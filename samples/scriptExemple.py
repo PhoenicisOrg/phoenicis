@@ -2,10 +2,16 @@ import scripts.SetupWindowCommander as POL_SetupWindow
 
 setupWindow = POL_SetupWindow("TITLE")
 
-print setupWindow.message("Test\n Test");
-print setupWindow.textbox("Test 2");
-setupWindow.message("Test 3");
+print "Hello from python!"
+
+setupWindow.message("Test\nTest");
+setupWindow.message("Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
+                          "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
+                          "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 ");
+
+result = setupWindow.textbox("Test 3");
+print result
+
 setupWindow.message("Test 4");
 setupWindow.message("Test 5");
 
-print "Hello from python!"
