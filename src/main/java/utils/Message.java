@@ -1,5 +1,7 @@
 package utils;
 
+import scripts.CancelException;
+
 import java.util.concurrent.Semaphore;
 
 public abstract class Message<ResultType> implements Runnable {
@@ -12,7 +14,7 @@ public abstract class Message<ResultType> implements Runnable {
         this.execute(this);
     }
 
-    public ResultType getResponse() throws InterruptedException {
+    public ResultType getResponse() throws InterruptedException, CancelException {
         semaphore.acquire();
         return this.response;
     }

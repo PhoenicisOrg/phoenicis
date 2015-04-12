@@ -1,7 +1,6 @@
 package ui.impl;
 
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -13,22 +12,20 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import api.SetupWindow;
-import utils.Message;
-
-import java.io.File;
+import utils.CancelableMessage;
 
 public class SetupWindowImplementation extends Stage implements SetupWindow {
     private final Scene scene;
     private final Pane root;
     private final String title;
+    private CancelableMessage currentMessage = null;
 
     /**
      * Draw the header at the top of the window
-     * @param root
-     * @param title
+     * @param root parent root
+     * @param title title of of the window
      */
     private void drawHeader(Pane root, String title) {
         Pane header = new Pane();
@@ -46,9 +43,27 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
         footer.setLayoutY(355);
         root.getChildren().add(footer);
         Button nextButton = new Button("Next");
+        Button cancelButton = new Button("Cancel");
+
         nextButton.setLayoutX(300);
-        footer.getChildren().add(nextButton);
+        cancelButton.setLayoutX(400);
+
+        footer.getChildren().addAll(nextButton, cancelButton);
+        nextButton.setOnMouseClicked(event -> {
+            nextButton.setDisable(true);
+            nextButtonAction.handle(event);
+        });
+        cancelButton.setOnMouseClicked(event -> {
+            nextButton.setDisable(true);
+            nextButtonAction.handle(event);
+        });
+
         nextButton.setOnMouseClicked(event -> { nextButton.setDisable(true); nextButtonAction.handle(event); });
+        cancelButton.setOnMouseClicked(event -> {
+            cancelButton.setDisable(true);
+            currentMessage.setCancel();
+            this.close();
+        });
     }
 
     private Pane drawPanelForTopHeader(Pane root) {
@@ -75,11 +90,16 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
         this.setScene(scene);
         this.show();
 
+        this.setOnCloseRequest(event -> {
+            if(this.currentMessage != null ) {
+                this.currentMessage.setCancel();
+            }
+        });
     }
 
 
-    @Override
-    public void message(Message message, String textToShow) {
+    public void message(CancelableMessage message, String textToShow) {
+        currentMessage = message;
         this.clearAll();
 
         this.drawHeader(this.root, this.title);
@@ -100,7 +120,9 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
 
     }
 
-    public void textbox(Message message, String textToShow, String defaultValue) {
+    public void textbox(CancelableMessage message, String textToShow, String defaultValue) {
+        currentMessage = message;
+
         defaultValue = defaultValue == null ? "" : defaultValue;
         this.clearAll();
         this.drawHeader(this.root, this.title);

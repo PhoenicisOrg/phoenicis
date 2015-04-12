@@ -1,11 +1,11 @@
 package api;
 
-import utils.Message;
+import utils.CancelableMessage;
 
 public interface SetupWindow {
-    void message(Message message, String textToShow);
+    void message(CancelableMessage message, String textToShow);
 
     void question();
 
-    void textbox(Message message, String textToShow, String defaultValue);
+    void textbox(CancelableMessage message, String textToShow, String defaultValue);
 }

@@ -1,6 +1,7 @@
 package ui.impl;
 
 import javafx.application.Platform;
+import scripts.CancelException;
 import utils.Message;
 import api.UIMessageSender;
 
@@ -36,7 +37,7 @@ public class UIMessageSenderImplementation implements UIMessageSender {
     }
 
     @Override
-    public Object synchroneousSendAndGetResult(Message message) throws InterruptedException {
+    public Object synchroneousSendAndGetResult(Message message) throws InterruptedException, CancelException {
         UIMessageSenderImplementation.runAndWait(message);
         return message.getResponse();
     }

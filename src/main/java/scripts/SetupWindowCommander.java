@@ -4,6 +4,7 @@ import api.Controller;
 import api.SetupWindow;
 import api.UIMessageSender;
 import utils.Message;
+import utils.CancelableMessage;
 
 public class SetupWindowCommander {
     static Controller controller;
@@ -13,7 +14,7 @@ public class SetupWindowCommander {
 
     /**
      * Jython needs static injection, Spring won't work for that purpose
-     * @param controller
+     * @param controller controller to be injected
      */
     public static void injectMainController(Controller controller) {
         SetupWindowCommander.controller = controller;
@@ -34,26 +35,26 @@ public class SetupWindowCommander {
     }
 
 
-    public void message(String textToShow) throws InterruptedException {
+    public void message(String textToShow) throws InterruptedException, CancelException {
         messageSender.synchroneousSendAndGetResult(
-                new Message() {
+                new CancelableMessage() {
                     @Override
-                    public void execute(Message message) {
+                    public void execute(CancelableMessage message) {
                         setupWindow.message(message, textToShow);
                     }
                 }
         );
     }
 
-    public String textbox(String textToShow) throws InterruptedException {
+    public String textbox(String textToShow) throws InterruptedException, CancelException {
         return this.textbox(textToShow, "");
     }
 
-    public String textbox(String textToShow, String defaultValue) throws InterruptedException {
+    public String textbox(String textToShow, String defaultValue) throws InterruptedException, CancelException {
         return (String) messageSender.synchroneousSendAndGetResult(
-                new Message<String>() {
+                new CancelableMessage<String>() {
                     @Override
-                    public void execute(Message message) {
+                    public void execute(CancelableMessage message) {
                         setupWindow.textbox(message, textToShow, defaultValue);
                     }
 

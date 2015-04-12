@@ -5,7 +5,7 @@
 printHelpMessage() {
         cat << EOF
 Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
-       wine --helpd                   Display this help and exit
+       wine --help                   Display this help and exit
        wine --version                Output version information and exit
 EOF
 
