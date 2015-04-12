@@ -14,16 +14,12 @@ import org.apache.commons.io.IOUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-/**
- * Created by qparis on 10/04/15.
- */
 public class WineProcessTest {
 
     private WineProcess wineProcessToTest;
 
     @Before
     public void getSystemProperties() throws Exception {
-        OperatingSystem operationSystem = OperatingSystem.fetchCurrentOperationSystem();
         URL url = this.getClass().getResource(".");
         this.wineProcessToTest = new WineProcess.Builder().withLibraryPath(new File(url.getPath())).build();
     }
@@ -40,7 +36,7 @@ public class WineProcessTest {
 
     @Test
     public void testRun_RunWineVersionWithArgument_ProcessReturnsHelpMessage() throws IOException {
-        ArrayList <String> arguments = new ArrayList<String>();
+        ArrayList <String> arguments = new ArrayList<>();
         arguments.add("/tmp/unexisting");
 
         Process wineProcess = this.wineProcessToTest.run(new File("/tmp"), "--help", null, arguments);
@@ -55,7 +51,7 @@ public class WineProcessTest {
 
     @Test
     public void testRun_RunWineVersionWithArgument_ProcessDoesNotReturnHepMessage() throws IOException {
-        ArrayList <String> arguments = new ArrayList<String>();
+        ArrayList <String> arguments = new ArrayList<>();
         arguments.add("--help");
 
         Process wineProcess = this.wineProcessToTest.run(new File("/tmp"), "/tmp/unexisting", null, arguments);
