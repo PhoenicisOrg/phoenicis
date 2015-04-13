@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Copyright (C) 2015 Pâris Quentin
+
+if [ "$(id -u)" = "0" ]; then
+	echo "PlayOnLinux is not supposed to be run as root. Sorry"
+	exit 0
+fi
