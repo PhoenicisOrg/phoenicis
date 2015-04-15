@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -17,20 +18,42 @@ public class MainWindow extends Application {
     private Stage stage;
 
     public ToolBar generateToolbar() {
-        Button run = new Button("Run", new ImageView(this.getClass().getResource("toolbar/run.png").toExternalForm()));
-        run.setContentDisplay(ContentDisplay.TOP);
 
-        Button stop = new Button("Stop", new ImageView(this.getClass().getResource("toolbar/stop.png").toExternalForm()));
-        stop.setContentDisplay(ContentDisplay.TOP);
+        ImageView runImage = new ImageView(this.getClass().getResource("toolbar/run.png").toExternalForm());
+        runImage.setFitWidth(16);
+        runImage.setFitHeight(16);
 
-        Button install = new Button("Install", new ImageView(this.getClass().getResource("toolbar/install.png").toExternalForm()));
-        install.setContentDisplay(ContentDisplay.TOP);
+        ImageView stopImage = new ImageView(this.getClass().getResource("toolbar/stop.png").toExternalForm());
+        stopImage.setFitWidth(16);
+        stopImage.setFitHeight(16);
 
-        Button remove = new Button("Install", new ImageView(this.getClass().getResource("toolbar/delete.png").toExternalForm()));
-        remove.setContentDisplay(ContentDisplay.TOP);
+        ImageView installImage = new ImageView(this.getClass().getResource("toolbar/install.png").toExternalForm());
+        installImage.setFitWidth(16);
+        installImage.setFitHeight(16);
 
-        Button configure = new Button("Configure", new ImageView(this.getClass().getResource("toolbar/configure.png").toExternalForm()));
-        configure.setContentDisplay(ContentDisplay.TOP);
+        ImageView removeImage = new ImageView(this.getClass().getResource("toolbar/delete.png").toExternalForm());
+        removeImage.setFitWidth(16);
+        removeImage.setFitHeight(16);
+
+        ImageView configureImage = new ImageView(this.getClass().getResource("toolbar/configure.png").toExternalForm());
+        configureImage.setFitWidth(16);
+        configureImage.setFitHeight(16);
+
+
+        Button run = new Button("Run", runImage);
+        run.setContentDisplay(ContentDisplay.LEFT);
+
+        Button stop = new Button("Stop", stopImage);
+        stop.setContentDisplay(ContentDisplay.LEFT);
+
+        Button install = new Button("Install", installImage);
+        install.setContentDisplay(ContentDisplay.LEFT);
+
+        Button remove = new Button("Remove", removeImage);
+        remove.setContentDisplay(ContentDisplay.LEFT);
+
+        Button configure = new Button("Configure", configureImage);
+        configure.setContentDisplay(ContentDisplay.LEFT);
 
         TextField searchField = new TextField();
 
