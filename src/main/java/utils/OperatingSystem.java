@@ -1,4 +1,4 @@
-package wine;
+package utils;
 
 
 public enum OperatingSystem {
@@ -16,7 +16,7 @@ public enum OperatingSystem {
         return this.name;
     }
 
-    public static OperatingSystem fromString(String name) throws Exception {
+    public static OperatingSystem fromString(String name) throws PlayOnLinuxError {
         if("Mac OS X".equals(name)) {
             return OperatingSystem.MACOSX;
         }
@@ -27,11 +27,11 @@ public enum OperatingSystem {
             return OperatingSystem.FREEBSD;
         }
 
-        throw new Exception(String.valueOf(System.out.format("Unknown operation system \"%s\"", name)));
+        throw new PlayOnLinuxError(String.valueOf(System.out.format("Incompatible operation system \"%s\"", name)));
     }
 
-    public static String fetchShortName(OperatingSystem operatingSystem) throws Exception {
-        switch (operatingSystem) {
+    public String fetchShortName() throws PlayOnLinuxError {
+        switch (this) {
             case MACOSX:
                 return "MACOSX";
             case LINUX:
@@ -39,11 +39,11 @@ public enum OperatingSystem {
             case FREEBSD:
                 return "FREEBSD";
             default:
-                throw new Exception(String.valueOf(System.out.format("Unknown operation system \"%s\"", operatingSystem.toString())));
+                throw new PlayOnLinuxError(String.valueOf(System.out.format("Incompatible operation system \"%s\"", this.toString())));
         }
     }
 
-    public static OperatingSystem fetchCurrentOperationSystem() throws Exception {
+    public static OperatingSystem fetchCurrentOperationSystem() throws PlayOnLinuxError {
         return OperatingSystem.fromString(System.getProperty("os.name"));
     }
 

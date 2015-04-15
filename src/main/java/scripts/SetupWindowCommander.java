@@ -34,6 +34,16 @@ public class SetupWindowCommander {
         );
     }
 
+    public void close() {
+        messageSender.synchroneousSend(
+                new Message() {
+                    @Override
+                    public void execute(Message message) {
+                        setupWindow.close();
+                    }
+                }
+        );
+    }
 
     public void message(String textToShow) throws InterruptedException, CancelException {
         messageSender.synchroneousSendAndGetResult(

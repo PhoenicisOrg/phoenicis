@@ -8,4 +8,6 @@ public interface SetupWindow {
     void question();
 
     void textbox(CancelableMessage message, String textToShow, String defaultValue);
+
+    void close();
 }

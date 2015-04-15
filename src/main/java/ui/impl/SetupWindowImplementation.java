@@ -61,8 +61,8 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
         nextButton.setLayoutY(9);
         cancelButton.setLayoutY(9);
 
-        nextButton.setLayoutX(355);
-        cancelButton.setLayoutX(435);
+        nextButton.setLayoutX(435);
+        cancelButton.setLayoutX(355);
 
         nextButton.setPrefSize(70, 28);
         cancelButton.setPrefSize(70, 28);
@@ -147,7 +147,7 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
     public void textbox(CancelableMessage message, String textToShow, String defaultValue) {
         currentMessage = message;
 
-        defaultValue = defaultValue == null ? "" : defaultValue;
+        defaultValue = defaultValue == null ? "" : defaultValue; // TODO: Use this parameter
         this.clearAll();
         this.drawHeader(this.root, this.title);
 

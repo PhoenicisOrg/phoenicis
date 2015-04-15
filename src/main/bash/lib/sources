@@ -6,3 +6,9 @@ if [ "$(id -u)" = "0" ]; then
 	echo "PlayOnLinux is not supposed to be run as root. Sorry"
 	exit 0
 fi
+
+if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
+	source "$PLAYONLINUX/lib/setupWindow"
+
+	export PLAYONLINUX_BASH_INCLUDED="TRUE"
+fi

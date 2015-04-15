@@ -3,20 +3,26 @@ package scripts;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+
 import static org.junit.Assert.*;
 
-/**
- * Created by tinou on 12/04/15.
- */
 public class ScriptTest {
 
-    @Before
-    public void setUp() throws Exception {
 
+    @Test
+    public void testDetectType_passALegacyScript_FormatIsDetected() throws Exception {
+        Script legacyScript = new Script(new File(this.getClass().getResource("legacyScriptExemple.sh").getPath()));
+
+        assertEquals(Script.Type.LEGACY, legacyScript.detectScriptType());
     }
 
     @Test
-    public void testDetectScriptType() throws Exception {
+    public void testDetectType_passARecentScript_FormatIsDetected() throws Exception {
+        Script legacyScript = new Script(new File(this.getClass().getResource("scriptExemple.py").getPath()));
 
+        assertEquals(Script.Type.RECENT, legacyScript.detectScriptType());
     }
+
+
 }

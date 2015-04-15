@@ -1,0 +1,88 @@
+#!/bin/bash
+
+# Copyright (C) 2007-2011 PlayOnLinux Team
+# Copyright (C) 2007-2011 Pâris Quentin
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+# This library is deprecated and only intended for PlayOnLinux v4 backward compatibility
+
+export POL_HOST="127.0.0.1"
+
+POL_Untab()
+{
+	echo "${1//	/\\t}"
+}
+
+# Silent netcat
+ncs()
+{
+	ncns "$@" > /dev/null 2> /dev/null
+}
+
+ncns()
+{
+	if [ "$POL_OS" = "MACOSX" ]; then
+		nc "$@"
+	else
+		nc -q -1 "$@" 2> /dev/null || nc "$@"
+	fi
+
+}
+
+POL_SetupWindow_Init ()
+{
+	# Open PlayOnLinux setup window. Should be use only once in a script !
+	# Needed for POL_SetupWindow_* functions
+	# Usage: POL_SetupWindow_Init
+
+	local arg1
+	local arg2
+	local arg3
+	[ "$1" = "--protect" ] && arg3="protect" && shift
+
+	[ "$POL_SetupWindow_TopImage" = "" ] && arg1="$1" || arg1="$POL_SetupWindow_TopImage"
+	[ "$POL_SetupWindow_LeftImage" = "" ] && arg2="$2" || arg2="$POL_SetupWindow_LeftImage"
+
+	[ "$arg1" = "" ] && arg1="None"
+	[ "$arg2" = "" ] && arg2="None"
+	[ "$arg3" = "" ] && arg3="None"
+
+	echo "$POL_COOKIE	POL_SetupWindow_Init	$$	$arg1	$arg2	$arg3" | ncs "$POL_HOST" "$POL_PORT"
+
+	export SETUPWINDOW_INIT="true"
+}
+
+POL_SetupWindow_message ()
+{
+	# Shows a simple message
+	# Usage POL_SetupWindow_message [message] [title]
+	echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | ncs "$POL_HOST" "$POL_PORT"
+}
+
+POL_SetupWindow_Close ()
+{
+	# Close PlayOnLinux setup window.
+	# After this command, POL_SetupWindow_* functions won't work
+	# Should be used at the end of the script if POL_SetupWindow_Init has been called
+	# Usage: POL_SetupWindow_Close
+
+	echo "$POL_COOKIE	POL_SetupWindow_Close	$$" | ncs "$POL_HOST" "$POL_PORT"
+
+	export SETUPWINDOW_INIT="false"
+	sleep 2
+}
+
+

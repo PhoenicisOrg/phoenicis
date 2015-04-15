@@ -1,7 +1,7 @@
 package remote.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import wine.OperatingSystem;
+import utils.OperatingSystem;
 
 import java.util.ArrayList;
 
