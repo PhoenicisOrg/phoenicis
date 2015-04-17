@@ -31,6 +31,31 @@ class SetupWindowNetcatCommandParser(object):
 
             self.setupWindowManager.getWindow(setupWindowId).message(textToShow)
 
+
+        if(self.getCommand() == "POL_SetupWindow_textbox"):
+            setupWindowId = self.command[2]
+            textToShow = self.command[3]
+
+            try:
+                defaultValue = self.command[4]
+            except IndexError:
+                defaultValue = ""
+
+            return self.setupWindowManager.getWindow(setupWindowId).textbox(textToShow, defaultValue)
+
+        if(self.getCommand() == "POL_SetupWindow_menu"):
+            setupWindowId = self.command[2]
+            textToShow = self.command[3]
+
+            try:
+                separator = self.command[5]
+            except IndexError:
+                separator = "~"
+
+            items = self.command[4].split(separator)
+
+            return self.setupWindowManager.getWindow(setupWindowId).menu(textToShow, items)
+
         if(self.getCommand() == "POL_SetupWindow_Close"):
             setupWindowId = self.command[2]
 

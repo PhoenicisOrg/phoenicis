@@ -17,11 +17,13 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# This library is deprecated and only intended for PlayOnLinux v4 backward compatibility
+# IMPORTANT
+# ---------
+# Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
 export POL_HOST="127.0.0.1"
 
-POL_Untab()
+POL_EscapeTab()
 {
 	echo "${1//	/\\t}"
 }
@@ -69,7 +71,7 @@ POL_SetupWindow_message ()
 {
 	# Shows a simple message
 	# Usage POL_SetupWindow_message [message] [title]
-	echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | ncs "$POL_HOST" "$POL_PORT"
+	echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$2")" | ncs "$POL_HOST" "$POL_PORT"
 }
 
 POL_SetupWindow_Close ()
@@ -85,4 +87,20 @@ POL_SetupWindow_Close ()
 	sleep 2
 }
 
+POL_SetupWindow_textbox ()
+{
+	# Shows a text box
+	# Usage: POL_SetupWindow_textbox [message] [title (ignored)] [default value]
+	# Result is sent in $APP_ANSWER variable
 
+	APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_textbox	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")" | ncns "$POL_HOST" "$POL_PORT")"
+}
+
+POL_SetupWindow_menu ()
+{
+	# Shows a menu
+	# Usage: POL_SetupWindow_menu [message] [title (ignored)] [list] [separator]
+	# Result is sent in $APP_ANSWER variable
+
+	APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_menu	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")	$(POL_EscapeTab "$4")" | ncns "$POL_HOST" "$POL_PORT")"
+}
