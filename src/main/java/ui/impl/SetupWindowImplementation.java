@@ -1,10 +1,12 @@
 package ui.impl;
 
 
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +19,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import api.SetupWindow;
 import utils.CancelableMessage;
+
+import java.util.List;
 
 public class SetupWindowImplementation extends Stage implements SetupWindow {
     private final Scene scene;
@@ -147,7 +151,7 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
     public void textbox(CancelableMessage message, String textToShow, String defaultValue) {
         currentMessage = message;
 
-        defaultValue = defaultValue == null ? "" : defaultValue; // TODO: Use this parameter
+        defaultValue = defaultValue == null ? "" : defaultValue;
         this.clearAll();
         this.drawHeader(this.root, this.title);
 
@@ -155,17 +159,44 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
 
         Text textWidget = new Text(textToShow);
         textWidget.setLayoutX(10);
-        textWidget.setLayoutY(10);
+        textWidget.setLayoutY(20);
 
         TextField textField = new TextField();
-
+        textField.setText(defaultValue);
         textField.setLayoutX(10);
-        textField.setLayoutY(20);
+        textField.setLayoutY(20 + textWidget.getLayoutY());
 
         this.drawFooter(this.root, event -> {
             message.setResponse(textField.getText());
         });
 
         contentPanel.getChildren().addAll(textWidget, textField);
+    }
+
+    @Override
+    public void menu(CancelableMessage message, String textToShow, List<String> menuItems) {
+        currentMessage = message;
+
+        this.clearAll();
+        this.drawHeader(this.root, this.title);
+
+        Pane contentPanel = this.drawPanelForTopHeader(root);
+
+        Text textWidget = new Text(textToShow);
+        textWidget.setLayoutX(10);
+        textWidget.setLayoutY(20);
+
+        ListView listViewWidget = new ListView();
+
+        listViewWidget.setItems(FXCollections.observableArrayList(menuItems));
+        listViewWidget.setLayoutX(10);
+        listViewWidget.setLayoutY(20 + textWidget.getLayoutY());
+        listViewWidget.setPrefSize(500, 240);
+
+        this.drawFooter(this.root, event -> {
+            message.setResponse(listViewWidget.getFocusModel().getFocusedItem());
+        });
+
+        contentPanel.getChildren().addAll(textWidget, listViewWidget);
     }
 }

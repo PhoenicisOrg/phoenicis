@@ -6,6 +6,8 @@ import api.UIMessageSender;
 import utils.Message;
 import utils.CancelableMessage;
 
+import java.util.List;
+
 public class SetupWindowCommander {
     static Controller controller;
     private final String title;
@@ -20,6 +22,10 @@ public class SetupWindowCommander {
         SetupWindowCommander.controller = controller;
     }
 
+    /**
+     * Create the setupWindow
+     * @param title title of the setupWindow
+     */
     public SetupWindowCommander(String title) {
         this.messageSender = controller.createUIMessageSender();
         this.title = title;
@@ -66,6 +72,22 @@ public class SetupWindowCommander {
                     @Override
                     public void execute(CancelableMessage message) {
                         setupWindow.textbox(message, textToShow, defaultValue);
+                    }
+
+                }
+        );
+    }
+
+    public String menu(String textToShow, List<String> menuItems) throws InterruptedException, CancelException {
+        return this.menu(textToShow, menuItems, "");
+    }
+
+    public String menu(String textToShow, List<String> menuItems, String defaultValue) throws CancelException, InterruptedException {
+        return (String) messageSender.synchroneousSendAndGetResult(
+                new CancelableMessage<String>() {
+                    @Override
+                    public void execute(CancelableMessage message) {
+                        setupWindow.menu(message, textToShow, menuItems);
                     }
 
                 }
