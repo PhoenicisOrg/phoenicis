@@ -2,7 +2,7 @@ package app;
 
 import api.Controller;
 import org.springframework.context.annotation.*;
-import scripts.SetupWindowCommander;
+import scripts.SetupWizard;
 import ui.impl.JavaFXControllerImplementation;
 
 @Configuration
@@ -12,7 +12,7 @@ public class PlayOnLinuxConfig {
     @Bean
     Controller gui() {
         Controller controller = new JavaFXControllerImplementation();
-        SetupWindowCommander.injectMainController(controller);
+        SetupWizard.injectMainController(controller);
         return controller;
     }
 

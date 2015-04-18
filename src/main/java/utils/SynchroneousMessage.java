@@ -4,11 +4,11 @@ import scripts.CancelException;
 
 import java.util.concurrent.Semaphore;
 
-public abstract class Message<ResultType> implements Runnable {
+public abstract class SynchroneousMessage<ResultType> implements Runnable {
     private ResultType response;
     Semaphore semaphore = new Semaphore(0);
 
-    abstract public void execute(Message message);
+    abstract public void execute(SynchroneousMessage message);
 
     public void run() {
         this.execute(this);
@@ -23,4 +23,5 @@ public abstract class Message<ResultType> implements Runnable {
         this.response = response;
         semaphore.release();
     }
+
 }

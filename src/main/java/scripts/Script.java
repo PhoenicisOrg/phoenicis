@@ -50,7 +50,7 @@ public class Script {
                         pythonInterpreter.execfile(script.getAbsolutePath());
                     }
                 } catch (PyException e) {
-                    if(e.getCause() instanceof CancelException) {
+                    if(e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedIOException) {
                         System.out.println("The script was canceled! "); // Fixme: better logging system
                     } else {
                         throw e;

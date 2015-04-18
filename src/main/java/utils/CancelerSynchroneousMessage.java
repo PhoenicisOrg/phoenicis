@@ -2,13 +2,13 @@ package utils;
 
 import scripts.CancelException;
 
-public abstract class CancelableMessage<ResultType> extends Message {
+public abstract class CancelerSynchroneousMessage<ResultType> extends SynchroneousMessage implements CancelerMessage {
     private Boolean processCanceled = false;
 
-    public abstract void execute(CancelableMessage message);
+    public abstract void execute(CancelerSynchroneousMessage message);
 
-    public void execute(Message message) {
-        this.execute((CancelableMessage) message);
+    public void execute(SynchroneousMessage message) {
+        this.execute((CancelerSynchroneousMessage) message);
     }
 
     public ResultType getResponse() throws InterruptedException, CancelException {
@@ -21,7 +21,7 @@ public abstract class CancelableMessage<ResultType> extends Message {
         return response;
     }
 
-    public void setCancel() {
+    public void sendCancelSignal() {
         this.processCanceled = true;
         super.semaphore.release();
     }

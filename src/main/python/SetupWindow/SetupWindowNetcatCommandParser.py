@@ -23,6 +23,7 @@ class SetupWindowNetcatCommandParser(object):
                 windowTitle = os.environ["TITLE"]
             else:
                 windowTitle = "%s Wizard" % EnvironementHelper.getApplicationName()
+
             self.setupWindowManager.newWindow(setupWindowId, windowTitle)
 
         if(self.getCommand() == "POL_SetupWindow_message"):
@@ -31,6 +32,11 @@ class SetupWindowNetcatCommandParser(object):
 
             self.setupWindowManager.getWindow(setupWindowId).message(textToShow)
 
+        if(self.getCommand() == "POL_SetupWindow_wait"):
+            setupWindowId = self.command[2]
+            textToShow = self.command[3]
+
+            self.setupWindowManager.getWindow(setupWindowId).wait(textToShow)
 
         if(self.getCommand() == "POL_SetupWindow_textbox"):
             setupWindowId = self.command[2]
@@ -60,3 +66,4 @@ class SetupWindowNetcatCommandParser(object):
             setupWindowId = self.command[2]
 
             self.setupWindowManager.getWindow(setupWindowId).close()
+

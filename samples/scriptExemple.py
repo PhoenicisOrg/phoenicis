@@ -1,4 +1,4 @@
-import scripts.SetupWindowCommander as POL_SetupWindow
+import scripts.SetupWizard as POL_SetupWindow
 
 setupWindow = POL_SetupWindow("TITLE")
 

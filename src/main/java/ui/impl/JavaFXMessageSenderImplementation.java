@@ -2,12 +2,13 @@ package ui.impl;
 
 import javafx.application.Platform;
 import scripts.CancelException;
-import utils.Message;
+import utils.AsynchroneousMessage;
+import utils.SynchroneousMessage;
 import api.UIMessageSender;
 
 import java.util.concurrent.CountDownLatch;
 
-public class UIMessageSenderImplementation implements UIMessageSender {
+public class JavaFXMessageSenderImplementation implements UIMessageSender {
     public static void runAndWait(Runnable action) {
         Object result = null;
         if (action == null)
@@ -37,12 +38,17 @@ public class UIMessageSenderImplementation implements UIMessageSender {
     }
 
     @Override
-    public Object synchroneousSendAndGetResult(Message message) throws InterruptedException, CancelException {
-        UIMessageSenderImplementation.runAndWait(message);
+    public Object synchroneousSendAndGetResult(SynchroneousMessage message) throws InterruptedException, CancelException {
+        JavaFXMessageSenderImplementation.runAndWait(message);
         return message.getResponse();
     }
 
-    public void synchroneousSend(Message message){
-        UIMessageSenderImplementation.runAndWait(message);
+    public void synchroneousSend(SynchroneousMessage message){
+        JavaFXMessageSenderImplementation.runAndWait(message);
+    }
+
+    @Override
+    public void asynchroneousSend(AsynchroneousMessage message) {
+        Platform.runLater(message);
     }
 }

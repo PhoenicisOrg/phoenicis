@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from scripts import SetupWindowCommander
+from scripts import SetupWizard
 
 class SetupWindowManager(object):
     def __init__(self):
@@ -9,7 +9,7 @@ class SetupWindowManager(object):
         return self.managedWindows[windowId]
 
     def newWindow(self, windowId, title):
-        self.managedWindows[windowId] = SetupWindowCommander(title)
+        self.managedWindows[windowId] = SetupWizard(title)
         return self.managedWindows[windowId]
 
 

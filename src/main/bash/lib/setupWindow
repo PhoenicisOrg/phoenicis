@@ -104,3 +104,19 @@ POL_SetupWindow_menu ()
 
 	APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_menu	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")	$(POL_EscapeTab "$4")" | ncns "$POL_HOST" "$POL_PORT")"
 }
+
+POL_SetupWindow_wait ()
+{
+	# Wait for next POL_SetupWindow_ command
+	# Shows a pulsebar
+	# Usage POL_SetupWindow_wait_next_signal [message] [title]
+
+	echo "$POL_COOKIE	POL_SetupWindow_wait	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | ncs "$POL_HOST" "$POL_PORT"
+}
+
+POL_SetupWindow_wait_next_signal ()
+{
+	# POL_SetupWindow_wait, PlayOnLinux v3 script compatibility
+	POL_SetupWindow_wait "$@"
+}
+
