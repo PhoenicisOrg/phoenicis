@@ -44,6 +44,9 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Closes the setupWindow
+     */
     public void close() {
         messageSender.synchroneousSend(
                 new SynchroneousMessage() {
@@ -55,6 +58,12 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Shows a simple message
+     * @param textToShow the text to show
+     * @throws InterruptedException
+     * @throws CancelException
+     */
     public void message(String textToShow) throws InterruptedException, CancelException {
         messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage() {
@@ -66,10 +75,25 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Ask the user to enter a value
+     * @param textToShow a text that will be shown
+     * @return the value the user entered
+     * @throws InterruptedException
+     * @throws CancelException
+     */
     public String textbox(String textToShow) throws InterruptedException, CancelException {
         return this.textbox(textToShow, "");
     }
 
+    /**
+     * Asks the user to enter a value
+     * @param textToShow a text that will be shown
+     * @param defaultValue a default value
+     * @return the value the user entered
+     * @throws InterruptedException
+     * @throws CancelException
+     */
     public String textbox(String textToShow, String defaultValue) throws InterruptedException, CancelException {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
@@ -81,11 +105,15 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Displays a menu so that the user can make a choice
+     * @param textToShow a text that will be shown
+     * @param menuItems a list containing the elements of the menu
+     * @return the value the user entered (as string)
+     * @throws InterruptedException
+     * @throws CancelException
+     */
     public String menu(String textToShow, List<String> menuItems) throws InterruptedException, CancelException {
-        return this.menu(textToShow, menuItems, "");
-    }
-
-    public String menu(String textToShow, List<String> menuItems, String defaultValue) throws CancelException, InterruptedException {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
                     @Override
@@ -96,6 +124,10 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Displays a message to the user with a waiting symbol, and releases the script just afterward
+     * @param textToShow a text that will be shown
+     */
     public void wait(String textToShow) {
         messageSender.asynchroneousSend(
                 new InterrupterAsynchroneousMessage() {
