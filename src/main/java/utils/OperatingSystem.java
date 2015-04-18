@@ -30,17 +30,8 @@ public enum OperatingSystem {
         throw new PlayOnLinuxError(String.valueOf(System.out.format("Incompatible operation system \"%s\"", name)));
     }
 
-    public String fetchShortName() throws PlayOnLinuxError {
-        switch (this) {
-            case MACOSX:
-                return "MACOSX";
-            case LINUX:
-                return "LINUX";
-            case FREEBSD:
-                return "FREEBSD";
-            default:
-                throw new PlayOnLinuxError(String.valueOf(System.out.format("Incompatible operation system \"%s\"", this.toString())));
-        }
+    public String fetchShortName() {
+        return this.name();
     }
 
     public static OperatingSystem fetchCurrentOperationSystem() throws PlayOnLinuxError {
