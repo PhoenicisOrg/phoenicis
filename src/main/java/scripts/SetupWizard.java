@@ -4,9 +4,16 @@ import api.Controller;
 import api.ProgressBar;
 import api.SetupWindow;
 import api.UIMessageSender;
+import com.sun.javaws.progress.Progress;
 import utils.messages.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
+import static utils.Localisation.Translate;
 
 public class SetupWizard {
     static Controller controller;
@@ -138,15 +145,6 @@ public class SetupWizard {
     }
 
     public ProgressBar progressBar(String textToShow) throws CancelException, InterruptedException {
-        messageSender.synchroneousSend(
-                new InterrupterSynchroneousMessage() {
-                    @Override
-                    public void execute(Message message) {
-
-                    }
-                }
-        );
-
         return (ProgressBar) messageSender.synchroneousSendAndGetResult(
                 new InterrupterSynchroneousMessage() {
                     @Override
@@ -157,4 +155,20 @@ public class SetupWizard {
                 }
         );
     }
+
+    public void download(String remoteUrl, String localFile) throws IOException, CancelException, InterruptedException {
+        Downloader downloader = new Downloader();
+        URL remoteFile = new URL(remoteUrl);
+
+        // FIXME: Change APPLICATION_TITLE here
+        ProgressBar progressBar = this.progressBar(Translate("Please wait while $APPLICATION_TITLE is downloading:")
+                + "\n" +
+                downloader.findFileNameFromURL(remoteFile));
+
+        downloader.setProgressBar(progressBar);
+        downloader.Get(remoteFile, new File(localFile));
+
+    }
+
+
 }

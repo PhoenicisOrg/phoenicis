@@ -1,6 +1,5 @@
 package ui.impl.setupwindow.steps;
 
-import javafx.scene.control.ProgressBar;
 import ui.impl.setupwindow.JavaFXProgressBar;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.InterrupterSynchroneousMessage;
