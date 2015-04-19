@@ -98,7 +98,7 @@ POL_SetupWindow_textbox ()
 
 POL_SetupWindow_menu ()
 {
-	# Shows a showMenuStep
+	# Shows a menu
 	# Usage: POL_SetupWindow_menu [message] [title (ignored)] [list] [separator]
 	# Result is sent in $APP_ANSWER variable
 
@@ -108,7 +108,6 @@ POL_SetupWindow_menu ()
 POL_SetupWindow_wait ()
 {
 	# Wait for next POL_SetupWindow_ command
-	# Shows a pulsebar
 	# Usage POL_SetupWindow_wait_next_signal [message] [title]
 
 	echo "$POL_COOKIE	POL_SetupWindow_wait	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | ncs "$POL_HOST" "$POL_PORT"
