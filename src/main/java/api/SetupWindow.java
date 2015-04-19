@@ -4,9 +4,14 @@ import utils.messages.CancelerSynchroneousMessage;
 import utils.messages.InterrupterAsynchroneousMessage;
 import utils.messages.InterrupterSynchroneousMessage;
 
+import java.io.File;
 import java.util.List;
 
 public interface SetupWindow {
+    void setTopImage(File topImage);
+
+    void setLeftImage(File leftImage);
+
     void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow);
 
     void showYesNoQuestionStep();

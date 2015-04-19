@@ -7,6 +7,8 @@ import javafx.scene.layout.Pane;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerMessage;
 
+import java.io.File;
+
 abstract class AbstractStep {
     private final CancelerMessage messageWaitingForResponse;
     private final JavaFXSetupWindowImplementation parent;
@@ -23,6 +25,14 @@ abstract class AbstractStep {
 
     protected Pane getParentRoot() {
         return this.parent.getRoot();
+    }
+
+    protected File getParentTopImage() {
+        return this.parent.getTopImage();
+    }
+
+    protected File getParentLeftImage() {
+        return this.parent.getLeftImage();
     }
 
     protected void addToStep(Node widgetToAdd) {
@@ -78,7 +88,6 @@ abstract class AbstractStep {
     protected void setNextButtonEnabled(Boolean nextEnabled) {
         nextButton.setDisable(!nextEnabled);
     }
-
 
     protected abstract void drawStepContent();
 

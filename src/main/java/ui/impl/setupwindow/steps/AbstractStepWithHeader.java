@@ -56,7 +56,7 @@ abstract class AbstractStepWithHeader extends AbstractStep {
     }
 
     private Image createTopImage() {
-        return new Image(this.getClass().getResource("logo96.png").toExternalForm());
+        return new Image("file:" + this.getParentTopImage().getAbsolutePath());
     }
 
     public void installStep() {

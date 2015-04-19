@@ -7,11 +7,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import api.SetupWindow;
 import ui.impl.setupwindow.steps.*;
+import utils.OperatingSystem;
+import utils.PlayOnLinuxError;
 import utils.messages.CancelerMessage;
 import utils.messages.CancelerSynchroneousMessage;
 import utils.messages.InterrupterAsynchroneousMessage;
 import utils.messages.InterrupterSynchroneousMessage;
 
+import java.io.File;
 import java.util.List;
 
 public class JavaFXSetupWindowImplementation extends Stage implements SetupWindow {
@@ -19,6 +22,10 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     private final Pane root;
     private final String wizardTitle;
     private CancelerMessage lastCancelerMessage = null;
+
+
+    private File topImage;
+    private File leftImage;
 
 
     public String getWizardTitle() {
@@ -29,9 +36,7 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
         return this.root;
     }
 
-
-    public void clearAll()
-    {
+    public void clearAll() {
         root.getChildren().clear();
     }
 
@@ -52,11 +57,31 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
                 this.lastCancelerMessage.sendCancelSignal();
             }
         });
+
+        this.loadImages();
     }
+
+    private void loadImages() {
+        this.topImage = new File(this.getClass().getResource("defaultTopImage.png").getPath());
+        try {
+            switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
+                case MACOSX:
+                    this.leftImage = new File(this.getClass().getResource("defaultLeftPlayOnMac.jpg").getPath());
+                default:
+                case LINUX:
+                    this.leftImage = new File(this.getClass().getResource("defaultLeftPlayOnLinux.jpg").getPath());
+            }
+        } catch (PlayOnLinuxError playOnLinuxError) {
+            this.leftImage = new File(this.getClass().getResource("defaultLeftPlayOnLinux.jpg").getPath());
+        }
+    }
+
 
     public void addNode(Node widgetToAdd) {
         this.root.getChildren().add(widgetToAdd);
     }
+
+
 
     @Override
     public void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow) {
@@ -93,5 +118,26 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
         stepProgressBar.installStep();
 
         return stepProgressBar.getProgressBar();
+    }
+
+
+
+
+    @Override
+    public void setTopImage(File topImage) {
+        this.topImage = topImage;
+    }
+
+    @Override
+    public void setLeftImage(File leftImage) {
+        this.leftImage = leftImage;
+    }
+
+    public File getLeftImage() {
+        return leftImage;
+    }
+
+    public File getTopImage() {
+        return topImage;
     }
 }
