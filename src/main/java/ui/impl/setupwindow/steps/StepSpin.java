@@ -5,20 +5,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
-import utils.InterrupterAsynchroneousMessage;
+import utils.messages.InterrupterAsynchroneousMessage;
 
-public class StepSpin extends AbstractStepWithHeader {
-    String textToShow;
+public class StepSpin extends AbstractAsynchroneousStepText {
     ImageView spinnerImage;
     int currentAngle = 1;
 
     public StepSpin(JavaFXSetupWindowImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
                     String textToShow) {
-        super(parent, messageWaitingForResponse);
-        this.textToShow = textToShow;
+        super(parent, messageWaitingForResponse, textToShow);
         spinnerImage = new ImageView();
 
     }
@@ -36,16 +33,11 @@ public class StepSpin extends AbstractStepWithHeader {
 
     @Override
     protected void drawStepContent() {
-        Text textWidget = new Text(textToShow);
-        textWidget.setLayoutX(10);
-        textWidget.setLayoutY(20);
-        textWidget.setWrappingWidth(500);
-        textWidget.prefWidth(500);
+        super.drawStepContent();
 
         spinnerImage.setLayoutX(230);
         spinnerImage.setLayoutY(100);
 
-        this.addToContentPanel(textWidget);
         this.addToContentPanel(spinnerImage);
     }
 

@@ -1,17 +1,16 @@
 package ui.impl.setupwindow;
 
+import api.ProgressBar;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import api.SetupWindow;
-import ui.impl.setupwindow.steps.StepMenu;
-import ui.impl.setupwindow.steps.StepMessage;
-import ui.impl.setupwindow.steps.StepSpin;
-import ui.impl.setupwindow.steps.StepTextBox;
-import utils.CancelerMessage;
-import utils.CancelerSynchroneousMessage;
-import utils.InterrupterAsynchroneousMessage;
+import ui.impl.setupwindow.steps.*;
+import utils.messages.CancelerMessage;
+import utils.messages.CancelerSynchroneousMessage;
+import utils.messages.InterrupterAsynchroneousMessage;
+import utils.messages.InterrupterSynchroneousMessage;
 
 import java.util.List;
 
@@ -86,5 +85,13 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
         StepSpin stepSpin = new StepSpin(this, message, textToShow);
         stepSpin.installStep();
+    }
+
+    @Override
+    public ProgressBar showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
+        StepProgressBar stepProgressBar = new StepProgressBar(this, message, textToShow);
+        stepProgressBar.installStep();
+
+        return stepProgressBar.getProgressBar();
     }
 }

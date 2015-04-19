@@ -2,15 +2,19 @@ package ui.impl.setupwindow.steps;
 
 import javafx.scene.text.Text;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
-import utils.messages.CancelerSynchroneousMessage;
+import utils.messages.CancelerMessage;
+import utils.messages.InterrupterAsynchroneousMessage;
 
-public class StepMessage extends AbstractStepWithHeader {
+public abstract class AbstractAsynchroneousStepText extends AbstractStepWithHeader {
     String textToShow;
 
-    public StepMessage(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow) {
+    public AbstractAsynchroneousStepText(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse,
+                                         String textToShow) {
         super(parent, messageWaitingForResponse);
         this.textToShow = textToShow;
+
     }
+
 
     @Override
     protected void drawStepContent() {
@@ -23,11 +27,5 @@ public class StepMessage extends AbstractStepWithHeader {
         this.addToContentPanel(textWidget);
     }
 
-    @Override
-    protected void setStepEvents() {
-        this.setNextButtonAction(event -> {
-            ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).setResponse(null);
-        });
-    }
 
 }

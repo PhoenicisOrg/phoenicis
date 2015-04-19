@@ -10,7 +10,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
-import utils.CancelerMessage;
+import utils.messages.CancelerMessage;
 
 abstract class AbstractStepWithHeader extends AbstractStep {
     Pane contentPanel;

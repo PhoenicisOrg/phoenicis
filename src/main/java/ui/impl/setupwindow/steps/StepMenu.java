@@ -3,7 +3,7 @@ package ui.impl.setupwindow.steps;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
-import utils.CancelerSynchroneousMessage;
+import utils.messages.CancelerSynchroneousMessage;
 
 import java.util.List;
 

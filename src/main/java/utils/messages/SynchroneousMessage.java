@@ -1,14 +1,12 @@
-package utils;
+package utils.messages;
 
 import scripts.CancelException;
 
 import java.util.concurrent.Semaphore;
 
-public abstract class SynchroneousMessage<ResultType> implements Runnable {
+public abstract class SynchroneousMessage<ResultType> implements Message {
     private ResultType response;
     Semaphore semaphore = new Semaphore(0);
-
-    abstract public void execute(SynchroneousMessage message);
 
     public void run() {
         this.execute(this);

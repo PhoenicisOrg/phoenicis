@@ -10,7 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 
-import static utils.Localisation.Translate;
+import static utils.Localisation.Translate ;
 
 public class MainWindow extends Application {
     private static ui.api.EventHandler eventHandler;

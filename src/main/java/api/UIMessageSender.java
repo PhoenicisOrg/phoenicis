@@ -1,12 +1,13 @@
 package api;
 
 import scripts.CancelException;
-import utils.AsynchroneousMessage;
-import utils.SynchroneousMessage;
+import utils.messages.Message;
+import utils.messages.SynchroneousMessage;
 
 public interface UIMessageSender {
     Object synchroneousSendAndGetResult(SynchroneousMessage message) throws InterruptedException, CancelException;
-    void synchroneousSend(SynchroneousMessage message);
 
-    void asynchroneousSend(AsynchroneousMessage message);
+    void synchroneousSend(Message message);
+
+    void asynchroneousSend(Message message);
 }

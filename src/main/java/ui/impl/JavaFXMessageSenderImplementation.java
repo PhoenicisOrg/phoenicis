@@ -2,9 +2,9 @@ package ui.impl;
 
 import javafx.application.Platform;
 import scripts.CancelException;
-import utils.AsynchroneousMessage;
-import utils.SynchroneousMessage;
 import api.UIMessageSender;
+import utils.messages.Message;
+import utils.messages.SynchroneousMessage;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -43,12 +43,12 @@ public class JavaFXMessageSenderImplementation implements UIMessageSender {
         return message.getResponse();
     }
 
-    public void synchroneousSend(SynchroneousMessage message){
+    public void synchroneousSend(Message message){
         JavaFXMessageSenderImplementation.runAndWait(message);
     }
 
     @Override
-    public void asynchroneousSend(AsynchroneousMessage message) {
+    public void asynchroneousSend(Message message) {
         Platform.runLater(message);
     }
 }

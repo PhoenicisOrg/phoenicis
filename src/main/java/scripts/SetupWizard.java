@@ -1,11 +1,10 @@
 package scripts;
 
 import api.Controller;
+import api.ProgressBar;
 import api.SetupWindow;
 import api.UIMessageSender;
-import utils.InterrupterAsynchroneousMessage;
-import utils.SynchroneousMessage;
-import utils.CancelerSynchroneousMessage;
+import utils.messages.*;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class SetupWizard {
         messageSender.synchroneousSend(
                 new SynchroneousMessage() {
                     @Override
-                    public void execute(SynchroneousMessage message) {
+                    public void execute(Message message) {
                         setupWindow = controller.createSetupWindowGUIInstance(title);
                     }
                 }
@@ -50,7 +49,7 @@ public class SetupWizard {
         messageSender.synchroneousSend(
                 new SynchroneousMessage() {
                     @Override
-                    public void execute(SynchroneousMessage message) {
+                    public void execute(Message message) {
                         setupWindow.close();
                     }
                 }
@@ -67,8 +66,8 @@ public class SetupWizard {
         messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage() {
                     @Override
-                    public void execute(CancelerSynchroneousMessage message) {
-                        setupWindow.showSimpleMessageStep(message, textToShow);
+                    public void execute(Message message) {
+                        setupWindow.showSimpleMessageStep((CancelerSynchroneousMessage) message, textToShow);
                     }
                 }
         );
@@ -97,8 +96,8 @@ public class SetupWizard {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
                     @Override
-                    public void execute(CancelerSynchroneousMessage message) {
-                        setupWindow.showTextBoxStep(message, textToShow, defaultValue);
+                    public void execute(Message message) {
+                        setupWindow.showTextBoxStep((CancelerSynchroneousMessage) message, textToShow, defaultValue);
                     }
                 }
         );
@@ -116,8 +115,8 @@ public class SetupWizard {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
                     @Override
-                    public void execute(CancelerSynchroneousMessage message) {
-                        setupWindow.showMenuStep(message, textToShow, menuItems);
+                    public void execute(Message message) {
+                        setupWindow.showMenuStep((CancelerSynchroneousMessage) message, textToShow, menuItems);
                     }
                 }
         );
@@ -131,8 +130,29 @@ public class SetupWizard {
         messageSender.asynchroneousSend(
                 new InterrupterAsynchroneousMessage() {
                     @Override
-                    public void execute(InterrupterAsynchroneousMessage message) {
-                        setupWindow.showSpinnerStep(message, textToShow);
+                    public void execute(Message message) {
+                        setupWindow.showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
+                    }
+                }
+        );
+    }
+
+    public ProgressBar progressBar(String textToShow) throws CancelException, InterruptedException {
+        messageSender.synchroneousSend(
+                new InterrupterSynchroneousMessage() {
+                    @Override
+                    public void execute(Message message) {
+
+                    }
+                }
+        );
+
+        return (ProgressBar) messageSender.synchroneousSendAndGetResult(
+                new InterrupterSynchroneousMessage() {
+                    @Override
+                    public void execute(Message message) {
+                        this.setResponse(setupWindow.showProgressBar((InterrupterSynchroneousMessage) message,
+                                textToShow));
                     }
                 }
         );

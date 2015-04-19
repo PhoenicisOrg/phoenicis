@@ -1,15 +1,9 @@
-package utils;
+package utils.messages;
 
 import scripts.CancelException;
 
 public abstract class CancelerSynchroneousMessage<ResultType> extends SynchroneousMessage implements CancelerMessage {
     private Boolean processCanceled = false;
-
-    public abstract void execute(CancelerSynchroneousMessage message);
-
-    public void execute(SynchroneousMessage message) {
-        this.execute((CancelerSynchroneousMessage) message);
-    }
 
     public ResultType getResponse() throws InterruptedException, CancelException {
         ResultType response = (ResultType) super.getResponse();

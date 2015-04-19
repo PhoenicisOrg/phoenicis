@@ -1,7 +1,8 @@
 package api;
 
-import utils.CancelerSynchroneousMessage;
-import utils.InterrupterAsynchroneousMessage;
+import utils.messages.CancelerSynchroneousMessage;
+import utils.messages.InterrupterAsynchroneousMessage;
+import utils.messages.InterrupterSynchroneousMessage;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface SetupWindow {
     void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems);
 
     void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow);
+
+    ProgressBar showProgressBar(InterrupterSynchroneousMessage message, String textToShow);
 
     void close();
 }
