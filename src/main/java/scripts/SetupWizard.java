@@ -3,7 +3,6 @@ package scripts;
 import api.Controller;
 import api.SetupWindow;
 import api.UIMessageSender;
-import utils.AsynchroneousMessage;
 import utils.InterrupterAsynchroneousMessage;
 import utils.SynchroneousMessage;
 import utils.CancelerSynchroneousMessage;
@@ -59,7 +58,7 @@ public class SetupWizard {
     }
 
     /**
-     * Shows a simple message
+     * Shows a simple showSimpleMessageStep
      * @param textToShow the text to show
      * @throws InterruptedException
      * @throws CancelException
@@ -69,7 +68,7 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage() {
                     @Override
                     public void execute(CancelerSynchroneousMessage message) {
-                        setupWindow.message(message, textToShow);
+                        setupWindow.showSimpleMessageStep(message, textToShow);
                     }
                 }
         );
@@ -99,16 +98,16 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage<String>() {
                     @Override
                     public void execute(CancelerSynchroneousMessage message) {
-                        setupWindow.textbox(message, textToShow, defaultValue);
+                        setupWindow.showTextBoxStep(message, textToShow, defaultValue);
                     }
                 }
         );
     }
 
     /**
-     * Displays a menu so that the user can make a choice
+     * Displays a showMenuStep so that the user can make a choice
      * @param textToShow a text that will be shown
-     * @param menuItems a list containing the elements of the menu
+     * @param menuItems a list containing the elements of the showMenuStep
      * @return the value the user entered (as string)
      * @throws InterruptedException
      * @throws CancelException
@@ -118,14 +117,14 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage<String>() {
                     @Override
                     public void execute(CancelerSynchroneousMessage message) {
-                        setupWindow.menu(message, textToShow, menuItems);
+                        setupWindow.showMenuStep(message, textToShow, menuItems);
                     }
                 }
         );
     }
 
     /**
-     * Displays a message to the user with a waiting symbol, and releases the script just afterward
+     * Displays a showSimpleMessageStep to the user with a waiting symbol, and releases the script just afterward
      * @param textToShow a text that will be shown
      */
     public void wait(String textToShow) {
@@ -133,7 +132,7 @@ public class SetupWizard {
                 new InterrupterAsynchroneousMessage() {
                     @Override
                     public void execute(InterrupterAsynchroneousMessage message) {
-                        setupWindow.showSpinner(message, textToShow);
+                        setupWindow.showSpinnerStep(message, textToShow);
                     }
                 }
         );

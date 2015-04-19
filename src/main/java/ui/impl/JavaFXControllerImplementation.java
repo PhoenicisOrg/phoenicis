@@ -5,7 +5,7 @@ import api.UIMessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import api.SetupWindow;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 
 @Component
 public class JavaFXControllerImplementation implements Controller {
@@ -21,7 +21,7 @@ public class JavaFXControllerImplementation implements Controller {
     }
 
     public SetupWindow createSetupWindowGUIInstance(String title) {
-        return new SetupWindowImplementation(title);
+        return new JavaFXSetupWindowImplementation(title);
     }
 
     @Override

@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.InterrupterAsynchroneousMessage;
 
 public class StepSpin extends AbstractStepWithHeader {
@@ -15,7 +15,7 @@ public class StepSpin extends AbstractStepWithHeader {
     ImageView spinnerImage;
     int currentAngle = 1;
 
-    public StepSpin(SetupWindowImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
+    public StepSpin(JavaFXSetupWindowImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
                     String textToShow) {
         super(parent, messageWaitingForResponse);
         this.textToShow = textToShow;

@@ -4,20 +4,20 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.CancelerMessage;
 
 abstract class AbstractStep {
     private final CancelerMessage messageWaitingForResponse;
-    private final SetupWindowImplementation parent;
+    private final JavaFXSetupWindowImplementation parent;
     private Button nextButton;
 
-    AbstractStep(SetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
+    AbstractStep(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
         this.parent = parent;
         this.messageWaitingForResponse = messageWaitingForResponse;
     }
 
-    protected SetupWindowImplementation getParent() {
+    protected JavaFXSetupWindowImplementation getParent() {
         return this.parent;
     }
 

@@ -1,13 +1,13 @@
 package ui.impl.setupwindow.steps;
 
 import javafx.scene.text.Text;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.CancelerSynchroneousMessage;
 
 public class StepMessage extends AbstractStepWithHeader {
     String textToShow;
 
-    public StepMessage(SetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow) {
+    public StepMessage(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow) {
         super(parent, messageWaitingForResponse);
         this.textToShow = textToShow;
     }

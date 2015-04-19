@@ -1,6 +1,5 @@
 package ui.impl.setupwindow;
 
-
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -16,7 +15,7 @@ import utils.InterrupterAsynchroneousMessage;
 
 import java.util.List;
 
-public class SetupWindowImplementation extends Stage implements SetupWindow {
+public class JavaFXSetupWindowImplementation extends Stage implements SetupWindow {
     private final Scene scene;
     private final Pane root;
     private final String wizardTitle;
@@ -37,7 +36,7 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
         root.getChildren().clear();
     }
 
-    public SetupWindowImplementation(String title) {
+    public JavaFXSetupWindowImplementation(String title) {
         super();
         this.root = new Pane();
         this.scene = new Scene(root, 520, 400);
@@ -56,34 +55,36 @@ public class SetupWindowImplementation extends Stage implements SetupWindow {
         });
     }
 
+    public void addNode(Node widgetToAdd) {
+        this.root.getChildren().add(widgetToAdd);
+    }
 
-    public void message(CancelerSynchroneousMessage message, String textToShow) {
+    @Override
+    public void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow) {
         StepMessage stepMessage = new StepMessage(this, message, textToShow);
         stepMessage.installStep();
     }
 
-    public void question() {
-
+    @Override
+    public void showYesNoQuestionStep() {
+        // TODO
     }
 
-    public void textbox(CancelerSynchroneousMessage message, String textToShow, String defaultValue) {
+    @Override
+    public void showTextBoxStep(CancelerSynchroneousMessage message, String textToShow, String defaultValue) {
         StepTextBox stepTextBox = new StepTextBox(this, message, textToShow, defaultValue);
         stepTextBox.installStep();
     }
 
     @Override
-    public void menu(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems) {
+    public void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems) {
         StepMenu stepMenu = new StepMenu(this, message, textToShow, menuItems);
         stepMenu.installStep();
     }
 
     @Override
-    public void showSpinner(InterrupterAsynchroneousMessage message, String textToShow) {
+    public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
         StepSpin stepSpin = new StepSpin(this, message, textToShow);
         stepSpin.installStep();
-    }
-
-    public void addNode(Node widgetToAdd) {
-        this.root.getChildren().add(widgetToAdd);
     }
 }

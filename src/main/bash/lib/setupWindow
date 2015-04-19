@@ -69,8 +69,8 @@ POL_SetupWindow_Init ()
 
 POL_SetupWindow_message ()
 {
-	# Shows a simple message
-	# Usage POL_SetupWindow_message [message] [title]
+	# Shows a simple showSimpleMessageStep
+	# Usage POL_SetupWindow_message [showSimpleMessageStep] [title]
 	echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$2")" | ncs "$POL_HOST" "$POL_PORT"
 }
 
@@ -90,7 +90,7 @@ POL_SetupWindow_Close ()
 POL_SetupWindow_textbox ()
 {
 	# Shows a text box
-	# Usage: POL_SetupWindow_textbox [message] [title (ignored)] [default value]
+	# Usage: POL_SetupWindow_textbox [showSimpleMessageStep] [title (ignored)] [default value]
 	# Result is sent in $APP_ANSWER variable
 
 	APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_textbox	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")" | ncns "$POL_HOST" "$POL_PORT")"
@@ -98,8 +98,8 @@ POL_SetupWindow_textbox ()
 
 POL_SetupWindow_menu ()
 {
-	# Shows a menu
-	# Usage: POL_SetupWindow_menu [message] [title (ignored)] [list] [separator]
+	# Shows a showMenuStep
+	# Usage: POL_SetupWindow_menu [showSimpleMessageStep] [title (ignored)] [list] [separator]
 	# Result is sent in $APP_ANSWER variable
 
 	APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_menu	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")	$(POL_EscapeTab "$4")" | ncns "$POL_HOST" "$POL_PORT")"
@@ -109,7 +109,7 @@ POL_SetupWindow_wait ()
 {
 	# Wait for next POL_SetupWindow_ command
 	# Shows a pulsebar
-	# Usage POL_SetupWindow_wait_next_signal [message] [title]
+	# Usage POL_SetupWindow_wait_next_signal [showSimpleMessageStep] [title]
 
 	echo "$POL_COOKIE	POL_SetupWindow_wait	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | ncs "$POL_HOST" "$POL_PORT"
 }

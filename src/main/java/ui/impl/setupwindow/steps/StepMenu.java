@@ -2,7 +2,7 @@ package ui.impl.setupwindow.steps;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.CancelerSynchroneousMessage;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class StepMenu extends StepMessage {
     List<String> menuItems;
     ListView listViewWidget;
 
-    public StepMenu(SetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
+    public StepMenu(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
              List<String> menuItems) {
         super(parent, messageWaitingForResponse, textToShow);
 

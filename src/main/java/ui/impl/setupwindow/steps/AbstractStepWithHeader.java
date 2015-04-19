@@ -9,13 +9,13 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.CancelerMessage;
 
 abstract class AbstractStepWithHeader extends AbstractStep {
     Pane contentPanel;
 
-    AbstractStepWithHeader(SetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
+    AbstractStepWithHeader(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
     }
 

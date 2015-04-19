@@ -1,14 +1,14 @@
 package ui.impl.setupwindow.steps;
 
 import javafx.scene.control.TextField;
-import ui.impl.setupwindow.SetupWindowImplementation;
+import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.CancelerSynchroneousMessage;
 
 public class StepTextBox extends StepMessage {
     private final String defaultValue;
     TextField textField;
 
-    public StepTextBox(SetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
+    public StepTextBox(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
                 String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
 

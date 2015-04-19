@@ -6,15 +6,15 @@ import utils.InterrupterAsynchroneousMessage;
 import java.util.List;
 
 public interface SetupWindow {
-    void message(CancelerSynchroneousMessage message, String textToShow);
+    void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow);
 
-    void question();
+    void showYesNoQuestionStep();
 
-    void textbox(CancelerSynchroneousMessage message, String textToShow, String defaultValue);
+    void showTextBoxStep(CancelerSynchroneousMessage message, String textToShow, String defaultValue);
 
-    void menu(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems);
+    void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems);
 
-    void showSpinner(InterrupterAsynchroneousMessage message, String textToShow);
+    void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow);
 
     void close();
 }
