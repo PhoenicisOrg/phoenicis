@@ -5,12 +5,14 @@ import api.ProgressBar;
 import api.SetupWindow;
 import api.UIMessageSender;
 import com.sun.javaws.progress.Progress;
+import utils.PlayOnLinuxError;
 import utils.messages.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static utils.Localisation.Translate;
@@ -18,6 +20,9 @@ import static utils.Localisation.Translate;
 public class SetupWizard {
     static Controller controller;
     private final String title;
+
+    String MD5_CHECKSUM = "md5";
+
     SetupWindow setupWindow;
     UIMessageSender messageSender;
 
@@ -156,6 +161,19 @@ public class SetupWizard {
         );
     }
 
+    public String download(String remoteUrl) throws IOException, CancelException, InterruptedException {
+        Downloader downloader = new Downloader();
+        URL remoteFile = new URL(remoteUrl);
+
+        // FIXME: Change APPLICATION_TITLE here
+        ProgressBar progressBar = this.progressBar(Translate("Please wait while $APPLICATION_TITLE is downloading:")
+                + "\n" +
+                downloader.findFileNameFromURL(remoteFile));
+
+        downloader.setProgressBar(progressBar);
+        return downloader.Get(remoteFile).getAbsolutePath();
+    }
+
     public void download(String remoteUrl, String localFile) throws IOException, CancelException, InterruptedException {
         Downloader downloader = new Downloader();
         URL remoteFile = new URL(remoteUrl);
@@ -167,8 +185,26 @@ public class SetupWizard {
 
         downloader.setProgressBar(progressBar);
         downloader.Get(remoteFile, new File(localFile));
-
     }
 
+    public String downloadAndCheck(String remoteUrl, String expectedChecksum) throws IOException, CancelException,
+            InterruptedException, NoSuchAlgorithmException, PlayOnLinuxError {
+        String localFile = this.download(remoteUrl);
+
+        if(!Checksum.calculate(new File(localFile), MD5_CHECKSUM).equals(expectedChecksum)) {
+            throw new PlayOnLinuxError("Checksum comparison has failed!");
+        }
+
+        return localFile;
+    }
+
+    public void downloadAndCheck(String remoteUrl, String localFile, String expectedChecksum) throws IOException,
+            CancelException, InterruptedException, NoSuchAlgorithmException, PlayOnLinuxError {
+        this.download(remoteUrl, localFile);
+
+        if(!Checksum.calculate(new File(localFile), MD5_CHECKSUM).equals(expectedChecksum)) {
+            throw new PlayOnLinuxError("Checksum comparison has failed!");
+        }
+    }
 
 }
