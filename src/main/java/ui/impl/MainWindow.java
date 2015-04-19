@@ -1,17 +1,16 @@
 package ui.impl;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+
+import static utils.Localisation.Translate;
 
 public class MainWindow extends Application {
     private static ui.api.EventHandler eventHandler;
@@ -40,19 +39,19 @@ public class MainWindow extends Application {
         configureImage.setFitHeight(16);
 
 
-        Button run = new Button("Run", runImage);
+        Button run = new Button(Translate("Run"), runImage);
         run.setContentDisplay(ContentDisplay.LEFT);
 
-        Button stop = new Button("Stop", stopImage);
+        Button stop = new Button(Translate("Stop"), stopImage);
         stop.setContentDisplay(ContentDisplay.LEFT);
 
-        Button install = new Button("Install", installImage);
+        Button install = new Button(Translate("Install"), installImage);
         install.setContentDisplay(ContentDisplay.LEFT);
 
-        Button remove = new Button("Remove", removeImage);
+        Button remove = new Button(Translate("Remove"), removeImage);
         remove.setContentDisplay(ContentDisplay.LEFT);
 
-        Button configure = new Button("Configure", configureImage);
+        Button configure = new Button(Translate("Configure"), configureImage);
         configure.setContentDisplay(ContentDisplay.LEFT);
 
         TextField searchField = new TextField();
