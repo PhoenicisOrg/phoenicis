@@ -4,12 +4,12 @@ import javafx.scene.control.TextField;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerSynchroneousMessage;
 
-public class StepTextBox extends StepMessage {
+public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final String defaultValue;
     TextField textField;
 
-    public StepTextBox(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
-                String defaultValue) {
+    public StepRepresentationTextBox(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
+                                     String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
 
         this.defaultValue = defaultValue;

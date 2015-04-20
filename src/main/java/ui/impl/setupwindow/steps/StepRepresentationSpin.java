@@ -9,12 +9,12 @@ import javafx.util.Duration;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.InterrupterAsynchroneousMessage;
 
-public class StepSpin extends AbstractAsynchroneousStepText {
+public class StepRepresentationSpin extends StepRepresentationMessage {
     ImageView spinnerImage;
     int currentAngle = 1;
 
-    public StepSpin(JavaFXSetupWindowImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
-                    String textToShow) {
+    public StepRepresentationSpin(JavaFXSetupWindowImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
+                                  String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         spinnerImage = new ImageView();
 

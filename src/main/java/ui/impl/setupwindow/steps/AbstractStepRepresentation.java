@@ -9,12 +9,12 @@ import utils.messages.CancelerMessage;
 
 import java.io.File;
 
-abstract class AbstractStep {
+abstract class AbstractStepRepresentation {
     private final CancelerMessage messageWaitingForResponse;
     private final JavaFXSetupWindowImplementation parent;
     private Button nextButton;
 
-    AbstractStep(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
+    AbstractStepRepresentation(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
         this.parent = parent;
         this.messageWaitingForResponse = messageWaitingForResponse;
     }

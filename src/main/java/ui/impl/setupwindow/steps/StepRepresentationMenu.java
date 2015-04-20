@@ -8,12 +8,12 @@ import utils.messages.CancelerSynchroneousMessage;
 import java.util.List;
 
 
-public class StepMenu extends StepMessage {
+public class StepRepresentationMenu extends StepRepresentationMessage {
     List<String> menuItems;
     ListView listViewWidget;
 
-    public StepMenu(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
-             List<String> menuItems) {
+    public StepRepresentationMenu(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
+                                  List<String> menuItems) {
         super(parent, messageWaitingForResponse, textToShow);
 
         this.menuItems = menuItems;

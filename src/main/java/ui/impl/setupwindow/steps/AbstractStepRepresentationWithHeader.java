@@ -12,10 +12,10 @@ import javafx.scene.paint.Color;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerMessage;
 
-abstract class AbstractStepWithHeader extends AbstractStep {
+abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     Pane contentPanel;
 
-    AbstractStepWithHeader(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
+    AbstractStepRepresentationWithHeader(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
     }
 

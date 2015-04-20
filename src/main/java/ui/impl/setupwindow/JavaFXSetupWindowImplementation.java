@@ -85,7 +85,7 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
 
     @Override
     public void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow) {
-        StepMessage stepMessage = new StepMessage(this, message, textToShow);
+        StepRepresentationMessage stepMessage = new StepRepresentationMessage(this, message, textToShow);
         stepMessage.installStep();
     }
 
@@ -96,25 +96,25 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
 
     @Override
     public void showTextBoxStep(CancelerSynchroneousMessage message, String textToShow, String defaultValue) {
-        StepTextBox stepTextBox = new StepTextBox(this, message, textToShow, defaultValue);
+        StepRepresentationTextBox stepTextBox = new StepRepresentationTextBox(this, message, textToShow, defaultValue);
         stepTextBox.installStep();
     }
 
     @Override
     public void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems) {
-        StepMenu stepMenu = new StepMenu(this, message, textToShow, menuItems);
+        StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems);
         stepMenu.installStep();
     }
 
     @Override
     public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
-        StepSpin stepSpin = new StepSpin(this, message, textToShow);
+        StepRepresentationSpin stepSpin = new StepRepresentationSpin(this, message, textToShow);
         stepSpin.installStep();
     }
 
     @Override
     public ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
-        StepProgressBar stepProgressBar = new StepProgressBar(this, message, textToShow);
+        StepRepresentationProgressBar stepProgressBar = new StepRepresentationProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
 
         return stepProgressBar;

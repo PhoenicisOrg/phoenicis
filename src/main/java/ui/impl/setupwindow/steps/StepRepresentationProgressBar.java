@@ -9,12 +9,12 @@ import utils.messages.AsynchroneousMessage;
 import utils.messages.InterrupterSynchroneousMessage;
 import utils.messages.Message;
 
-public class StepProgressBar extends AbstractAsynchroneousStepText implements ProgressStep {
+public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressStep {
     ProgressBar progressBar = new ProgressBar();
     Text progressText = new Text("");
 
-    public StepProgressBar(JavaFXSetupWindowImplementation parent, InterrupterSynchroneousMessage messageWaitingForResponse,
-                    String textToShow) {
+    public StepRepresentationProgressBar(JavaFXSetupWindowImplementation parent, InterrupterSynchroneousMessage messageWaitingForResponse,
+                                         String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);
     }
