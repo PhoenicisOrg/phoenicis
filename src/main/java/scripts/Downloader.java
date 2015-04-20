@@ -1,13 +1,13 @@
 package scripts;
 
-import api.ProgressBar;
+import api.ProgressStep;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Downloader {
-    ProgressBar progressBar;
+    ProgressStep progressBar;
 
     private static final int BLOCK_SIZE = 1024;
 
@@ -57,7 +57,7 @@ public class Downloader {
         return urlParts[urlParts.length - 1];
     }
 
-    public void setProgressBar(ProgressBar progressBar) {
+    public void setProgressBar(ProgressStep progressBar) {
         this.progressBar = progressBar;
     }
 

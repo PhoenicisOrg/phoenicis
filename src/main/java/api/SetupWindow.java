@@ -22,7 +22,7 @@ public interface SetupWindow {
 
     void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow);
 
-    ProgressBar showProgressBar(InterrupterSynchroneousMessage message, String textToShow);
+    ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow);
 
     void close();
 }

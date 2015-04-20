@@ -1,6 +1,6 @@
 package ui.impl.setupwindow;
 
-import api.ProgressBar;
+import api.ProgressStep;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -113,11 +113,11 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     }
 
     @Override
-    public ProgressBar showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
+    public ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
         StepProgressBar stepProgressBar = new StepProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
 
-        return stepProgressBar.getProgressBar();
+        return stepProgressBar;
     }
 
 

@@ -1,11 +1,17 @@
 package ui.impl.setupwindow.steps;
 
-import ui.impl.setupwindow.JavaFXProgressBar;
+import api.ProgressStep;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.text.Text;
+import ui.impl.JavaFXMessageSenderImplementation;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
+import utils.messages.AsynchroneousMessage;
 import utils.messages.InterrupterSynchroneousMessage;
+import utils.messages.Message;
 
-public class StepProgressBar extends AbstractAsynchroneousStepText {
-    JavaFXProgressBar progressBar = new JavaFXProgressBar();
+public class StepProgressBar extends AbstractAsynchroneousStepText implements ProgressStep {
+    ProgressBar progressBar = new ProgressBar();
+    Text progressText = new Text("");
 
     public StepProgressBar(JavaFXSetupWindowImplementation parent, InterrupterSynchroneousMessage messageWaitingForResponse,
                     String textToShow) {
@@ -21,6 +27,12 @@ public class StepProgressBar extends AbstractAsynchroneousStepText {
         progressBar.setLayoutX(30);
         progressBar.setPrefSize(460, 30);
         this.addToContentPanel(progressBar);
+
+        progressText.setLayoutX(10);
+        progressText.setLayoutY(100);
+        progressText.setWrappingWidth(500);
+        progressText.prefWidth(500);
+        this.addToContentPanel(progressText);
     }
 
     @Override
@@ -28,8 +40,34 @@ public class StepProgressBar extends AbstractAsynchroneousStepText {
         this.setNextButtonEnabled(false);
     }
 
-    public JavaFXProgressBar getProgressBar() {
-        return progressBar;
+    @Override
+    public void setProgressPercentage(int value) {
+        JavaFXMessageSenderImplementation messageSender = new JavaFXMessageSenderImplementation();
+        messageSender.asynchroneousSend(new AsynchroneousMessage() {
+                                            @Override
+                                            public void execute(Message message) {
+                                                progressBar.setProgress((double) value / 100.);
+                                            }
+                                        }
+        );
+    }
+
+    @Override
+    public int getProgressPercentage() {
+        return (int) (this.progressBar.getProgress() * 100);
+    }
+
+
+    @Override
+    public void setText(String text) {
+        JavaFXMessageSenderImplementation messageSender = new JavaFXMessageSenderImplementation();
+        messageSender.asynchroneousSend(new AsynchroneousMessage() {
+                                            @Override
+                                            public void execute(Message message) {
+                                                progressText.setText(text);
+                                            }
+                                        }
+        );
     }
 
 }

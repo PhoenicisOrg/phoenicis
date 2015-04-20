@@ -1,16 +1,14 @@
 package scripts;
 
 import api.Controller;
-import api.ProgressBar;
+import api.ProgressStep;
 import api.SetupWindow;
 import api.UIMessageSender;
-import com.sun.javaws.progress.Progress;
 import utils.PlayOnLinuxError;
 import utils.messages.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -149,8 +147,8 @@ public class SetupWizard {
         );
     }
 
-    public ProgressBar progressBar(String textToShow) throws CancelException, InterruptedException {
-        return (ProgressBar) messageSender.synchroneousSendAndGetResult(
+    public ProgressStep progressBar(String textToShow) throws CancelException, InterruptedException {
+        return (ProgressStep) messageSender.synchroneousSendAndGetResult(
                 new InterrupterSynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
@@ -166,7 +164,7 @@ public class SetupWizard {
         URL remoteFile = new URL(remoteUrl);
 
         // FIXME: Change APPLICATION_TITLE here
-        ProgressBar progressBar = this.progressBar(Translate("Please wait while $APPLICATION_TITLE is downloading:")
+        ProgressStep progressBar = this.progressBar(Translate("Please wait while $APPLICATION_TITLE is downloading:")
                 + "\n" +
                 downloader.findFileNameFromURL(remoteFile));
 
@@ -179,7 +177,7 @@ public class SetupWizard {
         URL remoteFile = new URL(remoteUrl);
 
         // FIXME: Change APPLICATION_TITLE here
-        ProgressBar progressBar = this.progressBar(Translate("Please wait while $APPLICATION_TITLE is downloading:")
+        ProgressStep progressBar = this.progressBar(Translate("Please wait while $APPLICATION_TITLE is downloading:")
                 + "\n" +
                 downloader.findFileNameFromURL(remoteFile));
 
