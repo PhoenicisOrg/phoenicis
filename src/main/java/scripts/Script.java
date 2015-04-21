@@ -1,12 +1,9 @@
 package scripts;
 
 import org.python.core.PyException;
-import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Script {
     enum Type {

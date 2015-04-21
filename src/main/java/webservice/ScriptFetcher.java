@@ -14,7 +14,6 @@ public class ScriptFetcher {
     }
 
     AvailableCategories fetchCategories() {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(this.url, AvailableCategories.class);
+        return new RestTemplate().getForObject(this.url, AvailableCategories.class);
     }
 }

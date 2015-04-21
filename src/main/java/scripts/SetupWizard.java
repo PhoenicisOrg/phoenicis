@@ -4,16 +4,10 @@ import api.Controller;
 import api.ProgressStep;
 import api.SetupWindow;
 import api.UIMessageSender;
-import utils.PlayOnLinuxError;
 import utils.messages.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import static utils.Localisation.Translate;
 
 public class SetupWizard {
     static Controller controller;
