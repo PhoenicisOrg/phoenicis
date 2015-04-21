@@ -29,7 +29,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
         this.addToContentPanel(progressBar);
 
         progressText.setLayoutX(10);
-        progressText.setLayoutY(100);
+        progressText.setLayoutY(120);
         progressText.setWrappingWidth(500);
         progressText.prefWidth(500);
         this.addToContentPanel(progressText);
