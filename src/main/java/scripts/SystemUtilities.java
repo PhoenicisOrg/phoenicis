@@ -7,7 +7,7 @@ public class SystemUtilities {
     // TODO: Find a name that do not use the verb "get"
 
     public static long getFreeSpace(File directory) {
-        return directory.getFreeSpace() / KILOBYTE;
+        return directory.getUsableSpace() / KILOBYTE;
     }
 
     public static long getFreeSpace(String directory) {
