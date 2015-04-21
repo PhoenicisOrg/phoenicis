@@ -1,10 +1,7 @@
-package remote.dto;
+package webservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Created by qparis on 11/04/15.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Script {
     public int getId() {

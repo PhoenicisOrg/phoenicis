@@ -1,13 +1,13 @@
-package remote;
+package webservice;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
-import remote.dto.AvailableCategories;
-import remote.dto.Category;
-import remote.dto.Script;
+import webservice.dto.AvailableCategories;
+import webservice.dto.Category;
+import webservice.dto.Script;
 
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class ScriptFetcherTest {
 
     @Test
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
-        ScriptFetcher scriptFetcher = new ScriptFetcher(this.mockServerURL);
+        ScriptFetcher scriptFetcher = new ScriptFetcher(mockServerURL);
         AvailableCategories categories = scriptFetcher.fetchCategories();
 
         assertEquals("Accessories", categories.getCategories().get(0).getName());
@@ -89,7 +89,7 @@ public class ScriptFetcherTest {
 
     @Test
     public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
-        ScriptFetcher scriptFetcher = new ScriptFetcher(this.mockServerURL);
+        ScriptFetcher scriptFetcher = new ScriptFetcher(mockServerURL);
         AvailableCategories categories = scriptFetcher.fetchCategories();
 
         ArrayList<Script> scripts = categories.getCategories().get(0).getScripts();

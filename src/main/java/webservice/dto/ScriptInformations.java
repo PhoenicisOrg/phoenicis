@@ -1,4 +1,4 @@
-package remote.dto;
+package webservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import utils.OperatingSystem;

@@ -1,4 +1,4 @@
-package remote.dto;
+package webservice.dto;
 
 import java.util.ArrayList;
 

@@ -1,11 +1,8 @@
-package remote.dto;
+package webservice.dto;
 
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Created by qparis on 11/04/15.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Category {
     public enum CategoryType {
