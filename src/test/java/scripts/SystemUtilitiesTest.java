@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class SystemUtilitiesTest {
     @Test
-    public void testGetFreeSpace() throws IOException, InterruptedException {
+    public void testGetFreeSpace_compareWithDf() throws IOException, InterruptedException {
         String directory = "/";
         long actualValue = SystemUtilities.getFreeSpace(directory);
         String command = "df -P -k "+directory+"";

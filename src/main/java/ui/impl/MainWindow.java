@@ -6,18 +6,22 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import static utils.Localisation.Translate ;
 
 public class MainWindow extends Application {
     private static ui.api.EventHandler eventHandler;
     private Stage stage;
+    private Scene scene;
 
     public ToolBar generateToolbar() {
-
         ImageView runImage = new ImageView(this.getClass().getResource("toolbar/run.png").toExternalForm());
         runImage.setFitWidth(16);
         runImage.setFitHeight(16);
@@ -98,18 +102,39 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
+        BorderPane pane = new BorderPane();
+        this.scene = new Scene(pane, 600, 400);
+
         VBox topContainer = new VBox();
         topContainer.getChildren().add(this.generateMenuBar());
         topContainer.getChildren().add(this.generateToolbar());
 
-        BorderPane pane = new BorderPane();
-        pane.setTop(topContainer);
+        VBox bottomContainer = new VBox();
+        bottomContainer.getChildren().add(this.generateStatusBar());
 
-        Scene scene = new Scene(pane, 600, 400);
+        pane.setTop(topContainer);
+        pane.setBottom(bottomContainer);
+
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("PlayOnLinux");
         primaryStage.show();
+    }
+
+    private ToolBar generateStatusBar() {
+        ToolBar statusBar = new ToolBar();
+        ProgressBar progressBar = new ProgressBar();
+        Text text = new Text("A new version of PlayOnLinux is available (5.1)");
+
+        text.setWrappingWidth(max(50, scene.getWidth() - 150));
+        progressBar.setPrefWidth(130);
+        statusBar.getItems().addAll(text, progressBar);
+
+        stage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            text.setWrappingWidth(max(50, newValue.intValue() - 150));
+        });
+
+        return statusBar;
     }
 
 
