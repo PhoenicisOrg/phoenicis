@@ -1,0 +1,2347 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pol\n"
+"Report-Msgid-Bugs-To: Tinou\n"
+"POT-Creation-Date: 2015-04-13 19:00+0200\n"
+"PO-Revision-Date: 2015-02-28 14:57+0000\n"
+"Last-Translator: MichelGustafssonHeld <okabekudo@yahoo.com>\n"
+"Language-Team: sv_SE.UTF-8 <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-04-14 05:09+0000\n"
+"X-Generator: Launchpad (build 17423)\n"
+
+#: Capture plugin:2, Detour plugin:4
+msgid "Which application do you want to apply the modification to?"
+msgstr "Vilken applikation vill du applicera förändringen på?"
+
+#: Capture plugin:3
+msgid ""
+"This plugin wil allow you to capture you applications under PlayOnLinux"
+msgstr "Du kan spela in dina applikationer i PlayOnLinux med detta plugin."
+
+#: Capture plugin:4
+msgid "Capture menu (OpenGL)"
+msgstr "Inspelningsmeny (OpenGL)"
+
+#: Capture plugin:5
+msgid "Capture menu (not OpenGL)"
+msgstr "Inspelningsmeny (inte OpenGL)"
+
+#: Capture plugin:6
+msgid "Begin the capture of an application"
+msgstr "Börja inspelningen av en applikation"
+
+#: Capture plugin:7
+msgid "Play a captured file"
+msgstr "Spela upp en inspelning"
+
+#: Capture plugin:8
+msgid "Convert a captured file to video"
+msgstr "Konvertera en inspelning till video"
+
+#: Capture plugin:9
+#, sh-format
+msgid ""
+"Press Next then click on the window\\nyou want to capture.\\nCapture will "
+"start automatically after 5 seconds.\\nOnly video will be captured."
+msgstr ""
+"Tryck på Nästa sedan klickar du på det fönster du vill spela in. "
+"Inspelningen kommer att börja automatiskt efter 5 sekunder. Bara video "
+"kommer att spelas in."
+
+#: Capture plugin:10
+msgid "Capture will begin..."
+msgstr "Inspelningen kommer att börja..."
+
+#: Capture plugin:11
+msgid "Press <SHIFT>+F8 to start or stop capture"
+msgstr "Tryck <SKIFT>+F8 för att starta eller stoppa inspelningen"
+
+#: Capture plugin:12
+msgid "Press <SHIFT>+F8 to stop capture"
+msgstr "Tryck <SKIFT>+F8 för att stoppa inspelningen"
+
+#: Capture plugin:13
+msgid "Capture in progress..."
+msgstr "Inspelningen är igång"
+
+#: Capture plugin:14
+msgid "Choose an action to perform"
+msgstr "Välj vad som skall göras"
+
+#: Capture plugin:15
+msgid "Please choose a PID capture file to play"
+msgstr "Välj en PID inspelnings fil för att spela"
+
+#: Capture plugin:16
+msgid "Please choose an OGV capture file to play"
+msgstr "Välj en OGV inspelnings fil för att spela"
+
+#: Capture plugin:17
+msgid "Please choose a capture file to convert"
+msgstr "Välj en inspelningsfil att konvertera"
+
+#: Capture plugin:18
+msgid "You must choose a capture to read"
+msgstr "Du måste välja en inspelningsfil"
+
+#: Capture plugin:19
+msgid "You must choose a capture to convert"
+msgstr "Du måste välja en fil att konvertera"
+
+#: Capture plugin:20
+msgid "Please wait while the PlayOnLinux logo is created..."
+msgstr "Var vänlig vänta medan PlayOnLinux loggan byggs..."
+
+#: Capture plugin:21
+msgid "Add the PlayOnLinux logo to your video?"
+msgstr "Vill du lägga till PlayOnLinux loggan till din video?"
+
+#: Capture plugin:22
+msgid ""
+"Warning: For correct video encoding,\\nresolution MUST be a multiple of 16"
+msgstr ""
+"Varning: För korrekt videokodering, \\nMÅSTE upplösningen vara en multipel "
+"av 16"
+
+#: Capture plugin:23
+msgid ""
+"Ubuntu users must add the MEDIBUNTU repository\\nfor this conversion format "
+"to work properly."
+msgstr ""
+"Ubuntu användare måste lägga till MEDIBUNTU paketkällan\\nför att detta "
+"format skall kunna konverteras korrekt."
+
+#: Capture plugin:24
+msgid "Choose the video format for conversion"
+msgstr "Välj formatet som videon skall konverteras till"
+
+#: Capture plugin:25
+msgid ""
+"Define your encoding options for pass 1 \\n (leave defaults if you do not "
+"know what to do)"
+msgstr ""
+"Definera dina koderingsinställningar för pass 1 \\n (låt verkinställningarna "
+"stå om du inte vet)"
+
+#: Capture plugin:26
+msgid ""
+"Define your encoding options for pass 2 \\n (leave defaults if you do not "
+"know what to do)"
+msgstr ""
+"Definera dina koderingsinställningar för pass 2 \\n (låt verkinställningarna "
+"stå om du inte vet)"
+
+#: Capture plugin:27
+msgid ""
+"Define your encoding options \\n (leave defaults if you do not know what to "
+"do)"
+msgstr ""
+"Definera dina koderingsinställningar  \\n (låt verkinställningarna stå om du "
+"inte vet)"
+
+#: Capture plugin:28
+msgid "Please wait while your video is being encoded..."
+msgstr "Var vänlig vänta medan din video koderas"
+
+#: Capture plugin:29
+msgid "Conversion done"
+msgstr "Konverteringen färdig"
+
+#: Advanced Wine Configuration Plugin:4
+msgid "Choose an option to modify"
+msgstr "Välj en inställning att modifiera"
+
+#: Advanced Wine Configuration Plugin:5
+msgid "All"
+msgstr "Allt ok!"
+
+#: Advanced Wine Configuration Plugin:6
+msgid "You must choose a game to modify"
+msgstr "Välj ett spel att modifiera"
+
+#: Advanced Wine Configuration Plugin:7
+msgid ""
+"Welcome in Advanced Wine Configuration, an optimization’s system for Wine "
+"created by GNU_Raziel. If you does not know what to choose, LEAVE DEFAULTS"
+msgstr ""
+"Välkommen till den avancerade WINE konfigurationen, skapad av GNU_Raziel för "
+"optimeringen av WINE. \\n\r\n"
+"Om du inte vet vad du ska göra LÅT VERKINSTÄLLNINGARNA STÅ"
+
+#: Advanced Wine Configuration Plugin:8
+msgid "Choose a game"
+msgstr "Välj ett spel"
+
+#: Advanced Wine Configuration Plugin:9
+msgid "You did not select a game"
+msgstr "Du valde inget spel"
+
+#: Advanced Wine Configuration Plugin:10
+msgid "Choose DirectDraw Renderer Mode?"
+msgstr "Använda DirectDraw kodering?"
+
+#: Advanced Wine Configuration Plugin:11
+msgid "Activate GLSL Support?"
+msgstr "Aktivera GLSL stöd?"
+
+#: Advanced Wine Configuration Plugin:13
+msgid "Choose Offscreen Rendering Mode?"
+msgstr "Använda offscreen rendering ?"
+
+#: Advanced Wine Configuration Plugin:14
+msgid "Choose Render Target Lock Mode?"
+msgstr "Använda renderingsmål lock?"
+
+#: Advanced Wine Configuration Plugin:15
+msgid "Activate Multisampling support?"
+msgstr "Aktivera multisampling stöd?"
+
+#: Advanced Wine Configuration Plugin:16
+msgid "Activate the mouse warp override?"
+msgstr "Tvinga muspekaren att stanna på skärmen ?"
+
+#: Advanced Wine Configuration Plugin:17
+msgid "Optimisation done"
+msgstr "Optimering slutförd"
+
+#: Detour plugin:3
+msgid ""
+"Welcome in Detour, a plugin witch enable you to create post-install shorcuts."
+msgstr ""
+"Välkommen till Detour, ett tillägg som låter dig skapa post-installations "
+"genvägar."
+
+#: Detour plugin:5
+msgid "Choose an application"
+msgstr "Välj ett program"
+
+#: Detour plugin:6
+msgid "Operation done"
+msgstr "Produktionen klar"
+
+#: bash/bug_report:32
+#, sh-format
+msgid "Report a bug"
+msgstr "Rapportera ett fel"
+
+#: bash/bug_report:37
+#, sh-format
+msgid ""
+"Please give the more details as you can, otherwise, it will be very "
+"difficult to help you"
+msgstr ""
+"Var vänlig, förklara ditt problem så utförligt som möjligt, annars kommer "
+"det att vara svårt att hjälpa dig."
+
+#: bash/bug_report:37
+#, sh-format
+msgid ""
+"This wizard will help you to report a bug about an officially supported "
+"program."
+msgstr ""
+"Detta formular kommer att hjälpa dig att rapportera ett fel om ett program "
+"som har officiellt stöd."
+
+#: bash/bug_report:41
+#, sh-format
+msgid ""
+"Your $APPLICATION_TITLE version is not up to date.\\nYou must update "
+"$APPLICATION_TITLE before sending a bug report.\\nThank you"
+msgstr ""
+"Du har inte den senaste $APPLICATION_TITLE.\\nDu måste uppdatera "
+"$APPLICATION_TITLE innan du skickar in en felrapport.\\nTack!"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "I have a problem with a software"
+msgstr "Jag har ett problem med en mjukvara"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "My problem concerns $APPLICATION_TITLE itself"
+msgstr "Mitt problem handlar om själva $APPLICATION_TITLE"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "What kind of problem do you have?"
+msgstr "Vad har du för problem?"
+
+#: bash/bug_report:51
+#, sh-format
+msgid "Don't join any log file"
+msgstr "Lägg inte till någon loggfil"
+
+#: bash/bug_report:54 bash/manual_install:27 bash/manual_install:100
+#: bash/manual_install:106 bash/manual_install:191
+#, sh-format
+msgid "Manual installation"
+msgstr "Manuell installation"
+
+#: bash/bug_report:55 bash/run_exe:24
+#, sh-format
+msgid "Automatic installation"
+msgstr "Automatisk installation"
+
+#: bash/bug_report:66
+#, sh-format
+msgid "Choose the log file corresponding to your software."
+msgstr "Välj loggfilen som tillhör din mjukvara."
+
+#: bash/bug_report:73
+#, sh-format
+msgid "Please explain your problem clearly (english only):"
+msgstr "Snälla förklara ditt problem utförligt (endast på engelska):"
+
+#: bash/bug_report:77
+#, sh-format
+msgid "Sorry, we need a detailed description."
+msgstr "Ursäkta, men vi behöver en utförlig förklaring."
+
+#: bash/bug_report:101
+#, sh-format
+msgid "Thank you !\\n\\nYour report has been sent."
+msgstr "Tack !\\n\\nDin rapport har sänts."
+
+#: bash/create_prefix:26
+#, sh-format
+msgid "Virtual drive creator"
+msgstr "Skaparen för virtuella diskar"
+
+#: bash/create_prefix:29
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE virtual drive creator.\\n\\nThis tool will "
+"help you to make a new virtual drive"
+msgstr ""
+"Välkommen till skaparen för virtuella diskar.\\n\\nDetta verktyget kommer "
+"att hjälpa dig att skapa en ny virtuell disk för $APPLICATION_TITLE"
+
+#: bash/create_prefix:31 bash/manual_install:169
+#, sh-format
+msgid "What kind of virtual drive do you want to create"
+msgstr "Vilken typ av virtuell disk vill du skapa?"
+
+#: bash/create_prefix:55
+#, sh-format
+msgid ""
+"(If this list is empty, please install a wine version with wine version "
+"manager)"
+msgstr ""
+"(Om denna lista är tom var vänlig installera en ny wine version med wine "
+"versions hanteraren)"
+
+#: bash/create_prefix:55 bash/manual_install:156
+#, sh-format
+msgid "Which version of Wine would you like to use?"
+msgstr "Vilken wine version vill du använda?"
+
+#: bash/create_prefix:63
+#, sh-format
+msgid "Choose the name of the virtual drive"
+msgstr "Välj ett namn för den virtuella disken"
+
+#: bash/expert/Executer:22 bash/expert/Executer:27 bash/expert/Executer:29
+#: python/mainwindow.py:275
+#, sh-format
+msgid "Run a local script"
+msgstr "Kör ett lokalt skript"
+
+#: bash/expert/Executer:27
+#, sh-format
+msgid ""
+"This wizard will help you to run an unofficial $APPLICATION_TITLE Script."
+msgstr ""
+"Denna hanterare kommer att hjälpa dig att köra ett inofficiellt skript för "
+"$APPLICATION_TITLE."
+
+#: bash/expert/Executer:29
+#, sh-format
+msgid "Choose a valid $APPLICATION_TITLE script to run."
+msgstr "Välj ett befintligt $APPLICATION_TITLE skript att köra."
+
+#: bash/expert/Executer:38
+#, sh-format
+msgid "Error!"
+msgstr "Fel!"
+
+#: bash/expert/Executer:38
+#, sh-format
+msgid "File not found!"
+msgstr "Hittade inte filen!"
+
+#: bash/install:27 bash/install:29 python/install.py:458 python/install.py:460
+#: python/install.py:580
+#, sh-format
+msgid "Please read this"
+msgstr "Var vänlig läs detta"
+
+#: bash/install_wver:27
+#, sh-format
+msgid "This wizard will help you to install Wine: "
+msgstr "Denna hanterare kommer att hjälpa dig att installera Wine: "
+
+#: bash/install_wver:27
+#, sh-format
+msgid "on the $APPLICATION_TITLE environment."
+msgstr "i $APPLICATION_TITLE miljön."
+
+#: bash/installpolpackages:29 bash/polconfigurator:23 bash/winebash:27
+#, sh-format
+msgid "$APPLICATION_TITLE Application Configurator"
+msgstr "$APPLICATION_TITLE program konfigurator."
+
+#: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
+#: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
+#: lib/setupwindow.lib:439 lib/wine.lib:1014 lib/wine.lib:1092
+#: lib/wine.lib:1122
+#, sh-format
+msgid "Please wait..."
+msgstr "Vänta…"
+
+#: bash/killall:26
+#, sh-format
+msgid ""
+"Are you sure you want to shutdown all active $APPLICATION_TITLE applications?"
+msgstr ""
+"Är du säker att du vill stänga av alla aktiva $APPLICATION_TITLE program?"
+
+#: bash/make_shortcut:25
+#, sh-format
+msgid "$APPLICATION_TITLE shortcut creator"
+msgstr "$APPLICATION_TITLE genvägs skapare"
+
+#: bash/make_shortcut:30
+#, sh-format
+msgid "Please choose a software to package"
+msgstr "Var vänlig välj en mjukvara att packa in"
+
+#: bash/make_shortcut:35
+#, sh-format
+msgid "Creating shortcut..."
+msgstr "Skapar genväg..."
+
+#: bash/make_shortcut:37
+#, sh-format
+msgid "The shortcut has been placed on your desktop"
+msgstr "Genvägen har placerats på ditt skrivbord"
+
+#: bash/make_shortcut:57
+#, sh-format
+msgid "Copying virtual drive"
+msgstr "Kopierar virtuella disken"
+
+#: bash/manual_install:52
+#, sh-format
+msgid "Autorun"
+msgstr "Autokör"
+
+#: bash/manual_install:52
+#, sh-format
+msgid "No setup location found in autorun.inf"
+msgstr "Ingen plats för setup angett i autorun.inf"
+
+#: bash/manual_install:100
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE manual installation wizard.\\n\\nThis script "
+"will allow you to install any program on $APPLICATION_TITLE and use it with "
+"all the tools\\n\\nWarning: We are unable to guarantee that your application "
+"will work perfectly."
+msgstr ""
+"Välkommen till den manuella installations hanteraren för "
+"$APPLICATION_TITLE.\\n\\nDetta skript låter dig installera vilket program "
+"som helst på $APPLICATION_TITLE och låter dig att använda programmet med "
+"alla givna verktyg\\n\\nVarning: Vi kan inte garantera att ditt program "
+"kommer att fungera korrekt."
+
+#: bash/manual_install:102
+#, sh-format
+msgid "Install a program in a new virtual drive"
+msgstr "Installera ett program i en ny virtuell disk."
+
+#: bash/manual_install:103
+#, sh-format
+msgid "Edit or update an existing application"
+msgstr "Bearbeta eller uppdatera ett befintligt program."
+
+#: bash/manual_install:106
+#, sh-format
+msgid "What would you like to do?"
+msgstr "Vad vill du göra?"
+
+#: bash/manual_install:117
+#, sh-format
+msgid ""
+"Please type a name for your application's virtual drive.\\nThis name "
+"shouldn't contain spaces."
+msgstr ""
+"Var vänlig skriv in ett namn för ditt programs virtuella disk.\\nNamnet får "
+"inte innehålla mellanslag."
+
+#: bash/manual_install:126
+#, sh-format
+msgid "Please choose a program"
+msgstr "Välj ett program"
+
+#: bash/manual_install:138
+#, sh-format
+msgid "Use another version of Wine"
+msgstr "Använd en annan version av Wine"
+
+#: bash/manual_install:139 bash/manual_install:191 bash/polconfigurator:102
+#: python/configure.py:232 python/mainwindow.py:583 python/mainwindow.py:615
+#, sh-format
+msgid "Configure Wine"
+msgstr "Anpassa Wine"
+
+#: bash/manual_install:140
+#, sh-format
+msgid "Install some libraries"
+msgstr "Installera några biblioteker"
+
+#: bash/manual_install:143
+#, sh-format
+msgid "If you don't know, unselect all"
+msgstr "Om du inte vet, avmakera alla"
+
+#: bash/manual_install:143
+#, sh-format
+msgid "What would you like to do before installation?"
+msgstr "Vad vill du göra innan installationen?"
+
+#: bash/manual_install:203 lib/scripts.lib:468
+#, sh-format
+msgid "Please make your choice"
+msgstr "Var vänlig välj"
+
+#: bash/manual_install:232
+#, sh-format
+msgid "Looking for runnable CD-ROMs"
+msgstr "Söker efter körabara CD-Rom skivor"
+
+#: bash/manual_install:255
+#, sh-format
+msgid "Select another file"
+msgstr "Välj en annan fil"
+
+#: bash/manual_install:263
+#, sh-format
+msgid "Please choose a way to install your program"
+msgstr "Välj ett sätt att installera ditt program"
+
+#: bash/manual_install:272
+#, sh-format
+msgid "Please select the install file to run."
+msgstr "Välj installationsfilen att köra"
+
+#: bash/manual_install:284
+#, sh-format
+msgid "You must choose a file!"
+msgstr "Du måste välja en fil!"
+
+#: bash/manual_install:290
+#, sh-format
+msgid "$APPLICATION_TITLE is installing your application..."
+msgstr "$APPLICATION_TITLE installerar ditt program..."
+
+#: bash/playonlinux-pkg:27
+#, sh-format
+msgid "Usage: "
+msgstr "Användning: "
+
+#: bash/playonlinux-pkg:29
+#, sh-format
+msgid "\tChoose a file"
+msgstr "\tVälj en fil"
+
+#: bash/playonlinux-pkg:31
+#, sh-format
+msgid "\tExtract the package"
+msgstr "\tExtrahera paketet"
+
+#: bash/playonlinux-pkg:33
+#, sh-format
+msgid "\tInstall the package"
+msgstr "\tInstallera paketet"
+
+#: bash/playonlinux-pkg:35
+#, sh-format
+msgid "\tShow this message"
+msgstr "\tVisa detta meddelande"
+
+#: bash/playonlinux-pkg:38
+#, sh-format
+msgid "$APPLICATION_TITLE package manager: "
+msgstr "$APPLICATION_TITLE paket hanterare: "
+
+#: bash/playonlinux-pkg:55
+#, sh-format
+msgid "Choose a package to install"
+msgstr "Välj ett paket att installera"
+
+#: bash/playonlinux-pkg:55
+#, sh-format
+msgid "PlayOnLinux package manager"
+msgstr "PlayOnLinux pakethanterare"
+
+#: bash/playonlinux-pkg:69
+#, sh-format
+msgid "Unable to find the file: "
+msgstr "Kunde inte hitta filen: "
+
+#: bash/playonlinux-pkg:75 bash/playonlinux-pkg:96 bash/playonlinux-pkg:107
+#: bash/playonlinux-pkg:112
+#, sh-format
+msgid " isn't a valid PlayOnLinux package!"
+msgstr " är inget giltigt PlayOnLinux paket"
+
+#: bash/playonlinux-pkg:75 bash/playonlinux-pkg:90 bash/playonlinux-pkg:96
+#: bash/playonlinux-pkg:107 bash/playonlinux-pkg:112
+#, sh-format
+msgid "This file: "
+msgstr "Denna fil: "
+
+#: bash/playonlinux-pkg:90
+#, sh-format
+msgid " does not exist!"
+msgstr " existerar inte!"
+
+#: bash/playonlinux-pkg:103
+#, sh-format
+msgid "Extracting: "
+msgstr "Extraherar: "
+
+#: bash/playonlinux-pkg:115
+#, sh-format
+msgid "Running..."
+msgstr "Kör..."
+
+#: bash/playonlinux-pkg:119
+#, sh-format
+msgid "Cleaning..."
+msgstr "Rensning pågår"
+
+#: bash/polconfigurator:34
+#, sh-format
+msgid "Killing programs in the virtual drive..."
+msgstr "Dödar program i den virtuella disken..."
+
+#: bash/polconfigurator:86
+#, sh-format
+msgid "Icon selection"
+msgstr "Ikon väljaren"
+
+#: bash/polconfigurator:86
+#, sh-format
+msgid "Please select an icon file"
+msgstr "Var vänlig välj en ikon fil"
+
+#: bash/polconfigurator:93
+#, sh-format
+msgid "Bad file extension"
+msgstr "Ogiltigt fil format"
+
+#: bash/polconfigurator:93
+#, sh-format
+msgid "is not an icon extension"
+msgstr "Är inget ikon format"
+
+#: bash/polconfigurator:103 python/configure.py:240 python/mainwindow.py:587
+#: python/mainwindow.py:628
+#, sh-format
+msgid "Registry Editor"
+msgstr "Register Editor"
+
+#: bash/polconfigurator:104
+#, sh-format
+msgid "Kill all prefix processes"
+msgstr "Döda alla prefix processer"
+
+#: bash/polconfigurator:105
+#, sh-format
+msgid "Update wineprefix"
+msgstr "Uppdatera wineprefix"
+
+#: bash/polconfigurator:106
+#, sh-format
+msgid "Simulate Windows reboot"
+msgstr "Simulera Windows omstart"
+
+#: bash/polconfigurator:107
+#, sh-format
+msgid "Use Advanced Wine Configuration plugin"
+msgstr "Använd avancerade Wine konfigurations tillägget"
+
+#: bash/polconfigurator:108
+#, sh-format
+msgid "Use PlayOnLinux's configurator for"
+msgstr "Använd PlayOnLinuxs konfigurator för"
+
+#: bash/polconfigurator:110
+#, sh-format
+msgid "Change the icon"
+msgstr "Byt ikon"
+
+#: bash/polconfigurator:111
+#, sh-format
+msgid "Use WineTricks"
+msgstr "Använd WineTricks"
+
+#: bash/polconfigurator:130
+#, sh-format
+msgid "Please choose an action to perform"
+msgstr "Välj en aktion att utföra"
+
+#: bash/read_pc_cd:25
+#, sh-format
+msgid "PC CD-ROM reader"
+msgstr "PC CD-ROM spelare"
+
+#: bash/read_pc_cd:33
+#, sh-format
+msgid ""
+"This tool will help your Mac to read the PC part of a CD-ROM.\\n\\nUse this "
+"tool ONLY if you CD-ROM is a hybride CD-ROM (Compatible with Windows and "
+"MacOS), and if you are not able to see the Windows part"
+msgstr ""
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "Eject a PC CD-ROM"
+msgstr "Mata ut en ĆD-ROM"
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "Read a PC CD-ROM"
+msgstr "Läs in en CD-ROM"
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "What do you want to do?"
+msgstr "Vad vill du göra?"
+
+#: bash/read_pc_cd:38
+#, sh-format
+msgid ""
+"Please insert your CD-ROM, and press next only when Finder has found the Mac "
+"OS part of your CD-ROM"
+msgstr ""
+
+#: bash/read_pc_cd:51
+#, sh-format
+msgid "Please choose a CD-ROM"
+msgstr "Var vänlig sök en CD-ROM"
+
+#: bash/read_pc_cd:97
+#, sh-format
+msgid "Please choose a CD-ROM to eject"
+msgstr "Välj en CD-ROM att mata ut"
+
+#: bash/run_app:85
+#, sh-format
+msgid "Please choose a software to run"
+msgstr "Välj ett program att köra"
+
+#: bash/run_app:115
+#, sh-format
+msgid "$APPLICATION_TITLE debugger is starting..."
+msgstr "$APPLICATION_TITLE debuggern startas"
+
+#: bash/run_app:118
+#, sh-format
+msgid "$PACKAGE crashed.\\nClick on debug link to get more details."
+msgstr "$PACKAGE kraschade.\\nTryck på felsök för att få fler detaljer."
+
+#: bash/run_app:120
+#, sh-format
+msgid "$PACKAGE crashed."
+msgstr "$PACKAGE kraschade."
+
+#: bash/run_exe:33
+#, sh-format
+msgid "Waiting XQuartz to be installed"
+msgstr "Vänta på att XQuartz installeras"
+
+#: bash/run_exe:70
+#, sh-format
+msgid "$APPLICATION_TITLE is analysing your application"
+msgstr "$APPLICATION_TITLE analyserar ditt program"
+
+#: bash/run_exe:81
+#, sh-format
+msgid "Do you want $APPLICATION_TITLE to install it automatically for you?"
+msgstr "Vill du att $APPLICATION_TITLE installerar det automatiskt för dig?"
+
+#: bash/run_exe:81
+#, sh-format
+msgid "We have detected that the program you want to install is :"
+msgstr "Vi har upptäckt att programmet du vill installera är :"
+
+#: bash/run_exe:97
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE assistant.\\nIt will help you to install $file "
+"on your computer.\\n\\nBe careful! This program is not officially supported "
+"by $APPLICATION_TITLE.\\nTherefore, it might not work as expected"
+msgstr ""
+"Välkommen till $APPLICATION_TITLE assistenten.\\nDen kommer att hjälpa dig "
+"att installera $file på din dator.\\n\\nVar försiktig! Programmet har inget "
+"officiellt stöd av $APPLICATION_TITLE.\\nDärför, kan det vara att det inte "
+"fungerar som förväntad."
+
+#: bash/run_exe:98
+#, sh-format
+msgid "What is the name of you program?"
+msgstr "Vad heter ditt program?"
+
+#: bash/run_exe:111
+#, sh-format
+msgid "Installation finished."
+msgstr "Installation slutförd"
+
+#: bash/startup_after_server:38
+#, sh-format
+msgid "PlayOnMac needs to install XQuartz to work properly."
+msgstr ""
+
+#: bash/startup_after_server:39
+#, sh-format
+msgid "PlayOnMac will help you to simplify this step"
+msgstr ""
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "Don't install XQuartz for the moment"
+msgstr ""
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "I've downloaded the file by myself"
+msgstr "Jag har laddat ner filen själv"
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "Please download XQuartz for me"
+msgstr ""
+
+#: bash/startup_after_server:47
+#, sh-format
+msgid "Downloading XQuartz"
+msgstr ""
+
+#: bash/startup_after_server:52
+#, sh-format
+msgid "Where is"
+msgstr "Var är"
+
+#: bash/startup_after_server:59
+#, sh-format
+msgid "Installing XQuartz..."
+msgstr ""
+
+#: bash/startup_after_server:68
+#, sh-format
+msgid "XQuartz has been installed."
+msgstr ""
+
+#: bash/startup_after_server:76
+#, sh-format
+msgid "Unable to install XQuartz! You must install it to use wine properly."
+msgstr ""
+
+#: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
+#: lib/wine.lib:866
+#, sh-format
+msgid "$APPLICATION_TITLE Uninstaller"
+msgstr "$APPLICATION_TITLE Uninstaller"
+
+#: bash/uninstall:39
+#, sh-format
+msgid "Please select a program to uninstall"
+msgstr "Välj ett program att avinstallera"
+
+#: bash/uninstall:50
+#, sh-format
+msgid "Click Next to continue."
+msgstr "Tryck på Nästa för att gå vidare"
+
+#: bash/uninstall:50
+#, sh-format
+msgid "This wizard will help you to uninstall: "
+msgstr "Denna assistent hjälper dig att avinstallera: "
+
+#: bash/uninstall:65 lib/wine.lib:866
+#, sh-format
+msgid "Uninstalling..."
+msgstr "Avinstallerar..."
+
+#: bash/uninstall:68
+#, sh-format
+msgid " has been uninstalled successfully."
+msgstr " har blivit avinstallerat successfullt."
+
+#: bash/uninstall:75
+#, sh-format
+msgid "Cannot find the shortcut"
+msgstr "Kan inte hitta genvägen"
+
+#: bash/update_git:25
+#, sh-format
+msgid "$APPLICATION_TITLE auto-updater"
+msgstr "$APPLICATION_TITLE auto-updaterare"
+
+#: bash/update_git:27
+#, sh-format
+msgid "Updating $APPLICATION_TITLE from GIT..."
+msgstr "Uppdaterar $APPLICATION_TITLE från GIT..."
+
+#: bash/update_git:31
+#, sh-format
+msgid "Do you want to update and restart $APPLICATION_TITLE?"
+msgstr "Vill du uppdatera och starta om $APPLICATION_TITLE?"
+
+#: bash/update_git:37
+#, sh-format
+msgid "Already up-to-date."
+msgstr "Du har redan den senaste versionen."
+
+#: lib/debug.lib:128
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered an error. If the program does not work "
+"correctly, it might be the cause of the problem.\\nVisit www.$POL_DNS to get "
+"further information"
+msgstr ""
+"$APPLICATION_TITLE har stött på ett fel. Om programmet inte fungerar "
+"korrekt, kan det vara anledningen till problemet.\\nBesök www.$POL_DNS för "
+"att få mer information."
+
+#: lib/debug.lib:142
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered an error. If the program you are "
+"installing does not work correctly, it might be the cause of the problem.\\"
+"nVisit www.$POL_DNS to get further information"
+msgstr ""
+"$APPLICATION_TITLE har stött på ett fel. Om programmet du håller på att "
+"installera inte fungerar korrekt, kan det vara anledningen till problemet.\\"
+"nBesök www.$POL_DNS för att få mer information."
+
+#: lib/debug.lib:155
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered a fatal error. $APPLICATION_TITLE will "
+"stop the installation process.\\nVisit www.$POL_DNS to get further "
+"information"
+msgstr ""
+"$APPLICATION_TITLE har stött på ett allvarligt fel. $APPLICATION_TITLE "
+"kommer stoppa installationsprocessen.\\nBesök www.$POL_DNS för att få mer "
+"information."
+
+#: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
+#: lib/wine.lib:891 lib/wine.lib:972
+#, sh-format
+msgid "Please wait while the virtual drive is being created..."
+msgstr "Vänligen vänta medan den virtuella disken skapas..."
+
+#: lib/deprecated.lib:431
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is simulating a Windows reboot"
+msgstr ""
+"Var vänlig vänta medan $APPLICATION_TITLE simulerar en Windows omstart."
+
+#: lib/deprecated.lib:563
+#, sh-format
+msgid "Setting Program Files var"
+msgstr "Sätta Program Filer var"
+
+#: lib/playonlinux.lib:261 lib/playonlinux.lib:267 lib/playonlinux.lib:273
+#: lib/playonlinux.lib:279 lib/playonlinux.lib:285 lib/playonlinux.lib:291
+#, sh-format
+msgid "This function is disabled in the PlayOnlinux environment."
+msgstr "Denna funktion är otillgänglig i PlayOnLinux miljön"
+
+#: lib/playonlinux.lib:354
+#, sh-format
+msgid ""
+"Warning !!\\n\\nThe signature of the script you are trying to run is NOT "
+"valid\\n\\nPlayOnLinux has not approved this script and will not be "
+"responsible from it.\\nPlease ensure you know what you are doing !"
+msgstr ""
+"Varning !!\\n\\nSignaturen av skriptet du försöker att köra är INTE giltig\\"
+"n\\nPlayOnLinux har inte godkännt detta skript och kommer inte ta ansvar för "
+"det.\\nSnälla försäkra dig om att du vet vad du håller på med!"
+
+#: lib/playonlinux.lib:355 lib/playonlinux.lib:378
+#, sh-format
+msgid "Here the source code of the script. Check it carefully"
+msgstr "Här är källkoden till skriptet. Kolla igenom den noga."
+
+#: lib/playonlinux.lib:377
+#, sh-format
+msgid ""
+"Warning !!\\n\\nThe signature of the script you are trying to run is NOT "
+"valid\\n\\n$APPLICATION_TITLE has not approved this script and will not be "
+"responsible from it.\\nPlease ensure you know what you are doing!"
+msgstr ""
+"Varning !!\\n\\nSignaturen av skriptet du försöker att köra är INTE giltig\\"
+"n\\n$APPLICATION_TITLE har inte godkännt detta skript och kommer inte ta "
+"ansvar för det.\\nSnälla försäkra dig om att du vet vad du håller på med!"
+
+#: lib/playonlinux.lib:378
+#, sh-format
+msgid "External library"
+msgstr "Extern bibliotek"
+
+#: lib/playonlinux.lib:641
+#, sh-format
+msgid "Making shortcut..."
+msgstr "Skapar genväg..."
+
+#: lib/playonlinux.lib:768
+#, sh-format
+msgid "Do you want to delete the virtual drive:"
+msgstr "Vill du ta bort den virtuella disken:"
+
+#: lib/playonlinux.lib:877
+#, sh-format
+msgid ""
+"The following file is located on a FAT32 filesystem.\\nIt might prevent wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+"Följande fil ligger på ett FAT32 filsystem.\\nDet kan hindra Wine från att "
+"fungera\\n\\$FilePath"
+
+#: lib/playonlinux.lib:878
+#, sh-format
+msgid ""
+"The following file is located on a NTFS filesystem.\\nIt might prevent wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+"Följande fil ligger på ett NTFS filsystem.\\nDet kan hindra Wine från att "
+"fungera\\n\\$FilePath"
+
+#: lib/playonlinux.lib:879
+#, sh-format
+msgid ""
+"The following file is located on a fuse filesystem.\\nIt might prevent wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+"Följande fil ligger på ett fuse filsystem.\\nDet kan hindra Wine från att "
+"fungera\\n\\$FilePath"
+
+#: lib/playonlinux.lib:880
+#, sh-format
+msgid ""
+"The following file is located on a noexec mounted filesystem.\\nIt might "
+"prevent wine from working\\n\\n$FilePath"
+msgstr ""
+"Följande fil ligger på ett noexec monterad filsystem.\\nDet kan hindra Wine "
+"från att fungera\\n\\$FilePath"
+
+#: lib/playonlinux.lib:909
+#, sh-format
+msgid ""
+"Your Linux kernel may not be configured to run Win16 programs under Wine\\"
+"nSee $EXPLANATION_URL"
+msgstr ""
+"Din Linux kernel kanske inte är konfigurerad för att kunna köra Win16 "
+"program i Wine\\nSe $EXPLANATION_URL"
+
+#: lib/playonlinux.lib:912
+#, sh-format
+msgid ""
+"Your kernel may be incompatible with running Win16 programs under Wine\\nSee "
+"$EXPLANATION_URL"
+msgstr ""
+"Din Linux kernel kan vara inkompatibel med att köra Win16 program i Wine\\"
+"nSe $EXPLANATION_URL"
+
+#: lib/plugins.lib:63
+#, sh-format
+msgid "Checking plugin: "
+msgstr "Undersöker insticksmodul: "
+
+#: lib/plugins.lib:85
+#, sh-format
+msgid "New: "
+msgstr "Ny: "
+
+#: lib/plugins.lib:85
+#, sh-format
+msgid "Updating plugin. Previous: "
+msgstr "Uppdaterar insticksmodul. Innan uppdateringen: "
+
+#: lib/plugins.lib:99
+#, sh-format
+msgid "Installing plugin: "
+msgstr "Installerar insticksmodul: "
+
+#: lib/scripts.lib:356
+#, sh-format
+msgid ""
+"Binary not found: $BINARY\\nHave you installed the program to the default "
+"location?"
+msgstr ""
+"Hittar inte binären $BINARY\\nHar du installerat programmet till den "
+"förvalda platsen?"
+
+#: lib/scripts.lib:427
+#, sh-format
+msgid "Function override detected, disabling bug reporting"
+msgstr "Hittade funktion åsidosätta, stänger av felrapportering."
+
+#: lib/scripts.lib:526 lib/scripts.lib:589
+#, sh-format
+msgid "No enough space to download:\\n$URL ($neededSpace KB)"
+msgstr ""
+"Inte tillräckligt mycket ledigt utrymme för att ladda ner:\\n$URL "
+"($neededSpace KB)"
+
+#: lib/scripts.lib:528 lib/scripts.lib:811
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is downloading:"
+msgstr "Var vänlig vänta medan $APPLICATION_TITLE laddas ner:"
+
+#: lib/scripts.lib:530 lib/scripts.lib:595
+#, sh-format
+msgid "An error happened during download."
+msgstr "Ett fel uppstod genom nedladdningen."
+
+#: lib/scripts.lib:530 lib/scripts.lib:548 lib/scripts.lib:595
+#: lib/scripts.lib:611
+#, sh-format
+msgid "Do you want to retry?"
+msgstr "Vill du försöka igen?"
+
+#: lib/scripts.lib:548 lib/scripts.lib:611
+#, sh-format
+msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
+msgstr ""
+"Fel ! Filerna matchar inte\\n\\nPlats $LOCAL_MD5\\nServer : $SERVER_MD5"
+
+#: lib/scripts.lib:716
+#, sh-format
+msgid ""
+"7z not installed, please check that you have 7zip installed and try again"
+msgstr ""
+"7z är inte installerad, vänligen kontrollera att du har 7zip installerad och "
+"försök igen."
+
+#: lib/scripts.lib:723
+#, sh-format
+msgid "Failed to locate ${dest} from ${archive}"
+msgstr "Misslyckat att lokalisera ${dest} från ${archive}"
+
+#: lib/scripts.lib:727
+#, sh-format
+msgid "Extracting ${filename} from ${archivename}"
+msgstr "Extraherar ${filename} från ${archivename}"
+
+#: lib/scripts.lib:742
+#, sh-format
+msgid "Extracted file size does not match!"
+msgstr "Den extraherade filstorleken matchar inte."
+
+#: lib/scripts.lib:773
+#, sh-format
+msgid "Copying ${filename}"
+msgstr "Kopierar ${filename}"
+
+#: lib/scripts.lib:786
+#, sh-format
+msgid "File size does not match!"
+msgstr "Filstorleken matchar inte!"
+
+#: lib/scripts.lib:937
+#, sh-format
+msgid ""
+"Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
+"n$APPLICATION_TITLE $NEEDED is required."
+msgstr ""
+"Förlåt men, $APPLICATION_TITLE $VERSION är för gammal för att fortsätta.\\"
+"n$APPLICATION_TITLE $NEEDED är ett krav."
+
+#: lib/scripts.lib:952
+#, sh-format
+msgid ""
+"Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
+"$NEEDED is recommended to continue."
+msgstr ""
+"Varning: Du kör $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE $NEEDED är "
+"rekommenderad för att fortsätta."
+
+#: lib/scripts.lib:983
+#, sh-format
+msgid "$AUTHOR profile"
+msgstr "$AUTHOR profil"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid " on your computer."
+msgstr " på din dator"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid " will be installed in: "
+msgstr " kommer att installeras i: "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "Click Next to start"
+msgstr "Tryck på nästa för att starta"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This installation program is provided by: "
+msgstr "Detta installationsprogram är tillhandahållit av: "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This program was created by: "
+msgstr "Detta program är skapad av: "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This wizard will help you install "
+msgstr "Denna assisten kommer att hjälpa dig att installera "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "Welcome to $APPLICATION_TITLE Installation Wizard."
+msgstr "Välkommen till $APPLICATION_TITLE Installationsassistenten"
+
+#: lib/setupwindow.lib:328
+#, sh-format
+msgid "Where is mounted your CD-ROM?"
+msgstr "Var är din CD-ROM monterad?"
+
+#: lib/setupwindow.lib:329 python/install.py:222
+#, sh-format
+msgid "Other"
+msgstr "Andra"
+
+#: lib/setupwindow.lib:330 python/install.py:290 python/install.py:294
+#, sh-format
+msgid "Refresh"
+msgstr "Uppdatera"
+
+#: lib/setupwindow.lib:388
+#, sh-format
+msgid "Reading your device"
+msgstr "Läser din maskin"
+
+#: lib/setupwindow.lib:403
+#, sh-format
+msgid "Error: Unable to find the CD-ROM!"
+msgstr "Fel: Kunde inte hitta CD-ROM!"
+
+#: lib/setupwindow.lib:417
+#, sh-format
+msgid ""
+"$TITLE needs to read the PC part of a hybrid CD-Rom.\\n\\nBy default, MacOS "
+"only gives you access to the Mac part of the cd-rom, which may not be "
+"compatible with recent versions of Mac OS.\\n\\nDo you want PlayOnMac to "
+"attempt to read the PC-Part of your CD?"
+msgstr ""
+
+#: lib/setupwindow.lib:469
+#, sh-format
+msgid ""
+"Don't forget to go to PlayOnMac tools menu -> Read a PC CD-Rom before "
+"running your game"
+msgstr ""
+
+#: lib/setupwindow.lib:483
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is copying files:"
+msgstr "Vänligen vänta medan $APPLICATION_TITLE kopierar filer:"
+
+#: lib/setupwindow.lib:568 lib/setupwindow.lib:721
+#, sh-format
+msgid "Scanning the virtual drive ..."
+msgstr "Skannar den virtuella disken..."
+
+#: lib/setupwindow.lib:582
+#, sh-format
+msgid "How much memory does your graphics board have?"
+msgstr "Hur mycket minne har ditt grafikkort?"
+
+#: lib/setupwindow.lib:591
+#, sh-format
+msgid "Video card does not have enough memory"
+msgstr "Ditt grafikkort har inte tillräckligt mycket minne"
+
+#: lib/setupwindow.lib:592
+#, sh-format
+msgid ""
+"Your video card does not have enough memory!\\nIt might prevent the game "
+"from working"
+msgstr ""
+"Ditt grafikkort har inte tillräckligt mycket minne!\\nDet kan hindra spelet "
+"från att fungera."
+
+#: lib/setupwindow.lib:607
+#, sh-format
+msgid "Use Steam Store version"
+msgstr "Använd Steam Butik versionen"
+
+#: lib/setupwindow.lib:608
+#, sh-format
+msgid "Use Steam Store demo version"
+msgstr "Använd Steam demo version"
+
+#: lib/setupwindow.lib:609
+#, sh-format
+msgid "Use Desura Store version"
+msgstr "Använd Desura Butik versionen"
+
+#: lib/setupwindow.lib:610
+#, sh-format
+msgid "Use Desura Store demo version"
+msgstr "Använd Desura Butik demo version"
+
+#: lib/setupwindow.lib:611
+#, sh-format
+msgid "Use Origin Store version"
+msgstr "Använd Origin Butik versionen"
+
+#: lib/setupwindow.lib:612
+#, sh-format
+msgid "Use Origin Store demo version"
+msgstr "Använd Origin Butik demo versionen"
+
+#: lib/setupwindow.lib:614
+#, sh-format
+msgid "Use a setup file in my computer"
+msgstr "Använd en setup fil på min dator"
+
+#: lib/setupwindow.lib:615
+#, sh-format
+msgid "Use CD-ROM(s)"
+msgstr "Använd CD-ROM(s)"
+
+#: lib/setupwindow.lib:616
+#, sh-format
+msgid "Use DVD-ROM(s)"
+msgstr "ANvänd DVD-ROM(s)"
+
+#: lib/setupwindow.lib:617
+#, sh-format
+msgid "Download the program"
+msgstr "Ladda ner programmet"
+
+#: lib/setupwindow.lib:682
+#, sh-format
+msgid "Please choose an installation method"
+msgstr "Vänligen välj en installations metod"
+
+#: lib/setupwindow.lib:713
+#, sh-format
+msgid "I don't want to make another shortcut"
+msgstr "Jag vill inte skapa en till genväg"
+
+#: lib/setupwindow.lib:714 python/guiv3.py:170
+#, sh-format
+msgid "Browse"
+msgstr "Bläddra"
+
+#: lib/setupwindow.lib:763
+#, sh-format
+msgid "A shortcut by that name already exists, overwrite?"
+msgstr "En genväg med det namnet existerar redan, skriva över?"
+
+#: lib/website.lib:29
+#, sh-format
+msgid "Connect to your $APPLICATION_TITLE account"
+msgstr "Anslut till din $APPLICATION_TITLE account"
+
+#: lib/website.lib:127
+#, sh-format
+msgid "Connecting..."
+msgstr "Kopplar upp..."
+
+#: lib/website.lib:132
+#, sh-format
+msgid ""
+"Failed to connect !\\nPlease ensure that your login and your password are "
+"valid."
+msgstr ""
+"Uppkopplingen misslyckad !\\nSnälla försäkra dig om att ditt användarnamn "
+"och ditt lösenord är korrekta."
+
+#: lib/wine.lib:388
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
+msgstr "Vänligen vänta medan $APPLICATION_TITLE skannar din hårdvara"
+
+#: lib/wine.lib:394
+#, sh-format
+msgid "Select the main videocard to report:"
+msgstr "Väl det huvudsakliga grafikkortet att rapportera"
+
+#: lib/wine.lib:540
+#, sh-format
+msgid ""
+"Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
+msgstr ""
+
+#: lib/wine.lib:578
+#, sh-format
+msgid ""
+"Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
+"message"
+msgstr ""
+"Wine verkar ha kraschad\\n\\nOm ditt program körs, ignorera detta meddelande."
+
+#: lib/wine.lib:623
+#, sh-format
+msgid ""
+"This is an installer for an update or an addon;\\nPlease install "
+"$TITLE_REQUIRED first"
+msgstr ""
+"Det här är en installation för en uppdatering eller ett tillägg;\\nVänligen "
+"installera $TITLE_REQUIRED först."
+
+#: lib/wine.lib:682
+#, sh-format
+msgid "Unable to find version: "
+msgstr "Kunde inte hitta version: "
+
+#: lib/wine.lib:688 lib/wine.lib:689
+#, sh-format
+msgid "Downloading Wine: "
+msgstr "Laddar ner Wine: "
+
+#: lib/wine.lib:698
+#, sh-format
+msgid "The download seems to have failed."
+msgstr "Nedladdningen verkar ha misslyckats."
+
+#: lib/wine.lib:700
+#, sh-format
+msgid "Extracting Wine..."
+msgstr "Extraherar Wine..."
+
+#: lib/wine.lib:897
+#, sh-format
+msgid "Overwrite (usually works, no guarantee)"
+msgstr "Skriv över (brukar fungera, ingen garanti)"
+
+#: lib/wine.lib:898
+#, sh-format
+msgid "Erase (virtual drive content will be lost)"
+msgstr "Radera (all innehåll i den virtuella disken kommer vara förlorat)"
+
+#: lib/wine.lib:899
+#, sh-format
+msgid "Abort installation"
+msgstr "Avbryt installationen"
+
+#: lib/wine.lib:912
+#, sh-format
+msgid "The target virtual drive $PREFNAME already exists:"
+msgstr "Den utvalda virtuella disken $PREFNAME existerar redan:"
+
+#: lib/wine.lib:928
+#, sh-format
+msgid "User abort"
+msgstr "Avbrytit av användaren"
+
+#: lib/wine.lib:1092 lib/wine.lib:1122
+#, sh-format
+msgid "Please wait while $SOFTNAME is installed..."
+msgstr "Vänligen vänta medan $SOFTNAME installeras"
+
+#: lib/wine.lib:1096 lib/wine.lib:1125
+#, sh-format
+msgid ""
+"Be careful! This will kill install process. If it is not finished, you will "
+"have to reinstall $SOFTNAME"
+msgstr ""
+"Vara försiktigt! Detta kommer döda alla installationsprocesser. Om den inte "
+"redan är klar, måste do installer $SOFTNAME igen"
+
+#: lib/wine.lib:1096 lib/wine.lib:1125
+#, sh-format
+msgid "Install is done"
+msgstr "Installationen är klar"
+
+#: lib/wine.lib:1129 lib/wine.lib:1130
+#, sh-format
+msgid "Press next only when the installation process is finished"
+msgstr "Tryck på nästa endast om installationsprocessen är klar"
+
+#: lib/wine.lib:1138
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
+msgstr "Vänligen vänta medan $APPLICATION_TITLE simulerar en omstart"
+
+#: python/configure.py:117
+msgid ""
+"Warning:\n"
+"\n"
+"This tool is for advanced users.\n"
+"To uninstall cleanly a program with {0}, you must delete the virtual drive "
+"associated"
+msgstr ""
+"Varning:\n"
+"\n"
+"Detta verktyg är för avancerade användare.\n"
+"För att fullständigt avinstallera ett program med {0}, måste du radera hela "
+"den tillhöriga virtuella disken."
+
+#: python/configure.py:198 python/configure.py:713
+msgid "General"
+msgstr "Generellt"
+
+#: python/configure.py:201
+msgid "Make a new shortcut from this virtual drive"
+msgstr "Skapa en ny genväg från denna virtuella disk"
+
+#: python/configure.py:202
+msgid "Name"
+msgstr "Namn"
+
+#: python/configure.py:203
+msgid "Wine version"
+msgstr "Wine version"
+
+#: python/configure.py:204
+msgid "Debug flags"
+msgstr "Debug flaggor"
+
+#: python/configure.py:206
+msgid "Virtual drive"
+msgstr "Virtuell disk"
+
+#: python/configure.py:208
+msgid "Arguments"
+msgstr "Argument"
+
+#: python/configure.py:212
+msgid "Run configuration wizard"
+msgstr "Kör konfigurationsassistenten"
+
+#: python/configure.py:249
+msgid "Windows reboot"
+msgstr "Windows omstart"
+
+#: python/configure.py:257
+msgid "Repair virtual drive"
+msgstr "Reparera virtuell disk"
+
+#: python/configure.py:266
+msgid "Command prompt"
+msgstr "Kommandotolk"
+
+#: python/configure.py:273
+msgid "Task manager"
+msgstr "Aktivitetshanteraren"
+
+#: python/configure.py:281
+msgid "Kill processes"
+msgstr "Döda processer"
+
+#: python/configure.py:288
+msgid "Wine uninstaller"
+msgstr "Wine uninstaller"
+
+#: python/configure.py:313
+msgid ""
+"Be careful! Installing one of these components can break your virtual drive."
+msgstr ""
+"Var försiktig! Om du installerar en av dessa komponenter kan riskerar du att "
+"din virtuella disk blir oanvändbar."
+
+#: python/configure.py:335 python/install.py:289 python/install.py:293
+#: python/mainwindow.py:243 python/mainwindow.py:383
+msgid "Install"
+msgstr "Installera"
+
+#: python/configure.py:398
+msgid "Open program's directory"
+msgstr "Öppna programmets mapp"
+
+#: python/configure.py:421
+msgid "Open virtual drive's directory"
+msgstr "Öpnna den virtuella diskens mapp"
+
+#: python/configure.py:565
+msgid "GLSL Support"
+msgstr "GLSL stöd"
+
+#: python/configure.py:566
+msgid "Direct Draw Renderer"
+msgstr ""
+
+#: python/configure.py:567
+msgid "Video memory size"
+msgstr "Videominnesstorlek"
+
+#: python/configure.py:568
+msgid "Offscreen rendering mode"
+msgstr ""
+
+#: python/configure.py:569
+msgid "Render target mode lock"
+msgstr ""
+
+#: python/configure.py:570
+msgid "Multisampling"
+msgstr ""
+
+#: python/configure.py:571
+msgid "Strict Draw Ordering"
+msgstr ""
+
+#: python/configure.py:581
+msgid "Mouse warp override"
+msgstr "Tvinga att musen stannar på skärmen"
+
+#: python/configure.py:583
+msgid "Open a shell"
+msgstr "Öppna en shell"
+
+#: python/configure.py:584
+msgid "Run a .exe file in this virtual drive"
+msgstr "Kör en .exe fil i denna virtuella disk"
+
+#: python/configure.py:585
+msgid "Command to exec before running the program"
+msgstr "Kör exec kommando innan du kör programmet"
+
+#: python/configure.py:595
+msgid ""
+"Warning:\n"
+"\n"
+"Any program still running in this virtual drive will be terminated before "
+"Wine version is changed.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"Varning:\n"
+"\n"
+"Alla program i denna virtuella disk som fortfarande körs kommer att stoppas "
+"innan Wine versionen ändras.\n"
+"Är du säker att du vill fortsätta?"
+
+#: python/configure.py:606
+msgid ""
+"Be careful!\n"
+"If you change "
+msgstr ""
+"Var försiktig!\n"
+"Om du ändrar "
+
+#: python/configure.py:666 python/mainwindow.py:972 python/mainwindow.py:974
+msgid "{0} configuration"
+msgstr "{0} konfiguration"
+
+#: python/configure.py:674
+msgid "Please select a program or a virtual drive to configure"
+msgstr "Vänligen välj ett program eller en virtuell disk att konfigurera"
+
+#: python/configure.py:693 python/configure.py:696 python/options.py:280
+msgid "New"
+msgstr "Installera ett program i en ny prefix"
+
+#: python/configure.py:694 python/configure.py:697 python/mainwindow.py:244
+#: python/mainwindow.py:384 python/mainwindow.py:603 python/options.py:207
+msgid "Remove"
+msgstr "Ta bort"
+
+#: python/configure.py:715
+msgid "Install components"
+msgstr "Installera komponenter"
+
+#: python/configure.py:716 python/mainwindow.py:364
+msgid "Display"
+msgstr "Visa"
+
+#: python/configure.py:717
+msgid "Miscellaneous"
+msgstr "Övrigt"
+
+#: python/configure.py:745
+msgid "This virtual drive is protected"
+msgstr "Denna virtuella disk är skyddad"
+
+#: python/configure.py:747
+msgid "Are you sure you want to delete {0} virtual drive ?"
+msgstr "Är du säker att du vill radera {0} virtuell disk?"
+
+#: python/configure.py:754
+msgid "Are you sure you want to delete {0} ?"
+msgstr "Är du säker att du vill radera {0}?"
+
+#: python/debug.py:40 python/mainwindow.py:281 python/mainwindow.py:947
+#: python/mainwindow.py:1037 python/wrapper.py:76
+msgid "{0} debugger"
+msgstr "{0} debugger"
+
+#: python/debug.py:51
+msgid "Please select a debug file"
+msgstr "Välj en debug fil"
+
+#: python/debug.py:80
+msgid "Locate this logfile"
+msgstr "Leta reda på denna loggfil"
+
+#: python/debug.py:103
+msgid "The file is named : {0}"
+msgstr "Filen har namnet : {0}"
+
+#: python/debug.py:201 python/debug.py:264
+msgid "Virtual drives"
+msgstr "Virtuella diskar"
+
+#: python/debug.py:229
+msgid "Report a problem about {0}"
+msgstr "Rapportera ett problem om {0}"
+
+#: python/debug.py:263
+msgid "Install scripts"
+msgstr "Installera skript"
+
+#: python/gui_server.py:54 python/gui_server.py:55
+msgid "Error: Unable to reserve a valid port"
+msgstr "Fel: Kunde inte reservera en filtig port"
+
+#: python/gui_server.py:165
+msgid "WARNING. Please use POL_SetupWindow_Init first"
+msgstr "VARNING. Snälla använd POL_SetupWindow_Init först"
+
+#: python/guiv3.py:117
+msgid "{0} Wizard"
+msgstr "{0} Assistent"
+
+#: python/guiv3.py:141 python/guiv3.py:144 python/install.py:288
+#: python/install.py:292 python/options.py:376
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: python/guiv3.py:142 python/guiv3.py:145
+msgid "Next"
+msgstr "Nästa"
+
+#: python/guiv3.py:164 python/guiv3.py:167
+msgid "No"
+msgstr "Nej"
+
+#: python/guiv3.py:165 python/guiv3.py:168
+msgid "Yes"
+msgstr "Ja"
+
+#: python/guiv3.py:178
+msgid "I Agree"
+msgstr "Jag godkänner"
+
+#: python/guiv3.py:179
+msgid "Don't remind me anymore"
+msgstr ""
+
+#: python/guiv3.py:180
+msgid "Show virtual drives"
+msgstr "Visa virtuella diskar"
+
+#: python/guiv3.py:201
+msgid "Login: "
+msgstr "Login: "
+
+#: python/guiv3.py:202
+msgid "Password: "
+msgstr "Lösenord: "
+
+#: python/guiv3.py:205
+msgid "Register"
+msgstr "Registrera"
+
+#: python/guiv3.py:312
+msgid "MB downloaded"
+msgstr "MB nedladdad"
+
+#: python/guiv3.py:312
+msgid "of"
+msgstr "av"
+
+#: python/guiv3.py:803 python/mainwindow.py:1158 python/mainwindow.py:1188
+#: python/mainwindow.py:1202 python/mainwindow.py:1211
+#: python/mainwindow.py:1223 python/mainwindow.py:1235 python/wrapper.py:129
+msgid "Error"
+msgstr "Fel"
+
+#: python/guiv3.py:803
+msgid "You cannot close this window"
+msgstr "Du kan inte stänga det här fönstret"
+
+#: python/install.py:115 python/install.py:117
+msgid "No description"
+msgstr "Beskrivning saknas"
+
+#: python/install.py:214
+msgid "Accessories"
+msgstr "Tillbehör"
+
+#: python/install.py:215
+msgid "Development"
+msgstr "Utveckling"
+
+#: python/install.py:216
+msgid "Education"
+msgstr "Utbildning"
+
+#: python/install.py:217
+msgid "Games"
+msgstr "Spel"
+
+#: python/install.py:218
+msgid "Graphics"
+msgstr "Grafik"
+
+#: python/install.py:219 python/mainwindow.py:287 python/options.py:384
+msgid "Internet"
+msgstr "Internet"
+
+#: python/install.py:220
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: python/install.py:221
+msgid "Office"
+msgstr "Kontor"
+
+#: python/install.py:223
+msgid "Patches"
+msgstr "Programfixar"
+
+#: python/install.py:256
+msgid "Include:"
+msgstr "Inkludera:"
+
+#: python/install.py:262
+msgid "Testing"
+msgstr "Testning"
+
+#: python/install.py:267
+msgid "No-cd needed"
+msgstr "No-cd behövs"
+
+#: python/install.py:274
+msgid "Commercial"
+msgstr "Kontorsområde"
+
+#: python/install.py:308
+msgid "Install a non-listed program"
+msgstr "Installera ett icke-listat program"
+
+#: python/install.py:458
+msgid ""
+"This program is currently in testing.\n"
+"\n"
+"It might not work as expected. Your feedback, positive or negative, is "
+"specially important to improve this installer."
+msgstr ""
+"Detta program är i testfas.\n"
+"\n"
+"Det kommer kanske inte fungera som väntad. Din feedback, positiv eller "
+"negativ, är speciellt viktigt för att utveckla denna installer."
+
+#: python/install.py:460
+msgid ""
+"This program contains a protection against copy (DRM) incompatible with "
+"emulation.\n"
+"The only workaround is to use a \"no-cd\" patch, but since those can also be "
+"used for piracy purposes we won't give any support on this matter."
+msgstr ""
+"Detta program innehåller skydd mot kopiering (DRM) som är inkompatibel med "
+"emulation.\n"
+"Den enda lösningen är att använda en \"no-cd\", men dessa kan också användas "
+"för pirateri, så ingen support i detta fall."
+
+#: python/install.py:577
+msgid "Attention!"
+msgstr "OBS!"
+
+#: python/install.py:577
+msgid ""
+"By enabling this option, you can install programs that employ digital rights "
+"management (DRM) copy protection that are not supported by {0} and might "
+"need to be bypassed.\n"
+"\n"
+"This feature should not be construed as implicit or implied condoning of "
+"piracy and as such, we will not offer any support for issues resulting from "
+"using this option."
+msgstr ""
+"Om du aktiverar detta alternativ, kan du installera program som använder "
+"DRMs koperingsskydd, vilka {0} inte stödjer, och de behöver undgås."
+
+#: python/install.py:580
+msgid ""
+"By enabling this, you will have access to installers for programs that "
+"contain protections against copy (DRM) incompatible with emulation.\n"
+"The only workaround is to use \"no-cd\" patches, but since those can also be "
+"used for piracy purposes we won't give any support on this matter."
+msgstr ""
+"Om du aktiverar detta alternativ, får du åtkomst till "
+"installationsassitenter för program som innehåller koperingsskydd (DRM) som "
+"är inkompatibla med emulation.\n"
+"Den enda lösningen är att använda en \"no-cd\", men dessa kan också användas "
+"för pirateri, så ingen support i det fall."
+
+#: python/lib/playonlinux.py:27
+msgid "There is nothing installed to run .{0} files."
+msgstr "Det är ingenting installerad för att köra .{0} filer."
+
+#: python/lib/playonlinux.py:454
+msgid "{0} error"
+msgstr "{0} fel"
+
+#: python/mainwindow.py:75
+msgid "{0} website is unavailable. Please check your connection"
+msgstr "{0} hemsida är inte tillgänglig. Kontrollera din internetanslutning."
+
+#: python/mainwindow.py:77
+msgid "Refreshing {0}"
+msgstr "Uppdaterar {0}"
+
+#: python/mainwindow.py:92 python/mainwindow.py:94
+msgid "An updated version of {0} is available"
+msgstr "En uppdatering av {0} är tillgänglig"
+
+#: python/mainwindow.py:242 python/mainwindow.py:379 python/mainwindow.py:774
+msgid "Run"
+msgstr "Kör"
+
+#: python/mainwindow.py:246
+msgid "Donate"
+msgstr "Donera"
+
+#: python/mainwindow.py:247
+msgid "Exit"
+msgstr "Stäng"
+
+#: python/mainwindow.py:251
+msgid "Small icons"
+msgstr "Små ikoner"
+
+#: python/mainwindow.py:252
+msgid "Medium icons"
+msgstr "Medelstora ikoner"
+
+#: python/mainwindow.py:253
+msgid "Large icons"
+msgstr "Stora ikoner"
+
+#: python/mainwindow.py:254
+msgid "Very large icons"
+msgstr "Mycket stora ikoner"
+
+#: python/mainwindow.py:266
+msgid "Manage Wine versions"
+msgstr "Hantera Wine versionerna"
+
+#: python/mainwindow.py:271
+msgid "Read a PC CD-Rom"
+msgstr "Läs in en PC CD-Rom"
+
+#: python/mainwindow.py:276
+msgid "{0} console"
+msgstr "{0} konsol"
+
+#: python/mainwindow.py:278
+msgid "Close all {0} software"
+msgstr "Stäng all {0} mjukvara"
+
+#: python/mainwindow.py:288 python/options.py:388
+msgid "File associations"
+msgstr "Filassociationer"
+
+#: python/mainwindow.py:289 python/mainwindow.py:337
+msgid "Plugin manager"
+msgstr "Hantera insticksmoduler"
+
+#: python/mainwindow.py:293
+msgid "Supported software"
+msgstr "Programvara som stöds"
+
+#: python/mainwindow.py:294
+msgid "News"
+msgstr "Nyheter"
+
+#: python/mainwindow.py:295
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: python/mainwindow.py:296
+msgid "Forums"
+msgstr "Forum"
+
+#: python/mainwindow.py:297
+msgid "Bugs"
+msgstr "Buggar"
+
+#: python/mainwindow.py:299
+msgid "Twitter"
+msgstr ""
+
+#: python/mainwindow.py:300
+msgid "Google+"
+msgstr ""
+
+#: python/mainwindow.py:301
+msgid "Facebook"
+msgstr ""
+
+#: python/mainwindow.py:305
+msgid "About {0}"
+msgstr "Om {0}"
+
+#: python/mainwindow.py:363
+msgid "File"
+msgstr "Fil"
+
+#: python/mainwindow.py:365
+msgid "Tools"
+msgstr "Verktyg"
+
+#: python/mainwindow.py:366 python/mainwindow.py:760
+msgid "Settings"
+msgstr "Inställningar"
+
+#: python/mainwindow.py:367 python/options.py:387
+msgid "Plugins"
+msgstr "Insticksmoduler"
+
+#: python/mainwindow.py:368
+msgid "Support"
+msgstr "Support"
+
+#: python/mainwindow.py:380 python/mainwindow.py:776
+msgid "Close"
+msgstr "Stäng"
+
+#: python/mainwindow.py:386 python/mainwindow.py:787 python/options.py:208
+msgid "Configure"
+msgstr "Konfigurera"
+
+#: python/mainwindow.py:399 python/mainwindow.py:402
+msgid "Search"
+msgstr "Sök"
+
+#: python/mainwindow.py:591
+msgid "Open the application's directory"
+msgstr "Öpnna programmets mapp"
+
+#: python/mainwindow.py:595 python/mainwindow.py:795
+msgid "Read the manual"
+msgstr "Läs manualen"
+
+#: python/mainwindow.py:599
+msgid "Set the icon"
+msgstr "Bestäm ikon"
+
+#: python/mainwindow.py:607
+msgid "Close this application"
+msgstr "Stäng detta program"
+
+#: python/mainwindow.py:618
+msgid "KillApp"
+msgstr ""
+
+#: python/mainwindow.py:625
+msgid "No manual found for {0}"
+msgstr "Hittade ingen manual för {0}"
+
+#: python/mainwindow.py:758
+msgid "Install a program"
+msgstr "Installera ett program"
+
+#: python/mainwindow.py:765
+msgid "Update GIT"
+msgstr "Uppdatera GIT"
+
+#: python/mainwindow.py:768
+msgid "Update instructions"
+msgstr "Uppdatera instruktioner"
+
+#: python/mainwindow.py:778
+msgid "Debug"
+msgstr "Felsökning"
+
+#: python/mainwindow.py:784
+msgid "Send a feedback"
+msgstr "Skicka feedback"
+
+#: python/mainwindow.py:789
+msgid "Create a shortcut"
+msgstr "Skapa genväg"
+
+#: python/mainwindow.py:791
+msgid "Open the directory"
+msgstr "Öppna mappen"
+
+#: python/mainwindow.py:798
+msgid "Uninstall"
+msgstr "Avinstallera"
+
+#: python/mainwindow.py:920 python/mainwindow.py:991 python/mainwindow.py:998
+#: python/mainwindow.py:1043
+msgid "Please select a program."
+msgstr "Välj ett program"
+
+#: python/mainwindow.py:928 python/mainwindow.py:930 python/mainwindow.py:932
+msgid "{0} settings"
+msgstr "{0} inställningar"
+
+#: python/mainwindow.py:1005
+msgid "{0} install menu"
+msgstr "{0} installationsmeny"
+
+#: python/mainwindow.py:1014
+msgid "{0} wine versions manager"
+msgstr "{0} Wineversionshanterare"
+
+#: python/mainwindow.py:1045
+msgid "The virtual drive associated with {0} ({1}) does no longer exists."
+msgstr "Den virtuella disken tillhörig till {0} ({1}) finns inte längre."
+
+#: python/mainwindow.py:1089
+msgid "Are you sure you want to close all {0} windows?"
+msgstr "Är du säker att du vill stänga alla {0} fönster?"
+
+#: python/mainwindow.py:1111
+msgid "Run your Windows programs on "
+msgstr "Kör dina Windows program på "
+
+#: python/mainwindow.py:1112
+msgid ""
+"PlayOnLinux and PlayOnMac team\n"
+"Under GPL licence version 3"
+msgstr ""
+"PlayOnLinux och PlayOnMac team\n"
+"Under GPL licens version 3"
+
+#: python/mainwindow.py:1113
+msgid "Developer and Website: "
+msgstr "Utvecklare och hemsida: "
+
+#: python/mainwindow.py:1114
+msgid "Scriptors: "
+msgstr "Programmerarare: "
+
+#: python/mainwindow.py:1115
+msgid "Packager: "
+msgstr "Ansvarig för paketering: "
+
+#: python/mainwindow.py:1116
+msgid "Icons:"
+msgstr "Ikoner:"
+
+#: python/mainwindow.py:1117
+msgid "The following people contributed to this program: "
+msgstr "Följande personer bidrog till detta program: "
+
+#: python/mainwindow.py:1118
+msgid "Translations:"
+msgstr "Översättningar:"
+
+#: python/mainwindow.py:1119
+msgid "Read TRANSLATORS file"
+msgstr "Läs TRANSLATORS (översättningarnas) fil"
+
+#: python/mainwindow.py:1158
+msgid "{0} is not able to start PlayOnLinux Setup Window server."
+msgstr "{0} kan inte starta PlayOnLinux Setup Window server."
+
+#: python/mainwindow.py:1179
+msgid "{0} cannot find {1}"
+msgstr "{0} kan inte hitta {1}"
+
+#: python/mainwindow.py:1181
+msgid " (from {2})"
+msgstr " (från {2})"
+
+#: python/mainwindow.py:1184
+msgid "You need to install it to continue"
+msgstr "Du behöver installera det för att kunna fortsätta."
+
+#: python/mainwindow.py:1186
+msgid "You should install it to use {0}"
+msgstr "Du borde installera det för att använda {0}"
+
+#: python/mainwindow.py:1202
+msgid "{0} is not supposed to be run as root. Sorry"
+msgstr "{0} ska inte köras som root."
+
+#: python/mainwindow.py:1211
+msgid ""
+"{0} is unable to find 32bits OpenGL libraries.\n"
+"\n"
+"You might encounter problem with your games"
+msgstr ""
+"{0} hittar inte 32bit OpenGL biblioteker.\n"
+"\n"
+"Du kommer stöta på problem med dina spel."
+
+#: python/mainwindow.py:1223
+msgid ""
+"{0} is unable to find 64bits OpenGL libraries.\n"
+"\n"
+"You might encounter problem with your games"
+msgstr ""
+"{0} hittar inte 64bit OpenGL biblioteker.\n"
+"\n"
+"Du kanske stöter på problem med dina spel."
+
+#: python/mainwindow.py:1235
+msgid ""
+"Your filesystem might prevent {0} from running correctly.\n"
+"\n"
+"Please open {0} in a terminal to get more details"
+msgstr ""
+"Ditt filsystem kan hindra {0} från att köras korrekt.\n"
+"\n"
+"Öppna {0} i en terminal för att få mer detaljer."
+
+#: python/mainwindow.py:1239
+msgid ""
+"Do you want to help {0} to make a compatibility database?\n"
+"\n"
+"If you click yes, the following things will be sent to us anonymously the "
+"first time you run a Windows program:\n"
+"\n"
+"- You graphic card model\n"
+"- Your OS version\n"
+"- If graphic drivers are installed or not.\n"
+"\n"
+"\n"
+"These information will be very precious for us to help people."
+msgstr ""
+"Vill du hjälpa {0} att göra en kompatibilitetsdatabas?\n"
+"\n"
+"Om du trycker på ja, följande saker kommer att skickas till oss anonymt "
+"första gången du kör ett Windows program:\n"
+"\n"
+"-Modellen på ditt grafikkort\n"
+"-Din OS version\n"
+"-Om grafikdrivrutiner är installerade eller inte.\n"
+"\n"
+"\n"
+"Dessa information kommer vara väldigt värdefulla för oss, för att hjälpa "
+"folk."
+
+#: python/mainwindow.py:1296
+msgid "Are you sure you want to  want to install {0} package?"
+msgstr "Är du säker att du vill installera {0} paketet?"
+
+#: python/mainwindow.py:1303 python/mainwindow.py:1305
+#: python/mainwindow.py:1307
+msgid ""
+"You are trying to open a script design for {0}! It might not work as expected"
+msgstr ""
+"Du försöker att öppna ett skriptdesign för {0}! Det kanske inte fungerar som "
+"förväntad."
+
+#: python/options.py:116
+msgid "Proxy configuration"
+msgstr "Proxy konfiguration"
+
+#: python/options.py:129
+msgid "Set a proxy"
+msgstr "Sätt en proxy"
+
+#: python/options.py:132
+msgid "Proxy address"
+msgstr "Proxy address"
+
+#: python/options.py:135
+msgid "Proxy port"
+msgstr "Proxyport"
+
+#: python/options.py:138
+msgid "Proxy login"
+msgstr ""
+
+#: python/options.py:141
+msgid "Proxy password"
+msgstr "Proxylösenord"
+
+#: python/options.py:188
+msgid "Installed plugins"
+msgstr "Installerade insticksmoduler"
+
+#: python/options.py:206
+msgid "Add"
+msgstr "Lägg till"
+
+#: python/options.py:209 python/options.py:337
+msgid "Enable"
+msgstr "Aktivera"
+
+#: python/options.py:210
+msgid "Choose a plugin"
+msgstr "Choose a plugin"
+
+#: python/options.py:263
+msgid "What is the extension?"
+msgstr "Vad är anknytningen?"
+
+#: python/options.py:275
+msgid "Assigned program"
+msgstr "Tilldelat program"
+
+#: python/options.py:277
+msgid "Delete"
+msgstr "Ta bort"
+
+#: python/options.py:305
+msgid "Are you sure you want to install: "
+msgstr "Är du säker att du vill installera: "
+
+#: python/options.py:313
+msgid "Are you sure you want to delete: "
+msgstr "Är du säker på att du vill radera: "
+
+#: python/options.py:334
+msgid "Disable"
+msgstr "Disable"
+
+#: python/options.py:375
+msgid "Apply"
+msgstr "Tillämpa"
+
+#: python/options.py:412
+msgid "You must restart {0} for the changes to take effect."
+msgstr "Du måste starta om {0} för att förändringarna ska ske."
+
+#: python/wine_versions.py:196
+msgid "Installed Wine versions: "
+msgstr "Installerade Wine versioner: "
+
+#: python/wine_versions.py:197
+msgid "Available Wine versions: "
+msgstr "Tillgängliga Wine versioner "
+
+#: python/wine_versions.py:208
+msgid "Wine versions"
+msgstr "Wine versioner"
+
+#: python/wine_versions.py:330
+msgid "Are you sure you want to delete wine {0}?"
+msgstr "Är du säker att du vill radera Wine {0}?"
+
+#: python/wine_versions.py:332
+msgid "This version is CURRENTLY IN USE"
+msgstr ""
+
+#: python/wrapper.py:129
+msgid "{0} is not able to start POL_SetupWindow_server."
+msgstr "{0} kan inte starta POL_Setup_Window_server."

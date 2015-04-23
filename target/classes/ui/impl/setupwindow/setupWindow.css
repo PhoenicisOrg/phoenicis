@@ -1,0 +1,18 @@
+#header {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-background-color:#FFFFFF;
+}
+
+#footer {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+}
+
+#panelForTopheader {
+    -fx-padding: 30px;
+    -fx-background-color: #F4F4F4;
+    -fx-border-color: #CCCCCC;
+}

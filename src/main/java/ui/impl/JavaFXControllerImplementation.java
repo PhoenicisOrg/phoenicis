@@ -5,6 +5,7 @@ import api.UIMessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import api.SetupWindow;
+import ui.impl.mainwindow.JavaFXMainWindow;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 
 @Component
@@ -15,9 +16,9 @@ public class JavaFXControllerImplementation implements Controller {
 
     public void startApplication() {
         // For the moment, I have no cleaner way to do that, JavaFX scene is started in a static context
-        MainWindow.defineStaticEventHandler(this.eventHandler);
+        JavaFXMainWindow.injectEventHandler(this.eventHandler);
 
-        MainWindow.launch(MainWindow.class);
+        JavaFXMainWindow.launch(JavaFXMainWindow.class);
     }
 
     public SetupWindow createSetupWindowGUIInstance(String title) {
