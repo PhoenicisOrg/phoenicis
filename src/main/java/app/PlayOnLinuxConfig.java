@@ -1,8 +1,7 @@
 package app;
 
 import api.Controller;
-import scripts.CancelException;
-import ui.impl.JavaFXMessageSenderImplementation;
+
 import ui.impl.api.EventHandler;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.*;
@@ -10,31 +9,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import scripts.SetupWizard;
 import ui.impl.JavaFXControllerImplementation;
-import ui.impl.mainwindow.MainWindow;
 import utils.OperatingSystem;
 import utils.PlayOnLinuxError;
-import utils.messages.Message;
-import utils.messages.SynchroneousMessage;
+
 
 @Configuration
-@ComponentScan({"app", "ui.impl.mainwindow"})
+@ComponentScan
 public class PlayOnLinuxConfig {
-
-    /*
-    It is very important to have a lazy initialization here. Otherwise, JavaFX runLater() method will be called before
-    JavaFX is initialized, raising a javafx Toolkit not initialized exception
-     */
-    @Bean
-    @Lazy
-    MainWindow mainWindow() throws CancelException, InterruptedException {
-        return new JavaFXMessageSenderImplementation<MainWindow>().synchroneousSendAndGetResult(
-                new SynchroneousMessage() {
-                    @Override
-                    public void execute(Message message) {
-                        setResponse(new MainWindow());
-                    }
-                });
-    }
 
     @Bean
     Controller controller() {
