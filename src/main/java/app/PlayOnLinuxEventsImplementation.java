@@ -1,11 +1,13 @@
 package app;
 
-
+import org.springframework.stereotype.Component;
+import ui.impl.api.EventHandler;
 import scripts.Script;
 
 import java.io.File;
 
-public class PlayOnLinuxEvents implements ui.api.EventHandler {
+@Component
+public class PlayOnLinuxEventsImplementation implements EventHandler {
     public void runLocalScript(File scriptToRun) {
         Script playonlinuxScript = new Script(scriptToRun);
         playonlinuxScript.run();

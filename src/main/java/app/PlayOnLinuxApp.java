@@ -11,16 +11,14 @@ public class PlayOnLinuxApp {
     @Autowired
     Controller controller;
 
-    public void start() {
-        this.controller.startApplication();
+    public void start(ApplicationContext context) {
+        this.controller.startApplication(context);
     }
 
     public static void main(String [] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(PlayOnLinuxConfig.class);
-
         PlayOnLinuxApp application = context.getBean(PlayOnLinuxApp.class);
-
-        application.start();
+        application.start(context);
     }
 
 }

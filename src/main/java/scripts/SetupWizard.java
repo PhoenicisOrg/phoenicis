@@ -4,6 +4,8 @@ import api.Controller;
 import api.ProgressStep;
 import api.SetupWindow;
 import api.UIMessageSender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import utils.messages.*;
 
 import java.util.List;

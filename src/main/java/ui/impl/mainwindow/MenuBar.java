@@ -4,10 +4,11 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import ui.api.EventHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ui.impl.api.EventHandler;
 
 import java.io.File;
-
 
 class MenuBar extends javafx.scene.control.MenuBar {
     private Stage stage;
@@ -19,6 +20,7 @@ class MenuBar extends javafx.scene.control.MenuBar {
         buildFileMenu();
         buildToolsMenu();
         buildHelpMenu();
+
 
         this.useSystemMenuBarProperty().set(true);
     }

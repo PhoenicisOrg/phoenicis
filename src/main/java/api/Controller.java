@@ -1,7 +1,9 @@
 package api;
 
+import org.springframework.context.ApplicationContext;
+
 public interface Controller {
-    void startApplication();
+    void startApplication(ApplicationContext context);
 
     SetupWindow createSetupWindowGUIInstance(String title);
 

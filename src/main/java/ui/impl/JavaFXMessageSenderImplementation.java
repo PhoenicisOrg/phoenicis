@@ -8,7 +8,7 @@ import utils.messages.SynchroneousMessage;
 
 import java.util.concurrent.CountDownLatch;
 
-public class JavaFXMessageSenderImplementation implements UIMessageSender {
+public class JavaFXMessageSenderImplementation<ReturnType> implements UIMessageSender<ReturnType> {
     public static void runAndWait(Runnable action) {
         Object result = null;
         if (action == null)
@@ -38,7 +38,7 @@ public class JavaFXMessageSenderImplementation implements UIMessageSender {
     }
 
     @Override
-    public Object synchroneousSendAndGetResult(SynchroneousMessage message) throws InterruptedException, CancelException {
+    public ReturnType synchroneousSendAndGetResult(SynchroneousMessage<ReturnType> message) throws InterruptedException, CancelException {
         JavaFXMessageSenderImplementation.runAndWait(message);
         return message.getResponse();
     }
