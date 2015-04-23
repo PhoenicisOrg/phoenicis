@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import ui.impl.mainwindow.MainWindow;
-import ui.impl.mainwindow.MainWindowConfig;
 
 @Component
 public class JavaFXApplication extends Application {
@@ -20,7 +19,7 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MainWindowConfig.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(JavaFXSpringConfig.class);
         MainWindow mainWindow = applicationContext.getBean(MainWindow.class);
 
         mainWindow.setUpWindow();

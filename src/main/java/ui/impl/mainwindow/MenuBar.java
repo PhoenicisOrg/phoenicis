@@ -11,7 +11,7 @@ import ui.impl.api.EventHandler;
 import java.io.File;
 
 @Component
-class MenuBar extends javafx.scene.control.MenuBar {
+public class MenuBar extends javafx.scene.control.MenuBar {
     @Autowired
     EventHandler eventHandler;
 
@@ -20,7 +20,7 @@ class MenuBar extends javafx.scene.control.MenuBar {
 
     private MenuItem openScript;
 
-    MenuBar() {
+    public MenuBar() {
         buildFileMenu();
         buildToolsMenu();
         buildHelpMenu();

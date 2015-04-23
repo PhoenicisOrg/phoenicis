@@ -9,9 +9,15 @@ import org.springframework.stereotype.Component;
 import api.SetupWindow;
 import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 
+import javax.naming.ldap.Control;
+
 @Component
 public class JavaFXControllerImplementation implements Controller {
 
+    public JavaFXControllerImplementation() {
+        System.out.println("New controller");
+        System.out.println(this);
+    }
     public void startApplication(ApplicationContext context) {
         JavaFXApplication.launch(context, JavaFXApplication.class);
     }

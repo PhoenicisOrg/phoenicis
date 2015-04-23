@@ -1,18 +1,17 @@
-package ui.impl.mainwindow;
+package ui.impl;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import app.PlayOnLinuxConfig;
+import org.springframework.context.annotation.*;
 import scripts.CancelException;
-import ui.impl.JavaFXMessageSenderImplementation;
+import ui.impl.mainwindow.MainWindow;
+import ui.impl.mainwindow.MenuBar;
 import utils.messages.Message;
 import utils.messages.SynchroneousMessage;
 
 @Configuration
 @ComponentScan
-@Import({app.PlayOnLinuxConfig.class})
-public class MainWindowConfig {
+@Import(PlayOnLinuxConfig.class)
+public class JavaFXSpringConfig {
 
     @Bean
     MainWindow mainWindow() throws CancelException, InterruptedException {
