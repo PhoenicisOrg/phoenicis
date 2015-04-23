@@ -12,16 +12,15 @@ import java.io.File;
 
 @Component
 class MenuBar extends javafx.scene.control.MenuBar {
-    private MenuItem openScript;
-
     @Autowired
     EventHandler eventHandler;
 
     @Autowired
     MainWindow mainWindow;
 
-    MenuBar() {
+    private MenuItem openScript;
 
+    MenuBar() {
         buildFileMenu();
         buildToolsMenu();
         buildHelpMenu();
