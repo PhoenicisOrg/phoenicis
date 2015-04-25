@@ -41,20 +41,20 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     }
 
     @Override
-    public void setProgressPercentage(int value) {
+    public void setProgressPercentage(double value) {
         JavaFXMessageSenderImplementation messageSender = new JavaFXMessageSenderImplementation();
         messageSender.asynchroneousSend(new AsynchroneousMessage() {
                                             @Override
                                             public void execute(Message message) {
-                                                progressBar.setProgress((double) value / 100.);
+                                                progressBar.setProgress(value / 100.);
                                             }
                                         }
         );
     }
 
     @Override
-    public int getProgressPercentage() {
-        return (int) (this.progressBar.getProgress() * 100);
+    public double getProgressPercentage() {
+        return this.progressBar.getProgress() * 100;
     }
 
 

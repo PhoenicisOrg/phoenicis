@@ -23,7 +23,7 @@ public class PlayOnLinuxConfig {
     }
 
     static EventHandler eventHandler() {
-        return new PlayOnLinuxEventsImplementation();
+            return new PlayOnLinuxEventsImplementation();
     }
 
     /*

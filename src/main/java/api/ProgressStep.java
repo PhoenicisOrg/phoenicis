@@ -1,9 +1,9 @@
 package api;
 
 public interface ProgressStep {
-    void setProgressPercentage(int value);
+    void setProgressPercentage(double value);
 
     void setText(String text);
 
-    int getProgressPercentage();
+    double getProgressPercentage();
 }
