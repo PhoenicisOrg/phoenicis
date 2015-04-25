@@ -4,23 +4,18 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ui.impl.api.EventHandler;
 
 import java.io.File;
 
-@Component
 public class MenuBar extends javafx.scene.control.MenuBar {
-    @Autowired
-    EventHandler eventHandler;
-
-    @Autowired
-    MainWindow mainWindow;
+    private final JavaFXMainWindowImplementation parent;
 
     private MenuItem openScript;
 
-    public MenuBar() {
+    public MenuBar(JavaFXMainWindowImplementation parent) {
+        this.parent = parent;
+
         buildFileMenu();
         buildToolsMenu();
         buildHelpMenu();
@@ -52,9 +47,9 @@ public class MenuBar extends javafx.scene.control.MenuBar {
         openScript.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open a script");
-            File scriptToRun = fileChooser.showOpenDialog(mainWindow);
+            File scriptToRun = fileChooser.showOpenDialog(parent);
 
-            eventHandler.runLocalScript(scriptToRun);
+            this.parent.getEventHandler().runLocalScript(scriptToRun);
         });
     }
 }

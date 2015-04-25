@@ -1,11 +1,13 @@
 package api;
 
-import org.springframework.context.ApplicationContext;
+import ui.impl.api.EventHandler;
 
 public interface Controller {
-    void startApplication(ApplicationContext context);
+    void startApplication();
 
     SetupWindow createSetupWindowGUIInstance(String title);
 
     UIMessageSender createUIMessageSender();
+
+    void injectEventHandler(EventHandler eventHandler);
 }

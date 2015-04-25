@@ -14,12 +14,14 @@ import javax.naming.ldap.Control;
 @Component
 public class JavaFXControllerImplementation implements Controller {
 
-    public JavaFXControllerImplementation() {
-        System.out.println("New controller");
-        System.out.println(this);
+    private static EventHandler eventHandler;
+
+    public static EventHandler getStaticEventHandler() {
+        return eventHandler;
     }
-    public void startApplication(ApplicationContext context) {
-        JavaFXApplication.launch(context, JavaFXApplication.class);
+
+    public void startApplication() {
+        JavaFXApplication.launch(JavaFXApplication.class);
     }
 
     public SetupWindow createSetupWindowGUIInstance(String title) {
@@ -29,5 +31,10 @@ public class JavaFXControllerImplementation implements Controller {
     @Override
     public UIMessageSender createUIMessageSender() {
         return new JavaFXMessageSenderImplementation();
+    }
+
+    @Override
+    public void injectEventHandler(EventHandler eventHandler) {
+        JavaFXControllerImplementation.eventHandler = eventHandler;
     }
 }

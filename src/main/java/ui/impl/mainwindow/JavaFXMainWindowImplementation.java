@@ -4,16 +4,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import ui.impl.JavaFXControllerImplementation;
+import ui.impl.api.EventHandler;
 
-@Component
-public class MainWindow extends Stage {
+public class JavaFXMainWindowImplementation extends Stage {
 
-    @Autowired
     MenuBar menuBar;
 
     public void setUpWindow() {
+        this.menuBar =  new MenuBar(this);
+
         BorderPane pane = new BorderPane();
 
         Scene scene = new Scene(pane, 600, 400);
@@ -32,6 +32,10 @@ public class MainWindow extends Stage {
         this.setScene(scene);
         this.setTitle("PlayOnLinux");
         this.show();
+    }
+
+    public EventHandler getEventHandler() {
+        return JavaFXControllerImplementation.getStaticEventHandler();
     }
 
 }
