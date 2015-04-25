@@ -1,12 +1,8 @@
 package scripts;
 
 import api.ProgressStep;
-import utils.PlayOnLinuxError;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 
 import static utils.Localisation.Translate;
 
