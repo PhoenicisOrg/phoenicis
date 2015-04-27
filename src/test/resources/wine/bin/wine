@@ -2,16 +2,14 @@
 
 # Wine mockup 
 
-printHelpMessage() {
-        cat << EOF
-Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program
-       wine --help                   Display this help and exit
-       wine --version                Output version information and exit
-EOF
 
+printHelpMessage() {
+    echo "Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program"
+    echo "       wine --help                   Display this help and exit"
+    echo "       wine --version                Output version information and exit"
 }
 
-if [ "$1" = "--help" ]; then
+if [ "$1" == "--help" ]; then
 	printHelpMessage
 fi
 

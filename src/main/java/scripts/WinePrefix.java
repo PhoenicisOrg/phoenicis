@@ -20,7 +20,6 @@ public class WinePrefix {
 
     public WinePrefix(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
-
     }
 
     public WinePrefix select(String prefixName) {
@@ -60,10 +59,8 @@ public class WinePrefix {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                /* FIXME */
-                System.out.println("Destroying process");
                 process.destroy();
-                process.waitFor();
+                wineInstallation.killAllProcess(this.prefix);
                 throw new CancelException();
             }
         }

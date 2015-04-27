@@ -6,14 +6,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";
     private static final String WINEPREFIX_ENV = "WINEPREFIX";
-
-    @Injectable
-    private static HashMap<String, String> systemEnvironment;
 
     private final File binaryPath;
     private final File libraryPath;
@@ -23,9 +21,7 @@ public class WineInstallation {
         this.libraryPath = new File(builder.path, "lib");
     }
 
-    public static void setSystemEnvironment(HashMap<String, String> systemEnvironment) {
-        WineInstallation.systemEnvironment = systemEnvironment;
-    }
+
 
     // TODO
     public String fetchVersion() {
@@ -36,32 +32,36 @@ public class WineInstallation {
         return new File(binaryPath, "wine");
     }
 
+    private File fetchWineServerExecutablePath() {
+        return new File(binaryPath, "wineserver");
+    }
+
+    // FIXME: Maybe it would be great to create a class to handle environment issues
+    private void addPathInfoToEnvironment(HashMap<String, String> environment) {
+        environment.put("PATH", this.binaryPath.getAbsolutePath());
+        environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
+    }
+
     public Process run(File workingDirectory, String executableToRun, HashMap<String, String> environment, ArrayList<String> arguments) throws IOException {
         ArrayList<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
-
         if(arguments != null) {
             command.addAll(arguments);
         }
 
-        ProcessBuilder processBuilder = new ProcessBuilder(command)
-                .directory(workingDirectory);
-
-
-        Map<String, String> processEnvironement = processBuilder.environment();
+        HashMap<String, String> wineEnvironment = new HashMap<>();
         if(environment != null) {
-            for (String environementVariable : environment.keySet()) {
-                processEnvironement.put(environementVariable, environment.get(environementVariable));
-            }
+            wineEnvironment.putAll(environment);
         }
 
-        processEnvironement.put("PATH", this.binaryPath+":"+processEnvironement.get("PATH")+":"+systemEnvironment.get("PATH"));
-        processEnvironement.put("LD_LIBRARY_PATH", this.libraryPath+":"+processEnvironement.get("LD_LIBRARY_PATH")+":"
-                +systemEnvironment.get("LD_LIBRARY_PATH"));
-        processEnvironement.put("DYLD_LIBRARY_PATH", systemEnvironment.get("DYLD_LIBRARY_PATH"));
+        this.addPathInfoToEnvironment(wineEnvironment);
 
-        return processBuilder.start();
+        return new WineProcessBuilder()
+                .withCommand(command)
+                .withEnvironment(wineEnvironment)
+                .withWorkingDirectory(workingDirectory)
+                .build();
     }
 
     public Process run(File workingDirectory, String executableToRun, HashMap<String, String> environment) throws IOException {
@@ -73,6 +73,22 @@ public class WineInstallation {
         winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
 
         return this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
+    }
+
+    public void killAllProcess(WinePrefix winePrefix) throws IOException {
+
+        HashMap<String, String> environment = new HashMap<>();
+        this.addPathInfoToEnvironment(environment);
+        environment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
+
+        List<String> command = new ArrayList<>();
+        command.add(this.fetchWineServerExecutablePath().getAbsolutePath());
+        command.add("-k");
+
+        new WineProcessBuilder()
+                .withCommand(command)
+                .withEnvironment(environment)
+                .build();
     }
 
     public static class Builder {

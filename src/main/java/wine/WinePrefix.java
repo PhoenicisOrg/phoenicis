@@ -34,4 +34,5 @@ public class WinePrefix {
     public long getSize() {
         return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
     }
+
 }
