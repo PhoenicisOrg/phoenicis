@@ -6,12 +6,14 @@ import api.SetupWindow;
 import api.UIMessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import utils.Injectable;
 import utils.messages.*;
 
 import java.util.List;
 
 
 public class SetupWizard {
+    @Injectable
     static Controller controller;
     private final String title;
 

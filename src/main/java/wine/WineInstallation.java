@@ -1,5 +1,7 @@
 package wine;
 
+import utils.Injectable;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";
     private static final String WINEPREFIX_ENV = "WINEPREFIX";
 
+    @Injectable
     private static HashMap<String, String> systemEnvironment;
 
     private final File binaryPath;
@@ -34,7 +37,7 @@ public class WineInstallation {
     }
 
     public Process run(File workingDirectory, String executableToRun, HashMap<String, String> environment, ArrayList<String> arguments) throws IOException {
-        ArrayList<String> command = new ArrayList<String>();
+        ArrayList<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
 
@@ -58,9 +61,7 @@ public class WineInstallation {
                 +systemEnvironment.get("LD_LIBRARY_PATH"));
         processEnvironement.put("DYLD_LIBRARY_PATH", systemEnvironment.get("DYLD_LIBRARY_PATH"));
 
-        Process process = processBuilder.start();
-
-        return process;
+        return processBuilder.start();
     }
 
     public Process run(File workingDirectory, String executableToRun, HashMap<String, String> environment) throws IOException {
