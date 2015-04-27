@@ -52,7 +52,7 @@ public class WinePrefix {
 
         while(process.isAlive()) {
             try {
-                double percentage = this.prefix.getSize() * 100. / 320000000.;
+                double percentage = this.prefix.getSize() * 100. / (double) NEW_PREFIX_SIZE;
                 progressStep.setProgressPercentage(percentage);
             } catch (IllegalArgumentException e) {
             }
