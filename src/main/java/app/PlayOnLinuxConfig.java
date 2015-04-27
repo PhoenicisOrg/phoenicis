@@ -3,14 +3,12 @@ package app;
 import api.Controller;
 
 import scripts.SetupWizard;
-import ui.impl.api.EventHandler;
-import ui.impl.JavaFXControllerImplementation;
-import utils.OperatingSystem;
+import ui.api.EventHandler;
+import ui.javafximpl.JavaFXControllerImplementation;
 import utils.PlayOnLinuxError;
 import wine.WineInstallation;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class PlayOnLinuxConfig {
 

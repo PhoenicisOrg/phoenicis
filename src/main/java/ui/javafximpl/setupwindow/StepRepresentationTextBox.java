@@ -1,4 +1,4 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import javafx.scene.control.TextField;
 import utils.messages.CancelerSynchroneousMessage;

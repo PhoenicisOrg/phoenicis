@@ -1,7 +1,7 @@
 package app;
 
 import org.springframework.stereotype.Component;
-import ui.impl.api.EventHandler;
+import ui.api.EventHandler;
 import scripts.Script;
 
 import java.io.File;

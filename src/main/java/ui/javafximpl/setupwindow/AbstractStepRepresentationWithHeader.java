@@ -1,4 +1,4 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;

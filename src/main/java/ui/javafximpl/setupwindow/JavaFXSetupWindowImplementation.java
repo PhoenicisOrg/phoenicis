@@ -1,4 +1,4 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import api.ProgressStep;
 import javafx.scene.Node;

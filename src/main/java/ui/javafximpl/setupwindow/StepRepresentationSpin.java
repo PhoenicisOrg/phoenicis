@@ -1,4 +1,4 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

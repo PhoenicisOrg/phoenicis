@@ -1,4 +1,4 @@
-package ui.impl.mainwindow;
+package ui.javafximpl.mainwindow;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -6,7 +6,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-import static utils.Localisation.Translate;
+import static utils.Localisation.translate;
 
 class ToolBar extends javafx.scene.control.ToolBar {
 
@@ -32,19 +32,19 @@ class ToolBar extends javafx.scene.control.ToolBar {
         configureImage.setFitHeight(16);
 
 
-        Button run = new Button(Translate("Run"), runImage);
+        Button run = new Button(translate("Run"), runImage);
         run.setContentDisplay(ContentDisplay.LEFT);
 
-        Button stop = new Button(Translate("Stop"), stopImage);
+        Button stop = new Button(translate("Stop"), stopImage);
         stop.setContentDisplay(ContentDisplay.LEFT);
 
-        Button install = new Button(Translate("Install"), installImage);
+        Button install = new Button(translate("Install"), installImage);
         install.setContentDisplay(ContentDisplay.LEFT);
 
-        Button remove = new Button(Translate("Remove"), removeImage);
+        Button remove = new Button(translate("Remove"), removeImage);
         remove.setContentDisplay(ContentDisplay.LEFT);
 
-        Button configure = new Button(Translate("Configure"), configureImage);
+        Button configure = new Button(translate("Configure"), configureImage);
         configure.setContentDisplay(ContentDisplay.LEFT);
 
         TextField searchField = new TextField();

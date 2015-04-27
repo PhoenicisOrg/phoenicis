@@ -1,6 +1,6 @@
 package api;
 
-import ui.impl.api.EventHandler;
+import ui.api.EventHandler;
 
 public interface Controller {
     void startApplication();

@@ -1,4 +1,4 @@
-package ui.impl;
+package ui.javafximpl;
 
 import javafx.application.Platform;
 import scripts.CancelException;

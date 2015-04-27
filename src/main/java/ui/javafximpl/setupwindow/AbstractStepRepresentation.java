@@ -1,10 +1,9 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerMessage;
 
 import java.io.File;

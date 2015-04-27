@@ -1,4 +1,4 @@
-package ui.impl.api;
+package ui.api;
 
 import java.io.File;
 

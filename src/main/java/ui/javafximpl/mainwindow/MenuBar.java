@@ -1,10 +1,8 @@
-package ui.impl.mainwindow;
+package ui.javafximpl.mainwindow;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
-
-import ui.impl.api.EventHandler;
 
 import java.io.File;
 

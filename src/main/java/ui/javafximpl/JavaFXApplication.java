@@ -1,9 +1,9 @@
-package ui.impl;
+package ui.javafximpl;
 
 import javafx.application.Application;
 
 import javafx.stage.Stage;
-import ui.impl.mainwindow.JavaFXMainWindowImplementation;
+import ui.javafximpl.mainwindow.JavaFXMainWindowImplementation;
 
 public class JavaFXApplication extends Application {
 

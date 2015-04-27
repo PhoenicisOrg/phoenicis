@@ -1,4 +1,4 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;

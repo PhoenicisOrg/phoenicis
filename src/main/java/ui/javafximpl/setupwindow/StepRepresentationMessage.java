@@ -1,4 +1,4 @@
-package ui.impl.setupwindow;
+package ui.javafximpl.setupwindow;
 
 import javafx.scene.text.Text;
 import utils.messages.CancelerMessage;

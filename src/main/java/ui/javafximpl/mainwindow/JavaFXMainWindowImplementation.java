@@ -1,11 +1,11 @@
-package ui.impl.mainwindow;
+package ui.javafximpl.mainwindow;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ui.impl.JavaFXControllerImplementation;
-import ui.impl.api.EventHandler;
+import ui.javafximpl.JavaFXControllerImplementation;
+import ui.api.EventHandler;
 
 public class JavaFXMainWindowImplementation extends Stage {
 

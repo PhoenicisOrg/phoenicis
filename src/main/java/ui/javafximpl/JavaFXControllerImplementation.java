@@ -1,10 +1,10 @@
-package ui.impl;
+package ui.javafximpl;
 
 import api.Controller;
-import ui.impl.api.EventHandler;
+import ui.api.EventHandler;
 import api.UIMessageSender;
 import api.SetupWindow;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
+import ui.javafximpl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.Injectable;
 
 

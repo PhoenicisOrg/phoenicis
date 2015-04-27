@@ -1,10 +1,7 @@
 package scripts;
 
-import ui.impl.api.EventHandler;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.*;
 
