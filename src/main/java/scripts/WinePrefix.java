@@ -55,9 +55,17 @@ public class WinePrefix {
                 double percentage = this.prefix.getSize() * 100. / 320000000.;
                 progressStep.setProgressPercentage(percentage);
             } catch (IllegalArgumentException e) {
-
             }
-            Thread.sleep(10);
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                /* FIXME */
+                System.out.println("Destroying process");
+                process.destroy();
+                process.waitFor();
+                throw new CancelException();
+            }
         }
         process.waitFor();
 
