@@ -1,6 +1,7 @@
 package scripts;
 
 import api.ProgressStep;
+import utils.Checksum;
 import utils.PlayOnLinuxError;
 
 import java.io.*;
@@ -8,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
-import static utils.Localisation.Translate;
+import static utils.Localisation.translate;
 
 /* A builder pattern could be used here but we chose not to use it to facilitate scripts syntax
  */
@@ -39,7 +40,7 @@ public class Downloader {
         if(this.progressStep == null) {
             // FIXME: Change APPLICATION_TITLE here
             this.progressStep = this.setupWizard.progressBar(
-                    Translate("Please wait while $APPLICATION_TITLE is downloading:") + "\n" +
+                    translate("Please wait while $APPLICATION_TITLE is downloading:") + "\n" +
                     this.findFileNameFromURL(remoteFile)
             );
         }

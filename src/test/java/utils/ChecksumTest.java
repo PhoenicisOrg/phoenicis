@@ -1,6 +1,7 @@
-package scripts;
+package utils;
 
 import org.junit.Test;
+import utils.Checksum;
 
 import java.io.File;
 import java.io.FileOutputStream;

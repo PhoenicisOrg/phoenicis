@@ -5,6 +5,12 @@ import api.Controller;
 import scripts.SetupWizard;
 import ui.impl.api.EventHandler;
 import ui.impl.JavaFXControllerImplementation;
+import utils.OperatingSystem;
+import utils.PlayOnLinuxError;
+import wine.WineInstallation;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 public class PlayOnLinuxConfig {
 
@@ -26,6 +32,11 @@ public class PlayOnLinuxConfig {
             return new PlayOnLinuxEventsImplementation();
     }
 
+    static PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxError, IOException {
+        return new PlayOnLinuxContext();
+    }
+
+
     /*
     Get static instances
      */
@@ -39,10 +50,19 @@ public class PlayOnLinuxConfig {
     /*
     Injection
      */
-    public void Inject() {
+    public void Inject() throws PlayOnLinuxError, IOException {
         Controller controller = controller();
+        PlayOnLinuxContext playOnLinuxContext = playOnLinuxContext();
+
         controller.injectEventHandler(eventHandler());
         SetupWizard.injectMainController(controller);
+
+        scripts.WinePrefix.injectPlayOnLinuxContext(playOnLinuxContext);
+
+
+        WineInstallation.setSystemEnvironment(playOnLinuxContext.getSystemEnvironment());
     }
+
+
 
 }

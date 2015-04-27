@@ -34,6 +34,18 @@ public enum OperatingSystem {
         return this.name();
     }
 
+    public String getNameForWinePackages() {
+        switch (this) {
+            case FREEBSD:
+                return "freebsd";
+            case MACOSX:
+                return "darwin";
+            case LINUX:
+            default:
+                return "linux";
+        }
+    }
+
     public static OperatingSystem fetchCurrentOperationSystem() throws PlayOnLinuxError {
         return OperatingSystem.fromString(System.getProperty("os.name"));
     }

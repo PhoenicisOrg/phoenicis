@@ -4,7 +4,7 @@ import api.ProgressStep;
 
 import java.io.*;
 
-import static utils.Localisation.Translate;
+import static utils.Localisation.translate;
 
 /* A builder pattern could be used here but we chose not to use it to facilitate scripts syntax
  */
@@ -34,7 +34,7 @@ public class FileManagement {
         if(this.progressStep == null) {
             // FIXME: Change APPLICATION_TITLE here
             this.progressStep = this.setupWizard.progressBar(
-                    Translate("Please wait while $APPLICATION_TITLE is copying:") + "\n" +
+                    translate("Please wait while $APPLICATION_TITLE is copying:") + "\n" +
                             sourceFile.getName()
             );
         }

@@ -3,7 +3,7 @@ package utils;
 // TODO
 public class Localisation {
 
-    public static String Translate(String s) {
+    public static String translate(String s) {
         return s;
     }
 }

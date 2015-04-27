@@ -14,19 +14,19 @@ import org.apache.commons.io.IOUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class WineProcessTest {
+public class WineInstallationTest {
 
-    private WineProcess wineProcessToTest;
+    private WineInstallation wineInstallationToTest;
 
     @Before
     public void getSystemProperties() throws Exception {
         URL url = this.getClass().getResource(".");
-        this.wineProcessToTest = new WineProcess.Builder().withLibraryPath(new File(url.getPath())).build();
+        this.wineInstallationToTest = new WineInstallation.Builder().withPath(new File(url.getPath())).build();
     }
 
     @Test
     public void testRun_RunWineVersion_ProcessRunsAndReturnsVersion() throws IOException {
-        Process wineProcess = this.wineProcessToTest.run(new File("/tmp"), "--version", null);
+        Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "--version", null);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
@@ -39,7 +39,7 @@ public class WineProcessTest {
         ArrayList <String> arguments = new ArrayList<>();
         arguments.add("/tmp/unexisting");
 
-        Process wineProcess = this.wineProcessToTest.run(new File("/tmp"), "--help", null, arguments);
+        Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "--help", null, arguments);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
@@ -54,7 +54,7 @@ public class WineProcessTest {
         ArrayList <String> arguments = new ArrayList<>();
         arguments.add("--help");
 
-        Process wineProcess = this.wineProcessToTest.run(new File("/tmp"), "/tmp/unexisting", null, arguments);
+        Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "/tmp/unexisting", null, arguments);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
