@@ -1,5 +1,6 @@
 package scripts;
 
+import api.ProgressStep;
 import app.PlayOnLinuxContext;
 import utils.Architecture;
 import utils.PlayOnLinuxError;
@@ -11,6 +12,7 @@ import static utils.Localisation.translate;
 
 public class WinePrefix {
     static PlayOnLinuxContext playOnLinuxContext;
+    private final long NEW_PREFIX_SIZE = 320000000;
 
     private final SetupWizard setupWizard;
     private wine.WinePrefix prefix;
@@ -27,11 +29,12 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws PlayOnLinuxError, IOException, InterruptedException {
+    public WinePrefix create(String version) throws PlayOnLinuxError, IOException, InterruptedException, CancelException {
         return this.create(version, Architecture.fetchCurrentArchitecture().name());
     }
 
-    public WinePrefix create(String version, String architecture) throws IOException, PlayOnLinuxError, InterruptedException {
+    public WinePrefix create(String version, String architecture) throws IOException, PlayOnLinuxError,
+            InterruptedException, CancelException {
         if(prefix == null) {
             throw new PlayOnLinuxError("Prefix must be selected!");
         }
@@ -41,8 +44,21 @@ public class WinePrefix {
                         Architecture.valueOf(architecture))
                 ).build();
 
-        this.setupWizard.wait(String.format(translate("Please wait while the prefix %s is created"), prefixName));
         Process process = wineInstallation.createPrefix(this.prefix);
+
+        /* Maybe it needs to be better implemented */
+        ProgressStep progressStep =
+                this.setupWizard.progressBar(String.format(translate("Please wait while the prefix %s is created"), prefixName));
+
+        while(process.isAlive()) {
+            try {
+                double percentage = this.prefix.getSize() * 100. / 320000000.;
+                progressStep.setProgressPercentage(percentage);
+            } catch (IllegalArgumentException e) {
+
+            }
+            Thread.sleep(100);
+        }
         process.waitFor();
 
         return this;

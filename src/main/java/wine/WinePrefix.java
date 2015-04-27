@@ -1,5 +1,7 @@
 package wine;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 
 public class WinePrefix {
@@ -29,4 +31,7 @@ public class WinePrefix {
         return this.winePrefixDirectory;
     }
 
+    public long getSize() {
+        return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
+    }
 }
