@@ -1,4 +1,4 @@
-package ui.impl.setupwindow.steps;
+package ui.impl.setupwindow;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.InterrupterAsynchroneousMessage;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {

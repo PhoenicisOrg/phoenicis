@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import api.SetupWindow;
-import ui.impl.setupwindow.steps.*;
 import utils.OperatingSystem;
 import utils.PlayOnLinuxError;
 import utils.messages.CancelerMessage;
@@ -116,11 +115,15 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     public ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
         StepRepresentationProgressBar stepProgressBar = new StepRepresentationProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
-
         return stepProgressBar;
     }
 
-
+    @Override
+    public void showPresentationStep(CancelerSynchroneousMessage message, String textToShow) {
+        StepRepresentationPresentation stepRepresentationPresentation =
+                new StepRepresentationPresentation(this, message, textToShow);
+        stepRepresentationPresentation.installStep();
+    }
 
 
     @Override

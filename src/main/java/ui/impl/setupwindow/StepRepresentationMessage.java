@@ -1,7 +1,6 @@
-package ui.impl.setupwindow.steps;
+package ui.impl.setupwindow;
 
 import javafx.scene.text.Text;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerMessage;
 import utils.messages.CancelerSynchroneousMessage;
 

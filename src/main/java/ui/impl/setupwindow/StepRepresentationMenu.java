@@ -1,8 +1,7 @@
-package ui.impl.setupwindow.steps;
+package ui.impl.setupwindow;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerSynchroneousMessage;
 
 import java.util.List;

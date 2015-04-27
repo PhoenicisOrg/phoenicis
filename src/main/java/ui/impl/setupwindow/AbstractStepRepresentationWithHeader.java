@@ -1,4 +1,4 @@
-package ui.impl.setupwindow.steps;
+package ui.impl.setupwindow;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -9,7 +9,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerMessage;
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {

@@ -24,5 +24,7 @@ public interface SetupWindow {
 
     ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow);
 
+    void showPresentationStep(CancelerSynchroneousMessage message, String textToShow);
+
     void close();
 }

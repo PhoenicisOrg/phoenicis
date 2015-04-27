@@ -79,6 +79,16 @@ public class SetupWizard {
         );
     }
 
+    public void presentation(String textToShow) throws CancelException, InterruptedException {
+        messageSender.synchroneousSendAndGetResult(
+                new CancelerSynchroneousMessage() {
+                    @Override
+                    public void execute(Message message) {
+                        setupWindow.showPresentationStep((CancelerSynchroneousMessage) message, textToShow);
+                    }
+                }
+        );
+    }
     /**
      * Ask the user to enter a value
      * @param textToShow a text that will be shown

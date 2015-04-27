@@ -1,4 +1,4 @@
-package ui.impl.setupwindow.steps;
+package ui.impl.setupwindow;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;

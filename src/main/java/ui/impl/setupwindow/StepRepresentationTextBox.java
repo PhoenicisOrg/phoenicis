@@ -1,7 +1,6 @@
-package ui.impl.setupwindow.steps;
+package ui.impl.setupwindow;
 
 import javafx.scene.control.TextField;
-import ui.impl.setupwindow.JavaFXSetupWindowImplementation;
 import utils.messages.CancelerSynchroneousMessage;
 
 public class StepRepresentationTextBox extends StepRepresentationMessage {
