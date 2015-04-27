@@ -57,7 +57,7 @@ public class WinePrefix {
             } catch (IllegalArgumentException e) {
 
             }
-            Thread.sleep(100);
+            Thread.sleep(10);
         }
         process.waitFor();
 
