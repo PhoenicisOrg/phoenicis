@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class WineProcessBuilder {
     @Injectable
-    private static HashMap<String, String> systemEnvironment;
+    private static HashMap<String, String> applicationEnvironment;
     private List<String> command;
     private File workingDirectory;
     private Map<String, String> environment;
@@ -39,10 +39,7 @@ public class WineProcessBuilder {
         if(environmentSource.containsKey(environmentVariable)) {
             environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable) + ":"
                     + environmentSource.get(environmentVariable));
-        } else {
-            environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable));
         }
-
     }
 
     Process build() throws IOException {
@@ -55,14 +52,20 @@ public class WineProcessBuilder {
             }
         }
 
+        Map<String,String> systemEnvironment = System.getenv();
+
         this.mergeEnvironmentVariables(systemEnvironment, processEnvironement, "PATH");
         this.mergeEnvironmentVariables(systemEnvironment, processEnvironement, "LD_LIBRARY_PATH");
         this.mergeEnvironmentVariables(systemEnvironment, processEnvironement, "DYLD_LIBRARY_PATH");
 
+        this.mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "PATH");
+        this.mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "LD_LIBRARY_PATH");
+        this.mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "DYLD_LIBRARY_PATH");
+
         return processBuilder.start();
     }
 
-    public static void injectSystemEnvironment(HashMap<String, String> systemEnvironment) {
-        WineProcessBuilder.systemEnvironment = systemEnvironment;
+    public static void injectApplicationEnvironment(HashMap<String, String> systemEnvironment) {
+        WineProcessBuilder.applicationEnvironment = systemEnvironment;
     }
 }

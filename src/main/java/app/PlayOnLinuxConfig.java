@@ -6,7 +6,6 @@ import scripts.SetupWizard;
 import ui.api.EventHandler;
 import ui.javafximpl.JavaFXControllerImplementation;
 import utils.PlayOnLinuxError;
-import wine.WineInstallation;
 import wine.WineProcessBuilder;
 
 import java.io.IOException;
@@ -59,7 +58,7 @@ public class PlayOnLinuxConfig {
         scripts.WinePrefix.injectPlayOnLinuxContext(playOnLinuxContext);
 
 
-        WineProcessBuilder.injectSystemEnvironment(playOnLinuxContext.getSystemEnvironment());
+        WineProcessBuilder.injectApplicationEnvironment(playOnLinuxContext.getSystemEnvironment());
     }
 
 
