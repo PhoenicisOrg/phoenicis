@@ -12,17 +12,17 @@ public class SystemUtilitiesTest {
     @Test
     public void testGetFreeSpace_compareWithDf() throws IOException, InterruptedException {
         String directory = "/";
-        long actualValue = SystemUtilities.getFreeSpace(directory);
-        String command = "df -P -k "+directory+"";
 
+        String command = "df -P -k "+directory+"";
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
-
+        long actualValue = SystemUtilities.getFreeSpace(directory);
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         reader.readLine();
         String firstList = reader.readLine();
 
         long expectedValue = Integer.valueOf(firstList.split("[ .]+")[3]);
+
 
         assertEquals(expectedValue, actualValue);
     }
