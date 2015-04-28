@@ -14,6 +14,8 @@ import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.utils.messages.InterrupterSynchroneousMessage;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class JavaFXSetupWindowImplementation extends Stage implements SetupWindow {
@@ -23,8 +25,8 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     private CancelerMessage lastCancelerMessage = null;
 
 
-    private File topImage;
-    private File leftImage;
+    private URL topImage;
+    private URL leftImage;
 
 
     public String getWizardTitle() {
@@ -61,17 +63,17 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     }
 
     private void loadImages() {
-        this.topImage = new File(this.getClass().getResource("defaultTopImage.png").getPath());
+        this.topImage = this.getClass().getResource("defaultTopImage.png");
         try {
             switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
                 case MACOSX:
-                    this.leftImage = new File(this.getClass().getResource("defaultLeftPlayOnMac.jpg").getPath());
+                    this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
                 default:
                 case LINUX:
-                    this.leftImage = new File(this.getClass().getResource("defaultLeftPlayOnLinux.jpg").getPath());
+                    this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
             }
         } catch (PlayOnLinuxError playOnLinuxError) {
-            this.leftImage = new File(this.getClass().getResource("defaultLeftPlayOnLinux.jpg").getPath());
+            this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
         }
     }
 
@@ -127,20 +129,20 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
 
 
     @Override
-    public void setTopImage(File topImage) {
-        this.topImage = topImage;
+    public void setTopImage(File topImage) throws MalformedURLException {
+        this.topImage = new URL(topImage.getAbsolutePath());
     }
 
     @Override
-    public void setLeftImage(File leftImage) {
-        this.leftImage = leftImage;
+    public void setLeftImage(File leftImage) throws MalformedURLException {
+        this.leftImage = new URL(leftImage.getAbsolutePath());
     }
 
-    public File getLeftImage() {
+    public URL getLeftImage() {
         return leftImage;
     }
 
-    public File getTopImage() {
+    public URL getTopImage() {
         return topImage;
     }
 }

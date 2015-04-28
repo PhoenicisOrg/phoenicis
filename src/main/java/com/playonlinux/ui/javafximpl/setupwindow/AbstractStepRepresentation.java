@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import com.playonlinux.utils.messages.CancelerMessage;
 
 import java.io.File;
+import java.net.URL;
 
 abstract class AbstractStepRepresentation {
     private final CancelerMessage messageWaitingForResponse;
@@ -26,11 +27,11 @@ abstract class AbstractStepRepresentation {
         return this.parent.getRoot();
     }
 
-    protected File getParentTopImage() {
+    protected URL getParentTopImage() {
         return this.parent.getTopImage();
     }
 
-    protected File getParentLeftImage() {
+    protected URL getParentLeftImage() {
         return this.parent.getLeftImage();
     }
 

@@ -55,7 +55,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
     }
 
     private Image createTopImage() {
-        return new Image("file:" + this.getParentTopImage().getAbsolutePath());
+        return new Image(this.getParentTopImage().toString());
     }
 
     public void installStep() {

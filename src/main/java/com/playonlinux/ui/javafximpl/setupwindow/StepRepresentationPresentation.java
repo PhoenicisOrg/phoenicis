@@ -23,7 +23,7 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
     }
 
     private Image createLeftImage() {
-        return new Image("file:" + this.getParentLeftImage().getAbsolutePath());
+        return new Image(this.getParentLeftImage().toExternalForm());
     }
 
     @Override

@@ -5,12 +5,13 @@ import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.utils.messages.InterrupterSynchroneousMessage;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
 
 public interface SetupWindow {
-    void setTopImage(File topImage);
+    void setTopImage(File topImage) throws MalformedURLException;
 
-    void setLeftImage(File leftImage);
+    void setLeftImage(File leftImage) throws MalformedURLException;
 
     void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow);
 
