@@ -332,7 +332,7 @@ msgstr "Якого типу віртуальний диск Ви бажаєте 
 #: bash/create_prefix:55
 #, sh-format
 msgid ""
-"(If this list is empty, please install a wine version with wine version "
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
 "manager)"
 msgstr ""
 "(Якщо цей перелік порожній, будь ласка, встановіть одну з версій Wine за "
@@ -400,8 +400,8 @@ msgstr "Налаштування додатку $APPLICATION_TITLE"
 
 #: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
 #: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
-#: lib/setupwindow.lib:439 lib/wine.lib:1014 lib/wine.lib:1092
-#: lib/wine.lib:1122
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait..."
 msgstr "Будь ласка, зачекайте..."
@@ -516,7 +516,7 @@ msgstr "Якщо Ви не знаєте, що потрібно вибрати, �
 msgid "What would you like to do before installation?"
 msgstr "Що Ви бажаєте зробити перед встановленням?"
 
-#: bash/manual_install:203 lib/scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "Будь ласка, зробіть свій вибір"
@@ -857,11 +857,11 @@ msgstr "XQuartz встановлено."
 
 #: bash/startup_after_server:76
 #, sh-format
-msgid "Unable to install XQuartz! You must install it to use wine properly."
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
 msgstr ""
 
 #: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
-#: lib/wine.lib:866
+#: lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "$APPLICATION_TITLE Uninstaller"
 msgstr "Деінсталятор $APPLICATION_TITLE"
@@ -881,7 +881,7 @@ msgstr "Для продовження клацніть Далі."
 msgid "This wizard will help you to uninstall: "
 msgstr "Цей майстер допоможе Вам вилучити програму: "
 
-#: bash/uninstall:65 lib/wine.lib:866
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "Uninstalling..."
 msgstr "Вилучення..."
@@ -950,7 +950,7 @@ msgstr ""
 "адресою: www.$POL_DNS"
 
 #: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
-#: lib/wine.lib:891 lib/wine.lib:972
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
 #, sh-format
 msgid "Please wait while the virtual drive is being created..."
 msgstr "Будь ласка, зачекайте, поки створюється віртуальний диск..."
@@ -1019,7 +1019,7 @@ msgstr "Ви бажаєте вилучити віртуальний диск:"
 #: lib/playonlinux.lib:877
 #, sh-format
 msgid ""
-"The following file is located on a FAT32 filesystem.\\nIt might prevent wine "
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Цей файл розташований на диску з файловою системою FAT32.\\nЗ-за цього Wine "
@@ -1028,7 +1028,7 @@ msgstr ""
 #: lib/playonlinux.lib:878
 #, sh-format
 msgid ""
-"The following file is located on a NTFS filesystem.\\nIt might prevent wine "
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Цей файл розташований на диску з файловою системою NTFS.\\nЗ-за цього Wine "
@@ -1037,7 +1037,7 @@ msgstr ""
 #: lib/playonlinux.lib:879
 #, sh-format
 msgid ""
-"The following file is located on a fuse filesystem.\\nIt might prevent wine "
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Цей файл розташований на файловій системі у користувацькому просторі "
@@ -1047,7 +1047,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "The following file is located on a noexec mounted filesystem.\\nIt might "
-"prevent wine from working\\n\\n$FilePath"
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
 msgstr ""
 "Цей файл розташований на диску, примонтованому без прав на виконання.\\nЗ-за "
 "цього Wine може не працювати.\\n\\n$FilePath"
@@ -1090,7 +1090,7 @@ msgstr "Оновлення втулки. Попередня: "
 msgid "Installing plugin: "
 msgstr "Інсталяція втулки: "
 
-#: lib/scripts.lib:356
+#: lib/com.playonlinux.scripts.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
@@ -1099,41 +1099,41 @@ msgstr ""
 "Виконуваний файл не знайдено: $BINARY\\nПереконайтеся, що обрано типову теку "
 "встановлення програми."
 
-#: lib/scripts.lib:427
+#: lib/com.playonlinux.scripts.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr ""
 
-#: lib/scripts.lib:526 lib/scripts.lib:589
+#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr ""
 "Невистачає вільного місця для завантаження :\\n$URL ($neededSpace KБ)"
 
-#: lib/scripts.lib:528 lib/scripts.lib:811
+#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr "Будь ласка, зачекайте поки стягується $APPLICATION_TITLE:"
 
-#: lib/scripts.lib:530 lib/scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "Під час завантаження сталася помилка."
 
-#: lib/scripts.lib:530 lib/scripts.lib:548 lib/scripts.lib:595
-#: lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "Повторити спробу?"
 
-#: lib/scripts.lib:548 lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 "Помилка! Файли не збігаються\\n\\nЛокальний: $LOCAL_MD5\\nНа сервері : "
 "$SERVER_MD5"
 
-#: lib/scripts.lib:716
+#: lib/com.playonlinux.scripts.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
@@ -1141,32 +1141,32 @@ msgstr ""
 "7z не встановлений, будь ласка, переконайтеся що 7zip встановлений й "
 "спробуйте знову"
 
-#: lib/scripts.lib:723
+#: lib/com.playonlinux.scripts.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr "Не вдалося розташувати ${dest} з ${archive}"
 
-#: lib/scripts.lib:727
+#: lib/com.playonlinux.scripts.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "Витягування ${filename} з ${archivename}"
 
-#: lib/scripts.lib:742
+#: lib/com.playonlinux.scripts.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "Розмір витягнутого файлу не збігається!"
 
-#: lib/scripts.lib:773
+#: lib/com.playonlinux.scripts.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "Копіювання ${filename}"
 
-#: lib/scripts.lib:786
+#: lib/com.playonlinux.scripts.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Розмір файлу не збігається!"
 
-#: lib/scripts.lib:937
+#: lib/com.playonlinux.scripts.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
@@ -1175,7 +1175,7 @@ msgstr ""
 "Нажаль, $APPLICATION_TITLE $VERSION надто застарів, й продовжити неможна.\\"
 "nПотрібен $APPLICATION_TITLE $NEEDED."
 
-#: lib/scripts.lib:952
+#: lib/com.playonlinux.scripts.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
@@ -1184,7 +1184,7 @@ msgstr ""
 "Увага: Ви запускаєте $APPLICATION_TITLE $VERSION.\\nДля того, щоб "
 "продовжити, рекомендовано $APPLICATION_TITLE $NEEDED."
 
-#: lib/scripts.lib:983
+#: lib/com.playonlinux.scripts.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr "$AUTHOR профіль"
@@ -1383,24 +1383,24 @@ msgstr ""
 "Не вдалося під’єднатися!\\n\\nБудь ласкаа, переконайтеся, що ім’я "
 "користувача та пароль правильні."
 
-#: lib/wine.lib:388
+#: lib/com.playonlinux.wine.lib:388
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
 msgstr ""
 "Будь ласка, зачекайте поки $APPLICATION_TITLE вивчає Ваше обладнання."
 
-#: lib/wine.lib:394
+#: lib/com.playonlinux.wine.lib:394
 #, sh-format
 msgid "Select the main videocard to report:"
 msgstr "Виберіть основну відеокартку для звіту:"
 
-#: lib/wine.lib:540
+#: lib/com.playonlinux.wine.lib:540
 #, sh-format
 msgid ""
 "Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
 msgstr ""
 
-#: lib/wine.lib:578
+#: lib/com.playonlinux.wine.lib:578
 #, sh-format
 msgid ""
 "Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
@@ -1409,7 +1409,7 @@ msgstr ""
 "Схоже, Wine перервала роботу.\\n\\nЯкщо Ваша програма працює, просто не "
 "звертайте уваги на це повідомлення."
 
-#: lib/wine.lib:623
+#: lib/com.playonlinux.wine.lib:623
 #, sh-format
 msgid ""
 "This is an installer for an update or an addon;\\nPlease install "
@@ -1418,57 +1418,57 @@ msgstr ""
 "Це встановлювач для оновлення або доповнення;\\nБудь ласка, спочатку "
 "встановіть $TITLE_REQUIRED."
 
-#: lib/wine.lib:682
+#: lib/com.playonlinux.wine.lib:682
 #, sh-format
 msgid "Unable to find version: "
 msgstr "Не вдалося знайти версію: "
 
-#: lib/wine.lib:688 lib/wine.lib:689
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
 #, sh-format
 msgid "Downloading Wine: "
 msgstr "Завантаження Wine: "
 
-#: lib/wine.lib:698
+#: lib/com.playonlinux.wine.lib:698
 #, sh-format
 msgid "The download seems to have failed."
 msgstr "Схоже, завантаження не вдалося."
 
-#: lib/wine.lib:700
+#: lib/com.playonlinux.wine.lib:700
 #, sh-format
 msgid "Extracting Wine..."
 msgstr "Витягування Wine..."
 
-#: lib/wine.lib:897
+#: lib/com.playonlinux.wine.lib:897
 #, sh-format
 msgid "Overwrite (usually works, no guarantee)"
 msgstr "Перезаписати (зазвичай працює, але не гарантовано)"
 
-#: lib/wine.lib:898
+#: lib/com.playonlinux.wine.lib:898
 #, sh-format
 msgid "Erase (virtual drive content will be lost)"
 msgstr "Стерти (вміст віртуального диска буде знищено)"
 
-#: lib/wine.lib:899
+#: lib/com.playonlinux.wine.lib:899
 #, sh-format
 msgid "Abort installation"
 msgstr "Скасувати встановлення"
 
-#: lib/wine.lib:912
+#: lib/com.playonlinux.wine.lib:912
 #, sh-format
 msgid "The target virtual drive $PREFNAME already exists:"
 msgstr "Цільовий віртуальний диск $PREFNAME вже існує:"
 
-#: lib/wine.lib:928
+#: lib/com.playonlinux.wine.lib:928
 #, sh-format
 msgid "User abort"
 msgstr "Операцію скасовано користувачем"
 
-#: lib/wine.lib:1092 lib/wine.lib:1122
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait while $SOFTNAME is installed..."
 msgstr "Будь ласка, зачекайте поки $SOFTNAME встановиться..."
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid ""
 "Be careful! This will kill install process. If it is not finished, you will "
@@ -1477,17 +1477,17 @@ msgstr ""
 "Будьте обережні!! Це вб’є процес встановлення. Якщо він не був закінчений, "
 "Вам доведеться перевстановити $SOFTNAME"
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid "Install is done"
 msgstr "Встановлення закінчено"
 
-#: lib/wine.lib:1129 lib/wine.lib:1130
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
 #, sh-format
 msgid "Press next only when the installation process is finished"
 msgstr "Натисніть далі лише коли процес встановлення буде закінчено"
 
-#: lib/wine.lib:1138
+#: lib/com.playonlinux.wine.lib:1138
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
 msgstr ""
@@ -1711,7 +1711,7 @@ msgid "Report a problem about {0}"
 msgstr "Повідомити про проблему, пов’язану з {0}"
 
 #: python/debug.py:263
-msgid "Install scripts"
+msgid "Install com.playonlinux.scripts"
 msgstr "Встановити скрипти"
 
 #: python/gui_server.py:54 python/gui_server.py:55
@@ -2109,7 +2109,7 @@ msgid "{0} install menu"
 msgstr "{0} меню встановл."
 
 #: python/mainwindow.py:1014
-msgid "{0} wine versions manager"
+msgid "{0} com.playonlinux.wine versions manager"
 msgstr "{0} менеджер версій Wine"
 
 #: python/mainwindow.py:1045
@@ -2339,8 +2339,8 @@ msgid "Wine versions"
 msgstr "Версії Wine"
 
 #: python/wine_versions.py:330
-msgid "Are you sure you want to delete wine {0}?"
-msgstr "Ви справді бажаєте вилучити wine {0}?"
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
+msgstr "Ви справді бажаєте вилучити com.playonlinux.wine {0}?"
 
 #: python/wine_versions.py:332
 msgid "This version is CURRENTLY IN USE"

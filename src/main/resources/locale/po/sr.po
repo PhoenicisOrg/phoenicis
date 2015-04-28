@@ -324,7 +324,7 @@ msgstr "Какав нестваран уређај желите створити
 #: bash/create_prefix:55
 #, sh-format
 msgid ""
-"(If this list is empty, please install a wine version with wine version "
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
 "manager)"
 msgstr ""
 "(Уколико је овај списак празан, молим, уградите издање вина са управником "
@@ -392,8 +392,8 @@ msgstr ""
 
 #: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
 #: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
-#: lib/setupwindow.lib:439 lib/wine.lib:1014 lib/wine.lib:1092
-#: lib/wine.lib:1122
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait..."
 msgstr "Молим, сачекајте..."
@@ -503,7 +503,7 @@ msgstr "Не знам, одзначи све"
 msgid "What would you like to do before installation?"
 msgstr "Шта би желели да урадите пре уградње?"
 
-#: bash/manual_install:203 lib/scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr ""
@@ -840,11 +840,11 @@ msgstr ""
 
 #: bash/startup_after_server:76
 #, sh-format
-msgid "Unable to install XQuartz! You must install it to use wine properly."
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
 msgstr ""
 
 #: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
-#: lib/wine.lib:866
+#: lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "$APPLICATION_TITLE Uninstaller"
 msgstr "Уклањач $APPLICATION_TITLE"
@@ -864,7 +864,7 @@ msgstr "Кликните Следеће за наставак."
 msgid "This wizard will help you to uninstall: "
 msgstr "Овај чаробњак ће вам помоћи да уклоните: "
 
-#: bash/uninstall:65 lib/wine.lib:866
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "Uninstalling..."
 msgstr "Уклањам..."
@@ -926,7 +926,7 @@ msgid ""
 msgstr ""
 
 #: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
-#: lib/wine.lib:891 lib/wine.lib:972
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
 #, sh-format
 msgid "Please wait while the virtual drive is being created..."
 msgstr ""
@@ -986,7 +986,7 @@ msgstr "Да ли желите избрисати нестварни уређа�
 #: lib/playonlinux.lib:877
 #, sh-format
 msgid ""
-"The following file is located on a FAT32 filesystem.\\nIt might prevent wine "
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Следећа датотека се налази на Фат32 систему датотека.\\nТо може спречити "
@@ -995,7 +995,7 @@ msgstr ""
 #: lib/playonlinux.lib:878
 #, sh-format
 msgid ""
-"The following file is located on a NTFS filesystem.\\nIt might prevent wine "
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Следећа датотека се налази на НТСФ систему датотека.\\nТо може спречити вино "
@@ -1004,7 +1004,7 @@ msgstr ""
 #: lib/playonlinux.lib:879
 #, sh-format
 msgid ""
-"The following file is located on a fuse filesystem.\\nIt might prevent wine "
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 
@@ -1012,7 +1012,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "The following file is located on a noexec mounted filesystem.\\nIt might "
-"prevent wine from working\\n\\n$FilePath"
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
 msgstr ""
 "Следећа датотека се налази на неизвршно прикаченом систему датотека.\\nТо "
 "може спречити Вино од рада на \\n\\n$FilePath"
@@ -1051,90 +1051,90 @@ msgstr "Надограђујем прикључак. Претходни: "
 msgid "Installing plugin: "
 msgstr "Уграђујем прикључак: "
 
-#: lib/scripts.lib:356
+#: lib/com.playonlinux.scripts.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
 "location?"
 msgstr ""
 
-#: lib/scripts.lib:427
+#: lib/com.playonlinux.scripts.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr ""
 
-#: lib/scripts.lib:526 lib/scripts.lib:589
+#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr "Нема довољно простора за преузимање:\\n$URL ($neededSpace KB)"
 
-#: lib/scripts.lib:528 lib/scripts.lib:811
+#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr ""
 
-#: lib/scripts.lib:530 lib/scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "Десила се грешка приликом преузимања"
 
-#: lib/scripts.lib:530 lib/scripts.lib:548 lib/scripts.lib:595
-#: lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "Желите ли да покушате поново?"
 
-#: lib/scripts.lib:548 lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 
-#: lib/scripts.lib:716
+#: lib/com.playonlinux.scripts.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
 msgstr ""
 
-#: lib/scripts.lib:723
+#: lib/com.playonlinux.scripts.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr ""
 
-#: lib/scripts.lib:727
+#: lib/com.playonlinux.scripts.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr ""
 
-#: lib/scripts.lib:742
+#: lib/com.playonlinux.scripts.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr ""
 
-#: lib/scripts.lib:773
+#: lib/com.playonlinux.scripts.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "Умножавам ${filename}"
 
-#: lib/scripts.lib:786
+#: lib/com.playonlinux.scripts.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Величина датотека се не поклапа"
 
-#: lib/scripts.lib:937
+#: lib/com.playonlinux.scripts.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
 "n$APPLICATION_TITLE $NEEDED is required."
 msgstr ""
 
-#: lib/scripts.lib:952
+#: lib/com.playonlinux.scripts.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
 "$NEEDED is recommended to continue."
 msgstr ""
 
-#: lib/scripts.lib:983
+#: lib/com.playonlinux.scripts.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr "$AUTHOR профил"
@@ -1330,23 +1330,23 @@ msgid ""
 "valid."
 msgstr ""
 
-#: lib/wine.lib:388
+#: lib/com.playonlinux.wine.lib:388
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
 msgstr "Молим, сачекајте док $APPLICATION_TITLE прегледа ваш хардвер"
 
-#: lib/wine.lib:394
+#: lib/com.playonlinux.wine.lib:394
 #, sh-format
 msgid "Select the main videocard to report:"
 msgstr ""
 
-#: lib/wine.lib:540
+#: lib/com.playonlinux.wine.lib:540
 #, sh-format
 msgid ""
 "Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
 msgstr ""
 
-#: lib/wine.lib:578
+#: lib/com.playonlinux.wine.lib:578
 #, sh-format
 msgid ""
 "Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
@@ -1355,64 +1355,64 @@ msgstr ""
 "Изгледа да се вино срушило\\n\\nАко с Ваш програм извршава, само занемарите "
 "ову поруку"
 
-#: lib/wine.lib:623
+#: lib/com.playonlinux.wine.lib:623
 #, sh-format
 msgid ""
 "This is an installer for an update or an addon;\\nPlease install "
 "$TITLE_REQUIRED first"
 msgstr ""
 
-#: lib/wine.lib:682
+#: lib/com.playonlinux.wine.lib:682
 #, sh-format
 msgid "Unable to find version: "
 msgstr "Нисам успео да пронађем издање: "
 
-#: lib/wine.lib:688 lib/wine.lib:689
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
 #, sh-format
 msgid "Downloading Wine: "
 msgstr "Преузимам Вино "
 
-#: lib/wine.lib:698
+#: lib/com.playonlinux.wine.lib:698
 #, sh-format
 msgid "The download seems to have failed."
 msgstr "Изгледа ми да преузимање није успело"
 
-#: lib/wine.lib:700
+#: lib/com.playonlinux.wine.lib:700
 #, sh-format
 msgid "Extracting Wine..."
 msgstr "Издвајам Вино"
 
-#: lib/wine.lib:897
+#: lib/com.playonlinux.wine.lib:897
 #, sh-format
 msgid "Overwrite (usually works, no guarantee)"
 msgstr "Препиши (обично успева, не јемчим)"
 
-#: lib/wine.lib:898
+#: lib/com.playonlinux.wine.lib:898
 #, sh-format
 msgid "Erase (virtual drive content will be lost)"
 msgstr "Обриши (садржај нестварног уређаја ће бити изгубљен)"
 
-#: lib/wine.lib:899
+#: lib/com.playonlinux.wine.lib:899
 #, sh-format
 msgid "Abort installation"
 msgstr "Прекини уградњу"
 
-#: lib/wine.lib:912
+#: lib/com.playonlinux.wine.lib:912
 #, sh-format
 msgid "The target virtual drive $PREFNAME already exists:"
 msgstr "циљни нестварни уређај $PREFNAME већ постоји"
 
-#: lib/wine.lib:928
+#: lib/com.playonlinux.wine.lib:928
 #, sh-format
 msgid "User abort"
 msgstr "Прекинуо корисник"
 
-#: lib/wine.lib:1092 lib/wine.lib:1122
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait while $SOFTNAME is installed..."
 msgstr "Молим, сачекајте док се $SOFTNAME угради..."
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid ""
 "Be careful! This will kill install process. If it is not finished, you will "
@@ -1421,17 +1421,17 @@ msgstr ""
 "Пажљиво! Ово ће убити поступак уградње. Ако није завршен, мораћете поново "
 "уградити $SOFTNAME"
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid "Install is done"
 msgstr "Уградња је завршена"
 
-#: lib/wine.lib:1129 lib/wine.lib:1130
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
 #, sh-format
 msgid "Press next only when the installation process is finished"
 msgstr "Приитисни следеће так након завршетка поступка уградње"
 
-#: lib/wine.lib:1138
+#: lib/com.playonlinux.wine.lib:1138
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
 msgstr "Молим, сачекајте док $APPLICATION_TITLE опонаша поновно покретање"
@@ -1647,7 +1647,7 @@ msgid "Report a problem about {0}"
 msgstr "Пријавите потешкоћу о {0}"
 
 #: python/debug.py:263
-msgid "Install scripts"
+msgid "Install com.playonlinux.scripts"
 msgstr "Угради скрипту"
 
 #: python/gui_server.py:54 python/gui_server.py:55
@@ -2034,7 +2034,7 @@ msgid "{0} install menu"
 msgstr "{0} изборник уградње"
 
 #: python/mainwindow.py:1014
-msgid "{0} wine versions manager"
+msgid "{0} com.playonlinux.wine versions manager"
 msgstr "Управник издања Вина"
 
 #: python/mainwindow.py:1045
@@ -2250,7 +2250,7 @@ msgid "Wine versions"
 msgstr "Издање вина"
 
 #: python/wine_versions.py:330
-msgid "Are you sure you want to delete wine {0}?"
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
 msgstr ""
 
 #: python/wine_versions.py:332

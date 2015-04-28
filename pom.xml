@@ -97,7 +97,7 @@
                         <phase>process-test-classes</phase>
                         <configuration>
                             <target>
-                                <chmod file="target/test-classes/wine/bin/wine" perm="755"/>
+                                <chmod file="target/test-classes/com.playonlinux.wine/bin/com.playonlinux.wine" perm="755"/>
                             </target>
                         </configuration>
                         <goals>
@@ -105,6 +105,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.playonlinux.com.playonlinux.app.PlayOnLinuxApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
 
 

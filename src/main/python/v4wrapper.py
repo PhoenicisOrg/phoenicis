@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-# This tools is made to run legacy PlayOnLinux v4 scripts
+# This tools is made to run legacy PlayOnLinux v4 com.playonlinux.scripts
 import os
 import subprocess
 
 from SetupWindow.SetupWindowNetcatServer import SetupWindowNetcatServer
-from scripts import EnvironementHelper
+from com.playonlinux.scripts import EnvironementHelper
 
 if __name__ == '__main__':
     setupWindowNetcatServer = SetupWindowNetcatServer()

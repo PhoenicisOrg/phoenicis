@@ -332,7 +332,7 @@ msgstr "Ce tip de disc virtual doriți să creați"
 #: bash/create_prefix:55
 #, sh-format
 msgid ""
-"(If this list is empty, please install a wine version with wine version "
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
 "manager)"
 msgstr ""
 
@@ -397,8 +397,8 @@ msgstr "$APPLICATION_TITLE configuratorul aplicației"
 
 #: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
 #: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
-#: lib/setupwindow.lib:439 lib/wine.lib:1014 lib/wine.lib:1092
-#: lib/wine.lib:1122
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait..."
 msgstr "Așteptați..."
@@ -510,7 +510,7 @@ msgstr "Dacă nu știți,deselectați tot"
 msgid "What would you like to do before installation?"
 msgstr "Ce v-ar place să faceți înaintea instalării?"
 
-#: bash/manual_install:203 lib/scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "Faceți alegerea"
@@ -661,7 +661,7 @@ msgstr "Se omoară toate prefixele proceselor"
 #: bash/polconfigurator:105
 #, sh-format
 msgid "Update wineprefix"
-msgstr "Se actualizează prefixul wine"
+msgstr "Se actualizează prefixul com.playonlinux.wine"
 
 #: bash/polconfigurator:106
 #, sh-format
@@ -848,11 +848,11 @@ msgstr "XQuartz a fost instalat."
 
 #: bash/startup_after_server:76
 #, sh-format
-msgid "Unable to install XQuartz! You must install it to use wine properly."
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
 msgstr ""
 
 #: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
-#: lib/wine.lib:866
+#: lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "$APPLICATION_TITLE Uninstaller"
 msgstr "Dezinstalatorul $APPLICATION_TITLE"
@@ -872,7 +872,7 @@ msgstr "Apăsați Următorul ca să continuați."
 msgid "This wizard will help you to uninstall: "
 msgstr "Acest vrăjitor vă va ajuta să dezinstalați: "
 
-#: bash/uninstall:65 lib/wine.lib:866
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "Uninstalling..."
 msgstr "Se dezinstalează..."
@@ -938,7 +938,7 @@ msgstr ""
 "viitoare"
 
 #: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
-#: lib/wine.lib:891 lib/wine.lib:972
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
 #, sh-format
 msgid "Please wait while the virtual drive is being created..."
 msgstr "Așteptați până când driverul virtual va fi creat..."
@@ -1005,7 +1005,7 @@ msgstr "Doriți ștergerea driver-ului virtual:"
 #: lib/playonlinux.lib:877
 #, sh-format
 msgid ""
-"The following file is located on a FAT32 filesystem.\\nIt might prevent wine "
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Fișierul următor este situat pe un sistem de fișiere FAT32.\\nPoate "
@@ -1014,7 +1014,7 @@ msgstr ""
 #: lib/playonlinux.lib:878
 #, sh-format
 msgid ""
-"The following file is located on a NTFS filesystem.\\nIt might prevent wine "
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "Fișierul următor este situat pe un sistem de fișiere NTFS.\\nPoate împiedica "
@@ -1023,7 +1023,7 @@ msgstr ""
 #: lib/playonlinux.lib:879
 #, sh-format
 msgid ""
-"The following file is located on a fuse filesystem.\\nIt might prevent wine "
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 
@@ -1031,7 +1031,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "The following file is located on a noexec mounted filesystem.\\nIt might "
-"prevent wine from working\\n\\n$FilePath"
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
 msgstr ""
 
 #: lib/playonlinux.lib:909
@@ -1068,7 +1068,7 @@ msgstr "Se actualizează modulul.Precedent: "
 msgid "Installing plugin: "
 msgstr "Se instalează modulul: "
 
-#: lib/scripts.lib:356
+#: lib/com.playonlinux.scripts.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
@@ -1077,72 +1077,72 @@ msgstr ""
 "Nu s-au găsit fișierele binare: $BINARY\\nAți instalat programul la locația "
 "implicită?"
 
-#: lib/scripts.lib:427
+#: lib/com.playonlinux.scripts.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr ""
 
-#: lib/scripts.lib:526 lib/scripts.lib:589
+#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr "Nu este spațiu suficient pentru a descărca:\\n$URL ($neededSpace KB)"
 
-#: lib/scripts.lib:528 lib/scripts.lib:811
+#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr "Așteptați până când $APPLICATION_TITLE este descărcat:"
 
-#: lib/scripts.lib:530 lib/scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "A intervenit o eroare în timpul descărcării."
 
-#: lib/scripts.lib:530 lib/scripts.lib:548 lib/scripts.lib:595
-#: lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "Doriți să reîncercați?"
 
-#: lib/scripts.lib:548 lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 "Eroare ! Fișierele nu se potrivesc\\n\\nLocal: $LOCAL_MD5\\nServer : "
 "$SERVER_MD5"
 
-#: lib/scripts.lib:716
+#: lib/com.playonlinux.scripts.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
 msgstr ""
 "7z nu este instalat,verificați dacă aveți 7zip instalat și încercați din nou"
 
-#: lib/scripts.lib:723
+#: lib/com.playonlinux.scripts.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr "Eșuare la localizarea ${dest} din ${archive}"
 
-#: lib/scripts.lib:727
+#: lib/com.playonlinux.scripts.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "Se extrage ${filename} din ${archivename}"
 
-#: lib/scripts.lib:742
+#: lib/com.playonlinux.scripts.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "Dimensiunea fișierului extras nu se potrivește!"
 
-#: lib/scripts.lib:773
+#: lib/com.playonlinux.scripts.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "Se copiază ${filename}"
 
-#: lib/scripts.lib:786
+#: lib/com.playonlinux.scripts.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Mărimea fișierului nu se potrivește!"
 
-#: lib/scripts.lib:937
+#: lib/com.playonlinux.scripts.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
@@ -1151,7 +1151,7 @@ msgstr ""
 "Regret,$APPLICATION_TITLE $VERSION este foarte vechi să continui.\\"
 "n$APPLICATION_TITLE $NEEDED este necesar."
 
-#: lib/scripts.lib:952
+#: lib/com.playonlinux.scripts.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
@@ -1160,7 +1160,7 @@ msgstr ""
 "Atenție: Rulați $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE $NEEDED "
 "este recomandat să continui."
 
-#: lib/scripts.lib:983
+#: lib/com.playonlinux.scripts.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr "Profil $AUTHOR"
@@ -1360,23 +1360,23 @@ msgstr ""
 "Eșuare la conectare!\\nAsigurați-vă că numele de logare și parola sunt "
 "valide."
 
-#: lib/wine.lib:388
+#: lib/com.playonlinux.wine.lib:388
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
 msgstr "Așteptați în timp ce $APPLICATION_TITLE scanează hardware-ul"
 
-#: lib/wine.lib:394
+#: lib/com.playonlinux.wine.lib:394
 #, sh-format
 msgid "Select the main videocard to report:"
 msgstr ""
 
-#: lib/wine.lib:540
+#: lib/com.playonlinux.wine.lib:540
 #, sh-format
 msgid ""
 "Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
 msgstr ""
 
-#: lib/wine.lib:578
+#: lib/com.playonlinux.wine.lib:578
 #, sh-format
 msgid ""
 "Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
@@ -1384,64 +1384,64 @@ msgid ""
 msgstr ""
 "Wine pare a fi prăbușit\\n\\nDacă programul vă rulează,ignorați acest mesaj"
 
-#: lib/wine.lib:623
+#: lib/com.playonlinux.wine.lib:623
 #, sh-format
 msgid ""
 "This is an installer for an update or an addon;\\nPlease install "
 "$TITLE_REQUIRED first"
 msgstr ""
 
-#: lib/wine.lib:682
+#: lib/com.playonlinux.wine.lib:682
 #, sh-format
 msgid "Unable to find version: "
 msgstr "Incapabil să aflu versiunea: "
 
-#: lib/wine.lib:688 lib/wine.lib:689
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
 #, sh-format
 msgid "Downloading Wine: "
 msgstr "Se descarcă Wine: "
 
-#: lib/wine.lib:698
+#: lib/com.playonlinux.wine.lib:698
 #, sh-format
 msgid "The download seems to have failed."
 msgstr "Descărcarea se pare că a eșuat."
 
-#: lib/wine.lib:700
+#: lib/com.playonlinux.wine.lib:700
 #, sh-format
 msgid "Extracting Wine..."
 msgstr "Se extrage Wine..."
 
-#: lib/wine.lib:897
+#: lib/com.playonlinux.wine.lib:897
 #, sh-format
 msgid "Overwrite (usually works, no guarantee)"
 msgstr "Suprascrie (lucrează de obicei, fără garanție)"
 
-#: lib/wine.lib:898
+#: lib/com.playonlinux.wine.lib:898
 #, sh-format
 msgid "Erase (virtual drive content will be lost)"
 msgstr "Șterge (se va pierde conținutul discului virtual)"
 
-#: lib/wine.lib:899
+#: lib/com.playonlinux.wine.lib:899
 #, sh-format
 msgid "Abort installation"
 msgstr "Abandonează instalarea"
 
-#: lib/wine.lib:912
+#: lib/com.playonlinux.wine.lib:912
 #, sh-format
 msgid "The target virtual drive $PREFNAME already exists:"
 msgstr "Ținta discul virtual $PREFNAME există deja:"
 
-#: lib/wine.lib:928
+#: lib/com.playonlinux.wine.lib:928
 #, sh-format
 msgid "User abort"
 msgstr "Abandonat de utilizator"
 
-#: lib/wine.lib:1092 lib/wine.lib:1122
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait while $SOFTNAME is installed..."
 msgstr "Așteptați până când $SOFTNAME este instalat..."
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid ""
 "Be careful! This will kill install process. If it is not finished, you will "
@@ -1450,17 +1450,17 @@ msgstr ""
 "Fiți atent! Acesta va omorâ  procesul instalării.Dacă nu este finalizat, va "
 "trebui să reinstalați $SOFTNAME"
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid "Install is done"
 msgstr "Instalarea este terminată"
 
-#: lib/wine.lib:1129 lib/wine.lib:1130
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
 #, sh-format
 msgid "Press next only when the installation process is finished"
 msgstr "Apăsați următorul numai după ce s-a terminat procesul instalării"
 
-#: lib/wine.lib:1138
+#: lib/com.playonlinux.wine.lib:1138
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
 msgstr "Așteptați până ce $APPLICATION_TITLE simulează o repornire"
@@ -1683,7 +1683,7 @@ msgid "Report a problem about {0}"
 msgstr "Raportați o problemă despre {0}"
 
 #: python/debug.py:263
-msgid "Install scripts"
+msgid "Install com.playonlinux.scripts"
 msgstr "Instalare scripturi"
 
 #: python/gui_server.py:54 python/gui_server.py:55
@@ -2071,8 +2071,8 @@ msgid "{0} install menu"
 msgstr "{0} meniu de instalare"
 
 #: python/mainwindow.py:1014
-msgid "{0} wine versions manager"
-msgstr "{0} administrator versiuni wine"
+msgid "{0} com.playonlinux.wine versions manager"
+msgstr "{0} administrator versiuni com.playonlinux.wine"
 
 #: python/mainwindow.py:1045
 msgid "The virtual drive associated with {0} ({1}) does no longer exists."
@@ -2285,8 +2285,8 @@ msgid "Wine versions"
 msgstr "Versiuni Wine"
 
 #: python/wine_versions.py:330
-msgid "Are you sure you want to delete wine {0}?"
-msgstr "Sigur doriți ștergerea wine (0)?"
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
+msgstr "Sigur doriți ștergerea com.playonlinux.wine (0)?"
 
 #: python/wine_versions.py:332
 msgid "This version is CURRENTLY IN USE"

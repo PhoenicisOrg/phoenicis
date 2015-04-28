@@ -3,7 +3,7 @@
 import os
 
 from SetupWindowManager import SetupWindowManager
-from scripts import EnvironementHelper
+from com.playonlinux.scripts import EnvironementHelper
 
 class SetupWindowNetcatCommandParser(object):
     def __init__(self, setupWindowManager, command):

@@ -309,7 +309,7 @@ msgstr "你要製作什麼類型的虛擬磁碟"
 #: bash/create_prefix:55
 #, sh-format
 msgid ""
-"(If this list is empty, please install a wine version with wine version "
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
 "manager)"
 msgstr "（如果這個清單是空的，請使用 Wine 版本管理員來安裝一個 Wine 版本）"
 
@@ -373,8 +373,8 @@ msgstr "$APPLICATION_TITLE 應用程式設定"
 
 #: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
 #: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
-#: lib/setupwindow.lib:439 lib/wine.lib:1014 lib/wine.lib:1092
-#: lib/wine.lib:1122
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait..."
 msgstr "請稍候…"
@@ -482,7 +482,7 @@ msgstr "如果你不知道的話，全部都不要選取"
 msgid "What would you like to do before installation?"
 msgstr "在安裝之前你想要先做什麼？"
 
-#: bash/manual_install:203 lib/scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "請選擇"
@@ -817,11 +817,11 @@ msgstr "XQuartz 已經安裝。"
 
 #: bash/startup_after_server:76
 #, sh-format
-msgid "Unable to install XQuartz! You must install it to use wine properly."
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
 msgstr ""
 
 #: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
-#: lib/wine.lib:866
+#: lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "$APPLICATION_TITLE Uninstaller"
 msgstr "$APPLICATION_TITLE 移除程式"
@@ -841,7 +841,7 @@ msgstr "點擊下一步以繼續"
 msgid "This wizard will help you to uninstall: "
 msgstr "這個精靈將會幫助你移除： "
 
-#: bash/uninstall:65 lib/wine.lib:866
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "Uninstalling..."
 msgstr "正在移除..."
@@ -906,7 +906,7 @@ msgstr ""
 "以得到進一步的資訊"
 
 #: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
-#: lib/wine.lib:891 lib/wine.lib:972
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
 #, sh-format
 msgid "Please wait while the virtual drive is being created..."
 msgstr "請等待虛擬硬碟建立 ..."
@@ -966,21 +966,21 @@ msgstr "你要刪除這個虛擬磁碟嗎："
 #: lib/playonlinux.lib:877
 #, sh-format
 msgid ""
-"The following file is located on a FAT32 filesystem.\\nIt might prevent wine "
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 
 #: lib/playonlinux.lib:878
 #, sh-format
 msgid ""
-"The following file is located on a NTFS filesystem.\\nIt might prevent wine "
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 
 #: lib/playonlinux.lib:879
 #, sh-format
 msgid ""
-"The following file is located on a fuse filesystem.\\nIt might prevent wine "
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 
@@ -988,7 +988,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "The following file is located on a noexec mounted filesystem.\\nIt might "
-"prevent wine from working\\n\\n$FilePath"
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
 msgstr ""
 
 #: lib/playonlinux.lib:909
@@ -1025,90 +1025,90 @@ msgstr ""
 msgid "Installing plugin: "
 msgstr "正在安裝外掛： "
 
-#: lib/scripts.lib:356
+#: lib/com.playonlinux.scripts.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
 "location?"
 msgstr ""
 
-#: lib/scripts.lib:427
+#: lib/com.playonlinux.scripts.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr ""
 
-#: lib/scripts.lib:526 lib/scripts.lib:589
+#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr ""
 
-#: lib/scripts.lib:528 lib/scripts.lib:811
+#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr ""
 
-#: lib/scripts.lib:530 lib/scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "下載時發生錯誤。"
 
-#: lib/scripts.lib:530 lib/scripts.lib:548 lib/scripts.lib:595
-#: lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "您想要重試嗎？"
 
-#: lib/scripts.lib:548 lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 
-#: lib/scripts.lib:716
+#: lib/com.playonlinux.scripts.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
 msgstr "沒有安裝 7z，請確認你已經安裝 7zip 並再試一次"
 
-#: lib/scripts.lib:723
+#: lib/com.playonlinux.scripts.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr ""
 
-#: lib/scripts.lib:727
+#: lib/com.playonlinux.scripts.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "從 ${archivename} 解壓縮 ${filename}"
 
-#: lib/scripts.lib:742
+#: lib/com.playonlinux.scripts.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "解壓縮出的檔案大小不匹配！"
 
-#: lib/scripts.lib:773
+#: lib/com.playonlinux.scripts.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "複製 ${filename}"
 
-#: lib/scripts.lib:786
+#: lib/com.playonlinux.scripts.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "文件大小不匹配"
 
-#: lib/scripts.lib:937
+#: lib/com.playonlinux.scripts.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
 "n$APPLICATION_TITLE $NEEDED is required."
 msgstr ""
 
-#: lib/scripts.lib:952
+#: lib/com.playonlinux.scripts.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
 "$NEEDED is recommended to continue."
 msgstr ""
 
-#: lib/scripts.lib:983
+#: lib/com.playonlinux.scripts.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr ""
@@ -1303,104 +1303,104 @@ msgid ""
 "valid."
 msgstr "連接失敗！\\n請確保您的登錄名稱和密碼是有效的."
 
-#: lib/wine.lib:388
+#: lib/com.playonlinux.wine.lib:388
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
 msgstr "$APPLICATION_TITLE 正在掃描您的硬體，請稍候"
 
-#: lib/wine.lib:394
+#: lib/com.playonlinux.wine.lib:394
 #, sh-format
 msgid "Select the main videocard to report:"
 msgstr "選擇要報告的主要顯示卡："
 
-#: lib/wine.lib:540
+#: lib/com.playonlinux.wine.lib:540
 #, sh-format
 msgid ""
 "Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
 msgstr ""
 
-#: lib/wine.lib:578
+#: lib/com.playonlinux.wine.lib:578
 #, sh-format
 msgid ""
 "Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
 "message"
 msgstr "Wine 似乎已經當機\\n\\n如果你的程式正在運行， 忽略此訊息"
 
-#: lib/wine.lib:623
+#: lib/com.playonlinux.wine.lib:623
 #, sh-format
 msgid ""
 "This is an installer for an update or an addon;\\nPlease install "
 "$TITLE_REQUIRED first"
 msgstr "此為一個更新或是插件的安裝檔;\\n請先行安裝 $TITLE_REQUIRED"
 
-#: lib/wine.lib:682
+#: lib/com.playonlinux.wine.lib:682
 #, sh-format
 msgid "Unable to find version: "
 msgstr "不能找到下列版本： "
 
-#: lib/wine.lib:688 lib/wine.lib:689
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
 #, sh-format
 msgid "Downloading Wine: "
 msgstr "下載 Wine： "
 
-#: lib/wine.lib:698
+#: lib/com.playonlinux.wine.lib:698
 #, sh-format
 msgid "The download seems to have failed."
 msgstr "下載似乎失敗了。"
 
-#: lib/wine.lib:700
+#: lib/com.playonlinux.wine.lib:700
 #, sh-format
 msgid "Extracting Wine..."
 msgstr "解壓縮 Wine 中..."
 
-#: lib/wine.lib:897
+#: lib/com.playonlinux.wine.lib:897
 #, sh-format
 msgid "Overwrite (usually works, no guarantee)"
 msgstr "覆蓋(通常奏效, 但不保證)"
 
-#: lib/wine.lib:898
+#: lib/com.playonlinux.wine.lib:898
 #, sh-format
 msgid "Erase (virtual drive content will be lost)"
 msgstr ""
 
-#: lib/wine.lib:899
+#: lib/com.playonlinux.wine.lib:899
 #, sh-format
 msgid "Abort installation"
 msgstr "中止安裝"
 
-#: lib/wine.lib:912
+#: lib/com.playonlinux.wine.lib:912
 #, sh-format
 msgid "The target virtual drive $PREFNAME already exists:"
 msgstr ""
 
-#: lib/wine.lib:928
+#: lib/com.playonlinux.wine.lib:928
 #, sh-format
 msgid "User abort"
 msgstr "使用者中止"
 
-#: lib/wine.lib:1092 lib/wine.lib:1122
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait while $SOFTNAME is installed..."
 msgstr "正在安裝 $SOFTNAME ，請稍候..."
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid ""
 "Be careful! This will kill install process. If it is not finished, you will "
 "have to reinstall $SOFTNAME"
 msgstr ""
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid "Install is done"
 msgstr "安裝完成"
 
-#: lib/wine.lib:1129 lib/wine.lib:1130
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
 #, sh-format
 msgid "Press next only when the installation process is finished"
 msgstr "只有在安裝程式完成時才按\"下一步\""
 
-#: lib/wine.lib:1138
+#: lib/com.playonlinux.wine.lib:1138
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
 msgstr "請等待， $APPLICATION_TITLE 正在模擬重新啟動"
@@ -1616,7 +1616,7 @@ msgid "Report a problem about {0}"
 msgstr "回報關於 {0} 的問題"
 
 #: python/debug.py:263
-msgid "Install scripts"
+msgid "Install com.playonlinux.scripts"
 msgstr "安裝腳本"
 
 #: python/gui_server.py:54 python/gui_server.py:55
@@ -1999,7 +1999,7 @@ msgid "{0} install menu"
 msgstr "{0} 安裝選單"
 
 #: python/mainwindow.py:1014
-msgid "{0} wine versions manager"
+msgid "{0} com.playonlinux.wine versions manager"
 msgstr "{0} Wine 版本管理員"
 
 #: python/mainwindow.py:1045
@@ -2212,7 +2212,7 @@ msgid "Wine versions"
 msgstr "Wine 版本"
 
 #: python/wine_versions.py:330
-msgid "Are you sure you want to delete wine {0}?"
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
 msgstr "你確定你要刪除 Wine {0} 嗎？"
 
 #: python/wine_versions.py:332

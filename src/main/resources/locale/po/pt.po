@@ -333,11 +333,11 @@ msgstr "Que tipo de unidade virtual deseja criar?"
 #: bash/create_prefix:55
 #, sh-format
 msgid ""
-"(If this list is empty, please install a wine version with wine version "
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
 "manager)"
 msgstr ""
 "(Se a lista estiver vazia, instale uma versão do Wine com o gestor de "
-"versões do wine)"
+"versões do com.playonlinux.wine)"
 
 #: bash/create_prefix:55 bash/manual_install:156
 #, sh-format
@@ -401,8 +401,8 @@ msgstr "Configuração da aplicação $APPLICATION_TITLE"
 
 #: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
 #: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
-#: lib/setupwindow.lib:439 lib/wine.lib:1014 lib/wine.lib:1092
-#: lib/wine.lib:1122
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait..."
 msgstr "Por favor aguarde..."
@@ -518,7 +518,7 @@ msgstr "Se não sabe, desmarque tudo"
 msgid "What would you like to do before installation?"
 msgstr "O que gostaria de fazer antes da instalação?"
 
-#: bash/manual_install:203 lib/scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "Por favor, escolha"
@@ -863,13 +863,13 @@ msgstr "XQuartz foi instalado."
 
 #: bash/startup_after_server:76
 #, sh-format
-msgid "Unable to install XQuartz! You must install it to use wine properly."
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
 msgstr ""
-"Não foi possível instalar o XQuartz! Tem de instalá-lo para utilizar o wine "
+"Não foi possível instalar o XQuartz! Tem de instalá-lo para utilizar o com.playonlinux.wine "
 "corretamente."
 
 #: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
-#: lib/wine.lib:866
+#: lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "$APPLICATION_TITLE Uninstaller"
 msgstr "Desinstalador de $APPLICATION_TITLE"
@@ -889,7 +889,7 @@ msgstr "Clique em Avançar para continuar."
 msgid "This wizard will help you to uninstall: "
 msgstr "Este assistente irá ajudá-lo a desinstalar: "
 
-#: bash/uninstall:65 lib/wine.lib:866
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
 #, sh-format
 msgid "Uninstalling..."
 msgstr "A desinstalar..."
@@ -957,7 +957,7 @@ msgstr ""
 "processo de instalação.\\nVisite www.$POL_DNS para mais informações."
 
 #: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
-#: lib/wine.lib:891 lib/wine.lib:972
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
 #, sh-format
 msgid "Please wait while the virtual drive is being created..."
 msgstr "Por favor, aguarde enquanto a unidade virtual está a ser criada..."
@@ -1025,7 +1025,7 @@ msgstr "Quer excluír a unidade virtual:"
 #: lib/playonlinux.lib:877
 #, sh-format
 msgid ""
-"The following file is located on a FAT32 filesystem.\\nIt might prevent wine "
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "O seguinte ficheiro está localizado numa partição FAT32.\\nIsso pode impedir "
@@ -1034,7 +1034,7 @@ msgstr ""
 #: lib/playonlinux.lib:878
 #, sh-format
 msgid ""
-"The following file is located on a NTFS filesystem.\\nIt might prevent wine "
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "O seguinte ficheiro está localizado numa partição NTFS.\\nIsso pode impedir "
@@ -1043,7 +1043,7 @@ msgstr ""
 #: lib/playonlinux.lib:879
 #, sh-format
 msgid ""
-"The following file is located on a fuse filesystem.\\nIt might prevent wine "
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
 "from working\\n\\n$FilePath"
 msgstr ""
 "O seguinte arquivo está localizado numa partição FUSE.\\nIsso pode impedir "
@@ -1053,7 +1053,7 @@ msgstr ""
 #, sh-format
 msgid ""
 "The following file is located on a noexec mounted filesystem.\\nIt might "
-"prevent wine from working\\n\\n$FilePath"
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
 msgstr ""
 "O seguinte arquivo está localizado numa partição montada noexec.\\nIsso pode "
 "impedir que o Wine funcione\\n\\n$FilePath"
@@ -1096,7 +1096,7 @@ msgstr "A actualizar a extensão. Anterior: "
 msgid "Installing plugin: "
 msgstr "A instalar a extensão: "
 
-#: lib/scripts.lib:356
+#: lib/com.playonlinux.scripts.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
@@ -1105,73 +1105,73 @@ msgstr ""
 "Binário não encontrado: $BINARY\\nTem instalado o programa na localização "
 "pré-definida?"
 
-#: lib/scripts.lib:427
+#: lib/com.playonlinux.scripts.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr "Detectado passagem de funções. Desactive o relatório de bugs."
 
-#: lib/scripts.lib:526 lib/scripts.lib:589
+#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr ""
 "Sem espaço suficiente para a transferência :\\n$URL ($neededSpace KB)"
 
-#: lib/scripts.lib:528 lib/scripts.lib:811
+#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr "Por favor, aguarde enquanto $APPLICATION_TITLE descarrega:"
 
-#: lib/scripts.lib:530 lib/scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "Ocorreu um erro durante a transferência."
 
-#: lib/scripts.lib:530 lib/scripts.lib:548 lib/scripts.lib:595
-#: lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "Deseja repetir?"
 
-#: lib/scripts.lib:548 lib/scripts.lib:611
+#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 "Erro! Incompatibilidade de ficheiros\\n\\nLocal : $LOCAL_MD5\\nServidor : "
 "$SERVER_MD5"
 
-#: lib/scripts.lib:716
+#: lib/com.playonlinux.scripts.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
 msgstr ""
 "7z não está instalado, verifique se tem instalado o 7zip e tente novamente."
 
-#: lib/scripts.lib:723
+#: lib/com.playonlinux.scripts.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr "Falha ao localizar ${dest} de ${archive}"
 
-#: lib/scripts.lib:727
+#: lib/com.playonlinux.scripts.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "A extrair ${filename} de ${archivename}"
 
-#: lib/scripts.lib:742
+#: lib/com.playonlinux.scripts.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "Tamanho do arquivo extraído não corresponde!"
 
-#: lib/scripts.lib:773
+#: lib/com.playonlinux.scripts.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "A copiar ${filename}"
 
-#: lib/scripts.lib:786
+#: lib/com.playonlinux.scripts.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Tamanho do arquivo não corresponde!"
 
-#: lib/scripts.lib:937
+#: lib/com.playonlinux.scripts.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
@@ -1180,7 +1180,7 @@ msgstr ""
 "Desculpe, $APPLICATION_TITLE $VERSION é demasiado antigo para continuar.\\nÉ "
 "necessário $APPLICATION_TITLE $NEEDED."
 
-#: lib/scripts.lib:952
+#: lib/com.playonlinux.scripts.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
@@ -1189,7 +1189,7 @@ msgstr ""
 "AVISO: A execução de $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
 "$NEEDED é recomendada para continuar."
 
-#: lib/scripts.lib:983
+#: lib/com.playonlinux.scripts.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr "Perfil de $AUTHOR"
@@ -1393,18 +1393,18 @@ msgid ""
 "valid."
 msgstr "Falha ao conectar!\\nVerifique se seu login e senha são válidos."
 
-#: lib/wine.lib:388
+#: lib/com.playonlinux.wine.lib:388
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
 msgstr ""
 "Por favor, aguarde enquanto $APPLICATION_TITLE analisa o seu equipamento."
 
-#: lib/wine.lib:394
+#: lib/com.playonlinux.wine.lib:394
 #, sh-format
 msgid "Select the main videocard to report:"
 msgstr "Seleccione a placa de video pricipal a reportar:"
 
-#: lib/wine.lib:540
+#: lib/com.playonlinux.wine.lib:540
 #, sh-format
 msgid ""
 "Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
@@ -1412,7 +1412,7 @@ msgstr ""
 "Iniciar o processo de 64-bits $EXEFILE não é suportado em unidades virtuais "
 "de 32-bits"
 
-#: lib/wine.lib:578
+#: lib/com.playonlinux.wine.lib:578
 #, sh-format
 msgid ""
 "Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
@@ -1421,7 +1421,7 @@ msgstr ""
 "O Wine parece ter deixado de funcionar\\n\\nSe o programa ainda está a ser "
 "executado, ignore esta mensagem."
 
-#: lib/wine.lib:623
+#: lib/com.playonlinux.wine.lib:623
 #, sh-format
 msgid ""
 "This is an installer for an update or an addon;\\nPlease install "
@@ -1430,57 +1430,57 @@ msgstr ""
 "Este é o instalador para uma actualização ou um complento;\\nPor favor "
 "instale primeiro $TITLE_REQUIRED."
 
-#: lib/wine.lib:682
+#: lib/com.playonlinux.wine.lib:682
 #, sh-format
 msgid "Unable to find version: "
 msgstr "Não foi possível determinar a versão: "
 
-#: lib/wine.lib:688 lib/wine.lib:689
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
 #, sh-format
 msgid "Downloading Wine: "
 msgstr "A transferir o Wine: "
 
-#: lib/wine.lib:698
+#: lib/com.playonlinux.wine.lib:698
 #, sh-format
 msgid "The download seems to have failed."
 msgstr "A transferência parece ter falhado."
 
-#: lib/wine.lib:700
+#: lib/com.playonlinux.wine.lib:700
 #, sh-format
 msgid "Extracting Wine..."
 msgstr "A extrair o Wine..."
 
-#: lib/wine.lib:897
+#: lib/com.playonlinux.wine.lib:897
 #, sh-format
 msgid "Overwrite (usually works, no guarantee)"
 msgstr "Escrever por cima (por norma funciona, mas não é garantido)"
 
-#: lib/wine.lib:898
+#: lib/com.playonlinux.wine.lib:898
 #, sh-format
 msgid "Erase (virtual drive content will be lost)"
 msgstr "Apagar (os conteúdos da unidade virtual serão perdidos)"
 
-#: lib/wine.lib:899
+#: lib/com.playonlinux.wine.lib:899
 #, sh-format
 msgid "Abort installation"
 msgstr "Abortar a instalação"
 
-#: lib/wine.lib:912
+#: lib/com.playonlinux.wine.lib:912
 #, sh-format
 msgid "The target virtual drive $PREFNAME already exists:"
 msgstr "A unidade virtual destino $PREFNAME já existe:"
 
-#: lib/wine.lib:928
+#: lib/com.playonlinux.wine.lib:928
 #, sh-format
 msgid "User abort"
 msgstr "Abortar manualmente"
 
-#: lib/wine.lib:1092 lib/wine.lib:1122
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
 #, sh-format
 msgid "Please wait while $SOFTNAME is installed..."
 msgstr "Por favor, aguarde enquanto $SOFTNAME é instalado..."
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid ""
 "Be careful! This will kill install process. If it is not finished, you will "
@@ -1489,19 +1489,19 @@ msgstr ""
 "Tenha cuidado! Isso vai forçar o encerramento do processo de instalação. Se "
 "não estiver terminado, precisará de reinstalar $SOFTNAME."
 
-#: lib/wine.lib:1096 lib/wine.lib:1125
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
 #, sh-format
 msgid "Install is done"
 msgstr "Instalação terminada"
 
-#: lib/wine.lib:1129 lib/wine.lib:1130
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
 #, sh-format
 msgid "Press next only when the installation process is finished"
 msgstr ""
 "Carregue em \"Seguinte\" somente quando o processo de instalação estiver "
 "terminada."
 
-#: lib/wine.lib:1138
+#: lib/com.playonlinux.wine.lib:1138
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
 msgstr ""
@@ -1731,8 +1731,8 @@ msgid "Report a problem about {0}"
 msgstr "Relate um erro do {0}"
 
 #: python/debug.py:263
-msgid "Install scripts"
-msgstr "Instalar \"scripts\""
+msgid "Install com.playonlinux.scripts"
+msgstr "Instalar \"com.playonlinux.scripts\""
 
 #: python/gui_server.py:54 python/gui_server.py:55
 msgid "Error: Unable to reserve a valid port"
@@ -2133,7 +2133,7 @@ msgid "{0} install menu"
 msgstr "Menu de instalação {0}"
 
 #: python/mainwindow.py:1014
-msgid "{0} wine versions manager"
+msgid "{0} com.playonlinux.wine versions manager"
 msgstr "Gestor de versões do Wine {0}"
 
 #: python/mainwindow.py:1045
@@ -2364,7 +2364,7 @@ msgid "Wine versions"
 msgstr "Versões do Wine"
 
 #: python/wine_versions.py:330
-msgid "Are you sure you want to delete wine {0}?"
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
 msgstr "Tem a certeza que pretende apagar o Wine {0}?"
 
 #: python/wine_versions.py:332
