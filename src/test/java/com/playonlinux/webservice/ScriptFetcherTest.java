@@ -43,7 +43,7 @@ public class ScriptFetcherTest {
                         )
                         .withBody("{\"categories\": [\n" +
                                 "    {\n" +
-                                "        \"com.playonlinux.scripts\": [\n" +
+                                "        \"scripts\": [\n" +
                                 "            {\n" +
                                 "                \"description\": \"\",\n" +
                                 "                \"id\": 373,\n" +

@@ -31,7 +31,7 @@ public class WineInstallationTest {
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
 
-        assertEquals("com.playonlinux.wine-1.7.26\n", processOutput);
+        assertEquals("wine-1.7.26\n", processOutput);
     }
 
     @Test
@@ -44,9 +44,9 @@ public class WineInstallationTest {
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
 
-        assertEquals("Usage: com.playonlinux.wine PROGRAM [ARGUMENTS...]   Run the specified program\n" +
-                "       com.playonlinux.wine --help                   Display this help and exit\n" +
-                "       com.playonlinux.wine --version                Output version information and exit\n", processOutput);
+        assertEquals("Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program\n" +
+                "       wine --help                   Display this help and exit\n" +
+                "       wine --version                Output version information and exit\n", processOutput);
     }
 
     @Test
@@ -59,9 +59,9 @@ public class WineInstallationTest {
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
 
-        assertNotEquals("Usage: com.playonlinux.wine PROGRAM [ARGUMENTS...]   Run the specified program\n" +
-                "       com.playonlinux.wine --help                   Display this help and exit\n" +
-                "       com.playonlinux.wine --version                Output version information and exit\n", processOutput);
+        assertNotEquals("Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program\n" +
+                "       wine --help                   Display this help and exit\n" +
+                "       wine --version                Output version information and exit\n", processOutput);
     }
 
 
