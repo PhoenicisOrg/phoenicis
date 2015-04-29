@@ -11,8 +11,8 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.playonlinux.utils.Localisation.translate;
 
-/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts syntax
- */
+@ScriptClass
+@SuppressWarnings("unused")
 public class Downloader {
     String MD5_CHECKSUM = "md5";
 
@@ -28,6 +28,7 @@ public class Downloader {
     public Downloader() {
 
     }
+
     public Downloader(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
@@ -49,7 +50,7 @@ public class Downloader {
         return (HttpURLConnection) remoteFile.openConnection();
     }
 
-    private void saveConnectionToFile(HttpURLConnection connection, File localFile) throws IOException {
+    private void saveConnectionToFile(HttpURLConnection connection, File localFile) throws IOException, CancelException {
         int fileSize = connection.getContentLength();
         float totalDataRead = 0;
 
@@ -66,6 +67,9 @@ public class Downloader {
                 int percentDownloaded = (int) ((totalDataRead * 100) / fileSize);
                 progressStep.setProgressPercentage(percentDownloaded);
             }
+            if(Thread.currentThread().isInterrupted()) {
+                throw new CancelException();
+            }
         }
         inputStream.close();
         outputStream.close();
@@ -80,7 +84,6 @@ public class Downloader {
     }
 
     public Downloader get(URL remoteFile) throws IOException, CancelException, InterruptedException {
-        HttpURLConnection connection = openConnection(remoteFile);
         File temporaryFile = File.createTempFile(this.findFileNameFromURL(remoteFile), "");
         return get(remoteFile, temporaryFile);
     }

@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import static com.playonlinux.utils.Localisation.translate;
 
+@ScriptClass
+@SuppressWarnings("unused")
 public class WinePrefix {
     static PlayOnLinuxContext playOnLinuxContext;
     private final long NEW_PREFIX_SIZE = 320000000;

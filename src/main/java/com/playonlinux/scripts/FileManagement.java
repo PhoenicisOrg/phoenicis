@@ -10,6 +10,8 @@ import static com.playonlinux.utils.Localisation.translate;
  */
 
 // TODO: Create an abstract class for FileManagement and Downloader
+@ScriptClass
+@SuppressWarnings("unused")
 public class FileManagement {
     private SetupWizard setupWizard;
     private ProgressStep progressStep;

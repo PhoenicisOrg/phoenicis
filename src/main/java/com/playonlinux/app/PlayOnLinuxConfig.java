@@ -34,7 +34,6 @@ public class PlayOnLinuxConfig {
         return new PlayOnLinuxContext();
     }
 
-
     /*
     Get static instances
      */
@@ -56,7 +55,6 @@ public class PlayOnLinuxConfig {
         SetupWizard.injectMainController(controller);
 
         com.playonlinux.scripts.WinePrefix.injectPlayOnLinuxContext(playOnLinuxContext);
-
 
         WineProcessBuilder.injectApplicationEnvironment(playOnLinuxContext.getSystemEnvironment());
     }

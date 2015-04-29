@@ -2,6 +2,8 @@ package com.playonlinux.scripts;
 
 import java.io.File;
 
+@ScriptClass
+@SuppressWarnings("unused")
 public class SystemUtilities {
     final static int KILOBYTE = 1024;
     // TODO: Find a name that do not use the verb "get"

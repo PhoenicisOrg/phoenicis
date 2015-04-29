@@ -3,6 +3,7 @@ package com.playonlinux.app;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.utils.ReplacableProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +16,9 @@ public class PlayOnLinuxContext {
     public PlayOnLinuxContext() throws PlayOnLinuxError, IOException {
         this.properties = loadProperties();
     }
-    public Properties loadProperties() throws PlayOnLinuxError, IOException {
-        Properties properties = new Properties();
+
+    public ReplacableProperties loadProperties() throws PlayOnLinuxError, IOException {
+        ReplacableProperties properties = new ReplacableProperties();
 
         String filename;
         switch (OperatingSystem.fetchCurrentOperationSystem()) {
@@ -33,7 +35,7 @@ public class PlayOnLinuxContext {
 
     public File makePrefixPathFromName(String prefixName) {
         String prefixPath = String.format("%s/%s",
-                this.properties.getProperty("application.wineprefix"),
+                this.properties.getProperty("application.user.wineprefix"),
                 prefixName
         );
         return new File(prefixPath);
@@ -45,7 +47,7 @@ public class PlayOnLinuxContext {
                 architecture.getNameForWinePackages()
         );
         String versionPath = String.format("%s/%s/%s",
-                this.properties.getProperty("application.wineversions"),
+                this.properties.getProperty("application.user.wineversions"),
                 architectureDirectory,
                 version
         );
@@ -58,8 +60,8 @@ public class PlayOnLinuxContext {
             case MACOSX:
                 systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
                 systemEnvironment.put("LD_LIBRARY_PATH",
-                        this.properties.getProperty("application.environment.dyld") + ":" + "/usr/X11/lib");
-                systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.ld"));
+                        this.properties.getProperty("application.environment.ld") + ":" + "/usr/X11/lib");
+                systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.dyld"));
                 break;
             case LINUX:
                 break;
