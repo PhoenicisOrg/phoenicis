@@ -1,4 +1,4 @@
-package com.playonlinux.ui.javafximpl.setupwindow;
+package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.api.ProgressStep;
 import javafx.scene.Node;

@@ -1,4 +1,4 @@
-package com.playonlinux.ui.javafximpl.setupwindow;
+package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import com.playonlinux.utils.messages.CancelerMessage;
 
-import java.io.File;
 import java.net.URL;
 
 abstract class AbstractStepRepresentation {

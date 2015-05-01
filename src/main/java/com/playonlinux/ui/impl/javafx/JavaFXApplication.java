@@ -1,9 +1,9 @@
-package com.playonlinux.ui.javafximpl;
+package com.playonlinux.ui.impl.javafx;
 
 import javafx.application.Application;
 
 import javafx.stage.Stage;
-import com.playonlinux.ui.javafximpl.mainwindow.JavaFXMainWindowImplementation;
+import com.playonlinux.ui.impl.javafx.mainwindow.JavaFXMainWindowImplementation;
 
 public class JavaFXApplication extends Application {
 

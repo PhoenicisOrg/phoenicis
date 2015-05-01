@@ -1,4 +1,4 @@
-package com.playonlinux.ui.javafximpl.setupwindow;
+package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
@@ -33,10 +33,10 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event -> {
+        this.setNextButtonAction(event ->
             ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).
-                    setResponse(listViewWidget.getFocusModel().getFocusedItem());
-        });
+                    setResponse(listViewWidget.getFocusModel().getFocusedItem())
+        );
     }
 
 }

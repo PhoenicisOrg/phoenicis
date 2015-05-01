@@ -1,10 +1,10 @@
-package com.playonlinux.ui.javafximpl.mainwindow;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import com.playonlinux.ui.impl.javafx.JavaFXControllerImplementation;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.playonlinux.ui.javafximpl.JavaFXControllerImplementation;
 import com.playonlinux.ui.api.EventHandler;
 
 public class JavaFXMainWindowImplementation extends Stage {

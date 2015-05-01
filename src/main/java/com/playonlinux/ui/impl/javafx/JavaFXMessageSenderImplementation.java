@@ -1,4 +1,4 @@
-package com.playonlinux.ui.javafximpl;
+package com.playonlinux.ui.impl.javafx;
 
 import javafx.application.Platform;
 import com.playonlinux.scripts.CancelException;

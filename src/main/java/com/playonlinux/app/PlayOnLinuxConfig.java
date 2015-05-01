@@ -4,7 +4,7 @@ import com.playonlinux.api.Controller;
 
 import com.playonlinux.scripts.SetupWizard;
 import com.playonlinux.ui.api.EventHandler;
-import com.playonlinux.ui.javafximpl.JavaFXControllerImplementation;
+import com.playonlinux.ui.impl.javafx.JavaFXControllerImplementation;
 import com.playonlinux.utils.PlayOnLinuxError;
 import com.playonlinux.wine.WineProcessBuilder;
 
@@ -22,8 +22,7 @@ public class PlayOnLinuxConfig {
     Configuration
      */
     static Controller controller() {
-        Controller controller = new JavaFXControllerImplementation();
-        return controller;
+        return new JavaFXControllerImplementation();
     }
 
     static EventHandler eventHandler() {

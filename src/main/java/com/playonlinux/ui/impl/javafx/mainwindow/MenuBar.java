@@ -1,4 +1,4 @@
-package com.playonlinux.ui.javafximpl.mainwindow;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;

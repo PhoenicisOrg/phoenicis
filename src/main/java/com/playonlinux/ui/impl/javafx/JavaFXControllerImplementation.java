@@ -1,10 +1,10 @@
-package com.playonlinux.ui.javafximpl;
+package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.api.Controller;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.api.UIMessageSender;
 import com.playonlinux.api.SetupWindow;
-import com.playonlinux.ui.javafximpl.setupwindow.JavaFXSetupWindowImplementation;
+import com.playonlinux.ui.impl.javafx.setupwindow.JavaFXSetupWindowImplementation;
 import com.playonlinux.utils.Injectable;
 
 

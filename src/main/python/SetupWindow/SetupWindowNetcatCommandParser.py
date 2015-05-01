@@ -2,7 +2,6 @@
 
 import os
 
-from SetupWindowManager import SetupWindowManager
 from com.playonlinux.scripts import EnvironementHelper
 
 class SetupWindowNetcatCommandParser(object):

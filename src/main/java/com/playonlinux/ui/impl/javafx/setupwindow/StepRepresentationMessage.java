@@ -1,4 +1,4 @@
-package com.playonlinux.ui.javafximpl.setupwindow;
+package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import javafx.scene.text.Text;
 import com.playonlinux.utils.messages.CancelerMessage;
@@ -25,9 +25,9 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event -> {
-            ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).setResponse(null);
-        });
+        this.setNextButtonAction(event ->
+            ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
+        );
     }
 
 }

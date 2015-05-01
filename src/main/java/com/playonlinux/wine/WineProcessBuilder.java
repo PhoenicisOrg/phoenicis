@@ -1,6 +1,5 @@
 package com.playonlinux.wine;
 
-
 import com.playonlinux.utils.Injectable;
 
 import java.io.File;
