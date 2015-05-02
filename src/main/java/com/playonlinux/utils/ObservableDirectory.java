@@ -26,7 +26,7 @@ public class ObservableDirectory extends Observable {
     public void stop() {
         observableDirectoryThread.stopChecking();
     }
-    U
+
     protected File[] findFiles() {
         return directoryToObserve.listFiles();
     }
