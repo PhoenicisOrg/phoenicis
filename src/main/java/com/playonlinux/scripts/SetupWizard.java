@@ -4,28 +4,24 @@ import com.playonlinux.api.Controller;
 import com.playonlinux.api.ProgressStep;
 import com.playonlinux.api.SetupWindow;
 import com.playonlinux.api.UIMessageSender;
-import com.playonlinux.utils.Injectable;
+import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.messages.*;
 
 import java.util.List;
 
-
+@Component
 public class SetupWizard {
-    @Injectable
+
+    @Inject
     static Controller controller;
+
     private final String title;
 
     SetupWindow setupWindow;
     UIMessageSender messageSender;
 
-    /**
-     * Jython needs static injection, Spring won't work for that purpose
-     *
-     * @param controller controller to be injected
-     */
-    public static void injectMainController(Controller controller) {
-        SetupWizard.controller = controller;
-    }
+
 
     /**
      * Create the setupWindow

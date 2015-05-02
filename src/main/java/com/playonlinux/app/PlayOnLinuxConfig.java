@@ -2,62 +2,33 @@ package com.playonlinux.app;
 
 import com.playonlinux.api.Controller;
 
-import com.playonlinux.scripts.SetupWizard;
+import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.impl.javafx.JavaFXControllerImplementation;
 import com.playonlinux.utils.PlayOnLinuxError;
-import com.playonlinux.wine.WineProcessBuilder;
 
 import java.io.IOException;
 
-public class PlayOnLinuxConfig {
+public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
-    static Controller controller;
-    /*
-    This is the only way I've found to inject dependencies through JavaFX and Jython.
-    Feel free to improve this piece of code
-     */
-
-    /*
-    Configuration
-     */
-    static Controller controller() {
+    @Bean
+    public Controller controller() {
         return new JavaFXControllerImplementation();
     }
 
-    static EventHandler eventHandler() {
+    @Bean
+    public EventHandler eventHandler() {
             return new PlayOnLinuxEventsImplementation();
     }
 
-    static PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxError, IOException {
+    @Bean
+    public PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxError, IOException {
         return new PlayOnLinuxContext();
     }
 
-    /*
-    Get static instances
-     */
-    public Controller getControllerInstance() {
-        if(controller == null) {
-            controller = controller();
-        }
-        return controller;
+    @Override
+    protected String definePackage() {
+        return "com.playonlinux";
     }
-
-    /*
-    Injection
-     */
-    public void Inject() throws PlayOnLinuxError, IOException {
-        Controller controller = controller();
-        PlayOnLinuxContext playOnLinuxContext = playOnLinuxContext();
-
-        controller.injectEventHandler(eventHandler());
-        SetupWizard.injectMainController(controller);
-
-        com.playonlinux.scripts.WinePrefix.injectPlayOnLinuxContext(playOnLinuxContext);
-
-        WineProcessBuilder.injectApplicationEnvironment(playOnLinuxContext.getSystemEnvironment());
-    }
-
-
-
 }

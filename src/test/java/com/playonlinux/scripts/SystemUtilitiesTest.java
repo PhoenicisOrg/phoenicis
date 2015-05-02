@@ -24,6 +24,6 @@ public class SystemUtilitiesTest {
         long expectedValue = Integer.valueOf(firstList.split("[ .]+")[3]);
 
 
-        assertEquals(expectedValue, actualValue);
+        assertEquals((double)expectedValue, (double)actualValue, (double) 100);
     }
 }

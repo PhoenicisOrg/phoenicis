@@ -1,22 +1,31 @@
 package com.playonlinux.app;
 
 import com.playonlinux.api.Controller;
+import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.InjectionException;
 import com.playonlinux.scripts.CancelException;
 import com.playonlinux.utils.PlayOnLinuxError;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
+@Component
 public class PlayOnLinuxApp {
 
-    public void start() throws PlayOnLinuxError, IOException {
-        PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
-        playOnLinuxConfig.Inject();
+    @Inject
+    static Controller controller;
 
-        Controller controller = playOnLinuxConfig.getControllerInstance();
+    public void start() throws PlayOnLinuxError, IOException,
+            InjectionException {
+        PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
+        playOnLinuxConfig.load();
+
         controller.startApplication();
     }
 
-    public static void main(String [] args) throws CancelException, InterruptedException, PlayOnLinuxError, IOException {
+    public static void main(String [] args) throws CancelException, InterruptedException,
+            PlayOnLinuxError, IOException, InjectionException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start();
     }

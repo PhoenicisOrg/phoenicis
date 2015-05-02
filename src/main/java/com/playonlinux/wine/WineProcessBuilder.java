@@ -1,6 +1,7 @@
 package com.playonlinux.wine;
 
-import com.playonlinux.utils.Injectable;
+import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Inject;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,15 +9,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// FIXME: Should not be any injection at this stage
+
 public class WineProcessBuilder {
-    @Injectable
-    private static HashMap<String, String> applicationEnvironment;
+    private HashMap<String, String> applicationEnvironment;
     private List<String> command;
     private File workingDirectory;
     private Map<String, String> environment;
 
     public WineProcessBuilder withCommand(List<String> command) {
         this.command = command;
+        return this;
+    }
+
+    public WineProcessBuilder withApplicationEnvironment(HashMap<String, String> applicationEnvironment) {
+        this.applicationEnvironment = applicationEnvironment;
         return this;
     }
 
@@ -64,7 +71,4 @@ public class WineProcessBuilder {
         return processBuilder.start();
     }
 
-    public static void injectApplicationEnvironment(HashMap<String, String> systemEnvironment) {
-        WineProcessBuilder.applicationEnvironment = systemEnvironment;
-    }
 }

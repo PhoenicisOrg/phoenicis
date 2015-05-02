@@ -2,6 +2,8 @@ package com.playonlinux.scripts;
 
 import com.playonlinux.api.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.PlayOnLinuxError;
 import com.playonlinux.wine.WineInstallation;
@@ -10,10 +12,13 @@ import java.io.IOException;
 
 import static com.playonlinux.utils.Localisation.translate;
 
+@Component
 @ScriptClass
 @SuppressWarnings("unused")
 public class WinePrefix {
+    @Inject
     static PlayOnLinuxContext playOnLinuxContext;
+
     private final long NEW_PREFIX_SIZE = 320000000;
 
     private final SetupWizard setupWizard;
@@ -43,7 +48,8 @@ public class WinePrefix {
                 .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
                         version,
                         Architecture.valueOf(architecture))
-                ).build();
+                ).withApplicationEnvironment(this.playOnLinuxContext.getSystemEnvironment())
+                .build();
 
         Process process = wineInstallation.createPrefix(this.prefix);
 

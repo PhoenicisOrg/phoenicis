@@ -12,10 +12,12 @@ public class WineInstallation {
 
     private final File binaryPath;
     private final File libraryPath;
+    private final HashMap<String, String> applicationEnvironment;
 
     private WineInstallation(WineInstallation.Builder builder) {
         this.binaryPath = new File(builder.path, "bin");
         this.libraryPath = new File(builder.path, "lib");
+        this.applicationEnvironment = builder.applicationEnvironment;
     }
 
 
@@ -58,6 +60,7 @@ public class WineInstallation {
                 .withCommand(command)
                 .withEnvironment(wineEnvironment)
                 .withWorkingDirectory(workingDirectory)
+                .withApplicationEnvironment(applicationEnvironment)
                 .build();
     }
 
@@ -90,15 +93,22 @@ public class WineInstallation {
 
     public static class Builder {
         private File path;
+        private HashMap<String, String> applicationEnvironment;
 
         public WineInstallation.Builder withPath(File path) {
             this.path = path;
             return this;
         }
 
+        public WineInstallation.Builder withApplicationEnvironment(HashMap<String, String> applicationEnvironment) {
+            this.applicationEnvironment = applicationEnvironment;
+            return this;
+        }
+
         public WineInstallation build() {
             return new WineInstallation(this);
         }
+
     }
 
 
