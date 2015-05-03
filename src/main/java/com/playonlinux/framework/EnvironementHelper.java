@@ -1,4 +1,4 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.utils.PlayOnLinuxError;

@@ -1,4 +1,4 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

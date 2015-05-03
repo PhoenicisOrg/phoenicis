@@ -1,6 +1,7 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import com.playonlinux.api.ProgressStep;
+import com.playonlinux.utils.CancelException;
 
 import java.io.*;
 

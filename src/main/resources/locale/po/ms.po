@@ -510,7 +510,7 @@ msgstr "Jika anda tidak tahu, nyahpilih semua"
 msgid "What would you like to do before installation?"
 msgstr "Apa yang anda hendak buat sebelum pemasangan?"
 
-#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.framework.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "Sila buat pilihan"
@@ -1079,7 +1079,7 @@ msgstr "Mengemaskini pemalam. Terdahulu: "
 msgid "Installing plugin: "
 msgstr "Memasang pemalam: "
 
-#: lib/com.playonlinux.scripts.lib:356
+#: lib/com.playonlinux.framework.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
@@ -1088,39 +1088,39 @@ msgstr ""
 "Binari tidak ditemui:  $BINARY\\nAdakah anda memasang program ke lokasi "
 "lalainya?"
 
-#: lib/com.playonlinux.scripts.lib:427
+#: lib/com.playonlinux.framework.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr "Pembatalan fungsi dikesan, melumpuhkan pelaporan pepijat"
 
-#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
+#: lib/com.playonlinux.framework.lib:526 lib/com.playonlinux.framework.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr "Ruang tidak mencukupi untuk memuat turun:\\n$URL ($neededSpace KB)"
 
-#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
+#: lib/com.playonlinux.framework.lib:528 lib/com.playonlinux.framework.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr "Sila tunggu semasa $APPLICATION_TITLE memuat turun:"
 
-#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "Ralat berlaku semasa muat turn."
 
-#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
-#: lib/com.playonlinux.scripts.lib:611
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:595
+#: lib/com.playonlinux.framework.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "Anda hendak cuba lagi?"
 
-#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
+#: lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 "Ralat ! Fail tidak sepadan\\n\\nSetempat : $LOCAL_MD5\\nPelayan : $SERVER_MD5"
 
-#: lib/com.playonlinux.scripts.lib:716
+#: lib/com.playonlinux.framework.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
@@ -1128,32 +1128,32 @@ msgstr ""
 "7z tidak dipasang, sila semak sama ada anda telah memasang 7zip dan cuba "
 "sekali lagi"
 
-#: lib/com.playonlinux.scripts.lib:723
+#: lib/com.playonlinux.framework.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr "Gagal mencari ${dest} dari ${archive}"
 
-#: lib/com.playonlinux.scripts.lib:727
+#: lib/com.playonlinux.framework.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "Mengekstrak ${filename} dari ${archivename}"
 
-#: lib/com.playonlinux.scripts.lib:742
+#: lib/com.playonlinux.framework.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "Saiz fail terekstrak tidak sepadan!"
 
-#: lib/com.playonlinux.scripts.lib:773
+#: lib/com.playonlinux.framework.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "Menyalin ${filename}"
 
-#: lib/com.playonlinux.scripts.lib:786
+#: lib/com.playonlinux.framework.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Saiz fail tidak sepadan!"
 
-#: lib/com.playonlinux.scripts.lib:937
+#: lib/com.playonlinux.framework.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
@@ -1162,7 +1162,7 @@ msgstr ""
 "Maaf, $APPLICATION_TITLE $VERSION terlalu tua untuk diteruskan.\\"
 "n$APPLICATION_TITLE $NEEDED diperlukan."
 
-#: lib/com.playonlinux.scripts.lib:952
+#: lib/com.playonlinux.framework.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
@@ -1171,7 +1171,7 @@ msgstr ""
 "Amaran: Anda kini menjalankan $APPLICATION_TITLE $VERSION.\\"
 "n$APPLICATION_TITLE $NEEDED disarankan untuk diteruskan."
 
-#: lib/com.playonlinux.scripts.lib:983
+#: lib/com.playonlinux.framework.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr "Profil $AUTHOR"
@@ -1702,7 +1702,7 @@ msgid "Report a problem about {0}"
 msgstr "Laporkan masalah mengenai {0}"
 
 #: python/debug.py:263
-msgid "Install com.playonlinux.scripts"
+msgid "Install com.playonlinux.framework"
 msgstr "Pasang skrip"
 
 #: python/gui_server.py:54 python/gui_server.py:55

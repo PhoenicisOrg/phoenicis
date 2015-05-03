@@ -1,4 +1,4 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import org.junit.Before;
 import org.junit.Test;

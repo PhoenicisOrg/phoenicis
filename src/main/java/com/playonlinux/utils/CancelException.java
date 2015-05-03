@@ -1,4 +1,4 @@
-package com.playonlinux.scripts;
+package com.playonlinux.utils;
 
 public class CancelException extends Throwable {
     

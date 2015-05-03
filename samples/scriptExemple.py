@@ -1,4 +1,4 @@
-import com.playonlinux.scripts.SetupWizard as POL_SetupWindow
+import com.playonlinux.framework.SetupWizard as POL_SetupWindow
 
 setupWindow = POL_SetupWindow("TITLE")
 

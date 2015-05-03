@@ -501,7 +501,7 @@ msgstr "Ako ne znate, odznačite sve"
 msgid "What would you like to do before installation?"
 msgstr "Što želite napraviti prije instalacije?"
 
-#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.framework.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "Odaberite vaš izbor"
@@ -1049,79 +1049,79 @@ msgstr "Ažuriranje priključka. Prije: "
 msgid "Installing plugin: "
 msgstr "Instalacija priključka: "
 
-#: lib/com.playonlinux.scripts.lib:356
+#: lib/com.playonlinux.framework.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
 "location?"
 msgstr ""
 
-#: lib/com.playonlinux.scripts.lib:427
+#: lib/com.playonlinux.framework.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr ""
 
-#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
+#: lib/com.playonlinux.framework.lib:526 lib/com.playonlinux.framework.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr ""
 
-#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
+#: lib/com.playonlinux.framework.lib:528 lib/com.playonlinux.framework.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr "Pričekajte dok se $APPLICATION_TITLE preuzima:"
 
-#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr ""
 
-#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
-#: lib/com.playonlinux.scripts.lib:611
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:595
+#: lib/com.playonlinux.framework.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr ""
 
-#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
+#: lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 "Greška ! Nepodudaranje datoteka\\n\\nLokalno : $LOCAL_MD5\\nPoslužitelj : "
 "$SERVER_MD5"
 
-#: lib/com.playonlinux.scripts.lib:716
+#: lib/com.playonlinux.framework.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
 msgstr ""
 "7z nije instaliran, provjerite imate li instaliran 7zip i pokušajte ponovno"
 
-#: lib/com.playonlinux.scripts.lib:723
+#: lib/com.playonlinux.framework.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr "Neuspjelo lociranje ${dest} iz ${archive}"
 
-#: lib/com.playonlinux.scripts.lib:727
+#: lib/com.playonlinux.framework.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "Otpakiravanje ${filename} iz ${archivename}"
 
-#: lib/com.playonlinux.scripts.lib:742
+#: lib/com.playonlinux.framework.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "Veličina raspakirane datoteke se ne poklapa!"
 
-#: lib/com.playonlinux.scripts.lib:773
+#: lib/com.playonlinux.framework.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "Kopiranje ${filename}"
 
-#: lib/com.playonlinux.scripts.lib:786
+#: lib/com.playonlinux.framework.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Veličina datoteke se ne poklapa!"
 
-#: lib/com.playonlinux.scripts.lib:937
+#: lib/com.playonlinux.framework.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
@@ -1130,7 +1130,7 @@ msgstr ""
 "Isprika, $APPLICATION_TITLE $VERSION je prestar za nastavak.\\"
 "n$APPLICATION_TITLE $NEEDED je potreban."
 
-#: lib/com.playonlinux.scripts.lib:952
+#: lib/com.playonlinux.framework.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
@@ -1139,7 +1139,7 @@ msgstr ""
 "Upozorenje: Pokrenuli ste $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
 "$NEEDED je potreban za nastavak."
 
-#: lib/com.playonlinux.scripts.lib:983
+#: lib/com.playonlinux.framework.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr ""
@@ -1657,7 +1657,7 @@ msgid "Report a problem about {0}"
 msgstr ""
 
 #: python/debug.py:263
-msgid "Install com.playonlinux.scripts"
+msgid "Install com.playonlinux.framework"
 msgstr ""
 
 #: python/gui_server.py:54 python/gui_server.py:55

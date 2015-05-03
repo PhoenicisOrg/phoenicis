@@ -5,18 +5,26 @@ import java.util.Arrays;
 import java.util.Observable;
 
 public class ObservableDirectory extends Observable {
-    final int CHECK_INTERVAL = 2000;
+    private int checkInterval = 1000;
     private final File directoryToObserve;
     private final ObservableDirectoryThread observableDirectoryThread;
 
     public ObservableDirectory(File directoryToObserve) throws PlayOnLinuxError {
         this.directoryToObserve = directoryToObserve;
+        if(!directoryToObserve.exists()) {
+            throw new PlayOnLinuxError(String.format("The directory %s does not exist",
+                    directoryToObserve.toString()));
+        }
         if(!directoryToObserve.isDirectory()) {
             throw new PlayOnLinuxError(String.format("The file %s is not a valid directory",
                     directoryToObserve.toString()));
         }
 
         observableDirectoryThread = new ObservableDirectoryThread(this);
+    }
+
+    void setCheckInterval(int checkInterval) {
+        this.checkInterval = checkInterval;
     }
 
     public void start() {
@@ -33,7 +41,7 @@ public class ObservableDirectory extends Observable {
 
     private class ObservableDirectoryThread extends Thread {
         private final ObservableDirectory observableDirectory;
-        private Boolean running;
+        private volatile Boolean running;
 
         ObservableDirectoryThread(ObservableDirectory observableDirectory) {
             super();
@@ -56,10 +64,11 @@ public class ObservableDirectory extends Observable {
             while(this.isRunning()) {
                 File[] directoryContent = observableDirectory.findFiles();
                 if(!Arrays.equals(directoryContent, lastDirectoryContent)) {
+                    this.observableDirectory.setChanged();
                     this.observableDirectory.notifyObservers(directoryContent);
                 }
                 try {
-                    Thread.sleep(CHECK_INTERVAL);
+                    Thread.sleep(checkInterval);
                 } catch (InterruptedException e) {
                     this.stopChecking();
                 }

@@ -1,7 +1,15 @@
 package com.playonlinux.utils;
 
 public class PlayOnLinuxError extends Throwable {
-    public PlayOnLinuxError(String s) {
+    private final String message;
 
+    public PlayOnLinuxError(String message) {
+        super(message);
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return this.message;
     }
 }

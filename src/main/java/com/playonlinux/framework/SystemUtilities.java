@@ -1,4 +1,4 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import com.playonlinux.api.Controller;
 import com.playonlinux.injection.AbstractConfigFile;
@@ -6,6 +6,7 @@ import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
 import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
+import com.playonlinux.utils.CancelException;
 import org.junit.Before;
 import org.junit.Test;
 

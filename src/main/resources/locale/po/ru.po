@@ -515,7 +515,7 @@ msgstr "Если Вы не знаете, что нужно выбрать, сн�
 msgid "What would you like to do before installation?"
 msgstr "Что Вы хотите сделать перед установкой?"
 
-#: bash/manual_install:203 lib/com.playonlinux.scripts.lib:468
+#: bash/manual_install:203 lib/com.playonlinux.framework.lib:468
 #, sh-format
 msgid "Please make your choice"
 msgstr "Пожалуйста, сделайте свой выбор"
@@ -1087,7 +1087,7 @@ msgstr "Обновление плагина. Предыдущий: "
 msgid "Installing plugin: "
 msgstr "Установка плагина: "
 
-#: lib/com.playonlinux.scripts.lib:356
+#: lib/com.playonlinux.framework.lib:356
 #, sh-format
 msgid ""
 "Binary not found: $BINARY\\nHave you installed the program to the default "
@@ -1096,41 +1096,41 @@ msgstr ""
 "Исполняемый файл не найден: $BINARY\\nУбедитесь, что выбрана папка установки "
 "программы по умолчанию."
 
-#: lib/com.playonlinux.scripts.lib:427
+#: lib/com.playonlinux.framework.lib:427
 #, sh-format
 msgid "Function override detected, disabling bug reporting"
 msgstr ""
 
-#: lib/com.playonlinux.scripts.lib:526 lib/com.playonlinux.scripts.lib:589
+#: lib/com.playonlinux.framework.lib:526 lib/com.playonlinux.framework.lib:589
 #, sh-format
 msgid "No enough space to download:\\n$URL ($neededSpace KB)"
 msgstr ""
 "Недостаточно свободного места для загрузки :\\n$URL ($neededSpace KБ)"
 
-#: lib/com.playonlinux.scripts.lib:528 lib/com.playonlinux.scripts.lib:811
+#: lib/com.playonlinux.framework.lib:528 lib/com.playonlinux.framework.lib:811
 #, sh-format
 msgid "Please wait while $APPLICATION_TITLE is downloading:"
 msgstr "Пожалуйста, подождите пока скачивается $APPLICATION_TITLE:"
 
-#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:595
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:595
 #, sh-format
 msgid "An error happened during download."
 msgstr "Во время загрузки произошла ошибка."
 
-#: lib/com.playonlinux.scripts.lib:530 lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:595
-#: lib/com.playonlinux.scripts.lib:611
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:595
+#: lib/com.playonlinux.framework.lib:611
 #, sh-format
 msgid "Do you want to retry?"
 msgstr "Хотите попробовать еще раз?"
 
-#: lib/com.playonlinux.scripts.lib:548 lib/com.playonlinux.scripts.lib:611
+#: lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:611
 #, sh-format
 msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
 msgstr ""
 "Ошибка! Файлы не совпадают\\n\\nЛокальный: $LOCAL_MD5\\nНа сервере : "
 "$SERVER_MD5"
 
-#: lib/com.playonlinux.scripts.lib:716
+#: lib/com.playonlinux.framework.lib:716
 #, sh-format
 msgid ""
 "7z not installed, please check that you have 7zip installed and try again"
@@ -1138,32 +1138,32 @@ msgstr ""
 "7z не установлен, пожалуйста, убедитесь что 7zip установлен и попробуйте "
 "снова"
 
-#: lib/com.playonlinux.scripts.lib:723
+#: lib/com.playonlinux.framework.lib:723
 #, sh-format
 msgid "Failed to locate ${dest} from ${archive}"
 msgstr "Не удалось разместить ${dest} из ${archive}"
 
-#: lib/com.playonlinux.scripts.lib:727
+#: lib/com.playonlinux.framework.lib:727
 #, sh-format
 msgid "Extracting ${filename} from ${archivename}"
 msgstr "Извлечение ${filename} из ${archivename}"
 
-#: lib/com.playonlinux.scripts.lib:742
+#: lib/com.playonlinux.framework.lib:742
 #, sh-format
 msgid "Extracted file size does not match!"
 msgstr "Размер извлечённого файла не сходится!"
 
-#: lib/com.playonlinux.scripts.lib:773
+#: lib/com.playonlinux.framework.lib:773
 #, sh-format
 msgid "Copying ${filename}"
 msgstr "Копирование ${filename}"
 
-#: lib/com.playonlinux.scripts.lib:786
+#: lib/com.playonlinux.framework.lib:786
 #, sh-format
 msgid "File size does not match!"
 msgstr "Размер файла не сходится!"
 
-#: lib/com.playonlinux.scripts.lib:937
+#: lib/com.playonlinux.framework.lib:937
 #, sh-format
 msgid ""
 "Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
@@ -1172,7 +1172,7 @@ msgstr ""
 "К сожалению, $APPLICATION_TITLE $VERSION слишком устарело, и продолжить "
 "нельзя.\\nТребуется $APPLICATION_TITLE $NEEDED."
 
-#: lib/com.playonlinux.scripts.lib:952
+#: lib/com.playonlinux.framework.lib:952
 #, sh-format
 msgid ""
 "Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
@@ -1181,7 +1181,7 @@ msgstr ""
 "Внимание: Вы запускаете $APPLICATION_TITLE $VERSION.\\nДля того, чтобы "
 "продолжить, рекомендуется $APPLICATION_TITLE $NEEDED."
 
-#: lib/com.playonlinux.scripts.lib:983
+#: lib/com.playonlinux.framework.lib:983
 #, sh-format
 msgid "$AUTHOR profile"
 msgstr "$AUTHOR профиль"
@@ -1708,7 +1708,7 @@ msgid "Report a problem about {0}"
 msgstr "Сообщить о проблеме, связанной с {0}"
 
 #: python/debug.py:263
-msgid "Install com.playonlinux.scripts"
+msgid "Install com.playonlinux.framework"
 msgstr "Установка сценариев"
 
 #: python/gui_server.py:54 python/gui_server.py:55

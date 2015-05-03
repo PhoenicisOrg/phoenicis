@@ -1,5 +1,6 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
+import com.playonlinux.utils.CancelException;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 

@@ -4,11 +4,10 @@ import com.playonlinux.api.Controller;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
-import com.playonlinux.scripts.CancelException;
+import com.playonlinux.utils.CancelException;
 import com.playonlinux.utils.PlayOnLinuxError;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 @Component
 public class PlayOnLinuxApp {

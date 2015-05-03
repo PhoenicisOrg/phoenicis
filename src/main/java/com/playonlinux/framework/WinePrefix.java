@@ -1,10 +1,11 @@
-package com.playonlinux.scripts;
+package com.playonlinux.framework;
 
 import com.playonlinux.api.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
+import com.playonlinux.utils.CancelException;
 import com.playonlinux.utils.PlayOnLinuxError;
 import com.playonlinux.wine.WineInstallation;
 

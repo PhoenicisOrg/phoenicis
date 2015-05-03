@@ -1,7 +1,7 @@
 package com.playonlinux.app;
 
 import com.playonlinux.ui.api.EventHandler;
-import com.playonlinux.scripts.Script;
+import com.playonlinux.framework.Script;
 
 import java.io.File;
 
