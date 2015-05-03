@@ -45,18 +45,21 @@ public class ObservableDirectoryTest {
 
         ObservableDirectory observableDirectory = new ObservableDirectory(temporaryDirectory);
         observableDirectory.setCheckInterval(CHECK_INTERVAL);
-        observableDirectory.start();
 
         Observer observer = mock(Observer.class);
 
         observableDirectory.addObserver(observer);
+
+        observableDirectory.start();
+
         Thread.sleep(2 * CHECK_INTERVAL);
 
         observableDirectory.stop();
 
         temporaryDirectory.delete();
 
-        verify(observer, never()).update(any(ObservableDirectory.class), anyObject());
+        // Notified once for the creation
+        verify(observer, times(1)).update(any(ObservableDirectory.class), anyObject());
     }
 
     @Test
@@ -71,6 +74,7 @@ public class ObservableDirectoryTest {
         observableDirectory.addObserver(observer);
         observableDirectory.start();
         File createdFile = new File(temporaryDirectory, "file.txt");
+        Thread.sleep(2 * CHECK_INTERVAL);
         createdFile.createNewFile();
         Thread.sleep(2 * CHECK_INTERVAL);
 
@@ -78,7 +82,7 @@ public class ObservableDirectoryTest {
 
         temporaryDirectory.delete();
 
-        verify(observer, times(1)).update(any(ObservableDirectory.class), anyObject());
+        verify(observer, times(2)).update(any(ObservableDirectory.class), anyObject());
     }
 
 }
