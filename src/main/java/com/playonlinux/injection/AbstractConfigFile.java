@@ -39,8 +39,13 @@ public abstract class AbstractConfigFile {
                         field.setAccessible(true);
                         field.set(null, beans.get(field.getType()));
                     } catch (IllegalAccessException e) {
+                        e.printStackTrace();
                         throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
-                                field.getClass().toString(), e));
+                                field.getType().toString(), e));
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                        throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
+                                field.getType().toString(), e));
                     }
                 }
             }

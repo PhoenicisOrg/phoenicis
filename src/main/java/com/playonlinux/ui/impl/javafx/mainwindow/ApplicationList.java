@@ -1,5 +1,6 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import com.playonlinux.ui.api.InstalledApplications;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
@@ -7,6 +8,7 @@ import javafx.scene.text.Text;
 
 import java.util.Observable;
 import java.util.Observer;
+
 
 public class ApplicationList extends TreeView implements Observer {
     private final TreeItem rootItem;
@@ -23,9 +25,8 @@ public class ApplicationList extends TreeView implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        // TODO
-        //
-
+        InstalledApplications installedApplications = (InstalledApplications) o;
+        System.out.println(installedApplications);
     }
 
     private class ApplicationItem extends GridPane {

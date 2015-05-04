@@ -1,6 +1,6 @@
 package com.playonlinux.api;
 
-import com.playonlinux.utils.CancelException;
+import com.playonlinux.domain.CancelException;
 import com.playonlinux.utils.messages.Message;
 import com.playonlinux.utils.messages.SynchroneousMessage;
 

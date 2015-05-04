@@ -1,5 +1,7 @@
 package com.playonlinux.framework;
 
+import com.playonlinux.domain.ScriptClass;
+
 import java.io.File;
 
 @ScriptClass

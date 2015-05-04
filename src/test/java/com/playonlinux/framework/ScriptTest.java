@@ -1,5 +1,6 @@
 package com.playonlinux.framework;
 
+import com.playonlinux.domain.Script;
 import org.junit.Test;
 
 import java.io.File;

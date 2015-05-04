@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import com.playonlinux.api.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.utils.messages.CancelerMessage;
 import com.playonlinux.utils.messages.CancelerSynchroneousMessage;
 import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;

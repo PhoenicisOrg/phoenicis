@@ -6,7 +6,7 @@ import com.playonlinux.api.SetupWindow;
 import com.playonlinux.api.UIMessageSender;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.utils.CancelException;
+import com.playonlinux.domain.CancelException;
 import com.playonlinux.utils.messages.*;
 
 import java.util.List;

@@ -1,5 +1,7 @@
 package com.playonlinux.utils;
 
+import com.playonlinux.domain.PlayOnLinuxError;
+
 public enum Architecture {
     I386,
     AMD64;

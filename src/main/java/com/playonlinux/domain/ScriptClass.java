@@ -1,4 +1,4 @@
-package com.playonlinux.framework;
+package com.playonlinux.domain;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

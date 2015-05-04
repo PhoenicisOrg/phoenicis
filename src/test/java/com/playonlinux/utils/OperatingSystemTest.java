@@ -1,5 +1,6 @@
 package com.playonlinux.utils;
 
+import com.playonlinux.domain.PlayOnLinuxError;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

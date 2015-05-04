@@ -1,6 +1,7 @@
 package com.playonlinux.utils;
 
 import com.google.common.io.Files;
+import com.playonlinux.domain.PlayOnLinuxError;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -76,7 +77,7 @@ public class ObservableDirectoryTest {
         File createdFile = new File(temporaryDirectory, "file.txt");
         Thread.sleep(2 * CHECK_INTERVAL);
         createdFile.createNewFile();
-        Thread.sleep(2 * CHECK_INTERVAL);
+        Thread.sleep(10 * CHECK_INTERVAL);
 
         observableDirectory.stop();
 

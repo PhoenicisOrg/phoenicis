@@ -1,7 +1,7 @@
 package com.playonlinux.ui.impl.javafx;
 
 import javafx.application.Platform;
-import com.playonlinux.utils.CancelException;
+import com.playonlinux.domain.CancelException;
 import com.playonlinux.api.UIMessageSender;
 import com.playonlinux.utils.messages.Message;
 import com.playonlinux.utils.messages.SynchroneousMessage;

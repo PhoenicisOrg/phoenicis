@@ -1,18 +1,20 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.ui.impl.javafx.JavaFXControllerImplementation;
-import javafx.scene.Group;
-import javafx.scene.Node;
+import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.ui.api.EventHandler;
+import com.playonlinux.ui.api.InstalledApplications;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import com.playonlinux.ui.api.EventHandler;
 
-public class JavaFXMainWindowImplementation extends Stage {
+@Component
+public class MainWindow extends Stage {
 
+    @Inject
+    static EventHandler eventHandler;
+    private ApplicationList listApps;
 
     public void setUpWindow() {
         MenuBar menuBar =  new MenuBar(this);
@@ -48,7 +50,10 @@ public class JavaFXMainWindowImplementation extends Stage {
 
         mainContent.setVgap(2.0);
         mainContent.add(new MenuLeft(), 0, 0);
-        ApplicationList listApps = new ApplicationList();
+
+
+        this.listApps = new ApplicationList();
+
 
         mainContent.add(listApps, 1, 0);
         pane.setCenter(mainContent);
@@ -59,11 +64,15 @@ public class JavaFXMainWindowImplementation extends Stage {
         this.show();
     }
 
-
+    public void setUpEvents() throws PlayOnLinuxError {
+        InstalledApplications installedApplications = eventHandler.getInstalledApplications();
+        installedApplications.addObserver(listApps);
+    }
 
     public EventHandler getEventHandler() {
-        return JavaFXControllerImplementation.getStaticEventHandler();
+        return eventHandler;
     }
+
 
 }
 

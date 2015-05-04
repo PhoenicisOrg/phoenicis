@@ -4,8 +4,8 @@ import com.playonlinux.api.Controller;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
-import com.playonlinux.utils.CancelException;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.CancelException;
+import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.IOException;
 

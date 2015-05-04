@@ -7,11 +7,11 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 public class MenuBar extends javafx.scene.control.MenuBar {
-    private final JavaFXMainWindowImplementation parent;
+    private final MainWindow parent;
 
     private MenuItem openScript;
 
-    public MenuBar(JavaFXMainWindowImplementation parent) {
+    public MenuBar(MainWindow parent) {
         this.parent = parent;
 
         buildFileMenu();
@@ -47,7 +47,7 @@ public class MenuBar extends javafx.scene.control.MenuBar {
             fileChooser.setTitle("Open a script");
             File scriptToRun = fileChooser.showOpenDialog(parent);
 
-            this.parent.getEventHandler().runLocalScript(scriptToRun);
+            parent.getEventHandler().runLocalScript(scriptToRun);
         });
     }
 }

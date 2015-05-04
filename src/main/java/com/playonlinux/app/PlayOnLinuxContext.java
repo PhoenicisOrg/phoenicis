@@ -2,7 +2,7 @@ package com.playonlinux.app;
 
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.utils.ReplacableProperties;
 
 import java.io.File;
@@ -70,4 +70,17 @@ public class PlayOnLinuxContext {
 
         return systemEnvironment;
     }
+
+    public File makeShortcutsScriptsPath() throws PlayOnLinuxError {
+        return new File(this.properties.getProperty("application.user.shortcuts.scripts"));
+    }
+
+    public File makeShortcutsIconsPath() throws PlayOnLinuxError {
+        return new File(this.properties.getProperty("application.user.shortcuts.icons"));
+    }
+
+    public File makeShortcutsConfigPath() throws PlayOnLinuxError {
+        return new File(this.properties.getProperty("application.user.shortcuts.config"));
+    }
+
 }

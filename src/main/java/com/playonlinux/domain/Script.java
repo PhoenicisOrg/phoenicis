@@ -1,18 +1,15 @@
-package com.playonlinux.framework;
+package com.playonlinux.domain;
 
-import com.playonlinux.utils.CancelException;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
 import java.io.*;
 
 public class Script {
-    enum Type {
+    public enum Type {
         RECENT,
         LEGACY
     }
-
-
 
     private final File script;
 

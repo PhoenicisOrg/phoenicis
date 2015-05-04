@@ -1,16 +1,17 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.api.ProgressStep;
-import com.playonlinux.utils.CancelException;
+import com.playonlinux.domain.CancelException;
+import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.utils.Checksum;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
-import static com.playonlinux.utils.Localisation.translate;
+import static com.playonlinux.domain.Localisation.translate;
 
 @ScriptClass
 @SuppressWarnings("unused")

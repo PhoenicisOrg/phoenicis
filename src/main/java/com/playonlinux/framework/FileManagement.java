@@ -1,11 +1,12 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.api.ProgressStep;
-import com.playonlinux.utils.CancelException;
+import com.playonlinux.domain.CancelException;
+import com.playonlinux.domain.ScriptClass;
 
 import java.io.*;
 
-import static com.playonlinux.utils.Localisation.translate;
+import static com.playonlinux.domain.Localisation.translate;
 
 /* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts syntax
  */

@@ -1,7 +1,5 @@
 package com.playonlinux.api;
 
-import com.playonlinux.ui.api.EventHandler;
-
 public interface Controller {
     void startApplication();
 
@@ -9,5 +7,4 @@ public interface Controller {
 
     UIMessageSender createUIMessageSender();
 
-    void injectEventHandler(EventHandler eventHandler);
 }

@@ -1,6 +1,8 @@
 package com.playonlinux.utils;
 
 
+import com.playonlinux.domain.PlayOnLinuxError;
+
 public enum OperatingSystem {
     MACOSX ("Mac OS X"),
     LINUX ("Linux"),

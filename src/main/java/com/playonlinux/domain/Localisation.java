@@ -1,4 +1,4 @@
-package com.playonlinux.utils;
+package com.playonlinux.domain;
 
 // TODO
 public class Localisation {

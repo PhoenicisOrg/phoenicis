@@ -2,16 +2,17 @@ package com.playonlinux.framework;
 
 import com.playonlinux.api.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
-import com.playonlinux.utils.CancelException;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.CancelException;
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.wine.WineInstallation;
 
 import java.io.IOException;
 
-import static com.playonlinux.utils.Localisation.translate;
+import static com.playonlinux.domain.Localisation.translate;
 
 @Component
 @ScriptClass

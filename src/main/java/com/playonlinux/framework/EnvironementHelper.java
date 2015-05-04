@@ -1,7 +1,8 @@
 package com.playonlinux.framework;
 
+import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxError;
 
 @ScriptClass
 @SuppressWarnings("unused")

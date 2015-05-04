@@ -1,4 +1,4 @@
-package com.playonlinux.utils;
+package com.playonlinux.domain;
 
 public class PlayOnLinuxError extends Throwable {
     private final String message;

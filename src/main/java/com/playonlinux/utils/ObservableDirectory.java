@@ -1,23 +1,25 @@
 package com.playonlinux.utils;
 
+import com.playonlinux.domain.PlayOnLinuxError;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Observable;
 
 public class ObservableDirectory extends Observable {
     private int checkInterval = 1000;
-    private final File directoryToObserve;
+    private final File observedDirectory;
     private final ObservableDirectoryThread observableDirectoryThread;
 
-    public ObservableDirectory(File directoryToObserve) throws PlayOnLinuxError {
-        this.directoryToObserve = directoryToObserve;
-        if(!directoryToObserve.exists()) {
+    public ObservableDirectory(File observedDirectory) throws PlayOnLinuxError {
+        this.observedDirectory = observedDirectory;
+        if(!observedDirectory.exists()) {
             throw new PlayOnLinuxError(String.format("The directory %s does not exist",
-                    directoryToObserve.toString()));
+                    observedDirectory.toString()));
         }
-        if(!directoryToObserve.isDirectory()) {
+        if(!observedDirectory.isDirectory()) {
             throw new PlayOnLinuxError(String.format("The file %s is not a valid directory",
-                    directoryToObserve.toString()));
+                    observedDirectory.toString()));
         }
 
         observableDirectoryThread = new ObservableDirectoryThread(this);
@@ -35,8 +37,14 @@ public class ObservableDirectory extends Observable {
         observableDirectoryThread.stopChecking();
     }
 
+    public File getObservedDirectory() {
+        return observedDirectory;
+    }
+
+    /* Protected because the user of the class should use the observer pattern and should not access directly
+    to the files */
     protected File[] findFiles() {
-        return directoryToObserve.listFiles();
+        return observedDirectory.listFiles();
     }
 
     private class ObservableDirectoryThread extends Thread {

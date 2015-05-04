@@ -6,7 +6,7 @@ import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.impl.javafx.JavaFXControllerImplementation;
-import com.playonlinux.utils.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.IOException;
 

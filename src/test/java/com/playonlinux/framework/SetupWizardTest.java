@@ -6,7 +6,7 @@ import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
 import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
-import com.playonlinux.utils.CancelException;
+import com.playonlinux.domain.CancelException;
 import org.junit.Before;
 import org.junit.Test;
 

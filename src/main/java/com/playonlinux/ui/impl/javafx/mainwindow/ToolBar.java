@@ -6,7 +6,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-import static com.playonlinux.utils.Localisation.translate;
+import static com.playonlinux.domain.Localisation.translate;
 
 class ToolBar extends javafx.scene.control.ToolBar {
 
