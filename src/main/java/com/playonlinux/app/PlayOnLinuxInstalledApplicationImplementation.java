@@ -5,9 +5,11 @@ import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.ui.api.Shortcut;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -43,5 +45,10 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     public void update(Observable o, Object arg) {
         this.setChanged();
         this.notifyObservers(shortcutSet);
+    }
+
+    @Override
+    public Iterator<Shortcut> getShortcuts() {
+        return null;
     }
 }
