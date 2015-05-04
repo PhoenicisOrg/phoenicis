@@ -1,10 +1,9 @@
 package com.playonlinux.ui.api;
 
-import java.util.Iterator;
+import com.playonlinux.ui.beans.ShortcutBean;
+
 import java.util.Observer;
 
-public interface InstalledApplications {
+public interface InstalledApplications extends Iterable<ShortcutBean> {
     void addObserver(Observer o);
-
-    Iterator<Shortcut> getShortcuts();
 }

@@ -1,6 +1,7 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.ui.beans.ShortcutBean;
+import javafx.application.Platform;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
@@ -19,14 +20,23 @@ public class ApplicationList extends TreeView implements Observer {
         this.setShowRoot(false);
     }
 
-    public void addItem() {
-        rootItem.getChildren().add(new TreeItem(new ApplicationItem("Test", "test")));
+    public void addItem(String shortcutName) {
+        rootItem.getChildren().add(new TreeItem(new ApplicationItem(shortcutName, "test")));
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        InstalledApplications installedApplications = (InstalledApplications) o;
-        System.out.println(installedApplications);
+    public synchronized void update(Observable o, Object arg) {
+        this.clear();
+        Platform.runLater(() -> {
+            Iterable<ShortcutBean> installedApplications = (Iterable<ShortcutBean>) o;
+            for (ShortcutBean shortcut : installedApplications) {
+                addItem(shortcut.getName());
+            }
+        });
+    }
+
+    private void clear() {
+        rootItem.getChildren().clear();
     }
 
     private class ApplicationItem extends GridPane {

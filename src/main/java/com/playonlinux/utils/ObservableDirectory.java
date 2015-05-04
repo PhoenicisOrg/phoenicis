@@ -1,6 +1,7 @@
 package com.playonlinux.utils;
 
 import com.playonlinux.domain.PlayOnLinuxError;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
 import java.util.Arrays;
@@ -41,6 +42,12 @@ public class ObservableDirectory extends Observable {
         return observedDirectory;
     }
 
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(observedDirectory.getName())
+                .append(checkInterval)
+                .toString();
+    }
     /* Protected because the user of the class should use the observer pattern and should not access directly
     to the files */
     protected File[] findFiles() {
