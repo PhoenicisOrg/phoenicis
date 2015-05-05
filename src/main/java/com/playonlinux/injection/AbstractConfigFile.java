@@ -21,48 +21,9 @@ public abstract class AbstractConfigFile {
     }
     public void load() throws InjectionException {
         Injector injector = new Injector(definePackage());
-        HashMap<Class<?>, Object> beans = loadAllBeans(injector);
-        injectAllBeans(injector, beans);
+        HashMap<Class<?>, Object> beans = injector.loadAllBeans(this);
+        injector.injectAllBeans(strictLoadingPolicy, beans);
     }
 
-    protected void injectAllBeans(Injector injector, HashMap<Class<?>, Object> beans) throws InjectionException {
-        Set<Class<?>> componentClasses = injector.getComponentClasses();
 
-        for(Class<?> componentClass: componentClasses) {
-            List<Field> fields = injector.getAnnotatedFields(componentClass, Inject.class);
-            for(Field field: fields){
-                if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
-                    throw new InjectionException(String.format("Unable to inject %s. Check your config file",
-                            field.getType().toString()));
-                } else if(beans.containsKey(field.getType())){
-                    try {
-                        field.setAccessible(true);
-                        field.set(null, beans.get(field.getType()));
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                        throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
-                                field.getType().toString(), e));
-                    }
-                }
-            }
-        }
-    }
-
-    private HashMap<Class<?>, Object> loadAllBeans(Injector injector) throws InjectionException {
-        List<Method> methods = injector.getAnnotatedMethods(this.getClass(), Bean.class);
-
-        HashMap<Class<?>, Object> beans = new HashMap<>();
-
-        for(Method method: methods) {
-            method.setAccessible(true);
-            try {
-                beans.put(method.getReturnType(), method.invoke(this));
-            } catch (IllegalAccessException e) {
-                throw new InjectionException(String.format("Unable to inject dependencies (IllegalAccessException): %s", e));
-            } catch (InvocationTargetException e) {
-                throw new InjectionException(String.format("Unable to inject dependencies (InvocationTargetException): %s", e));
-            }
-        }
-        return beans;
-    }
 }

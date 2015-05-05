@@ -4,8 +4,10 @@ import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -49,4 +51,45 @@ public class Injector {
         return methods;
     }
 
+    public HashMap<Class<?>, Object> loadAllBeans(AbstractConfigFile configFile) throws InjectionException {
+        List<Method> methods = this.getAnnotatedMethods(configFile.getClass(), Bean.class);
+
+        HashMap<Class<?>, Object> beans = new HashMap<>();
+
+        for(Method method: methods) {
+            method.setAccessible(true);
+            try {
+                beans.put(method.getReturnType(), method.invoke(configFile));
+            } catch (IllegalAccessException e) {
+                throw new InjectionException(String.format("Unable to inject dependencies (IllegalAccessException): %s", e));
+            } catch (InvocationTargetException e) {
+                throw new InjectionException(String.format("Unable to inject dependencies (InvocationTargetException): %s", e));
+            }
+        }
+        return beans;
+    }
+
+    public void injectAllBeans(Boolean strictLoadingPolicy, HashMap<Class<?>, Object> beans) throws InjectionException {
+        Set<Class<?>> componentClasses = this.getComponentClasses();
+
+        for(Class<?> componentClass: componentClasses) {
+            List<Field> fields = this.getAnnotatedFields(componentClass, Inject.class);
+            for(Field field: fields){
+                if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
+                    throw new InjectionException(String.format("Unable to inject %s. Check your config file",
+                            field.getType().toString()));
+                } else if(beans.containsKey(field.getType())){
+                    try {
+                        field.setAccessible(true);
+                        field.set(null, beans.get(field.getType()));
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                        throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
+                                field.getType().toString(), e));
+                    }
+                }
+            }
+        }
+
+    }
 }
