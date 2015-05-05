@@ -31,7 +31,6 @@ public class ShortcutSet extends Observable implements Observer {
         return shortcuts;
     }
 
-    // FIXME: What happens if the icon does not exist?
     @Override
     synchronized public void update(Observable o, Object arg) {
         if(o == shortcutDirectory) {
