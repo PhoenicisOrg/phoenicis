@@ -48,6 +48,7 @@ public class ShortcutSet extends Observable implements Observer {
                 this.getShortcuts().add(shortcut);
             }
         }
+        this.setChanged();
         this.notifyObservers(getShortcuts());
     }
 }

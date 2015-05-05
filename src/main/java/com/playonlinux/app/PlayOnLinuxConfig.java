@@ -27,6 +27,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
         return new PlayOnLinuxContext();
     }
 
+    @Bean
+    public PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager() {
+        return new PlayOnLinuxBackgroundServicesManager();
+    }
+
     @Override
     protected String definePackage() {
         return "com.playonlinux";

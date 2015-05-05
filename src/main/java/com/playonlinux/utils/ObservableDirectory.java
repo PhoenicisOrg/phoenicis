@@ -7,10 +7,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Observable;
 
-public class ObservableDirectory extends Observable {
+public class ObservableDirectory extends Observable implements BackgroundService {
     private int checkInterval = 1000;
     private final File observedDirectory;
     private final ObservableDirectoryThread observableDirectoryThread;
+    private String serviceName;
 
     public ObservableDirectory(File observedDirectory) throws PlayOnLinuxError {
         this.observedDirectory = observedDirectory;
@@ -53,6 +54,12 @@ public class ObservableDirectory extends Observable {
     protected File[] findFiles() {
         return observedDirectory.listFiles();
     }
+
+    @Override
+    public void shutdown() {
+        this.stop();
+    }
+
 
     private class ObservableDirectoryThread extends Thread {
         private final ObservableDirectory observableDirectory;

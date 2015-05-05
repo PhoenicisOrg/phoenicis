@@ -6,7 +6,7 @@ import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.InstalledApplications;
-import com.playonlinux.ui.beans.ShortcutBean;
+import com.playonlinux.ui.dtos.ShortcutDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
@@ -19,8 +19,11 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    @Inject
+    static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+
     ShortcutSet shortcutSet;
-    private Iterator<ShortcutBean> shortcutBeanIterator;
+    private Iterator<ShortcutDTO> shortcutBeanIterator;
 
     PlayOnLinuxInstalledApplicationImplementation() throws PlayOnLinuxError {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
@@ -30,11 +33,8 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
         ObservableDirectory shortcutDirectoryObservable = new ObservableDirectory(shortcutDirectory);
         ObservableDirectory iconDirectoryObservable = new ObservableDirectory(iconDirectory);
 
-        shortcutDirectoryObservable.addObserver(this);
-        iconDirectoryObservable.addObserver(this);
-
-        shortcutDirectoryObservable.start();
-        iconDirectoryObservable.start();
+        playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
+        playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
 
         shortcutSet = new ShortcutSet(shortcutDirectoryObservable, iconDirectoryObservable,
                 configFilesDirectory);
@@ -47,7 +47,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     public synchronized void update(Observable o, Object arg) {
         this.setChanged();
         this.notifyObservers();
-        shortcutBeanIterator = new Iterator<ShortcutBean>() {
+        shortcutBeanIterator = new Iterator<ShortcutDTO>() {
             volatile int i = 0;
 
             @Override
@@ -56,10 +56,10 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
             }
 
             @Override
-            public ShortcutBean next() {
+            public ShortcutDTO next() {
                 Shortcut shortcut = shortcutSet.getShortcuts().get(i);
                 i++;
-                return new ShortcutBean.Builder()
+                return new ShortcutDTO.Builder()
                         .withName(shortcut.getShortcutName())
                         .withIcon(shortcut.getIconPath())
                         .build();
@@ -68,7 +68,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     }
 
     @Override
-    synchronized public Iterator<ShortcutBean> iterator() {
+    synchronized public Iterator<ShortcutDTO> iterator() {
         return this.shortcutBeanIterator;
     }
 

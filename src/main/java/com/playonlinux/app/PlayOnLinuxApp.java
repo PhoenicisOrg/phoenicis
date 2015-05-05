@@ -13,6 +13,9 @@ import java.io.IOException;
 public class PlayOnLinuxApp {
 
     @Inject
+    static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+
+    @Inject
     static Controller controller;
 
     public void start() throws PlayOnLinuxError, IOException,
@@ -27,6 +30,8 @@ public class PlayOnLinuxApp {
             PlayOnLinuxError, IOException, InjectionException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start();
+
+        playOnLinuxBackgroundServicesManager.shutdown();
     }
 
 }

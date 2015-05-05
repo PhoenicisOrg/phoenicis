@@ -1,8 +1,8 @@
-package com.playonlinux.ui.beans;
+package com.playonlinux.ui.dtos;
 
 import java.io.File;
 
-public class ShortcutBean {
+public class ShortcutDTO {
     public String getName() {
         return name;
     }
@@ -14,7 +14,7 @@ public class ShortcutBean {
     private final String name;
     private final File icon;
 
-    public ShortcutBean(Builder builder) {
+    public ShortcutDTO(Builder builder) {
         this.name = builder.name;
         this.icon = builder.icon;
     }
@@ -23,18 +23,18 @@ public class ShortcutBean {
         private File icon;
         private String name;
 
-        public ShortcutBean.Builder withName(String name) {
+        public ShortcutDTO.Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public ShortcutBean.Builder withIcon(File icon) {
+        public ShortcutDTO.Builder withIcon(File icon) {
             this.icon = icon;
             return this;
         }
 
-        public ShortcutBean build() {
-            return new ShortcutBean(this);
+        public ShortcutDTO build() {
+            return new ShortcutDTO(this);
         }
 
     }

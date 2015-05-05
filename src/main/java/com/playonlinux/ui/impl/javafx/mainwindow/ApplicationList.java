@@ -1,6 +1,6 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.ui.beans.ShortcutBean;
+import com.playonlinux.ui.dtos.ShortcutDTO;
 import javafx.application.Platform;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -28,8 +28,8 @@ public class ApplicationList extends TreeView implements Observer {
     public synchronized void update(Observable o, Object arg) {
         this.clear();
         Platform.runLater(() -> {
-            Iterable<ShortcutBean> installedApplications = (Iterable<ShortcutBean>) o;
-            for (ShortcutBean shortcut : installedApplications) {
+            Iterable<ShortcutDTO> installedApplications = (Iterable<ShortcutDTO>) o;
+            for (ShortcutDTO shortcut : installedApplications) {
                 addItem(shortcut.getName());
             }
         });
