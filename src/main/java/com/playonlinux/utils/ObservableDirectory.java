@@ -51,8 +51,19 @@ public class ObservableDirectory extends Observable implements BackgroundService
     }
     /* Protected because the user of the class should use the observer pattern and should not access directly
     to the files */
+
+    /* TODO: Test this method with better coverage */
     protected File[] findFiles() {
-        return observedDirectory.listFiles();
+        File[] files = observedDirectory.listFiles();
+        File[] filesFiltered = new File[files.length];
+        int i = 0;
+        for(File file: files) {
+            if(!file.getName().startsWith(".")) {
+                filesFiltered[i] = file;
+                i++;
+            }
+        }
+        return filesFiltered;
     }
 
     @Override

@@ -4,9 +4,12 @@ import com.playonlinux.ui.dtos.ShortcutDTO;
 import javafx.application.Platform;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,8 +23,8 @@ public class ApplicationList extends TreeView implements Observer {
         this.setShowRoot(false);
     }
 
-    public void addItem(String shortcutName) {
-        rootItem.getChildren().add(new TreeItem(new ApplicationItem(shortcutName, "test")));
+    public void addItem(String shortcutName, File iconPath) {
+        rootItem.getChildren().add(new TreeItem(new ApplicationItem(shortcutName, iconPath)));
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ApplicationList extends TreeView implements Observer {
         Platform.runLater(() -> {
             Iterable<ShortcutDTO> installedApplications = (Iterable<ShortcutDTO>) o;
             for (ShortcutDTO shortcut : installedApplications) {
-                addItem(shortcut.getName());
+                addItem(shortcut.getName(), shortcut.getIcon());
             }
         });
     }
@@ -41,17 +44,17 @@ public class ApplicationList extends TreeView implements Observer {
 
     private class ApplicationItem extends GridPane {
         private final String applicationName;
-        private final String prefixName;
+        private final File iconPath;
 
-        ApplicationItem(String applicationName, String prefixName) {
+        ApplicationItem(String applicationName, File iconPath) {
             this.applicationName = applicationName;
-            this.prefixName = prefixName;
-
-            this.setPrefHeight(100.);
+            this.iconPath = iconPath;
+            System.out.println(iconPath.getAbsolutePath());
+            this.setPrefHeight(70.);
             Text applicationNameLabel = new Text(applicationName);
-            Text prefixNameLabel = new Text(prefixName);
-            this.add(applicationNameLabel, 0, 0);
-            this.add(prefixNameLabel, 0, 1);
+
+            this.add(applicationNameLabel, 1, 0);
+            this.add(new ImageView(new Image("file:/"+iconPath.getAbsolutePath())), 0, 0);
         }
     }
 }
