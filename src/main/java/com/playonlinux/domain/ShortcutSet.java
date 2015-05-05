@@ -12,14 +12,15 @@ public class ShortcutSet extends Observable implements Observer {
     private final ObservableDirectory iconDirectory;
     private final File configFilesDirectory;
     private final ObservableDirectory shortcutDirectory;
+    private final File defaultIcon;
     private List<Shortcut> shortcuts;
 
     public ShortcutSet(ObservableDirectory shortcutDirectory, ObservableDirectory iconDirectory,
-                       File configFilesDirectory) {
+                       File configFilesDirectory, File defaultIcon) {
         this.shortcuts = new ArrayList<>();
         this.iconDirectory = iconDirectory;
         this.configFilesDirectory = configFilesDirectory;
-
+        this.defaultIcon = defaultIcon;
         this.shortcutDirectory = shortcutDirectory;
 
         shortcutDirectory.addObserver(this);
@@ -37,6 +38,9 @@ public class ShortcutSet extends Observable implements Observer {
             getShortcuts().clear();
             for (File shortcutFile : (File[]) arg) {
                 File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
+                if(!iconFile.exists()) {
+                    iconFile = defaultIcon;
+                }
                 File configFile = new File(configFilesDirectory, shortcutFile.getName());
 
                 Shortcut shortcut;

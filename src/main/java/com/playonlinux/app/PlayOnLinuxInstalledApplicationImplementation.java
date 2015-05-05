@@ -29,6 +29,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
+        File defaultIcon = playOnLinuxContext.makeDefaultIconPath();
 
         ObservableDirectory shortcutDirectoryObservable = new ObservableDirectory(shortcutDirectory);
         ObservableDirectory iconDirectoryObservable = new ObservableDirectory(iconDirectory);
@@ -37,7 +38,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
         playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
 
         shortcutSet = new ShortcutSet(shortcutDirectoryObservable, iconDirectoryObservable,
-                configFilesDirectory);
+                configFilesDirectory, defaultIcon);
 
         shortcutSet.addObserver(this);
     }

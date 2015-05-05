@@ -5,6 +5,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Observable;
 
 public class ObservableDirectory extends Observable implements BackgroundService {
@@ -55,15 +56,14 @@ public class ObservableDirectory extends Observable implements BackgroundService
     /* TODO: Test this method with better coverage */
     protected File[] findFiles() {
         File[] files = observedDirectory.listFiles();
-        File[] filesFiltered = new File[files.length];
-        int i = 0;
+        LinkedList<File> filesFiltered = new LinkedList<>();
         for(File file: files) {
-            if(!file.getName().startsWith(".")) {
-                filesFiltered[i] = file;
-                i++;
+            if (!file.getName().startsWith(".")) {
+                filesFiltered.add(file);
             }
         }
-        return filesFiltered;
+
+        return filesFiltered.toArray(new File[filesFiltered.size()]);
     }
 
     @Override

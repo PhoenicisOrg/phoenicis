@@ -83,4 +83,7 @@ public class PlayOnLinuxContext {
         return new File(this.properties.getProperty("application.user.shortcuts.config"));
     }
 
+    public File makeDefaultIconPath() {
+        return new File(this.properties.getProperty("application.root.classes"), "playonlinux.png");
+    }
 }
