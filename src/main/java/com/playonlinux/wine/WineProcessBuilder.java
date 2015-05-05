@@ -1,8 +1,5 @@
 package com.playonlinux.wine;
 
-import com.playonlinux.injection.Component;
-import com.playonlinux.injection.Inject;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;

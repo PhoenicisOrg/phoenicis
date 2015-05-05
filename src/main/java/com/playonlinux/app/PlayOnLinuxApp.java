@@ -18,8 +18,7 @@ public class PlayOnLinuxApp {
     @Inject
     static Controller controller;
 
-    public void start() throws PlayOnLinuxError, IOException,
-            InjectionException {
+    public void start() throws InjectionException {
         PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
         playOnLinuxConfig.load();
 

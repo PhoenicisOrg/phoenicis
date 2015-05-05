@@ -44,7 +44,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         this.addToStep(header);
     }
 
-    private void drawPanelForTopHeader(Pane root) {
+    private void drawPanelForTopHeader() {
         Pane panel = new Pane();
         panel.setId("panelForTopheader");
         panel.setPrefSize(522, 294);
@@ -61,7 +61,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
     public void installStep() {
         this.clearAllOnParent();
         this.drawHeader();
-        this.drawPanelForTopHeader(this.getParentRoot());
+        this.drawPanelForTopHeader();
         this.drawFooter();
 
         this.setStepEvents();

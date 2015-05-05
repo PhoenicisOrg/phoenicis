@@ -1,12 +1,6 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {

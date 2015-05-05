@@ -38,10 +38,6 @@ public abstract class AbstractConfigFile {
                     try {
                         field.setAccessible(true);
                         field.set(null, beans.get(field.getType()));
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                        throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
-                                field.getType().toString(), e));
                     } catch (Throwable e) {
                         e.printStackTrace();
                         throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
@@ -55,7 +51,7 @@ public abstract class AbstractConfigFile {
     private HashMap<Class<?>, Object> loadAllBeans(Injector injector) throws InjectionException {
         List<Method> methods = injector.getAnnotatedMethods(this.getClass(), Bean.class);
 
-        HashMap<Class<?>, Object> beans = new HashMap();
+        HashMap<Class<?>, Object> beans = new HashMap<>();
 
         for(Method method: methods) {
             method.setAccessible(true);

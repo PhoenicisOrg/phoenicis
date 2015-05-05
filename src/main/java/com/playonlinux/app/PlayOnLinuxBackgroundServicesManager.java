@@ -8,7 +8,7 @@ public class PlayOnLinuxBackgroundServicesManager {
     ArrayList<BackgroundService> runningTask;
 
     PlayOnLinuxBackgroundServicesManager() {
-        runningTask = new ArrayList<BackgroundService>();
+        runningTask = new ArrayList<>();
     }
 
     void register(BackgroundService backgroundService) {
@@ -17,8 +17,6 @@ public class PlayOnLinuxBackgroundServicesManager {
     }
 
     void shutdown() {
-        for(BackgroundService backgroundService: runningTask) {
-            backgroundService.shutdown();
-        }
+        runningTask.forEach(com.playonlinux.utils.BackgroundService::shutdown);
     }
 }

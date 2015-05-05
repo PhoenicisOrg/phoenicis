@@ -18,8 +18,7 @@ public class Injector {
 
     public Set<Class<?>> getComponentClasses() {
         Reflections reflections = new Reflections(this.packageName);
-        Set<Class<?>> componentClasses = reflections.getTypesAnnotatedWith(Component.class);
-        return componentClasses;
+        return reflections.getTypesAnnotatedWith(Component.class);
     }
 
     public <T extends Annotation> Boolean isAnnotatedWith(Field field, Class<T> annotation) {
@@ -31,7 +30,7 @@ public class Injector {
     }
 
     public <T extends Annotation> List<Field> getAnnotatedFields(Class<?> annotatedClass, Class<T> annotation) {
-        List<Field> fields = new ArrayList();
+        List<Field> fields = new ArrayList<>();
         for(Field field: annotatedClass.getDeclaredFields()) {
             if(isAnnotatedWith(field, annotation)) {
                 fields.add(field);
@@ -41,7 +40,7 @@ public class Injector {
     }
 
     public <T extends Annotation> List<Method> getAnnotatedMethods(Class<?> annotatedClass, Class<T> annotation) {
-        List<Method> methods = new ArrayList();
+        List<Method> methods = new ArrayList<>();
         for(Method method: annotatedClass.getDeclaredMethods()) {
             if(isAnnotatedWith(method, annotation)) {
                 methods.add(method);

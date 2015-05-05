@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.List;
 
 public class JavaFXSetupWindowImplementation extends Stage implements SetupWindow {
-    private final Scene scene;
     private final Pane root;
     private final String wizardTitle;
     private CancelerMessage lastCancelerMessage = null;
@@ -44,8 +43,8 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
     public JavaFXSetupWindowImplementation(String title) {
         super();
         this.root = new Pane();
-        this.scene = new Scene(root, 520, 400);
-        this.scene.getStylesheets().add(this.getClass().getResource("setupWindow.css").toExternalForm());
+        Scene scene = new Scene(root, 520, 400);
+        scene.getStylesheets().add(this.getClass().getResource("setupWindow.css").toExternalForm());
 
         this.wizardTitle = title;
 

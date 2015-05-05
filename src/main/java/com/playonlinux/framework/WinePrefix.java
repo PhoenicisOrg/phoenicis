@@ -50,7 +50,7 @@ public class WinePrefix {
                 .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
                         version,
                         Architecture.valueOf(architecture))
-                ).withApplicationEnvironment(this.playOnLinuxContext.getSystemEnvironment())
+                ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
                 .build();
 
         Process process = wineInstallation.createPrefix(this.prefix);
@@ -63,7 +63,7 @@ public class WinePrefix {
             try {
                 double percentage = this.prefix.getSize() * 100. / (double) NEW_PREFIX_SIZE;
                 progressStep.setProgressPercentage(percentage);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException ignored) {
             }
 
             try {

@@ -17,7 +17,7 @@ public class Checksum {
     }
 
     private static byte[] getDigest(InputStream inputStream, MessageDigest messageDigest)
-            throws NoSuchAlgorithmException, IOException {
+            throws IOException {
 
         messageDigest.reset();
         byte[] bytes = new byte[BLOCK_SIZE];
@@ -25,7 +25,6 @@ public class Checksum {
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
         }
-        byte[] digest = messageDigest.digest();
-        return digest;
+        return messageDigest.digest();
     }
 }

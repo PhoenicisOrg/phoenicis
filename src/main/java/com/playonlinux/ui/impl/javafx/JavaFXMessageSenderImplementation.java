@@ -10,7 +10,6 @@ import java.util.concurrent.CountDownLatch;
 
 public class JavaFXMessageSenderImplementation<ReturnType> implements UIMessageSender<ReturnType> {
     public static void runAndWait(Runnable action) {
-        Object result = null;
         if (action == null)
             throw new NullPointerException("action");
 

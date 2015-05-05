@@ -71,15 +71,15 @@ public class PlayOnLinuxContext {
         return systemEnvironment;
     }
 
-    public File makeShortcutsScriptsPath() throws PlayOnLinuxError {
+    public File makeShortcutsScriptsPath() {
         return new File(this.properties.getProperty("application.user.shortcuts.scripts"));
     }
 
-    public File makeShortcutsIconsPath() throws PlayOnLinuxError {
+    public File makeShortcutsIconsPath() {
         return new File(this.properties.getProperty("application.user.shortcuts.icons"));
     }
 
-    public File makeShortcutsConfigPath() throws PlayOnLinuxError {
+    public File makeShortcutsConfigPath() {
         return new File(this.properties.getProperty("application.user.shortcuts.config"));
     }
 
