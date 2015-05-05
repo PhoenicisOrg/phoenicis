@@ -1,11 +1,19 @@
 package com.playonlinux.domain;
 
+import com.playonlinux.utils.BackgroundService;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
 import java.io.*;
 
-public class Script {
+public class Script implements BackgroundService {
+    private Thread scriptThread;
+
+    @Override
+    public void shutdown() {
+        scriptThread.interrupt();
+    }
+
     public enum Type {
         RECENT,
         LEGACY
@@ -27,9 +35,9 @@ public class Script {
         }
     }
 
-    public void run() {
-        new Thread()
-        {
+    @Override
+    public void start() {
+        scriptThread = new Thread() {
             public void run() {
                 try {
                     File pythonPath = new File("src/main/python");
@@ -37,7 +45,7 @@ public class Script {
 
                     PythonInterpreter pythonInterpreter = new PythonInterpreter();
 
-                    if(detectScriptType() == Type.LEGACY) {
+                    if (detectScriptType() == Type.LEGACY) {
                         File v4wrapper = new File("src/main/python/v4wrapper.py");
                         String filePath = v4wrapper.getAbsolutePath();
                         pythonInterpreter.set("__file__", filePath);
@@ -47,7 +55,7 @@ public class Script {
                         pythonInterpreter.execfile(script.getAbsolutePath());
                     }
                 } catch (PyException e) {
-                    if(e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedIOException) {
+                    if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedIOException) {
                         System.out.println("The script was canceled! "); // Fixme: better logging system
                     } else {
                         throw e;
@@ -56,7 +64,8 @@ public class Script {
                     e.printStackTrace();
                 }
             }
-        }.start();
+        };
+        scriptThread.start();
 
     }
 }
