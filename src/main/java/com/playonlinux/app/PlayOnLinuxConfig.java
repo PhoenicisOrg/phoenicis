@@ -10,6 +10,7 @@ import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.IOException;
 
+@SuppressWarnings("unused")
 public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
