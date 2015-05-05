@@ -11,7 +11,7 @@ import static com.playonlinux.domain.Localisation.translate;
 class ToolBar extends javafx.scene.control.ToolBar {
 
     public ToolBar() {
-        ImageView runImage = new ImageView(this.getClass().getResource("run.png").toExternalForm());
+        ImageView runImage = new ImageView(this.getClass().getResource("play.png").toExternalForm());
         runImage.setFitWidth(16);
         runImage.setFitHeight(16);
 

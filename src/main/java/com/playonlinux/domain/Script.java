@@ -55,7 +55,7 @@ public class Script implements BackgroundService {
                         pythonInterpreter.execfile(script.getAbsolutePath());
                     }
                 } catch (PyException e) {
-                    if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedIOException) {
+                    if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedException) {
                         System.out.println("The script was canceled! "); // Fixme: better logging system
                     } else {
                         throw e;
