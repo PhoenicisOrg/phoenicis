@@ -1,11 +1,7 @@
 package com.playonlinux.injection;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+
 
 public abstract class AbstractConfigFile {
     protected abstract String definePackage();
