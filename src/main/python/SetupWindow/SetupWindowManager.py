@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from com.playonlinux.scripts import SetupWizard
+from com.playonlinux.framework import SetupWizard
 
 class SetupWindowManager(object):
     def __init__(self):

@@ -5,7 +5,7 @@ import os
 import subprocess
 
 from SetupWindow.SetupWindowNetcatServer import SetupWindowNetcatServer
-from com.playonlinux.scripts import EnvironementHelper
+from com.playonlinux.framework import EnvironementHelper
 
 if __name__ == '__main__':
     setupWindowNetcatServer = SetupWindowNetcatServer()
