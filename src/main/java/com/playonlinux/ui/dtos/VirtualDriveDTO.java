@@ -8,6 +8,10 @@ public class VirtualDriveDTO {
         this.name = builder.name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static class Builder {
         private String name;
 

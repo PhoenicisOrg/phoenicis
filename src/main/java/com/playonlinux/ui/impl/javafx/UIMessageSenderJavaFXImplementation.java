@@ -8,7 +8,7 @@ import com.playonlinux.utils.messages.SynchroneousMessage;
 
 import java.util.concurrent.CountDownLatch;
 
-public class UIMessageSenderJavaFXImplementation<RETURNTYPE> implements UIMessageSender<RETURNTYPE> {
+public class UIMessageSenderJavaFXImplementation<RETURN_TYPE> implements UIMessageSender<RETURN_TYPE> {
     public static void runAndWait(Runnable action) {
         if (action == null)
             throw new NullPointerException("action");
@@ -37,7 +37,7 @@ public class UIMessageSenderJavaFXImplementation<RETURNTYPE> implements UIMessag
     }
 
     @Override
-    public RETURNTYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURNTYPE> message) throws InterruptedException, CancelException {
+    public RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws InterruptedException, CancelException {
         UIMessageSenderJavaFXImplementation.runAndWait(message);
         return message.getResponse();
     }

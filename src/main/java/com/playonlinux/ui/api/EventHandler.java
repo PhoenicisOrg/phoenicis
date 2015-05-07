@@ -9,5 +9,5 @@ public interface EventHandler {
 
     InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
 
-    VirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
+    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
 }

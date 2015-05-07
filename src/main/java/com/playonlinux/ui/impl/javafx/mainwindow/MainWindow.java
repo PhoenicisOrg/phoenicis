@@ -1,9 +1,6 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.injection.Component;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
@@ -13,7 +10,7 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
     private JavaFXEventHandler eventHandler = new JavaFXEventHandler();
-    private ApplicationList listApps;
+    private ApplicationListWidget applicationListWidget;
     private ToolBar toolBar;
 
     public void setUpWindow() {
@@ -54,10 +51,10 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         mainContent.add(new MenuLeft(), 0, 0);
 
 
-        this.listApps = new ApplicationList();
+        this.applicationListWidget = new ApplicationListWidget();
 
 
-        mainContent.add(listApps, 1, 0);
+        mainContent.add(applicationListWidget, 1, 0);
         pane.setCenter(mainContent);
 
 
@@ -68,7 +65,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
     public void setUpEvents() throws PlayOnLinuxError {
         InstalledApplications installedApplications = eventHandler.getInstalledApplications();
-        installedApplications.addObserver(listApps);
+        installedApplications.addObserver(applicationListWidget);
 
         toolBar.setUpEvents();
     }

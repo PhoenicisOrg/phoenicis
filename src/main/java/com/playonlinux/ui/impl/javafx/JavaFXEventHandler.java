@@ -5,6 +5,7 @@ import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.ui.api.InstalledVirtualDrives;
 import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
 
@@ -20,11 +21,15 @@ public class JavaFXEventHandler {
         return mainEventHandler.getInstalledApplications();
     }
 
+    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError {
+        return mainEventHandler.getInstalledVirtualDrives();
+    }
+
     public void runLocalScript(File scriptToRun) {
         mainEventHandler.runLocalScript(scriptToRun);
     }
 
-    public void openConfigureWindow(PlayOnLinuxWindow parent) {
+    public void openConfigureWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
         ConfigureWindow configureWindow = ConfigureWindow.getInstance(parent);
     }
 }

@@ -6,7 +6,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.domain.Script;
 import com.playonlinux.ui.api.InstalledApplications;
-import com.playonlinux.ui.api.VirtualDrives;
+import com.playonlinux.ui.api.InstalledVirtualDrives;
 
 import java.io.File;
 
@@ -17,7 +17,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
 
     private InstalledApplications installedApplications;
-    private VirtualDrivesPlayOnLinuxImplementation virtualDrives;
+    private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
 
     public void runLocalScript(File scriptToRun) {
         Script playonlinuxScript = new Script(scriptToRun);
@@ -33,9 +33,9 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     }
 
     @Override
-    public VirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError {
+    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError {
         if(virtualDrives == null) {
-            virtualDrives = new VirtualDrivesPlayOnLinuxImplementation();
+            virtualDrives = new InstalledVirtualDrivesPlayOnLinuxImplementation();
         }
 
         return this.virtualDrives;

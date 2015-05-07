@@ -46,6 +46,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     @Override
     public synchronized void update(Observable o, Object arg) {
+        // FIXME: Use arg instead of getting a new list
         this.setChanged();
         this.notifyObservers();
         shortcutDtoIterator = new Iterator<ShortcutDTO>() {

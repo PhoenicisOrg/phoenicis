@@ -4,8 +4,8 @@ import com.playonlinux.domain.CancelException;
 import com.playonlinux.utils.messages.Message;
 import com.playonlinux.utils.messages.SynchroneousMessage;
 
-public interface UIMessageSender <RETURNTYPE> {
-    RETURNTYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURNTYPE> message) throws InterruptedException, CancelException;
+public interface UIMessageSender <RETURN_TYPE> {
+    RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws InterruptedException, CancelException;
 
     void synchroneousSend(Message message);
 

@@ -1,5 +1,6 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import com.playonlinux.domain.PlayOnLinuxError;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -70,7 +71,11 @@ class ToolBar extends javafx.scene.control.ToolBar {
 
     public void setUpEvents() {
         configureButton.setOnMouseClicked(event -> {
-            this.parent.getEventHandler().openConfigureWindow(this.parent);
+            try {
+                this.parent.getEventHandler().openConfigureWindow(this.parent);
+            } catch (PlayOnLinuxError playOnLinuxError) {
+                playOnLinuxError.printStackTrace();
+            }
         });
     }
 

@@ -2,11 +2,11 @@ package com.playonlinux.utils.messages;
 
 import com.playonlinux.domain.CancelException;
 
-public abstract class CancelerSynchroneousMessage<RESULTTYPE> extends SynchroneousMessage implements CancelerMessage {
+public abstract class CancelerSynchroneousMessage<RESULT_TYPE> extends SynchroneousMessage implements CancelerMessage {
     private Boolean processCanceled = false;
 
-    public RESULTTYPE getResponse() throws InterruptedException, CancelException {
-        RESULTTYPE response = (RESULTTYPE) super.getResponse();
+    public RESULT_TYPE getResponse() throws InterruptedException, CancelException {
+        RESULT_TYPE response = (RESULT_TYPE) super.getResponse();
 
         if(this.processCanceled) {
             throw new CancelException();
