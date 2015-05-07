@@ -15,7 +15,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 @Component
-public class PlayOnLinuxInstalledApplicationImplementation extends Observable implements InstalledApplications, Observer {
+public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -25,7 +25,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     ShortcutSet shortcutSet;
     private Iterator<ShortcutDTO> shortcutDtoIterator;
 
-    PlayOnLinuxInstalledApplicationImplementation() throws PlayOnLinuxError {
+    InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxError {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();

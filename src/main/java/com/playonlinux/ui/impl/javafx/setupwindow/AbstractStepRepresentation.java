@@ -10,15 +10,15 @@ import java.net.URL;
 
 abstract class AbstractStepRepresentation {
     private final CancelerMessage messageWaitingForResponse;
-    private final JavaFXSetupWindowImplementation parent;
+    private final SetupWindowJavaFXImplementation parent;
     private Button nextButton;
 
-    AbstractStepRepresentation(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
+    AbstractStepRepresentation(SetupWindowJavaFXImplementation parent, CancelerMessage messageWaitingForResponse) {
         this.parent = parent;
         this.messageWaitingForResponse = messageWaitingForResponse;
     }
 
-    protected JavaFXSetupWindowImplementation getParent() {
+    protected SetupWindowJavaFXImplementation getParent() {
         return this.parent;
     }
 

@@ -14,7 +14,7 @@ import com.playonlinux.utils.messages.CancelerMessage;
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     Pane contentPanel;
 
-    AbstractStepRepresentationWithHeader(JavaFXSetupWindowImplementation parent, CancelerMessage messageWaitingForResponse) {
+    AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent, CancelerMessage messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
     }
 

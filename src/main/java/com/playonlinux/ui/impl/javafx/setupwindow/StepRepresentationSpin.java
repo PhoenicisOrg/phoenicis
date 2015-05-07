@@ -4,7 +4,7 @@ import javafx.scene.control.ProgressIndicator;
 import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
-    public StepRepresentationSpin(JavaFXSetupWindowImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
+    public StepRepresentationSpin(SetupWindowJavaFXImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
                                   String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
     }

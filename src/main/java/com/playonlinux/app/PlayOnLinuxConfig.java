@@ -5,7 +5,7 @@ import com.playonlinux.api.Controller;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.api.EventHandler;
-import com.playonlinux.ui.impl.javafx.JavaFXControllerImplementation;
+import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.IOException;
@@ -15,12 +15,12 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
     public Controller controller() {
-        return new JavaFXControllerImplementation();
+        return new ControllerJavaFXImplementation();
     }
 
     @Bean
     public EventHandler eventHandler() {
-            return new PlayOnLinuxEventsImplementation();
+            return new EventHandlerPlayOnLinuxImplementation();
     }
 
     @Bean

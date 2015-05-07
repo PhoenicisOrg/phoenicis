@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class JavaFXSetupWindowImplementation extends Stage implements SetupWindow {
+public class SetupWindowJavaFXImplementation extends Stage implements SetupWindow {
     private final Pane root;
     private final String wizardTitle;
     private CancelerMessage lastCancelerMessage = null;
@@ -40,7 +40,7 @@ public class JavaFXSetupWindowImplementation extends Stage implements SetupWindo
         root.getChildren().clear();
     }
 
-    public JavaFXSetupWindowImplementation(String title) {
+    public SetupWindowJavaFXImplementation(String title) {
         super();
         this.root = new Pane();
         Scene scene = new Scene(root, 520, 400);

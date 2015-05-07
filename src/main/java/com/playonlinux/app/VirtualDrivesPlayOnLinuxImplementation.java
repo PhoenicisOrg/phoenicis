@@ -15,7 +15,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 @Component
-public class PlayOnLinuxVirtualDrivesImplementation extends Observable implements VirtualDrives, Observer {
+public class VirtualDrivesPlayOnLinuxImplementation extends Observable implements VirtualDrives, Observer {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -26,7 +26,7 @@ public class PlayOnLinuxVirtualDrivesImplementation extends Observable implement
     private ObservableDirectory observableWineprefixes;
 
 
-    public PlayOnLinuxVirtualDrivesImplementation() throws PlayOnLinuxError {
+    public VirtualDrivesPlayOnLinuxImplementation() throws PlayOnLinuxError {
         File winePrefixes = playOnLinuxContext.makePrefixesPath();
         observableWineprefixes = new ObservableDirectory(winePrefixes);
 

@@ -1,7 +1,7 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.api.ProgressStep;
-import com.playonlinux.ui.impl.javafx.JavaFXMessageSenderImplementation;
+import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 import com.playonlinux.utils.messages.AsynchroneousMessage;
@@ -12,7 +12,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     ProgressBar progressBar = new ProgressBar();
     Text progressText = new Text("");
 
-    public StepRepresentationProgressBar(JavaFXSetupWindowImplementation parent, InterrupterSynchroneousMessage messageWaitingForResponse,
+    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, InterrupterSynchroneousMessage messageWaitingForResponse,
                                          String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);
@@ -41,7 +41,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
 
     @Override
     public void setProgressPercentage(double value) {
-        JavaFXMessageSenderImplementation messageSender = new JavaFXMessageSenderImplementation();
+        UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
         messageSender.asynchroneousSend(new AsynchroneousMessage() {
                                             @Override
                                             public void execute(Message message) {
@@ -59,7 +59,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
 
     @Override
     public void setText(String text) {
-        JavaFXMessageSenderImplementation messageSender = new JavaFXMessageSenderImplementation();
+        UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
         messageSender.asynchroneousSend(new AsynchroneousMessage() {
                                             @Override
                                             public void execute(Message message) {

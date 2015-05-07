@@ -11,7 +11,7 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     List<String> menuItems;
     ListView listViewWidget;
 
-    public StepRepresentationMenu(JavaFXSetupWindowImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
+    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
                                   List<String> menuItems) {
         super(parent, messageWaitingForResponse, textToShow);
 

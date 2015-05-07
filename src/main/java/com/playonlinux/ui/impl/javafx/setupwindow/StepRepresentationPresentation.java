@@ -17,7 +17,7 @@ import com.playonlinux.utils.messages.CancelerSynchroneousMessage;
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     String textToShow;
 
-    public StepRepresentationPresentation(JavaFXSetupWindowImplementation parent, CancelerMessage message, String textToShow) {
+    public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow) {
         super(parent, message);
         this.textToShow = textToShow;
     }
