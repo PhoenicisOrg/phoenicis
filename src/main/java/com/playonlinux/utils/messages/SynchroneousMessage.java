@@ -4,20 +4,20 @@ import com.playonlinux.domain.CancelException;
 
 import java.util.concurrent.Semaphore;
 
-public abstract class SynchroneousMessage<ResultType> implements Message {
-    private ResultType response;
+public abstract class SynchroneousMessage<RESULTTYPE> implements Message {
+    private RESULTTYPE response;
     Semaphore semaphore = new Semaphore(0);
 
     public void run() {
         this.execute(this);
     }
 
-    public ResultType getResponse() throws InterruptedException, CancelException {
+    public RESULTTYPE getResponse() throws InterruptedException, CancelException {
         semaphore.acquire();
         return this.response;
     }
 
-    public void setResponse(ResultType response) {
+    public void setResponse(RESULTTYPE response) {
         this.response = response;
         semaphore.release();
     }
