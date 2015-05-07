@@ -5,12 +5,13 @@ import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class MainWindow extends Stage {
+public class MainWindow extends Stage implements PlayOnLinuxWindow {
     private JavaFXEventHandler eventHandler = new JavaFXEventHandler();
     private ApplicationList listApps;
     private ToolBar toolBar;

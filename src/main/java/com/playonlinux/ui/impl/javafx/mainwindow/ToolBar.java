@@ -70,7 +70,7 @@ class ToolBar extends javafx.scene.control.ToolBar {
 
     public void setUpEvents() {
         configureButton.setOnMouseClicked(event -> {
-            this.parent.getEventHandler().openConfigureWindow();
+            this.parent.getEventHandler().openConfigureWindow(this.parent);
         });
     }
 

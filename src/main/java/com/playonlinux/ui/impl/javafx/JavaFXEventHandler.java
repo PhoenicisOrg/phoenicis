@@ -5,6 +5,8 @@ import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
+import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
 
 import java.io.File;
 
@@ -22,7 +24,7 @@ public class JavaFXEventHandler {
         mainEventHandler.runLocalScript(scriptToRun);
     }
 
-    public void openConfigureWindow() {
-        System.out.println("TODO");
+    public void openConfigureWindow(PlayOnLinuxWindow parent) {
+        ConfigureWindow configureWindow = ConfigureWindow.getInstance(parent);
     }
 }
