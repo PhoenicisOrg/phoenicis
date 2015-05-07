@@ -23,7 +23,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
 
     ShortcutSet shortcutSet;
-    private Iterator<ShortcutDTO> shortcutBeanIterator;
+    private Iterator<ShortcutDTO> shortcutDtoIterator;
 
     PlayOnLinuxInstalledApplicationImplementation() throws PlayOnLinuxError {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
@@ -48,7 +48,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
     public synchronized void update(Observable o, Object arg) {
         this.setChanged();
         this.notifyObservers();
-        shortcutBeanIterator = new Iterator<ShortcutDTO>() {
+        shortcutDtoIterator = new Iterator<ShortcutDTO>() {
             volatile int i = 0;
 
             @Override
@@ -70,7 +70,7 @@ public class PlayOnLinuxInstalledApplicationImplementation extends Observable im
 
     @Override
     synchronized public Iterator<ShortcutDTO> iterator() {
-        return this.shortcutBeanIterator;
+        return this.shortcutDtoIterator;
     }
 
 }

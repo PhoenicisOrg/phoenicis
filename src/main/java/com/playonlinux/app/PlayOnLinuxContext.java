@@ -41,6 +41,10 @@ public class PlayOnLinuxContext {
         return new File(prefixPath);
     }
 
+    public File makePrefixesPath() {
+        return new File(this.properties.getProperty("application.user.wineprefix"));
+    }
+
     public File makeWinePathFromVersionAndArchitecture(String version, Architecture architecture) throws PlayOnLinuxError {
         String architectureDirectory = String.format("%s-%s",
                 OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages(),
@@ -86,4 +90,6 @@ public class PlayOnLinuxContext {
     public File makeDefaultIconPath() {
         return new File(this.properties.getProperty("application.root.classes"), "playonlinux.png");
     }
+
+
 }

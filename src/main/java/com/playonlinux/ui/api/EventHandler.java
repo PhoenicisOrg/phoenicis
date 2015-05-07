@@ -8,4 +8,6 @@ public interface EventHandler {
     void runLocalScript(File scriptToRun);
 
     InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
+
+    VirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
 }
