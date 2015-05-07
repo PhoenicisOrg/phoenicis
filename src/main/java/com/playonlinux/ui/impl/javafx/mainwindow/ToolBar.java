@@ -1,16 +1,21 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import static com.playonlinux.domain.Localisation.translate;
 
 class ToolBar extends javafx.scene.control.ToolBar {
+    private final MainWindow parent;
+    private final Button configureButton;
 
-    public ToolBar() {
+    public ToolBar(MainWindow parent) {
+        this.parent = parent;
         ImageView runImage = new ImageView(this.getClass().getResource("play.png").toExternalForm());
         runImage.setFitWidth(16);
         runImage.setFitHeight(16);
@@ -44,8 +49,8 @@ class ToolBar extends javafx.scene.control.ToolBar {
         Button remove = new Button(translate("Remove"), removeImage);
         remove.setContentDisplay(ContentDisplay.LEFT);
 
-        Button configure = new Button(translate("Configure"), configureImage);
-        configure.setContentDisplay(ContentDisplay.LEFT);
+        configureButton = new Button(translate("Configure"), configureImage);
+        configureButton.setContentDisplay(ContentDisplay.LEFT);
 
         TextField searchField = new TextField();
 
@@ -57,10 +62,16 @@ class ToolBar extends javafx.scene.control.ToolBar {
                 install,
                 remove,
                 new Separator(),
-                configure,
+                configureButton,
                 new Separator(),
                 searchField
         );
+    }
+
+    public void setUpEvents() {
+        configureButton.setOnMouseClicked(event -> {
+            this.parent.getEventHandler().openConfigureWindow();
+        });
     }
 
 }

@@ -5,16 +5,15 @@ import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-@Component
 public class MainWindow extends Stage {
-
-    @Inject
-    static EventHandler eventHandler;
+    private JavaFXEventHandler eventHandler = new JavaFXEventHandler();
     private ApplicationList listApps;
+    private ToolBar toolBar;
 
     public void setUpWindow() {
         MenuBar menuBar =  new MenuBar(this);
@@ -23,8 +22,10 @@ public class MainWindow extends Stage {
         Scene scene = new Scene(pane, 600, 400);
 
         VBox topContainer = new VBox();
+        toolBar = new ToolBar(this);
+
         topContainer.getChildren().add(menuBar);
-        topContainer.getChildren().add(new ToolBar());
+        topContainer.getChildren().add(toolBar);
         pane.setTop(topContainer);
 
         pane.setBottom(new StatusBar(this, scene));
@@ -67,9 +68,11 @@ public class MainWindow extends Stage {
     public void setUpEvents() throws PlayOnLinuxError {
         InstalledApplications installedApplications = eventHandler.getInstalledApplications();
         installedApplications.addObserver(listApps);
+
+        toolBar.setUpEvents();
     }
 
-    public EventHandler getEventHandler() {
+    public JavaFXEventHandler getEventHandler() {
         return eventHandler;
     }
 

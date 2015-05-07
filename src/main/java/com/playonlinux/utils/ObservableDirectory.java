@@ -12,7 +12,6 @@ public class ObservableDirectory extends Observable implements BackgroundService
     private int checkInterval = 1000;
     private final File observedDirectory;
     private final ObservableDirectoryThread observableDirectoryThread;
-    private String serviceName;
 
     public ObservableDirectory(File observedDirectory) throws PlayOnLinuxError {
         this.observedDirectory = observedDirectory;
