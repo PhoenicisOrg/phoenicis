@@ -1,8 +1,17 @@
 package com.playonlinux.ui.dtos;
 
+
 import java.io.File;
 
 public class ShortcutDTO {
+    private final File icon;
+    private final String name;
+
+    public ShortcutDTO(Builder builder) {
+        this.name = builder.name;
+        this.icon = builder.icon;
+    }
+
     public String getName() {
         return name;
     }
@@ -11,24 +20,16 @@ public class ShortcutDTO {
         return icon;
     }
 
-    private final String name;
-    private final File icon;
-
-    public ShortcutDTO(Builder builder) {
-        this.name = builder.name;
-        this.icon = builder.icon;
-    }
-
     public static class Builder {
-        private File icon;
         private String name;
+        private File icon;
 
-        public ShortcutDTO.Builder withName(String name) {
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public ShortcutDTO.Builder withIcon(File icon) {
+        public Builder withIcon(File icon) {
             this.icon = icon;
             return this;
         }
@@ -36,6 +37,5 @@ public class ShortcutDTO {
         public ShortcutDTO build() {
             return new ShortcutDTO(this);
         }
-
     }
 }

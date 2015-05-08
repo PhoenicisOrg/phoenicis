@@ -4,8 +4,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 
 
-public class VirtualDrivePanel extends TitledPane {
-    public VirtualDrivePanel(String name) {
+public class AccordionPanel extends TitledPane {
+    public AccordionPanel(String name) {
         this.setText(name);
         this.setContent(new PaneContent());
     }

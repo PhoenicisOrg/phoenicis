@@ -28,7 +28,6 @@ public class ApplicationListWidget extends TreeView implements Observer {
 
     public ApplicationListWidget() {
         rootItem = new TreeItem();
-
         this.setRoot(rootItem);
         this.setShowRoot(false);
     }

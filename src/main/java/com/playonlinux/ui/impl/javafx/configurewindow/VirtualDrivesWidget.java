@@ -1,68 +1,77 @@
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
+import com.playonlinux.ui.dtos.ShortcutDTO;
 import com.playonlinux.ui.dtos.VirtualDriveDTO;
 import javafx.application.Platform;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
+import javafx.geometry.Insets;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
-public class VirtualDrivesWidget extends Accordion implements Observer {
-    VirtualDrivePanel expandedPane;
 
-    public VirtualDrivesWidget() {
-        super();
+public class VirtualDrivesWidget extends TreeView implements Observer {
 
-        this.expandedPaneProperty().addListener((property, oldPane, newPane) -> {
-            if (oldPane != null) oldPane.setCollapsible(true);
-            if (newPane != null) Platform.runLater(() -> newPane.setCollapsible(false));
-        });
+    private final TreeItem rootItem;
 
+    VirtualDrivesWidget() {
+        rootItem = new TreeItem();
+        this.setRoot(rootItem);
+        this.setShowRoot(false);
+    }
 
+    public void addItem(String shortcutName, File iconPath) {
+        TreeItem treeItem = new TreeItem(new VirtualDriveItem(shortcutName, iconPath));
+        rootItem.getChildren().add(treeItem);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        final String expandedPaneName;
-        if(expandedPane != null) {
-            expandedPaneName = expandedPane.getText();
-        } else {
-            expandedPaneName = null;
-        }
-
-        this.getPanes().clear();
-
+        this.clear();
         Platform.runLater(() -> {
-            Iterable<VirtualDriveDTO> virtualdrives = (Iterable<VirtualDriveDTO>) o;
-            int i = 0;
-            for (VirtualDriveDTO virtualdrive : virtualdrives) {
-                this.getPanes().add(new VirtualDrivePanel(virtualdrive.getName()));
-                i++;
-            }
-
-            if (i > 0) {
-                if (expandedPaneName == null) {
-                    this.setExpandedPane(this.getPanes().get(0));
-                } else {
-                    TitledPane paneToExpand = this.getPaneFromName(expandedPaneName);
-                    if(paneToExpand == null) {
-                        this.setExpandedPane(this.getPanes().get(0));
-                    } else {
-                        this.setExpandedPane(paneToExpand);
-                    }
-
-                }
+            Iterable<VirtualDriveDTO> virtualDrives = (Iterable<VirtualDriveDTO>) o;
+            for (VirtualDriveDTO virtualDrive : virtualDrives) {
+                addItem(virtualDrive.getName(), virtualDrive.getIcon());
             }
         });
     }
 
-    private TitledPane getPaneFromName(String expandedPaneName) {
-        for(TitledPane titledPane: this.getPanes()) {
-            if(expandedPaneName.equals(titledPane.getText())) {
-                return expandedPane;
+    private void clear() {
+        rootItem.getChildren().clear();
+    }
+
+    private class VirtualDriveItem extends GridPane {
+        private final File iconPath;
+
+        VirtualDriveItem(String virtualDriveName, File iconPath) {
+            this.iconPath = iconPath;
+            this.setPrefHeight(0.);
+
+            VirtualDriveLabel virtualDriveLabel = new VirtualDriveLabel(virtualDriveName);
+
+            ImageView iconImageView = new ImageView(new Image("file://"+iconPath.getAbsolutePath()));
+            iconImageView.setFitHeight(16);
+            iconImageView.setFitWidth(16);
+
+            this.add(iconImageView, 0, 0);
+            this.add(virtualDriveLabel, 1, 0);
+        }
+
+
+        private class VirtualDriveLabel extends Pane {
+            VirtualDriveLabel(String virtualDriveName) {
+                Text virtualDriveLabelText = new Text(virtualDriveName);
+                virtualDriveLabelText.setLayoutX(10);
+                virtualDriveLabelText.setLayoutY(12);
+                this.getChildren().add(virtualDriveLabelText);
             }
         }
-        return null;
     }
 }

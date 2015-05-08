@@ -4,8 +4,10 @@ import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
 import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
@@ -34,9 +36,15 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
 
         this.installedVirtualDrivesWidget = new VirtualDrivesWidget();
 
+        GridPane gridPane = new GridPane();
+        gridPane.add(installedVirtualDrivesWidget, 0, 0);
 
-        Scene scene = new Scene(installedVirtualDrivesWidget, 620, 400);
+        Scene scene = new Scene(gridPane, 620, 400);
 
+        ColumnConstraints columnConstraint = new ColumnConstraints();
+        columnConstraint.setPercentWidth(25);
+
+        gridPane.getColumnConstraints().add(columnConstraint);
 
         this.setScene(scene);
         this.setUpEvents();
