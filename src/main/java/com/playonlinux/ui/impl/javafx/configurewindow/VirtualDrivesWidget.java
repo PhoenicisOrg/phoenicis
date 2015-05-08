@@ -1,9 +1,7 @@
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
-import com.playonlinux.ui.dtos.ShortcutDTO;
 import com.playonlinux.ui.dtos.VirtualDriveDTO;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -48,10 +46,7 @@ public class VirtualDrivesWidget extends TreeView implements Observer {
     }
 
     private class VirtualDriveItem extends GridPane {
-        private final File iconPath;
-
         VirtualDriveItem(String virtualDriveName, File iconPath) {
-            this.iconPath = iconPath;
             this.setPrefHeight(0.);
 
             VirtualDriveLabel virtualDriveLabel = new VirtualDriveLabel(virtualDriveName);

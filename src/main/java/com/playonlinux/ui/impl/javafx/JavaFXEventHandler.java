@@ -8,6 +8,7 @@ import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
 import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
+import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
 
 import java.io.File;
 
@@ -29,7 +30,12 @@ public class JavaFXEventHandler {
         mainEventHandler.runLocalScript(scriptToRun);
     }
 
-    public void openConfigureWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
-        ConfigureWindow configureWindow = ConfigureWindow.getInstance(parent);
+    public PlayOnLinuxWindow openConfigureWindow(PlayOnLinuxWindow parent, String selectedApplication)
+            throws PlayOnLinuxError {
+        return ConfigureWindow.getInstance(parent);
+    }
+
+    public PlayOnLinuxWindow openInstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
+        return InstallWindow.getInstance(parent);
     }
 }

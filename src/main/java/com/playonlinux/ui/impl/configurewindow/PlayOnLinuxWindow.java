@@ -4,5 +4,4 @@ import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
 
 public interface PlayOnLinuxWindow {
     JavaFXEventHandler getEventHandler();
-
 }

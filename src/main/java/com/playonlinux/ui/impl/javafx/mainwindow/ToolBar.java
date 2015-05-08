@@ -14,6 +14,7 @@ import static com.playonlinux.domain.Localisation.translate;
 class ToolBar extends javafx.scene.control.ToolBar {
     private final MainWindow parent;
     private final Button configureButton;
+    private final Button installButton;
 
     public ToolBar(MainWindow parent) {
         this.parent = parent;
@@ -44,8 +45,8 @@ class ToolBar extends javafx.scene.control.ToolBar {
         Button stop = new Button(translate("Stop"), stopImage);
         stop.setContentDisplay(ContentDisplay.LEFT);
 
-        Button install = new Button(translate("Install"), installImage);
-        install.setContentDisplay(ContentDisplay.LEFT);
+        installButton = new Button(translate("Install"), installImage);
+        installButton.setContentDisplay(ContentDisplay.LEFT);
 
         Button remove = new Button(translate("Remove"), removeImage);
         remove.setContentDisplay(ContentDisplay.LEFT);
@@ -60,7 +61,7 @@ class ToolBar extends javafx.scene.control.ToolBar {
                 run,
                 stop,
                 new Separator(),
-                install,
+                installButton,
                 remove,
                 new Separator(),
                 configureButton,
@@ -72,7 +73,15 @@ class ToolBar extends javafx.scene.control.ToolBar {
     public void setUpEvents() {
         configureButton.setOnMouseClicked(event -> {
             try {
-                this.parent.getEventHandler().openConfigureWindow(this.parent);
+                this.parent.getEventHandler().openConfigureWindow(this.parent, this.parent.getSelectedApplication());
+            } catch (PlayOnLinuxError playOnLinuxError) {
+                playOnLinuxError.printStackTrace();
+            }
+        });
+
+        installButton.setOnMouseClicked(event -> {
+            try {
+                this.parent.getEventHandler().openInstallWindow(this.parent);
             } catch (PlayOnLinuxError playOnLinuxError) {
                 playOnLinuxError.printStackTrace();
             }

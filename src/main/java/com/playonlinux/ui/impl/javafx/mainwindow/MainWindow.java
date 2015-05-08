@@ -75,5 +75,8 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     }
 
 
+    public String getSelectedApplication() {
+        return null;
+    }
 }
 

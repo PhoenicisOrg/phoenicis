@@ -10,6 +10,7 @@ import com.playonlinux.ui.dtos.ShortcutDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
@@ -46,20 +47,20 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     @Override
     public synchronized void update(Observable o, Object arg) {
-        // FIXME: Use arg instead of getting a new list
         this.setChanged();
         this.notifyObservers();
+
         shortcutDtoIterator = new Iterator<ShortcutDTO>() {
             volatile int i = 0;
 
             @Override
             public boolean hasNext() {
-                return (shortcutSet.getShortcuts().size() > i);
+                return ((ArrayList<Shortcut>) arg).size() > i;
             }
 
             @Override
             public ShortcutDTO next() {
-                Shortcut shortcut = shortcutSet.getShortcuts().get(i);
+                Shortcut shortcut = ((ArrayList<Shortcut>) arg).get(i);
                 i++;
                 return new ShortcutDTO.Builder()
                         .withName(shortcut.getShortcutName())
