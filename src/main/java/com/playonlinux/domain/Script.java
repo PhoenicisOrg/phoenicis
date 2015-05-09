@@ -19,6 +19,7 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.utils.BackgroundService;
+import org.apache.commons.lang.StringUtils;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
@@ -53,8 +54,45 @@ public class Script implements BackgroundService {
         }
     }
 
-    public String extractSignature() {
-        return null;
+    public String extractSignature() throws IOException, PlayOnLinuxError {
+        switch(this.detectScriptType()) {
+            case LEGACY:
+                return this.extractLegacyScriptSignature();
+            case RECENT:
+            default:
+                return null;
+        }
+
+    }
+
+    private String extractLegacyScriptSignature() throws IOException, PlayOnLinuxError {
+        BufferedReader bufferReader = new BufferedReader(new FileReader(this.script));
+        StringBuilder signatureBuilder = new StringBuilder();
+
+        String readLine;
+        Boolean insideSignature = false;
+        do {
+            readLine = bufferReader.readLine();
+            if("-----BEGIN PGP PUBLIC KEY BLOCK-----".equals(readLine)) {
+                insideSignature = true;
+            }
+
+            if(insideSignature) {
+                signatureBuilder.append(readLine);
+                signatureBuilder.append("\n");
+            }
+
+            if("-----END PGP PUBLIC KEY BLOCK-----".equals(readLine)) {
+                insideSignature = false;
+            }
+        } while(readLine != null);
+
+        String signature = signatureBuilder.toString().trim();
+
+        if(StringUtils.isBlank(signature)) {
+            throw new PlayOnLinuxError("The script has no valid signature!");
+        }
+        return signature;
     }
 
     @Override

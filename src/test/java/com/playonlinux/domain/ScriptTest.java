@@ -16,12 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.domain;
 
-import com.playonlinux.domain.Script;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -42,5 +42,22 @@ public class ScriptTest {
         assertEquals(Script.Type.RECENT, legacyScript.detectScriptType());
     }
 
+    @Test
+    public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, PlayOnLinuxError {
+        Script legacyScriptWithSignature = new Script(new File(this.getClass()
+                .getResource("legacyScriptExempleWithSignature.sh").getPath()));
+        String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
+                "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
+                "\n" +
+                "MOCKED SIGNATURE\n" +
+                "-----END PGP PUBLIC KEY BLOCK-----";
+        assertEquals(expectedSignture, legacyScriptWithSignature.extractSignature());
+    }
+
+    @Test(expected = PlayOnLinuxError.class)
+    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, PlayOnLinuxError {
+        Script legacyScriptWithoutSignature = new Script(new File(this.getClass().getResource("legacyScriptExemple.sh").getPath()));
+        legacyScriptWithoutSignature.extractSignature();
+    }
 
 }
