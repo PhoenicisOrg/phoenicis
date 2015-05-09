@@ -53,6 +53,10 @@ public class Script implements BackgroundService {
         }
     }
 
+    public String extractSignature() {
+        return null;
+    }
+
     @Override
     public void start() {
         scriptThread = new Thread() {
