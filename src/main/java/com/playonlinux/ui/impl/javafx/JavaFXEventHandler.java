@@ -29,6 +29,7 @@ import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
 import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
 
 import java.io.File;
+import java.io.IOException;
 
 @Component
 public class JavaFXEventHandler {
@@ -44,7 +45,7 @@ public class JavaFXEventHandler {
         return mainEventHandler.getInstalledVirtualDrives();
     }
 
-    public void runLocalScript(File scriptToRun) {
+    public void runLocalScript(File scriptToRun) throws IOException {
         mainEventHandler.runLocalScript(scriptToRun);
     }
 

@@ -27,6 +27,7 @@ import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
 
 import java.io.File;
+import java.io.IOException;
 
 @Component
 public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
@@ -37,8 +38,8 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
 
-    public void runLocalScript(File scriptToRun) {
-        Script playonlinuxScript = new Script(scriptToRun);
+    public void runLocalScript(File scriptToRun) throws IOException {
+        Script playonlinuxScript = Script.createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
 

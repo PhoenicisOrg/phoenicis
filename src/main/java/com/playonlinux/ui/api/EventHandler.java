@@ -21,9 +21,10 @@ package com.playonlinux.ui.api;
 import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.File;
+import java.io.IOException;
 
 public interface EventHandler {
-    void runLocalScript(File scriptToRun);
+    void runLocalScript(File scriptToRun) throws IOException;
 
     InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
 

@@ -18,11 +18,15 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
+
+import static com.playonlinux.domain.Localisation.translate;
 
 public class MenuBar extends javafx.scene.control.MenuBar {
     private final MainWindow parent;
@@ -65,7 +69,14 @@ public class MenuBar extends javafx.scene.control.MenuBar {
             fileChooser.setTitle("Open a script");
             File scriptToRun = fileChooser.showOpenDialog(parent);
 
-            parent.getEventHandler().runLocalScript(scriptToRun);
+            try {
+                parent.getEventHandler().runLocalScript(scriptToRun);
+            } catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(translate("Error while trying to run the script."));
+                alert.setContentText("The file was not found");
+                e.printStackTrace();
+            }
         });
     }
 }

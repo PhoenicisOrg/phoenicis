@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 
 import static org.junit.Assert.*;
 
@@ -30,22 +31,20 @@ public class ScriptTest {
 
     @Test
     public void testDetectType_passALegacyScript_FormatIsDetected() throws Exception {
-        Script legacyScript = new Script(new File(this.getClass().getResource("legacyScriptExemple.sh").getPath()));
-
-        assertEquals(Script.Type.LEGACY, legacyScript.detectScriptType());
+        assertEquals(Script.Type.LEGACY, Script.detectScriptType(new File(
+                this.getClass().getResource("legacyScriptExample.sh").getPath())));
     }
 
     @Test
     public void testDetectType_passARecentScript_FormatIsDetected() throws Exception {
-        Script legacyScript = new Script(new File(this.getClass().getResource("scriptExemple.py").getPath()));
-
-        assertEquals(Script.Type.RECENT, legacyScript.detectScriptType());
+        assertEquals(Script.Type.RECENT, Script.detectScriptType(new File(
+                this.getClass().getResource("scriptExample.py").getPath())));
     }
 
     @Test
-    public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, PlayOnLinuxError {
-        Script legacyScriptWithSignature = new Script(new File(this.getClass()
-                .getResource("legacyScriptExempleWithSignature.sh").getPath()));
+    public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException {
+        Script legacyScriptWithSignature = Script.createInstance(new File(this.getClass()
+                .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
                 "\n" +
@@ -54,10 +53,37 @@ public class ScriptTest {
         assertEquals(expectedSignture, legacyScriptWithSignature.extractSignature());
     }
 
-    @Test(expected = PlayOnLinuxError.class)
-    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, PlayOnLinuxError {
-        Script legacyScriptWithoutSignature = new Script(new File(this.getClass().getResource("legacyScriptExemple.sh").getPath()));
+    @Test(expected = ParseException.class)
+    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
+        Script legacyScriptWithoutSignature = Script.createInstance(
+                new File(this.getClass().getResource("legacyScriptExample.sh").getPath()));
         legacyScriptWithoutSignature.extractSignature();
     }
 
+
+    @Test
+    public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException {
+        Script script = Script.createInstance(new File(this.getClass()
+                .getResource("scriptExampleWithSignature.py").getPath()));
+        String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
+                "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
+                "\n" +
+                "MOCKED SIGNATURE (PYTHON)\n" +
+                "-----END PGP PUBLIC KEY BLOCK-----";
+        assertEquals(expectedSignture, script.extractSignature());
+    }
+
+    @Test(expected = ParseException.class)
+    public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
+        Script script = Script.createInstance(
+                new File(this.getClass().getResource("scriptExample.py").getPath()));
+        script.extractSignature();
+    }
+
+    @Test(expected = ParseException.class)
+    public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ParseException {
+        Script script = Script.createInstance(
+                new File(this.getClass().getResource("emptyScript").getPath()));
+        script.extractSignature();
+    }
 }

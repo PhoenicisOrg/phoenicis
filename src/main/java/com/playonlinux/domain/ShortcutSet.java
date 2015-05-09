@@ -21,6 +21,7 @@ package com.playonlinux.domain;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -54,19 +55,23 @@ public class ShortcutSet extends Observable implements Observer {
         if(o == shortcutDirectory) {
             getShortcuts().clear();
             for (File shortcutFile : (File[]) arg) {
-                File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
-                if(!iconFile.exists()) {
-                    iconFile = defaultIcon;
-                }
-                File configFile = new File(configFilesDirectory, shortcutFile.getName());
+                try {
+                    File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
+                    if (!iconFile.exists()) {
+                        iconFile = defaultIcon;
+                    }
+                    File configFile = new File(configFilesDirectory, shortcutFile.getName());
 
-                Shortcut shortcut;
-                if (configFile.exists()) {
-                    shortcut = new Shortcut(shortcutFile.getName(), iconFile, new Script(shortcutFile), configFile);
-                } else {
-                    shortcut = new Shortcut(shortcutFile.getName(), iconFile, new Script(shortcutFile));
+                    Shortcut shortcut;
+                    if (configFile.exists()) {
+                        shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile), configFile);
+                    } else {
+                        shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile));
+                    }
+                    this.getShortcuts().add(shortcut);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                this.getShortcuts().add(shortcut);
             }
         }
         this.setChanged();

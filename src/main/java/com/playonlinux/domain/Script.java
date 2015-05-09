@@ -19,18 +19,28 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.utils.BackgroundService;
-import org.apache.commons.lang.StringUtils;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
 import java.io.*;
+import java.text.ParseException;
 
-public class Script implements BackgroundService {
+public abstract class Script implements BackgroundService {
     private Thread scriptThread;
+    private File script;
+
+    protected Script(File script) {
+        this.script = script;
+    }
+
 
     @Override
     public void shutdown() {
         scriptThread.interrupt();
+    }
+
+    public File getScript() {
+        return script;
     }
 
     public enum Type {
@@ -38,14 +48,18 @@ public class Script implements BackgroundService {
         LEGACY
     }
 
-    private final File script;
-
-    public Script(File script) {
-        this.script = script;
+    public static Script createInstance(File script) throws IOException {
+        switch(Script.detectScriptType(script)) {
+            case LEGACY:
+                return new ScriptLegacy(script);
+            case RECENT:
+            default:
+                return new ScriptRecent(script);
+        }
     }
 
-    public Type detectScriptType() throws IOException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(this.script));
+    public static Type detectScriptType(File script) throws IOException {
+        BufferedReader bufferReader = new BufferedReader(new FileReader(script));
         String firstLine = bufferReader.readLine();
         if("#!/bin/bash".equals(firstLine)) {
             return Type.LEGACY;
@@ -54,46 +68,6 @@ public class Script implements BackgroundService {
         }
     }
 
-    public String extractSignature() throws IOException, PlayOnLinuxError {
-        switch(this.detectScriptType()) {
-            case LEGACY:
-                return this.extractLegacyScriptSignature();
-            case RECENT:
-            default:
-                return null;
-        }
-
-    }
-
-    private String extractLegacyScriptSignature() throws IOException, PlayOnLinuxError {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(this.script));
-        StringBuilder signatureBuilder = new StringBuilder();
-
-        String readLine;
-        Boolean insideSignature = false;
-        do {
-            readLine = bufferReader.readLine();
-            if("-----BEGIN PGP PUBLIC KEY BLOCK-----".equals(readLine)) {
-                insideSignature = true;
-            }
-
-            if(insideSignature) {
-                signatureBuilder.append(readLine);
-                signatureBuilder.append("\n");
-            }
-
-            if("-----END PGP PUBLIC KEY BLOCK-----".equals(readLine)) {
-                insideSignature = false;
-            }
-        } while(readLine != null);
-
-        String signature = signatureBuilder.toString().trim();
-
-        if(StringUtils.isBlank(signature)) {
-            throw new PlayOnLinuxError("The script has no valid signature!");
-        }
-        return signature;
-    }
 
     @Override
     public void start() {
@@ -102,30 +76,26 @@ public class Script implements BackgroundService {
                 try {
                     File pythonPath = new File("src/main/python");
                     System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
-
                     PythonInterpreter pythonInterpreter = new PythonInterpreter();
-
-                    if (detectScriptType() == Type.LEGACY) {
-                        File v4wrapper = new File("src/main/python/v4wrapper.py");
-                        String filePath = v4wrapper.getAbsolutePath();
-                        pythonInterpreter.set("__file__", filePath);
-                        pythonInterpreter.set("__scriptToWrap__", script.getAbsolutePath());
-                        pythonInterpreter.execfile(filePath);
-                    } else {
-                        pythonInterpreter.execfile(script.getAbsolutePath());
-                    }
+                    executeScript(pythonInterpreter);
                 } catch (PyException e) {
                     if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedException) {
                         System.out.println("The script was canceled! "); // Fixme: better logging system
                     } else {
                         throw e;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
+
+
+
+
         };
         scriptThread.start();
 
     }
+
+    protected abstract void executeScript(PythonInterpreter pythonInterpreter);
+
+    public abstract String extractSignature() throws ParseException, IOException;
 }
