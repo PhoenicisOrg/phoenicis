@@ -103,7 +103,11 @@ public class RegistryParserTest {
         File registryFile = new File(this.getClass().getResource("user.reg").getFile());
 
         RegistryParser registryParser = new RegistryParser(registryFile, "User");
-        System.out.println(registryParser.parseFile());
+        RegistryKey parsedFile = registryParser.parseFile();
+
+        assertEquals(1541, parsedFile.toString().split("\n").length);
+
+        System.out.println(parsedFile);
     }
 
 }
