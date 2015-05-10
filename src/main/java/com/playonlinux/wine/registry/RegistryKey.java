@@ -64,4 +64,16 @@ public class RegistryKey extends AbstractRegistryNode {
         return null;
     }
 
+    public AbstractRegistryNode getChild(String... childrenNames) {
+        RegistryKey currentLevel = this;
+        for(String child: childrenNames) {
+            AbstractRegistryNode nextLevel = currentLevel.getChild(child);
+            if(nextLevel instanceof RegistryKey) {
+                currentLevel = (RegistryKey) nextLevel;
+            } else {
+                return nextLevel;
+            }
+        }
+        return currentLevel;
+    }
 }

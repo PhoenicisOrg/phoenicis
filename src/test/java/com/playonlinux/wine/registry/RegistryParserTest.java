@@ -61,42 +61,6 @@ public class RegistryParserTest {
         assertEquals(1, levelTwoNode.getChildren().size());
     }
 
-    @Test
-    public void testRegistryParser_parseSimpleFile_testStringValues() throws IOException, ParseException {
-        File temporaryFile = File.createTempFile("registry", "test");
-
-        FileOutputStream outputStream = new FileOutputStream(temporaryFile);
-
-        byte[] bytes = ("[A] 1430602912\n" +
-                "   \n" +
-                "\"C=D\"=\"Content1\"\n" +
-                "\"D\\\"\"=\"Content\\\"2\"\n" +
-                "\"E\"=\"3\\\\\"\n" +
-                "\"\\\\G\"=\"3\"\n" +
-                "\"test\"=\":\"\n"
-        ).getBytes();
-
-        outputStream.write(bytes);
-        outputStream.flush();
-
-        RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
-        RegistryKey node = registryParser.parseFile();
-
-        RegistryKey levelOneNode = (RegistryKey) node.getChild(0);
-
-        assertEquals(5, levelOneNode.getChildren().size());
-        assertEquals("C=D", levelOneNode.getChild(0).getName());
-        assertEquals("D\"", levelOneNode.getChild(1).getName());
-        assertEquals("E", levelOneNode.getChild(2).getName());
-        assertEquals("\\G", levelOneNode.getChild(3).getName());
-        assertEquals("test", levelOneNode.getChild(4).getName());
-
-        assertEquals("Content1", ((RegistryValue) levelOneNode.getChild(0)).getText());
-        assertEquals("Content\"2", ((RegistryValue) levelOneNode.getChild(1)).getText());
-        assertEquals("3\\", ((RegistryValue) levelOneNode.getChild(2)).getText());
-        assertEquals(":", ((RegistryValue) levelOneNode.getChild(4)).getText());
-    }
-
 
     @Test
     public void testParse_realRegFile_testObjectPopulated() throws IOException, ParseException {
