@@ -37,7 +37,7 @@ public class RegistryParser {
         SEPARATOR,
         READING_VALUE
     }
-    RegistryParser(File registryFile, String rootName) {
+    public RegistryParser(File registryFile, String rootName) {
         this.registryFile = registryFile;
         this.rootName = rootName;
     }
