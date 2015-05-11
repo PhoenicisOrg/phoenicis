@@ -44,18 +44,14 @@ public class RegistryValue<TYPE extends AbstractValueType>
             int colPosition = inputString.indexOf(':');
             String valueTypeString = inputString.substring(0, colPosition);
             String valueContentString = inputString.substring(colPosition + 1, inputString.length());
-
+            if(valueContentString.endsWith("\\0")) {
+                valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
+            }
             switch(valueTypeString) {
                 case "str(7)": // Multi String
-                    if(valueContentString.endsWith("\\0")) {
-                        valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
-                    }
                     parsedValue = new RegistryValue<>(name, new MultiStringValueType(valueContentString));
                     break;
                 case "str(2)": // Expandable String
-                    if(valueContentString.endsWith("\\0")) {
-                        valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
-                    }
                     parsedValue = new RegistryValue<>(name, new ExpandableValueType(valueContentString));
                     break;
                 case "dword": // DWORD
