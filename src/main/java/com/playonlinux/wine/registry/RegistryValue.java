@@ -36,6 +36,9 @@ public class RegistryValue<TYPE extends AbstractValueType>
             String valueContentString = inputString.substring(1, inputString.length() - 1);
             valueContentString = valueContentString.replaceAll("\\\\\\\"", "\"");
             valueContentString = valueContentString.replaceAll("\\\\\\\\", "\\\\");
+            if(valueContentString.endsWith("\\0")) {
+                valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
+            }
             parsedValue = new RegistryValue<>(name, new StringValueType(valueContentString));
         } else if(inputString.contains(":")) {
             int colPosition = inputString.indexOf(':');
@@ -44,17 +47,20 @@ public class RegistryValue<TYPE extends AbstractValueType>
 
             switch(valueTypeString) {
                 case "str(7)": // Multi String
-                    parsedValue = new RegistryValue<MultiStringValueType>(name,
-                            new MultiStringValueType(valueContentString));
+                    if(valueContentString.endsWith("\\0")) {
+                        valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
+                    }
+                    parsedValue = new RegistryValue<>(name, new MultiStringValueType(valueContentString));
                     break;
                 case "str(2)": // Expandable String
-                    parsedValue = new RegistryValue<ExpandableValueType>(name,
-                            new ExpandableValueType(valueContentString));
+                    if(valueContentString.endsWith("\\0")) {
+                        valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
+                    }
+                    parsedValue = new RegistryValue<>(name, new ExpandableValueType(valueContentString));
                     break;
                 case "dword": // DWORD
                     long dwordValue = Long.valueOf(valueContentString, 16);
-                    parsedValue = new RegistryValue<DwordValueType>(name,
-                            new DwordValueType(dwordValue));
+                    parsedValue = new RegistryValue<>(name, new DwordValueType(dwordValue));
                     break;
                 case "hex": // Binary
                     String[] binariesString = valueContentString.split(",");
@@ -62,8 +68,7 @@ public class RegistryValue<TYPE extends AbstractValueType>
                     for(int i = 0; i < binariesString.length; i++) {
                         binaries[i] = Byte.valueOf((byte) (Integer.valueOf(binariesString[i], 16) - 128));
                     }
-                    parsedValue = new RegistryValue<BinaryValueType>(name,
-                            new BinaryValueType(binaries));
+                    parsedValue = new RegistryValue<>(name, new BinaryValueType(binaries));
                     break;
                 default:
                     throw new IllegalArgumentException(String.format("Unknown value type: %s", valueTypeString));

@@ -16,10 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.configurewindow;
+package com.playonlinux.ui.impl.javafx.installwindow;
 
-import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
+import javafx.scene.layout.Pane;
 
-public interface PlayOnLinuxWindow {
-    JavaFXEventHandler getEventHandler();
+public class HeaderPane extends Pane {
+    HeaderPane() {
+        this.setPrefHeight(70);
+        this.setPrefWidth(804);
+        this.setLayoutY(-2);
+        this.setId("header");
+    }
 }

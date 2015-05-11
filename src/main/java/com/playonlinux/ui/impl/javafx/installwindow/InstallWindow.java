@@ -19,13 +19,9 @@
 package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.ui.api.InstalledVirtualDrives;
-import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
+import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
-import com.playonlinux.ui.impl.javafx.configurewindow.VirtualDrivesWidget;
 import javafx.scene.Scene;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -52,8 +48,13 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow {
         super();
         this.parent = parent;
 
-        Scene scene = new Scene(new Pane(), 620, 400);
+        Pane mainPane = new Pane();
+        Scene scene = new Scene(mainPane, 800, 600);
+        scene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
 
+        Pane header = new HeaderPane();
+
+        mainPane.getChildren().add(header);
         this.setScene(scene);
         this.show();
     }

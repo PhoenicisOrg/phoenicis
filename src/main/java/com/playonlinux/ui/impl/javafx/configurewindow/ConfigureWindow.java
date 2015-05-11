@@ -20,9 +20,8 @@ package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
-import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
+import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;

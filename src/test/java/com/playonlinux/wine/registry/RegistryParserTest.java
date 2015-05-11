@@ -74,4 +74,28 @@ public class RegistryParserTest {
         System.out.println(parsedFile);
     }
 
+
+    @Test
+    public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException, ParseException {
+        File temporaryFile = File.createTempFile("registry", "test");
+
+        FileOutputStream outputStream = new FileOutputStream(temporaryFile);
+
+        byte[] bytes = ("[Software\\\\Wine\\\\DllOverrides] 1431283548\n" +
+                "\"*d3dx9_24\"=\"native, builtin\\0\"\n" +
+                "\"*d3dx9_25\"=\"native, builtin\\0\"\n" +
+                "\"*d3dx9_26\"=\"native, builtin\\0\"").getBytes();
+
+        RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
+        outputStream.write(bytes);
+        outputStream.flush();
+
+        RegistryValue<StringValueType> registryValue = (RegistryValue<StringValueType>) registryParser
+                .parseFile()
+                .getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
+
+        assertEquals("*d3dx9_24", registryValue.getName());
+        assertEquals("native, builtin", registryValue.getText());
+    }
+
 }

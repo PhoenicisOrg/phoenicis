@@ -24,7 +24,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
-import com.playonlinux.ui.impl.configurewindow.PlayOnLinuxWindow;
+import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
 import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
 
