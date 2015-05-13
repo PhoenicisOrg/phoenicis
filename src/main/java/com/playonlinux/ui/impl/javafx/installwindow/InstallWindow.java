@@ -56,7 +56,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow {
         Scene scene = new Scene(mainPane, 800, 600);
         scene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
 
-        Pane header = new HeaderPane();
+        Pane header = new HeaderPane(this.eventHandler);
 
         mainPane.getChildren().add(header);
         this.setScene(scene);

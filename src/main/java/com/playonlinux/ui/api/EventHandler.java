@@ -22,6 +22,7 @@ import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public interface EventHandler {
     void runLocalScript(File scriptToRun) throws IOException;
@@ -29,4 +30,8 @@ public interface EventHandler {
     InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
 
     InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
+
+    RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException;
+
+    void onApplicationStarted() throws MalformedURLException;
 }

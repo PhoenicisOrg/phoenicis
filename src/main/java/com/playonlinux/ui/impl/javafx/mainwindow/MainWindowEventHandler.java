@@ -27,6 +27,7 @@ import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 @Component
 public class MainWindowEventHandler implements UIEventHandler {
@@ -55,8 +56,18 @@ public class MainWindowEventHandler implements UIEventHandler {
         return InstallWindow.getInstance(parent);
     }
 
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
+        return mainEventHandler.getRemoteAvailableInstallers();
+    }
+
     @Override
     public EventHandler getMainEventHandler() {
         return mainEventHandler;
     }
+
+    public void onApplicationStarted() throws MalformedURLException {
+        mainEventHandler.onApplicationStarted();
+    }
+
+
 }

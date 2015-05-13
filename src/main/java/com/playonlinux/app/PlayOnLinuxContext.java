@@ -25,6 +25,8 @@ import com.playonlinux.utils.ReplacableProperties;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -109,5 +111,7 @@ public class PlayOnLinuxContext {
         return new File(this.properties.getProperty("application.root.classes"), "playonlinux.png");
     }
 
-
+    public URL makeWebserviceUrl() throws MalformedURLException {
+        return new URL(this.properties.getProperty("webservice.url"));
+    }
 }

@@ -70,7 +70,7 @@ public class MenuBar extends javafx.scene.control.MenuBar {
             File scriptToRun = fileChooser.showOpenDialog(parent);
 
             try {
-                parent.getEventHandler().runLocalScript(scriptToRun);
+                parent.getMainEventHandler().runLocalScript(scriptToRun);
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to run the script."));

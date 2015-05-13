@@ -19,13 +19,14 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+
+import java.util.Observable;
+import java.util.Observer;
 
 import static com.playonlinux.domain.Localisation.translate;
 
@@ -91,7 +92,7 @@ class ToolBar extends javafx.scene.control.ToolBar {
     public void setUpEvents() {
         configureButton.setOnMouseClicked(event -> {
             try {
-                this.parent.getEventHandler().openConfigureWindow(this.parent, this.parent.getSelectedApplication());
+                this.parent.getMainEventHandler().openConfigureWindow(this.parent, this.parent.getSelectedApplication());
             } catch (PlayOnLinuxError playOnLinuxError) {
                 playOnLinuxError.printStackTrace();
             }
@@ -99,11 +100,10 @@ class ToolBar extends javafx.scene.control.ToolBar {
 
         installButton.setOnMouseClicked(event -> {
             try {
-                this.parent.getEventHandler().openInstallWindow(this.parent);
+                this.parent.getMainEventHandler().openInstallWindow(this.parent);
             } catch (PlayOnLinuxError playOnLinuxError) {
                 playOnLinuxError.printStackTrace();
             }
         });
     }
-
 }

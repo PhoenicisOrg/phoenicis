@@ -51,8 +51,6 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
 
     @Override
     public void update(Observable o, Object directoryContent) {
-        this.setChanged();
-        this.notifyObservers();
         File[] directoryContentCasted = (File[]) directoryContent;
         virtualdrivesDTOInterator = new Iterator<VirtualDriveDTO>() {
             volatile int i = 0;
@@ -73,6 +71,9 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
                         .build();
             }
         };
+
+        this.setChanged();
+        this.notifyObservers();
     }
 
     @Override

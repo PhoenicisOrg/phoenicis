@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.common.dtos.CategoryDTO;
+import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.ClickableImageView;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -26,32 +28,45 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class HeaderPane extends GridPane {
-    HeaderPane() {
+public class HeaderPane extends GridPane implements Observer {
+    InstallWindowEventHandler installWindowEventHandler;
+
+    HeaderPane(InstallWindowEventHandler installWindowEventHandler) {
         this.setPrefHeight(70);
         this.setPrefWidth(804);
         this.setLayoutY(-2);
         this.setId("header");
+
+        this.installWindowEventHandler = installWindowEventHandler;
+
+        this.setUpEvents();
     }
 
-    private void drawIcons(List<String> icons) {
-        int iconSizeInPercent = 100 / icons.size();
+    private void setUpEvents() {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) arg;
+
+        int iconSizeInPercent = 100 / remoteAvailableInstallers.getNumberOfCategories();
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setPercentWidth(iconSizeInPercent);
         this.getColumnConstraints().add(columnConstraints);
 
-        for(String iconName: icons) {
-            CategoryButton accessoriesIcon = new CategoryButton(iconName);
-            this.getChildren().add(accessoriesIcon);
+        for(CategoryDTO categoryDTO: remoteAvailableInstallers) {
+            CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
+            this.getChildren().add(categoryIcon);
         }
     }
 

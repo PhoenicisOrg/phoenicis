@@ -21,6 +21,7 @@ package com.playonlinux.app;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
+import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.domain.Script;
 import com.playonlinux.ui.api.InstalledApplications;
@@ -28,6 +29,7 @@ import com.playonlinux.ui.api.InstalledVirtualDrives;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 @Component
 public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
@@ -37,6 +39,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
 
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
+    private RemoteAvailableInstallers remoteAvailableInstallers;
 
     public void runLocalScript(File scriptToRun) throws IOException {
         Script playonlinuxScript = Script.createInstance(scriptToRun);
@@ -58,5 +61,19 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
         }
 
         return this.virtualDrives;
+    }
+
+    @Override
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
+        if(remoteAvailableInstallers == null) {
+            remoteAvailableInstallers = new RemoteAvailableInstallersPlayOnLinuxImplementation();
+        }
+
+        return this.remoteAvailableInstallers;
+    }
+
+    @Override
+    public void onApplicationStarted() throws MalformedURLException {
+
     }
 }

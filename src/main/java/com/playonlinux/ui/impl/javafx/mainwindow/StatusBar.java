@@ -18,26 +18,60 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
+import java.net.MalformedURLException;
+import java.util.Observable;
+import java.util.Observer;
+
+import static com.playonlinux.domain.Localisation.translate;
 import static java.lang.Integer.max;
 
-class StatusBar extends javafx.scene.control.ToolBar {
-    public StatusBar(Stage stage, Scene scene) {
-        ProgressBar progressBar = new ProgressBar();
+class StatusBar extends javafx.scene.control.ToolBar implements Observer {
+    private final MainWindow parent;
+    private final Text text;
+    private final ProgressBar progressBar = new ProgressBar();
 
-        Text text = new Text("A new version of PlayOnLinux is available (5.1)");
+    public StatusBar(MainWindow parent, Scene scene) {
+        this.parent = parent;
 
+        text = new Text("A new version of PlayOnLinux is available (5.1)");
         text.setWrappingWidth(max(50, (int)scene.getWidth() - 150));
         progressBar.setPrefWidth(130);
 
-        this.getItems().addAll(text, progressBar);
+        this.getItems().addAll(text);
 
-        stage.widthProperty().addListener((observable, oldValue, newValue) -> {
+        parent.widthProperty().addListener((observable, oldValue, newValue) -> {
             text.setWrappingWidth(max(50, newValue.intValue() - 150));
         });
+    }
+
+    public void updateStatus(String newText) {
+        text.setText(newText);
+    }
+
+    public void showStatusBar(boolean showStatusBar) {
+        if(showStatusBar) {
+            this.getItems().add(progressBar);
+        } else {
+            this.getItems().remove(progressBar);
+        }
+    }
+
+    public void setUpEvents() throws MalformedURLException {
+        this.parent.getMainEventHandler().getRemoteAvailableInstallers().addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
+
+        if(remoteAvailableInstallers.hasFailed()) {
+            updateStatus(translate("$APPLICATION_TITLE website seems to be unavailable!"));
+        }
+        System.out.println();
     }
 }

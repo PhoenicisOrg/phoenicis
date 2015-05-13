@@ -16,29 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.app;
+package com.playonlinux.common.dtos;
 
-import com.playonlinux.common.dtos.CategoryDTO;
-import com.playonlinux.injection.Component;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.ui.api.AvailableInstallers;
+public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> {
+    DownloadStateDTO downloadState;
 
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
-
-@Component
-public class AvailableInstallersPlayOnLinuxImplementation extends Observable implements AvailableInstallers, Observer {
-    @Inject
-    static PlayOnLinuxContext playOnLinuxContext;
-
-    @Override
-    public Iterator<CategoryDTO> iterator() {
-        return null;
+    public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
+        return envelopeContent;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void setEnvelopeContent(ENVELOPE_CONTENT_TYPE envelopeContent) {
+        this.envelopeContent = envelopeContent;
     }
+
+    public DownloadStateDTO getDownloadState() {
+        return downloadState;
+    }
+
+    public void setDownloadState(DownloadStateDTO downloadState) {
+        this.downloadState = downloadState;
+    }
+
+    ENVELOPE_CONTENT_TYPE envelopeContent;
 }

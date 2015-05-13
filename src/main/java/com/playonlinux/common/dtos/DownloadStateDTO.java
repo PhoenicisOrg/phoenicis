@@ -16,27 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice;
+package com.playonlinux.common.dtos;
 
-import org.springframework.web.client.RestTemplate;
-import com.playonlinux.common.dtos.AvailableCategoriesDTO;
-
-import java.util.Observable;
-
-/**
- * This class download scripts from a playonlinux web service and converts it into DTOs
- */
-public class RemoteScripts extends Observable {
-    private final String url;
-    private AvailableCategoriesDTO categories;
-
-    RemoteScripts(String url) {
-        this.url = url;
+public class DownloadStateDTO {
+    public State getState() {
+        return state;
     }
 
-    void fetchCategories() {
-        this.categories = new RestTemplate().getForObject(this.url, AvailableCategoriesDTO.class);
-        this.setChanged();
-        this.notifyObservers(categories);
+    public void setState(State state) {
+        this.state = state;
     }
+
+    public enum State {
+        WAITING,
+        DOWNLOADING,
+        SUCCESS,
+        FAILED
+    }
+
+    private State state;
+
+    public String toString() {
+        return this.state.name();
+    }
+
 }

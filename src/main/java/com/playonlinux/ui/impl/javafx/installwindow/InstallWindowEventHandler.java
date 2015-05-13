@@ -20,7 +20,10 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
+import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.api.UIEventHandler;
+
+import java.net.MalformedURLException;
 
 public class InstallWindowEventHandler implements UIEventHandler {
     @Inject
@@ -29,5 +32,9 @@ public class InstallWindowEventHandler implements UIEventHandler {
     @Override
     public EventHandler getMainEventHandler() {
         return mainEventHandler;
+    }
+
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
+        return mainEventHandler.getRemoteAvailableInstallers();
     }
 }

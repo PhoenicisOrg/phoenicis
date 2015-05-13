@@ -65,9 +65,6 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     @Override
     public synchronized void update(Observable o, Object arg) {
-        this.setChanged();
-        this.notifyObservers();
-
         shortcutDtoIterator = new Iterator<ShortcutDTO>() {
             volatile int i = 0;
 
@@ -86,6 +83,9 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
                         .build();
             }
         };
+
+        this.setChanged();
+        this.notifyObservers();
     }
 
     @Override

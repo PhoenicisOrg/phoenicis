@@ -19,17 +19,22 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.net.MalformedURLException;
+
+import static com.playonlinux.domain.Localisation.translate;
+
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
-    private MainWindowEventHandler eventHandler = new MainWindowEventHandler();
+    private MainWindowEventHandler mainEventHandler = new MainWindowEventHandler();
     private ApplicationListWidget applicationListWidget;
     private ToolBar toolBar;
+    private StatusBar statusBar;
 
     public void setUpWindow() {
         MenuBar menuBar =  new MenuBar(this);
@@ -44,7 +49,8 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         topContainer.getChildren().add(toolBar);
         pane.setTop(topContainer);
 
-        pane.setBottom(new StatusBar(this, scene));
+        statusBar = new StatusBar(this, scene);
+        pane.setBottom(statusBar);
 
 
 
@@ -82,14 +88,25 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     }
 
     public void setUpEvents() throws PlayOnLinuxError {
-        InstalledApplications installedApplications = eventHandler.getInstalledApplications();
+        InstalledApplications installedApplications = mainEventHandler.getInstalledApplications();
         installedApplications.addObserver(applicationListWidget);
 
         toolBar.setUpEvents();
+
+        try {
+            statusBar.setUpEvents();
+        } catch (MalformedURLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to update installer list."));
+            alert.setContentText("The error was: MalformedURLException");
+            e.printStackTrace();
+        }
     }
 
-    protected MainWindowEventHandler getEventHandler() {
-        return eventHandler;
+
+
+    protected MainWindowEventHandler getMainEventHandler() {
+        return mainEventHandler;
     }
 
 

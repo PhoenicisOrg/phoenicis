@@ -19,10 +19,15 @@
 package com.playonlinux.ui.api;
 
 import com.playonlinux.common.dtos.CategoryDTO;
-import com.playonlinux.common.dtos.VirtualDriveDTO;
 
 import java.util.Observer;
 
-public interface AvailableInstallers extends Iterable<CategoryDTO> {
+public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
     void addObserver(Observer o);
+
+    int getNumberOfCategories();
+
+    boolean isUpdating();
+
+    boolean hasFailed();
 }

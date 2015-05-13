@@ -21,7 +21,6 @@ package com.playonlinux.webservice;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import com.playonlinux.common.dtos.AvailableCategoriesDTO;
@@ -29,6 +28,8 @@ import com.playonlinux.common.dtos.CategoryDTO;
 import com.playonlinux.common.dtos.ScriptDTO;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -39,18 +40,18 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 
-public class RemoteScriptsTest {
+public class RemoteWebServiceTest {
 
-    private static String mockServerURL;
+    private static URL mockServerURL;
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
-    private RemoteScripts remoteScripts;
+    private RemoteWebService remoteWebService;
     private MockObserver observer;
 
     @BeforeClass
-    public static void setUp() {
+    public static void setUp() throws MalformedURLException {
         mockServer = new ClientAndServer(MOCKSERVER_PORT);
-        mockServerURL = "http://localhost:"+MOCKSERVER_PORT+"/categories";
+        mockServerURL = new URL("http://localhost:"+MOCKSERVER_PORT+"/categories");
     }
 
     @Before
@@ -101,14 +102,14 @@ public class RemoteScriptsTest {
         );
 
 
-        remoteScripts = new RemoteScripts(mockServerURL);
+        remoteWebService = new RemoteWebService(mockServerURL);
         observer = new MockObserver();
-        remoteScripts.addObserver(observer);
+        remoteWebService.addObserver(observer);
     }
 
     @Test
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
-        remoteScripts.fetchCategories();
+        remoteWebService.downloadContent();
 
         assertEquals("Accessories", observer.getDTO().getCategories().get(0).getName());
         assertEquals(2, observer.getDTO().getCategories().get(0).getId());
@@ -117,7 +118,7 @@ public class RemoteScriptsTest {
 
     @Test
     public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
-        remoteScripts.fetchCategories();
+        remoteWebService.downloadContent();
 
         ArrayList<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
 
