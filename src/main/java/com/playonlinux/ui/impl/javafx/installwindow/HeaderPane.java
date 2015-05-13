@@ -18,7 +18,21 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.ui.impl.javafx.common.ClickableImageView;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+import java.net.URL;
+import java.util.List;
 
 public class HeaderPane extends Pane {
     HeaderPane() {
@@ -26,5 +40,59 @@ public class HeaderPane extends Pane {
         this.setPrefWidth(804);
         this.setLayoutY(-2);
         this.setId("header");
+
+        //this.drawIcons();
+    }
+
+    private void drawIcons(List<String> icons) {
+        CategoryButton accessoriesIcon = new CategoryButton("Games");
+
+        this.getChildren().add(accessoriesIcon);
+    }
+
+    class CategoryButton extends GridPane {
+
+        private final String categoryName;
+        private final ImageView categoryIcon;
+        private final Text categoryNameText;
+
+        CategoryButton(String categoryName) {
+            this.setPrefHeight(64);
+            this.setMaxHeight(64);
+
+            this.setPrefWidth(64);
+
+            this.setAlignment(Pos.CENTER);
+            this.categoryName = categoryName;
+            categoryIcon = new ClickableImageView(new Image(this.getIcon().toString()));
+            categoryIcon.setFitHeight(32);
+            categoryIcon.setFitWidth(32);
+            categoryIcon.setLayoutY(10);
+            categoryIcon.setLayoutX(16);
+
+            categoryNameText = new Text(categoryName);
+            categoryNameText.setLayoutY(53);
+            categoryNameText.setFont(new Font(10));
+            categoryNameText.setTextAlignment(TextAlignment.CENTER);
+
+            RowConstraints rowConstraintIcon = new RowConstraints();
+            rowConstraintIcon.setPercentHeight(70);
+            RowConstraints rowConstraintText = new RowConstraints();
+            rowConstraintText.setPercentHeight(20);
+
+            this.getRowConstraints().addAll(rowConstraintIcon, rowConstraintText);
+
+            this.add(categoryIcon, 0, 0);
+            this.add(categoryNameText, 0, 1);
+
+        }
+
+        public void setMouseClicked(EventHandler<?super MouseEvent> mouseEventEventHandler) {
+            this.categoryIcon.setOnMouseClicked(mouseEventEventHandler);
+        }
+
+        public URL getIcon() {
+            return this.getClass().getResource("applications-"+categoryName.toLowerCase()+".png");
+        }
     }
 }

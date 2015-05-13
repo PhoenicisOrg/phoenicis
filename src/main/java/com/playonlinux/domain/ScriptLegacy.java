@@ -28,6 +28,10 @@ import java.io.IOException;
 import java.text.ParseException;
 
 public class ScriptLegacy extends Script {
+    private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP PUBLIC KEY BLOCK-----";
+    private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
+
+
     protected ScriptLegacy(File script) {
         super(script);
     }
@@ -50,7 +54,7 @@ public class ScriptLegacy extends Script {
         Boolean insideSignature = false;
         do {
             readLine = bufferReader.readLine();
-            if("-----BEGIN PGP PUBLIC KEY BLOCK-----".equals(readLine)) {
+            if(BEGIN_PGP_KEY_BLOCK_LINE.equals(readLine)) {
                 insideSignature = true;
             }
 
@@ -59,7 +63,7 @@ public class ScriptLegacy extends Script {
                 signatureBuilder.append("\n");
             }
 
-            if("-----END PGP PUBLIC KEY BLOCK-----".equals(readLine)) {
+            if(END_PGP_KEY_BLOCK_LINE.equals(readLine)) {
                 insideSignature = false;
             }
         } while(readLine != null);

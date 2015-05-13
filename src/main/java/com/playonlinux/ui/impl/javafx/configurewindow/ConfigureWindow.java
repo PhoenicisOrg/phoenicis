@@ -44,6 +44,9 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         } else {
             instance.toFront();
         }
+        instance.setOnCloseRequest(event -> {
+            instance = null;
+        });
         return instance;
     }
 
