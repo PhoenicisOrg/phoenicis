@@ -16,16 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice.dto;
+package com.playonlinux.common.dtos;
 
 import java.util.ArrayList;
 
-public class AvailableCategories {
-    public ArrayList<Category> getCategories() {
+public class AvailableCategoriesDTO {
+    public ArrayList<CategoryDTO> getCategories() {
         return categories;
     }
 
-    ArrayList<Category> categories;
+    ArrayList<CategoryDTO> categories;
 
 
 }

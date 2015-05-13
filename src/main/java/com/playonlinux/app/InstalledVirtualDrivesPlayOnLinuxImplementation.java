@@ -23,7 +23,7 @@ import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
-import com.playonlinux.ui.dtos.VirtualDriveDTO;
+import com.playonlinux.common.dtos.VirtualDriveDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;

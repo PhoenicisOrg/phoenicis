@@ -18,10 +18,6 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.common.dtos.ShortcutDTO;
-
-import java.util.Observer;
-
-public interface InstalledApplications extends Iterable<ShortcutDTO> {
-    void addObserver(Observer o);
+public interface UIEventHandler {
+    EventHandler getMainEventHandler();
 }

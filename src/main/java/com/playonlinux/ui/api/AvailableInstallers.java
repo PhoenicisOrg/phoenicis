@@ -16,37 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice.dto;
+package com.playonlinux.ui.api;
 
-import java.util.ArrayList;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.playonlinux.common.dtos.CategoryDTO;
+import com.playonlinux.common.dtos.VirtualDriveDTO;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Category {
-    public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
-    }
+import java.util.Observer;
 
-    public int getId() {
-        return id;
-    }
-
-    public CategoryType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<Script> getScripts() {
-        return scripts;
-    }
-
-    int id;
-    CategoryType type;
-    String name;
-    ArrayList <Script> scripts;
-
+public interface AvailableInstallers extends Iterable<CategoryDTO> {
+    void addObserver(Observer o);
 }

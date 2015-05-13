@@ -16,22 +16,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice;
+package com.playonlinux.common.dtos;
 
-import org.springframework.web.client.RestTemplate;
-import com.playonlinux.webservice.dto.AvailableCategories;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * This class download com.playonlinux.scripts from a com.playonlinux.webservice web service and converts it into DTOs
- */
-public class ScriptFetcher {
-    private final String url;
+import java.io.File;
 
-    ScriptFetcher(String url) {
-        this.url = url;
+import static org.junit.Assert.*;
+
+public class ShortcutDTOTest {
+
+    private ShortcutDTO shortcutDto;
+
+    @Before
+    public void setUp() {
+        this.shortcutDto = new ShortcutDTO.Builder()
+                .withName("Name")
+                .withIcon(new File("/tmp/icon"))
+                .build();
+    }
+    @Test
+    public void testShortcutDTO_CreateDTO_nameIsPopulated() throws Exception {
+        assertEquals("Name", shortcutDto.getName());
     }
 
-    AvailableCategories fetchCategories() {
-        return new RestTemplate().getForObject(this.url, AvailableCategories.class);
+    @Test
+    public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
+        assertEquals("/tmp/icon", shortcutDto.getIcon().getAbsolutePath());
     }
 }

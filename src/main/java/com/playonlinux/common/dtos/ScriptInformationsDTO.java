@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice.dto;
+package com.playonlinux.common.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.utils.OperatingSystem;
@@ -24,7 +24,7 @@ import com.playonlinux.utils.OperatingSystem;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptInformations {
+public class ScriptInformationsDTO {
     public ArrayList<OperatingSystem> getCompatiblesOperatingSystems() {
         return compatiblesOperatingSystems;
     }

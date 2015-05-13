@@ -24,7 +24,7 @@ import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.injection.Component;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.InstalledApplications;
-import com.playonlinux.ui.dtos.ShortcutDTO;
+import com.playonlinux.common.dtos.ShortcutDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;

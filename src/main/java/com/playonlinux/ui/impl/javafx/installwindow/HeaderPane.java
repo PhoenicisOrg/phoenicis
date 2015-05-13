@@ -24,6 +24,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
@@ -34,20 +35,24 @@ import javafx.scene.text.TextAlignment;
 import java.net.URL;
 import java.util.List;
 
-public class HeaderPane extends Pane {
+public class HeaderPane extends GridPane {
     HeaderPane() {
         this.setPrefHeight(70);
         this.setPrefWidth(804);
         this.setLayoutY(-2);
         this.setId("header");
-
-        //this.drawIcons();
     }
 
     private void drawIcons(List<String> icons) {
-        CategoryButton accessoriesIcon = new CategoryButton("Games");
+        int iconSizeInPercent = 100 / icons.size();
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setPercentWidth(iconSizeInPercent);
+        this.getColumnConstraints().add(columnConstraints);
 
-        this.getChildren().add(accessoriesIcon);
+        for(String iconName: icons) {
+            CategoryButton accessoriesIcon = new CategoryButton(iconName);
+            this.getChildren().add(accessoriesIcon);
+        }
     }
 
     class CategoryButton extends GridPane {
@@ -59,8 +64,6 @@ public class HeaderPane extends Pane {
         CategoryButton(String categoryName) {
             this.setPrefHeight(64);
             this.setMaxHeight(64);
-
-            this.setPrefWidth(64);
 
             this.setAlignment(Pos.CENTER);
             this.categoryName = categoryName;

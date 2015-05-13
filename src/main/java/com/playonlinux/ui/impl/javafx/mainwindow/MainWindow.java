@@ -19,15 +19,15 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
-    private JavaFXEventHandler eventHandler = new JavaFXEventHandler();
+    private MainWindowEventHandler eventHandler = new MainWindowEventHandler();
     private ApplicationListWidget applicationListWidget;
     private ToolBar toolBar;
 
@@ -88,7 +88,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         toolBar.setUpEvents();
     }
 
-    public JavaFXEventHandler getEventHandler() {
+    protected MainWindowEventHandler getEventHandler() {
         return eventHandler;
     }
 

@@ -20,7 +20,6 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -28,6 +27,7 @@ import javafx.stage.Stage;
 public class InstallWindow extends Stage implements PlayOnLinuxWindow {
     private final PlayOnLinuxWindow parent;
     private static InstallWindow instance;
+    private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler();
 
     /**
      * Get the instance of the configure window.
@@ -63,10 +63,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow {
         this.show();
     }
 
-
-    @Override
-    public JavaFXEventHandler getEventHandler() {
-        return parent.getEventHandler();
+    public InstallWindowEventHandler getEventHandler() {
+        return eventHandler;
     }
 }
 

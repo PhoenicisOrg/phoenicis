@@ -18,10 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.ui.dtos.ShortcutDTO;
+import com.playonlinux.common.dtos.ShortcutDTO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TreeItem;
@@ -30,11 +29,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 

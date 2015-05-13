@@ -16,44 +16,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.dtos;
+package com.playonlinux.common.dtos;
 
+import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.io.File;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CategoryDTO {
+    public enum CategoryType {
+        INSTALLERS,
+        FUNCTIONS
+    }
 
-public class ShortcutDTO {
-    private final File icon;
-    private final String name;
+    public int getId() {
+        return id;
+    }
 
-    public ShortcutDTO(Builder builder) {
-        this.name = builder.name;
-        this.icon = builder.icon;
+    public CategoryType getType() {
+        return type;
     }
 
     public String getName() {
         return name;
     }
 
-    public File getIcon() {
-        return icon;
+    public ArrayList<ScriptDTO> getScripts() {
+        return scripts;
     }
 
-    public static class Builder {
-        private String name;
-        private File icon;
+    int id;
+    CategoryType type;
+    String name;
+    ArrayList <ScriptDTO> scripts;
 
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withIcon(File icon) {
-            this.icon = icon;
-            return this;
-        }
-
-        public ShortcutDTO build() {
-            return new ShortcutDTO(this);
-        }
-    }
 }

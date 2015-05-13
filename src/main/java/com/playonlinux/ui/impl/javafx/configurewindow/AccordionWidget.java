@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
-import com.playonlinux.ui.dtos.VirtualDriveDTO;
+import com.playonlinux.common.dtos.VirtualDriveDTO;
 import javafx.application.Platform;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;

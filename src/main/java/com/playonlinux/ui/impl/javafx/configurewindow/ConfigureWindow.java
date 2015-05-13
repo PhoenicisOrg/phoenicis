@@ -21,7 +21,6 @@ package com.playonlinux.ui.impl.javafx.configurewindow;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.InstalledVirtualDrives;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -31,7 +30,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
     private final PlayOnLinuxWindow parent;
     private static ConfigureWindow instance;
     private final VirtualDrivesWidget installedVirtualDrivesWidget;
-
+    private final ConfigureWindowEventHandler eventHandler = new ConfigureWindowEventHandler();
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
@@ -76,9 +75,9 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         installedVirtualDrives.addObserver(this.installedVirtualDrivesWidget);
 
     }
-    @Override
-    public JavaFXEventHandler getEventHandler() {
-        return parent.getEventHandler();
+
+    public ConfigureWindowEventHandler getEventHandler() {
+        return eventHandler;
     }
 }
 

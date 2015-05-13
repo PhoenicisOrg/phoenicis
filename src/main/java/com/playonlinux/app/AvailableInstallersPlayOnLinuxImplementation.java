@@ -16,12 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.app;
 
-import com.playonlinux.common.dtos.ShortcutDTO;
+import com.playonlinux.common.dtos.CategoryDTO;
+import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.ui.api.AvailableInstallers;
 
+import java.util.Iterator;
+import java.util.Observable;
 import java.util.Observer;
 
-public interface InstalledApplications extends Iterable<ShortcutDTO> {
-    void addObserver(Observer o);
+@Component
+public class AvailableInstallersPlayOnLinuxImplementation extends Observable implements AvailableInstallers, Observer {
+    @Inject
+    static PlayOnLinuxContext playOnLinuxContext;
+
+    @Override
+    public Iterator<CategoryDTO> iterator() {
+        return null;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }

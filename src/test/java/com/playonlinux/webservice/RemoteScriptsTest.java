@@ -21,25 +21,31 @@ package com.playonlinux.webservice;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
-import com.playonlinux.webservice.dto.AvailableCategories;
-import com.playonlinux.webservice.dto.Category;
-import com.playonlinux.webservice.dto.Script;
+import com.playonlinux.common.dtos.AvailableCategoriesDTO;
+import com.playonlinux.common.dtos.CategoryDTO;
+import com.playonlinux.common.dtos.ScriptDTO;
 
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 
-public class ScriptFetcherTest {
+public class RemoteScriptsTest {
 
     private static String mockServerURL;
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
+    private RemoteScripts remoteScripts;
+    private MockObserver observer;
 
     @BeforeClass
     public static void setUp() {
@@ -93,24 +99,27 @@ public class ScriptFetcherTest {
                                 "    }\n" +
                                 "]}\n")
         );
+
+
+        remoteScripts = new RemoteScripts(mockServerURL);
+        observer = new MockObserver();
+        remoteScripts.addObserver(observer);
     }
 
     @Test
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
-        ScriptFetcher scriptFetcher = new ScriptFetcher(mockServerURL);
-        AvailableCategories categories = scriptFetcher.fetchCategories();
+        remoteScripts.fetchCategories();
 
-        assertEquals("Accessories", categories.getCategories().get(0).getName());
-        assertEquals(2, categories.getCategories().get(0).getId());
-        assertEquals(Category.CategoryType.INSTALLERS, categories.getCategories().get(0).getType());
+        assertEquals("Accessories", observer.getDTO().getCategories().get(0).getName());
+        assertEquals(2, observer.getDTO().getCategories().get(0).getId());
+        assertEquals(CategoryDTO.CategoryType.INSTALLERS, observer.getDTO().getCategories().get(0).getType());
     }
 
     @Test
     public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
-        ScriptFetcher scriptFetcher = new ScriptFetcher(mockServerURL);
-        AvailableCategories categories = scriptFetcher.fetchCategories();
+        remoteScripts.fetchCategories();
 
-        ArrayList<Script> scripts = categories.getCategories().get(0).getScripts();
+        ArrayList<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
 
         assertEquals("", scripts.get(0).getDescription());
         assertEquals(373, scripts.get(0).getId());
@@ -121,4 +130,16 @@ public class ScriptFetcherTest {
         assertEquals("FluidMark 1.3.1", scripts.get(1).getName());
     }
 
+    private class MockObserver implements Observer {
+        public AvailableCategoriesDTO categoryDto;
+
+        @Override
+        public void update(Observable o, Object arg) {
+            this.categoryDto = (AvailableCategoriesDTO) arg;
+        }
+
+        public AvailableCategoriesDTO getDTO() {
+            return categoryDto;
+        }
+    }
 }

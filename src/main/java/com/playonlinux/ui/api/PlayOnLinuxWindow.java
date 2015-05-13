@@ -18,8 +18,6 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.ui.impl.javafx.JavaFXEventHandler;
-
 public interface PlayOnLinuxWindow {
-    JavaFXEventHandler getEventHandler();
+
 }

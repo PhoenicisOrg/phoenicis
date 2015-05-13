@@ -16,12 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.common.dtos;
 
-import com.playonlinux.common.dtos.ShortcutDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Observer;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ScriptDTO {
+    public int getId() {
+        return id;
+    }
+    int id;
+    String name;
+    String description;
 
-public interface InstalledApplications extends Iterable<ShortcutDTO> {
-    void addObserver(Observer o);
+    ScriptInformationsDTO scriptInformations;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ScriptInformationsDTO getScriptInformations() {
+        return scriptInformations;
+    }
 }

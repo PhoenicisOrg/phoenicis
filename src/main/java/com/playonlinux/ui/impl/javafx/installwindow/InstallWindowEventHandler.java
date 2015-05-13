@@ -16,33 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.dtos;
+package com.playonlinux.ui.impl.javafx.installwindow;
 
-import org.junit.Before;
-import org.junit.Test;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.ui.api.EventHandler;
+import com.playonlinux.ui.api.UIEventHandler;
 
-import java.io.File;
+public class InstallWindowEventHandler implements UIEventHandler {
+    @Inject
+    static EventHandler mainEventHandler;
 
-import static org.junit.Assert.*;
-
-public class ShortcutDTOTest {
-
-    private ShortcutDTO shortcutDto;
-
-    @Before
-    public void setUp() {
-        this.shortcutDto = new ShortcutDTO.Builder()
-                .withName("Name")
-                .withIcon(new File("/tmp/icon"))
-                .build();
-    }
-    @Test
-    public void testShortcutDTO_CreateDTO_nameIsPopulated() throws Exception {
-        assertEquals("Name", shortcutDto.getName());
-    }
-
-    @Test
-    public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
-        assertEquals("/tmp/icon", shortcutDto.getIcon().getAbsolutePath());
+    @Override
+    public EventHandler getMainEventHandler() {
+        return mainEventHandler;
     }
 }
