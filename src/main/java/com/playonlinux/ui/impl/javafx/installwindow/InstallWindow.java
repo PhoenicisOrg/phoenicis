@@ -39,7 +39,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler();
     private Scene mainScene;
     private Scene updateScene;
-
+    private RemoteAvailableInstallers availableInstallers;
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
@@ -62,9 +62,15 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private InstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
         super();
         this.parent = parent;
+        try {
+            this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
+        } catch (MalformedURLException e) {
+            throw new PlayOnLinuxError("URL seems to be malformed", e);
+        }
 
+        this.update((Observable) availableInstallers, null);
         this.setUpEvents();
-        this.showUpdateScene();
+        this.showMainScene();
         this.show();
     }
 
@@ -101,11 +107,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
     private void setUpEvents() throws PlayOnLinuxError {
-        try {
-            this.eventHandler.getRemoteAvailableInstallers().addObserver(this);
-        } catch (MalformedURLException e) {
-            throw new PlayOnLinuxError("Update URL is malformed", e);
-        }
+        availableInstallers.addObserver(this);
     }
 
     public InstallWindowEventHandler getEventHandler() {
@@ -118,9 +120,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
         if(remoteAvailableInstallers.isUpdating()) {
-
-        } else if(remoteAvailableInstallers.hasFailed()) {
             Platform.runLater(() -> this.showUpdateScene());
+        } else if(remoteAvailableInstallers.hasFailed()) {
+            // TODO
         } else {
             Platform.runLater(() -> this.showMainScene());
         }

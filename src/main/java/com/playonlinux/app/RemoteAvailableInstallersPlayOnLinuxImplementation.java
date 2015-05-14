@@ -60,6 +60,11 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     @Override
+    public void addObserver(Observer o) {
+        super.addObserver(o);
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
         downloadEnvelopeDto = (DownloadEnvelopeDTO<AvailableCategoriesDTO>) arg;
 
