@@ -28,7 +28,7 @@ import java.io.IOException;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class MenuBar extends javafx.scene.control.MenuBar {
+class MenuBar extends javafx.scene.control.MenuBar {
     private final MainWindow parent;
 
     private MenuItem openScript;

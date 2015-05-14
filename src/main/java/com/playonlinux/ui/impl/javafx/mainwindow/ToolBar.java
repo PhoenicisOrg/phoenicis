@@ -25,9 +25,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import static com.playonlinux.domain.Localisation.translate;
 
 class ToolBar extends javafx.scene.control.ToolBar {

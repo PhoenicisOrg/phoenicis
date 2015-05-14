@@ -81,6 +81,5 @@ class StatusBar extends javafx.scene.control.ToolBar implements Observer {
             updateStatus("");
             Platform.runLater(() -> showStatusBar(false));
         }
-        System.out.println();
     }
 }

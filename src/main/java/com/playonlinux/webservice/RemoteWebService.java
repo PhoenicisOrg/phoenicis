@@ -21,7 +21,6 @@ package com.playonlinux.webservice;
 import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
 import com.playonlinux.common.dtos.DownloadStateDTO;
 import com.playonlinux.utils.BackgroundService;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import com.playonlinux.common.dtos.AvailableCategoriesDTO;
@@ -56,10 +55,7 @@ public class RemoteWebService extends Observable implements BackgroundService {
             try {
                 categories = new RestTemplate().getForObject(this.url.toString(), AvailableCategoriesDTO.class);
                 this.state = DownloadStateDTO.State.SUCCESS;
-            } catch(HttpClientErrorException e) {
-                e.printStackTrace();
-                this.state = DownloadStateDTO.State.FAILED;
-            } catch (RestClientException e) {
+            } catch(RestClientException e) {
                 e.printStackTrace();
                 this.state = DownloadStateDTO.State.FAILED;
             } finally {

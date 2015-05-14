@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 @Component
-public class MainWindowEventHandler implements UIEventHandler {
+class MainWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 

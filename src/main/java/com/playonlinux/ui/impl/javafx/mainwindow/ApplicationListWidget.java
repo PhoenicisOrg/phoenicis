@@ -38,7 +38,7 @@ import java.util.Observer;
 import static com.playonlinux.domain.Localisation.translate;
 
 
-public class ApplicationListWidget extends TreeView implements Observer {
+class ApplicationListWidget extends TreeView implements Observer {
     private final TreeItem rootItem;
 
     public ApplicationListWidget() {
