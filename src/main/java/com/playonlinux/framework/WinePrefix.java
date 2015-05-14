@@ -21,7 +21,7 @@ package com.playonlinux.framework;
 import com.playonlinux.api.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.ScriptClass;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.domain.CancelException;
@@ -32,7 +32,7 @@ import java.io.IOException;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-@Component
+@Scan
 @ScriptClass
 @SuppressWarnings("unused")
 public class WinePrefix {

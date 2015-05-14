@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.*;
 import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-@Component
+@Scan
 class MainWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;

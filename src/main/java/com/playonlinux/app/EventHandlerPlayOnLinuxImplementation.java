@@ -19,7 +19,7 @@
 package com.playonlinux.app;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.api.EventHandler;
@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-@Component
+@Scan
 public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
 
     @Inject

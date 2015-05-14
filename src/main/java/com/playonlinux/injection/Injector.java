@@ -38,7 +38,7 @@ public class Injector {
 
     public Set<Class<?>> getComponentClasses() {
         Reflections reflections = new Reflections(this.packageName);
-        return reflections.getTypesAnnotatedWith(Component.class);
+        return reflections.getTypesAnnotatedWith(Scan.class);
     }
 
     public <T extends Annotation> Boolean isAnnotatedWith(Field field, Class<T> annotation) {

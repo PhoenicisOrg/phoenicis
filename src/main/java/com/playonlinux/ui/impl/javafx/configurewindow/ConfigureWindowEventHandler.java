@@ -19,15 +19,11 @@
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.*;
-import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
 
-import java.io.File;
-import java.io.IOException;
-
-@Component
+@Scan
 public class ConfigureWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;

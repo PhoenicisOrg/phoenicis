@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
@@ -25,6 +26,7 @@ import com.playonlinux.ui.api.UIEventHandler;
 
 import java.net.MalformedURLException;
 
+@Scan
 public class InstallWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;

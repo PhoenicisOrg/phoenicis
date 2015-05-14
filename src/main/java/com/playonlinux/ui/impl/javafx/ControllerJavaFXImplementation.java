@@ -19,12 +19,12 @@
 package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.api.Controller;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.api.UIMessageSender;
 import com.playonlinux.api.SetupWindow;
 import com.playonlinux.ui.impl.javafx.setupwindow.SetupWindowJavaFXImplementation;
 
-@Component
+@Scan
 public class ControllerJavaFXImplementation implements Controller {
 
     public void startApplication() {

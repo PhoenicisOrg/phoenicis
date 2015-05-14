@@ -20,14 +20,25 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
+import com.playonlinux.ui.api.RemoteAvailableInstallers;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class InstallWindow extends Stage implements PlayOnLinuxWindow {
+import java.net.MalformedURLException;
+import java.util.Observable;
+import java.util.Observer;
+
+import static com.playonlinux.domain.Localisation.translate;
+
+public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer {
     private final PlayOnLinuxWindow parent;
     private static InstallWindow instance;
     private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler();
+    private Scene mainScene;
+    private Scene updateScene;
 
     /**
      * Get the instance of the configure window.
@@ -52,19 +63,67 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow {
         super();
         this.parent = parent;
 
-        Pane mainPane = new Pane();
-        Scene scene = new Scene(mainPane, 800, 600);
-        scene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
-
-        Pane header = new HeaderPane(this.eventHandler);
-
-        mainPane.getChildren().add(header);
-        this.setScene(scene);
+        this.setUpEvents();
+        this.showUpdateScene();
         this.show();
+    }
+
+    private void showMainScene() {
+        if(mainScene == null) {
+            Pane mainPane = new Pane();
+            mainScene = new Scene(mainPane, 800, 600);
+            mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
+
+            Pane header = new HeaderPane(this.eventHandler);
+
+            mainPane.getChildren().add(header);
+        }
+
+        this.setScene(mainScene);
+    }
+
+    private void showUpdateScene() {
+        if(updateScene == null) {
+            Pane updatePane = new Pane();
+            updateScene = new Scene(updatePane, 800, 600);
+            updateScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
+
+            ProgressIndicator progressIndicator = new ProgressIndicator();
+            progressIndicator.setPrefWidth(64);
+            progressIndicator.setPrefHeight(64);
+            progressIndicator.setLayoutX((this.updateScene.getWidth() - 64) / 2);
+            progressIndicator.setLayoutY((this.updateScene.getHeight() - 64) / 2);
+
+            updatePane.getChildren().add(progressIndicator);
+        }
+
+        this.setScene(updateScene);
+    }
+
+    private void setUpEvents() throws PlayOnLinuxError {
+        try {
+            this.eventHandler.getRemoteAvailableInstallers().addObserver(this);
+        } catch (MalformedURLException e) {
+            throw new PlayOnLinuxError("Update URL is malformed", e);
+        }
     }
 
     public InstallWindowEventHandler getEventHandler() {
         return eventHandler;
+    }
+
+
+    @Override
+    public void update(Observable o, Object arg) {
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
+
+        if(remoteAvailableInstallers.isUpdating()) {
+
+        } else if(remoteAvailableInstallers.hasFailed()) {
+            Platform.runLater(() -> this.showUpdateScene());
+        } else {
+            Platform.runLater(() -> this.showMainScene());
+        }
     }
 }
 

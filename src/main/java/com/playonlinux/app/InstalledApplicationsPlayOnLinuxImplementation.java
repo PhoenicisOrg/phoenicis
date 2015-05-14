@@ -21,7 +21,7 @@ package com.playonlinux.app;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.ShortcutSet;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.common.dtos.ShortcutDTO;
@@ -33,7 +33,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
-@Component
+@Scan
 public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;

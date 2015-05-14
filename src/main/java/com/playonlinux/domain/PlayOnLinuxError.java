@@ -18,16 +18,29 @@
 
 package com.playonlinux.domain;
 
+import org.apache.commons.lang.ArrayUtils;
+
 public class PlayOnLinuxError extends Throwable {
     private final String message;
+    private final Throwable parent;
 
     public PlayOnLinuxError(String message) {
+        this(message, null);
+    }
+
+    public PlayOnLinuxError(String message, Throwable parent) {
         super(message);
         this.message = message;
+        this.parent = parent;
     }
 
     @Override
     public String toString() {
         return this.message;
+    }
+
+    @Override
+    public StackTraceElement[] getStackTrace() {
+        return (StackTraceElement[]) ArrayUtils.addAll(super.getStackTrace(), this.parent.getStackTrace());
     }
 }

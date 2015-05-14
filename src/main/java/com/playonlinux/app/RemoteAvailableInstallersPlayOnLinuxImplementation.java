@@ -22,7 +22,7 @@ import com.playonlinux.common.dtos.AvailableCategoriesDTO;
 import com.playonlinux.common.dtos.CategoryDTO;
 import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
 import com.playonlinux.common.dtos.DownloadStateDTO;
-import com.playonlinux.injection.Component;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.webservice.RemoteWebService;
@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
-@Component
+@Scan
 public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
         implements RemoteAvailableInstallers, Observer {
     @Inject
