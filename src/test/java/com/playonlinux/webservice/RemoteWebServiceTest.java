@@ -18,6 +18,7 @@
 
 package com.playonlinux.webservice;
 
+import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -136,7 +137,7 @@ public class RemoteWebServiceTest {
 
         @Override
         public void update(Observable o, Object arg) {
-            this.categoryDto = (AvailableCategoriesDTO) arg;
+            this.categoryDto = (AvailableCategoriesDTO) ((DownloadEnvelopeDTO) arg).getEnvelopeContent();
         }
 
         public AvailableCategoriesDTO getDTO() {
