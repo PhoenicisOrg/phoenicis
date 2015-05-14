@@ -68,7 +68,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             throw new PlayOnLinuxError("URL seems to be malformed", e);
         }
 
-        this.update((Observable) availableInstallers, null);
+        this.update(availableInstallers);
         this.setUpEvents();
         this.showMainScene();
         this.show();
@@ -114,11 +114,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         return eventHandler;
     }
 
-
-    @Override
-    public void update(Observable o, Object arg) {
-        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
-
+    public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
         if(remoteAvailableInstallers.isUpdating()) {
             Platform.runLater(() -> this.showUpdateScene());
         } else if(remoteAvailableInstallers.hasFailed()) {
@@ -126,6 +122,13 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         } else {
             Platform.runLater(() -> this.showMainScene());
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
+
+        update(remoteAvailableInstallers);
     }
 }
 
