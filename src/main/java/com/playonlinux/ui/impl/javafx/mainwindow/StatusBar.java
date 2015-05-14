@@ -19,6 +19,7 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
@@ -38,15 +39,16 @@ class StatusBar extends javafx.scene.control.ToolBar implements Observer {
     public StatusBar(MainWindow parent, Scene scene) {
         this.parent = parent;
 
-        text = new Text("A new version of PlayOnLinux is available (5.1)");
+        text = new Text();
         text.setWrappingWidth(max(50, (int)scene.getWidth() - 150));
         progressBar.setPrefWidth(130);
-
         this.getItems().addAll(text);
 
         parent.widthProperty().addListener((observable, oldValue, newValue) -> {
             text.setWrappingWidth(max(50, newValue.intValue() - 150));
         });
+
+        this.setPrefHeight(25);
     }
 
     public void updateStatus(String newText) {
@@ -69,8 +71,15 @@ class StatusBar extends javafx.scene.control.ToolBar implements Observer {
     public void update(Observable o, Object arg) {
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
-        if(remoteAvailableInstallers.hasFailed()) {
+        if(remoteAvailableInstallers.isUpdating()) {
+            updateStatus(translate("Please wait while $APPLICATION_TITLE is refreshing itself"));
+            Platform.runLater(() -> showStatusBar(true));
+        } else if(remoteAvailableInstallers.hasFailed()) {
             updateStatus(translate("$APPLICATION_TITLE website seems to be unavailable!"));
+            Platform.runLater(() -> showStatusBar(false));
+        } else {
+            updateStatus("");
+            Platform.runLater(() -> showStatusBar(false));
         }
         System.out.println();
     }

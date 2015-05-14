@@ -64,12 +64,13 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         downloadEnvelopeDto = (DownloadEnvelopeDTO<AvailableCategoriesDTO>) arg;
 
         try {
-            ArrayList<CategoryDTO> availableCategories = new ArrayList<>(
-                    downloadEnvelopeDto.getEnvelopeContent().getCategories()
-            );
-
-            numberOfCategories = availableCategories.size();
-            categoryDTO = availableCategories.iterator();
+            if(downloadEnvelopeDto.getEnvelopeContent() != null) {
+                ArrayList<CategoryDTO> availableCategories = new ArrayList<>(
+                        downloadEnvelopeDto.getEnvelopeContent().getCategories()
+                );
+                numberOfCategories = availableCategories.size();
+                categoryDTO = availableCategories.iterator();
+            }
         } finally {
             this.setChanged();
             this.notifyObservers();
