@@ -24,6 +24,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 
 import java.io.IOException;
 
@@ -36,17 +37,20 @@ public class PlayOnLinuxApp {
     @Inject
     static Controller controller;
 
-    public void start() throws InjectionException {
+    public void start(String[] args) throws InjectionException {
         PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
+        if(args.length > 0 && args[0] == "--cli") {
+            playOnLinuxConfig.setUseCLIInterface(true);
+        }
         playOnLinuxConfig.load();
 
         controller.startApplication();
     }
 
-    public static void main(String [] args) throws CancelException, InterruptedException,
+    public static void main(String[] args) throws CancelException, InterruptedException,
             PlayOnLinuxError, IOException, InjectionException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
-        application.start();
+        application.start(args);
 
         playOnLinuxBackgroundServicesManager.shutdown();
     }

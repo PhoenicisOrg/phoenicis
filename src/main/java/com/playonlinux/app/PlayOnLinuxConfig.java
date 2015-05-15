@@ -22,7 +22,10 @@ import com.playonlinux.api.Controller;
 
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
+import com.playonlinux.services.EventHandlerPlayOnLinuxImplementation;
+import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.ui.api.EventHandler;
+import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.domain.PlayOnLinuxError;
 
@@ -31,9 +34,15 @@ import java.io.IOException;
 @SuppressWarnings("unused")
 public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
+    private boolean useCliInterface = false;
+
     @Bean
     public Controller controller() {
-        return new ControllerJavaFXImplementation();
+        if(useCliInterface) {
+            return new ControllerCLIImplementation();
+        } else {
+            return new ControllerJavaFXImplementation();
+        }
     }
 
     @Bean
@@ -54,5 +63,9 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Override
     protected String definePackage() {
         return "com.playonlinux";
+    }
+
+    public void setUseCLIInterface(boolean enabled) {
+        this.useCliInterface = enabled;
     }
 }

@@ -16,25 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.app;
+package com.playonlinux.ui.impl.cli;
 
-import com.playonlinux.utils.BackgroundService;
+import com.playonlinux.api.Controller;
+import com.playonlinux.api.SetupWindow;
+import com.playonlinux.api.UIMessageSender;
+import com.playonlinux.injection.Scan;
 
-import java.util.ArrayList;
+@Scan
+public class ControllerCLIImplementation implements Controller {
 
-public class PlayOnLinuxBackgroundServicesManager {
-    ArrayList<BackgroundService> runningTask;
+    public void startApplication() {
 
-    PlayOnLinuxBackgroundServicesManager() {
-        runningTask = new ArrayList<>();
     }
 
-    void register(BackgroundService backgroundService) {
-        runningTask.add(backgroundService);
-        backgroundService.start();
+    public SetupWindow createSetupWindowGUIInstance(String title) {
+        return null;
     }
 
-    void shutdown() {
-        runningTask.forEach(com.playonlinux.utils.BackgroundService::shutdown);
+    @Override
+    public UIMessageSender createUIMessageSender() {
+        return new UIMessageSenderCLIImplementation();
     }
+
+
 }
