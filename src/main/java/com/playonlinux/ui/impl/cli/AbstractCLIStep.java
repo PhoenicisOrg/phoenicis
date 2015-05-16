@@ -40,7 +40,7 @@ public abstract class AbstractCLIStep {
                 input = defineDefaultValue();
             }
         } else {
-            input = System.console().readLine(String.format("%s:", defineInputMessage()));
+            input = System.console().readLine(String.format("< %s >", defineInputMessage()));
         }
     }
 

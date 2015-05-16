@@ -47,6 +47,7 @@ public class HeaderPane extends GridPane implements Observer {
         this.setId("header");
 
         this.installWindowEventHandler = installWindowEventHandler;
+        this.setAlignment(Pos.CENTER);
 
         this.setUpEvents();
     }
@@ -57,16 +58,25 @@ public class HeaderPane extends GridPane implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) arg;
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
-        int iconSizeInPercent = 100 / remoteAvailableInstallers.getNumberOfCategories();
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setPercentWidth(iconSizeInPercent);
-        this.getColumnConstraints().add(columnConstraints);
+        if(!remoteAvailableInstallers.isUpdating() && !remoteAvailableInstallers.hasFailed()) {
+            int iconSizeInPercent = 100 / (remoteAvailableInstallers.getNumberOfCategories() - 1);
 
-        for(CategoryDTO categoryDTO: remoteAvailableInstallers) {
-            CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
-            this.getChildren().add(categoryIcon);
+
+            int i = 0;
+            for(CategoryDTO categoryDTO: remoteAvailableInstallers) {
+                /* Functions should not be shown in this window */
+                if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                    ColumnConstraints columnConstraints = new ColumnConstraints();
+                    columnConstraints.setPercentWidth(iconSizeInPercent);
+                    this.getColumnConstraints().add(columnConstraints);
+
+                    CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
+                    this.add(categoryIcon, i, 0);
+                    i++;
+                }
+            }
         }
     }
 

@@ -40,6 +40,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private Scene mainScene;
     private Scene updateScene;
     private RemoteAvailableInstallers availableInstallers;
+    private final HeaderPane header;
+
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
@@ -68,6 +70,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             throw new PlayOnLinuxError("URL seems to be malformed", e);
         }
 
+        header = new HeaderPane(this.eventHandler);
+
+
         this.update(availableInstallers);
         this.setUpEvents();
         this.showMainScene();
@@ -79,8 +84,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             Pane mainPane = new Pane();
             mainScene = new Scene(mainPane, 800, 600);
             mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
-
-            Pane header = new HeaderPane(this.eventHandler);
 
             mainPane.getChildren().add(header);
         }
@@ -108,6 +111,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void setUpEvents() throws PlayOnLinuxError {
         availableInstallers.addObserver(this);
+        availableInstallers.addObserver(header);
     }
 
     public InstallWindowEventHandler getEventHandler() {
