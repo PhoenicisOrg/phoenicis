@@ -75,7 +75,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
         this.update(availableInstallers);
         this.setUpEvents();
-        this.showMainScene();
         this.show();
     }
 
@@ -119,11 +118,11 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
         if(remoteAvailableInstallers.isUpdating()) {
-            Platform.runLater(() -> this.showUpdateScene());
+            this.showUpdateScene();
         } else if(remoteAvailableInstallers.hasFailed()) {
             // TODO
         } else {
-            Platform.runLater(() -> this.showMainScene());
+            this.showMainScene();
         }
     }
 
@@ -131,7 +130,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     public void update(Observable o, Object arg) {
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
-        update(remoteAvailableInstallers);
+        Platform.runLater(() -> update(remoteAvailableInstallers));
     }
 }
 

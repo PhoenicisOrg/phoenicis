@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 import com.playonlinux.common.dtos.CategoryDTO;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.ClickableImageView;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -65,7 +66,7 @@ public class HeaderPane extends GridPane implements Observer {
     public void update(Observable o, Object arg) {
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
-        update(remoteAvailableInstallers);
+        Platform.runLater(() -> update(remoteAvailableInstallers));
     }
 
     public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
