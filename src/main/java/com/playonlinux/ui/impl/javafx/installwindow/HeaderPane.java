@@ -33,33 +33,42 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
 public class HeaderPane extends GridPane implements Observer {
-    InstallWindowEventHandler installWindowEventHandler;
+    private final RemoteAvailableInstallers availableInstallers;
+    InstallWindowEventHandler eventHandler;
 
-    HeaderPane(InstallWindowEventHandler installWindowEventHandler) {
+    HeaderPane(InstallWindowEventHandler installWindowEventHandler) throws MalformedURLException {
         this.setPrefHeight(70);
         this.setPrefWidth(804);
         this.setLayoutY(-2);
         this.setId("header");
 
-        this.installWindowEventHandler = installWindowEventHandler;
+        this.eventHandler = installWindowEventHandler;
+        this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
+
+        this.update(availableInstallers);
         this.setAlignment(Pos.CENTER);
 
         this.setUpEvents();
     }
 
     private void setUpEvents() {
-
+        availableInstallers.addObserver(this);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
+        update(remoteAvailableInstallers);
+    }
+
+    public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
         if(!remoteAvailableInstallers.isUpdating() && !remoteAvailableInstallers.hasFailed()) {
             int iconSizeInPercent = 100 / (remoteAvailableInstallers.getNumberOfCategories() - 1);
 

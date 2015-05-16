@@ -66,11 +66,11 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         this.parent = parent;
         try {
             this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
+            header = new HeaderPane(this.eventHandler);
         } catch (MalformedURLException e) {
             throw new PlayOnLinuxError("URL seems to be malformed", e);
         }
 
-        header = new HeaderPane(this.eventHandler);
 
 
         this.update(availableInstallers);
@@ -111,7 +111,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void setUpEvents() throws PlayOnLinuxError {
         availableInstallers.addObserver(this);
-        availableInstallers.addObserver(header);
     }
 
     public InstallWindowEventHandler getEventHandler() {
