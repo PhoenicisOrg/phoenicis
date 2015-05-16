@@ -30,4 +30,6 @@ public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
     boolean isUpdating();
 
     boolean hasFailed();
+
+
 }

@@ -22,14 +22,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ScriptDTO {
-    public int getId() {
-        return id;
-    }
+
     int id;
     String name;
     String description;
-
     ScriptInformationsDTO scriptInformations;
+
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -42,4 +44,6 @@ public class ScriptDTO {
     public ScriptInformationsDTO getScriptInformations() {
         return scriptInformations;
     }
+
+
 }

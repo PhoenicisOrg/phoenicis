@@ -68,12 +68,8 @@ class ApplicationListWidget extends TreeView implements Observer {
     }
 
     private class ApplicationItem extends GridPane {
-        private final String applicationName;
-        private final File iconPath;
 
         ApplicationItem(String applicationName, File iconPath) {
-            this.applicationName = applicationName;
-            this.iconPath = iconPath;
             this.setPrefHeight(60.);
             Text applicationNameLabel = new Text(applicationName);
 

@@ -28,6 +28,12 @@ import java.net.MalformedURLException;
 
 @Scan
 public class InstallWindowEventHandler implements UIEventHandler {
+    private final InstallWindow installWindow;
+
+    InstallWindowEventHandler(InstallWindow installWindow) {
+        this.installWindow = installWindow;
+    }
+
     @Inject
     static EventHandler mainEventHandler;
 
@@ -38,5 +44,9 @@ public class InstallWindowEventHandler implements UIEventHandler {
 
     public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
         return mainEventHandler.getRemoteAvailableInstallers();
+    }
+
+    public void selectCategory(String categoryName) {
+        installWindow.getApplicationList().setCategoryName(categoryName);
     }
 }

@@ -31,17 +31,21 @@ import java.net.MalformedURLException;
 import java.util.Observable;
 import java.util.Observer;
 
-import static com.playonlinux.domain.Localisation.translate;
-
 public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer {
     private final PlayOnLinuxWindow parent;
     private static InstallWindow instance;
-    private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler();
+    private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler(this);
     private Scene mainScene;
     private Scene updateScene;
+
+
     private RemoteAvailableInstallers availableInstallers;
     private final HeaderPane header;
+    private AvailableInstallerListWidget applicationList;
 
+    public AvailableInstallerListWidget getApplicationList() {
+        return applicationList;
+    }
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
@@ -84,7 +88,16 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             mainScene = new Scene(mainPane, 800, 600);
             mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
 
-            mainPane.getChildren().add(header);
+
+            try {
+                applicationList = new AvailableInstallerListWidget(eventHandler);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                // FIXME
+            }
+
+            mainPane.getChildren().addAll(header, applicationList);
+
         }
 
         this.setScene(mainScene);

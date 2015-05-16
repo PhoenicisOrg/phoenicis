@@ -83,6 +83,8 @@ public class HeaderPane extends GridPane implements Observer {
                     this.getColumnConstraints().add(columnConstraints);
 
                     CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
+                    categoryIcon.setMouseClicked((evt) -> eventHandler.selectCategory(categoryDTO.getName()));
+
                     this.add(categoryIcon, i, 0);
                     i++;
                 }
@@ -101,6 +103,7 @@ public class HeaderPane extends GridPane implements Observer {
             this.setMaxHeight(64);
 
             this.setAlignment(Pos.CENTER);
+
             this.categoryName = categoryName;
             categoryIcon = new ClickableImageView(new Image(this.getIcon().toString()));
             categoryIcon.setFitHeight(32);
@@ -117,8 +120,11 @@ public class HeaderPane extends GridPane implements Observer {
             rowConstraintIcon.setPercentHeight(70);
             RowConstraints rowConstraintText = new RowConstraints();
             rowConstraintText.setPercentHeight(20);
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setPercentWidth(100);
 
             this.getRowConstraints().addAll(rowConstraintIcon, rowConstraintText);
+            this.getColumnConstraints().add(columnConstraints);
 
             this.add(categoryIcon, 0, 0);
             this.add(categoryNameText, 0, 1);
@@ -127,6 +133,7 @@ public class HeaderPane extends GridPane implements Observer {
 
         public void setMouseClicked(EventHandler<?super MouseEvent> mouseEventEventHandler) {
             this.categoryIcon.setOnMouseClicked(mouseEventEventHandler);
+            this.categoryNameText.setOnMouseClicked(mouseEventEventHandler);
         }
 
         public URL getIcon() {

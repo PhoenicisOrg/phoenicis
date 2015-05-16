@@ -44,7 +44,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     @Inject
     private static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
 
-    private Iterator<CategoryDTO> categoryDTO;
+    private ArrayList<CategoryDTO> categoriesDTO;
     private int numberOfCategories;
     private DownloadEnvelopeDTO<AvailableCategoriesDTO> downloadEnvelopeDto;
 
@@ -57,7 +57,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public Iterator<CategoryDTO> iterator() {
-        return categoryDTO;
+        return new ArrayList(categoriesDTO).iterator();
     }
 
     @Override
@@ -74,8 +74,9 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
                 ArrayList<CategoryDTO> availableCategories = new ArrayList<>(
                         downloadEnvelopeDto.getEnvelopeContent().getCategories()
                 );
+
                 numberOfCategories = availableCategories.size();
-                categoryDTO = availableCategories.iterator();
+                categoriesDTO = availableCategories;
             }
         } finally {
             this.setChanged();
