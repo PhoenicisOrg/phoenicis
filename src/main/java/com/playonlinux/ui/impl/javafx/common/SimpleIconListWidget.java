@@ -69,7 +69,7 @@ public class SimpleIconListWidget extends TreeView {
     public void addChangeListener(SimpleIconChangeListener simpleIconChangeListener) {
         getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if(newValue != null) {
+                    if (newValue != null) {
                         simpleIconChangeListener.changed((
                                         (TreeItem<SimpleIconListItem>) newValue).getValue().getValue()
                         );
@@ -79,6 +79,11 @@ public class SimpleIconListWidget extends TreeView {
 
     protected void clear() {
         rootItem.getChildren().clear();
+    }
+
+    public String getSelectedItemLabel() {
+        TreeItem<SimpleIconListItem> item = (TreeItem<SimpleIconListItem>) this.getSelectionModel().getSelectedItem();
+        return item.getValue().getValue();
     }
 
     private class SimpleIconListItem extends GridPane {
@@ -91,6 +96,7 @@ public class SimpleIconListWidget extends TreeView {
             SimpleIconListItemLabel simpleIconListItemLabel = new SimpleIconListItemLabel(itemName);
 
             ImageView iconImageView = new ImageView(new Image(iconPath.toExternalForm()));
+
             iconImageView.setFitHeight(16);
             iconImageView.setFitWidth(16);
 

@@ -26,7 +26,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import org.apache.commons.lang.StringUtils;
 
-import java.net.MalformedURLException;
 import java.util.Observable;
 import java.util.Observer;
 

@@ -22,11 +22,15 @@ import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
+import com.sun.javafx.scene.control.skin.ListViewSkin;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -107,9 +111,21 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             availableInstallerListWidget.setLayoutX(10);
             availableInstallerListWidget.setPrefWidth(550);
             availableInstallerListWidget.setPrefHeight(385);
+            availableInstallerListWidget.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if(event.getClickCount() == 2) {
+                        System.out.println(availableInstallerListWidget.getSelectedItemLabel());
+                    }
+                }
+            });
+
         } catch (PlayOnLinuxError e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to initialize available installers."));
+            alert.setContentText(String.format("The error was: %s", e.toString()));
+            alert.show();
             e.printStackTrace();
-            // FIXME
         }
 
         descriptionWidget = new WebView();

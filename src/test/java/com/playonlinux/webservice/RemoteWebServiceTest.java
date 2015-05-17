@@ -73,11 +73,12 @@ public class RemoteWebServiceTest {
                                 "            {\n" +
                                 "                \"description\": \"\",\n" +
                                 "                \"id\": 373,\n" +
+                                "                \"iconUrl\": \"http://url1\",\n" +
+                                "                \"miniaturesUrls\" : [],\n" +
                                 "                \"scriptInformations\": {\n" +
                                 "                    \"compatiblesOperatingSystems\" : [\"LINUX\", \"MACOSX\"],\n" +
                                 "                    \"testingOperatingSystems\" : [],\n" +
                                 "                    \"free\": true,\n" +
-                                "                    \"hasIcon\": true,\n" +
                                 "                    \"requiresNoCD\": false\n" +
                                 "                },\n" +
                                 "                \"name\": \"7-Zip\"\n" +
@@ -85,11 +86,12 @@ public class RemoteWebServiceTest {
                                 "            {\n" +
                                 "                \"description\": \"Description FluidMark\",\n" +
                                 "                \"id\": 830,\n" +
+                                "                \"iconUrl\": \"http://url2\",\n" +
+                                "                \"miniaturesUrls\" : [\"http://Miniature1\", \"http://Miniature2\"],\n" +
                                 "                \"infos\": {\n" +
                                 "                    \"compatiblesOperatingSystems\" : [\"LINUX\"],\n" +
                                 "                    \"testingOperatingSystems\" : [\"LINUX\"],\n" +
                                 "                    \"free\": true,\n" +
-                                "                    \"icon\": true,\n" +
                                 "                    \"requires_nocd\": false\n" +
                                 "                },\n" +
                                 "                \"name\": \"FluidMark 1.3.1\"\n" +
@@ -125,10 +127,16 @@ public class RemoteWebServiceTest {
 
         assertEquals("", scripts.get(0).getDescription());
         assertEquals(373, scripts.get(0).getId());
+        assertEquals("http://url1", scripts.get(0).getIconUrl());
+        assertEquals(0, scripts.get(0).getMiniaturesUrls().size());
         assertEquals("7-Zip", scripts.get(0).getName());
 
         assertEquals("Description FluidMark", scripts.get(1).getDescription());
         assertEquals(830, scripts.get(1).getId());
+        assertEquals("http://url2", scripts.get(1).getIconUrl());
+        assertEquals(2, scripts.get(1).getMiniaturesUrls().size());
+        assertEquals("http://Miniature1", scripts.get(1).getMiniaturesUrls().get(0));
+        assertEquals("http://Miniature2", scripts.get(1).getMiniaturesUrls().get(1));
         assertEquals("FluidMark 1.3.1", scripts.get(1).getName());
     }
 

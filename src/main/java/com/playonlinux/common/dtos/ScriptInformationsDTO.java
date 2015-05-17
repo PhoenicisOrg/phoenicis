@@ -41,15 +41,10 @@ public class ScriptInformationsDTO {
         return requiresNoCD;
     }
 
-    public Boolean isHasIcon() {
-        return hasIcon;
-    }
-
     private ArrayList<OperatingSystem> compatiblesOperatingSystems;
     private ArrayList<OperatingSystem> testingOperatingSystems;
 
     private Boolean free;
     private Boolean requiresNoCD;
-    private Boolean hasIcon;
 
 }

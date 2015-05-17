@@ -21,6 +21,7 @@ package com.playonlinux.common.dtos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Comparator;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ScriptDTO {
@@ -28,6 +29,17 @@ public class ScriptDTO {
     int id;
     String name;
     String description;
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public List<String> getMiniaturesUrls() {
+        return miniaturesUrls;
+    }
+
+    String iconUrl;
+    List<String> miniaturesUrls;
     ScriptInformationsDTO scriptInformations;
 
 
