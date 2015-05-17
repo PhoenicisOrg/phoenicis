@@ -5,6 +5,6 @@ POL_Download ()
 	# Download a file and place it in the current directory
 	# Usage: POL_Download [URL] [MD5]
 
-   	# TODO: To be implemented
+   	# TODO: To be implemented (https://github.com/PlayOnLinux/POL-POM-5/issues/7)
     echo "Not implemented"
 }
