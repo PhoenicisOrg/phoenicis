@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+POL_Download ()
+{
+	# Download a file and place it in the current directory
+	# Usage: POL_Download [URL] [MD5]
+
+   	# TODO: To be implemented
+    echo "Not implemented"
+}

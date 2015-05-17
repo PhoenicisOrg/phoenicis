@@ -24,6 +24,7 @@ fi
 
 if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
 	source "$PLAYONLINUX/lib/setupWindow"
+	source "$PLAyONLINUX/lib/scripts"
 
 	export PLAYONLINUX_BASH_INCLUDED="TRUE"
 fi
