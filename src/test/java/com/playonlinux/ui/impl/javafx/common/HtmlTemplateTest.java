@@ -25,19 +25,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.MissingFormatArgumentException;
 
 import static org.junit.Assert.*;
 
 public class HtmlTemplateTest {
 
-    private File testTemplate;
+    private URL testTemplate;
 
     @Before
     public void setUp() throws IOException {
-        this.testTemplate = File.createTempFile("test", "html");
+        File fileTemplate = File.createTempFile("test", "html");
+        testTemplate = new URL("file://"+fileTemplate.getAbsolutePath());
 
-        OutputStream outputStream = new FileOutputStream(testTemplate);
+        OutputStream outputStream = new FileOutputStream(fileTemplate);
 
         outputStream.write(
                 ("<html>" +

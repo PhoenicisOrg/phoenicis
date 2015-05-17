@@ -18,32 +18,21 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
-import org.python.core.util.StringUtil;
+import org.apache.commons.io.IOUtils;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.net.URL;
+
 
 public class HtmlTemplate {
-    private static final Charset DEFAULT_ENCODING = StandardCharsets.UTF_8;
-    private final File templateFile;
-    private final Charset encoding;
+    private final URL templateUrl;
 
-    public HtmlTemplate(File templateFile) {
-        this(templateFile, DEFAULT_ENCODING);
-    }
-
-    public HtmlTemplate(File templateFile, Charset encoding) {
-        this.templateFile = templateFile;
-        this.encoding = encoding;
+    public HtmlTemplate(URL templateUrl) {
+        this.templateUrl = templateUrl;
     }
 
     public String render(String... replacements) throws IOException {
-        String fileContent = new String(Files.readAllBytes(Paths.get(templateFile.getAbsolutePath())), encoding);
-
+        String fileContent = IOUtils.toString(templateUrl.openStream());
         return String.format(fileContent, replacements);
     }
 }

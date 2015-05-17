@@ -20,6 +20,7 @@ package com.playonlinux.ui.impl.javafx.common;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -29,6 +30,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static com.playonlinux.domain.Localisation.translate;
 
 public class SimpleIconListWidget extends TreeView {
     private final TreeItem rootItem;
@@ -40,12 +45,24 @@ public class SimpleIconListWidget extends TreeView {
     }
 
     public void addItem(String itemName) {
-        addItem(itemName, new File(SimpleIconListWidget.class.getResource("playonlinux.png").getFile()));
+        addItem(itemName, SimpleIconListWidget.class.getResource("playonlinux.png"));
     }
 
 
     public void addItem(String itemName, File iconPath) {
-        TreeItem<SimpleIconListItem> treeItem = new TreeItem<>(new SimpleIconListItem(itemName, iconPath));
+        try {
+            addItem(itemName, new URL("file://"+iconPath.getAbsolutePath()));
+        } catch (MalformedURLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(String.format(translate("Error while trying to load the icon %s."),
+                    iconPath.getAbsolutePath()));
+            alert.setContentText(String.format("The error was: %s", e));
+            e.printStackTrace();
+        }
+    }
+
+    public void addItem(String itemName, URL iconUrl) {
+        TreeItem<SimpleIconListItem> treeItem = new TreeItem<>(new SimpleIconListItem(itemName, iconUrl));
         rootItem.getChildren().add(treeItem);
     }
 
@@ -67,13 +84,13 @@ public class SimpleIconListWidget extends TreeView {
     private class SimpleIconListItem extends GridPane {
         private String itemName;
 
-        SimpleIconListItem(String itemName, File iconPath) {
+        SimpleIconListItem(String itemName, URL iconPath) {
             this.itemName = itemName;
             this.setPrefHeight(0.);
 
             SimpleIconListItemLabel simpleIconListItemLabel = new SimpleIconListItemLabel(itemName);
 
-            ImageView iconImageView = new ImageView(new Image("file://"+iconPath.getAbsolutePath()));
+            ImageView iconImageView = new ImageView(new Image(iconPath.toExternalForm()));
             iconImageView.setFitHeight(16);
             iconImageView.setFitWidth(16);
 
