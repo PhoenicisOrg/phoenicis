@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx;
 import com.playonlinux.domain.PlayOnLinuxError;
 import javafx.application.Application;
 
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 
@@ -28,6 +29,8 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("common/playonlinux.png")));
+        primaryStage.setTitle("PlayOnLinux");
         MainWindow mainWindow = new MainWindow();
 
         mainWindow.setUpWindow();
