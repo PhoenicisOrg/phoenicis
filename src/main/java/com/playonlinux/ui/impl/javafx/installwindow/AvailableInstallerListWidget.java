@@ -76,17 +76,8 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
                     this.addItem(scriptDTO.getName());
                 }
             } else if (categoryName != null) {
-                CategoryDTO category = null;
-                for(CategoryDTO categoryDTO: remoteAvailableInstallers) {
-                    if (categoryName.equals(categoryDTO.getName())) {
-                        category = categoryDTO;
-                    }
-                }
-
-                if (category != null) {
-                    for (ScriptDTO scriptDTO : category.getScripts()) {
-                        this.addItem(scriptDTO.getName());
-                    }
+                for(ScriptDTO scriptDTO: remoteAvailableInstallers.getAllScriptsInCategory(categoryName)) {
+                    this.addItem(scriptDTO.getName());
                 }
             }
         }

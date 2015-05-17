@@ -21,6 +21,7 @@ package com.playonlinux.ui.api;
 import com.playonlinux.common.dtos.CategoryDTO;
 import com.playonlinux.common.dtos.ScriptDTO;
 
+import java.util.Iterator;
 import java.util.Observer;
 
 public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
@@ -35,4 +36,6 @@ public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
     Iterable<ScriptDTO> getAllScripts();
 
     Iterable<ScriptDTO> getAllScripts(String filter);
+
+    Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName);
 }

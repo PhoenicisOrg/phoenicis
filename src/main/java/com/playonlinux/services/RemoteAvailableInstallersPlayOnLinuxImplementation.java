@@ -115,4 +115,25 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
         return () -> scripts.iterator();
     }
+
+    @Override
+    public Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) {
+        for(CategoryDTO categoryDTO: categoriesDTO) {
+            if(categoryName.equals(categoryDTO.getName())) {
+                return getAllScriptsInCategory(categoryDTO);
+            }
+        }
+        return null;
+    }
+
+    private Iterable<ScriptDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {
+        ArrayList<ScriptDTO> scripts = new ArrayList<>();
+        for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
+            scripts.add(scriptDTO);
+        }
+
+        Collections.sort(scripts, new ScriptDTO.alphabeticalOrderComparator());
+
+        return () -> scripts.iterator();
+    }
 }
