@@ -73,6 +73,8 @@ public class SimpleIconListWidget extends TreeView {
                         simpleIconChangeListener.changed((
                                         (TreeItem<SimpleIconListItem>) newValue).getValue().getValue()
                         );
+                    } else {
+                        simpleIconChangeListener.changed(null);
                     }
                 });
     }

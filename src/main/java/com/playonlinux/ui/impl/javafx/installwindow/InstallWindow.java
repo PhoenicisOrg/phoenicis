@@ -33,6 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -95,7 +96,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         // TODO: Improve this scene (get rid of absolute positioning, ...)
 
         Pane mainPane = new Pane();
-        mainScene = new Scene(mainPane, 800, 600);
+        mainScene = new Scene(mainPane, 800, 545);
         mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
 
         searchWidget = new TextField();
@@ -110,11 +111,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             availableInstallerListWidget.setLayoutX(10);
             availableInstallerListWidget.setPrefWidth(550);
             availableInstallerListWidget.setPrefHeight(385);
-            availableInstallerListWidget.setOnMouseClicked(event -> {
-                if(event.getClickCount() == 2) {
-                    System.out.println(availableInstallerListWidget.getSelectedItemLabel());
-                }
-            });
 
         } catch (PlayOnLinuxError e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -134,7 +130,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         installImage.setFitWidth(16);
         installImage.setFitHeight(16);
         installButton = new Button(translate("Install"), installImage);
-        installButton.setLayoutY(507);
+        installButton.setLayoutY(510);
+        installButton.setDisable(true);
 
         mainPane.getChildren().addAll(header, availableInstallerListWidget, searchWidget,
                 descriptionWidget, installButton);
@@ -173,15 +170,19 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         availableInstallers.addObserver(this);
         availableInstallerListWidget.addChangeListener(newValue -> {
             try {
-                try {
-                    descriptionWidget.getEngine().loadContent(
-                            new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
-                                    .render(eventHandler.getInstallerDescription(newValue))
-                    );
-                } catch (IOException e) {
-                    throw new PlayOnLinuxError("Error while loading descriptionTemplate.html", e);
+                if(newValue == null || StringUtils.isBlank(newValue)) {
+                    installButton.setDisable(true);
+                } else {
+                    installButton.setDisable(false);
+                    try {
+                        descriptionWidget.getEngine().loadContent(
+                                new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
+                                        .render(eventHandler.getInstallerDescription(newValue))
+                        );
+                    } catch (IOException e) {
+                        throw new PlayOnLinuxError("Error while loading descriptionTemplate.html", e);
+                    }
                 }
-
             } catch (PlayOnLinuxError playOnLinuxError) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to get installer information."));
@@ -191,6 +192,13 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             }
         });
         searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
+
+        availableInstallerListWidget.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                eventHandler.installProgram(availableInstallerListWidget.getSelectedItemLabel());
+            }
+        });
+        installButton.setOnMouseClicked(event -> eventHandler.installProgram(availableInstallerListWidget.getSelectedItemLabel()));
     }
 
     public InstallWindowEventHandler getEventHandler() {
