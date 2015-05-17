@@ -41,4 +41,6 @@ public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
     Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError;
 
     ScriptDTO getScriptByName(String scriptName) throws PlayOnLinuxError;
+
+    void refresh();
 }

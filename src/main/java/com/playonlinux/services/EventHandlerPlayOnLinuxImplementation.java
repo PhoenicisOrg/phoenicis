@@ -80,4 +80,5 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     public void onApplicationStarted() throws MalformedURLException {
 
     }
+
 }

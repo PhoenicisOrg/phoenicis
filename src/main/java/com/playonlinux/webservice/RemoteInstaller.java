@@ -16,30 +16,41 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.webservice;
 
+import com.playonlinux.common.dtos.AvailableCategoriesDTO;
+import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
+import com.playonlinux.common.dtos.DownloadStateDTO;
 import com.playonlinux.utils.BackgroundService;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.Observable;
+import java.util.concurrent.Semaphore;
 
-public class PlayOnLinuxBackgroundServicesManager {
-    ArrayList<BackgroundService> runningTask;
+/**
+ * This class download a given script from PlayOnLinux webservices
+ */
+public class RemoteInstaller extends Observable implements BackgroundService {
 
-    public PlayOnLinuxBackgroundServicesManager() {
-        runningTask = new ArrayList<>();
+    private final String url;
+
+    public RemoteInstaller(String url) {
+        this.url = url;
     }
 
-    public void register(BackgroundService backgroundService) {
-        runningTask.add(backgroundService);
-        backgroundService.start();
+    String fetchScript(String scriptName) {
+        return null;
     }
 
+    @Override
     public void shutdown() {
-        runningTask.forEach(com.playonlinux.utils.BackgroundService::shutdown);
+
     }
 
-    public void unregister(BackgroundService backgroundService) {
-        runningTask.remove(backgroundService);
-        backgroundService.shutdown();
+    @Override
+    public void start() {
+
     }
 }

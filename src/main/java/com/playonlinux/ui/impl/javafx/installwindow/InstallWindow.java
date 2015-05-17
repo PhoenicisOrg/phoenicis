@@ -54,6 +54,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private TextField searchWidget;
     private WebView descriptionWidget;
     private Button installButton;
+    private Button refreshButton;
 
     public AvailableInstallerListWidget getAvailableInstallerListWidget() {
         return availableInstallerListWidget;
@@ -107,11 +108,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
         try {
             availableInstallerListWidget = new AvailableInstallerListWidget(eventHandler);
-            availableInstallerListWidget.setLayoutY(112);
-            availableInstallerListWidget.setLayoutX(10);
-            availableInstallerListWidget.setPrefWidth(550);
-            availableInstallerListWidget.setPrefHeight(385);
-
         } catch (PlayOnLinuxError e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to initialize available installers."));
@@ -119,6 +115,11 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             alert.show();
             e.printStackTrace();
         }
+
+        availableInstallerListWidget.setLayoutY(112);
+        availableInstallerListWidget.setLayoutX(10);
+        availableInstallerListWidget.setPrefWidth(550);
+        availableInstallerListWidget.setPrefHeight(385);
 
         descriptionWidget = new WebView();
         descriptionWidget.setLayoutX(570);
@@ -133,15 +134,21 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         installButton.setLayoutY(510);
         installButton.setDisable(true);
 
+        ImageView updateImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
+        updateImage.setFitWidth(16);
+        updateImage.setFitHeight(16);
+        refreshButton = new Button(translate("Refresh"), updateImage);
+        refreshButton.setLayoutY(510);
+
         mainPane.getChildren().addAll(header, availableInstallerListWidget, searchWidget,
-                descriptionWidget, installButton);
+                descriptionWidget, installButton, refreshButton);
 
     }
 
 
     private void setUpUpdateScene() {
         Pane updatePane = new Pane();
-        updateScene = new Scene(updatePane, 800, 600);
+        updateScene = new Scene(updatePane, 800, 545);
         updateScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
 
         ProgressIndicator progressIndicator = new ProgressIndicator();
@@ -158,6 +165,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         this.setScene(mainScene);
         /* JavaFX only waits for a node to be displayed before calculating width */
         Platform.runLater(() -> installButton.setLayoutX(790 - installButton.getWidth()));
+        Platform.runLater(() -> refreshButton.setLayoutX(780 - refreshButton.getWidth() - installButton.getWidth()));
     }
 
     private void showUpdateScene() {
@@ -170,7 +178,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         availableInstallers.addObserver(this);
         availableInstallerListWidget.addChangeListener(newValue -> {
             try {
-                if(newValue == null || StringUtils.isBlank(newValue)) {
+                if (newValue == null || StringUtils.isBlank(newValue)) {
                     installButton.setDisable(true);
                 } else {
                     installButton.setDisable(false);
@@ -199,7 +207,11 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             }
         });
         installButton.setOnMouseClicked(event -> eventHandler.installProgram(availableInstallerListWidget.getSelectedItemLabel()));
+
+        refreshButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
     }
+
+
 
     public InstallWindowEventHandler getEventHandler() {
         return eventHandler;

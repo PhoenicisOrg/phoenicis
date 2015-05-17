@@ -78,6 +78,8 @@ public class HeaderPane extends GridPane implements Observer {
 
 
             int i = 0;
+            this.getColumnConstraints().clear();
+            this.getChildren().clear();
             for(CategoryDTO categoryDTO: remoteAvailableInstallers) {
                 /* Functions should not be shown in this window */
                 if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
@@ -93,6 +95,7 @@ public class HeaderPane extends GridPane implements Observer {
                     i++;
                 }
             }
+
         }
     }
 

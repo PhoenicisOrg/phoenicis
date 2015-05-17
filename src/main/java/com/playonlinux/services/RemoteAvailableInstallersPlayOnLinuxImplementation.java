@@ -41,12 +41,12 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     private ArrayList<CategoryDTO> categoriesDTO;
     private int numberOfCategories;
     private DownloadEnvelopeDTO<AvailableCategoriesDTO> downloadEnvelopeDto;
+    private RemoteAvailableInstallers remoteAvailableInstallers;
+    private final URL webserviceUrl;
 
     RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
-        URL webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
-        RemoteAvailableInstallers remoteAvailableInstallers = new RemoteAvailableInstallers(webserviceUrl);
-        remoteAvailableInstallers.addObserver(this);
-        playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
+        webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
+        this.refresh();
     }
 
     @Override
@@ -134,6 +134,17 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         }
 
         throw new PlayOnLinuxError(String.format("The script %s does not exist!", scriptName));
+    }
+
+    @Override
+    public void refresh() {
+        if(remoteAvailableInstallers != null) {
+            remoteAvailableInstallers.deleteObserver(this);
+            playOnLinuxBackgroundServicesManager.unregister(remoteAvailableInstallers);
+        }
+        remoteAvailableInstallers = new RemoteAvailableInstallers(webserviceUrl);
+        remoteAvailableInstallers.addObserver(this);
+        playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
     }
 
     private Iterable<ScriptDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {

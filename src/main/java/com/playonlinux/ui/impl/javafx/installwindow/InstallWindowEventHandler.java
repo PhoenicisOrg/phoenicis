@@ -24,8 +24,10 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.api.UIEventHandler;
+import javafx.scene.control.Alert;
 
-import java.net.MalformedURLException;
+
+import static com.playonlinux.domain.Localisation.translate;
 
 @Scan
 public class InstallWindowEventHandler implements UIEventHandler {
@@ -57,5 +59,17 @@ public class InstallWindowEventHandler implements UIEventHandler {
 
     public void installProgram(String selectedItemLabel) {
         System.out.println(selectedItemLabel);
+    }
+
+    public void updateAvailableInstallers() {
+        try {
+            getRemoteAvailableInstallers().refresh();
+        } catch (PlayOnLinuxError playOnLinuxError) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to update installers."));
+            alert.setContentText(String.format("The error was: %s", playOnLinuxError.toString()));
+            alert.show();
+            playOnLinuxError.printStackTrace();
+        }
     }
 }
