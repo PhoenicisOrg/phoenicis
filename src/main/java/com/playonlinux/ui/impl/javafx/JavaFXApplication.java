@@ -32,7 +32,7 @@ public class JavaFXApplication extends Application {
     public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("common/playonlinux.png")));
         primaryStage.setTitle("PlayOnLinux");
-        loadFonts();
+        //loadFonts();
 
         MainWindow mainWindow = new MainWindow();
 
