@@ -20,6 +20,8 @@ package com.playonlinux.common.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Comparator;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ScriptDTO {
 
@@ -45,5 +47,11 @@ public class ScriptDTO {
         return scriptInformations;
     }
 
+    public static class alphabeticalOrderComparator implements Comparator<ScriptDTO> {
 
+        @Override
+        public int compare(ScriptDTO script1, ScriptDTO script2) {
+            return script1.getName().compareTo(script2.getName());
+        }
+    }
 }

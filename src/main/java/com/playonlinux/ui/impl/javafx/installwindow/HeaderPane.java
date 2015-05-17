@@ -99,8 +99,8 @@ public class HeaderPane extends GridPane implements Observer {
         private final Text categoryNameText;
 
         CategoryButton(String categoryName) {
-            this.setPrefHeight(64);
-            this.setMaxHeight(64);
+            this.setPrefHeight(62);
+            this.setMaxHeight(62);
 
             this.setAlignment(Pos.CENTER);
 

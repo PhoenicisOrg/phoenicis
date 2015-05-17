@@ -23,6 +23,7 @@ import com.playonlinux.common.dtos.ScriptDTO;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
+import org.apache.commons.lang.StringUtils;
 
 import java.net.MalformedURLException;
 import java.util.Observable;
@@ -51,6 +52,7 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
 
     public void setSearchFilter(String searchFilter) {
         this.searchFilter = searchFilter;
+        this.update();
     }
 
     private String categoryName;
@@ -69,7 +71,11 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     public void update() {
         if(remoteAvailableInstallers != null) {
             this.clear();
-            if (categoryName != null) {
+            if(!StringUtils.isBlank(searchFilter)) {
+                for(ScriptDTO scriptDTO : remoteAvailableInstallers.getAllScripts(searchFilter)) {
+                    this.addItem(scriptDTO.getName());
+                }
+            } else if (categoryName != null) {
                 CategoryDTO category = null;
                 for(CategoryDTO categoryDTO: remoteAvailableInstallers) {
                     if (categoryName.equals(categoryDTO.getName())) {

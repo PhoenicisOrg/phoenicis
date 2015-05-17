@@ -22,14 +22,19 @@ import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.MalformedURLException;
 import java.util.Observable;
 import java.util.Observer;
+
+import static com.playonlinux.domain.Localisation.translate;
 
 public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer {
     private final PlayOnLinuxWindow parent;
@@ -38,10 +43,10 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private Scene mainScene;
     private Scene updateScene;
 
-
     private RemoteAvailableInstallers availableInstallers;
     private final HeaderPane header;
     private AvailableInstallerListWidget applicationList;
+    private TextField searchWidget;
 
     public AvailableInstallerListWidget getApplicationList() {
         return applicationList;
@@ -75,54 +80,71 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             throw new PlayOnLinuxError("URL seems to be malformed", e);
         }
 
-
+        this.setUpMainScene();
+        this.setUpUpdateScene();
 
         this.update(availableInstallers);
         this.setUpEvents();
         this.show();
     }
 
-    private void showMainScene() {
-        if(mainScene == null) {
-            Pane mainPane = new Pane();
-            mainScene = new Scene(mainPane, 800, 600);
-            mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
+    private void setUpMainScene() {
+        // TODO: Improve this scene (get rid of absolute positioning, ...)
 
+        Pane mainPane = new Pane();
+        mainScene = new Scene(mainPane, 800, 600);
+        mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
 
-            try {
-                applicationList = new AvailableInstallerListWidget(eventHandler);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                // FIXME
-            }
+        searchWidget = new TextField();
+        searchWidget.setLayoutY(77);
+        searchWidget.setLayoutX(10);
+        searchWidget.setPrefWidth(250);
+        searchWidget.setPromptText(translate("Search"));
 
-            mainPane.getChildren().addAll(header, applicationList);
-
+        try {
+            applicationList = new AvailableInstallerListWidget(eventHandler);
+            applicationList.setLayoutY(112);
+            applicationList.setLayoutX(10);
+            applicationList.setPrefWidth(550);
+            applicationList.setPrefHeight(385);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            // FIXME
         }
 
+
+        mainPane.getChildren().addAll(header, applicationList, searchWidget);
+    }
+
+
+    private void setUpUpdateScene() {
+        Pane updatePane = new Pane();
+        updateScene = new Scene(updatePane, 800, 600);
+        updateScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
+
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.setPrefWidth(64);
+        progressIndicator.setPrefHeight(64);
+        progressIndicator.setLayoutX((this.updateScene.getWidth() - 64) / 2);
+        progressIndicator.setLayoutY((this.updateScene.getHeight() - 64) / 2);
+
+        updatePane.getChildren().add(progressIndicator);
+    }
+
+
+    private void showMainScene() {
         this.setScene(mainScene);
     }
 
     private void showUpdateScene() {
-        if(updateScene == null) {
-            Pane updatePane = new Pane();
-            updateScene = new Scene(updatePane, 800, 600);
-            updateScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
-
-            ProgressIndicator progressIndicator = new ProgressIndicator();
-            progressIndicator.setPrefWidth(64);
-            progressIndicator.setPrefHeight(64);
-            progressIndicator.setLayoutX((this.updateScene.getWidth() - 64) / 2);
-            progressIndicator.setLayoutY((this.updateScene.getHeight() - 64) / 2);
-
-            updatePane.getChildren().add(progressIndicator);
-        }
-
         this.setScene(updateScene);
     }
 
+
+
     private void setUpEvents() throws PlayOnLinuxError {
         availableInstallers.addObserver(this);
+        searchWidget.setOnKeyPressed(event -> applicationList.setSearchFilter(searchWidget.getText()));
     }
 
     public InstallWindowEventHandler getEventHandler() {

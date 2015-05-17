@@ -19,21 +19,16 @@
 package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.common.dtos.AvailableCategoriesDTO;
-import com.playonlinux.common.dtos.CategoryDTO;
-import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
-import com.playonlinux.common.dtos.DownloadStateDTO;
+import com.playonlinux.common.dtos.*;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.webservice.RemoteWebService;
 
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 @Scan
 public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
@@ -98,5 +93,26 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     @Override
     public boolean hasFailed() {
         return downloadEnvelopeDto.getDownloadState().getState() == DownloadStateDTO.State.FAILED;
+    }
+
+    @Override
+    public Iterable<ScriptDTO> getAllScripts() {
+        return getAllScripts(null);
+    }
+
+    @Override
+    public Iterable<ScriptDTO> getAllScripts(String filterText) {
+        ArrayList<ScriptDTO> scripts = new ArrayList<>();
+        for(CategoryDTO categoryDTO: new ArrayList<>(categoriesDTO)) {
+            for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
+                if(filterText == null || scriptDTO.getName().contains(filterText)) {
+                    scripts.add(scriptDTO);
+                }
+            }
+        }
+
+        Collections.sort(scripts, new ScriptDTO.alphabeticalOrderComparator());
+
+        return () -> scripts.iterator();
     }
 }
