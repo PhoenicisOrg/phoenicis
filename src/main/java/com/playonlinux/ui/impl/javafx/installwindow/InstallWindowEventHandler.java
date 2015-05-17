@@ -72,4 +72,8 @@ public class InstallWindowEventHandler implements UIEventHandler {
             playOnLinuxError.printStackTrace();
         }
     }
+
+    public void clearSearch() {
+        installWindow.clearSearch();
+    }
 }

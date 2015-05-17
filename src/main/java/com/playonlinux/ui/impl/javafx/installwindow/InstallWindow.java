@@ -233,5 +233,10 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
         Platform.runLater(() -> update(remoteAvailableInstallers));
     }
+
+    public void clearSearch() {
+        searchWidget.clear();
+        availableInstallerListWidget.setSearchFilter("");
+    }
 }
 

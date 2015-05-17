@@ -89,7 +89,10 @@ public class HeaderPane extends GridPane implements Observer {
                     this.getColumnConstraints().add(columnConstraints);
 
                     CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
-                    categoryIcon.setMouseClicked((evt) -> eventHandler.selectCategory(categoryDTO.getName()));
+                    categoryIcon.setMouseClicked((evt) -> {
+                        eventHandler.selectCategory(categoryDTO.getName());
+                        eventHandler.clearSearch();
+                    });
 
                     this.add(categoryIcon, i, 0);
                     i++;
