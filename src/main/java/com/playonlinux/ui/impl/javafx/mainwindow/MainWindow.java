@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.InstalledApplications;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
+import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.*;
@@ -40,7 +41,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         MenuBar menuBar =  new MenuBar(this);
 
         BorderPane pane = new BorderPane();
-        Scene scene = new Scene(pane, 600, 400);
+        Scene scene = new PlayOnLinuxScene(pane, 600, 400);
 
         VBox topContainer = new VBox();
         toolBar = new ToolBar(this);

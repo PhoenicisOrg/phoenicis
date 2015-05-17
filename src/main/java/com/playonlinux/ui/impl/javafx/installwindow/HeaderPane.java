@@ -120,9 +120,9 @@ public class HeaderPane extends GridPane implements Observer {
 
             categoryNameText = new Text(categoryName);
             categoryNameText.setLayoutY(53);
-            categoryNameText.setFont(new Font(10));
+            categoryNameText.setFont(new Font(11));
             categoryNameText.setTextAlignment(TextAlignment.CENTER);
-
+            categoryNameText.getStyleClass().add("thin");
             RowConstraints rowConstraintIcon = new RowConstraints();
             rowConstraintIcon.setPercentHeight(70);
             rowConstraintIcon.setValignment(VPos.CENTER);

@@ -22,6 +22,7 @@ import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
+import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -97,8 +98,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         // TODO: Improve this scene (get rid of absolute positioning, ...)
 
         Pane mainPane = new Pane();
-        mainScene = new Scene(mainPane, 800, 545);
-        mainScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
+        mainScene = new PlayOnLinuxScene(mainPane, 800, 545);
 
         searchWidget = new TextField();
         searchWidget.setLayoutY(77);
@@ -148,8 +148,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void setUpUpdateScene() {
         Pane updatePane = new Pane();
-        updateScene = new Scene(updatePane, 800, 545);
-        updateScene.getStylesheets().add(this.getClass().getResource("installWindow.css").toExternalForm());
+        updateScene = new PlayOnLinuxScene(updatePane, 800, 545);
 
         ProgressIndicator progressIndicator = new ProgressIndicator();
         progressIndicator.setPrefWidth(64);

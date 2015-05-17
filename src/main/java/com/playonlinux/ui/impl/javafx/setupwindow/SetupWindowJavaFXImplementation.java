@@ -19,6 +19,7 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.api.ProgressStep;
+import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -61,7 +62,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     public SetupWindowJavaFXImplementation(String title) {
         super();
         this.root = new Pane();
-        Scene scene = new Scene(root, 520, 400);
+        Scene scene = new PlayOnLinuxScene(root, 520, 400);
         scene.getStylesheets().add(this.getClass().getResource("setupWindow.css").toExternalForm());
 
         this.wizardTitle = title;
