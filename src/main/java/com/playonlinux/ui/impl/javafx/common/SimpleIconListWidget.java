@@ -40,7 +40,7 @@ public class SimpleIconListWidget extends TreeView {
     }
 
     public void addItem(String itemName) {
-        addItem(itemName, new File(SimpleIconListWidget.class.getResource("playonlinux.png").getPath()));
+        addItem(itemName, new File(SimpleIconListWidget.class.getResource("playonlinux.png").getFile()));
     }
 
 

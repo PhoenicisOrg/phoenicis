@@ -154,7 +154,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
                 try {
                     descriptionWidget.getEngine().loadContent(
                             new HtmlTemplate(
-                                    new File(this.getClass().getResource("descriptionTemplate.html").getPath())
+                                    new File(this.getClass().getResource("descriptionTemplate.html").getFile())
                             ).render(eventHandler.getInstallerDescription(newValue))
                     );
                 } catch (IOException e) {
