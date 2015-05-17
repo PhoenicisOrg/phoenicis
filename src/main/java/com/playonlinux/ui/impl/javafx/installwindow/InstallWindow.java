@@ -21,16 +21,18 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
+import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -45,11 +47,12 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private RemoteAvailableInstallers availableInstallers;
     private final HeaderPane header;
-    private AvailableInstallerListWidget applicationList;
+    private AvailableInstallerListWidget availableInstallerListWidget;
     private TextField searchWidget;
+    private WebView descriptionWidget;
 
-    public AvailableInstallerListWidget getApplicationList() {
-        return applicationList;
+    public AvailableInstallerListWidget getAvailableInstallerListWidget() {
+        return availableInstallerListWidget;
     }
     /**
      * Get the instance of the configure window.
@@ -73,12 +76,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private InstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
         super();
         this.parent = parent;
-        try {
-            this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
-            header = new HeaderPane(this.eventHandler);
-        } catch (MalformedURLException e) {
-            throw new PlayOnLinuxError("URL seems to be malformed", e);
-        }
+        this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
+        header = new HeaderPane(this.eventHandler);
+
 
         this.setUpMainScene();
         this.setUpUpdateScene();
@@ -102,18 +102,23 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         searchWidget.setPromptText(translate("Search"));
 
         try {
-            applicationList = new AvailableInstallerListWidget(eventHandler);
-            applicationList.setLayoutY(112);
-            applicationList.setLayoutX(10);
-            applicationList.setPrefWidth(550);
-            applicationList.setPrefHeight(385);
-        } catch (MalformedURLException e) {
+            availableInstallerListWidget = new AvailableInstallerListWidget(eventHandler);
+            availableInstallerListWidget.setLayoutY(112);
+            availableInstallerListWidget.setLayoutX(10);
+            availableInstallerListWidget.setPrefWidth(550);
+            availableInstallerListWidget.setPrefHeight(385);
+        } catch (PlayOnLinuxError e) {
             e.printStackTrace();
             // FIXME
         }
 
+        descriptionWidget = new WebView();
+        descriptionWidget.setLayoutX(570);
+        descriptionWidget.setLayoutY(112);
+        descriptionWidget.setPrefWidth(218);
+        descriptionWidget.setPrefHeight(200);
 
-        mainPane.getChildren().addAll(header, applicationList, searchWidget);
+        mainPane.getChildren().addAll(header, availableInstallerListWidget, searchWidget, descriptionWidget);
     }
 
 
@@ -144,7 +149,27 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void setUpEvents() throws PlayOnLinuxError {
         availableInstallers.addObserver(this);
-        searchWidget.setOnKeyPressed(event -> applicationList.setSearchFilter(searchWidget.getText()));
+        availableInstallerListWidget.addChangeListener(newValue -> {
+            try {
+                try {
+                    descriptionWidget.getEngine().loadContent(
+                            new HtmlTemplate(
+                                    new File(this.getClass().getResource("descriptionTemplate.html").getPath())
+                            ).render(eventHandler.getInstallerDescription(newValue))
+                    );
+                } catch (IOException e) {
+                    throw new PlayOnLinuxError("Error while loading descriptionTemplate.html", e);
+                }
+
+            } catch (PlayOnLinuxError playOnLinuxError) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(translate("Error while trying to get installer information."));
+                alert.setContentText(String.format("The error was: %s", playOnLinuxError.toString()));
+                alert.show();
+                playOnLinuxError.printStackTrace();
+            }
+        });
+        searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
     }
 
     public InstallWindowEventHandler getEventHandler() {

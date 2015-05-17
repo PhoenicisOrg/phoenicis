@@ -18,16 +18,19 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
-import com.playonlinux.common.dtos.CategoryDTO;
 import com.playonlinux.common.dtos.ScriptDTO;
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.MalformedURLException;
 import java.util.Observable;
 import java.util.Observer;
+
+import static com.playonlinux.domain.Localisation.translate;
 
 public class AvailableInstallerListWidget extends SimpleIconListWidget implements Observer {
     private final InstallWindowEventHandler installWindowEventHandler;
@@ -61,7 +64,7 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     private boolean includeCommercial = true;
     private String searchFilter = "";
 
-    AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws MalformedURLException {
+    AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxError {
         super();
         this.installWindowEventHandler = installWindowEventHandler;
         this.installWindowEventHandler.getRemoteAvailableInstallers().addObserver(this);
@@ -76,8 +79,15 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
                     this.addItem(scriptDTO.getName());
                 }
             } else if (categoryName != null) {
-                for(ScriptDTO scriptDTO: remoteAvailableInstallers.getAllScriptsInCategory(categoryName)) {
-                    this.addItem(scriptDTO.getName());
+                try {
+                    for(ScriptDTO scriptDTO: remoteAvailableInstallers.getAllScriptsInCategory(categoryName)) {
+                        this.addItem(scriptDTO.getName());
+                    }
+                } catch (PlayOnLinuxError playOnLinuxError) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(translate("Error while trying to show installer list."));
+                    alert.setContentText(String.format("The error was: %s", playOnLinuxError));
+                    playOnLinuxError.printStackTrace();
                 }
             }
         }

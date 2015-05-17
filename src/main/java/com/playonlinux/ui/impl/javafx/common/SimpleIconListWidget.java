@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -43,8 +45,19 @@ public class SimpleIconListWidget extends TreeView {
 
 
     public void addItem(String itemName, File iconPath) {
-        TreeItem treeItem = new TreeItem(new SimpleIconListItem(itemName, iconPath));
+        TreeItem<SimpleIconListItem> treeItem = new TreeItem<>(new SimpleIconListItem(itemName, iconPath));
         rootItem.getChildren().add(treeItem);
+    }
+
+    public void addChangeListener(SimpleIconChangeListener simpleIconChangeListener) {
+        getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if(newValue != null) {
+                        simpleIconChangeListener.changed((
+                                        (TreeItem<SimpleIconListItem>) newValue).getValue().getValue()
+                        );
+                    }
+                });
     }
 
     protected void clear() {
@@ -52,7 +65,10 @@ public class SimpleIconListWidget extends TreeView {
     }
 
     private class SimpleIconListItem extends GridPane {
+        private String itemName;
+
         SimpleIconListItem(String itemName, File iconPath) {
+            this.itemName = itemName;
             this.setPrefHeight(0.);
 
             SimpleIconListItemLabel simpleIconListItemLabel = new SimpleIconListItemLabel(itemName);
@@ -65,6 +81,10 @@ public class SimpleIconListWidget extends TreeView {
             this.add(simpleIconListItemLabel, 1, 0);
         }
 
+        public String getValue() {
+            return itemName;
+        }
+
 
         private class SimpleIconListItemLabel extends Pane {
             SimpleIconListItemLabel(String itemName) {
@@ -74,6 +94,10 @@ public class SimpleIconListWidget extends TreeView {
                 this.getChildren().add(simpleIconListItemLabelText);
             }
         }
+    }
+
+    public interface SimpleIconChangeListener {
+        void changed(String newValue);
     }
 }
 

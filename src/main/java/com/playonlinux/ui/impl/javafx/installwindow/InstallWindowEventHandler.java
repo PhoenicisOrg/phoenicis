@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.EventHandler;
@@ -42,11 +43,15 @@ public class InstallWindowEventHandler implements UIEventHandler {
         return mainEventHandler;
     }
 
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError {
         return mainEventHandler.getRemoteAvailableInstallers();
     }
 
     public void selectCategory(String categoryName) {
-        installWindow.getApplicationList().setCategoryName(categoryName);
+        installWindow.getAvailableInstallerListWidget().setCategoryName(categoryName);
+    }
+
+    public String getInstallerDescription(String scriptName) throws PlayOnLinuxError {
+        return getRemoteAvailableInstallers().getScriptByName(scriptName).getDescription();
     }
 }

@@ -20,6 +20,7 @@ package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.dtos.*;
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
@@ -117,13 +118,24 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     @Override
-    public Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) {
+    public Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError {
         for(CategoryDTO categoryDTO: categoriesDTO) {
             if(categoryName.equals(categoryDTO.getName())) {
                 return getAllScriptsInCategory(categoryDTO);
             }
         }
-        return null;
+        throw new PlayOnLinuxError(String.format("The category %s does not exist!", categoryName));
+    }
+
+    @Override
+    public ScriptDTO getScriptByName(String scriptName) throws PlayOnLinuxError {
+        for(ScriptDTO scriptDTO: this.getAllScripts()) {
+            if(scriptName.equals(scriptDTO.getName())) {
+                return scriptDTO;
+            }
+        }
+
+        throw new PlayOnLinuxError(String.format("The script %s does not exist!", scriptName));
     }
 
     private Iterable<ScriptDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {

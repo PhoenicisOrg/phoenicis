@@ -31,7 +31,7 @@ public interface EventHandler {
 
     InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
 
-    RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException;
+    RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError;
 
     void onApplicationStarted() throws MalformedURLException;
 }

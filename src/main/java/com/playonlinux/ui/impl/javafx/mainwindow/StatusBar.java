@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -63,7 +64,7 @@ class StatusBar extends javafx.scene.control.ToolBar implements Observer {
         }
     }
 
-    public void setUpEvents() throws MalformedURLException {
+    public void setUpEvents() throws PlayOnLinuxError {
         this.parent.getMainEventHandler().getRemoteAvailableInstallers().addObserver(this);
     }
 

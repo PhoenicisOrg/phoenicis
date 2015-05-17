@@ -56,7 +56,7 @@ class MainWindowEventHandler implements UIEventHandler {
         return InstallWindow.getInstance(parent);
     }
 
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError {
         return mainEventHandler.getRemoteAvailableInstallers();
     }
 

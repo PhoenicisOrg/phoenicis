@@ -95,10 +95,10 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
         try {
             statusBar.setUpEvents();
-        } catch (MalformedURLException e) {
+        } catch (PlayOnLinuxError e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to update installer list."));
-            alert.setContentText("The error was: MalformedURLException");
+            alert.setContentText(String.format("The error was: %s", e));
             e.printStackTrace();
         }
     }

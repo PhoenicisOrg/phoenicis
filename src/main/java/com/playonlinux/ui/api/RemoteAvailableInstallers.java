@@ -20,6 +20,7 @@ package com.playonlinux.ui.api;
 
 import com.playonlinux.common.dtos.CategoryDTO;
 import com.playonlinux.common.dtos.ScriptDTO;
+import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.util.Iterator;
 import java.util.Observer;
@@ -37,5 +38,7 @@ public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
 
     Iterable<ScriptDTO> getAllScripts(String filter);
 
-    Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName);
+    Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError;
+
+    ScriptDTO getScriptByName(String scriptName) throws PlayOnLinuxError;
 }

@@ -64,9 +64,13 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     }
 
     @Override
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws MalformedURLException {
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError {
         if(remoteAvailableInstallers == null) {
-            remoteAvailableInstallers = new RemoteAvailableInstallersPlayOnLinuxImplementation();
+            try {
+                remoteAvailableInstallers = new RemoteAvailableInstallersPlayOnLinuxImplementation();
+            } catch (MalformedURLException e) {
+                throw new PlayOnLinuxError("URL has an invalid format", e);
+            }
         }
 
         return this.remoteAvailableInstallers;
