@@ -99,6 +99,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to update installer list."));
             alert.setContentText(String.format("The error was: %s", e));
+            alert.show();
             e.printStackTrace();
         }
     }

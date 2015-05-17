@@ -32,14 +32,14 @@ import java.util.concurrent.Semaphore;
 /**
  * This class download scripts from a playonlinux web service and converts it into DTOs
  */
-public class RemoteWebService extends Observable implements BackgroundService {
+public class RemoteAvailableInstallers extends Observable implements BackgroundService {
 
     private final URL url;
     private DownloadStateDTO.State state = DownloadStateDTO.State.WAITING;
     private Semaphore updateSemaphore = new Semaphore(1);
     private AvailableCategoriesDTO categories;
 
-    public RemoteWebService(URL url) {
+    public RemoteAvailableInstallers(URL url) {
         this.url = url;
     }
 

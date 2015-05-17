@@ -24,7 +24,9 @@ import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.ClickableImageView;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -81,6 +83,7 @@ public class HeaderPane extends GridPane implements Observer {
                 if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     ColumnConstraints columnConstraints = new ColumnConstraints();
                     columnConstraints.setPercentWidth(iconSizeInPercent);
+                    columnConstraints.setHalignment(HPos.CENTER);
                     this.getColumnConstraints().add(columnConstraints);
 
                     CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
@@ -104,13 +107,10 @@ public class HeaderPane extends GridPane implements Observer {
             this.setMaxHeight(62);
 
             this.setAlignment(Pos.CENTER);
-
             this.categoryName = categoryName;
             categoryIcon = new ClickableImageView(new Image(this.getIcon().toString()));
-            categoryIcon.setFitHeight(32);
             categoryIcon.setFitWidth(32);
-            categoryIcon.setLayoutY(10);
-            categoryIcon.setLayoutX(16);
+            categoryIcon.setFitHeight(32);
 
             categoryNameText = new Text(categoryName);
             categoryNameText.setLayoutY(53);
@@ -119,10 +119,16 @@ public class HeaderPane extends GridPane implements Observer {
 
             RowConstraints rowConstraintIcon = new RowConstraints();
             rowConstraintIcon.setPercentHeight(70);
+            rowConstraintIcon.setValignment(VPos.CENTER);
+
             RowConstraints rowConstraintText = new RowConstraints();
             rowConstraintText.setPercentHeight(20);
+            rowConstraintText.setValignment(VPos.CENTER);
+
+
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPercentWidth(100);
+            columnConstraints.setHalignment(HPos.CENTER);
 
             this.getRowConstraints().addAll(rowConstraintIcon, rowConstraintText);
             this.getColumnConstraints().add(columnConstraints);

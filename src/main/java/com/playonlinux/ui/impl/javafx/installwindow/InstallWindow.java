@@ -22,20 +22,18 @@ import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
-import com.sun.javafx.scene.control.skin.ListViewSkin;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
@@ -54,6 +52,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private AvailableInstallerListWidget availableInstallerListWidget;
     private TextField searchWidget;
     private WebView descriptionWidget;
+    private Button installButton;
 
     public AvailableInstallerListWidget getAvailableInstallerListWidget() {
         return availableInstallerListWidget;
@@ -111,12 +110,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             availableInstallerListWidget.setLayoutX(10);
             availableInstallerListWidget.setPrefWidth(550);
             availableInstallerListWidget.setPrefHeight(385);
-            availableInstallerListWidget.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if(event.getClickCount() == 2) {
-                        System.out.println(availableInstallerListWidget.getSelectedItemLabel());
-                    }
+            availableInstallerListWidget.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 2) {
+                    System.out.println(availableInstallerListWidget.getSelectedItemLabel());
                 }
             });
 
@@ -134,7 +130,15 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         descriptionWidget.setPrefWidth(218);
         descriptionWidget.setPrefHeight(200);
 
-        mainPane.getChildren().addAll(header, availableInstallerListWidget, searchWidget, descriptionWidget);
+        ImageView installImage = new ImageView(new Image(getClass().getResourceAsStream("install.png")));
+        installImage.setFitWidth(16);
+        installImage.setFitHeight(16);
+        installButton = new Button(translate("Install"), installImage);
+        installButton.setLayoutY(507);
+
+        mainPane.getChildren().addAll(header, availableInstallerListWidget, searchWidget,
+                descriptionWidget, installButton);
+
     }
 
 
@@ -155,6 +159,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void showMainScene() {
         this.setScene(mainScene);
+        /* JavaFX only waits for a node to be displayed before calculating width */
+        Platform.runLater(() -> installButton.setLayoutX(790 - installButton.getWidth()));
     }
 
     private void showUpdateScene() {

@@ -41,12 +41,12 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 
-public class RemoteWebServiceTest {
+public class RemoteAvailableInstallersTest {
 
     private static URL mockServerURL;
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
-    private RemoteWebService remoteWebService;
+    private RemoteAvailableInstallers remoteAvailableInstallers;
     private MockObserver observer;
 
     @BeforeClass
@@ -105,14 +105,14 @@ public class RemoteWebServiceTest {
         );
 
 
-        remoteWebService = new RemoteWebService(mockServerURL);
+        remoteAvailableInstallers = new RemoteAvailableInstallers(mockServerURL);
         observer = new MockObserver();
-        remoteWebService.addObserver(observer);
+        remoteAvailableInstallers.addObserver(observer);
     }
 
     @Test
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
-        remoteWebService.downloadContent();
+        remoteAvailableInstallers.downloadContent();
 
         assertEquals("Accessories", observer.getDTO().getCategories().get(0).getName());
         assertEquals(2, observer.getDTO().getCategories().get(0).getId());
@@ -121,7 +121,7 @@ public class RemoteWebServiceTest {
 
     @Test
     public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
-        remoteWebService.downloadContent();
+        remoteAvailableInstallers.downloadContent();
 
         ArrayList<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
 

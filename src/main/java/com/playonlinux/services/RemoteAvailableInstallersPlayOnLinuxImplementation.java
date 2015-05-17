@@ -23,17 +23,15 @@ import com.playonlinux.common.dtos.*;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.ui.api.RemoteAvailableInstallers;
-import com.playonlinux.webservice.RemoteWebService;
+import com.playonlinux.webservice.RemoteAvailableInstallers;
 
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
 @Scan
 public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
-        implements RemoteAvailableInstallers, Observer {
+        implements com.playonlinux.ui.api.RemoteAvailableInstallers, Observer {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
@@ -46,9 +44,9 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
         URL webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
-        RemoteWebService remoteWebService = new RemoteWebService(webserviceUrl);
-        remoteWebService.addObserver(this);
-        playOnLinuxBackgroundServicesManager.register(remoteWebService);
+        RemoteAvailableInstallers remoteAvailableInstallers = new RemoteAvailableInstallers(webserviceUrl);
+        remoteAvailableInstallers.addObserver(this);
+        playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
     }
 
     @Override
