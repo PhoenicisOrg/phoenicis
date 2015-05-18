@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 
 public class ObservableDirectory extends Observable implements BackgroundService {
@@ -49,6 +50,7 @@ public class ObservableDirectory extends Observable implements BackgroundService
         this.checkInterval = checkInterval;
     }
 
+    @Override
     public void start() {
         observableDirectoryThread.start();
     }
@@ -73,7 +75,7 @@ public class ObservableDirectory extends Observable implements BackgroundService
     /* TODO: Test this method with better coverage */
     protected File[] findFiles() {
         File[] files = observedDirectory.listFiles();
-        LinkedList<File> filesFiltered = new LinkedList<>();
+        List<File> filesFiltered = new LinkedList<>();
         for(File file: files) {
             if (!file.getName().startsWith(".")) {
                 filesFiltered.add(file);
@@ -109,6 +111,7 @@ public class ObservableDirectory extends Observable implements BackgroundService
             this.running = false;
         }
 
+        @Override
         public void run() {
             File[] lastDirectoryContent = null;
             while(this.isRunning()) {

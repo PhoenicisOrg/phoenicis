@@ -68,6 +68,7 @@ public class RemoteAvailableInstallers extends Observable implements BackgroundS
         }
     }
 
+
     private synchronized void update() {
         DownloadEnvelopeDTO<AvailableCategoriesDTO> envelopeDTO = new DownloadEnvelopeDTO<>();
         DownloadStateDTO downloadStateDTO = new DownloadStateDTO();
@@ -88,6 +89,7 @@ public class RemoteAvailableInstallers extends Observable implements BackgroundS
     @Override
     synchronized public void start() {
         new Thread() {
+            @Override
             public void run() {
                 downloadContent();
             }

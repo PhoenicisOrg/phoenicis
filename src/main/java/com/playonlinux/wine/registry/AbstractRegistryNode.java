@@ -22,6 +22,7 @@ public abstract class AbstractRegistryNode {
     RegistryKey parent;
     String name;
 
+    @Override
     public abstract String toString();
 
     AbstractRegistryNode(String name) {

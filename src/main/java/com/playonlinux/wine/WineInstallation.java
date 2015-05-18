@@ -60,8 +60,9 @@ public class WineInstallation {
         environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
     }
 
-    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment, ArrayList<String> arguments) throws IOException {
-        ArrayList<String> command = new ArrayList<>();
+    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment,
+                       List<String> arguments) throws IOException {
+        List<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
         if(arguments != null) {

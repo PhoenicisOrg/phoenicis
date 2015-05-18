@@ -38,7 +38,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     @Inject
     private static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
 
-    private ArrayList<CategoryDTO> categoriesDTO;
+    private List<CategoryDTO> categoriesDTO;
     private int numberOfCategories;
     private DownloadEnvelopeDTO<AvailableCategoriesDTO> downloadEnvelopeDto;
     private RemoteAvailableInstallers remoteAvailableInstallers;
@@ -65,7 +65,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
         try {
             if(downloadEnvelopeDto.getEnvelopeContent() != null) {
-                ArrayList<CategoryDTO> availableCategories = new ArrayList<>(
+                List<CategoryDTO> availableCategories = new ArrayList<>(
                         downloadEnvelopeDto.getEnvelopeContent().getCategories()
                 );
 
@@ -101,7 +101,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public Iterable<ScriptDTO> getAllScripts(String filterText) {
-        ArrayList<ScriptDTO> scripts = new ArrayList<>();
+        List<ScriptDTO> scripts = new ArrayList<>();
         for(CategoryDTO categoryDTO: new ArrayList<>(categoriesDTO)) {
             for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
                 if(filterText == null || scriptDTO.getName().contains(filterText)) {
@@ -148,7 +148,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     private Iterable<ScriptDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {
-        ArrayList<ScriptDTO> scripts = new ArrayList<>();
+        List<ScriptDTO> scripts = new ArrayList<>();
         for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
             scripts.add(scriptDTO);
         }

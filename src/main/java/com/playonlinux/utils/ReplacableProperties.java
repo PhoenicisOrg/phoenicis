@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ReplacableProperties extends Properties {
+    @Override
     public String getProperty(String key) {
         String rawProperty = super.getProperty(key);
         rawProperty = replaceGlobalVariables(rawProperty);
