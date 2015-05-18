@@ -46,11 +46,11 @@ public class RemoteInstaller extends Observable implements BackgroundService {
 
     @Override
     public void shutdown() {
-
+        // TODO
     }
 
     @Override
     public void start() {
-
+        // TODO
     }
 }

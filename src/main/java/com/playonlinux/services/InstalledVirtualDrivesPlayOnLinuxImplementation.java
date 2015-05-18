@@ -20,6 +20,7 @@ package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -28,9 +29,7 @@ import com.playonlinux.common.dtos.VirtualDriveDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 @Scan
 public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable implements InstalledVirtualDrives, Observer {
@@ -63,6 +62,9 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
 
             @Override
             public VirtualDriveDTO next() {
+                if(i >= directoryContentCasted.length) {
+                    throw new NoSuchElementException();
+                }
                 VirtualDrive virtualDrive =
                         new VirtualDrive(directoryContentCasted[i]);
                 i++;

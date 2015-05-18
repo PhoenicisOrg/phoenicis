@@ -33,10 +33,14 @@ import static org.junit.Assert.assertEquals;
 public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
-    public void setTopImage(File topImage) throws MalformedURLException { }
+    public void setTopImage(File topImage) throws MalformedURLException {
+        // Nothing to do here, because the mockup has no images
+    }
 
     @Override
-    public void setLeftImage(File leftImage) throws MalformedURLException { }
+    public void setLeftImage(File leftImage) throws MalformedURLException {
+        // Nothing to do here, because the mockup has no images
+    }
 
     @Override
     public void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow) {
@@ -46,7 +50,7 @@ public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
     public void showYesNoQuestionStep() {
-
+        // TODO
     }
 
     @Override
@@ -77,11 +81,11 @@ public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
     public void showPresentationStep(CancelerSynchroneousMessage message, String textToShow) {
-
+        // TODO
     }
 
     @Override
     public void close() {
-
+        // Nothing to do to close the mockup, contrary to the real setup wizard
     }
 }

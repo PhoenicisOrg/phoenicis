@@ -29,10 +29,7 @@ import com.playonlinux.common.dtos.ShortcutDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 @Scan
 public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
@@ -71,12 +68,16 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
             @Override
             public boolean hasNext() {
-                return ((ArrayList<Shortcut>) arg).size() > i;
+                return ((List<Shortcut>) arg).size() > i;
             }
 
             @Override
             public ShortcutDTO next() {
-                Shortcut shortcut = ((ArrayList<Shortcut>) arg).get(i);
+                List<Shortcut> shortcutList = ((List<Shortcut>) arg);
+                if(i >= shortcutList.size()) {
+                    throw new NoSuchElementException();
+                }
+                Shortcut shortcut = shortcutList.get(i);
                 i++;
                 return new ShortcutDTO.Builder()
                         .withName(shortcut.getShortcutName())
@@ -90,7 +91,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     }
 
     @Override
-    synchronized public Iterator<ShortcutDTO> iterator() {
+    public synchronized Iterator<ShortcutDTO> iterator() {
         return this.shortcutDtoIterator;
     }
 

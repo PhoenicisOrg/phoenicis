@@ -37,7 +37,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -89,7 +88,7 @@ public class HeaderPane extends GridPane implements Observer {
                     this.getColumnConstraints().add(columnConstraints);
 
                     CategoryButton categoryIcon = new CategoryButton(categoryDTO.getName());
-                    categoryIcon.setMouseClicked((evt) -> {
+                    categoryIcon.setMouseClicked(evt -> {
                         eventHandler.selectCategory(categoryDTO.getName());
                         eventHandler.clearSearch();
                     });

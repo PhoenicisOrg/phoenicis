@@ -27,7 +27,7 @@ import com.playonlinux.injection.Scan;
 public class ControllerCLIImplementation implements Controller {
 
     public void startApplication() {
-
+        // TODO: Implement this
     }
 
     public SetupWindow createSetupWindowGUIInstance(String title) {

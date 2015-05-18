@@ -62,6 +62,7 @@ public class RemoteAvailableInstallers extends Observable implements BackgroundS
                 this.update();
             }
         } catch (InterruptedException ignored) {
+            // If the semaphore is interrupted, we just ignore the download request.
         } finally {
             updateSemaphore.release();
         }

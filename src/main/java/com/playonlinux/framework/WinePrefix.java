@@ -39,7 +39,7 @@ public class WinePrefix {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
-    private final long NEW_PREFIX_SIZE = 320000000;
+    private final static long NEWPREFIXSIZE = 320000000;
 
     private final SetupWizard setupWizard;
     private com.playonlinux.wine.WinePrefix prefix;
@@ -78,11 +78,8 @@ public class WinePrefix {
                 this.setupWizard.progressBar(String.format(translate("Please wait while the prefix %s is created"), prefixName));
 
         while(process.isAlive()) {
-            try {
-                double percentage = this.prefix.getSize() * 100. / (double) NEW_PREFIX_SIZE;
-                progressStep.setProgressPercentage(percentage);
-            } catch (IllegalArgumentException ignored) {
-            }
+            double percentage = this.prefix.getSize() * 100. / (double) NEWPREFIXSIZE;
+            progressStep.setProgressPercentage(percentage);
 
             try {
                 Thread.sleep(10);
