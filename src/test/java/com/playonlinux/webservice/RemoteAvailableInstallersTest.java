@@ -31,12 +31,11 @@ import com.playonlinux.common.dtos.ScriptDTO;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
@@ -123,7 +122,7 @@ public class RemoteAvailableInstallersTest {
     public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
         remoteAvailableInstallers.downloadContent();
 
-        ArrayList<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
+        List<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
 
         assertEquals("", scripts.get(0).getDescription());
         assertEquals(373, scripts.get(0).getId());

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";
@@ -30,7 +31,7 @@ public class WineInstallation {
 
     private final File binaryPath;
     private final File libraryPath;
-    private final HashMap<String, String> applicationEnvironment;
+    private final Map<String, String> applicationEnvironment;
 
     private WineInstallation(WineInstallation.Builder builder) {
         this.binaryPath = new File(builder.path, "bin");
@@ -54,12 +55,12 @@ public class WineInstallation {
     }
 
     // FIXME: Maybe it would be great to create a class to handle environment issues
-    private void addPathInfoToEnvironment(HashMap<String, String> environment) {
+    private void addPathInfoToEnvironment(Map<String, String> environment) {
         environment.put("PATH", this.binaryPath.getAbsolutePath());
         environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
     }
 
-    public Process run(File workingDirectory, String executableToRun, HashMap<String, String> environment, ArrayList<String> arguments) throws IOException {
+    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment, ArrayList<String> arguments) throws IOException {
         ArrayList<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
@@ -67,7 +68,7 @@ public class WineInstallation {
             command.addAll(arguments);
         }
 
-        HashMap<String, String> wineEnvironment = new HashMap<>();
+        Map<String, String> wineEnvironment = new HashMap<>();
         if(environment != null) {
             wineEnvironment.putAll(environment);
         }
@@ -82,12 +83,12 @@ public class WineInstallation {
                 .build();
     }
 
-    public Process run(File workingDirectory, String executableToRun, HashMap<String, String> environment) throws IOException {
+    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment) throws IOException {
         return this.run(workingDirectory, executableToRun, environment, null);
     }
 
     public Process createPrefix(WinePrefix winePrefix) throws IOException {
-        HashMap<String, String> winePrefixEnvironment = new HashMap<>();
+        Map<String, String> winePrefixEnvironment = new HashMap<>();
         winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
 
         return this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
@@ -95,7 +96,7 @@ public class WineInstallation {
 
     public void killAllProcess(WinePrefix winePrefix) throws IOException {
 
-        HashMap<String, String> environment = new HashMap<>();
+        Map<String, String> environment = new HashMap<>();
         this.addPathInfoToEnvironment(environment);
         environment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
 
@@ -111,14 +112,14 @@ public class WineInstallation {
 
     public static class Builder {
         private File path;
-        private HashMap<String, String> applicationEnvironment;
+        private Map<String, String> applicationEnvironment;
 
         public WineInstallation.Builder withPath(File path) {
             this.path = path;
             return this;
         }
 
-        public WineInstallation.Builder withApplicationEnvironment(HashMap<String, String> applicationEnvironment) {
+        public WineInstallation.Builder withApplicationEnvironment(Map<String, String> applicationEnvironment) {
             this.applicationEnvironment = applicationEnvironment;
             return this;
         }

@@ -20,14 +20,13 @@ package com.playonlinux.wine;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 // FIXME: Should not be any injection at this stage
 
 public class WineProcessBuilder {
-    private HashMap<String, String> applicationEnvironment;
+    private Map<String, String> applicationEnvironment;
     private List<String> command;
     private File workingDirectory;
     private Map<String, String> environment;
@@ -37,7 +36,7 @@ public class WineProcessBuilder {
         return this;
     }
 
-    public WineProcessBuilder withApplicationEnvironment(HashMap<String, String> applicationEnvironment) {
+    public WineProcessBuilder withApplicationEnvironment(Map<String, String> applicationEnvironment) {
         this.applicationEnvironment = applicationEnvironment;
         return this;
     }
