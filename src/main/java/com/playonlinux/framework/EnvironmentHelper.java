@@ -24,7 +24,11 @@ import com.playonlinux.domain.PlayOnLinuxError;
 
 @ScriptClass
 @SuppressWarnings("unused")
-public class EnvironementHelper {
+public final class EnvironmentHelper {
+    private EnvironmentHelper() {
+        // This is a static class, it should never be instantiated
+    }
+
     public static OperatingSystem getOperatinSystem() throws PlayOnLinuxError {
         return OperatingSystem.fetchCurrentOperationSystem();
     }
