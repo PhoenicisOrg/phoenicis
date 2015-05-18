@@ -18,7 +18,7 @@
 
 package com.playonlinux.injection;
 
-public class InjectionException extends Throwable {
+public class InjectionException extends Exception {
     private final String error;
 
     public InjectionException(String error) {

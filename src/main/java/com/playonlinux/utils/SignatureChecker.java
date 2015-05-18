@@ -23,11 +23,9 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.*;
 
 
-import javax.crypto.Cipher;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.security.SignatureException;
@@ -67,7 +65,7 @@ public class SignatureChecker {
         PGPSignature pgpSignature = null;
         if (nextObject instanceof PGPSignatureList) {
             PGPSignatureList list = (PGPSignatureList) nextObject;
-            if (list.size() > 0) {
+            if (!list.isEmpty()) {
                 pgpSignature = list.get(0);
             }
         }
@@ -88,9 +86,9 @@ public class SignatureChecker {
     }
 
 
-    private PGPPublicKey readPublicKey(InputStream in) throws IOException, PGPException {
-        in = getDecoderStream(in);
-        PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(in);
+    private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) throws IOException, PGPException {
+        InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream);
+        PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
 
         PGPPublicKey key = null;
 

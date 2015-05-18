@@ -18,6 +18,6 @@
 
 package com.playonlinux.domain;
 
-public class CancelException extends Throwable {
+public class CancelException extends Exception {
     
 }
