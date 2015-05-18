@@ -100,7 +100,7 @@ public class Injector {
                     try {
                         field.setAccessible(true);
                         field.set(null, beans.get(field.getType()));
-                    } catch (Throwable e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
                                 field.getType().toString(), e));

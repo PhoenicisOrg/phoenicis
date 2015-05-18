@@ -120,12 +120,11 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
 
-    <build>
 
+    <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -195,6 +194,15 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>2.5</version>
+
+            </plugin>
         </plugins>
+
     </build>
+
+
 </project>
