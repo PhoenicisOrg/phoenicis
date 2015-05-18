@@ -204,7 +204,10 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
 
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+            </plugin>
         </plugins>
 
     </build>
