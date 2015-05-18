@@ -34,12 +34,12 @@ public class ScriptRecent extends Script {
 
     @Override
     protected void executeScript(PythonInterpreter pythonInterpreter) {
-        pythonInterpreter.execfile(this.getScript().getAbsolutePath());
+        pythonInterpreter.execfile(this.getScriptFile().getAbsolutePath());
     }
 
     @Override
     public String extractSignature() throws ParseException, IOException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(this.getScript()));
+        BufferedReader bufferReader = new BufferedReader(new FileReader(this.getScriptFile()));
         StringBuilder signatureBuilder = new StringBuilder();
 
         String readLine;

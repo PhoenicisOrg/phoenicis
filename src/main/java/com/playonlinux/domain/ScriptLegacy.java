@@ -41,13 +41,13 @@ public class ScriptLegacy extends Script {
         File v4wrapper = new File("src/main/python/v4wrapper.py");
         String filePath = v4wrapper.getAbsolutePath();
         pythonInterpreter.set("__file__", filePath);
-        pythonInterpreter.set("__scriptToWrap__", this.getScript().getAbsolutePath());
+        pythonInterpreter.set("__scriptToWrap__", this.getScriptFile().getAbsolutePath());
         pythonInterpreter.execfile(filePath);
     }
 
     @Override
     public String extractSignature() throws ParseException, IOException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(this.getScript()));
+        BufferedReader bufferReader = new BufferedReader(new FileReader(this.getScriptFile()));
         StringBuilder signatureBuilder = new StringBuilder();
 
         String readLine;

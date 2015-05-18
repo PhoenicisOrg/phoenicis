@@ -24,10 +24,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Injector {
     private String packageName;
@@ -69,10 +66,10 @@ public class Injector {
         return methods;
     }
 
-    public HashMap<Class<?>, Object> loadAllBeans(AbstractConfigFile configFile) throws InjectionException {
+    public Map<Class<?>, Object> loadAllBeans(AbstractConfigFile configFile) throws InjectionException {
         List<Method> methods = this.getAnnotatedMethods(configFile.getClass(), Bean.class);
 
-        HashMap<Class<?>, Object> beans = new HashMap<>();
+        Map<Class<?>, Object> beans = new HashMap<>();
 
         for(Method method: methods) {
             method.setAccessible(true);
@@ -87,7 +84,7 @@ public class Injector {
         return beans;
     }
 
-    public void injectAllBeans(Boolean strictLoadingPolicy, HashMap<Class<?>, Object> beans) throws InjectionException {
+    public void injectAllBeans(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans) throws InjectionException {
         Set<Class<?>> componentClasses = this.getComponentClasses();
 
         for(Class<?> componentClass: componentClasses) {

@@ -18,7 +18,7 @@
 
 package com.playonlinux.injection;
 
-import java.util.HashMap;
+import java.util.Map;
 
 
 public abstract class AbstractConfigFile {
@@ -35,7 +35,7 @@ public abstract class AbstractConfigFile {
     }
     public void load() throws InjectionException {
         Injector injector = new Injector(definePackage());
-        HashMap<Class<?>, Object> beans = injector.loadAllBeans(this);
+        Map<Class<?>, Object> beans = injector.loadAllBeans(this);
         injector.injectAllBeans(strictLoadingPolicy, beans);
     }
 

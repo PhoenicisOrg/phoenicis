@@ -19,6 +19,8 @@
 package com.playonlinux.common.dtos;
 
 public class DownloadStateDTO {
+    private State state;
+
     public State getState() {
         return state;
     }
@@ -34,8 +36,7 @@ public class DownloadStateDTO {
         FAILED
     }
 
-    private State state;
-
+    @Override
     public String toString() {
         return this.state.name();
     }

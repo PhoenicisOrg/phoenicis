@@ -122,7 +122,7 @@ public class Downloader {
             throw new PlayOnLinuxError("You must download the file first before running check()!");
         }
         if(!expectedChecksum.equals(calculatedChecksum)) {
-            throw new PlayOnLinuxError(String.format("Checksum comparison has failed!\n\nServer: %s\nClient: %s",
+            throw new PlayOnLinuxError(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
                     expectedChecksum, calculatedChecksum));
         }
 

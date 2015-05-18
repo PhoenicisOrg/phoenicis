@@ -86,9 +86,11 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
             switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
                 case MACOSX:
                     this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
+                    break;
                 default:
                 case LINUX:
                     this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
+                    break;
             }
         } catch (PlayOnLinuxError playOnLinuxError) {
             this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");

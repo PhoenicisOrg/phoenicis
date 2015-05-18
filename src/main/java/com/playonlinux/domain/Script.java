@@ -27,10 +27,10 @@ import java.text.ParseException;
 
 public abstract class Script implements BackgroundService {
     private Thread scriptThread;
-    private File script;
+    private File scriptFile;
 
-    protected Script(File script) {
-        this.script = script;
+    protected Script(File scriptFile) {
+        this.scriptFile = scriptFile;
     }
 
 
@@ -39,8 +39,8 @@ public abstract class Script implements BackgroundService {
         scriptThread.interrupt();
     }
 
-    public File getScript() {
-        return script;
+    public File getScriptFile() {
+        return scriptFile;
     }
 
     public enum Type {
@@ -72,6 +72,7 @@ public abstract class Script implements BackgroundService {
     @Override
     public void start() {
         scriptThread = new Thread() {
+            @Override
             public void run() {
                 try {
                     File pythonPath = new File("src/main/python");

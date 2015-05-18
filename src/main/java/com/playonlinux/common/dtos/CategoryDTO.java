@@ -18,7 +18,8 @@
 
 package com.playonlinux.common.dtos;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -40,13 +41,13 @@ public class CategoryDTO {
         return name;
     }
 
-    public ArrayList<ScriptDTO> getScripts() {
+    public List<ScriptDTO> getScripts() {
         return scripts;
     }
 
     int id;
     CategoryType type;
     String name;
-    ArrayList <ScriptDTO> scripts;
+    List <ScriptDTO> scripts;
 
 }

@@ -19,7 +19,12 @@
 package com.playonlinux.domain;
 
 // TODO
-public class Localisation {
+public final class Localisation {
+
+    // This is a static class
+    private Localisation() {
+
+    }
 
     public static String translate(String s) {
         return s;

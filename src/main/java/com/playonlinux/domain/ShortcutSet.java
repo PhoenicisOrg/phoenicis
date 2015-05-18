@@ -64,7 +64,8 @@ public class ShortcutSet extends Observable implements Observer {
 
                     Shortcut shortcut;
                     if (configFile.exists()) {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile), configFile);
+                        shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile),
+                                configFile);
                     } else {
                         shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile));
                     }

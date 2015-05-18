@@ -18,14 +18,14 @@
 
 package com.playonlinux.common.dtos;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class AvailableCategoriesDTO {
-    public ArrayList<CategoryDTO> getCategories() {
+    public List<CategoryDTO> getCategories() {
         return categories;
     }
 
-    ArrayList<CategoryDTO> categories;
+    List<CategoryDTO> categories;
 
 
 }

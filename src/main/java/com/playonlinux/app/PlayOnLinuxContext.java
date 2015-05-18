@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class PlayOnLinuxContext {
@@ -38,7 +39,7 @@ public class PlayOnLinuxContext {
     }
 
     public ReplacableProperties loadProperties() throws PlayOnLinuxError, IOException {
-        ReplacableProperties properties = new ReplacableProperties();
+        ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
         String filename;
         switch (OperatingSystem.fetchCurrentOperationSystem()) {
@@ -49,8 +50,8 @@ public class PlayOnLinuxContext {
             default:
                 filename = "playonlinux.properties";
         }
-        properties.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
-        return properties;
+        propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
+        return propertiesBeingLoaded;
     }
 
     public File makePrefixPathFromName(String prefixName) {
@@ -78,8 +79,8 @@ public class PlayOnLinuxContext {
         return new File(versionPath);
     }
 
-    public HashMap<String,String> getSystemEnvironment() throws PlayOnLinuxError {
-        HashMap<String, String> systemEnvironment = new HashMap<>();
+    public Map<String,String> getSystemEnvironment() throws PlayOnLinuxError {
+        Map<String, String> systemEnvironment = new HashMap<>();
         switch(OperatingSystem.fetchCurrentOperationSystem()){
             case MACOSX:
                 systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
@@ -87,9 +88,9 @@ public class PlayOnLinuxContext {
                         this.properties.getProperty("application.environment.ld") + ":" + "/usr/X11/lib");
                 systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.dyld"));
                 break;
+            default:
             case LINUX:
                 break;
-
         }
 
         return systemEnvironment;
