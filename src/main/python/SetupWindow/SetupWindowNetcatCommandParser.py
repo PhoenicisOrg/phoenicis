@@ -20,6 +20,7 @@
 import os
 
 from com.playonlinux.framework import EnvironmentHelper
+from com.playonlinux.framework import Downloader
 
 class SetupWindowNetcatCommandParser(object):
     def __init__(self, setupWindowManager, command):
@@ -83,3 +84,8 @@ class SetupWindowNetcatCommandParser(object):
 
             self.setupWindowManager.getWindow(setupWindowId).close()
 
+        if(self.getCommand() == "POL_Download"):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+
+            Downloader(setupWindow).get(self.command[3]).check(self.command[4])
