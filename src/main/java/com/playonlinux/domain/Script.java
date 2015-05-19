@@ -75,10 +75,7 @@ public abstract class Script implements BackgroundService {
             @Override
             public void run() {
                 try {
-                    File pythonPath = new File("src/main/python");
-                    System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
-                    PythonInterpreter pythonInterpreter = new PythonInterpreter();
-                    executeScript(pythonInterpreter);
+                    runScript();
                 } catch (PyException e) {
                     if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedException) {
                         System.out.println("The script was canceled! "); // Fixme: better logging system
@@ -94,6 +91,13 @@ public abstract class Script implements BackgroundService {
         };
         scriptThread.start();
 
+    }
+
+    public void runScript() {
+        File pythonPath = new File("src/main/python");
+        System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
+        PythonInterpreter pythonInterpreter = new PythonInterpreter();
+        executeScript(pythonInterpreter);
     }
 
     protected abstract void executeScript(PythonInterpreter pythonInterpreter);
