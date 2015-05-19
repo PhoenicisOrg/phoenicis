@@ -19,7 +19,7 @@
 
 import os
 
-from com.playonlinux.framework import EnvironementHelper
+from com.playonlinux.framework import EnvironmentHelper
 
 class SetupWindowNetcatCommandParser(object):
     def __init__(self, setupWindowManager, command):
@@ -38,7 +38,7 @@ class SetupWindowNetcatCommandParser(object):
             if("TITLE" in os.environ.keys()):
                 windowTitle = os.environ["TITLE"]
             else:
-                windowTitle = "%s Wizard" % EnvironementHelper.getApplicationName()
+                windowTitle = "%s Wizard" % EnvironmentHelper.getApplicationName()
 
             self.setupWindowManager.newWindow(setupWindowId, windowTitle)
 

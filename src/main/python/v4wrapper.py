@@ -23,7 +23,7 @@ import os
 import subprocess
 
 from SetupWindow.SetupWindowNetcatServer import SetupWindowNetcatServer
-from com.playonlinux.framework import EnvironementHelper
+from com.playonlinux.framework import EnvironmentHelper
 
 if __name__ == '__main__':
     setupWindowNetcatServer = SetupWindowNetcatServer()
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     os.environ["PLAYONLINUX"] = os.path.join(os.path.dirname(__file__), "..", "bash")
     os.environ["POL_PORT"] = str(setupWindowNetcatServer.getPort())
     os.environ["POL_COOKIE"] = setupWindowNetcatServer.getCookie()
-    os.environ["POL_OS"] = EnvironementHelper.getOperatinSystem().fetchShortName()
+    os.environ["POL_OS"] = EnvironmentHelper.getOperatinSystem().fetchShortName()
 
     process = subprocess.call(["bash", __scriptToWrap__])
 
