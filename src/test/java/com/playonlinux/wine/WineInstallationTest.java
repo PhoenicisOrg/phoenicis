@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
@@ -54,7 +55,7 @@ public class WineInstallationTest {
 
     @Test
     public void testRun_RunWineVersionWithArgument_ProcessReturnsHelpMessage() throws IOException {
-        ArrayList <String> arguments = new ArrayList<>();
+        List<String> arguments = new ArrayList<>();
         arguments.add("/tmp/unexisting");
 
         Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "--help", null, arguments);
@@ -69,7 +70,7 @@ public class WineInstallationTest {
 
     @Test
     public void testRun_RunWineVersionWithArgument_ProcessDoesNotReturnHepMessage() throws IOException {
-        ArrayList <String> arguments = new ArrayList<>();
+        List <String> arguments = new ArrayList<>();
         arguments.add("--help");
 
         Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "/tmp/unexisting", null, arguments);
