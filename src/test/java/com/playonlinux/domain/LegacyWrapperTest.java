@@ -36,10 +36,7 @@ public class LegacyWrapperTest {
         }
         File testScript = new File(this.getClass().getResource("wrapperTestScript.sh").getPath());
         Script testScriptWrapper = Script.createInstance(testScript);
-        //Fixme: This is rather ugly here. Create a static Helper for PythonInterpreters?
-        File pythonPath = new File("src/main/python");
-        System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
-        testScriptWrapper.executeScript(new PythonInterpreter());
+        testScriptWrapper.runScript();
         //file should exist now
         assertTrue(tmpFile.exists());
     }
