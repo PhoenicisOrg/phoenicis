@@ -18,6 +18,9 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.framework.domain.ScriptTemplate;
+import com.playonlinux.python.AbstractPythonModule;
+import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
@@ -35,7 +38,13 @@ public class ScriptRecent extends Script {
     @Override
     protected void executeScript(PythonInterpreter pythonInterpreter) {
         pythonInterpreter.execfile(this.getScriptFile().getAbsolutePath());
+        PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
+        if(pythonInstaller.hasMain()) {
+            pythonInstaller.runMain();
+        }
     }
+
+
 
     @Override
     public String extractSignature() throws ParseException, IOException {
