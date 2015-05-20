@@ -6,7 +6,7 @@ TITLE="Legacy script"
 
 echo "Test"
 POL_SetupWindow_Init
-POL_Download "http://files.metaquotes.net/metaquotes.software.corp/mt4/mt4setup.exe" "e42ebc9ebc2d8975de5a0c94386d1a6a"
+POL_Download "https://www.playonlinux.com/images/logos/logo96.png" "a857e55353968fa77efa4ddae7d8853f"
 POL_SetupWindow_message "Test"
 POL_SetupWindow_message "Test 2"
 POL_SetupWindow_message "Test 3"
