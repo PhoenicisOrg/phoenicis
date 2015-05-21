@@ -24,14 +24,15 @@ import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
@@ -48,6 +49,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler(this);
     private Scene mainScene;
     private Scene updateScene;
+    private Scene failureScene;
 
     private RemoteAvailableInstallers availableInstallers;
     private final HeaderPane header;
@@ -56,6 +58,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private WebView descriptionWidget;
     private Button installButton;
     private Button refreshButton;
+    private Button retryButton;
 
     public AvailableInstallerListWidget getAvailableInstallerListWidget() {
         return availableInstallerListWidget;
@@ -85,9 +88,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
         header = new HeaderPane(this.eventHandler);
 
-
         this.setUpMainScene();
         this.setUpUpdateScene();
+        this.setUpFailureScene();
 
         this.update(availableInstallers);
         this.setUpEvents();
@@ -145,7 +148,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     }
 
-
     private void setUpUpdateScene() {
         Pane updatePane = new Pane();
         updateScene = new PlayOnLinuxScene(updatePane, 800, 545);
@@ -159,6 +161,27 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         updatePane.getChildren().add(progressIndicator);
     }
 
+    private void setUpFailureScene() {
+        BorderPane failurePane = new BorderPane();
+        failureScene = new PlayOnLinuxScene(failurePane, 800, 545);
+        VBox centerRegion = new VBox();
+        centerRegion.setSpacing(10);
+        centerRegion.setAlignment(Pos.CENTER);
+
+        Label failureNotificationLbl = new Label();
+        failureNotificationLbl.setText(translate("Connecting to PlayOnLinux failed.\nPlease check your connection and try again."));
+        failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
+
+        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
+        retryImage.setFitWidth(16);
+        retryImage.setFitHeight(16);
+        retryButton = new Button(translate("Retry"), retryImage);
+
+        centerRegion.getChildren().addAll(failureNotificationLbl, retryButton);
+        failurePane.setCenter(centerRegion);
+    }
+
+
 
     private void showMainScene() {
         this.setScene(mainScene);
@@ -171,6 +194,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         this.setScene(updateScene);
     }
 
+    private void showFailureScene() { this.setScene(failureScene); }
 
 
     private void setUpEvents() throws PlayOnLinuxError {
@@ -208,6 +232,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         installButton.setOnMouseClicked(event -> eventHandler.installProgram(availableInstallerListWidget.getSelectedItemLabel()));
 
         refreshButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
+        retryButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
     }
 
 
@@ -220,7 +245,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         if(remoteAvailableInstallers.isUpdating()) {
             this.showUpdateScene();
         } else if(remoteAvailableInstallers.hasFailed()) {
-            // TODO
+            this.showFailureScene();
         } else {
             this.showMainScene();
         }
