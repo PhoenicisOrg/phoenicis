@@ -37,7 +37,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
