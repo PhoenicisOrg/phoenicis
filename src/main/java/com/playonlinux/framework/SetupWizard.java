@@ -29,6 +29,8 @@ import com.playonlinux.utils.messages.*;
 
 import java.util.List;
 
+import static com.playonlinux.domain.Localisation.translate;
+
 @Scan
 public class SetupWizard {
 
@@ -55,7 +57,7 @@ public class SetupWizard {
                 new SynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow = controller.createSetupWindowGUIInstance(title);
+                        setupWindow = controller.createSetupWindowGUIInstance(translate(title));
                     }
                 }
         );

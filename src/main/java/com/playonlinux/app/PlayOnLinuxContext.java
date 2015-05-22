@@ -38,7 +38,7 @@ public class PlayOnLinuxContext {
         this.properties = loadProperties();
     }
 
-    public ReplacableProperties loadProperties() throws PlayOnLinuxError, IOException {
+    public ReplacableProperties loadProperties() throws PlayOnLinuxError {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
         String filename;
@@ -50,7 +50,11 @@ public class PlayOnLinuxContext {
             default:
                 filename = "playonlinux.properties";
         }
-        propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
+        try {
+            propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
+        } catch (IOException e) {
+            throw new PlayOnLinuxError("Cannot load properties", e);
+        }
         return propertiesBeingLoaded;
     }
 
@@ -114,5 +118,9 @@ public class PlayOnLinuxContext {
 
     public URL makeWebserviceUrl() throws MalformedURLException {
         return new URL(this.properties.getProperty("webservice.url"));
+    }
+
+    public String getApplicationName() {
+        return this.properties.getProperty("application.name");
     }
 }

@@ -19,7 +19,6 @@
 
 import os
 
-from com.playonlinux.framework import EnvironmentHelper
 from com.playonlinux.framework import Downloader
 
 class SetupWindowNetcatCommandParser(object):
@@ -39,7 +38,7 @@ class SetupWindowNetcatCommandParser(object):
             if("TITLE" in os.environ.keys()):
                 windowTitle = os.environ["TITLE"]
             else:
-                windowTitle = "%s Wizard" % EnvironmentHelper.getApplicationName()
+                windowTitle = "${application.name} Wizard";
 
             self.setupWindowManager.newWindow(setupWindowId, windowTitle)
 

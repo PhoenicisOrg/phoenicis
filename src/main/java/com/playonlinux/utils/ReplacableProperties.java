@@ -45,13 +45,18 @@ public class ReplacableProperties extends Properties {
         return transformedPropertyStringBuffer.toString();
     }
 
-    private String replaceGlobalVariables(String rawProperty) {
-        return matchAndReplace(rawProperty, "\\$\\(([^\\}]*)\\)", System.getProperties());
+    private String replaceGlobalVariables(String inputString) {
+        return matchAndReplace(inputString, "\\$\\(([^\\}]*)\\)", System.getProperties());
     }
 
-    private String replaceLocalVariables(String rawProperty) {
-        return matchAndReplace(rawProperty, "\\$\\{([^\\}]*)\\}", this);
+    private String replaceLocalVariables(String inputString) {
+        return matchAndReplace(inputString, "\\$\\{([^\\}]*)\\}", this);
     }
 
+    public String replaceAllVariables(String inputString) {
+        String globalVariableTranslatedString = this.replaceGlobalVariables(inputString);
+        String translatedString = this.replaceLocalVariables(globalVariableTranslatedString);
 
+        return translatedString;
+    }
 }

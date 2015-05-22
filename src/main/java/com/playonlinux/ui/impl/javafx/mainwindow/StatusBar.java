@@ -73,10 +73,10 @@ class StatusBar extends javafx.scene.control.ToolBar implements Observer {
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
         if(remoteAvailableInstallers.isUpdating()) {
-            updateStatus(translate("Please wait while $APPLICATION_TITLE is refreshing itself"));
+            updateStatus(translate("Please wait while ${application.name} is refreshing itself"));
             Platform.runLater(() -> showStatusBar(true));
         } else if(remoteAvailableInstallers.hasFailed()) {
-            updateStatus(translate("$APPLICATION_TITLE website seems to be unavailable!"));
+            updateStatus(translate("${application.name} website seems to be unavailable!"));
             Platform.runLater(() -> showStatusBar(false));
         } else {
             updateStatus("");

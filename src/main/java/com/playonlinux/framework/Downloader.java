@@ -59,9 +59,8 @@ public class Downloader {
 
     private void defineProgressStep(URL remoteFile) throws CancelException, InterruptedException {
         if(this.progressStep == null) {
-            // FIXME: Change APPLICATION_TITLE here
             this.progressStep = this.setupWizard.progressBar(
-                    translate("Please wait while $APPLICATION_TITLE is downloading:") + "\n" +
+                    translate("Please wait while ${application.name} is downloading:") + "\n" +
                     this.findFileNameFromURL(remoteFile)
             );
         }

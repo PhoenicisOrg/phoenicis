@@ -54,9 +54,8 @@ public class FileManagement {
 
     private void defineProgressStep(File sourceFile) throws CancelException, InterruptedException {
         if(this.progressStep == null) {
-            // FIXME: Change APPLICATION_TITLE here
             this.progressStep = this.setupWizard.progressBar(
-                    translate("Please wait while $APPLICATION_TITLE is copying:") + "\n" +
+                    translate("Please wait while ${application.name} is copying:") + "\n" +
                             sourceFile.getName()
             );
         }
