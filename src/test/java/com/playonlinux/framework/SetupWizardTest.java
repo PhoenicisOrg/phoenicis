@@ -19,6 +19,8 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.api.ui.Controller;
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
@@ -28,6 +30,7 @@ import com.playonlinux.domain.CancelException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -48,6 +51,11 @@ public class SetupWizardTest {
         @Override
         protected String definePackage() {
             return "com.playonlinux";
+        }
+
+        @Bean
+        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxError, IOException {
+            return new PlayOnLinuxContext();
         }
     }
 
