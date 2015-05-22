@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.mockui;
 
-import com.playonlinux.api.UIMessageSender;
+import com.playonlinux.api.ui.UIMessageSender;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.utils.messages.Message;
 import com.playonlinux.utils.messages.SynchroneousMessage;

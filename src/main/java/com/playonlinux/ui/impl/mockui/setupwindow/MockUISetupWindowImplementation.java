@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.mockui.setupwindow;
 
-import com.playonlinux.api.ProgressStep;
-import com.playonlinux.api.SetupWindow;
+import com.playonlinux.api.ui.ProgressStep;
+import com.playonlinux.api.ui.SetupWindow;
 import com.playonlinux.utils.messages.CancelerSynchroneousMessage;
 import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.utils.messages.InterrupterSynchroneousMessage;

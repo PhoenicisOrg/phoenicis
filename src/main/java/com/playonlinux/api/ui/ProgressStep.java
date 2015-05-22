@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.api;
+package com.playonlinux.api.ui;
 
 public interface ProgressStep {
     void setProgressPercentage(double value);

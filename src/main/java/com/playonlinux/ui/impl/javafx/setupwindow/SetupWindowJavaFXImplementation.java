@@ -18,13 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.api.ProgressStep;
+import com.playonlinux.api.ui.ProgressStep;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import com.playonlinux.api.SetupWindow;
+import com.playonlinux.api.ui.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.utils.messages.CancelerMessage;

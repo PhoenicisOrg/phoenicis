@@ -18,7 +18,7 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.api.Controller;
+import com.playonlinux.api.ui.Controller;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;

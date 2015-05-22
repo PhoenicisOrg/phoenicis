@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.api.ProgressStep;
+import com.playonlinux.api.ui.ProgressStep;
 import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;

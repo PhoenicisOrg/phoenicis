@@ -18,10 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx;
 
-import com.playonlinux.api.Controller;
+import com.playonlinux.api.ui.Controller;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.api.UIMessageSender;
-import com.playonlinux.api.SetupWindow;
+import com.playonlinux.api.ui.UIMessageSender;
+import com.playonlinux.api.ui.SetupWindow;
 import com.playonlinux.ui.impl.javafx.setupwindow.SetupWindowJavaFXImplementation;
 
 @Scan
