@@ -119,6 +119,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         testingCheck = new CheckBox(translate("Testing"));
         noCdNeededCheck = new CheckBox(translate("No CD needed"));
         commercialCheck = new CheckBox(translate("Commercial"));
+        commercialCheck.setSelected(true);
         filterPane.getChildren().addAll(searchWidget, filterLbl, testingCheck, noCdNeededCheck, commercialCheck);
 
         try {
@@ -243,8 +244,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         });
         searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
         testingCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(testingCheck.isSelected()));
-        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(noCdNeededCheck.isSelected()));
-        commercialCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(commercialCheck.isSelected()));
+        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.setIncludeNoCDNeeded(noCdNeededCheck.isSelected()));
+        commercialCheck.setOnAction(event -> availableInstallerListWidget.setIncludeCommercial(commercialCheck.isSelected()));
 
         availableInstallerListWidget.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
