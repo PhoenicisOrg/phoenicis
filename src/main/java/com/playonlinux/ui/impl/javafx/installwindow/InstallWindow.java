@@ -206,9 +206,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void showMainScene() {
         this.setScene(mainScene);
-        /* JavaFX only waits for a node to be displayed before calculating width */
-        Platform.runLater(() -> installButton.setLayoutX(790 - installButton.getWidth()));
-        Platform.runLater(() -> refreshButton.setLayoutX(780 - refreshButton.getWidth() - installButton.getWidth()));
     }
 
     private void showUpdateScene() {
