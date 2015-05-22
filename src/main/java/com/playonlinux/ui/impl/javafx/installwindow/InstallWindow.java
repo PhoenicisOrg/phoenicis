@@ -137,7 +137,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         sidePane.setSpacing(10);
         sidePane.setAlignment(Pos.CENTER);
         descriptionWidget = new WebView();
-        miniatureWidget = new ImageView(new Image(getClass().getResourceAsStream("pol_min.png")));
+        miniatureWidget = new ImageView(new Image(getClass().getResourceAsStream("defaultMiniature.png")));
         miniatureWidget.prefHeight(150);
         sidePane.getChildren().addAll(descriptionWidget, miniatureWidget);
 
