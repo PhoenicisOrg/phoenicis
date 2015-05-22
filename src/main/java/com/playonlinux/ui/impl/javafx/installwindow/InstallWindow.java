@@ -170,14 +170,13 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
     private void setUpUpdateScene() {
-        Pane updatePane = new Pane();
+        VBox updatePane = new VBox();
+        updatePane.setAlignment(Pos.CENTER);
         updateScene = new PlayOnLinuxScene(updatePane, 800, 545);
 
         ProgressIndicator progressIndicator = new ProgressIndicator();
         progressIndicator.setPrefWidth(64);
         progressIndicator.setPrefHeight(64);
-        progressIndicator.setLayoutX((this.updateScene.getWidth() - 64) / 2);
-        progressIndicator.setLayoutY((this.updateScene.getHeight() - 64) / 2);
 
         updatePane.getChildren().add(progressIndicator);
     }
