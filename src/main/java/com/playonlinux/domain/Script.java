@@ -78,6 +78,7 @@ public abstract class Script implements BackgroundService {
                     runScript();
                 } catch (PyException e) {
                     if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedException) {
+                        e.printStackTrace();
                         System.out.println("The script was canceled! "); // Fixme: better logging system
                     } else {
                         throw e;
