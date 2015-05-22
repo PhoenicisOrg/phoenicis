@@ -79,7 +79,11 @@ public class WinePrefix {
     }
 
     public long getSize() {
-        return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
+        try {
+            return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
+        } catch(IllegalArgumentException e) {
+            return getSize();
+        }
     }
 
 }

@@ -198,9 +198,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <exclude>com.playonlinux.ui.impl.javafx.*</exclude>
-                </configuration>
             </plugin>
 
         </plugins>
