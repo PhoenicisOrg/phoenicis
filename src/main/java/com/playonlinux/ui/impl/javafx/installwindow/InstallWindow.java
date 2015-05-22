@@ -24,14 +24,13 @@ import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -54,8 +53,14 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     private RemoteAvailableInstallers availableInstallers;
     private final HeaderPane header;
     private AvailableInstallerListWidget availableInstallerListWidget;
+
     private TextField searchWidget;
+    private CheckBox testingCheck;
+    private CheckBox noCdNeededCheck;
+    private CheckBox commercialCheck;
+
     private WebView descriptionWidget;
+    private ImageView miniatureWidget;
     private Button installButton;
     private Button refreshButton;
     private Button retryButton;
@@ -98,16 +103,23 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
     private void setUpMainScene() {
-        // TODO: Improve this scene (get rid of absolute positioning, ...)
-
-        Pane mainPane = new Pane();
+        BorderPane mainPane = new BorderPane();
         mainScene = new PlayOnLinuxScene(mainPane, 800, 545);
 
+        BorderPane centerPane = new BorderPane();
+        centerPane.setPadding(new Insets(10, 10, 0, 10));
+
+        HBox filterPane = new HBox();
+        filterPane.setAlignment(Pos.CENTER_LEFT);
+        filterPane.setSpacing(20);
         searchWidget = new TextField();
-        searchWidget.setLayoutY(77);
-        searchWidget.setLayoutX(10);
         searchWidget.setPrefWidth(250);
         searchWidget.setPromptText(translate("Search"));
+        Label filterLbl = new Label(translate("Include") + ":");
+        testingCheck = new CheckBox(translate("Testing"));
+        noCdNeededCheck = new CheckBox(translate("No CD needed"));
+        commercialCheck = new CheckBox(translate("Commercial"));
+        filterPane.getChildren().addAll(searchWidget, filterLbl, testingCheck, noCdNeededCheck, commercialCheck);
 
         try {
             availableInstallerListWidget = new AvailableInstallerListWidget(eventHandler);
@@ -119,32 +131,41 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             e.printStackTrace();
         }
 
-        availableInstallerListWidget.setLayoutY(112);
-        availableInstallerListWidget.setLayoutX(10);
-        availableInstallerListWidget.setPrefWidth(550);
-        availableInstallerListWidget.setPrefHeight(385);
-
+        VBox sidePane = new VBox();
+        sidePane.setPadding(new Insets(0, 10, 0, 10));
+        sidePane.setPrefWidth(230);
+        sidePane.setSpacing(10);
+        sidePane.setAlignment(Pos.CENTER);
         descriptionWidget = new WebView();
-        descriptionWidget.setLayoutX(570);
-        descriptionWidget.setLayoutY(112);
-        descriptionWidget.setPrefWidth(218);
-        descriptionWidget.setPrefHeight(200);
+        miniatureWidget = new ImageView(new Image(getClass().getResourceAsStream("pol_min.png")));
+        miniatureWidget.prefHeight(150);
+        sidePane.getChildren().addAll(descriptionWidget, miniatureWidget);
+
+        centerPane.setTop(filterPane);
+        centerPane.setMargin(filterPane, new Insets(0, 0, 10, 0));
+        centerPane.setCenter(availableInstallerListWidget);
+        centerPane.setRight(sidePane);
+
+        HBox bottomPane = new HBox();
+        bottomPane.setSpacing(10);
+        bottomPane.setPadding(new Insets(5));
+        bottomPane.setAlignment(Pos.CENTER_RIGHT);
 
         ImageView installImage = new ImageView(new Image(getClass().getResourceAsStream("install.png")));
         installImage.setFitWidth(16);
         installImage.setFitHeight(16);
         installButton = new Button(translate("Install"), installImage);
-        installButton.setLayoutY(510);
         installButton.setDisable(true);
 
         ImageView updateImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
         updateImage.setFitWidth(16);
         updateImage.setFitHeight(16);
         refreshButton = new Button(translate("Refresh"), updateImage);
-        refreshButton.setLayoutY(510);
+        bottomPane.getChildren().addAll(installButton, refreshButton);
 
-        mainPane.getChildren().addAll(header, availableInstallerListWidget, searchWidget,
-                descriptionWidget, installButton, refreshButton);
+        mainPane.setTop(header);
+        mainPane.setCenter(centerPane);
+        mainPane.setBottom(bottomPane);
 
     }
 
@@ -194,7 +215,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         this.setScene(updateScene);
     }
 
-    private void showFailureScene() { this.setScene(failureScene); }
+    private void showFailureScene() {
+        this.setScene(failureScene);
+    }
 
 
     private void setUpEvents() throws PlayOnLinuxError {
@@ -223,6 +246,9 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             }
         });
         searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
+        testingCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(testingCheck.isSelected()));
+        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(noCdNeededCheck.isSelected()));
+        commercialCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(commercialCheck.isSelected()));
 
         availableInstallerListWidget.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
