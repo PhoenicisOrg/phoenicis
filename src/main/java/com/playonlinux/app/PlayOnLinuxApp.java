@@ -22,11 +22,7 @@ import com.playonlinux.api.ui.Controller;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
-
-import java.io.IOException;
 
 @Scan
 public class PlayOnLinuxApp {
