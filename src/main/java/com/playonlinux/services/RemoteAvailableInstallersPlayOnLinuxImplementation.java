@@ -105,23 +105,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         }
 
         Collections.sort(scripts, new ScriptDTO.AlphabeticalOrderComparator());
-        return () -> scripts.iterator();
-    }
-
-    @Override
-    public Iterable<ScriptDTO> getAllScripts(String filterText) {
-        List<ScriptDTO> scripts = new ArrayList<>();
-        for(CategoryDTO categoryDTO: new ArrayList<>(categoriesDTO)) {
-            for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
-                if(filterText == null || scriptDTO.getName().contains(filterText)) {
-                    scripts.add(scriptDTO);
-                }
-            }
-        }
-
-        Collections.sort(scripts, new ScriptDTO.AlphabeticalOrderComparator());
-
-        return () -> scripts.iterator();
+        return scripts;
     }
 
     @Override
@@ -139,7 +123,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
                 scripts.add(script);
             }
         }
-        return () -> scripts.iterator();
+        return scripts;
     }
 
     @Override
