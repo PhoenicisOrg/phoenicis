@@ -88,8 +88,7 @@ public class PlayOnLinuxContext {
         switch(OperatingSystem.fetchCurrentOperationSystem()){
             case MACOSX:
                 systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
-                systemEnvironment.put("LD_LIBRARY_PATH",
-                        this.properties.getProperty("application.environment.ld") + ":" + "/usr/X11/lib");
+                systemEnvironment.put("LD_LIBRARY_PATH", this.properties.getProperty("application.environment.ld"));
                 systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.dyld"));
                 break;
             default:
