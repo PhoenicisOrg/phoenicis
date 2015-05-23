@@ -20,7 +20,7 @@ package com.playonlinux.common.dtos;
 
 import java.net.URL;
 
-public class ShortcutDTO {
+public class ShortcutDTO implements AbstractDTO  {
     private final URL icon;
     private final String name;
 

@@ -24,7 +24,7 @@ import com.playonlinux.utils.OperatingSystem;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptInformationsDTO {
+public class ScriptInformationsDTO implements AbstractDTO  {
     public List<OperatingSystem> getCompatiblesOperatingSystems() {
         return compatiblesOperatingSystems;
     }

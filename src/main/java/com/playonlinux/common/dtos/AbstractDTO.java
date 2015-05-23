@@ -18,41 +18,5 @@
 
 package com.playonlinux.common.dtos;
 
-import java.net.URL;
-
-public class VirtualDriveDTO implements AbstractDTO  {
-    private final URL icon;
-    private final String name;
-
-    public VirtualDriveDTO(Builder builder) {
-        this.name = builder.name;
-        this.icon = builder.icon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public URL getIcon() {
-        return icon;
-    }
-
-    public static class Builder {
-        private String name;
-        private URL icon;
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withIcon(URL icon) {
-            this.icon = icon;
-            return this;
-        }
-
-        public VirtualDriveDTO build() {
-            return new VirtualDriveDTO(this);
-        }
-    }
+public interface AbstractDTO {
 }

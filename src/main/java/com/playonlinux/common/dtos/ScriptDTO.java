@@ -24,11 +24,26 @@ import java.util.Comparator;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptDTO {
+public class ScriptDTO implements AbstractDTO  {
 
-    int id;
-    String name;
-    String description;
+    private int id;
+    private String name;
+    private String description;
+    private String iconUrl;
+    private List<String> miniaturesUrls;
+    private ScriptInformationsDTO scriptInformations;
+
+    public ScriptDTO() {
+        // Kept for the webservice
+    }
+    private ScriptDTO(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+        description = builder.description;
+        iconUrl = builder.iconURL;
+        miniaturesUrls = builder.miniaturesUrls;
+        scriptInformations = builder.scriptInformations;
+    }
 
     public String getIconUrl() {
         return iconUrl;
@@ -37,11 +52,6 @@ public class ScriptDTO {
     public List<String> getMiniaturesUrls() {
         return miniaturesUrls;
     }
-
-    String iconUrl;
-    List<String> miniaturesUrls;
-    ScriptInformationsDTO scriptInformations;
-
 
     public int getId() {
         return id;
@@ -60,10 +70,66 @@ public class ScriptDTO {
     }
 
     public static class AlphabeticalOrderComparator implements Comparator<ScriptDTO> {
-
         @Override
         public int compare(ScriptDTO script1, ScriptDTO script2) {
             return script1.getName().compareTo(script2.getName());
         }
     }
+
+    public static class Builder {
+        private String name;
+        private String description;
+        private String iconURL;
+        private List<String> miniaturesUrls;
+        private ScriptInformationsDTO scriptInformations;
+        private int id;
+
+        public Builder() {
+            // We need a public builder to be able to create a ScriptDTO from scratch
+        }
+
+        public Builder(ScriptDTO scriptDTO) {
+            this.name = scriptDTO.name;
+            this.description = scriptDTO.description;
+            this.iconURL = scriptDTO.iconUrl;
+            this.miniaturesUrls = scriptDTO.miniaturesUrls;
+            this.scriptInformations = scriptDTO.scriptInformations;
+            this.id = scriptDTO.id;
+        }
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withIconURL(String iconURL) {
+            this.iconURL = iconURL;
+            return this;
+        }
+
+        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
+            this.miniaturesUrls = miniaturesUrls;
+            return this;
+        }
+
+        public Builder withScriptInformations(ScriptInformationsDTO scriptInformations) {
+            this.scriptInformations = scriptInformations;
+            return this;
+        }
+
+        public ScriptDTO build() {
+            return new ScriptDTO(this);
+        }
+    }
+
+
 }

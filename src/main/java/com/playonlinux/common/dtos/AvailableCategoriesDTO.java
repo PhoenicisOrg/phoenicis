@@ -20,7 +20,7 @@ package com.playonlinux.common.dtos;
 
 import java.util.List;
 
-public class AvailableCategoriesDTO {
+public class AvailableCategoriesDTO implements AbstractDTO {
     public List<CategoryDTO> getCategories() {
         return categories;
     }

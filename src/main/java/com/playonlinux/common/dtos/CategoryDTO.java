@@ -23,7 +23,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CategoryDTO {
+public class CategoryDTO implements AbstractDTO {
     public enum CategoryType {
         INSTALLERS,
         FUNCTIONS

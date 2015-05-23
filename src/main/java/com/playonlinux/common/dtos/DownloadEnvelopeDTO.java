@@ -18,7 +18,7 @@
 
 package com.playonlinux.common.dtos;
 
-public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> {
+public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> implements AbstractDTO  {
     DownloadStateDTO downloadState;
 
     public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {

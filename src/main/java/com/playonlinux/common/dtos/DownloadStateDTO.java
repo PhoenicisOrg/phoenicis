@@ -18,7 +18,7 @@
 
 package com.playonlinux.common.dtos;
 
-public class DownloadStateDTO {
+public class DownloadStateDTO implements AbstractDTO {
     private State state;
 
     public State getState() {
