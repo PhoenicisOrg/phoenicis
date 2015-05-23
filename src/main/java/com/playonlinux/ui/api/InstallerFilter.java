@@ -22,6 +22,7 @@ import com.playonlinux.common.dtos.ScriptDTO;
 import com.playonlinux.common.dtos.ScriptInformationsDTO;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.utils.OperatingSystem;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Observable;
 
@@ -59,31 +60,31 @@ public class InstallerFilter extends Observable {
     public String getTitle() { return title; }
     public void setTitle(String title) {
         this.title = title;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public String getCategory() { return category; }
     public void setCategory(String category) {
         this.category = category;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public boolean isShowTesting() { return showTesting; }
     public void setShowTesting(boolean showTesting) {
         this.showTesting = showTesting;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public boolean isShowNoCd() { return showNoCd; }
     public void setShowNoCd(boolean showNoCd) {
         this.showNoCd = showNoCd;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public boolean isShowCommercial() { return showCommercial; }
     public void setShowCommercial(boolean showCommercial) {
         this.showCommercial = showCommercial;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
 
@@ -103,9 +104,20 @@ public class InstallerFilter extends Observable {
         if(isTesting && !showTesting){ return false; }
         if(scriptInfo.isRequiresNoCD() && !showNoCd){ return false; }
         if(!scriptInfo.isFree() && !showCommercial){ return false; }
-        if(!script.getName().contains(title)){ return false; }
+        if(StringUtils.isNotBlank(title)) {
+            if(!script.getName().contains(title)){ return false; }
+        }
 
         return true;
+    }
+
+
+
+
+
+    private void fireUpdate(){
+        this.setChanged();
+        this.notifyObservers();
     }
 
 }
