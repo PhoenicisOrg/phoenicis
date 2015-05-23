@@ -18,8 +18,6 @@
 
 package com.playonlinux.domain;
 
-import com.playonlinux.framework.domain.ScriptTemplate;
-import com.playonlinux.python.AbstractPythonModule;
 import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;

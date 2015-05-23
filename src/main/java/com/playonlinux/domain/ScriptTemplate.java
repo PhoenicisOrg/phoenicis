@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework.domain;
+package com.playonlinux.domain;
 
 public interface ScriptTemplate {
     void main();

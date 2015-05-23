@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.framework.domain.ScriptTemplate;
+import com.playonlinux.domain.ScriptTemplate;
 
 public abstract class Script implements ScriptTemplate {
     public abstract void main();
