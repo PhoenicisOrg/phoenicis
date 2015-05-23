@@ -21,10 +21,16 @@ package com.playonlinux.wine;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 import org.apache.commons.io.FileUtils;
+import org.python.antlr.ast.Str;
 
+import javax.print.attribute.SetOfIntegerSyntax;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class WinePrefix {
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
@@ -32,6 +38,8 @@ public class WinePrefix {
     private static final String SYSTEM_REGISTRY_NODENAME = "HKEY_LOCAL_MACHINE";
     private static final String USER_REGISTRY_FILENAME = "user.reg";
     private static final String USER_REGISTRY_NODENAME = "HKEY_CURRENT_USER";
+    private static final String EXECUTABLE_EXTENSION = "exe";
+    private static final String DRIVE_C = "drive_c";
 
 
     private final File winePrefixDirectory;
@@ -62,6 +70,10 @@ public class WinePrefix {
         return parseRegistryFile(USER_REGISTRY_FILENAME, USER_REGISTRY_NODENAME);
     }
 
+    private File getDriveCPath() {
+        return new File(winePrefixDirectory, DRIVE_C);
+    }
+
     public String fetchVersion() {
         return null;
     }
@@ -86,4 +98,32 @@ public class WinePrefix {
         }
     }
 
+    private Collection<File> findAllFilesByExtension(String extension) {
+        return findAllFilesByExtension(extension, this.getDriveCPath());
+    }
+
+    private Collection<File> findAllFilesByExtension(String extension, File searchPath) {
+        final Collection<File> candidates = new ArrayList<>();
+        final File[] filesInSearchPath = searchPath.listFiles();
+        for(File candidate: filesInSearchPath) {
+            if(candidate.isDirectory()) {
+                candidates.addAll(findAllFilesByExtension(extension, candidate));
+            } else if(candidate.getName().toLowerCase().endsWith(extension.toLowerCase()) &&
+                    !getSearchExcludedFiles().contains(candidate.getName())) {
+                candidates.add(candidate);
+            }
+        }
+        return candidates;
+    }
+
+    private Collection<String> getSearchExcludedFiles() {
+        final ArrayList<String> searchExcludedFiles = new ArrayList<>();
+        searchExcludedFiles.add("iexplore.exe");
+
+        return searchExcludedFiles;
+    }
+
+    public Collection<File> findAllExecutables() {
+        return findAllFilesByExtension(EXECUTABLE_EXTENSION);
+    }
 }
