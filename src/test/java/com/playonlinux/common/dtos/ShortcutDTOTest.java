@@ -35,7 +35,7 @@ public class ShortcutDTOTest {
     public void setUp() throws MalformedURLException {
         this.shortcutDto = new ShortcutDTO.Builder()
                 .withName("Name")
-                .withIcon(new URL(new File("/tmp/icon").getAbsolutePath()))
+                .withIcon(new URL("file://"+new File("/tmp/icon").getAbsolutePath()))
                 .build();
     }
     @Test
@@ -45,6 +45,6 @@ public class ShortcutDTOTest {
 
     @Test
     public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
-        assertEquals("/tmp/icon", shortcutDto.getIcon().toString());
+        assertEquals("file:/tmp/icon", shortcutDto.getIcon().toString());
     }
 }
