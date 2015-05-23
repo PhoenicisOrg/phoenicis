@@ -23,7 +23,6 @@ import com.playonlinux.common.dtos.*;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.ui.api.InstallerFilter;
 import com.playonlinux.webservice.RemoteAvailableInstallers;
 
 import java.net.MalformedURLException;
@@ -65,7 +64,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         downloadEnvelopeDto = (DownloadEnvelopeDTO<AvailableCategoriesDTO>) arg;
 
         try {
-            if (downloadEnvelopeDto.getEnvelopeContent() != null) {
+            if(downloadEnvelopeDto.getEnvelopeContent() != null) {
                 List<CategoryDTO> availableCategories = new ArrayList<>(
                         downloadEnvelopeDto.getEnvelopeContent().getCategories()
                 );
@@ -97,39 +96,39 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public Iterable<ScriptDTO> getAllScripts() {
+        return getAllScripts(null);
+    }
+
+    @Override
+    public Iterable<ScriptDTO> getAllScripts(String filterText) {
         List<ScriptDTO> scripts = new ArrayList<>();
-        for (CategoryDTO categoryDTO : new ArrayList<>(categoriesDTO)) {
-            for (ScriptDTO scriptDTO : new ArrayList<>(categoryDTO.getScripts())) {
-                scripts.add(scriptDTO);
+        for(CategoryDTO categoryDTO: new ArrayList<>(categoriesDTO)) {
+            for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
+                if(filterText == null || scriptDTO.getName().contains(filterText)) {
+                    scripts.add(scriptDTO);
+                }
             }
         }
 
         Collections.sort(scripts, new ScriptDTO.AlphabeticalOrderComparator());
-        return scripts;
+
+        return () -> scripts.iterator();
     }
 
     @Override
-    public Iterable<ScriptDTO> getAllScripts(InstallerFilter filter) throws PlayOnLinuxError {
-        Iterable<ScriptDTO> scriptsToFilter;
-        List<ScriptDTO> scripts = new ArrayList<>();
-        if (filter.getCategory() == null) {
-            scriptsToFilter = this.getAllScripts();
-        } else {
-            scriptsToFilter = this.getAllScriptsInCategory(filter.getCategory());
-        }
-
-        for (ScriptDTO script : scriptsToFilter) {
-            if (filter.apply(script)) {
-                scripts.add(script);
+    public Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError {
+        for(CategoryDTO categoryDTO: categoriesDTO) {
+            if(categoryName.equals(categoryDTO.getName())) {
+                return getAllScriptsInCategory(categoryDTO);
             }
         }
-        return scripts;
+        throw new PlayOnLinuxError(String.format("The category %s does not exist!", categoryName));
     }
 
     @Override
     public ScriptDTO getScriptByName(String scriptName) throws PlayOnLinuxError {
-        for (ScriptDTO scriptDTO : this.getAllScripts()) {
-            if (scriptName.equals(scriptDTO.getName())) {
+        for(ScriptDTO scriptDTO: this.getAllScripts()) {
+            if(scriptName.equals(scriptDTO.getName())) {
                 return scriptDTO;
             }
         }
@@ -139,7 +138,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public void refresh() {
-        if (remoteAvailableInstallers != null) {
+        if(remoteAvailableInstallers != null) {
             remoteAvailableInstallers.deleteObserver(this);
             playOnLinuxBackgroundServicesManager.unregister(remoteAvailableInstallers);
         }
@@ -148,18 +147,9 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
     }
 
-    private Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError {
-        for (CategoryDTO categoryDTO : categoriesDTO) {
-            if (categoryName.equals(categoryDTO.getName())) {
-                return getAllScriptsInCategory(categoryDTO);
-            }
-        }
-        throw new PlayOnLinuxError(String.format("The category %s does not exist!", categoryName));
-    }
-
     private Iterable<ScriptDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {
         List<ScriptDTO> scripts = new ArrayList<>();
-        for (ScriptDTO scriptDTO : new ArrayList<>(categoryDTO.getScripts())) {
+        for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
             scripts.add(scriptDTO);
         }
 
