@@ -25,7 +25,6 @@ import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -38,7 +37,9 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
 
     private final InstallerFilter filter = new InstallerFilter();
 
-    public InstallerFilter getFilter(){ return this.filter; }
+    public InstallerFilter getFilter() {
+        return this.filter;
+    }
 
 
     AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxError {
@@ -52,13 +53,13 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     }
 
     public void update() {
-        if(remoteAvailableInstallers != null) {
+        if (remoteAvailableInstallers != null) {
             this.clear();
             try {
                 for (ScriptDTO script : remoteAvailableInstallers.getAllScripts(filter)) {
                     this.addItem(script.getName());
                 }
-            } catch(PlayOnLinuxError playOnLinuxError){
+            } catch (PlayOnLinuxError playOnLinuxError) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to show installer list."));
                 alert.setContentText(String.format("The error was: %s", playOnLinuxError));

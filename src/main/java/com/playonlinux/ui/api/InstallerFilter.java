@@ -43,45 +43,58 @@ public class InstallerFilter extends Observable {
     private final OperatingSystem hostOs;
 
 
-
-    public InstallerFilter(){
+    public InstallerFilter() {
         //TODO: Pre-define filters.
         OperatingSystem os;
-        try{
+        try {
             os = OperatingSystem.fetchCurrentOperationSystem();
-        }catch (PlayOnLinuxError err){
+        } catch (PlayOnLinuxError err) {
             os = null;
         }
         this.hostOs = os;
     }
 
 
+    public String getTitle() {
+        return title;
+    }
 
-    public String getTitle() { return title; }
     public void setTitle(String title) {
         this.title = title;
         this.fireUpdate();
     }
 
-    public String getCategory() { return category; }
+    public String getCategory() {
+        return category;
+    }
+
     public void setCategory(String category) {
         this.category = category;
         this.fireUpdate();
     }
 
-    public boolean isShowTesting() { return showTesting; }
+    public boolean isShowTesting() {
+        return showTesting;
+    }
+
     public void setShowTesting(boolean showTesting) {
         this.showTesting = showTesting;
         this.fireUpdate();
     }
 
-    public boolean isShowNoCd() { return showNoCd; }
+    public boolean isShowNoCd() {
+        return showNoCd;
+    }
+
     public void setShowNoCd(boolean showNoCd) {
         this.showNoCd = showNoCd;
         this.fireUpdate();
     }
 
-    public boolean isShowCommercial() { return showCommercial; }
+    public boolean isShowCommercial() {
+        return showCommercial;
+    }
+
     public void setShowCommercial(boolean showCommercial) {
         this.showCommercial = showCommercial;
         this.fireUpdate();
@@ -91,31 +104,37 @@ public class InstallerFilter extends Observable {
     /**
      * Test the given script against the filter rules.
      * <p>
-     *     Note: At the moment, this method does not filter categories, since Scripts don't know about their own category.
+     * Note: At the moment, this method does not filter categories, since Scripts don't know about their own category.
      * </p>
+     *
      * @param script Script which should be tested against the filter.
      * @return True if this Script matches the filter criteria, false otherwise.
      */
-    public boolean apply(ScriptDTO script){
+    public boolean apply(ScriptDTO script) {
         //TODO: write testcases for this method.
         ScriptInformationsDTO scriptInfo = script.getScriptInformations();
         boolean isTesting = scriptInfo.getTestingOperatingSystems().contains(hostOs);
 
-        if(isTesting && !showTesting){ return false; }
-        if(scriptInfo.isRequiresNoCD() && !showNoCd){ return false; }
-        if(!scriptInfo.isFree() && !showCommercial){ return false; }
-        if(StringUtils.isNotBlank(title)) {
-            if(!script.getName().contains(title)){ return false; }
+        if (isTesting && !showTesting) {
+            return false;
+        }
+        if (scriptInfo.isRequiresNoCD() && !showNoCd) {
+            return false;
+        }
+        if (!scriptInfo.isFree() && !showCommercial) {
+            return false;
+        }
+        if (StringUtils.isNotBlank(title)) {
+            if (!script.getName().contains(title)) {
+                return false;
+            }
         }
 
         return true;
     }
 
 
-
-
-
-    private void fireUpdate(){
+    private void fireUpdate() {
         this.setChanged();
         this.notifyObservers();
     }
