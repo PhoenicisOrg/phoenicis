@@ -20,6 +20,7 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.common.dtos.ScriptDTO;
 import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.ui.api.InstallerFilter;
 import com.playonlinux.ui.api.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
@@ -35,62 +36,33 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     private final InstallWindowEventHandler installWindowEventHandler;
     private RemoteAvailableInstallers remoteAvailableInstallers;
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-        this.update();
-    }
+    private final InstallerFilter filter = new InstallerFilter();
 
-    public void setIncludeCommercial(boolean includeCommercial) {
-        this.includeCommercial = includeCommercial;
-        this.update();
-    }
+    public InstallerFilter getFilter(){ return this.filter; }
 
-    public void setIncludeNoCDNeeded(boolean includeNoCDNeeded) {
-        this.includeNoCDNeeded = includeNoCDNeeded;
-        this.update();
-    }
-
-    public void setIncludeTesting(boolean includeTesting) {
-        this.includeTesting = includeTesting;
-        this.update();
-    }
-
-    public void setSearchFilter(String searchFilter) {
-        this.searchFilter = searchFilter;
-        this.update();
-    }
-
-    private String categoryName;
-    private boolean includeTesting = false;
-    private boolean includeNoCDNeeded = false;
-    private boolean includeCommercial = true;
-    private String searchFilter = "";
 
     AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxError {
         super();
         this.installWindowEventHandler = installWindowEventHandler;
         this.installWindowEventHandler.getRemoteAvailableInstallers().addObserver(this);
         remoteAvailableInstallers = this.installWindowEventHandler.getRemoteAvailableInstallers();
+
+        AvailableInstallerListWidget me = this;
+        this.filter.addObserver((observable, o) -> me.update());
     }
 
     public void update() {
         if(remoteAvailableInstallers != null) {
             this.clear();
-            if(!StringUtils.isBlank(searchFilter)) {
-                for(ScriptDTO scriptDTO : remoteAvailableInstallers.getAllScripts(searchFilter)) {
-                    this.addItem(scriptDTO.getName());
+            try {
+                for (ScriptDTO script : remoteAvailableInstallers.getAllScripts(filter)) {
+                    this.addItem(script.getName());
                 }
-            } else if (categoryName != null) {
-                try {
-                    for(ScriptDTO scriptDTO: remoteAvailableInstallers.getAllScriptsInCategory(categoryName)) {
-                        this.addItem(scriptDTO.getName());
-                    }
-                } catch (PlayOnLinuxError playOnLinuxError) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(translate("Error while trying to show installer list."));
-                    alert.setContentText(String.format("The error was: %s", playOnLinuxError));
-                    playOnLinuxError.printStackTrace();
-                }
+            } catch(PlayOnLinuxError playOnLinuxError){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(translate("Error while trying to show installer list."));
+                alert.setContentText(String.format("The error was: %s", playOnLinuxError));
+                playOnLinuxError.printStackTrace();
             }
         }
     }

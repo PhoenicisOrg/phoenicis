@@ -68,6 +68,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     public AvailableInstallerListWidget getAvailableInstallerListWidget() {
         return availableInstallerListWidget;
     }
+
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
@@ -203,7 +204,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
 
-
     private void showMainScene() {
         this.setScene(mainScene);
     }
@@ -242,10 +242,10 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
                 playOnLinuxError.printStackTrace();
             }
         });
-        searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
-        testingCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(testingCheck.isSelected()));
-        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.setIncludeNoCDNeeded(noCdNeededCheck.isSelected()));
-        commercialCheck.setOnAction(event -> availableInstallerListWidget.setIncludeCommercial(commercialCheck.isSelected()));
+        searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.getFilter().setTitle(searchWidget.getText()));
+        testingCheck.setOnAction(event -> availableInstallerListWidget.getFilter().setShowTesting(testingCheck.isSelected()));
+        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.getFilter().setShowNoCd(noCdNeededCheck.isSelected()));
+        commercialCheck.setOnAction(event -> availableInstallerListWidget.getFilter().setShowCommercial(commercialCheck.isSelected()));
 
         availableInstallerListWidget.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -257,7 +257,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         refreshButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
         retryButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
     }
-
 
 
     public InstallWindowEventHandler getEventHandler() {
@@ -283,7 +282,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     public void clearSearch() {
         searchWidget.clear();
-        availableInstallerListWidget.setSearchFilter("");
+        availableInstallerListWidget.getFilter().setTitle(null);
     }
 }
 
