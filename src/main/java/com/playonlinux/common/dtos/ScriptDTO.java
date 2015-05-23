@@ -59,7 +59,7 @@ public class ScriptDTO {
         return scriptInformations;
     }
 
-    public static class alphabeticalOrderComparator implements Comparator<ScriptDTO> {
+    public static class AlphabeticalOrderComparator implements Comparator<ScriptDTO> {
 
         @Override
         public int compare(ScriptDTO script1, ScriptDTO script2) {

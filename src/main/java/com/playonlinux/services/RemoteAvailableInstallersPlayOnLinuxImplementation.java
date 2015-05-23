@@ -110,7 +110,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
             }
         }
 
-        Collections.sort(scripts, new ScriptDTO.alphabeticalOrderComparator());
+        Collections.sort(scripts, new ScriptDTO.AlphabeticalOrderComparator());
 
         return () -> scripts.iterator();
     }
@@ -153,7 +153,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
             scripts.add(scriptDTO);
         }
 
-        Collections.sort(scripts, new ScriptDTO.alphabeticalOrderComparator());
+        Collections.sort(scripts, new ScriptDTO.AlphabeticalOrderComparator());
 
         return () -> scripts.iterator();
     }
