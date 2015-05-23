@@ -18,8 +18,6 @@
 
 package com.playonlinux.common.dtos;
 
-
-import java.io.File;
 import java.net.URL;
 
 public class VirtualDriveDTO {

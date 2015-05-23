@@ -47,8 +47,7 @@ public class PlayOnLinuxApp {
         controller.startApplication();
     }
 
-    public static void main(String[] args) throws CancelException, InterruptedException,
-            PlayOnLinuxError, IOException, InjectionException {
+    public static void main(String[] args) throws InjectionException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start(args);
 
