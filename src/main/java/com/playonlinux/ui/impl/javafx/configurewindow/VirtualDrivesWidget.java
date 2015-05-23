@@ -21,15 +21,7 @@ package com.playonlinux.ui.impl.javafx.configurewindow;
 import com.playonlinux.common.dtos.VirtualDriveDTO;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 
-import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
