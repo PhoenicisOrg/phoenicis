@@ -68,16 +68,14 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     public AvailableInstallerListWidget getAvailableInstallerListWidget() {
         return availableInstallerListWidget;
     }
-
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
-     *
      * @param parent
      * @return the install window instance
      */
     public static InstallWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
-        if (instance == null) {
+        if(instance == null) {
             instance = new InstallWindow(parent);
         } else {
             instance.toFront();
@@ -205,6 +203,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
 
+
     private void showMainScene() {
         this.setScene(mainScene);
     }
@@ -243,10 +242,10 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
                 playOnLinuxError.printStackTrace();
             }
         });
-        searchWidget.setOnKeyReleased(event -> availableInstallerListWidget.getFilter().setTitle(searchWidget.getText()));
-        testingCheck.setOnAction(event -> availableInstallerListWidget.getFilter().setShowTesting(testingCheck.isSelected()));
-        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.getFilter().setShowNoCd(noCdNeededCheck.isSelected()));
-        commercialCheck.setOnAction(event -> availableInstallerListWidget.getFilter().setShowCommercial(commercialCheck.isSelected()));
+        searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
+        testingCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(testingCheck.isSelected()));
+        noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.setIncludeNoCDNeeded(noCdNeededCheck.isSelected()));
+        commercialCheck.setOnAction(event -> availableInstallerListWidget.setIncludeCommercial(commercialCheck.isSelected()));
 
         availableInstallerListWidget.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -260,14 +259,15 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
 
+
     public InstallWindowEventHandler getEventHandler() {
         return eventHandler;
     }
 
     public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
-        if (remoteAvailableInstallers.isUpdating()) {
+        if(remoteAvailableInstallers.isUpdating()) {
             this.showUpdateScene();
-        } else if (remoteAvailableInstallers.hasFailed()) {
+        } else if(remoteAvailableInstallers.hasFailed()) {
             this.showFailureScene();
         } else {
             this.showMainScene();
@@ -283,7 +283,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     public void clearSearch() {
         searchWidget.clear();
-        availableInstallerListWidget.getFilter().setTitle(null);
+        availableInstallerListWidget.setSearchFilter("");
     }
 }
 
