@@ -18,11 +18,10 @@
 
 package com.playonlinux.common.dtos;
 
-
-import java.io.File;
+import java.net.URL;
 
 public class ShortcutDTO {
-    private final File icon;
+    private final URL icon;
     private final String name;
 
     public ShortcutDTO(Builder builder) {
@@ -34,20 +33,20 @@ public class ShortcutDTO {
         return name;
     }
 
-    public File getIcon() {
+    public URL getIcon() {
         return icon;
     }
 
     public static class Builder {
         private String name;
-        private File icon;
+        private URL icon;
 
         public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withIcon(File icon) {
+        public Builder withIcon(URL icon) {
             this.icon = icon;
             return this;
         }

@@ -32,6 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -47,7 +48,7 @@ class ApplicationListWidget extends TreeView implements Observer {
         this.setShowRoot(false);
     }
 
-    public void addItem(String shortcutName, File iconPath) {
+    public void addItem(String shortcutName, URL iconPath) {
         TreeItem treeItem = new TreeItem(new ApplicationItem(shortcutName, iconPath));
         rootItem.getChildren().add(treeItem);
     }
@@ -69,11 +70,11 @@ class ApplicationListWidget extends TreeView implements Observer {
 
     private class ApplicationItem extends GridPane {
 
-        ApplicationItem(String applicationName, File iconPath) {
+        ApplicationItem(String applicationName, URL iconPath) {
             this.setPrefHeight(60.);
             Text applicationNameLabel = new Text(applicationName);
 
-            ImageView iconImageView = new ImageView(new Image("file://"+iconPath.getAbsolutePath()));
+            ImageView iconImageView = new ImageView(new Image(iconPath.toExternalForm()));
             iconImageView.setFitHeight(40);
             iconImageView.setFitWidth(40);
 

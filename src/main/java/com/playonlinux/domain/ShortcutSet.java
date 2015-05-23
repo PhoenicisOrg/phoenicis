@@ -22,6 +22,7 @@ import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -31,11 +32,11 @@ public class ShortcutSet extends Observable implements Observer {
     private final ObservableDirectory iconDirectory;
     private final File configFilesDirectory;
     private final ObservableDirectory shortcutDirectory;
-    private final File defaultIcon;
+    private final URL defaultIcon;
     private List<Shortcut> shortcuts;
 
     public ShortcutSet(ObservableDirectory shortcutDirectory, ObservableDirectory iconDirectory,
-                       File configFilesDirectory, File defaultIcon) {
+                       File configFilesDirectory, URL defaultIcon) {
         this.shortcuts = new ArrayList<>();
         this.iconDirectory = iconDirectory;
         this.configFilesDirectory = configFilesDirectory;
@@ -56,18 +57,25 @@ public class ShortcutSet extends Observable implements Observer {
             getShortcuts().clear();
             for (File shortcutFile : (File[]) arg) {
                 try {
+                    URL iconURL;
                     File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
                     if (!iconFile.exists()) {
-                        iconFile = defaultIcon;
+                        iconURL = defaultIcon;
+                    } else {
+                        iconURL = new URL("file://"+iconFile.getAbsolutePath());
                     }
+
+
+
+
                     File configFile = new File(configFilesDirectory, shortcutFile.getName());
 
                     Shortcut shortcut;
                     if (configFile.exists()) {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile),
+                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, Script.createInstance(shortcutFile),
                                 configFile);
                     } else {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconFile, Script.createInstance(shortcutFile));
+                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, Script.createInstance(shortcutFile));
                     }
                     this.getShortcuts().add(shortcut);
                 } catch (IOException e) {

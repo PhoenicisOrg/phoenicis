@@ -20,7 +20,6 @@ package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -70,7 +69,7 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
                 i++;
                 return new VirtualDriveDTO.Builder()
                         .withName(virtualDrive.getName())
-                        .withIcon(playOnLinuxContext.makeDefaultIconPath())
+                        .withIcon(playOnLinuxContext.makeDefaultIconURL())
                         .build();
             }
         };

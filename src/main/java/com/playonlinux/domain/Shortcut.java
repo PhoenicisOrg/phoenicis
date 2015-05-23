@@ -19,25 +19,26 @@
 package com.playonlinux.domain;
 
 import java.io.File;
+import java.net.URL;
 
 public class Shortcut {
     public String getShortcutName() {
         return shortcutName;
     }
 
-    public File getIconPath() {
+    public URL getIconPath() {
         return iconPath;
     }
 
     private final String shortcutName;
-    private final File iconPath;
+    private final URL iconPath;
     private final Script runScript;
     private final File configFile;
 
-    public Shortcut(String shorctName, File iconPath, Script runScript) {
+    public Shortcut(String shorctName, URL iconPath, Script runScript) {
         this(shorctName, iconPath, runScript, null);
     }
-    public Shortcut(String shortcutName, File iconPath, Script runScript, File configFile) {
+    public Shortcut(String shortcutName, URL iconPath, Script runScript, File configFile) {
         this.shortcutName = shortcutName;
         this.iconPath = iconPath;
         this.runScript = runScript;

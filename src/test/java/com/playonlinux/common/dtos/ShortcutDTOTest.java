@@ -22,6 +22,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.junit.Assert.*;
 
@@ -30,10 +32,10 @@ public class ShortcutDTOTest {
     private ShortcutDTO shortcutDto;
 
     @Before
-    public void setUp() {
+    public void setUp() throws MalformedURLException {
         this.shortcutDto = new ShortcutDTO.Builder()
                 .withName("Name")
-                .withIcon(new File("/tmp/icon"))
+                .withIcon(new URL(new File("/tmp/icon").getAbsolutePath()))
                 .build();
     }
     @Test
@@ -43,6 +45,6 @@ public class ShortcutDTOTest {
 
     @Test
     public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
-        assertEquals("/tmp/icon", shortcutDto.getIcon().getAbsolutePath());
+        assertEquals("/tmp/icon", shortcutDto.getIcon().toString());
     }
 }

@@ -29,6 +29,7 @@ import com.playonlinux.common.dtos.ShortcutDTO;
 import com.playonlinux.utils.ObservableDirectory;
 
 import java.io.File;
+import java.net.URL;
 import java.util.*;
 
 @Scan
@@ -46,7 +47,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
-        File defaultIcon = playOnLinuxContext.makeDefaultIconPath();
+        URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
 
         ObservableDirectory shortcutDirectoryObservable = new ObservableDirectory(shortcutDirectory);
         ObservableDirectory iconDirectoryObservable = new ObservableDirectory(iconDirectory);

@@ -48,7 +48,7 @@ public enum OperatingSystem {
             return OperatingSystem.FREEBSD;
         }
 
-        throw new PlayOnLinuxError(String.valueOf(System.out.format("Incompatible operation system \"%s\"", name)));
+        throw new PlayOnLinuxError(String.format("Incompatible operation system \"%s\"", name));
     }
 
     public String fetchShortName() {
