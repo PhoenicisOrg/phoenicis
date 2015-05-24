@@ -40,12 +40,18 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
 
     private Iterator<VirtualDriveDTO> virtualdrivesDTOInterator;
 
+    final ObservableDirectory observableWineprefixes;
+
     public InstalledVirtualDrivesPlayOnLinuxImplementation() throws PlayOnLinuxError {
         File winePrefixes = playOnLinuxContext.makePrefixesPath();
-        final ObservableDirectory observableWineprefixes = new ObservableDirectory(winePrefixes);
+        observableWineprefixes = new ObservableDirectory(winePrefixes);
 
         observableWineprefixes.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(observableWineprefixes);
+    }
+
+    protected void finalize() {
+        observableWineprefixes.deleteObserver(this);
     }
 
     @Override

@@ -61,6 +61,9 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
         shortcutSet.addObserver(this);
     }
 
+    protected void finalize() {
+        shortcutSet.deleteObserver(this);
+    }
 
     @Override
     public synchronized void update(Observable o, Object arg) {

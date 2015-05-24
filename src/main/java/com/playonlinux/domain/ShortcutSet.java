@@ -47,6 +47,11 @@ public class ShortcutSet extends Observable implements Observer {
         iconDirectory.addObserver(this);
     }
 
+    protected void finalize() {
+        shortcutDirectory.deleteObserver(this);
+        iconDirectory.deleteObserver(this);
+    }
+
     synchronized public List<Shortcut> getShortcuts() {
         return shortcuts;
     }
@@ -64,9 +69,6 @@ public class ShortcutSet extends Observable implements Observer {
                     } else {
                         iconURL = new URL("file://"+iconFile.getAbsolutePath());
                     }
-
-
-
 
                     File configFile = new File(configFilesDirectory, shortcutFile.getName());
 
