@@ -28,6 +28,10 @@
     -fx-background-color:#FFFFFF;
 }
 
+#logo {
+    -fx-font-family: "Maven Pro";
+    -fx-font-size: 20px;
+}
 .thin {
     /* -fx-font-family: Roboto Thin; */
     -fx-font-weight: 100;

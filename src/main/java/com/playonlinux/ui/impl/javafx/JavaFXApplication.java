@@ -32,7 +32,7 @@ public class JavaFXApplication extends Application {
     public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("common/playonlinux.png")));
         primaryStage.setTitle("PlayOnLinux");
-        //loadFonts();
+        loadFonts();
 
         MainWindow mainWindow = new MainWindow();
 
@@ -47,9 +47,7 @@ public class JavaFXApplication extends Application {
     }
 
     private void loadFonts() {
-        Font.loadFont(getClass().getResource("common/roboto/Roboto-regular.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("common/roboto/Roboto-light.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("common/roboto/Roboto-thin.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("common/mavenpro/MavenPro-Medium.ttf").toExternalForm(), 12);
     }
 
 }
