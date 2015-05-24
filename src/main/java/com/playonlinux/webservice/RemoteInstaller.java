@@ -18,16 +18,8 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.dtos.AvailableCategoriesDTO;
-import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
-import com.playonlinux.common.dtos.DownloadStateDTO;
 import com.playonlinux.utils.BackgroundService;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-
-import java.net.URL;
 import java.util.Observable;
-import java.util.concurrent.Semaphore;
 
 /**
  * This class download a given script from PlayOnLinux webservices

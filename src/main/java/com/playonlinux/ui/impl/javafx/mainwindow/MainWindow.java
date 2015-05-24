@@ -27,8 +27,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.net.MalformedURLException;
-
 import static com.playonlinux.domain.Localisation.translate;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {

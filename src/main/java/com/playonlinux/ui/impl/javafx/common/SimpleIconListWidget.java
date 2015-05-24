@@ -18,8 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;

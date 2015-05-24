@@ -31,7 +31,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
-import java.io.File;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
