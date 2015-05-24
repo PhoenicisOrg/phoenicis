@@ -27,7 +27,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import com.playonlinux.utils.messages.CancelerMessage;
+import com.playonlinux.common.messages.CancelerMessage;
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     Pane contentPanel;

@@ -22,7 +22,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import com.playonlinux.utils.messages.CancelerMessage;
+import com.playonlinux.common.messages.CancelerMessage;
 
 import java.net.URL;
 

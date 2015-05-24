@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.common.dtos.ShortcutDTO;
+import com.playonlinux.common.dto.ShortcutDTO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

@@ -21,8 +21,8 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.ui.api.EventHandler;
-import com.playonlinux.ui.api.RemoteAvailableInstallers;
+import com.playonlinux.common.api.services.EventHandler;
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.api.UIEventHandler;
 import javafx.scene.control.Alert;
 

@@ -18,7 +18,7 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.utils.BackgroundService;
+import com.playonlinux.common.api.services.BackgroundService;
 import java.util.Observable;
 
 /**

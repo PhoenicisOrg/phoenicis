@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.ui.api.InstalledApplications;
+import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.scene.Scene;

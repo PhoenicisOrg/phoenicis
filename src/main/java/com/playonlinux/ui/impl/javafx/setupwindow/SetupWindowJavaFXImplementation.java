@@ -18,19 +18,19 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.api.ui.ProgressStep;
+import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import com.playonlinux.api.ui.SetupWindow;
+import com.playonlinux.common.api.ui.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.utils.messages.CancelerMessage;
-import com.playonlinux.utils.messages.CancelerSynchroneousMessage;
-import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.utils.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.common.messages.CancelerMessage;
+import com.playonlinux.common.messages.CancelerSynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
 
 import java.io.File;
 import java.net.MalformedURLException;

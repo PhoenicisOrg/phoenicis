@@ -16,27 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.cli;
+package com.playonlinux.common.messages;
 
-import com.playonlinux.common.api.ui.UIMessageSender;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.common.messages.Message;
-import com.playonlinux.common.messages.SynchroneousMessage;
+public abstract class AsynchroneousMessage implements Message {
 
-public class UIMessageSenderCLIImplementation<T> implements UIMessageSender<T> {
-    @Override
-    public T synchroneousSendAndGetResult(SynchroneousMessage<T> message) throws InterruptedException, CancelException {
-        message.run();
-        return message.getResponse();
-    }
-
-    @Override
-    public void synchroneousSend(Message message) {
-        message.run();
-    }
-
-    @Override
-    public void asynchroneousSend(Message message) {
-        new Thread(message).start();
+    public void run() {
+        this.execute(this);
     }
 }

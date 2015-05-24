@@ -16,12 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.api.ui;
+package com.playonlinux.common.dto;
 
-public interface ProgressStep {
-    void setProgressPercentage(double value);
+import com.playonlinux.common.api.dto.AbstractDTO;
 
-    void setText(String text);
+public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> implements AbstractDTO {
+    DownloadStateDTO downloadState;
 
-    double getProgressPercentage();
+    public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
+        return envelopeContent;
+    }
+
+    public void setEnvelopeContent(ENVELOPE_CONTENT_TYPE envelopeContent) {
+        this.envelopeContent = envelopeContent;
+    }
+
+    public DownloadStateDTO getDownloadState() {
+        return downloadState;
+    }
+
+    public void setDownloadState(DownloadStateDTO downloadState) {
+        this.downloadState = downloadState;
+    }
+
+    ENVELOPE_CONTENT_TYPE envelopeContent;
 }

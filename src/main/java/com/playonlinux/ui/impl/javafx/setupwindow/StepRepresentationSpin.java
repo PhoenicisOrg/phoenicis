@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import javafx.scene.control.ProgressIndicator;
-import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
     public StepRepresentationSpin(SetupWindowJavaFXImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,

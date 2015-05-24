@@ -16,13 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.api.ui;
+package com.playonlinux.common.messages;
 
-public interface Controller {
-    void startApplication();
-
-    SetupWindow createSetupWindowGUIInstance(String title);
-
-    UIMessageSender createUIMessageSender();
+public interface CancelerMessage extends Message {
+    void sendCancelSignal();
 
 }

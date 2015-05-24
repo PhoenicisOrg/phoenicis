@@ -18,13 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.api.ui.ProgressStep;
+import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
-import com.playonlinux.utils.messages.AsynchroneousMessage;
-import com.playonlinux.utils.messages.InterrupterSynchroneousMessage;
-import com.playonlinux.utils.messages.Message;
+import com.playonlinux.common.messages.AsynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.common.messages.Message;
 
 public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressStep {
     ProgressBar progressBar = new ProgressBar();

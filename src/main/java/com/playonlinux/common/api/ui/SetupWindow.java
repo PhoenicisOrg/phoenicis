@@ -16,11 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.api.ui;
+package com.playonlinux.common.api.ui;
 
-import com.playonlinux.utils.messages.CancelerSynchroneousMessage;
-import com.playonlinux.utils.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.utils.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.common.messages.CancelerSynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
 
 import java.io.File;
 import java.net.MalformedURLException;

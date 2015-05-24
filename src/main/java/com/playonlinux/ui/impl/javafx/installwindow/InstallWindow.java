@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.ui.api.RemoteAvailableInstallers;
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.application.Platform;
