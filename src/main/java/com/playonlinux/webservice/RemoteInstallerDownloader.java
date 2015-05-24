@@ -27,24 +27,40 @@ import com.playonlinux.common.Progressable;
 public class RemoteInstallerDownloader extends Progressable {
 
     private final String url;
+    private String script;
+    private Runnable callBack;
 
     public RemoteInstallerDownloader() {
         this.url = null;
     }
 
-    String fetchScript(String scriptName) {
-        return null;
-    }
-
     public BackgroundService createTask(String selectedItemLabel) {
-        return new Task();
+        return new Task(this);
     }
 
+    public RemoteInstallerDownloader withScript(String scriptName) {
+        this.script = scriptName;
+        return this;
+    }
+
+    public RemoteInstallerDownloader withCallBack(Runnable callBack) {
+        this.callBack = callBack;
+        return this;
+    }
+
+    public void runCallback() {
+        if(callBack != null) {
+            this.callBack.run();
+        }
+    }
 
     private class Task implements BackgroundService {
         DownloadThread downloadThread;
-        Task() {
-            downloadThread = new DownloadThread();
+        RemoteInstallerDownloader remoteInstallerDownloader;
+
+        Task(RemoteInstallerDownloader remoteInstallerDownloader) {
+            this.remoteInstallerDownloader = remoteInstallerDownloader;
+            downloadThread = new DownloadThread(remoteInstallerDownloader);
         }
         @Override
         public void shutdown() {
@@ -58,21 +74,30 @@ public class RemoteInstallerDownloader extends Progressable {
     }
 
     private class DownloadThread extends Thread {
+        private final RemoteInstallerDownloader remoteInstallerDownloader;
+
+        public DownloadThread(RemoteInstallerDownloader remoteInstallerDownloader) {
+            super();
+            this.remoteInstallerDownloader = remoteInstallerDownloader;
+        }
+
         public void run() {
-            setState(Progressable.State.RUNNING);
+            remoteInstallerDownloader.setState(Progressable.State.RUNNING);
             for(float i = 0; i < 100; i += 0.1) {
-                setPercentage(i);
+                remoteInstallerDownloader.setPercentage(i);
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            remoteInstallerDownloader.setState(Progressable.State.SUCCESS);
+            remoteInstallerDownloader.runCallback();
         }
 
 
         public void shutdown() {
-
+            this.interrupt();
         }
     }
 }
