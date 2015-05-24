@@ -242,7 +242,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
                 playOnLinuxError.printStackTrace();
             }
         });
-        searchWidget.setOnKeyPressed(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
+        searchWidget.setOnKeyReleased(event -> availableInstallerListWidget.setSearchFilter(searchWidget.getText()));
         testingCheck.setOnAction(event -> availableInstallerListWidget.setIncludeTesting(testingCheck.isSelected()));
         noCdNeededCheck.setOnAction(event -> availableInstallerListWidget.setIncludeNoCDNeeded(noCdNeededCheck.isSelected()));
         commercialCheck.setOnAction(event -> availableInstallerListWidget.setIncludeCommercial(commercialCheck.isSelected()));
