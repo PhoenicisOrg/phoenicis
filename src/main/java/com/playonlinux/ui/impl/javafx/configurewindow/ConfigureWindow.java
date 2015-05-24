@@ -43,9 +43,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         } else {
             instance.toFront();
         }
-        instance.setOnCloseRequest(event -> {
-            instance = null;
-        });
+
         return instance;
     }
 
@@ -74,6 +72,10 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         InstalledVirtualDrives installedVirtualDrives = getEventHandler().getInstalledVirtualDrives();
         installedVirtualDrives.addObserver(this.installedVirtualDrivesWidget);
 
+        this.setOnCloseRequest(event -> {
+            installedVirtualDrives.deleteObserver(this.installedVirtualDrivesWidget);
+            instance = null;
+        });
     }
 
     public ConfigureWindowEventHandler getEventHandler() {

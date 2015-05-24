@@ -24,4 +24,6 @@ import java.util.Observer;
 
 public interface InstalledVirtualDrives extends Iterable<VirtualDriveDTO> {
     void addObserver(Observer o);
+
+    void deleteObserver(Observer o);
 }
