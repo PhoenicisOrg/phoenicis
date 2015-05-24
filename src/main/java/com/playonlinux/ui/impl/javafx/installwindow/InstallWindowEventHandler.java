@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.common.Progressable;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -32,6 +33,7 @@ import static com.playonlinux.domain.Localisation.translate;
 @Scan
 public class InstallWindowEventHandler implements UIEventHandler {
     private final InstallWindow installWindow;
+    private InstallWindow remoteInstallerObservable;
 
     InstallWindowEventHandler(InstallWindow installWindow) {
         this.installWindow = installWindow;
@@ -57,9 +59,6 @@ public class InstallWindowEventHandler implements UIEventHandler {
         return getRemoteAvailableInstallers().getScriptByName(scriptName).getDescription();
     }
 
-    public void installProgram(String selectedItemLabel) {
-        System.out.println(selectedItemLabel);
-    }
 
     public void updateAvailableInstallers() {
         try {
@@ -76,4 +75,14 @@ public class InstallWindowEventHandler implements UIEventHandler {
     public void clearSearch() {
         installWindow.clearSearch();
     }
+
+    /* Install feature */
+    public Progressable getRemoteInstallerObservable() {
+        return getMainEventHandler().getRemoteInstallerDownloaderDownloader();
+    }
+
+    public void installProgram(String selectedItemLabel) {
+        getMainEventHandler().installProgram(selectedItemLabel);
+    }
+
 }

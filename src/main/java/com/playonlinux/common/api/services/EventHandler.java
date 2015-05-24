@@ -18,6 +18,7 @@
 
 package com.playonlinux.common.api.services;
 
+import com.playonlinux.common.Progressable;
 import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.io.File;
@@ -34,4 +35,8 @@ public interface EventHandler {
     RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError;
 
     void onApplicationStarted() throws MalformedURLException;
+
+    Progressable getRemoteInstallerDownloaderDownloader();
+
+    void installProgram(String selectedItemLabel);
 }
