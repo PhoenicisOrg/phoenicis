@@ -22,18 +22,13 @@ import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 
 import org.apache.commons.io.FileUtils;
-import org.python.antlr.ast.Str;
-
-import javax.print.attribute.SetOfIntegerSyntax;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class WinePrefix {
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
@@ -44,7 +39,7 @@ public class WinePrefix {
     private static final String EXECUTABLE_EXTENSION = "exe";
     private static final String DRIVE_C = "drive_c";
 
-    private static final String[] EXCLUDES_FILES = new String[] {"iexplore.exe", "notepad.exe"};
+    private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
 
@@ -121,7 +116,7 @@ public class WinePrefix {
     }
 
     private boolean checkSearchExcludedFiles(String candidateName) {
-        return (Arrays.binarySearch(EXCLUDES_FILES, candidateName) == 0);
+        return (Arrays.binarySearch(SEARCH_EXCLUDED_EXECUTABLE, candidateName) == 0);
     }
 
     public Collection<File> findAllExecutables() {
