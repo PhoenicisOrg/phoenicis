@@ -53,15 +53,9 @@ public class HeaderPane extends GridPane implements Observer {
 
         this.eventHandler = installWindowEventHandler;
         this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
-
         this.update(availableInstallers);
         this.setAlignment(Pos.CENTER);
 
-        this.setUpEvents();
-    }
-
-    private void setUpEvents() {
-        availableInstallers.addObserver(this);
     }
 
     @Override

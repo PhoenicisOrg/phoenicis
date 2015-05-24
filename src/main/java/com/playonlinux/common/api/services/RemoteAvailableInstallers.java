@@ -27,6 +27,8 @@ import java.util.Observer;
 public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
     void addObserver(Observer o);
 
+    void deleteObserver(Observer o);
+
     int getNumberOfCategories();
 
     boolean isUpdating();

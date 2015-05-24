@@ -25,15 +25,11 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.api.UIEventHandler;
-import javafx.scene.control.Alert;
 
-
-import static com.playonlinux.domain.Localisation.translate;
 
 @Scan
 public class InstallWindowEventHandler implements UIEventHandler {
     private final InstallWindow installWindow;
-    private InstallWindow remoteInstallerObservable;
 
     InstallWindowEventHandler(InstallWindow installWindow) {
         this.installWindow = installWindow;
@@ -47,7 +43,7 @@ public class InstallWindowEventHandler implements UIEventHandler {
         return mainEventHandler;
     }
 
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError {
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() {
         return mainEventHandler.getRemoteAvailableInstallers();
     }
 
@@ -61,15 +57,7 @@ public class InstallWindowEventHandler implements UIEventHandler {
 
 
     public void updateAvailableInstallers() {
-        try {
-            getRemoteAvailableInstallers().refresh();
-        } catch (PlayOnLinuxError playOnLinuxError) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(translate("Error while trying to update installers."));
-            alert.setContentText(String.format("The error was: %s", playOnLinuxError.toString()));
-            alert.show();
-            playOnLinuxError.printStackTrace();
-        }
+        getRemoteAvailableInstallers().refresh();
     }
 
     public void clearSearch() {
