@@ -18,6 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import com.playonlinux.common.api.services.EventHandler;
+import com.playonlinux.common.api.services.InstalledApplications;
+import com.playonlinux.common.api.services.InstalledVirtualDrives;
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;

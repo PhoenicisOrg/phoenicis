@@ -18,7 +18,7 @@
 
 package com.playonlinux.domain;
 
-import com.playonlinux.utils.BackgroundService;
+import com.playonlinux.common.api.services.BackgroundService;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 

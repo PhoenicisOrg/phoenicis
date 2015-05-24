@@ -16,29 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dtos;
+package com.playonlinux.common.dto;
 
-public class DownloadStateDTO implements AbstractDTO {
-    private State state;
+import com.playonlinux.common.api.dto.AbstractDTO;
 
-    public State getState() {
-        return state;
+import java.util.List;
+
+public class AvailableCategoriesDTO implements AbstractDTO {
+    public List<CategoryDTO> getCategories() {
+        return categories;
     }
 
-    public void setState(State state) {
-        this.state = state;
-    }
+    List<CategoryDTO> categories;
 
-    public enum State {
-        WAITING,
-        DOWNLOADING,
-        SUCCESS,
-        FAILED
-    }
-
-    @Override
-    public String toString() {
-        return this.state.name();
-    }
 
 }

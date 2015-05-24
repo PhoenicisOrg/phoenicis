@@ -18,7 +18,7 @@
 
 package com.playonlinux.services;
 
-import com.playonlinux.utils.BackgroundService;
+import com.playonlinux.common.api.services.BackgroundService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class PlayOnLinuxBackgroundServicesManager {
     }
 
     public void shutdown() {
-        runningTask.forEach(com.playonlinux.utils.BackgroundService::shutdown);
+        runningTask.forEach(BackgroundService::shutdown);
     }
 
     public void unregister(BackgroundService backgroundService) {

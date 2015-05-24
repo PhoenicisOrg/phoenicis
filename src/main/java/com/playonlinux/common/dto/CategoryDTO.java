@@ -16,12 +16,39 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.common.dto;
 
-import com.playonlinux.common.dtos.VirtualDriveDTO;
+import java.util.List;
 
-import java.util.Observer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.playonlinux.common.api.dto.AbstractDTO;
 
-public interface InstalledVirtualDrives extends Iterable<VirtualDriveDTO> {
-    void addObserver(Observer o);
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CategoryDTO implements AbstractDTO {
+    public enum CategoryType {
+        INSTALLERS,
+        FUNCTIONS
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public CategoryType getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<ScriptDTO> getScripts() {
+        return scripts;
+    }
+
+    int id;
+    CategoryType type;
+    String name;
+    List <ScriptDTO> scripts;
+
 }

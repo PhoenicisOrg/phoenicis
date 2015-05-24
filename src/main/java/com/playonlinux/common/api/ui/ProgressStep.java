@@ -16,10 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils;
+package com.playonlinux.common.api.ui;
 
-public interface BackgroundService {
-    void shutdown();
+public interface ProgressStep {
+    void setProgressPercentage(double value);
 
-    void start();
+    void setText(String text);
+
+    double getProgressPercentage();
 }

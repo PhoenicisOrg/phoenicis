@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.api.ui.Controller;
+import com.playonlinux.common.api.ui.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.AbstractConfigFile;

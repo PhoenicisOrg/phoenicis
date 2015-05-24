@@ -16,9 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.messages;
+package com.playonlinux.common.messages;
 
-public interface CancelerMessage extends Message {
-    void sendCancelSignal();
+public abstract class InterrupterSynchroneousMessage extends SynchroneousMessage implements CancelerMessage {
+    Thread messageSender;
 
+    public InterrupterSynchroneousMessage() {
+        this.messageSender = Thread.currentThread();
+    }
+
+    public void sendCancelSignal() {
+        messageSender.interrupt();
+    }
 }

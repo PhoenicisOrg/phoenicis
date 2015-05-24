@@ -19,13 +19,12 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxError;
-import com.playonlinux.ui.api.RemoteAvailableInstallers;
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 
-import java.net.MalformedURLException;
 import java.util.Observable;
 import java.util.Observer;
 

@@ -16,12 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.common.api.services;
 
-import com.playonlinux.common.dtos.ShortcutDTO;
+import com.playonlinux.common.dto.CategoryDTO;
+import com.playonlinux.common.dto.ScriptDTO;
+import com.playonlinux.domain.PlayOnLinuxError;
 
 import java.util.Observer;
 
-public interface InstalledApplications extends Iterable<ShortcutDTO> {
+public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
     void addObserver(Observer o);
+
+    int getNumberOfCategories();
+
+    boolean isUpdating();
+
+    boolean hasFailed();
+
+    Iterable<ScriptDTO> getAllScripts();
+
+    Iterable<ScriptDTO> getAllScripts(String filter);
+
+    Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError;
+
+    ScriptDTO getScriptByName(String scriptName) throws PlayOnLinuxError;
+
+    void refresh();
 }
