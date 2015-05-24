@@ -25,6 +25,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 
 import static com.playonlinux.domain.Localisation.translate;
