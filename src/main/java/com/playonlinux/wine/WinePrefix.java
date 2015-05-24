@@ -44,7 +44,7 @@ public class WinePrefix {
     private static final String EXECUTABLE_EXTENSION = "exe";
     private static final String DRIVE_C = "drive_c";
 
-    private static String[] EXCLUDES_FILES = new String[1]; // One element for now
+    private static String[] EXCLUDES_FILES = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
 
@@ -121,12 +121,7 @@ public class WinePrefix {
     }
 
     private boolean checkSearchExcludedFiles(String candidateName) {
-        if (EXCLUDES_FILES[0] == null) { // Check if the first element exist
-            EXCLUDES_FILES[0] = "iexplore.exe"; // Complete if empty
-        }
-        
-        int isIn = Arrays.binarySearch(EXCLUDES_FILES, candidateName); // Check if candidateName is in EXCLUDES_FILES
-        
+        int isIn = Arrays.binarySearch(EXCLUDES_FILES, candidateName);
         return (isIn == 0);
     }
 
