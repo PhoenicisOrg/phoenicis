@@ -18,6 +18,7 @@
 
 package com.playonlinux.services;
 
+import com.playonlinux.common.Progressable;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -26,6 +27,7 @@ import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.domain.Script;
 import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.common.api.services.InstalledVirtualDrives;
+import com.playonlinux.webservice.RemoteInstallerDownloader;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +42,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
     private RemoteAvailableInstallers remoteAvailableInstallers;
+    private RemoteInstallerDownloader remoteInstallerDownloaderDownloader;
 
     public void runLocalScript(File scriptToRun) throws IOException {
         Script playonlinuxScript = Script.createInstance(scriptToRun);
@@ -63,6 +66,20 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
         return this.virtualDrives;
     }
 
+    /* Remote Installer Downloader */
+    @Override
+    public Progressable getRemoteInstallerDownloaderDownloader() {
+        if(remoteInstallerDownloaderDownloader == null) {
+            remoteInstallerDownloaderDownloader = new RemoteInstallerDownloader();
+        }
+        return remoteInstallerDownloaderDownloader;
+    }
+
+    @Override
+    public void installProgram(String selectedItemLabel) {
+        playOnLinuxBackgroundServicesManager.register(remoteInstallerDownloaderDownloader.createTask(selectedItemLabel));
+    }
+
     @Override
     public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError {
         if(remoteAvailableInstallers == null) {
@@ -80,5 +97,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     public void onApplicationStarted() throws MalformedURLException {
         // Will be implemented later
     }
+
+
 
 }

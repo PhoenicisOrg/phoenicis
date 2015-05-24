@@ -40,7 +40,7 @@ public class PlayOnLinuxLogo extends HBox {
 
         this.getChildren().add(logoView);
         this.getChildren().add(text);
-        this.setPadding(new Insets(0, 10, 0, 10));
+        this.setPadding(new Insets(0, 10, 0, 0));
         this.setSpacing(5.);
     }
 }

@@ -16,33 +16,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice;
+package com.playonlinux.common;
 
-import com.playonlinux.common.api.services.BackgroundService;
 import java.util.Observable;
 
-/**
- * This class download a given script from PlayOnLinux webservices
- */
-public class RemoteInstaller extends Observable implements BackgroundService {
-
-    private final String url;
-
-    public RemoteInstaller(String url) {
-        this.url = url;
+public class Progressable extends Observable {
+    public enum State {
+        READY,
+        RUNNING,
+        SUCCESS,
+        FAILED
     }
 
-    String fetchScript(String scriptName) {
-        return null;
+    private State state;
+    private float percentage;
+
+    private boolean progressing;
+
+    protected void setState(State state) {
+        this.state = state;
+    }
+    public boolean isProgressing() {
+        return state == State.RUNNING;
     }
 
-    @Override
-    public void shutdown() {
-        // TODO
+    public synchronized float getPercentage() {
+        return percentage;
     }
 
-    @Override
-    public void start() {
-        // TODO
+    protected synchronized void setPercentage(float percentage) {
+        this.percentage = percentage;
+        this.setChanged();
+        this.notifyObservers();
     }
 }

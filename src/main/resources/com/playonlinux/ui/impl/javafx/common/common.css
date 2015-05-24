@@ -36,3 +36,8 @@
     /* -fx-font-family: Roboto Thin; */
     -fx-font-weight: 100;
 }
+
+.smallProgressIndicator .percentage {
+    -fx-fill: null;
+    -fx-padding: -10px;
+}

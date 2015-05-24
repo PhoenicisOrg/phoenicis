@@ -23,6 +23,7 @@ import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
+import com.playonlinux.ui.impl.javafx.common.ProgressButton;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -61,7 +62,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private WebView descriptionWidget;
     private ImageView miniatureWidget;
-    private Button installButton;
+    private ProgressButton installButton;
     private Button refreshButton;
     private Button retryButton;
 
@@ -155,7 +156,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         ImageView installImage = new ImageView(new Image(getClass().getResourceAsStream("install.png")));
         installImage.setFitWidth(16);
         installImage.setFitHeight(16);
-        installButton = new Button(translate("Install"), installImage);
+        installButton = new ProgressButton(translate("Install"), installImage);
+
         installButton.setDisable(true);
 
         ImageView updateImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
@@ -219,12 +221,14 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void setUpEvents() throws PlayOnLinuxError {
         availableInstallers.addObserver(this);
+
+        this.eventHandler.getRemoteInstallerObservable().addObserver(installButton);
         availableInstallerListWidget.addChangeListener(newValue -> {
             try {
                 if (newValue == null || StringUtils.isBlank(newValue)) {
-                    installButton.setDisable(true);
+                    installButton.setEnableIfPosible(false);
                 } else {
-                    installButton.setDisable(false);
+                    installButton.setEnableIfPosible(true);
                     try {
                         descriptionWidget.getEngine().loadContent(
                                 new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
