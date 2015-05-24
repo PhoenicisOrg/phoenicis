@@ -3,3 +3,9 @@ bin/
 target/ 
 .DS_Store
 .idea
+
+# Eclipse
+.project
+.classpath
+.settings/
+*.class

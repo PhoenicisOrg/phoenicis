@@ -20,15 +20,18 @@ package com.playonlinux.wine;
 
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
+
 import org.apache.commons.io.FileUtils;
 import org.python.antlr.ast.Str;
 
 import javax.print.attribute.SetOfIntegerSyntax;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,6 +44,7 @@ public class WinePrefix {
     private static final String EXECUTABLE_EXTENSION = "exe";
     private static final String DRIVE_C = "drive_c";
 
+    private static String[] EXCLUDES_FILES = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
 
@@ -109,18 +113,16 @@ public class WinePrefix {
             if(candidate.isDirectory()) {
                 candidates.addAll(findAllFilesByExtension(extension, candidate));
             } else if(candidate.getName().toLowerCase().endsWith(extension.toLowerCase()) &&
-                    !getSearchExcludedFiles().contains(candidate.getName())) {
+                    !checkSearchExcludedFiles(candidate.getName())) {
                 candidates.add(candidate);
             }
         }
         return candidates;
     }
 
-    private Collection<String> getSearchExcludedFiles() {
-        final ArrayList<String> searchExcludedFiles = new ArrayList<>();
-        searchExcludedFiles.add("iexplore.exe");
-
-        return searchExcludedFiles;
+    private boolean checkSearchExcludedFiles(String candidateName) {
+        int isIn = Arrays.binarySearch(EXCLUDES_FILES, candidateName);
+        return (isIn == 0);
     }
 
     public Collection<File> findAllExecutables() {
