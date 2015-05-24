@@ -10,4 +10,4 @@ The build instructions can be found on our wiki: http://wiki.playonlinux.com/ind
 * Jenkins: http://www.playonlinux.org:8080/
 * SonarQube: http://www.playonlinux.org:9000/
 
-test de pull request
+test de pull request 2
