@@ -22,6 +22,4 @@ public interface BackgroundService {
     void shutdown();
 
     void start();
-
-    void waitTerminated();
 }
