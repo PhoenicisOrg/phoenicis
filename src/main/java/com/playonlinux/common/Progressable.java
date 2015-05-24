@@ -35,6 +35,8 @@ public class Progressable extends Observable {
 
     protected void setState(State state) {
         this.state = state;
+        this.setChanged();
+        this.notifyObservers();
     }
     public boolean isProgressing() {
         return state == State.RUNNING;
