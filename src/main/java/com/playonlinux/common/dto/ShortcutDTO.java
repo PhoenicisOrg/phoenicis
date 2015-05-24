@@ -16,11 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dtos;
+package com.playonlinux.common.dto;
+
+import com.playonlinux.common.api.dto.AbstractDTO;
 
 import java.net.URL;
 
-public class ShortcutDTO implements AbstractDTO  {
+public class ShortcutDTO implements AbstractDTO {
     private final URL icon;
     private final String name;
 

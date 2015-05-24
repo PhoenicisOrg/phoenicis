@@ -16,25 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.messages;
+package com.playonlinux.common.dto;
 
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.common.api.dto.AbstractDTO;
 
-public abstract class CancelerSynchroneousMessage<RESULT_TYPE> extends SynchroneousMessage implements CancelerMessage {
-    private Boolean processCanceled = false;
+public class DownloadStateDTO implements AbstractDTO {
+    private State state;
 
-    public RESULT_TYPE getResponse() throws InterruptedException, CancelException {
-        RESULT_TYPE response = (RESULT_TYPE) super.getResponse();
-
-        if(this.processCanceled) {
-            throw new CancelException();
-        }
-
-        return response;
+    public State getState() {
+        return state;
     }
 
-    public void sendCancelSignal() {
-        this.processCanceled = true;
-        super.semaphore.release();
+    public void setState(State state) {
+        this.state = state;
     }
+
+    public enum State {
+        WAITING,
+        DOWNLOADING,
+        SUCCESS,
+        FAILED
+    }
+
+    @Override
+    public String toString() {
+        return this.state.name();
+    }
+
 }

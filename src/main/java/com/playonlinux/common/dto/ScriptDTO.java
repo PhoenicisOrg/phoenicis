@@ -16,15 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dtos;
+package com.playonlinux.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.playonlinux.common.api.dto.AbstractDTO;
 
 import java.util.Comparator;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptDTO implements AbstractDTO  {
+public class ScriptDTO implements AbstractDTO {
 
     private int id;
     private String name;

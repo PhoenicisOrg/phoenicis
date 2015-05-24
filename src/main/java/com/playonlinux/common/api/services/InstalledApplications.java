@@ -16,8 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.messages;
+package com.playonlinux.common.api.services;
 
-public interface Message extends Runnable {
-    void execute(Message message);
+import com.playonlinux.common.dto.ShortcutDTO;
+
+import java.util.Observer;
+
+public interface InstalledApplications extends Iterable<ShortcutDTO> {
+    void addObserver(Observer o);
 }

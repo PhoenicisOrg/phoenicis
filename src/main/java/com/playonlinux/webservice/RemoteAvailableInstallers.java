@@ -18,12 +18,12 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.dtos.DownloadEnvelopeDTO;
-import com.playonlinux.common.dtos.DownloadStateDTO;
-import com.playonlinux.utils.BackgroundService;
+import com.playonlinux.common.dto.DownloadEnvelopeDTO;
+import com.playonlinux.common.dto.DownloadStateDTO;
+import com.playonlinux.common.api.services.BackgroundService;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import com.playonlinux.common.dtos.AvailableCategoriesDTO;
+import com.playonlinux.common.dto.AvailableCategoriesDTO;
 
 import java.net.URL;
 import java.util.Observable;

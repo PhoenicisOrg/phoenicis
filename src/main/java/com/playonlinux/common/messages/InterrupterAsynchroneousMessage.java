@@ -16,16 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.api.ui;
+package com.playonlinux.common.messages;
 
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.utils.messages.Message;
-import com.playonlinux.utils.messages.SynchroneousMessage;
+public abstract class InterrupterAsynchroneousMessage extends AsynchroneousMessage implements CancelerMessage {
+    Thread messageSender;
 
-public interface UIMessageSender <RETURN_TYPE> {
-    RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws InterruptedException, CancelException;
+    public InterrupterAsynchroneousMessage() {
+        this.messageSender = Thread.currentThread();
+    }
 
-    void synchroneousSend(Message message);
-
-    void asynchroneousSend(Message message);
+    public void sendCancelSignal() {
+        messageSender.interrupt();
+    }
 }

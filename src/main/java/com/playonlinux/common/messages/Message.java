@@ -16,38 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dtos;
+package com.playonlinux.common.messages;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CategoryDTO implements AbstractDTO {
-    public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public CategoryType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<ScriptDTO> getScripts() {
-        return scripts;
-    }
-
-    int id;
-    CategoryType type;
-    String name;
-    List <ScriptDTO> scripts;
-
+public interface Message extends Runnable {
+    void execute(Message message);
 }

@@ -18,13 +18,13 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.api.ui.Controller;
+import com.playonlinux.common.api.ui.Controller;
 
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.services.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
-import com.playonlinux.ui.api.EventHandler;
+import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.domain.PlayOnLinuxError;

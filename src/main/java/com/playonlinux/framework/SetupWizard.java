@@ -18,14 +18,14 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.api.ui.Controller;
-import com.playonlinux.api.ui.ProgressStep;
-import com.playonlinux.api.ui.SetupWindow;
-import com.playonlinux.api.ui.UIMessageSender;
+import com.playonlinux.common.api.ui.Controller;
+import com.playonlinux.common.api.ui.ProgressStep;
+import com.playonlinux.common.api.ui.SetupWindow;
+import com.playonlinux.common.api.ui.UIMessageSender;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.domain.CancelException;
-import com.playonlinux.utils.messages.*;
+import com.playonlinux.common.messages.*;
 
 import java.util.List;
 

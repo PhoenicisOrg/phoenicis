@@ -16,22 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.common.messages;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.CancelException;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
+public abstract class CancelerSynchroneousMessage<RESULT_TYPE> extends SynchroneousMessage implements CancelerMessage {
+    private Boolean processCanceled = false;
 
-public interface EventHandler {
-    void runLocalScript(File scriptToRun) throws IOException;
+    public RESULT_TYPE getResponse() throws InterruptedException, CancelException {
+        RESULT_TYPE response = (RESULT_TYPE) super.getResponse();
 
-    InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
+        if(this.processCanceled) {
+            throw new CancelException();
+        }
 
-    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
+        return response;
+    }
 
-    RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError;
-
-    void onApplicationStarted() throws MalformedURLException;
+    public void sendCancelSignal() {
+        this.processCanceled = true;
+        super.semaphore.release();
+    }
 }

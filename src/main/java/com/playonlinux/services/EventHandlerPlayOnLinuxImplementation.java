@@ -21,11 +21,11 @@ package com.playonlinux.services;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.ui.api.RemoteAvailableInstallers;
-import com.playonlinux.ui.api.EventHandler;
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
+import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.domain.Script;
-import com.playonlinux.ui.api.InstalledApplications;
-import com.playonlinux.ui.api.InstalledVirtualDrives;
+import com.playonlinux.common.api.services.InstalledApplications;
+import com.playonlinux.common.api.services.InstalledVirtualDrives;
 
 import java.io.File;
 import java.io.IOException;

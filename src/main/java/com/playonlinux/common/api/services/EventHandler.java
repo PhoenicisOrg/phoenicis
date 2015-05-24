@@ -16,16 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dtos;
+package com.playonlinux.common.api.services;
 
-import java.util.List;
+import com.playonlinux.domain.PlayOnLinuxError;
 
-public class AvailableCategoriesDTO implements AbstractDTO {
-    public List<CategoryDTO> getCategories() {
-        return categories;
-    }
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
-    List<CategoryDTO> categories;
+public interface EventHandler {
+    void runLocalScript(File scriptToRun) throws IOException;
 
+    InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
 
+    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
+
+    RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError;
+
+    void onApplicationStarted() throws MalformedURLException;
 }

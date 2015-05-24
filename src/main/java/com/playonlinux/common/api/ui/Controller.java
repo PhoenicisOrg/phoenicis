@@ -16,16 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.messages;
+package com.playonlinux.common.api.ui;
 
-public abstract class InterrupterAsynchroneousMessage extends AsynchroneousMessage implements CancelerMessage {
-    Thread messageSender;
+public interface Controller {
+    void startApplication();
 
-    public InterrupterAsynchroneousMessage() {
-        this.messageSender = Thread.currentThread();
-    }
+    SetupWindow createSetupWindowGUIInstance(String title);
 
-    public void sendCancelSignal() {
-        messageSender.interrupt();
-    }
+    UIMessageSender createUIMessageSender();
+
 }

@@ -29,8 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import com.playonlinux.utils.messages.CancelerMessage;
-import com.playonlinux.utils.messages.CancelerSynchroneousMessage;
+import com.playonlinux.common.messages.CancelerMessage;
+import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     String textToShow;

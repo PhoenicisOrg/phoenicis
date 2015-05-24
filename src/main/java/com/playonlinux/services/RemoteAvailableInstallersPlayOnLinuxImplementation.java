@@ -19,7 +19,7 @@
 package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.common.dtos.*;
+import com.playonlinux.common.dto.*;
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -31,7 +31,7 @@ import java.util.*;
 
 @Scan
 public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
-        implements com.playonlinux.ui.api.RemoteAvailableInstallers, Observer {
+        implements com.playonlinux.common.api.services.RemoteAvailableInstallers, Observer {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
