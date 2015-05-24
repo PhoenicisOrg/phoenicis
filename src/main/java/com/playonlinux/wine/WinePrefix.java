@@ -44,7 +44,7 @@ public class WinePrefix {
     private static final String EXECUTABLE_EXTENSION = "exe";
     private static final String DRIVE_C = "drive_c";
 
-    private static String[] EXCLUDES_FILES = new String[] {"iexplore.exe", "notepad.exe"};
+    private static final String[] EXCLUDES_FILES = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
 
