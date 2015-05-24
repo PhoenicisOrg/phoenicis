@@ -23,7 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 
 import static com.playonlinux.domain.Localisation.translate;
 
@@ -73,7 +75,9 @@ class ToolBar extends javafx.scene.control.ToolBar {
         TextField searchField = new TextField();
 
 
+        PlayOnLinuxLogo playonlinuxLogo = new PlayOnLinuxLogo();
         this.getItems().addAll(
+                playonlinuxLogo,
                 run,
                 stop,
                 new Separator(),

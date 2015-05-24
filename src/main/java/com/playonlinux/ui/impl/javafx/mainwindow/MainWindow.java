@@ -39,7 +39,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         MenuBar menuBar =  new MenuBar(this);
 
         BorderPane pane = new BorderPane();
-        Scene scene = new PlayOnLinuxScene(pane, 600, 400);
+        Scene scene = new PlayOnLinuxScene(pane, 780, 400);
 
         VBox topContainer = new VBox();
         toolBar = new ToolBar(this);
@@ -82,7 +82,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
 
         this.setScene(scene);
-        this.setTitle("PlayOnLinux");
+        this.setTitle(translate("${application.name}"));
         this.show();
     }
 
