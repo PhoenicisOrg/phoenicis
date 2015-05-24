@@ -121,8 +121,7 @@ public class WinePrefix {
     }
 
     private boolean checkSearchExcludedFiles(String candidateName) {
-        int isIn = Arrays.binarySearch(EXCLUDES_FILES, candidateName);
-        return (isIn == 0);
+        return (Arrays.binarySearch(EXCLUDES_FILES, candidateName) == 0);
     }
 
     public Collection<File> findAllExecutables() {
