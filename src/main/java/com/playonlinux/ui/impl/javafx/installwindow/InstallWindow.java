@@ -81,9 +81,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         } else {
             instance.toFront();
         }
-        instance.setOnCloseRequest(event -> {
-            instance = null;
-        });
 
         return instance;
     }
@@ -221,8 +218,10 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
     private void setUpEvents() throws PlayOnLinuxError {
         availableInstallers.addObserver(this);
+        availableInstallers.addObserver(header);
+        eventHandler.getRemoteInstallerObservable().addObserver(installButton);
+        eventHandler.getRemoteAvailableInstallers().addObserver(availableInstallerListWidget);
 
-        this.eventHandler.getRemoteInstallerObservable().addObserver(installButton);
         availableInstallerListWidget.addChangeListener(newValue -> {
             try {
                 if (newValue == null || StringUtils.isBlank(newValue)) {
@@ -260,6 +259,16 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
         refreshButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
         retryButton.setOnMouseClicked(event -> eventHandler.updateAvailableInstallers());
+
+
+        this.setOnCloseRequest(event -> {
+            availableInstallers.deleteObserver(this);
+            availableInstallers.deleteObserver(header);
+            eventHandler.getRemoteAvailableInstallers().deleteObserver(availableInstallerListWidget);
+            eventHandler.getRemoteInstallerObservable().deleteObserver(installButton);
+
+            instance = null;
+        });
     }
 
 

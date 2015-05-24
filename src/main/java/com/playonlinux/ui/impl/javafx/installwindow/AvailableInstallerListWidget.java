@@ -69,7 +69,6 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxError {
         super();
         this.installWindowEventHandler = installWindowEventHandler;
-        this.installWindowEventHandler.getRemoteAvailableInstallers().addObserver(this);
         remoteAvailableInstallers = this.installWindowEventHandler.getRemoteAvailableInstallers();
     }
 
