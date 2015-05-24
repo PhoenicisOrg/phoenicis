@@ -50,11 +50,11 @@ public class InstallWindowEventHandler implements UIEventHandler {
     }
 
     public void selectCategory(String categoryName) {
-        installWindow.getAvailableInstallerListWidget().setCategoryName(categoryName);
+        installWindow.getAvailableInstallerListWidget().getFilter().setCategory(categoryName);
     }
 
     public String getInstallerDescription(String scriptName) throws PlayOnLinuxError {
-        return getRemoteAvailableInstallers().getScriptByName(scriptName).getDescription();
+        return getRemoteAvailableInstallers().getByName(scriptName).getDescription();
     }
 
     public void installProgram(String selectedItemLabel) {
