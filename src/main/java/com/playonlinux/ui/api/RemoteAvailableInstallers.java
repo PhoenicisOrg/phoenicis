@@ -59,40 +59,55 @@ public interface RemoteAvailableInstallers extends Iterable<CategoryDTO>, Filter
         protected boolean showNoCd;
         protected boolean showCommercial;
 
-        public String getTitle() { return title; }
+        public String getTitle() {
+            return title;
+        }
+
         public void setTitle(String title) {
             //prevent unnecessary filtering
-            if(this.title != title){
+            if (this.title != title) {
                 this.title = title;
                 this.fireUpdate();
             }
         }
 
-        public String getCategory() { return category; }
+        public String getCategory() {
+            return category;
+        }
+
         public void setCategory(String category) {
             this.category = category;
             this.fireUpdate();
         }
 
-        public boolean isShowTesting() { return showTesting; }
+        public boolean isShowTesting() {
+            return showTesting;
+        }
+
         public void setShowTesting(boolean showTesting) {
             this.showTesting = showTesting;
             this.fireUpdate();
         }
 
-        public boolean isShowNoCd() { return showNoCd; }
+        public boolean isShowNoCd() {
+            return showNoCd;
+        }
+
         public void setShowNoCd(boolean showNoCd) {
             this.showNoCd = showNoCd;
             this.fireUpdate();
         }
 
-        public boolean isShowCommercial() { return showCommercial; }
+        public boolean isShowCommercial() {
+            return showCommercial;
+        }
+
         public void setShowCommercial(boolean showCommercial) {
             this.showCommercial = showCommercial;
             this.fireUpdate();
         }
 
-        private void fireUpdate(){
+        private void fireUpdate() {
             this.setChanged();
             this.notifyObservers();
         }

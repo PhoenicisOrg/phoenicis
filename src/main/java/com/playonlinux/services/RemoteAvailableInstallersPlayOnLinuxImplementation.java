@@ -67,7 +67,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         downloadEnvelopeDto = (DownloadEnvelopeDTO<AvailableCategoriesDTO>) arg;
 
         try {
-            if(downloadEnvelopeDto.getEnvelopeContent() != null) {
+            if (downloadEnvelopeDto.getEnvelopeContent() != null) {
                 List<CategoryDTO> availableCategories = new ArrayList<>(
                         downloadEnvelopeDto.getEnvelopeContent().getCategories()
                 );
@@ -98,13 +98,11 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
 
-
-
     @Override
     public Iterable<ScriptDTO> getList() {
         List<ScriptDTO> scripts = new ArrayList<>();
-        for(CategoryDTO categoryDTO: new ArrayList<>(categoriesDTO)) {
-            for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
+        for (CategoryDTO categoryDTO : new ArrayList<>(categoriesDTO)) {
+            for (ScriptDTO scriptDTO : new ArrayList<>(categoryDTO.getScripts())) {
                 scripts.add(scriptDTO);
             }
         }
@@ -116,15 +114,15 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     @Override
     public Iterable<ScriptDTO> getFilteredList() throws PlayOnLinuxError {
         Iterable<ScriptDTO> scriptsToFilter;
-        if(filter.getCategory() == null){
+        if (filter.getCategory() == null) {
             scriptsToFilter = getList();
-        }else{
+        } else {
             scriptsToFilter = getAllScriptsInCategory(filter.getCategory());
         }
 
         List<ScriptDTO> scripts = new ArrayList<>();
-        for(ScriptDTO script : scriptsToFilter){
-            if(getFilter().apply(script)){
+        for (ScriptDTO script : scriptsToFilter) {
+            if (getFilter().apply(script)) {
                 scripts.add(script);
             }
         }
@@ -133,15 +131,15 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
 
     @Override
-    public InstallerFilter getFilter(){
+    public InstallerFilter getFilter() {
         return this.filter;
     }
 
 
     @Override
     public ScriptDTO getByName(String scriptName) throws PlayOnLinuxError {
-        for(ScriptDTO scriptDTO: this.getList()) {
-            if(scriptName.equals(scriptDTO.getName())) {
+        for (ScriptDTO scriptDTO : this.getList()) {
+            if (scriptName.equals(scriptDTO.getName())) {
                 return scriptDTO;
             }
         }
@@ -151,7 +149,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public void refresh() {
-        if(remoteAvailableInstallers != null) {
+        if (remoteAvailableInstallers != null) {
             remoteAvailableInstallers.deleteObserver(this);
             playOnLinuxBackgroundServicesManager.unregister(remoteAvailableInstallers);
         }
@@ -161,8 +159,8 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     private Iterable<ScriptDTO> getAllScriptsInCategory(String categoryName) throws PlayOnLinuxError {
-        for(CategoryDTO categoryDTO: categoriesDTO) {
-            if(categoryName.equals(categoryDTO.getName())) {
+        for (CategoryDTO categoryDTO : categoriesDTO) {
+            if (categoryName.equals(categoryDTO.getName())) {
                 return getAllScriptsInCategory(categoryDTO);
             }
         }
@@ -171,7 +169,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     private Iterable<ScriptDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {
         List<ScriptDTO> scripts = new ArrayList<>();
-        for(ScriptDTO scriptDTO: new ArrayList<>(categoryDTO.getScripts())) {
+        for (ScriptDTO scriptDTO : new ArrayList<>(categoryDTO.getScripts())) {
             scripts.add(scriptDTO);
         }
 
@@ -181,12 +179,11 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
 
-
     public class InstallerFilter extends com.playonlinux.ui.api.RemoteAvailableInstallers.InstallerFilter {
 
         private final OperatingSystem hostOs;
 
-        public InstallerFilter(){
+        public InstallerFilter() {
             //predefine filters
             title = null;
             category = null;
@@ -195,24 +192,30 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
             showCommercial = true;
 
             OperatingSystem os;
-            try{
+            try {
                 os = OperatingSystem.fetchCurrentOperationSystem();
-            }catch (PlayOnLinuxError err){
+            } catch (PlayOnLinuxError err) {
                 os = null;
             }
             this.hostOs = os;
         }
 
         @Override
-        public boolean apply(ScriptDTO script){
+        public boolean apply(ScriptDTO script) {
             //TODO: write testcases for this method.
             ScriptInformationsDTO scriptInfo = script.getScriptInformations();
             boolean isTesting = scriptInfo.getTestingOperatingSystems().contains(hostOs);
 
-            if(isTesting && !showTesting){ return false; }
-            if(scriptInfo.isRequiresNoCD() && !showNoCd){ return false; }
-            if(!scriptInfo.isFree() && !showCommercial){ return false; }
-            if(StringUtils.isNotBlank(title) && !script.getName().contains(title)){
+            if (isTesting && !showTesting) {
+                return false;
+            }
+            if (scriptInfo.isRequiresNoCD() && !showNoCd) {
+                return false;
+            }
+            if (!scriptInfo.isFree() && !showCommercial) {
+                return false;
+            }
+            if (StringUtils.isNotBlank(title) && !script.getName().contains(title)) {
                 return false;
             }
 
