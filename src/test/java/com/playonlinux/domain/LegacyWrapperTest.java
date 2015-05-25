@@ -18,14 +18,41 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.app.TestPlayOnLinuxContext;
+import com.playonlinux.common.api.ui.Controller;
+import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.Bean;
+import com.playonlinux.injection.InjectionException;
+import org.junit.Before;
 import org.junit.Test;
 import org.python.util.PythonInterpreter;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 public class LegacyWrapperTest {
+
+    class TestContextConfig extends AbstractConfigFile {
+        @Bean
+        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
+            return new TestPlayOnLinuxContext();
+        }
+
+        @Override
+        protected String definePackage() {
+            return "com.playonlinux";
+        }
+    }
+
+    @Before
+    public void setUp() throws InjectionException {
+        AbstractConfigFile testConfigFile = new TestContextConfig();
+        testConfigFile.setStrictLoadingPolicy(false);
+        testConfigFile.load();
+    }
 
     @Test
     public void testLegacyWrapper() throws Exception {
