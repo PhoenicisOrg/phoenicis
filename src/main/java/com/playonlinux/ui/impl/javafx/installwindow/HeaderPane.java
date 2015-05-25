@@ -85,6 +85,7 @@ public class HeaderPane extends GridPane implements Observer {
                     categoryIcon.setMouseClicked(evt -> {
                         eventHandler.selectCategory(categoryDTO.getName());
                         eventHandler.clearSearch();
+                        eventHandler.refreshAvailableInstallerLisWidget();
                     });
 
                     this.add(categoryIcon, i, 0);

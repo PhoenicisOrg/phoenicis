@@ -51,6 +51,10 @@ public class InstallWindowEventHandler implements UIEventHandler {
         installWindow.getAvailableInstallerListWidget().setCategoryName(categoryName);
     }
 
+    public void refreshAvailableInstallerLisWidget() {
+        installWindow.getAvailableInstallerListWidget().update();
+    }
+
     public String getInstallerDescription(String scriptName) throws PlayOnLinuxError {
         return getRemoteAvailableInstallers().getScriptByName(scriptName).getDescription();
     }
