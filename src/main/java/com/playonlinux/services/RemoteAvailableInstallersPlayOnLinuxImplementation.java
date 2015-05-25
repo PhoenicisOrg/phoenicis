@@ -51,7 +51,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public Iterator<CategoryDTO> iterator() {
-        return new ArrayList(categoriesDTO).iterator();
+        return new ArrayList<>(categoriesDTO).iterator();
     }
 
     @Override
@@ -61,6 +61,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public void update(Observable o, Object arg) {
+        assert(arg instanceof DownloadEnvelopeDTO);
         downloadEnvelopeDto = (DownloadEnvelopeDTO<AvailableCategoriesDTO>) arg;
 
         try {
