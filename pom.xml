@@ -30,20 +30,6 @@
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>qtjambi</id>
-            <name>qtjambi</name>
-            <url>http://qtjambi.sourceforge.net/maven2/</url>
-            <releases>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-            <snapshots>
-                <checksumPolicy>ignore</checksumPolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -198,6 +184,26 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>sh.tak.appbundler</groupId>
+                <artifactId>appbundle-maven-plugin</artifactId>
+                <version>1.0.2</version>
+                <configuration>
+                    <mainClass>com.playonlinux.app.PlayOnLinuxApp</mainClass>
+                    <iconFile>playonmac.icns</iconFile>
+                    <bundleName>PlayOnMac</bundleName>
+                    <jvmVersion>1.8</jvmVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
