@@ -56,7 +56,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     @Override
     public void runApplication(String applicationName) {
         try {
-            Script playonLinuxScript = Script.createInstance(new File(this.playOnLinuxContext.makeShortcutsScriptsPath(), applicationName));
+            Script playonLinuxScript = Script.createInstance(new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName));
             playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
         } catch (IOException e) {
             e.printStackTrace(); // FIXME
