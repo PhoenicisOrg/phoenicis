@@ -61,8 +61,12 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
         shortcutSet.addObserver(this);
     }
 
-    protected void finalize() {
-        shortcutSet.deleteObserver(this);
+    protected void finalize() throws Throwable {
+        try {
+            shortcutSet.deleteObserver(this);
+        } finally {
+            super.finalize();
+        }
     }
 
     @Override
