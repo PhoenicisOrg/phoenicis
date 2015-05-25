@@ -70,7 +70,7 @@ public class ScriptLegacy extends Script {
             }
         } while(readLine != null);
 
-        String signature = signatureBuilder.toString().trim()   ;
+        String signature = signatureBuilder.toString().trim();
 
         if(StringUtils.isBlank(signature)) {
             throw new ParseException("The script has no valid signature!", 0);

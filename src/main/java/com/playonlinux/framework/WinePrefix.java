@@ -39,7 +39,7 @@ public class WinePrefix {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
-    private final static long NEWPREFIXSIZE = 320000000;
+    private final static long NEWPREFIXSIZE = 320_000_000;
 
     private final SetupWizard setupWizard;
     private com.playonlinux.wine.WinePrefix prefix;
