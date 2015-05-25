@@ -19,7 +19,7 @@
 
 
 # This tools is made to run legacy PlayOnLinux v4 scripts
-import subprocess
+import subprocess, os
 
 from SetupWindow.SetupWindowNetcatServer import SetupWindowNetcatServer
 from Environment.EnvironmentLoader import EnvironmentLoader
