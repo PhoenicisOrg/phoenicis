@@ -35,6 +35,8 @@ import static com.playonlinux.domain.Localisation.translate;
 
 public class SimpleIconListWidget extends TreeView {
     private final TreeItem rootItem;
+    private Image defaultIcon =
+            new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem();
@@ -43,7 +45,16 @@ public class SimpleIconListWidget extends TreeView {
     }
 
     public void addItem(String itemName) {
-        addItem(itemName, SimpleIconListWidget.class.getResource("playonlinux.png"));
+        ImageView defaultIconImageView = new ImageView(defaultIcon);
+        defaultIconImageView.setFitHeight(16);
+        defaultIconImageView.setFitWidth(16);
+        addItem(itemName, defaultIconImageView);
+    }
+
+    private void addItem(String itemName, ImageView icon) {
+        TreeItem<SimpleIconListItem> treeItem = new TreeItem<>(new SimpleIconListItem(itemName, icon));
+        treeItem.setGraphic(icon);
+        rootItem.getChildren().add(treeItem);
     }
 
 
@@ -60,8 +71,8 @@ public class SimpleIconListWidget extends TreeView {
     }
 
     public void addItem(String itemName, URL iconUrl) {
-        TreeItem<SimpleIconListItem> treeItem = new TreeItem<>(new SimpleIconListItem(itemName, iconUrl));
-        rootItem.getChildren().add(treeItem);
+        ImageView icon = new ImageView(iconUrl.toExternalForm());
+        addItem(itemName, icon);
     }
 
     public void addChangeListener(SimpleIconChangeListener simpleIconChangeListener) {
@@ -89,16 +100,11 @@ public class SimpleIconListWidget extends TreeView {
     private class SimpleIconListItem extends GridPane {
         private String itemName;
 
-        SimpleIconListItem(String itemName, URL iconPath) {
+        SimpleIconListItem(String itemName, ImageView iconImageView) {
             this.itemName = itemName;
             this.setPrefHeight(0.);
 
             SimpleIconListItemLabel simpleIconListItemLabel = new SimpleIconListItemLabel(itemName);
-
-            ImageView iconImageView = new ImageView(new Image(iconPath.toExternalForm()));
-
-            iconImageView.setFitHeight(16);
-            iconImageView.setFitWidth(16);
 
             this.add(iconImageView, 0, 0);
             this.add(simpleIconListItemLabel, 1, 0);

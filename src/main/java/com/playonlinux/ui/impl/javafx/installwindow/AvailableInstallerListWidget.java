@@ -37,27 +37,22 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-        this.update();
     }
 
     public void setIncludeCommercial(boolean includeCommercial) {
         this.includeCommercial = includeCommercial;
-        this.update();
     }
 
     public void setIncludeNoCDNeeded(boolean includeNoCDNeeded) {
         this.includeNoCDNeeded = includeNoCDNeeded;
-        this.update();
     }
 
     public void setIncludeTesting(boolean includeTesting) {
         this.includeTesting = includeTesting;
-        this.update();
     }
 
     public void setSearchFilter(String searchFilter) {
         this.searchFilter = searchFilter;
-        this.update();
     }
 
     private String categoryName;
