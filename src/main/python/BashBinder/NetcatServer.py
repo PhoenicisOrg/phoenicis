@@ -17,11 +17,16 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import socket, threading, thread, string, random
-from SetupWindowNetcatCommandParser import SetupWindowNetcatCommandParser
-from SetupWindowManager import SetupWindowManager
+import socket
+import threading
+import thread
+import string
+import random
 
-class SetupWindowNetcatServer(threading.Thread):
+from CommandParser import CommandParser
+from SetupWindow.SetupWindowManager import SetupWindowManager
+
+class NetcatServer(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self._host = '127.0.0.1'
@@ -86,7 +91,7 @@ class SetupWindowNetcatServer(threading.Thread):
 
 
     def processReceivedCommand(self, command):
-        commandParser = SetupWindowNetcatCommandParser(self.setupWindowManager, command)
+        commandParser = CommandParser(self.setupWindowManager, command)
         if(commandParser.getCookie() != self.getCookie()):
             raise Exception("Bad cookie!")
         else:
