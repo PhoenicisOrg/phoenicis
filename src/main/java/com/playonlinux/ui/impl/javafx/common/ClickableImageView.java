@@ -23,14 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ClickableImageView extends ImageView {
-
-    private final String STYLE_NORMAL = "-fx-background-color: transparent; -fx-padding: 5, 5, 5, 5;";
-    private final String STYLE_PRESSED = "-fx-background-color: transparent; -fx-padding: 6 4 4 6;";
-
-    public ClickableImageView(String image) {
-        this(new Image(image));
-    }
-
     public ClickableImageView(Image image) {
         super(image);
 

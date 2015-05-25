@@ -72,7 +72,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
-     * @param parent
+     * @param parent The parent window
      * @return the install window instance
      */
     public static InstallWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
@@ -189,7 +189,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         centerRegion.setAlignment(Pos.CENTER);
 
         Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(translate("Connecting to PlayOnLinux failed.\nPlease check your connection and try again."));
+        failureNotificationLbl.setText(translate("Connecting to ${applicatioN.title} failed.\n" +
+                "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
         ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
@@ -275,10 +276,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
 
-
-    public InstallWindowEventHandler getEventHandler() {
-        return eventHandler;
-    }
 
     public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
         if(remoteAvailableInstallers.isUpdating()) {

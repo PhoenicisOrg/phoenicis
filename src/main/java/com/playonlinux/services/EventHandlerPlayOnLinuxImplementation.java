@@ -18,6 +18,7 @@
 
 package com.playonlinux.services;
 
+import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.Progressable;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Scan;
@@ -35,18 +36,31 @@ import java.net.MalformedURLException;
 
 @Scan
 public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
-
     @Inject
     static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+
+    @Inject
+    static PlayOnLinuxContext playOnLinuxContext;
 
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
     private RemoteAvailableInstallers remoteAvailableInstallers;
     private RemoteInstallerDownloader remoteInstallerDownloaderDownloader;
 
+    @Override
     public void runLocalScript(File scriptToRun) throws IOException {
         Script playonlinuxScript = Script.createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
+    }
+
+    @Override
+    public void runApplication(String applicationName) {
+        try {
+            Script playonLinuxScript = Script.createInstance(new File(this.playOnLinuxContext.makeShortcutsScriptsPath(), applicationName));
+            playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
+        } catch (IOException e) {
+            e.printStackTrace(); // FIXME
+        }
     }
 
     @Override
@@ -79,6 +93,8 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     public void installProgram(String selectedItemLabel) {
         playOnLinuxBackgroundServicesManager.register(remoteInstallerDownloaderDownloader.createTask(selectedItemLabel));
     }
+
+
 
     @Override
     public RemoteAvailableInstallers getRemoteAvailableInstallers() {

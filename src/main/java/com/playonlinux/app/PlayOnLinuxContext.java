@@ -118,8 +118,4 @@ public class PlayOnLinuxContext {
     public URL makeWebserviceUrl() throws MalformedURLException {
         return new URL(this.properties.getProperty("webservice.url"));
     }
-
-    public String getApplicationName() {
-        return this.properties.getProperty("application.name");
-    }
 }

@@ -78,7 +78,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         mainContent.add(new MenuLeft(), 0, 0);
 
 
-        this.applicationListWidget = new ApplicationListWidget();
+        this.applicationListWidget = new ApplicationListWidget(this);
 
 
         mainContent.add(applicationListWidget, 1, 0);

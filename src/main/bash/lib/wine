@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+POL_Wine() {
+    # TODO
+    echo "Should run wine at this point";
+    echo "$@";
+    echo "STUB";
+}

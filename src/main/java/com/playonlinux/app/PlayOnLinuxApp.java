@@ -35,7 +35,7 @@ public class PlayOnLinuxApp {
 
     public void start(String[] args) throws InjectionException {
         PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
-        if(args.length > 0 && args[0] == "--cli") {
+        if(args.length > 0 && "--cli".equals(args[0])) {
             playOnLinuxConfig.setUseCLIInterface(true);
         }
         playOnLinuxConfig.load();

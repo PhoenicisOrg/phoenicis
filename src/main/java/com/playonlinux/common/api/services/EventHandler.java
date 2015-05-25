@@ -39,4 +39,6 @@ public interface EventHandler {
     Progressable getRemoteInstallerDownloaderDownloader();
 
     void installProgram(String selectedItemLabel);
+
+    void runApplication(String applicationName);
 }

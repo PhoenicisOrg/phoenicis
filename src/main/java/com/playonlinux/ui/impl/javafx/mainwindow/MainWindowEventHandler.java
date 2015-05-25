@@ -73,5 +73,7 @@ class MainWindowEventHandler implements UIEventHandler {
         mainEventHandler.onApplicationStarted();
     }
 
-
+    public void runApplication(String applicationName) {
+        mainEventHandler.runApplication(applicationName);
+    }
 }
