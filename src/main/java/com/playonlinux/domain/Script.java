@@ -95,7 +95,7 @@ public abstract class Script implements BackgroundService {
     }
 
     public void runScript() {
-        File pythonPath = new File("src/main/python");
+        File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
         PythonInterpreter pythonInterpreter = new PythonInterpreter();
         executeScript(pythonInterpreter);

@@ -38,11 +38,13 @@ public class ScriptLegacy extends Script {
 
     @Override
     protected void executeScript(PythonInterpreter pythonInterpreter) {
-        File v4wrapper = new File("src/main/python/v4wrapper.py");
-        String filePath = v4wrapper.getAbsolutePath();
+        // FIXME: Use the properties here
+        Script v4wrapper = new ScriptRecent(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+        String filePath = v4wrapper.getScriptFile().getAbsolutePath();
         pythonInterpreter.set("__file__", filePath);
         pythonInterpreter.set("__scriptToWrap__", this.getScriptFile().getAbsolutePath());
-        pythonInterpreter.execfile(filePath);
+
+        v4wrapper.executeScript(pythonInterpreter);
     }
 
     @Override
