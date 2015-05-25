@@ -31,6 +31,7 @@ if __name__ == '__main__':
     EnvironmentLoader.setup(setupWindowNetcatServer)
 
     print("Running %s" % __scriptToWrap__) # FIXME: Need a logger here
+    print(os.environ)
     process = subprocess.call(["bash", __scriptToWrap__])
 
     setupWindowNetcatServer.closeServer()
