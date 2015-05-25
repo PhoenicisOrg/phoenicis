@@ -23,6 +23,9 @@ if [ "$(id -u)" = "0" ]; then
 fi
 
 if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
+	source "$PLAYONLINUX/lib/system"
+	source "$PLAYONLINUX/lib/config"
+	source "$PLAYONLINUX/lib/debug"
 	source "$PLAYONLINUX/lib/setupWindow"
 	source "$PLAYONLINUX/lib/scripts"
 	source "$PLAYONLINUX/lib/wine"

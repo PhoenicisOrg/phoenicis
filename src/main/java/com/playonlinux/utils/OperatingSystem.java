@@ -55,6 +55,18 @@ public enum OperatingSystem {
         return this.name();
     }
 
+    public String fetchLegacyName() {
+        switch (this) {
+            case FREEBSD:
+                return "FreeBSD";
+            case MACOSX:
+                return "Mac";
+            case LINUX:
+            default:
+                return "Linux";
+        }
+    }
+
     public String getNameForWinePackages() {
         switch (this) {
             case FREEBSD:

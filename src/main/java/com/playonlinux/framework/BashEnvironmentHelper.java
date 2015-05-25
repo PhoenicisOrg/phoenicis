@@ -22,22 +22,55 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.domain.PlayOnLinuxException;
+
+import java.util.Map;
+
+import static com.playonlinux.wine.WineProcessBuilder.mergeEnvironmentVariables;
 
 @ScriptClass
 @Scan
 @SuppressWarnings("unused")
-public final class EnvironmentHelper {
+public final class BashEnvironmentHelper {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
-    private EnvironmentHelper() {
+    private BashEnvironmentHelper() {
         // This is a static class, it should never be instantiated
     }
 
     public static OperatingSystem getOperatinSystem() throws PlayOnLinuxException {
         return OperatingSystem.fetchCurrentOperationSystem();
     }
-    
+
+    public static Architecture getArchitecture() throws PlayOnLinuxException {
+        return Architecture.fetchCurrentArchitecture();
+    }
+
+    public static String getUserRoot() throws PlayOnLinuxException {
+        return playOnLinuxContext.loadProperties().getProperty("application.user.root");
+    }
+
+    public static String getEnvironmentVar(String variable) throws PlayOnLinuxException {
+        Map<String,String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
+        Map<String,String> systemEnvironment = System.getenv();
+
+        mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
+        return playonOnLinuxEnvironment.get(variable);
+    }
+
+    public static String getPath() throws PlayOnLinuxException {
+        return getEnvironmentVar("PATH");
+    }
+
+    public static String getLibraryPath() throws PlayOnLinuxException {
+        return getEnvironmentVar("LD_LIBRARY_PATH");
+    }
+
+    public static String getDyldLibraryPath() throws PlayOnLinuxException {
+        return getEnvironmentVar("DYLD_LIBRARY_PATH");
+    }
+
 }
