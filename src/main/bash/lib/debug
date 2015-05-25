@@ -3,7 +3,7 @@
 POL_Debug_Fatal ()
 {
     echo "$@";
-    # FIXME
+    # FIXME: Python should throw a CancelException at this point
 }
 
 POL_Debug_Message ()
