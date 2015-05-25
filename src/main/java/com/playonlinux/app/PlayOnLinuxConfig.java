@@ -27,7 +27,7 @@ import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 
 import java.io.IOException;
 
@@ -51,7 +51,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
-    public PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxError, IOException {
+    public PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
         return new PlayOnLinuxContext();
     }
 

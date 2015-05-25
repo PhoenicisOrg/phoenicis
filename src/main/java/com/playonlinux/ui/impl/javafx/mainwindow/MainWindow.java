@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import java.util.Optional;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
@@ -78,7 +78,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         mainContent.add(new MenuLeft(), 0, 0);
 
 
-        this.applicationListWidget = new ApplicationListWidget();
+        this.applicationListWidget = new ApplicationListWidget(this);
 
 
         mainContent.add(applicationListWidget, 1, 0);
@@ -95,7 +95,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
             alert.setTitle(translate("${application.name}"));
             alert.setHeaderText(translate("Are you sure you want to close all ${application.name} windows?"));
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
+            if (result.get() == ButtonType.OK) {
                 Platform.exit();
             } else {
                 event.consume();
@@ -103,7 +103,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         });
     }
 
-    public void setUpEvents() throws PlayOnLinuxError {
+    public void setUpEvents() throws PlayOnLinuxException {
         InstalledApplications installedApplications = mainEventHandler.getInstalledApplications();
         installedApplications.addObserver(applicationListWidget);
 
@@ -111,7 +111,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
         try {
             statusBar.setUpEvents();
-        } catch (PlayOnLinuxError e) {
+        } catch (PlayOnLinuxException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to update installer list."));
             alert.setContentText(String.format("The error was: %s", e));

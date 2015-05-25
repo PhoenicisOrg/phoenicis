@@ -19,7 +19,7 @@
 package com.playonlinux.utils;
 
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 
 public enum OperatingSystem {
     MACOSX ("Mac OS X"),
@@ -37,7 +37,7 @@ public enum OperatingSystem {
         return this.name;
     }
 
-    public static OperatingSystem fromString(String name) throws PlayOnLinuxError {
+    public static OperatingSystem fromString(String name) throws PlayOnLinuxException {
         if("Mac OS X".equals(name)) {
             return OperatingSystem.MACOSX;
         }
@@ -48,11 +48,23 @@ public enum OperatingSystem {
             return OperatingSystem.FREEBSD;
         }
 
-        throw new PlayOnLinuxError(String.format("Incompatible operation system \"%s\"", name));
+        throw new PlayOnLinuxException(String.format("Incompatible operation system \"%s\"", name));
     }
 
     public String fetchShortName() {
         return this.name();
+    }
+
+    public String fetchLegacyName() {
+        switch (this) {
+            case FREEBSD:
+                return "FreeBSD";
+            case MACOSX:
+                return "Mac";
+            case LINUX:
+            default:
+                return "Linux";
+        }
     }
 
     public String getNameForWinePackages() {
@@ -67,7 +79,7 @@ public enum OperatingSystem {
         }
     }
 
-    public static OperatingSystem fetchCurrentOperationSystem() throws PlayOnLinuxError {
+    public static OperatingSystem fetchCurrentOperationSystem() throws PlayOnLinuxException {
         return OperatingSystem.fromString(System.getProperty("os.name"));
     }
 

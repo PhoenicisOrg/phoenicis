@@ -26,7 +26,7 @@ import java.io.*;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts syntax
+/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts.sh syntax
  */
 
 // TODO: Create an abstract class for FileManagement and Downloader
@@ -52,7 +52,7 @@ public class FileManagement {
         this.progressStep = progressStep;
     }
 
-    private void defineProgressStep(File sourceFile) throws CancelException, InterruptedException {
+    private void defineProgressStep(File sourceFile) throws CancelException {
         if(this.progressStep == null) {
             this.progressStep = this.setupWizard.progressBar(
                     translate("Please wait while ${application.name} is copying:") + "\n" +
@@ -61,7 +61,7 @@ public class FileManagement {
         }
     }
 
-    private void copyFile(File sourceFile, File destinationFile) throws IOException {
+    private void copyFile(File sourceFile, File destinationFile) throws IOException, CancelException {
         int fileSize = (int) sourceFile.length();
         float totalDataRead = 0;
 
@@ -77,6 +77,10 @@ public class FileManagement {
             if(progressStep != null) {
                 int percentCopied = (int) ((totalDataRead * 100) / fileSize);
                 progressStep.setProgressPercentage(percentCopied);
+            }
+
+            if(Thread.interrupted()) {
+                throw new CancelException();
             }
         }
         inputStream.close();

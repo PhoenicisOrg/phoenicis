@@ -20,7 +20,7 @@ package com.playonlinux.app;
 
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.utils.ReplacableProperties;
 
 import java.io.File;
@@ -34,11 +34,11 @@ import java.util.Properties;
 public class PlayOnLinuxContext {
     private final Properties properties;
 
-    public PlayOnLinuxContext() throws PlayOnLinuxError, IOException {
+    public PlayOnLinuxContext() throws PlayOnLinuxException, IOException {
         this.properties = loadProperties();
     }
 
-    public ReplacableProperties loadProperties() throws PlayOnLinuxError {
+    public ReplacableProperties loadProperties() throws PlayOnLinuxException {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
         String filename;
@@ -53,7 +53,7 @@ public class PlayOnLinuxContext {
         try {
             propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
         } catch (IOException e) {
-            throw new PlayOnLinuxError("Cannot load properties", e);
+            throw new PlayOnLinuxException("Cannot load properties", e);
         }
         return propertiesBeingLoaded;
     }
@@ -70,7 +70,7 @@ public class PlayOnLinuxContext {
         return new File(this.properties.getProperty("application.user.wineprefix"));
     }
 
-    public File makeWinePathFromVersionAndArchitecture(String version, Architecture architecture) throws PlayOnLinuxError {
+    public File makeWinePathFromVersionAndArchitecture(String version, Architecture architecture) throws PlayOnLinuxException {
         String architectureDirectory = String.format("%s-%s",
                 OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages(),
                 architecture.getNameForWinePackages()
@@ -83,18 +83,12 @@ public class PlayOnLinuxContext {
         return new File(versionPath);
     }
 
-    public Map<String,String> getSystemEnvironment() throws PlayOnLinuxError {
+    public Map<String,String> getSystemEnvironment() throws PlayOnLinuxException {
         Map<String, String> systemEnvironment = new HashMap<>();
-        switch(OperatingSystem.fetchCurrentOperationSystem()){
-            case MACOSX:
-                systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
-                systemEnvironment.put("LD_LIBRARY_PATH", this.properties.getProperty("application.environment.ld"));
-                systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.dyld"));
-                break;
-            default:
-            case LINUX:
-                break;
-        }
+        systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
+        systemEnvironment.put("LD_LIBRARY_PATH", this.properties.getProperty("application.environment.ld"));
+        systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.dyld"));
+
 
         return systemEnvironment;
     }
@@ -117,9 +111,5 @@ public class PlayOnLinuxContext {
 
     public URL makeWebserviceUrl() throws MalformedURLException {
         return new URL(this.properties.getProperty("webservice.url"));
-    }
-
-    public String getApplicationName() {
-        return this.properties.getProperty("application.name");
     }
 }

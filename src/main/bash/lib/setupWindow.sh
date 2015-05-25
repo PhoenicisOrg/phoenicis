@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright (C) 2007-2011 PlayOnLinux Team
 # Copyright (C) 2007-2011 Pâris Quentin
+# Copyright (C) 2015 Pâris Quentin
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 # IMPORTANT
 # ---------
 # Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
+
 
 export POL_HOST="127.0.0.1"
 

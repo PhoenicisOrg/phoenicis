@@ -26,7 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import com.playonlinux.common.api.ui.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.messages.CancelerMessage;
 import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
@@ -92,7 +92,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
                     this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
                     break;
             }
-        } catch (PlayOnLinuxError playOnLinuxError) {
+        } catch (PlayOnLinuxException playOnLinuxException) {
             this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
         }
     }

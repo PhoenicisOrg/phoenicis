@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
@@ -72,10 +72,10 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
-     * @param parent
+     * @param parent The parent window
      * @return the install window instance
      */
-    public static InstallWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
+    public static InstallWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
         if(instance == null) {
             instance = new InstallWindow(parent);
         } else {
@@ -85,7 +85,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         return instance;
     }
 
-    private InstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
+    private InstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
         super();
         this.parent = parent;
         this.availableInstallers = this.eventHandler.getRemoteAvailableInstallers();
@@ -122,7 +122,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
 
         try {
             availableInstallerListWidget = new AvailableInstallerListWidget(eventHandler);
-        } catch (PlayOnLinuxError e) {
+        } catch (PlayOnLinuxException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to initialize available installers."));
             alert.setContentText(String.format("The error was: %s", e.toString()));
@@ -189,7 +189,8 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
         centerRegion.setAlignment(Pos.CENTER);
 
         Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(translate("Connecting to PlayOnLinux failed.\nPlease check your connection and try again."));
+        failureNotificationLbl.setText(translate("Connecting to ${applicatioN.title} failed.\n" +
+                "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
         ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
@@ -216,7 +217,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
 
-    private void setUpEvents() throws PlayOnLinuxError {
+    private void setUpEvents() throws PlayOnLinuxException {
         availableInstallers.addObserver(this);
         availableInstallers.addObserver(header);
         eventHandler.getRemoteInstallerObservable().addObserver(installButton);
@@ -234,15 +235,15 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
                                         .render(eventHandler.getInstallerDescription(newValue))
                         );
                     } catch (IOException e) {
-                        throw new PlayOnLinuxError("Error while loading descriptionTemplate.html", e);
+                        throw new PlayOnLinuxException("Error while loading descriptionTemplate.html", e);
                     }
                 }
-            } catch (PlayOnLinuxError playOnLinuxError) {
+            } catch (PlayOnLinuxException playOnLinuxException) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to get installer information."));
-                alert.setContentText(String.format("The error was: %s", playOnLinuxError.toString()));
+                alert.setContentText(String.format("The error was: %s", playOnLinuxException.toString()));
                 alert.show();
-                playOnLinuxError.printStackTrace();
+                playOnLinuxException.printStackTrace();
             }
         });
         searchWidget.setOnKeyPressed(event -> {
@@ -275,10 +276,6 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
     }
 
 
-
-    public InstallWindowEventHandler getEventHandler() {
-        return eventHandler;
-    }
 
     public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
         if(remoteAvailableInstallers.isUpdating()) {

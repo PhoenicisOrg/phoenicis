@@ -1,6 +1,7 @@
-#!/usr/bin/env python
-# coding=utf-8
+#!/usr/bin/env bash
 
+# Copyright (C) 2007-2011 PlayOnLinux Team
+# Copyright (C) 2007-2011 Pâris Quentin
 # Copyright (C) 2015 Pâris Quentin
 
 # This program is free software; you can redistribute it and/or modify
@@ -17,23 +18,20 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
-# This tools is made to run legacy PlayOnLinux v4 scripts
-import subprocess, os
-
-from SetupWindow.SetupWindowNetcatServer import SetupWindowNetcatServer
-from Environment.EnvironmentLoader import EnvironmentLoader
-
-if __name__ == '__main__':
-    setupWindowNetcatServer = SetupWindowNetcatServer()
-    setupWindowNetcatServer.initServer()
-
-    EnvironmentLoader.setup(setupWindowNetcatServer)
-
-    print("Running %s" % __scriptToWrap__) # FIXME: Need a logger here
-    print(os.environ)
-    process = subprocess.call(["bash", __scriptToWrap__])
-
-    setupWindowNetcatServer.closeServer()
+# IMPORTANT
+# ---------
+# Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
 
+
+POL_Debug_Fatal ()
+{
+    echo "$@";
+    # FIXME: Python should throw a CancelException at this point
+}
+
+POL_Debug_Message ()
+{
+    echo "$@"
+    # FIXME
+}

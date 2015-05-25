@@ -16,29 +16,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.api.services;
+package com.playonlinux.app;
 
-import com.playonlinux.common.Progressable;
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.utils.Architecture;
+import com.playonlinux.utils.OperatingSystem;
+import com.playonlinux.utils.ReplacableProperties;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
-public interface EventHandler {
-    void runLocalScript(File scriptToRun) throws IOException;
+public class MockPlayOnLinuxContext extends PlayOnLinuxContext {
 
-    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
+    public MockPlayOnLinuxContext() throws PlayOnLinuxException, IOException {
+        super();
+    }
 
-    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
+    public ReplacableProperties loadProperties() throws PlayOnLinuxException {
+        ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
-    RemoteAvailableInstallers getRemoteAvailableInstallers();
+        try {
+            propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream("test.properties"));
+        } catch (IOException e) {
+            throw new PlayOnLinuxException("Cannot load properties", e);
+        }
+        return propertiesBeingLoaded;
+    }
 
-    void onApplicationStarted() throws MalformedURLException;
-
-    Progressable getRemoteInstallerDownloaderDownloader();
-
-    void installProgram(String selectedItemLabel);
-
-    void runApplication(String applicationName);
 }

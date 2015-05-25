@@ -18,15 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.GridPane;
 
 import static com.playonlinux.domain.Localisation.translate;
 
@@ -95,16 +92,16 @@ class ToolBar extends javafx.scene.control.ToolBar {
         configureButton.setOnMouseClicked(event -> {
             try {
                 this.parent.getMainEventHandler().openConfigureWindow(this.parent, this.parent.getSelectedApplication());
-            } catch (PlayOnLinuxError playOnLinuxError) {
-                playOnLinuxError.printStackTrace();
+            } catch (PlayOnLinuxException playOnLinuxException) {
+                playOnLinuxException.printStackTrace();
             }
         });
 
         installButton.setOnMouseClicked(event -> {
             try {
                 this.parent.getMainEventHandler().openInstallWindow(this.parent);
-            } catch (PlayOnLinuxError playOnLinuxError) {
-                playOnLinuxError.printStackTrace();
+            } catch (PlayOnLinuxException playOnLinuxException) {
+                playOnLinuxException.printStackTrace();
             }
         });
     }

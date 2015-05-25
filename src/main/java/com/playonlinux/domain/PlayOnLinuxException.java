@@ -16,28 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.domain;
 
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.ScriptClass;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.domain.PlayOnLinuxError;
+import org.apache.commons.lang.ArrayUtils;
 
-@ScriptClass
-@Scan
-@SuppressWarnings("unused")
-public final class EnvironmentHelper {
-    @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+public class PlayOnLinuxException extends Exception {
+    private final String message;
+    private final Throwable parent;
 
-    private EnvironmentHelper() {
-        // This is a static class, it should never be instantiated
+    public PlayOnLinuxException(String message) {
+        this(message, null);
     }
 
-    public static OperatingSystem getOperatinSystem() throws PlayOnLinuxError {
-        return OperatingSystem.fetchCurrentOperationSystem();
+    public PlayOnLinuxException(String message, Throwable parent) {
+        super(message);
+        this.message = message;
+        this.parent = parent;
     }
-    
+
+    @Override
+    public String toString() {
+        return this.message;
+    }
+
+    @Override
+    public StackTraceElement[] getStackTrace() {
+        return (StackTraceElement[]) ArrayUtils.addAll(super.getStackTrace(), this.parent.getStackTrace());
+    }
 }

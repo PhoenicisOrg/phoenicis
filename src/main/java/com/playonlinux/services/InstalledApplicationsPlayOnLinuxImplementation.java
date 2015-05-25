@@ -19,7 +19,7 @@
 package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.injection.Scan;
@@ -43,7 +43,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     ShortcutSet shortcutSet;
     private Iterator<ShortcutDTO> shortcutDtoIterator;
 
-    InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxError {
+    InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();

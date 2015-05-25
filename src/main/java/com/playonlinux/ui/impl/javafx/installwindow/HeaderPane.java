@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.common.dto.CategoryDTO;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.ClickableImageView;
 import javafx.application.Platform;
@@ -45,7 +45,7 @@ public class HeaderPane extends GridPane implements Observer {
     private final RemoteAvailableInstallers availableInstallers;
     InstallWindowEventHandler eventHandler;
 
-    HeaderPane(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxError {
+    HeaderPane(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxException {
         this.setPrefHeight(70);
         this.setPrefWidth(804);
         this.setLayoutY(-2);

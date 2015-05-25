@@ -61,7 +61,7 @@ public abstract class Script implements BackgroundService {
     public static Type detectScriptType(File script) throws IOException {
         BufferedReader bufferReader = new BufferedReader(new FileReader(script));
         String firstLine = bufferReader.readLine();
-        if("#!/bin/bash".equals(firstLine)) {
+        if("#!/bin/bash".equals(firstLine) || "#!/usr/bin/env playonlinux-bash".equals(firstLine)) {
             return Type.LEGACY;
         } else {
             return Type.RECENT;

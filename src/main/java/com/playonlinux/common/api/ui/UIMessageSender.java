@@ -23,7 +23,7 @@ import com.playonlinux.common.messages.Message;
 import com.playonlinux.common.messages.SynchroneousMessage;
 
 public interface UIMessageSender <RETURN_TYPE> {
-    RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws InterruptedException, CancelException;
+    RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws CancelException;
 
     void synchroneousSend(Message message);
 

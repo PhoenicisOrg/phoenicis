@@ -19,7 +19,7 @@
 package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -42,7 +42,7 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
 
     final ObservableDirectory observableWineprefixes;
 
-    public InstalledVirtualDrivesPlayOnLinuxImplementation() throws PlayOnLinuxError {
+    public InstalledVirtualDrivesPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File winePrefixes = playOnLinuxContext.makePrefixesPath();
         observableWineprefixes = new ObservableDirectory(winePrefixes);
 

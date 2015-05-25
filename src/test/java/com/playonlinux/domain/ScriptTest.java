@@ -33,6 +33,9 @@ public class ScriptTest {
     public void testDetectType_passALegacyScript_FormatIsDetected() throws Exception {
         assertEquals(Script.Type.LEGACY, Script.detectScriptType(new File(
                 this.getClass().getResource("legacyScriptExample.sh").getPath())));
+
+        assertEquals(Script.Type.LEGACY, Script.detectScriptType(new File(
+                this.getClass().getResource("legacyScriptExampleWithPlayOnLinuxBashHeader.sh").getPath())));
     }
 
     @Test

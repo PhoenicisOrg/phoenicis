@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright (C) 2015 Pâris Quentin
 
@@ -19,12 +19,16 @@
 
 if [ "$(id -u)" = "0" ]; then
 	echo "PlayOnLinux is not supposed to be run as root. Sorry"
-	exit 0
+	exit 1
 fi
 
 if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
-	source "$PLAYONLINUX/lib/setupWindow"
-	source "$PLAYONLINUX/lib/scripts"
+	source "$PLAYONLINUX/lib/system.sh"
+	source "$PLAYONLINUX/lib/config.sh"
+	source "$PLAYONLINUX/lib/debug.sh"
+	source "$PLAYONLINUX/lib/setupWindow.sh"
+	source "$PLAYONLINUX/lib/scripts.sh"
+	source "$PLAYONLINUX/lib/wine.sh"
 
 	export PLAYONLINUX_BASH_INCLUDED="TRUE"
 fi

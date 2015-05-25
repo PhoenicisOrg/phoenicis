@@ -40,9 +40,11 @@ import static com.playonlinux.domain.Localisation.translate;
 
 class ApplicationListWidget extends TreeView implements Observer {
     private final TreeItem rootItem;
+    private final MainWindow parent;
 
-    public ApplicationListWidget() {
-        rootItem = new TreeItem();
+    public ApplicationListWidget(MainWindow parent) {
+        this.parent = parent;
+        this.rootItem = new TreeItem();
         this.setRoot(rootItem);
         this.setShowRoot(false);
     }
@@ -88,7 +90,7 @@ class ApplicationListWidget extends TreeView implements Observer {
             playImageView.setFitWidth(16);
 
             Button runButton = new Button(translate("Run"), playImageView);
-
+            runButton.setOnMouseClicked(evt -> parent.getMainEventHandler().runApplication(applicationName));
             runButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             this.add(runButton, 2, 0);
         }

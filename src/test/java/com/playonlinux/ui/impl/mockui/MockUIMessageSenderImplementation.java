@@ -16,31 +16,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.ui.impl.mockui;
 
-import org.apache.commons.lang.ArrayUtils;
+import com.playonlinux.common.api.ui.UIMessageSender;
+import com.playonlinux.domain.CancelException;
+import com.playonlinux.common.messages.Message;
+import com.playonlinux.common.messages.SynchroneousMessage;
 
-public class PlayOnLinuxError extends Throwable {
-    private final String message;
-    private final Throwable parent;
-
-    public PlayOnLinuxError(String message) {
-        this(message, null);
-    }
-
-    public PlayOnLinuxError(String message, Throwable parent) {
-        super(message);
-        this.message = message;
-        this.parent = parent;
+public class MockUIMessageSenderImplementation<T> implements UIMessageSender<T> {
+    @Override
+    public T synchroneousSendAndGetResult(SynchroneousMessage<T> message) throws CancelException {
+        message.run();
+        return message.getResponse();
     }
 
     @Override
-    public String toString() {
-        return this.message;
+    public void synchroneousSend(Message message) {
+        message.run();
     }
 
     @Override
-    public StackTraceElement[] getStackTrace() {
-        return (StackTraceElement[]) ArrayUtils.addAll(super.getStackTrace(), this.parent.getStackTrace());
+    public void asynchroneousSend(Message message) {
+        new Thread(message).start();
     }
 }

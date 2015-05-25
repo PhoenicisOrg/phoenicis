@@ -39,8 +39,8 @@ public final class Localisation {
         ReplacableProperties properties;
         try {
             properties = playOnLinuxContext.loadProperties();
-        } catch (PlayOnLinuxError playOnLinuxError) {
-            playOnLinuxError.printStackTrace(); // TODO: Log this exception
+        } catch (PlayOnLinuxException playOnLinuxException) {
+            playOnLinuxException.printStackTrace(); // TODO: Log this exception
             return stringToTranslate;
         }
         return properties.replaceAllVariables(stringToTranslate);

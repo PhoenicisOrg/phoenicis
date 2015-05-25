@@ -18,6 +18,14 @@
 
 package com.playonlinux.domain;
 
-public class CancelException extends Exception {
-    
+public class CancelException extends PlayOnLinuxException {
+    public CancelException() {
+        super("The action has been canceled by the user");
+    }
+    public CancelException(String message) {
+        super(message);
+    }
+    public CancelException(String message, Throwable parent) {
+        super(message, parent);
+    }
 }

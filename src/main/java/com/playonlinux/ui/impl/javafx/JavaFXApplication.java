@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Application;
 
 import javafx.scene.image.Image;
@@ -39,7 +39,7 @@ public class JavaFXApplication extends Application {
         mainWindow.setUpWindow();
         try {
             mainWindow.setUpEvents();
-        } catch (PlayOnLinuxError e) {
+        } catch (PlayOnLinuxException e) {
             // FIXME
             e.printStackTrace();
         }

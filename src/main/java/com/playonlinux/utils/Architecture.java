@@ -18,13 +18,13 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 
 public enum Architecture {
     I386,
     AMD64;
 
-    public static Architecture fetchCurrentArchitecture() throws PlayOnLinuxError {
+    public static Architecture fetchCurrentArchitecture() throws PlayOnLinuxException {
         if(OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX) {
             return I386;
         }

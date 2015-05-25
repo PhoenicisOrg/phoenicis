@@ -18,8 +18,9 @@
 
 package com.playonlinux.services;
 
+import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.Progressable;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
@@ -35,22 +36,35 @@ import java.net.MalformedURLException;
 
 @Scan
 public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
-
     @Inject
     static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+
+    @Inject
+    static PlayOnLinuxContext playOnLinuxContext;
 
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
     private RemoteAvailableInstallers remoteAvailableInstallers;
     private RemoteInstallerDownloader remoteInstallerDownloaderDownloader;
 
+    @Override
     public void runLocalScript(File scriptToRun) throws IOException {
         Script playonlinuxScript = Script.createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
 
     @Override
-    public InstalledApplications getInstalledApplications() throws PlayOnLinuxError {
+    public void runApplication(String applicationName) {
+        try {
+            Script playonLinuxScript = Script.createInstance(new File(this.playOnLinuxContext.makeShortcutsScriptsPath(), applicationName));
+            playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
+        } catch (IOException e) {
+            e.printStackTrace(); // FIXME
+        }
+    }
+
+    @Override
+    public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
         if(installedApplications == null) {
             installedApplications = new InstalledApplicationsPlayOnLinuxImplementation();
         }
@@ -58,7 +72,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     }
 
     @Override
-    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError {
+    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException {
         if(virtualDrives == null) {
             virtualDrives = new InstalledVirtualDrivesPlayOnLinuxImplementation();
         }
@@ -79,6 +93,8 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     public void installProgram(String selectedItemLabel) {
         playOnLinuxBackgroundServicesManager.register(remoteInstallerDownloaderDownloader.createTask(selectedItemLabel));
     }
+
+
 
     @Override
     public RemoteAvailableInstallers getRemoteAvailableInstallers() {

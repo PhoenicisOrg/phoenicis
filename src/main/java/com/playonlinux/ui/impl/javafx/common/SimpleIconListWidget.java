@@ -33,13 +33,14 @@ import java.net.URL;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class SimpleIconListWidget extends TreeView {
-    private final TreeItem rootItem;
+public class SimpleIconListWidget
+        extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
+    private final TreeItem<SimpleIconListItem> rootItem;
     private Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
     public SimpleIconListWidget() {
-        rootItem = new TreeItem();
+        rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
     }
@@ -93,11 +94,11 @@ public class SimpleIconListWidget extends TreeView {
     }
 
     public String getSelectedItemLabel() {
-        TreeItem<SimpleIconListItem> item = (TreeItem<SimpleIconListItem>) this.getSelectionModel().getSelectedItem();
+        TreeItem<SimpleIconListItem> item = this.getSelectionModel().getSelectedItem();
         return item.getValue().getValue();
     }
 
-    private class SimpleIconListItem extends GridPane {
+    protected class SimpleIconListItem extends GridPane {
         private String itemName;
 
         SimpleIconListItem(String itemName, ImageView iconImageView) {

@@ -22,7 +22,7 @@ import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.utils.Checksum;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -115,13 +115,13 @@ public class Downloader {
         return get(new URL(remoteFile), new File(localFile));
     }
 
-    public Downloader check(String expectedChecksum) throws IOException, NoSuchAlgorithmException, PlayOnLinuxError {
+    public Downloader check(String expectedChecksum) throws IOException, NoSuchAlgorithmException, PlayOnLinuxException {
         String calculatedChecksum = Checksum.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
         if(this.findDownloadedFile() == null) {
-            throw new PlayOnLinuxError("You must download the file first before running check()!");
+            throw new PlayOnLinuxException("You must download the file first before running check()!");
         }
         if(!expectedChecksum.equals(calculatedChecksum)) {
-            throw new PlayOnLinuxError(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
+            throw new PlayOnLinuxException(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
                     expectedChecksum, calculatedChecksum));
         }
 

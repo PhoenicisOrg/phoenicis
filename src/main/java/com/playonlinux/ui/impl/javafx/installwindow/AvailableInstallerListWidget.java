@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.common.dto.ScriptDTO;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
@@ -61,7 +61,7 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     private boolean includeCommercial = true;
     private String searchFilter = "";
 
-    AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxError {
+    AvailableInstallerListWidget(InstallWindowEventHandler installWindowEventHandler) throws PlayOnLinuxException {
         super();
         this.installWindowEventHandler = installWindowEventHandler;
         remoteAvailableInstallers = this.installWindowEventHandler.getRemoteAvailableInstallers();
@@ -79,11 +79,11 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
                     for(ScriptDTO scriptDTO: remoteAvailableInstallers.getAllScriptsInCategory(categoryName)) {
                         this.addItem(scriptDTO.getName());
                     }
-                } catch (PlayOnLinuxError playOnLinuxError) {
+                } catch (PlayOnLinuxException playOnLinuxException) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle(translate("Error while trying to show installer list."));
-                    alert.setContentText(String.format("The error was: %s", playOnLinuxError));
-                    playOnLinuxError.printStackTrace();
+                    alert.setContentText(String.format("The error was: %s", playOnLinuxException));
+                    playOnLinuxException.printStackTrace();
                 }
             }
         }
