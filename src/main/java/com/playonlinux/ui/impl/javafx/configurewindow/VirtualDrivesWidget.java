@@ -32,6 +32,7 @@ public class VirtualDrivesWidget extends SimpleIconListWidget implements Observe
     public void update(Observable o, Object arg) {
         this.clear();
         Platform.runLater(() -> {
+            assert(o instanceof Iterable);
             Iterable<VirtualDriveDTO> virtualDrives = (Iterable<VirtualDriveDTO>) o;
             for (VirtualDriveDTO virtualDrive : virtualDrives) {
                 addItem(virtualDrive.getName(), virtualDrive.getIcon());

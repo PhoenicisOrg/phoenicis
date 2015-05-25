@@ -27,7 +27,7 @@ import java.util.List;
 
 public class StepRepresentationMenu extends StepRepresentationMessage {
     List<String> menuItems;
-    ListView listViewWidget;
+    ListView<String> listViewWidget;
 
     public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
                                   List<String> menuItems) {
@@ -39,7 +39,7 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     @Override
     protected void drawStepContent() {
         super.drawStepContent();
-        listViewWidget = new ListView();
+        listViewWidget = new ListView<>();
 
         listViewWidget.setItems(FXCollections.observableArrayList(menuItems));
         listViewWidget.setLayoutX(10);

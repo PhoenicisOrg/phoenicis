@@ -62,7 +62,7 @@ public class RegistryValue<TYPE extends AbstractValueType>
                     String[] binariesString = valueContentString.split(",");
                     byte[] binaries = new byte[binariesString.length];
                     for(int i = 0; i < binariesString.length; i++) {
-                        binaries[i] = Byte.valueOf((byte) (Integer.valueOf(binariesString[i], 16) - 128));
+                        binaries[i] = (byte) (Integer.valueOf(binariesString[i], 16) - 128);
                     }
                     parsedValue = new RegistryValue<>(name, new BinaryValueType(binaries));
                     break;

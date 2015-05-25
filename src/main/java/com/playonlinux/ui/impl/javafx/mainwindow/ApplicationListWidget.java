@@ -38,19 +38,19 @@ import java.util.Observer;
 import static com.playonlinux.domain.Localisation.translate;
 
 
-class ApplicationListWidget extends TreeView implements Observer {
-    private final TreeItem rootItem;
+class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
+    private final TreeItem<ApplicationItem> rootItem;
     private final MainWindow parent;
 
     public ApplicationListWidget(MainWindow parent) {
         this.parent = parent;
-        this.rootItem = new TreeItem();
+        this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
     }
 
     public void addItem(String shortcutName, URL iconPath) {
-        TreeItem treeItem = new TreeItem(new ApplicationItem(shortcutName, iconPath));
+        TreeItem<ApplicationItem> treeItem = new TreeItem<>(new ApplicationItem(shortcutName, iconPath));
         rootItem.getChildren().add(treeItem);
     }
 
@@ -58,6 +58,7 @@ class ApplicationListWidget extends TreeView implements Observer {
     public synchronized void update(Observable o, Object arg) {
         this.clear();
         Platform.runLater(() -> {
+            assert(o instanceof Iterable);
             Iterable<ShortcutDTO> installedApplications = (Iterable<ShortcutDTO>) o;
             for (ShortcutDTO shortcut : installedApplications) {
                 addItem(shortcut.getName(), shortcut.getIcon());
@@ -69,7 +70,7 @@ class ApplicationListWidget extends TreeView implements Observer {
         rootItem.getChildren().clear();
     }
 
-    private class ApplicationItem extends GridPane {
+    protected class ApplicationItem extends GridPane {
 
         ApplicationItem(String applicationName, URL iconPath) {
             this.setPrefHeight(60.);
