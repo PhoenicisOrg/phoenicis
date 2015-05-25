@@ -78,8 +78,11 @@ public class WinePrefix {
         }
 
         /* Maybe it needs to be better implemented */
-        ProgressStep progressStep =
-                this.setupWizard.progressBar(String.format(translate("Please wait while the prefix %s is created"), prefixName));
+        ProgressStep progressStep = this.setupWizard.progressBar(
+                String.format(
+                        translate("Please wait while the virtual drive is being created..."), prefixName
+                )
+        );
 
         while(process.isAlive()) {
             double percentage = this.prefix.getSize() * 100. / (double) NEWPREFIXSIZE;
