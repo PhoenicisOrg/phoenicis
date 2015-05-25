@@ -31,9 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class TestPlayOnLinuxContext extends PlayOnLinuxContext {
+public class MockPlayOnLinuxContext extends PlayOnLinuxContext {
 
-    public TestPlayOnLinuxContext() throws PlayOnLinuxException, IOException {
+    public MockPlayOnLinuxContext() throws PlayOnLinuxException, IOException {
         super();
     }
 

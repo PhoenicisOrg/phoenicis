@@ -19,14 +19,12 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.TestPlayOnLinuxContext;
-import com.playonlinux.common.api.ui.Controller;
+import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
 import org.junit.Before;
 import org.junit.Test;
-import org.python.util.PythonInterpreter;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +36,7 @@ public class LegacyWrapperTest {
     class TestContextConfig extends AbstractConfigFile {
         @Bean
         protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
-            return new TestPlayOnLinuxContext();
+            return new MockPlayOnLinuxContext();
         }
 
         @Override
