@@ -93,9 +93,4 @@ public class WinePrefix {
 
         return this;
     }
-
-
-    public static void injectPlayOnLinuxContext(PlayOnLinuxContext playOnLinuxContext) {
-        WinePrefix.playOnLinuxContext = playOnLinuxContext;
-    }
 }
