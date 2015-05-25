@@ -47,9 +47,13 @@ public class ShortcutSet extends Observable implements Observer {
         iconDirectory.addObserver(this);
     }
 
-    protected void finalize() {
-        shortcutDirectory.deleteObserver(this);
-        iconDirectory.deleteObserver(this);
+    protected void finalize() throws Throwable {
+        try {
+            shortcutDirectory.deleteObserver(this);
+            iconDirectory.deleteObserver(this);
+        } finally {
+            super.finalize();
+        }
     }
 
     synchronized public List<Shortcut> getShortcuts() {

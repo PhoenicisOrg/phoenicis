@@ -50,8 +50,12 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
         playOnLinuxBackgroundServicesManager.register(observableWineprefixes);
     }
 
-    protected void finalize() {
-        observableWineprefixes.deleteObserver(this);
+    protected void finalize() throws Throwable {
+        try {
+            observableWineprefixes.deleteObserver(this);
+        } finally {
+            super.finalize();
+        }
     }
 
     @Override
