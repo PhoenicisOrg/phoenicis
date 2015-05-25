@@ -36,7 +36,7 @@ import static com.playonlinux.domain.Localisation.translate;
 public class SimpleIconListWidget extends TreeView {
     private final TreeItem rootItem;
     private Image defaultIcon =
-            new Image(SimpleIconListWidget.class.getResource("playonlinux44.png").toExternalForm());
+            new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem();
