@@ -19,7 +19,7 @@
 package com.playonlinux.utils;
 
 import com.google.common.io.Files;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -39,25 +39,25 @@ public class ObservableDirectoryTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testObservableDirectory_DirectoryDoesNotExist_ExceptionThrown() throws PlayOnLinuxError {
-        expectedEx.expect(PlayOnLinuxError.class);
+    public void testObservableDirectory_DirectoryDoesNotExist_ExceptionThrown() throws PlayOnLinuxException {
+        expectedEx.expect(PlayOnLinuxException.class);
         expectedEx.expectMessage(String.format("The directory %s does not exist", "/tmp/unexistingDirectory"));
 
         new ObservableDirectory(new File("/tmp/unexistingDirectory"));
     }
 
     @Test
-    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxError, IOException {
+    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxException, IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
 
-        expectedEx.expect(PlayOnLinuxError.class);
+        expectedEx.expect(PlayOnLinuxException.class);
         expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
         new ObservableDirectory(temporaryFile);
     }
 
     @Test
-    public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified() throws PlayOnLinuxError,
+    public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified() throws PlayOnLinuxException,
             InterruptedException {
         File temporaryDirectory = Files.createTempDir();
 
@@ -82,7 +82,7 @@ public class ObservableDirectoryTest {
     }
 
     @Test
-    public void testObservableDirectory_createANewFile_ObservableIsNotified() throws PlayOnLinuxError,
+    public void testObservableDirectory_createANewFile_ObservableIsNotified() throws PlayOnLinuxException,
             InterruptedException, IOException {
         File temporaryDirectory = Files.createTempDir();
 

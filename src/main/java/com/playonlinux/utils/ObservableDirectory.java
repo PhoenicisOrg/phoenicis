@@ -19,7 +19,7 @@
 package com.playonlinux.utils;
 
 import com.playonlinux.common.api.services.BackgroundService;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
@@ -33,14 +33,14 @@ public class ObservableDirectory extends Observable implements BackgroundService
     private final File observedDirectory;
     private final ObservableDirectoryThread observableDirectoryThread;
 
-    public ObservableDirectory(File observedDirectory) throws PlayOnLinuxError {
+    public ObservableDirectory(File observedDirectory) throws PlayOnLinuxException {
         this.observedDirectory = observedDirectory;
         if(!observedDirectory.exists()) {
-            throw new PlayOnLinuxError(String.format("The directory %s does not exist",
+            throw new PlayOnLinuxException(String.format("The directory %s does not exist",
                     observedDirectory.toString()));
         }
         if(!observedDirectory.isDirectory()) {
-            throw new PlayOnLinuxError(String.format("The file %s is not a valid directory",
+            throw new PlayOnLinuxException(String.format("The file %s is not a valid directory",
                     observedDirectory.toString()));
         }
 

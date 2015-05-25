@@ -20,15 +20,15 @@ package com.playonlinux.domain;
 
 import org.apache.commons.lang.ArrayUtils;
 
-public class PlayOnLinuxError extends Throwable {
+public class PlayOnLinuxException extends Exception {
     private final String message;
     private final Throwable parent;
 
-    public PlayOnLinuxError(String message) {
+    public PlayOnLinuxException(String message) {
         this(message, null);
     }
 
-    public PlayOnLinuxError(String message, Throwable parent) {
+    public PlayOnLinuxException(String message, Throwable parent) {
         super(message);
         this.message = message;
         this.parent = parent;

@@ -25,7 +25,7 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.wine.WineInstallation;
 
 import java.io.IOException;
@@ -55,14 +55,14 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws PlayOnLinuxError, IOException, InterruptedException, CancelException {
+    public WinePrefix create(String version) throws PlayOnLinuxException, IOException, InterruptedException, CancelException {
         return this.create(version, Architecture.fetchCurrentArchitecture().name());
     }
 
-    public WinePrefix create(String version, String architecture) throws IOException, PlayOnLinuxError,
+    public WinePrefix create(String version, String architecture) throws IOException, PlayOnLinuxException,
             InterruptedException, CancelException {
         if(prefix == null) {
-            throw new PlayOnLinuxError("Prefix must be selected!");
+            throw new PlayOnLinuxException("Prefix must be selected!");
         }
         WineInstallation wineInstallation = new WineInstallation.Builder()
                 .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(

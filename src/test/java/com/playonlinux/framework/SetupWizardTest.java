@@ -20,7 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.common.api.ui.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
@@ -54,7 +54,7 @@ public class SetupWizardTest {
         }
 
         @Bean
-        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxError, IOException {
+        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
             return new PlayOnLinuxContext();
         }
     }

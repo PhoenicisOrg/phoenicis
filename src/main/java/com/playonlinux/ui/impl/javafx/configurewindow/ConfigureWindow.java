@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.InstalledVirtualDrives;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import javafx.scene.Scene;
@@ -34,10 +34,10 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
-     * @param parent
+     * @param parent: The parent window
      * @return the configureWindow instance
      */
-    public static ConfigureWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
+    public static ConfigureWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
         if(instance == null) {
             instance = new ConfigureWindow(parent);
         } else {
@@ -47,7 +47,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         return instance;
     }
 
-    private ConfigureWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
+    private ConfigureWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
         super();
         this.parent = parent;
 
@@ -68,7 +68,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         this.show();
     }
 
-    public void setUpEvents() throws PlayOnLinuxError {
+    public void setUpEvents() throws PlayOnLinuxException {
         InstalledVirtualDrives installedVirtualDrives = getEventHandler().getInstalledVirtualDrives();
         installedVirtualDrives.addObserver(this.installedVirtualDrivesWidget);
 

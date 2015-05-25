@@ -30,8 +30,12 @@ public abstract class SynchroneousMessage<RESULT_TYPE> implements Message {
         this.execute(this);
     }
 
-    public RESULT_TYPE getResponse() throws InterruptedException, CancelException {
-        semaphore.acquire();
+    public RESULT_TYPE getResponse() throws CancelException {
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            throw new CancelException("This script has been interrupted", e);
+        }
         return this.response;
     }
 

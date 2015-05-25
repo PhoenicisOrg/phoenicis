@@ -19,7 +19,7 @@
 package com.playonlinux.services;
 
 import com.playonlinux.common.Progressable;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
@@ -50,7 +50,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     }
 
     @Override
-    public InstalledApplications getInstalledApplications() throws PlayOnLinuxError {
+    public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
         if(installedApplications == null) {
             installedApplications = new InstalledApplicationsPlayOnLinuxImplementation();
         }
@@ -58,7 +58,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     }
 
     @Override
-    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError {
+    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException {
         if(virtualDrives == null) {
             virtualDrives = new InstalledVirtualDrivesPlayOnLinuxImplementation();
         }

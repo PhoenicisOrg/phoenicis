@@ -23,7 +23,7 @@ import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 
 @ScriptClass
 @Scan
@@ -36,7 +36,7 @@ public final class EnvironmentHelper {
         // This is a static class, it should never be instantiated
     }
 
-    public static OperatingSystem getOperatinSystem() throws PlayOnLinuxError {
+    public static OperatingSystem getOperatinSystem() throws PlayOnLinuxException {
         return OperatingSystem.fetchCurrentOperationSystem();
     }
     

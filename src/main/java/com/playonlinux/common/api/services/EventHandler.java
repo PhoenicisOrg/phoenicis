@@ -19,7 +19,7 @@
 package com.playonlinux.common.api.services;
 
 import com.playonlinux.common.Progressable;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.net.MalformedURLException;
 public interface EventHandler {
     void runLocalScript(File scriptToRun) throws IOException;
 
-    InstalledApplications getInstalledApplications() throws PlayOnLinuxError;
+    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
 
-    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError;
+    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
 
     RemoteAvailableInstallers getRemoteAvailableInstallers();
 

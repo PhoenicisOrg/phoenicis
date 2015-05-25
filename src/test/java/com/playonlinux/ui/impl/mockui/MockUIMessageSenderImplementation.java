@@ -25,7 +25,7 @@ import com.playonlinux.common.messages.SynchroneousMessage;
 
 public class MockUIMessageSenderImplementation<T> implements UIMessageSender<T> {
     @Override
-    public T synchroneousSendAndGetResult(SynchroneousMessage<T> message) throws InterruptedException, CancelException {
+    public T synchroneousSendAndGetResult(SynchroneousMessage<T> message) throws CancelException {
         message.run();
         return message.getResponse();
     }

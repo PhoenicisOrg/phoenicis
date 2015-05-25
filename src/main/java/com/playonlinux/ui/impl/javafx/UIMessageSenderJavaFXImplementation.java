@@ -55,7 +55,7 @@ public class UIMessageSenderJavaFXImplementation<RETURN_TYPE> implements UIMessa
     }
 
     @Override
-    public RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws InterruptedException, CancelException {
+    public RETURN_TYPE synchroneousSendAndGetResult(SynchroneousMessage<RETURN_TYPE> message) throws CancelException {
         UIMessageSenderJavaFXImplementation.runAndWait(message);
         return message.getResponse();
     }

@@ -168,7 +168,7 @@ public class SetupWizard {
         );
     }
 
-    public ProgressStep progressBar(String textToShow) throws CancelException, InterruptedException {
+    public ProgressStep progressBar(String textToShow) throws CancelException {
         return (ProgressStep) messageSender.synchroneousSendAndGetResult(
                 new InterrupterSynchroneousMessage() {
                     @Override

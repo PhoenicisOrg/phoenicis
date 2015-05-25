@@ -22,7 +22,7 @@ import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.common.api.services.InstalledVirtualDrives;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.*;
@@ -39,11 +39,11 @@ class MainWindowEventHandler implements UIEventHandler {
     static EventHandler mainEventHandler;
 
 
-    public InstalledApplications getInstalledApplications() throws PlayOnLinuxError {
+    public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
         return mainEventHandler.getInstalledApplications();
     }
 
-    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxError {
+    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException {
         return mainEventHandler.getInstalledVirtualDrives();
     }
 
@@ -52,15 +52,15 @@ class MainWindowEventHandler implements UIEventHandler {
     }
 
     public PlayOnLinuxWindow openConfigureWindow(PlayOnLinuxWindow parent, String selectedApplication)
-            throws PlayOnLinuxError {
+            throws PlayOnLinuxException {
         return ConfigureWindow.getInstance(parent);
     }
 
-    public PlayOnLinuxWindow openInstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxError {
+    public PlayOnLinuxWindow openInstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
         return InstallWindow.getInstance(parent);
     }
 
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxError {
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException {
         return mainEventHandler.getRemoteAvailableInstallers();
     }
 

@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.common.Progressable;
-import com.playonlinux.domain.PlayOnLinuxError;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.EventHandler;
@@ -55,7 +55,7 @@ public class InstallWindowEventHandler implements UIEventHandler {
         installWindow.getAvailableInstallerListWidget().update();
     }
 
-    public String getInstallerDescription(String scriptName) throws PlayOnLinuxError {
+    public String getInstallerDescription(String scriptName) throws PlayOnLinuxException {
         return getRemoteAvailableInstallers().getScriptByName(scriptName).getDescription();
     }
 
