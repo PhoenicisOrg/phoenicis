@@ -22,15 +22,15 @@ import com.playonlinux.domain.CancelException;
 
 import java.util.concurrent.Semaphore;
 
-public abstract class SynchroneousMessage<RESULT_TYPE> implements Message {
-    private RESULT_TYPE response;
+public abstract class SynchroneousMessage<RESULT> implements Message {
+    private RESULT response;
     Semaphore semaphore = new Semaphore(0);
 
     public void run() {
         this.execute(this);
     }
 
-    public RESULT_TYPE getResponse() throws CancelException {
+    public RESULT getResponse() throws CancelException {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
@@ -39,7 +39,7 @@ public abstract class SynchroneousMessage<RESULT_TYPE> implements Message {
         return this.response;
     }
 
-    public void setResponse(RESULT_TYPE response) {
+    public void setResponse(RESULT response) {
         this.response = response;
         semaphore.release();
     }

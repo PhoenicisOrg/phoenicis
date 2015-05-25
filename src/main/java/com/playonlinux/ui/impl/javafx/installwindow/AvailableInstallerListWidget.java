@@ -93,6 +93,6 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
     public void update(Observable o, Object arg) {
         remoteAvailableInstallers = (RemoteAvailableInstallers) o;
 
-        Platform.runLater(() -> update());
+        Platform.runLater(this::update);
     }
 }

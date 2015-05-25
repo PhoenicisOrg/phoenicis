@@ -87,7 +87,7 @@ public class Downloader {
                 progressStep.setProgressPercentage(percentDownloaded);
             }
             if(Thread.currentThread().isInterrupted()) {
-                throw new CancelException();
+                throw new CancelException("The download has been aborted");
             }
         }
         inputStream.close();

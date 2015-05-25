@@ -77,6 +77,7 @@ public class ObservableDirectory extends Observable implements BackgroundService
     protected File[] findFiles() {
         File[] files = observedDirectory.listFiles();
         List<File> filesFiltered = new LinkedList<>();
+        assert files != null;
         for(File file: files) {
             if (!file.getName().startsWith(".")) {
                 filesFiltered.add(file);

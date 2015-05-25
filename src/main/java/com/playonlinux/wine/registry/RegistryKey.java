@@ -27,10 +27,15 @@ public class RegistryKey extends AbstractRegistryNode {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("+ " + this.name + "\n");
+        stringBuilder
+                .append("+ ")
+                .append(this.name).append("\n");
         for(AbstractRegistryNode child: children) {
             for(String line: child.toString().split("\n")) {
-                stringBuilder.append("| " +  line + "\n");
+                stringBuilder
+                        .append("| ")
+                        .append(line)
+                        .append("\n");
             }
         }
         return stringBuilder.toString();

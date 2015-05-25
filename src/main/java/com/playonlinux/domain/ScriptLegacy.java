@@ -38,11 +38,13 @@ public class ScriptLegacy extends Script {
 
     @Override
     protected void executeScript(PythonInterpreter pythonInterpreter) {
-        File v4wrapper = new File("src/main/python/v4wrapper.py");
-        String filePath = v4wrapper.getAbsolutePath();
+        // FIXME: Use the properties here
+        Script playonlinuxBashInterpreter = new ScriptRecent(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+        String filePath = playonlinuxBashInterpreter.getScriptFile().getAbsolutePath();
         pythonInterpreter.set("__file__", filePath);
         pythonInterpreter.set("__scriptToWrap__", this.getScriptFile().getAbsolutePath());
-        pythonInterpreter.execfile(filePath);
+
+        playonlinuxBashInterpreter.executeScript(pythonInterpreter);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class ScriptLegacy extends Script {
             }
         } while(readLine != null);
 
-        String signature = signatureBuilder.toString().trim()   ;
+        String signature = signatureBuilder.toString().trim();
 
         if(StringUtils.isBlank(signature)) {
             throw new ParseException("The script has no valid signature!", 0);

@@ -80,8 +80,7 @@ public class SimpleIconListWidget
         getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        simpleIconChangeListener.changed((
-                                        (TreeItem<SimpleIconListItem>) newValue).getValue().getValue()
+                        simpleIconChangeListener.changed(newValue.getValue().getValue()
                         );
                     } else {
                         simpleIconChangeListener.changed(null);

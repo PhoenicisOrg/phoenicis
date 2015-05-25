@@ -24,17 +24,17 @@ import os
 
 from BashBinder.NetcatServer import NetcatServer
 from Environment.EnvironmentLoader import EnvironmentLoader
+from com.playonlinux.framework.templates import Script
 
-if __name__ == '__main__':
-    setupWindowNetcatServer = NetcatServer()
-    setupWindowNetcatServer.initServer()
+class PlayOnLinuxBashInterpreter(Script):
+    def main(self):
+        setupWindowNetcatServer = NetcatServer()
+        setupWindowNetcatServer.initServer()
 
-    EnvironmentLoader.setup(setupWindowNetcatServer)
+        EnvironmentLoader.setup(setupWindowNetcatServer)
 
-    print("Running %s" % __scriptToWrap__) # FIXME: Need a logger here
-    print(os.environ)
-    process = subprocess.call(["bash", __scriptToWrap__])
+        process = subprocess.call(["bash", __scriptToWrap__])
 
-    setupWindowNetcatServer.closeServer()
+        setupWindowNetcatServer.closeServer()
 
 

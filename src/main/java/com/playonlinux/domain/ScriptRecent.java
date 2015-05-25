@@ -70,7 +70,7 @@ public class ScriptRecent extends Script {
             if(readLine.contains("-----END PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
                 insideSignature = false;
             }
-        } while(readLine != null);
+        } while(true);
 
         String signature = signatureBuilder.toString().trim();
 

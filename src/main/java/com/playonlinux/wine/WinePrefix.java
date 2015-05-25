@@ -104,6 +104,7 @@ public class WinePrefix {
     private Collection<File> findAllFilesByExtension(String extension, File searchPath) {
         final Collection<File> candidates = new ArrayList<>();
         final File[] filesInSearchPath = searchPath.listFiles();
+        assert filesInSearchPath != null;
         for(File candidate: filesInSearchPath) {
             if(candidate.isDirectory()) {
                 candidates.addAll(findAllFilesByExtension(extension, candidate));

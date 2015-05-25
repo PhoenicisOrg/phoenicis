@@ -25,7 +25,7 @@ import org.python.util.PythonInterpreter;
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String MAIN_METHOD_NAME = "main";
 
-    public PythonInstaller(PythonInterpreter pythonInterpreter, Class type) {
+    public PythonInstaller(PythonInterpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
     }
 

@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.setupwindow;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import com.playonlinux.common.messages.CancelerMessage;
 
@@ -95,7 +96,7 @@ abstract class AbstractStepRepresentation {
         });
     }
 
-    protected void setNextButtonAction(EventHandler nextButtonAction) {
+    protected void setNextButtonAction(EventHandler<MouseEvent> nextButtonAction) {
         nextButton.setOnMouseClicked(event -> {
             nextButton.setDisable(true);
             nextButtonAction.handle(event);

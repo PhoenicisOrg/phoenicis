@@ -60,25 +60,19 @@ public class WindowsShortcut
      */
     public static boolean isPotentialValidLink(File file) throws IOException {
         final int minimum_length = 0x64;
-        InputStream fis = new FileInputStream(file);
-        boolean isPotentiallyValid = false;
-        try {
+        boolean isPotentiallyValid;
+        try (InputStream fis = new FileInputStream(file)) {
             isPotentiallyValid = file.isFile()
                     && file.getName().toLowerCase().endsWith(".lnk")
                     && fis.available() >= minimum_length
                     && isMagicPresent(getBytes(fis, 32));
-        } finally {
-            fis.close();
         }
         return isPotentiallyValid;
     }
 
     public WindowsShortcut(File file) throws IOException, ParseException {
-        InputStream in = new FileInputStream(file);
-        try {
+        try (InputStream in = new FileInputStream(file)) {
             parseLink(getBytes(in));
-        } finally {
-            in.close();
         }
     }
 

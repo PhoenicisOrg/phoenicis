@@ -76,11 +76,13 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
             @Override
             public boolean hasNext() {
+                assert(arg instanceof List);
                 return ((List<Shortcut>) arg).size() > i;
             }
 
             @Override
             public ShortcutDTO next() {
+                assert(arg instanceof List);
                 List<Shortcut> shortcutList = ((List<Shortcut>) arg);
                 if(i >= shortcutList.size()) {
                     throw new NoSuchElementException();

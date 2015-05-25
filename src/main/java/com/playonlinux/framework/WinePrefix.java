@@ -39,7 +39,7 @@ public class WinePrefix {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
-    private final static long NEWPREFIXSIZE = 320000000;
+    private final static long NEWPREFIXSIZE = 320_000_000;
 
     private final SetupWizard setupWizard;
     private com.playonlinux.wine.WinePrefix prefix;
@@ -55,12 +55,11 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws PlayOnLinuxException, IOException, InterruptedException, CancelException {
+    public WinePrefix create(String version) throws PlayOnLinuxException, InterruptedException {
         return this.create(version, Architecture.fetchCurrentArchitecture().name());
     }
 
-    public WinePrefix create(String version, String architecture) throws IOException, PlayOnLinuxException,
-            InterruptedException, CancelException {
+    public WinePrefix create(String version, String architecture) throws PlayOnLinuxException {
         if(prefix == null) {
             throw new PlayOnLinuxException("Prefix must be selected!");
         }
@@ -71,11 +70,19 @@ public class WinePrefix {
                 ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
                 .build();
 
-        Process process = wineInstallation.createPrefix(this.prefix);
+        Process process;
+        try {
+            process = wineInstallation.createPrefix(this.prefix);
+        } catch (IOException e) {
+            throw new PlayOnLinuxException("Unable to create the wineprefix", e);
+        }
 
         /* Maybe it needs to be better implemented */
-        ProgressStep progressStep =
-                this.setupWizard.progressBar(String.format(translate("Please wait while the prefix %s is created"), prefixName));
+        ProgressStep progressStep = this.setupWizard.progressBar(
+                String.format(
+                        translate("Please wait while the virtual drive is being created..."), prefixName
+                )
+        );
 
         while(process.isAlive()) {
             double percentage = this.prefix.getSize() * 100. / (double) NEWPREFIXSIZE;
@@ -85,17 +92,15 @@ public class WinePrefix {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 process.destroy();
-                wineInstallation.killAllProcess(this.prefix);
+                try {
+                    wineInstallation.killAllProcess(this.prefix);
+                } catch (IOException logged) {
+                    // Todo: We just need to log this exception.
+                }
                 throw new CancelException();
             }
         }
-        process.waitFor();
 
         return this;
-    }
-
-
-    public static void injectPlayOnLinuxContext(PlayOnLinuxContext playOnLinuxContext) {
-        WinePrefix.playOnLinuxContext = playOnLinuxContext;
     }
 }

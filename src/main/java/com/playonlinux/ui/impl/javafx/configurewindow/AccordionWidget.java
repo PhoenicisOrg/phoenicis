@@ -23,6 +23,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -52,6 +53,7 @@ public class AccordionWidget extends Accordion implements Observer {
         this.getPanes().clear();
 
         Platform.runLater(() -> {
+            assert(o instanceof Iterator);
             Iterable<VirtualDriveDTO> virtualdrives = (Iterable<VirtualDriveDTO>) o;
             int i = 0;
             for (VirtualDriveDTO virtualdrive : virtualdrives) {

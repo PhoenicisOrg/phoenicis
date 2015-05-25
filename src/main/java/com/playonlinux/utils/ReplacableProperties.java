@@ -55,8 +55,7 @@ public class ReplacableProperties extends Properties {
 
     public String replaceAllVariables(String inputString) {
         String globalVariableTranslatedString = this.replaceGlobalVariables(inputString);
-        String translatedString = this.replaceLocalVariables(globalVariableTranslatedString);
 
-        return translatedString;
+        return this.replaceLocalVariables(globalVariableTranslatedString);
     }
 }
