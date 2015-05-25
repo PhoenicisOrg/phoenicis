@@ -21,7 +21,7 @@ import os
 
 from com.playonlinux.framework import Downloader
 
-class SetupWindowNetcatCommandParser(object):
+class CommandParser(object):
     def __init__(self, setupWindowManager, command):
         self.command = command.split("\t")
         self.setupWindowManager = setupWindowManager
