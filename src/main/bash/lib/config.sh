@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Copyright (C) 2007-2011 PlayOnLinux Team
+# Copyright (C) 2007-2011 Pâris Quentin
 # Copyright (C) 2015 Pâris Quentin
 
 # This program is free software; you can redistribute it and/or modify
@@ -16,19 +18,16 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+# IMPORTANT
+# ---------
+# Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
-if [ "$(id -u)" = "0" ]; then
-	echo "PlayOnLinux is not supposed to be run as root. Sorry"
-	exit 1
-fi
 
-if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
-	source "$PLAYONLINUX/lib/system.sh"
-	source "$PLAYONLINUX/lib/config.sh"
-	source "$PLAYONLINUX/lib/debug.sh"
-	source "$PLAYONLINUX/lib/setupWindow.sh"
-	source "$PLAYONLINUX/lib/scripts.sh"
-	source "$PLAYONLINUX/lib/wine.sh"
 
-	export PLAYONLINUX_BASH_INCLUDED="TRUE"
-fi
+POL_Config_PrefixRead ()
+{
+	# Read an entry in wine current prefix's config file
+	# Usage : POL_Config_PrefixRead [KEY]
+
+	cat "$WINEPREFIX/playonlinux.cfg" 2> /dev/null | grep "^$1=" | cut -d\= -f2-
+}

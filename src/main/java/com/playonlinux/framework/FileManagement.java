@@ -26,7 +26,7 @@ import java.io.*;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts syntax
+/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts.sh syntax
  */
 
 // TODO: Create an abstract class for FileManagement and Downloader
