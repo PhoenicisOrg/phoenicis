@@ -36,6 +36,7 @@ public class WineProcessBuilder {
         if(environmentSource == null) {
             return;
         }
+
         if(environmentSource.containsKey(environmentVariable)) {
             environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable) + ":"
                     + environmentSource.get(environmentVariable));
