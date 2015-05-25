@@ -18,15 +18,19 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import java.util.Optional;
+
 import com.playonlinux.domain.PlayOnLinuxError;
 import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
+
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import static com.playonlinux.domain.Localisation.translate;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
@@ -84,6 +88,19 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         this.setScene(scene);
         this.setTitle(translate("${application.name}"));
         this.show();
+        
+        
+        scene.getWindow().setOnCloseRequest(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(translate("${application.name}"));
+            alert.setHeaderText(translate("Are you sure you want to close all ${application.name} windows?"));
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                Platform.exit();
+            } else {
+                event.consume();
+            }
+        });
     }
 
     public void setUpEvents() throws PlayOnLinuxError {
