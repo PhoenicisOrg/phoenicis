@@ -90,7 +90,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         this.show();
         
         
-        scene.getWindow().setOnCloseRequest(event -> {
+        this.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(translate("${application.name}"));
             alert.setHeaderText(translate("Are you sure you want to close all ${application.name} windows?"));
