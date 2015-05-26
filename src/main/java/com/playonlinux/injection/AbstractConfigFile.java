@@ -18,6 +18,7 @@
 
 package com.playonlinux.injection;
 
+import java.net.URL;
 import java.util.Map;
 
 

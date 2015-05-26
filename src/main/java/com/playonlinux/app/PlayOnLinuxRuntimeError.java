@@ -16,29 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.app;
 
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.utils.ReplacableProperties;
+import org.apache.commons.lang.ArrayUtils;
 
+public class PlayOnLinuxRuntimeError extends Error {
+    private final String message;
+    private final Throwable parent;
 
-// TODO
-@Scan
-public final class Localisation {
-    @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
-
-    // This is a static class
-    private Localisation() {
-
+    public PlayOnLinuxRuntimeError(String message) {
+        this(message, null);
     }
 
-    public static String translate(String stringToTranslate) {
-        ReplacableProperties properties;
-        properties = playOnLinuxContext.loadProperties();
+    public PlayOnLinuxRuntimeError(String message, Throwable parent) {
+        super(message);
+        this.message = message;
+        this.parent = parent;
+    }
 
-        return properties.replaceAllVariables(stringToTranslate);
+    @Override
+    public String toString() {
+        return this.message;
+    }
+
+    @Override
+    public StackTraceElement[] getStackTrace() {
+        return (StackTraceElement[]) ArrayUtils.addAll(super.getStackTrace(), this.parent.getStackTrace());
     }
 }

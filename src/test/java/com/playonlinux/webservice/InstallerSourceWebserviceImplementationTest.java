@@ -40,12 +40,12 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
 
-public class RemoteAvailableInstallersTest {
+public class InstallerSourceWebserviceImplementationTest {
 
     private static URL mockServerURL;
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
-    private RemoteAvailableInstallers remoteAvailableInstallers;
+    private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
     private MockObserver observer;
 
     @BeforeClass
@@ -104,14 +104,14 @@ public class RemoteAvailableInstallersTest {
         );
 
 
-        remoteAvailableInstallers = new RemoteAvailableInstallers(mockServerURL);
+        remoteAvailableInstallers = new InstallerSourceWebserviceImplementation(mockServerURL);
         observer = new MockObserver();
         remoteAvailableInstallers.addObserver(observer);
     }
 
     @Test
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
-        remoteAvailableInstallers.downloadContent();
+        remoteAvailableInstallers.populate();
 
         assertEquals("Accessories", observer.getDTO().getCategories().get(0).getName());
         assertEquals(2, observer.getDTO().getCategories().get(0).getId());
@@ -120,7 +120,7 @@ public class RemoteAvailableInstallersTest {
 
     @Test
     public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
-        remoteAvailableInstallers.downloadContent();
+        remoteAvailableInstallers.populate();
 
         List<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
 

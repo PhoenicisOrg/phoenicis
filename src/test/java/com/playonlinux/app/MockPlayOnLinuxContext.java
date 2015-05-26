@@ -37,13 +37,13 @@ public class MockPlayOnLinuxContext extends PlayOnLinuxContext {
         super();
     }
 
-    public ReplacableProperties loadProperties() throws PlayOnLinuxException {
+    public ReplacableProperties loadProperties() {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
         try {
             propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream("test.properties"));
         } catch (IOException e) {
-            throw new PlayOnLinuxException("Cannot load properties", e);
+            throw new PlayOnLinuxRuntimeError("Cannot load properties", e);
         }
         return propertiesBeingLoaded;
     }
