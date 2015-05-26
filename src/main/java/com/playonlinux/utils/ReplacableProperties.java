@@ -38,7 +38,11 @@ public class ReplacableProperties extends Properties {
 
         while(matcher.find()) {
             String propertyMatched = matcher.group(1);
-            matcher.appendReplacement(transformedPropertyStringBuffer, propertyObject.getProperty(propertyMatched));
+            if(propertyObject.getProperty(propertyMatched) != null) {
+                matcher.appendReplacement(transformedPropertyStringBuffer, propertyObject.getProperty(propertyMatched));
+            } else {
+                matcher.appendReplacement(transformedPropertyStringBuffer, "\\${"+propertyMatched+"}");
+            }
         }
         matcher.appendTail(transformedPropertyStringBuffer);
 
@@ -46,7 +50,7 @@ public class ReplacableProperties extends Properties {
     }
 
     private String replaceGlobalVariables(String inputString) {
-        return matchAndReplace(inputString, "\\$\\(([^\\}]*)\\)", System.getProperties());
+        return matchAndReplace(inputString, "\\$\\{([^\\}]*)\\}", System.getProperties());
     }
 
     private String replaceLocalVariables(String inputString) {

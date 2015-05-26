@@ -27,6 +27,7 @@ import com.playonlinux.utils.Architecture;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.wine.WineInstallation;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -36,6 +37,8 @@ import static com.playonlinux.domain.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class WinePrefix {
+    Logger logger = Logger.getLogger(WinePrefix.class);
+
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -95,7 +98,7 @@ public class WinePrefix {
                 try {
                     wineInstallation.killAllProcess(this.prefix);
                 } catch (IOException logged) {
-                    // Todo: We just need to log this exception.
+                    logger.warn("Unable to kill wine processes", logged);
                 }
                 throw new CancelException();
             }

@@ -19,6 +19,7 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.common.api.services.BackgroundService;
+import org.apache.log4j.Logger;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
@@ -26,6 +27,8 @@ import java.io.*;
 import java.text.ParseException;
 
 public abstract class Script implements BackgroundService {
+    static Logger logger = Logger.getLogger(Script.class);
+
     private Thread scriptThread;
     private File scriptFile;
 
@@ -78,8 +81,7 @@ public abstract class Script implements BackgroundService {
                     runScript();
                 } catch (PyException e) {
                     if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedException) {
-                        e.printStackTrace();
-                        System.out.println("The script was canceled! "); // Fixme: better logging system
+                        logger.info("The script was canceled", e);
                     } else {
                         throw e;
                     }
