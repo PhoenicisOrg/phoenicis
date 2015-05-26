@@ -16,29 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.common.api.webservice;
 
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.utils.ReplacableProperties;
-
-
-// TODO
-@Scan
-public final class Localisation {
-    @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
-
-    // This is a static class
-    private Localisation() {
-
-    }
-
-    public static String translate(String stringToTranslate) {
-        ReplacableProperties properties;
-        properties = playOnLinuxContext.loadProperties();
-
-        return properties.replaceAllVariables(stringToTranslate);
-    }
+public interface InstallerSource {
+    void populate();
 }

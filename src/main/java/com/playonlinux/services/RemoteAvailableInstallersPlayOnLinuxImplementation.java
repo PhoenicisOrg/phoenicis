@@ -23,7 +23,7 @@ import com.playonlinux.common.dto.*;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.webservice.RemoteAvailableInstallers;
+import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,7 +41,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     private List<CategoryDTO> categoriesDTO;
     private int numberOfCategories;
     private DownloadEnvelopeDTO<AvailableCategoriesDTO> downloadEnvelopeDto;
-    private RemoteAvailableInstallers remoteAvailableInstallers;
+    private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
     private final URL webserviceUrl;
 
     RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
@@ -143,7 +143,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
             remoteAvailableInstallers.deleteObserver(this);
             playOnLinuxBackgroundServicesManager.unregister(remoteAvailableInstallers);
         }
-        remoteAvailableInstallers = new RemoteAvailableInstallers(webserviceUrl);
+        remoteAvailableInstallers = new InstallerSourceWebserviceImplementation(webserviceUrl);
         remoteAvailableInstallers.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
     }

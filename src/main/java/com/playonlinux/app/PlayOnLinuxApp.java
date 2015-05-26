@@ -33,6 +33,9 @@ public class PlayOnLinuxApp {
     @Inject
     static Controller controller;
 
+    @Inject
+    static PlayOnLinuxContext playOnLinuxContext;
+
     public void start(String[] args) throws InjectionException {
         PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
         if(args.length > 0 && "--cli".equals(args[0])) {
@@ -40,6 +43,7 @@ public class PlayOnLinuxApp {
         }
         playOnLinuxConfig.load();
 
+        //playOnLinuxContext.initLogger();
         controller.startApplication();
     }
 

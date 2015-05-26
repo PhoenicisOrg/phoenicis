@@ -18,6 +18,7 @@
 
 package com.playonlinux.webservice;
 
+import com.playonlinux.common.api.webservice.InstallerSource;
 import com.playonlinux.common.dto.DownloadEnvelopeDTO;
 import com.playonlinux.common.dto.DownloadStateDTO;
 import com.playonlinux.common.api.services.BackgroundService;
@@ -32,18 +33,19 @@ import java.util.concurrent.Semaphore;
 /**
  * This class download scripts from a playonlinux web service and converts it into DTOs
  */
-public class RemoteAvailableInstallers extends Observable implements BackgroundService {
+public class InstallerSourceWebserviceImplementation extends Observable
+        implements BackgroundService, InstallerSource {
 
     private final URL url;
     private DownloadStateDTO.State state = DownloadStateDTO.State.WAITING;
     private Semaphore updateSemaphore = new Semaphore(1);
     private AvailableCategoriesDTO categories;
 
-    public RemoteAvailableInstallers(URL url) {
+    public InstallerSourceWebserviceImplementation(URL url) {
         this.url = url;
     }
 
-    synchronized public void downloadContent() {
+    synchronized public void populate() {
         try {
             categories = null;
 
@@ -91,7 +93,7 @@ public class RemoteAvailableInstallers extends Observable implements BackgroundS
         new Thread() {
             @Override
             public void run() {
-                downloadContent();
+                populate();
             }
         }.start();
     }

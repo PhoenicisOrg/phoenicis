@@ -20,6 +20,7 @@ package com.playonlinux.app;
 
 import com.playonlinux.common.api.ui.Controller;
 
+import com.playonlinux.common.api.webservice.InstallerSource;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.services.EventHandlerPlayOnLinuxImplementation;
@@ -28,13 +29,17 @@ import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @SuppressWarnings("unused")
 public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     private boolean useCliInterface = false;
+    private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
 
     @Bean
     public Controller controller() {
@@ -46,13 +51,18 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
+    public InstallerSource installerSource() throws MalformedURLException {
+        return new InstallerSourceWebserviceImplementation(new URL(playOnLinuxContext.getProperty("webservice.url")));
+    }
+
+    @Bean
     public EventHandler eventHandler() {
             return new EventHandlerPlayOnLinuxImplementation();
     }
 
     @Bean
     public PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
-        return new PlayOnLinuxContext();
+        return playOnLinuxContext;
     }
 
     @Bean

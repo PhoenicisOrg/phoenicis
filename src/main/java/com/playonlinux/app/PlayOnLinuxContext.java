@@ -22,6 +22,7 @@ import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.utils.ReplacableProperties;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,26 +35,36 @@ import java.util.Properties;
 public class PlayOnLinuxContext {
     private final Properties properties;
 
-    public PlayOnLinuxContext() throws PlayOnLinuxException, IOException {
+    public PlayOnLinuxContext() {
         this.properties = loadProperties();
     }
 
-    public ReplacableProperties loadProperties() throws PlayOnLinuxException {
-        ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
-
-        String filename;
+    public String getPropertyFileName() throws PlayOnLinuxException {
         switch (OperatingSystem.fetchCurrentOperationSystem()) {
             case MACOSX:
-                filename = "playonmac.properties";
-                break;
+                return "playonmac.properties";
             case LINUX:
             default:
-                filename = "playonlinux.properties";
+                return "playonlinux.properties";
         }
+    }
+
+    public void initLogger() {
         try {
+            PropertyConfigurator.configure("/com/playonlinux/"+getPropertyFileName());
+        } catch (PlayOnLinuxException e) {
+            throw new PlayOnLinuxRuntimeError("Cannot initialize logger", e);
+        }
+    }
+
+    public ReplacableProperties loadProperties()  {
+        ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
+
+        try {
+            String filename = this.getPropertyFileName();
             propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
-        } catch (IOException e) {
-            throw new PlayOnLinuxException("Cannot load properties", e);
+        } catch (PlayOnLinuxException | IOException e) {
+            throw new PlayOnLinuxRuntimeError("Cannot load properties", e);
         }
         return propertiesBeingLoaded;
     }
@@ -64,6 +75,10 @@ public class PlayOnLinuxContext {
                 prefixName
         );
         return new File(prefixPath);
+    }
+
+    public String getProperty(String property) {
+        return this.properties.getProperty(property);
     }
 
     public File makePrefixesPath() {
