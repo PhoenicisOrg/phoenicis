@@ -51,7 +51,7 @@ public class PlayOnLinuxContext {
 
     public void initLogger() {
         try {
-            PropertyConfigurator.configure("/com/playonlinux/"+getPropertyFileName());
+            PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
         } catch (PlayOnLinuxException e) {
             throw new PlayOnLinuxRuntimeError("Cannot initialize logger", e);
         }

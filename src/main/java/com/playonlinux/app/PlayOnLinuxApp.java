@@ -43,7 +43,7 @@ public class PlayOnLinuxApp {
         }
         playOnLinuxConfig.load();
 
-        //playOnLinuxContext.initLogger();
+        playOnLinuxContext.initLogger();
         controller.startApplication();
     }
 
