@@ -80,17 +80,16 @@ public abstract class Script implements BackgroundService {
                 try {
                     runScript();
                 } catch (PyException e) {
-                    if (e.getCause() instanceof CancelException || e.getCause() instanceof InterruptedException) {
-                        logger.info("The script was canceled", e);
-                    } else {
-                        throw e;
+                    if(e.getCause() instanceof ScriptFailureException) {
+                        logger.error("The script encountered an error");
                     }
+                    if(e.getCause() instanceof CancelException) {
+                        logger.info("The script has been canceled");
+                    }
+                    logger.error(e);
+                    logger.error(e.getCause());
                 }
             }
-
-
-
-
         };
         scriptThread.start();
 
