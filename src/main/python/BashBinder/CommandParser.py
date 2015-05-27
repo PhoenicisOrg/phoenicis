@@ -23,17 +23,26 @@ from com.playonlinux.framework import Downloader
 
 class CommandParser(object):
     def __init__(self, setupWindowManager, command):
-        self.command = command.split("\t")
+        self.command = command
+        self.splitCommand = self.command.split("\t")
         self.setupWindowManager = setupWindowManager
 
     def getCookie(self):
-        return self.command[0]
+        return self.splitCommand[0]
 
     def getCommand(self):
-        return self.command[1]
+        return self.splitCommand[1]
 
     def executeCommand(self):
-        if(self.getCommand() == "POL_SetupWindow_Init"):
+        commandExecutor = CommandParser.CommandExecutor(self.splitCommand, self.setupWindowManager)
+        return getattr(commandExecutor, self.getCommand())()
+
+    class CommandExecutor():
+        def __init__(self, command, setupWindowManager):
+            self.command = command
+            self.setupWindowManager = setupWindowManager
+
+        def POL_SetupWindow_Init(self):
             setupWindowId = self.command[2]
             if("TITLE" in os.environ.keys()):
                 windowTitle = os.environ["TITLE"]
@@ -42,19 +51,19 @@ class CommandParser(object):
 
             self.setupWindowManager.newWindow(setupWindowId, windowTitle)
 
-        if(self.getCommand() == "POL_SetupWindow_message"):
+        def POL_SetupWindow_message(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
 
             self.setupWindowManager.getWindow(setupWindowId).message(textToShow)
 
-        if(self.getCommand() == "POL_SetupWindow_wait"):
+        def POL_SetupWindow_wait(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
 
             self.setupWindowManager.getWindow(setupWindowId).wait(textToShow)
 
-        if(self.getCommand() == "POL_SetupWindow_textbox"):
+        def POL_SetupWindow_textbox(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
 
@@ -65,7 +74,7 @@ class CommandParser(object):
 
             return self.setupWindowManager.getWindow(setupWindowId).textbox(textToShow, defaultValue)
 
-        if(self.getCommand() == "POL_SetupWindow_menu"):
+        def POL_SetupWindow_menu(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
 
@@ -78,12 +87,12 @@ class CommandParser(object):
 
             return self.setupWindowManager.getWindow(setupWindowId).menu(textToShow, items)
 
-        if(self.getCommand() == "POL_SetupWindow_Close"):
+        def POL_SetupWindow_Close(self):
             setupWindowId = self.command[2]
 
             self.setupWindowManager.getWindow(setupWindowId).close()
 
-        if(self.getCommand() == "POL_Download"):
+        def POL_Download(self):
             setupWindowId = self.command[2]
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 

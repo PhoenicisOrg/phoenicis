@@ -6,9 +6,10 @@ TITLE="Legacy script"
 
 echo "Test"
 POL_SetupWindow_Init
-POL_Download "https://www.playonlinux.com/images/logos/logo96.png" "a857e55353968fa77efa4ddae7d8853f"
 POL_SetupWindow_message "Test"
 POL_SetupWindow_message "Test 2"
 POL_SetupWindow_message "Test 3"
+POL_Download "http://www.playonlinux.com/images/logos/logo96.png" "a857e55353968fa77efa4ddae7d8853f"
+
 POL_SetupWindow_Close
 exit

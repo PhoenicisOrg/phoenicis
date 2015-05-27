@@ -18,20 +18,19 @@
 
 package com.playonlinux.domain;
 
-public class CancelException extends PlayOnLinuxException {
-    private static final String DEFAULT_MESSAGE = "The action has been canceled by the user";
+public class ScriptFailureException extends CancelException {
+    private static final String DEFAULT_MESSAGE = "The script has encountered a fatal error";
 
-    public CancelException() {
+    public ScriptFailureException() {
         super(DEFAULT_MESSAGE);
     }
-    public CancelException(String message) {
+    public ScriptFailureException(String message) {
         super(message);
     }
-    public CancelException(String message, Throwable parent) {
+    public ScriptFailureException(String message, Throwable parent) {
         super(message, parent);
     }
-    public CancelException(Throwable parent) {
+    public ScriptFailureException(Throwable parent) {
         super(DEFAULT_MESSAGE, parent);
     }
-
 }
