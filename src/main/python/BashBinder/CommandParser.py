@@ -20,6 +20,7 @@
 import os
 
 from com.playonlinux.framework import Downloader
+from com.playonlinux.domain import ScriptFailureException
 
 class CommandParser(object):
     def __init__(self, setupWindowManager, command):
@@ -97,3 +98,6 @@ class CommandParser(object):
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 
             Downloader(setupWindow).get(self.command[3]).check(self.command[4])
+
+        def POL_Throw(self):
+            raise ScriptFailureException(self.command[3])

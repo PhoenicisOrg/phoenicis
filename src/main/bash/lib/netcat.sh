@@ -22,22 +22,43 @@
 # ---------
 # Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
+export POL_HOST="127.0.0.1"
 
-
-POL_Debug_Fatal ()
+POL_EscapeTab()
 {
-    local message="$1"
-    # FIXME: Close the setupWindow properly before throwing an exception
-    throw "$message"
+	echo "${1//	/\\t}"
 }
 
-POL_Debug_Message ()
+# Silent netcat
+ncs()
 {
-    echo "$@"
-    # FIXME
+	ncns "$@" > /dev/null 2> /dev/null
 }
 
-throw() {
-    local message="$1"
-    toPython "POL_Throw" "$message"
+ncns()
+{
+	if [ "$POL_OS" = "MACOSX" ]; then
+		nc "$@"
+	else
+		nc -q -1 "$@" 2> /dev/null || nc "$@"
+	fi
+
+}
+
+toPythonPipe() {
+    ncs "$POL_HOST" "$POL_PORT"
+}
+
+toPython() {
+    local command="$1"
+    shift
+    arguments=""
+    for argument in "$@"
+    do
+        arguments="${arguments}\t$(POL_EscapeTab "$argument")"
+    done
+
+    local arguments="$2"
+
+    echo "$POL_COOKIE	$command	$$	$arguments" | toPythonPipe
 }

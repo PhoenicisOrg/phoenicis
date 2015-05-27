@@ -23,6 +23,7 @@ if [ "$(id -u)" = "0" ]; then
 fi
 
 if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
+	source "$PLAYONLINUX/lib/netcat.sh"
 	source "$PLAYONLINUX/lib/system.sh"
 	source "$PLAYONLINUX/lib/config.sh"
 	source "$PLAYONLINUX/lib/debug.sh"
