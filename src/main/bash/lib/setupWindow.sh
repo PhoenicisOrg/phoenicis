@@ -23,29 +23,6 @@
 # Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
 
-export POL_HOST="127.0.0.1"
-
-POL_EscapeTab()
-{
-	echo "${1//	/\\t}"
-}
-
-# Silent netcat
-ncs()
-{
-	ncns "$@" > /dev/null 2> /dev/null
-}
-
-ncns()
-{
-	if [ "$POL_OS" = "MACOSX" ]; then
-		nc "$@"
-	else
-		nc -q -1 "$@" 2> /dev/null || nc "$@"
-	fi
-
-}
-
 POL_SetupWindow_Init ()
 {
 	# Open PlayOnLinux setup window. Should be use only once in a script !
@@ -64,7 +41,7 @@ POL_SetupWindow_Init ()
 	[ "$arg2" = "" ] && arg2="None"
 	[ "$arg3" = "" ] && arg3="None"
 
-	echo "$POL_COOKIE	POL_SetupWindow_Init	$$	$arg1	$arg2	$arg3" | ncs "$POL_HOST" "$POL_PORT"
+	echo "$POL_COOKIE	POL_SetupWindow_Init	$$	$arg1	$arg2	$arg3" | toPythonPipe
 
 	export SETUPWINDOW_INIT="true"
 }
@@ -73,7 +50,7 @@ POL_SetupWindow_message ()
 {
 	# Shows a simple message
 	# Usage POL_SetupWindow_message [message] [title]
-	echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$2")" | ncs "$POL_HOST" "$POL_PORT"
+	echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$2")" | toPythonPipe
 }
 
 POL_SetupWindow_Close ()
@@ -83,7 +60,7 @@ POL_SetupWindow_Close ()
 	# Should be used at the end of the script if POL_SetupWindow_Init has been called
 	# Usage: POL_SetupWindow_Close
 
-	echo "$POL_COOKIE	POL_SetupWindow_Close	$$" | ncs "$POL_HOST" "$POL_PORT"
+	echo "$POL_COOKIE	POL_SetupWindow_Close	$$" | toPythonPipe
 
 	export SETUPWINDOW_INIT="false"
 	sleep 2
@@ -112,7 +89,7 @@ POL_SetupWindow_wait ()
 	# Wait for next POL_SetupWindow_ command
 	# Usage POL_SetupWindow_wait_next_signal [message] [title]
 
-	echo "$POL_COOKIE	POL_SetupWindow_wait	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | ncs "$POL_HOST" "$POL_PORT"
+	echo "$POL_COOKIE	POL_SetupWindow_wait	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | toPythonPipe
 }
 
 POL_SetupWindow_wait_next_signal ()

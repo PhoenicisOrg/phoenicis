@@ -21,11 +21,13 @@ package com.playonlinux.framework;
 import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.domain.ScriptFailureException;
 import com.playonlinux.utils.Checksum;
 import com.playonlinux.domain.PlayOnLinuxException;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
@@ -102,17 +104,38 @@ public class Downloader {
         return this;
     }
 
-    public Downloader get(URL remoteFile) throws IOException, CancelException, InterruptedException {
-        File temporaryFile = File.createTempFile(this.findFileNameFromURL(remoteFile), "");
-        return get(remoteFile, temporaryFile);
+    public Downloader get(URL remoteFile) throws CancelException {
+        File temporaryFile;
+        try {
+            temporaryFile = File.createTempFile(this.findFileNameFromURL(remoteFile), "");
+        } catch (IOException e) {
+            throw new ScriptFailureException("Unable to create temporary log file", e);
+        }
+        try {
+            return get(remoteFile, temporaryFile);
+        } catch (IOException e) {
+            throw new ScriptFailureException("Unable to download the remote file", e);
+        } catch (InterruptedException e) {
+            throw new CancelException(e);
+        }
     }
 
-    public Downloader get(String remoteFile) throws IOException, InterruptedException, CancelException {
-        return get(new URL(remoteFile));
+    public Downloader get(String remoteFile) throws CancelException {
+        try {
+            return get(new URL(remoteFile));
+        } catch (MalformedURLException e) {
+            throw new ScriptFailureException(String.format("Unable to download the remote file: %s", remoteFile), e);
+        }
     }
 
-    public Downloader get(String remoteFile, String localFile) throws IOException, InterruptedException, CancelException {
-        return get(new URL(remoteFile), new File(localFile));
+    public Downloader get(String remoteFile, String localFile) throws CancelException {
+        try {
+            return get(new URL(remoteFile), new File(localFile));
+        } catch (IOException  e) {
+            throw new ScriptFailureException("The download has failed", e);
+        } catch (InterruptedException e) {
+            throw new CancelException(e);
+        }
     }
 
     public Downloader check(String expectedChecksum) throws IOException, NoSuchAlgorithmException, PlayOnLinuxException {
