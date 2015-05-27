@@ -21,6 +21,7 @@
 # This tools is made to run legacy PlayOnLinux v4 scripts
 import subprocess
 import os
+from BashBinder.BashProcess import BashProcess
 
 from BashBinder.NetcatServer import NetcatServer
 from Environment.EnvironmentLoader import EnvironmentLoader
@@ -33,7 +34,10 @@ class PlayOnLinuxBashInterpreter(Script):
 
         EnvironmentLoader.setup(setupWindowNetcatServer)
 
-        process = subprocess.call(["bash", __scriptToWrap__])
+        process = BashProcess(["bash", __scriptToWrap__])
+        setupWindowNetcatServer.setProcess(process)
+        process.start()
+        process.join()
 
         setupWindowNetcatServer.closeServer()
 
