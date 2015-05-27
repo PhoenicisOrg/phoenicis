@@ -13,6 +13,7 @@ POL_Download "http://www.playonlinux.com/images/logos/logo96.png" "a857e55353968
 
 throw "Cancel this script please"
 
+echo "This message should never appear"
 POL_SetupWindow_message "This message should never appear"
 POL_SetupWindow_Close
 exit
