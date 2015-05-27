@@ -56,6 +56,7 @@ class NetcatServer(threading.Thread):
             result = self.processReceivedCommand(clientCommand)
         except Throwable, e:
             print "Exception encountered. Will close the SetupWindow server now"
+            self.process.stop()
             self.closeServer()
             self.failException = e
             raise
@@ -116,3 +117,6 @@ class NetcatServer(threading.Thread):
 
     def getCookie(self):
         return self._cookie
+
+    def setProcess(self, process):
+        self.process = process
