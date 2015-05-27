@@ -19,6 +19,7 @@
 package com.playonlinux.domain;
 
 public class ScriptFailureException extends CancelException {
+
     private static final String DEFAULT_MESSAGE = "The script has encountered a fatal error";
 
     public ScriptFailureException() {

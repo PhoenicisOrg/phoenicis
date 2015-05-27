@@ -22,6 +22,7 @@ import threading
 import thread
 import string
 import random
+from java.lang import Throwable
 
 from CommandParser import CommandParser
 from SetupWindow.SetupWindowManager import SetupWindowManager
@@ -34,6 +35,7 @@ class NetcatServer(threading.Thread):
         self._cookie = self._generateUniqueCookie()
         self._running = True
         self.setupWindowManager = SetupWindowManager()
+        self.failException = None
 
     def connectionHandler(self, connection):
         clientCommand = ""
@@ -50,11 +52,18 @@ class NetcatServer(threading.Thread):
             if "\n" in chunk:
                 break
 
-        result = self.processReceivedCommand(clientCommand)
-        connection.send(str(result))
-
-        connection.shutdown(1)
-        connection.close()
+        try:
+            result = self.processReceivedCommand(clientCommand)
+        except Throwable, e:
+            print "Exception encountered. Will close the SetupWindow server now"
+            self.closeServer()
+            self.failException = e
+            raise
+        else:
+            connection.send(str(result))
+        finally:
+            connection.shutdown(1)
+            connection.close()
 
     def _generateUniqueCookie(self, length=20, chars=string.letters + string.digits):
         return ''.join([random.SystemRandom().choice(chars) for i in range(length)])
@@ -75,6 +84,11 @@ class NetcatServer(threading.Thread):
 
 
     def closeServer(self):
+        # The server has already been shutdown because an exception has been raised
+        # We are going to rethrow it so that Java can get it
+        if(self.failException is not None):
+            raise self.failException
+
         self.acceptor.close()
         self._running = False
 
