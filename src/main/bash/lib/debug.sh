@@ -40,4 +40,5 @@ POL_Debug_Message ()
 throw() {
     local message="$1"
     toPython "POL_Throw" "$message"
+    exit 1
 }
