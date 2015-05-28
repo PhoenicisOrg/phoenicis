@@ -18,6 +18,7 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.python.Interpreter;
 import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
@@ -34,10 +35,15 @@ public class ScriptRecent extends Script {
     }
 
     @Override
-    protected void executeScript(PythonInterpreter pythonInterpreter) {
+    protected void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException {
         pythonInterpreter.execfile(this.getScriptFile().getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
+
         if(pythonInstaller.hasMain()) {
+            String logContext = pythonInstaller.extractLogContext();
+            if(logContext != null) {
+                System.out.println("Log context: " + logContext);
+            }
             pythonInstaller.runMain();
         }
     }

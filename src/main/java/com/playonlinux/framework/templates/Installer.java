@@ -20,7 +20,10 @@ package com.playonlinux.framework.templates;
 
 import com.playonlinux.domain.ScriptTemplate;
 
-public abstract class Script implements ScriptTemplate {
+public abstract class Installer implements ScriptTemplate {
     public abstract void main();
 
+    public String defineLogContext() {
+        return null;
+    }
 }
