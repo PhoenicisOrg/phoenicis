@@ -23,7 +23,7 @@ import com.playonlinux.domain.ScriptTemplate;
 public abstract class Installer implements ScriptTemplate {
     public abstract void main();
 
-    public String defineLogContext() {
+    public String logContext() {
         return null;
     }
 }

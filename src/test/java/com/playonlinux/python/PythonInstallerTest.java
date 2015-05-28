@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 
 public class PythonInstallerTest {
     @Test
-    public void testDefineLogContext() throws IOException, ScriptFailureException {
+    public void testPythonInstaller_DefineLogContextWithMethod_ContextIsSet() throws IOException, ScriptFailureException {
         File temporaryScript = File.createTempFile("testDefineLogContext", "py");
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
@@ -40,7 +40,7 @@ public class PythonInstallerTest {
                 "class PlayOnLinuxBashInterpreter(Installer):\n" +
                 "    def main(self):\n" +
                 "        pass\n" +
-                "    def defineLogContext(self):\n" +
+                "    def logContext(self):\n" +
                 "        return \"Mock Log Context\"\n").getBytes());
 
         Interpreter interpreter = Interpreter.createInstance();
@@ -48,5 +48,26 @@ public class PythonInstallerTest {
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
         assertEquals("Mock Log Context", pythonInstaller.extractLogContext());
+    }
+
+
+    @Test
+    public void testPythonInstaller_DefineLogContextWithAttribute_ContextIsSet() throws IOException, ScriptFailureException {
+        File temporaryScript = File.createTempFile("testDefineLogContext", "py");
+        FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
+
+        fileOutputStream.write(("#!/usr/bin/env/python\n" +
+                "from com.playonlinux.framework.templates import Installer\n" +
+                "\n" +
+                "class PlayOnLinuxBashInterpreter(Installer):\n" +
+                "   logContext = \"Mock Log Context 2\"\n" +
+                "   def main(self):\n" +
+                "        pass\n").getBytes());
+
+        Interpreter interpreter = Interpreter.createInstance();
+        interpreter.execfile(temporaryScript.getAbsolutePath());
+        PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
+
+        assertEquals("Mock Log Context 2", pythonInstaller.extractLogContext());
     }
 }
