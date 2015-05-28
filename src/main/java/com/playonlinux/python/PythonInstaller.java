@@ -26,7 +26,7 @@ import org.python.core.PyType;
 
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String MAIN_METHOD_NAME = "main";
-    private static final String DEFINE_LOGCONTEXT_METHOD_NAME = "defineLogContext";
+    private static final String DEFINE_LOGCONTEXT_NAME = "logContext";
 
     public PythonInstaller(Interpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
@@ -49,17 +49,21 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public String extractLogContext() throws ScriptFailureException {
-        PyObject pyLogContext = this.getMainInstance().invoke(DEFINE_LOGCONTEXT_METHOD_NAME);
-        if(pyLogContext != null && !(pyLogContext instanceof PyNone)) {
-            if(!(pyLogContext instanceof PyString)) {
-                throw new ScriptFailureException(String.format("%s must return a string.", DEFINE_LOGCONTEXT_METHOD_NAME));
-            } else {
-                return ((PyString) pyLogContext).getString();
-            }
+        PyObject pyLogAttribute = this.getMainInstance().__getattr__(DEFINE_LOGCONTEXT_NAME);
+        if(pyLogAttribute instanceof PyString) {
+            return ((PyString) pyLogAttribute).getString();
         } else {
-            return null;
+            PyObject pyLogContext = this.getMainInstance().invoke(DEFINE_LOGCONTEXT_NAME);
+            if (pyLogContext != null && !(pyLogContext instanceof PyNone)) {
+                if (!(pyLogContext instanceof PyString)) {
+                    throw new ScriptFailureException(String.format("%s must return a string.", DEFINE_LOGCONTEXT_NAME));
+                } else {
+                    return ((PyString) pyLogContext).getString();
+                }
+            } else {
+                return null;
+            }
         }
     }
-
 
 }
