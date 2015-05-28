@@ -43,7 +43,7 @@ public class PythonInstallerTest {
                 "    def defineLogContext(self):\n" +
                 "        return \"Mock Log Context\"\n").getBytes());
 
-        Interpreter interpreter = new Interpreter();
+        Interpreter interpreter = Interpreter.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 

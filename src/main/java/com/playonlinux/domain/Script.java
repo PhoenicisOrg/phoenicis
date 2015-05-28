@@ -98,7 +98,7 @@ public abstract class Script implements BackgroundService {
     }
 
     public void executeInterpreter() throws ScriptFailureException {
-        Interpreter pythonInterpreter = new Interpreter();
+        Interpreter pythonInterpreter = Interpreter.createInstance();
         executeScript(pythonInterpreter);
     }
 
