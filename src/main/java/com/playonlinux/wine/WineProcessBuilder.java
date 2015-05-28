@@ -83,8 +83,6 @@ public class WineProcessBuilder {
         mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "LD_LIBRARY_PATH");
         mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "DYLD_LIBRARY_PATH");
 
-        processBuilder.inheritIO();
-
         return processBuilder.start();
     }
 

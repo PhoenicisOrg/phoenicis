@@ -19,6 +19,7 @@
 package com.playonlinux.python;
 
 import com.playonlinux.domain.ScriptFailureException;
+import org.python.core.PyNone;
 import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.core.PyType;
@@ -49,7 +50,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
 
     public String extractLogContext() throws ScriptFailureException {
         PyObject pyLogContext = this.getMainInstance().invoke(DEFINE_LOGCONTEXT_METHOD_NAME);
-        if(pyLogContext != null) {
+        if(pyLogContext != null && !(pyLogContext instanceof PyNone)) {
             if(!(pyLogContext instanceof PyString)) {
                 throw new ScriptFailureException(String.format("%s must return a string.", DEFINE_LOGCONTEXT_METHOD_NAME));
             } else {
