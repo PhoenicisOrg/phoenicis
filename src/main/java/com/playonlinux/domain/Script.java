@@ -19,9 +19,9 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.common.api.services.BackgroundService;
+import com.playonlinux.python.Interpreter;
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
-import org.python.util.PythonInterpreter;
 
 import java.io.*;
 import java.text.ParseException;
@@ -78,7 +78,7 @@ public abstract class Script implements BackgroundService {
             @Override
             public void run() {
                 try {
-                    runScript();
+                    executeInterpreter();
                 } catch (PyException e) {
                     if(e.getCause() instanceof ScriptFailureException) {
                         logger.error("The script encountered an error");
@@ -88,6 +88,8 @@ public abstract class Script implements BackgroundService {
                     }
                     logger.error(e);
                     logger.error(e.getCause());
+                } catch (ScriptFailureException e) {
+                    logger.error(e);
                 }
             }
         };
@@ -95,14 +97,12 @@ public abstract class Script implements BackgroundService {
 
     }
 
-    public void runScript() {
-        File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
-        System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
-        PythonInterpreter pythonInterpreter = new PythonInterpreter();
+    public void executeInterpreter() throws ScriptFailureException {
+        Interpreter pythonInterpreter = Interpreter.createInstance();
         executeScript(pythonInterpreter);
     }
 
-    protected abstract void executeScript(PythonInterpreter pythonInterpreter);
+    protected abstract void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException;
 
     public abstract String extractSignature() throws ParseException, IOException;
 }

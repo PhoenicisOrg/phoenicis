@@ -27,9 +27,9 @@ import java.util.List;
 
 public abstract class AbstractPythonModule<T> {
     private final Class<T> type;
-    protected final PythonInterpreter pythonInterpreter;
+    protected final Interpreter pythonInterpreter;
 
-    public AbstractPythonModule(PythonInterpreter pythonInterpreter, Class<T> type) {
+    public AbstractPythonModule(Interpreter pythonInterpreter, Class<T> type) {
         this.type = type;
         this.pythonInterpreter = pythonInterpreter;
     }

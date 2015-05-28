@@ -26,19 +26,38 @@
 
 POL_Debug_Fatal ()
 {
-    local message="$1"
     # FIXME: Close the setupWindow properly before throwing an exception
+    local message="$1"
+    POL_Debug_Error "($(Get_CurrentDate)) $message"
+    POL_SetupWindow_Close
     throw "$message"
 }
 
+POL_Debug_Error ()
+{
+    # FIXME: Show a popup message
+    echo "($(Get_CurrentDate)) [ERROR] $@"
+}
+
+
 POL_Debug_Message ()
 {
-    echo "$@"
-    # FIXME
+    echo "($(Get_CurrentDate)) [INFO] $@"
+}
+
+POL_Debug_Warning ()
+{
+    echo "($(Get_CurrentDate)) [WARNING] $@"
 }
 
 throw() {
     local message="$1"
     toPython "POL_Throw" "$message"
     exit 1
+}
+
+Get_CurrentDate()
+{
+	# Return the current date
+	date "+%D %T"
 }

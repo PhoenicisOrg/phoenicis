@@ -61,7 +61,7 @@ public class LegacyWrapperTest {
         }
         File testScript = new File(this.getClass().getResource("wrapperTestScript.sh").getPath());
         Script testScriptWrapper = Script.createInstance(testScript);
-        testScriptWrapper.runScript();
+        testScriptWrapper.executeInterpreter();
         //file should exist now
         assertTrue(tmpFile.exists());
     }

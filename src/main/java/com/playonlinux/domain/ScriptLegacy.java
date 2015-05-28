@@ -18,6 +18,7 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.python.Interpreter;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
@@ -37,7 +38,7 @@ public class ScriptLegacy extends Script {
     }
 
     @Override
-    protected void executeScript(PythonInterpreter pythonInterpreter) {
+    protected void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException {
         // FIXME: Use the properties here
         Script playonlinuxBashInterpreter = new ScriptRecent(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
         String filePath = playonlinuxBashInterpreter.getScriptFile().getAbsolutePath();

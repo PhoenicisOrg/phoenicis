@@ -19,15 +19,13 @@
 
 
 # This tools is made to run legacy PlayOnLinux v4 scripts
-import subprocess
-import os
 from BashBinder.BashProcess import BashProcess
 
 from BashBinder.NetcatServer import NetcatServer
 from Environment.EnvironmentLoader import EnvironmentLoader
-from com.playonlinux.framework.templates import Script
+from com.playonlinux.framework.templates import Installer
 
-class PlayOnLinuxBashInterpreter(Script):
+class PlayOnLinuxBashInterpreter(Installer):
     def main(self):
         setupWindowNetcatServer = NetcatServer()
         setupWindowNetcatServer.initServer()
