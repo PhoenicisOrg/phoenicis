@@ -1,7 +1,9 @@
 from com.playonlinux.framework import SetupWizard
-from com.playonlinux.framework.templates import Script
+from com.playonlinux.framework.templates import Installer
 
-class Example(Script):
+class Example(Installer):
+    logContext = "ExampleScript"
+
     def main(self):
         setupWindow = SetupWizard("TITLE")
 

@@ -18,9 +18,11 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.common.log.LogStream;
 import com.playonlinux.python.Interpreter;
 import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.python.util.PythonInterpreter;
 
 import java.io.BufferedReader;
@@ -42,7 +44,11 @@ public class ScriptRecent extends Script {
         if(pythonInstaller.hasMain()) {
             String logContext = pythonInstaller.extractLogContext();
             if(logContext != null) {
-                System.out.println("Log context: " + logContext);
+                try {
+                    pythonInterpreter.setOut(new LogStream(logContext));
+                } catch (IOException e) {
+                    throw new ScriptFailureException(e);
+                }
             }
             pythonInstaller.runMain();
         }
