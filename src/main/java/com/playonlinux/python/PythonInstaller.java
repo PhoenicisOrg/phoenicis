@@ -29,6 +29,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String DEFINE_LOGCONTEXT_NAME = "logContext";
     private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
     private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
+    private PyObject mainInstance;
 
     public PythonInstaller(Interpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
@@ -39,7 +40,10 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     private PyObject getMainInstance() {
-        return this.getMainClass().__call__();
+        if(mainInstance == null) {
+            mainInstance = this.getMainClass().__call__();
+        }
+        return mainInstance;
     }
 
     public boolean hasMain() {
@@ -53,7 +57,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private void rollback(PyObject mainInstance) {
         mainInstance.invoke(ROLLBACK_METHOD_NAME);
     }
-    
+
     public String extractLogContext() throws ScriptFailureException {
         return extractStringAttribute(DEFINE_LOGCONTEXT_NAME);
     }
@@ -69,22 +73,21 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                 }
             }
 
-            PyObject mainInstance = this.getMainInstance();
-
             String scriptTitle = this.extractStringAttribute("title");
             if(scriptTitle == null) {
                 throw new ScriptFailureException("The title is missing on this script");
             } else {
-                mainInstance.invoke("_setSetupWizardTitle", new PyString(scriptTitle));
+                getMainInstance().invoke("_setSetupWizardTitle", new PyString(scriptTitle));
             }
 
             try {
-                this.runMain(mainInstance);
+                this.runMain(getMainInstance());
             } catch(Exception e) {
                 try {
-                    mainInstance.invoke(ROLLBACK_METHOD_NAME);
+                    getMainInstance().invoke(ROLLBACK_METHOD_NAME);
                 } catch (Exception rollbackException) {
-                    mainInstance.invoke(DEFAULT_ROLLBACK_METHOD_NAME);
+                    getMainInstance().invoke(DEFAULT_ROLLBACK_METHOD_NAME);
+                    rollbackException.initCause(e);
                     throw rollbackException;
                 }
                 throw e;
@@ -95,11 +98,16 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     
 
     public String extractStringAttribute(String attributeToExtract) throws ScriptFailureException {
-        PyObject pyLogAttribute = this.getMainInstance().__getattr__(attributeToExtract);
+        PyObject pyLogAttribute;
+        try {
+            pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);
+        } catch (PyException e) {
+            return null;
+        }
         if (pyLogAttribute instanceof PyString) {
             return ((PyString) pyLogAttribute).getString();
         } else {
-            PyObject pyLogContext = this.getMainInstance().invoke(attributeToExtract);
+            PyObject pyLogContext = getMainInstance().invoke(attributeToExtract);
             if (pyLogContext != null && !(pyLogContext instanceof PyNone)) {
                 if (!(pyLogContext instanceof PyString)) {
                     throw new ScriptFailureException(String.format("%s must return a string.", attributeToExtract));

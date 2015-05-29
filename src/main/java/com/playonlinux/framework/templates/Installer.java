@@ -35,7 +35,7 @@ public abstract class Installer implements ScriptTemplate {
         this.setupWizardTitle = setupWizardTitle;
     }
 
-    private void _defaultRollback() {
+    public void _defaultRollback() {
         if(this.setupWizard != null) {
             setupWizard.close();
         }

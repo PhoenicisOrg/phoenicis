@@ -28,14 +28,15 @@ from CommandParser import CommandParser
 from SetupWindow.SetupWindowManager import SetupWindowManager
 
 class NetcatServer(threading.Thread):
-    def __init__(self):
+    def __init__(self, setupWindowManager):
         threading.Thread.__init__(self)
         self._host = '127.0.0.1'
         self._port = 30000
         self._cookie = self._generateUniqueCookie()
         self._running = True
-        self.setupWindowManager = SetupWindowManager()
+        self.setupWindowManager = setupWindowManager
         self.failException = None
+
 
     def connectionHandler(self, connection):
         clientCommand = ""
@@ -56,8 +57,6 @@ class NetcatServer(threading.Thread):
             result = self.processReceivedCommand(clientCommand)
         except Throwable, e:
             print "Exception encountered. Will close the SetupWindow server now"
-            self.process.stop()
-            self.closeServer()
             self.failException = e
             raise
         else:
@@ -85,13 +84,15 @@ class NetcatServer(threading.Thread):
 
 
     def closeServer(self):
+        self.acceptor.close()
+        self._running = False
+
         # The server has already been shutdown because an exception has been raised
         # We are going to rethrow it so that Java can get it
         if(self.failException is not None):
             raise self.failException
 
-        self.acceptor.close()
-        self._running = False
+
 
 
     def run(self):
@@ -117,6 +118,3 @@ class NetcatServer(threading.Thread):
 
     def getCookie(self):
         return self._cookie
-
-    def setProcess(self, process):
-        self.process = process

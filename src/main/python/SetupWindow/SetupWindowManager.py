@@ -30,4 +30,6 @@ class SetupWindowManager(object):
         self.managedWindows[windowId] = SetupWizard(title)
         return self.managedWindows[windowId]
 
-
+    def closeAll(self):
+        for windowId in self.managedWindows:
+            self.managedWindows[windowId].close()
