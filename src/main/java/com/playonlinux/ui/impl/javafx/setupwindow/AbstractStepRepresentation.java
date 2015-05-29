@@ -92,7 +92,6 @@ abstract class AbstractStepRepresentation {
         cancelButton.setOnMouseClicked(event -> {
             cancelButton.setDisable(true);
             messageWaitingForResponse.sendCancelSignal();
-            this.parent.close();
         });
     }
 
@@ -100,6 +99,13 @@ abstract class AbstractStepRepresentation {
         nextButton.setOnMouseClicked(event -> {
             nextButton.setDisable(true);
             nextButtonAction.handle(event);
+        });
+
+        this.getParent().setOnCloseRequest(event -> {
+            if (this.messageWaitingForResponse != null) {
+                this.messageWaitingForResponse.sendCancelSignal();
+            }
+            event.consume();
         });
     }
 

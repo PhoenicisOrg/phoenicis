@@ -41,17 +41,7 @@ public class ScriptRecent extends Script {
         pythonInterpreter.execfile(this.getScriptFile().getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
 
-        if(pythonInstaller.hasMain()) {
-            String logContext = pythonInstaller.extractLogContext();
-            if(logContext != null) {
-                try {
-                    pythonInterpreter.setOut(new LogStream(logContext));
-                } catch (IOException e) {
-                    throw new ScriptFailureException(e);
-                }
-            }
-            pythonInstaller.runMain();
-        }
+        pythonInstaller.exec();
     }
 
 

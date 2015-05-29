@@ -40,8 +40,6 @@ import java.util.List;
 public class SetupWindowJavaFXImplementation extends Stage implements SetupWindow {
     private final Pane root;
     private final String wizardTitle;
-    private CancelerMessage lastCancelerMessage = null;
-
 
     private URL topImage;
     private URL leftImage;
@@ -70,12 +68,6 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
         this.setTitle(title);
         this.setScene(scene);
         this.show();
-
-        this.setOnCloseRequest(event -> {
-            if (this.lastCancelerMessage != null) {
-                this.lastCancelerMessage.sendCancelSignal();
-            }
-        });
 
         this.loadImages();
     }

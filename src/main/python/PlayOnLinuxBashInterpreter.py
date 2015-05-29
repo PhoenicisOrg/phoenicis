@@ -19,24 +19,41 @@
 
 
 # This tools is made to run legacy PlayOnLinux v4 scripts
-from BashBinder.BashProcess import BashProcess
-
-from BashBinder.NetcatServer import NetcatServer
-from Environment.EnvironmentLoader import EnvironmentLoader
 from com.playonlinux.framework.templates import Installer
 
+
+from BashBinder.BashProcess import BashProcess
+from BashBinder.NetcatServer import NetcatServer
+from Environment.EnvironmentLoader import EnvironmentLoader
+from SetupWindow.SetupWindowManager import SetupWindowManager
+
+
 class PlayOnLinuxBashInterpreter(Installer):
+    title = "PlayOnLinux bash interpreter" # FIXME
+
     def main(self):
-        setupWindowNetcatServer = NetcatServer()
-        setupWindowNetcatServer.initServer()
+        self.setupWindowManager = SetupWindowManager();
+        self.netcatServer = NetcatServer(self.setupWindowManager)
+        self.netcatServer.initServer()
 
-        EnvironmentLoader.setup(setupWindowNetcatServer)
+        EnvironmentLoader.setup(self.netcatServer)
 
-        process = BashProcess(["bash", __scriptToWrap__])
-        setupWindowNetcatServer.setProcess(process)
-        process.start()
-        process.join()
+        self.process = BashProcess(["bash", __scriptToWrap__])
+        self.process.start()
+        self.process.join()
 
-        setupWindowNetcatServer.closeServer()
+        self.netcatServer.closeServer()
 
+    def rollback(self):
+        try:
+            try:
+                self.process.stop()
+            except AttributeError:
+                pass
 
+            try:
+                self.netcatServer.closeServer()
+            except AttributeError:
+                pass
+        finally:
+            self.setupWindowManager.closeAll();
