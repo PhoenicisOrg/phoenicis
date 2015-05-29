@@ -18,8 +18,11 @@
 
 package com.playonlinux.python;
 
+import com.playonlinux.common.log.LogStream;
 import com.playonlinux.domain.ScriptFailureException;
 import org.python.core.*;
+
+import java.io.IOException;
 
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String MAIN_METHOD_NAME = "main";
@@ -46,26 +49,38 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public String extractLogContext() throws ScriptFailureException {
+        return extractStringAttribute(DEFINE_LOGCONTEXT_NAME);
+    }
+
+    public void exec() throws ScriptFailureException {
+        if(this.hasMain()) {
+            String logContext = this.extractLogContext();
+            if(logContext != null) {
+                try {
+                    pythonInterpreter.setOut(new LogStream(logContext));
+                } catch (IOException e) {
+                    throw new ScriptFailureException(e);
+                }
+            }
+            this.runMain();
+        }
+    }
+
+    public String extractStringAttribute(String defineLogcontextName) throws ScriptFailureException {
         PyObject pyLogAttribute = this.getMainInstance().__getattr__(DEFINE_LOGCONTEXT_NAME);
         if (pyLogAttribute instanceof PyString) {
             return ((PyString) pyLogAttribute).getString();
         } else {
-            return extractLogContextFromMethod();
-        }
-
-    }
-
-    private String extractLogContextFromMethod() throws ScriptFailureException {
-        PyObject pyLogContext = this.getMainInstance().invoke(DEFINE_LOGCONTEXT_NAME);
-        if (pyLogContext != null && !(pyLogContext instanceof PyNone)) {
-            if (!(pyLogContext instanceof PyString)) {
-                throw new ScriptFailureException(String.format("%s must return a string.", DEFINE_LOGCONTEXT_NAME));
+            PyObject pyLogContext = this.getMainInstance().invoke(DEFINE_LOGCONTEXT_NAME);
+            if (pyLogContext != null && !(pyLogContext instanceof PyNone)) {
+                if (!(pyLogContext instanceof PyString)) {
+                    throw new ScriptFailureException(String.format("%s must return a string.", DEFINE_LOGCONTEXT_NAME));
+                } else {
+                    return ((PyString) pyLogContext).getString();
+                }
             } else {
-                return ((PyString) pyLogContext).getString();
+                return null;
             }
-        } else {
-            return null;
         }
     }
-
 }
