@@ -66,15 +66,15 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
         }
     }
 
-    public String extractStringAttribute(String defineLogcontextName) throws ScriptFailureException {
-        PyObject pyLogAttribute = this.getMainInstance().__getattr__(DEFINE_LOGCONTEXT_NAME);
+    public String extractStringAttribute(String attributeToExtract) throws ScriptFailureException {
+        PyObject pyLogAttribute = this.getMainInstance().__getattr__(attributeToExtract);
         if (pyLogAttribute instanceof PyString) {
             return ((PyString) pyLogAttribute).getString();
         } else {
-            PyObject pyLogContext = this.getMainInstance().invoke(DEFINE_LOGCONTEXT_NAME);
+            PyObject pyLogContext = this.getMainInstance().invoke(attributeToExtract);
             if (pyLogContext != null && !(pyLogContext instanceof PyNone)) {
                 if (!(pyLogContext instanceof PyString)) {
-                    throw new ScriptFailureException(String.format("%s must return a string.", DEFINE_LOGCONTEXT_NAME));
+                    throw new ScriptFailureException(String.format("%s must return a string.", attributeToExtract));
                 } else {
                     return ((PyString) pyLogContext).getString();
                 }
