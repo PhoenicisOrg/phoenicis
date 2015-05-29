@@ -27,6 +27,8 @@ import java.io.IOException;
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String MAIN_METHOD_NAME = "main";
     private static final String DEFINE_LOGCONTEXT_NAME = "logContext";
+    private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
+    private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
 
     public PythonInstaller(Interpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
@@ -44,10 +46,14 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
         return this.getCandidateClasses().size() > 0;
     }
 
-    public void runMain() {
-        this.getMainInstance().invoke(MAIN_METHOD_NAME);
+    public void runMain(PyObject mainInstance) {
+        mainInstance.invoke(MAIN_METHOD_NAME);
     }
 
+    private void rollback(PyObject mainInstance) {
+        mainInstance.invoke(ROLLBACK_METHOD_NAME);
+    }
+    
     public String extractLogContext() throws ScriptFailureException {
         return extractStringAttribute(DEFINE_LOGCONTEXT_NAME);
     }
@@ -62,9 +68,31 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                     throw new ScriptFailureException(e);
                 }
             }
-            this.runMain();
+
+            PyObject mainInstance = this.getMainInstance();
+
+            String scriptTitle = this.extractStringAttribute("title");
+            if(scriptTitle == null) {
+                throw new ScriptFailureException("The title is missing on this script");
+            } else {
+                mainInstance.invoke("_setSetupWizardTitle", new PyString(scriptTitle));
+            }
+
+            try {
+                this.runMain(mainInstance);
+            } catch(Exception e) {
+                try {
+                    mainInstance.invoke(ROLLBACK_METHOD_NAME);
+                } catch (Exception rollbackException) {
+                    mainInstance.invoke(DEFAULT_ROLLBACK_METHOD_NAME);
+                    throw rollbackException;
+                }
+                throw e;
+            }
         }
     }
+
+    
 
     public String extractStringAttribute(String attributeToExtract) throws ScriptFailureException {
         PyObject pyLogAttribute = this.getMainInstance().__getattr__(attributeToExtract);

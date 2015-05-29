@@ -1,11 +1,11 @@
-from com.playonlinux.framework import SetupWizard
 from com.playonlinux.framework.templates import Installer
 
 class Example(Installer):
     logContext = "ExampleScript"
+    title = "TITLE"
 
     def main(self):
-        setupWindow = SetupWizard("TITLE")
+        setupWindow = self.getSetupWizard()
 
         print "Hello from python!"
 
@@ -22,3 +22,7 @@ class Example(Installer):
 
         setupWindow.close()
 
+    def rollback(self):
+        setupWindow = self.getSetupWizard()
+        setupWindow.message("It seems that everything has crashed. Last chance to rollback")
+        Installer.rollback(self)

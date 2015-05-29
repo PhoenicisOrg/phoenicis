@@ -19,13 +19,40 @@
 package com.playonlinux.framework.templates;
 
 import com.playonlinux.domain.ScriptTemplate;
+import com.playonlinux.framework.SetupWizard;
 
 public abstract class Installer implements ScriptTemplate {
+    /* Template parameters */
     private String logContext;
+    private String title;
 
+    /* Template attributes */
+    private String setupWizardTitle;
+    protected SetupWizard setupWizard;
+
+    /* Private methods */
+    public void _setSetupWizardTitle(String setupWizardTitle) {
+        this.setupWizardTitle = setupWizardTitle;
+    }
+
+    private void _defaultRollback() {
+        if(this.setupWizard != null) {
+            setupWizard.close();
+        }
+    }
+
+    /* Methods that can be overwritten */
     public abstract void main();
 
-    public String logContext() {
-        return logContext;
+    public void rollback() {
+        this._defaultRollback();
+    }
+
+    /* Methods that can be called */
+    protected SetupWizard getSetupWizard() {
+        if(this.setupWizard == null) {
+            setupWizard = new SetupWizard(setupWizardTitle);
+        }
+        return setupWizard;
     }
 }
