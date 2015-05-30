@@ -3,10 +3,10 @@ package com.playonlinux.utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class ExceptionUtils {
+public final class ExceptionUtils {
     
     private ExceptionUtils() {
-        // Never used
+        // This is a utility class, it should never be instantiated
     }
     
     public static String getStackTrace(Exception e) {
