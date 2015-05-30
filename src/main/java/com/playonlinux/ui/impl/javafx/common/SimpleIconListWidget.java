@@ -26,7 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -38,6 +38,8 @@ public class SimpleIconListWidget
     private final TreeItem<SimpleIconListItem> rootItem;
     private Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
+
+    private final static Logger logger = Logger.getLogger(SimpleIconListWidget.class);
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem<>();
@@ -64,10 +66,11 @@ public class SimpleIconListWidget
             addItem(itemName, new URL("file://"+iconPath.getAbsolutePath()));
         } catch (MalformedURLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(String.format(translate("Error while trying to load the icon %s."),
-                    iconPath.getAbsolutePath()));
+            String errorTitle = String.format(translate("Error while trying to load the icon %s."),
+                    iconPath.getAbsolutePath());
+            alert.setTitle(errorTitle);
             alert.setContentText(String.format("The error was: %s", e));
-            e.printStackTrace();
+            logger.warn(errorTitle, e);
         }
     }
 

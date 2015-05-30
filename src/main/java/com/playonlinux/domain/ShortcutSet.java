@@ -19,6 +19,7 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.utils.ObservableDirectoryFiles;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class ShortcutSet extends Observable implements Observer {
     private final ObservableDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
     private List<Shortcut> shortcuts;
+
+    private Logger logger = Logger.getLogger(this.getClass());
 
     public ShortcutSet(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
                        File configFilesDirectory, URL defaultIcon) {
@@ -85,7 +88,7 @@ public class ShortcutSet extends Observable implements Observer {
                     }
                     this.getShortcuts().add(shortcut);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.warn(e);
                 }
             }
         }

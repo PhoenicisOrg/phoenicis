@@ -87,9 +87,10 @@ public class HTTPDownloader extends Observable {
 
     private void changeState() {
         this.setChanged();
-        ProgressStateDTO currentState = new ProgressStateDTO();
-        currentState.setPercent(this.percentage);
-        currentState.setState(ProgressStateDTO.State.valueOf(this.state.name()));
+        ProgressStateDTO currentState = new ProgressStateDTO.Builder()
+                .withPercent(this.percentage)
+                .withState(ProgressStateDTO.State.valueOf(this.state.name()))
+                .build();
         this.notifyObservers(currentState);
     }
 

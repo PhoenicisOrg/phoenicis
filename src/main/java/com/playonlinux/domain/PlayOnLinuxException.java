@@ -18,11 +18,8 @@
 
 package com.playonlinux.domain;
 
-import org.apache.commons.lang.ArrayUtils;
-
 public class PlayOnLinuxException extends Exception {
     private final String message;
-    private final Throwable parent;
 
     public PlayOnLinuxException(String message) {
         this(message, null);
@@ -31,16 +28,11 @@ public class PlayOnLinuxException extends Exception {
     public PlayOnLinuxException(String message, Throwable parent) {
         super(message);
         this.message = message;
-        this.parent = parent;
+        this.initCause(parent);
     }
 
     @Override
     public String toString() {
         return this.message;
-    }
-
-    @Override
-    public StackTraceElement[] getStackTrace() {
-        return (StackTraceElement[]) ArrayUtils.addAll(super.getStackTrace(), this.parent.getStackTrace());
     }
 }

@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,8 @@ class MenuBar extends javafx.scene.control.MenuBar {
     private final MainWindow parent;
 
     private MenuItem openScript;
+
+    private final static Logger logger = Logger.getLogger(MenuBar.class);
 
     public MenuBar(MainWindow parent) {
         this.parent = parent;
@@ -75,7 +78,7 @@ class MenuBar extends javafx.scene.control.MenuBar {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to run the script."));
                 alert.setContentText("The file was not found");
-                e.printStackTrace();
+                logger.warn("Error while trying to run the script", e);
             }
         });
     }

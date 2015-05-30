@@ -25,6 +25,7 @@ import com.playonlinux.common.dto.CategoryDTO;
 import com.playonlinux.common.dto.DownloadEnvelopeDTO;
 import com.playonlinux.common.dto.ProgressStateDTO;
 import com.playonlinux.common.api.services.BackgroundService;
+import org.apache.log4j.Logger;
 
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
     private final URL url;
     private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
-
+    private final static Logger logger = Logger.getLogger(InstallerSourceWebserviceImplementation.class);
     private List<CategoryDTO> categories;
 
     public InstallerSourceWebserviceImplementation(URL url) {
@@ -63,20 +64,18 @@ public class InstallerSourceWebserviceImplementation extends Observable
                 HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
                 String result = httpDownloader.get();
                 categories = mapper.readValue(result, new TypeReference<List<CategoryDTO>>() {});
-                System.out.println(categories);
-
                 this.state = ProgressStateDTO.State.SUCCESS;
             } catch(DownloadException e) {
-                e.printStackTrace();
+                logger.warn(String.format("Error while downloading %s", url), e);
                 this.state = ProgressStateDTO.State.FAILED;
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.warn(String.format("IO error while downloading %s", url), e);
                 this.state = ProgressStateDTO.State.FAILED;
             } finally {
                 this.update();
             }
         } catch (InterruptedException ignored) {
-            // If the semaphore is interrupted, we just ignore the download request.
+            logger.info(String.format("The download was interrupted: %s", url), ignored);
         } finally {
             updateSemaphore.release();
         }
@@ -85,8 +84,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
 
     private synchronized void update() {
         DownloadEnvelopeDTO<List<CategoryDTO>> envelopeDTO = new DownloadEnvelopeDTO<>();
-        ProgressStateDTO progressStateDTO = new ProgressStateDTO();
-        progressStateDTO.setState(this.state);
+        ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder().withState(state).build();
 
         envelopeDTO.setDownloadState(progressStateDTO);
         envelopeDTO.setEnvelopeContent(categories);

@@ -21,23 +21,20 @@ package com.playonlinux.common.dto;
 import com.playonlinux.common.api.dto.AbstractDTO;
 
 public class ProgressStateDTO implements AbstractDTO {
-    private State state;
-    private double percent;
+    private final State state;
+    private final double percent;
+
+    public ProgressStateDTO(Builder builder) {
+        this.state = builder.state;
+        this.percent = builder.percent;
+    }
 
     public State getState() {
         return state;
     }
 
-    public void setState(State state) {
-        this.state = state;
-    }
-
     public double getPercent() {
         return percent;
-    }
-
-    public void setPercent(double percent) {
-        this.percent = percent;
     }
 
     public enum State {
@@ -52,4 +49,31 @@ public class ProgressStateDTO implements AbstractDTO {
         return this.state.name();
     }
 
+    public static class Builder {
+        private State state;
+        private double percent;
+
+        public Builder(ProgressStateDTO other) {
+            state = other.state;
+            percent = other.percent;
+        }
+
+        public Builder() {
+
+        }
+
+        public Builder withState(State state) {
+            this.state = state;
+            return this;
+        }
+
+        public Builder withPercent(double percent) {
+            this.percent = percent;
+            return this;
+        }
+
+        public ProgressStateDTO build() {
+            return new ProgressStateDTO(this);
+        }
+    }
 }

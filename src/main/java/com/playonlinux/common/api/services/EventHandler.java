@@ -40,5 +40,5 @@ public interface EventHandler {
 
     void installProgram(String selectedItemLabel);
 
-    void runApplication(String applicationName);
+    void runApplication(String applicationName) throws PlayOnLinuxException;
 }

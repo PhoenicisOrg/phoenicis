@@ -17,6 +17,7 @@
  */
 
 package com.playonlinux.utils;
+import org.apache.log4j.Logger;
 import org.bouncycastle.bcpg.ArmoredInputStream;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -38,6 +39,7 @@ public class SignatureChecker {
     private String publicKey;
     private String signedData;
     private String signature;
+    private final static Logger logger = Logger.getLogger(SignatureChecker.class);
 
     public SignatureChecker withSignature(String signature) {
         this.signature = signature;
@@ -77,6 +79,7 @@ public class SignatureChecker {
         try {
             pgpSignature.initVerify(pgpSigningKey, "BC");
         } catch(NoSuchProviderException e) {
+            logger.info("No security provider found. Adding bouncy castle", e);
             Security.addProvider(new BouncyCastleProvider());
             pgpSignature.initVerify(pgpSigningKey, "BC");
         }

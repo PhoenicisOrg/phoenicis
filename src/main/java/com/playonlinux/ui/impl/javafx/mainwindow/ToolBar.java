@@ -24,6 +24,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import org.apache.log4j.Logger;
 
 import static com.playonlinux.domain.Localisation.translate;
 
@@ -31,6 +32,7 @@ class ToolBar extends javafx.scene.control.ToolBar {
     private final MainWindow parent;
     private final Button configureButton;
     private final Button installButton;
+    private final Logger logger = Logger.getLogger(ToolBar.class);
 
     public ToolBar(MainWindow parent) {
         this.parent = parent;
@@ -93,7 +95,7 @@ class ToolBar extends javafx.scene.control.ToolBar {
             try {
                 this.parent.getMainEventHandler().openConfigureWindow(this.parent, this.parent.getSelectedApplication());
             } catch (PlayOnLinuxException playOnLinuxException) {
-                playOnLinuxException.printStackTrace();
+                logger.warn(playOnLinuxException);
             }
         });
 
@@ -101,7 +103,7 @@ class ToolBar extends javafx.scene.control.ToolBar {
             try {
                 this.parent.getMainEventHandler().openInstallWindow(this.parent);
             } catch (PlayOnLinuxException playOnLinuxException) {
-                playOnLinuxException.printStackTrace();
+                logger.warn(playOnLinuxException);
             }
         });
     }

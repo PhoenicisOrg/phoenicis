@@ -21,8 +21,9 @@ package com.playonlinux.injection;
 public class InjectionException extends Exception {
     private final String error;
 
-    public InjectionException(String error) {
+    public InjectionException(String error, Throwable e) {
         this.error = error;
+        this.initCause(e);
     }
 
     @Override

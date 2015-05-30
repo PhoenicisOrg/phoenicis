@@ -31,6 +31,7 @@ import com.playonlinux.common.messages.CancelerMessage;
 import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -44,6 +45,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     private URL topImage;
     private URL leftImage;
 
+    Logger logger = Logger.getLogger(this.getClass());
 
     public String getWizardTitle() {
         return wizardTitle;
@@ -85,6 +87,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
                     break;
             }
         } catch (PlayOnLinuxException playOnLinuxException) {
+            logger.info("Unable to load a setupWindow image. Switching to the default one.");
             this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
         }
     }

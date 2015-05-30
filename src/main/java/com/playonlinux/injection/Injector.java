@@ -18,6 +18,7 @@
 
 package com.playonlinux.injection;
 
+import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
@@ -28,6 +29,7 @@ import java.util.*;
 
 public class Injector {
     private String packageName;
+    private Logger logger = Logger.getLogger(this.getClass());
 
     public Injector(String packageName) {
         this.packageName = packageName;
@@ -76,9 +78,9 @@ public class Injector {
             try {
                 beans.put(method.getReturnType(), method.invoke(configFile));
             } catch (IllegalAccessException e) {
-                throw new InjectionException(String.format("Unable to inject dependencies (IllegalAccessException): %s", e));
+                throw new InjectionException(String.format("Unable to inject dependencies (IllegalAccessException)."), e);
             } catch (InvocationTargetException e) {
-                throw new InjectionException(String.format("Unable to inject dependencies (InvocationTargetException): %s", e));
+                throw new InjectionException(String.format("Unable to inject dependencies (InvocationTargetException)"), e);
             }
         }
         return beans;
@@ -92,15 +94,17 @@ public class Injector {
             for(Field field: fields){
                 if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
                     throw new InjectionException(String.format("Unable to inject %s on class %s. Check your config file",
-                            field.getType().toString(), componentClass.getName()));
+                            field.getType().toString(), componentClass.getName()), null);
                 } else if(beans.containsKey(field.getType())){
                     try {
                         field.setAccessible(true);
                         field.set(null, beans.get(field.getType()));
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        throw new InjectionException(String.format("Unable to inject %s. Error while injecting: %s",
-                                field.getType().toString(), e));
+                        String injectErrorString = String.format("Unable to inject %s. Error while injecting.",
+                                field.getType().toString());
+
+                        logger.fatal(injectErrorString, e);
+                        throw new InjectionException(injectErrorString, e);
                     }
                 }
             }
