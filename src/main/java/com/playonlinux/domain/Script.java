@@ -19,7 +19,10 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.common.api.services.BackgroundService;
+import com.playonlinux.framework.CancelException;
+import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
+
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
 

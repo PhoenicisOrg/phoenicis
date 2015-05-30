@@ -26,13 +26,12 @@ import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
 import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
-import com.playonlinux.domain.CancelException;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

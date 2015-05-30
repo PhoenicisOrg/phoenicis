@@ -32,7 +32,6 @@ import static com.playonlinux.wine.WineProcessBuilder.mergeEnvironmentVariables;
 
 @ScriptClass
 @Scan
-@SuppressWarnings("unused")
 public final class BashEnvironmentHelper {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
@@ -41,35 +40,47 @@ public final class BashEnvironmentHelper {
         // This is a static class, it should never be instantiated
     }
 
-    public static OperatingSystem getOperatinSystem() throws PlayOnLinuxException {
-        return OperatingSystem.fetchCurrentOperationSystem();
+    public static OperatingSystem getOperatinSystem() throws ScriptFailureException {
+        try {
+            return OperatingSystem.fetchCurrentOperationSystem();
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
-    public static Architecture getArchitecture() throws PlayOnLinuxException {
-        return Architecture.fetchCurrentArchitecture();
+    public static Architecture getArchitecture() throws ScriptFailureException {
+        try {
+            return Architecture.fetchCurrentArchitecture();
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
-    public static String getUserRoot() throws PlayOnLinuxException {
+    public static String getUserRoot() throws ScriptFailureException {
         return playOnLinuxContext.loadProperties().getProperty("application.user.root");
     }
 
-    public static String getEnvironmentVar(String variable) throws PlayOnLinuxException {
-        Map<String,String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
-        Map<String,String> systemEnvironment = System.getenv();
-
-        mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
-        return playonOnLinuxEnvironment.get(variable);
+    public static String getEnvironmentVar(String variable) throws ScriptFailureException {
+        try {
+            Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
+            Map<String,String> systemEnvironment = System.getenv();
+            
+            mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
+            return playonOnLinuxEnvironment.get(variable);
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
-    public static String getPath() throws PlayOnLinuxException {
+    public static String getPath() throws ScriptFailureException {
         return getEnvironmentVar("PATH");
     }
 
-    public static String getLibraryPath() throws PlayOnLinuxException {
+    public static String getLibraryPath() throws ScriptFailureException {
         return getEnvironmentVar("LD_LIBRARY_PATH");
     }
 
-    public static String getDyldLibraryPath() throws PlayOnLinuxException {
+    public static String getDyldLibraryPath() throws ScriptFailureException {
         return getEnvironmentVar("DYLD_LIBRARY_PATH");
     }
 

@@ -24,7 +24,6 @@ import com.playonlinux.common.api.ui.SetupWindow;
 import com.playonlinux.common.api.ui.UIMessageSender;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.domain.CancelException;
 import com.playonlinux.common.messages.*;
 
 import java.util.List;
@@ -80,10 +79,9 @@ public class SetupWizard {
     /**
      * Shows a simple showSimpleMessageStep
      * @param textToShow the text to show
-     * @throws InterruptedException
      * @throws CancelException
      */
-    public void message(String textToShow) throws InterruptedException, CancelException {
+    public void message(String textToShow) throws CancelException {
         messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage() {
                     @Override
@@ -94,7 +92,7 @@ public class SetupWizard {
         );
     }
 
-    public void presentation(String textToShow) throws CancelException, InterruptedException {
+    public void presentation(String textToShow) throws CancelException {
         messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage() {
                     @Override
@@ -111,7 +109,7 @@ public class SetupWizard {
      * @throws InterruptedException
      * @throws CancelException
      */
-    public String textbox(String textToShow) throws InterruptedException, CancelException {
+    public String textbox(String textToShow) throws CancelException {
         return this.textbox(textToShow, "");
     }
 
@@ -123,7 +121,7 @@ public class SetupWizard {
      * @throws InterruptedException
      * @throws CancelException
      */
-    public String textbox(String textToShow, String defaultValue) throws InterruptedException, CancelException {
+    public String textbox(String textToShow, String defaultValue) throws CancelException {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
                     @Override
@@ -142,7 +140,7 @@ public class SetupWizard {
      * @throws InterruptedException
      * @throws CancelException
      */
-    public String menu(String textToShow, List<String> menuItems) throws InterruptedException, CancelException {
+    public String menu(String textToShow, List<String> menuItems) throws CancelException {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
                     @Override

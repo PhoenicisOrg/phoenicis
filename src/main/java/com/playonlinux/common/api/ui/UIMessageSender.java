@@ -18,7 +18,7 @@
 
 package com.playonlinux.common.api.ui;
 
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.framework.CancelException;
 import com.playonlinux.common.messages.Message;
 import com.playonlinux.common.messages.SynchroneousMessage;
 
