@@ -16,40 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.webservice;
 
-import com.playonlinux.common.api.dto.AbstractDTO;
+import com.playonlinux.domain.PlayOnLinuxException;
 
-public class DownloadStateDTO implements AbstractDTO {
-    private State state;
-    private double percent;
-
-    public State getState() {
-        return state;
+public class DownloadException extends PlayOnLinuxException {
+    public DownloadException(String message) {
+        super(message);
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public DownloadException(String message, Throwable parent) {
+        super(message, parent);
     }
-
-    public double getPercent() {
-        return percent;
-    }
-
-    public void setPercent(float percent) {
-        this.percent = percent;
-    }
-
-    public enum State {
-        READY,
-        DOWNLOADING,
-        SUCCESS,
-        FAILED
-    }
-
-    @Override
-    public String toString() {
-        return this.state.name();
-    }
-
 }

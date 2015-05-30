@@ -19,14 +19,12 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.ScriptClass;
-import com.playonlinux.domain.ScriptFailureException;
+import com.playonlinux.domain.*;
 import com.playonlinux.utils.Checksum;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.webservice.DownloadException;
+import com.playonlinux.webservice.HTTPDownloader;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -41,7 +39,6 @@ public class Downloader {
     private SetupWizard setupWizard;
     private ProgressStep progressStep;
 
-    private static final int BLOCK_SIZE = 1024;
     private File downloadedFile;
 
     /**
@@ -59,7 +56,7 @@ public class Downloader {
         this.progressStep = progressStep;
     }
 
-    private void defineProgressStep(URL remoteFile) throws CancelException, InterruptedException {
+    private void defineProgressStep(URL remoteFile) throws CancelException {
         if(this.progressStep == null) {
             this.progressStep = this.setupWizard.progressBar(
                     translate("Please wait while ${application.name} is downloading:") + "\n" +
@@ -67,40 +64,24 @@ public class Downloader {
             );
         }
     }
-    private HttpURLConnection openConnection(URL remoteFile) throws IOException {
-        return (HttpURLConnection) remoteFile.openConnection();
-    }
 
-    private void saveConnectionToFile(HttpURLConnection connection, File localFile) throws IOException, CancelException {
-        int fileSize = connection.getContentLength();
-        float totalDataRead = 0;
 
-        BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(localFile), BLOCK_SIZE);
 
-        byte[] data = new byte[BLOCK_SIZE];
-        int i;
-        while((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0)
-        {
-            totalDataRead += i;
-            outputStream.write(data, 0, i);
-            if(progressStep != null) {
-                int percentDownloaded = (int) ((totalDataRead * 100) / fileSize);
-                progressStep.setProgressPercentage(percentDownloaded);
-            }
-            if(Thread.currentThread().isInterrupted()) {
-                throw new CancelException("The download has been aborted");
-            }
-        }
-        inputStream.close();
-        outputStream.close();
-    }
+    private Downloader downloadRemoteFile(URL remoteFile, File localFile) throws CancelException {
 
-    public Downloader get(URL remoteFile, File localFile) throws IOException, CancelException, InterruptedException {
         this.defineProgressStep(remoteFile);
-        HttpURLConnection connection = openConnection(remoteFile);
-        this.saveConnectionToFile(connection, localFile);
-        this.downloadedFile = localFile;
+
+        HTTPDownloader downloader = new HTTPDownloader(remoteFile);
+        try {
+            downloader.addObserver(progressStep);
+            downloader.get(localFile);
+        } catch (DownloadException e) {
+            throw new ScriptFailureException(e);
+        } finally {
+            downloader.deleteObserver(progressStep);
+        }
+
+        downloadedFile = localFile;
         return this;
     }
 
@@ -111,13 +92,10 @@ public class Downloader {
         } catch (IOException e) {
             throw new ScriptFailureException("Unable to create temporary log file", e);
         }
-        try {
-            return get(remoteFile, temporaryFile);
-        } catch (IOException e) {
-            throw new ScriptFailureException("Unable to download the remote file", e);
-        } catch (InterruptedException e) {
-            throw new CancelException(e);
-        }
+
+        return downloadRemoteFile(remoteFile, temporaryFile);
+
+
     }
 
     public Downloader get(String remoteFile) throws CancelException {
@@ -130,21 +108,24 @@ public class Downloader {
 
     public Downloader get(String remoteFile, String localFile) throws CancelException {
         try {
-            return get(new URL(remoteFile), new File(localFile));
-        } catch (IOException  e) {
-            throw new ScriptFailureException("The download has failed", e);
-        } catch (InterruptedException e) {
-            throw new CancelException(e);
+            return downloadRemoteFile(new URL(remoteFile), new File(localFile));
+        } catch (MalformedURLException e) {
+            throw new ScriptFailureException(e);
         }
     }
 
-    public Downloader check(String expectedChecksum) throws IOException, NoSuchAlgorithmException, PlayOnLinuxException {
-        String calculatedChecksum = Checksum.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
+    public Downloader check(String expectedChecksum) throws ScriptFailureException {
+        String calculatedChecksum;
+        try {
+            calculatedChecksum = Checksum.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
+        } catch (NoSuchAlgorithmException | IOException e) {
+            throw new ScriptFailureException(e);
+        }
         if(this.findDownloadedFile() == null) {
-            throw new PlayOnLinuxException("You must download the file first before running check()!");
+            throw new ScriptFailureException("You must download the file first before running check()!");
         }
         if(!expectedChecksum.equals(calculatedChecksum)) {
-            throw new PlayOnLinuxException(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
+            throw new ScriptFailureException(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
                     expectedChecksum, calculatedChecksum));
         }
 

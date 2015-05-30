@@ -20,7 +20,9 @@ package com.playonlinux.python;
 
 import com.playonlinux.common.log.LogStream;
 import com.playonlinux.domain.ScriptFailureException;
+import org.apache.log4j.Logger;
 import org.python.core.*;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 
@@ -30,6 +32,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
     private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
     private PyObject mainInstance;
+    private Logger logger = Logger.getLogger(PythonInstaller.class);
 
     public PythonInstaller(Interpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
@@ -83,6 +86,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
             try {
                 this.runMain(getMainInstance());
             } catch(Exception e) {
+                logger.error("The script encountered an error. Rolling back");
                 try {
                     getMainInstance().invoke(ROLLBACK_METHOD_NAME);
                 } catch (Exception rollbackException) {

@@ -89,6 +89,7 @@ public abstract class Script implements BackgroundService {
                     logger.error(e);
                     logger.error(e.getCause());
                 } catch (ScriptFailureException e) {
+                    logger.error("The script encountered an error");
                     logger.error(e);
                 }
             }
