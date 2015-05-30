@@ -93,7 +93,7 @@ public abstract class Script implements BackgroundService {
                     if(e.getCause() instanceof CancelException) {
                         logger.info("The script has been canceled");
                     }
-                    logger.error(Script.this.getStackTrace(e));
+                    logger.error(ExceptionUtils.getStackTrace(e));
                 } catch (ScriptFailureException e) {
                     logger.error("The script encountered an error");
                     logger.error(e);
@@ -102,13 +102,6 @@ public abstract class Script implements BackgroundService {
         };
         scriptThread.start();
 
-    }
-    
-    private String getStackTrace(Exception e) {
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        e.printStackTrace(printWriter);
-        return stringWriter.toString();
     }
 
     public void executeInterpreter() throws ScriptFailureException {
