@@ -19,12 +19,15 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.common.api.ui.ProgressStep;
+import com.playonlinux.common.dto.DownloadStateDTO;
 import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 import com.playonlinux.common.messages.AsynchroneousMessage;
 import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
 import com.playonlinux.common.messages.Message;
+
+import java.util.Observable;
 
 public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressStep {
     ProgressBar progressBar = new ProgressBar();
@@ -87,4 +90,11 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
         );
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        assert arg instanceof DownloadStateDTO;
+        DownloadStateDTO downloadStateDTO = (DownloadStateDTO) arg;
+
+        this.setProgressPercentage(downloadStateDTO.getPercent());
+    }
 }

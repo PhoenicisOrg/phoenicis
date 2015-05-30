@@ -19,6 +19,7 @@
 package com.playonlinux.webservice;
 
 import com.playonlinux.common.dto.DownloadEnvelopeDTO;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -150,5 +151,10 @@ public class InstallerSourceWebserviceImplementationTest {
         public AvailableCategoriesDTO getDTO() {
             return categoryDto;
         }
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        mockServer.stop();
     }
 }

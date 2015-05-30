@@ -18,7 +18,9 @@
 
 package com.playonlinux.common.api.ui;
 
-public interface ProgressStep {
+import java.util.Observer;
+
+public interface ProgressStep extends Observer {
     void setProgressPercentage(double value);
 
     void setText(String text);

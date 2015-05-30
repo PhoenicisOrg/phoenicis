@@ -37,7 +37,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
         implements BackgroundService, InstallerSource {
 
     private final URL url;
-    private DownloadStateDTO.State state = DownloadStateDTO.State.WAITING;
+    private DownloadStateDTO.State state = DownloadStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
     private AvailableCategoriesDTO categories;
 
