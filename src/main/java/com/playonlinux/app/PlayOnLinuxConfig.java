@@ -18,19 +18,17 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
+import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.common.api.ui.Controller;
-
 import com.playonlinux.common.api.webservice.InstallerSource;
-import com.playonlinux.injection.AbstractConfigFile;
-import com.playonlinux.injection.Bean;
 import com.playonlinux.common.services.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.common.services.PlayOnLinuxBackgroundServicesManager;
-import com.playonlinux.common.api.services.EventHandler;
+import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
 
 import java.io.IOException;

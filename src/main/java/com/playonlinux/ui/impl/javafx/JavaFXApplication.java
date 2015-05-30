@@ -19,12 +19,11 @@
 package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Application;
-
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import org.apache.log4j.Logger;
 
 public class JavaFXApplication extends Application {

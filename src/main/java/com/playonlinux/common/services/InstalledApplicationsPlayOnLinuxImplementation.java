@@ -20,13 +20,13 @@ package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
+import com.playonlinux.common.api.services.InstalledApplications;
+import com.playonlinux.common.dto.ShortcutDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.ShortcutSet;
-import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
-import com.playonlinux.common.api.services.InstalledApplications;
-import com.playonlinux.common.dto.ShortcutDTO;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;

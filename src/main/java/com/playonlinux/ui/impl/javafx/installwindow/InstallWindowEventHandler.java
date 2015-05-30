@@ -19,11 +19,11 @@
 package com.playonlinux.ui.impl.javafx.installwindow;
 
 import com.playonlinux.common.Progressable;
-import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
+import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
 
 

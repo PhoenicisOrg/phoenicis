@@ -23,7 +23,6 @@ import com.playonlinux.common.api.dto.AbstractDTO;
 import com.playonlinux.common.comparator.Nameable;
 import com.playonlinux.utils.OperatingSystem;
 
-import java.util.Comparator;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -19,8 +19,6 @@
 package com.playonlinux.wine;
 
 
-import java.text.ParseException;
-
 public class UninitializedWineprefixException extends WineException {
 
     public UninitializedWineprefixException(String s) {

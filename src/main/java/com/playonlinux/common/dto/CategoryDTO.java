@@ -18,10 +18,10 @@
 
 package com.playonlinux.common.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.common.api.dto.AbstractDTO;
+
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryDTO implements AbstractDTO {

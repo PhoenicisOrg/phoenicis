@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.ui.impl.javafx.common.ProgressButton;
@@ -31,7 +31,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;

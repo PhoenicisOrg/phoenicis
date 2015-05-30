@@ -18,13 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import java.util.Optional;
-
-import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.InstalledApplications;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
-
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -32,6 +29,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+
+import java.util.Optional;
 
 import static com.playonlinux.domain.Localisation.translate;
 

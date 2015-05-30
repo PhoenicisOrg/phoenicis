@@ -20,9 +20,9 @@ package com.playonlinux.app;
 
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.ui.Controller;
-import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class PlayOnLinuxApp {

@@ -18,8 +18,8 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.common.Progressable;
+import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.common.dto.ProgressStateDTO;
 import org.apache.log4j.Logger;
 

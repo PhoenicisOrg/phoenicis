@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import javafx.scene.text.Text;
 import com.playonlinux.common.messages.CancelerMessage;
 import com.playonlinux.common.messages.CancelerSynchroneousMessage;
+import javafx.scene.text.Text;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
     String textToShow;

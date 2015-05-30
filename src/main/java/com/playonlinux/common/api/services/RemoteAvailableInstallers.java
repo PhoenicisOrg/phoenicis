@@ -20,7 +20,6 @@ package com.playonlinux.common.api.services;
 
 import com.playonlinux.common.dto.ApplicationDTO;
 import com.playonlinux.common.dto.CategoryDTO;
-import com.playonlinux.common.dto.ScriptDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
 
 import java.util.Observer;

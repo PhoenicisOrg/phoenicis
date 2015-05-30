@@ -19,18 +19,17 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.common.api.ui.ProgressStep;
+import com.playonlinux.common.api.ui.SetupWindow;
+import com.playonlinux.common.messages.CancelerSynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
+import com.playonlinux.utils.OperatingSystem;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import com.playonlinux.common.api.ui.SetupWindow;
-import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.common.messages.CancelerMessage;
-import com.playonlinux.common.messages.CancelerSynchroneousMessage;
-import com.playonlinux.common.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
 import org.apache.log4j.Logger;
 
 import java.io.File;

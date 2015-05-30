@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 
 import java.util.List;
 

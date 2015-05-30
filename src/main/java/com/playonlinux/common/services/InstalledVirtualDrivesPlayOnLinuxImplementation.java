@@ -20,16 +20,19 @@ package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
-import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.domain.VirtualDrive;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.InstalledVirtualDrives;
 import com.playonlinux.common.dto.VirtualDriveDTO;
+import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.domain.VirtualDrive;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Observable;
+import java.util.Observer;
 
 @Scan
 public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable implements InstalledVirtualDrives, Observer {

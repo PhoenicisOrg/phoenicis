@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import javafx.scene.control.TextField;
 import com.playonlinux.common.messages.CancelerSynchroneousMessage;
+import javafx.scene.control.TextField;
 
 public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final String defaultValue;

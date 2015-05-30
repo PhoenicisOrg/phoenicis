@@ -20,7 +20,6 @@ package com.playonlinux.python;
 
 import org.python.core.PyObject;
 import org.python.core.PyType;
-import org.python.util.PythonInterpreter;
 
 import java.util.ArrayList;
 import java.util.List;

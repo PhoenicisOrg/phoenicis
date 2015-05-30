@@ -18,15 +18,12 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.domain.PlayOnLinuxException;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
 
 public class ObservableDirectoryFiles extends AbstractObservableDirectory {
     private final ObservableDirectoryThread observableDirectoryThread;

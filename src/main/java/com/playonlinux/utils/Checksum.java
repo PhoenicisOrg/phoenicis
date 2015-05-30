@@ -18,11 +18,14 @@
 
 package com.playonlinux.utils;
 
-import java.io.*;
+import org.apache.commons.codec.binary.Hex;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import org.apache.commons.codec.binary.Hex;
 
 public class Checksum {
     private static final int BLOCK_SIZE = 2048;
