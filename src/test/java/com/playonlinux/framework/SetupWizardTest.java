@@ -20,6 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.common.api.ui.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;

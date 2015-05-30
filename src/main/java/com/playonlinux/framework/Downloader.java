@@ -76,7 +76,7 @@ public class Downloader {
             downloader.addObserver(progressStep);
             downloader.get(localFile);
         } catch (DownloadException e) {
-            throw new ScriptFailureException(e);
+            throw new ScriptFailureException("Unable to download the file", e);
         } finally {
             downloader.deleteObserver(progressStep);
         }

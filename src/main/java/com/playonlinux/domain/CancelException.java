@@ -16,9 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.domain;
 
-import com.playonlinux.domain.PlayOnLinuxException;
 
 public class CancelException extends PlayOnLinuxException {
     private static final String DEFAULT_MESSAGE = "The action has been canceled by the user";

@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.mockui;
 
 import com.playonlinux.common.api.ui.UIMessageSender;
-import com.playonlinux.framework.CancelException;
 import com.playonlinux.common.messages.Message;
 import com.playonlinux.common.messages.SynchroneousMessage;
+import com.playonlinux.domain.CancelException;
 
 public class MockUIMessageSenderImplementation<T> implements UIMessageSender<T> {
     @Override

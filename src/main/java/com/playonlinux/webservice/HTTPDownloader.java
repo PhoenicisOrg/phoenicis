@@ -19,7 +19,7 @@
 package com.playonlinux.webservice;
 
 import com.playonlinux.common.dto.DownloadStateDTO;
-import com.playonlinux.framework.CancelException;
+import com.playonlinux.domain.CancelException;
 
 import java.io.*;
 import java.net.HttpURLConnection;
