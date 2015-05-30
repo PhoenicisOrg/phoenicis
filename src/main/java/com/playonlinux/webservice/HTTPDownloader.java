@@ -50,19 +50,19 @@ public class HTTPDownloader extends Observable {
         return (HttpURLConnection) remoteFile.openConnection();
     }
 
-    private void saveConnectionToFile(HttpURLConnection connection, File localFile) throws DownloadException {
+    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream) throws DownloadException {
         int fileSize = connection.getContentLength();
         float totalDataRead = 0;
 
         try {
             BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(localFile), BLOCK_SIZE);
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE);
 
             byte[] data = new byte[BLOCK_SIZE];
             int i;
             while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
                 totalDataRead += i;
-                outputStream.write(data, 0, i);
+                bufferedOutputStream.write(data, 0, i);
 
                 this.percentage = (float) ((totalDataRead * 100.) / fileSize);
                 this.state = State.DOWNLOADING;
@@ -74,7 +74,7 @@ public class HTTPDownloader extends Observable {
             }
 
             inputStream.close();
-            outputStream.close();
+            bufferedOutputStream.close();
         } catch(IOException | InterruptedException e) {
             this.state = State.FAILED;
             this.changeState();
@@ -95,12 +95,33 @@ public class HTTPDownloader extends Observable {
     }
 
     public void get(File localFile) throws DownloadException {
+        try {
+            get(new FileOutputStream(localFile));
+        } catch (FileNotFoundException e) {
+            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
+        }
+    }
+    public void get(OutputStream outputStream) throws DownloadException {
         HttpURLConnection connection;
         try {
             connection = openConnection(url);
         } catch (IOException e) {
             throw new DownloadException(String.format("Download of %s has failed", this.url), e);
         }
-        this.saveConnectionToFile(connection, localFile);
+
+        this.saveConnectionToStream(connection, outputStream);
+
+    }
+
+    public String get() throws DownloadException {
+        OutputStream outputStream = new ByteArrayOutputStream();
+        get(outputStream);
+        try {
+            outputStream.flush();
+        } catch (IOException e) {
+            throw new DownloadException("Download failed", e);
+        }
+        return outputStream.toString();
+
     }
 }
