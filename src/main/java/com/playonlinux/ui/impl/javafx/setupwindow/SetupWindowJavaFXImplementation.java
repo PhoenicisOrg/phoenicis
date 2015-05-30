@@ -87,7 +87,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
                     break;
             }
         } catch (PlayOnLinuxException playOnLinuxException) {
-            logger.info("Unable to load a setupWindow image. Switching to the default one.");
+            logger.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
             this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
         }
     }
