@@ -59,7 +59,7 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws CancelException, ScriptFailureException {
+    public WinePrefix create(String version) throws ScriptFailureException {
         try {
             return this.create(version, Architecture.fetchCurrentArchitecture().name());
         } catch (PlayOnLinuxException e) {
@@ -67,7 +67,7 @@ public class WinePrefix {
         }
     }
 
-    public WinePrefix create(String version, String architecture) throws ScriptFailureException, CancelException {
+    public WinePrefix create(String version, String architecture) throws CancelException {
         if(prefix == null) {
             throw new ScriptFailureException("Prefix must be selected!");
         }

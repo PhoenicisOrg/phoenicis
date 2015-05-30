@@ -32,7 +32,6 @@ import static com.playonlinux.wine.WineProcessBuilder.mergeEnvironmentVariables;
 
 @ScriptClass
 @Scan
-@SuppressWarnings("unused")
 public final class BashEnvironmentHelper {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
