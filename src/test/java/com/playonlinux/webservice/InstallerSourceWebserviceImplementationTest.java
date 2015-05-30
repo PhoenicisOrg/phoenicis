@@ -75,7 +75,7 @@ public class InstallerSourceWebserviceImplementationTest {
                                 "                    \"name\": \"7-Zip\",\n" +
                                 "                    \"description\": \"\",\n" +
                                 "                    \"iconUrl\": \"http:\\/\\/files.playonlinux.com\\/resources\\/icones_install\\/7-Zip\",\n" +
-                                "                    \"miniaturesUrls\": [],\n" +
+                                "                    \"miniaturesUrls\": [\"URL1\", \"URL2\"],\n" +
                                 "                    \"scripts\": [\n" +
                                 "                        {\n" +
                                 "                            \"scriptName\": \"7-Zip\",\n" +
@@ -92,7 +92,7 @@ public class InstallerSourceWebserviceImplementationTest {
                                 "                {\n" +
                                 "                    \"id\": 1265,\n" +
                                 "                    \"name\": \"Amazon Kindle\",\n" +
-                                "                    \"description\": \"Known problems:\\r<br \\/>- Displays a warning about a new version being available, you can disregard the warning.\\r<br \\/>\",\n" +
+                                "                    \"description\": \"Amazon Description\",\n" +
                                 "                    \"iconUrl\": \"http:\\/\\/files.playonlinux.com\\/resources\\/icones_install\\/Amazon Kindle\",\n" +
                                 "                    \"miniaturesUrls\": [],\n" +
                                 "                    \"scripts\": [\n" +
@@ -140,17 +140,17 @@ public class InstallerSourceWebserviceImplementationTest {
 
         assertEquals("", applications.get(0).getDescription());
         assertEquals(373, applications.get(0).getId());
-        assertEquals("http://url1", applications.get(0).getIconUrl());
-        assertEquals(0, applications.get(0).getMiniaturesUrls().size());
+        assertEquals("http://files.playonlinux.com/resources/icones_install/7-Zip", applications.get(0).getIconUrl());
+        assertEquals(2, applications.get(0).getMiniaturesUrls().size());
         assertEquals("7-Zip", applications.get(0).getName());
+        assertEquals("URL1", applications.get(0).getMiniaturesUrls().get(0));
+        assertEquals("URL2", applications.get(0).getMiniaturesUrls().get(1));
 
-        assertEquals("Description FluidMark", applications.get(1).getDescription());
-        assertEquals(830, applications.get(1).getId());
-        assertEquals("http://url2", applications.get(1).getIconUrl());
-        assertEquals(2, applications.get(1).getMiniaturesUrls().size());
-        assertEquals("http://Miniature1", applications.get(1).getMiniaturesUrls().get(0));
-        assertEquals("http://Miniature2", applications.get(1).getMiniaturesUrls().get(1));
-        assertEquals("FluidMark 1.3.1", applications.get(1).getName());
+        assertEquals("Amazon Description", applications.get(1).getDescription());
+        assertEquals(1265, applications.get(1).getId());
+        assertEquals("http://files.playonlinux.com/resources/icones_install/Amazon Kindle", applications.get(1).getIconUrl());
+        assertEquals(0, applications.get(1).getMiniaturesUrls().size());
+        assertEquals("Amazon Kindle", applications.get(1).getName());
     }
 
 
