@@ -22,6 +22,7 @@ import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class WinePrefix {
     private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
-
+    private final static Logger logger = Logger.getLogger(WinePrefix.class);
     public WinePrefix(File winePrefixDirectory) {
         this.winePrefixDirectory = winePrefixDirectory;
         if(!this.winePrefixDirectory.exists()) {
@@ -55,9 +56,9 @@ public class WinePrefix {
             RegistryParser registryParser = new RegistryParser(new File(winePrefixDirectory, filename), nodeName);
             return registryParser.parseFile();
         } catch (IOException e) {
-            throw new UninitializedWineprefixException("The virtual drive seems to be uninitialized");
+            throw new UninitializedWineprefixException("The virtual drive seems to be uninitialized", e);
         } catch (ParseException e) {
-            throw new UninitializedWineprefixException("The virtual drive registry files seem to be corrupted");
+            throw new UninitializedWineprefixException("The virtual drive registry files seem to be corrupted", e);
         }
     }
 
@@ -93,6 +94,7 @@ public class WinePrefix {
         try {
             return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
         } catch(IllegalArgumentException e) {
+            logger.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
             return getSize();
         }
     }
