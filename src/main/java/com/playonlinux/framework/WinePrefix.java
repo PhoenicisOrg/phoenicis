@@ -18,6 +18,7 @@
 
 package com.playonlinux.framework;
 
+import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.ScriptClass;
@@ -25,7 +26,7 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.wine.WineException;
+import com.playonlinux.utils.ObservableDirectorySize;
 import com.playonlinux.wine.WineInstallation;
 
 import org.apache.log4j.Logger;
@@ -42,6 +43,9 @@ public class WinePrefix {
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
+
+    @Inject
+    static BackgroundServiceManager backgroundServicesManager;
 
     private final static long NEWPREFIXSIZE = 320_000_000;
 
@@ -83,6 +87,24 @@ public class WinePrefix {
             throw new ScriptFailureException(e);
         }
 
+        /* Maybe it needs to be better implemented */
+        ProgressStep progressStep = this.setupWizard.progressBar(
+                String.format(
+                        translate("Please wait while the virtual drive is being created..."), prefixName
+                )
+        );
+        ObservableDirectorySize observableDirectorySize;
+        try {
+            observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0,
+                    NEWPREFIXSIZE);
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
+
+        observableDirectorySize.setCheckInterval(10);
+        observableDirectorySize.addObserver(progressStep);
+        backgroundServicesManager.register(observableDirectorySize);
+
         Process process;
         try {
             process = wineInstallation.createPrefix(this.prefix);
@@ -90,27 +112,52 @@ public class WinePrefix {
             throw new ScriptFailureException("Unable to create the wineprefix", e);
         }
 
-        /* Maybe it needs to be better implemented */
-        ProgressStep progressStep = this.setupWizard.progressBar(
-                String.format(
-                        translate("Please wait while the virtual drive is being created..."), prefixName
-                )
-        );
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            process.destroy();
+            try {
+                wineInstallation.killAllProcess(this.prefix);
+            } catch (IOException logged) {
+                logger.warn("Unable to kill wine processes", logged);
+            }
+            throw new CancelException(e);
+        } finally {
+            observableDirectorySize.deleteObserver(progressStep);
+            backgroundServicesManager.unregister(observableDirectorySize);
+        }
 
-        while(process.isAlive()) {
-            double percentage = this.prefix.getSize() * 100. / (double) NEWPREFIXSIZE;
-            progressStep.setProgressPercentage(percentage);
+
+        return this;
+    }
+
+    public WinePrefix delete() throws CancelException {
+        if(prefix.getWinePrefixDirectory().exists()) {
+            ProgressStep progressStep = this.setupWizard.progressBar(
+                    String.format(
+                            translate("Please wait while the virtual drive is being deleted..."), prefixName
+                    )
+            );
+
+            ObservableDirectorySize observableDirectorySize;
+            try {
+                observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
+                        0);
+            } catch (PlayOnLinuxException e) {
+                throw new ScriptFailureException(e);
+            }
+
+            observableDirectorySize.setCheckInterval(10);
+            observableDirectorySize.addObserver(progressStep);
+            backgroundServicesManager.register(observableDirectorySize);
 
             try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                process.destroy();
-                try {
-                    wineInstallation.killAllProcess(this.prefix);
-                } catch (IOException logged) {
-                    logger.warn("Unable to kill wine processes", logged);
-                }
-                throw new CancelException();
+                prefix.delete();
+            } catch (IOException e) {
+                throw new ScriptFailureException("Unable to delete the wineprefix", e);
+            } finally {
+                observableDirectorySize.deleteObserver(progressStep);
+                backgroundServicesManager.unregister(observableDirectorySize);
             }
         }
 

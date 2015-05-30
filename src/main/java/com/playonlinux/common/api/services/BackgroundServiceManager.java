@@ -16,28 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.common.api.services;
 
-import com.playonlinux.common.api.dto.AbstractDTO;
+public interface BackgroundServiceManager {
+    void register(BackgroundService backgroundService);
 
-public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> implements AbstractDTO {
-    ProgressStateDTO downloadState;
+    void shutdown();
 
-    public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
-        return envelopeContent;
-    }
-
-    public void setEnvelopeContent(ENVELOPE_CONTENT_TYPE envelopeContent) {
-        this.envelopeContent = envelopeContent;
-    }
-
-    public ProgressStateDTO getDownloadState() {
-        return downloadState;
-    }
-
-    public void setDownloadState(ProgressStateDTO downloadState) {
-        this.downloadState = downloadState;
-    }
-
-    ENVELOPE_CONTENT_TYPE envelopeContent;
+    void unregister(BackgroundService backgroundService);
 }

@@ -91,8 +91,8 @@ public class Injector {
             List<Field> fields = this.getAnnotatedFields(componentClass, Inject.class);
             for(Field field: fields){
                 if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
-                    throw new InjectionException(String.format("Unable to inject %s. Check your config file",
-                            field.getType().toString()));
+                    throw new InjectionException(String.format("Unable to inject %s on class %s. Check your config file",
+                            field.getType().toString(), componentClass.getName()));
                 } else if(beans.containsKey(field.getType())){
                     try {
                         field.setAccessible(true);

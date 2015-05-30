@@ -18,8 +18,7 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.dto.DownloadStateDTO;
-import com.playonlinux.framework.CancelException;
+import com.playonlinux.common.dto.ProgressStateDTO;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -34,7 +33,7 @@ public class HTTPDownloader extends Observable {
 
     public enum State {
         READY,
-        DOWNLOADING,
+        PROGRESSING,
         SUCCESS,
         FAILED
     }
@@ -65,7 +64,7 @@ public class HTTPDownloader extends Observable {
                 bufferedOutputStream.write(data, 0, i);
 
                 this.percentage = (float) ((totalDataRead * 100.) / fileSize);
-                this.state = State.DOWNLOADING;
+                this.state = State.PROGRESSING;
                 this.changeState();
 
                 if (Thread.currentThread().isInterrupted()) {
@@ -88,9 +87,9 @@ public class HTTPDownloader extends Observable {
 
     private void changeState() {
         this.setChanged();
-        DownloadStateDTO currentState = new DownloadStateDTO();
+        ProgressStateDTO currentState = new ProgressStateDTO();
         currentState.setPercent(this.percentage);
-        currentState.setState(DownloadStateDTO.State.valueOf(this.state.name()));
+        currentState.setState(ProgressStateDTO.State.valueOf(this.state.name()));
         this.notifyObservers(currentState);
     }
 
