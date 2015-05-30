@@ -90,7 +90,7 @@ public class RemoteInstallerDownloader extends Progressable {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    logger.info("Download was interrupted", e);
                 }
             }
             remoteInstallerDownloader.setState(ProgressStateDTO.State.SUCCESS);

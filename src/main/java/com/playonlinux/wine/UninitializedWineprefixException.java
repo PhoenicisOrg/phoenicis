@@ -19,14 +19,16 @@
 package com.playonlinux.wine;
 
 
+import java.text.ParseException;
+
 public class UninitializedWineprefixException extends WineException {
-    private final String content;
 
     public UninitializedWineprefixException(String s) {
-        this.content = s;
+        super(s);
     }
 
-    public String toString() {
-        return this.content;
+    public UninitializedWineprefixException(String s, Throwable e) {
+        super(s, e);
     }
+
 }

@@ -192,7 +192,9 @@ public class WindowsShortcut
                 real_file = shareName + "\\" + finalname;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ParseException("Could not be parsed, probably not a valid WindowsShortcut", 0);
+            ParseException exception = new ParseException("Could not be parsed, probably not a valid WindowsShortcut", 0);
+            exception.initCause(e);
+            throw exception;
         }
     }
 
