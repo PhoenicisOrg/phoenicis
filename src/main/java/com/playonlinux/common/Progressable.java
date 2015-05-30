@@ -18,28 +18,24 @@
 
 package com.playonlinux.common;
 
+import com.playonlinux.common.dto.ProgressStateDTO;
+
 import java.util.Observable;
 
 public class Progressable extends Observable {
-    public enum State {
-        READY,
-        RUNNING,
-        SUCCESS,
-        FAILED
-    }
+    private ProgressStateDTO progressStateDTO;
 
-    private State state;
     private float percentage;
 
     private boolean progressing;
 
-    protected void setState(State state) {
-        this.state = state;
+    protected void setState(ProgressStateDTO.State state) {
+        this.progressStateDTO = new ProgressStateDTO.Builder(progressStateDTO).withState(state).build();
         this.setChanged();
         this.notifyObservers();
     }
     public boolean isProgressing() {
-        return state == State.RUNNING;
+        return progressStateDTO.getState() == ProgressStateDTO.State.PROGRESSING;
     }
 
     public synchronized float getPercentage() {

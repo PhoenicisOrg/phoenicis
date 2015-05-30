@@ -25,8 +25,10 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import org.apache.log4j.Logger;
 
 public class JavaFXApplication extends Application {
+    private final static Logger logger = Logger.getLogger(Application.class);
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,8 +42,7 @@ public class JavaFXApplication extends Application {
         try {
             mainWindow.setUpEvents();
         } catch (PlayOnLinuxException e) {
-            // FIXME
-            e.printStackTrace();
+            logger.warn(e);
         }
         mainWindow.show();
     }

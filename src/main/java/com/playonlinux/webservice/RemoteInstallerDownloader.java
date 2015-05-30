@@ -20,6 +20,8 @@ package com.playonlinux.webservice;
 
 import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.common.Progressable;
+import com.playonlinux.common.dto.ProgressStateDTO;
+import org.apache.log4j.Logger;
 
 /**
  * This class download a given script from PlayOnLinux webservices
@@ -29,7 +31,7 @@ public class RemoteInstallerDownloader extends Progressable {
     private final String url;
     private String script;
     private Runnable callBack;
-
+    private final static Logger logger = Logger.getLogger(RemoteInstallerDownloader.class);
     public RemoteInstallerDownloader() {
         this.url = null;
     }
@@ -82,7 +84,7 @@ public class RemoteInstallerDownloader extends Progressable {
         }
 
         public void run() {
-            remoteInstallerDownloader.setState(Progressable.State.RUNNING);
+            remoteInstallerDownloader.setState(ProgressStateDTO.State.PROGRESSING);
             for(float i = 0; i < 100; i += 0.1) {
                 remoteInstallerDownloader.setPercentage(i);
                 try {
@@ -91,7 +93,7 @@ public class RemoteInstallerDownloader extends Progressable {
                     e.printStackTrace();
                 }
             }
-            remoteInstallerDownloader.setState(Progressable.State.SUCCESS);
+            remoteInstallerDownloader.setState(ProgressStateDTO.State.SUCCESS);
             remoteInstallerDownloader.runCallback();
         }
 

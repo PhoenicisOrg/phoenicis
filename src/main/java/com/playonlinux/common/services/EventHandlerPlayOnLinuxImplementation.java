@@ -26,6 +26,7 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.domain.Script;
 import com.playonlinux.webservice.RemoteInstallerDownloader;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    private Logger logger = Logger.getLogger(this.getClass());
+
+
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
     private RemoteAvailableInstallers remoteAvailableInstallers;
@@ -51,12 +55,12 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     }
 
     @Override
-    public void runApplication(String applicationName) {
+    public void runApplication(String applicationName) throws PlayOnLinuxException {
         try {
             Script playonLinuxScript = Script.createInstance(new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName));
             playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
         } catch (IOException e) {
-            e.printStackTrace(); // FIXME
+            throw new PlayOnLinuxException("Unable to run this script", e);
         }
     }
 
@@ -99,7 +103,7 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
             try {
                 remoteAvailableInstallers = new RemoteAvailableInstallersPlayOnLinuxImplementation();
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                logger.error("The URL was malformed", e);
             }
         }
 

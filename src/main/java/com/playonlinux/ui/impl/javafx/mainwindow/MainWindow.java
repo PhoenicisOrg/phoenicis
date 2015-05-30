@@ -31,10 +31,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
+
 import static com.playonlinux.domain.Localisation.translate;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
     private MainWindowEventHandler mainEventHandler = new MainWindowEventHandler();
+
+    private Logger logger = Logger.getLogger(this.getClass());
+
     private ApplicationListWidget applicationListWidget;
     private ToolBar toolBar;
     private StatusBar statusBar;
@@ -116,7 +121,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
             alert.setTitle(translate("Error while trying to update installer list."));
             alert.setContentText(String.format("The error was: %s", e));
             alert.show();
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 

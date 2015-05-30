@@ -29,10 +29,9 @@ import java.io.File;
 public class ObservableDirectorySize extends AbstractObservableDirectory {
     private final long startSize;
     private final long endSize;
-    private int checkInterval = 1000;
     private final File observedDirectory;
     private final ObservableDirectoryThread observableDirectoryThread;
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger logger = Logger.getLogger(ObservableDirectorySize.class);
 
     public ObservableDirectorySize(File observedDirectory, long startSize, long endSize) throws PlayOnLinuxException {
         this.startSize = startSize;
@@ -99,13 +98,15 @@ public class ObservableDirectorySize extends AbstractObservableDirectory {
                 try {
                     lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
                     final double percentage = 100. * (double) (lastDirectorySize - startSize) / (double) (endSize - startSize);
-                    ProgressStateDTO progressStateDTO = new ProgressStateDTO();
-                    progressStateDTO.setPercent(percentage);
-                    progressStateDTO.setState(ProgressStateDTO.State.PROGRESSING);
+                    ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder()
+                            .withState(ProgressStateDTO.State.PROGRESSING)
+                            .withPercent(percentage)
+                            .build();
+
                     this.observableDirectorySize.setChanged();
                     this.observableDirectorySize.notifyObservers(progressStateDTO);
                 } catch(IllegalArgumentException e) {
-                    logger.info(String.format("Got IllegalArgumentException while checking the directory size:s. Ignoring", observedDirectory));
+                    logger.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);
                 }
 
                 try {

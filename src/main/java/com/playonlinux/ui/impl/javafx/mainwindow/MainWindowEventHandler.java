@@ -28,16 +28,21 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.ui.api.*;
 import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
 import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
+import javafx.scene.control.Alert;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+
+import static com.playonlinux.domain.Localisation.translate;
 
 @Scan
 class MainWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 
+    private Logger logger = Logger.getLogger(this.getClass());
 
     public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
         return mainEventHandler.getInstalledApplications();
@@ -74,6 +79,14 @@ class MainWindowEventHandler implements UIEventHandler {
     }
 
     public void runApplication(String applicationName) {
-        mainEventHandler.runApplication(applicationName);
+        try {
+            mainEventHandler.runApplication(applicationName);
+        } catch (PlayOnLinuxException e) {
+            logger.error(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to run the application."));
+            alert.setContentText(String.format("The error was: %s", e));
+            alert.show();
+        }
     }
 }

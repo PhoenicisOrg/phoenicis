@@ -159,7 +159,6 @@ public class InstallerSourceWebserviceImplementationTest {
 
         @Override
         public void update(Observable o, Object arg) {
-            System.out.println(arg);
             this.categoryDto = (List<CategoryDTO>) ((DownloadEnvelopeDTO) arg).getEnvelopeContent();
         }
 

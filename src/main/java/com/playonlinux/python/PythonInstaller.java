@@ -24,8 +24,6 @@ import com.playonlinux.framework.ScriptFailureException;
 import org.apache.log4j.Logger;
 import org.python.core.*;
 
-import sun.rmi.runtime.Log;
-
 import java.io.IOException;
 
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
@@ -52,15 +50,11 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public boolean hasMain() {
-        return this.getCandidateClasses().size() > 0;
+        return !(this.getCandidateClasses().isEmpty());
     }
 
     public void runMain(PyObject mainInstance) {
         mainInstance.invoke(MAIN_METHOD_NAME);
-    }
-
-    private void rollback(PyObject mainInstance) {
-        mainInstance.invoke(ROLLBACK_METHOD_NAME);
     }
 
     public String extractLogContext() throws ScriptFailureException {
@@ -108,6 +102,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
         try {
             pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);
         } catch (PyException e) {
+            logger.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
             return null;
         }
         if (pyLogAttribute instanceof PyString) {

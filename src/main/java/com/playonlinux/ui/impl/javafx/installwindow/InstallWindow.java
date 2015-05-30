@@ -36,6 +36,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -44,6 +45,8 @@ import java.util.Observer;
 import static com.playonlinux.domain.Localisation.translate;
 
 public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer {
+    private final static Logger logger = Logger.getLogger(InstallWindow.class);
+
     private final PlayOnLinuxWindow parent;
     private static InstallWindow instance;
     private final InstallWindowEventHandler eventHandler = new InstallWindowEventHandler(this);
@@ -127,7 +130,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
             alert.setTitle(translate("Error while trying to initialize available installers."));
             alert.setContentText(String.format("The error was: %s", e.toString()));
             alert.show();
-            e.printStackTrace();
+            logger.warn("Error while trying to initialize available installers.", e);
         }
 
         VBox sidePane = new VBox();
@@ -243,7 +246,7 @@ public class InstallWindow extends Stage implements PlayOnLinuxWindow, Observer 
                 alert.setTitle(translate("Error while trying to get installer information."));
                 alert.setContentText(String.format("The error was: %s", playOnLinuxException.toString()));
                 alert.show();
-                playOnLinuxException.printStackTrace();
+                logger.warn("Error while trying to get installer information.", playOnLinuxException);
             }
         });
         searchWidget.setOnKeyPressed(event -> {
