@@ -191,7 +191,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>com.playonlinux.ui.impl.javafx</exclude>
+                        <exclude>**/com/playonlinux/ui/impl/javafx/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
