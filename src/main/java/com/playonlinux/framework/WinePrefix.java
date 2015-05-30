@@ -21,7 +21,6 @@ package com.playonlinux.framework;
 import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.ScriptClass;
-import com.playonlinux.domain.ScriptFailureException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
