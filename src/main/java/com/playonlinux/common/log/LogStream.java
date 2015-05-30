@@ -22,7 +22,10 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @Scan
 public class LogStream extends OutputStream {

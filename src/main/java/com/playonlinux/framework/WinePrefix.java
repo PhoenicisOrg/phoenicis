@@ -18,18 +18,17 @@
 
 package com.playonlinux.framework;
 
+import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.ScriptClass;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.utils.Architecture;
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.ObservableDirectorySize;
 import com.playonlinux.wine.WineInstallation;
-
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

@@ -17,12 +17,12 @@
  */
 
 package com.playonlinux.utils;
+
 import org.apache.log4j.Logger;
 import org.bouncycastle.bcpg.ArmoredInputStream;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.*;
-
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -19,12 +19,14 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.domain.*;
+import com.playonlinux.domain.CancelException;
+import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.utils.Checksum;
 import com.playonlinux.webservice.DownloadException;
 import com.playonlinux.webservice.HTTPDownloader;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;

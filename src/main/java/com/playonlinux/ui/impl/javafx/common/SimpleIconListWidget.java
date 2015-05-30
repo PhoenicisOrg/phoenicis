@@ -27,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;

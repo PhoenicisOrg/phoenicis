@@ -18,12 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import com.playonlinux.common.messages.CancelerMessage;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import com.playonlinux.common.messages.CancelerMessage;
 
 import java.net.URL;
 

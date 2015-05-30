@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.common.dto.CategoryDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.common.ClickableImageView;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

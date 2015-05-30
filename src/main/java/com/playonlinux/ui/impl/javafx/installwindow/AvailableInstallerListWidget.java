@@ -18,10 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
-import com.playonlinux.common.dto.ApplicationDTO;
-import com.playonlinux.common.dto.ScriptDTO;
-import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
+import com.playonlinux.common.dto.ApplicationDTO;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

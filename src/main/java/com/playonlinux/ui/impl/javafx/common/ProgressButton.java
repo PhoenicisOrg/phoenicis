@@ -24,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 
-
 import java.util.Observable;
 import java.util.Observer;
 

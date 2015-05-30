@@ -22,9 +22,9 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.Progressable;
 import com.playonlinux.common.api.services.*;
 import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.injection.Inject;
 import com.playonlinux.domain.Script;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.webservice.RemoteInstallerDownloader;
 import org.apache.log4j.Logger;
 

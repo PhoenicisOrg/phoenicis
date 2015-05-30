@@ -21,10 +21,13 @@ package com.playonlinux.common.services;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.comparator.AlphabeticalOrderComparator;
-import com.playonlinux.common.dto.*;
+import com.playonlinux.common.dto.ApplicationDTO;
+import com.playonlinux.common.dto.CategoryDTO;
+import com.playonlinux.common.dto.DownloadEnvelopeDTO;
+import com.playonlinux.common.dto.ProgressStateDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
 
 import java.net.MalformedURLException;

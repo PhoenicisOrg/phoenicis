@@ -20,9 +20,7 @@ package com.playonlinux.domain;
 
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
-
 import org.apache.commons.lang.StringUtils;
-import org.python.util.PythonInterpreter;
 
 import java.io.BufferedReader;
 import java.io.File;

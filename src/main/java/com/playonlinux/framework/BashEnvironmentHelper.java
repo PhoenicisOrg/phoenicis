@@ -19,12 +19,12 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.domain.PlayOnLinuxException;
 
 import java.util.Map;
 

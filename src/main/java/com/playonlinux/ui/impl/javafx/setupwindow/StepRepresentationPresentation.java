@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import com.playonlinux.common.messages.CancelerMessage;
+import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,8 +31,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import com.playonlinux.common.messages.CancelerMessage;
-import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     String textToShow;
