@@ -33,15 +33,7 @@ public class ObservableDirectoryFiles extends AbstractObservableDirectory {
 
     public ObservableDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
         this.observedDirectory = observedDirectory;
-        if(!observedDirectory.exists()) {
-            throw new PlayOnLinuxException(String.format("The directory %s does not exist",
-                    observedDirectory.toString()));
-        }
-        if(!observedDirectory.isDirectory()) {
-            throw new PlayOnLinuxException(String.format("The file %s is not a valid directory",
-                    observedDirectory.toString()));
-        }
-
+        validate();
         observableDirectoryThread = new ObservableDirectoryThread(this);
     }
 
