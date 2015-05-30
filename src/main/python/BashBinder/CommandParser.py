@@ -20,8 +20,8 @@
 import os
 
 from com.playonlinux.framework import Downloader
+from com.playonlinux.framework import ScriptFailureException
 from org.python.core import PyException
-from com.playonlinux.domain import ScriptFailureException
 
 
 class CommandParser(object):

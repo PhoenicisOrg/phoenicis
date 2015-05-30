@@ -18,8 +18,9 @@
 
 package com.playonlinux.python;
 
-import com.playonlinux.domain.ScriptFailureException;
 import com.playonlinux.domain.ScriptTemplate;
+import com.playonlinux.framework.ScriptFailureException;
+
 import org.junit.Test;
 
 import java.io.File;

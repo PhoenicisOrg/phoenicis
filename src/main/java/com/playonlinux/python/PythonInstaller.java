@@ -19,9 +19,11 @@
 package com.playonlinux.python;
 
 import com.playonlinux.common.log.LogStream;
-import com.playonlinux.domain.ScriptFailureException;
+import com.playonlinux.framework.ScriptFailureException;
+
 import org.apache.log4j.Logger;
 import org.python.core.*;
+
 import sun.rmi.runtime.Log;
 
 import java.io.IOException;

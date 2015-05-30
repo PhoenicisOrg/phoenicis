@@ -24,9 +24,7 @@ import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
-import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.domain.ScriptFailureException;
 import com.playonlinux.wine.WineException;
 import com.playonlinux.wine.WineInstallation;
 
@@ -61,20 +59,29 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws InterruptedException, PlayOnLinuxException {
-        return this.create(version, Architecture.fetchCurrentArchitecture().name());
+    public WinePrefix create(String version) throws CancelException, ScriptFailureException {
+        try {
+			return this.create(version, Architecture.fetchCurrentArchitecture().name());
+		} catch (PlayOnLinuxException e) {
+			throw new ScriptFailureException(e);
+		}
     }
 
-    public WinePrefix create(String version, String architecture) throws PlayOnLinuxException {
+    public WinePrefix create(String version, String architecture) throws ScriptFailureException, CancelException {
         if(prefix == null) {
             throw new ScriptFailureException("Prefix must be selected!");
         }
-        WineInstallation wineInstallation = new WineInstallation.Builder()
-                .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
-                        version,
-                        Architecture.valueOf(architecture))
-                ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
-                .build();
+        WineInstallation wineInstallation;
+		try {
+			wineInstallation = new WineInstallation.Builder()
+			        .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
+			                version,
+			                Architecture.valueOf(architecture))
+			        ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
+			        .build();
+		} catch (PlayOnLinuxException e) {
+			throw new ScriptFailureException(e);
+		}
 
         Process process;
         try {

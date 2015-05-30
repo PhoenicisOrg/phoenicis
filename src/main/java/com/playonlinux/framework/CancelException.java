@@ -16,22 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.framework;
 
-public class ScriptFailureException extends CancelException {
+import com.playonlinux.domain.PlayOnLinuxException;
 
-    private static final String DEFAULT_MESSAGE = "The script has encountered a fatal error";
+public class CancelException extends PlayOnLinuxException {
+    private static final String DEFAULT_MESSAGE = "The action has been canceled by the user";
 
-    public ScriptFailureException() {
+    public CancelException() {
         super(DEFAULT_MESSAGE);
     }
-    public ScriptFailureException(String message) {
+    public CancelException(String message) {
         super(message);
     }
-    public ScriptFailureException(String message, Throwable parent) {
+    public CancelException(String message, Throwable parent) {
         super(message, parent);
     }
-    public ScriptFailureException(Throwable parent) {
+    public CancelException(Throwable parent) {
         super(DEFAULT_MESSAGE, parent);
     }
+
 }
