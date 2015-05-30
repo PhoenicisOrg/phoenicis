@@ -21,6 +21,7 @@ package com.playonlinux.framework;
 import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.domain.ScriptFailureException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
@@ -64,7 +65,7 @@ public class WinePrefix {
 
     public WinePrefix create(String version, String architecture) throws PlayOnLinuxException {
         if(prefix == null) {
-            throw new PlayOnLinuxException("Prefix must be selected!");
+            throw new ScriptFailureException("Prefix must be selected!");
         }
         WineInstallation wineInstallation = new WineInstallation.Builder()
                 .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
@@ -77,7 +78,7 @@ public class WinePrefix {
         try {
             process = wineInstallation.createPrefix(this.prefix);
         } catch (IOException e) {
-            throw new PlayOnLinuxException("Unable to create the wineprefix", e);
+            throw new ScriptFailureException("Unable to create the wineprefix", e);
         }
 
         /* Maybe it needs to be better implemented */

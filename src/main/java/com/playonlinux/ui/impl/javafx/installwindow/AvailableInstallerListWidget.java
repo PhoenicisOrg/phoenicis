@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.installwindow;
 
+import com.playonlinux.common.dto.ApplicationDTO;
 import com.playonlinux.common.dto.ScriptDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
@@ -71,13 +72,13 @@ public class AvailableInstallerListWidget extends SimpleIconListWidget implement
         if(remoteAvailableInstallers != null) {
             this.clear();
             if(!StringUtils.isBlank(searchFilter)) {
-                for(ScriptDTO scriptDTO : remoteAvailableInstallers.getAllScripts(searchFilter)) {
-                    this.addItem(scriptDTO.getName());
+                for(ApplicationDTO applicationDTO : remoteAvailableInstallers.getAllScripts(searchFilter)) {
+                    this.addItem(applicationDTO.getName());
                 }
             } else if (categoryName != null) {
                 try {
-                    for(ScriptDTO scriptDTO: remoteAvailableInstallers.getAllScriptsInCategory(categoryName)) {
-                        this.addItem(scriptDTO.getName());
+                    for(ApplicationDTO applicationDTO: remoteAvailableInstallers.getAllApplicationsInCategory(categoryName)) {
+                        this.addItem(applicationDTO.getName());
                     }
                 } catch (PlayOnLinuxException playOnLinuxException) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

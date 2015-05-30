@@ -16,18 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.common.comparator;
 
-import com.playonlinux.common.api.dto.AbstractDTO;
+import java.util.Comparator;
 
-import java.util.List;
-
-public class AvailableCategoriesDTO implements AbstractDTO {
-    public List<CategoryDTO> getCategories() {
-        return categories;
+public class AlphabeticalOrderComparator<T extends Nameable> implements Comparator<T> {
+    @Override
+    public int compare(T nameable1, T nameable2) {
+        return nameable1.getName().compareTo(nameable2.getName());
     }
-
-    List<CategoryDTO> categories;
-
-
 }
