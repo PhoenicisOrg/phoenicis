@@ -21,6 +21,8 @@ package com.playonlinux.domain;
 import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
+import com.playonlinux.utils.ExceptionUtils;
+
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
 
@@ -28,6 +30,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.ParseException;
 
 public abstract class Script implements BackgroundService {
@@ -90,8 +94,7 @@ public abstract class Script implements BackgroundService {
                     if(e.getCause() instanceof CancelException) {
                         logger.info("The script has been canceled");
                     }
-                    logger.error(e);
-                    logger.error(e.getCause());
+                    logger.error(ExceptionUtils.getStackTrace(e));
                 } catch (ScriptFailureException e) {
                     logger.error("The script encountered an error");
                     logger.error(e);
