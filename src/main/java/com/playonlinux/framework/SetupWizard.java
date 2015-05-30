@@ -25,6 +25,7 @@ import com.playonlinux.common.api.ui.UIMessageSender;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.common.messages.*;
+import com.playonlinux.domain.CancelException;
 
 import java.util.List;
 

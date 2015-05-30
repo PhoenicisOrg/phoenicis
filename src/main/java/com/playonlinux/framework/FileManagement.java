@@ -19,6 +19,7 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.common.api.ui.ProgressStep;
+import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.ScriptClass;
 
 import java.io.*;

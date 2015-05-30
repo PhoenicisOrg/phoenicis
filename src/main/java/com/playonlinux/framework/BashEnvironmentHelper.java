@@ -44,7 +44,7 @@ public final class BashEnvironmentHelper {
         try {
             return OperatingSystem.fetchCurrentOperationSystem();
         } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
+            throw new ScriptFailureException("Unable to get the current OS name", e);
         }
     }
 
@@ -52,7 +52,7 @@ public final class BashEnvironmentHelper {
         try {
             return Architecture.fetchCurrentArchitecture();
         } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
+            throw new ScriptFailureException("Unable to get the current architecture", e);
         }
     }
 
@@ -68,7 +68,7 @@ public final class BashEnvironmentHelper {
             mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
             return playonOnLinuxEnvironment.get(variable);
         } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
+            throw new ScriptFailureException("Unable to get the environment variables", e);
         }
     }
 

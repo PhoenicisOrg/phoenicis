@@ -20,6 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.common.api.ui.ProgressStep;
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.ScriptClass;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
@@ -63,7 +64,7 @@ public class WinePrefix {
         try {
             return this.create(version, Architecture.fetchCurrentArchitecture().name());
         } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
+            throw new ScriptFailureException("Unable to create the wineprefix", e);
         }
     }
 
