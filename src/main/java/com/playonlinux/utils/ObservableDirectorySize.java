@@ -29,7 +29,7 @@ import java.io.File;
 public class ObservableDirectorySize extends AbstractObservableDirectory {
     private final long startSize;
     private final long endSize;
-    private final File observedDirectory;
+    //private final File observedDirectory;
     private final ObservableDirectoryThread observableDirectoryThread;
     private static final Logger logger = Logger.getLogger(ObservableDirectorySize.class);
 
