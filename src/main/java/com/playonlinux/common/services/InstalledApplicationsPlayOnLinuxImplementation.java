@@ -19,6 +19,7 @@
 package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.ShortcutSet;
@@ -26,7 +27,7 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.common.dto.ShortcutDTO;
-import com.playonlinux.utils.ObservableDirectory;
+import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;
 import java.net.URL;
@@ -38,7 +39,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     ShortcutSet shortcutSet;
     private Iterator<ShortcutDTO> shortcutDtoIterator;
@@ -49,8 +50,8 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
         File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
         URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
 
-        ObservableDirectory shortcutDirectoryObservable = new ObservableDirectory(shortcutDirectory);
-        ObservableDirectory iconDirectoryObservable = new ObservableDirectory(iconDirectory);
+        ObservableDirectoryFiles shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
+        ObservableDirectoryFiles iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
 
         playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
         playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);

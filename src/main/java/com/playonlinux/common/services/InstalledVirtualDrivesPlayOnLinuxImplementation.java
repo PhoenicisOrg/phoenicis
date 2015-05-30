@@ -19,13 +19,14 @@
 package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.common.api.services.InstalledVirtualDrives;
 import com.playonlinux.common.dto.VirtualDriveDTO;
-import com.playonlinux.utils.ObservableDirectory;
+import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;
 import java.util.*;
@@ -36,15 +37,15 @@ public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable 
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     private Iterator<VirtualDriveDTO> virtualdrivesDTOInterator;
 
-    final ObservableDirectory observableWineprefixes;
+    final ObservableDirectoryFiles observableWineprefixes;
 
     public InstalledVirtualDrivesPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File winePrefixes = playOnLinuxContext.makePrefixesPath();
-        observableWineprefixes = new ObservableDirectory(winePrefixes);
+        observableWineprefixes = new ObservableDirectoryFiles(winePrefixes);
 
         observableWineprefixes.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(observableWineprefixes);

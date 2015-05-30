@@ -123,4 +123,8 @@ public class WinePrefix {
     public Collection<File> findAllExecutables() {
         return findAllFilesByExtension(EXECUTABLE_EXTENSION);
     }
+
+    public void delete() throws IOException {
+        FileUtils.deleteDirectory(this.getWinePrefixDirectory());
+    }
 }

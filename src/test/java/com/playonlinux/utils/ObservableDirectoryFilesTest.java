@@ -32,7 +32,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
-public class ObservableDirectoryTest {
+public class ObservableDirectoryFilesTest {
 
     private static final int CHECK_INTERVAL = 100;
     @Rule
@@ -43,7 +43,7 @@ public class ObservableDirectoryTest {
         expectedEx.expect(PlayOnLinuxException.class);
         expectedEx.expectMessage(String.format("The directory %s does not exist", "/tmp/unexistingDirectory"));
 
-        new ObservableDirectory(new File("/tmp/unexistingDirectory"));
+        new ObservableDirectoryFiles(new File("/tmp/unexistingDirectory"));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ObservableDirectoryTest {
         expectedEx.expect(PlayOnLinuxException.class);
         expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-        new ObservableDirectory(temporaryFile);
+        new ObservableDirectoryFiles(temporaryFile);
     }
 
     @Test
@@ -62,23 +62,23 @@ public class ObservableDirectoryTest {
         File temporaryDirectory = Files.createTempDir();
 
 
-        ObservableDirectory observableDirectory = new ObservableDirectory(temporaryDirectory);
-        observableDirectory.setCheckInterval(CHECK_INTERVAL);
+        ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory);
+        observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
         Observer observer = mock(Observer.class);
 
-        observableDirectory.addObserver(observer);
+        observableDirectoryFiles.addObserver(observer);
 
-        observableDirectory.start();
+        observableDirectoryFiles.start();
 
         Thread.sleep(2 * CHECK_INTERVAL);
 
-        observableDirectory.stop();
+        observableDirectoryFiles.stop();
 
         temporaryDirectory.delete();
 
         // Notified once for the creation
-        verify(observer, times(1)).update(any(ObservableDirectory.class), anyObject());
+        verify(observer, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
     }
 
     @Test
@@ -86,22 +86,22 @@ public class ObservableDirectoryTest {
             InterruptedException, IOException {
         File temporaryDirectory = Files.createTempDir();
 
-        ObservableDirectory observableDirectory = new ObservableDirectory(temporaryDirectory);
-        observableDirectory.setCheckInterval(CHECK_INTERVAL);
+        ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory);
+        observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
         Observer observer = mock(Observer.class);
-        observableDirectory.addObserver(observer);
-        observableDirectory.start();
+        observableDirectoryFiles.addObserver(observer);
+        observableDirectoryFiles.start();
         File createdFile = new File(temporaryDirectory, "file.txt");
         Thread.sleep(2 * CHECK_INTERVAL);
         createdFile.createNewFile();
         Thread.sleep(10 * CHECK_INTERVAL);
 
-        observableDirectory.stop();
+        observableDirectoryFiles.stop();
 
         temporaryDirectory.delete();
 
-        verify(observer, times(2)).update(any(ObservableDirectory.class), anyObject());
+        verify(observer, times(2)).update(any(ObservableDirectoryFiles.class), anyObject());
     }
 
 }

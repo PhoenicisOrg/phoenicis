@@ -18,6 +18,8 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.common.api.services.BackgroundService;
+import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.ui.Controller;
 
 import com.playonlinux.common.api.webservice.InstallerSource;
@@ -66,7 +68,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
-    public PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager() {
+    public BackgroundServiceManager playOnLinuxBackgroundServicesManager() {
         return new PlayOnLinuxBackgroundServicesManager();
     }
 

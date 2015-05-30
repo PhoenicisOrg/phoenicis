@@ -18,7 +18,7 @@
 
 package com.playonlinux.domain;
 
-import com.playonlinux.utils.ObservableDirectory;
+import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,13 +29,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ShortcutSet extends Observable implements Observer {
-    private final ObservableDirectory iconDirectory;
+    private final ObservableDirectoryFiles iconDirectory;
     private final File configFilesDirectory;
-    private final ObservableDirectory shortcutDirectory;
+    private final ObservableDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
     private List<Shortcut> shortcuts;
 
-    public ShortcutSet(ObservableDirectory shortcutDirectory, ObservableDirectory iconDirectory,
+    public ShortcutSet(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
                        File configFilesDirectory, URL defaultIcon) {
         this.shortcuts = new ArrayList<>();
         this.iconDirectory = iconDirectory;
