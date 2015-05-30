@@ -20,11 +20,10 @@ package com.playonlinux.webservice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.playonlinux.common.api.webservice.InstallerSource;
 import com.playonlinux.common.dto.CategoryDTO;
 import com.playonlinux.common.dto.DownloadEnvelopeDTO;
-import com.playonlinux.common.dto.DownloadStateDTO;
+import com.playonlinux.common.dto.ProgressStateDTO;
 import com.playonlinux.common.api.services.BackgroundService;
 
 
@@ -41,7 +40,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
         implements BackgroundService, InstallerSource {
 
     private final URL url;
-    private DownloadStateDTO.State state = DownloadStateDTO.State.READY;
+    private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
 
     private List<CategoryDTO> categories;
@@ -55,7 +54,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
             categories = null;
 
             updateSemaphore.acquire();
-            this.state = DownloadStateDTO.State.DOWNLOADING;
+            this.state = ProgressStateDTO.State.PROGRESSING;
             this.setChanged();
             this.update();
 
@@ -66,13 +65,13 @@ public class InstallerSourceWebserviceImplementation extends Observable
                 categories = mapper.readValue(result, new TypeReference<List<CategoryDTO>>() {});
                 System.out.println(categories);
 
-                this.state = DownloadStateDTO.State.SUCCESS;
+                this.state = ProgressStateDTO.State.SUCCESS;
             } catch(DownloadException e) {
                 e.printStackTrace();
-                this.state = DownloadStateDTO.State.FAILED;
+                this.state = ProgressStateDTO.State.FAILED;
             } catch (IOException e) {
                 e.printStackTrace();
-                this.state = DownloadStateDTO.State.FAILED;
+                this.state = ProgressStateDTO.State.FAILED;
             } finally {
                 this.update();
             }
@@ -86,10 +85,10 @@ public class InstallerSourceWebserviceImplementation extends Observable
 
     private synchronized void update() {
         DownloadEnvelopeDTO<List<CategoryDTO>> envelopeDTO = new DownloadEnvelopeDTO<>();
-        DownloadStateDTO downloadStateDTO = new DownloadStateDTO();
-        downloadStateDTO.setState(this.state);
+        ProgressStateDTO progressStateDTO = new ProgressStateDTO();
+        progressStateDTO.setState(this.state);
 
-        envelopeDTO.setDownloadState(downloadStateDTO);
+        envelopeDTO.setDownloadState(progressStateDTO);
         envelopeDTO.setEnvelopeContent(categories);
 
         this.setChanged();

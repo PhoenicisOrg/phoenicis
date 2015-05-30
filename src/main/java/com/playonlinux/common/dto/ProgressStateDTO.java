@@ -20,7 +20,7 @@ package com.playonlinux.common.dto;
 
 import com.playonlinux.common.api.dto.AbstractDTO;
 
-public class DownloadStateDTO implements AbstractDTO {
+public class ProgressStateDTO implements AbstractDTO {
     private State state;
     private double percent;
 
@@ -36,13 +36,13 @@ public class DownloadStateDTO implements AbstractDTO {
         return percent;
     }
 
-    public void setPercent(float percent) {
+    public void setPercent(double percent) {
         this.percent = percent;
     }
 
     public enum State {
         READY,
-        DOWNLOADING,
+        PROGRESSING,
         SUCCESS,
         FAILED
     }

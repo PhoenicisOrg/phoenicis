@@ -19,11 +19,12 @@
 package com.playonlinux.common.services;
 
 import com.playonlinux.common.api.services.BackgroundService;
+import com.playonlinux.common.api.services.BackgroundServiceManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayOnLinuxBackgroundServicesManager {
+public class PlayOnLinuxBackgroundServicesManager implements BackgroundServiceManager {
     List<BackgroundService> runningTask;
 
     public PlayOnLinuxBackgroundServicesManager() {

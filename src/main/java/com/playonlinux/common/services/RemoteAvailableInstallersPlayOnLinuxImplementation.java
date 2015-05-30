@@ -19,6 +19,7 @@
 package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.comparator.AlphabeticalOrderComparator;
 import com.playonlinux.common.dto.*;
 import com.playonlinux.domain.PlayOnLinuxException;
@@ -37,7 +38,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     private static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    private static PlayOnLinuxBackgroundServicesManager playOnLinuxBackgroundServicesManager;
+    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     private List<CategoryDTO> categoriesDTO;
     private int numberOfCategories;
@@ -88,12 +89,12 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public boolean isUpdating() {
-        return downloadEnvelopeDto.getDownloadState().getState() == DownloadStateDTO.State.DOWNLOADING;
+        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
     }
 
     @Override
     public boolean hasFailed() {
-        return downloadEnvelopeDto.getDownloadState().getState() == DownloadStateDTO.State.FAILED;
+        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
     }
 
     @Override

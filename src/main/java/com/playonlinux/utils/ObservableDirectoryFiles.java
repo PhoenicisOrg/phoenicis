@@ -28,12 +28,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
-public class ObservableDirectory extends Observable implements BackgroundService {
-    private int checkInterval = 1000;
-    private final File observedDirectory;
+public class ObservableDirectoryFiles extends AbstractObservableDirectory {
     private final ObservableDirectoryThread observableDirectoryThread;
 
-    public ObservableDirectory(File observedDirectory) throws PlayOnLinuxException {
+    public ObservableDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
         this.observedDirectory = observedDirectory;
         if(!observedDirectory.exists()) {
             throw new PlayOnLinuxException(String.format("The directory %s does not exist",
@@ -47,31 +45,17 @@ public class ObservableDirectory extends Observable implements BackgroundService
         observableDirectoryThread = new ObservableDirectoryThread(this);
     }
 
-    void setCheckInterval(int checkInterval) {
-        this.checkInterval = checkInterval;
-    }
 
     @Override
     public void start() {
         observableDirectoryThread.start();
     }
 
+    @Override
     public void stop() {
         observableDirectoryThread.stopChecking();
     }
 
-    public File getObservedDirectory() {
-        return observedDirectory;
-    }
-
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append(observedDirectory.getName())
-                .append(checkInterval)
-                .toString();
-    }
-    /* Protected because the user of the class should use the observer pattern and should not access directly
-    to the files */
 
     /* TODO: Test this method with better coverage */
     protected File[] findFiles() {
@@ -87,20 +71,15 @@ public class ObservableDirectory extends Observable implements BackgroundService
         return filesFiltered.toArray(new File[filesFiltered.size()]);
     }
 
-    @Override
-    public void shutdown() {
-        this.stop();
-    }
-
 
     private class ObservableDirectoryThread extends Thread {
-        private final ObservableDirectory observableDirectory;
+        private final ObservableDirectoryFiles observableDirectoryFiles;
         private volatile Boolean running;
 
-        ObservableDirectoryThread(ObservableDirectory observableDirectory) {
+        ObservableDirectoryThread(ObservableDirectoryFiles observableDirectoryFiles) {
             super();
             this.running = false;
-            this.observableDirectory = observableDirectory;
+            this.observableDirectoryFiles = observableDirectoryFiles;
         }
 
         @Override
@@ -108,6 +87,7 @@ public class ObservableDirectory extends Observable implements BackgroundService
             this.running = true;
             super.start();
         }
+
 
         public synchronized void stopChecking() {
             this.running = false;
@@ -117,10 +97,10 @@ public class ObservableDirectory extends Observable implements BackgroundService
         public void run() {
             File[] lastDirectoryContent = null;
             while(this.isRunning()) {
-                File[] directoryContent = observableDirectory.findFiles();
+                File[] directoryContent = observableDirectoryFiles.findFiles();
                 if(!Arrays.equals(directoryContent, lastDirectoryContent)) {
-                    this.observableDirectory.setChanged();
-                    this.observableDirectory.notifyObservers(directoryContent);
+                    this.observableDirectoryFiles.setChanged();
+                    this.observableDirectoryFiles.notifyObservers(directoryContent);
                 }
                 try {
                     Thread.sleep(checkInterval);
