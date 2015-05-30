@@ -21,8 +21,8 @@ package com.playonlinux.wine;
 import com.playonlinux.domain.PlayOnLinuxException;
 
 public class WineException extends PlayOnLinuxException {
-	
-	private static final String DEFAULT_MESSAGE = "Wine has encountered a fatal error";
+    
+    private static final String DEFAULT_MESSAGE = "Wine has encountered a fatal error";
 
     public WineException() {
         super(DEFAULT_MESSAGE);

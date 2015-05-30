@@ -61,10 +61,10 @@ public class WinePrefix {
 
     public WinePrefix create(String version) throws CancelException, ScriptFailureException {
         try {
-			return this.create(version, Architecture.fetchCurrentArchitecture().name());
-		} catch (PlayOnLinuxException e) {
-			throw new ScriptFailureException(e);
-		}
+            return this.create(version, Architecture.fetchCurrentArchitecture().name());
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     public WinePrefix create(String version, String architecture) throws ScriptFailureException, CancelException {
@@ -72,16 +72,16 @@ public class WinePrefix {
             throw new ScriptFailureException("Prefix must be selected!");
         }
         WineInstallation wineInstallation;
-		try {
-			wineInstallation = new WineInstallation.Builder()
-			        .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
-			                version,
-			                Architecture.valueOf(architecture))
-			        ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
-			        .build();
-		} catch (PlayOnLinuxException e) {
-			throw new ScriptFailureException(e);
-		}
+        try {
+            wineInstallation = new WineInstallation.Builder()
+                    .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
+                            version,
+                            Architecture.valueOf(architecture))
+                    ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
+                    .build();
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
 
         Process process;
         try {

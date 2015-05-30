@@ -43,18 +43,18 @@ public final class BashEnvironmentHelper {
 
     public static OperatingSystem getOperatinSystem() throws ScriptFailureException {
         try {
-			return OperatingSystem.fetchCurrentOperationSystem();
-		} catch (PlayOnLinuxException e) {
-			throw new ScriptFailureException(e);
-		}
+            return OperatingSystem.fetchCurrentOperationSystem();
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     public static Architecture getArchitecture() throws ScriptFailureException {
         try {
-			return Architecture.fetchCurrentArchitecture();
-		} catch (PlayOnLinuxException e) {
-			throw new ScriptFailureException(e);
-		}
+            return Architecture.fetchCurrentArchitecture();
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     public static String getUserRoot() throws ScriptFailureException {
@@ -62,15 +62,15 @@ public final class BashEnvironmentHelper {
     }
 
     public static String getEnvironmentVar(String variable) throws ScriptFailureException {
-		try {
-			Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
-	        Map<String,String> systemEnvironment = System.getenv();
-	
-	        mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
-	        return playonOnLinuxEnvironment.get(variable);
-		} catch (PlayOnLinuxException e) {
-			throw new ScriptFailureException(e);
-		}
+        try {
+            Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
+            Map<String,String> systemEnvironment = System.getenv();
+            
+            mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
+            return playonOnLinuxEnvironment.get(variable);
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     public static String getPath() throws ScriptFailureException {
