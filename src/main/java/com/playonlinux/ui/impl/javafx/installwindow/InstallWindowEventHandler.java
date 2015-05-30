@@ -56,7 +56,7 @@ public class InstallWindowEventHandler implements UIEventHandler {
     }
 
     public String getInstallerDescription(String scriptName) throws PlayOnLinuxException {
-        return getRemoteAvailableInstallers().getScriptByName(scriptName).getDescription();
+        return getRemoteAvailableInstallers().getApplicationByName(scriptName).getDescription();
     }
 
 

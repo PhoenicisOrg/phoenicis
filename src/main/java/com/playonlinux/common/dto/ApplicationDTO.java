@@ -21,33 +21,30 @@ package com.playonlinux.common.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.common.api.dto.AbstractDTO;
 import com.playonlinux.common.comparator.Nameable;
-import com.playonlinux.utils.OperatingSystem;
 
 import java.util.Comparator;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptDTO implements AbstractDTO, Nameable {
+public class ApplicationDTO implements AbstractDTO, Nameable {
 
     private int id;
     private String name;
     private String description;
     private String iconUrl;
     private List<String> miniaturesUrls;
-    private List<OperatingSystem> compatiblesOperatingSystems;
-    private List<OperatingSystem> testingOperatingSystems;
-    private Boolean free;
-    private Boolean requiresNoCD;
+    private List<ScriptDTO> scripts;
 
-    public ScriptDTO() {
+    public ApplicationDTO() {
         // Kept for the webservice
     }
-    private ScriptDTO(Builder builder) {
+    private ApplicationDTO(Builder builder) {
         id = builder.id;
         name = builder.name;
         description = builder.description;
         iconUrl = builder.iconURL;
         miniaturesUrls = builder.miniaturesUrls;
+        scripts = builder.scripts;
     }
 
     public String getIconUrl() {
@@ -70,23 +67,36 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         return description;
     }
 
+    public List<ScriptDTO> getScripts() {
+        return scripts;
+    }
+
+    public static class AlphabeticalOrderComparator implements Comparator<ApplicationDTO> {
+        @Override
+        public int compare(ApplicationDTO script1, ApplicationDTO script2) {
+            return script1.getName().compareTo(script2.getName());
+        }
+    }
+
     public static class Builder {
         private String name;
         private String description;
         private String iconURL;
         private List<String> miniaturesUrls;
+        private List<ScriptDTO> scripts;
         private int id;
 
         public Builder() {
             // We need a public builder to be able to create a ScriptDTO from scratch
         }
 
-        public Builder(ScriptDTO scriptDTO) {
-            this.name = scriptDTO.name;
-            this.description = scriptDTO.description;
-            this.iconURL = scriptDTO.iconUrl;
-            this.miniaturesUrls = scriptDTO.miniaturesUrls;
-            this.id = scriptDTO.id;
+        public Builder(ApplicationDTO applicationDTO) {
+            this.name = applicationDTO.name;
+            this.description = applicationDTO.description;
+            this.iconURL = applicationDTO.iconUrl;
+            this.miniaturesUrls = applicationDTO.miniaturesUrls;
+            this.scripts = applicationDTO.scripts;
+            this.id = applicationDTO.id;
         }
 
         public Builder withId(int id) {
@@ -113,9 +123,13 @@ public class ScriptDTO implements AbstractDTO, Nameable {
             return this;
         }
 
+        public Builder withScriptInformations(ScriptDTO scriptDTO) {
+            this.scripts = scripts;
+            return this;
+        }
 
-        public ScriptDTO build() {
-            return new ScriptDTO(this);
+        public ApplicationDTO build() {
+            return new ApplicationDTO(this);
         }
     }
 

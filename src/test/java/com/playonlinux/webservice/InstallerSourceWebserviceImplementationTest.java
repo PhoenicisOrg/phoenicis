@@ -18,16 +18,16 @@
 
 package com.playonlinux.webservice;
 
+import com.playonlinux.common.dto.ApplicationDTO;
 import com.playonlinux.common.dto.DownloadEnvelopeDTO;
+import com.playonlinux.common.dto.ScriptDTO;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
-import com.playonlinux.common.dto.AvailableCategoriesDTO;
 import com.playonlinux.common.dto.CategoryDTO;
-import com.playonlinux.common.dto.ScriptDTO;
 
 
 import java.net.MalformedURLException;
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
@@ -67,41 +67,53 @@ public class InstallerSourceWebserviceImplementationTest {
                         .withHeaders(
                                 new Header("Content-Type", "application/json")
                         )
-                        .withBody("{\"categories\": [\n" +
+                        .withBody("[\n" +
                                 "    {\n" +
-                                "        \"scripts\": [\n" +
-                                "            {\n" +
-                                "                \"description\": \"\",\n" +
-                                "                \"id\": 373,\n" +
-                                "                \"iconUrl\": \"http://url1\",\n" +
-                                "                \"miniaturesUrls\" : [],\n" +
-                                "                \"scriptInformations\": {\n" +
-                                "                    \"compatiblesOperatingSystems\" : [\"LINUX\", \"MACOSX\"],\n" +
-                                "                    \"testingOperatingSystems\" : [],\n" +
-                                "                    \"free\": true,\n" +
-                                "                    \"requiresNoCD\": false\n" +
+                                "        \"applications\": [\n" +
+                                "                {\n" +
+                                "                    \"id\": 373,\n" +
+                                "                    \"name\": \"7-Zip\",\n" +
+                                "                    \"description\": \"\",\n" +
+                                "                    \"iconUrl\": \"http:\\/\\/files.playonlinux.com\\/resources\\/icones_install\\/7-Zip\",\n" +
+                                "                    \"miniaturesUrls\": [\"URL1\", \"URL2\"],\n" +
+                                "                    \"scripts\": [\n" +
+                                "                        {\n" +
+                                "                            \"scriptName\": \"7-Zip\",\n" +
+                                "                            \"compatiblesOperatingSystems\": [\n" +
+                                "                                \"LINUX\",\n" +
+                                "                                \"MACOSX\"\n" +
+                                "                            ],\n" +
+                                "                            \"testingOperatingSystems\": [],\n" +
+                                "                            \"free\": true,\n" +
+                                "                            \"requiresNoCD\": false\n" +
+                                "                        }\n" +
+                                "                    ]\n" +
                                 "                },\n" +
-                                "                \"name\": \"7-Zip\"\n" +
-                                "            },\n" +
-                                "            {\n" +
-                                "                \"description\": \"Description FluidMark\",\n" +
-                                "                \"id\": 830,\n" +
-                                "                \"iconUrl\": \"http://url2\",\n" +
-                                "                \"miniaturesUrls\" : [\"http://Miniature1\", \"http://Miniature2\"],\n" +
-                                "                \"infos\": {\n" +
-                                "                    \"compatiblesOperatingSystems\" : [\"LINUX\"],\n" +
-                                "                    \"testingOperatingSystems\" : [\"LINUX\"],\n" +
-                                "                    \"free\": true,\n" +
-                                "                    \"requires_nocd\": false\n" +
-                                "                },\n" +
-                                "                \"name\": \"FluidMark 1.3.1\"\n" +
-                                "            }\n" +
+                                "                {\n" +
+                                "                    \"id\": 1265,\n" +
+                                "                    \"name\": \"Amazon Kindle\",\n" +
+                                "                    \"description\": \"Amazon Description\",\n" +
+                                "                    \"iconUrl\": \"http:\\/\\/files.playonlinux.com\\/resources\\/icones_install\\/Amazon Kindle\",\n" +
+                                "                    \"miniaturesUrls\": [],\n" +
+                                "                    \"scripts\": [\n" +
+                                "                        {\n" +
+                                "                            \"scriptName\": \"Amazon Kindle\",\n" +
+                                "                            \"compatiblesOperatingSystems\": [\n" +
+                                "                                \"LINUX\",\n" +
+                                "                                \"MACOSX\"\n" +
+                                "                            ],\n" +
+                                "                            \"testingOperatingSystems\": [],\n" +
+                                "                            \"free\": true,\n" +
+                                "                            \"requiresNoCD\": false\n" +
+                                "                        }\n" +
+                                "                    ]\n" +
+                                "                }\n" +
                                 "        ],\n" +
                                 "        \"id\": 2,\n" +
                                 "        \"name\": \"Accessories\",\n" +
                                 "        \"type\": \"INSTALLERS\"\n" +
                                 "    }\n" +
-                                "]}\n")
+                                "]\n")
         );
 
 
@@ -114,41 +126,44 @@ public class InstallerSourceWebserviceImplementationTest {
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
         remoteAvailableInstallers.populate();
 
-        assertEquals("Accessories", observer.getDTO().getCategories().get(0).getName());
-        assertEquals(2, observer.getDTO().getCategories().get(0).getId());
-        assertEquals(CategoryDTO.CategoryType.INSTALLERS, observer.getDTO().getCategories().get(0).getType());
+        assertEquals("Accessories", observer.getDTO().get(0).getName());
+        assertEquals(2, observer.getDTO().get(0).getId());
+        assertEquals(CategoryDTO.CategoryType.INSTALLERS, observer.getDTO().get(0).getType());
     }
+
 
     @Test
-    public void testScriptFetcher_MockWebServer_ScriptDTOIsPopulated() {
+    public void testScriptFetcher_MockWebServer_ApplicationsDTOIsPopulated() {
         remoteAvailableInstallers.populate();
 
-        List<ScriptDTO> scripts = observer.getDTO().getCategories().get(0).getScripts();
+        List<ApplicationDTO> applications = observer.getDTO().get(0).getApplications();
 
-        assertEquals("", scripts.get(0).getDescription());
-        assertEquals(373, scripts.get(0).getId());
-        assertEquals("http://url1", scripts.get(0).getIconUrl());
-        assertEquals(0, scripts.get(0).getMiniaturesUrls().size());
-        assertEquals("7-Zip", scripts.get(0).getName());
+        assertEquals("", applications.get(0).getDescription());
+        assertEquals(373, applications.get(0).getId());
+        assertEquals("http://files.playonlinux.com/resources/icones_install/7-Zip", applications.get(0).getIconUrl());
+        assertEquals(2, applications.get(0).getMiniaturesUrls().size());
+        assertEquals("7-Zip", applications.get(0).getName());
+        assertEquals("URL1", applications.get(0).getMiniaturesUrls().get(0));
+        assertEquals("URL2", applications.get(0).getMiniaturesUrls().get(1));
 
-        assertEquals("Description FluidMark", scripts.get(1).getDescription());
-        assertEquals(830, scripts.get(1).getId());
-        assertEquals("http://url2", scripts.get(1).getIconUrl());
-        assertEquals(2, scripts.get(1).getMiniaturesUrls().size());
-        assertEquals("http://Miniature1", scripts.get(1).getMiniaturesUrls().get(0));
-        assertEquals("http://Miniature2", scripts.get(1).getMiniaturesUrls().get(1));
-        assertEquals("FluidMark 1.3.1", scripts.get(1).getName());
+        assertEquals("Amazon Description", applications.get(1).getDescription());
+        assertEquals(1265, applications.get(1).getId());
+        assertEquals("http://files.playonlinux.com/resources/icones_install/Amazon Kindle", applications.get(1).getIconUrl());
+        assertEquals(0, applications.get(1).getMiniaturesUrls().size());
+        assertEquals("Amazon Kindle", applications.get(1).getName());
     }
 
+
     private class MockObserver implements Observer {
-        public AvailableCategoriesDTO categoryDto;
+        public List<CategoryDTO> categoryDto;
 
         @Override
         public void update(Observable o, Object arg) {
-            this.categoryDto = (AvailableCategoriesDTO) ((DownloadEnvelopeDTO) arg).getEnvelopeContent();
+            System.out.println(arg);
+            this.categoryDto = (List<CategoryDTO>) ((DownloadEnvelopeDTO) arg).getEnvelopeContent();
         }
 
-        public AvailableCategoriesDTO getDTO() {
+        public List<CategoryDTO> getDTO() {
             return categoryDto;
         }
     }

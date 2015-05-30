@@ -18,15 +18,19 @@
 
 package com.playonlinux.webservice;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.playonlinux.common.api.webservice.InstallerSource;
+import com.playonlinux.common.dto.CategoryDTO;
 import com.playonlinux.common.dto.DownloadEnvelopeDTO;
 import com.playonlinux.common.dto.DownloadStateDTO;
 import com.playonlinux.common.api.services.BackgroundService;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-import com.playonlinux.common.dto.AvailableCategoriesDTO;
 
+
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
@@ -39,7 +43,8 @@ public class InstallerSourceWebserviceImplementation extends Observable
     private final URL url;
     private DownloadStateDTO.State state = DownloadStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
-    private AvailableCategoriesDTO categories;
+
+    private List<CategoryDTO> categories;
 
     public InstallerSourceWebserviceImplementation(URL url) {
         this.url = url;
@@ -55,9 +60,17 @@ public class InstallerSourceWebserviceImplementation extends Observable
             this.update();
 
             try {
-                categories = new RestTemplate().getForObject(this.url.toString(), AvailableCategoriesDTO.class);
+                ObjectMapper mapper = new ObjectMapper();
+                HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
+                String result = httpDownloader.get();
+                categories = mapper.readValue(result, new TypeReference<List<CategoryDTO>>() {});
+                System.out.println(categories);
+
                 this.state = DownloadStateDTO.State.SUCCESS;
-            } catch(RestClientException e) {
+            } catch(DownloadException e) {
+                e.printStackTrace();
+                this.state = DownloadStateDTO.State.FAILED;
+            } catch (IOException e) {
                 e.printStackTrace();
                 this.state = DownloadStateDTO.State.FAILED;
             } finally {
@@ -72,7 +85,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
 
 
     private synchronized void update() {
-        DownloadEnvelopeDTO<AvailableCategoriesDTO> envelopeDTO = new DownloadEnvelopeDTO<>();
+        DownloadEnvelopeDTO<List<CategoryDTO>> envelopeDTO = new DownloadEnvelopeDTO<>();
         DownloadStateDTO downloadStateDTO = new DownloadStateDTO();
         downloadStateDTO.setState(this.state);
 

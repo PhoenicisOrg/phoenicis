@@ -36,14 +36,16 @@ import static org.mockserver.model.HttpResponse.response;
 
 public class HTTPDownloaderTest {
     private static URL mockServerURL;
+    private static URL mockServerURLFile2;
+
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
-    private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
 
     @BeforeClass
     public static void setUp() throws MalformedURLException {
         mockServer = new ClientAndServer(MOCKSERVER_PORT);
         mockServerURL = new URL("http://localhost:"+MOCKSERVER_PORT+"/test.txt");
+        mockServerURLFile2 = new URL("http://localhost:"+MOCKSERVER_PORT+"/test2.txt");
     }
 
     @Test
@@ -67,6 +69,27 @@ public class HTTPDownloaderTest {
         String fileContent = IOUtils.toString(new FileReader(temporaryFile));
 
         assertEquals("Content file to download", fileContent);
+    }
+
+
+    @Test
+    public void testGet_DownloadFileInAString_FileIsDownloaded() throws Exception {
+        mockServer.when(
+                request()
+                        .withMethod("GET")
+                        .withPath("/test2.txt")
+        ).respond(
+                response()
+                        .withStatusCode(200)
+                        .withHeaders(
+                                new Header("Content-Type", "application/json")
+                        )
+                        .withBody("Content file to download 2")
+        );
+
+        String result = new HTTPDownloader(mockServerURLFile2).get();
+
+        assertEquals("Content file to download 2", result);
     }
 
     @AfterClass

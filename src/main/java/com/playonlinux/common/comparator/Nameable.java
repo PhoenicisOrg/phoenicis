@@ -16,39 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.common.comparator;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.playonlinux.common.api.dto.AbstractDTO;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CategoryDTO implements AbstractDTO {
-    public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public CategoryType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<ApplicationDTO> getApplications() {
-        return applications;
-    }
-
-    int id;
-    CategoryType type;
-    String name;
-    List <ApplicationDTO> applications;
-
+public interface Nameable {
+    String getName();
 }
