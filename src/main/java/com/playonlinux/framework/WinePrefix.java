@@ -26,7 +26,10 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.domain.ScriptFailureException;
+import com.playonlinux.wine.WineException;
 import com.playonlinux.wine.WineInstallation;
+
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -58,13 +61,13 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws PlayOnLinuxException, InterruptedException {
+    public WinePrefix create(String version) throws InterruptedException, PlayOnLinuxException {
         return this.create(version, Architecture.fetchCurrentArchitecture().name());
     }
 
     public WinePrefix create(String version, String architecture) throws PlayOnLinuxException {
         if(prefix == null) {
-            throw new PlayOnLinuxException("Prefix must be selected!");
+            throw new ScriptFailureException("Prefix must be selected!");
         }
         WineInstallation wineInstallation = new WineInstallation.Builder()
                 .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
@@ -77,7 +80,7 @@ public class WinePrefix {
         try {
             process = wineInstallation.createPrefix(this.prefix);
         } catch (IOException e) {
-            throw new PlayOnLinuxException("Unable to create the wineprefix", e);
+            throw new ScriptFailureException("Unable to create the wineprefix", e);
         }
 
         /* Maybe it needs to be better implemented */

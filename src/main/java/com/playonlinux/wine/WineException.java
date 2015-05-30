@@ -18,5 +18,11 @@
 
 package com.playonlinux.wine;
 
-public class WineException extends Throwable {
+import com.playonlinux.domain.PlayOnLinuxException;
+
+public class WineException extends PlayOnLinuxException {
+
+    public WineException(String message, Throwable parent) {
+        super(message);
+    }
 }
