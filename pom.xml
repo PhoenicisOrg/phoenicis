@@ -192,6 +192,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/com/playonlinux/ui/impl/javafx/**</exclude>
+                        <exclude>**/com/playonlinux/app/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
