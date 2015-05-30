@@ -19,20 +19,13 @@
 package com.playonlinux.domain;
 
 public class PlayOnLinuxException extends Exception {
-    private final String message;
-
     public PlayOnLinuxException(String message) {
         this(message, null);
     }
 
     public PlayOnLinuxException(String message, Throwable parent) {
         super(message);
-        this.message = message;
         this.initCause(parent);
     }
 
-    @Override
-    public String toString() {
-        return this.message;
-    }
 }

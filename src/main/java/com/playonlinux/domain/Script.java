@@ -21,8 +21,8 @@ package com.playonlinux.domain;
 import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
-import com.playonlinux.utils.ExceptionUtils;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
 
@@ -30,8 +30,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.ParseException;
 
 public abstract class Script implements BackgroundService {
