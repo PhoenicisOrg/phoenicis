@@ -58,6 +58,6 @@ throw() {
 
 Get_CurrentDate()
 {
-	# Return the current date
-	date "+%D %T"
+    # Return the current date
+    date "+%D %T"
 }

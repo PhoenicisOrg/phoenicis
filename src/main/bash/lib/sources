@@ -18,18 +18,18 @@
 
 
 if [ "$(id -u)" = "0" ]; then
-	echo "PlayOnLinux is not supposed to be run as root. Sorry"
-	exit 1
+    echo "PlayOnLinux is not supposed to be run as root. Sorry"
+    exit 1
 fi
 
 if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
-	source "$PLAYONLINUX/lib/netcat.sh"
-	source "$PLAYONLINUX/lib/system.sh"
-	source "$PLAYONLINUX/lib/config.sh"
-	source "$PLAYONLINUX/lib/debug.sh"
-	source "$PLAYONLINUX/lib/setupWindow.sh"
-	source "$PLAYONLINUX/lib/scripts.sh"
-	source "$PLAYONLINUX/lib/wine.sh"
+    source "$PLAYONLINUX/lib/netcat.sh"
+    source "$PLAYONLINUX/lib/system.sh"
+    source "$PLAYONLINUX/lib/config.sh"
+    source "$PLAYONLINUX/lib/debug.sh"
+    source "$PLAYONLINUX/lib/setupWindow.sh"
+    source "$PLAYONLINUX/lib/scripts.sh"
+    source "$PLAYONLINUX/lib/wine.sh"
 
-	export PLAYONLINUX_BASH_INCLUDED="TRUE"
+    export PLAYONLINUX_BASH_INCLUDED="TRUE"
 fi

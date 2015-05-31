@@ -25,8 +25,8 @@
 
 POL_Download ()
 {
-	# Download a file and place it in the current directory
-	# Usage: POL_Download [URL] [MD5]
+    # Download a file and place it in the current directory
+    # Usage: POL_Download [URL] [MD5]
 
-    echo "$POL_COOKIE	POL_Download	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$2")" | ncs "$POL_HOST" "$POL_PORT"
+    echo "$POL_COOKIE   POL_Download    $$  $(POL_EscapeTab "$1")   $(POL_EscapeTab "$2")" | ncs "$POL_HOST" "$POL_PORT"
 }
