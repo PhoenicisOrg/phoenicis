@@ -31,7 +31,7 @@ public class UIMessageSenderJavaFXImplementation<RETURN> implements UIMessageSen
         if (action == null)
             throw new NullPointerException("action");
 
-        // run synchronously on JavaFX thread
+        // runBackground synchronously on JavaFX thread
         if (Platform.isFxApplicationThread()) {
             action.run();
             return;

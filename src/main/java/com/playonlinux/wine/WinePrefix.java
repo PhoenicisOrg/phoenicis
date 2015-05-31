@@ -128,4 +128,8 @@ public class WinePrefix {
     public void delete() throws IOException {
         FileUtils.deleteDirectory(this.getWinePrefixDirectory());
     }
+
+    public boolean initialized() {
+        return false;
+    }
 }
