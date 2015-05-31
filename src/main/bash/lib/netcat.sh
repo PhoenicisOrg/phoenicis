@@ -26,7 +26,7 @@ export POL_HOST="127.0.0.1"
 
 POL_EscapeTab()
 {
-    echo "${1//	/	}"
+    echo "${1//	/\\t}"
 }
 
 # Silent netcat
