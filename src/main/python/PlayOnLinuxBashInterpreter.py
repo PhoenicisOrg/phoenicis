@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-# This tools is made to run legacy PlayOnLinux v4 scripts
+# This tools is made to runBackground legacy PlayOnLinux v4 scripts
 from com.playonlinux.framework.templates import Installer
 
 
