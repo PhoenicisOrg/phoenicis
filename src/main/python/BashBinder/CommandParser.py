@@ -22,6 +22,7 @@ import os
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
 from org.python.core import PyException
+from com.playonlinux.common.api.ui import SetupWindow
 
 
 class CommandParser(object):
@@ -59,6 +60,12 @@ class CommandParser(object):
             textToShow = self.command[3]
 
             self.setupWindowManager.getWindow(setupWindowId).message(textToShow)
+        
+        def POL_SetupWindow_free_presentation(self):
+            setupWindowId = self.command[2]
+            textToShow = self.command[3]
+            
+            self.setupWindowManager.getWindow(setupWindowId).presentation(textToShow)
 
         def POL_SetupWindow_wait(self):
             setupWindowId = self.command[2]

@@ -26,8 +26,8 @@
 
 POL_Config_PrefixRead ()
 {
-	# Read an entry in wine current prefix's config file
-	# Usage : POL_Config_PrefixRead [KEY]
+    # Read an entry in wine current prefix's config file
+    # Usage : POL_Config_PrefixRead [KEY]
 
-	cat "$WINEPREFIX/playonlinux.cfg" 2> /dev/null | grep "^$1=" | cut -d\= -f2-
+    cat "$WINEPREFIX/playonlinux.cfg" 2> /dev/null | grep "^$1=" | cut -d\= -f2-
 }

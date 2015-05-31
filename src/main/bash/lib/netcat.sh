@@ -26,22 +26,22 @@ export POL_HOST="127.0.0.1"
 
 POL_EscapeTab()
 {
-	echo "${1//	/\\t}"
+    echo "${1//	/\\t}"
 }
 
 # Silent netcat
 ncs()
 {
-	ncns "$@" > /dev/null 2> /dev/null
+    ncns "$@" > /dev/null 2> /dev/null
 }
 
 ncns()
 {
-	if [ "$POL_OS" = "MACOSX" ]; then
-		nc "$@"
-	else
-		nc -q -1 "$@" 2> /dev/null || nc "$@"
-	fi
+    if [ "$POL_OS" = "MACOSX" ]; then
+        nc "$@"
+    else
+        nc -q -1 "$@" 2> /dev/null || nc "$@"
+    fi
 
 }
 
@@ -52,13 +52,12 @@ toPythonPipe() {
 toPython() {
     local command="$1"
     shift
-    arguments=""
+    arguments="$1"
+    shift
     for argument in "$@"
     do
-        arguments="${arguments}\t$(POL_EscapeTab "$argument")"
+        arguments="${arguments}	$(POL_EscapeTab "$argument")"
     done
-
-    local arguments="$2"
 
     echo "$POL_COOKIE	$command	$$	$arguments" | toPythonPipe
 }
