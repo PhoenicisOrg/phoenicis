@@ -31,7 +31,7 @@ public class CFFile extends AbstractCabStructure {
     byte[] attribs = new byte[2];
     byte[] szName = new byte[257];
 
-    CFFile(int offset) {
+    CFFile(long offset) {
         super(offset);
     }
 

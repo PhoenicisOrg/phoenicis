@@ -30,7 +30,7 @@ public class CFData extends AbstractCabStructure {
     byte[] abReserve = new byte[256];
     byte[] ab = new byte[256];
 
-    CFData(int offset) {
+    CFData(long offset) {
         super(offset);
     }
 
@@ -52,7 +52,6 @@ public class CFData extends AbstractCabStructure {
     public String toString() {
         return String.format(
                 "Offset: %s\n",
-
 
                 offset
 

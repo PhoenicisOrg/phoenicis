@@ -29,7 +29,7 @@ public class CFFolder extends AbstractCabStructure {
 
     byte[] abReserve = new byte[256];
 
-    CFFolder(int offset) {
+    CFFolder(long offset) {
         super(offset);
     }
 

@@ -47,7 +47,7 @@ public class CFHeader extends AbstractCabStructure {
     byte[] szCabinetNext = new byte[255];
     byte[] szDiskNext = new byte[255];
 
-    CFHeader(int offset) {
+    CFHeader(long offset) {
         super(offset);
     }
 

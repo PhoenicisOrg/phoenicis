@@ -19,10 +19,12 @@
 package com.playonlinux.utils.cab;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cabfile {
     private final InputStream archiveStream;
-    private int readBytes = 0;
+    private long readBytes = 0;
 
     public Cabfile(File archiveFile) throws CabException {
         try {
@@ -39,7 +41,6 @@ public class Cabfile {
             while (true) {
                 byte[] nextRead = new byte[1];
                 int numRead = archiveStream.read(nextRead);
-
 
                 if(numRead == -1) {
                     throw new CabException("This file does not contain any cabinet archive");
@@ -75,6 +76,7 @@ public class Cabfile {
         CFHeader cfHeader = new CFHeader(readBytes);
         cfHeader.populate(archiveStream);
         readBytes += cfHeader.getStructureSize();
+
         return cfHeader;
     }
 
@@ -93,10 +95,16 @@ public class Cabfile {
     }
 
     public CFData getData() throws CabException {
+        System.out.println(readBytes);
         CFData cfData = new CFData(readBytes);
         cfData.populate(archiveStream);
         readBytes += cfData.getStructureSize();
         return cfData;
+    }
+
+    private void skipBytes(long numberToSkip) throws IOException {
+        readBytes += numberToSkip;
+        archiveStream.skip(numberToSkip);
     }
 
     public static void main(String[] args) throws CabException, IOException {
@@ -104,37 +112,34 @@ public class Cabfile {
         Cabfile cabfile = new Cabfile(tahoma32);
         System.out.println(cabfile.findCabOffset());
         CFHeader header = cabfile.getHeader();
-        System.out.println(header);
-        System.out.print("Number of folders: ");
-        System.out.println(header.getNumberOfFolders());
-        for(int i = 0; i < header.getNumberOfFolders() - 1; i++) {
+
+
+
+        List <CFFolder> cfFolders = new ArrayList<>();
+        for(int i = 0; i < header.getNumberOfFolders(); i++) {
             CFFolder cfFolder = cabfile.getFolder();
             System.out.println(cfFolder);
         }
 
-        System.out.print("Read bytes: ");
-        System.out.println(cabfile.readBytes);
 
-        System.out.print("Header size: ");
-        System.out.println(header.getStructureSize());
+        cabfile.skipBytes(header.coffFiles[0] - cabfile.readBytes);
 
-        System.out.print("First file offset: ");
-        System.out.println(header.coffFiles[0]);
-
-        int numberToSkip = header.coffFiles[0] - cabfile.readBytes;
-
-        cabfile.archiveStream.skip(numberToSkip);
-
+        List<CFFile> cfiles = new ArrayList<>();
         for(int i = 0; i < header.getNumberOfFiles(); i++) {
-            CFFile cfFile = cabfile.getFile();
-            System.out.println(cfFile);
+            CFFile cfile = cabfile.getFile();
+            cfiles.add(cfile);
+            System.out.println(cfile);
         }
 
-        for(int i = 0; i < header.getNumberOfFiles(); i++) {
+        for(CFFile cfile: cfiles) {
+            System.out.println(cfile);
+            cabfile.skipBytes(cfile.getOffsetStartData() - cabfile.readBytes);
+            System.out.println(cabfile.readBytes);
             CFData cfData = cabfile.getData();
             System.out.println(cfData);
         }
     }
+
 
 
 

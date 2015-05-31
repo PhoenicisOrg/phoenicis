@@ -22,10 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class AbstractCabStructure {
-    protected final int offset;
+    protected final long offset;
     protected int structureSize;
 
-    AbstractCabStructure(int offset) {
+    AbstractCabStructure(long offset) {
         this.offset = offset;
     }
 
