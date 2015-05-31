@@ -67,7 +67,7 @@ POL_SetupWindow_free_presentation ()
     # Free presentation for a script
     # Usage POL_SetupWindow_free_presentation [title] [message]
     
-    echo "$POL_COOKIE   POL_SetupWindow_free_presentation   $$  $(POL_Untab "$1")   $(POL_Untab "$2")" | toPythonPipe
+    echo "$POL_COOKIE	POL_SetupWindow_free_presentation	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | toPython
 }
 
 POL_SetupWindow_Close ()
