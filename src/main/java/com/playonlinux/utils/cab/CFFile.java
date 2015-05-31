@@ -18,6 +18,8 @@
 
 package com.playonlinux.utils.cab;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -67,19 +69,22 @@ public class CFFile extends AbstractCabStructure {
     public String toString() {
         return String.format(
                 "Offset: %s\n" +
-                        "Uncompressed size: %s\n" +
-                        "Data offset: %s\n" +
-                        "Folder: %s\n" +
-                        "szName: %s\n",
+                "Size: %s\n" +
+                "Uncompressed size: %s\n" +
+                "Data offset: %s\n" +
+                "Folder: %s\n" +
+                "szName: %s\n",
 
                 offset,
+                getStructureSize(),
                 this.getUncompressedSize(),
                 this.getOffsetStartDataInsideFolder(),
                 this.getFolderIndex(),
-                new String(szName)
-
+                this.getFilename()
         );
     }
 
-
+    public String getFilename() {
+        return new String(szName).split("\0")[0];
+    }
 }

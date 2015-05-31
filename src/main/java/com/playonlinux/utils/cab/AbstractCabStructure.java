@@ -18,8 +18,11 @@
 
 package com.playonlinux.utils.cab;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public abstract class AbstractCabStructure {
     protected final long offset;
@@ -28,6 +31,7 @@ public abstract class AbstractCabStructure {
     AbstractCabStructure(long offset) {
         this.offset = offset;
     }
+
 
     abstract public void populate(InputStream inputStream) throws CabException;
 
@@ -54,15 +58,11 @@ public abstract class AbstractCabStructure {
         return i;
     }
 
-    protected long decodeLittleEndian(byte[] array) {
-        if(array.length == 4) {
-            return (0xFF & array[0]) +
-                    (0xFF & array[1]) * 16 +
-                    (0xFF & array[2]) * 256 +
-                    (0xFF & array[3]) * 4096;
+    protected long decodeLittleEndian(byte[] bytes) {
+        if(bytes.length == 4) {
+            return ((bytes[3] & 0xFF) << 24) | ((bytes[2] & 0xFF) << 16) | ((bytes[1] & 0xFF) << 8)  | (bytes[0] & 0xFF);
         } else {
-            return (0xFF & array[0]) +
-                    (0xFF & array[1]) * 16;
+            return ((bytes[1] & 0xFF) << 8) | (bytes[0] & 0xFF);
         }
 
     }

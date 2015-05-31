@@ -99,6 +99,7 @@ public class CFHeader extends AbstractCabStructure {
     public String toString() {
         return String.format(
                 "Offset: %s\n" +
+                "Size: %s\n" +
                 "Signature: %s\n" +
                 "Reserved1: %s\n" +
                 "cbCabinet: %s\n" +
@@ -112,6 +113,7 @@ public class CFHeader extends AbstractCabStructure {
                 "cbCFData: %s\n" +
                 "cbCFFolder: %s",
                 offset,
+                getStructureSize(),
                 Arrays.toString(signature),
                 Arrays.toString(reserved1),
                 Arrays.toString(cbCabinet),

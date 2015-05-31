@@ -18,8 +18,11 @@
 
 package com.playonlinux.utils.cab;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Cabfile {
@@ -95,7 +98,6 @@ public class Cabfile {
     }
 
     public CFData getData() throws CabException {
-        System.out.println(readBytes);
         CFData cfData = new CFData(readBytes);
         cfData.populate(archiveStream);
         readBytes += cfData.getStructureSize();
@@ -112,12 +114,11 @@ public class Cabfile {
     }
 
     public static void main(String[] args) throws CabException, IOException {
-        File tahoma32 = new File("/Users/tinou/Downloads/TAHOMA32.EXE");
+        File tahoma32 = new File("/Users/tinou/Downloads/arial32.exe");
         Cabfile cabfile = new Cabfile(tahoma32);
-        System.out.println(cabfile.findCabOffset());
+        int offset = cabfile.findCabOffset();
+        System.out.println(offset);
         CFHeader header = cabfile.getHeader();
-
-
 
         List <CFFolder> cfFolders = new ArrayList<>();
         for(int i = 0; i < header.getNumberOfFolders(); i++) {
@@ -136,16 +137,43 @@ public class Cabfile {
             System.out.println(cfile);
         }
 
+        CFData cfData2 = cabfile.getData();
+        System.out.println(cfData2);
 
+        CFData cfData = cabfile.getData();
+        System.out.println(cfData);
+
+        CFData cfData3 = cabfile.getData();
+        System.out.println(cfData3);
+
+        /*
         for(CFFile cfFile: cfiles) {
-            CFFolder cfFolder = cfFolders.get((int) cfFile.getFolderIndex());
-            long dataIndex = cfFolder.getOffsetStartData() + cfFile.getOffsetStartDataInsideFolder();
+            if("fontinst.inf".equals(cfFile.getFilename())) {
+                CFFolder cfFolder = cfFolders.get((int) cfFile.getFolderIndex());
 
-            cabfile.jumpTo(dataIndex);
-            CFData cfData = cabfile.getData();
 
-            System.out.println(cfData);
-        }
+                long dataIndex = cfFolder.getOffsetStartData() + cfFile.getOffsetStartDataInsideFolder();
+
+                System.out.print("Index: ");
+                System.out.println(dataIndex);
+
+                cabfile.jumpTo(dataIndex);
+
+
+                CFData cfData = cabfile.getData();
+
+
+                cfFolder.dump();
+                System.out.println(cfFile);
+                System.out.println(cfData);
+
+                File test = new File("/tmp/test");
+                FileOutputStream stream = new FileOutputStream(test);
+
+                stream.write(cfData.ab);
+                System.out.println(Arrays.toString(cfData.ab));
+            }
+        } */
     }
 
 

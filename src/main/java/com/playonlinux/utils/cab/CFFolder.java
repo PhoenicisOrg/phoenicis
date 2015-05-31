@@ -18,6 +18,8 @@
 
 package com.playonlinux.utils.cab;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -56,16 +58,30 @@ public class CFFolder extends AbstractCabStructure {
         return decodeLittleEndian(cCFData);
     }
 
+    public long getCompressType() {
+        return decodeLittleEndian(typeCompress) & 0x000F;
+    }
+
+    public void dump() {
+        System.out.println(Hex.encodeHexString(coffCabStart));
+        System.out.println(Hex.encodeHexString(cCFData));
+        System.out.println(Hex.encodeHexString(typeCompress));
+
+        System.out.println(this);
+    }
+
     public String toString() {
         return String.format(
+                "Offset: %s\n" +
                 "Size: %s\n" +
                 "Offset of the first data: %s\n" +
                 "Number of data structures: %s\n" +
                 "typeCompress: %s\n",
+                offset,
                 getStructureSize(),
                 getOffsetStartData(),
-                Arrays.toString(cCFData),
-                Arrays.toString(typeCompress)
+                getNumberOfDataStructures(),
+                getCompressType()
 
         );
     }
