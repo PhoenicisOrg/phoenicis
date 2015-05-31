@@ -32,14 +32,13 @@ class BashProcess(threading.Thread):
     def run(self):
         self.process = subprocess.Popen(self.processArguments, stdout = subprocess.PIPE)
         self.process.wait()
-        print "Process ended"
+        self.healthChecker.release()
 
     def stop(self):
         if(self.process.pid is None):
             pid = self.getPid(self.process)
         else: # Jython bug #2221 workaround
             pid = self.process.pid
-        print pid
         os.kill(pid, signal.SIGKILL)
 
     def getPid(self, process):
@@ -50,3 +49,6 @@ class BashProcess(threading.Thread):
             return None
         else:
             return field.getInt(process._process)
+
+    def setHealthChecker(self, healthChecker):
+        self.healthChecker = healthChecker

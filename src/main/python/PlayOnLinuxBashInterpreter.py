@@ -23,26 +23,34 @@ from com.playonlinux.framework.templates import Installer
 
 
 from BashBinder.BashProcess import BashProcess
+from BashBinder.HealthChecher import HealthChecker
 from BashBinder.NetcatServer import NetcatServer
 from Environment.EnvironmentLoader import EnvironmentLoader
 from SetupWindow.SetupWindowManager import SetupWindowManager
+
+
 
 
 class PlayOnLinuxBashInterpreter(Installer):
     title = "PlayOnLinux bash interpreter" # FIXME
 
     def main(self):
-        self.setupWindowManager = SetupWindowManager();
+        self.setupWindowManager = SetupWindowManager()
+        healthChecker = HealthChecker()
+
         self.netcatServer = NetcatServer(self.setupWindowManager)
         self.netcatServer.initServer()
+        self.netcatServer.setHealthChecker(healthChecker)
 
         EnvironmentLoader.setup(self.netcatServer)
 
         self.process = BashProcess(["bash", __scriptToWrap__])
+        self.process.setHealthChecker(healthChecker)
         self.process.start()
-        self.process.join()
 
+        healthChecker.wait()
         self.netcatServer.closeServer()
+
 
     def rollback(self):
         try:
