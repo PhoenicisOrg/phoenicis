@@ -35,8 +35,7 @@ class NetcatServer(threading.Thread):
         self._cookie = self._generateUniqueCookie()
         self._running = True
         self.setupWindowManager = setupWindowManager
-        self.failException = None
-
+        self.healthChecker = None
 
     def connectionHandler(self, connection):
         clientCommand = ""
@@ -57,8 +56,7 @@ class NetcatServer(threading.Thread):
             result = self.processReceivedCommand(clientCommand)
         except Throwable, e:
             print "Exception encountered. Will close the SetupWindow server now"
-            self.failException = e
-            raise
+            self.healthChecker.sendException(e)
         else:
             connection.send(str(result))
         finally:
@@ -87,10 +85,7 @@ class NetcatServer(threading.Thread):
         self.acceptor.close()
         self._running = False
 
-        # The server has already been shutdown because an exception has been raised
-        # We are going to rethrow it so that Java can get it
-        if(self.failException is not None):
-            raise self.failException
+
 
 
 
@@ -112,6 +107,9 @@ class NetcatServer(threading.Thread):
             raise Exception("Bad cookie!")
         else:
             return commandParser.executeCommand()
+
+    def setHealthChecker(self, healthChecker):
+        self.healthChecker = healthChecker
 
     def getPort(self):
         return self._port
