@@ -107,7 +107,7 @@ public class Cabfile {
         System.out.println(header);
         System.out.print("Number of folders: ");
         System.out.println(header.getNumberOfFolders());
-        for(int i = 0; i <= header.getNumberOfFolders(); i++) {
+        for(int i = 0; i < header.getNumberOfFolders() - 1; i++) {
             CFFolder cfFolder = cabfile.getFolder();
             System.out.println(cfFolder);
         }
@@ -121,8 +121,9 @@ public class Cabfile {
         System.out.print("First file offset: ");
         System.out.println(header.coffFiles[0]);
 
-        int numberToSkip = cabfile.readBytes - header.getStructureSize();
-        //cabfile.archiveStream.skip(numberToSkip);
+        int numberToSkip = header.coffFiles[0] - cabfile.readBytes;
+
+        cabfile.archiveStream.skip(numberToSkip);
 
         for(int i = 0; i < header.getNumberOfFiles(); i++) {
             CFFile cfFile = cabfile.getFile();
