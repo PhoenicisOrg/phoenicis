@@ -41,7 +41,7 @@ POL_SetupWindow_Init ()
     [ "$arg2" = "" ] && arg2="None"
     [ "$arg3" = "" ] && arg3="None"
 
-    echo "$POL_COOKIE	POL_SetupWindow_Init	$$	$arg1	$arg2	$arg3" | toPythonPipe
+    toPython "POL_SetupWindow_Init" "$arg1"	"$arg2"	"$arg3"
 
     export SETUPWINDOW_INIT="true"
 }
@@ -50,7 +50,8 @@ POL_SetupWindow_message ()
 {
     # Shows a simple message
     # Usage POL_SetupWindow_message [message] [title]
-    echo "$POL_COOKIE	POL_SetupWindow_message	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$2")" | toPythonPipe
+    
+    toPython "POL_SetupWindow_message" "$1" "$2"
 }
 
 POL_SetupWindow_presentation ()
@@ -67,7 +68,7 @@ POL_SetupWindow_free_presentation ()
     # Free presentation for a script
     # Usage POL_SetupWindow_free_presentation [title] [message]
     
-    echo "$POL_COOKIE	POL_SetupWindow_free_presentation	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | toPython
+    toPython "POL_SetupWindow_free_presentation" "$1" "$2"
 }
 
 POL_SetupWindow_Close ()
@@ -77,7 +78,7 @@ POL_SetupWindow_Close ()
     # Should be used at the end of the script if POL_SetupWindow_Init has been called
     # Usage: POL_SetupWindow_Close
 
-    echo "$POL_COOKIE	POL_SetupWindow_Close	$$" | toPythonPipe
+    toPython "POL_SetupWindow_Close"
 
     export SETUPWINDOW_INIT="false"
     sleep 2
@@ -106,7 +107,7 @@ POL_SetupWindow_wait ()
     # Wait for next POL_SetupWindow_ command
     # Usage POL_SetupWindow_wait_next_signal [message] [title]
 
-    echo "$POL_COOKIE	POL_SetupWindow_wait	$$	$(POL_Untab "$1")	$(POL_Untab "$2")" | toPythonPipe
+    toPython "POL_SetupWindow_wait" "$1" "$2"
 }
 
 POL_SetupWindow_wait_next_signal ()

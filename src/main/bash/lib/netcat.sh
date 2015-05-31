@@ -52,13 +52,12 @@ toPythonPipe() {
 toPython() {
     local command="$1"
     shift
-    arguments=""
+    arguments="$1"
+    shift
     for argument in "$@"
     do
-        arguments="${arguments}\t$(POL_EscapeTab "$argument")"
+        arguments="${arguments}	$(POL_EscapeTab "$argument")"
     done
-
-    local arguments="$2"
 
     echo "$POL_COOKIE	$command	$$	$arguments" | toPythonPipe
 }

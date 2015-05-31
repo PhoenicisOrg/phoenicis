@@ -61,7 +61,7 @@ class CommandParser(object):
 
             self.setupWindowManager.getWindow(setupWindowId).message(textToShow)
         
-        def POL_SetupWindow_free_presentatio(self):
+        def POL_SetupWindow_free_presentation(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
             
