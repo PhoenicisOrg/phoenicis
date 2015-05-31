@@ -107,6 +107,10 @@ public class Cabfile {
         archiveStream.skip(numberToSkip);
     }
 
+    private void jumpTo(long offset) throws IOException {
+        this.skipBytes(offset - readBytes);
+    }
+
     public static void main(String[] args) throws CabException, IOException {
         File tahoma32 = new File("/Users/tinou/Downloads/TAHOMA32.EXE");
         Cabfile cabfile = new Cabfile(tahoma32);
@@ -118,11 +122,12 @@ public class Cabfile {
         List <CFFolder> cfFolders = new ArrayList<>();
         for(int i = 0; i < header.getNumberOfFolders(); i++) {
             CFFolder cfFolder = cabfile.getFolder();
+            cfFolders.add(cfFolder);
             System.out.println(cfFolder);
         }
 
 
-        cabfile.skipBytes(header.coffFiles[0] - cabfile.readBytes);
+        cabfile.jumpTo(header.coffFiles[0]);
 
         List<CFFile> cfiles = new ArrayList<>();
         for(int i = 0; i < header.getNumberOfFiles(); i++) {
@@ -131,11 +136,14 @@ public class Cabfile {
             System.out.println(cfile);
         }
 
-        for(CFFile cfile: cfiles) {
-            System.out.println(cfile);
-            cabfile.skipBytes(cfile.getOffsetStartData() - cabfile.readBytes);
-            System.out.println(cabfile.readBytes);
+
+        for(CFFile cfFile: cfiles) {
+            CFFolder cfFolder = cfFolders.get((int) cfFile.getFolderIndex());
+            long dataIndex = cfFolder.getOffsetStartData() + cfFile.getOffsetStartDataInsideFolder();
+
+            cabfile.jumpTo(dataIndex);
             CFData cfData = cabfile.getData();
+
             System.out.println(cfData);
         }
     }

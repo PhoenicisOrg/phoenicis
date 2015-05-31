@@ -41,26 +41,31 @@ public class CFFolder extends AbstractCabStructure {
             structureSize += inputStream.read(cCFData);
             structureSize += inputStream.read(typeCompress);
 
-            structureSize += readVariableField(inputStream, abReserve);
+            //structureSize += readVariableField(inputStream, abReserve);
         } catch (IOException e) {
             throw new CabException("Unable to extract CFFolder", e);
         }
 
     }
 
+    public long getOffsetStartData() {
+        return decodeLittleEndian(coffCabStart);
+    }
+
+    public long getNumberOfDataStructures() {
+        return decodeLittleEndian(cCFData);
+    }
+
     public String toString() {
         return String.format(
-                "Offset: %s\n" +
-                "coffCabStart: %s\n" +
-                "cCFData: %s\n" +
-                "typeCompress: %s\n" +
-                "abReserve: %s\n",
-
-                offset,
-                Arrays.toString(coffCabStart),
+                "Size: %s\n" +
+                "Offset of the first data: %s\n" +
+                "Number of data structures: %s\n" +
+                "typeCompress: %s\n",
+                getStructureSize(),
+                getOffsetStartData(),
                 Arrays.toString(cCFData),
-                Arrays.toString(typeCompress),
-                Arrays.toString(abReserve)
+                Arrays.toString(typeCompress)
 
         );
     }

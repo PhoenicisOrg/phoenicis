@@ -28,7 +28,7 @@ public class CFData extends AbstractCabStructure {
     byte[] cbUncomp = new byte[2];
 
     byte[] abReserve = new byte[256];
-    byte[] ab = new byte[256];
+    byte[] ab;
 
     CFData(long offset) {
         super(offset);
@@ -42,6 +42,8 @@ public class CFData extends AbstractCabStructure {
             structureSize += inputStream.read(cbUncomp);
 
             structureSize += readVariableField(inputStream, abReserve);
+
+            ab = new byte[(int) this.decodeLittleEndian(cbData)];
             structureSize += readVariableField(inputStream, ab);
 
         } catch (IOException e) {
@@ -52,9 +54,7 @@ public class CFData extends AbstractCabStructure {
     public String toString() {
         return String.format(
                 "Offset: %s\n",
-
                 offset
-
         );
     }
 

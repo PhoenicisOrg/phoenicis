@@ -56,33 +56,30 @@ public class CFFile extends AbstractCabStructure {
         return decodeLittleEndian(cbFile);
     }
 
-    public long getOffsetStartData() {
+    public long getOffsetStartDataInsideFolder() {
         return decodeLittleEndian(uoffFolderStart);
     }
 
-    private long decodeLittleEndian(byte[] array) {
-        return (0xFF & array[3]) +
-                (0xFF & array[2]) * 16 +
-                (0xFF & array[1]) * 256 +
-                (0xFF & array[0]) * 4096;
-
+    public long getFolderIndex() {
+        return decodeLittleEndian(iFolder);
     }
 
     public String toString() {
         return String.format(
                 "Offset: %s\n" +
-                "Uncompressed size: %s\n" +
-                "Data offset: %s\n" +
-                "iFolder: %s\n" +
-                "szName: %s\n",
+                        "Uncompressed size: %s\n" +
+                        "Data offset: %s\n" +
+                        "Folder: %s\n" +
+                        "szName: %s\n",
 
                 offset,
                 this.getUncompressedSize(),
-                this.getOffsetStartData(),
-                Arrays.toString(iFolder),
+                this.getOffsetStartDataInsideFolder(),
+                this.getFolderIndex(),
                 new String(szName)
 
         );
     }
+
 
 }

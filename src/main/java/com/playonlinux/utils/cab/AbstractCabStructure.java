@@ -54,6 +54,19 @@ public abstract class AbstractCabStructure {
         return i;
     }
 
+    protected long decodeLittleEndian(byte[] array) {
+        if(array.length == 4) {
+            return (0xFF & array[0]) +
+                    (0xFF & array[1]) * 16 +
+                    (0xFF & array[2]) * 256 +
+                    (0xFF & array[3]) * 4096;
+        } else {
+            return (0xFF & array[0]) +
+                    (0xFF & array[1]) * 16;
+        }
+
+    }
+
     public int getStructureSize() {
         return structureSize;
     }
