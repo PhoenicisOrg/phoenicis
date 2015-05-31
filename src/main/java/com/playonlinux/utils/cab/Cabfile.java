@@ -18,11 +18,8 @@
 
 package com.playonlinux.utils.cab;
 
-import org.apache.commons.codec.binary.Hex;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Cabfile {
