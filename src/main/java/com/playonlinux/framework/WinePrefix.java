@@ -29,8 +29,10 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.ObservableDirectorySize;
 import com.playonlinux.wine.WineInstallation;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 
 import static com.playonlinux.domain.Localisation.translate;
@@ -52,6 +54,7 @@ public class WinePrefix {
     private final SetupWizard setupWizard;
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
+    private WineInstallation wineInstallation;
 
     public WinePrefix(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
@@ -75,7 +78,7 @@ public class WinePrefix {
         if(prefix == null) {
             throw new ScriptFailureException("Prefix must be selected!");
         }
-        WineInstallation wineInstallation;
+
         try {
             wineInstallation = new WineInstallation.Builder()
                     .withPath(playOnLinuxContext.makeWinePathFromVersionAndArchitecture(
@@ -116,12 +119,58 @@ public class WinePrefix {
             process.waitFor();
         } catch (InterruptedException e) {
             process.destroy();
-            try {
-                wineInstallation.killAllProcess(this.prefix);
-            } catch (IOException logged) {
-                logger.warn("Unable to kill wine processes", logged);
-            }
+            killall();
             throw new CancelException(e);
+        } finally {
+            observableDirectorySize.deleteObserver(progressStep);
+            backgroundServicesManager.unregister(observableDirectorySize);
+        }
+
+
+        return this;
+    }
+
+    public WinePrefix killall() {
+        try {
+            wineInstallation.killAllProcess(this.prefix);
+        } catch (IOException logged) {
+            logger.warn("Unable to kill wine processes", logged);
+        }
+
+        return this;
+    }
+
+    public WinePrefix waitEnd() {
+        try {
+            wineInstallation.waitAllProcesses(this.prefix);
+        } catch (IOException logged) {
+            logger.warn("Unable to wait for wine processes", logged);
+        }
+
+        return this;
+    }
+
+    public WinePrefix waitEndDirectoryProgress(File directory, long endSize) throws CancelException {
+        ObservableDirectorySize observableDirectorySize;
+        ProgressStep progressStep = this.setupWizard.progressBar(
+                String.format(
+                        translate("Please wait while the program is being installed..."), prefixName
+                )
+        );
+
+        try {
+            observableDirectorySize = new ObservableDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
+                    endSize);
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
+
+        observableDirectorySize.setCheckInterval(10);
+        observableDirectorySize.addObserver(progressStep);
+        backgroundServicesManager.register(observableDirectorySize);
+
+        try {
+            waitEnd();
         } finally {
             observableDirectorySize.deleteObserver(progressStep);
             backgroundServicesManager.unregister(observableDirectorySize);

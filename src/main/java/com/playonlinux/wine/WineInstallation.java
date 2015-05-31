@@ -96,20 +96,29 @@ public class WineInstallation {
     }
 
     public void killAllProcess(WinePrefix winePrefix) throws IOException {
+        runWineServerCommand(winePrefix, "-k");
+    }
 
+    public void waitAllProcesses(WinePrefix winePrefix) throws IOException {
+        runWineServerCommand(winePrefix, "-w");
+    }
+
+    private void runWineServerCommand(WinePrefix winePrefix, String parameter) throws IOException {
         Map<String, String> environment = new HashMap<>();
         this.addPathInfoToEnvironment(environment);
         environment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
 
         List<String> command = new ArrayList<>();
         command.add(this.fetchWineServerExecutablePath().getAbsolutePath());
-        command.add("-k");
+        command.add(parameter);
 
         new WineProcessBuilder()
                 .withCommand(command)
                 .withEnvironment(environment)
                 .build();
+
     }
+
 
     public static class Builder {
         private File path;
