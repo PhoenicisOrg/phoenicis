@@ -19,10 +19,10 @@
 package com.playonlinux.utils.cab;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public class CFFolder extends AbstractCabStructure {
     byte[] coffCabStart = new byte[4];
@@ -30,6 +30,7 @@ public class CFFolder extends AbstractCabStructure {
     byte[] typeCompress = new byte[2];
 
     byte[] abReserve = new byte[256];
+    private Logger logger = Logger.getLogger(AbstractCabStructure.class);
 
     CFFolder(long offset) {
         super(offset);
@@ -58,8 +59,21 @@ public class CFFolder extends AbstractCabStructure {
         return decodeLittleEndian(cCFData);
     }
 
-    public long getCompressType() {
-        return decodeLittleEndian(typeCompress) & 0x000F;
+    public CompressionType getCompressType() throws CabException {
+        Long compressType = decodeLittleEndian(typeCompress) & 0x000F;
+        if(compressType == 0) {
+            return CompressionType.NONE;
+        }
+        if(compressType == 1) {
+            return CompressionType.MSZIP;
+        }
+        if(compressType == 2) {
+            return CompressionType.QUANTUM;
+        }
+        if(compressType == 3) {
+            return CompressionType.LZX;
+        }
+        throw new CabException("Unsupported compression type");
     }
 
     public void dump() {
@@ -71,6 +85,14 @@ public class CFFolder extends AbstractCabStructure {
     }
 
     public String toString() {
+        String compressType;
+        try {
+            compressType = getCompressType().name();
+        } catch (CabException e) {
+            logger.warn(e);
+            compressType = "Unknown";
+        }
+
         return String.format(
                 "Offset: %s\n" +
                 "Size: %s\n" +
@@ -81,8 +103,7 @@ public class CFFolder extends AbstractCabStructure {
                 getStructureSize(),
                 getOffsetStartData(),
                 getNumberOfDataStructures(),
-                getCompressType()
-
+                compressType
         );
     }
 

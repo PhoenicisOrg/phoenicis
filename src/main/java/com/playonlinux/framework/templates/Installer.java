@@ -20,20 +20,18 @@ package com.playonlinux.framework.templates;
 
 import com.playonlinux.domain.ScriptTemplate;
 import com.playonlinux.framework.SetupWizard;
+import com.playonlinux.python.PythonAttribute;
 
 public abstract class Installer implements ScriptTemplate {
     /* Template parameters */
+    @PythonAttribute
     private String logContext;
+
+    @PythonAttribute
     private String title;
 
     /* Template attributes */
-    private String setupWizardTitle;
     protected SetupWizard setupWizard;
-
-    /* Private methods */
-    public void _setSetupWizardTitle(String setupWizardTitle) {
-        this.setupWizardTitle = setupWizardTitle;
-    }
 
     public void _defaultRollback() {
         if(this.setupWizard != null) {
@@ -51,7 +49,7 @@ public abstract class Installer implements ScriptTemplate {
     /* Methods that can be called */
     protected SetupWizard getSetupWizard() {
         if(this.setupWizard == null) {
-            setupWizard = new SetupWizard(setupWizardTitle);
+            setupWizard = new SetupWizard(title);
         }
         return setupWizard;
     }

@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 public class CFData extends AbstractCabStructure {
+    private final CompressionType compressionType;
     byte[] csum = new byte[4];
     byte[] cbData = new byte[2];
     byte[] cbUncomp = new byte[2];
@@ -30,8 +31,9 @@ public class CFData extends AbstractCabStructure {
     byte[] abReserve = new byte[256];
     byte[] ab;
 
-    CFData(long offset) {
+    CFData(long offset, CompressionType compressionType) {
         super(offset);
+        this.compressionType = compressionType;
     }
 
     @Override
@@ -44,6 +46,7 @@ public class CFData extends AbstractCabStructure {
             //structureSize += readVariableField(inputStream, abReserve);
 
             ab = new byte[(int) getCompressedSize()];
+
             structureSize += inputStream.read(ab);
 
 

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPythonModule<T> {
-    private final Class<T> type;
+    protected final Class<T> type;
     protected final Interpreter pythonInterpreter;
 
     public AbstractPythonModule(Interpreter pythonInterpreter, Class<T> type) {
@@ -51,6 +51,7 @@ public abstract class AbstractPythonModule<T> {
         }
         return pyClasses;
     }
+
 
 
 }
