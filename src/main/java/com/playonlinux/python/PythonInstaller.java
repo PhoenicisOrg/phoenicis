@@ -82,9 +82,12 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     public void exec() throws ScriptFailureException {
         if(this.hasMain()) {
             String logContext = this.extractLogContext();
+            LogStream logStream = null;
+
             if(logContext != null) {
                 try {
-                    pythonInterpreter.setOut(new LogStream(logContext));
+                    logStream = new LogStream(logContext);
+                    pythonInterpreter.setOut(logStream);
                 } catch (IOException e) {
                     throw new ScriptFailureException(e);
                 }
@@ -104,6 +107,14 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                     throw rollbackException;
                 }
                 throw e;
+            } finally {
+                if(logStream != null) {
+                    try {
+                        logStream.flush();
+                    } catch (IOException e) {
+                        logger.warn("Unable to flush script log stream", e);
+                    }
+                }
             }
         }
     }

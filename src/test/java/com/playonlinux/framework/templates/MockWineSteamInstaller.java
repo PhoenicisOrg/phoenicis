@@ -18,37 +18,26 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.python.PythonAttribute;
 
+import java.util.List;
 
-public abstract class Installer extends AbstractTemplate {
+public abstract class MockWineSteamInstaller extends Installer {
     @PythonAttribute
-    private String title;
+    String prefix;
 
-    /* Template attributes */
-    protected SetupWizard setupWizard;
+    @PythonAttribute
+    String wineversion;
 
-    public void _defaultRollback() {
-        if(this.setupWizard != null) {
-            setupWizard.close();
-        }
+    @PythonAttribute
+    int steamId;
+
+    @PythonAttribute
+    List<String> packages;
+
+    public void main() {
+        print(String.format("Implementation has to be done, but we have access to prefix (%s), " +
+                "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have " +
+                "a list: %s", prefix, wineversion, steamId, packages, packages.get(0)));
     }
-
-    /* Methods that can be overwritten */
-    public abstract void main();
-
-    public void rollback() {
-        this._defaultRollback();
-    }
-
-    /* Methods that can be called */
-    protected SetupWizard getSetupWizard() {
-        if(this.setupWizard == null) {
-            setupWizard = new SetupWizard(title);
-        }
-        return setupWizard;
-    }
-
-
 }

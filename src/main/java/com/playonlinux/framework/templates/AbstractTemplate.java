@@ -18,37 +18,32 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.framework.SetupWizard;
+import com.playonlinux.common.log.LogStream;
+import com.playonlinux.domain.ScriptTemplate;
 import com.playonlinux.python.PythonAttribute;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
-public abstract class Installer extends AbstractTemplate {
+public abstract class AbstractTemplate implements ScriptTemplate {
     @PythonAttribute
-    private String title;
+    private String logContext;
 
-    /* Template attributes */
-    protected SetupWizard setupWizard;
-
-    public void _defaultRollback() {
-        if(this.setupWizard != null) {
-            setupWizard.close();
+    protected void print(String message) {
+        OutputStream outputstream;
+        if(logContext != null) {
+            try {
+                outputstream = new LogStream(logContext);
+            } catch (IOException e) {
+                outputstream = System.out;
+            }
+        } else {
+            outputstream = System.out;
         }
+
+        PrintWriter printWriter = new PrintWriter(outputstream);
+        printWriter.println(message);
+        printWriter.flush();
     }
-
-    /* Methods that can be overwritten */
-    public abstract void main();
-
-    public void rollback() {
-        this._defaultRollback();
-    }
-
-    /* Methods that can be called */
-    protected SetupWizard getSetupWizard() {
-        if(this.setupWizard == null) {
-            setupWizard = new SetupWizard(title);
-        }
-        return setupWizard;
-    }
-
-
 }
