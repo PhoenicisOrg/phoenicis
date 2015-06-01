@@ -18,6 +18,8 @@
 
 package com.playonlinux.utils.cab;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,8 +96,8 @@ public class Cabfile {
         return cfFile;
     }
 
-    public CFData getData() throws CabException {
-        CFData cfData = new CFData(readBytes);
+    public CFData getData(CompressionType compressionType) throws CabException {
+        CFData cfData = new CFData(readBytes, compressionType);
         cfData.populate(archiveStream);
         readBytes += cfData.getStructureSize();
         return cfData;
@@ -134,14 +136,14 @@ public class Cabfile {
             System.out.println(cfile);
         }
 
-        CFData cfData2 = cabfile.getData();
-        System.out.println(cfData2);
-
-        CFData cfData = cabfile.getData();
+        CFData cfData = cabfile.getData(CompressionType.NONE);
         System.out.println(cfData);
+        System.out.println(Hex.encodeHexString(cfData.ab));
 
-        CFData cfData3 = cabfile.getData();
-        System.out.println(cfData3);
+        CFData cfData2 = cabfile.getData(CompressionType.NONE);
+        System.out.println(cfData2);
+        System.out.println(Hex.encodeHexString(cfData2.ab));
+
 
         /*
         for(CFFile cfFile: cfiles) {

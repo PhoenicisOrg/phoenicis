@@ -22,8 +22,11 @@ import com.playonlinux.common.log.LogStream;
 import com.playonlinux.framework.ScriptFailureException;
 import org.apache.log4j.Logger;
 import org.python.core.*;
+import org.reflections.ReflectionUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Set;
 
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String MAIN_METHOD_NAME = "main";
@@ -57,26 +60,40 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public String extractLogContext() throws ScriptFailureException {
-        return extractStringAttribute(DEFINE_LOGCONTEXT_NAME);
+        return (String) extractAttribute(DEFINE_LOGCONTEXT_NAME);
+    }
+
+    private void injectAllPythonAttributes() throws ScriptFailureException {
+        Class <?> parentClass = ((PyType) ((PyType) getMainClass().getBase()).getBase()).getProxyType();
+
+        Set<Field> fields = ReflectionUtils.getAllFields(parentClass,
+                ReflectionUtils.withAnnotation(PythonAttribute.class));
+
+        for(Field field: fields) {
+            field.setAccessible(true);
+            try {
+                field.set(getMainInstance().__tojava__(type), this.extractAttribute(field.getName()));
+            } catch (IllegalAccessException e) {
+                throw new ScriptFailureException(e);
+            }
+        }
     }
 
     public void exec() throws ScriptFailureException {
         if(this.hasMain()) {
             String logContext = this.extractLogContext();
+            LogStream logStream = null;
+
             if(logContext != null) {
                 try {
-                    pythonInterpreter.setOut(new LogStream(logContext));
+                    logStream = new LogStream(logContext);
+                    pythonInterpreter.setOut(logStream);
                 } catch (IOException e) {
                     throw new ScriptFailureException(e);
                 }
             }
 
-            String scriptTitle = this.extractStringAttribute("title");
-            if(scriptTitle == null) {
-                throw new ScriptFailureException("The title is missing on this script");
-            } else {
-                getMainInstance().invoke("_setSetupWizardTitle", new PyString(scriptTitle));
-            }
+            this.injectAllPythonAttributes();
 
             try {
                 this.runMain(getMainInstance());
@@ -90,13 +107,21 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                     throw rollbackException;
                 }
                 throw e;
+            } finally {
+                if(logStream != null) {
+                    try {
+                        logStream.flush();
+                    } catch (IOException e) {
+                        logger.warn("Unable to flush script log stream", e);
+                    }
+                }
             }
         }
     }
 
-    
 
-    public String extractStringAttribute(String attributeToExtract) throws ScriptFailureException {
+
+    public Object extractAttribute(String attributeToExtract) throws ScriptFailureException {
         PyObject pyLogAttribute;
         try {
             pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);
@@ -104,19 +129,15 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
             logger.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
             return null;
         }
-        if (pyLogAttribute instanceof PyString) {
-            return ((PyString) pyLogAttribute).getString();
-        } else {
-            PyObject pyLogContext = getMainInstance().invoke(attributeToExtract);
-            if (pyLogContext != null && !(pyLogContext instanceof PyNone)) {
-                if (!(pyLogContext instanceof PyString)) {
-                    throw new ScriptFailureException(String.format("%s must return a string.", attributeToExtract));
-                } else {
-                    return ((PyString) pyLogContext).getString();
-                }
+        if (pyLogAttribute instanceof PyMethod) {
+            PyObject pyReturn = getMainInstance().invoke(attributeToExtract);
+            if (pyReturn != null && !(pyReturn instanceof PyNone)) {
+                return pyReturn.__tojava__(Object.class);
             } else {
                 return null;
             }
+        } else {
+            return pyLogAttribute.__tojava__(Object.class);
         }
     }
 }

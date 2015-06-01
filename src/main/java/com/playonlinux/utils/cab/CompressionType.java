@@ -16,12 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.utils.cab;
 
-public interface ScriptTemplate {
-    void validate();
-
-    void main();
-
-    void rollback();
+public enum CompressionType {
+    NONE,
+    MSZIP,
+    QUANTUM,
+    LZX
 }

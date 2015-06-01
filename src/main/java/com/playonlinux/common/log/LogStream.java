@@ -43,6 +43,12 @@ public class LogStream extends OutputStream {
     }
 
     @Override
+    public void flush() throws IOException {
+        this.logOutputStream.flush();
+        super.flush();
+    }
+
+    @Override
     public void write(int b) throws IOException {
         logOutputStream.write(b);
         System.out.write(b);

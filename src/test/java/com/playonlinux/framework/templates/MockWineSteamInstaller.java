@@ -16,12 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.framework.templates;
 
-public interface ScriptTemplate {
-    void validate();
+import com.playonlinux.python.PythonAttribute;
 
-    void main();
+import java.util.List;
 
-    void rollback();
+public abstract class MockWineSteamInstaller extends Installer {
+    @PythonAttribute
+    String prefix;
+
+    @PythonAttribute
+    String wineversion;
+
+    @PythonAttribute
+    int steamId;
+
+    @PythonAttribute
+    List<String> packages;
+
+    public void main() {
+        print(String.format("Implementation has to be done, but we have access to prefix (%s), " +
+                "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have " +
+                "a list: %s", prefix, wineversion, steamId, packages, packages.get(0)));
+    }
 }

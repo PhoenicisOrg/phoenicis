@@ -16,12 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux;
 
-public interface ScriptTemplate {
-    void validate();
+import com.playonlinux.app.MockPlayOnLinuxContext;
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.Bean;
 
-    void main();
+import java.io.IOException;
 
-    void rollback();
+public class TestContextConfig extends AbstractConfigFile {
+    @Bean
+    protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
+        return new MockPlayOnLinuxContext();
+    }
+
+    @Override
+    protected String definePackage() {
+        return "com.playonlinux";
+    }
 }

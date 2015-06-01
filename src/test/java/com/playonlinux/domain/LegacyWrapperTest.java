@@ -18,6 +18,7 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.TestContextConfig;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.injection.AbstractConfigFile;
@@ -33,17 +34,6 @@ import static org.junit.Assert.*;
 
 public class LegacyWrapperTest {
 
-    class TestContextConfig extends AbstractConfigFile {
-        @Bean
-        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
-            return new MockPlayOnLinuxContext();
-        }
-
-        @Override
-        protected String definePackage() {
-            return "com.playonlinux";
-        }
-    }
 
     @Before
     public void setUp() throws InjectionException {
