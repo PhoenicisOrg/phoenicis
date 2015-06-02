@@ -18,17 +18,13 @@
 
 package com.playonlinux.domain;
 
-import com.playonlinux.TestContextConfig;
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.MockPlayOnLinuxContext;
+import com.playonlinux.MockContextConfig;
 import com.playonlinux.injection.AbstractConfigFile;
-import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +33,7 @@ public class LegacyWrapperTest {
 
     @Before
     public void setUp() throws InjectionException {
-        AbstractConfigFile testConfigFile = new TestContextConfig();
+        AbstractConfigFile testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }

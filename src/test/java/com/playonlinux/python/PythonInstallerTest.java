@@ -18,7 +18,7 @@
 
 package com.playonlinux.python;
 
-import com.playonlinux.TestContextConfig;
+import com.playonlinux.MockContextConfig;
 import com.playonlinux.domain.ScriptTemplate;
 import com.playonlinux.framework.ScriptFailureException;
 
@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
 public class PythonInstallerTest {
     @BeforeClass
     public static void setUp() throws InjectionException {
-        AbstractConfigFile testConfigFile = new TestContextConfig();
+        AbstractConfigFile testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }
