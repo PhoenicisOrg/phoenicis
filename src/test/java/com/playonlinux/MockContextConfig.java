@@ -26,7 +26,7 @@ import com.playonlinux.injection.Bean;
 
 import java.io.IOException;
 
-public class TestContextConfig extends AbstractConfigFile {
+public class MockContextConfig extends AbstractConfigFile {
     @Bean
     protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
         return new MockPlayOnLinuxContext();
