@@ -18,6 +18,7 @@
 
 package com.playonlinux.common.dto;
 
+import com.playonlinux.common.dto.ui.ShortcutDTO;
 import org.junit.Before;
 import org.junit.Test;
 

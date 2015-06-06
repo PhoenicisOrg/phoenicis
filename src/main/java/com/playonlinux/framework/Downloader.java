@@ -91,6 +91,7 @@ public class Downloader {
         File temporaryFile;
         try {
             temporaryFile = File.createTempFile(this.findFileNameFromURL(remoteFile), "");
+            temporaryFile.deleteOnExit();
         } catch (IOException e) {
             throw new ScriptFailureException("Unable to create temporary log file", e);
         }

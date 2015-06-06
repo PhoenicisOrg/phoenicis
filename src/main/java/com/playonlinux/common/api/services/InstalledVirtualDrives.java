@@ -18,7 +18,7 @@
 
 package com.playonlinux.common.api.services;
 
-import com.playonlinux.common.dto.VirtualDriveDTO;
+import com.playonlinux.common.dto.ui.VirtualDriveDTO;
 
 import java.util.Observer;
 

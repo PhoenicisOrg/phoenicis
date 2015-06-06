@@ -18,82 +18,46 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
+import com.playonlinux.ui.impl.javafx.common.SelfManagedWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.center.ViewCenter;
+import com.playonlinux.ui.impl.javafx.mainwindow.myapps.ViewMyApps;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import org.apache.log4j.Logger;
+import javafx.scene.layout.VBox;
 
 import java.util.Optional;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class MainWindow extends Stage implements PlayOnLinuxWindow {
-    private MainWindowEventHandler mainEventHandler = new MainWindowEventHandler();
+public class MainWindow extends SelfManagedWindow {
 
-    private Logger logger = Logger.getLogger(this.getClass());
-
-    private ApplicationListWidget applicationListWidget;
-    private ToolBar toolBar;
-    private StatusBar statusBar;
+    private MainWindowHeader headerPane;
+    private ViewMyApps myApps;
+    private ViewCenter center;
+    private VBox rootPane;
 
     public void setUpWindow() {
-        MenuBar menuBar =  new MenuBar(this);
+        rootPane = new VBox();
 
-        BorderPane pane = new BorderPane();
-        Scene scene = new PlayOnLinuxScene(pane, 780, 400);
+        myApps = new ViewMyApps(this);
+        center = new ViewCenter(this);
 
-        VBox topContainer = new VBox();
-        toolBar = new ToolBar(this);
+        Scene scene = new PlayOnLinuxScene(rootPane);
+        headerPane = new MainWindowHeader();
 
-        topContainer.getChildren().add(menuBar);
-        topContainer.getChildren().add(toolBar);
-        pane.setTop(topContainer);
-
-        statusBar = new StatusBar(this, scene);
-        pane.setBottom(statusBar);
-
-
-
-        GridPane mainContent = new GridPane();
-
-
-        ColumnConstraints columnConstraint = new ColumnConstraints();
-        columnConstraint.setPercentWidth(30);
-
-        ColumnConstraints columnConstraint2 = new ColumnConstraints();
-        columnConstraint2.setPercentWidth(70);
-
-        RowConstraints rowConstraint = new RowConstraints();
-        rowConstraint.setPercentHeight(100);
-
-        mainContent.getColumnConstraints().add(columnConstraint);
-        mainContent.getColumnConstraints().add(columnConstraint2);
-
-        mainContent.getRowConstraints().add(rowConstraint);
-
-        mainContent.setVgap(2.0);
-        mainContent.add(new MenuLeft(), 0, 0);
-
-
-        this.applicationListWidget = new ApplicationListWidget(this);
-
-
-        mainContent.add(applicationListWidget, 1, 0);
-        pane.setCenter(mainContent);
-
+        goTo(myApps);
 
         this.setScene(scene);
         this.setTitle(translate("${application.name}"));
         this.show();
-        
-        
+
+
+
         this.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle(translate("${application.name}"));
@@ -105,34 +69,24 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
                 event.consume();
             }
         });
+
     }
 
     public void setUpEvents() throws PlayOnLinuxException {
-        InstalledApplications installedApplications = mainEventHandler.getInstalledApplications();
-        installedApplications.addObserver(applicationListWidget);
+        this.setMouseEvents(headerPane);
 
-        toolBar.setUpEvents();
+        this.headerPane.setMyAppsEvent(evt -> goTo(myApps));
+        this.headerPane.setCenterEvent(evt -> goTo(center));
 
-        try {
-            statusBar.setUpEvents();
-        } catch (PlayOnLinuxException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(translate("Error while trying to update installer list."));
-            alert.setContentText(String.format("The error was: %s", e));
-            alert.show();
-            logger.error(e);
-        }
+        myApps.setUpEvents();
+        center.setUpEvents();
+    }
+
+    private void goTo(Node view) {
+        rootPane.getChildren().clear();
+        rootPane.getChildren().addAll(headerPane, view);
     }
 
 
-
-    protected MainWindowEventHandler getMainEventHandler() {
-        return mainEventHandler;
-    }
-
-
-    public String getSelectedApplication() {
-        return null;
-    }
 }
 

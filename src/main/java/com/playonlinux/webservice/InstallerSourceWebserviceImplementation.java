@@ -22,9 +22,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.common.api.services.BackgroundService;
 import com.playonlinux.common.api.webservice.InstallerSource;
-import com.playonlinux.common.dto.CategoryDTO;
-import com.playonlinux.common.dto.DownloadEnvelopeDTO;
-import com.playonlinux.common.dto.ProgressStateDTO;
+import com.playonlinux.common.dto.web.CategoryDTO;
+import com.playonlinux.common.dto.web.DownloadEnvelopeDTO;
+import com.playonlinux.common.dto.web.ProgressStateDTO;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

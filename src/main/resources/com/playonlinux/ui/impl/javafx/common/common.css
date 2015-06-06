@@ -28,16 +28,96 @@
     -fx-background-color:#FFFFFF;
 }
 
-#logo {
+#logoText {
     -fx-font-family: "Maven Pro";
-    -fx-font-size: 20px;
+    -fx-font-size: 1.8em;
+    -fx-translate-x: 1.2em;
+    -fx-translate-y: -0.1em;
+    -fx-fill: white;
 }
+
 .thin {
     /* -fx-font-family: Roboto Thin; */
     -fx-font-weight: 100;
 }
 
 .smallProgressIndicator .percentage {
-    -fx-fill: null;
     -fx-padding: -10px;
 }
+
+#headerPane {
+    -fx-background-color: linear-gradient(#428bca, #116395);
+    -fx-pref-width: 100%;
+    -fx-pref-height: 3em;
+    -fx-padding: 0.5em;
+
+}
+
+.menuEntry {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 1.6em;
+    -fx-translate-y: 0.2em;
+    -fx-fill: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+.mainWindowScene {
+    -fx-min-height: 35.2em;
+    -fx-fit-to-height: true;
+}
+
+.leftPane {
+    -fx-background-color: #F0F0F0;
+    -fx-min-height: 40em;
+    -fx-pref-width: 15em;
+    -fx-padding: 1em;
+    -fx-spacing: 0.4em;
+}
+
+#menuPane {
+    -fx-spacing: 4em;
+}
+
+.rightPane {
+    -fx-max-height: 40em;
+    -fx-pref-width: 55em;
+    -fx-border-width: 0px;
+    -fx-border-style: none;
+    -fx-focus-traversable: false;
+    -fx-background-color: transparent;
+
+}
+.rightPane > .viewport {
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0px;
+}
+.rightPane .content {
+    -fx-pref-width: 53em;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0px;
+    -fx-border-style: none;
+}
+.text-field {
+    -fx-background-radius: 1em;
+}
+
+.leftBarTitle {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 1.1em;
+    -fx-alignment: baseline-left;
+    -fx-translate-y: -0.1em;
+}
+
+.leftButton {
+    -fx-cursor: hand;
+}
+.leftButton .label {
+    -fx-font-family: "Roboto Light";
+    -fx-translate-y: 0.4em;
+    -fx-translate-x: 0.5em;
+}
+
+.leftSpacer {
+    -fx-pref-height: 0.8em;
+}
+

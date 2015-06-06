@@ -21,7 +21,7 @@ package com.playonlinux.common.services;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.services.InstalledVirtualDrives;
-import com.playonlinux.common.dto.VirtualDriveDTO;
+import com.playonlinux.common.dto.ui.VirtualDriveDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Inject;

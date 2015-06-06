@@ -16,19 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow;
+package com.playonlinux.ui.impl.javafx.mainwindow.myapps;
 
 import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.common.api.services.InstalledApplications;
-import com.playonlinux.common.api.services.InstalledVirtualDrives;
-import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.ui.impl.javafx.configurewindow.ConfigureWindow;
-import com.playonlinux.ui.impl.javafx.installwindow.InstallWindow;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
@@ -39,7 +34,7 @@ import java.net.MalformedURLException;
 import static com.playonlinux.domain.Localisation.translate;
 
 @Scan
-class MainWindowEventHandler implements UIEventHandler {
+class EventHandlerMyApps implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 
@@ -49,25 +44,8 @@ class MainWindowEventHandler implements UIEventHandler {
         return mainEventHandler.getInstalledApplications();
     }
 
-    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException {
-        return mainEventHandler.getInstalledVirtualDrives();
-    }
-
     public void runLocalScript(File scriptToRun) throws IOException {
         mainEventHandler.runLocalScript(scriptToRun);
-    }
-
-    public PlayOnLinuxWindow openConfigureWindow(PlayOnLinuxWindow parent, String selectedApplication)
-            throws PlayOnLinuxException {
-        return ConfigureWindow.getInstance(parent);
-    }
-
-    public PlayOnLinuxWindow openInstallWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
-        return InstallWindow.getInstance(parent);
-    }
-
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException {
-        return mainEventHandler.getRemoteAvailableInstallers();
     }
 
     @Override
@@ -90,4 +68,6 @@ class MainWindowEventHandler implements UIEventHandler {
             alert.show();
         }
     }
+
+
 }

@@ -16,19 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.common;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 
-public class PlayOnLinuxScene extends Scene {
-    public PlayOnLinuxScene(Parent parent, int width, int height) {
-        super(parent, width, height);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+public class RightScrollContent extends ScrollPane {
+    public RightScrollContent(Node content) {
+        super(content);
     }
 
-    public PlayOnLinuxScene(Parent parent) {
-        super(parent);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+    public void requestFocus() {
+        // Disable border focus
     }
 }

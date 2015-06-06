@@ -16,24 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.installwindow;
+package com.playonlinux.ui.impl.javafx.mainwindow.center;
 
-import com.playonlinux.common.Progressable;
 import com.playonlinux.common.api.services.EventHandler;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
-import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
 
 
 @Scan
-public class InstallWindowEventHandler implements UIEventHandler {
-    private final InstallWindow installWindow;
+public class EventHandlerCenter implements UIEventHandler {
 
-    InstallWindowEventHandler(InstallWindow installWindow) {
-        this.installWindow = installWindow;
-    }
 
     @Inject
     static EventHandler mainEventHandler;
@@ -47,34 +41,10 @@ public class InstallWindowEventHandler implements UIEventHandler {
         return mainEventHandler.getRemoteAvailableInstallers();
     }
 
-    public void selectCategory(String categoryName) {
-        installWindow.getAvailableInstallerListWidget().setCategoryName(categoryName);
-    }
-
-    public void refreshAvailableInstallerLisWidget() {
-        installWindow.getAvailableInstallerListWidget().update();
-    }
-
-    public String getInstallerDescription(String scriptName) throws PlayOnLinuxException {
-        return getRemoteAvailableInstallers().getApplicationByName(scriptName).getDescription();
-    }
-
-
     public void updateAvailableInstallers() {
         getRemoteAvailableInstallers().refresh();
     }
 
-    public void clearSearch() {
-        installWindow.clearSearch();
-    }
 
-    /* Install feature */
-    public Progressable getRemoteInstallerObservable() {
-        return getMainEventHandler().getRemoteInstallerDownloaderDownloader();
-    }
-
-    public void installProgram(String selectedItemLabel) {
-        getMainEventHandler().installProgram(selectedItemLabel);
-    }
 
 }

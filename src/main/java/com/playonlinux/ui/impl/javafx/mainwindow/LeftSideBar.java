@@ -18,28 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
-import static com.playonlinux.domain.Localisation.translate;
+import javafx.scene.layout.VBox;
 
-public class PlayOnLinuxLogo extends HBox {
-    PlayOnLinuxLogo() {
+public class LeftSideBar extends VBox {
+    public LeftSideBar() {
         super();
-        Image logoImage = new Image(this.getClass().getResourceAsStream("/playonlinux.png"));
-        ImageView logoView = new ImageView(logoImage);
-        logoView.setFitWidth(24);
-        logoView.setFitHeight(24);
-
-        Text text = new Text(translate("${application.name}").toLowerCase());
-        text.setId("logo");
-
-        this.getChildren().add(logoView);
-        this.getChildren().add(text);
-        this.setPadding(new Insets(0, 10, 0, 0));
-        this.setSpacing(5.);
+        this.getStyleClass().add("leftPane");
     }
 }

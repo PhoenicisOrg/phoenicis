@@ -16,45 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.common.dto.ui;
 
 import com.playonlinux.common.api.dto.AbstractDTO;
+import com.playonlinux.common.comparator.Nameable;
 
-import java.net.URL;
+public class CenterCategoryDTO implements AbstractDTO, Nameable {
 
-public class ShortcutDTO implements AbstractDTO {
-    private final URL icon;
     private final String name;
 
-    public ShortcutDTO(Builder builder) {
-        this.name = builder.name;
-        this.icon = builder.icon;
+    public CenterCategoryDTO(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public URL getIcon() {
-        return icon;
-    }
-
-    public static class Builder {
-        private String name;
-        private URL icon;
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withIcon(URL icon) {
-            this.icon = icon;
-            return this;
-        }
-
-        public ShortcutDTO build() {
-            return new ShortcutDTO(this);
-        }
+    public String getIconName() {
+        return "center/applications-" + name.toLowerCase() + ".png";
     }
 }

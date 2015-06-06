@@ -21,11 +21,12 @@ package com.playonlinux.common.services;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.comparator.AlphabeticalOrderComparator;
-import com.playonlinux.common.dto.ApplicationDTO;
-import com.playonlinux.common.dto.CategoryDTO;
-import com.playonlinux.common.dto.DownloadEnvelopeDTO;
-import com.playonlinux.common.dto.ProgressStateDTO;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.common.dto.ui.CenterCategoryDTO;
+import com.playonlinux.common.dto.ui.CenterItemDTO;
+import com.playonlinux.common.dto.web.ApplicationDTO;
+import com.playonlinux.common.dto.web.CategoryDTO;
+import com.playonlinux.common.dto.web.DownloadEnvelopeDTO;
+import com.playonlinux.common.dto.web.ProgressStateDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
@@ -33,6 +34,8 @@ import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+
+import static com.playonlinux.common.dto.ui.CenterItemDTO.Builder;
 
 @Scan
 public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
@@ -43,8 +46,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
-    private List<CategoryDTO> categoriesDTO;
-    private int numberOfCategories;
+    private List<CategoryDTO> categoriesDTO = new ArrayList<>();
     private DownloadEnvelopeDTO<List<CategoryDTO>> downloadEnvelopeDto;
     private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
     private final URL webserviceUrl;
@@ -55,8 +57,8 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     @Override
-    public Iterator<CategoryDTO> iterator() {
-        return new ArrayList<>(categoriesDTO).iterator();
+    public Iterator<CenterItemDTO> iterator() {
+        return getAllCenterItems().iterator();
     }
 
     @Override
@@ -75,7 +77,6 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
                         downloadEnvelopeDto.getEnvelopeContent()
                 );
 
-                numberOfCategories = availableCategories.size();
                 categoriesDTO = availableCategories;
             }
         } finally {
@@ -85,10 +86,6 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     }
 
-    @Override
-    public int getNumberOfCategories() {
-        return numberOfCategories;
-    }
 
     @Override
     public boolean isUpdating() {
@@ -101,46 +98,39 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     @Override
-    public Iterable<ApplicationDTO> getAllScripts() {
-        return getAllScripts(null);
-    }
+    public List<CenterItemDTO> getAllCenterItems() {
+        List<CenterItemDTO> centerItemDTOs = new ArrayList<>();
 
-    @Override
-    public Iterable<ApplicationDTO> getAllScripts(String filterText) {
-        List<ApplicationDTO> applicationDTOs = new ArrayList<>();
-        for(CategoryDTO categoryDTO: new ArrayList<>(categoriesDTO)) {
-            for(ApplicationDTO applicationDTO: new ArrayList<>(categoryDTO.getApplications())) {
-                if(filterText == null || applicationDTO.getName().contains(filterText)) {
-                    applicationDTOs.add(applicationDTO);
-                }
-            }
-        }
-
-        Collections.sort(applicationDTOs, new AlphabeticalOrderComparator<ApplicationDTO>());
-
-        return applicationDTOs::iterator;
-    }
-
-    @Override
-    public Iterable<ApplicationDTO> getAllApplicationsInCategory(String categoryName) throws PlayOnLinuxException {
         for(CategoryDTO categoryDTO: categoriesDTO) {
-            if(categoryName.equals(categoryDTO.getName())) {
-                return getAllScriptsInCategory(categoryDTO);
+
+            for(ApplicationDTO applicationDTO: new ArrayList<>(categoryDTO.getApplications())) {
+                CenterItemDTO centerItemDTO = new Builder() //
+                        .withName(applicationDTO.getName()) //
+                        .withCategoryName(categoryDTO.getName()) //
+                        .withDescription(applicationDTO.getDescription()) //
+                        .withRequiresNoCd(false) // FIXME
+                        .withTesting(false) //
+                        .withCommercial(false) //
+                        .build();
+                centerItemDTOs.add(centerItemDTO);
             }
         }
-        throw new PlayOnLinuxException(String.format("The category %s does not exist!", categoryName));
+        Collections.sort(centerItemDTOs, new AlphabeticalOrderComparator<>());
+
+        return centerItemDTOs;
     }
 
     @Override
-    public ApplicationDTO getApplicationByName(String scriptName) throws PlayOnLinuxException {
-        for(ApplicationDTO applicationDTO: this.getAllScripts()) {
-            if(scriptName.equals(applicationDTO.getName())) {
-                return applicationDTO;
+    public List<CenterCategoryDTO> getAllCategories() {
+        List <CenterCategoryDTO> categoryDTOs = new ArrayList<>();
+        for(CategoryDTO categoryDTO: categoriesDTO) {
+            if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                categoryDTOs.add(new CenterCategoryDTO(categoryDTO.getName()));
             }
         }
-
-        throw new PlayOnLinuxException(String.format("The script %s does not exist!", scriptName));
+        return categoryDTOs;
     }
+
 
     @Override
     public void refresh() {
@@ -153,14 +143,5 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
     }
 
-    private Iterable<ApplicationDTO> getAllScriptsInCategory(CategoryDTO categoryDTO) {
-        List<ApplicationDTO> applicationDTOs = new ArrayList<>();
-        for(ApplicationDTO applicationDTO: new ArrayList<>(categoryDTO.getApplications())) {
-            applicationDTOs.add(applicationDTO);
-        }
 
-        Collections.sort(applicationDTOs, new AlphabeticalOrderComparator<>());
-
-        return applicationDTOs::iterator;
-    }
 }

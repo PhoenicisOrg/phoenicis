@@ -92,7 +92,7 @@ public class SimpleIconListWidget
                 });
     }
 
-    protected void clear() {
+    public void clear() {
         rootItem.getChildren().clear();
     }
 

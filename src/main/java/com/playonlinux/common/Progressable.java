@@ -18,7 +18,7 @@
 
 package com.playonlinux.common;
 
-import com.playonlinux.common.dto.ProgressStateDTO;
+import com.playonlinux.common.dto.web.ProgressStateDTO;
 
 import java.util.Observable;
 

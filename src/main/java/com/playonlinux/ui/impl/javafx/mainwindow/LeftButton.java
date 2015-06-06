@@ -16,19 +16,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.common;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 
-public class PlayOnLinuxScene extends Scene {
-    public PlayOnLinuxScene(Parent parent, int width, int height) {
-        super(parent, width, height);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+
+public class LeftButton extends HBox {
+    private final String name;
+
+    public LeftButton(String iconName, String name) {
+        super();
+        this.name = name;
+        this.getStyleClass().add("leftButton");
+
+        ImageView iconView = new ImageView(new Image(this.getClass().getResourceAsStream(iconName)));
+        iconView.setFitWidth(24);
+        iconView.setFitHeight(24);
+
+        Text label = new Text(name);
+        label.getStyleClass().add("label");
+        this.getChildren().addAll(iconView, label);
     }
 
-    public PlayOnLinuxScene(Parent parent) {
-        super(parent);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+    public String getName() {
+        return name;
     }
 }
