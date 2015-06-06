@@ -16,19 +16,39 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.common;
+package com.playonlinux.common.dto.web;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.playonlinux.common.api.dto.AbstractDTO;
 
-public class PlayOnLinuxScene extends Scene {
-    public PlayOnLinuxScene(Parent parent, int width, int height) {
-        super(parent, width, height);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CategoryDTO implements AbstractDTO {
+    public enum CategoryType {
+        INSTALLERS,
+        FUNCTIONS
     }
 
-    public PlayOnLinuxScene(Parent parent) {
-        super(parent);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+    public int getId() {
+        return id;
     }
+
+    public CategoryType getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<ApplicationDTO> getApplications() {
+        return applications;
+    }
+
+    int id;
+    CategoryType type;
+    String name;
+    List <ApplicationDTO> applications;
+
 }

@@ -48,6 +48,8 @@ public class JavaFXApplication extends Application {
 
     private void loadFonts() {
         Font.loadFont(getClass().getResource("common/mavenpro/MavenPro-Medium.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("common/roboto/Roboto-Medium.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
     }
 
 }

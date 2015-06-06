@@ -22,10 +22,10 @@ import threading
 import thread
 import string
 import random
-from java.lang import Throwable
 
+from java.lang import Throwable
 from CommandParser import CommandParser
-from SetupWindow.SetupWindowManager import SetupWindowManager
+
 
 class NetcatServer(threading.Thread):
     def __init__(self, setupWindowManager):

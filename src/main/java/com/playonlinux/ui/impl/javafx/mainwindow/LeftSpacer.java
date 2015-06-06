@@ -16,39 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.playonlinux.common.api.dto.AbstractDTO;
+import javafx.scene.layout.Pane;
 
-import java.util.List;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CategoryDTO implements AbstractDTO {
-    public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
+public final class LeftSpacer extends Pane {
+    public LeftSpacer() {
+        this.getStyleClass().add("leftSpacer");
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public CategoryType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<ApplicationDTO> getApplications() {
-        return applications;
-    }
-
-    int id;
-    CategoryType type;
-    String name;
-    List <ApplicationDTO> applications;
-
 }

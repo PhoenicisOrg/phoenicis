@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.common.dto.ProgressStateDTO;
+import com.playonlinux.common.dto.web.ProgressStateDTO;
 import com.playonlinux.common.messages.AsynchroneousMessage;
 import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
 import com.playonlinux.common.messages.Message;

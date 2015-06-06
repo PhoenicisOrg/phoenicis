@@ -18,16 +18,15 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.dto.ApplicationDTO;
-import com.playonlinux.common.dto.DownloadEnvelopeDTO;
-import com.playonlinux.common.dto.ScriptDTO;
+import com.playonlinux.common.dto.web.ApplicationDTO;
+import com.playonlinux.common.dto.web.DownloadEnvelopeDTO;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
-import com.playonlinux.common.dto.CategoryDTO;
+import com.playonlinux.common.dto.web.CategoryDTO;
 
 
 import java.net.MalformedURLException;

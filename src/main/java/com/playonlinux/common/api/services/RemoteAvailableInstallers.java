@@ -18,30 +18,24 @@
 
 package com.playonlinux.common.api.services;
 
-import com.playonlinux.common.dto.ApplicationDTO;
-import com.playonlinux.common.dto.CategoryDTO;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.common.dto.ui.CenterCategoryDTO;
+import com.playonlinux.common.dto.ui.CenterItemDTO;
 
+import java.util.List;
 import java.util.Observer;
 
-public interface RemoteAvailableInstallers extends Iterable<CategoryDTO> {
+public interface RemoteAvailableInstallers extends Iterable<CenterItemDTO> {
     void addObserver(Observer o);
 
     void deleteObserver(Observer o);
-
-    int getNumberOfCategories();
 
     boolean isUpdating();
 
     boolean hasFailed();
 
-    Iterable<ApplicationDTO> getAllScripts();
+    List<CenterItemDTO> getAllCenterItems();
 
-    Iterable<ApplicationDTO> getAllScripts(String filter);
-
-    Iterable<ApplicationDTO> getAllApplicationsInCategory(String categoryName) throws PlayOnLinuxException;
-
-    ApplicationDTO getApplicationByName(String scriptName) throws PlayOnLinuxException;
+    List<CenterCategoryDTO> getAllCategories();
 
     void refresh();
 }

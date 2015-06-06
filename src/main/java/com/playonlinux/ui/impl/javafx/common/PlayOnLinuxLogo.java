@@ -16,28 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.dto;
+package com.playonlinux.ui.impl.javafx.common;
 
-import com.playonlinux.common.api.dto.AbstractDTO;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
-public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> implements AbstractDTO {
-    ProgressStateDTO downloadState;
+import static com.playonlinux.domain.Localisation.translate;
 
-    public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
-        return envelopeContent;
+public class PlayOnLinuxLogo extends HBox {
+    public PlayOnLinuxLogo() {
+        super();
+        Image logoImage = new Image(this.getClass().getResourceAsStream("/playonlinux.png"));
+        ImageView logoView = new ImageView(logoImage);
+        logoView.setFitWidth(28);
+        logoView.setFitHeight(28);
+
+        Text text = new Text(translate("${application.name}").toLowerCase());
+        text.setId("logoText");
+
+        this.getChildren().add(logoView);
+        this.getChildren().add(text);
+
     }
-
-    public void setEnvelopeContent(ENVELOPE_CONTENT_TYPE envelopeContent) {
-        this.envelopeContent = envelopeContent;
-    }
-
-    public ProgressStateDTO getDownloadState() {
-        return downloadState;
-    }
-
-    public void setDownloadState(ProgressStateDTO downloadState) {
-        this.downloadState = downloadState;
-    }
-
-    ENVELOPE_CONTENT_TYPE envelopeContent;
 }

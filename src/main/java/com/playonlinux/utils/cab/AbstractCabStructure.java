@@ -18,11 +18,8 @@
 
 package com.playonlinux.utils.cab;
 
-import org.apache.commons.codec.binary.Hex;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public abstract class AbstractCabStructure {
     protected final long offset;

@@ -16,9 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow;
+package com.playonlinux.ui.impl.javafx.mainwindow.myapps;
 
-import com.playonlinux.common.dto.ShortcutDTO;
+import com.playonlinux.common.dto.ui.ShortcutDTO;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -40,9 +40,9 @@ import static com.playonlinux.domain.Localisation.translate;
 
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
     private final TreeItem<ApplicationItem> rootItem;
-    private final MainWindow parent;
+    private final ViewMyApps parent;
 
-    public ApplicationListWidget(MainWindow parent) {
+    public ApplicationListWidget(ViewMyApps parent) {
         this.parent = parent;
         this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
@@ -91,7 +91,7 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             playImageView.setFitWidth(16);
 
             Button runButton = new Button(translate("Run"), playImageView);
-            runButton.setOnMouseClicked(evt -> parent.getMainEventHandler().runApplication(applicationName));
+            runButton.setOnMouseClicked(evt -> parent.getEventHandler().runApplication(applicationName));
             runButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             this.add(runButton, 2, 0);
         }

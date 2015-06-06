@@ -18,7 +18,7 @@
 
 package com.playonlinux.common.api.services;
 
-import com.playonlinux.common.dto.ShortcutDTO;
+import com.playonlinux.common.dto.ui.ShortcutDTO;
 
 import java.util.Observer;
 
