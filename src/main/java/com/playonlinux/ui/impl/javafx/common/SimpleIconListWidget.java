@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
+import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -46,6 +47,8 @@ public class SimpleIconListWidget
         rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
+        this.setCache(true);
+        this.setCacheHint(CacheHint.QUALITY);
     }
 
     public void addItem(String itemName) {
