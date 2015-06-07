@@ -55,10 +55,10 @@ public class MainWindowHeader extends GridPane {
         menuPane.setId("menuPane");
         this.add(menuPane, 1, 0);
 
-        myApps = new Text("My Apps");
+        myApps = new Text("Library");
         myApps.getStyleClass().add("menuEntry");
 
-        appCenter = new Text("Center");
+        appCenter = new Text("Apps");
         appCenter.getStyleClass().add("menuEntry");
 
         engines = new Text("Engines");

@@ -40,9 +40,9 @@ import static com.playonlinux.domain.Localisation.translate;
 
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
     private final TreeItem<ApplicationItem> rootItem;
-    private final ViewMyApps parent;
+    private final ViewLibrary parent;
 
-    public ApplicationListWidget(ViewMyApps parent) {
+    public ApplicationListWidget(ViewLibrary parent) {
         this.parent = parent;
         this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
