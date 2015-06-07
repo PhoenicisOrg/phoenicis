@@ -21,9 +21,8 @@ package com.playonlinux.ui.impl.javafx.mainwindow;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
-import com.playonlinux.ui.impl.javafx.common.SelfManagedWindow;
-import com.playonlinux.ui.impl.javafx.mainwindow.center.ViewCenter;
-import com.playonlinux.ui.impl.javafx.mainwindow.myapps.ViewMyApps;
+import com.playonlinux.ui.impl.javafx.mainwindow.center.ViewApps;
+import com.playonlinux.ui.impl.javafx.mainwindow.myapps.ViewLibrary;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -39,20 +38,20 @@ import static com.playonlinux.domain.Localisation.translate;
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
     private MainWindowHeader headerPane;
-    private ViewMyApps myApps;
-    private ViewCenter center;
+    private ViewLibrary library;
+    private ViewApps apps;
     private VBox rootPane;
 
     public void setUpWindow() {
         rootPane = new VBox();
 
-        myApps = new ViewMyApps(this);
-        center = new ViewCenter(this);
+        library = new ViewLibrary(this);
+        apps = new ViewApps(this);
 
         Scene scene = new PlayOnLinuxScene(rootPane);
         headerPane = new MainWindowHeader();
 
-        goTo(myApps);
+        goTo(library);
 
         this.setScene(scene);
         this.setTitle(translate("${application.name}"));
@@ -76,11 +75,11 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
     public void setUpEvents() throws PlayOnLinuxException {
 
-        this.headerPane.setMyAppsEvent(evt -> goTo(myApps));
-        this.headerPane.setCenterEvent(evt -> goTo(center));
+        this.headerPane.setMyAppsEvent(evt -> goTo(library));
+        this.headerPane.setCenterEvent(evt -> goTo(apps));
 
-        myApps.setUpEvents();
-        center.setUpEvents();
+        library.setUpEvents();
+        apps.setUpEvents();
     }
 
     private void goTo(Node view) {

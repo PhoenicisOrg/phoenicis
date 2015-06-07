@@ -39,7 +39,7 @@ import java.util.Observer;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class ViewCenter extends HBox implements Observer {
+public class ViewApps extends HBox implements Observer {
     private VBox failurePanel;
     private Button retryButton;
     private List<CenterCategoryDTO> categories;
@@ -53,7 +53,7 @@ public class ViewCenter extends HBox implements Observer {
     private TextField searchBar;
     private HBox progressIndicatorPanel;
 
-    public ViewCenter(MainWindow parent) {
+    public ViewApps(MainWindow parent) {
         eventHandlerCenter = new EventHandlerCenter();
         this.getStyleClass().add("mainWindowScene");
 

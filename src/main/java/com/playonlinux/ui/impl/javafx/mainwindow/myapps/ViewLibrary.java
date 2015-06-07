@@ -31,7 +31,7 @@ import java.io.IOException;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class ViewMyApps extends HBox {
+public class ViewLibrary extends HBox {
 
     private LeftButton runScript;
     private final MainWindow parent;
@@ -40,7 +40,7 @@ public class ViewMyApps extends HBox {
     private final EventHandlerMyApps eventHandlerMyApps;
 
 
-    public ViewMyApps(MainWindow parent) {
+    public ViewLibrary(MainWindow parent) {
         this.parent = parent;
         this.getStyleClass().add("mainWindowScene");
 
