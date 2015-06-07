@@ -19,6 +19,7 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.ui.impl.javafx.common.SelfManagedWindow;
 import com.playonlinux.ui.impl.javafx.mainwindow.center.ViewCenter;
@@ -29,12 +30,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class MainWindow extends SelfManagedWindow {
+public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
     private MainWindowHeader headerPane;
     private ViewMyApps myApps;
@@ -73,7 +75,6 @@ public class MainWindow extends SelfManagedWindow {
     }
 
     public void setUpEvents() throws PlayOnLinuxException {
-        this.setMouseEvents(headerPane);
 
         this.headerPane.setMyAppsEvent(evt -> goTo(myApps));
         this.headerPane.setCenterEvent(evt -> goTo(center));
