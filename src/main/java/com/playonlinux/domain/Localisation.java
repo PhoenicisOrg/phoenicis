@@ -19,14 +19,15 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.lang.LanguageBundle;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.ReplacableProperties;
 
-
-// TODO
 @Scan
 public final class Localisation {
+    @Inject
+    private static LanguageBundle bundle;
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
@@ -39,6 +40,6 @@ public final class Localisation {
         ReplacableProperties properties;
         properties = playOnLinuxContext.loadProperties();
 
-        return properties.replaceAllVariables(stringToTranslate);
+        return properties.replaceAllVariables(bundle.translate(stringToTranslate));
     }
 }
