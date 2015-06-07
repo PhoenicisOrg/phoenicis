@@ -98,7 +98,7 @@ public class ViewApps extends HBox implements Observer {
         progressIndicatorPanel.getStyleClass().add("rightPane");
 
         progressIndicatorPanel.getChildren().add(progressIndicator);
-        progressIndicatorPanel.setAlignment(Pos.BASELINE_CENTER);
+        progressIndicatorPanel.setAlignment(Pos.CENTER);
     }
 
 
