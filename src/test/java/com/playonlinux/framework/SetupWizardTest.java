@@ -22,6 +22,8 @@ import com.playonlinux.common.api.ui.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.domain.lang.FallbackLanguageBundle;
+import com.playonlinux.domain.lang.LanguageBundle;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
@@ -56,6 +58,11 @@ public class SetupWizardTest {
         @Bean
         protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
             return new PlayOnLinuxContext();
+        }
+
+        @Bean
+        protected LanguageBundle languageBundle() {
+            return FallbackLanguageBundle.getInstance();
         }
     }
 

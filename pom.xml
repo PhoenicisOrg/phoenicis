@@ -86,6 +86,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <dependency>
+            <groupId>org.fedorahosted.tennera</groupId>
+            <artifactId>jgettext</artifactId>
+            <version>0.14</version>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

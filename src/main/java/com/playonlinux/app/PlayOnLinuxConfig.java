@@ -25,6 +25,8 @@ import com.playonlinux.common.api.webservice.InstallerSource;
 import com.playonlinux.common.services.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.common.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.domain.lang.LanguageBundle;
+import com.playonlinux.domain.lang.LanguageBundleSelector;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
@@ -34,6 +36,7 @@ import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 @SuppressWarnings("unused")
 public class PlayOnLinuxConfig extends AbstractConfigFile  {
@@ -68,6 +71,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Bean
     public BackgroundServiceManager playOnLinuxBackgroundServicesManager() {
         return new PlayOnLinuxBackgroundServicesManager();
+    }
+
+    @Bean
+    public LanguageBundle languageBundle() {
+        return LanguageBundleSelector.forLocale(Locale.getDefault());
     }
 
     @Override
