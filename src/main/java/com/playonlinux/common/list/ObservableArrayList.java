@@ -18,9 +18,12 @@
 
 package com.playonlinux.common.list;
 
-import com.sun.istack.internal.NotNull;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Observable;
 
 /**
  * ArrayList that can be observed for changes.
