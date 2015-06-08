@@ -21,6 +21,9 @@ package com.playonlinux.ui.impl.javafx.mainwindow.center;
 import com.playonlinux.common.api.services.RemoteAvailableInstallers;
 import com.playonlinux.common.dto.ui.CenterCategoryDTO;
 import com.playonlinux.common.dto.ui.CenterItemDTO;
+import com.playonlinux.common.filter.CenterItemFilter;
+import com.playonlinux.common.list.FilterPromise;
+import com.playonlinux.common.list.ObservableArrayList;
 import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import javafx.application.Platform;
@@ -28,12 +31,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
-import org.apache.commons.lang.StringUtils;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -42,16 +42,18 @@ import static com.playonlinux.domain.Localisation.translate;
 public class ViewApps extends HBox implements Observer {
     private VBox failurePanel;
     private Button retryButton;
-    private List<CenterCategoryDTO> categories;
-    private List<CenterItemDTO> centerItems;
+    private ObservableArrayList<CenterCategoryDTO> categories;
+    private FilterPromise<CenterItemDTO> centerItems = null;
     private final SimpleIconListWidget availableInstallerListWidget;
 
     private final EventHandlerCenter eventHandlerCenter;
+    private final CenterItemFilter filter = new CenterItemFilter();
 
     private LeftSideBar leftContent;
-    private String selectedCategory;
     private TextField searchBar;
+    private CategoryView categoryView;
     private HBox progressIndicatorPanel;
+
 
     public ViewApps(MainWindow parent) {
         eventHandlerCenter = new EventHandlerCenter();
@@ -64,6 +66,9 @@ public class ViewApps extends HBox implements Observer {
 
         this.initWait();
         this.initFailure();
+
+        categories = new ObservableArrayList<>();
+        centerItems = new FilterPromise<CenterItemDTO>(eventHandlerCenter.getRemoteAvailableInstallers(), this.filter);
 
         this.drawSideBar();
         this.showWait();
@@ -103,8 +108,28 @@ public class ViewApps extends HBox implements Observer {
 
 
     private void drawSideBar() {
+        searchBar = new TextField();
+        searchBar.setOnKeyReleased(event -> filter.setTitle(searchBar.getText()));
+
+        categoryView = new CategoryView(categories);
+        categoryView.addObserver((cView, category) -> {
+            filter.startTransaction();
+            filter.setCategory(category);
+            filter.setTitle("");
+            filter.endTransaction(true);
+        });
+
+        CheckBox testingCheck = new CheckBox(translate("Testing"));
+        testingCheck.setOnAction(actionEvent -> filter.setShowTesting(testingCheck.isSelected()));
+        CheckBox noCdNeededCheck = new CheckBox(translate("No CD needed"));
+        noCdNeededCheck.setOnAction(actionEvent -> filter.setShowTesting(noCdNeededCheck.isSelected()));
+        CheckBox commercialCheck = new CheckBox(translate("Commercial"));
+        commercialCheck.setOnAction(actionEvent -> filter.setShowTesting(commercialCheck.isSelected()));
+
+        leftContent.getChildren().addAll(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(), new LeftBarTitle("Filters"),
+                testingCheck, noCdNeededCheck, commercialCheck);
+
         this.getChildren().add(leftContent);
-        this.drawSideBarContent();
     }
 
     private void removeRightItems() {
@@ -128,60 +153,17 @@ public class ViewApps extends HBox implements Observer {
     }
 
     private void addApplicationsToList() {
-        String searchFilter = searchBar.getText();
         availableInstallerListWidget.clear();
 
         if(centerItems != null) {
-            if(!StringUtils.isBlank(searchFilter)) {
-                for (CenterItemDTO centerItem : this.centerItems) {
-                    if(centerItem.getName().toLowerCase().contains(searchFilter.toLowerCase())) {
-                        availableInstallerListWidget.addItem(centerItem.getName());
-                    }
-                }
-            } else {
-                for (CenterItemDTO centerItem : this.centerItems) {
-                    if(centerItem.getCategoryName().equals(this.selectedCategory)) {
-                        availableInstallerListWidget.addItem(centerItem.getName());
-                    }
-                }
-            }
-
-        }
-    }
-
-
-
-    private void drawSideBarContent() {
-        leftContent.getChildren().clear();
-        searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> addApplicationsToList());
-
-        leftContent.getChildren().add(searchBar);
-        if(categories != null && categories.size() > 0) {
-            leftContent.getChildren().addAll(new LeftSpacer(), new LeftBarTitle("Category"));
-
-            for (CenterCategoryDTO category : categories) {
-                LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
-                leftContent.getChildren().add(categoryButton);
-                categoryButton.setOnMouseClicked(event -> {
-                    selectedCategory = categoryButton.getName();
-                    clearSearch();
-                    addApplicationsToList();
-                });
+            for(CenterItemDTO item : centerItems){
+                availableInstallerListWidget.addItem(item.getName());
             }
         }
-
-        CheckBox testingCheck = new CheckBox(translate("Testing"));
-        CheckBox noCdNeededCheck = new CheckBox(translate("No CD needed"));
-        CheckBox commercialCheck = new CheckBox(translate("Commercial"));
-
-        leftContent.getChildren().addAll(new LeftSpacer(), new LeftBarTitle("Filters"), testingCheck,
-                noCdNeededCheck, commercialCheck);
     }
-
 
     public void setUpEvents() {
-        eventHandlerCenter.getRemoteAvailableInstallers().addObserver(this);
+        centerItems.addObserver(this);
         retryButton.setOnMouseClicked(event -> this.eventHandlerCenter.updateAvailableInstallers());
     }
 
@@ -189,27 +171,20 @@ public class ViewApps extends HBox implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) o;
-
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers)centerItems.getSource();
         Platform.runLater(() -> update(remoteAvailableInstallers));
     }
 
-    public void update(RemoteAvailableInstallers remoteAvailableInstallers) {
+    private void update(RemoteAvailableInstallers remoteAvailableInstallers) {
         if(remoteAvailableInstallers.isUpdating()) {
             this.showWait();
         } else if(remoteAvailableInstallers.hasFailed()) {
             this.showFailure();
         } else {
             this.showContent();
+            categories.swapContents(remoteAvailableInstallers.getCategories());
+            this.addApplicationsToList();
         }
-        categories = remoteAvailableInstallers.getAllCategories();
-        centerItems = remoteAvailableInstallers.getAllCenterItems();
-
-        this.drawSideBarContent();
-        this.addApplicationsToList();
     }
 
-    public void clearSearch() {
-        searchBar.clear();
-    }
 }

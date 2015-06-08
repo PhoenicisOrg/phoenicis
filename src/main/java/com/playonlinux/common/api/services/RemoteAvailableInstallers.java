@@ -18,24 +18,20 @@
 
 package com.playonlinux.common.api.services;
 
+import com.playonlinux.common.api.filter.Filterable;
 import com.playonlinux.common.dto.ui.CenterCategoryDTO;
 import com.playonlinux.common.dto.ui.CenterItemDTO;
 
 import java.util.List;
-import java.util.Observer;
 
-public interface RemoteAvailableInstallers extends Iterable<CenterItemDTO> {
-    void addObserver(Observer o);
-
-    void deleteObserver(Observer o);
+public interface RemoteAvailableInstallers extends Filterable<CenterItemDTO> {
 
     boolean isUpdating();
 
     boolean hasFailed();
 
-    List<CenterItemDTO> getAllCenterItems();
-
-    List<CenterCategoryDTO> getAllCategories();
+    List<CenterCategoryDTO> getCategories();
 
     void refresh();
+
 }
