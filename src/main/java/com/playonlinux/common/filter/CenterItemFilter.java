@@ -84,10 +84,11 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     @Override
     public boolean apply(CenterItemDTO item) {
-        if (category != null && item.getCategoryName() != category) {
-            return false;
-        }
-        if (title != null && !item.getName().contains(title)) {
+        if(title != null){
+            if(!item.getName().contains(title)) {
+                return false;
+            }
+        }else if(category != null && item.getCategoryName() != category) {
             return false;
         }
 
