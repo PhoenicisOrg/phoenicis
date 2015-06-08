@@ -18,6 +18,8 @@
 
 package com.playonlinux.common.api.list;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Observer;
 
 /**
@@ -30,6 +32,8 @@ public interface ObservableList<T> extends Iterable<T> {
     void addObserver(Observer o);
 
     void deleteObserver(Observer o);
+
+    int size();
 
     /**
      * Get an array containing all items within this observable list.

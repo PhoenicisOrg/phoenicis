@@ -51,6 +51,12 @@ public class ObservableArrayList<T> extends Observable implements List<T>, com.p
         return list.iterator();
     }
 
+    public void swapContents(Collection<T> newContent) {
+        list.clear();
+        list.addAll(newContent);
+        this.fireUpdate();
+    }
+
     @Override
     public T[] toArray() {
         return (T[]) list.toArray();

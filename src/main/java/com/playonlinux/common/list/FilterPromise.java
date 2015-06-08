@@ -58,6 +58,12 @@ public class FilterPromise<T> extends Observable implements Filterable<T>, Obser
     }
 
     @Override
+    public int size() {
+        updateCache();
+        return cache.size();
+    }
+
+    @Override
     public T[] toArray() {
         updateCache();
         return (T[]) cache.toArray();
