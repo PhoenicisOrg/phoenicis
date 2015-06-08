@@ -21,6 +21,8 @@ package com.playonlinux.common.filter;
 import com.playonlinux.common.api.filter.Filter;
 import com.playonlinux.common.dto.ui.CenterItemDTO;
 import com.playonlinux.common.dto.web.ScriptDTO;
+import javafx.application.Platform;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Observable;
 
@@ -29,20 +31,21 @@ import java.util.Observable;
  */
 public class CenterItemFilter extends Observable implements Filter<CenterItemDTO> {
 
+    private boolean transaction = false;
+
     private String title = null;
     private String category = null;
     private boolean showTesting = false;
     private boolean showNoCd = false;
     private boolean showCommercial = true;
 
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
-        this.notifyObservers();
+        this.title = title.toLowerCase();
+        this.fireUpdate();
     }
 
     public String getCategory() {
@@ -51,7 +54,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setCategory(String category) {
         this.category = category;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public boolean isShowTesting() {
@@ -60,7 +63,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowTesting(boolean showTesting) {
         this.showTesting = showTesting;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public boolean isShowNoCd() {
@@ -69,7 +72,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowNoCd(boolean showNoCd) {
         this.showNoCd = showNoCd;
-        this.notifyObservers();
+        this.fireUpdate();
     }
 
     public boolean isShowCommercial() {
@@ -78,14 +81,13 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowCommercial(boolean showCommercial) {
         this.showCommercial = showCommercial;
-        this.notifyObservers();
+        this.fireUpdate();
     }
-
 
     @Override
     public boolean apply(CenterItemDTO item) {
-        if(title != null){
-            if(!item.getName().contains(title)) {
+        if(StringUtils.isNotBlank(title)){
+            if(!item.getName().toLowerCase().contains(title)) {
                 return false;
             }
         }else if(category != null && item.getCategoryName() != category) {
@@ -103,9 +105,26 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
     }
 
 
+
+
+    @Override
+    public void startTransaction() {
+        transaction = true;
+    }
+
+    @Override
+    public void endTransaction(boolean fire) {
+        transaction = false;
+        if(fire){
+            this.fireUpdate();
+        }
+    }
+
     private void fireUpdate() {
-        this.setChanged();
-        this.notifyObservers();
+        if(!transaction){
+            this.setChanged();
+            this.notifyObservers();
+        }
     }
 
 }
