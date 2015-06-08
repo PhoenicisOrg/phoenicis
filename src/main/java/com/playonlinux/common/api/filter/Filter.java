@@ -32,6 +32,17 @@ public interface Filter<T> {
     void deleteObserver(Observer o);
 
     /**
+     * Start a filter-change transaction. While a transaction is running, the observers aren't notified.
+     */
+    void startTransaction();
+
+    /**
+     * End a filter-change transaction.
+     * @param fire Defines whether to update the observers now.
+     */
+    void endTransaction(boolean fire);
+
+    /**
      * Test the given item against the list rules defined within this list.
      *
      * @param item Item to test against the list rules.
