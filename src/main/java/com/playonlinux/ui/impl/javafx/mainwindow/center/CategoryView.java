@@ -72,9 +72,7 @@ public class CategoryView extends VBox implements Observer {
 
     private void fireCategorySelection(String categoryName){
         for(CategorySelectionObserver o : observers){
-            try{
-                o.update(this, categoryName);
-            }catch(Exception ex){}
+            o.update(this, categoryName);
         }
     }
 
