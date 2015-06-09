@@ -40,6 +40,7 @@ public final class CategoryView extends VBox implements Observer {
         this.categories = categoryList;
         categoryList.addObserver(this);
         this.update(null, null);
+        this.getStyleClass().add("leftPaneInside");
     }
 
 
