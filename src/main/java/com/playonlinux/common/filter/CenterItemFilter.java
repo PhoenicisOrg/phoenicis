@@ -54,7 +54,6 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setCategory(String category) {
         this.category = category;
-        this.fireUpdate();
     }
 
     public boolean isShowTesting() {
@@ -63,7 +62,6 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowTesting(boolean showTesting) {
         this.showTesting = showTesting;
-        this.fireUpdate();
     }
 
     public boolean isShowNoCd() {
@@ -72,7 +70,6 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowNoCd(boolean showNoCd) {
         this.showNoCd = showNoCd;
-        this.fireUpdate();
     }
 
     public boolean isShowCommercial() {
@@ -81,7 +78,6 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowCommercial(boolean showCommercial) {
         this.showCommercial = showCommercial;
-        this.fireUpdate();
     }
 
     @Override
@@ -94,7 +90,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
             if(!item.getName().toLowerCase().contains(title)) {
                 return false;
             }
-        } else if(category != null && category.equals(item.getCategoryName())) {
+        } else if(category != null && !category.equals(item.getCategoryName())) {
             return false;
         }
 
