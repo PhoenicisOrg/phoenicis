@@ -43,7 +43,7 @@ public class ViewApps extends HBox implements Observer {
     private VBox failurePanel;
     private Button retryButton;
     private ObservableArrayList<CenterCategoryDTO> categories;
-    private FilterPromise<CenterItemDTO> centerItems = null;
+    private FilterPromise<CenterItemDTO> centerItems;
     private final SimpleIconListWidget availableInstallerListWidget;
 
     private final EventHandlerCenter eventHandlerCenter;
@@ -68,7 +68,7 @@ public class ViewApps extends HBox implements Observer {
         this.initFailure();
 
         categories = new ObservableArrayList<>();
-        centerItems = new FilterPromise<CenterItemDTO>(eventHandlerCenter.getRemoteAvailableInstallers(), this.filter);
+        centerItems = new FilterPromise<>(eventHandlerCenter.getRemoteAvailableInstallers(), this.filter);
 
         this.drawSideBar();
         this.showWait();

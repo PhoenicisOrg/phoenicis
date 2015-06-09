@@ -20,10 +20,8 @@ package com.playonlinux.ui.impl.javafx.mainwindow.center;
 
 import com.playonlinux.common.api.list.ObservableList;
 import com.playonlinux.common.dto.ui.CenterCategoryDTO;
-import com.playonlinux.common.dto.web.CategoryDTO;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
-import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -33,12 +31,12 @@ import java.util.Observer;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-public class CategoryView extends VBox implements Observer {
+public final class CategoryView extends VBox implements Observer {
 
     private ObservableList<CenterCategoryDTO> categories;
     private List<CategorySelectionObserver> observers = new ArrayList<>();
 
-    public CategoryView (ObservableList<CenterCategoryDTO> categoryList){
+    public CategoryView(ObservableList<CenterCategoryDTO> categoryList) {
         this.categories = categoryList;
         categoryList.addObserver(this);
         this.update(null, null);
@@ -50,7 +48,7 @@ public class CategoryView extends VBox implements Observer {
         this.getChildren().clear();
         this.getChildren().addAll(new LeftBarTitle(translate("Category")));
 
-        if(categories.size() > 0) {
+        if (categories.size() > 0) {
             for (CenterCategoryDTO category : categories) {
                 LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
                 this.getChildren().add(categoryButton);
@@ -62,16 +60,16 @@ public class CategoryView extends VBox implements Observer {
     }
 
 
-    public void addObserver(CategorySelectionObserver o){
+    public void addObserver(CategorySelectionObserver o) {
         this.observers.add(o);
     }
 
-    public void deleteObserver(CategorySelectionObserver o){
+    public void deleteObserver(CategorySelectionObserver o) {
         this.observers.remove(o);
     }
 
-    private void fireCategorySelection(String categoryName){
-        for(CategorySelectionObserver o : observers){
+    private void fireCategorySelection(String categoryName) {
+        for (CategorySelectionObserver o : observers) {
             o.update(this, categoryName);
         }
     }
