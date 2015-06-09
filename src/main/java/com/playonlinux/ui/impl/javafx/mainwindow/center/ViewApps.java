@@ -121,11 +121,11 @@ public class ViewApps extends HBox implements Observer {
         });
 
         CheckBox testingCheck = new CheckBox(translate("Testing"));
-        testingCheck.setOnAction(actionEvent -> filter.setShowTesting(testingCheck.isSelected()));
+        testingCheck.setOnMouseReleased(actionEvent -> filter.setShowTesting(testingCheck.isSelected()));
         CheckBox noCdNeededCheck = new CheckBox(translate("No CD needed"));
-        noCdNeededCheck.setOnAction(actionEvent -> filter.setShowTesting(noCdNeededCheck.isSelected()));
+        noCdNeededCheck.setOnMouseReleased(actionEvent -> filter.setShowTesting(noCdNeededCheck.isSelected()));
         CheckBox commercialCheck = new CheckBox(translate("Commercial"));
-        commercialCheck.setOnAction(actionEvent -> filter.setShowTesting(commercialCheck.isSelected()));
+        commercialCheck.setOnMouseReleased(actionEvent -> filter.setShowTesting(commercialCheck.isSelected()));
 
         leftContent.getChildren().addAll(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(), new LeftBarTitle("Filters"),
                 testingCheck, noCdNeededCheck, commercialCheck);
