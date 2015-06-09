@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015 Markus Ebner
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.api.services;
+package com.playonlinux.common.list;
 
+import com.playonlinux.common.api.filter.Filter;
 import com.playonlinux.common.api.filter.Filterable;
-import com.playonlinux.common.dto.ui.CenterCategoryDTO;
-import com.playonlinux.common.dto.ui.CenterItemDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public interface RemoteAvailableInstallers extends Filterable<CenterItemDTO> {
+public class FilterableList<T> extends ObservableArrayList<T> implements Filterable<T> {
 
-    boolean isUpdating();
-
-    boolean hasFailed();
-
-    List<CenterCategoryDTO> getCategories();
-
-    void refresh();
+    @Override
+    public List<T> getFiltered(Filter<T> filter) {
+        List<T> filtered = new ArrayList<>();
+        for (T item : this) {
+            if (filter.apply(item)) {
+                filtered.add(item);
+            }
+        }
+        return filtered;
+    }
 
 }

@@ -19,6 +19,7 @@
 package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.common.api.filter.Filter;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.comparator.AlphabeticalOrderComparator;
 import com.playonlinux.common.dto.ui.CenterCategoryDTO;
@@ -51,6 +52,8 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
     private final URL webserviceUrl;
 
+    private List<CenterItemDTO> cache = null;
+
     RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
         webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
         this.refresh();
@@ -58,12 +61,24 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     @Override
     public Iterator<CenterItemDTO> iterator() {
-        return getAllCenterItems().iterator();
+        updateCache();
+        return cache.iterator();
     }
 
     @Override
     public void addObserver(Observer o) {
         super.addObserver(o);
+    }
+
+    @Override
+    public int size() {
+        updateCache();
+        return cache.size();
+    }
+
+    @Override
+    public CenterItemDTO[] toArray() {
+        return cache.toArray(new CenterItemDTO[cache.size()]);
     }
 
     @Override
@@ -80,6 +95,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
                 categoriesDTO = availableCategories;
             }
         } finally {
+            cache = null; //invalidate cache
             this.setChanged();
             this.notifyObservers();
         }
@@ -98,30 +114,18 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
     }
 
     @Override
-    public List<CenterItemDTO> getAllCenterItems() {
-        List<CenterItemDTO> centerItemDTOs = new ArrayList<>();
-
-        for(CategoryDTO categoryDTO: categoriesDTO) {
-
-            for(ApplicationDTO applicationDTO: new ArrayList<>(categoryDTO.getApplications())) {
-                CenterItemDTO centerItemDTO = new Builder() //
-                        .withName(applicationDTO.getName()) //
-                        .withCategoryName(categoryDTO.getName()) //
-                        .withDescription(applicationDTO.getDescription()) //
-                        .withRequiresNoCd(false) // FIXME
-                        .withTesting(false) //
-                        .withCommercial(false) //
-                        .build();
-                centerItemDTOs.add(centerItemDTO);
+    public List<CenterItemDTO> getFiltered(Filter<CenterItemDTO> filter) {
+        List<CenterItemDTO> filtered = new ArrayList<>();
+        for(CenterItemDTO item : this){
+            if(filter.apply(item)){
+                filtered.add(item);
             }
         }
-        Collections.sort(centerItemDTOs, new AlphabeticalOrderComparator<>());
-
-        return centerItemDTOs;
+        return filtered;
     }
 
     @Override
-    public List<CenterCategoryDTO> getAllCategories() {
+    public List<CenterCategoryDTO> getCategories() {
         List <CenterCategoryDTO> categoryDTOs = new ArrayList<>();
         for(CategoryDTO categoryDTO: categoriesDTO) {
             if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
@@ -143,5 +147,26 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
         playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
     }
 
+
+    private void updateCache(){
+        if(cache == null){
+            cache = new ArrayList<>();
+
+            for(CategoryDTO categoryDTO: categoriesDTO) {
+                for(ApplicationDTO applicationDTO: new ArrayList<>(categoryDTO.getApplications())) {
+                    CenterItemDTO centerItemDTO = new Builder() //
+                            .withName(applicationDTO.getName()) //
+                            .withCategoryName(categoryDTO.getName()) //
+                            .withDescription(applicationDTO.getDescription()) //
+                            .withRequiresNoCd(false) // FIXME
+                            .withTesting(false) //
+                            .withCommercial(false) //
+                            .build();
+                    cache.add(centerItemDTO);
+                }
+            }
+            Collections.sort(cache, new AlphabeticalOrderComparator<>());
+        }
+    }
 
 }

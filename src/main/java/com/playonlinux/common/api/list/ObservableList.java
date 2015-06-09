@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015 Markus Ebner
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.api.services;
+package com.playonlinux.common.api.list;
 
-import com.playonlinux.common.api.filter.Filterable;
-import com.playonlinux.common.dto.ui.CenterCategoryDTO;
-import com.playonlinux.common.dto.ui.CenterItemDTO;
-
+import java.util.Collection;
 import java.util.List;
+import java.util.Observer;
 
-public interface RemoteAvailableInstallers extends Filterable<CenterItemDTO> {
+/**
+ * Defines how a list which can be observed for changes should look and behave like.
+ *
+ * @param <T>
+ */
+public interface ObservableList<T> extends Iterable<T> {
 
-    boolean isUpdating();
+    void addObserver(Observer o);
 
-    boolean hasFailed();
+    void deleteObserver(Observer o);
 
-    List<CenterCategoryDTO> getCategories();
+    int size();
 
-    void refresh();
+    /**
+     * Get an array containing all items within this observable list.
+     *
+     * @return An array of items contained within the list.
+     */
+    T[] toArray();
 
 }

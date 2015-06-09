@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015 Markus Ebner
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.common.api.services;
+package com.playonlinux.common.api.filter;
 
-import com.playonlinux.common.api.filter.Filterable;
-import com.playonlinux.common.dto.ui.CenterCategoryDTO;
-import com.playonlinux.common.dto.ui.CenterItemDTO;
+import com.playonlinux.common.api.list.ObservableList;
 
 import java.util.List;
 
-public interface RemoteAvailableInstallers extends Filterable<CenterItemDTO> {
+/**
+ * Defines how a filterable list of items should look and behave like.
+ *
+ * @param <T> Type of the item stored within this filterable list.
+ */
+public interface Filterable<T> extends ObservableList<T> {
 
-    boolean isUpdating();
-
-    boolean hasFailed();
-
-    List<CenterCategoryDTO> getCategories();
-
-    void refresh();
+    /**
+     * Get an iterable with the items of this filterable that match the given list.
+     *
+     * @param filter The list to test the items against.
+     * @return An iterable over all items within this filterable that matched the given list.
+     */
+    List<T> getFiltered(Filter<T> filter);
 
 }
