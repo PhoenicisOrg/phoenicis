@@ -33,7 +33,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     private boolean transaction = false;
 
-    private String title = null;
+    private String title = "";
     private String category = null;
     private boolean showTesting = false;
     private boolean showNoCd = false;
