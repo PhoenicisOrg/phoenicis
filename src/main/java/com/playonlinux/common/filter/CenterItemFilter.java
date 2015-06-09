@@ -54,6 +54,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setCategory(String category) {
         this.category = category;
+        this.fireUpdate();
     }
 
     public boolean isShowTesting() {
@@ -62,6 +63,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowTesting(boolean showTesting) {
         this.showTesting = showTesting;
+        this.fireUpdate();
     }
 
     public boolean isShowNoCd() {
@@ -70,6 +72,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     public void setShowNoCd(boolean showNoCd) {
         this.showNoCd = showNoCd;
+        this.fireUpdate();
     }
 
     public boolean isShowCommercial() {
