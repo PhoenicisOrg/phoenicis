@@ -74,6 +74,10 @@
     -fx-spacing: 0.4em;
 }
 
+.leftPaneInside {
+    -fx-spacing: 0.4em;
+}
+
 #menuPane {
     -fx-spacing: 4em;
 }
