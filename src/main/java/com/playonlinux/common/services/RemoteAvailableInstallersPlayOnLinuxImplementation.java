@@ -153,16 +153,18 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
             cache = new ArrayList<>();
 
             for(CategoryDTO categoryDTO: categoriesDTO) {
-                for(ApplicationDTO applicationDTO: new ArrayList<>(categoryDTO.getApplications())) {
-                    CenterItemDTO centerItemDTO = new Builder() //
-                            .withName(applicationDTO.getName()) //
-                            .withCategoryName(categoryDTO.getName()) //
-                            .withDescription(applicationDTO.getDescription()) //
-                            .withRequiresNoCd(false) // FIXME
-                            .withTesting(false) //
-                            .withCommercial(false) //
-                            .build();
-                    cache.add(centerItemDTO);
+                if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                    for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
+                        CenterItemDTO centerItemDTO = new Builder() //
+                                .withName(applicationDTO.getName()) //
+                                .withCategoryName(categoryDTO.getName()) //
+                                .withDescription(applicationDTO.getDescription()) //
+                                .withRequiresNoCd(false) // FIXME
+                                .withTesting(false) //
+                                .withCommercial(false) //
+                                .build();
+                        cache.add(centerItemDTO);
+                    }
                 }
             }
             Collections.sort(cache, new AlphabeticalOrderComparator<>());
