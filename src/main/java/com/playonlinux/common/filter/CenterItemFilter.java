@@ -33,7 +33,7 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     private boolean transaction = false;
 
-    private String title = null;
+    private String title = "";
     private String category = null;
     private boolean showTesting = false;
     private boolean showNoCd = false;
@@ -86,20 +86,26 @@ public class CenterItemFilter extends Observable implements Filter<CenterItemDTO
 
     @Override
     public boolean apply(CenterItemDTO item) {
+        if(StringUtils.isBlank(title) && category == null) {
+            return false;
+        }
+
         if(StringUtils.isNotBlank(title)){
             if(!item.getName().toLowerCase().contains(title)) {
                 return false;
             }
-        }else if(category != null && item.getCategoryName() != category) {
+        } else if(category != null && category.equals(item.getCategoryName())) {
             return false;
         }
 
         if (item.isTesting() && !showTesting) {
             return false;
         }
+
         if (item.isRequiresNoCd() && !showNoCd) {
             return false;
         }
+
         return !(item.isCommercial() && !showCommercial);
 
     }

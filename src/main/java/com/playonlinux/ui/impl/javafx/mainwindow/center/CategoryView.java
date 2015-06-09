@@ -77,9 +77,7 @@ public final class CategoryView extends VBox implements Observer {
 
 
     public interface CategorySelectionObserver {
-
         void update(CategoryView categoryView, String category);
-
     }
 
 

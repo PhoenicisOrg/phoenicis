@@ -33,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -171,8 +172,13 @@ public class ViewApps extends HBox implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers)centerItems.getSource();
-        Platform.runLater(() -> update(remoteAvailableInstallers));
+        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) centerItems.getSource();
+        Platform.runLater(() -> {
+            if(StringUtils.isBlank(filter.getTitle())) {
+                searchBar.setText("");
+            }
+            update(remoteAvailableInstallers);
+        });
     }
 
     private void update(RemoteAvailableInstallers remoteAvailableInstallers) {
