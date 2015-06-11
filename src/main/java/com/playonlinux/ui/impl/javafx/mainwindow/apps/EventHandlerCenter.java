@@ -16,17 +16,35 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow;
+package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
+import com.playonlinux.common.api.services.EventHandler;
+import com.playonlinux.common.api.services.RemoteAvailableInstallers;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.ui.api.UIEventHandler;
 
-public class RightScrollContent extends ScrollPane {
-    public RightScrollContent(Node content) {
-        super(content);
+
+@Scan
+public class EventHandlerCenter implements UIEventHandler {
+
+
+    @Inject
+    static EventHandler mainEventHandler;
+
+    @Override
+    public EventHandler getMainEventHandler() {
+        return mainEventHandler;
     }
 
-    public void requestFocus() {
-        // Disable border focus
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() {
+        return mainEventHandler.getRemoteAvailableInstallers();
     }
+
+    public void updateAvailableInstallers() {
+        getRemoteAvailableInstallers().refresh();
+    }
+
+
+
 }

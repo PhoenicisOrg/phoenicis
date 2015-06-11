@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.myapps;
+package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
@@ -50,16 +50,9 @@ public class ViewLibrary extends HBox {
     }
 
     private void drawContent() {
-        //Pane contentPane = new FlowPane();
         applicationListWidget = new ApplicationListWidget(this);
         applicationListWidget.getStyleClass().add("rightPane");
 
-        /* LATER
-        RightScrollContent scrollPane = new RightScrollContent(contentPane);
-        scrollPane.getStyleClass().add("rightPane");
-        contentPane.getStyleClass().add("content");
-        this.getChildren().add(scrollPane);
-        */
 
         this.getChildren().add(applicationListWidget);
     }
@@ -71,7 +64,7 @@ public class ViewLibrary extends HBox {
 
         TextField searchBar = new TextField();
 
-        this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/myapps/script.png", "Run a script");
+        this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", "Run a script");
 
         LeftSpacer spacer = new LeftSpacer();
         leftContent.getChildren().addAll(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript);
