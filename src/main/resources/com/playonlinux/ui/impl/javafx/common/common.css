@@ -95,12 +95,7 @@
     -fx-background-color: #FFFFFF;
     -fx-border-width: 0px;
 }
-.rightPane .content {
-    -fx-pref-width: 53em;
-    -fx-background-color: #FFFFFF;
-    -fx-border-width: 0px;
-    -fx-border-style: none;
-}
+
 .text-field {
     -fx-background-radius: 1em;
 }
@@ -125,3 +120,33 @@
     -fx-pref-height: 0.8em;
 }
 
+.miniatureText {
+    -fx-font-size: 0.75em;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+.miniatureImage {
+    -fx-border-radius: 0.4em;
+    -fx-background-radius: 0.4em;
+}
+.rightPane .miniatureList {
+    -fx-pref-width: 53.5em;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0px;
+    -fx-border-style: none;
+    -fx-padding: 0.5em;
+}
+.miniatureListElement {
+    -fx-pref-width: 12em;
+    -fx-pref-height: 9em;
+    -fx-font-family: "Roboto Light";
+    -fx-alignment: top-center;
+    -fx-spacing: 0.3em;
+    -fx-padding: 0.5em;
+    -fx-cursor: hand;
+    -fx-background-radius: 0.8em;
+}
+.miniatureListElement:hover {
+    -fx-background-color: #EFEFEF;
+}

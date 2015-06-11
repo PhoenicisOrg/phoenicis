@@ -24,7 +24,7 @@ import com.playonlinux.common.dto.ui.CenterItemDTO;
 import com.playonlinux.common.filter.CenterItemFilter;
 import com.playonlinux.common.list.FilterPromise;
 import com.playonlinux.common.list.ObservableArrayList;
-import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
+import com.playonlinux.ui.impl.javafx.common.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -45,7 +45,7 @@ public class ViewApps extends HBox implements Observer {
     private Button retryButton;
     private ObservableArrayList<CenterCategoryDTO> categories;
     private FilterPromise<CenterItemDTO> centerItems;
-    private final SimpleIconListWidget availableInstallerListWidget;
+    private final MiniatureListWidget availableInstallerListWidget;
 
     private final EventHandlerCenter eventHandlerCenter;
     private final CenterItemFilter filter = new CenterItemFilter();
@@ -60,8 +60,7 @@ public class ViewApps extends HBox implements Observer {
         eventHandlerCenter = new EventHandlerCenter();
         this.getStyleClass().add("mainWindowScene");
 
-        availableInstallerListWidget = new SimpleIconListWidget();
-        availableInstallerListWidget.getStyleClass().add("rightPane");
+        availableInstallerListWidget = MiniatureListWidget.create();
 
         leftContent = new LeftSideBar();
 
