@@ -34,6 +34,6 @@ public class CenterCategoryDTO implements AbstractDTO, Nameable {
     }
 
     public String getIconName() {
-        return "center/applications-" + name.toLowerCase() + ".png";
+        return "apps/applications-" + name.toLowerCase() + ".png";
     }
 }
