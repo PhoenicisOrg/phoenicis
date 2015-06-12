@@ -20,14 +20,6 @@ package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.StringWriter;
-
-import org.apache.commons.io.IOUtils;
-
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
@@ -44,7 +36,6 @@ import javafx.scene.text.Text;
 
 import com.playonlinux.common.messages.CancelerMessage;
 import com.playonlinux.common.messages.CancelerSynchroneousMessage;
-import com.playonlinux.domain.CancelException;
 
 public class StepRepresentationLicence extends AbstractStepRepresentation {
     String textToShow;

@@ -110,15 +110,15 @@ public class SetupWizard {
         );
     }
 
-    public void licence(String textToShow, String licenceFile) throws CancelException {
+    public void licence(String textToShow, String licenceFile) throws ScriptFailureException, CancelException {
         try {
-            FileInputStream content = new FileInputStream(new File(licenceFile));
-            StringWriter writer = new StringWriter();
+            final FileInputStream content = new FileInputStream(new File(licenceFile));
+            final StringWriter writer = new StringWriter();
             IOUtils.copy(content, writer, "UTF-8");
             content.close();
             showLicense(textToShow, writer.toString());
         } catch (IOException e) {
-            throw new CancelException("Cannot acces the licence file", e);
+            throw new ScriptFailureException("Cannot acces the licence file", e);
         }
     }
     

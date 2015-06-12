@@ -105,6 +105,13 @@ class CommandParser(object):
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 
             Downloader(setupWindow).get(self.command[3]).check(self.command[4])
+        
+        def POL_SetupWindow_licence(self):
+            setupWindowId = self.command[2]
+            textToShow = self.command[3]
+            licenceFile = self.command[5]
+            
+            self.setupWindowManager.getWindow(setupWindowId).licence(textToShow, licenceFile)
 
         def POL_Throw(self):
             raise ScriptFailureException(self.command[3])

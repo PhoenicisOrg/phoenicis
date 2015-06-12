@@ -116,3 +116,10 @@ POL_SetupWindow_wait_next_signal ()
     POL_SetupWindow_wait "$@"
 }
 
+POL_SetupWindow_licence ()
+{
+    # Shows a licence file, and force the user to accept it to continue
+    # Usage POL_SetupWindow_licence [message] [title] [licence's file]
+    toPython "POL_SetupWindow_licence" "$1" "$2" "$3"
+}
+
