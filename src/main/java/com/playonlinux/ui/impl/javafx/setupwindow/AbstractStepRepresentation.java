@@ -19,6 +19,8 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.common.messages.CancelerMessage;
+import com.playonlinux.domain.CancelException;
+
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

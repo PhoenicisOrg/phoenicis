@@ -26,9 +26,14 @@ import com.playonlinux.common.messages.*;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.utils.ReadFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 
 import static com.playonlinux.domain.Localisation.translate;
 
@@ -105,12 +110,24 @@ public class SetupWizard {
         );
     }
 
-    public String licence(String textToShow, String licenceFile) throws CancelException {
+    public void licence(String textToShow, String licenceFile) throws CancelException {
+        try {
+            FileInputStream content = new FileInputStream(new File(licenceFile));
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(content, writer, "UTF-8");
+            content.close();
+            showLicense(textToShow, writer.toString());
+        } catch (IOException e) {
+            throw new CancelException("Cannot acces the licence file", e);
+        }
+    }
+    
+    private String showLicense(String textToShow, String licenceText) throws CancelException {
         return (String) messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showLicenceStep((CancelerSynchroneousMessage) message, textToShow, ReadFile.readFile(licenceFile));
+                        setupWindow.showLicenceStep((CancelerSynchroneousMessage) message, textToShow, licenceText);
                     }
                 }
         );
