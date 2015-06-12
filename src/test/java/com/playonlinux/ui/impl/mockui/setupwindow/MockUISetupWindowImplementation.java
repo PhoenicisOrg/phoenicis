@@ -88,4 +88,10 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     public void close() {
         // Nothing to do to close the mockup, contrary to the real setup wizard
     }
+
+    @Override
+    public void showLicenceStep(CancelerSynchroneousMessage message, String textToShow, String licenceText) {
+        // TODO
+        
+    }
 }
