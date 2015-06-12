@@ -121,6 +121,10 @@ public class SetupWizard {
             throw new ScriptFailureException("Cannot acces the licence file", e);
         }
     }
+
+    public void customLicence(String textToShow, String licenceText) throws CancelException {
+        showLicense(textToShow, licenceText);
+    }
     
     private String showLicense(String textToShow, String licenceText) throws CancelException {
         return (String) messageSender.synchroneousSendAndGetResult(
