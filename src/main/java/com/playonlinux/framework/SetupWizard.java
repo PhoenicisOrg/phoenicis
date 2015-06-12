@@ -26,6 +26,7 @@ import com.playonlinux.common.messages.*;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.utils.ReadFile;
 
 import java.util.List;
 
@@ -103,6 +104,18 @@ public class SetupWizard {
                 }
         );
     }
+
+    public String licence(String textToShow, String licenceFile) throws CancelException {
+        return (String) messageSender.synchroneousSendAndGetResult(
+                new CancelerSynchroneousMessage<String>() {
+                    @Override
+                    public void execute(Message message) {
+                        setupWindow.showLicenceStep((CancelerSynchroneousMessage) message, textToShow, ReadFile.readFile(licenceFile));
+                    }
+                }
+        );
+    }
+    
     /**
      * Ask the user to enter a value
      * @param textToShow a text that will be shown

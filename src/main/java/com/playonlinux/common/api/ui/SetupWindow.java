@@ -45,5 +45,7 @@ public interface SetupWindow {
 
     void showPresentationStep(CancelerSynchroneousMessage message, String textToShow);
 
+    void showLicenceStep(CancelerSynchroneousMessage message, String textToShow, String licenceText);
+
     void close();
 }
