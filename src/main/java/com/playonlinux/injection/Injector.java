@@ -78,9 +78,9 @@ public class Injector {
             try {
                 beans.put(method.getReturnType(), method.invoke(configFile));
             } catch (IllegalAccessException e) {
-                throw new InjectionException(String.format("Unable to inject dependencies (IllegalAccessException)."), e);
+                throw new InjectionException("Unable to inject dependencies (IllegalAccessException).", e);
             } catch (InvocationTargetException e) {
-                throw new InjectionException(String.format("Unable to inject dependencies (InvocationTargetException)"), e);
+                throw new InjectionException("Unable to inject dependencies (InvocationTargetException)", e);
             }
         }
         return beans;
