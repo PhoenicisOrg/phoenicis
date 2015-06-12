@@ -24,7 +24,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -52,6 +51,7 @@ public final class MiniatureListWidget extends ScrollPane {
 
         this.setCache(true);
         this.setCacheHint(CacheHint.QUALITY);
+
     }
 
     public void clear() {
