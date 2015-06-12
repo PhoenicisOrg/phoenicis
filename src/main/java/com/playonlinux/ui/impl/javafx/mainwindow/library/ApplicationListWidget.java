@@ -19,6 +19,9 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.filter.InstalledApplicationFilter;
+import com.playonlinux.common.list.FilterPromise;
+import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -41,12 +44,25 @@ import static com.playonlinux.domain.Localisation.translate;
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
+    private EventHandlerMyApps eventHandlerMyApps;
+    private InstalledApplicationFilter filter = new InstalledApplicationFilter();
+
+    private FilterPromise<ShortcutDTO> applications;
 
     public ApplicationListWidget(ViewLibrary parent) {
+        eventHandlerMyApps = new EventHandlerMyApps();
         this.parent = parent;
         this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
+
+        try {
+            applications = new FilterPromise<>(eventHandlerMyApps.getInstalledApplications(), this.filter);
+        } catch (PlayOnLinuxException e) {
+            e.printStackTrace();
+        }
+
+        setUpEvents();
     }
 
     public void addItem(String shortcutName, URL iconPath) {
@@ -54,12 +70,24 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
         rootItem.getChildren().add(treeItem);
     }
 
+    public void setUpEvents() {
+        applications.addObserver(this);
+    }
+
     @Override
     public synchronized void update(Observable o, Object arg) {
+        System.out.print("\n Update apps");
+        //System.out.print(applications.size());
         this.clear();
         Platform.runLater(() -> {
             assert(o instanceof Iterable);
-            Iterable<ShortcutDTO> installedApplications = (Iterable<ShortcutDTO>) o;
+            Iterable<ShortcutDTO> installedApplications = null;
+            try {
+                installedApplications = eventHandlerMyApps.getInstalledApplications();
+            } catch (PlayOnLinuxException e) {
+                e.printStackTrace();
+            }
+            assert installedApplications != null;
             for (ShortcutDTO shortcut : installedApplications) {
                 addItem(shortcut.getName(), shortcut.getIcon());
             }
@@ -68,6 +96,11 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     private void clear() {
         rootItem.getChildren().clear();
+    }
+
+    public void search(String searchText) {
+        filter.setName(searchText);
+        System.out.print(applications.getFiltered(filter));
     }
 
     protected class ApplicationItem extends GridPane {

@@ -19,6 +19,7 @@
 package com.playonlinux.common.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.common.api.filter.Filter;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.services.InstalledApplications;
 import com.playonlinux.common.dto.ui.ShortcutDTO;
@@ -32,6 +33,7 @@ import com.playonlinux.utils.ObservableDirectoryFiles;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Scan
 public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
@@ -43,6 +45,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     ShortcutSet shortcutSet;
     private Iterator<ShortcutDTO> shortcutDtoIterator;
+    private List<ShortcutDTO> cache = null;
 
     InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
@@ -106,4 +109,43 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
         return this.shortcutDtoIterator;
     }
 
+    @Override
+    public List<ShortcutDTO> getFiltered(Filter<ShortcutDTO> filter) {
+        List<ShortcutDTO> filtered = new ArrayList<>();
+
+
+
+        List<ShortcutDTO> copy = copyIterator(shortcutDtoIterator);
+        System.out.print(shortcutDtoIterator.hasNext());
+        System.out.print("Size: " + copy.size());
+
+        for(ShortcutDTO s : copy) {
+            System.out.print(s.getName());
+        }
+
+        filtered.addAll(copy.stream().filter(filter::apply).collect(Collectors.toList()));
+        return filtered;
+    }
+
+    @Override
+    public int size() {
+        updateCache();
+        return cache.size();
+    }
+
+    @Override
+    public ShortcutDTO[] toArray() {
+        return cache.toArray(new ShortcutDTO[cache.size()]);
+    }
+
+    private void updateCache() {
+
+    }
+
+    public static <T> List<T> copyIterator(Iterator<T> iter) {
+        List<T> copy = new ArrayList<T>();
+        while (iter.hasNext())
+            copy.add(iter.next());
+        return copy;
+    }
 }
