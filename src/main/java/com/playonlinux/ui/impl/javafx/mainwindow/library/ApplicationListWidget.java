@@ -24,10 +24,7 @@ import com.playonlinux.common.list.FilterPromise;
 import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -40,13 +37,12 @@ import java.util.Observer;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
 
     private EventHandlerMyApps eventHandlerMyApps;
-    private FilterPromise<InstalledApplicationDTO> applications;
+    private FilterPromise<InstalledApplicationDTO> installedApplications;
     private InstalledApplicationFilter filter = new InstalledApplicationFilter();
 
     public ApplicationListWidget(ViewLibrary parent) {
@@ -56,11 +52,11 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
         this.setRoot(rootItem);
         this.setShowRoot(false);
         try {
-            applications = new FilterPromise<>(eventHandlerMyApps.getInstalledApplications(), this.filter);
+            installedApplications = new FilterPromise<>(eventHandlerMyApps.getInstalledApplications(), this.filter);
         } catch (PlayOnLinuxException e) {
             e.printStackTrace();
         }
-        applications.addObserver(this);
+        installedApplications.addObserver(this);
     }
 
     public void addItem(String shortcutName, URL iconPath) {
@@ -70,11 +66,11 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     @Override
     public synchronized void update(Observable o, Object arg) {
-        // TODO: Something is calling this method twice on startup
+        // TODO: Something is calling this method twice on startup. Could use some research
         System.out.print("\nUpdate");
         Platform.runLater(() -> {
             this.clear();
-            for (InstalledApplicationDTO shortcut : applications) {
+            for (InstalledApplicationDTO shortcut : installedApplications) {
                 addItem(shortcut.getName(), shortcut.getIcon());
             }
         });
@@ -84,8 +80,8 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
         rootItem.getChildren().clear();
     }
 
-    public void search(String searchText) {
-        filter.setName(searchText);
+    public void search(TextField searchBar) {
+        filter.setName(searchBar.getText());
         System.out.print("\nFilter: " + filter.getName());
     }
 

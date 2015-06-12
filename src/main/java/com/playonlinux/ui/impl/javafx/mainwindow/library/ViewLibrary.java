@@ -39,7 +39,6 @@ public class ViewLibrary extends HBox {
     private ApplicationListWidget applicationListWidget;
     private final EventHandlerMyApps eventHandlerMyApps;
 
-
     public ViewLibrary(MainWindow parent) {
         this.parent = parent;
         this.getStyleClass().add("mainWindowScene");
@@ -62,7 +61,7 @@ public class ViewLibrary extends HBox {
 
         TextField searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> {
-            applicationListWidget.search(event.getText());
+            applicationListWidget.search(searchBar);
         });
 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", "Run a script");
