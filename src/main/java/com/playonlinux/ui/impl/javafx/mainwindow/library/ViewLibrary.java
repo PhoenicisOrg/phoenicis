@@ -52,8 +52,6 @@ public class ViewLibrary extends HBox {
     private void drawContent() {
         applicationListWidget = new ApplicationListWidget(this);
         applicationListWidget.getStyleClass().add("rightPane");
-
-
         this.getChildren().add(applicationListWidget);
     }
 

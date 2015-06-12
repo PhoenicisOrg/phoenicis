@@ -24,5 +24,6 @@ import com.playonlinux.common.dto.ui.ShortcutDTO;
 import java.util.Observer;
 
 public interface InstalledApplications extends Filterable<ShortcutDTO>, Iterable<ShortcutDTO> {
+
     void addObserver(Observer o);
 }

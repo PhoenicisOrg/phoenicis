@@ -33,7 +33,6 @@ import com.playonlinux.utils.ObservableDirectoryFiles;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Scan
 public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
@@ -111,19 +110,8 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     @Override
     public List<ShortcutDTO> getFiltered(Filter<ShortcutDTO> filter) {
-        List<ShortcutDTO> filtered = new ArrayList<>();
-
-
-
-        List<ShortcutDTO> copy = copyIterator(shortcutDtoIterator);
-        System.out.print(shortcutDtoIterator.hasNext());
-        System.out.print("Size: " + copy.size());
-
-        for(ShortcutDTO s : copy) {
-            System.out.print(s.getName());
-        }
-
-        filtered.addAll(copy.stream().filter(filter::apply).collect(Collectors.toList()));
+        List<ShortcutDTO> filtered = copyIterator(shortcutDtoIterator);
+        //filtered.addAll(copy.stream().filter(filter::apply).collect(Collectors.toList()));
         return filtered;
     }
 
@@ -148,4 +136,5 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
             copy.add(iter.next());
         return copy;
     }
+
 }
