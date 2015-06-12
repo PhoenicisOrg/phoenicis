@@ -110,6 +110,13 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Show the content of a licence file
+     * @param textToShow a message above the licence
+     * @param licenceFile the path to the licence file
+     * @throws ScriptFailureException
+     * @throws CancelException
+     */
     public void licence(String textToShow, String licenceFile) throws ScriptFailureException, CancelException {
         try {
             final FileInputStream content = new FileInputStream(new File(licenceFile));
@@ -122,6 +129,12 @@ public class SetupWizard {
         }
     }
 
+    /**
+     * Show a custom licence message
+     * @param textToShow a message above the licence
+     * @param licenceText the licence text to show
+     * @throws CancelException
+     */
     public void customLicence(String textToShow, String licenceText) throws CancelException {
         showLicense(textToShow, licenceText);
     }
