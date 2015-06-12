@@ -18,18 +18,21 @@
 package com.playonlinux.common.filter;
 
 import com.playonlinux.common.api.filter.Filter;
-import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
 import java.util.Observable;
 
-public class InstalledApplicationFilter extends Observable implements Filter<ShortcutDTO> {
+/**
+ * Filter for installed applications in the MainWindow
+ */
+public class InstalledApplicationFilter extends Observable implements Filter<InstalledApplicationDTO> {
 
     private boolean transaction = false;
 
     private String name = "";
-    private URL icon;
+    private URL icon = null;
 
     @Override
     public void startTransaction() { transaction = true; }
@@ -42,15 +45,8 @@ public class InstalledApplicationFilter extends Observable implements Filter<Sho
         }
     }
 
-    private void fireUpdate() {
-        if(!transaction){
-            this.setChanged();
-            this.notifyObservers();
-        }
-    }
-
     @Override
-    public boolean apply(ShortcutDTO item) {
+    public boolean apply(InstalledApplicationDTO item) {
         if(StringUtils.isBlank(name)) {
             return false;
         }
@@ -63,12 +59,20 @@ public class InstalledApplicationFilter extends Observable implements Filter<Sho
         return false;
     }
 
+    private void fireUpdate() {
+        if(!transaction){
+            this.setChanged();
+            this.notifyObservers();
+        }
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
+        fireUpdate();
     }
 
     public URL getIcon() {
@@ -77,5 +81,6 @@ public class InstalledApplicationFilter extends Observable implements Filter<Sho
 
     public void setIcon(URL icon) {
         this.icon = icon;
+        fireUpdate();
     }
 }

@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.common.filter.InstalledApplicationFilter;
 import com.playonlinux.common.list.FilterPromise;
 import com.playonlinux.domain.PlayOnLinuxException;
@@ -45,10 +45,9 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
 
-
     private EventHandlerMyApps eventHandlerMyApps;
+    private FilterPromise<InstalledApplicationDTO> applications;
     private InstalledApplicationFilter filter = new InstalledApplicationFilter();
-    private FilterPromise<ShortcutDTO> applications;
 
     public ApplicationListWidget(ViewLibrary parent) {
         eventHandlerMyApps = new EventHandlerMyApps();
@@ -71,10 +70,11 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     @Override
     public synchronized void update(Observable o, Object arg) {
-        System.out.print("\n Update apps");
+        // TODO: Something is calling this method twice on startup
+        System.out.print("\nUpdate");
         Platform.runLater(() -> {
             this.clear();
-            for (ShortcutDTO shortcut : applications) {
+            for (InstalledApplicationDTO shortcut : applications) {
                 addItem(shortcut.getName(), shortcut.getIcon());
             }
         });
@@ -86,6 +86,7 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     public void search(String searchText) {
         filter.setName(searchText);
+        System.out.print("\nFilter: " + filter.getName());
     }
 
     protected class ApplicationItem extends GridPane {

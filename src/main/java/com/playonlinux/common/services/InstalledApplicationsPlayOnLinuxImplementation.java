@@ -22,7 +22,7 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.common.api.filter.Filter;
 import com.playonlinux.common.api.services.BackgroundServiceManager;
 import com.playonlinux.common.api.services.InstalledApplications;
-import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.ShortcutSet;
@@ -43,8 +43,8 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     ShortcutSet shortcutSet;
-    private Iterator<ShortcutDTO> shortcutDtoIterator;
-    private List<ShortcutDTO> cache = null;
+    private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
+    private List<InstalledApplicationDTO> cache = null;
 
     InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
@@ -74,7 +74,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     @Override
     public synchronized void update(Observable o, Object arg) {
-        shortcutDtoIterator = new Iterator<ShortcutDTO>() {
+        shortcutDtoIterator = new Iterator<InstalledApplicationDTO>() {
             volatile int i = 0;
 
             @Override
@@ -84,7 +84,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
             }
 
             @Override
-            public ShortcutDTO next() {
+            public InstalledApplicationDTO next() {
                 assert(arg instanceof List);
                 List<Shortcut> shortcutList = ((List<Shortcut>) arg);
                 if(i >= shortcutList.size()) {
@@ -92,7 +92,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
                 }
                 Shortcut shortcut = shortcutList.get(i);
                 i++;
-                return new ShortcutDTO.Builder()
+                return new InstalledApplicationDTO.Builder()
                         .withName(shortcut.getShortcutName())
                         .withIcon(shortcut.getIconPath())
                         .build();
@@ -104,13 +104,13 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     }
 
     @Override
-    public synchronized Iterator<ShortcutDTO> iterator() {
+    public synchronized Iterator<InstalledApplicationDTO> iterator() {
         return this.shortcutDtoIterator;
     }
 
     @Override
-    public List<ShortcutDTO> getFiltered(Filter<ShortcutDTO> filter) {
-        List<ShortcutDTO> filtered = copyIterator(shortcutDtoIterator);
+    public List<InstalledApplicationDTO> getFiltered(Filter<InstalledApplicationDTO> filter) {
+        List<InstalledApplicationDTO> filtered = copyIterator(shortcutDtoIterator);
         //filtered.addAll(copy.stream().filter(filter::apply).collect(Collectors.toList()));
         return filtered;
     }
@@ -122,8 +122,8 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     }
 
     @Override
-    public ShortcutDTO[] toArray() {
-        return cache.toArray(new ShortcutDTO[cache.size()]);
+    public InstalledApplicationDTO[] toArray() {
+        return cache.toArray(new InstalledApplicationDTO[cache.size()]);
     }
 
     private void updateCache() {

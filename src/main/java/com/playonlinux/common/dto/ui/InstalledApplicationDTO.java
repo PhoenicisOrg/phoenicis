@@ -22,11 +22,11 @@ import com.playonlinux.common.api.dto.AbstractDTO;
 
 import java.net.URL;
 
-public class ShortcutDTO implements AbstractDTO {
+public class InstalledApplicationDTO implements AbstractDTO {
     private final URL icon;
     private final String name;
 
-    public ShortcutDTO(Builder builder) {
+    public InstalledApplicationDTO(Builder builder) {
         this.name = builder.name;
         this.icon = builder.icon;
     }
@@ -53,8 +53,8 @@ public class ShortcutDTO implements AbstractDTO {
             return this;
         }
 
-        public ShortcutDTO build() {
-            return new ShortcutDTO(this);
+        public InstalledApplicationDTO build() {
+            return new InstalledApplicationDTO(this);
         }
     }
 }
