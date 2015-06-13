@@ -33,6 +33,7 @@ import com.playonlinux.utils.ObservableDirectoryFiles;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Scan
 public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
@@ -45,6 +46,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     ShortcutSet shortcutSet;
     private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
     private List<InstalledApplicationDTO> cache = null;
+    private List<InstalledApplicationDTO> installedApplications;
 
     InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
@@ -99,6 +101,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
             }
         };
 
+        installedApplications = copyIterator(shortcutDtoIterator);
         this.setChanged();
         this.notifyObservers();
     }
@@ -110,9 +113,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     @Override
     public List<InstalledApplicationDTO> getFiltered(Filter<InstalledApplicationDTO> filter) {
-        List<InstalledApplicationDTO> filtered = copyIterator(shortcutDtoIterator);
-        //filtered.addAll(copy.stream().filter(filter::apply).collect(Collectors.toList()));
-        return filtered;
+        return installedApplications.stream().filter(filter::apply).collect(Collectors.toList());
     }
 
     @Override
@@ -127,13 +128,15 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     }
 
     private void updateCache() {
-
+        if(cache == null) {
+            cache = new ArrayList<>();
+        }
     }
 
-    public static <T> List<T> copyIterator(Iterator<T> iter) {
-        List<T> copy = new ArrayList<T>();
-        while (iter.hasNext())
-            copy.add(iter.next());
+    public static <T> List<T> copyIterator(Iterator<T> iterator) {
+        List<T> copy = new ArrayList<>();
+        while (iterator.hasNext())
+            copy.add(iterator.next());
         return copy;
     }
 

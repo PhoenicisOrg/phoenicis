@@ -47,16 +47,7 @@ public class InstalledApplicationFilter extends Observable implements Filter<Ins
 
     @Override
     public boolean apply(InstalledApplicationDTO item) {
-        if(StringUtils.isBlank(name)) {
-            return false;
-        }
-
-        if(StringUtils.isNotBlank(name)){
-            if(!item.getName().toLowerCase().contains(name)) {
-                return false;
-            }
-        }
-        return false;
+        return !StringUtils.isNotBlank(name) || item.getName().toLowerCase().contains(name);
     }
 
     private void fireUpdate() {

@@ -69,7 +69,6 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
     @Override
     public synchronized void update(Observable o, Object arg) {
         // TODO: Something is calling this method twice on startup. Could use some research
-        System.out.print("\nUpdate");
         Platform.runLater(() -> {
             this.clear();
             if(StringUtils.isBlank(filter.getName())) {
@@ -87,7 +86,6 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     public void search(String searchBar) {
         filter.setName(searchBar);
-        System.out.print("\nFilter: " + filter.getName());
     }
 
     protected class ApplicationItem extends GridPane {
