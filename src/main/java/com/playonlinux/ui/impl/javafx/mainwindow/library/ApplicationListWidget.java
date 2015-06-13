@@ -24,12 +24,16 @@ import com.playonlinux.common.list.FilterPromise;
 import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
 import java.util.Observable;
@@ -70,6 +74,9 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
         System.out.print("\nUpdate");
         Platform.runLater(() -> {
             this.clear();
+            if(StringUtils.isBlank(filter.getName())) {
+                parent.getSearchBar().setText("");
+            }
             for (InstalledApplicationDTO shortcut : installedApplications) {
                 addItem(shortcut.getName(), shortcut.getIcon());
             }
@@ -80,8 +87,8 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
         rootItem.getChildren().clear();
     }
 
-    public void search(TextField searchBar) {
-        filter.setName(searchBar.getText());
+    public void search(String searchBar) {
+        filter.setName(searchBar);
         System.out.print("\nFilter: " + filter.getName());
     }
 

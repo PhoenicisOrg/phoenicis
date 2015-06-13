@@ -38,6 +38,7 @@ public class ViewLibrary extends HBox {
     private Logger logger = Logger.getLogger(this.getClass());
     private ApplicationListWidget applicationListWidget;
     private final EventHandlerMyApps eventHandlerMyApps;
+    private TextField searchBar;
 
     public ViewLibrary(MainWindow parent) {
         this.parent = parent;
@@ -59,9 +60,9 @@ public class ViewLibrary extends HBox {
 
         this.getChildren().add(leftContent);
 
-        TextField searchBar = new TextField();
+        searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> {
-            applicationListWidget.search(searchBar);
+            applicationListWidget.search(searchBar.getText());
         });
 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", "Run a script");
@@ -101,5 +102,9 @@ public class ViewLibrary extends HBox {
 
     public EventHandlerMyApps getEventHandler() {
         return eventHandlerMyApps;
+    }
+
+    public TextField getSearchBar() {
+        return searchBar;
     }
 }
