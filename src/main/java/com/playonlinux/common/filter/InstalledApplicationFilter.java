@@ -47,6 +47,7 @@ public class InstalledApplicationFilter extends Observable implements Filter<Ins
 
     @Override
     public boolean apply(InstalledApplicationDTO item) {
+        // We want to return the whole list for empty search string. Otherwise compare strings.
         return !StringUtils.isNotBlank(name) || item.getName().toLowerCase().contains(name);
     }
 
