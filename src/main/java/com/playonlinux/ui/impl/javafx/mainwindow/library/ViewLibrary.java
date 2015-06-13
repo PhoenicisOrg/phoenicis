@@ -44,9 +44,10 @@ public class ViewLibrary extends HBox {
         this.parent = parent;
         this.getStyleClass().add("mainWindowScene");
 
+        eventHandlerMyApps = new EventHandlerMyApps();
+
         this.drawSideBar();
         this.drawContent();
-        eventHandlerMyApps = new EventHandlerMyApps();
     }
 
     private void drawContent() {

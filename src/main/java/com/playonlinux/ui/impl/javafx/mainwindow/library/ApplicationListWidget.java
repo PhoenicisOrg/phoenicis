@@ -45,18 +45,16 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
 
-    private EventHandlerMyApps eventHandlerMyApps;
     private FilterPromise<InstalledApplicationDTO> installedApplications;
-    private InstalledApplicationFilter filter = new InstalledApplicationFilter();
+    private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
 
     public ApplicationListWidget(ViewLibrary parent) {
-        eventHandlerMyApps = new EventHandlerMyApps();
         this.parent = parent;
         this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
         try {
-            installedApplications = new FilterPromise<>(eventHandlerMyApps.getInstalledApplications(), this.filter);
+            installedApplications = new FilterPromise<>(this.parent.getEventHandler().getInstalledApplications(), this.filter);
         } catch (PlayOnLinuxException e) {
             e.printStackTrace();
         }
