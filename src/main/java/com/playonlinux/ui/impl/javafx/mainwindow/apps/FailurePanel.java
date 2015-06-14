@@ -28,7 +28,7 @@ import javafx.scene.text.TextAlignment;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-class FailurePanel extends VBox {
+final class FailurePanel extends VBox {
     private final Button retryButton;
 
     public FailurePanel() {

@@ -31,8 +31,7 @@ import java.util.Observer;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-public final class CategoryView extends VBox implements Observer {
-
+final class CategoryView extends VBox implements Observer {
     private ObservableList<CenterCategoryDTO> categories;
     private List<CategorySelectionObserver> observers = new ArrayList<>();
 

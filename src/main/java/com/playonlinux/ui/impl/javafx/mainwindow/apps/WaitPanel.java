@@ -22,7 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
 
-class WaitPanel extends HBox {
+final class WaitPanel extends HBox {
     public WaitPanel() {
         ProgressIndicator progressIndicator = new ProgressIndicator();
         progressIndicator.setPrefWidth(64);

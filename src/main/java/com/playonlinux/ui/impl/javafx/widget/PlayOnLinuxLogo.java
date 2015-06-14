@@ -16,16 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.common;
+package com.playonlinux.ui.impl.javafx.widget;
 
-import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 
-public class ClickableImageView extends ImageView {
-    public ClickableImageView(Image image) {
-        super(image);
+import static com.playonlinux.lang.Localisation.translate;
 
-        this.setCursor(Cursor.HAND);
+public class PlayOnLinuxLogo extends HBox {
+    public PlayOnLinuxLogo() {
+        super();
+        Image logoImage = new Image(this.getClass().getResourceAsStream("/playonlinux.png"));
+        ImageView logoView = new ImageView(logoImage);
+        logoView.setFitWidth(28);
+        logoView.setFitHeight(28);
+
+        Text text = new Text(translate("${application.name}").toLowerCase());
+        text.setId("logoText");
+
+        this.getChildren().add(logoView);
+        this.getChildren().add(text);
+
     }
 }

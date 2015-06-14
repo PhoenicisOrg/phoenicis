@@ -26,9 +26,7 @@ import com.playonlinux.ui.api.UIEventHandler;
 
 
 @Scan
-public class EventHandlerCenter implements UIEventHandler {
-
-
+final class EventHandlerApps implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 

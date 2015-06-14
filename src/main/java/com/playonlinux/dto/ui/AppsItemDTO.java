@@ -60,6 +60,10 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         return requiresNoCd;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public static class Builder {
         public String name;
         public String categoryName;
