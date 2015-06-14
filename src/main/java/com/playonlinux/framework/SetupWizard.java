@@ -114,10 +114,9 @@ public class SetupWizard {
      * Show the content of a licence file
      * @param textToShow a message above the licence
      * @param licenceFile the licence file to display (with 'from java.io import File')
-     * @throws ScriptFailureException
      * @throws CancelException
      */
-    public void licenceFile(String textToShow, File licenceFile) throws ScriptFailureException, CancelException {
+    public void licenceFile(String textToShow, File licenceFile) throws CancelException {
         try {
             final FileInputStream content = new FileInputStream(licenceFile);
             final StringWriter writer = new StringWriter();
@@ -136,7 +135,7 @@ public class SetupWizard {
      * @throws ScriptFailureException
      * @throws CancelException
      */
-    public void licenceFile(String textToShow, String licenceFilePath) throws ScriptFailureException, CancelException {
+    public void licenceFile(String textToShow, String licenceFilePath) throws CancelException {
         licenceFile(textToShow, new File(licenceFilePath));
     }
 

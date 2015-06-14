@@ -27,8 +27,8 @@ import com.playonlinux.common.messages.CancelerMessage;
 import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 
 public class StepRepresentationLicence extends AbstractStepRepresentationWithHeader {
-    String textToShow;
-    String licenceText;
+    private String textToShow;
+    private String licenceText;
 
     public StepRepresentationLicence(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow, String licenceText) {
         super(parent, message);
