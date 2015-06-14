@@ -46,8 +46,7 @@ import java.util.Observer;
 import static com.playonlinux.lang.Localisation.translate;
 
 public class ViewApps extends HBox implements Observer {
-    private VBox failurePanel;
-    private Button retryButton;
+    private FailurePanel failurePanel;
     private ObservableArrayList<CenterCategoryDTO> categories;
     private FilterPromise<AppsItemDTO> centerItems;
     private final MiniatureListWidget availableInstallerListWidget;
@@ -58,7 +57,7 @@ public class ViewApps extends HBox implements Observer {
     private LeftSideBar leftContent;
     private TextField searchBar;
     private CategoryView categoryView;
-    private HBox progressIndicatorPanel;
+    private HBox waitPanel;
 
 
     public ViewApps(MainWindow parent) {
@@ -80,35 +79,11 @@ public class ViewApps extends HBox implements Observer {
     }
 
     private void initFailure() {
-        failurePanel = new VBox();
-        failurePanel.getStyleClass().add("rightPane");
-
-        failurePanel.setSpacing(10);
-        failurePanel.setAlignment(Pos.CENTER);
-
-        Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(translate("Connecting to ${application.name} failed.\n" +
-                "Please check your connection and try again."));
-        failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
-
-        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
-        retryImage.setFitWidth(16);
-        retryImage.setFitHeight(16);
-        retryButton = new Button(translate("Retry"), retryImage);
-
-        failurePanel.getChildren().addAll(failureNotificationLbl, retryButton);
+        failurePanel = new FailurePanel();
     }
 
     private void initWait() {
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setPrefWidth(64);
-        progressIndicator.setPrefHeight(64);
-
-        progressIndicatorPanel = new HBox();
-        progressIndicatorPanel.getStyleClass().add("rightPane");
-
-        progressIndicatorPanel.getChildren().add(progressIndicator);
-        progressIndicatorPanel.setAlignment(Pos.CENTER);
+        waitPanel = new WaitPanel();
     }
 
 
@@ -138,7 +113,7 @@ public class ViewApps extends HBox implements Observer {
     }
 
     private void removeRightItems() {
-        this.getChildren().removeAll(availableInstallerListWidget, progressIndicatorPanel, failurePanel);
+        this.getChildren().removeAll(availableInstallerListWidget, waitPanel, failurePanel);
     }
 
     private void showContent() {
@@ -149,7 +124,7 @@ public class ViewApps extends HBox implements Observer {
 
     private void showWait() {
         this.removeRightItems();
-        this.getChildren().add(progressIndicatorPanel);
+        this.getChildren().add(waitPanel);
     }
 
     private void showFailure() {
@@ -170,7 +145,7 @@ public class ViewApps extends HBox implements Observer {
 
     public void setUpEvents() {
         centerItems.addObserver(this);
-        retryButton.setOnMouseClicked(event -> this.eventHandlerCenter.updateAvailableInstallers());
+        failurePanel.getRetryButton().setOnMouseClicked(event -> this.eventHandlerCenter.updateAvailableInstallers());
     }
 
     @Override
