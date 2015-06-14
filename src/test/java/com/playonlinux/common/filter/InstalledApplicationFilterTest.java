@@ -30,6 +30,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.assertEquals;
+
 public class InstalledApplicationFilterTest {
 
     private MockFilterObserver mockFilterObserver;
@@ -42,25 +44,25 @@ public class InstalledApplicationFilterTest {
     @Test
     public void testFilterWithString() {
         mockFilterObserver.setName("St");
-        assert mockFilterObserver.getFilteredInstalledApplications().size() == 1;
+        assertEquals(1, mockFilterObserver.getFilteredInstalledApplications().size());
     }
 
     @Test
     public void testFilterWithEmptyString() {
         mockFilterObserver.setName("");
-        assert mockFilterObserver.getFilteredInstalledApplications().size() == 1;
+        assertEquals(1, mockFilterObserver.getFilteredInstalledApplications().size());
     }
 
     @Test
     public void testFilterWithWrongString() {
         mockFilterObserver.setName("WRONG");
-        assert mockFilterObserver.getFilteredInstalledApplications().size() == 0;
+        assertEquals(0, mockFilterObserver.getFilteredInstalledApplications().size());
     }
 
     public class MockFilterObserver implements Observer {
 
         private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
-        private List<InstalledApplicationDTO> installedApplications;
+        private final List<InstalledApplicationDTO> installedApplications;
         private List<InstalledApplicationDTO> filteredInstalledApplications;
 
         MockFilterObserver() throws MalformedURLException{
@@ -78,8 +80,12 @@ public class InstalledApplicationFilterTest {
             filteredInstalledApplications = installedApplications.stream().filter(filter::apply).collect(Collectors.toList());
         }
 
-        public void setName(String name) { filter.setName(name); }
+        public void setName(String name) {
+            filter.setName(name);
+        }
 
-        public List<InstalledApplicationDTO> getFilteredInstalledApplications() { return this.filteredInstalledApplications; }
+        public List<InstalledApplicationDTO> getFilteredInstalledApplications() {
+            return this.filteredInstalledApplications;
+        }
     }
 }
