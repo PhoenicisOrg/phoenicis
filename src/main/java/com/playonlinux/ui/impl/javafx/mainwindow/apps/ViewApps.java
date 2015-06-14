@@ -24,19 +24,15 @@ import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.utils.filter.CenterItemFilter;
 import com.playonlinux.utils.list.FilterPromise;
 import com.playonlinux.utils.list.ObservableArrayList;
-import com.playonlinux.ui.impl.javafx.common.MiniatureListWidget;
+import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Observable;
@@ -44,24 +40,24 @@ import java.util.Observer;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-public class ViewApps extends HBox implements Observer {
-    private VBox failurePanel;
-    private Button retryButton;
+final public class ViewApps extends HBox implements Observer {
+    private FailurePanel failurePanel;
     private ObservableArrayList<CenterCategoryDTO> categories;
     private FilterPromise<AppsItemDTO> centerItems;
     private final MiniatureListWidget availableInstallerListWidget;
 
-    private final EventHandlerCenter eventHandlerCenter;
+    private final EventHandlerApps eventHandlerApps;
     private final CenterItemFilter filter = new CenterItemFilter();
 
     private LeftSideBar leftContent;
     private TextField searchBar;
     private CategoryView categoryView;
-    private HBox progressIndicatorPanel;
+    private HBox waitPanel;
 
+    private Node visiblePane;
 
     public ViewApps(MainWindow parent) {
-        eventHandlerCenter = new EventHandlerCenter();
+        eventHandlerApps = new EventHandlerApps();
         this.getStyleClass().add("mainWindowScene");
 
         availableInstallerListWidget = MiniatureListWidget.create();
@@ -72,42 +68,18 @@ public class ViewApps extends HBox implements Observer {
         this.initFailure();
 
         categories = new ObservableArrayList<>();
-        centerItems = new FilterPromise<>(eventHandlerCenter.getRemoteAvailableInstallers(), this.filter);
+        centerItems = new FilterPromise<>(eventHandlerApps.getRemoteAvailableInstallers(), this.filter);
 
         this.drawSideBar();
         this.showWait();
     }
 
     private void initFailure() {
-        failurePanel = new VBox();
-        failurePanel.getStyleClass().add("rightPane");
-
-        failurePanel.setSpacing(10);
-        failurePanel.setAlignment(Pos.CENTER);
-
-        Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(translate("Connecting to ${application.name} failed.\n" +
-                "Please check your connection and try again."));
-        failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
-
-        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
-        retryImage.setFitWidth(16);
-        retryImage.setFitHeight(16);
-        retryButton = new Button(translate("Retry"), retryImage);
-
-        failurePanel.getChildren().addAll(failureNotificationLbl, retryButton);
+        failurePanel = new FailurePanel();
     }
 
     private void initWait() {
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setPrefWidth(64);
-        progressIndicator.setPrefHeight(64);
-
-        progressIndicatorPanel = new HBox();
-        progressIndicatorPanel.getStyleClass().add("rightPane");
-
-        progressIndicatorPanel.getChildren().add(progressIndicator);
-        progressIndicatorPanel.setAlignment(Pos.CENTER);
+        waitPanel = new WaitPanel();
     }
 
 
@@ -136,24 +108,29 @@ public class ViewApps extends HBox implements Observer {
         this.getChildren().add(leftContent);
     }
 
-    private void removeRightItems() {
-        this.getChildren().removeAll(availableInstallerListWidget, progressIndicatorPanel, failurePanel);
-    }
 
     private void showContent() {
-        this.removeRightItems();
-        this.getChildren().add(availableInstallerListWidget);
-        this.addApplicationsToList();
+        show(availableInstallerListWidget);
     }
 
     private void showWait() {
-        this.removeRightItems();
-        this.getChildren().add(progressIndicatorPanel);
+        show(waitPanel);
     }
 
     private void showFailure() {
-        this.removeRightItems();
-        this.getChildren().add(failurePanel);
+        show(failurePanel);
+    }
+
+    private void showAppDetails(AppsItemDTO item) {
+        show(new AppPanel(item));
+    }
+
+    private void show(Node nodeToShow) {
+        if(visiblePane != null) {
+            this.getChildren().remove(visiblePane);
+        }
+        this.visiblePane = nodeToShow;
+        this.getChildren().add(visiblePane);
     }
 
     private void addApplicationsToList() {
@@ -161,14 +138,17 @@ public class ViewApps extends HBox implements Observer {
 
         if(centerItems != null) {
             for(AppsItemDTO item : centerItems){
-                availableInstallerListWidget.addItem(item);
+                Node itemNode = availableInstallerListWidget.addItem(item.getName());
+                itemNode.setOnMouseClicked((evt) -> showAppDetails(item));
             }
         }
     }
 
+
+
     public void setUpEvents() {
         centerItems.addObserver(this);
-        retryButton.setOnMouseClicked(event -> this.eventHandlerCenter.updateAvailableInstallers());
+        failurePanel.getRetryButton().setOnMouseClicked(event -> this.eventHandlerApps.updateAvailableInstallers());
     }
 
     @Override

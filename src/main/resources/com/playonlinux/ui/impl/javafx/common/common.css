@@ -107,6 +107,13 @@
     -fx-translate-y: -0.1em;
 }
 
+.title {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 1.3em;
+    -fx-alignment: baseline-left;
+    -fx-translate-y: -0.1em;
+}
+
 .leftButton {
     -fx-cursor: hand;
 }
@@ -149,4 +156,9 @@
 }
 .miniatureListElement:hover {
     -fx-background-color: #EFEFEF;
+}
+
+.appPresentation {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 0.5em;
 }

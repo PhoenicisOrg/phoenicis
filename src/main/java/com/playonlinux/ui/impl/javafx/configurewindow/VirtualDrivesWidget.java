@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.ui.impl.javafx.common.SimpleIconListWidget;
+import com.playonlinux.ui.impl.javafx.widget.SimpleIconListWidget;
 import javafx.application.Platform;
 
 import java.util.Observable;
