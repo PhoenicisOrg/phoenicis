@@ -16,37 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain.lang;
+package com.playonlinux.lang;
 
 import com.google.common.base.Preconditions;
-import org.fedorahosted.tennera.jgettext.Catalog;
-import org.fedorahosted.tennera.jgettext.Message;
 
 /**
- * Language bundle from gnu gettext PO files using jgettext.
+ * LanguageBundle that doesn't translate at all.
  */
-public class CatalogLanguageBundle implements LanguageBundle {
-    private final Catalog catalog;
+public class FallbackLanguageBundle implements LanguageBundle {
+    private static final FallbackLanguageBundle instance = new FallbackLanguageBundle();
 
-    public CatalogLanguageBundle(Catalog catalog) {
-        this.catalog = catalog;
+    public static FallbackLanguageBundle getInstance() {
+        return instance;
     }
+
+    private FallbackLanguageBundle() {}
 
     @Override
     public String translate(String toTranslate) {
-        // toTranslate null check below
-        return translate(null, toTranslate);
+        Preconditions.checkNotNull(toTranslate, "toTranslate");
+        return toTranslate;
     }
 
     @Override
     public String translate(String context, String toTranslate) {
         Preconditions.checkNotNull(toTranslate, "toTranslate");
-
-        Message message = catalog.locateMessage(context, toTranslate);
-        if (message == null) {
-            return toTranslate;
-        } else {
-            return message.getMsgstr();
-        }
+        return toTranslate;
     }
 }

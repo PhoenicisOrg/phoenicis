@@ -18,7 +18,7 @@
 
 package com.playonlinux.messages;
 
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.installer.CancelException;
 
 public abstract class CancelerSynchroneousMessage<RESULT> extends SynchroneousMessage<RESULT>
         implements CancelerMessage {

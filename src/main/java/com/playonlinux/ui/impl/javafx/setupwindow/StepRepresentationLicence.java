@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;

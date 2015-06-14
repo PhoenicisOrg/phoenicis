@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain.lang;
+package com.playonlinux.lang;
 
 /**
  * Interface to translate UI strings to different languages.

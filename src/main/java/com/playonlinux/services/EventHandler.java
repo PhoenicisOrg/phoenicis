@@ -19,7 +19,7 @@
 package com.playonlinux.services;
 
 import com.playonlinux.utils.Progressable;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 import java.io.File;
 import java.io.IOException;

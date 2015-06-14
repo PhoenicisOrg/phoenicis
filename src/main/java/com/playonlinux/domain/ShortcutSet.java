@@ -18,6 +18,7 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.installer.Script;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 import org.apache.log4j.Logger;
 

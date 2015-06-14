@@ -20,8 +20,8 @@ package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.utils.Progressable;
-import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.domain.Script;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.installer.Script;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.webservice.RemoteInstallerDownloader;

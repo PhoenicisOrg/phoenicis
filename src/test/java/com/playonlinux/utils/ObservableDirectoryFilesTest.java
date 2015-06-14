@@ -19,7 +19,7 @@
 package com.playonlinux.utils;
 
 import com.google.common.io.Files;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

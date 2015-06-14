@@ -16,12 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.installer;
 
-public interface ScriptTemplate {
-    void validate();
 
-    void main();
+import com.playonlinux.app.PlayOnLinuxException;
 
-    void rollback();
+public class CancelException extends PlayOnLinuxException {
+    private static final String DEFAULT_MESSAGE = "The action has been canceled by the user";
+
+    public CancelException() {
+        super(DEFAULT_MESSAGE);
+    }
+    public CancelException(String message) {
+        super(message);
+    }
+    public CancelException(String message, Throwable parent) {
+        super(message, parent);
+    }
+    public CancelException(Throwable parent) {
+        super(DEFAULT_MESSAGE, parent);
+    }
+
 }

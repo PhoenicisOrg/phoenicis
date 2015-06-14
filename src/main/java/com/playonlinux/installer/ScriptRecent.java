@@ -16,10 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.installer;
 
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
+import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.BufferedReader;
@@ -28,25 +29,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 
-public class ScriptLegacy extends Script {
-    private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP PUBLIC KEY BLOCK-----";
-    private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
-
-
-    protected ScriptLegacy(File script) {
+public class ScriptRecent extends Script {
+    protected ScriptRecent(File script) {
         super(script);
     }
 
     @Override
     protected void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException {
-        // FIXME: Use the properties here
-        Script playonlinuxBashInterpreter = new ScriptRecent(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
-        String filePath = playonlinuxBashInterpreter.getScriptFile().getAbsolutePath();
-        pythonInterpreter.set("__file__", filePath);
-        pythonInterpreter.set("__scriptToWrap__", this.getScriptFile().getAbsolutePath());
+        pythonInterpreter.execfile(this.getScriptFile().getAbsolutePath());
+        PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
 
-        playonlinuxBashInterpreter.executeScript(pythonInterpreter);
+        pythonInstaller.exec();
     }
+
+
 
     @Override
     public String extractSignature() throws ParseException, IOException {
@@ -57,19 +53,24 @@ public class ScriptLegacy extends Script {
         Boolean insideSignature = false;
         do {
             readLine = bufferReader.readLine();
-            if(BEGIN_PGP_KEY_BLOCK_LINE.equals(readLine)) {
+            if(readLine == null) {
+                break;
+            }
+            if(readLine.contains("-----BEGIN PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
                 insideSignature = true;
             }
 
             if(insideSignature) {
-                signatureBuilder.append(readLine);
+                if(readLine.startsWith("#")) {
+                    signatureBuilder.append(readLine.substring(1, readLine.length()).trim());
+                }
                 signatureBuilder.append("\n");
             }
 
-            if(END_PGP_KEY_BLOCK_LINE.equals(readLine)) {
+            if(readLine.contains("-----END PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
                 insideSignature = false;
             }
-        } while(readLine != null);
+        } while(true);
 
         String signature = signatureBuilder.toString().trim();
 

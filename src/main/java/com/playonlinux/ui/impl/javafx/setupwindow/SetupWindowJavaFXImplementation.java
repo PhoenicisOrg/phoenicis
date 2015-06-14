@@ -23,7 +23,7 @@ import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.messages.CancelerSynchroneousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchroneousMessage;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.utils.OperatingSystem;
 

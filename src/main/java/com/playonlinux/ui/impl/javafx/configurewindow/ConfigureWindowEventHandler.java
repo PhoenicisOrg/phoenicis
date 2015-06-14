@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.services.EventHandler;
 import com.playonlinux.services.InstalledVirtualDrives;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;

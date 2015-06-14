@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.ui.impl.javafx.mainwindow.apps.ViewApps;
@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
 

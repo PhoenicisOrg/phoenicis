@@ -23,7 +23,7 @@ import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.messages.*;
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.installer.CancelException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
@@ -35,7 +35,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 @Scan
 public class SetupWizard {

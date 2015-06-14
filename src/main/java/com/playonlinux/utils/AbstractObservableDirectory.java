@@ -19,7 +19,7 @@
 package com.playonlinux.utils;
 
 import com.playonlinux.services.BackgroundService;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;

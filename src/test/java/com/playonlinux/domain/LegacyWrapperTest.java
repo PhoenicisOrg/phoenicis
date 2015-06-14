@@ -21,6 +21,7 @@ package com.playonlinux.domain;
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
+import com.playonlinux.installer.Script;
 import org.junit.Before;
 import org.junit.Test;
 

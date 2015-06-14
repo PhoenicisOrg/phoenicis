@@ -33,7 +33,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 public class SimpleIconListWidget
         extends TreeView<SimpleIconListWidget.SimpleIconListItem> {

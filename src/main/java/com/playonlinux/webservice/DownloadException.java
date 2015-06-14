@@ -18,7 +18,7 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 public class DownloadException extends PlayOnLinuxException {
     public DownloadException(String message) {

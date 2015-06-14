@@ -20,7 +20,7 @@ package com.playonlinux.ui;
 
 import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchroneousMessage;
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.installer.CancelException;
 
 public interface UIMessageSender <RETURN> {
     RETURN synchroneousSendAndGetResult(SynchroneousMessage<RETURN> message) throws CancelException;

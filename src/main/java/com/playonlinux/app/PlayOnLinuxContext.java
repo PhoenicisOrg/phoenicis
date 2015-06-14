@@ -18,7 +18,6 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.utils.ReplacableProperties;

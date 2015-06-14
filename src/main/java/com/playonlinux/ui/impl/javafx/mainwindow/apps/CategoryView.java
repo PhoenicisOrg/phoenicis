@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 public final class CategoryView extends VBox implements Observer {
 

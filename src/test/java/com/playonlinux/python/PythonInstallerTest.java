@@ -19,7 +19,7 @@
 package com.playonlinux.python;
 
 import com.playonlinux.MockContextConfig;
-import com.playonlinux.domain.ScriptTemplate;
+import com.playonlinux.installer.ScriptTemplate;
 import com.playonlinux.framework.ScriptFailureException;
 
 import com.playonlinux.injection.AbstractConfigFile;

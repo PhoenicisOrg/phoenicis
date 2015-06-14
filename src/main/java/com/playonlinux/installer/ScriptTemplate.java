@@ -16,16 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.installer;
 
-public class PlayOnLinuxException extends Exception {
-    public PlayOnLinuxException(String message) {
-        this(message, null);
-    }
+public interface ScriptTemplate {
+    void validate();
 
-    public PlayOnLinuxException(String message, Throwable parent) {
-        super(message);
-        this.initCause(parent);
-    }
+    void main();
 
+    void rollback();
 }

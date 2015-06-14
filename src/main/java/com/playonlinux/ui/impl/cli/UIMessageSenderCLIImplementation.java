@@ -21,7 +21,7 @@ package com.playonlinux.ui.impl.cli;
 import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchroneousMessage;
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.installer.CancelException;
 
 public class UIMessageSenderCLIImplementation<T> implements UIMessageSender<T> {
     @Override

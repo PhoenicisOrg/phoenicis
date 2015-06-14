@@ -42,7 +42,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.Observable;
 import java.util.Observer;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 public class ViewApps extends HBox implements Observer {
     private VBox failurePanel;

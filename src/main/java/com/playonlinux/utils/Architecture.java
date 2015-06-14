@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 public enum Architecture {
     I386,

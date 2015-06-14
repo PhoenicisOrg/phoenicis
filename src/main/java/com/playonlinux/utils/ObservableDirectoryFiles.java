@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 import java.io.File;
 import java.util.Arrays;

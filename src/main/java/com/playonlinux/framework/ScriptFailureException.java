@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.installer.CancelException;
 
 
 public class ScriptFailureException extends CancelException {

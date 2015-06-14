@@ -16,15 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.lang;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.lang.LanguageBundle;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.utils.ReplacableProperties;
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
-public @interface ScriptClass {
+@Scan
+public final class Localisation {
+    @Inject
+    private static LanguageBundle bundle;
+    @Inject
+    private static PlayOnLinuxContext playOnLinuxContext;
 
+    // This is a static class
+    private Localisation() {
+
+    }
+
+    public static String translate(String stringToTranslate) {
+        ReplacableProperties properties;
+        properties = playOnLinuxContext.loadProperties();
+
+        return properties.replaceAllVariables(bundle.translate(stringToTranslate));
+    }
 }

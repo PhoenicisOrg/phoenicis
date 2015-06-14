@@ -20,7 +20,7 @@ package com.playonlinux;
 
 import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 

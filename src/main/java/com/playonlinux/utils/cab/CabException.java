@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils.cab;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 public class CabException extends PlayOnLinuxException {
     public CabException(String message) {

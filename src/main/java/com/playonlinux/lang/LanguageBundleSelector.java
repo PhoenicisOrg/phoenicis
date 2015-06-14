@@ -16,9 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain.lang;
+package com.playonlinux.lang;
 
-import com.playonlinux.domain.Localisation;
 import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;

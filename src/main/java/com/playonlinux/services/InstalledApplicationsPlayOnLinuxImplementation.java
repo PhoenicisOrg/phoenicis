@@ -21,7 +21,7 @@ package com.playonlinux.services;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.domain.Shortcut;
 import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.injection.Inject;

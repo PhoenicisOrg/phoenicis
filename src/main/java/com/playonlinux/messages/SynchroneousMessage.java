@@ -18,7 +18,7 @@
 
 package com.playonlinux.messages;
 
-import com.playonlinux.domain.CancelException;
+import com.playonlinux.installer.CancelException;
 
 import java.util.concurrent.Semaphore;
 

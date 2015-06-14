@@ -16,23 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.installer;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class CancelException extends PlayOnLinuxException {
-    private static final String DEFAULT_MESSAGE = "The action has been canceled by the user";
-
-    public CancelException() {
-        super(DEFAULT_MESSAGE);
-    }
-    public CancelException(String message) {
-        super(message);
-    }
-    public CancelException(String message, Throwable parent) {
-        super(message, parent);
-    }
-    public CancelException(Throwable parent) {
-        super(DEFAULT_MESSAGE, parent);
-    }
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.SOURCE)
+public @interface ScriptClass {
 
 }
