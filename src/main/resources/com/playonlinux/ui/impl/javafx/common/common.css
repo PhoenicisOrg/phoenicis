@@ -85,7 +85,7 @@
 .leftPaneButtons:hover {
 	-fx-background-color: #D3D3D3;
 	-fx-background-insets: 0,1,2;
-    -fx-background-radius: 3,2,1;
+	-fx-background-radius: 3,2,1;
 }
 
 #menuPane {
