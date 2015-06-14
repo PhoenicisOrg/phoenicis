@@ -113,13 +113,13 @@ public class SetupWizard {
     /**
      * Show the content of a licence file
      * @param textToShow a message above the licence
-     * @param licenceFile the path to the licence file
+     * @param licenceFile the licence file to display (with 'from java.io import File')
      * @throws ScriptFailureException
      * @throws CancelException
      */
-    public void licence(String textToShow, String licenceFile) throws ScriptFailureException, CancelException {
+    public void licence(String textToShow, File licenceFile) throws ScriptFailureException, CancelException {
         try {
-            final FileInputStream content = new FileInputStream(new File(licenceFile));
+            final FileInputStream content = new FileInputStream(licenceFile);
             final StringWriter writer = new StringWriter();
             IOUtils.copy(content, writer, "UTF-8");
             content.close();
@@ -135,7 +135,7 @@ public class SetupWizard {
      * @param licenceText the licence text to show
      * @throws CancelException
      */
-    public void customLicence(String textToShow, String licenceText) throws CancelException {
+    public void licence(String textToShow, String licenceText) throws CancelException {
         showLicense(textToShow, licenceText);
     }
     
