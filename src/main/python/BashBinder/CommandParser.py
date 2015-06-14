@@ -22,8 +22,6 @@ import os
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
 
-from java.io import File
-
 
 class CommandParser(object):
     def __init__(self, setupWindowManager, command):
@@ -111,9 +109,9 @@ class CommandParser(object):
         def POL_SetupWindow_licence(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
-            licenceFile = self.command[5]
+            licenceFilePath = self.command[5]
             
-            self.setupWindowManager.getWindow(setupWindowId).licence(textToShow, File(licenceFile))
+            self.setupWindowManager.getWindow(setupWindowId).licenceFile(textToShow, licenceFilePath)
 
         def POL_Throw(self):
             raise ScriptFailureException(self.command[3])
