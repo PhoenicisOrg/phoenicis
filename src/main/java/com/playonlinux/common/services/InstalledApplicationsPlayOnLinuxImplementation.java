@@ -45,7 +45,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
 
     ShortcutSet shortcutSet;
     private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
-    private List<InstalledApplicationDTO> cache = null;
+    private List<InstalledApplicationDTO> cache;
     private List<InstalledApplicationDTO> installedApplications;
 
     InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {

@@ -24,16 +24,14 @@ import com.playonlinux.common.list.FilterPromise;
 import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.Observable;
@@ -42,11 +40,12 @@ import java.util.Observer;
 import static com.playonlinux.domain.Localisation.translate;
 
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
+
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
-
-    private FilterPromise<InstalledApplicationDTO> installedApplications;
     private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
+    private FilterPromise<InstalledApplicationDTO> installedApplications;
+    private Logger logger = Logger.getLogger(this.getClass());
 
     public ApplicationListWidget(ViewLibrary parent) {
         this.parent = parent;
@@ -56,7 +55,11 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
         try {
             installedApplications = new FilterPromise<>(this.parent.getEventHandler().getInstalledApplications(), this.filter);
         } catch (PlayOnLinuxException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to fetch installed applications."));
+            alert.setContentText(String.format("The error was: %s", e));
+            alert.show();
+            logger.error(e);
         }
         installedApplications.addObserver(this);
     }
