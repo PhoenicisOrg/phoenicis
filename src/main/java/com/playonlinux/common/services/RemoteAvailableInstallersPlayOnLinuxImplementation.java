@@ -88,11 +88,9 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
         try {
             if(downloadEnvelopeDto.getEnvelopeContent() != null) {
-                List<CategoryDTO> availableCategories = new ArrayList<>(
+                categoriesDTO = new ArrayList<>(
                         downloadEnvelopeDto.getEnvelopeContent()
                 );
-
-                categoriesDTO = availableCategories;
             }
         } finally {
             cache = null; //invalidate cache

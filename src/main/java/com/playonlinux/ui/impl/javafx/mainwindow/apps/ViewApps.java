@@ -175,7 +175,7 @@ public class ViewApps extends HBox implements Observer {
     public void update(Observable o, Object arg) {
         RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) centerItems.getSource();
         Platform.runLater(() -> {
-            if(StringUtils.isBlank(filter.getTitle())) {
+            if (StringUtils.isBlank(filter.getTitle())) {
                 searchBar.setText("");
             }
             update(remoteAvailableInstallers);

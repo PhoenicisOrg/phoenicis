@@ -21,7 +21,7 @@ package com.playonlinux.utils.cab;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class AbstractCabStructure {
+abstract class AbstractCabStructure {
     protected final long offset;
     protected int structureSize;
 

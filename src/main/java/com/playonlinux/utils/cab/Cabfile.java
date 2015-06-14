@@ -32,7 +32,7 @@ public class Cabfile {
         try {
             this.archiveStream = new FileInputStream(archiveFile);
         } catch (FileNotFoundException e) {
-            throw new CabException(String.format("The file %s is not found"), e);
+            throw new CabException(String.format("The file %s is not found", archiveFile), e);
         }
     }
 
