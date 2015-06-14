@@ -65,6 +65,7 @@ public class ViewLibrary extends HBox {
         searchBar.setOnKeyReleased(event -> applicationListWidget.search(searchBar.getText()));
 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", "Run a script");
+        this.runScript.getStyleClass().add("leftPaneButtons");
 
         LeftSpacer spacer = new LeftSpacer();
         leftContent.getChildren().addAll(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript);

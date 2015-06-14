@@ -18,10 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.utils.list.ObservableList;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
+import com.playonlinux.utils.list.ObservableList;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -51,6 +51,7 @@ final class CategoryView extends VBox implements Observer {
         if (categories.size() > 0) {
             for (CenterCategoryDTO category : categories) {
                 LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
+                categoryButton.getStyleClass().add("leftPaneButtons");
                 this.getChildren().add(categoryButton);
                 categoryButton.setOnMouseClicked(event -> {
                     this.fireCategorySelection(categoryButton.getName());
