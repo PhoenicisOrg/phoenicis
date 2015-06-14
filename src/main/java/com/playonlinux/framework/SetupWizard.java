@@ -99,6 +99,30 @@ public class SetupWizard {
         );
     }
 
+    /**
+     * Show a default script presentation
+     * @param programName the name of the program
+     * @param programEditor the editor of the program
+     * @param editorIRL the editor website URL
+     * @param scriptorName the scriptor name
+     * @param prefixName the name of the prefix for that program
+     * @throws CancelException
+     */
+    public void presentation(String programName, String programEditor, String editorURL, String scriptorName, String prefixName) throws CancelException {
+        final String textToShow = String.format(translate("This wizard will help you install %1$s on your computer.\n\n"
+                + "This program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s"
+                + "\n\n%1$s will be installed in: ${application.user.wineprefix}%5$s\n\n"
+                + "${application.name} is not responsible for anything that might happen as a result of using"
+                + " these scripts.\n\nClick Next to start")
+                , programName, programEditor, editorURL, scriptorName, prefixName);
+        presentation(textToShow);
+    }
+
+    /**
+     * Show a free script presentation
+     * @param textToShow the free presentation text to show
+     * @throws CancelException
+     */
     public void presentation(String textToShow) throws CancelException {
         messageSender.synchroneousSendAndGetResult(
                 new CancelerSynchroneousMessage() {
@@ -160,7 +184,6 @@ public class SetupWizard {
      * Ask the user to enter a value
      * @param textToShow a text that will be shown
      * @return the value the user entered
-     * @throws InterruptedException
      * @throws CancelException
      */
     public String textbox(String textToShow) throws CancelException {
@@ -172,7 +195,6 @@ public class SetupWizard {
      * @param textToShow a text that will be shown
      * @param defaultValue a default value
      * @return the value the user entered
-     * @throws InterruptedException
      * @throws CancelException
      */
     public String textbox(String textToShow, String defaultValue) throws CancelException {
@@ -191,7 +213,6 @@ public class SetupWizard {
      * @param textToShow a text that will be shown
      * @param menuItems a list containing the elements of the showMenuStep
      * @return the value the user entered (as string)
-     * @throws InterruptedException
      * @throws CancelException
      */
     public String menu(String textToShow, List<String> menuItems) throws CancelException {
