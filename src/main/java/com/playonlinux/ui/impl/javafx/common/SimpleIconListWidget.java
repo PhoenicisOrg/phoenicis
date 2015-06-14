@@ -33,7 +33,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 public class SimpleIconListWidget
         extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
@@ -104,6 +104,7 @@ public class SimpleIconListWidget
         return item.getValue().getValue();
     }
 
+
     protected class SimpleIconListItem extends GridPane {
         private String itemName;
 
@@ -120,7 +121,6 @@ public class SimpleIconListWidget
         public String getValue() {
             return itemName;
         }
-
 
         private class SimpleIconListItemLabel extends Pane {
             SimpleIconListItemLabel(String itemName) {

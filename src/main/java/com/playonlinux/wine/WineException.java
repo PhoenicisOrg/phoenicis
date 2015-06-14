@@ -18,7 +18,7 @@
 
 package com.playonlinux.wine;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 public class WineException extends PlayOnLinuxException {
     

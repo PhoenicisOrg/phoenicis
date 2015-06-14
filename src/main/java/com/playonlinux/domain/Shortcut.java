@@ -18,6 +18,8 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.installer.Script;
+
 import java.io.File;
 import java.net.URL;
 

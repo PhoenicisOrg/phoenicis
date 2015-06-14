@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.installer.ScriptClass;
 
 import java.io.File;
 

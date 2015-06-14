@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 public class ViewLibrary extends HBox {
 

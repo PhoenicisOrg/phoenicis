@@ -18,6 +18,7 @@
 
 package com.playonlinux.domain;
 
+import com.playonlinux.installer.Script;
 import org.junit.Test;
 
 import java.io.File;

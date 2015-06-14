@@ -18,12 +18,12 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.common.api.ui.Controller;
+import com.playonlinux.ui.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.domain.lang.FallbackLanguageBundle;
-import com.playonlinux.domain.lang.LanguageBundle;
+import com.playonlinux.installer.CancelException;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.lang.FallbackLanguageBundle;
+import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;

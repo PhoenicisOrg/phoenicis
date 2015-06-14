@@ -18,13 +18,13 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.installer.CancelException;
+import com.playonlinux.installer.ScriptClass;
 
 import java.io.*;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 /* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts.sh syntax
  */

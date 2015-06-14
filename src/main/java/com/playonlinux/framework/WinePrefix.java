@@ -19,11 +19,11 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.common.api.services.BackgroundServiceManager;
-import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.PlayOnLinuxException;
-import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.installer.CancelException;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.installer.ScriptClass;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.Architecture;
@@ -37,7 +37,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 @Scan
 @ScriptClass

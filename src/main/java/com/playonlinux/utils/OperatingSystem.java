@@ -19,7 +19,7 @@
 package com.playonlinux.utils;
 
 
-import com.playonlinux.domain.PlayOnLinuxException;
+import com.playonlinux.app.PlayOnLinuxException;
 
 public enum OperatingSystem {
     MACOSX ("Mac OS X"),

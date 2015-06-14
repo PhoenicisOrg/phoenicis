@@ -18,9 +18,9 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.domain.CancelException;
-import com.playonlinux.domain.ScriptClass;
+import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.installer.CancelException;
+import com.playonlinux.installer.ScriptClass;
 import com.playonlinux.utils.Checksum;
 import com.playonlinux.webservice.DownloadException;
 import com.playonlinux.webservice.HTTPDownloader;
@@ -31,7 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
-import static com.playonlinux.domain.Localisation.translate;
+import static com.playonlinux.lang.Localisation.translate;
 
 @ScriptClass
 @SuppressWarnings("unused")
