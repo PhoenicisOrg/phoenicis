@@ -61,6 +61,10 @@
     -fx-cursor: hand;
 }
 
+.menuEntry:hover {
+    -fx-fill: black;
+}
+
 .mainWindowScene {
     -fx-min-height: 35.2em;
     -fx-fit-to-height: true;
