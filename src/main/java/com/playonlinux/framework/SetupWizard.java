@@ -31,7 +31,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Formatter;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -110,10 +109,13 @@ public class SetupWizard {
      * @throws CancelException
      */
     public void presentation(String programName, String programEditor, String editorURL, String scriptorName, String prefixName) throws CancelException {
-        StringBuffer buffer = new StringBuffer();
-        Formatter formatter = new Formatter(buffer);
-        formatter.format("This wizard will help you install %1$s on your computer.\n\nThis program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s\n\n%1$s will be installed in: ${application.user.wineprefix}%5$s\n\n${application.name} is not responsible for anything that might happen as a result of using these scripts.\n\nClick Next to start", programName, programEditor, editorURL, scriptorName, prefixName);
-        presentation(translate(buffer.toString()));
+        String textToShow = String.format(translate("This wizard will help you install %1$s on your computer.\n\n"
+                + "This program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s"
+                + "\n\n%1$s will be installed in: ${application.user.wineprefix}%5$s\n\n"
+                + "${application.name} is not responsible for anything that might happen as a result of using"
+                + " these scripts.\n\nClick Next to start")
+                , programName, programEditor, editorURL, scriptorName, prefixName);
+        presentation(textToShow);
     }
 
     /**
