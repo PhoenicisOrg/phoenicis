@@ -109,7 +109,7 @@ public class SetupWizard {
      * @throws CancelException
      */
     public void presentation(String programName, String programEditor, String editorURL, String scriptorName, String prefixName) throws CancelException {
-        String textToShow = String.format(translate("This wizard will help you install %1$s on your computer.\n\n"
+        final String textToShow = String.format(translate("This wizard will help you install %1$s on your computer.\n\n"
                 + "This program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s"
                 + "\n\n%1$s will be installed in: ${application.user.wineprefix}%5$s\n\n"
                 + "${application.name} is not responsible for anything that might happen as a result of using"
