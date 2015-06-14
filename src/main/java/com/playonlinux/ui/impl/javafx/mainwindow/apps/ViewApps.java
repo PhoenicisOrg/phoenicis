@@ -31,6 +31,7 @@ import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -161,7 +162,8 @@ public class ViewApps extends HBox implements Observer {
 
         if(centerItems != null) {
             for(AppsItemDTO item : centerItems){
-                availableInstallerListWidget.addItem(item);
+                Node itemNode = availableInstallerListWidget.addItem(item.getName());
+                itemNode.setOnMouseClicked((evt) -> System.out.println(item));
             }
         }
     }
