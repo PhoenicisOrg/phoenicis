@@ -29,6 +29,7 @@ import com.playonlinux.common.messages.CancelerSynchroneousMessage;
 public class StepRepresentationLicence extends AbstractStepRepresentationWithHeader {
     private String textToShow;
     private String licenceText;
+    private boolean isAgree;
 
     public StepRepresentationLicence(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow, String licenceText) {
         super(parent, message);
@@ -56,8 +57,9 @@ public class StepRepresentationLicence extends AbstractStepRepresentationWithHea
         
         CheckBox confirmWidget = new CheckBox(translate("I agree"));
         confirmWidget.setOnAction((event) -> {
-            confirmWidget.setSelected(true);
-            setNextButtonEnabled(true);
+            isAgree = !isAgree;
+            confirmWidget.setSelected(isAgree);
+            setNextButtonEnabled(isAgree);
         });
         confirmWidget.setLayoutX(10);
         confirmWidget.setLayoutY(330);
