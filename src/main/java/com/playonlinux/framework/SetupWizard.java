@@ -27,7 +27,13 @@ import com.playonlinux.domain.CancelException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 
 import static com.playonlinux.domain.Localisation.translate;
 
@@ -103,6 +109,53 @@ public class SetupWizard {
                 }
         );
     }
+
+    /**
+     * Show the content of a licence file
+     * @param textToShow a message above the licence
+     * @param licenceFile the licence file to display (with 'from java.io import File')
+     * @throws CancelException
+     */
+    public void licenceFile(String textToShow, File licenceFile) throws CancelException {
+        try {
+            final FileInputStream content = new FileInputStream(licenceFile);
+            final StringWriter writer = new StringWriter();
+            IOUtils.copy(content, writer, "UTF-8");
+            content.close();
+            licence(textToShow, writer.toString());
+        } catch (IOException e) {
+            throw new ScriptFailureException("Cannot acces the licence file", e);
+        }
+    }
+
+    /**
+     * Show the content of a licence file
+     * @param textToShow a message above the licence
+     * @param licenceFilePath the path of the licence file to display
+     * @throws ScriptFailureException
+     * @throws CancelException
+     */
+    public void licenceFile(String textToShow, String licenceFilePath) throws CancelException {
+        licenceFile(textToShow, new File(licenceFilePath));
+    }
+
+    /**
+     * Show a custom licence message
+     * @param textToShow a message above the licence
+     * @param licenceText the licence text to show
+     * @throws CancelException
+     */
+    public String licence(String textToShow, String licenceText) throws CancelException {
+        return (String) messageSender.synchroneousSendAndGetResult(
+                new CancelerSynchroneousMessage<String>() {
+                    @Override
+                    public void execute(Message message) {
+                        setupWindow.showLicenceStep((CancelerSynchroneousMessage) message, textToShow, licenceText);
+                    }
+                }
+        );
+    }
+    
     /**
      * Ask the user to enter a value
      * @param textToShow a text that will be shown

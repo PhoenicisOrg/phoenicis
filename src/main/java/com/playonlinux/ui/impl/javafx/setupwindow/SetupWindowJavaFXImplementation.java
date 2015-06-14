@@ -26,10 +26,12 @@ import com.playonlinux.common.messages.InterrupterSynchroneousMessage;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.utils.OperatingSystem;
+
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -139,6 +141,13 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
         StepRepresentationPresentation stepRepresentationPresentation =
                 new StepRepresentationPresentation(this, message, textToShow);
         stepRepresentationPresentation.installStep();
+    }
+
+    @Override
+    public void showLicenceStep(CancelerSynchroneousMessage message, String textToShow, String licenceText) {
+        StepRepresentationLicence stepRepresentationLicence =
+                new StepRepresentationLicence(this, message, textToShow, licenceText);
+        stepRepresentationLicence.installStep();
     }
 
 
