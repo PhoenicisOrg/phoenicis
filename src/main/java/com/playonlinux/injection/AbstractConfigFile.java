@@ -33,6 +33,7 @@ public abstract class AbstractConfigFile {
     public void setStrictLoadingPolicy(Boolean strictLoadingPolicy) {
         this.strictLoadingPolicy = strictLoadingPolicy;
     }
+
     public void load() throws InjectionException {
         Injector injector = new Injector(definePackage());
         Map<Class<?>, Object> beans = injector.loadAllBeans(this);

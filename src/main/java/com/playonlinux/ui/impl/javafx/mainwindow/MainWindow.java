@@ -82,7 +82,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         apps.setUpEvents();
     }
 
-    private void goTo(Node view) {
+    public void goTo(Node view) {
         rootPane.getChildren().clear();
         rootPane.getChildren().addAll(headerPane, view);
     }

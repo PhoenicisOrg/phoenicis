@@ -102,8 +102,7 @@ public class SignatureChecker {
             PGPPublicKeyRing kRing = rIt.next();
             Iterator<PGPPublicKey> kIt = kRing.getPublicKeys();
             while (key == null && kIt.hasNext()) {
-                PGPPublicKey k = kIt.next();
-                key = k;
+                key = kIt.next();
             }
         }
 
