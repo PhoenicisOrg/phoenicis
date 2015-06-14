@@ -25,13 +25,17 @@ import com.playonlinux.common.filter.CenterItemFilter;
 import com.playonlinux.common.list.FilterPromise;
 import com.playonlinux.common.list.ObservableArrayList;
 import com.playonlinux.ui.impl.javafx.common.MiniatureListWidget;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import org.apache.commons.lang.StringUtils;
 
@@ -166,8 +170,6 @@ public class ViewApps extends HBox implements Observer {
         centerItems.addObserver(this);
         retryButton.setOnMouseClicked(event -> this.eventHandlerCenter.updateAvailableInstallers());
     }
-
-
 
     @Override
     public void update(Observable o, Object arg) {

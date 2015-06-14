@@ -18,7 +18,7 @@
 
 package com.playonlinux.common.dto;
 
-import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,26 +26,26 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class ShortcutDTOTest {
+public class InstalledApplicationDTOTest {
 
-    private ShortcutDTO shortcutDto;
+    private InstalledApplicationDTO installedApplicationDto;
 
     @Before
     public void setUp() throws MalformedURLException {
-        this.shortcutDto = new ShortcutDTO.Builder()
+        this.installedApplicationDto = new InstalledApplicationDTO.Builder()
                 .withName("Name")
                 .withIcon(new URL("file://"+new File("/tmp/icon").getAbsolutePath()))
                 .build();
     }
     @Test
     public void testShortcutDTO_CreateDTO_nameIsPopulated() throws Exception {
-        assertEquals("Name", shortcutDto.getName());
+        assertEquals("Name", installedApplicationDto.getName());
     }
 
     @Test
     public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
-        assertEquals("file:/tmp/icon", shortcutDto.getIcon().toString());
+        assertEquals("file:/tmp/icon", installedApplicationDto.getIcon().toString());
     }
 }

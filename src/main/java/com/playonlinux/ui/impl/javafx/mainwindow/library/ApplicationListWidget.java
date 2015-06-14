@@ -18,18 +18,20 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.common.filter.InstalledApplicationFilter;
+import com.playonlinux.common.list.FilterPromise;
+import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.Observable;
@@ -37,16 +39,29 @@ import java.util.Observer;
 
 import static com.playonlinux.domain.Localisation.translate;
 
-
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
+
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
+    private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
+    private FilterPromise<InstalledApplicationDTO> installedApplications;
+    private Logger logger = Logger.getLogger(this.getClass());
 
     public ApplicationListWidget(ViewLibrary parent) {
         this.parent = parent;
         this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
+        try {
+            installedApplications = new FilterPromise<>(this.parent.getEventHandler().getInstalledApplications(), this.filter);
+        } catch (PlayOnLinuxException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to fetch installed applications."));
+            alert.setContentText(String.format("The error was: %s", e));
+            alert.show();
+            logger.error(e);
+        }
+        installedApplications.addObserver(this);
     }
 
     public void addItem(String shortcutName, URL iconPath) {
@@ -56,11 +71,13 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     @Override
     public synchronized void update(Observable o, Object arg) {
-        this.clear();
+        // TODO: Something is calling this method twice on startup. Could use some research
         Platform.runLater(() -> {
-            assert(o instanceof Iterable);
-            Iterable<ShortcutDTO> installedApplications = (Iterable<ShortcutDTO>) o;
-            for (ShortcutDTO shortcut : installedApplications) {
+            this.clear();
+            if(StringUtils.isBlank(filter.getName())) {
+                parent.getSearchBar().setText("");
+            }
+            for (InstalledApplicationDTO shortcut : installedApplications) {
                 addItem(shortcut.getName(), shortcut.getIcon());
             }
         });
@@ -68,6 +85,10 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     private void clear() {
         rootItem.getChildren().clear();
+    }
+
+    public void search(String searchBar) {
+        filter.setName(searchBar);
     }
 
     protected class ApplicationItem extends GridPane {

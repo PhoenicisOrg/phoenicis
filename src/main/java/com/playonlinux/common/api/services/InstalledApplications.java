@@ -18,10 +18,12 @@
 
 package com.playonlinux.common.api.services;
 
-import com.playonlinux.common.dto.ui.ShortcutDTO;
+import com.playonlinux.common.api.filter.Filterable;
+import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
 
 import java.util.Observer;
 
-public interface InstalledApplications extends Iterable<ShortcutDTO> {
+public interface InstalledApplications extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO> {
+
     void addObserver(Observer o);
 }
