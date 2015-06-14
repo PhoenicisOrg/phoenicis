@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.common.dto.ui.InstalledApplicationDTO;
-import com.playonlinux.common.filter.InstalledApplicationFilter;
-import com.playonlinux.common.list.FilterPromise;
+import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.utils.filter.InstalledApplicationFilter;
+import com.playonlinux.utils.list.FilterPromise;
 import com.playonlinux.domain.PlayOnLinuxException;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

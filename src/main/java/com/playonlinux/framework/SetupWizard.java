@@ -18,11 +18,11 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.common.api.ui.Controller;
-import com.playonlinux.common.api.ui.ProgressStep;
-import com.playonlinux.common.api.ui.SetupWindow;
-import com.playonlinux.common.api.ui.UIMessageSender;
-import com.playonlinux.common.messages.*;
+import com.playonlinux.ui.Controller;
+import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.SetupWindow;
+import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.messages.*;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;

@@ -18,12 +18,12 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.common.api.services.BackgroundServiceManager;
-import com.playonlinux.common.api.services.EventHandler;
-import com.playonlinux.common.api.ui.Controller;
-import com.playonlinux.common.api.webservice.InstallerSource;
-import com.playonlinux.common.services.EventHandlerPlayOnLinuxImplementation;
-import com.playonlinux.common.services.PlayOnLinuxBackgroundServicesManager;
+import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.EventHandler;
+import com.playonlinux.ui.Controller;
+import com.playonlinux.installer.InstallerSource;
+import com.playonlinux.services.EventHandlerPlayOnLinuxImplementation;
+import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.lang.LanguageBundle;
 import com.playonlinux.domain.lang.LanguageBundleSelector;
@@ -31,7 +31,7 @@ import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.webservice.InstallerSourceWebserviceImplementation;
+import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

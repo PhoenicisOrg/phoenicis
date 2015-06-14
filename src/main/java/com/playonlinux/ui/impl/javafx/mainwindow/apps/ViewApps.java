@@ -18,12 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.common.api.services.RemoteAvailableInstallers;
-import com.playonlinux.common.dto.ui.CenterCategoryDTO;
-import com.playonlinux.common.dto.ui.CenterItemDTO;
-import com.playonlinux.common.filter.CenterItemFilter;
-import com.playonlinux.common.list.FilterPromise;
-import com.playonlinux.common.list.ObservableArrayList;
+import com.playonlinux.services.RemoteAvailableInstallers;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.utils.filter.CenterItemFilter;
+import com.playonlinux.utils.list.FilterPromise;
+import com.playonlinux.utils.list.ObservableArrayList;
 import com.playonlinux.ui.impl.javafx.common.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
@@ -48,7 +48,7 @@ public class ViewApps extends HBox implements Observer {
     private VBox failurePanel;
     private Button retryButton;
     private ObservableArrayList<CenterCategoryDTO> categories;
-    private FilterPromise<CenterItemDTO> centerItems;
+    private FilterPromise<AppsItemDTO> centerItems;
     private final MiniatureListWidget availableInstallerListWidget;
 
     private final EventHandlerCenter eventHandlerCenter;
@@ -160,8 +160,8 @@ public class ViewApps extends HBox implements Observer {
         availableInstallerListWidget.clear();
 
         if(centerItems != null) {
-            for(CenterItemDTO item : centerItems){
-                availableInstallerListWidget.addItem(item.getName());
+            for(AppsItemDTO item : centerItems){
+                availableInstallerListWidget.addItem(item);
             }
         }
     }

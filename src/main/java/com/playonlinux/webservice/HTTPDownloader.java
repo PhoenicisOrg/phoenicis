@@ -18,7 +18,7 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.dto.web.ProgressStateDTO;
+import com.playonlinux.dto.web.ProgressStateDTO;
 
 import java.io.*;
 import java.net.HttpURLConnection;

@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx;
 
-import com.playonlinux.common.api.ui.UIMessageSender;
-import com.playonlinux.common.messages.Message;
-import com.playonlinux.common.messages.SynchroneousMessage;
+import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.messages.Message;
+import com.playonlinux.messages.SynchroneousMessage;
 import com.playonlinux.domain.CancelException;
 import javafx.application.Platform;
 

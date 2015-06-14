@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.common.api.services.BackgroundService;
+import com.playonlinux.services.BackgroundService;
 import com.playonlinux.domain.PlayOnLinuxException;
 import org.apache.commons.lang.builder.ToStringBuilder;
 

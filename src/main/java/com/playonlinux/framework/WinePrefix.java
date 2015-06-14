@@ -19,8 +19,8 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.common.api.services.BackgroundServiceManager;
-import com.playonlinux.common.api.ui.ProgressStep;
+import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.domain.CancelException;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.domain.ScriptClass;

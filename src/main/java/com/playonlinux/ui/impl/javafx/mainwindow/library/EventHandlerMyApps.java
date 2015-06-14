@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.common.api.services.EventHandler;
-import com.playonlinux.common.api.services.InstalledApplications;
+import com.playonlinux.services.EventHandler;
+import com.playonlinux.services.InstalledApplications;
 import com.playonlinux.domain.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;

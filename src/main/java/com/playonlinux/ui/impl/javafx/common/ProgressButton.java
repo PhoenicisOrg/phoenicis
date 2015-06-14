@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
-import com.playonlinux.common.Progressable;
+import com.playonlinux.utils.Progressable;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;

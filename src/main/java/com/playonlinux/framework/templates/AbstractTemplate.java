@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.common.log.LogStream;
+import com.playonlinux.log.LogStream;
 import com.playonlinux.domain.ScriptTemplate;
 import com.playonlinux.python.PythonAttribute;
 

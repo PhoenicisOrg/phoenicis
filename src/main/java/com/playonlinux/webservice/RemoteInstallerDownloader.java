@@ -18,9 +18,9 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.common.Progressable;
-import com.playonlinux.common.api.services.BackgroundService;
-import com.playonlinux.common.dto.web.ProgressStateDTO;
+import com.playonlinux.utils.Progressable;
+import com.playonlinux.services.BackgroundService;
+import com.playonlinux.dto.web.ProgressStateDTO;
 import org.apache.log4j.Logger;
 
 /**
@@ -83,6 +83,7 @@ public class RemoteInstallerDownloader extends Progressable {
             this.remoteInstallerDownloader = remoteInstallerDownloader;
         }
 
+        /* TODO: Implement this method */
         public void run() {
             remoteInstallerDownloader.setState(ProgressStateDTO.State.PROGRESSING);
             for(float i = 0; i < 100; i += 0.1) {

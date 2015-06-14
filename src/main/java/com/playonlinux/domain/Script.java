@@ -18,7 +18,7 @@
 
 package com.playonlinux.domain;
 
-import com.playonlinux.common.api.services.BackgroundService;
+import com.playonlinux.services.BackgroundService;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
 import org.apache.commons.lang.exception.ExceptionUtils;

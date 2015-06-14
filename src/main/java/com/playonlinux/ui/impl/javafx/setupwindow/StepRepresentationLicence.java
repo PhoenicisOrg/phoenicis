@@ -23,8 +23,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
-import com.playonlinux.common.messages.CancelerMessage;
-import com.playonlinux.common.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerMessage;
+import com.playonlinux.messages.CancelerSynchroneousMessage;
 
 public class StepRepresentationLicence extends AbstractStepRepresentationWithHeader {
     private String textToShow;

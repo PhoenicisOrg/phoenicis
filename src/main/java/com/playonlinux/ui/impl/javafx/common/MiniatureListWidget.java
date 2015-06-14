@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
+import com.playonlinux.dto.ui.ItemWithMiniatureDTO;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.control.ScrollPane;
@@ -58,25 +59,25 @@ public final class MiniatureListWidget extends ScrollPane {
         content.getChildren().clear();
     }
 
-    public void addItem(String name) {
-        content.getChildren().add(new Element(name));
+    public void addItem(ItemWithMiniatureDTO appsItem) {
+        content.getChildren().add(new Element(appsItem));
     }
 
 
     private class Element extends VBox {
-        private final String name;
+        private final ItemWithMiniatureDTO appsItem;
 
-        Element(String name) {
+        Element(ItemWithMiniatureDTO appsItem) {
             this.getStyleClass().add("miniatureListElement");
 
             this.setAlignment(Pos.CENTER);
-            this.name = name;
+            this.appsItem = appsItem;
 
             ImageView miniature = new ImageView(defaultMiniature);
             miniature.setFitWidth(120);
             miniature.setFitHeight(90);
             miniature.getStyleClass().add("miniatureImage");
-            Text label = new Text(name);
+            Text label = new Text(appsItem.getName());
             label.setWrappingWidth(150);
             label.getStyleClass().add("miniatureText");
 
@@ -86,7 +87,7 @@ public final class MiniatureListWidget extends ScrollPane {
         }
 
         String getName() {
-            return name;
+            return appsItem.getName();
         }
     }
 }

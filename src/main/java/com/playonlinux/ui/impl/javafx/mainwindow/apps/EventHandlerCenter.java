@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.common.api.services.EventHandler;
-import com.playonlinux.common.api.services.RemoteAvailableInstallers;
+import com.playonlinux.services.EventHandler;
+import com.playonlinux.services.RemoteAvailableInstallers;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
