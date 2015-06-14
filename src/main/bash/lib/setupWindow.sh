@@ -59,8 +59,7 @@ POL_SetupWindow_presentation ()
     # Default presentation of a script
     # Usage: POL_SetupWindow_presentation [Program's name] [Program's editor] [Editor's url] [Scriptor's name] [Prefix's name]
     [ "$3" = "" ] || url="($3)" 
-    POL_SetupWindow_free_presentation "Welcome to $APPLICATION_TITLE Installation Wizard." "This wizard will help you install $1 on your computer.\n\nThis program was created by: $2\n$url\n\nThis installation program is provided by: $4\n\n$1 will be installed in: $POL_USER_ROOT/wineprefix/$5\n\n$APPLICATION_TITLE is not responsible for anything that might happen as a result of using these scripts.\n\nClick Next to start"
-
+    toPython "POL_SetupWindow_presentation" "$1" "$2" "$3" "$4" "$5"
 }
 
 POL_SetupWindow_free_presentation ()
