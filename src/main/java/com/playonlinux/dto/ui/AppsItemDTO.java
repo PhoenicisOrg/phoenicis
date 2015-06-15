@@ -21,6 +21,9 @@ package com.playonlinux.dto.ui;
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.utils.comparator.Nameable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO {
     private final String name;
@@ -28,6 +31,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
     private final boolean isCommercial;
     private final boolean isTesting;
     private final boolean requiresNoCd;
+    private final List<String> miniaturesUrls;
     private final String description;
 
     private AppsItemDTO(Builder builder) {
@@ -37,6 +41,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         this.isTesting = builder.isTesting;
         this.requiresNoCd = builder.requiresNoCd;
         this.description = builder.description;
+        this.miniaturesUrls = builder.miniaturesUrls;
     }
 
     @Override
@@ -64,6 +69,10 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         return description;
     }
 
+    public List<String> getMiniaturesUrls() {
+        return miniaturesUrls;
+    }
+
     public static class Builder {
         public String name;
         public String categoryName;
@@ -71,6 +80,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         public boolean isTesting;
         public boolean requiresNoCd;
         public String description;
+        public List<String> miniaturesUrls = new ArrayList<>();
 
         public Builder withName(String name) {
             this.name = name;
@@ -99,6 +109,11 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
 
         public Builder withDescription(String description) {
             this.description = description;
+            return this;
+        }
+
+        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
+            this.miniaturesUrls = miniaturesUrls;
             return this;
         }
 

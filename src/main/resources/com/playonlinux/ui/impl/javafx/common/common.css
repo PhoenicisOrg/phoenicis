@@ -21,13 +21,13 @@
      -fx-font-family: Roboto;
 }
 */
+
 #header {
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
     -fx-border-width: 1px;
     -fx-background-color:#FFFFFF;
 }
-
 #logoText {
     -fx-font-family: "Maven Pro";
     -fx-font-size: 1.8em;
@@ -119,9 +119,10 @@
 
 .title {
     -fx-font-family: "Roboto Regular";
-    -fx-font-size: 1.3em;
+    -fx-font-size: 1.4em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
+    -fx-fill: #428bca;
 }
 
 .leftButton {
