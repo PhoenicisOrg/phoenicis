@@ -22,7 +22,6 @@ import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.widget.Title;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import org.apache.log4j.Logger;
 
@@ -38,9 +37,17 @@ final class AppPanel extends VBox {
         final WebView descriptionWidget = new WebView();
 
         try {
+            StringBuilder images = new StringBuilder();
+            for(String imageUrl: appsItemDTO.getMiniaturesUrls()) {
+                images.append(String.format("<img src='%s' /> ", imageUrl, imageUrl));
+            }
+
             descriptionWidget.getEngine().loadContent(
                     new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
-                            .render(appsItemDTO.getDescription())
+                            .render(
+                                    appsItemDTO.getDescription(),
+                                    images.toString()
+                            )
             );
         } catch (IOException e) {
             logger.error("Unable to load the description");

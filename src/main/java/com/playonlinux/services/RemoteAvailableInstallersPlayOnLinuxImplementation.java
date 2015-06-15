@@ -159,6 +159,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
                                 .withRequiresNoCd(false) // FIXME
                                 .withTesting(false) //
                                 .withCommercial(false) //
+                                .withMiniaturesUrls(applicationDTO.getMiniaturesUrls()) //
                                 .build();
                         cache.add(appsItemDTO);
                     }
