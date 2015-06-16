@@ -16,9 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.domain;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
@@ -38,13 +39,13 @@ import java.util.*;
 import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
 
 @Scan
-public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
+final public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
         implements RemoteAvailableInstallers, Observer {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    private static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     private List<CategoryDTO> categoriesDTO = new ArrayList<>();
     private DownloadEnvelopeDTO<List<CategoryDTO>> downloadEnvelopeDto;
@@ -53,7 +54,7 @@ public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observab
 
     private List<AppsItemDTO> cache = null;
 
-    RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
+    public RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
         webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
         this.refresh();
     }

@@ -19,10 +19,10 @@
 package com.playonlinux.app;
 
 import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.services.EventHandler;
+import com.playonlinux.services.EventDispatcher;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.installer.InstallerSource;
-import com.playonlinux.services.EventHandlerPlayOnLinuxImplementation;
+import com.playonlinux.services.EventDispatcherPlayOnLinuxImplementation;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.lang.LanguageBundleSelector;
@@ -58,8 +58,8 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
-    public EventHandler eventHandler() {
-            return new EventHandlerPlayOnLinuxImplementation();
+    public EventDispatcher eventHandler() {
+            return new EventDispatcherPlayOnLinuxImplementation();
     }
 
     @Bean
