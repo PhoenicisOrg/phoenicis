@@ -18,27 +18,9 @@
 
 package com.playonlinux.services;
 
-import com.playonlinux.utils.Progressable;
-import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.messages.ParametrableRunnable;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-public interface EventHandler {
-    void runLocalScript(File scriptToRun) throws IOException;
-
-    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
-
-    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
-
-    RemoteAvailableInstallers getRemoteAvailableInstallers();
-
-    void onApplicationStarted() throws MalformedURLException;
-
-    Progressable getRemoteInstallerDownloaderDownloader();
-
-    void installProgram(String selectedItemLabel);
-
-    void runApplication(String applicationName) throws PlayOnLinuxException;
+public interface SubmitableBackgroundService<T, U>
+        extends BackgroundService {
+    void submit(T task, U callback, ParametrableRunnable<Exception> error);
 }

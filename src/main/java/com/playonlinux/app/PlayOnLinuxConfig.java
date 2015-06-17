@@ -19,10 +19,10 @@
 package com.playonlinux.app;
 
 import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.services.EventHandler;
+import com.playonlinux.services.EventDispatcher;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.installer.InstallerSource;
-import com.playonlinux.services.EventHandlerPlayOnLinuxImplementation;
+import com.playonlinux.services.EventDispatcherPlayOnLinuxImplementation;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.lang.LanguageBundleSelector;
@@ -31,6 +31,7 @@ import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
+import com.playonlinux.webservice.DownloadManager;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -42,6 +43,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     private boolean useCliInterface = false;
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
+    private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
 
     @Bean
     public Controller controller() {
@@ -58,8 +60,8 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
-    public EventHandler eventHandler() {
-            return new EventHandlerPlayOnLinuxImplementation();
+    public EventDispatcher eventHandler() {
+            return new EventDispatcherPlayOnLinuxImplementation();
     }
 
     @Bean
@@ -69,12 +71,19 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
     public BackgroundServiceManager playOnLinuxBackgroundServicesManager() {
-        return new PlayOnLinuxBackgroundServicesManager();
+        return playOnLinuxBackgroundServiceManager;
     }
 
     @Bean
     public LanguageBundle languageBundle() {
         return LanguageBundleSelector.forLocale(Locale.getDefault());
+    }
+
+    @Bean
+    public DownloadManager downloadManager() {
+        DownloadManager downloadManager = new DownloadManager();
+        playOnLinuxBackgroundServiceManager.register(downloadManager);
+        return downloadManager;
     }
 
     @Override

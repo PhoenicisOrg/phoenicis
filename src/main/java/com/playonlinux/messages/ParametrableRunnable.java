@@ -18,30 +18,16 @@
 
 package com.playonlinux.messages;
 
-import com.playonlinux.installer.CancelException;
+public abstract class ParametrableRunnable<T> implements Runnable {
+    private T parameter;
 
-import java.util.concurrent.Semaphore;
+    public void setParameter(T parameter) {
+        this.parameter = parameter;
+    }
+    public abstract void run(T parameter);
 
-public abstract class SynchroneousMessage<RESULT> implements Message {
-    private RESULT response;
-    Semaphore semaphore = new Semaphore(0);
-
+    @Override
     public void run() {
-        this.execute(this);
+        run(parameter);
     }
-
-    public RESULT getResponse() throws CancelException {
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            throw new CancelException("The action has been interrupted", e);
-        }
-        return this.response;
-    }
-
-    public void setResponse(RESULT response) {
-        this.response = response;
-        semaphore.release();
-    }
-
 }

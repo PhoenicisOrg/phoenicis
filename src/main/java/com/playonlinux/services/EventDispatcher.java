@@ -18,20 +18,25 @@
 
 package com.playonlinux.services;
 
-import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
-import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.domain.InstalledApplications;
+import com.playonlinux.domain.InstalledVirtualDrives;
+import com.playonlinux.domain.RemoteAvailableInstallers;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
-public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO> {
+public interface EventDispatcher {
+    void runLocalScript(File scriptToRun) throws IOException;
 
-    boolean isUpdating();
+    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
 
-    boolean hasFailed();
+    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
 
-    List<CenterCategoryDTO> getCategories();
+    RemoteAvailableInstallers getRemoteAvailableInstallers();
 
-    void refresh();
+    void onApplicationStarted() throws MalformedURLException;
 
+    void runApplication(String applicationName) throws PlayOnLinuxException;
 }

@@ -16,14 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.domain;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.domain.Shortcut;
-import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.ObservableDirectoryFiles;
@@ -46,7 +45,7 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
     private List<InstalledApplicationDTO> cache;
     private List<InstalledApplicationDTO> installedApplications;
 
-    InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
+    public InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
         File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();

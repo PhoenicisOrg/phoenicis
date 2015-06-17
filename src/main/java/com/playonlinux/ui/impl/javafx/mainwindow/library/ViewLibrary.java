@@ -37,14 +37,14 @@ public class ViewLibrary extends HBox {
     private final MainWindow parent;
     private Logger logger = Logger.getLogger(this.getClass());
     private ApplicationListWidget applicationListWidget;
-    private final EventHandlerMyApps eventHandlerMyApps;
+    private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
 
     public ViewLibrary(MainWindow parent) {
         this.parent = parent;
         this.getStyleClass().add("mainWindowScene");
 
-        eventHandlerMyApps = new EventHandlerMyApps();
+        eventHandlerLibrary = new EventHandlerLibrary();
 
         this.drawSideBar();
         this.drawContent();
@@ -73,7 +73,7 @@ public class ViewLibrary extends HBox {
 
     public void setUpEvents() {
         try {
-            eventHandlerMyApps.getInstalledApplications().addObserver(applicationListWidget);
+            eventHandlerLibrary.getInstalledApplications().addObserver(applicationListWidget);
         } catch (PlayOnLinuxException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to update installer list."));
@@ -89,7 +89,7 @@ public class ViewLibrary extends HBox {
 
             try {
                 if (scriptToRun != null) {
-                    eventHandlerMyApps.runLocalScript(scriptToRun);
+                    eventHandlerLibrary.runLocalScript(scriptToRun);
                 }
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -100,8 +100,8 @@ public class ViewLibrary extends HBox {
         });
     }
 
-    public EventHandlerMyApps getEventHandler() {
-        return eventHandlerMyApps;
+    public EventHandlerLibrary getEventHandler() {
+        return eventHandlerLibrary;
     }
 
     public TextField getSearchBar() {

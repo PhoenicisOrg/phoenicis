@@ -16,14 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.domain;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;

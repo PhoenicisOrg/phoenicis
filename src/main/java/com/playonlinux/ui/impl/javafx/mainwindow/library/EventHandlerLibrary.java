@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.services.EventHandler;
-import com.playonlinux.services.InstalledApplications;
+import com.playonlinux.services.EventDispatcher;
+import com.playonlinux.domain.InstalledApplications;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -34,32 +34,32 @@ import java.net.MalformedURLException;
 import static com.playonlinux.lang.Localisation.translate;
 
 @Scan
-class EventHandlerMyApps implements UIEventHandler {
+class EventHandlerLibrary implements UIEventHandler {
     @Inject
-    static EventHandler mainEventHandler;
+    static EventDispatcher mainEventDispatcher;
 
     private Logger logger = Logger.getLogger(this.getClass());
 
     public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
-        return mainEventHandler.getInstalledApplications();
+        return mainEventDispatcher.getInstalledApplications();
     }
 
     public void runLocalScript(File scriptToRun) throws IOException {
-        mainEventHandler.runLocalScript(scriptToRun);
+        mainEventDispatcher.runLocalScript(scriptToRun);
     }
 
     @Override
-    public EventHandler getMainEventHandler() {
-        return mainEventHandler;
+    public EventDispatcher getMainEventHandler() {
+        return mainEventDispatcher;
     }
 
     public void onApplicationStarted() throws MalformedURLException {
-        mainEventHandler.onApplicationStarted();
+        mainEventDispatcher.onApplicationStarted();
     }
 
     public void runApplication(String applicationName) {
         try {
-            mainEventHandler.runApplication(applicationName);
+            mainEventDispatcher.runApplication(applicationName);
         } catch (PlayOnLinuxException e) {
             logger.error(e);
             Alert alert = new Alert(Alert.AlertType.ERROR);

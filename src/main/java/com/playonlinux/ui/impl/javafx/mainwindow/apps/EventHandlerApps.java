@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.services.EventHandler;
-import com.playonlinux.services.RemoteAvailableInstallers;
+import com.playonlinux.services.EventDispatcher;
+import com.playonlinux.domain.RemoteAvailableInstallers;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
@@ -28,15 +28,15 @@ import com.playonlinux.ui.api.UIEventHandler;
 @Scan
 final class EventHandlerApps implements UIEventHandler {
     @Inject
-    static EventHandler mainEventHandler;
+    static EventDispatcher mainEventDispatcher;
 
     @Override
-    public EventHandler getMainEventHandler() {
-        return mainEventHandler;
+    public EventDispatcher getMainEventHandler() {
+        return mainEventDispatcher;
     }
 
     public RemoteAvailableInstallers getRemoteAvailableInstallers() {
-        return mainEventHandler.getRemoteAvailableInstallers();
+        return mainEventDispatcher.getRemoteAvailableInstallers();
     }
 
     public void updateAvailableInstallers() {

@@ -19,12 +19,11 @@
 package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.utils.Progressable;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.domain.*;
 import com.playonlinux.installer.Script;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.webservice.RemoteInstallerDownloader;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -32,7 +31,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 @Scan
-public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
+public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
@@ -45,7 +44,6 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
     private RemoteAvailableInstallers remoteAvailableInstallers;
-    private RemoteInstallerDownloader remoteInstallerDownloaderDownloader;
 
     @Override
     public void runLocalScript(File scriptToRun) throws IOException {
@@ -79,21 +77,6 @@ public class EventHandlerPlayOnLinuxImplementation implements EventHandler {
 
         return this.virtualDrives;
     }
-
-    /* Remote Installer Downloader */
-    @Override
-    public Progressable getRemoteInstallerDownloaderDownloader() {
-        if(remoteInstallerDownloaderDownloader == null) {
-            remoteInstallerDownloaderDownloader = new RemoteInstallerDownloader();
-        }
-        return remoteInstallerDownloaderDownloader;
-    }
-
-    @Override
-    public void installProgram(String selectedItemLabel) {
-        playOnLinuxBackgroundServicesManager.register(remoteInstallerDownloaderDownloader.createTask(selectedItemLabel));
-    }
-
 
 
     @Override

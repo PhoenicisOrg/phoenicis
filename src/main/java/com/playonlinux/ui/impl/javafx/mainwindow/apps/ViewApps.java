@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.services.RemoteAvailableInstallers;
+import com.playonlinux.domain.RemoteAvailableInstallers;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.utils.filter.CenterItemFilter;

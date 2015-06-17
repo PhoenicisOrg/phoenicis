@@ -20,12 +20,15 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
+import com.playonlinux.ui.impl.javafx.common.RemoteImage;
 import com.playonlinux.ui.impl.javafx.widget.Title;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.net.URL;
 
 final class AppPanel extends VBox {
     private final Logger logger = Logger.getLogger(AppPanel.class);
@@ -37,16 +40,10 @@ final class AppPanel extends VBox {
         final WebView descriptionWidget = new WebView();
 
         try {
-            StringBuilder images = new StringBuilder();
-            for(String imageUrl: appsItemDTO.getMiniaturesUrls()) {
-                images.append(String.format("<img src='%s' /> ", imageUrl, imageUrl));
-            }
-
             descriptionWidget.getEngine().loadContent(
                     new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
                             .render(
-                                    appsItemDTO.getDescription(),
-                                    images.toString()
+                                    appsItemDTO.getDescription()
                             )
             );
         } catch (IOException e) {
@@ -54,8 +51,17 @@ final class AppPanel extends VBox {
         }
 
         this.getChildren().add(new Title(appsItemDTO.getName()));
+
+
+        FlowPane miniaturesPane = new FlowPane();
+
+        for(URL imageUrl: appsItemDTO.getMiniaturesUrls()) {
+            RemoteImage remoteImage = new RemoteImage(imageUrl);
+            miniaturesPane.getChildren().add(remoteImage);
+            remoteImage.download();
+        }
+
         this.getChildren().add(descriptionWidget);
-
-
+        this.getChildren().add(miniaturesPane);
     }
 }

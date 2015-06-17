@@ -16,32 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.messages;
+package com.playonlinux.domain;
 
-import com.playonlinux.installer.CancelException;
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.AppsItemDTO;
 
-import java.util.concurrent.Semaphore;
+import java.util.List;
 
-public abstract class SynchroneousMessage<RESULT> implements Message {
-    private RESULT response;
-    Semaphore semaphore = new Semaphore(0);
+public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO> {
 
-    public void run() {
-        this.execute(this);
-    }
+    boolean isUpdating();
 
-    public RESULT getResponse() throws CancelException {
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            throw new CancelException("The action has been interrupted", e);
-        }
-        return this.response;
-    }
+    boolean hasFailed();
 
-    public void setResponse(RESULT response) {
-        this.response = response;
-        semaphore.release();
-    }
+    List<CenterCategoryDTO> getCategories();
+
+    void refresh();
 
 }
