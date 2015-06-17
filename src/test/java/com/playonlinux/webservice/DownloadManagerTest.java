@@ -23,6 +23,7 @@ import com.playonlinux.messages.ParametrableRunnable;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Semaphore;
 
 import static org.mockito.Mockito.*;
 
@@ -31,8 +32,8 @@ public class DownloadManagerTest {
     @Test
     public void testSubmit() throws DownloadException, ExecutionException, InterruptedException {
         HTTPDownloader httpDownloaderMock = mock(HTTPDownloader.class);
-        ParametrableRunnable<byte[]> callBackMock = mock(ParametrableRunnable.class);
         ParametrableRunnable<Exception> callBackError = mock(ParametrableRunnable.class);
+        Semaphore lock = new Semaphore(0);
 
         when(httpDownloaderMock.getBytes()).thenReturn("Download result".getBytes());
 
@@ -40,11 +41,18 @@ public class DownloadManagerTest {
         downloadManager.start();
 
 
-        downloadManager.submit(httpDownloaderMock, callBackMock, callBackError);
+        downloadManager.submit(httpDownloaderMock, new ParametrableRunnable<byte[]>() {
+            @Override
+            public void run(byte[] parameter) {
+                lock.release();
+            }
+        }, callBackError);
 
+
+        lock.acquire();
         downloadManager.shutdown();
+
         verify(httpDownloaderMock).getBytes();
-        verify(callBackMock).run();
-        verify(callBackMock).setParameter("Download result".getBytes());
+
     }
 }
