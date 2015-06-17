@@ -43,7 +43,7 @@ public class DownloadManagerTest {
         downloadManager.submit(httpDownloaderMock, callBackMock, callBackError);
 
         downloadManager.shutdown();
-        verify(httpDownloaderMock).get();
+        verify(httpDownloaderMock).getBytes();
         verify(callBackMock).run();
         verify(callBackMock).setParameter("Download result".getBytes());
     }
