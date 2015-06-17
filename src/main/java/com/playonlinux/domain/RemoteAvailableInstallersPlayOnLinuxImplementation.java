@@ -160,7 +160,7 @@ final public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
                                 .withRequiresNoCd(false) // FIXME
                                 .withTesting(false) //
                                 .withCommercial(false) //
-                                .withMiniaturesUrls(applicationDTO.getMiniaturesUrls()) //
+                                .withMiniaturesUrlsString(applicationDTO.getMiniaturesUrls()) //
                                 .build();
                         cache.add(appsItemDTO);
                     }

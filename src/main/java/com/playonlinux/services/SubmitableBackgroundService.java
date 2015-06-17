@@ -18,7 +18,9 @@
 
 package com.playonlinux.services;
 
+import com.playonlinux.messages.ParametrableRunnable;
+
 public interface SubmitableBackgroundService<T, U>
         extends BackgroundService {
-    void submit(T task, U callback);
+    void submit(T task, U callback, ParametrableRunnable<Exception> error);
 }

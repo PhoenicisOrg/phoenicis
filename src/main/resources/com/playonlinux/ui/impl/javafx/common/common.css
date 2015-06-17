@@ -173,3 +173,10 @@
     -fx-background-color: #FFFFFF;
     -fx-padding: 0.5em;
 }
+
+.downloadImageWaiting {
+    -fx-padding: 1em;
+    -fx-pref-width: 150;
+    -fx-pref-height: 100;
+    -fx-alignment: center;
+}

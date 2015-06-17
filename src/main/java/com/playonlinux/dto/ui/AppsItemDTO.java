@@ -20,7 +20,10 @@ package com.playonlinux.dto.ui;
 
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.utils.comparator.Nameable;
+import org.apache.log4j.Logger;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
     private final boolean isCommercial;
     private final boolean isTesting;
     private final boolean requiresNoCd;
-    private final List<String> miniaturesUrls;
+    private final List<URL> miniaturesUrls;
     private final String description;
 
     private AppsItemDTO(Builder builder) {
@@ -69,7 +72,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         return description;
     }
 
-    public List<String> getMiniaturesUrls() {
+    public List<URL> getMiniaturesUrls() {
         return miniaturesUrls;
     }
 
@@ -80,7 +83,8 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         public boolean isTesting;
         public boolean requiresNoCd;
         public String description;
-        public List<String> miniaturesUrls = new ArrayList<>();
+        public List<URL> miniaturesUrls = new ArrayList<>();
+        private Logger logger = Logger.getLogger(AppsItemDTO.class);
 
         public Builder withName(String name) {
             this.name = name;
@@ -112,7 +116,20 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
             return this;
         }
 
-        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
+
+        public Builder withMiniaturesUrlsString(List<String> miniaturesUrlsAsString) {
+            List<URL> miniaturesUrls = new ArrayList<>();
+            for(String url: miniaturesUrlsAsString) {
+                try {
+                    miniaturesUrls.add(new URL(url));
+                } catch (MalformedURLException e) {
+                    logger.warn(String.format("%s was malformed. Ignored", url), e);
+                }
+            }
+            return withMiniaturesUrls(miniaturesUrls);
+        }
+
+        private Builder withMiniaturesUrls(List<URL> miniaturesUrls) {
             this.miniaturesUrls = miniaturesUrls;
             return this;
         }

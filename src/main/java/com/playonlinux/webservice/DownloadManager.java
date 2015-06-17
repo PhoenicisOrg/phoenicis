@@ -22,6 +22,7 @@ import com.playonlinux.messages.ParametrableRunnable;
 import com.playonlinux.services.SubmitableBackgroundService;
 import org.apache.log4j.Logger;
 
+import java.net.URL;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -31,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  Represents a download manager
  */
 public class DownloadManager implements
-        SubmitableBackgroundService<HTTPDownloader, ParametrableRunnable<String>> {
+        SubmitableBackgroundService<HTTPDownloader, ParametrableRunnable<byte[]>> {
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
@@ -65,15 +66,26 @@ public class DownloadManager implements
     }
 
     @Override
-    public void submit(HTTPDownloader task, ParametrableRunnable<String> callback) {
+    public void submit(HTTPDownloader task, ParametrableRunnable<byte[]> callback,
+                       ParametrableRunnable<Exception> error) {
+
+
         threadPoolExecutor.submit(() -> {
             try {
-                String downloadResult = task.get();
+                byte[] downloadResult = task.getBytes();
                 callback.setParameter(downloadResult);
                 callback.run();
             } catch (DownloadException e) {
                 logger.error(e);
+                error.setParameter(e);
+                error.run();
             }
         });
+    }
+
+    public void submit(URL url, ParametrableRunnable<byte[]> callback,
+                       ParametrableRunnable<Exception> error) {
+        HTTPDownloader task = new HTTPDownloader(url);
+        submit(task, callback, error);
     }
 }

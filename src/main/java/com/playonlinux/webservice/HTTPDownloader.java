@@ -114,14 +114,17 @@ public class HTTPDownloader extends Observable {
     }
 
     public String get() throws DownloadException {
-        OutputStream outputStream = new ByteArrayOutputStream();
+        return new String(getBytes());
+    }
+
+    public byte[] getBytes() throws DownloadException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         get(outputStream);
         try {
             outputStream.flush();
         } catch (IOException e) {
             throw new DownloadException("Download failed", e);
         }
-        return outputStream.toString();
-
+        return outputStream.toByteArray();
     }
 }

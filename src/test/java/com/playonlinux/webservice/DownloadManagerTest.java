@@ -22,25 +22,29 @@ package com.playonlinux.webservice;
 import com.playonlinux.messages.ParametrableRunnable;
 import org.junit.Test;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.mockito.Mockito.*;
 
 public class DownloadManagerTest {
 
     @Test
-    public void testSubmit() throws DownloadException {
+    public void testSubmit() throws DownloadException, ExecutionException, InterruptedException {
         HTTPDownloader httpDownloaderMock = mock(HTTPDownloader.class);
-        ParametrableRunnable<String> callBackMock = mock(ParametrableRunnable.class);
+        ParametrableRunnable<byte[]> callBackMock = mock(ParametrableRunnable.class);
+        ParametrableRunnable<Exception> callBackError = mock(ParametrableRunnable.class);
 
-        when(httpDownloaderMock.get()).thenReturn("Download result");
+        when(httpDownloaderMock.getBytes()).thenReturn("Download result".getBytes());
 
         DownloadManager downloadManager = new DownloadManager();
         downloadManager.start();
 
 
-        downloadManager.submit(httpDownloaderMock, callBackMock);
+        downloadManager.submit(httpDownloaderMock, callBackMock, callBackError);
 
+        downloadManager.shutdown();
         verify(httpDownloaderMock).get();
         verify(callBackMock).run();
-        verify(callBackMock).setParameter("Download result");
+        verify(callBackMock).setParameter("Download result".getBytes());
     }
 }
