@@ -36,10 +36,48 @@
             color: #428bca;
             font-weight: normal;
         }
+        a.btn.pol_script {
+            background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #428bca 0%, #116395 100%) repeat scroll 0 0;
+            border-color: #0f5885;
+            border-width: 1px;
+            border-style: solid;
+            color: #fff;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            border-image: none;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 0;
+            padding: 4px 12px;
+            box-sizing: border-box;
+            margin:10px;
+        }
+        a.btn.pol_script:focus, a.btn.pol_script:active {
+            background: rgba(0, 0, 0, 0) linear-gradient(to top, #3b84c3 0%, #116395 100%) repeat scroll 0 0;
+        }
+        a.btn img {
+            height: 16px;
+            width: 16px;
+            position: relative;
+            left:-2px;
+            top: 2px;
+        }
     </style>
 </head>
 <body>
-<h1>%s</h1>
-<p>%s</p>
+
+<h1>{{name}}</h1>
+<p>{{{description}}}</p>
+
+<p style="text-align:right">
+    <a class="btn pol_script"><img alt="logo" src="{{LOGO}}"> Install this program</a>
+</p>
 </body>
 </html>
