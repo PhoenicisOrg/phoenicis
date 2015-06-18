@@ -41,8 +41,10 @@ public class CenterItemFilter extends Observable implements Filter<AppsItemDTO> 
     }
 
     public void setTitle(String title) {
-        this.title = title.toLowerCase();
-        this.fireUpdate();
+        if(!title.equalsIgnoreCase(this.title)) {
+            this.title = title.toLowerCase();
+            this.fireUpdate();
+        }
     }
 
     public String getCategory() {
