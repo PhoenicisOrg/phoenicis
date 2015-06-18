@@ -172,7 +172,7 @@
 .downloadImageWaiting {
     -fx-padding: 1em;
     -fx-pref-width: 150;
-    -fx-pref-height: 100;
+    -fx-max-height: 95;
     -fx-alignment: center;
 }
 
@@ -186,4 +186,18 @@
 
 .appPanelMiniaturesPane {
     -fx-background-color: #FAFAFA;
+}
+
+.appPanelMiniaturesPaneWrapper {
+    -fx-padding: 0px;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-focus-traversable: false;
+    -fx-background-color: transparent;
+    -fx-pref-height: 360;
+}
+
+.appPanelMiniaturesPaneWrapper > .viewport {
+    -fx-background-color: #FAFAFA;
+    -fx-border-width: 0;
 }

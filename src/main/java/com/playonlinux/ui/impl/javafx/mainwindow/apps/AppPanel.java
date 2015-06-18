@@ -21,7 +21,9 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import org.apache.log4j.Logger;
@@ -50,8 +52,11 @@ final class AppPanel extends VBox {
 
 
 
-        FlowPane miniaturesPane = new FlowPane();
+        HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
+
+        ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
+        miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
         for(URL imageUrl: appsItemDTO.getMiniaturesUrls()) {
             RemoteImage remoteImage = new RemoteImage(imageUrl);
@@ -60,6 +65,6 @@ final class AppPanel extends VBox {
         }
 
         this.getChildren().add(descriptionWidget);
-        this.getChildren().add(miniaturesPane);
+        this.getChildren().add(miniaturesPaneWrapper);
     }
 }
