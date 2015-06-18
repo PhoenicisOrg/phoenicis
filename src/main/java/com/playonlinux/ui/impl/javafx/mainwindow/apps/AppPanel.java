@@ -20,8 +20,9 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
-import com.playonlinux.ui.impl.javafx.common.RemoteImage;
+import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
 import com.playonlinux.ui.impl.javafx.widget.Title;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -37,12 +38,14 @@ final class AppPanel extends VBox {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
 
+        //presentationPaneWrapper.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         final WebView descriptionWidget = new WebView();
 
         try {
             descriptionWidget.getEngine().loadContent(
                     new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
                             .render(
+                                    appsItemDTO.getName(),
                                     appsItemDTO.getDescription()
                             )
             );
@@ -50,10 +53,10 @@ final class AppPanel extends VBox {
             logger.error("Unable to load the description");
         }
 
-        this.getChildren().add(new Title(appsItemDTO.getName()));
 
 
         FlowPane miniaturesPane = new FlowPane();
+        miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
 
         for(URL imageUrl: appsItemDTO.getMiniaturesUrls()) {
             RemoteImage remoteImage = new RemoteImage(imageUrl);
