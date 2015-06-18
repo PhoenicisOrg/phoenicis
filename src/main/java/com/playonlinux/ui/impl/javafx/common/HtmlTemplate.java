@@ -18,21 +18,44 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+import javafx.scene.web.WebView;
 import org.apache.commons.io.IOUtils;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class HtmlTemplate {
-    private final URL templateUrl;
+    private final InputStream inputStream;
+    private final DefaultMustacheFactory mf;
 
-    public HtmlTemplate(URL templateUrl) {
-        this.templateUrl = templateUrl;
+    public HtmlTemplate(InputStream inputStream) {
+        this.inputStream = inputStream;
+        mf = new DefaultMustacheFactory();
     }
 
-    public String render(String... replacements) throws IOException {
-        String fileContent = IOUtils.toString(templateUrl.openStream());
-        return String.format(fileContent, replacements);
+    public String render(Object userScope) throws IOException {
+        Reader reader = new InputStreamReader(inputStream);
+        Mustache mustache = mf.compile(reader, null);
+        OutputStream stream = new ByteArrayOutputStream();
+
+        Object[] scopes = new Object[2];
+        scopes[0] = userScope;
+        scopes[1] = globalScope();
+
+        mustache.execute(new PrintWriter(stream), scopes).flush();
+
+        return stream.toString();
+    }
+
+    private Map<String, String> globalScope() {
+        Map<String, String> scopes = new HashMap<>();
+        scopes.put("LOGO", this.getClass().getResource("/com/playonlinux/ui/impl/javafx/common/playonlinux.png").toExternalForm());
+        return scopes;
     }
 }

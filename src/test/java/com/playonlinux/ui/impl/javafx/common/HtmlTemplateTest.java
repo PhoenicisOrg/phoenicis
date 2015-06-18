@@ -21,10 +21,7 @@ package com.playonlinux.ui.impl.javafx.common;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.MissingFormatArgumentException;
 
@@ -32,22 +29,21 @@ import static org.junit.Assert.*;
 
 public class HtmlTemplateTest {
 
-    private URL testTemplate;
+    private File testTemplate;
 
     @Before
     public void setUp() throws IOException {
-        File fileTemplate = File.createTempFile("test", "html");
-        testTemplate = new URL("file://"+fileTemplate.getAbsolutePath());
+        testTemplate = File.createTempFile("test", "html");
 
-        OutputStream outputStream = new FileOutputStream(fileTemplate);
+        OutputStream outputStream = new FileOutputStream(testTemplate);
 
         outputStream.write(
                 ("<html>" +
                         "<head>" +
-                        "<title>%s</title>" +
+                        "<title>{{title}}</title>" +
                         "</head>" +
                         "<body>" +
-                        "Content: %s" +
+                        "Content: {{content}}" +
                         "</bod>" +
                         "</html>").getBytes()
         );
@@ -57,7 +53,7 @@ public class HtmlTemplateTest {
 
     @Test
     public void testRender_replaceTwoValues_valuesAreReplaced() throws Exception {
-        HtmlTemplate htmlTemplate = new HtmlTemplate(testTemplate);
+        HtmlTemplate htmlTemplate = new HtmlTemplate(new FileInputStream(testTemplate));
 
         String expected = "<html>" +
                 "<head>" +
@@ -67,21 +63,11 @@ public class HtmlTemplateTest {
                 "Content: Content" +
                 "</bod>" +
                 "</html>";
-        assertEquals(expected, htmlTemplate.render("Title", "Content"));
+        assertEquals(expected, htmlTemplate.render(new Object() {
+            String title = "Title";
+            String content = "Content";
+        }));
     }
 
-    @Test(expected = MissingFormatArgumentException.class)
-    public void testRender_noReplacement_exceptionThrown() throws Exception {
-        HtmlTemplate htmlTemplate = new HtmlTemplate(testTemplate);
 
-        String expected = "<html>" +
-                "<head>" +
-                "<title>Title</title>" +
-                "</head>" +
-                "<body>" +
-                "Content: Content" +
-                "</bod>" +
-                "</html>";
-        assertEquals(expected, htmlTemplate.render());
-    }
 }

@@ -21,8 +21,6 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
-import com.playonlinux.ui.impl.javafx.widget.Title;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -43,11 +41,8 @@ final class AppPanel extends VBox {
 
         try {
             descriptionWidget.getEngine().loadContent(
-                    new HtmlTemplate(this.getClass().getResource("descriptionTemplate.html"))
-                            .render(
-                                    appsItemDTO.getName(),
-                                    appsItemDTO.getDescription()
-                            )
+                    new HtmlTemplate(this.getClass().getResourceAsStream("descriptionTemplate.html"))
+                            .render(appsItemDTO)
             );
         } catch (IOException e) {
             logger.error("Unable to load the description");
