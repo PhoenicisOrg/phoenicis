@@ -126,7 +126,7 @@ public class CenterItemFilterTest {
         }
 
         public void setShowNoCD(boolean showNoCD) {
-            filter.setShowNoCd(true);
+            filter.setShowNoCd(showNoCD);
         }
 
         public void setShowCommercial(boolean showCommercial) {
