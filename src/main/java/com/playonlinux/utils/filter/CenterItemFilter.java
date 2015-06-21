@@ -105,11 +105,7 @@ public class CenterItemFilter extends Observable implements Filter<AppsItemDTO> 
         }
 
         return !(item.isCommercial() && !showCommercial);
-
     }
-
-
-
 
     @Override
     public void startTransaction() {
