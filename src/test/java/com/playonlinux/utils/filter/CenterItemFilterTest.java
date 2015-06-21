@@ -21,31 +21,22 @@ package com.playonlinux.utils.filter;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import org.junit.Before;
 import org.junit.Test;
-<<<<<<< HEAD
 import org.mockito.Mockito;
 
 import java.net.MalformedURLException;
-=======
-
->>>>>>> origin/test/center-item-filter
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.stream.Collectors;
 
-<<<<<<< HEAD
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-=======
-import static junit.framework.TestCase.assertEquals;
->>>>>>> origin/test/center-item-filter
 
 public class CenterItemFilterTest {
 
     private MockFilterObserver mockFilterObserver;
-<<<<<<< HEAD
     private Observer mockObserver;
     private CenterItemFilter filter;
 
@@ -69,46 +60,17 @@ public class CenterItemFilterTest {
         mockFilterObserver.setTitle("7-");
         assertEquals(1, mockFilterObserver.getFilteredCenterItems().size());
 
-=======
-
-    @Before
-    public void setUp() {
-        mockFilterObserver = new MockFilterObserver();
-    }
-
-    @Test
-    public void testFilterWithString() {
-        mockFilterObserver.setTitle("7-");
-        assertEquals(1, mockFilterObserver.getFilteredCenterItems().size());
-
-        /**
-          * We show regular applications even when grouping is applied.
-          */
->>>>>>> origin/test/center-item-filter
-        mockFilterObserver.setTitle("7-z");
-        mockFilterObserver.setShowCommercial(true);
-        mockFilterObserver.setShowNoCD(true);
+        mockFilterObserver.setTitle("7-zi");
         assertEquals(1, mockFilterObserver.getFilteredCenterItems().size());
     }
 
     @Test
-<<<<<<< HEAD
     public void testApply_applyTwiceWithSameTitleAndWithGroupingEnabled_observerIsUpdatedTwice() {
-=======
-    public void testFilterWithStringAndGroupings() {
->>>>>>> origin/test/center-item-filter
         mockFilterObserver.setTitle("Dia");
         mockFilterObserver.setShowCommercial(true);
         mockFilterObserver.setShowNoCD(true);
         assertEquals(1, mockFilterObserver.getFilteredCenterItems().size());
 
-<<<<<<< HEAD
-
-=======
-        /**
-         * We only show commercial and CD requiring applications when grouping is applied
-         */
->>>>>>> origin/test/center-item-filter
         mockFilterObserver.setTitle("Dia");
         mockFilterObserver.setShowCommercial(false);
         mockFilterObserver.setShowNoCD(false);
@@ -116,7 +78,6 @@ public class CenterItemFilterTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void testApply_applyOnceWithEmptyString_observerIsNeverUpdated() {
         filter.setTitle("");
         verify(mockObserver, Mockito.times(0)).update(filter, null);
@@ -124,15 +85,6 @@ public class CenterItemFilterTest {
 
     @Test
     public void testApply_applyOnceWithWrongString_observerIsUpdatedOnceAndReturnsEmptyList() {
-=======
-    public void testFilterWithEmptyString() {
-        mockFilterObserver.setTitle("");
-        assertEquals(0, mockFilterObserver.getFilteredCenterItems().size());
-    }
-
-    @Test
-    public void testFilterWithWrongString() {
->>>>>>> origin/test/center-item-filter
         mockFilterObserver.setTitle("WRONG");
         assertEquals(0, mockFilterObserver.getFilteredCenterItems().size());
     }
