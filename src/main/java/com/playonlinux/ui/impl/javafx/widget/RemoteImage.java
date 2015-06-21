@@ -84,13 +84,15 @@ public class RemoteImage extends VBox {
 
             double fitWidth;
             double fitHeight;
+
+
             if(downloadedImage.getWidth() / downloadedImage.getHeight()
                     > this.getWidth() / this.getHeight()) {
-                fitWidth = this.getWidth();
-                fitHeight = downloadedImage.getHeight() * (this.getWidth() / downloadedImage.getWidth());
+                fitWidth = this.getCalculationWidth();
+                fitHeight = downloadedImage.getHeight() * (this.getCalculationWidth() / downloadedImage.getWidth());
             } else {
-                fitHeight = this.getHeight();
-                fitWidth = downloadedImage.getWidth() * (this.getHeight() / downloadedImage.getHeight());
+                fitHeight = this.getCalculationHeight();
+                fitWidth = downloadedImage.getWidth() * (this.getCalculationHeight() / downloadedImage.getHeight());
             }
 
             this.getChildren().add(downloadedImageView);
@@ -104,4 +106,21 @@ public class RemoteImage extends VBox {
         });
 
     }
+
+    public double getCalculationWidth() {
+        if(this.getMaxWidth() == -1) {
+            return this.getWidth();
+        } else {
+            return this.getMaxWidth();
+        }
+    }
+
+    public double getCalculationHeight() {
+        if(this.getMaxHeight() == -1) {
+            return this.getHeight();
+        } else {
+            return this.getMaxHeight();
+        }
+    }
+
 }
