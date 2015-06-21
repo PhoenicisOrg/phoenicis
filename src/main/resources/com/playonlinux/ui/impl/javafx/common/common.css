@@ -172,7 +172,8 @@
 .downloadImageWaiting {
     -fx-padding: 1em;
     -fx-pref-width: 150;
-    -fx-max-height: 95;
+    -fx-max-height: 100;
+    -fx-pref-height: 95;
     -fx-alignment: center;
 }
 
