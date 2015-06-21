@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
+import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.services.EventDispatcher;
 import com.playonlinux.domain.RemoteAvailableInstallers;
 import com.playonlinux.injection.Inject;
@@ -44,5 +45,7 @@ final class EventHandlerApps implements UIEventHandler {
     }
 
 
-
+    public void installApp(AppsItemDTO appsItemDTO, int scriptId) {
+        System.out.println("Will handle installation of script "+scriptId);
+    }
 }

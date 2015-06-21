@@ -19,15 +19,13 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.dto.ui.AppsItemScriptDTO;
+import com.playonlinux.dto.web.*;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.dto.web.ApplicationDTO;
-import com.playonlinux.dto.web.CategoryDTO;
-import com.playonlinux.dto.web.DownloadEnvelopeDTO;
-import com.playonlinux.dto.web.ProgressStateDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
@@ -153,6 +151,16 @@ final public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
             for(CategoryDTO categoryDTO: categoriesDTO) {
                 if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
+                        List<AppsItemScriptDTO> scripts = new ArrayList<>();
+                        for(ScriptDTO script: applicationDTO.getScripts()) {
+                            scripts.add(
+                                    new AppsItemScriptDTO.Builder()
+                                        .withName(script.getName())
+                                        .withId(script.getId())
+                                        .build()
+                            );
+                        }
+
                         AppsItemDTO appsItemDTO = new Builder() //
                                 .withName(applicationDTO.getName()) //
                                 .withCategoryName(categoryDTO.getName()) //
@@ -161,6 +169,7 @@ final public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
                                 .withTesting(false) //
                                 .withCommercial(false) //
                                 .withMiniaturesUrlsString(applicationDTO.getMiniaturesUrls()) //
+                                .withScripts(scripts)
                                 .build();
                         cache.add(appsItemDTO);
                     }
