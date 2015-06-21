@@ -16,29 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.dto.ui;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.dto.AbstractDTO;
-import com.playonlinux.utils.comparator.Nameable;
 import com.playonlinux.utils.OperatingSystem;
+import com.playonlinux.utils.comparator.Nameable;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptDTO implements AbstractDTO, Nameable {
+public class AppsItemScriptDTO implements AbstractDTO, Nameable {
 
     private int id;
     private String name;
-    private List<OperatingSystem> compatiblesOperatingSystems;
-    private List<OperatingSystem> testingOperatingSystems;
-    private Boolean free;
-    private Boolean requiresNoCD;
 
-    public ScriptDTO() {
-        // Kept for the webservice
-    }
-    private ScriptDTO(Builder builder) {
+    private AppsItemScriptDTO(Builder builder) {
         id = builder.id;
         name = builder.name;
     }
@@ -51,49 +45,37 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         return name;
     }
 
+    public String toString() {
+        return new ToStringBuilder(this.getClass().getName())
+                .append(this.id)
+                .append(this.name).toString();
+    }
+
     public static class Builder {
         private String name;
-        private String description;
-        private String iconURL;
-        private List<String> miniaturesUrls;
         private int id;
 
         public Builder() {
             // We need a public builder to be able to create a ScriptDTO from scratch
         }
 
-        public Builder(ScriptDTO scriptDTO) {
+        public Builder(AppsItemScriptDTO scriptDTO) {
             this.name = scriptDTO.name;
             this.id = scriptDTO.id;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
         }
 
         public Builder withId(int id) {
             this.id = id;
             return this;
         }
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
 
-        public Builder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder withIconURL(String iconURL) {
-            this.iconURL = iconURL;
-            return this;
-        }
-
-        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
-            this.miniaturesUrls = miniaturesUrls;
-            return this;
-        }
-
-
-        public ScriptDTO build() {
-            return new ScriptDTO(this);
+        public AppsItemScriptDTO build() {
+            return new AppsItemScriptDTO(this);
         }
     }
 

@@ -21,20 +21,32 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
+import com.sun.webkit.dom.HTMLAnchorElementImpl;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
+import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
 final class AppPanel extends VBox {
     private final Logger logger = Logger.getLogger(AppPanel.class);
 
-    public AppPanel(AppsItemDTO appsItemDTO) {
+    public AppPanel(EventHandlerApps eventHandlerApps, AppsItemDTO appsItemDTO) {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
 
@@ -50,6 +62,26 @@ final class AppPanel extends VBox {
             logger.error("Unable to load the description");
         }
 
+        descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                // note next classes are from org.w3c.dom domain
+                // note next classes are from org.w3c.dom domain
+                EventListener listener = ev -> {
+                    if(ev.getTarget() instanceof HTMLAnchorElementImpl) {
+                        String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
+                        int scriptId = Integer.valueOf(link.replace("install://", ""));
+                        eventHandlerApps.installApp(appsItemDTO, scriptId);
+                    }
+                };
+
+                Document doc = descriptionWidget.getEngine().getDocument();
+                NodeList lista = doc.getElementsByTagName("a");
+
+                for (int i = 0; i < lista.getLength(); i++) {
+                    ((EventTarget) lista.item(i)).addEventListener("click", listener, false);
+                }
+            }
+        });
 
 
         HBox miniaturesPane = new HBox();

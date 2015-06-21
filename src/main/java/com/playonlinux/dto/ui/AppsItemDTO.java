@@ -19,6 +19,7 @@
 package com.playonlinux.dto.ui;
 
 import com.playonlinux.dto.AbstractDTO;
+import com.playonlinux.dto.web.ScriptDTO;
 import com.playonlinux.utils.comparator.Nameable;
 import org.apache.log4j.Logger;
 
@@ -36,6 +37,12 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
     private final boolean requiresNoCd;
     private final List<URL> miniaturesUrls;
     private final String description;
+    private final List<AppsItemScriptDTO> scripts;
+
+    public List<AppsItemScriptDTO> getScripts() {
+        return scripts;
+    }
+
 
     private AppsItemDTO(Builder builder) {
         this.name = builder.name;
@@ -45,6 +52,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         this.requiresNoCd = builder.requiresNoCd;
         this.description = builder.description;
         this.miniaturesUrls = builder.miniaturesUrls;
+        this.scripts = builder.scripts;
     }
 
     @Override
@@ -85,6 +93,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         public String description;
         public List<URL> miniaturesUrls = new ArrayList<>();
         private Logger logger = Logger.getLogger(AppsItemDTO.class);
+        private List<AppsItemScriptDTO> scripts;
 
         public Builder withName(String name) {
             this.name = name;
@@ -131,6 +140,11 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
 
         private Builder withMiniaturesUrls(List<URL> miniaturesUrls) {
             this.miniaturesUrls = miniaturesUrls;
+            return this;
+        }
+
+        public Builder withScripts(List<AppsItemScriptDTO> scripts) {
+            this.scripts = scripts;
             return this;
         }
 

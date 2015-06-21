@@ -122,7 +122,7 @@ final public class ViewApps extends HBox implements Observer {
     }
 
     private void showAppDetails(AppsItemDTO item) {
-        show(new AppPanel(item));
+        show(new AppPanel(eventHandlerApps, item));
     }
 
     private void show(Node nodeToShow) {
