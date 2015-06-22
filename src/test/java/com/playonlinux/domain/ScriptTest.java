@@ -76,7 +76,7 @@ public class ScriptTest {
 
     @Test
     public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException {
-        Script legacyScriptWithSignature = ScriptFactoryDefaultImplementation.createInstance(new File(this.getClass()
+        Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
@@ -88,7 +88,7 @@ public class ScriptTest {
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
-        Script legacyScriptWithoutSignature = ScriptFactoryDefaultImplementation.createInstance(
+        Script legacyScriptWithoutSignature = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("legacyScriptExample.sh").getPath()));
         legacyScriptWithoutSignature.extractSignature();
     }
@@ -96,7 +96,7 @@ public class ScriptTest {
 
     @Test
     public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException {
-        Script script = ScriptFactoryDefaultImplementation.createInstance(new File(this.getClass()
+        Script script = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("scriptExampleWithSignature.py").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
@@ -108,14 +108,14 @@ public class ScriptTest {
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
-        Script script = ScriptFactoryDefaultImplementation.createInstance(
+        Script script = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("scriptExample.py").getPath()));
         script.extractSignature();
     }
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ParseException {
-        Script script = ScriptFactoryDefaultImplementation.createInstance(
+        Script script = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("emptyScript").getPath()));
         script.extractSignature();
     }
