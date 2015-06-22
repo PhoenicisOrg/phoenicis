@@ -46,6 +46,7 @@ public class JavaFXApplication extends Application {
         }
         mainWindow.show();
 
+        /*
         try {
             if (OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX){
                 com.apple.eawt.Application a = com.apple.eawt.Application.getApplication();
@@ -56,6 +57,7 @@ public class JavaFXApplication extends Application {
         } catch (PlayOnLinuxException e) {
             e.printStackTrace();
         }
+        */
 
     }
 
