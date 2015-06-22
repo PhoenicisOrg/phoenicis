@@ -23,20 +23,17 @@ import com.playonlinux.python.Interpreter;
 import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 
 public class ScriptRecent extends Script {
-    protected ScriptRecent(File script) {
+    protected ScriptRecent(String script) {
         super(script);
     }
 
     @Override
     protected void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException {
-        pythonInterpreter.execfile(this.getScriptFile().getAbsolutePath());
+        pythonInterpreter.exec(this.getScriptContent());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
 
         pythonInstaller.exec();
@@ -46,7 +43,7 @@ public class ScriptRecent extends Script {
 
     @Override
     public String extractSignature() throws ParseException, IOException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(this.getScriptFile()));
+        BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
         StringBuilder signatureBuilder = new StringBuilder();
 
         String readLine;

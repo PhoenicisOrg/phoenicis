@@ -18,8 +18,11 @@
 
 package com.playonlinux.ui.impl.javafx;
 
+import com.apple.eawt.AppEvent;
+import com.apple.eawt.OpenFilesHandler;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.utils.OperatingSystem;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
@@ -44,6 +47,18 @@ public class JavaFXApplication extends Application {
             logger.warn(e);
         }
         mainWindow.show();
+
+        try {
+            if (OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX){
+                com.apple.eawt.Application a = com.apple.eawt.Application.getApplication();
+
+                a.setOpenFileHandler(openFilesEvent -> System.out.println(openFilesEvent.getFiles()));
+
+            }
+        } catch (PlayOnLinuxException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void loadFonts() {
