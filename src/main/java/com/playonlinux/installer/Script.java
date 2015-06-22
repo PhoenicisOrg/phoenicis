@@ -21,9 +21,11 @@ package com.playonlinux.installer;
 import com.playonlinux.services.BackgroundService;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
+import org.python.core.util.FileUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,10 +37,19 @@ public abstract class Script implements BackgroundService {
     static Logger logger = Logger.getLogger(Script.class);
 
     private Thread scriptThread;
-    private File scriptFile;
+    private final String scriptContent;
 
-    protected Script(File scriptFile) {
-        this.scriptFile = scriptFile;
+    protected Script(String scriptContent) {
+        this.scriptContent = scriptContent;
+    }
+
+    public static Script.Type detectScriptType(String script) {
+        String firstLine = script.split("\n")[0];
+        if("#!/bin/bash".equals(firstLine) || "#!/usr/bin/env playonlinux-bash".equals(firstLine)) {
+            return Script.Type.LEGACY;
+        } else {
+            return Script.Type.RECENT;
+        }
     }
 
 
@@ -47,33 +58,13 @@ public abstract class Script implements BackgroundService {
         scriptThread.interrupt();
     }
 
-    public File getScriptFile() {
-        return scriptFile;
+    public String getScriptContent() {
+        return scriptContent;
     }
 
     public enum Type {
         RECENT,
         LEGACY
-    }
-
-    public static Script createInstance(File script) throws IOException {
-        switch(Script.detectScriptType(script)) {
-            case LEGACY:
-                return new ScriptLegacy(script);
-            case RECENT:
-            default:
-                return new ScriptRecent(script);
-        }
-    }
-
-    public static Type detectScriptType(File script) throws IOException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(script));
-        String firstLine = bufferReader.readLine();
-        if("#!/bin/bash".equals(firstLine) || "#!/usr/bin/env playonlinux-bash".equals(firstLine)) {
-            return Type.LEGACY;
-        } else {
-            return Type.RECENT;
-        }
     }
 
 

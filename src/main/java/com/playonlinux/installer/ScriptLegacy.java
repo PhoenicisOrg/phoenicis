@@ -22,10 +22,7 @@ import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
 import org.apache.commons.lang.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 
 public class ScriptLegacy extends Script {
@@ -33,24 +30,38 @@ public class ScriptLegacy extends Script {
     private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
 
 
-    protected ScriptLegacy(File script) {
+    protected ScriptLegacy(String script) {
         super(script);
     }
 
     @Override
     protected void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException {
         // FIXME: Use the properties here
-        Script playonlinuxBashInterpreter = new ScriptRecent(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
-        String filePath = playonlinuxBashInterpreter.getScriptFile().getAbsolutePath();
-        pythonInterpreter.set("__file__", filePath);
-        pythonInterpreter.set("__scriptToWrap__", this.getScriptFile().getAbsolutePath());
+        Script playonlinuxBashInterpreter;
+        File bashScriptFile;
+        try {
+            playonlinuxBashInterpreter =
+                    new ScriptFactoryDefaultImplementation()
+                            .createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+
+            bashScriptFile = File.createTempFile("script", "sh");
+            bashScriptFile.deleteOnExit();
+            FileWriter bashScriptWriter = new FileWriter(bashScriptFile);
+            bashScriptWriter.write(this.getScriptContent());
+            bashScriptWriter.close();
+        } catch (IOException e) {
+            throw new ScriptFailureException(e);
+        }
+
+
+        pythonInterpreter.set("__scriptToWrap__", bashScriptFile.getAbsolutePath());
 
         playonlinuxBashInterpreter.executeScript(pythonInterpreter);
     }
 
     @Override
     public String extractSignature() throws ParseException, IOException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(this.getScriptFile()));
+        BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
         StringBuilder signatureBuilder = new StringBuilder();
 
         String readLine;

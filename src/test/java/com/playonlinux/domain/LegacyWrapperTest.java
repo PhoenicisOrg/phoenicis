@@ -22,6 +22,7 @@ import com.playonlinux.MockContextConfig;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.installer.Script;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,7 +48,7 @@ public class LegacyWrapperTest {
             tmpFile.delete();
         }
         File testScript = new File(this.getClass().getResource("wrapperTestScript.sh").getPath());
-        Script testScriptWrapper = Script.createInstance(testScript);
+        Script testScriptWrapper = new ScriptFactoryDefaultImplementation().createInstance(testScript);
         testScriptWrapper.executeInterpreter();
         //file should exist now
         assertTrue(tmpFile.exists());

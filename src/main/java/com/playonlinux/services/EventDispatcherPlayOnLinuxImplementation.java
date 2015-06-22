@@ -24,6 +24,7 @@ import com.playonlinux.domain.*;
 import com.playonlinux.installer.Script;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -47,14 +48,16 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
 
     @Override
     public void runLocalScript(File scriptToRun) throws IOException {
-        Script playonlinuxScript = Script.createInstance(scriptToRun);
+        Script playonlinuxScript = new ScriptFactoryDefaultImplementation().createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
 
     @Override
     public void runApplication(String applicationName) throws PlayOnLinuxException {
         try {
-            Script playonLinuxScript = Script.createInstance(new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName));
+            Script playonLinuxScript = new ScriptFactoryDefaultImplementation().createInstance(
+                    new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName)
+            );
             playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
         } catch (IOException e) {
             throw new PlayOnLinuxException("Unable to run this script", e);

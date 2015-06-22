@@ -19,6 +19,8 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.installer.Script;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
@@ -31,23 +33,50 @@ public class ScriptTest {
 
 
     @Test
-    public void testDetectType_passALegacyScript_FormatIsDetected() throws Exception {
-        assertEquals(Script.Type.LEGACY, Script.detectScriptType(new File(
-                this.getClass().getResource("legacyScriptExample.sh").getPath())));
+    public void testDetectType_passALegacyScript_FormatIsDetected() throws IOException {
+        assertEquals(Script.Type.LEGACY, Script.detectScriptType(
+                        FileUtils.readFileToString(
+                                new File(
+                                        this.getClass()
+                                                .getResource("legacyScriptExample.sh")
+                                                .getPath()
+                                )
+                        )
+                )
+        );
+    }
 
-        assertEquals(Script.Type.LEGACY, Script.detectScriptType(new File(
-                this.getClass().getResource("legacyScriptExampleWithPlayOnLinuxBashHeader.sh").getPath())));
+    public void testDetectType_passALegacyScriptWithHeader_FormatIsDetected() throws IOException {
+        assertEquals(Script.Type.LEGACY, Script.detectScriptType(
+                        FileUtils.readFileToString(
+                                new File(
+                                        this.getClass()
+                                                .getResource("legacyScriptExampleWithPlayOnLinuxBashHeader.sh")
+                                                .getPath()
+                                )
+                        )
+                )
+        );
+
     }
 
     @Test
-    public void testDetectType_passARecentScript_FormatIsDetected() throws Exception {
-        assertEquals(Script.Type.RECENT, Script.detectScriptType(new File(
-                this.getClass().getResource("scriptExample.py").getPath())));
+    public void testDetectType_passARecentScript_FormatIsDetected() throws IOException {
+        assertEquals(Script.Type.RECENT, Script.detectScriptType(
+                        FileUtils.readFileToString(
+                                new File(
+                                        this.getClass()
+                                                .getResource("scriptExample.py")
+                                                .getPath()
+                                )
+                        )
+                )
+        );
     }
 
     @Test
     public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException {
-        Script legacyScriptWithSignature = Script.createInstance(new File(this.getClass()
+        Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
@@ -59,7 +88,7 @@ public class ScriptTest {
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
-        Script legacyScriptWithoutSignature = Script.createInstance(
+        Script legacyScriptWithoutSignature = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("legacyScriptExample.sh").getPath()));
         legacyScriptWithoutSignature.extractSignature();
     }
@@ -67,7 +96,7 @@ public class ScriptTest {
 
     @Test
     public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException {
-        Script script = Script.createInstance(new File(this.getClass()
+        Script script = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("scriptExampleWithSignature.py").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
@@ -79,14 +108,14 @@ public class ScriptTest {
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
-        Script script = Script.createInstance(
+        Script script = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("scriptExample.py").getPath()));
         script.extractSignature();
     }
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ParseException {
-        Script script = Script.createInstance(
+        Script script = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("emptyScript").getPath()));
         script.extractSignature();
     }
