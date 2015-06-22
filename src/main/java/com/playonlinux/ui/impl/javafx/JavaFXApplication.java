@@ -48,17 +48,6 @@ public class JavaFXApplication extends Application {
         }
         mainWindow.show();
 
-        try {
-            if (OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX){
-                com.apple.eawt.Application a = com.apple.eawt.Application.getApplication();
-
-                a.setOpenFileHandler(openFilesEvent -> System.out.println(openFilesEvent.getFiles()));
-
-            }
-        } catch (PlayOnLinuxException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void loadFonts() {
