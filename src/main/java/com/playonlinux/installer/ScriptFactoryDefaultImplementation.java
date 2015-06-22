@@ -18,11 +18,25 @@
 
 package com.playonlinux.installer;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 
-public interface ScriptFactory {
-    Script createInstance(String script);
+public class ScriptFactoryDefaultImplementation implements ScriptFactory {
 
-    Script createInstance(File script) throws IOException;
+    public Script createInstance(File scriptFile) throws IOException {
+        return createInstance(FileUtils.readFileToString(scriptFile));
+    }
+
+    public Script createInstance(String script) {
+        switch(Script.detectScriptType(script)) {
+            case LEGACY:
+                return new ScriptLegacy(script);
+            case RECENT:
+            default:
+                return new ScriptRecent(script);
+        }
+    }
+
 }

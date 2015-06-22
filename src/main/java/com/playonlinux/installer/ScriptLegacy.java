@@ -41,7 +41,8 @@ public class ScriptLegacy extends Script {
         File bashScriptFile;
         try {
             playonlinuxBashInterpreter =
-                    ScriptFactory.createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+                    new ScriptFactoryDefaultImplementation()
+                            .createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
 
             bashScriptFile = File.createTempFile("script", "sh");
             bashScriptFile.deleteOnExit();

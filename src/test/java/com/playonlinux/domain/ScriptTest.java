@@ -19,10 +19,9 @@
 package com.playonlinux.domain;
 
 import com.playonlinux.installer.Script;
-import com.playonlinux.installer.ScriptFactory;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.python.core.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +76,7 @@ public class ScriptTest {
 
     @Test
     public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException {
-        Script legacyScriptWithSignature = ScriptFactory.createInstance(new File(this.getClass()
+        Script legacyScriptWithSignature = ScriptFactoryDefaultImplementation.createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
@@ -89,7 +88,7 @@ public class ScriptTest {
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
-        Script legacyScriptWithoutSignature = ScriptFactory.createInstance(
+        Script legacyScriptWithoutSignature = ScriptFactoryDefaultImplementation.createInstance(
                 new File(this.getClass().getResource("legacyScriptExample.sh").getPath()));
         legacyScriptWithoutSignature.extractSignature();
     }
@@ -97,7 +96,7 @@ public class ScriptTest {
 
     @Test
     public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException {
-        Script script = ScriptFactory.createInstance(new File(this.getClass()
+        Script script = ScriptFactoryDefaultImplementation.createInstance(new File(this.getClass()
                 .getResource("scriptExampleWithSignature.py").getPath()));
         String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
@@ -109,14 +108,14 @@ public class ScriptTest {
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ParseException {
-        Script script = ScriptFactory.createInstance(
+        Script script = ScriptFactoryDefaultImplementation.createInstance(
                 new File(this.getClass().getResource("scriptExample.py").getPath()));
         script.extractSignature();
     }
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ParseException {
-        Script script = ScriptFactory.createInstance(
+        Script script = ScriptFactoryDefaultImplementation.createInstance(
                 new File(this.getClass().getResource("emptyScript").getPath()));
         script.extractSignature();
     }
