@@ -16,33 +16,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto;
+package com.playonlinux.dto.web;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.dto.web.ScriptDTO;
+public class ApplicationDTOTest {
 
-public class ScriptDTOTest {
-
-    private ScriptDTO scriptDTO;
+    private ApplicationDTO applicationDTO;
 
     @Before
     public void setUp() {
-        this.scriptDTO = new ScriptDTO.Builder()
+        this.applicationDTO = new ApplicationDTO.Builder()
                 .withName("Name")
                 .withId(13)
+                .withDescription("a description")
+                .withIconURL("a icon url")
                 .build();
     }
     @Test
-    public void testScriptDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", scriptDTO.getName());
+    public void testApplicationDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", applicationDTO.getName());
+    }
+    @Test
+    public void testApplicationDTO_CreateDTO_idIsPopulated() {
+        assertEquals(13, applicationDTO.getId());
     }
 
     @Test
-    public void testScriptDTO_CreateDTO_iconIsPopulated() {
-        assertEquals(13, scriptDTO.getId());
+    public void testApplicationDTO_CreateDTO_descriptionIsPopulated() {
+        assertEquals("a description", applicationDTO.getDescription());
+    }
+
+    @Test
+    public void testApplicationDTO_CreateDTO_iconURLIsPopulated() {
+        assertEquals("a icon url", applicationDTO.getIconUrl());
     }
 }
