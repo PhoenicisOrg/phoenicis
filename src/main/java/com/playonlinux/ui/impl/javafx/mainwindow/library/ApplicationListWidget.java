@@ -45,7 +45,7 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
     private final ViewLibrary parent;
     private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
     private FilterPromise<InstalledApplicationDTO> installedApplications;
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = Logger.getLogger(ApplicationListWidget.class);
 
     public ApplicationListWidget(ViewLibrary parent) {
         this.parent = parent;
@@ -59,7 +59,7 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             alert.setTitle(translate("Error while trying to fetch installed applications."));
             alert.setContentText(String.format("The error was: %s", e));
             alert.show();
-            logger.error(e);
+            LOGGER.error(e);
         }
         installedApplications.addObserver(this);
     }

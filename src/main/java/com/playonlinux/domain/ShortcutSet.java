@@ -37,7 +37,7 @@ public class ShortcutSet extends Observable implements Observer {
     private final URL defaultIcon;
     private List<Shortcut> shortcuts;
 
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = Logger.getLogger(ShortcutSet.class);
 
     public ShortcutSet(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
                        File configFilesDirectory, URL defaultIcon) {
@@ -60,12 +60,12 @@ public class ShortcutSet extends Observable implements Observer {
         }
     }
 
-    synchronized public List<Shortcut> getShortcuts() {
+    public synchronized List<Shortcut> getShortcuts() {
         return shortcuts;
     }
 
     @Override
-    synchronized public void update(Observable o, Object arg) {
+    public synchronized void update(Observable o, Object arg) {
         if(o == shortcutDirectory) {
             getShortcuts().clear();
             for (File shortcutFile : (File[]) arg) {
@@ -91,7 +91,7 @@ public class ShortcutSet extends Observable implements Observer {
                     }
                     this.getShortcuts().add(shortcut);
                 } catch (IOException e) {
-                    logger.warn(e);
+                    LOGGER.warn(e);
                 }
             }
         }

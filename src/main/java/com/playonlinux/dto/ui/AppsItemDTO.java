@@ -19,7 +19,6 @@
 package com.playonlinux.dto.ui;
 
 import com.playonlinux.dto.AbstractDTO;
-import com.playonlinux.dto.web.ScriptDTO;
 import com.playonlinux.utils.comparator.Nameable;
 import org.apache.log4j.Logger;
 
@@ -39,10 +38,6 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
     private final String description;
     private final List<AppsItemScriptDTO> scripts;
 
-    public List<AppsItemScriptDTO> getScripts() {
-        return scripts;
-    }
-
 
     private AppsItemDTO(Builder builder) {
         this.name = builder.name;
@@ -53,6 +48,10 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         this.description = builder.description;
         this.miniaturesUrls = builder.miniaturesUrls;
         this.scripts = builder.scripts;
+    }
+
+    public List<AppsItemScriptDTO> getScripts() {
+        return scripts;
     }
 
     @Override
@@ -92,7 +91,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
         public boolean requiresNoCd;
         public String description;
         public List<URL> miniaturesUrls = new ArrayList<>();
-        private Logger logger = Logger.getLogger(AppsItemDTO.class);
+        private static final Logger LOGGER = Logger.getLogger(AppsItemDTO.class);
         private List<AppsItemScriptDTO> scripts;
 
         public Builder withName(String name) {
@@ -132,7 +131,7 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
                 try {
                     miniaturesUrls.add(new URL(url));
                 } catch (MalformedURLException e) {
-                    logger.warn(String.format("%s was malformed. Ignored", url), e);
+                    LOGGER.warn(String.format("%s was malformed. Ignored", url), e);
                 }
             }
             return withMiniaturesUrls(miniaturesUrls);

@@ -30,7 +30,7 @@ public class CFFolder extends AbstractCabStructure {
     byte[] typeCompress = new byte[2];
 
     byte[] abReserve = new byte[256];
-    private Logger logger = Logger.getLogger(AbstractCabStructure.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractCabStructure.class);
 
     CFFolder(long offset) {
         super(offset);
@@ -89,7 +89,7 @@ public class CFFolder extends AbstractCabStructure {
         try {
             compressType = getCompressType().name();
         } catch (CabException e) {
-            logger.warn(e);
+            LOGGER.warn(e);
             compressType = "Unknown";
         }
 

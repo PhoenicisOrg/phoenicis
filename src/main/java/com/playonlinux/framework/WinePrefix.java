@@ -43,7 +43,7 @@ import static com.playonlinux.lang.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class WinePrefix {
-    Logger logger = Logger.getLogger(WinePrefix.class);
+    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -51,7 +51,7 @@ public class WinePrefix {
     @Inject
     static BackgroundServiceManager backgroundServicesManager;
 
-    private final static long NEWPREFIXSIZE = 320_000_000;
+    private static final long NEWPREFIXSIZE = 320_000_000;
 
     private final SetupWizard setupWizard;
     private com.playonlinux.wine.WinePrefix prefix;
@@ -80,7 +80,7 @@ public class WinePrefix {
                         ).withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
                         .build();
             } catch (PlayOnLinuxException e) {
-                logger.warn("Error while detecting prefix name");
+                LOGGER.warn("Error while detecting prefix name");
             }
         }
 
@@ -175,7 +175,7 @@ public class WinePrefix {
         try {
             wineInstallation.killAllProcess(this.prefix);
         } catch (IOException logged) {
-            logger.warn("Unable to kill wine processes", logged);
+            LOGGER.warn("Unable to kill wine processes", logged);
         }
 
         return this;
@@ -267,7 +267,7 @@ public class WinePrefix {
         try {
             wineInstallation.waitAllProcesses(this.prefix);
         } catch (IOException logged) {
-            logger.warn("Unable to wait for wine processes", logged);
+            LOGGER.warn("Unable to wait for wine processes", logged);
         }
 
         return this;

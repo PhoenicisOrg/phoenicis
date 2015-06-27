@@ -24,13 +24,6 @@ import java.io.File;
 import java.net.URL;
 
 public class Shortcut {
-    public String getShortcutName() {
-        return shortcutName;
-    }
-
-    public URL getIconPath() {
-        return iconPath;
-    }
 
     private final String shortcutName;
     private final URL iconPath;
@@ -45,5 +38,13 @@ public class Shortcut {
         this.iconPath = iconPath;
         this.runScript = runScript;
         this.configFile = configFile;
+    }
+    
+    public String getShortcutName() {
+        return shortcutName;
+    }
+
+    public URL getIconPath() {
+        return iconPath;
     }
 }

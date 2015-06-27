@@ -18,23 +18,19 @@
 
 package com.playonlinux.installer;
 
-import com.playonlinux.services.BackgroundService;
-import com.playonlinux.framework.ScriptFailureException;
-import com.playonlinux.python.Interpreter;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
-import org.python.core.PyException;
-import org.python.core.util.FileUtil;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
+import org.python.core.PyException;
+
+import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.python.Interpreter;
+import com.playonlinux.services.BackgroundService;
+
 public abstract class Script implements BackgroundService {
-    static Logger logger = Logger.getLogger(Script.class);
+    private static final Logger LOGGER = Logger.getLogger(Script.class);
 
     private Thread scriptThread;
     private final String scriptContent;
@@ -77,15 +73,15 @@ public abstract class Script implements BackgroundService {
                     executeInterpreter();
                 } catch (PyException e) {
                     if(e.getCause() instanceof ScriptFailureException) {
-                        logger.error("The script encountered an error");
+                        LOGGER.error("The script encountered an error");
                     }
                     if(e.getCause() instanceof CancelException) {
-                        logger.info("The script has been canceled");
+                        LOGGER.info("The script has been canceled");
                     }
-                    logger.error(ExceptionUtils.getStackTrace(e));
+                    LOGGER.error(ExceptionUtils.getStackTrace(e));
                 } catch (ScriptFailureException e) {
-                    logger.error("The script encountered an error");
-                    logger.error(e);
+                    LOGGER.error("The script encountered an error");
+                    LOGGER.error(e);
                 }
             }
         };

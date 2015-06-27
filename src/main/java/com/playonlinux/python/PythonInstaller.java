@@ -34,7 +34,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
     private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
     private PyObject mainInstance;
-    private Logger logger = Logger.getLogger(PythonInstaller.class);
+    private static final Logger LOGGER = Logger.getLogger(PythonInstaller.class);
 
     public PythonInstaller(Interpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
@@ -98,7 +98,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
             try {
                 this.runMain(getMainInstance());
             } catch(Exception e) {
-                logger.error("The script encountered an error. Rolling back");
+                LOGGER.error("The script encountered an error. Rolling back");
                 try {
                     getMainInstance().invoke(ROLLBACK_METHOD_NAME);
                 } catch (Exception rollbackException) {
@@ -112,7 +112,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                     try {
                         logStream.flush();
                     } catch (IOException e) {
-                        logger.warn("Unable to flush script log stream", e);
+                        LOGGER.warn("Unable to flush script log stream", e);
                     }
                 }
             }
@@ -126,7 +126,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
         try {
             pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);
         } catch (PyException e) {
-            logger.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
+            LOGGER.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
             return null;
         }
         if (pyLogAttribute instanceof PyMethod) {

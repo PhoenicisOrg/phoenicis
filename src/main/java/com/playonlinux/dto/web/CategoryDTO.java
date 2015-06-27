@@ -25,6 +25,12 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryDTO implements AbstractDTO {
+
+    int id;
+    CategoryType type;
+    String name;
+    List <ApplicationDTO> applications;
+    
     public enum CategoryType {
         INSTALLERS,
         FUNCTIONS
@@ -45,10 +51,4 @@ public class CategoryDTO implements AbstractDTO {
     public List<ApplicationDTO> getApplications() {
         return applications;
     }
-
-    int id;
-    CategoryType type;
-    String name;
-    List <ApplicationDTO> applications;
-
 }

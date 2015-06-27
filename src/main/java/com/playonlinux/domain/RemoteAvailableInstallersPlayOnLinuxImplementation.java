@@ -37,7 +37,7 @@ import java.util.*;
 import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
 
 @Scan
-final public class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
+public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
         implements RemoteAvailableInstallers, Observer {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;

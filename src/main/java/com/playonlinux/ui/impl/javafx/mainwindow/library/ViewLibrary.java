@@ -35,7 +35,7 @@ public class ViewLibrary extends HBox {
 
     private LeftButton runScript;
     private final MainWindow parent;
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = Logger.getLogger(ViewLibrary.class);
     private ApplicationListWidget applicationListWidget;
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
@@ -79,7 +79,7 @@ public class ViewLibrary extends HBox {
             alert.setTitle(translate("Error while trying to update installer list."));
             alert.setContentText(String.format("The error was: %s", e));
             alert.show();
-            logger.error(e);
+            LOGGER.error(e);
         }
 
         runScript.setOnMouseClicked(event -> {
@@ -95,7 +95,7 @@ public class ViewLibrary extends HBox {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to run the script."));
                 alert.setContentText("The file was not found");
-                logger.warn("Error while trying to run the script", e);
+                LOGGER.warn("Error while trying to run the script", e);
             }
         });
     }

@@ -39,7 +39,7 @@ public class SignatureChecker {
     private String publicKey;
     private String signedData;
     private String signature;
-    private final static Logger logger = Logger.getLogger(SignatureChecker.class);
+    private static final Logger LOGGER = Logger.getLogger(SignatureChecker.class);
 
     public SignatureChecker withSignature(String signature) {
         this.signature = signature;
@@ -79,7 +79,7 @@ public class SignatureChecker {
         try {
             pgpSignature.initVerify(pgpSigningKey, "BC");
         } catch(NoSuchProviderException e) {
-            logger.info("No security provider found. Adding bouncy castle", e);
+            LOGGER.info("No security provider found. Adding bouncy castle", e);
             Security.addProvider(new BouncyCastleProvider());
             pgpSignature.initVerify(pgpSigningKey, "BC");
         }

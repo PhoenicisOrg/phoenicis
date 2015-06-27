@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 public class JavaFXApplication extends Application {
-    private final static Logger logger = Logger.getLogger(Application.class);
+    private static final Logger LOGGER = Logger.getLogger(Application.class);
 
     @Override
     public void start(Stage primaryStage) {
@@ -42,7 +42,7 @@ public class JavaFXApplication extends Application {
         try {
             mainWindow.setUpEvents();
         } catch (PlayOnLinuxException e) {
-            logger.warn(e);
+            LOGGER.warn(e);
         }
         mainWindow.show();
 

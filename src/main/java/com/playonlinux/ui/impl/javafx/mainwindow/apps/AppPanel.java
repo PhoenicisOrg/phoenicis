@@ -44,7 +44,7 @@ import java.io.IOException;
 import java.net.URL;
 
 final class AppPanel extends VBox {
-    private final Logger logger = Logger.getLogger(AppPanel.class);
+    private static final Logger LOGGER = Logger.getLogger(AppPanel.class);
 
     public AppPanel(EventHandlerApps eventHandlerApps, AppsItemDTO appsItemDTO) {
         super();
@@ -59,7 +59,7 @@ final class AppPanel extends VBox {
                             .render(appsItemDTO)
             );
         } catch (IOException e) {
-            logger.error("Unable to load the description");
+            LOGGER.error("Unable to load the description");
         }
 
         descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {

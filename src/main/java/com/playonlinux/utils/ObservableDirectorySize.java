@@ -30,7 +30,7 @@ public class ObservableDirectorySize extends AbstractObservableDirectory {
     private final long startSize;
     private final long endSize;
     private final ObservableDirectoryThread observableDirectoryThread;
-    private static final Logger logger = Logger.getLogger(ObservableDirectorySize.class);
+    private static final Logger LOGGER = Logger.getLogger(ObservableDirectorySize.class);
 
     public ObservableDirectorySize(File observedDirectory, long startSize, long endSize) throws PlayOnLinuxException {
         this.startSize = startSize;
@@ -98,7 +98,7 @@ public class ObservableDirectorySize extends AbstractObservableDirectory {
                     this.observableDirectorySize.setChanged();
                     this.observableDirectorySize.notifyObservers(progressStateDTO);
                 } catch(IllegalArgumentException e) {
-                    logger.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);
+                    LOGGER.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);
                 }
 
                 try {
