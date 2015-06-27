@@ -20,8 +20,6 @@ package com.playonlinux.dto;
 
 import static org.junit.Assert.assertEquals;
 
-import java.net.MalformedURLException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,19 +30,19 @@ public class ScriptDTOTest {
     private ScriptDTO scriptDTO;
 
     @Before
-    public void setUp() throws MalformedURLException {
+    public void setUp() {
         this.scriptDTO = new ScriptDTO.Builder()
                 .withName("Name")
                 .withId(13)
                 .build();
     }
     @Test
-    public void testScriptDTO_CreateDTO_nameIsPopulated() throws Exception {
+    public void testScriptDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", scriptDTO.getName());
     }
 
     @Test
-    public void testScriptDTO_CreateDTO_iconIsPopulated() throws Exception {
+    public void testScriptDTO_CreateDTO_iconIsPopulated() {
         assertEquals(13, scriptDTO.getId());
     }
 }
