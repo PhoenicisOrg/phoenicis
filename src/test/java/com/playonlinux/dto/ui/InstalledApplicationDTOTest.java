@@ -40,12 +40,12 @@ public class InstalledApplicationDTOTest {
                 .build();
     }
     @Test
-    public void testShortcutDTO_CreateDTO_nameIsPopulated() throws Exception {
+    public void testShortcutDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", installedApplicationDto.getName());
     }
 
     @Test
-    public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
+    public void testShortcutDTO_CreateDTO_iconIsPopulated() {
         assertEquals("file:/tmp/icon", installedApplicationDto.getIcon().toString());
     }
 }
