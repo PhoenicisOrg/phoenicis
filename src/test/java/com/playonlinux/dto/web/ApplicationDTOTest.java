@@ -16,36 +16,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto;
-
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+package com.playonlinux.dto.web;
 
 import static org.junit.Assert.assertEquals;
 
-public class InstalledApplicationDTOTest {
+import org.junit.Before;
+import org.junit.Test;
 
-    private InstalledApplicationDTO installedApplicationDto;
+public class ApplicationDTOTest {
+
+    private ApplicationDTO applicationDTO;
 
     @Before
-    public void setUp() throws MalformedURLException {
-        this.installedApplicationDto = new InstalledApplicationDTO.Builder()
+    public void setUp() {
+        this.applicationDTO = new ApplicationDTO.Builder()
                 .withName("Name")
-                .withIcon(new URL("file://"+new File("/tmp/icon").getAbsolutePath()))
+                .withId(13)
+                .withDescription("a description")
+                .withIconURL("a icon url")
                 .build();
     }
     @Test
-    public void testShortcutDTO_CreateDTO_nameIsPopulated() throws Exception {
-        assertEquals("Name", installedApplicationDto.getName());
+    public void testApplicationDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", applicationDTO.getName());
+    }
+    @Test
+    public void testApplicationDTO_CreateDTO_idIsPopulated() {
+        assertEquals(13, applicationDTO.getId());
     }
 
     @Test
-    public void testShortcutDTO_CreateDTO_iconIsPopulated() throws Exception {
-        assertEquals("file:/tmp/icon", installedApplicationDto.getIcon().toString());
+    public void testApplicationDTO_CreateDTO_descriptionIsPopulated() {
+        assertEquals("a description", applicationDTO.getDescription());
+    }
+
+    @Test
+    public void testApplicationDTO_CreateDTO_iconURLIsPopulated() {
+        assertEquals("a icon url", applicationDTO.getIconUrl());
     }
 }
