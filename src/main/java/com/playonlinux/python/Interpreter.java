@@ -23,15 +23,14 @@ import org.python.util.PythonInterpreter;
 import java.io.File;
 
 public class Interpreter extends PythonInterpreter {
+
+    private Interpreter() {
+        super();
+    }
+    
     public static Interpreter createInstance() {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
         return new Interpreter();
     }
-
-    private Interpreter() {
-        super();
-    }
-
-
 }

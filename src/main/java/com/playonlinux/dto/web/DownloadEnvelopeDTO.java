@@ -21,6 +21,8 @@ package com.playonlinux.dto.web;
 import com.playonlinux.dto.AbstractDTO;
 
 public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> implements AbstractDTO {
+
+    ENVELOPE_CONTENT_TYPE envelopeContent;
     ProgressStateDTO downloadState;
 
     public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
@@ -38,6 +40,4 @@ public class DownloadEnvelopeDTO<ENVELOPE_CONTENT_TYPE> implements AbstractDTO {
     public void setDownloadState(ProgressStateDTO downloadState) {
         this.downloadState = downloadState;
     }
-
-    ENVELOPE_CONTENT_TYPE envelopeContent;
 }

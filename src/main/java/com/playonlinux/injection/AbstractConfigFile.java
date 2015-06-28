@@ -22,13 +22,14 @@ import java.util.Map;
 
 
 public abstract class AbstractConfigFile {
-    protected abstract String definePackage();
 
     /**
      * If this is set to true, the injector will throw an exception if a non defined bean in the config file
      * is being injected. Otherwise, the object will stay to null (useful for a testing context)
      */
     boolean strictLoadingPolicy = true;
+    
+    protected abstract String definePackage();
 
     public void setStrictLoadingPolicy(Boolean strictLoadingPolicy) {
         this.strictLoadingPolicy = strictLoadingPolicy;

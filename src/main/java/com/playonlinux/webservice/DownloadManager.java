@@ -36,7 +36,7 @@ public class DownloadManager implements
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
-    private Logger logger = Logger.getLogger(DownloadManager.class);
+    private static final Logger LOGGER = Logger.getLogger(DownloadManager.class);
 
     public DownloadManager() {
         this(DEFAULT_POOL_SIZE, DEFAULT_QUEUE_SIZE);
@@ -76,7 +76,7 @@ public class DownloadManager implements
                 callback.setParameter(downloadResult);
                 callback.run();
             } catch (DownloadException e) {
-                logger.error(e);
+                LOGGER.error(e);
                 error.setParameter(e);
                 error.run();
             }

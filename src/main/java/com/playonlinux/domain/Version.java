@@ -25,6 +25,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * Represent a version
  */
 public class Version {
+
+    final int bigNumber;
+    final int intermediateNumber;
+    final int lowNumber;
+
+    public Version(String versionAsString) {
+        String[] splitVersionAsString = versionAsString.split("\\.");
+        bigNumber = Integer.valueOf(splitVersionAsString[0]);
+        intermediateNumber = Integer.valueOf(splitVersionAsString[1]);
+        lowNumber = Integer.valueOf(splitVersionAsString[2]);
+    }
+    
     public int getBigNumber() {
         return bigNumber;
     }
@@ -36,10 +48,6 @@ public class Version {
     public int getLowNumber() {
         return lowNumber;
     }
-
-    final int bigNumber;
-    final int intermediateNumber;
-    final int lowNumber;
 
     @Override
     public boolean equals(Object o) {
@@ -67,13 +75,6 @@ public class Version {
                 .append(intermediateNumber)
                 .append(lowNumber)
                 .toHashCode();
-    }
-
-    public Version(String versionAsString) {
-        String[] splitVersionAsString = versionAsString.split("\\.");
-        bigNumber = Integer.valueOf(splitVersionAsString[0]);
-        intermediateNumber = Integer.valueOf(splitVersionAsString[1]);
-        lowNumber = Integer.valueOf(splitVersionAsString[2]);
     }
 
     public String toString() {

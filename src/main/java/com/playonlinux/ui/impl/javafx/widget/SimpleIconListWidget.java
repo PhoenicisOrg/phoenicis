@@ -41,7 +41,7 @@ public class SimpleIconListWidget
     private Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
-    private final static Logger logger = Logger.getLogger(SimpleIconListWidget.class);
+    private static final Logger LOGGER = Logger.getLogger(SimpleIconListWidget.class);
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem<>();
@@ -74,7 +74,7 @@ public class SimpleIconListWidget
                     iconPath.getAbsolutePath());
             alert.setTitle(errorTitle);
             alert.setContentText(String.format("The error was: %s", e));
-            logger.warn(errorTitle, e);
+            LOGGER.warn(errorTitle, e);
         }
     }
 

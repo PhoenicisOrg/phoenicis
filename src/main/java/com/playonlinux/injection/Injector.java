@@ -29,7 +29,7 @@ import java.util.*;
 
 public class Injector {
     private String packageName;
-    private Logger logger = Logger.getLogger(this.getClass());
+    private static final Logger LOGGER = Logger.getLogger(Injector.class);
 
     public Injector(String packageName) {
         this.packageName = packageName;
@@ -103,7 +103,7 @@ public class Injector {
                         String injectErrorString = String.format("Unable to inject %s. Error while injecting.",
                                 field.getType().toString());
 
-                        logger.fatal(injectErrorString, e);
+                        LOGGER.fatal(injectErrorString, e);
                         throw new InjectionException(injectErrorString, e);
                     }
                 }

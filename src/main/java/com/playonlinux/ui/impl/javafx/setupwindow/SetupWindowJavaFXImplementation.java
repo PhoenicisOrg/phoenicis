@@ -46,19 +46,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     private URL topImage;
     private URL leftImage;
 
-    Logger logger = Logger.getLogger(this.getClass());
-
-    public String getWizardTitle() {
-        return wizardTitle;
-    }
-
-    public Pane getRoot() {
-        return this.root;
-    }
-
-    public void clearAll() {
-        root.getChildren().clear();
-    }
+    private static final Logger LOGGER = Logger.getLogger(SetupWindowJavaFXImplementation.class);
 
     public SetupWindowJavaFXImplementation(String title) {
         super();
@@ -75,6 +63,18 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
         this.loadImages();
     }
 
+    public String getWizardTitle() {
+        return wizardTitle;
+    }
+
+    public Pane getRoot() {
+        return this.root;
+    }
+
+    public void clearAll() {
+        root.getChildren().clear();
+    }
+
     private void loadImages() {
         this.topImage = this.getClass().getResource("defaultTopImage.png");
         try {
@@ -88,7 +88,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
                     break;
             }
         } catch (PlayOnLinuxException playOnLinuxException) {
-            logger.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
+            LOGGER.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
             this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
         }
     }

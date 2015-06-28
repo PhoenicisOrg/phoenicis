@@ -43,14 +43,14 @@ public class InstallerSourceWebserviceImplementation extends Observable
     private final URL url;
     private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
-    private final static Logger logger = Logger.getLogger(InstallerSourceWebserviceImplementation.class);
+    private static final Logger LOGGER = Logger.getLogger(InstallerSourceWebserviceImplementation.class);
     private List<CategoryDTO> categories;
 
     public InstallerSourceWebserviceImplementation(URL url) {
         this.url = url;
     }
 
-    synchronized public void populate() {
+    public synchronized void populate() {
         try {
             categories = null;
 
@@ -66,16 +66,16 @@ public class InstallerSourceWebserviceImplementation extends Observable
                 categories = mapper.readValue(result, new TypeReference<List<CategoryDTO>>() {});
                 this.state = ProgressStateDTO.State.SUCCESS;
             } catch(DownloadException e) {
-                logger.warn(String.format("Error while downloading %s", url), e);
+                LOGGER.warn(String.format("Error while downloading %s", url), e);
                 this.state = ProgressStateDTO.State.FAILED;
             } catch (IOException e) {
-                logger.warn(String.format("IO error while downloading %s", url), e);
+                LOGGER.warn(String.format("IO error while downloading %s", url), e);
                 this.state = ProgressStateDTO.State.FAILED;
             } finally {
                 this.update();
             }
         } catch (InterruptedException ignored) {
-            logger.info(String.format("The download was interrupted: %s", url), ignored);
+            LOGGER.info(String.format("The download was interrupted: %s", url), ignored);
         } finally {
             updateSemaphore.release();
         }
@@ -99,7 +99,7 @@ public class InstallerSourceWebserviceImplementation extends Observable
     }
 
     @Override
-    synchronized public void start() {
+    public synchronized void start() {
         new Thread() {
             @Override
             public void run() {

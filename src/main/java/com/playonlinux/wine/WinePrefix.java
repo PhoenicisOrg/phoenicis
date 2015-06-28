@@ -42,7 +42,7 @@ public class WinePrefix {
     private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
-    private final static Logger logger = Logger.getLogger(WinePrefix.class);
+    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
     public WinePrefix(File winePrefixDirectory) {
         this.winePrefixDirectory = winePrefixDirectory;
         if(!this.winePrefixDirectory.exists()) {
@@ -93,7 +93,7 @@ public class WinePrefix {
         try {
             return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
         } catch(IllegalArgumentException e) {
-            logger.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
+            LOGGER.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
             return getSize();
         }
     }
