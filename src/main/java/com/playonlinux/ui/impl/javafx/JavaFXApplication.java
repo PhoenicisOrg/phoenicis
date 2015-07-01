@@ -20,7 +20,6 @@ package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
-import com.playonlinux.utils.OperatingSystem;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;

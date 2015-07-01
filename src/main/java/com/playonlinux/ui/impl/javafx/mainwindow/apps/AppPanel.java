@@ -64,8 +64,6 @@ final class AppPanel extends VBox {
 
         descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                // note next classes are from org.w3c.dom domain
-                // note next classes are from org.w3c.dom domain
                 EventListener listener = ev -> {
                     if(ev.getTarget() instanceof HTMLAnchorElementImpl) {
                         String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
