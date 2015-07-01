@@ -55,7 +55,7 @@ public class GTKApplication extends Window {
 
         if(fileChooserDialog.getFilename() != null) {
             File scriptPath = new File(fileChooserDialog.getFilename());
-            fileChooserDialog.destroy();
+            fileChooserDialog.hide();
 
             mainEventDispatcher.runLocalScript(scriptPath);
         }
