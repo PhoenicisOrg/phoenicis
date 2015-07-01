@@ -23,19 +23,28 @@ import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchroneousMessage;
 import com.playonlinux.ui.UIMessageSender;
 
-public class UIMessageSenderGTKImplementation implements UIMessageSender {
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+
+public class UIMessageSenderGTKImplementation<RETURN> implements UIMessageSender<RETURN>  {
     @Override
-    public Object synchroneousSendAndGetResult(SynchroneousMessage message) throws CancelException {
-        return null;
+    public RETURN synchroneousSendAndGetResult(SynchroneousMessage<RETURN> message) throws CancelException {
+        this.synchroneousSend(message);
+        return message.getResponse();
     }
 
     @Override
     public void synchroneousSend(Message message) {
-
+        final Semaphore lock = new Semaphore(0);
+        Executors.newSingleThreadExecutor().submit(() -> {
+            message.run();
+            lock.release();
+        });
+        lock.release();
     }
 
     @Override
     public void asynchroneousSend(Message message) {
-
+        Executors.newSingleThreadExecutor().submit(message);
     }
 }

@@ -18,12 +18,21 @@
 
 package com.playonlinux.ui.impl.gtk;
 
-import org.gnome.gtk.Gtk;
-import org.gnome.gtk.Window;
-import org.gnome.gtk.WindowPosition;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.services.EventDispatcher;
+import org.gnome.gtk.*;
 
+import java.io.File;
+import java.io.IOException;
+
+@Scan
 public class GTKApplication extends Window {
-    public GTKApplication() {
+
+    @Inject
+    static EventDispatcher mainEventDispatcher;
+
+    public GTKApplication() throws IOException {
         setTitle("PlayOnLinux");
 
         connect((DeleteEvent) (source, event) -> {
@@ -34,5 +43,22 @@ public class GTKApplication extends Window {
         setDefaultSize(250, 150);
         setPosition(WindowPosition.CENTER);
         show();
+
+        FileChooserDialog fileChooserDialog =
+                new FileChooserDialog("Select a script to run", this, FileChooserAction.OPEN);
+
+        try {
+            fileChooserDialog.run();
+        } catch(org.gnome.glib.FatalError ignored) {
+            // FIXME: Catch properly this exception
+        }
+
+        if(fileChooserDialog.getFilename() != null) {
+            File scriptPath = new File(fileChooserDialog.getFilename());
+            fileChooserDialog.hide();
+
+            mainEventDispatcher.runLocalScript(scriptPath);
+        }
+
     }
 }

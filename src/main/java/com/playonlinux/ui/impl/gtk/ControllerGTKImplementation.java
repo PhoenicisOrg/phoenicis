@@ -25,6 +25,8 @@ import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.ui.impl.gtk.setupwindow.SetupWindowGTKImplementation;
 import org.gnome.gtk.Gtk;
 
+import java.io.IOException;
+
 
 @Scan
 public class ControllerGTKImplementation implements Controller {
@@ -33,7 +35,11 @@ public class ControllerGTKImplementation implements Controller {
 
     public void startApplication() {
         Gtk.init(ARGS);
-        GTKApplication gtkApplication = new GTKApplication();
+        try {
+            GTKApplication gtkApplication = new GTKApplication();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Gtk.main();
     }
 
