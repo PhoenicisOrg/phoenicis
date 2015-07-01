@@ -19,13 +19,16 @@
 package com.playonlinux.ui.impl.gtk;
 
 import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.services.EventDispatcher;
 import org.gnome.gtk.*;
 
 import java.io.File;
 import java.io.IOException;
 
+@Scan
 public class GTKApplication extends Window {
+
     @Inject
     static EventDispatcher mainEventDispatcher;
 
@@ -44,8 +47,18 @@ public class GTKApplication extends Window {
         FileChooserDialog fileChooserDialog =
                 new FileChooserDialog("Select a script to run", this, FileChooserAction.OPEN);
 
-        fileChooserDialog.show();
-        System.out.println(fileChooserDialog.getFilename());
-        mainEventDispatcher.runLocalScript(new File(fileChooserDialog.getFilename()));
+        try {
+            fileChooserDialog.run();
+        } catch(org.gnome.glib.FatalError ignored) {
+            // FIXME: Catch properly this exception
+        }
+
+        if(fileChooserDialog.getFilename() != null) {
+            File scriptPath = new File(fileChooserDialog.getFilename());
+            fileChooserDialog.destroy();
+
+            mainEventDispatcher.runLocalScript(scriptPath);
+        }
+
     }
 }
