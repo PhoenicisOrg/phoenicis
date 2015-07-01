@@ -23,16 +23,22 @@ import com.playonlinux.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchroneousMessage;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
+import org.gnome.gtk.Window;
+import org.gnome.gtk.WindowPosition;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
 
-public class SetupWindowGTKImplementation implements SetupWindow {
+public class SetupWindowGTKImplementation extends Window implements SetupWindow {
     private final String title;
 
     public SetupWindowGTKImplementation(String title) {
         this.title = title;
+        setTitle(title);
+        setDefaultSize(520, 400);
+        setPosition(WindowPosition.CENTER);
+        show();
     }
 
     @Override
