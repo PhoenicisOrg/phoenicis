@@ -29,6 +29,7 @@ import com.playonlinux.lang.LanguageBundleSelector;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
+import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 import com.playonlinux.webservice.DownloadManager;
@@ -44,11 +45,14 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     private boolean useCliInterface = false;
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
     private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
+    private boolean useGTKInterface;
 
     @Bean
     public Controller controller() {
         if(useCliInterface) {
             return new ControllerCLIImplementation();
+        } else if(useGTKInterface) {
+            return new ControllerGTKImplementation();
         } else {
             return new ControllerJavaFXImplementation();
         }
@@ -93,5 +97,9 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     public void setUseCLIInterface(boolean enabled) {
         this.useCliInterface = enabled;
+    }
+
+    public void setUseGTKInterface(boolean useGTKInterface) {
+        this.useGTKInterface = useGTKInterface;
     }
 }

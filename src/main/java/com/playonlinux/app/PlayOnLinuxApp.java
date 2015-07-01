@@ -41,6 +41,11 @@ public class PlayOnLinuxApp {
         if(args.length > 0 && "--cli".equals(args[0])) {
             playOnLinuxConfig.setUseCLIInterface(true);
         }
+        if(args.length > 0 && "--gtk".equals(args[0])) {
+            playOnLinuxConfig.setUseGTKInterface(true);
+        }
+
+
         playOnLinuxConfig.load();
 
         playOnLinuxContext.initLogger();
