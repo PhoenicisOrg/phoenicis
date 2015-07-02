@@ -22,11 +22,14 @@ import com.playonlinux.installer.CancelException;
 import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchroneousMessage;
 import com.playonlinux.ui.UIMessageSender;
+import org.apache.log4j.Logger;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 public class UIMessageSenderGTKImplementation<RETURN> implements UIMessageSender<RETURN>  {
+    private static final Logger LOGGER = Logger.getLogger(UIMessageSenderGTKImplementation.class);
+
     @Override
     public RETURN synchroneousSendAndGetResult(SynchroneousMessage<RETURN> message) throws CancelException {
         this.synchroneousSend(message);
@@ -40,7 +43,11 @@ public class UIMessageSenderGTKImplementation<RETURN> implements UIMessageSender
             message.run();
             lock.release();
         });
-        lock.release();
+        try {
+            lock.acquire();
+        } catch (InterruptedException e) {
+            LOGGER.info(e);
+        }
     }
 
     @Override

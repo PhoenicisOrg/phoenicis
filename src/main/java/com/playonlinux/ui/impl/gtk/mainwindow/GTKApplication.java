@@ -16,49 +16,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.gtk;
+package com.playonlinux.ui.impl.gtk.mainwindow;
 
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.services.EventDispatcher;
 import org.gnome.gtk.*;
 
-import java.io.File;
-import java.io.IOException;
 
-@Scan
 public class GTKApplication extends Window {
+    private MainWindowEventDispatcher mainWindowEventDispatcher;
 
-    @Inject
-    static EventDispatcher mainEventDispatcher;
-
-    public GTKApplication() throws IOException {
+    public GTKApplication() {
         setTitle("PlayOnLinux");
+
+        mainWindowEventDispatcher = new MainWindowEventDispatcher(this);
 
         connect((DeleteEvent) (source, event) -> {
             Gtk.mainQuit();
             return false;
         });
 
-        setDefaultSize(250, 150);
+        VBox vBox = new VBox(false, 0);
+
+        MenuBar menuBar = new MainWindowMenuBar(this);
+
+
+
+        vBox.packStart(menuBar, false, false, 3);
+        setDefaultSize(515, 450);
         setPosition(WindowPosition.CENTER);
-        show();
 
-        FileChooserDialog fileChooserDialog =
-                new FileChooserDialog("Select a script to run", this, FileChooserAction.OPEN);
+        add(vBox);
 
-        try {
-            fileChooserDialog.run();
-        } catch(org.gnome.glib.FatalError ignored) {
-            // FIXME: Catch properly this exception
-        }
 
-        if(fileChooserDialog.getFilename() != null) {
-            File scriptPath = new File(fileChooserDialog.getFilename());
-            fileChooserDialog.hide();
+        showAll();
 
-            mainEventDispatcher.runLocalScript(scriptPath);
-        }
+    }
 
+    public MainWindowEventDispatcher getMainWindowEventDispatcher() {
+        return mainWindowEventDispatcher;
     }
 }
