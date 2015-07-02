@@ -25,6 +25,8 @@ import org.gnome.gdk.RGBA;
 import org.gnome.gtk.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
@@ -44,16 +46,16 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
      */
     private void drawHeader() {
         String title = this.getParentWizardTitle(); // FIXME: use this variable to draw the title of the window
-        Fixed header = new Fixed();
-
+        Layout header = new Layout();
+        header.overrideBackground(StateFlags.NORMAL, RGBA.WHITE);
         header.setSizeRequest(522, 65);
+        header.setBorderWidth(1);
 
-        Image topImage = null;
         try {
             Pixbuf pixbuf = new Pixbuf(this.createTopImage());
-            topImage = new Image(pixbuf);
+            Image topImage = new Image(pixbuf);
             header.put(topImage, 456, 0);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             LOGGER.warn(e);
         }
 
@@ -67,8 +69,8 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         this.contentPanel = panel;
     }
 
-    private String createTopImage() {
-        return this.getParentTopImage().toString();
+    private byte[] createTopImage() {
+        return this.getParentTopImage();
     }
 
     public void installStep() {

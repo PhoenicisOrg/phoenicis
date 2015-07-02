@@ -25,12 +25,13 @@ import com.playonlinux.messages.InterrupterSynchroneousMessage;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.gnome.gtk.Fixed;
 import org.gnome.gtk.Window;
 import org.gnome.gtk.WindowPosition;
 
-import java.io.File;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -39,7 +40,7 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     private static final Logger LOGGER = Logger.getLogger(SetupWindowGTKImplementation.class);
     private final String title;
     private Fixed root;
-    private URL topImage;
+    private byte[] topImage;
     private URL leftImage;
 
     public SetupWindowGTKImplementation(String title) {
@@ -48,16 +49,22 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
         setDefaultSize(520, 400);
         setPosition(WindowPosition.CENTER);
 
-        this.loadImages();
+        try {
+            this.loadImages();
+        } catch (IOException e) {
+            LOGGER.warn(e);
+        }
         root = new Fixed();
 
         this.add(root);
         showAll();
     }
 
-    private void loadImages() {
-        this.topImage = SetupWindow.class.getResource("/com/playonlinux/ui/setupwindow/defaultTopImage.png");
+    private void loadImages() throws IOException {
+        InputStream topImageStream
+                = SetupWindow.class.getResourceAsStream("/com/playonlinux/ui/setupwindow/defaultTopImage.png");
 
+        topImage = IOUtils.toByteArray(topImageStream);
         try {
             switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
                 case MACOSX:
@@ -78,8 +85,9 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     }
 
     @Override
-    public void setTopImage(File topImage) throws MalformedURLException {
-        this.topImage = new URL(topImage.getAbsolutePath());
+    public void setTopImage(File topImage) throws IOException {
+        FileInputStream inputStream = new FileInputStream(topImage);
+        this.topImage = IOUtils.toByteArray(inputStream);
     }
 
     @Override
@@ -131,14 +139,14 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
 
     @Override
     public void close() {
-
+        this.destroy();
     }
 
     public Fixed getRoot() {
         return root;
     }
 
-    public URL getTopImage() {
+    public byte[] getTopImage() {
         return topImage;
     }
 
