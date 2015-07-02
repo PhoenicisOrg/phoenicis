@@ -20,8 +20,7 @@ package com.playonlinux.ui.impl.gtk.setupwindow;
 
 import com.playonlinux.messages.CancelerMessage;
 import com.playonlinux.messages.CancelerSynchroneousMessage;
-import org.gnome.gtk.Align;
-import org.gnome.gtk.Label;
+import org.gnome.gtk.*;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
     String textToShow;
@@ -35,9 +34,8 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
     protected void drawStepContent() {
         Label textWidget = new Label(textToShow);
         textWidget.setLineWrap(true);
+        textWidget.setAlignment(0, 0);
         textWidget.setSizeRequest(500, 100);
-        textWidget.setAlignHorizontal(Align.START);
-        textWidget.setAlignVertical(Align.FILL);
 
         this.addToContentPanel(textWidget, 10, 20);
     }

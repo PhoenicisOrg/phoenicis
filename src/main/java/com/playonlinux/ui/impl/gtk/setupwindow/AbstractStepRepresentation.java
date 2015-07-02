@@ -42,7 +42,7 @@ abstract class AbstractStepRepresentation {
         return this.parent.getRoot();
     }
 
-    protected URL getParentTopImage() {
+    protected byte[] getParentTopImage() {
         return this.parent.getTopImage();
     }
 
@@ -70,11 +70,13 @@ abstract class AbstractStepRepresentation {
         this.addToStep(footer, 0, 356);
 
         nextButton = new Button("Next");
-        nextButton.setSizeRequest(70, 28);
+        nextButton.setSizeRequest(75, 28);
+        nextButton.setExpandHorizontal(false);
 
         Button cancelButton = new Button("Cancel");
 
-        cancelButton.setSizeRequest(70, 28);
+        cancelButton.setSizeRequest(75, 28);
+        cancelButton.setExpandHorizontal(false);
 
         footer.put(nextButton, 435, 9);
         footer.put(cancelButton, 335, 9);
