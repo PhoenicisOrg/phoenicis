@@ -46,6 +46,7 @@ public class GTKApplication extends Window {
 
         add(vBox);
 
+
         showAll();
 
     }
