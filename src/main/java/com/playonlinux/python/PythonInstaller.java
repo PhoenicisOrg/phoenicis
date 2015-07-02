@@ -111,6 +111,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                 if(logStream != null) {
                     try {
                         logStream.flush();
+                        logStream.close();
                     } catch (IOException e) {
                         LOGGER.warn("Unable to flush script log stream", e);
                     }
