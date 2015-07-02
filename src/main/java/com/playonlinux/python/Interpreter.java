@@ -30,7 +30,7 @@ public class Interpreter extends PythonInterpreter {
     
     public static Interpreter createInstance() {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
-        System.getProperties().setProperty("python.path", pythonPath.getAbsolutePath());
+        System.setProperty("python.path", pythonPath.getAbsolutePath());
         return new Interpreter();
     }
 }
