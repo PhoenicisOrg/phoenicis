@@ -22,10 +22,9 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.ui.impl.gtk.mainwindow.GTKApplication;
 import com.playonlinux.ui.impl.gtk.setupwindow.SetupWindowGTKImplementation;
 import org.gnome.gtk.Gtk;
-
-import java.io.IOException;
 
 
 @Scan
@@ -35,11 +34,8 @@ public class ControllerGTKImplementation implements Controller {
 
     public void startApplication() {
         Gtk.init(ARGS);
-        try {
-            GTKApplication gtkApplication = new GTKApplication();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        GTKApplication gtkApplication = new GTKApplication();
+
         Gtk.main();
     }
 

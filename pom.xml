@@ -96,11 +96,16 @@
             <artifactId>compiler</artifactId>
             <version>0.9.0</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.gnome</groupId>
             <artifactId>java-gnome-linux-x86</artifactId>
+            <scope>system</scope>
+            <systemPath>/usr/share/java/gtk-4.1.jar</systemPath>
             <version>4.0.13</version>
         </dependency>
+
 
         <!-- Test dependencies -->
         <dependency>
