@@ -79,14 +79,14 @@ abstract class AbstractStepRepresentation {
         footer.put(nextButton, 435, 9);
         footer.put(cancelButton, 335, 9);
 
-        cancelButton.connect((Button button) -> {
+        cancelButton.connect((Button.Clicked) (Button button) -> {
             cancelButton.setSensitive(false);
             messageWaitingForResponse.sendCancelSignal();
         });
     }
 
     protected void setNextButtonAction(Button.Clicked nextButtonAction) {
-        nextButton.connect((Button button) -> {
+        nextButton.connect((Button.Clicked) (Button button) -> {
             nextButton.setSensitive(false);
             nextButtonAction.onClicked(button);
         });

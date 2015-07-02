@@ -25,7 +25,7 @@ public class MainWindowMenuBar extends MenuBar {
         final Menu toolsMenu = new Menu();
         final MenuItem runScriptItem = new MenuItem(translate("Run a local script"));
 
-        runScriptItem.connect((MenuItem menuItem) -> {
+        runScriptItem.connect((MenuItem.Activate) (MenuItem menuItem) -> {
             try {
                 mainWindowEventDispatcher.runLocalScript();
             } catch (IOException e) {
