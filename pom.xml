@@ -67,7 +67,7 @@
             <version>0.9.9</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang</groupId>
+          f  <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.5</version>
         </dependency>
@@ -100,10 +100,9 @@
 
         <dependency>
             <groupId>org.gnome</groupId>
-            <artifactId>java-gnome-linux-x86</artifactId>
+            <artifactId>java-gnome</artifactId>
             <scope>system</scope>
-            <systemPath>/usr/share/java/gtk-4.1.jar</systemPath>
-            <version>4.0.13</version>
+            <systemPath>dependencies/gtk-4.1.jar</systemPath>
         </dependency>
 
 
@@ -129,12 +128,6 @@
     </dependencies>
 
 
-    <repositories>
-        <repository>
-            <id>javabuilders</id>
-            <url>http://javabuilders.googlecode.com/svn/repo</url>
-        </repository>
-    </repositories>
 
     <build>
         <resources>
