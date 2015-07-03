@@ -88,9 +88,9 @@ public abstract class Script implements BackgroundService {
                     }
                     LOGGER.error(ExceptionUtils.getStackTrace(e));
                 } catch (ScriptFailureException e) {
-                    LOGGER.error("The script encountered an error");
-                    LOGGER.error(e);
+                    LOGGER.error("The script encountered an error", e);
                 } finally {
+                    LOGGER.info("Cleaning up");
                     pythonInterpreter.cleanup();
                     backgroundServiceManager.unregister(Script.this);
                 }
