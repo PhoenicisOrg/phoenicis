@@ -21,6 +21,9 @@ package com.playonlinux.installer;
 import java.io.IOException;
 import java.text.ParseException;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.services.BackgroundServiceManager;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
@@ -29,7 +32,11 @@ import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
 import com.playonlinux.services.BackgroundService;
 
+@Scan
 public abstract class Script implements BackgroundService {
+    @Inject
+    private static BackgroundServiceManager backgroundServiceManager;
+
     private static final Logger LOGGER = Logger.getLogger(Script.class);
 
     private Thread scriptThread;
@@ -95,6 +102,7 @@ public abstract class Script implements BackgroundService {
             executeScript(pythonInterpreter);
         } finally {
             pythonInterpreter.cleanup();
+            backgroundServiceManager.unregister(this);
         }
     }
 
