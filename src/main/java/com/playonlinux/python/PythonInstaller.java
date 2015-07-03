@@ -116,6 +116,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                         LOGGER.warn("Unable to flush script log stream", e);
                     }
                 }
+                pythonInterpreter.close();
             }
         }
     }
