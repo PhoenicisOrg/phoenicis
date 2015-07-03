@@ -18,19 +18,37 @@
 
 package com.playonlinux.python;
 
+import org.python.core.Py;
+import org.python.core.PyDictionary;
+import org.python.core.PySystemState;
+import org.python.modules.zipimport.zipimport;
 import org.python.util.PythonInterpreter;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Interpreter extends PythonInterpreter {
-
+public class Interpreter extends PythonInterpreter implements AutoCloseable {
+    private static int numberOfInstances = 0;
     private Interpreter() {
         super();
     }
     
-    public static Interpreter createInstance() {
+    synchronized public static Interpreter createInstance() {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
-        return new Interpreter();
+        numberOfInstances++;
+        Interpreter interpreter = new Interpreter();
+        return interpreter;
+    }
+
+    @Override
+    synchronized public void close() {
+        numberOfInstances--;
+        if(numberOfInstances == 0) {
+            Py.defaultSystemState = new PySystemState();
+            zipimport._zip_directory_cache = new PyDictionary();
+        }
     }
 }

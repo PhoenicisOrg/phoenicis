@@ -29,11 +29,14 @@ import com.playonlinux.services.BackgroundServiceManager;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.Py;
+import org.python.core.PyDictionary;
 import org.python.core.PyException;
 
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
 import com.playonlinux.services.BackgroundService;
+import org.python.core.PySystemState;
+import org.python.modules.zipimport.zipimport;
 
 @Scan
 public abstract class Script implements BackgroundService {
@@ -97,7 +100,7 @@ public abstract class Script implements BackgroundService {
             } finally {
                 LOGGER.info("Cleaning up");
                 pythonInterpreter.cleanup();
-                Py.getSystemState().cleanup();
+                pythonInterpreter.close();
                 backgroundServiceManager.unregister(Script.this);
             }
         });
