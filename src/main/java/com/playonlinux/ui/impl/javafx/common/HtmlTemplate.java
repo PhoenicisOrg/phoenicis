@@ -20,12 +20,8 @@ package com.playonlinux.ui.impl.javafx.common;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
-import javafx.scene.web.WebView;
-import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 

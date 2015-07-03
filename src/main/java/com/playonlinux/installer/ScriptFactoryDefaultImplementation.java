@@ -18,12 +18,17 @@
 
 package com.playonlinux.installer;
 
+import com.playonlinux.python.Interpreter;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class ScriptFactoryDefaultImplementation implements ScriptFactory {
+    ExecutorService executorService = newSingleThreadExecutor();
 
     public Script createInstance(File scriptFile) throws IOException {
         return createInstance(FileUtils.readFileToString(scriptFile));
@@ -32,11 +37,15 @@ public class ScriptFactoryDefaultImplementation implements ScriptFactory {
     public Script createInstance(String script) {
         switch(Script.detectScriptType(script)) {
             case LEGACY:
-                return new ScriptLegacy(script);
+                return new ScriptLegacy(script, executorService);
             case RECENT:
             default:
-                return new ScriptRecent(script);
+                return new ScriptRecent(script, executorService);
         }
     }
 
+    public ScriptFactoryDefaultImplementation withExecutor(ExecutorService executorService) {
+        this.executorService = executorService;
+        return this;
+    }
 }

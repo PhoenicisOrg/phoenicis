@@ -24,14 +24,15 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
 import java.text.ParseException;
+import java.util.concurrent.ExecutorService;
 
 public class ScriptLegacy extends Script {
     private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP PUBLIC KEY BLOCK-----";
     private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
 
 
-    protected ScriptLegacy(String script) {
-        super(script);
+    protected ScriptLegacy(String script, ExecutorService executorService) {
+        super(script, executorService);
     }
 
     @Override

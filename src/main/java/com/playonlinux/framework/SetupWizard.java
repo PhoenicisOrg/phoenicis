@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -45,7 +46,7 @@ public class SetupWizard {
 
     private final String title;
 
-    SetupWindow setupWindow;
+    WeakReference<SetupWindow> setupWindow;
     UIMessageSender messageSender;
 
 
@@ -63,7 +64,7 @@ public class SetupWizard {
                 new SynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow = controller.createSetupWindowGUIInstance(translate(title));
+                        setupWindow = new WeakReference<>(controller.createSetupWindowGUIInstance(translate(title)));
                     }
                 }
         );
@@ -77,7 +78,7 @@ public class SetupWizard {
                 new SynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.close();
+                        setupWindow.get().close();
                     }
                 }
         );
@@ -93,7 +94,7 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showSimpleMessageStep((CancelerSynchroneousMessage) message, textToShow);
+                        setupWindow.get().showSimpleMessageStep((CancelerSynchroneousMessage) message, textToShow);
                     }
                 }
         );
@@ -103,7 +104,7 @@ public class SetupWizard {
      * Show a default script presentation
      * @param programName the name of the program
      * @param programEditor the editor of the program
-     * @param editorIRL the editor website URL
+     * @param editorURL the editor website URL
      * @param scriptorName the scriptor name
      * @param prefixName the name of the prefix for that program
      * @throws CancelException
@@ -128,7 +129,7 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showPresentationStep((CancelerSynchroneousMessage) message, textToShow);
+                        setupWindow.get().showPresentationStep((CancelerSynchroneousMessage) message, textToShow);
                     }
                 }
         );
@@ -174,7 +175,7 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showLicenceStep((CancelerSynchroneousMessage) message, textToShow, licenceText);
+                        setupWindow.get().showLicenceStep((CancelerSynchroneousMessage) message, textToShow, licenceText);
                     }
                 }
         );
@@ -202,7 +203,7 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showTextBoxStep((CancelerSynchroneousMessage) message, textToShow, defaultValue);
+                        setupWindow.get().showTextBoxStep((CancelerSynchroneousMessage) message, textToShow, defaultValue);
                     }
                 }
         );
@@ -220,7 +221,7 @@ public class SetupWizard {
                 new CancelerSynchroneousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showMenuStep((CancelerSynchroneousMessage) message, textToShow, menuItems);
+                        setupWindow.get().showMenuStep((CancelerSynchroneousMessage) message, textToShow, menuItems);
                     }
                 }
         );
@@ -235,7 +236,7 @@ public class SetupWizard {
                 new InterrupterAsynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
+                        setupWindow.get().showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
                     }
                 }
         );
@@ -246,7 +247,7 @@ public class SetupWizard {
                 new InterrupterSynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        this.setResponse(setupWindow.showProgressBar((InterrupterSynchroneousMessage) message,
+                        this.setResponse(setupWindow.get().showProgressBar((InterrupterSynchroneousMessage) message,
                                 textToShow));
                     }
                 }

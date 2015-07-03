@@ -23,13 +23,21 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
+import com.playonlinux.services.BackgroundServiceManager;
 
 import java.io.IOException;
+
+import static org.mockito.Mockito.mock;
 
 public class MockContextConfig extends AbstractConfigFile {
     @Bean
     protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
         return new MockPlayOnLinuxContext();
+    }
+
+    @Bean
+    protected BackgroundServiceManager mockBackgroundServiceManager() {
+        return mock(BackgroundServiceManager.class);
     }
 
     @Override

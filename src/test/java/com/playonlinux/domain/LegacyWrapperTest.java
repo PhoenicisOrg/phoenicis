@@ -23,12 +23,23 @@ import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
+import com.playonlinux.python.Interpreter;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.io.File;
+import java.util.List;
+import java.util.concurrent.AbstractExecutorService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class LegacyWrapperTest {
 
@@ -48,10 +59,23 @@ public class LegacyWrapperTest {
             tmpFile.delete();
         }
         File testScript = new File(this.getClass().getResource("wrapperTestScript.sh").getPath());
-        Script testScriptWrapper = new ScriptFactoryDefaultImplementation().createInstance(testScript);
-        testScriptWrapper.executeInterpreter();
+        ExecutorService mockExecutorService = mock(ExecutorService.class);
+        Future mockFuture = mock(Future.class);
+        when(mockExecutorService.submit(any(Runnable.class))).thenAnswer(invocation -> {
+            Object[] args = invocation.getArguments();
+            Runnable runnable = (Runnable) args[0];
+            runnable.run();
+            return mockFuture;
+        });
+
+        Script testScriptWrapper = new ScriptFactoryDefaultImplementation()
+                .withExecutor(mockExecutorService)
+                .createInstance(testScript);
+        testScriptWrapper.start();
         //file should exist now
         assertTrue(tmpFile.exists());
     }
+
+
 
 }

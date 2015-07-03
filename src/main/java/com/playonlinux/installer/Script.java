@@ -20,22 +20,37 @@ package com.playonlinux.installer;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.services.BackgroundServiceManager;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+import org.python.core.Py;
+import org.python.core.PyDictionary;
 import org.python.core.PyException;
 
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.python.Interpreter;
 import com.playonlinux.services.BackgroundService;
+import org.python.core.PySystemState;
+import org.python.modules.zipimport.zipimport;
 
+@Scan
 public abstract class Script implements BackgroundService {
-    private static final Logger LOGGER = Logger.getLogger(Script.class);
+    @Inject
+    private static BackgroundServiceManager backgroundServiceManager;
 
-    private Thread scriptThread;
+    private static final Logger LOGGER = Logger.getLogger(Script.class);
+    private final ExecutorService executor;
+    private Future runningScript;
+
     private final String scriptContent;
 
-    protected Script(String scriptContent) {
+    protected Script(String scriptContent, ExecutorService executor) {
+        this.executor = executor;
         this.scriptContent = scriptContent;
     }
 
@@ -51,47 +66,44 @@ public abstract class Script implements BackgroundService {
 
     @Override
     public void shutdown() {
-        scriptThread.interrupt();
+        runningScript.cancel(true);
     }
 
     public String getScriptContent() {
         return scriptContent;
     }
 
+
+
     public enum Type {
         RECENT,
         LEGACY
     }
 
-
     @Override
     public void start() {
-        scriptThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    executeInterpreter();
-                } catch (PyException e) {
-                    if(e.getCause() instanceof ScriptFailureException) {
-                        LOGGER.error("The script encountered an error");
-                    }
-                    if(e.getCause() instanceof CancelException) {
-                        LOGGER.info("The script has been canceled");
-                    }
-                    LOGGER.error(ExceptionUtils.getStackTrace(e));
-                } catch (ScriptFailureException e) {
+        runningScript = executor.submit(() -> {
+            Interpreter pythonInterpreter = Interpreter.createInstance();
+
+            try {
+                executeScript(pythonInterpreter);
+            } catch (PyException e) {
+                if (e.getCause() instanceof ScriptFailureException) {
                     LOGGER.error("The script encountered an error");
-                    LOGGER.error(e);
                 }
+                if (e.getCause() instanceof CancelException) {
+                    LOGGER.info("The script has been canceled");
+                }
+                LOGGER.error(ExceptionUtils.getStackTrace(e));
+            } catch (ScriptFailureException e) {
+                LOGGER.error("The script encountered an error", e);
+            } finally {
+                LOGGER.info("Cleaning up");
+                pythonInterpreter.cleanup();
+                pythonInterpreter.close();
+                backgroundServiceManager.unregister(Script.this);
             }
-        };
-        scriptThread.start();
-
-    }
-
-    public void executeInterpreter() throws ScriptFailureException {
-        Interpreter pythonInterpreter = Interpreter.createInstance();
-        executeScript(pythonInterpreter);
+        });
     }
 
     protected abstract void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException;
