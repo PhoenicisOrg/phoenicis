@@ -25,10 +25,11 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
 import java.text.ParseException;
+import java.util.concurrent.ExecutorService;
 
 public class ScriptRecent extends Script {
-    protected ScriptRecent(String script) {
-        super(script);
+    protected ScriptRecent(String script, ExecutorService executorService) {
+        super(script, executorService);
     }
 
     @Override

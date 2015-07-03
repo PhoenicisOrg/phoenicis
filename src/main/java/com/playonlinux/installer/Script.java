@@ -20,6 +20,8 @@ package com.playonlinux.installer;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -38,11 +40,13 @@ public abstract class Script implements BackgroundService {
     private static BackgroundServiceManager backgroundServiceManager;
 
     private static final Logger LOGGER = Logger.getLogger(Script.class);
+    private final ExecutorService executor;
+    private Future runningScript;
 
-    private Thread scriptThread;
     private final String scriptContent;
 
-    protected Script(String scriptContent) {
+    protected Script(String scriptContent, ExecutorService executor) {
+        this.executor = executor;
         this.scriptContent = scriptContent;
     }
 
@@ -58,12 +62,14 @@ public abstract class Script implements BackgroundService {
 
     @Override
     public void shutdown() {
-        scriptThread.interrupt();
+        runningScript.cancel(true);
     }
 
     public String getScriptContent() {
         return scriptContent;
     }
+
+
 
     public enum Type {
         RECENT,
@@ -72,32 +78,27 @@ public abstract class Script implements BackgroundService {
 
     @Override
     public void start() {
-        scriptThread = new Thread() {
-            @Override
-            public void run() {
-                Interpreter pythonInterpreter = Interpreter.createInstance();
+        runningScript = executor.submit(() -> {
+            Interpreter pythonInterpreter = Interpreter.createInstance();
 
-                try {
-                    executeScript(pythonInterpreter);
-                } catch (PyException e) {
-                    if(e.getCause() instanceof ScriptFailureException) {
-                        LOGGER.error("The script encountered an error");
-                    }
-                    if(e.getCause() instanceof CancelException) {
-                        LOGGER.info("The script has been canceled");
-                    }
-                    LOGGER.error(ExceptionUtils.getStackTrace(e));
-                } catch (ScriptFailureException e) {
-                    LOGGER.error("The script encountered an error", e);
-                } finally {
-                    LOGGER.info("Cleaning up");
-                    pythonInterpreter.cleanup();
-                    backgroundServiceManager.unregister(Script.this);
+            try {
+                executeScript(pythonInterpreter);
+            } catch (PyException e) {
+                if (e.getCause() instanceof ScriptFailureException) {
+                    LOGGER.error("The script encountered an error");
                 }
+                if (e.getCause() instanceof CancelException) {
+                    LOGGER.info("The script has been canceled");
+                }
+                LOGGER.error(ExceptionUtils.getStackTrace(e));
+            } catch (ScriptFailureException e) {
+                LOGGER.error("The script encountered an error", e);
+            } finally {
+                LOGGER.info("Cleaning up");
+                pythonInterpreter.cleanup();
+                backgroundServiceManager.unregister(Script.this);
             }
-        };
-        scriptThread.start();
-
+        });
     }
 
     protected abstract void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException;
