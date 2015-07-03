@@ -70,14 +70,15 @@ public abstract class Script implements BackgroundService {
         LEGACY
     }
 
-
     @Override
     public void start() {
         scriptThread = new Thread() {
             @Override
             public void run() {
+                Interpreter pythonInterpreter = Interpreter.createInstance();
+
                 try {
-                    executeInterpreter();
+                    executeScript(pythonInterpreter);
                 } catch (PyException e) {
                     if(e.getCause() instanceof ScriptFailureException) {
                         LOGGER.error("The script encountered an error");
@@ -89,21 +90,14 @@ public abstract class Script implements BackgroundService {
                 } catch (ScriptFailureException e) {
                     LOGGER.error("The script encountered an error");
                     LOGGER.error(e);
+                } finally {
+                    pythonInterpreter.cleanup();
+                    backgroundServiceManager.unregister(Script.this);
                 }
             }
         };
         scriptThread.start();
 
-    }
-
-    public void executeInterpreter() throws ScriptFailureException {
-        Interpreter pythonInterpreter = Interpreter.createInstance();
-        try {
-            executeScript(pythonInterpreter);
-        } finally {
-            pythonInterpreter.cleanup();
-            backgroundServiceManager.unregister(this);
-        }
     }
 
     protected abstract void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException;
