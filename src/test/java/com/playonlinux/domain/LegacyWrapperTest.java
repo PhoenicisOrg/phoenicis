@@ -23,18 +23,12 @@ import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
-import com.playonlinux.python.Interpreter;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.io.File;
-import java.util.List;
-import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;

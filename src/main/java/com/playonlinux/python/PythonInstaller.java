@@ -22,6 +22,7 @@ import com.playonlinux.log.LogStream;
 import com.playonlinux.framework.ScriptFailureException;
 import org.apache.log4j.Logger;
 import org.python.core.*;
+import org.python.util.PythonInterpreter;
 import org.reflections.ReflectionUtils;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private PyObject mainInstance;
     private static final Logger LOGGER = Logger.getLogger(PythonInstaller.class);
 
-    public PythonInstaller(Interpreter pythonInterpreter, Class<T> type) {
+    public PythonInstaller(PythonInterpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
     }
 

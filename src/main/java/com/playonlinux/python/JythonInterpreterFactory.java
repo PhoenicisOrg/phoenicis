@@ -18,33 +18,37 @@
 
 package com.playonlinux.python;
 
+import com.playonlinux.app.PlayOnLinuxException;
 import org.python.core.Py;
 import org.python.core.PyDictionary;
 import org.python.core.PySystemState;
 import org.python.modules.zipimport.zipimport;
 import org.python.util.PythonInterpreter;
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Interpreter extends PythonInterpreter implements AutoCloseable {
-    private static int numberOfInstances = 0;
-    private Interpreter() {
-        super();
+public class JythonInterpreterFactory {
+    private int numberOfInstances = 0;
+
+    synchronized public PythonInterpreter createInstance() throws PlayOnLinuxException {
+        return createInstance(PythonInterpreter.class);
     }
-    
-    synchronized public static Interpreter createInstance() {
+
+    synchronized public <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
         numberOfInstances++;
-        Interpreter interpreter = new Interpreter();
+        T interpreter = null;
+        try {
+            interpreter = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new PlayOnLinuxException("Unable to create a Python interpreter", e);
+        }
         return interpreter;
     }
 
-    @Override
-    synchronized public void close() {
+    synchronized public void close(PythonInterpreter interpreter) {
+        interpreter.cleanup();
         numberOfInstances--;
         if(numberOfInstances == 0) {
             Py.defaultSystemState = new PySystemState();

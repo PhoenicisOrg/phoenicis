@@ -34,6 +34,7 @@ import static com.playonlinux.lang.Localisation.translate;
 public class ViewLibrary extends HBox {
 
     private LeftButton runScript;
+    private LeftButton runConsole;
     private final MainWindow parent;
     private static final Logger LOGGER = Logger.getLogger(ViewLibrary.class);
     private ApplicationListWidget applicationListWidget;
@@ -64,11 +65,14 @@ public class ViewLibrary extends HBox {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applicationListWidget.search(searchBar.getText()));
 
-        this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", "Run a script");
+        this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("Run a script"));
+        this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("${application.name} console"));
+
         this.runScript.getStyleClass().add("leftPaneButtons");
+        this.runConsole.getStyleClass().add("leftPaneButtons");
 
         LeftSpacer spacer = new LeftSpacer();
-        leftContent.getChildren().addAll(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript);
+        leftContent.getChildren().addAll(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
 
     public void setUpEvents() {
@@ -98,6 +102,8 @@ public class ViewLibrary extends HBox {
                 LOGGER.warn("Error while trying to run the script", e);
             }
         });
+
+        runConsole.setOnMouseClicked(event -> eventHandlerLibrary.runConsole());
     }
 
     public EventHandlerLibrary getEventHandler() {

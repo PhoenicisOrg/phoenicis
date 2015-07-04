@@ -102,8 +102,8 @@ public class Injector {
                         field.setAccessible(true);
                         field.set(null, beans.get(field.getType()));
                     } catch (Exception e) {
-                        String injectErrorString = String.format("Unable to inject %s. Error while injecting.",
-                                field.getType().toString());
+                        String injectErrorString = String.format("Unable to inject %s on class %s. Error while injecting.",
+                                field.getType().toString(), componentClass.getName());
 
                         LOGGER.fatal(injectErrorString, e);
                         throw new InjectionException(injectErrorString, e);

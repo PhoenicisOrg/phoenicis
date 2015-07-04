@@ -20,15 +20,16 @@ package com.playonlinux.python;
 
 import org.python.core.PyObject;
 import org.python.core.PyType;
+import org.python.util.PythonInterpreter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractPythonModule<T> {
     protected final Class<T> type;
-    protected final Interpreter pythonInterpreter;
+    protected final PythonInterpreter pythonInterpreter;
 
-    public AbstractPythonModule(Interpreter pythonInterpreter, Class<T> type) {
+    public AbstractPythonModule(PythonInterpreter pythonInterpreter, Class<T> type) {
         this.type = type;
         this.pythonInterpreter = pythonInterpreter;
     }

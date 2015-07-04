@@ -24,6 +24,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
+import com.playonlinux.ui.impl.javafx.consolewindow.ConsoleWindow;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
@@ -70,4 +71,7 @@ class EventHandlerLibrary implements UIEventHandler {
     }
 
 
+    public void runConsole() {
+        ConsoleWindow consoleWindow = new ConsoleWindow();
+    }
 }
