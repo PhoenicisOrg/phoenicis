@@ -19,9 +19,9 @@
 package com.playonlinux.installer;
 
 import com.playonlinux.framework.ScriptFailureException;
-import com.playonlinux.python.Interpreter;
 import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
+import org.python.util.PythonInterpreter;
 
 import java.io.*;
 import java.text.ParseException;
@@ -33,7 +33,7 @@ public class ScriptRecent extends Script {
     }
 
     @Override
-    protected void executeScript(Interpreter pythonInterpreter) throws ScriptFailureException {
+    protected void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException {
         pythonInterpreter.exec(this.getScriptContent());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
 

@@ -18,6 +18,8 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.python.JythonCommandInterpreterFactory;
+import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.services.EventDispatcher;
 import com.playonlinux.ui.Controller;
@@ -28,6 +30,7 @@ import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.lang.LanguageBundleSelector;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
+import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
@@ -97,6 +100,15 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
         return downloadManager;
     }
 
+    @Bean
+    public CommandInterpreterFactory commandInterpreterFactory() {
+        return new JythonCommandInterpreterFactory();
+    }
+
+    @Bean
+    public JythonInterpreterFactory jythonCommandInterpreterFactory() {
+        return new JythonInterpreterFactory();
+    }
 
     @Override
     protected String definePackage() {

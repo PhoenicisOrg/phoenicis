@@ -18,7 +18,6 @@
 
 package com.playonlinux.installer;
 
-import com.playonlinux.python.Interpreter;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

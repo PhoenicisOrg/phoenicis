@@ -23,6 +23,7 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
+import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
 
 import java.io.IOException;
@@ -38,6 +39,11 @@ public class MockContextConfig extends AbstractConfigFile {
     @Bean
     protected BackgroundServiceManager mockBackgroundServiceManager() {
         return mock(BackgroundServiceManager.class);
+    }
+
+    @Bean
+    protected JythonInterpreterFactory jythonInterpreterFactory() {
+        return new JythonInterpreterFactory();
     }
 
     @Override

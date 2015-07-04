@@ -19,29 +19,38 @@
 package com.playonlinux.python;
 
 import com.playonlinux.MockContextConfig;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.installer.ScriptTemplate;
-import com.playonlinux.framework.ScriptFailureException;
 
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.python.util.PythonInterpreter;
 
 import java.io.*;
 
 import static org.junit.Assert.*;
 
 public class PythonInstallerTest {
+    private JythonInterpreterFactory jythonInterpreterFactory;
+
     @BeforeClass
-    public static void setUp() throws InjectionException {
+    public static void setUpClass() throws InjectionException {
         AbstractConfigFile testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }
 
+    @Before
+    public void setUp() {
+        jythonInterpreterFactory = new JythonInterpreterFactory();
+    }
+
     @Test
-    public void testPythonInstaller_DefineLogContextWithMethod_ContextIsSet() throws IOException, ScriptFailureException {
+    public void testPythonInstaller_DefineLogContextWithMethod_ContextIsSet() throws IOException, PlayOnLinuxException {
         File temporaryScript = File.createTempFile("testDefineLogContext", "py");
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
@@ -54,7 +63,7 @@ public class PythonInstallerTest {
                 "    def logContext(self):\n" +
                 "        return \"Mock Log Context\"\n").getBytes());
 
-        Interpreter interpreter = Interpreter.createInstance();
+        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -63,7 +72,7 @@ public class PythonInstallerTest {
 
 
     @Test
-    public void testPythonInstaller_DefineLogContextWithAttribute_ContextIsSet() throws IOException, ScriptFailureException {
+    public void testPythonInstaller_DefineLogContextWithAttribute_ContextIsSet() throws IOException, PlayOnLinuxException {
         File temporaryScript = File.createTempFile("testDefineLogContext", "py");
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
@@ -75,7 +84,7 @@ public class PythonInstallerTest {
                 "   def main(self):\n" +
                 "        pass\n").getBytes());
 
-        Interpreter interpreter = Interpreter.createInstance();
+        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -84,7 +93,7 @@ public class PythonInstallerTest {
 
 
     @Test
-    public void testPythonInstaller_DefineVariableAttributes_AttributesAreSet() throws IOException, ScriptFailureException {
+    public void testPythonInstaller_DefineVariableAttributes_AttributesAreSet() throws IOException, PlayOnLinuxException {
         File temporaryOutput = new File("/tmp/testPythonInstaller_DefineVariableAttributes.log");
         temporaryOutput.deleteOnExit();
 
@@ -105,7 +114,7 @@ public class PythonInstallerTest {
                 "    steamId = 130\n" +
                 "    packages = [\"package1\", \"package2\"]\n").getBytes());
 
-        Interpreter interpreter = Interpreter.createInstance();
+        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 

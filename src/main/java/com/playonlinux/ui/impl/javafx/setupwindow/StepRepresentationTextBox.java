@@ -23,7 +23,7 @@ import javafx.scene.control.TextField;
 
 public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final String defaultValue;
-    TextField textField;
+    private TextField textField;
 
     public StepRepresentationTextBox(SetupWindowJavaFXImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
                                      String defaultValue) {
