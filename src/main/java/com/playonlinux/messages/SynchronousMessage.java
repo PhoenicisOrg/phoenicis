@@ -22,7 +22,7 @@ import com.playonlinux.installer.CancelException;
 
 import java.util.concurrent.Semaphore;
 
-public abstract class SynchroneousMessage<RESULT> implements Message {
+public abstract class SynchronousMessage<RESULT> implements Message {
     private RESULT response;
     Semaphore semaphore = new Semaphore(0);
 

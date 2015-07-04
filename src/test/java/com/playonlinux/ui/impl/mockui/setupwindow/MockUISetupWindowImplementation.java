@@ -20,9 +20,9 @@ package com.playonlinux.ui.impl.mockui.setupwindow;
 
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
-import com.playonlinux.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.messages.InterrupterSynchronousMessage;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -43,7 +43,7 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     }
 
     @Override
-    public void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow) {
+    public void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow) {
         assertEquals("Text to show", textToShow);
         message.setResponse(null);
     }
@@ -54,14 +54,14 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     }
 
     @Override
-    public void showTextBoxStep(CancelerSynchroneousMessage message, String textToShow, String defaultValue) {
+    public void showTextBoxStep(CancelerSynchronousMessage message, String textToShow, String defaultValue) {
         assertEquals("Text to show", textToShow);
         assertEquals("Default value", defaultValue);
         message.setResponse("showTextBoxStep result");
     }
 
     @Override
-    public void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems) {
+    public void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems) {
         assertEquals("Text to show", textToShow);
         assertEquals("Element 1", menuItems.get(0));
         assertEquals("Element 2", menuItems.get(1));
@@ -75,12 +75,12 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     }
 
     @Override
-    public ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
+    public ProgressStep showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
         return null;
     }
 
     @Override
-    public void showPresentationStep(CancelerSynchroneousMessage message, String textToShow) {
+    public void showPresentationStep(CancelerSynchronousMessage message, String textToShow) {
         // TODO
     }
 
@@ -90,7 +90,7 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     }
 
     @Override
-    public void showLicenceStep(CancelerSynchroneousMessage message, String textToShow, String licenceText) {
+    public void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText) {
         // TODO
         
     }

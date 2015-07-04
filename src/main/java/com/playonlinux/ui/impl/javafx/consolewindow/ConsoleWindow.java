@@ -21,6 +21,10 @@ package com.playonlinux.ui.impl.javafx.consolewindow;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.CancelException;
+import com.playonlinux.messages.Message;
+import com.playonlinux.messages.RunnableWithParameter;
+import com.playonlinux.messages.SynchronousMessage;
 import com.playonlinux.ui.api.CommandInterpreter;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
@@ -33,6 +37,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 import static com.playonlinux.lang.Localisation.translate;
 
@@ -49,7 +54,7 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
 
         TextField command = new TextField();
         TextArea console = new TextArea();
-        console.setDisable(true);
+        console.setEditable(false);
         rootPane.getChildren().addAll(console, command);
 
         Scene scene = new PlayOnLinuxScene(rootPane);
@@ -60,11 +65,18 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
 
         command.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER) {
-                console.appendText(">>> " + command.getText() + "\n");
-                String commandResult = commandInterpreter.sendCommand(command.getText());
+                final String commandTonSend = command.getText();
+                command.setDisable(true);
+                console.appendText(">>> " + commandTonSend + "\n");
                 command.setText("");
-                console.appendText(commandResult);
-            }
-        });
+                commandInterpreter.sendCommand(commandTonSend, message -> {
+                    console.appendText(message);
+                    command.setDisable(false);
+                });
+
+
+
+                }
+            });
     }
 }

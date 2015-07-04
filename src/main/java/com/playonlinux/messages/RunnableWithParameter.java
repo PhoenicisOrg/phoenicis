@@ -18,14 +18,6 @@
 
 package com.playonlinux.messages;
 
-public abstract class InterrupterSynchroneousMessage extends SynchroneousMessage implements CancelerMessage {
-    Thread messageSender;
-
-    public InterrupterSynchroneousMessage() {
-        this.messageSender = Thread.currentThread();
-    }
-
-    public void sendCancelSignal() {
-        messageSender.interrupt();
-    }
+public interface RunnableWithParameter<T>  {
+    void run(T parameter);
 }

@@ -20,9 +20,9 @@ package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
-import com.playonlinux.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.messages.InterrupterSynchronousMessage;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.utils.OperatingSystem;
@@ -101,7 +101,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
 
 
     @Override
-    public void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow) {
+    public void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow) {
         StepRepresentationMessage stepMessage = new StepRepresentationMessage(this, message, textToShow);
         stepMessage.installStep();
     }
@@ -112,13 +112,13 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     }
 
     @Override
-    public void showTextBoxStep(CancelerSynchroneousMessage message, String textToShow, String defaultValue) {
+    public void showTextBoxStep(CancelerSynchronousMessage message, String textToShow, String defaultValue) {
         StepRepresentationTextBox stepTextBox = new StepRepresentationTextBox(this, message, textToShow, defaultValue);
         stepTextBox.installStep();
     }
 
     @Override
-    public void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems) {
+    public void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems) {
         StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems);
         stepMenu.installStep();
     }
@@ -130,21 +130,21 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     }
 
     @Override
-    public ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow) {
+    public ProgressStep showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
         StepRepresentationProgressBar stepProgressBar = new StepRepresentationProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
         return stepProgressBar;
     }
 
     @Override
-    public void showPresentationStep(CancelerSynchroneousMessage message, String textToShow) {
+    public void showPresentationStep(CancelerSynchronousMessage message, String textToShow) {
         StepRepresentationPresentation stepRepresentationPresentation =
                 new StepRepresentationPresentation(this, message, textToShow);
         stepRepresentationPresentation.installStep();
     }
 
     @Override
-    public void showLicenceStep(CancelerSynchroneousMessage message, String textToShow, String licenceText) {
+    public void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText) {
         StepRepresentationLicence stepRepresentationLicence =
                 new StepRepresentationLicence(this, message, textToShow, licenceText);
         stepRepresentationLicence.installStep();

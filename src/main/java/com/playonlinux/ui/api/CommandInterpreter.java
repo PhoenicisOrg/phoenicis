@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.api;
 
+import com.playonlinux.messages.RunnableWithParameter;
+
 public interface CommandInterpreter {
-    String sendCommand(String text);
+    void sendCommand(String text, RunnableWithParameter<String> callback);
 }

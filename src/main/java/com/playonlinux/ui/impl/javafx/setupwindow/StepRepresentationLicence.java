@@ -24,7 +24,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 import com.playonlinux.messages.CancelerMessage;
-import com.playonlinux.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerSynchronousMessage;
 
 public class StepRepresentationLicence extends AbstractStepRepresentationWithHeader {
     private String textToShow;
@@ -73,7 +73,7 @@ public class StepRepresentationLicence extends AbstractStepRepresentationWithHea
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event ->
-            ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
         );
     }
 

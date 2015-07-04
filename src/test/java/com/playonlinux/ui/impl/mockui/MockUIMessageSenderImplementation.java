@@ -20,23 +20,23 @@ package com.playonlinux.ui.impl.mockui;
 
 import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.messages.Message;
-import com.playonlinux.messages.SynchroneousMessage;
+import com.playonlinux.messages.SynchronousMessage;
 import com.playonlinux.installer.CancelException;
 
 public class MockUIMessageSenderImplementation<T> implements UIMessageSender<T> {
     @Override
-    public T synchroneousSendAndGetResult(SynchroneousMessage<T> message) throws CancelException {
+    public T synchronousSendAndGetResult(SynchronousMessage<T> message) throws CancelException {
         message.run();
         return message.getResponse();
     }
 
     @Override
-    public void synchroneousSend(Message message) {
+    public void synchronousSend(Message message) {
         message.run();
     }
 
     @Override
-    public void asynchroneousSend(Message message) {
+    public void asynchronousSend(Message message) {
         new Thread(message).start();
     }
 }

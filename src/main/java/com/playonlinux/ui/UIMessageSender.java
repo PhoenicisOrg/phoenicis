@@ -19,13 +19,13 @@
 package com.playonlinux.ui;
 
 import com.playonlinux.messages.Message;
-import com.playonlinux.messages.SynchroneousMessage;
+import com.playonlinux.messages.SynchronousMessage;
 import com.playonlinux.installer.CancelException;
 
 public interface UIMessageSender <RETURN> {
-    RETURN synchroneousSendAndGetResult(SynchroneousMessage<RETURN> message) throws CancelException;
+    RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException;
 
-    void synchroneousSend(Message message);
+    void synchronousSend(Message message);
 
-    void asynchroneousSend(Message message);
+    void asynchronousSend(Message message);
 }

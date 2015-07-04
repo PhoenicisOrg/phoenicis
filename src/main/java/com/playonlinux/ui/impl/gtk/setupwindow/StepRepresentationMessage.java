@@ -19,7 +19,7 @@
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
 import com.playonlinux.messages.CancelerMessage;
-import com.playonlinux.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerSynchronousMessage;
 import org.gnome.gtk.*;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
@@ -43,7 +43,7 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event ->
-            ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
         );
     }
 
