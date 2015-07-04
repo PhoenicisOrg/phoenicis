@@ -70,7 +70,15 @@ public class JythonCommandInterpreter implements CommandInterpreter, BackgroundS
 
     @Override
     public void shutdown() {
+        if(this.interactiveInterpreter != null) {
+            jythonInterpreterFactory.close(this.interactiveInterpreter);
+        }
         currentTask.cancel(true);
+        executorService.shutdownNow();
+    }
+
+    @Override
+    public void close() {
         backgroundServiceManager.unregister(this);
     }
 

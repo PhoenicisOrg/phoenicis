@@ -38,6 +38,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 import static com.playonlinux.lang.Localisation.translate;
@@ -65,7 +66,7 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
         this.show();
 
         command.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER) {
+            if (event.getCode() == KeyCode.ENTER) {
                 final String commandTonSend = command.getText();
                 command.setDisable(true);
                 console.appendText(">>> " + commandTonSend + "\n");
@@ -79,5 +80,7 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
 
             }
         });
+
+        this.setOnCloseRequest(event -> commandInterpreter.close());
     }
 }

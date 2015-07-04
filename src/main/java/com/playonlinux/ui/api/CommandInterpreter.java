@@ -22,4 +22,6 @@ import com.playonlinux.messages.RunnableWithParameter;
 
 public interface CommandInterpreter {
     void sendCommand(String text, RunnableWithParameter<String> callback);
+
+    void close();
 }
