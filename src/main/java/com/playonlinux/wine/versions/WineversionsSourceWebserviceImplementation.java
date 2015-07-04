@@ -16,26 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.installer;
+package com.playonlinux.wine.versions;
+
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.dto.web.CategoryDTO;
+import com.playonlinux.dto.web.WineVersionDTO;
 import com.playonlinux.webservice.Webservice;
 import java.net.URL;
 import java.util.List;
 
 
-/**
- * This class download scripts from a playonlinux web service and converts it into DTOs
- */
-public class InstallerSourceWebserviceImplementation extends Webservice<CategoryDTO> implements InstallerSource {
+public class WineversionsSourceWebserviceImplementation extends Webservice
+        implements WineVersionSource {
 
-    public InstallerSourceWebserviceImplementation(URL url) {
+
+    public WineversionsSourceWebserviceImplementation(URL url) {
         super(url);
     }
 
     @Override
     protected TypeReference defineTypeReference() {
-        return new TypeReference<List<CategoryDTO>>() {};
+        return new TypeReference<List<WineVersionDTO>>() {};
     }
 }
