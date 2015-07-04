@@ -110,7 +110,7 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     }
 
     @Override
-    public List<AppsItemDTO> getFiltered(Filter<AppsItemDTO> filter) {
+    public ConList<AppsItemDTO> getFiltered(Filter<AppsItemDTO> filter) {
         List<AppsItemDTO> filtered = new ArrayList<>();
         for(AppsItemDTO item : this){
             if(filter.apply(item)){

@@ -29,6 +29,7 @@ import com.playonlinux.ui.api.CommandInterpreter;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -70,13 +71,13 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
                 console.appendText(">>> " + commandTonSend + "\n");
                 command.setText("");
                 commandInterpreter.sendCommand(commandTonSend, message -> {
-                    console.appendText(message);
-                    command.setDisable(false);
+                    Platform.runLater(() -> {
+                        console.appendText(message);
+                        command.setDisable(false);
+                    });
                 });
 
-
-
-                }
-            });
+            }
+        });
     }
 }

@@ -22,32 +22,31 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.messages.RunnableWithParameter;
-import com.playonlinux.messages.SynchronousMessage;
-import com.playonlinux.ui.Controller;
-import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.services.BackgroundService;
+import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.api.CommandInterpreter;
 import org.python.util.InteractiveInterpreter;
 
 import java.io.StringWriter;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 @Scan
-public class JythonCommandInterpreter implements CommandInterpreter {
+public class JythonCommandInterpreter implements CommandInterpreter, BackgroundService {
     @Inject
     private static JythonInterpreterFactory jythonInterpreterFactory;
 
     @Inject
-    static Controller controller;
+    private static BackgroundServiceManager backgroundServiceManager;
 
     private InteractiveInterpreter interactiveInterpreter;
     private final StringWriter commandBuffer;
     private final ExecutorService executorService;
-    private final UIMessageSender<Object> uiMessageSender;
+    private Future currentTask;
 
     public JythonCommandInterpreter(ExecutorService executorService) {
         this.commandBuffer = new StringWriter();
         this.executorService = executorService;
-        this.uiMessageSender = controller.createUIMessageSender();
     }
 
     @Override
@@ -61,11 +60,22 @@ public class JythonCommandInterpreter implements CommandInterpreter {
             }
         }
 
-        executorService.submit(() -> {
+        currentTask = executorService.submit(() -> {
             commandBuffer.getBuffer().setLength(0);
             interactiveInterpreter.exec(text);
             callback.run(commandBuffer.toString());
         });
 
+    }
+
+    @Override
+    public void shutdown() {
+        currentTask.cancel(true);
+        backgroundServiceManager.unregister(this);
+    }
+
+    @Override
+    public void start() {
+        // Nothing to start
     }
 }
