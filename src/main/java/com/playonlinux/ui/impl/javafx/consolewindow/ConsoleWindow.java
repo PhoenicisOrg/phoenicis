@@ -21,41 +21,46 @@ package com.playonlinux.ui.impl.javafx.consolewindow;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.messages.Message;
-import com.playonlinux.messages.RunnableWithParameter;
-import com.playonlinux.messages.SynchronousMessage;
 import com.playonlinux.ui.api.CommandInterpreter;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang.StringUtils;
+
 
 import static com.playonlinux.lang.Localisation.translate;
 
 @Scan
 public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
 
+    private static final String NOT_INSIDE_BLOCK = ">>> ";
+    private static final String INSIDE_BLOCK = "... ";
+
     @Inject
     private static CommandInterpreterFactory commandInterpreterFactory;
 
     CommandInterpreter commandInterpreter = commandInterpreterFactory.createInstance();
-
+    private String nextSymbol = NOT_INSIDE_BLOCK;
     public ConsoleWindow() {
-        VBox rootPane = new VBox();
+        final VBox rootPane = new VBox();
 
-        TextField command = new TextField();
-        TextArea console = new TextArea();
-        console.setEditable(false);
-        rootPane.getChildren().addAll(console, command);
+        final TextField command = new TextField();
+        command.getStyleClass().add("consoleCommandType");
+        final TextFlow console = new TextFlow();
+        final ScrollPane consolePane = new ScrollPane(console);
+        rootPane.getStyleClass().add("consoleWindow");
+        consolePane.getStyleClass().add("console");
+        consolePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        rootPane.getChildren().addAll(consolePane, command);
 
         Scene scene = new PlayOnLinuxScene(rootPane);
 
@@ -63,20 +68,34 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
         this.setTitle(translate("${application.name} console"));
         this.show();
 
+        command.requestFocus();
+
         command.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER) {
-                final String commandTonSend = command.getText();
+            if (event.getCode() == KeyCode.ENTER) {
+                final String commandToSend = command.getText();
                 command.setDisable(true);
-                console.appendText(">>> " + commandTonSend + "\n");
+                Text commandText = new Text(nextSymbol + commandToSend + "\n");
+                commandText.getStyleClass().add("commandText");
+                console.getChildren().add(commandText);
                 command.setText("");
-                commandInterpreter.sendCommand(commandTonSend, message -> {
-                    console.appendText(message);
+
+                if (commandInterpreter.sendLine(commandToSend, message -> Platform.runLater(() -> {
+                    if (!StringUtils.isBlank(message)) {
+                        Text resultText = new Text(message);
+                        resultText.getStyleClass().add("resultText");
+                        console.getChildren().add(resultText);
+                    }
                     command.setDisable(false);
-                });
-
-
-
+                    command.requestFocus();
+                    consolePane.setVvalue(consolePane.getVmax());
+                }))) {
+                    nextSymbol = NOT_INSIDE_BLOCK;
+                } else {
+                    nextSymbol = INSIDE_BLOCK;
                 }
-            });
+            }
+        });
+
+        this.setOnCloseRequest(event -> commandInterpreter.close());
     }
 }

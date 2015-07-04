@@ -202,3 +202,29 @@
     -fx-background-color: #FAFAFA;
     -fx-border-width: 0;
 }
+
+.commandText {
+    -fx-fill:#999999;
+}
+.resultText {
+    -fx-fill:#000000;
+}
+
+.consolePane {
+    -fx-background-color: #FFFFFF;
+    -fx-pref-width:60em;
+    -fx-pref-height:20em;
+}
+.console, .console .viewport {
+    -fx-background-color: #FFFFFF;
+}
+.console {
+    -fx-pref-width:60em;
+    -fx-pref-height:20em;
+    -fx-padding: 1em;
+    -fx-font-family: "Lucida Console";
+}
+.consoleCommandType {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}

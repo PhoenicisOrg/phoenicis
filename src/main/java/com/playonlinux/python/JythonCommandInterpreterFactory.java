@@ -18,11 +18,18 @@
 
 package com.playonlinux.python;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 
 import java.util.concurrent.ExecutorService;
 
+@Scan
 public class JythonCommandInterpreterFactory implements CommandInterpreterFactory {
+    @Inject
+    private static BackgroundServiceManager backgroundServiceManager;
+
     private final ExecutorService executorService;
 
     public JythonCommandInterpreterFactory(ExecutorService executorService) {
@@ -30,6 +37,8 @@ public class JythonCommandInterpreterFactory implements CommandInterpreterFactor
     }
 
     public JythonCommandInterpreter createInstance() {
-        return new JythonCommandInterpreter(executorService);
+        JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);
+        backgroundServiceManager.register(interpreter);
+        return interpreter;
     }
 }
