@@ -21,7 +21,7 @@ package com.playonlinux.ui.impl.javafx.setupwindow;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.dto.web.ProgressStateDTO;
 import com.playonlinux.messages.AsynchroneousMessage;
-import com.playonlinux.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.messages.InterrupterSynchronousMessage;
 import com.playonlinux.messages.Message;
 import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
 import javafx.scene.control.ProgressBar;
@@ -33,7 +33,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     ProgressBar progressBar = new ProgressBar();
     Text progressText = new Text("");
 
-    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, InterrupterSynchroneousMessage messageWaitingForResponse,
+    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, InterrupterSynchronousMessage messageWaitingForResponse,
                                          String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);
@@ -63,12 +63,12 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     @Override
     public void setProgressPercentage(double value) {
         UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
-        messageSender.asynchroneousSend(new AsynchroneousMessage() {
-                                            @Override
-                                            public void execute(Message message) {
-                                                progressBar.setProgress(value / 100.);
-                                            }
-                                        }
+        messageSender.asynchronousSend(new AsynchroneousMessage() {
+                                           @Override
+                                           public void execute(Message message) {
+                                               progressBar.setProgress(value / 100.);
+                                           }
+                                       }
         );
     }
 
@@ -81,12 +81,12 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     @Override
     public void setText(String text) {
         UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
-        messageSender.asynchroneousSend(new AsynchroneousMessage() {
-                                            @Override
-                                            public void execute(Message message) {
-                                                progressText.setText(text);
-                                            }
-                                        }
+        messageSender.asynchronousSend(new AsynchroneousMessage() {
+                                           @Override
+                                           public void execute(Message message) {
+                                               progressText.setText(text);
+                                           }
+                                       }
         );
     }
 

@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.messages.Message;
-import com.playonlinux.messages.SynchroneousMessage;
+import com.playonlinux.messages.SynchronousMessage;
 import com.playonlinux.installer.CancelException;
 import javafx.application.Platform;
 
@@ -55,17 +55,18 @@ public class UIMessageSenderJavaFXImplementation<RETURN> implements UIMessageSen
     }
 
     @Override
-    public RETURN synchroneousSendAndGetResult(SynchroneousMessage<RETURN> message) throws CancelException {
+    public RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException {
         UIMessageSenderJavaFXImplementation.runAndWait(message);
         return message.getResponse();
     }
 
-    public void synchroneousSend(Message message){
+    @Override
+    public void synchronousSend(Message message){
         UIMessageSenderJavaFXImplementation.runAndWait(message);
     }
 
     @Override
-    public void asynchroneousSend(Message message) {
+    public void asynchronousSend(Message message) {
         Platform.runLater(message);
     }
 }

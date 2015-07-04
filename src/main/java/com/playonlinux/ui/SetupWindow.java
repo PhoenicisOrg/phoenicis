@@ -18,13 +18,12 @@
 
 package com.playonlinux.ui;
 
-import com.playonlinux.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.messages.InterrupterSynchroneousMessage;
+import com.playonlinux.messages.InterrupterSynchronousMessage;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 public interface SetupWindow {
@@ -32,21 +31,21 @@ public interface SetupWindow {
 
     void setLeftImage(File leftImage) throws IOException;
 
-    void showSimpleMessageStep(CancelerSynchroneousMessage message, String textToShow);
+    void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow);
 
     void showYesNoQuestionStep();
 
-    void showTextBoxStep(CancelerSynchroneousMessage message, String textToShow, String defaultValue);
+    void showTextBoxStep(CancelerSynchronousMessage message, String textToShow, String defaultValue);
 
-    void showMenuStep(CancelerSynchroneousMessage message, String textToShow, List<String> menuItems);
+    void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems);
 
     void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow);
 
-    ProgressStep showProgressBar(InterrupterSynchroneousMessage message, String textToShow);
+    ProgressStep showProgressBar(InterrupterSynchronousMessage message, String textToShow);
 
-    void showPresentationStep(CancelerSynchroneousMessage message, String textToShow);
+    void showPresentationStep(CancelerSynchronousMessage message, String textToShow);
 
-    void showLicenceStep(CancelerSynchroneousMessage message, String textToShow, String licenceText);
+    void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText);
 
     void close();
 }

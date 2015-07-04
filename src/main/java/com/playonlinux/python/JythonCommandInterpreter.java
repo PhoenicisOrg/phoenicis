@@ -21,26 +21,37 @@ package com.playonlinux.python;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.messages.RunnableWithParameter;
+import com.playonlinux.messages.SynchronousMessage;
+import com.playonlinux.ui.Controller;
+import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.ui.api.CommandInterpreter;
 import org.python.util.InteractiveInterpreter;
 
 import java.io.StringWriter;
-import java.io.Writer;
+import java.util.concurrent.ExecutorService;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter {
     @Inject
     private static JythonInterpreterFactory jythonInterpreterFactory;
 
-    private InteractiveInterpreter interactiveInterpreter;
-    private StringWriter commandBuffer;
+    @Inject
+    static Controller controller;
 
-    public JythonCommandInterpreter() {
-        commandBuffer = new StringWriter();
+    private InteractiveInterpreter interactiveInterpreter;
+    private final StringWriter commandBuffer;
+    private final ExecutorService executorService;
+    private final UIMessageSender<Object> uiMessageSender;
+
+    public JythonCommandInterpreter(ExecutorService executorService) {
+        this.commandBuffer = new StringWriter();
+        this.executorService = executorService;
+        this.uiMessageSender = controller.createUIMessageSender();
     }
 
     @Override
-    public String sendCommand(String text) {
+    public void sendCommand(String text, RunnableWithParameter<String> callback) {
         if(interactiveInterpreter == null) {
             try {
                 interactiveInterpreter = jythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
@@ -50,8 +61,11 @@ public class JythonCommandInterpreter implements CommandInterpreter {
             }
         }
 
-        commandBuffer.getBuffer().setLength(0);
-        interactiveInterpreter.exec(text);
-        return commandBuffer.toString();
+        executorService.submit(() -> {
+            commandBuffer.getBuffer().setLength(0);
+            interactiveInterpreter.exec(text);
+            callback.run(commandBuffer.toString());
+        });
+
     }
 }

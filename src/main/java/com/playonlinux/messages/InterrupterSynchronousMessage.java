@@ -18,24 +18,14 @@
 
 package com.playonlinux.messages;
 
-import com.playonlinux.installer.CancelException;
+public abstract class InterrupterSynchronousMessage extends SynchronousMessage implements CancelerMessage {
+    Thread messageSender;
 
-public abstract class CancelerSynchroneousMessage<RESULT> extends SynchroneousMessage<RESULT>
-        implements CancelerMessage {
-    private Boolean processCanceled = false;
-
-    public RESULT getResponse() throws CancelException {
-        RESULT response = super.getResponse();
-
-        if(this.processCanceled) {
-            throw new CancelException();
-        }
-
-        return response;
+    public InterrupterSynchronousMessage() {
+        this.messageSender = Thread.currentThread();
     }
 
     public void sendCancelSignal() {
-        this.processCanceled = true;
-        super.semaphore.release();
+        messageSender.interrupt();
     }
 }

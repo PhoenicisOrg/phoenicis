@@ -43,6 +43,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.concurrent.Executors;
 
 @SuppressWarnings("unused")
 public class PlayOnLinuxConfig extends AbstractConfigFile  {
@@ -102,7 +103,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
     public CommandInterpreterFactory commandInterpreterFactory() {
-        return new JythonCommandInterpreterFactory();
+        return new JythonCommandInterpreterFactory(Executors.newSingleThreadExecutor());
     }
 
     @Bean

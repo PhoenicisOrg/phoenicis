@@ -23,6 +23,6 @@ public interface Controller {
 
     SetupWindow createSetupWindowGUIInstance(String title);
 
-    UIMessageSender createUIMessageSender();
+    <T> UIMessageSender<T> createUIMessageSender();
 
 }

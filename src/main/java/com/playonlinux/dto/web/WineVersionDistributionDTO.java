@@ -24,6 +24,6 @@ import java.util.List;
 
 public class WineVersionDistributionDTO implements AbstractDTO {
     private String name;
-    private String directory;
-    private List<WineVersionDTO> wineVersions;
+    private String description;
+    private List<WineVersionDTO> packages;
 }

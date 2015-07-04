@@ -18,14 +18,14 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.messages.CancelerSynchroneousMessage;
+import com.playonlinux.messages.CancelerSynchronousMessage;
 import javafx.scene.control.TextField;
 
 public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final String defaultValue;
     private TextField textField;
 
-    public StepRepresentationTextBox(SetupWindowJavaFXImplementation parent, CancelerSynchroneousMessage messageWaitingForResponse, String textToShow,
+    public StepRepresentationTextBox(SetupWindowJavaFXImplementation parent, CancelerSynchronousMessage messageWaitingForResponse, String textToShow,
                                      String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
 
@@ -47,7 +47,7 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event ->
-            ((CancelerSynchroneousMessage) this.getMessageAwaitingForResponse()).setResponse(textField.getText())
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(textField.getText())
         );
     }
 

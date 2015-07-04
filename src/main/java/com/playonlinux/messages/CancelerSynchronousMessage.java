@@ -16,20 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.python;
+package com.playonlinux.messages;
 
-import com.playonlinux.ui.api.CommandInterpreterFactory;
+import com.playonlinux.installer.CancelException;
 
-import java.util.concurrent.ExecutorService;
+public abstract class CancelerSynchronousMessage<RESULT> extends SynchronousMessage<RESULT>
+        implements CancelerMessage {
+    private Boolean processCanceled = false;
 
-public class JythonCommandInterpreterFactory implements CommandInterpreterFactory {
-    private final ExecutorService executorService;
+    public RESULT getResponse() throws CancelException {
+        RESULT response = super.getResponse();
 
-    public JythonCommandInterpreterFactory(ExecutorService executorService) {
-        this.executorService = executorService;
+        if(this.processCanceled) {
+            throw new CancelException();
+        }
+
+        return response;
     }
 
-    public JythonCommandInterpreter createInstance() {
-        return new JythonCommandInterpreter(executorService);
+    public void sendCancelSignal() {
+        this.processCanceled = true;
+        super.semaphore.release();
     }
 }

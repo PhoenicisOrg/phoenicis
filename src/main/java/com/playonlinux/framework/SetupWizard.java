@@ -60,8 +60,8 @@ public class SetupWizard {
         this.messageSender = controller.createUIMessageSender();
         this.title = title;
 
-        messageSender.synchroneousSend(
-                new SynchroneousMessage() {
+        messageSender.synchronousSend(
+                new SynchronousMessage() {
                     @Override
                     public void execute(Message message) {
                         setupWindow = new WeakReference<>(controller.createSetupWindowGUIInstance(translate(title)));
@@ -74,8 +74,8 @@ public class SetupWizard {
      * Closes the setupWindow
      */
     public void close() {
-        messageSender.synchroneousSend(
-                new SynchroneousMessage() {
+        messageSender.synchronousSend(
+                new SynchronousMessage() {
                     @Override
                     public void execute(Message message) {
                         setupWindow.get().close();
@@ -90,11 +90,11 @@ public class SetupWizard {
      * @throws CancelException
      */
     public void message(String textToShow) throws CancelException {
-        messageSender.synchroneousSendAndGetResult(
-                new CancelerSynchroneousMessage() {
+        messageSender.synchronousSendAndGetResult(
+                new CancelerSynchronousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showSimpleMessageStep((CancelerSynchroneousMessage) message, textToShow);
+                        setupWindow.get().showSimpleMessageStep((CancelerSynchronousMessage) message, textToShow);
                     }
                 }
         );
@@ -125,11 +125,11 @@ public class SetupWizard {
      * @throws CancelException
      */
     public void presentation(String textToShow) throws CancelException {
-        messageSender.synchroneousSendAndGetResult(
-                new CancelerSynchroneousMessage() {
+        messageSender.synchronousSendAndGetResult(
+                new CancelerSynchronousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showPresentationStep((CancelerSynchroneousMessage) message, textToShow);
+                        setupWindow.get().showPresentationStep((CancelerSynchronousMessage) message, textToShow);
                     }
                 }
         );
@@ -171,11 +171,11 @@ public class SetupWizard {
      * @throws CancelException
      */
     public String licence(String textToShow, String licenceText) throws CancelException {
-        return (String) messageSender.synchroneousSendAndGetResult(
-                new CancelerSynchroneousMessage<String>() {
+        return (String) messageSender.synchronousSendAndGetResult(
+                new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showLicenceStep((CancelerSynchroneousMessage) message, textToShow, licenceText);
+                        setupWindow.get().showLicenceStep((CancelerSynchronousMessage) message, textToShow, licenceText);
                     }
                 }
         );
@@ -199,11 +199,11 @@ public class SetupWizard {
      * @throws CancelException
      */
     public String textbox(String textToShow, String defaultValue) throws CancelException {
-        return (String) messageSender.synchroneousSendAndGetResult(
-                new CancelerSynchroneousMessage<String>() {
+        return (String) messageSender.synchronousSendAndGetResult(
+                new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showTextBoxStep((CancelerSynchroneousMessage) message, textToShow, defaultValue);
+                        setupWindow.get().showTextBoxStep((CancelerSynchronousMessage) message, textToShow, defaultValue);
                     }
                 }
         );
@@ -217,11 +217,11 @@ public class SetupWizard {
      * @throws CancelException
      */
     public String menu(String textToShow, List<String> menuItems) throws CancelException {
-        return (String) messageSender.synchroneousSendAndGetResult(
-                new CancelerSynchroneousMessage<String>() {
+        return (String) messageSender.synchronousSendAndGetResult(
+                new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showMenuStep((CancelerSynchroneousMessage) message, textToShow, menuItems);
+                        setupWindow.get().showMenuStep((CancelerSynchronousMessage) message, textToShow, menuItems);
                     }
                 }
         );
@@ -232,7 +232,7 @@ public class SetupWizard {
      * @param textToShow a text that will be shown
      */
     public void wait(String textToShow) {
-        messageSender.asynchroneousSend(
+        messageSender.asynchronousSend(
                 new InterrupterAsynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
@@ -243,11 +243,11 @@ public class SetupWizard {
     }
 
     public ProgressStep progressBar(String textToShow) throws CancelException {
-        return (ProgressStep) messageSender.synchroneousSendAndGetResult(
-                new InterrupterSynchroneousMessage() {
+        return (ProgressStep) messageSender.synchronousSendAndGetResult(
+                new InterrupterSynchronousMessage() {
                     @Override
                     public void execute(Message message) {
-                        this.setResponse(setupWindow.get().showProgressBar((InterrupterSynchroneousMessage) message,
+                        this.setResponse(setupWindow.get().showProgressBar((InterrupterSynchronousMessage) message,
                                 textToShow));
                     }
                 }
