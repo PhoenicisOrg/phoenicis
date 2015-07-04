@@ -33,6 +33,8 @@ import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 import com.playonlinux.webservice.DownloadManager;
+import com.playonlinux.wine.versions.WineVersionSource;
+import com.playonlinux.wine.versions.WineversionsSourceWebserviceImplementation;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -64,6 +66,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
+    public WineVersionSource wineVersionSource() throws MalformedURLException {
+        return new WineversionsSourceWebserviceImplementation(new URL(playOnLinuxContext.getProperty("webservice.wine.url")));
+    }
+
+    @Bean
     public EventDispatcher eventHandler() {
             return new EventDispatcherPlayOnLinuxImplementation();
     }
@@ -89,6 +96,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
         playOnLinuxBackgroundServiceManager.register(downloadManager);
         return downloadManager;
     }
+
 
     @Override
     protected String definePackage() {
