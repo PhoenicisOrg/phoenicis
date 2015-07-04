@@ -25,6 +25,7 @@ import com.playonlinux.messages.RunnableWithParameter;
 import com.playonlinux.services.BackgroundService;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.api.CommandInterpreter;
+import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
 
 import java.io.StringWriter;
@@ -40,31 +41,49 @@ public class JythonCommandInterpreter implements CommandInterpreter, BackgroundS
     private static BackgroundServiceManager backgroundServiceManager;
 
     private InteractiveInterpreter interactiveInterpreter;
-    private final StringWriter commandBuffer;
+    private final StringWriter returnBuffer;
     private final ExecutorService executorService;
     private Future currentTask;
+    private final StringBuffer commandBuffer;
 
     public JythonCommandInterpreter(ExecutorService executorService) {
-        this.commandBuffer = new StringWriter();
+        this.returnBuffer = new StringWriter();
         this.executorService = executorService;
+        this.commandBuffer = new StringBuffer();
     }
 
     @Override
-    public void sendCommand(String text, RunnableWithParameter<String> callback) {
+    public boolean sendLine(String command, RunnableWithParameter<String> callback) {
         if(interactiveInterpreter == null) {
             try {
                 interactiveInterpreter = jythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
-                interactiveInterpreter.setOut(commandBuffer);
+                interactiveInterpreter.setOut(returnBuffer);
+                interactiveInterpreter.setErr(returnBuffer);
             } catch (PlayOnLinuxException e) {
                 e.printStackTrace();
             }
         }
 
-        currentTask = executorService.submit(() -> {
-            commandBuffer.getBuffer().setLength(0);
-            interactiveInterpreter.exec(text);
-            callback.run(commandBuffer.toString());
-        });
+        commandBuffer.append(command);
+
+        if(command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
+            commandBuffer.append("\n");
+            callback.run("");
+            return false;
+        } else {
+            String completeCommand = commandBuffer.toString();
+            commandBuffer.setLength(0);
+            currentTask = executorService.submit(() -> {
+                returnBuffer.getBuffer().setLength(0);
+                try {
+                    interactiveInterpreter.exec(completeCommand);
+                    callback.run(returnBuffer.toString());
+                } catch (PyException e) {
+                    callback.run(e.toString());
+                }
+            });
+            return true;
+        }
 
     }
 
@@ -73,7 +92,9 @@ public class JythonCommandInterpreter implements CommandInterpreter, BackgroundS
         if(this.interactiveInterpreter != null) {
             jythonInterpreterFactory.close(this.interactiveInterpreter);
         }
-        currentTask.cancel(true);
+        if(currentTask != null) {
+            currentTask.cancel(true);
+        }
         executorService.shutdownNow();
     }
 

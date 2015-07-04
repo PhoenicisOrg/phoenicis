@@ -21,7 +21,14 @@ package com.playonlinux.ui.api;
 import com.playonlinux.messages.RunnableWithParameter;
 
 public interface CommandInterpreter {
-    void sendCommand(String text, RunnableWithParameter<String> callback);
+    /**
+     * Send a line to the interpreter
+     * @param command command to send
+     * @param callback callback to run when the command is sent
+     * @return true if the command is directly interpreted (complete). False if the command is incomplete
+     * (if statements, ...)
+     */
+    boolean sendLine(String command, RunnableWithParameter<String> callback);
 
     void close();
 }
