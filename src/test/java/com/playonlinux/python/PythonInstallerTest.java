@@ -60,7 +60,8 @@ public class PythonInstallerTest {
                 "class PlayOnLinuxBashInterpreter(Installer):\n" +
                 "    def main(self):\n" +
                 "        pass\n" +
-                "    def logContext(self):\n" +
+
+                "    def title(self):\n" +
                 "        return \"Mock Log Context\"\n").getBytes());
 
         PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
@@ -80,7 +81,7 @@ public class PythonInstallerTest {
                 "from com.playonlinux.framework.templates import Installer\n" +
                 "\n" +
                 "class PlayOnLinuxBashInterpreter(Installer):\n" +
-                "   logContext = \"Mock Log Context 2\"\n" +
+                "   title = \"Mock Log Context 2\"\n" +
                 "   def main(self):\n" +
                 "        pass\n").getBytes());
 

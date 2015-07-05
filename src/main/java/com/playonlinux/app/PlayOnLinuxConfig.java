@@ -18,6 +18,7 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.JythonCommandInterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
@@ -109,6 +110,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Bean
     public JythonInterpreterFactory jythonCommandInterpreterFactory() {
         return new JythonInterpreterFactory();
+    }
+
+    @Bean
+    public LogStreamFactory logStreamFactory() {
+        return new LogStreamFactory();
     }
 
     @Override
