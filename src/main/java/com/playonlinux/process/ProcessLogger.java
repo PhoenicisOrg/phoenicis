@@ -67,11 +67,11 @@ public class ProcessLogger implements BackgroundService {
                 }
 
                 if(stdErrNextLine != null) {
-                    logContext.write(stdErrNextLine.getBytes());
+                    logContext.write((stdErrNextLine + "\n").getBytes());
                 }
 
                 if(stdOutNextLine != null) {
-                    logContext.write(stdOutNextLine.getBytes());
+                    logContext.write((stdOutNextLine + "\n").getBytes());
                 }
 
             } catch (IOException e) {
