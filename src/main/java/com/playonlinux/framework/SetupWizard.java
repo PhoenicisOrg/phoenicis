@@ -261,7 +261,9 @@ public class SetupWizard {
     }
 
     public SetupWizard withLogContext(String logContextName) throws IOException {
-        this.logContext = logStreamFactory.getLogger(logContextName);
+        if(logContextName != null) {
+            this.logContext = logStreamFactory.getLogger(logContextName);
+        }
         return this;
     }
 

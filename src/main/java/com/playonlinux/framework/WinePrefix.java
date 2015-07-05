@@ -19,6 +19,7 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.process.ProcessLogger;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.installer.CancelException;
@@ -191,7 +192,12 @@ public class WinePrefix {
         validateWineInstallationInitialized();
 
         try {
-            return wineInstallation.run(workingDirectory, executableToRun, environment, arguments);
+            final Process process = wineInstallation.run(workingDirectory, executableToRun, environment, arguments);
+            if(this.setupWizard.getLogContext() != null) {
+                ProcessLogger processLogger = new ProcessLogger(process, this.setupWizard.getLogContext());
+                backgroundServicesManager.register(processLogger);
+            }
+            return process;
         } catch (IOException e) {
             throw new ScriptFailureException("Error while running wine:" + e);
         }
