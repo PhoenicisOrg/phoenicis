@@ -18,6 +18,8 @@
 
 package com.playonlinux.framework;
 
+import com.playonlinux.log.LogStream;
+import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
@@ -42,13 +44,16 @@ import static com.playonlinux.lang.Localisation.translate;
 public class SetupWizard {
 
     @Inject
-    static Controller controller;
+    private static Controller controller;
+
+    @Inject
+    private static LogStreamFactory logStreamFactory;
 
     private final String title;
 
     WeakReference<SetupWindow> setupWindow;
-    UIMessageSender messageSender;
-
+    UIMessageSender<String> messageSender;
+    private LogStream logContext;
 
 
     /**
@@ -91,7 +96,7 @@ public class SetupWizard {
      */
     public void message(String textToShow) throws CancelException {
         messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage() {
+                new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
                         setupWindow.get().showSimpleMessageStep((CancelerSynchronousMessage) message, textToShow);
@@ -126,7 +131,7 @@ public class SetupWizard {
      */
     public void presentation(String textToShow) throws CancelException {
         messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage() {
+                new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
                         setupWindow.get().showPresentationStep((CancelerSynchronousMessage) message, textToShow);
@@ -243,8 +248,9 @@ public class SetupWizard {
     }
 
     public ProgressStep progressBar(String textToShow) throws CancelException {
-        return (ProgressStep) messageSender.synchronousSendAndGetResult(
-                new InterrupterSynchronousMessage() {
+        UIMessageSender<ProgressStep> progressStepUIMessageSender = controller.createUIMessageSender();
+        return progressStepUIMessageSender.synchronousSendAndGetResult(
+                new InterrupterSynchronousMessage<ProgressStep>() {
                     @Override
                     public void execute(Message message) {
                         this.setResponse(setupWindow.get().showProgressBar((InterrupterSynchronousMessage) message,
@@ -254,5 +260,14 @@ public class SetupWizard {
         );
     }
 
+    public SetupWizard withLogContext(String logContextName) throws IOException {
+        if(logContextName != null) {
+            this.logContext = logStreamFactory.getLogger(logContextName);
+        }
+        return this;
+    }
 
+    public LogStream getLogContext() {
+        return logContext;
+    }
 }

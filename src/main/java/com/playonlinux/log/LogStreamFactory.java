@@ -16,17 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.messages;
+package com.playonlinux.log;
 
-public abstract class InterrupterSynchronousMessage<RETURN_TYPE> extends SynchronousMessage<RETURN_TYPE>
-        implements CancelerMessage {
-    Thread messageSender;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-    public InterrupterSynchronousMessage() {
-        this.messageSender = Thread.currentThread();
+public class LogStreamFactory {
+    private final Map<String, LogStream> loggers;
+
+    public LogStreamFactory() {
+        this.loggers = new HashMap<>();
     }
 
-    public void sendCancelSignal() {
-        messageSender.interrupt();
+    synchronized public LogStream getLogger(String logContext) throws IOException {
+        if(!loggers.containsKey(logContext)) {
+            loggers.put(logContext, new LogStream(logContext));
+        }
+        return loggers.get(logContext);
     }
 }

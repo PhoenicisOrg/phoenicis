@@ -18,8 +18,7 @@
 
 package com.playonlinux.wine;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +62,7 @@ public class WineProcessBuilder {
         return this;
     }
 
+
     Process build() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder(command).directory(workingDirectory);
 
@@ -82,8 +82,10 @@ public class WineProcessBuilder {
         mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "PATH");
         mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "LD_LIBRARY_PATH");
         mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "DYLD_LIBRARY_PATH");
+        final Process process = processBuilder.start();
 
-        return processBuilder.start();
+        return process;
     }
+
 
 }

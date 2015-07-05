@@ -21,6 +21,8 @@ package com.playonlinux.framework.templates;
 import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.python.PythonAttribute;
 
+import java.io.IOException;
+
 
 public abstract class Installer extends AbstractTemplate {
     @PythonAttribute
@@ -43,9 +45,10 @@ public abstract class Installer extends AbstractTemplate {
     }
 
     /* Methods that can be called */
-    protected SetupWizard getSetupWizard() {
+    protected SetupWizard getSetupWizard() throws IOException {
         if(this.setupWizard == null) {
-            setupWizard = new SetupWizard(title);
+            setupWizard = new SetupWizard(title)
+                .withLogContext(title);
         }
         return setupWizard;
     }

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (C) 2015 Pâris Quentin
+# Copyright (C) 2015 Paris Quentin
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,9 +26,6 @@ from BashBinder.HealthChecher import HealthChecker
 from BashBinder.NetcatServer import NetcatServer
 from Environment.EnvironmentLoader import EnvironmentLoader
 from SetupWindow.SetupWindowManager import SetupWindowManager
-
-
-
 
 class PlayOnLinuxBashInterpreter(Installer):
     title = "PlayOnLinux bash interpreter" # FIXME

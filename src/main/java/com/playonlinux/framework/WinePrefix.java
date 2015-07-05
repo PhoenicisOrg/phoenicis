@@ -19,6 +19,7 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.process.ProcessLogger;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.installer.CancelException;
@@ -191,7 +192,12 @@ public class WinePrefix {
         validateWineInstallationInitialized();
 
         try {
-            return wineInstallation.run(workingDirectory, executableToRun, environment, arguments);
+            final Process process = wineInstallation.run(workingDirectory, executableToRun, environment, arguments);
+            if(this.setupWizard.getLogContext() != null) {
+                ProcessLogger processLogger = new ProcessLogger(process, this.setupWizard.getLogContext());
+                backgroundServicesManager.register(processLogger);
+            }
+            return process;
         } catch (IOException e) {
             throw new ScriptFailureException("Error while running wine:" + e);
         }
@@ -225,6 +231,17 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
+    public WinePrefix runBackground(String executableToRun, List<String> arguments, Map<String, String> environment)
+            throws ScriptFailureException {
+        runBackground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
     public WinePrefix runBackground(File executableToRun, List<String> arguments) throws ScriptFailureException {
         runBackground(executableToRun, arguments, null);
         return this;
@@ -234,6 +251,12 @@ public class WinePrefix {
         runBackground(executableToRun, (List<String>) null, null);
         return this;
     }
+
+    public WinePrefix runBackground(String executableToRun) throws ScriptFailureException {
+        runBackground(executableToRun, null, null);
+        return this;
+    }
+
 
     /**
      * Run wine in the prefix in background

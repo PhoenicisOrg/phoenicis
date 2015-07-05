@@ -18,6 +18,9 @@
 
 package com.playonlinux.python;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.log.LogStream;
 import com.playonlinux.framework.ScriptFailureException;
 import org.apache.log4j.Logger;
@@ -29,9 +32,13 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Set;
 
+@Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
+    @Inject
+    private static LogStreamFactory logStreamFactory;
+
     private static final String MAIN_METHOD_NAME = "main";
-    private static final String DEFINE_LOGCONTEXT_NAME = "logContext";
+    private static final String DEFINE_LOGCONTEXT_NAME = "title";
     private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
     private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
     private PyObject mainInstance;
@@ -87,7 +94,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
 
             if(logContext != null) {
                 try {
-                    logStream = new LogStream(logContext);
+                    logStream = logStreamFactory.getLogger(logContext);
                     pythonInterpreter.setOut(logStream);
                 } catch (IOException e) {
                     throw new ScriptFailureException(e);
