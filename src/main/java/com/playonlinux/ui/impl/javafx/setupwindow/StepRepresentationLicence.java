@@ -19,40 +19,33 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import static com.playonlinux.lang.Localisation.translate;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
-
-import com.playonlinux.messages.CancelerMessage;
 import com.playonlinux.messages.CancelerSynchronousMessage;
 
-public class StepRepresentationLicence extends AbstractStepRepresentationWithHeader {
-    private String textToShow;
-    private String licenceText;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
+
+public class StepRepresentationLicence extends StepRepresentationMessage {
+    private final String licenceText;
     private boolean isAgree;
 
-    public StepRepresentationLicence(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow, String licenceText) {
-        super(parent, message);
-        this.textToShow = textToShow;
+    public StepRepresentationLicence(SetupWindowJavaFXImplementation parent, CancelerSynchronousMessage messageWaitingForResponse, String textToShow,
+                                     String licenceText) {
+        super(parent, messageWaitingForResponse, textToShow);
+
         this.licenceText = licenceText;
     }
 
     @Override
     protected void drawStepContent() {
-
-        Text textWidget = new Text(textToShow);
-        textWidget.setLayoutX(10);
-        textWidget.setLayoutY(40);
-        textWidget.setWrappingWidth(350);
-        textWidget.prefWidth(350);
+        super.drawStepContent();
         
         TextArea licenceWidget = new TextArea(licenceText);
         licenceWidget.setLayoutX(10);
-        licenceWidget.setLayoutY(80);
+        licenceWidget.setLayoutY(100);
         licenceWidget.setMinWidth(500);
         licenceWidget.setMaxWidth(500);
-        licenceWidget.setMinHeight(230);
-        licenceWidget.setMaxHeight(230);
+        licenceWidget.setMinHeight(220);
+        licenceWidget.setMaxHeight(220);
         licenceWidget.setEditable(false);
         
         CheckBox confirmWidget = new CheckBox(translate("I agree"));
@@ -65,7 +58,6 @@ public class StepRepresentationLicence extends AbstractStepRepresentationWithHea
         confirmWidget.setLayoutY(330);
         setNextButtonEnabled(false);
         
-        this.addToStep(textWidget);
         this.addToStep(licenceWidget);
         this.addToStep(confirmWidget);
     }
@@ -73,7 +65,7 @@ public class StepRepresentationLicence extends AbstractStepRepresentationWithHea
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event ->
-            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(false)
         );
     }
 
