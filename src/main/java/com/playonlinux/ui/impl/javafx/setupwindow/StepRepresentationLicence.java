@@ -42,7 +42,7 @@ public class StepRepresentationLicence extends AbstractStepRepresentationWithHea
 
         Text textWidget = new Text(textToShow);
         textWidget.setLayoutX(10);
-        textWidget.setLayoutY(20);
+        textWidget.setLayoutY(40);
         textWidget.setWrappingWidth(350);
         textWidget.prefWidth(350);
         
