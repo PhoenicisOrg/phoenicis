@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SuppressWarnings("unused")
@@ -53,6 +54,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
     private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
     private boolean useGTKInterface;
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Bean
     public Controller controller() {
@@ -104,7 +106,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
     public CommandInterpreterFactory commandInterpreterFactory() {
-        return new JythonCommandInterpreterFactory(Executors.newSingleThreadExecutor());
+        return new JythonCommandInterpreterFactory(executorService);
     }
 
     @Bean
@@ -128,5 +130,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     public void setUseGTKInterface(boolean useGTKInterface) {
         this.useGTKInterface = useGTKInterface;
+    }
+
+    @Override
+    public void close() {
+        executorService.shutdown();
+        playOnLinuxBackgroundServiceManager.shutdown();
     }
 }

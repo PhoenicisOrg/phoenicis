@@ -26,10 +26,6 @@ import com.playonlinux.injection.Scan;
 
 @Scan
 public class PlayOnLinuxApp {
-
-    @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
-
     @Inject
     static Controller controller;
 
@@ -37,26 +33,25 @@ public class PlayOnLinuxApp {
     static PlayOnLinuxContext playOnLinuxContext;
 
     public void start(String[] args) throws InjectionException {
-        PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig();
-        if(args.length > 0 && "--cli".equals(args[0])) {
-            playOnLinuxConfig.setUseCLIInterface(true);
+        try(PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig()) {
+            if (args.length > 0 && "--cli".equals(args[0])) {
+                playOnLinuxConfig.setUseCLIInterface(true);
+            }
+            if (args.length > 0 && "--gtk".equals(args[0])) {
+                playOnLinuxConfig.setUseGTKInterface(true);
+            }
+
+
+            playOnLinuxConfig.load();
+
+            playOnLinuxContext.initLogger();
+            controller.startApplication();
         }
-        if(args.length > 0 && "--gtk".equals(args[0])) {
-            playOnLinuxConfig.setUseGTKInterface(true);
-        }
-
-
-        playOnLinuxConfig.load();
-
-        playOnLinuxContext.initLogger();
-        controller.startApplication();
     }
 
     public static void main(String[] args) throws InjectionException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start(args);
-
-        playOnLinuxBackgroundServicesManager.shutdown();
     }
 
 }

@@ -64,6 +64,11 @@ public class SetupWizardTest {
         protected LanguageBundle languageBundle() {
             return FallbackLanguageBundle.getInstance();
         }
+
+        @Override
+        public void close() throws Exception {
+
+        }
     }
 
     @Before
