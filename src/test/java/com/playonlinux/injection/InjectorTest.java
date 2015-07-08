@@ -56,4 +56,9 @@ public class InjectorTest extends AbstractConfigFile {
     protected String definePackage() {
         return "com.playonlinux";
     }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }
