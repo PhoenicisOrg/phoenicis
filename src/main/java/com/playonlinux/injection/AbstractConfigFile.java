@@ -21,7 +21,7 @@ package com.playonlinux.injection;
 import java.util.Map;
 
 
-public abstract class AbstractConfigFile {
+public abstract class AbstractConfigFile implements AutoCloseable {
 
     /**
      * If this is set to true, the injector will throw an exception if a non defined bean in the config file
