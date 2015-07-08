@@ -26,10 +26,6 @@ import com.playonlinux.injection.Scan;
 
 @Scan
 public class PlayOnLinuxApp {
-
-    @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
-
     @Inject
     static Controller controller;
 
@@ -56,8 +52,6 @@ public class PlayOnLinuxApp {
     public static void main(String[] args) throws InjectionException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start(args);
-
-        playOnLinuxBackgroundServicesManager.shutdown();
     }
 
 }

@@ -135,5 +135,6 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Override
     public void close() {
         executorService.shutdown();
+        playOnLinuxBackgroundServiceManager.shutdown();
     }
 }
