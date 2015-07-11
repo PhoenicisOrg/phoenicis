@@ -33,7 +33,6 @@ import com.playonlinux.utils.ObservableDirectorySize;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.wine.WineDistribution;
 import com.playonlinux.wine.WineException;
-import com.playonlinux.wine.WineInstallation;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -49,6 +48,7 @@ import static com.playonlinux.lang.Localisation.translate;
 @SuppressWarnings("unused")
 public class WinePrefix {
     private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
+    private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -64,7 +64,6 @@ public class WinePrefix {
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
     private WineInstallation wineInstallation;
-    private WineDistribution wineDistribution;
 
     public WinePrefix(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
@@ -85,19 +84,7 @@ public class WinePrefix {
         }
 
         if(prefix.initialized()) {
-            try {
-                wineInstallation = new WineInstallation.Builder()
-                        .withPath(
-                                playOnLinuxContext.makeWinePath(
-                                        prefix.fetchVersion(),
-                                        prefix.fetchDistribution()
-                                )
-                        )
-                        .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
-                        .build();
-            } catch (PlayOnLinuxException e) {
-                LOGGER.warn("Error while detecting prefix name");
-            }
+            wineInstallation = new WineInstallation(prefix.fetchVersion(), prefix.fetchDistribution());
         }
 
         return this;
@@ -115,13 +102,7 @@ public class WinePrefix {
      * @throws CancelException if the prefix cannot be created or if the user cancels the operation
      */
     public WinePrefix create(String version, String distribution) throws CancelException {
-        try {
-            return this.create(version, Architecture.fetchCurrentArchitecture().name());
-        } catch (CancelException e) {
-            throw e;
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException("Unable to create the wineprefix", e);
-        }
+        return this.create(version, DEFAULT_DISTRIBUTION_NAME, DEFAULT_ARCHITECTURE.name());
     }
 
     /**
@@ -137,21 +118,15 @@ public class WinePrefix {
         }
 
         try {
-            wineInstallation = new WineInstallation.Builder()
-                    .withPath(playOnLinuxContext.makeWinePath(
-                                    new Version(version),
-                                    new WineDistribution(
-                                            OperatingSystem.fetchCurrentOperationSystem(),
-                                            Architecture.valueOf(architecture),
-                                            distribution
-                                    )
-                            )
-                    )
-                    .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
-                    .build();
+            wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
+                    OperatingSystem.fetchCurrentOperationSystem(),
+                    Architecture.valueOf(architecture),
+                    distribution
+            ));
         } catch (PlayOnLinuxException e) {
             throw new ScriptFailureException(e);
         }
+
 
         ProgressStep progressStep = this.setupWizard.progressBar(
                 String.format(
@@ -172,7 +147,7 @@ public class WinePrefix {
 
         Process process;
         try {
-            process = wineInstallation.createPrefix(this.prefix);
+            process = wineInstallation.getInstallation().createPrefix(this.prefix);
         } catch (WineException e) {
             throw new ScriptFailureException("Unable to create the wineprefix", e);
         }
@@ -200,7 +175,7 @@ public class WinePrefix {
     public WinePrefix killall() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
-            wineInstallation.killAllProcess(this.prefix);
+            wineInstallation.getInstallation().killAllProcess(this.prefix);
         } catch (IOException logged) {
             LOGGER.warn("Unable to kill wine processes", logged);
         }
@@ -218,7 +193,10 @@ public class WinePrefix {
         validateWineInstallationInitialized();
 
         try {
-            final Process process = wineInstallation.run(workingDirectory, executableToRun, environment, arguments);
+            final Process process = wineInstallation
+                    .getInstallation()
+                    .run(workingDirectory, executableToRun, environment, arguments);
+
             if(this.setupWizard.getLogContext() != null) {
                 ProcessLogger processLogger = new ProcessLogger(process, this.setupWizard.getLogContext());
                 backgroundServicesManager.register(processLogger);
@@ -314,7 +292,8 @@ public class WinePrefix {
     public WinePrefix waitAll() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
-            wineInstallation.waitAllProcesses(this.prefix);
+            wineInstallation.getInstallation()
+                    .waitAllProcesses(this.prefix);
         } catch (IOException logged) {
             LOGGER.warn("Unable to wait for wine processes", logged);
         }

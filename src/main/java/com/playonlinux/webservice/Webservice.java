@@ -21,7 +21,6 @@ package com.playonlinux.webservice;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.dto.AbstractDTO;
-import com.playonlinux.dto.web.CategoryDTO;
 import com.playonlinux.dto.web.DownloadEnvelopeDTO;
 import com.playonlinux.dto.web.ProgressStateDTO;
 import com.playonlinux.services.BackgroundService;
@@ -46,8 +45,6 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
 
     public synchronized void populate() {
         try {
-            items = null;
-
             updateSemaphore.acquire();
             this.state = ProgressStateDTO.State.PROGRESSING;
             this.setChanged();
