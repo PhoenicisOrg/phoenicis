@@ -57,6 +57,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
     private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
     private boolean useGTKInterface;
+    private ExecutorService executor = Executors.newCachedThreadPool();
 
     @Bean
     public Controller controller() {
@@ -127,7 +128,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     private ExecutorService defaultExecutor() {
-        return Executors.newCachedThreadPool();
+        return executor;
     }
 
     @Override
@@ -146,5 +147,6 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Override
     public void close() {
         playOnLinuxBackgroundServiceManager.shutdown();
+        executor.shutdownNow();
     }
 }
