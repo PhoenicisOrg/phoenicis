@@ -19,7 +19,7 @@
 package com.playonlinux.services;
 
 public interface BackgroundServiceManager {
-    void register(BackgroundService backgroundService);
+    BackgroundService register(BackgroundService backgroundService);
 
     void shutdown();
 

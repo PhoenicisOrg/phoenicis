@@ -48,13 +48,4 @@ public class ScriptFactoryDefaultImplementation implements ScriptFactory {
         return this;
     }
 
-    @Override
-    public void shutdown() {
-        executorService.shutdownNow();
-    }
-
-    @Override
-    public void start() {
-        executorService = newSingleThreadExecutor();
-    }
 }

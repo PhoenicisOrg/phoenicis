@@ -31,7 +31,11 @@ public class JythonCommandInterpreterFactory implements CommandInterpreterFactor
     @Inject
     private static BackgroundServiceManager backgroundServiceManager;
 
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService;
+
+    public JythonCommandInterpreterFactory(ExecutorService executorService) {
+        this.executorService = executorService;
+    }
 
     public JythonCommandInterpreter createInstance() {
         JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);

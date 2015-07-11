@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutorService;
 
 import com.playonlinux.services.BackgroundService;
 
-public interface ScriptFactory extends BackgroundService {
+public interface ScriptFactory {
     Script createInstance(String script);
 
     Script createInstance(File script) throws IOException;

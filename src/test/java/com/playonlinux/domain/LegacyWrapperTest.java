@@ -64,11 +64,12 @@ public class LegacyWrapperTest {
             return mockFuture;
         });
 
-        ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation();
-        scriptFactory.start();
-        Script testScriptWrapper = scriptFactory
-                .withExecutor(mockExecutorService)
+        final ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation()
+                .withExecutor(mockExecutorService);
+
+        final Script testScriptWrapper = scriptFactory
                 .createInstance(testScript);
+
         testScriptWrapper.start();
         //file should exist now
         assertTrue(tmpFile.exists());
