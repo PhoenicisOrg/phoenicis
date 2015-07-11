@@ -19,6 +19,8 @@
 package com.playonlinux.installer;
 
 import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.injection.Inject;
+
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
@@ -29,6 +31,9 @@ import java.util.concurrent.ExecutorService;
 public class ScriptLegacy extends Script {
     private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP PUBLIC KEY BLOCK-----";
     private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
+    
+    @Inject
+    private static ScriptFactory scriptFactory;
 
 
     protected ScriptLegacy(String script, ExecutorService executorService) {
@@ -41,9 +46,8 @@ public class ScriptLegacy extends Script {
         Script playonlinuxBashInterpreter;
         File bashScriptFile;
         try {
-            playonlinuxBashInterpreter =
-                    new ScriptFactoryDefaultImplementation()
-                            .createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+            playonlinuxBashInterpreter = scriptFactory
+                    .createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
 
             bashScriptFile = File.createTempFile("script", "sh");
             bashScriptFile.deleteOnExit();

@@ -22,7 +22,9 @@ import com.playonlinux.MockContextConfig;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.installer.Script;
+import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +64,9 @@ public class LegacyWrapperTest {
             return mockFuture;
         });
 
-        Script testScriptWrapper = new ScriptFactoryDefaultImplementation()
+        ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation();
+        scriptFactory.start();
+        Script testScriptWrapper = scriptFactory
                 .withExecutor(mockExecutorService)
                 .createInstance(testScript);
         testScriptWrapper.start();

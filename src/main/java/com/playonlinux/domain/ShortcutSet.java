@@ -18,8 +18,11 @@
 
 package com.playonlinux.domain;
 
-import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.utils.ObservableDirectoryFiles;
+
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -30,7 +33,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+@Scan
 public class ShortcutSet extends Observable implements Observer {
+    
+    @Inject
+    private static ScriptFactory scriptFactory;
+    
     private final ObservableDirectoryFiles iconDirectory;
     private final File configFilesDirectory;
     private final ObservableDirectoryFiles shortcutDirectory;
@@ -82,11 +90,11 @@ public class ShortcutSet extends Observable implements Observer {
 
                     Shortcut shortcut;
                     if (configFile.exists()) {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, new ScriptFactoryDefaultImplementation()
+                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, scriptFactory
                                 .createInstance(shortcutFile),
                                 configFile);
                     } else {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, new ScriptFactoryDefaultImplementation()
+                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, scriptFactory
                                 .createInstance(shortcutFile));
                     }
                     this.getShortcuts().add(shortcut);
