@@ -47,17 +47,19 @@ import static com.playonlinux.lang.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class WinePrefix {
-    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
-    private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
-
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
     static BackgroundServiceManager backgroundServicesManager;
 
+    @Inject
+    private static Logger logger;
+
+
     private static final long NEWPREFIXSIZE = 320_000_000;
     private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
+    private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
 
     private final SetupWizard setupWizard;
 
@@ -177,7 +179,7 @@ public class WinePrefix {
         try {
             wineInstallation.getInstallation().killAllProcess(this.prefix);
         } catch (IOException logged) {
-            LOGGER.warn("Unable to kill wine processes", logged);
+            logger.warn("Unable to kill wine processes", logged);
         }
 
         return this;
@@ -295,7 +297,7 @@ public class WinePrefix {
             wineInstallation.getInstallation()
                     .waitAllProcesses(this.prefix);
         } catch (IOException logged) {
-            LOGGER.warn("Unable to wait for wine processes", logged);
+            logger.warn("Unable to wait for wine processes", logged);
         }
 
         return this;

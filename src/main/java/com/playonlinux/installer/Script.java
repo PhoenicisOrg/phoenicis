@@ -27,7 +27,6 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.python.InterpreterFactory;
-import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
@@ -45,7 +44,10 @@ public abstract class Script implements BackgroundService {
     @Inject
     private static InterpreterFactory jythonInterpreterFactory;
 
-    private static final Logger LOGGER = Logger.getLogger(Script.class);
+    @Inject
+    private static Logger logger;
+
+
     private final ExecutorService executor;
     private Future runningScript;
 
@@ -94,22 +96,22 @@ public abstract class Script implements BackgroundService {
                     executeScript(pythonInterpreter);
                 } catch (PyException e) {
                     if (e.getCause() instanceof ScriptFailureException) {
-                        LOGGER.error("The script encountered an error");
+                        logger.error("The script encountered an error");
                     }
                     if (e.getCause() instanceof CancelException) {
-                        LOGGER.info("The script has been canceled");
+                        logger.info("The script has been canceled");
                     }
-                    LOGGER.error(ExceptionUtils.getStackTrace(e));
+                    logger.error(ExceptionUtils.getStackTrace(e));
                 } catch (ScriptFailureException e) {
-                    LOGGER.error("The script encountered an error", e);
+                    logger.error("The script encountered an error", e);
                 } finally {
-                    LOGGER.info("Cleaning up");
+                    logger.info("Cleaning up");
                     pythonInterpreter.cleanup();
                     jythonInterpreterFactory.close(pythonInterpreter);
                     backgroundServiceManager.unregister(Script.this);
                 }
             } catch(PlayOnLinuxException e) {
-                LOGGER.error("Cannot create interpreter", e);
+                logger.error("Cannot create interpreter", e);
             }
         });
     }

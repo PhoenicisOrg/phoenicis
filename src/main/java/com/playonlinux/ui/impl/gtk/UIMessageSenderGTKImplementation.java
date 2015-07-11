@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.gtk;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchronousMessage;
@@ -27,8 +29,10 @@ import org.apache.log4j.Logger;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+@Scan
 public class UIMessageSenderGTKImplementation<RETURN> implements UIMessageSender<RETURN>  {
-    private static final Logger LOGGER = Logger.getLogger(UIMessageSenderGTKImplementation.class);
+    @Inject
+    private static Logger logger;
 
     @Override
     public RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException {
@@ -46,7 +50,7 @@ public class UIMessageSenderGTKImplementation<RETURN> implements UIMessageSender
         try {
             lock.acquire();
         } catch (InterruptedException e) {
-            LOGGER.info(e);
+            logger.info(e);
         }
     }
 

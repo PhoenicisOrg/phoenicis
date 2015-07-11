@@ -18,19 +18,21 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.messages.CancelerMessage;
 import org.apache.log4j.Logger;
 import org.gnome.gdk.Pixbuf;
 import org.gnome.gdk.RGBA;
 import org.gnome.gtk.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 
-
+@Scan
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
-    private static final Logger LOGGER = Logger.getLogger(AbstractStepRepresentationWithHeader.class);
+    @Inject
+    private static Logger logger;
+
     Fixed contentPanel;
 
     AbstractStepRepresentationWithHeader(SetupWindowGTKImplementation parent, CancelerMessage messageWaitingForResponse) {
@@ -56,7 +58,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
             Image topImage = new Image(pixbuf);
             header.put(topImage, 456, 0);
         } catch (IOException e) {
-            LOGGER.warn(e);
+            logger.warn(e);
         }
 
         this.addToStep(header, 0, 0);

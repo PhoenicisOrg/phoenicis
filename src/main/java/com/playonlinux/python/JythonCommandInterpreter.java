@@ -25,6 +25,7 @@ import com.playonlinux.messages.RunnableWithParameter;
 import com.playonlinux.services.BackgroundService;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.api.CommandInterpreter;
+import org.apache.log4j.Logger;
 import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
 
@@ -34,6 +35,9 @@ import java.util.concurrent.Future;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, BackgroundService {
+    @Inject
+    private static Logger logger;
+
     @Inject
     private static InterpreterFactory jythonInterpreterFactory;
 
@@ -60,7 +64,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, BackgroundS
                 interactiveInterpreter.setOut(returnBuffer);
                 interactiveInterpreter.setErr(returnBuffer);
             } catch (PlayOnLinuxException e) {
-                e.printStackTrace();
+                logger.warn(e);
             }
         }
 

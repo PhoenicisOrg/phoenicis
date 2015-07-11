@@ -35,17 +35,19 @@ import java.util.Observer;
 
 @Scan
 public class ShortcutSet extends Observable implements Observer {
-    
     @Inject
     private static ScriptFactory scriptFactory;
-    
+
+    @Inject
+    private static Logger logger;
+
+
     private final ObservableDirectoryFiles iconDirectory;
     private final File configFilesDirectory;
     private final ObservableDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
     private List<Shortcut> shortcuts;
 
-    private static final Logger LOGGER = Logger.getLogger(ShortcutSet.class);
 
     public ShortcutSet(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
                        File configFilesDirectory, URL defaultIcon) {
@@ -99,7 +101,7 @@ public class ShortcutSet extends Observable implements Observer {
                     }
                     this.getShortcuts().add(shortcut);
                 } catch (IOException e) {
-                    LOGGER.warn(e);
+                    logger.warn(e);
                 }
             }
         }
