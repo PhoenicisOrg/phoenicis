@@ -18,18 +18,23 @@
 
 package com.playonlinux.wine;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.domain.Version;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
+/**
+ * Represents a wineprefix
+ */
 public class WinePrefix {
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
     private static final String SYSTEM_REGISTRY_FILENAME = "system.reg";
@@ -43,10 +48,13 @@ public class WinePrefix {
 
     private final File winePrefixDirectory;
     private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
-    public WinePrefix(File winePrefixDirectory) {
+
+    public WinePrefix(File winePrefixDirectory) throws WineException {
         this.winePrefixDirectory = winePrefixDirectory;
         if(!this.winePrefixDirectory.exists()) {
-            this.winePrefixDirectory.mkdirs();
+            if(!this.winePrefixDirectory.mkdirs()) {
+                throw new WineException("Cannot create prefix: " + getWinePrefixDirectory());
+            }
         }
     }
 
@@ -61,6 +69,11 @@ public class WinePrefix {
         }
     }
 
+    /**
+     * Return the system registry
+     * @return the system registry
+     * @throws WineException if any error happen while parsing the registry
+     */
     public RegistryKey fetchSystemRegistry() throws WineException {
         return parseRegistryFile(SYSTEM_REGISTRY_FILENAME, SYSTEM_REGISTRY_NODENAME);
     }
@@ -73,7 +86,7 @@ public class WinePrefix {
         return new File(winePrefixDirectory, DRIVE_C);
     }
 
-    public String fetchVersion() {
+    public Version fetchVersion() {
         return null;
     }
 
@@ -131,5 +144,36 @@ public class WinePrefix {
 
     public boolean initialized() {
         return false;
+    }
+
+    public void createConfigFile(WineDistribution wineDistribution, Version version) throws WineException {
+        final Map<String, String> configContent = new HashMap<>();
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        configContent.put("distributionCode", wineDistribution.getDistributionCode());
+        configContent.put("operatingSystem", wineDistribution.getOperatingSystem().name());
+        configContent.put("architecture", wineDistribution.getArchitecture().name());
+        configContent.put("version", version.toString());
+
+        final File configFile = new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE);
+        if(configFile.exists()) {
+            throw new WineException("Prefix already exists: " + getWinePrefixDirectory());
+        }
+
+        try {
+            if(configFile.createNewFile()) {
+                try (PrintWriter fileOutputWriter = new PrintWriter(configFile)) {
+                    objectMapper.writeValue(fileOutputWriter, configContent);
+                }
+            } else {
+                throw new WineException("Cannot create file: " + configFile);
+            }
+        } catch (IOException e) {
+            throw new WineException(e);
+        }
+    }
+
+    public WineDistribution fetchDistribution() {
+        return null;
     }
 }

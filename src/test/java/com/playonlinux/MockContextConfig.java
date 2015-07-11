@@ -56,14 +56,17 @@ public class MockContextConfig extends AbstractConfigFile {
     }
 
     @Bean
-    protected ScriptFactory scriptFactory() { return new ScriptFactoryDefaultImplementation(); }
+    protected ScriptFactory scriptFactory() {
+        return new ScriptFactoryDefaultImplementation();
+    }
+
     @Override
     protected String definePackage() {
         return "com.playonlinux";
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
 
     }
 }
