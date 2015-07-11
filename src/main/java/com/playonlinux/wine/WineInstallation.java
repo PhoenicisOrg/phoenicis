@@ -132,6 +132,10 @@ public class WineInstallation {
 
     }
 
+    public boolean exists() {
+        return this.binaryPath.exists() && this.libraryPath.exists();
+    }
+
 
     public static class Builder {
         private File path;

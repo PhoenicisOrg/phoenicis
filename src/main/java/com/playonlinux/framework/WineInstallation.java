@@ -1,0 +1,62 @@
+/*
+ * Copyright (C) 2015 PÂRIS Quentin
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+package com.playonlinux.framework;
+
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.domain.Version;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.ScriptClass;
+import com.playonlinux.wine.WineDistribution;
+
+@Scan
+@ScriptClass
+@SuppressWarnings("unused")
+public class WineInstallation {
+    @Inject
+    private static PlayOnLinuxContext playOnLinuxContext;
+
+    private final Version version;
+    private final WineDistribution wineDistribution;
+
+    public WineInstallation(Version version, WineDistribution wineDistribution) {
+        this.version = version;
+        this.wineDistribution = wineDistribution;
+    }
+
+    public com.playonlinux.wine.WineInstallation getInstallation() throws ScriptFailureException {
+        try {
+            return new com.playonlinux.wine.WineInstallation.Builder()
+                    .withPath(playOnLinuxContext.makeWinePath(
+                                    version,
+                                    wineDistribution
+                            )
+                    )
+                    .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
+                    .build();
+        } catch (PlayOnLinuxException e) {
+            throw new ScriptFailureException(e);
+        }
+    }
+
+    public boolean isInstalled() throws ScriptFailureException {
+        return getInstallation().exists();
+    }
+}
