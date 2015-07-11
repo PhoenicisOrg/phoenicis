@@ -56,7 +56,6 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
     private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
     private boolean useGTKInterface;
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Bean
     public Controller controller() {
@@ -108,7 +107,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
     public CommandInterpreterFactory commandInterpreterFactory() {
-        return new JythonCommandInterpreterFactory(executorService);
+        return new JythonCommandInterpreterFactory();
     }
 
     @Bean
@@ -143,7 +142,6 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Override
     public void close() {
-        executorService.shutdown();
         playOnLinuxBackgroundServiceManager.shutdown();
     }
 }

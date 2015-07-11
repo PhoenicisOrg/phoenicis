@@ -24,17 +24,14 @@ import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Scan
 public class JythonCommandInterpreterFactory implements CommandInterpreterFactory {
     @Inject
     private static BackgroundServiceManager backgroundServiceManager;
 
-    private final ExecutorService executorService;
-
-    public JythonCommandInterpreterFactory(ExecutorService executorService) {
-        this.executorService = executorService;
-    }
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public JythonCommandInterpreter createInstance() {
         JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);
