@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutorService;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class ScriptFactoryDefaultImplementation implements ScriptFactory {
-    ExecutorService executorService = newSingleThreadExecutor();
+    ExecutorService executorService;
 
     public Script createInstance(File scriptFile) throws IOException {
         return createInstance(FileUtils.readFileToString(scriptFile));
@@ -46,5 +46,15 @@ public class ScriptFactoryDefaultImplementation implements ScriptFactory {
     public ScriptFactoryDefaultImplementation withExecutor(ExecutorService executorService) {
         this.executorService = executorService;
         return this;
+    }
+
+    @Override
+    public void shutdown() {
+        executorService.shutdownNow();
+    }
+
+    @Override
+    public void start() {
+        executorService = newSingleThreadExecutor();
     }
 }

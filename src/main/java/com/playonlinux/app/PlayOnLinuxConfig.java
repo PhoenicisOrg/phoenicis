@@ -25,6 +25,8 @@ import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.services.EventDispatcher;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.installer.InstallerSource;
+import com.playonlinux.installer.ScriptFactory;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import com.playonlinux.services.EventDispatcherPlayOnLinuxImplementation;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.lang.LanguageBundle;
@@ -117,6 +119,13 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Bean
     public LogStreamFactory logStreamFactory() {
         return new LogStreamFactory();
+    }
+    
+    @Bean
+    public ScriptFactory scriptFactory() {
+        ScriptFactoryDefaultImplementation scriptFactory = new ScriptFactoryDefaultImplementation();
+        playOnLinuxBackgroundServiceManager.register(scriptFactory);
+        return scriptFactory;
     }
 
     @Override

@@ -22,9 +22,10 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.domain.*;
 import com.playonlinux.installer.Script;
+import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
+
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -38,6 +39,9 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
+    
+    @Inject
+    private static ScriptFactory scriptFactory;
 
     private static final Logger LOGGER = Logger.getLogger(EventDispatcherPlayOnLinuxImplementation.class);
 
@@ -48,14 +52,14 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
 
     @Override
     public void runLocalScript(File scriptToRun) throws IOException {
-        Script playonlinuxScript = new ScriptFactoryDefaultImplementation().createInstance(scriptToRun);
+        Script playonlinuxScript = scriptFactory.createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
 
     @Override
     public void runApplication(String applicationName) throws PlayOnLinuxException {
         try {
-            Script playonLinuxScript = new ScriptFactoryDefaultImplementation().createInstance(
+            Script playonLinuxScript = scriptFactory.createInstance(
                     new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName)
             );
             playOnLinuxBackgroundServicesManager.register(playonLinuxScript);

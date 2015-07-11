@@ -69,7 +69,6 @@ public abstract class Script implements BackgroundService {
     @Override
     public void shutdown() {
         runningScript.cancel(true);
-        executor.shutdown();
     }
 
     public String getScriptContent() {

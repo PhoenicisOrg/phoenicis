@@ -20,9 +20,14 @@ package com.playonlinux.installer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 
-public interface ScriptFactory {
+import com.playonlinux.services.BackgroundService;
+
+public interface ScriptFactory extends BackgroundService {
     Script createInstance(String script);
 
     Script createInstance(File script) throws IOException;
+    
+    ScriptFactory withExecutor(ExecutorService executorService);
 }
