@@ -18,6 +18,13 @@
 
 package com.playonlinux.python;
 
-public interface InterpreterFactory {
+import com.playonlinux.app.PlayOnLinuxException;
+import org.python.util.PythonInterpreter;
 
+public interface InterpreterFactory {
+    PythonInterpreter createInstance() throws PlayOnLinuxException;
+
+    <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException;
+
+    void close(PythonInterpreter interpreter);
 }

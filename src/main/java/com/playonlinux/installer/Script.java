@@ -26,6 +26,7 @@ import java.util.concurrent.Future;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -42,7 +43,7 @@ public abstract class Script implements BackgroundService {
     private static BackgroundServiceManager backgroundServiceManager;
 
     @Inject
-    private static JythonInterpreterFactory jythonInterpreterFactory;
+    private static InterpreterFactory jythonInterpreterFactory;
 
     private static final Logger LOGGER = Logger.getLogger(Script.class);
     private final ExecutorService executor;
