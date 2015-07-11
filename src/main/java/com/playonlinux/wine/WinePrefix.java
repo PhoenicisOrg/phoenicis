@@ -20,6 +20,8 @@ package com.playonlinux.wine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.domain.Version;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 import org.apache.commons.io.FileUtils;
@@ -35,7 +37,12 @@ import java.util.*;
 /**
  * Represents a wineprefix
  */
+@Scan
 public class WinePrefix {
+    @Inject
+    private static Logger logger;
+
+
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
     private static final String SYSTEM_REGISTRY_FILENAME = "system.reg";
     private static final String SYSTEM_REGISTRY_NODENAME = "HKEY_LOCAL_MACHINE";
@@ -47,7 +54,6 @@ public class WinePrefix {
     private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
-    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
 
     public WinePrefix(File winePrefixDirectory) throws WineException {
         this.winePrefixDirectory = winePrefixDirectory;
@@ -106,7 +112,7 @@ public class WinePrefix {
         try {
             return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
         } catch(IllegalArgumentException e) {
-            LOGGER.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
+            logger.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
             return getSize();
         }
     }

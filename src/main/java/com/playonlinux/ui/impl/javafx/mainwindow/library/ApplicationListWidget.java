@@ -19,6 +19,8 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.filter.InstalledApplicationFilter;
 import com.playonlinux.utils.list.FilterPromise;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -39,13 +41,15 @@ import java.util.Observer;
 
 import static com.playonlinux.lang.Localisation.translate;
 
+@Scan
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
+    @Inject
+    private static Logger logger;
 
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
     private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
     private FilterPromise<InstalledApplicationDTO> installedApplications;
-    private static final Logger LOGGER = Logger.getLogger(ApplicationListWidget.class);
 
     public ApplicationListWidget(ViewLibrary parent) {
         this.parent = parent;
@@ -59,7 +63,7 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             alert.setTitle(translate("Error while trying to fetch installed applications."));
             alert.setContentText(String.format("The error was: %s", e));
             alert.show();
-            LOGGER.error(e);
+            logger.error(e);
         }
         installedApplications.addObserver(this);
     }

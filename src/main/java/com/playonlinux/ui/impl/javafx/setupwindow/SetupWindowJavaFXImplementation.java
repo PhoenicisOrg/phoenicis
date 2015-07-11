@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.messages.CancelerSynchronousMessage;
@@ -39,14 +41,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+@Scan
 public class SetupWindowJavaFXImplementation extends Stage implements SetupWindow {
+    @Inject
+    private static Logger logger;
+
     private final Pane root;
     private final String wizardTitle;
 
     private URL topImage;
     private URL leftImage;
-
-    private static final Logger LOGGER = Logger.getLogger(SetupWindowJavaFXImplementation.class);
 
     public SetupWindowJavaFXImplementation(String title) {
         super();
@@ -88,7 +92,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
                     break;
             }
         } catch (PlayOnLinuxException playOnLinuxException) {
-            LOGGER.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
+            logger.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
             this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
         }
     }

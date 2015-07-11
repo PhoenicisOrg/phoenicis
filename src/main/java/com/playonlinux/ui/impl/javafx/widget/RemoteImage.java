@@ -43,7 +43,8 @@ public class RemoteImage extends VBox {
     @Inject
     private static DownloadManager downloadManager;
 
-    private static final Logger LOGGER = Logger.getLogger(RemoteImage.class);
+    @Inject
+    private static Logger logger;
 
     private URL imageUrl;
 
@@ -101,7 +102,7 @@ public class RemoteImage extends VBox {
             try {
                 inputStream.close();
             } catch (IOException e) {
-                LOGGER.warn(e);
+                logger.warn(e);
             }
         });
 

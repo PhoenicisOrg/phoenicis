@@ -18,6 +18,8 @@
 
 package com.playonlinux.webservice;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.messages.ParametrableRunnable;
 import com.playonlinux.services.SubmitableBackgroundService;
 import org.apache.log4j.Logger;
@@ -31,12 +33,15 @@ import java.util.concurrent.TimeUnit;
 /*
  Represents a download manager
  */
-public class DownloadManager implements
-        SubmitableBackgroundService<HTTPDownloader, ParametrableRunnable<byte[]>> {
+@Scan
+public class DownloadManager implements SubmitableBackgroundService<HTTPDownloader, ParametrableRunnable<byte[]>> {
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
-    private static final Logger LOGGER = Logger.getLogger(DownloadManager.class);
+
+    @Inject
+    private static Logger logger;
+
 
     public DownloadManager() {
         this(DEFAULT_POOL_SIZE, DEFAULT_QUEUE_SIZE);
@@ -76,7 +81,7 @@ public class DownloadManager implements
                 callback.setParameter(downloadResult);
                 callback.run();
             } catch (DownloadException e) {
-                LOGGER.error(e);
+                logger.error(e);
                 error.setParameter(e);
                 error.run();
             }
