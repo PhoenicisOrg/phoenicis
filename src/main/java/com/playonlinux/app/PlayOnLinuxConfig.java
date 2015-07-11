@@ -19,6 +19,7 @@
 package com.playonlinux.app;
 
 import com.playonlinux.log.LogStreamFactory;
+import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonCommandInterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
@@ -107,11 +108,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Bean
     public CommandInterpreterFactory commandInterpreterFactory() {
-        return new JythonCommandInterpreterFactory();
+        return new JythonCommandInterpreterFactory(defaultExecutor());
     }
 
     @Bean
-    public JythonInterpreterFactory jythonCommandInterpreterFactory() {
+    public InterpreterFactory interpreterFactory() {
         return new JythonInterpreterFactory();
     }
 
@@ -122,9 +123,11 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     
     @Bean
     public ScriptFactory scriptFactory() {
-        ScriptFactoryDefaultImplementation scriptFactory = new ScriptFactoryDefaultImplementation();
-        playOnLinuxBackgroundServiceManager.register(scriptFactory);
-        return scriptFactory;
+        return new ScriptFactoryDefaultImplementation().withExecutor(defaultExecutor());
+    }
+
+    private ExecutorService defaultExecutor() {
+        return Executors.newCachedThreadPool();
     }
 
     @Override

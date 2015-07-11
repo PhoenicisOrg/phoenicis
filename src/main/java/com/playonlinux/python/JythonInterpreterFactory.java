@@ -26,8 +26,9 @@ import org.python.modules.zipimport.zipimport;
 import org.python.util.PythonInterpreter;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
 
-public class JythonInterpreterFactory {
+public class JythonInterpreterFactory implements InterpreterFactory {
     private int numberOfInstances = 0;
 
     synchronized public PythonInterpreter createInstance() throws PlayOnLinuxException {
@@ -55,4 +56,5 @@ public class JythonInterpreterFactory {
             zipimport._zip_directory_cache = new PyDictionary();
         }
     }
+
 }

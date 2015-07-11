@@ -16,30 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.python;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface InterpreterFactory {
 
-public class PlayOnLinuxBackgroundServicesManager implements BackgroundServiceManager {
-    List<BackgroundService> runningTask;
-
-    public PlayOnLinuxBackgroundServicesManager() {
-        runningTask = new ArrayList<>();
-    }
-
-    public BackgroundService register(BackgroundService backgroundService) {
-        runningTask.add(backgroundService);
-        backgroundService.start();
-        return backgroundService;
-    }
-
-    public void shutdown() {
-        runningTask.forEach(BackgroundService::shutdown);
-    }
-
-    public void unregister(BackgroundService backgroundService) {
-        runningTask.remove(backgroundService);
-        backgroundService.shutdown();
-    }
 }
