@@ -35,7 +35,7 @@ import java.util.concurrent.Future;
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, BackgroundService {
     @Inject
-    private static JythonInterpreterFactory jythonInterpreterFactory;
+    private static InterpreterFactory jythonInterpreterFactory;
 
     @Inject
     private static BackgroundServiceManager backgroundServiceManager;
