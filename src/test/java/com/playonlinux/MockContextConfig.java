@@ -23,6 +23,8 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
+import com.playonlinux.installer.ScriptFactory;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
@@ -52,6 +54,8 @@ public class MockContextConfig extends AbstractConfigFile {
         return new LogStreamFactory();
     }
 
+    @Bean
+    protected ScriptFactory scriptFactory() { return new ScriptFactoryDefaultImplementation(); }
     @Override
     protected String definePackage() {
         return "com.playonlinux";
