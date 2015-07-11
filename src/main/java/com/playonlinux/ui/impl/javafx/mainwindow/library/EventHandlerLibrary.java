@@ -39,9 +39,7 @@ class EventHandlerLibrary implements UIEventHandler {
     @Inject
     static EventDispatcher mainEventDispatcher;
 
-    @Inject
-    private static Logger logger;
-
+    private static final Logger LOGGER = Logger.getLogger(EventHandlerLibrary.class);
 
     public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
         return mainEventDispatcher.getInstalledApplications();
@@ -64,7 +62,7 @@ class EventHandlerLibrary implements UIEventHandler {
         try {
             mainEventDispatcher.runApplication(applicationName);
         } catch (PlayOnLinuxException e) {
-            logger.error(e);
+            LOGGER.error(e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to run the application."));
             alert.setContentText(String.format("The error was: %s", e));

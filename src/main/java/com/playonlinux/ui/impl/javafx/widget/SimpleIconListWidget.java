@@ -18,8 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.widget;
 
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
 import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
@@ -37,16 +35,13 @@ import java.net.URL;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-@Scan
-public class SimpleIconListWidget extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
-
-    @Inject
-    private static Logger logger;
-
+public class SimpleIconListWidget
+        extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
     private final TreeItem<SimpleIconListItem> rootItem;
     private Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
+    private static final Logger LOGGER = Logger.getLogger(SimpleIconListWidget.class);
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem<>();
@@ -79,7 +74,7 @@ public class SimpleIconListWidget extends TreeView<SimpleIconListWidget.SimpleIc
                     iconPath.getAbsolutePath());
             alert.setTitle(errorTitle);
             alert.setContentText(String.format("The error was: %s", e));
-            logger.warn(errorTitle, e);
+            LOGGER.warn(errorTitle, e);
         }
     }
 
