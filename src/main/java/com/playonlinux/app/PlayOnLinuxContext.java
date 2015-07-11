@@ -18,9 +18,10 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.utils.Architecture;
+import com.playonlinux.domain.Version;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.utils.ReplacableProperties;
+import com.playonlinux.wine.WineDistribution;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
@@ -84,14 +85,10 @@ public class PlayOnLinuxContext {
         return new File(this.properties.getProperty("application.user.wineprefix"));
     }
 
-    public File makeWinePathFromVersionAndArchitecture(String version, Architecture architecture) throws PlayOnLinuxException {
-        String architectureDirectory = String.format("%s-%s",
-                OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages(),
-                architecture.getNameForWinePackages()
-        );
+    public File makeWinePath(Version version, WineDistribution wineDistribution) throws PlayOnLinuxException {
         String versionPath = String.format("%s/%s/%s",
                 this.properties.getProperty("application.user.wineversions"),
-                architectureDirectory,
+                wineDistribution.toString(),
                 version
         );
         return new File(versionPath);

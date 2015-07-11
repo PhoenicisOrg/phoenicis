@@ -18,6 +18,8 @@
 
 package com.playonlinux.wine;
 
+import com.playonlinux.domain.Version;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +34,15 @@ public class WineInstallation {
     private final File binaryPath;
     private final File libraryPath;
     private final Map<String, String> applicationEnvironment;
+    private final WineDistribution distribution;
+    private final Version version;
 
     private WineInstallation(WineInstallation.Builder builder) {
         this.binaryPath = new File(builder.path, "bin");
         this.libraryPath = new File(builder.path, "lib");
         this.applicationEnvironment = builder.applicationEnvironment;
+        this.version = builder.version;
+        this.distribution = builder.distribution;
     }
 
 
@@ -88,11 +94,18 @@ public class WineInstallation {
         return this.run(workingDirectory, executableToRun, environment, null);
     }
 
-    public Process createPrefix(WinePrefix winePrefix) throws IOException {
+    public Process createPrefix(WinePrefix winePrefix) throws WineException {
         Map<String, String> winePrefixEnvironment = new HashMap<>();
         winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
+        winePrefix.createConfigFile(this.distribution, this.version);
 
-        return this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
+        final Process process;
+        try {
+            process = this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
+        } catch (IOException e) {
+            throw new WineException(e);
+        }
+        return process;
     }
 
     public void killAllProcess(WinePrefix winePrefix) throws IOException {
@@ -123,6 +136,18 @@ public class WineInstallation {
     public static class Builder {
         private File path;
         private Map<String, String> applicationEnvironment;
+        public Version version;
+        public WineDistribution distribution;
+
+        public WineInstallation.Builder withVersion(Version version) {
+            this.version = version;
+            return this;
+        }
+
+        public WineInstallation.Builder withDistributionName(WineDistribution distributionName) {
+            this.distribution = distribution;
+            return this;
+        }
 
         public WineInstallation.Builder withPath(File path) {
             this.path = path;
