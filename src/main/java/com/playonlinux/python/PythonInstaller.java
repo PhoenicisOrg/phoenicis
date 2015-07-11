@@ -37,15 +37,12 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     @Inject
     private static LogStreamFactory logStreamFactory;
 
-    @Inject
-    private static Logger logger;
-
-
     private static final String MAIN_METHOD_NAME = "main";
     private static final String DEFINE_LOGCONTEXT_NAME = "title";
     private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
     private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
     private PyObject mainInstance;
+    private static final Logger LOGGER = Logger.getLogger(PythonInstaller.class);
 
     public PythonInstaller(PythonInterpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);
@@ -109,7 +106,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
             try {
                 this.runMain(getMainInstance());
             } catch(Exception e) {
-                logger.error("The script encountered an error. Rolling back");
+                LOGGER.error("The script encountered an error. Rolling back");
                 try {
                     getMainInstance().invoke(ROLLBACK_METHOD_NAME);
                 } catch (Exception rollbackException) {
@@ -124,7 +121,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                         logStream.flush();
                         logStream.close();
                     } catch (IOException e) {
-                        logger.warn("Unable to flush script log stream", e);
+                        LOGGER.warn("Unable to flush script log stream", e);
                     }
                 }
             }
@@ -138,7 +135,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
         try {
             pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);
         } catch (PyException e) {
-            logger.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
+            LOGGER.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
             return null;
         }
         if (pyLogAttribute instanceof PyMethod) {

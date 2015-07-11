@@ -19,30 +19,32 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
 import com.sun.webkit.dom.HTMLAnchorElementImpl;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
+import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
-@Scan
 final class AppPanel extends VBox {
-
-    @Inject
-    private static Logger logger;
+    private static final Logger LOGGER = Logger.getLogger(AppPanel.class);
 
     public AppPanel(EventHandlerApps eventHandlerApps, AppsItemDTO appsItemDTO) {
         super();
@@ -57,7 +59,7 @@ final class AppPanel extends VBox {
                             .render(appsItemDTO)
             );
         } catch (IOException e) {
-            logger.error("Unable to load the description");
+            LOGGER.error("Unable to load the description");
         }
 
         descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {

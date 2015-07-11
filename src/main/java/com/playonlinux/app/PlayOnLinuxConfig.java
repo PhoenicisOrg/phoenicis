@@ -42,7 +42,6 @@ import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 import com.playonlinux.webservice.DownloadManager;
 import com.playonlinux.wine.versions.WineVersionSource;
 import com.playonlinux.wine.versions.WineversionsSourceWebserviceImplementation;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -126,11 +125,6 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     @Bean
     public ScriptFactory scriptFactory() {
         return new ScriptFactoryDefaultImplementation().withExecutor(defaultExecutor());
-    }
-
-    @Bean
-    private Logger logger() {
-        return Logger.getLogger("playonlinux");
     }
 
     private ExecutorService defaultExecutor() {

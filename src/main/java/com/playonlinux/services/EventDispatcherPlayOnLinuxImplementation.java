@@ -43,8 +43,7 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
     @Inject
     private static ScriptFactory scriptFactory;
 
-    @Inject
-    private static Logger logger;
+    private static final Logger LOGGER = Logger.getLogger(EventDispatcherPlayOnLinuxImplementation.class);
 
 
     private InstalledApplications installedApplications;
@@ -93,7 +92,7 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
             try {
                 remoteAvailableInstallers = new RemoteAvailableInstallersPlayOnLinuxImplementation();
             } catch (MalformedURLException e) {
-                logger.error("The URL was malformed", e);
+                LOGGER.error("The URL was malformed", e);
             }
         }
 

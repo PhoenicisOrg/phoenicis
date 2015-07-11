@@ -1,7 +1,5 @@
 package com.playonlinux.ui.impl.gtk.mainwindow;
 
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
 import org.apache.log4j.Logger;
 import org.gnome.gtk.*;
 
@@ -9,11 +7,8 @@ import java.io.IOException;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-@Scan
 public class MainWindowMenuBar extends MenuBar {
-    @Inject
-    private static Logger logger;
-
+    private static final Logger LOGGER = Logger.getLogger(MainWindowMenuBar.class);
     private final GTKApplication parent;
     private final MainWindowEventDispatcher mainWindowEventDispatcher;
 
@@ -34,7 +29,7 @@ public class MainWindowMenuBar extends MenuBar {
             try {
                 mainWindowEventDispatcher.runLocalScript();
             } catch (IOException e) {
-                logger.warn(e);
+                LOGGER.warn(e);
             }
         });
         toolsMenu.append(runScriptItem);
