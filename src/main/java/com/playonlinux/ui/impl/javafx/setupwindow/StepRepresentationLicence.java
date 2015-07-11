@@ -35,6 +35,7 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
         this.licenceText = licenceText;
     }
 
+    @Override
     protected void drawStepContent() {
         super.drawStepContent();
         
@@ -60,11 +61,4 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
         this.addToStep(licenceWidget);
         this.addToStep(confirmWidget);
     }
-
-    protected void setStepEvents() {
-        this.setNextButtonAction(event ->
-            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(false)
-        );
-    }
-
 }
