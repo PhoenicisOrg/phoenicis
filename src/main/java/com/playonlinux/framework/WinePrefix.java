@@ -116,7 +116,7 @@ public class WinePrefix {
      */
     public WinePrefix create(String version, String distribution) throws CancelException {
         try {
-            return this.create(version, Architecture.fetchCurrentArchitecture().name(), DEFAULT_DISTRIBUTION_NAME);
+            return this.create(version, DEFAULT_DISTRIBUTION_NAME, Architecture.fetchCurrentArchitecture().name());
         } catch (CancelException e) {
             throw e;
         } catch (PlayOnLinuxException e) {
