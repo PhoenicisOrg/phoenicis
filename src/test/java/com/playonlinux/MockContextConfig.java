@@ -26,6 +26,7 @@ import com.playonlinux.injection.Bean;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import com.playonlinux.log.LogStreamFactory;
+import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.BackgroundServiceManager;
 
@@ -45,7 +46,7 @@ public class MockContextConfig extends AbstractConfigFile {
     }
 
     @Bean
-    protected JythonInterpreterFactory jythonInterpreterFactory() {
+    protected InterpreterFactory jythonInterpreterFactory() {
         return new JythonInterpreterFactory();
     }
 
