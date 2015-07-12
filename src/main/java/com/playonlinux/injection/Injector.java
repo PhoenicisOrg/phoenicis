@@ -68,7 +68,7 @@ public class Injector {
         return methods;
     }
 
-    public Map<Class<?>, Object> loadAllBeans(AbstractConfigFile configFile) throws InjectionException {
+    public Map<Class<?>, Object> loadAllBeans(AbstractConfiguration configFile) throws InjectionException {
         List<Method> methods = this.getAnnotatedMethods(configFile.getClass(), Bean.class);
 
         Map<Class<?>, Object> beans = new HashMap<>();

@@ -62,4 +62,11 @@ public interface BackgroundServiceManager {
      * @return true if the background manager currently contains the service. False if it does not
      */
     boolean containsService(String serviceName);
+
+    /**
+     * Initialize the background service manager
+     */
+    void init() throws BackgroundServiceInitializationException;
+
+    <T extends BackgroundService> T getBackgroundService(Class<T> installedApplicationsClass);
 }

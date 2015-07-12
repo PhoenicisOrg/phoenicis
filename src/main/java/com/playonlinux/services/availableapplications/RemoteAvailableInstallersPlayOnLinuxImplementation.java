@@ -21,6 +21,7 @@ package com.playonlinux.services.availableapplications;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.dto.ui.AppsItemScriptDTO;
 import com.playonlinux.dto.web.*;
+import com.playonlinux.services.AutoStartedBackgroundService;
 import com.playonlinux.services.BackgroundServiceInitializationException;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.filter.Filter;
@@ -40,6 +41,7 @@ import java.util.*;
 import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
 
 @Scan
+@AutoStartedBackgroundService(name = "AvailableInstallersService")
 public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
         implements RemoteAvailableInstallers {
     @Inject

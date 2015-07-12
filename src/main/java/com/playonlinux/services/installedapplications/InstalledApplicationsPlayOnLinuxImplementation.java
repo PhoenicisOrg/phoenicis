@@ -19,8 +19,7 @@
 package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.services.BackgroundServiceInitializationException;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.*;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -34,6 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Scan
+@AutoStartedBackgroundService(name = "InstalledApplicationsService")
 public final class InstalledApplicationsPlayOnLinuxImplementation
         extends Observable implements InstalledApplications {
     @Inject

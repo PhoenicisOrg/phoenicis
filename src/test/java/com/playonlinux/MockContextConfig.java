@@ -21,7 +21,7 @@ package com.playonlinux;
 import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
@@ -34,7 +34,7 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 
-public class MockContextConfig extends AbstractConfigFile {
+public class MockContextConfig extends AbstractConfiguration {
     @Bean
     protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
         return new MockPlayOnLinuxContext();

@@ -32,6 +32,9 @@ public class PlayOnLinuxApp {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    @Inject
+    static BackgroundServiceManager backgroundServiceManager;
+
     public void start(String[] args) throws InjectionException {
         try(PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig()) {
             if (args.length > 0 && "--cli".equals(args[0])) {
@@ -41,11 +44,16 @@ public class PlayOnLinuxApp {
                 playOnLinuxConfig.setUseGTKInterface(true);
             }
 
-
             playOnLinuxConfig.load();
-
             playOnLinuxContext.initLogger();
+            backgroundServiceManager.init();
+
             controller.startApplication();
+
+            backgroundServiceManager.shutdown();
+        } catch (PlayOnLinuxException e) {
+            System.out.println("Unable to load PlayOnLinux");
+            e.printStackTrace();
         }
     }
 

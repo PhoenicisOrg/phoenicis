@@ -22,7 +22,7 @@ import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.installer.ScriptTemplate;
 
-import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.injection.InjectionException;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class PythonInstallerTest {
 
     @BeforeClass
     public static void setUpClass() throws InjectionException {
-        AbstractConfigFile testConfigFile = new MockContextConfig();
+        AbstractConfiguration testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }

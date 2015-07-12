@@ -18,6 +18,7 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonCommandInterpreterFactory;
@@ -33,7 +34,6 @@ import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.lang.LanguageBundleSelector;
-import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
@@ -52,7 +52,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SuppressWarnings("unused")
-public class PlayOnLinuxConfig extends AbstractConfigFile  {
+public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     private boolean useCliInterface = false;
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
@@ -147,7 +147,6 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
 
     @Override
     public void close() {
-        playOnLinuxBackgroundServiceManager.shutdown();
         executor.shutdownNow();
     }
 }

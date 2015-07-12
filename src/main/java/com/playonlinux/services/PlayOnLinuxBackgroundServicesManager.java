@@ -18,10 +18,7 @@
 
 package com.playonlinux.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class PlayOnLinuxBackgroundServicesManager implements BackgroundServiceManager {
     private final Map<String, BackgroundService> backgroundServices;
@@ -71,7 +68,36 @@ public final class PlayOnLinuxBackgroundServicesManager implements BackgroundSer
     }
 
     @Override
+    public <T extends BackgroundService> T getBackgroundService(Class<T> backgroundServiceType) {
+        for(BackgroundService backgroundService: backgroundServices.values()) {
+            if(backgroundServiceType.isAssignableFrom(backgroundService.getClass())) {
+                return (T) backgroundService;
+            }
+        }
+
+        throw new IllegalArgumentException("The selected type is not valid");
+    }
+
+    @Override
     public boolean containsService(String serviceName) {
         return backgroundServices.containsKey(serviceName);
     }
+
+    @Override
+    public void init() throws BackgroundServiceInitializationException {
+        final AutoStartedBackgroundServiceFinder autoStartedBackgroundServiceFinder = new AutoStartedBackgroundServiceFinder();
+        final Map<String, Class<?>> autoLoadedBackgroundServices
+                = autoStartedBackgroundServiceFinder.findClasses();
+
+        for(String backgroundServiceKey: autoLoadedBackgroundServices.keySet()) {
+            try {
+                this.register(backgroundServiceKey,
+                        (BackgroundService) autoLoadedBackgroundServices.get(backgroundServiceKey).newInstance());
+            } catch (ReflectiveOperationException e) {
+                throw new BackgroundServiceInitializationException(e);
+            }
+        }
+    }
+
+
 }
