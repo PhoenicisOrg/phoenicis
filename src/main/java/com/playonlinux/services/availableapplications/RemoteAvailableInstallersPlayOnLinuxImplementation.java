@@ -19,145 +19,75 @@
 package com.playonlinux.services.availableapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.dto.ui.AppsItemScriptDTO;
-import com.playonlinux.dto.web.*;
-import com.playonlinux.services.AutoStartedBackgroundService;
-import com.playonlinux.services.BackgroundServiceInitializationException;
-import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
-import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsItemScriptDTO;
+import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.dto.web.ApplicationDTO;
+import com.playonlinux.dto.web.CategoryDTO;
+import com.playonlinux.dto.web.ScriptDTO;
+import com.playonlinux.filter.Filter;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.InstallerSource;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
+import com.playonlinux.services.manager.AutoStartedService;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.ui.api.EntitiesProvider;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.Observer;
 import com.playonlinux.webservice.DownloadEnvelope;
-import com.playonlinux.dto.ui.ProgressStateDTO;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
+import static com.playonlinux.dto.ui.apps.AppsItemDTO.Builder;
 
 @Scan
-@AutoStartedBackgroundService(name = "AvailableInstallersService")
-public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
-        implements RemoteAvailableInstallers {
+@AutoStartedService(name = "AvailableInstallersService")
+public final class RemoteAvailableInstallersPlayOnLinuxImplementation
+        extends AbstractObservableImplementation<AppsWindowDTO>
+        implements Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
+                   EntitiesProvider<AppsItemDTO, AppsWindowDTO> {
+
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    private static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    private static ServiceManager playOnLinuxBackgroundServicesManager;
 
-    private List<CategoryDTO> categoriesDTO = new ArrayList<>();
-    private DownloadEnvelope<List<CategoryDTO>> downloadEnvelope;
+    private List<AppsItemDTO> appsItemDTOs = new ArrayList<>();
+    private List<AppsItemDTO> filteredAppsItemsDTOs = new ArrayList<>();
+    private List<AppsCategoryDTO> categoriesDTO = new ArrayList<>();
+
     private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
-
-    private List<AppsItemDTO> cache = null;
-
-    @Override
-    public Iterator<AppsItemDTO> iterator() {
-        updateCache();
-        return cache.iterator();
-    }
-
-    @Override
-    public void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-
-    @Override
-    public int size() {
-        updateCache();
-        return cache.size();
-    }
-
-    @Override
-    public AppsItemDTO[] toArray() {
-        return cache.toArray(new AppsItemDTO[cache.size()]);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        assert(arg instanceof DownloadEnvelope);
-        downloadEnvelope = (DownloadEnvelope<List<CategoryDTO>>) arg;
-
-        try {
-            if(downloadEnvelope.getEnvelopeContent() != null) {
-                categoriesDTO = new ArrayList<>(
-                        downloadEnvelope.getEnvelopeContent()
-                );
-            }
-        } finally {
-            cache = null; //invalidate cache
-            this.setChanged();
-            this.notifyObservers();
-        }
-
-    }
+    private Filter<AppsItemDTO> lastFilter;
+    private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
 
     @Override
-    public boolean isUpdating() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
-    }
+    public void update(InstallerSource installerSource, DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {
+        this.downloadEnvelope = downloadEnvelope;
+        this.categoriesDTO.clear();
 
-    @Override
-    public boolean hasFailed() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
-    }
-
-    @Override
-    public List<AppsItemDTO> getFiltered(Filter<AppsItemDTO> filter) {
-        List<AppsItemDTO> filtered = new ArrayList<>();
-        for(AppsItemDTO item : this){
-            if(filter.apply(item)){
-                filtered.add(item);
-            }
-        }
-        return filtered;
-    }
-
-    @Override
-    public List<CenterCategoryDTO> getCategories() {
-        List <CenterCategoryDTO> categoryDTOs = new ArrayList<>();
-        for(CategoryDTO categoryDTO: categoriesDTO) {
-            if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                categoryDTOs.add(new CenterCategoryDTO(categoryDTO.getName()));
-            }
-        }
-        return categoryDTOs;
-    }
-
-
-    @Override
-    public void refresh() throws BackgroundServiceInitializationException {
-        if(installerSourceWebserviceImplementation != null) {
-            installerSourceWebserviceImplementation.deleteObserver(this);
-            playOnLinuxBackgroundServicesManager.unregister(installerSourceWebserviceImplementation);
-        }
-        installerSourceWebserviceImplementation = new InstallerSourceWebserviceImplementation(webserviceUrl);
-        installerSourceWebserviceImplementation.addObserver(this);
-        playOnLinuxBackgroundServicesManager.register(installerSourceWebserviceImplementation);
-    }
-
-
-    private void updateCache(){
-        if(cache == null){
-            cache = new ArrayList<>();
-
-            for(CategoryDTO categoryDTO: categoriesDTO) {
-                if(categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+        if(downloadEnvelope.getEnvelopeContent() != null) {
+            for (CategoryDTO categoryDTO : downloadEnvelope.getEnvelopeContent()) {
+                if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                    categoriesDTO.add(new AppsCategoryDTO(categoryDTO.getName()));
                     for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
                         List<AppsItemScriptDTO> scripts = new ArrayList<>();
-                        for(ScriptDTO script: applicationDTO.getScripts()) {
+                        for (ScriptDTO script : applicationDTO.getScripts()) {
                             scripts.add(
                                     new AppsItemScriptDTO.Builder()
-                                        .withName(script.getName())
-                                        .withId(script.getId())
-                                        .build()
+                                            .withName(script.getName())
+                                            .withId(script.getId())
+                                            .build()
                             );
                         }
 
@@ -171,13 +101,61 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
                                 .withMiniaturesUrlsString(applicationDTO.getMiniaturesUrls()) //
                                 .withScripts(scripts)
                                 .build();
-                        cache.add(appsItemDTO);
+
+                        appsItemDTOs.add(appsItemDTO);
                     }
                 }
             }
-            Collections.sort(cache, new AlphabeticalOrderComparator<>());
         }
+        applyFilter(lastFilter);
     }
+
+    @Override
+    public void applyFilter(Filter<AppsItemDTO> filter) {
+        this.lastFilter = filter;
+
+        if(filter == null) {
+            filteredAppsItemsDTOs.clear();
+        } else {
+            filteredAppsItemsDTOs.clear();
+            for (AppsItemDTO appsItemDTO : appsItemDTOs) {
+                if (filter.apply(appsItemDTO)) {
+                    filteredAppsItemsDTOs.add(appsItemDTO);
+                }
+            }
+        }
+
+
+        this.notifyObservers(new AppsWindowDTO.Builder()
+                .withAppsCategory(categoriesDTO)
+                .withAppsItem(filteredAppsItemsDTOs)
+                .withDownloadFailed(hasFailed())
+                .withDownloading(isUpdating())
+                .build());
+    }
+
+
+    private boolean isUpdating() {
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
+    }
+
+    private boolean hasFailed() {
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
+    }
+
+
+    public void refresh() throws ServiceInitializationException {
+        if(installerSourceWebserviceImplementation != null) {
+            installerSourceWebserviceImplementation.deleteObserver(this);
+            playOnLinuxBackgroundServicesManager.unregister(installerSourceWebserviceImplementation);
+        }
+        installerSourceWebserviceImplementation = new InstallerSourceWebserviceImplementation(webserviceUrl);
+        installerSourceWebserviceImplementation.addObserver(this);
+        playOnLinuxBackgroundServicesManager.register(installerSourceWebserviceImplementation);
+    }
+
+
+
 
     @Override
     public void shutdown() {
@@ -185,12 +163,13 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     }
 
     @Override
-    public void start() throws BackgroundServiceInitializationException {
+    public void start() throws ServiceInitializationException {
         try {
             webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
         } catch (MalformedURLException e) {
-            throw new BackgroundServiceInitializationException(e);
+            throw new ServiceInitializationException(e);
         }
         this.refresh();
     }
+
 }

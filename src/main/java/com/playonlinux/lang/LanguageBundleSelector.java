@@ -18,12 +18,13 @@
 
 package com.playonlinux.lang;
 
+import org.fedorahosted.tennera.jgettext.PoParser;
+
 import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
-import org.fedorahosted.tennera.jgettext.PoParser;
 
 public class LanguageBundleSelector {
     /**

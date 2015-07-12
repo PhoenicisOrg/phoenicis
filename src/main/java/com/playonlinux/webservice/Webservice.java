@@ -22,16 +22,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.services.BackgroundService;
+import com.playonlinux.services.manager.Service;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
-abstract public class Webservice<T extends AbstractDTO> extends Observable implements BackgroundService {
+abstract public class Webservice<T extends AbstractDTO>
+        extends AbstractObservableImplementation<DownloadEnvelope> implements Service {
     private final URL url;
     private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
@@ -46,7 +47,6 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
         try {
             updateSemaphore.acquire();
             this.state = ProgressStateDTO.State.PROGRESSING;
-            this.setChanged();
             this.update();
 
             try {
@@ -81,7 +81,6 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
         envelopeDTO.setDownloadState(progressStateDTO);
         envelopeDTO.setEnvelopeContent(items);
 
-        this.setChanged();
         this.notifyObservers(envelopeDTO);
     }
 

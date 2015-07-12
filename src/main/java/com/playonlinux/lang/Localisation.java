@@ -19,7 +19,6 @@
 package com.playonlinux.lang;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.ReplacableProperties;

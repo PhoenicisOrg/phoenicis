@@ -22,9 +22,8 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.messages.RunnableWithParameter;
-import com.playonlinux.services.BackgroundService;
-import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.ui.api.CommandInterpreter;
+import com.playonlinux.services.manager.Service;
+import com.playonlinux.services.manager.ServiceManager;
 import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
 
@@ -33,12 +32,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 @Scan
-public class JythonCommandInterpreter implements CommandInterpreter, BackgroundService {
+public class JythonCommandInterpreter implements CommandInterpreter, Service {
     @Inject
     private static InterpreterFactory jythonInterpreterFactory;
 
     @Inject
-    private static BackgroundServiceManager backgroundServiceManager;
+    private static ServiceManager serviceManager;
 
     private InteractiveInterpreter interactiveInterpreter;
     private final StringWriter returnBuffer;
@@ -100,7 +99,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, BackgroundS
 
     @Override
     public void close() {
-        backgroundServiceManager.unregister(this);
+        serviceManager.unregister(this);
     }
 
     @Override

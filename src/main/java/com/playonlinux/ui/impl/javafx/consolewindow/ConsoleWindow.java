@@ -21,8 +21,8 @@ package com.playonlinux.ui.impl.javafx.consolewindow;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.python.CommandInterpreter;
 import com.playonlinux.python.CommandInterpreterException;
-import com.playonlinux.ui.api.CommandInterpreter;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
@@ -36,7 +36,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
-
 
 import static com.playonlinux.lang.Localisation.translate;
 

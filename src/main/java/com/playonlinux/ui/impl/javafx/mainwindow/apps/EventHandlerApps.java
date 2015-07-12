@@ -19,13 +19,13 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsWindowDTO;
 import com.playonlinux.events.EventDispatcher;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.utils.filter.Filterable;
 
 
 @Scan
@@ -38,7 +38,7 @@ final class EventHandlerApps implements UIEventHandler {
         return mainEventDispatcher;
     }
 
-    public Filterable<AppsItemDTO> getRemoteAvailableInstallers() throws PlayOnLinuxException {
+    public EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers() {
         return mainEventDispatcher.getRemoteAvailableInstallers();
     }
 

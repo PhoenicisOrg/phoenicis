@@ -19,27 +19,27 @@
 package com.playonlinux.services.virtualdrives;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.services.AutoStartedBackgroundService;
-import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.utils.ObservableDirectoryFiles;
+import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.ObservableDirectoryFiles;
+import com.playonlinux.utils.observer.Observer;
 
 import java.io.File;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Observable;
-import java.util.Observer;
 
 @Scan
-public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable implements InstalledVirtualDrives, Observer {
+public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends AbstractObservableImplementation
+        implements InstalledVirtualDrives, Observer<ObservableDirectoryFiles, File[]> {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private Iterator<VirtualDriveDTO> virtualdrivesDTOInterator;
 
@@ -62,23 +62,22 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
     }
 
     @Override
-    public void update(Observable o, Object directoryContent) {
-        File[] directoryContentCasted = (File[]) directoryContent;
+    public void update(ObservableDirectoryFiles observable, File[] directoryContent) {
         virtualdrivesDTOInterator = new Iterator<VirtualDriveDTO>() {
             volatile int i = 0;
 
             @Override
             public boolean hasNext() {
-                return (directoryContentCasted.length > i);
+                return (directoryContent.length > i);
             }
 
             @Override
             public VirtualDriveDTO next() {
-                if(i >= directoryContentCasted.length) {
+                if(i >= directoryContent.length) {
                     throw new NoSuchElementException();
                 }
                 VirtualDrive virtualDrive =
-                        new VirtualDrive(directoryContentCasted[i]);
+                        new VirtualDrive(directoryContent[i]);
                 i++;
                 return new VirtualDriveDTO.Builder()
                         .withName(virtualDrive.getName())
@@ -87,7 +86,6 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
             }
         };
 
-        this.setChanged();
         this.notifyObservers();
     }
 
@@ -95,4 +93,5 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
     public Iterator<VirtualDriveDTO> iterator() {
         return virtualdrivesDTOInterator;
     }
+
 }

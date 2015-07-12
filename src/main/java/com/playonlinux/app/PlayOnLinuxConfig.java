@@ -18,28 +18,28 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
 import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.Bean;
+import com.playonlinux.installer.InstallerSource;
+import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
+import com.playonlinux.installer.ScriptFactory;
+import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
+import com.playonlinux.lang.LanguageBundle;
+import com.playonlinux.lang.LanguageBundleSelector;
 import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonCommandInterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
-import com.playonlinux.services.BackgroundServiceInitializationException;
-import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.services.manager.PlayOnLinuxServicesManager;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.ui.Controller;
-import com.playonlinux.installer.InstallerSource;
-import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
-import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
-import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
-import com.playonlinux.lang.LanguageBundle;
-import com.playonlinux.lang.LanguageBundleSelector;
-import com.playonlinux.injection.Bean;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 import com.playonlinux.webservice.DownloadManager;
 import com.playonlinux.wine.versions.WineVersionSource;
 import com.playonlinux.wine.versions.WineversionsSourceWebserviceImplementation;
@@ -56,7 +56,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     private boolean useCliInterface = false;
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
-    private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
+    private ServiceManager playOnLinuxServiceManager = new PlayOnLinuxServicesManager();
     private boolean useGTKInterface;
     private ExecutorService executor = Executors.newCachedThreadPool();
 
@@ -92,8 +92,8 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     @Bean
-    public BackgroundServiceManager playOnLinuxBackgroundServicesManager() {
-        return playOnLinuxBackgroundServiceManager;
+    public ServiceManager playOnLinuxBackgroundServicesManager() {
+        return playOnLinuxServiceManager;
     }
 
     @Bean
@@ -102,9 +102,9 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     @Bean
-    public DownloadManager downloadManager() throws BackgroundServiceInitializationException {
+    public DownloadManager downloadManager() throws ServiceInitializationException {
         DownloadManager downloadManager = new DownloadManager();
-        playOnLinuxBackgroundServiceManager.register(downloadManager);
+        playOnLinuxServiceManager.register(downloadManager);
         return downloadManager;
     }
 

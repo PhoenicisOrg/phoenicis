@@ -19,8 +19,10 @@
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
 import com.playonlinux.messages.CancelerMessage;
-import org.gnome.gtk.*;
-
+import org.gnome.gtk.Button;
+import org.gnome.gtk.Fixed;
+import org.gnome.gtk.Widget;
+import org.gnome.gtk.Window;
 
 import java.net.URL;
 

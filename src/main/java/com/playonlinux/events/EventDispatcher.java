@@ -19,19 +19,15 @@
 package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.dto.web.ApplicationDTO;
-import com.playonlinux.services.installedapplications.InstalledApplications;
-import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
-import com.playonlinux.utils.filter.Filterable;
-import javafx.application.Application;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.Observable;
 
 /**
  * Call version models from the UI
@@ -49,11 +45,11 @@ public interface EventDispatcher {
      * @return installed applications observable
      * @throws PlayOnLinuxException
      */
-    Filterable<InstalledApplicationDTO> getInstalledApplications() throws PlayOnLinuxException;
+    EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications();
 
     Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
 
-    Filterable<AppsItemDTO> getRemoteAvailableInstallers() throws PlayOnLinuxException;
+    EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers();
 
     void onApplicationStarted() throws MalformedURLException;
 

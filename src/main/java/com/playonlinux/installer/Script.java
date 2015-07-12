@@ -18,29 +18,27 @@
 
 package com.playonlinux.installer;
 
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.python.InterpreterFactory;
+import com.playonlinux.services.manager.Service;
+import com.playonlinux.services.manager.ServiceManager;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
+import org.python.core.PyException;
+import org.python.util.PythonInterpreter;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.python.InterpreterFactory;
-import com.playonlinux.python.JythonInterpreterFactory;
-import com.playonlinux.services.BackgroundServiceManager;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
-import org.python.core.PyException;
-
-import com.playonlinux.framework.ScriptFailureException;
-import com.playonlinux.services.BackgroundService;
-import org.python.util.PythonInterpreter;
-
 @Scan
-public abstract class Script implements BackgroundService {
+public abstract class Script implements Service {
     @Inject
-    private static BackgroundServiceManager backgroundServiceManager;
+    private static ServiceManager serviceManager;
 
     @Inject
     private static InterpreterFactory jythonInterpreterFactory;
@@ -106,7 +104,7 @@ public abstract class Script implements BackgroundService {
                     LOGGER.info("Cleaning up");
                     pythonInterpreter.cleanup();
                     jythonInterpreterFactory.close(pythonInterpreter);
-                    backgroundServiceManager.unregister(Script.this);
+                    serviceManager.unregister(Script.this);
                 }
             } catch(PlayOnLinuxException e) {
                 LOGGER.error("Cannot create interpreter", e);

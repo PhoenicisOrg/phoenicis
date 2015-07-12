@@ -20,19 +20,16 @@ package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.ui.impl.javafx.widget.SimpleIconListWidget;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
 
-import java.util.Observable;
-import java.util.Observer;
-
-
-public class VirtualDrivesWidget extends SimpleIconListWidget implements Observer {
+public class VirtualDrivesWidget extends SimpleIconListWidget implements Observer<Observable, Iterable> {
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Iterable arg) {
         this.clear();
         Platform.runLater(() -> {
-            assert(o instanceof Iterable);
             Iterable<VirtualDriveDTO> virtualDrives = (Iterable<VirtualDriveDTO>) o;
             for (VirtualDriveDTO virtualDrive : virtualDrives) {
                 addItem(virtualDrive.getName(), virtualDrive.getIcon());

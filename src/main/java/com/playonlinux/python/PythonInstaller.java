@@ -18,11 +18,11 @@
 
 package com.playonlinux.python;
 
+import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.log.LogStream;
-import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.log.LogStreamFactory;
 import org.apache.log4j.Logger;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;

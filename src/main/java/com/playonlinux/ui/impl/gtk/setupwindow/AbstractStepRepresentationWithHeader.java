@@ -24,9 +24,7 @@ import org.gnome.gdk.Pixbuf;
 import org.gnome.gdk.RGBA;
 import org.gnome.gtk.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {

@@ -22,7 +22,6 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.messages.ParametrableRunnable;
 
 import java.net.MalformedURLException;
 import java.net.URL;

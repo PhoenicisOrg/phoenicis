@@ -18,16 +18,17 @@
 
 package com.playonlinux.framework;
 
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.CancelException;
 import com.playonlinux.log.LogStream;
 import com.playonlinux.log.LogStreamFactory;
+import com.playonlinux.messages.*;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.ui.UIMessageSender;
-import com.playonlinux.messages.*;
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,8 +36,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 import static com.playonlinux.lang.Localisation.translate;
 

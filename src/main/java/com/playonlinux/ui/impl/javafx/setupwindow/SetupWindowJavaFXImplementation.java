@@ -18,20 +18,18 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.ui.ProgressControl;
-import com.playonlinux.ui.SetupWindow;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchronousMessage;
-import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.ui.ProgressControl;
+import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.utils.OperatingSystem;
-
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import org.apache.log4j.Logger;
 
 import java.io.File;

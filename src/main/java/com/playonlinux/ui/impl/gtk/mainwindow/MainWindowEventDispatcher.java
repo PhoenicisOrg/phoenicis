@@ -2,15 +2,14 @@ package com.playonlinux.ui.impl.gtk.mainwindow;
 
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.events.EventDispatcher;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.events.EventDispatcher;
 import org.gnome.gtk.FileChooserAction;
 import org.gnome.gtk.FileChooserDialog;
 import org.gnome.gtk.Window;
 
 import java.io.File;
-import java.io.IOException;
 
 @Scan
 public class MainWindowEventDispatcher {

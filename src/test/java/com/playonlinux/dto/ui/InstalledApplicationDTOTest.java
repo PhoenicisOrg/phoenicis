@@ -18,7 +18,7 @@
 
 package com.playonlinux.dto.ui;
 
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import org.junit.Before;
 import org.junit.Test;
 

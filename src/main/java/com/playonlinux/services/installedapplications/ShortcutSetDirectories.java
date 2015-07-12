@@ -22,8 +22,9 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerException;
 import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.utils.ObservableDirectoryFiles;
-
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.ObservableDirectoryFiles;
+import com.playonlinux.utils.observer.Observer;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -31,11 +32,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 @Scan
-class ShortcutSetDirectories extends Observable implements Observer {
+class ShortcutSetDirectories
+        extends AbstractObservableImplementation
+        implements Observer<ObservableDirectoryFiles, File[]> {
     
     @Inject
     private static ScriptFactory scriptFactory;
@@ -74,10 +75,10 @@ class ShortcutSetDirectories extends Observable implements Observer {
     }
 
     @Override
-    public synchronized void update(Observable o, Object arg) {
-        if(o == shortcutDirectory) {
+    public void update(ObservableDirectoryFiles observableDirectoryFiles, File[] argument) {
+        if(observableDirectoryFiles == shortcutDirectory) {
             getShortcuts().clear();
-            for (File shortcutFile : (File[]) arg) {
+            for (File shortcutFile : (File[]) argument) {
                 try {
                     URL iconURL;
                     File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
@@ -104,7 +105,8 @@ class ShortcutSetDirectories extends Observable implements Observer {
                 }
             }
         }
-        this.setChanged();
         this.notifyObservers(getShortcuts());
     }
+
+
 }

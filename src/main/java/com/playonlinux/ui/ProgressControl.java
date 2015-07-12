@@ -18,12 +18,14 @@
 
 package com.playonlinux.ui;
 
-import java.util.Observer;
+import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 
 /**
  * Represents a progress control
  */
-public interface ProgressControl extends Observer {
+public interface ProgressControl extends Observer<Observable, ProgressStateDTO> {
     void setProgressPercentage(double value);
 
     void setText(String text);

@@ -20,9 +20,8 @@ package com.playonlinux.log;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.log.LogStream;
-import com.playonlinux.services.BackgroundService;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.Service;
+import com.playonlinux.services.manager.ServiceManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,9 +29,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @Scan
-public class ProcessLogger implements BackgroundService {
+public class ProcessLogger implements Service {
     @Inject
-    private static BackgroundServiceManager backgroundServiceManager;
+    private static ServiceManager serviceManager;
 
     private final Process process;
     private final LogStream logContext;
@@ -83,6 +82,6 @@ public class ProcessLogger implements BackgroundService {
     }
 
     private void stop() {
-        backgroundServiceManager.unregister(this);
+        serviceManager.unregister(this);
     }
 }
