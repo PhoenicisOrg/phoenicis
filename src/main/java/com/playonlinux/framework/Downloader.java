@@ -73,7 +73,7 @@ public class Downloader {
 
         this.defineProgressStep(remoteFile);
 
-        HTTPDownloader downloader = new HTTPDownloader(remoteFile);
+        final HTTPDownloader downloader = new HTTPDownloader(remoteFile);
         try {
             downloader.addObserver(progressStep);
             downloader.get(localFile);

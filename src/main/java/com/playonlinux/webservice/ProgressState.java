@@ -18,9 +18,7 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.dto.AbstractDTO;
-
-public class ProgressState implements AbstractDTO {
+public class ProgressState {
     private final State state;
     private final double percent;
 

@@ -18,9 +18,7 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.dto.AbstractDTO;
-
-public class DownloadEnvelope<ENVELOPE_CONTENT_TYPE> implements AbstractDTO {
+public class DownloadEnvelope<ENVELOPE_CONTENT_TYPE> {
 
     ENVELOPE_CONTENT_TYPE envelopeContent;
     ProgressState downloadState;
