@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
-import com.playonlinux.services.InstalledVirtualDrives;
+import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import javafx.scene.Scene;
@@ -69,6 +69,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
     }
 
     public void setUpEvents() throws PlayOnLinuxException {
+        /*
         InstalledVirtualDrives installedVirtualDrives = getEventHandler().getInstalledVirtualDrives();
         installedVirtualDrives.addObserver(this.installedVirtualDrivesWidget);
 
@@ -76,6 +77,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
             installedVirtualDrives.deleteObserver(this.installedVirtualDrivesWidget);
             instance = null;
         });
+        */
     }
 
     public ConfigureWindowEventHandler getEventHandler() {

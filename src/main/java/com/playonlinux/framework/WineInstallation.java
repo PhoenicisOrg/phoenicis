@@ -20,7 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.domain.Version;
+import com.playonlinux.version.Version;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.ScriptClass;

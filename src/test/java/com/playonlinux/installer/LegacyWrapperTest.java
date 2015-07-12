@@ -16,14 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.installer;
 
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.InjectionException;
-import com.playonlinux.installer.Script;
-import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 
 import org.junit.Before;
 import org.junit.Test;

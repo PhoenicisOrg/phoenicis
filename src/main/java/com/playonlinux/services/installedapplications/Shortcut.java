@@ -16,14 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.installer.Script;
 
 import java.io.File;
 import java.net.URL;
 
-public class Shortcut {
+class Shortcut {
 
     private final String shortcutName;
     private final URL iconPath;

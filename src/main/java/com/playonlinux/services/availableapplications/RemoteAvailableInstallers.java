@@ -16,15 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.availableapplications;
 
+import com.playonlinux.services.BackgroundService;
+import com.playonlinux.services.RemoteService;
 import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.AppsItemDTO;
 
+import java.util.List;
 import java.util.Observer;
 
-public interface InstalledApplications
-        extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO>, BackgroundService, Observer {
-
-    void addObserver(Observer o);
+/**
+ * Represents a service allowing to access to available installers
+ */
+public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService, Observer, BackgroundService {
+    List<CenterCategoryDTO> getCategories();
 }

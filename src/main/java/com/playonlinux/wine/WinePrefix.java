@@ -19,14 +19,13 @@
 package com.playonlinux.wine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playonlinux.domain.Version;
+import com.playonlinux.version.Version;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;

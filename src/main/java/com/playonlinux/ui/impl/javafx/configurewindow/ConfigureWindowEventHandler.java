@@ -18,8 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
+import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.events.EventDispatcher;
-import com.playonlinux.services.InstalledVirtualDrives;
+import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -30,7 +31,7 @@ public class ConfigureWindowEventHandler implements UIEventHandler {
     @Inject
     static EventDispatcher mainEventDispatcher;
 
-    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException {
+    public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
         return mainEventDispatcher.getInstalledVirtualDrives();
     }
 

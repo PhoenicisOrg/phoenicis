@@ -19,8 +19,7 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.services.BackgroundServiceException;
-import com.playonlinux.services.RemoteAvailableInstallers;
+import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.utils.filter.CenterItemFilter;

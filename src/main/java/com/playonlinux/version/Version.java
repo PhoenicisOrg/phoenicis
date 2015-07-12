@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
- * Represent a version
+ * Represents a version
  */
 public class Version {
 
@@ -36,7 +36,7 @@ public class Version {
         intermediateNumber = Integer.valueOf(splitVersionAsString[1]);
         lowNumber = Integer.valueOf(splitVersionAsString[2]);
     }
-    
+
     public int getBigNumber() {
         return bigNumber;
     }
