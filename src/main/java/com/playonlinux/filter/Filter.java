@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2015 Markus Ebner
- *
+ * Copyright (C) 2015 PÂRIS Quentin
+
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,20 +17,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.collections;
+package com.playonlinux.filter;
 
-import com.playonlinux.utils.observer.Observable;
-
-import java.util.Collection;
-import java.util.List;
 
 
 /**
- * Defines how a list which can be observed for changes should look and behave like.
+ * Defines how a list (used in filterables) should look and behave like.
  *
- * @param <T>
+ * @param <T> Type of the item stored within the filterable list.
  */
-public interface ObservableList<T> extends Iterable<T>, List<T>, Observable {
+public interface Filter<T> {
 
-    void swapContents(Collection<T> newContent);
+    /**
+     * Test the given item against the list rules defined within this list.
+     *
+     * @param item Item to test against the list rules.
+     * @return {@code true} if the given item matches the list rules, {@code false} otherwise.
+     */
+    boolean apply(T item);
+
 }

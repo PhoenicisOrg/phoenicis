@@ -22,29 +22,29 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.filter.Filter;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.AutoStartedService;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.utils.ObservableDirectoryFiles;
-import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.utils.observer.*;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.Observer;
 
 import java.io.File;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
 public final class InstalledApplicationsPlayOnLinuxImplementation
         extends AbstractObservableImplementation<LibraryWindowDTO>
         implements Observer<ShortcutSetDirectories, List<Shortcut>>,
-                   Filterable<InstalledApplicationDTO>,
                    EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> {
+
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 

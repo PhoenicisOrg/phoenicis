@@ -28,7 +28,6 @@ import com.playonlinux.python.CommandInterpreterException;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.impl.javafx.consolewindow.ConsoleWindow;
-import com.playonlinux.utils.filter.Filterable;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 

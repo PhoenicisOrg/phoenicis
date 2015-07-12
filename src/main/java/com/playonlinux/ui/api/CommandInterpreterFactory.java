@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.python.CommandInterpreterException;
 import com.playonlinux.python.CommandInterpreter;
+import com.playonlinux.python.CommandInterpreterException;
 
 public interface CommandInterpreterFactory {
     CommandInterpreter createInstance() throws CommandInterpreterException;

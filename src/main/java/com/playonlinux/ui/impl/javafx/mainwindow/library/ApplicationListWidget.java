@@ -19,19 +19,16 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.utils.filter.InstalledApplicationFilter;
-import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.utils.observer.Observer;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.List;

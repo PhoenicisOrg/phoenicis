@@ -19,16 +19,16 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.filter.CenterItemFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
-import com.playonlinux.utils.filter.CenterItemFilter;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;

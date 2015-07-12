@@ -19,13 +19,11 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.apps.AppsItemDTO;
-import com.playonlinux.dto.ui.apps.AppsWindowDTO;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.filter.InstalledApplicationFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
-import com.playonlinux.utils.filter.InstalledApplicationFilter;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
@@ -33,7 +31,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;

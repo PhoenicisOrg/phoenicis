@@ -22,8 +22,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerException;
 import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.utils.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.Observer;
 import org.apache.log4j.Logger;
 

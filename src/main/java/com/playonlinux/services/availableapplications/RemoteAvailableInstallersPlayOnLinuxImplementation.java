@@ -19,7 +19,7 @@
 package com.playonlinux.services.availableapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.dto.ui.*;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsItemScriptDTO;
@@ -27,6 +27,7 @@ import com.playonlinux.dto.ui.apps.AppsWindowDTO;
 import com.playonlinux.dto.web.ApplicationDTO;
 import com.playonlinux.dto.web.CategoryDTO;
 import com.playonlinux.dto.web.ScriptDTO;
+import com.playonlinux.filter.Filter;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerSource;
@@ -35,8 +36,6 @@ import com.playonlinux.services.manager.AutoStartedService;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.utils.filter.Filterable;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import com.playonlinux.utils.observer.Observer;
 import com.playonlinux.webservice.DownloadEnvelope;
@@ -54,7 +53,6 @@ import static com.playonlinux.dto.ui.apps.AppsItemDTO.Builder;
 public final class RemoteAvailableInstallersPlayOnLinuxImplementation
         extends AbstractObservableImplementation<AppsWindowDTO>
         implements Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
-                   Filterable<AppsItemDTO>,
                    EntitiesProvider<AppsItemDTO, AppsWindowDTO> {
 
     @Inject

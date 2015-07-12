@@ -20,9 +20,9 @@ package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsWindowDTO;
-import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.injection.Inject;
@@ -31,7 +31,6 @@ import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation;
 import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
-import com.playonlinux.services.manager.Service;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
 import com.playonlinux.ui.api.EntitiesProvider;

@@ -20,6 +20,7 @@ package com.playonlinux.utils;
 
 import com.google.common.io.Files;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.utils.observer.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.Observer;
 import org.junit.Rule;
 import org.junit.Test;

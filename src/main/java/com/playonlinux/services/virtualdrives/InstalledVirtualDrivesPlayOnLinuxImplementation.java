@@ -24,8 +24,8 @@ import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.utils.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.Observer;
 
 import java.io.File;

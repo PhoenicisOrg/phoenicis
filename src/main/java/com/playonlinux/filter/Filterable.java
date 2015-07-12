@@ -1,7 +1,6 @@
 /*
  * Copyright (C) 2015 Markus Ebner
- * Copyright (C) 2015 PÂRIS Quentin
-
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,23 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.filter;
-
+package com.playonlinux.filter;
 
 
 /**
- * Defines how a list (used in filterables) should look and behave like.
+ * Represents of the filterable
  *
- * @param <T> Type of the item stored within the filterable list.
+ * @param <T> Type held by the filter
  */
-public interface Filter<T> {
+public interface Filterable<T> {
 
     /**
-     * Test the given item against the list rules defined within this list.
-     *
-     * @param item Item to test against the list rules.
-     * @return {@code true} if the given item matches the list rules, {@code false} otherwise.
+     * Apply a filter
+     * @param filter to apply
      */
-    boolean apply(T item);
+    void applyFilter(Filter<T> filter);
 
 }

@@ -16,11 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils;
+package com.playonlinux.utils.observer;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.services.manager.Service;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;

@@ -15,13 +15,11 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.playonlinux.utils.filter;
+package com.playonlinux.filter;
 
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
-
-import java.net.URL;
 
 /**
  * Filter for installed applications in the MainWindow
