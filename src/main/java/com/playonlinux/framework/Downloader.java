@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.installer.ScriptClass;
 import com.playonlinux.utils.Checksum;
@@ -39,7 +39,7 @@ public class Downloader {
     String MD5_CHECKSUM = "md5";
 
     private SetupWizard setupWizard;
-    private ProgressStep progressStep;
+    private ProgressControl progressControl;
 
     private File downloadedFile;
 
@@ -54,13 +54,13 @@ public class Downloader {
         this.setupWizard = setupWizard;
     }
 
-    public Downloader(ProgressStep progressStep) {
-        this.progressStep = progressStep;
+    public Downloader(ProgressControl progressControl) {
+        this.progressControl = progressControl;
     }
 
     private void defineProgressStep(URL remoteFile) throws CancelException {
-        if(this.progressStep == null) {
-            this.progressStep = this.setupWizard.progressBar(
+        if(this.progressControl == null) {
+            this.progressControl = this.setupWizard.progressBar(
                     translate("Please wait while ${application.name} is downloading:") + "\n" +
                     this.findFileNameFromURL(remoteFile)
             );
@@ -75,12 +75,12 @@ public class Downloader {
 
         final HTTPDownloader downloader = new HTTPDownloader(remoteFile);
         try {
-            downloader.addObserver(progressStep);
+            downloader.addObserver(progressControl);
             downloader.get(localFile);
         } catch (DownloadException e) {
             throw new ScriptFailureException("Unable to download the file", e);
         } finally {
-            downloader.deleteObserver(progressStep);
+            downloader.deleteObserver(progressControl);
         }
 
         downloadedFile = localFile;

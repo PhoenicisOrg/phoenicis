@@ -16,13 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.webservice;
+package com.playonlinux.dto.ui;
 
-public class ProgressState {
+import com.playonlinux.dto.AbstractDTO;
+
+/**
+ * Represent a progress state that will be sent to the UI.
+ * The UI will be able to represent this progress state (progressbar, etc...)
+ */
+public class ProgressStateDTO implements AbstractDTO {
     private final State state;
     private final double percent;
 
-    public ProgressState(Builder builder) {
+    public ProgressStateDTO(Builder builder) {
         this.state = builder.state;
         this.percent = builder.percent;
     }
@@ -51,7 +57,7 @@ public class ProgressState {
         private State state;
         private double percent;
 
-        public Builder(ProgressState other) {
+        public Builder(ProgressStateDTO other) {
             state = other.state;
             percent = other.percent;
         }
@@ -70,8 +76,8 @@ public class ProgressState {
             return this;
         }
 
-        public ProgressState build() {
-            return new ProgressState(this);
+        public ProgressStateDTO build() {
+            return new ProgressStateDTO(this);
         }
     }
 }

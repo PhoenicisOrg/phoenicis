@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.ui.ProgressStep;
-import com.playonlinux.webservice.ProgressState;
+import com.playonlinux.ui.ProgressControl;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.messages.AsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchronousMessage;
 import com.playonlinux.messages.Message;
@@ -29,7 +29,7 @@ import javafx.scene.text.Text;
 
 import java.util.Observable;
 
-public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressStep {
+public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressControl {
     ProgressBar progressBar = new ProgressBar();
     Text progressText = new Text("");
 
@@ -73,12 +73,6 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     }
 
     @Override
-    public double getProgressPercentage() {
-        return this.progressBar.getProgress() * 100;
-    }
-
-
-    @Override
     public void setText(String text) {
         UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
         messageSender.asynchronousSend(new AsynchroneousMessage() {
@@ -92,9 +86,9 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
 
     @Override
     public void update(Observable o, Object arg) {
-        assert arg instanceof ProgressState;
-        ProgressState progressState = (ProgressState) arg;
+        assert arg instanceof ProgressStateDTO;
+        ProgressStateDTO progressStateDTO = (ProgressStateDTO) arg;
 
-        this.setProgressPercentage(progressState.getPercent());
+        this.setProgressPercentage(progressStateDTO.getPercent());
     }
 }

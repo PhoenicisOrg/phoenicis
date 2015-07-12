@@ -18,10 +18,12 @@
 
 package com.playonlinux.webservice;
 
+import com.playonlinux.dto.ui.ProgressStateDTO;
+
 public class DownloadEnvelope<ENVELOPE_CONTENT_TYPE> {
 
     ENVELOPE_CONTENT_TYPE envelopeContent;
-    ProgressState downloadState;
+    ProgressStateDTO downloadState;
 
     public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
         return envelopeContent;
@@ -31,11 +33,11 @@ public class DownloadEnvelope<ENVELOPE_CONTENT_TYPE> {
         this.envelopeContent = envelopeContent;
     }
 
-    public ProgressState getDownloadState() {
+    public ProgressStateDTO getDownloadState() {
         return downloadState;
     }
 
-    public void setDownloadState(ProgressState downloadState) {
+    public void setDownloadState(ProgressStateDTO downloadState) {
         this.downloadState = downloadState;
     }
 }

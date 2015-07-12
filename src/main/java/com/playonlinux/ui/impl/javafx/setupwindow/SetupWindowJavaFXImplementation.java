@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
@@ -130,7 +130,7 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     }
 
     @Override
-    public ProgressStep showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
+    public ProgressControl showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
         StepRepresentationProgressBar stepProgressBar = new StepRepresentationProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
         return stepProgressBar;

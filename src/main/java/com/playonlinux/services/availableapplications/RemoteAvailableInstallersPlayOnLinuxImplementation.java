@@ -31,7 +31,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 import com.playonlinux.webservice.DownloadEnvelope;
-import com.playonlinux.webservice.ProgressState;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -99,12 +99,12 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     @Override
     public boolean isUpdating() {
-        return downloadEnvelopeDto.getDownloadState().getState() == ProgressState.State.PROGRESSING;
+        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
     }
 
     @Override
     public boolean hasFailed() {
-        return downloadEnvelopeDto.getDownloadState().getState() == ProgressState.State.FAILED;
+        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
     }
 
     @Override

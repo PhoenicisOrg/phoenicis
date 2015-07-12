@@ -22,7 +22,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchronousMessage;
-import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;
 import org.apache.commons.io.IOUtils;
@@ -123,7 +123,7 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     }
 
     @Override
-    public ProgressStep showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
+    public ProgressControl showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
         return null;
     }
 

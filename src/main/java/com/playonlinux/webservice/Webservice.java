@@ -21,6 +21,7 @@ package com.playonlinux.webservice;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.dto.AbstractDTO;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.services.BackgroundService;
 import org.apache.log4j.Logger;
 
@@ -32,7 +33,7 @@ import java.util.concurrent.Semaphore;
 
 abstract public class Webservice<T extends AbstractDTO> extends Observable implements BackgroundService {
     private final URL url;
-    private ProgressState.State state = ProgressState.State.READY;
+    private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
     private List<T> items;
@@ -44,7 +45,7 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
     public synchronized void populate() {
         try {
             updateSemaphore.acquire();
-            this.state = ProgressState.State.PROGRESSING;
+            this.state = ProgressStateDTO.State.PROGRESSING;
             this.setChanged();
             this.update();
 
@@ -53,13 +54,13 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
                 HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
                 String result = httpDownloader.get();
                 items = mapper.readValue(result, this.defineTypeReference());
-                this.state = ProgressState.State.SUCCESS;
+                this.state = ProgressStateDTO.State.SUCCESS;
             } catch(DownloadException e) {
                 LOGGER.warn(String.format("Error while downloading %s", url), e);
-                this.state = ProgressState.State.FAILED;
+                this.state = ProgressStateDTO.State.FAILED;
             } catch (IOException e) {
                 LOGGER.warn(String.format("IO error while downloading %s", url), e);
-                this.state = ProgressState.State.FAILED;
+                this.state = ProgressStateDTO.State.FAILED;
             } finally {
                 this.update();
             }
@@ -75,9 +76,9 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
 
     private synchronized void update() {
         DownloadEnvelope<List<T>> envelopeDTO = new DownloadEnvelope<>();
-        ProgressState progressState = new ProgressState.Builder().withState(state).build();
+        ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder().withState(state).build();
 
-        envelopeDTO.setDownloadState(progressState);
+        envelopeDTO.setDownloadState(progressStateDTO);
         envelopeDTO.setEnvelopeContent(items);
 
         this.setChanged();
