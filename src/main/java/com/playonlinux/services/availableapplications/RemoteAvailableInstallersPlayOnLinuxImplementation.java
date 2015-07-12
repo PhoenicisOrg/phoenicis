@@ -57,26 +57,11 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     private List<AppsItemDTO> cache = null;
 
-    @Override
-    public Iterator<AppsItemDTO> iterator() {
-        updateCache();
-        return cache.iterator();
-    }
+
 
     @Override
     public void addObserver(Observer o) {
         super.addObserver(o);
-    }
-
-    @Override
-    public int size() {
-        updateCache();
-        return cache.size();
-    }
-
-    @Override
-    public AppsItemDTO[] toArray() {
-        return cache.toArray(new AppsItemDTO[cache.size()]);
     }
 
     @Override
@@ -111,8 +96,9 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     @Override
     public List<AppsItemDTO> getFiltered(Filter<AppsItemDTO> filter) {
+        updateCache();
         List<AppsItemDTO> filtered = new ArrayList<>();
-        for(AppsItemDTO item : this){
+        for(AppsItemDTO item : this.cache){
             if(filter.apply(item)){
                 filtered.add(item);
             }

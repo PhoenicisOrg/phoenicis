@@ -90,16 +90,6 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
         return installedApplications.stream().filter(filter::apply).collect(Collectors.toList());
     }
 
-    @Override
-    public int size() {
-        updateCache();
-        return cache.size();
-    }
-
-    @Override
-    public InstalledApplicationDTO[] toArray() {
-        return cache.toArray(new InstalledApplicationDTO[cache.size()]);
-    }
 
     private void updateCache() {
         if(cache == null) {

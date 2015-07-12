@@ -18,16 +18,15 @@
 
 package com.playonlinux.utils.filter;
 
-import com.playonlinux.collections.ObservableList;
-
 import java.util.List;
+import java.util.Observer;
 
 /**
  * Defines how a filterable list of items should look and behave like.
  *
  * @param <T> Type of the item stored within this filterable list.
  */
-public interface Filterable<T> extends ObservableList<T> {
+public interface Filterable<T> {
 
     /**
      * Get an iterable with the items of this filterable that match the given list.
@@ -37,4 +36,5 @@ public interface Filterable<T> extends ObservableList<T> {
      */
     List<T> getFiltered(Filter<T> filter);
 
+    void addObserver(Observer observer);
 }

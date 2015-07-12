@@ -28,7 +28,7 @@ import java.util.*;
  *
  * @param <T> The type of the items within the list.
  */
-public class FilterPromise<T> extends Observable implements Filterable<T>, Observer {
+public class FilterPromise<T> extends Observable implements Filterable<T>, Observer, Iterable<T> {
 
     private Filterable<T> source;
     private Filter<T> filter;
@@ -55,18 +55,6 @@ public class FilterPromise<T> extends Observable implements Filterable<T>, Obser
     public Iterator<T> iterator() {
         updateCache();
         return cache.iterator();
-    }
-
-    @Override
-    public int size() {
-        updateCache();
-        return cache.size();
-    }
-
-    @Override
-    public T[] toArray() {
-        updateCache();
-        return (T[]) cache.toArray();
     }
 
     @Override
