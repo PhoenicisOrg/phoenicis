@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 import java.util.Observable;
 
 /**
- * Call domain models from the UI
+ * Call version models from the UI
  */
 public interface EventDispatcher {
     /**

@@ -18,7 +18,7 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.domain.Version;
+import com.playonlinux.version.Version;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.utils.ReplacableProperties;
 import com.playonlinux.wine.WineDistribution;

@@ -18,7 +18,7 @@
 
 package com.playonlinux.wine;
 
-import com.playonlinux.domain.Version;
+import com.playonlinux.version.Version;
 
 import java.io.File;
 import java.io.IOException;
