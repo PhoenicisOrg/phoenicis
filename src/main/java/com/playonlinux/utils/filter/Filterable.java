@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils.filter;
 
-import com.playonlinux.utils.list.ObservableList;
+import com.playonlinux.collections.ObservableList;
 
 import java.util.List;
 

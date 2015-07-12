@@ -24,7 +24,7 @@ import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.utils.filter.CenterItemFilter;
 import com.playonlinux.utils.list.FilterPromise;
-import com.playonlinux.utils.list.ObservableArrayList;
+import com.playonlinux.collections.ObservableArrayList;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;

@@ -21,7 +21,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
-import com.playonlinux.utils.list.ObservableList;
+import com.playonlinux.collections.ObservableList;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;

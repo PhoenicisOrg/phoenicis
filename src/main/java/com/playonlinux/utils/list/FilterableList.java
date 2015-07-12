@@ -18,6 +18,7 @@
 
 package com.playonlinux.utils.list;
 
+import com.playonlinux.collections.ObservableArrayList;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.utils.filter.Filterable;
 

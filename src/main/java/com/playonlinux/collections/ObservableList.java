@@ -16,8 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.list;
+package com.playonlinux.collections;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Observer;
 
 /**
@@ -25,19 +27,11 @@ import java.util.Observer;
  *
  * @param <T>
  */
-public interface ObservableList<T> extends Iterable<T> {
+public interface ObservableList<T> extends Iterable<T>, List<T> {
 
     void addObserver(Observer o);
 
     void deleteObserver(Observer o);
 
-    int size();
-
-    /**
-     * Get an array containing all items within this observable list.
-     *
-     * @return An array of items contained within the list.
-     */
-    T[] toArray();
-
+    void swapContents(Collection<T> newContent);
 }

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.list;
+package com.playonlinux.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +54,7 @@ public class ObservableArrayList<T> extends Observable implements List<T>, Obser
         return list.iterator();
     }
 
+    @Override
     public void swapContents(Collection<T> newContent) {
         list.clear();
         list.addAll(newContent);
