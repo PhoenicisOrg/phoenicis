@@ -16,9 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.comparator;
-
-import com.playonlinux.domain.Version;
+package com.playonlinux.domain;
 
 import java.util.Comparator;
 

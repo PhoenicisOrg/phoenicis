@@ -22,7 +22,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
- * Represent a version
+ * Represents a version
  */
 public class Version {
 
@@ -36,7 +36,7 @@ public class Version {
         intermediateNumber = Integer.valueOf(splitVersionAsString[1]);
         lowNumber = Integer.valueOf(splitVersionAsString[2]);
     }
-    
+
     public int getBigNumber() {
         return bigNumber;
     }

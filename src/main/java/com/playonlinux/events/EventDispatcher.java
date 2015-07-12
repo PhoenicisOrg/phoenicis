@@ -19,23 +19,45 @@
 package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.dto.web.ApplicationDTO;
 import com.playonlinux.services.installedapplications.InstalledApplications;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
 import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
+import com.playonlinux.utils.filter.Filterable;
+import javafx.application.Application;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Observable;
 
+/**
+ * Call domain models from the UI
+ */
 public interface EventDispatcher {
+    /**
+     * Run a local script
+     * @param scriptToRun script to run
+     * @throws PlayOnLinuxException if any error occurs
+     */
     void runLocalScript(File scriptToRun) throws PlayOnLinuxException;
 
-    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
+    /**
+     * Get installed applications
+     * @return installed applications observable
+     * @throws PlayOnLinuxException
+     */
+    Filterable<InstalledApplicationDTO> getInstalledApplications() throws PlayOnLinuxException;
 
-    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
+    Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
 
-    RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException;
+    Filterable<AppsItemDTO> getRemoteAvailableInstallers() throws PlayOnLinuxException;
 
     void onApplicationStarted() throws MalformedURLException;
 
     void runApplication(String applicationName) throws PlayOnLinuxException;
+
+    void refreshAvailableInstallers() throws PlayOnLinuxException;
 }

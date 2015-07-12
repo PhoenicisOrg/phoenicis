@@ -19,6 +19,7 @@
 package com.playonlinux.utils.comparator;
 
 import com.playonlinux.domain.Version;
+import com.playonlinux.domain.VersionComparator;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -69,6 +69,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
     }
 
     public void setUpEvents() throws PlayOnLinuxException {
+        /*
         InstalledVirtualDrives installedVirtualDrives = getEventHandler().getInstalledVirtualDrives();
         installedVirtualDrives.addObserver(this.installedVirtualDrivesWidget);
 
@@ -76,6 +77,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
             installedVirtualDrives.deleteObserver(this.installedVirtualDrivesWidget);
             instance = null;
         });
+        */
     }
 
     public ConfigureWindowEventHandler getEventHandler() {

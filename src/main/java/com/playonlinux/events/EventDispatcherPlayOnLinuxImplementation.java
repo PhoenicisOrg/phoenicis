@@ -20,6 +20,10 @@ package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.dto.web.ApplicationDTO;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.injection.Inject;
@@ -32,10 +36,12 @@ import com.playonlinux.services.installedapplications.InstalledApplications;
 import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
+import com.playonlinux.utils.filter.Filterable;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Observable;
 
 @Scan
 public final class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
@@ -84,7 +90,7 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
     }
 
     @Override
-    public InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException {
+    public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
         if(virtualDrives == null) {
             virtualDrives = new InstalledVirtualDrivesPlayOnLinuxImplementation();
         }
@@ -103,6 +109,12 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
         return playOnLinuxBackgroundServicesManager.getBackgroundService(REMOTE_INSTALER_SERVICE_KEY
                 , RemoteAvailableInstallers.class);
     }
+
+    @Override
+    public void refreshAvailableInstallers() throws PlayOnLinuxException {
+        getRemoteAvailableInstallers().refresh();
+    }
+
 
     @Override
     public void onApplicationStarted() throws MalformedURLException {

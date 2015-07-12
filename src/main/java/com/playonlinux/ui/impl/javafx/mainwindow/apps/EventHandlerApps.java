@@ -25,6 +25,7 @@ import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
+import com.playonlinux.utils.filter.Filterable;
 
 
 @Scan
@@ -37,12 +38,12 @@ final class EventHandlerApps implements UIEventHandler {
         return mainEventDispatcher;
     }
 
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException {
+    public Filterable<AppsItemDTO> getRemoteAvailableInstallers() throws PlayOnLinuxException {
         return mainEventDispatcher.getRemoteAvailableInstallers();
     }
 
     public void updateAvailableInstallers() throws PlayOnLinuxException {
-        getRemoteAvailableInstallers().refresh();
+        mainEventDispatcher.refreshAvailableInstallers();
     }
 
     public void installApp(AppsItemDTO appsItemDTO, int scriptId) {

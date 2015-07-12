@@ -25,6 +25,9 @@ import com.playonlinux.utils.comparator.Nameable;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Represents an application
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApplicationDTO implements AbstractDTO, Nameable {
 
@@ -38,6 +41,7 @@ public class ApplicationDTO implements AbstractDTO, Nameable {
     public ApplicationDTO() {
         // Kept for the webservice
     }
+
     private ApplicationDTO(Builder builder) {
         id = builder.id;
         name = builder.name;
@@ -78,6 +82,9 @@ public class ApplicationDTO implements AbstractDTO, Nameable {
         }
     }
 
+    /**
+     * Build this DTO
+     */
     public static class Builder {
         private String name;
         private String description;

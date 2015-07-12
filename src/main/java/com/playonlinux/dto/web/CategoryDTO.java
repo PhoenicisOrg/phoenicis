@@ -23,6 +23,9 @@ import com.playonlinux.dto.AbstractDTO;
 
 import java.util.List;
 
+/**
+ * Represents a category of application
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryDTO implements AbstractDTO {
 
