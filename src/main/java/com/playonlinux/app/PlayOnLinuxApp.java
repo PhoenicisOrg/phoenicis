@@ -49,6 +49,8 @@ public class PlayOnLinuxApp {
             backgroundServiceManager.init();
 
             controller.startApplication();
+
+            backgroundServiceManager.shutdown();
         } catch (PlayOnLinuxException e) {
             System.out.println("Unable to load PlayOnLinux");
             e.printStackTrace();
