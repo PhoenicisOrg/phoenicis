@@ -19,12 +19,11 @@
 package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.services.InstalledApplications;
+import com.playonlinux.services.installedapplications.InstalledApplications;
 import com.playonlinux.services.InstalledVirtualDrives;
 import com.playonlinux.services.RemoteAvailableInstallers;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 
 public interface EventDispatcher {

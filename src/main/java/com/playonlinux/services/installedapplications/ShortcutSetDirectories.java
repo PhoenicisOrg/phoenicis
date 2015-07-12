@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -35,7 +35,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 @Scan
-public class ShortcutSet extends Observable implements Observer {
+class ShortcutSetDirectories extends Observable implements Observer {
     
     @Inject
     private static ScriptFactory scriptFactory;
@@ -46,10 +46,10 @@ public class ShortcutSet extends Observable implements Observer {
     private final URL defaultIcon;
     private List<Shortcut> shortcuts;
 
-    private static final Logger LOGGER = Logger.getLogger(ShortcutSet.class);
+    private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
 
-    public ShortcutSet(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
-                       File configFilesDirectory, URL defaultIcon) {
+    public ShortcutSetDirectories(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
+                                  File configFilesDirectory, URL defaultIcon) {
         this.shortcuts = new ArrayList<>();
         this.iconDirectory = iconDirectory;
         this.configFilesDirectory = configFilesDirectory;

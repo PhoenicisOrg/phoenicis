@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.events.EventDispatcher;
 import com.playonlinux.python.CommandInterpreterException;
-import com.playonlinux.services.InstalledApplications;
+import com.playonlinux.services.installedapplications.InstalledApplications;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -30,7 +30,6 @@ import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 
 import static com.playonlinux.lang.Localisation.translate;

@@ -16,11 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.domain.Shortcut;
-import com.playonlinux.domain.ShortcutSet;
+import com.playonlinux.services.BackgroundServiceInitializationException;
+import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -42,7 +42,7 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
-    private ShortcutSet shortcutSet;
+    private ShortcutSetDirectories shortcutSetDirectories;
     private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
     private List<InstalledApplicationDTO> cache;
     private List<InstalledApplicationDTO> installedApplications;
@@ -116,7 +116,7 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
 
     @Override
     public void shutdown() {
-        shortcutSet.deleteObserver(this);
+        shortcutSetDirectories.deleteObserver(this);
         deleteObservers();
     }
 
@@ -139,10 +139,10 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
         playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
         playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
 
-        shortcutSet = new ShortcutSet(shortcutDirectoryObservable, iconDirectoryObservable,
+        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
                 configFilesDirectory, defaultIcon);
 
 
-        shortcutSet.addObserver(this);
+        shortcutSetDirectories.addObserver(this);
     }
 }

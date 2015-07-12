@@ -26,16 +26,17 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
 import com.playonlinux.services.*;
+import com.playonlinux.services.installedapplications.InstalledApplications;
+import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 
 @Scan
 public final class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
     private static final String INSTALLED_APPLICATION_SERVICE_KEY =
-            "com.playonlinux.services.InstalledApplicationsPlayOnLinuxImplementation";
+            "com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation";
     private static final String REMOTE_INSTALER_SERVICE_KEY =
             "com.playonlinux.services.RemoteAvailableInstallersPlayOnLinuxImplementation";
 
