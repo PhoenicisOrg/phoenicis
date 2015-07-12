@@ -20,15 +20,20 @@ package com.playonlinux.utils.list;
 
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * An observable,filterable list whose source itself is a filterable list, accessed with the given filter.
  *
  * @param <T> The type of the items within the list.
  */
-public class FilterPromise<T> extends Observable implements Filterable<T>, Observer, Iterable<T> {
+public class FilterPromise<T> extends AbstractObservableImplementation implements Filterable<T>, Observer, Iterable<T> {
 
     private Filterable<T> source;
     private Filter<T> filter;
@@ -65,9 +70,8 @@ public class FilterPromise<T> extends Observable implements Filterable<T>, Obser
 
 
     @Override
-    public void update(Observable observable, Object o) {
+    public void update(Observable observable, Object argument) {
         cache = null;
-        this.setChanged();
         this.notifyObservers();
     }
 
@@ -76,5 +80,6 @@ public class FilterPromise<T> extends Observable implements Filterable<T>, Obser
             this.cache = new ArrayList<>(source.getFiltered(filter));
         }
     }
+
 
 }

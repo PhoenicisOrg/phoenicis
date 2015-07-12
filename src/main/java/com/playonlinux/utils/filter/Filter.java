@@ -18,18 +18,15 @@
 
 package com.playonlinux.utils.filter;
 
-import java.util.Observer;
+
+import com.playonlinux.utils.observer.Observable;
 
 /**
  * Defines how a list (used in filterables) should look and behave like.
  *
  * @param <T> Type of the item stored within the filterable list.
  */
-public interface Filter<T> {
-
-    void addObserver(Observer o);
-
-    void deleteObserver(Observer o);
+public interface Filter<T> extends Observable {
 
     /**
      * Start a filter-change transaction. While a transaction is running, the observers aren't notified.

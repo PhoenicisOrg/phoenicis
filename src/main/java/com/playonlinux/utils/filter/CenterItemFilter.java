@@ -19,14 +19,13 @@
 package com.playonlinux.utils.filter;
 
 import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.Observable;
 
 /**
  * Filter implementation for CenterItems
  */
-public class CenterItemFilter extends Observable implements Filter<AppsItemDTO> {
+public class CenterItemFilter extends AbstractObservableImplementation implements Filter<AppsItemDTO> {
 
     private boolean transaction = false;
 
@@ -122,7 +121,6 @@ public class CenterItemFilter extends Observable implements Filter<AppsItemDTO> 
 
     private void fireUpdate() {
         if(!transaction){
-            this.setChanged();
             this.notifyObservers();
         }
     }

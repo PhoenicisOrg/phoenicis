@@ -23,7 +23,7 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerException;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.utils.ObservableDirectoryFiles;
-
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import com.playonlinux.utils.observer.Observer;
 import org.apache.log4j.Logger;
 
@@ -32,10 +32,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 @Scan
-class ShortcutSetDirectories extends Observable implements Observer<ObservableDirectoryFiles, File[]> {
+class ShortcutSetDirectories extends AbstractObservableImplementation implements Observer<ObservableDirectoryFiles, File[]> {
     
     @Inject
     private static ScriptFactory scriptFactory;
@@ -104,7 +103,6 @@ class ShortcutSetDirectories extends Observable implements Observer<ObservableDi
                 }
             }
         }
-        this.setChanged();
         this.notifyObservers(getShortcuts());
     }
 

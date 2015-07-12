@@ -18,11 +18,10 @@
 
 package com.playonlinux.dto.ui;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.utils.comparator.Nameable;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppsItemScriptDTO implements AbstractDTO, Nameable {

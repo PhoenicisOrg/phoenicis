@@ -27,7 +27,6 @@ import javafx.stage.FileChooser;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 
 import static com.playonlinux.lang.Localisation.translate;
 

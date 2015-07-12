@@ -18,8 +18,8 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.log.LogStream;
 import com.playonlinux.installer.ScriptTemplate;
+import com.playonlinux.log.LogStream;
 import com.playonlinux.python.PythonAttribute;
 
 import java.io.IOException;

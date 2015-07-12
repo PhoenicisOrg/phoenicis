@@ -18,10 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.utils.filter.InstalledApplicationFilter;
 import com.playonlinux.utils.list.FilterPromise;
-import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -34,12 +36,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer {
+class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer<Observable, Object> {
 
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;

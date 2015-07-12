@@ -18,9 +18,9 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.installer.ScriptClass;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.utils.Checksum;
 import com.playonlinux.webservice.DownloadException;
 import com.playonlinux.webservice.HTTPDownloader;

@@ -19,25 +19,30 @@
 package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.AutoStartedService;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.ObservableDirectoryFiles;
+import com.playonlinux.utils.filter.Filter;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.Observable;
 
 import java.io.File;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
 public final class InstalledApplicationsPlayOnLinuxImplementation
-        extends Observable implements InstalledApplications {
+        extends AbstractObservableImplementation implements InstalledApplications {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -51,19 +56,19 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
 
 
     @Override
-    public synchronized void update(Observable o, Object arg) {
+    public void update(Observable observable, List arg) {
         shortcutDtoIterator = new Iterator<InstalledApplicationDTO>() {
             volatile int i = 0;
 
             @Override
             public boolean hasNext() {
-                assert(arg instanceof List);
+                assert(arg != null);
                 return ((List<Shortcut>) arg).size() > i;
             }
 
             @Override
             public InstalledApplicationDTO next() {
-                assert(arg instanceof List);
+                assert(arg != null);
                 List<Shortcut> shortcutList = ((List<Shortcut>) arg);
                 if(i >= shortcutList.size()) {
                     throw new NoSuchElementException();
@@ -78,7 +83,6 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
         };
 
         installedApplications = copyIterator(shortcutDtoIterator);
-        this.setChanged();
         this.notifyObservers();
     }
 
@@ -137,4 +141,5 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
 
         shortcutSetDirectories.addObserver(this);
     }
+
 }

@@ -18,18 +18,21 @@
 
 package com.playonlinux.services.availableapplications;
 
-import com.playonlinux.services.manager.Service;
-import com.playonlinux.services.RemoteService;
-import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.services.RemoteService;
+import com.playonlinux.services.manager.Service;
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
+import com.playonlinux.webservice.DownloadEnvelope;
 
 import java.util.List;
-import java.util.Observer;
 
 /**
  * Represents a service allowing to access to available installers
  */
-public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService, Observer, Service {
+public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService,
+        Observer<Observable, DownloadEnvelope>, Service {
     List<CenterCategoryDTO> getCategories();
 }

@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.gtk.setupwindow;
 
 import com.playonlinux.messages.CancelerMessage;
 import com.playonlinux.messages.CancelerSynchronousMessage;
-import org.gnome.gtk.*;
+import org.gnome.gtk.Label;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
     String textToShow;

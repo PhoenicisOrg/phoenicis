@@ -18,10 +18,10 @@
 
 package com.playonlinux.ui.impl.cli;
 
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.ui.UIMessageSender;
-import com.playonlinux.injection.Scan;
 
 @Scan
 public class ControllerCLIImplementation implements Controller {

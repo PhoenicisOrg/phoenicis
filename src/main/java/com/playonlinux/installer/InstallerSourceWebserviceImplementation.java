@@ -21,6 +21,7 @@ package com.playonlinux.installer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.playonlinux.dto.web.CategoryDTO;
 import com.playonlinux.webservice.Webservice;
+
 import java.net.URL;
 import java.util.List;
 

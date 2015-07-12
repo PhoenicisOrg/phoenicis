@@ -18,19 +18,16 @@
 
 package com.playonlinux.collections;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Observable;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+
+import java.util.*;
 
 /**
  * ArrayList that can be observed for changes.
  *
  * @param <T> Type of the items within this list.
  */
-public class ObservableArrayList<T> extends Observable implements List<T>, ObservableList<T> {
+public class ObservableArrayList<T> extends AbstractObservableImplementation implements List<T>, ObservableList<T> {
 
     private List<T> list = new ArrayList<>();
 
@@ -53,6 +50,7 @@ public class ObservableArrayList<T> extends Observable implements List<T>, Obser
     public Iterator<T> iterator() {
         return list.iterator();
     }
+
 
     @Override
     public void swapContents(Collection<T> newContent) {
@@ -187,7 +185,6 @@ public class ObservableArrayList<T> extends Observable implements List<T>, Obser
 
 
     private void fireUpdate() {
-        this.setChanged();
         this.notifyObservers();
     }
 

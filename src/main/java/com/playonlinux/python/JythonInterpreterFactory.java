@@ -26,7 +26,6 @@ import org.python.modules.zipimport.zipimport;
 import org.python.util.PythonInterpreter;
 
 import java.io.File;
-import java.util.concurrent.ExecutorService;
 
 public class JythonInterpreterFactory implements InterpreterFactory {
     private int numberOfInstances = 0;

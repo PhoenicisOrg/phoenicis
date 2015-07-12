@@ -18,16 +18,16 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
+import com.playonlinux.collections.ObservableList;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
-import com.playonlinux.collections.ObservableList;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import static com.playonlinux.lang.Localisation.translate;
 

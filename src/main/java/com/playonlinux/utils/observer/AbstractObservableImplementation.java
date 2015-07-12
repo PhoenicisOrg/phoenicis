@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractObservableImplementation<OBSERVER extends Observer, ARG>
+public abstract class AbstractObservableImplementation<ARG>
         implements Observable<ARG> {
     private final List<Observer> observers;
 

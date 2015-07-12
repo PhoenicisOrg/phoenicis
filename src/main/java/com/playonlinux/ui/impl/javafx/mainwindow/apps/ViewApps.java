@@ -19,26 +19,26 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.utils.filter.CenterItemFilter;
-import com.playonlinux.utils.list.FilterPromise;
 import com.playonlinux.collections.ObservableArrayList;
-import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
+import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
+import com.playonlinux.utils.filter.CenterItemFilter;
+import com.playonlinux.utils.list.FilterPromise;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-import java.util.Observable;
-import java.util.Observer;
 
 import static com.playonlinux.lang.Localisation.translate;
 

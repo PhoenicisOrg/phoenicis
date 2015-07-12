@@ -24,7 +24,6 @@ import com.playonlinux.ui.impl.javafx.JavaFXApplication;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.ui.impl.javafx.mainwindow.apps.ViewApps;
 import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
-
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;

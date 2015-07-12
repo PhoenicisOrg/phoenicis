@@ -18,20 +18,18 @@
 
 package com.playonlinux.collections;
 
+import com.playonlinux.utils.observer.Observable;
+
 import java.util.Collection;
 import java.util.List;
-import java.util.Observer;
+
 
 /**
  * Defines how a list which can be observed for changes should look and behave like.
  *
  * @param <T>
  */
-public interface ObservableList<T> extends Iterable<T>, List<T> {
-
-    void addObserver(Observer o);
-
-    void deleteObserver(Observer o);
+public interface ObservableList<T> extends Iterable<T>, List<T>, Observable {
 
     void swapContents(Collection<T> newContent);
 }

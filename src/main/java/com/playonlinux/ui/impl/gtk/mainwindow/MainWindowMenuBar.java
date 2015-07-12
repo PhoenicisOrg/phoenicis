@@ -4,8 +4,6 @@ import com.playonlinux.app.PlayOnLinuxException;
 import org.apache.log4j.Logger;
 import org.gnome.gtk.*;
 
-import java.io.IOException;
-
 import static com.playonlinux.lang.Localisation.translate;
 
 public class MainWindowMenuBar extends MenuBar {

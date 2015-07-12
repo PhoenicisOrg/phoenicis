@@ -18,15 +18,15 @@
 package com.playonlinux.utils.filter;
 
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
-import java.util.Observable;
 
 /**
  * Filter for installed applications in the MainWindow
  */
-public class InstalledApplicationFilter extends Observable implements Filter<InstalledApplicationDTO> {
+public class InstalledApplicationFilter extends AbstractObservableImplementation implements Filter<InstalledApplicationDTO> {
 
     private boolean transaction = false;
 
@@ -52,7 +52,6 @@ public class InstalledApplicationFilter extends Observable implements Filter<Ins
 
     private void fireUpdate() {
         if(!transaction){
-            this.setChanged();
             this.notifyObservers();
         }
     }

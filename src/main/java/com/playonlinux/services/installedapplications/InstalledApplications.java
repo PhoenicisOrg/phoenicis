@@ -18,14 +18,17 @@
 
 package com.playonlinux.services.installedapplications;
 
+import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.services.manager.Service;
 import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 
-import java.util.Observer;
+import java.util.List;
 
 public interface InstalledApplications
-        extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO>, Service, Observer {
+        extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO>, Service,
+        Observer<Observable, List> {
 
     void addObserver(Observer o);
 }

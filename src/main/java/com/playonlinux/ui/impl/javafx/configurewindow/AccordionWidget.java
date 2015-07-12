@@ -19,13 +19,14 @@
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 
 import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
+
 
 public class AccordionWidget extends Accordion implements Observer {
     AccordionPanel expandedPane;

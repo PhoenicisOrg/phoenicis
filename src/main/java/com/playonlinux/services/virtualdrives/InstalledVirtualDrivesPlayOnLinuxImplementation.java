@@ -19,21 +19,21 @@
 package com.playonlinux.services.virtualdrives;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.utils.ObservableDirectoryFiles;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import com.playonlinux.utils.observer.Observer;
 
 import java.io.File;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Observable;
 
 @Scan
-public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable
+public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends AbstractObservableImplementation
         implements InstalledVirtualDrives, Observer<ObservableDirectoryFiles, File[]> {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -86,7 +86,6 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
             }
         };
 
-        this.setChanged();
         this.notifyObservers();
     }
 

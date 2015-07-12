@@ -20,7 +20,6 @@ package com.playonlinux.installer;
 
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.injection.Inject;
-
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 

@@ -21,11 +21,10 @@ package com.playonlinux.events;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.installer.Script;
-import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-
+import com.playonlinux.installer.Script;
+import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.services.installedapplications.InstalledApplications;
 import com.playonlinux.services.manager.ServiceManager;

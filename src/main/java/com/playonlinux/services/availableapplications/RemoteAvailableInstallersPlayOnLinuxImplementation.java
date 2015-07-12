@@ -19,30 +19,36 @@
 package com.playonlinux.services.availableapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.dto.ui.AppsItemScriptDTO;
-import com.playonlinux.dto.web.*;
-import com.playonlinux.services.manager.AutoStartedService;
-import com.playonlinux.services.manager.ServiceInitializationException;
-import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.AppsItemScriptDTO;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.dto.web.ApplicationDTO;
+import com.playonlinux.dto.web.CategoryDTO;
+import com.playonlinux.dto.web.ScriptDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
+import com.playonlinux.services.manager.AutoStartedService;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
+import com.playonlinux.utils.filter.Filter;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.webservice.DownloadEnvelope;
-import com.playonlinux.dto.ui.ProgressStateDTO;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
 
 @Scan
 @AutoStartedService(name = "AvailableInstallersService")
-public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
+public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends AbstractObservableImplementation
         implements RemoteAvailableInstallers {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
@@ -58,16 +64,9 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     private List<AppsItemDTO> cache = null;
 
 
-
     @Override
-    public void addObserver(Observer o) {
-        super.addObserver(o);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        assert(arg instanceof DownloadEnvelope);
-        downloadEnvelope = (DownloadEnvelope<List<CategoryDTO>>) arg;
+    public void update(Observable observable, DownloadEnvelope argument) {
+        downloadEnvelope = (DownloadEnvelope<List<CategoryDTO>>) argument;
 
         try {
             if(downloadEnvelope.getEnvelopeContent() != null) {
@@ -77,7 +76,6 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
             }
         } finally {
             cache = null; //invalidate cache
-            this.setChanged();
             this.notifyObservers();
         }
 
@@ -179,4 +177,5 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
         }
         this.refresh();
     }
+
 }

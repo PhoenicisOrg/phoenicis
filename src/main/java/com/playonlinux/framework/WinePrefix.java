@@ -19,20 +19,20 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.version.Version;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.CancelException;
+import com.playonlinux.installer.ScriptClass;
 import com.playonlinux.log.ProcessLogger;
 import com.playonlinux.services.manager.ServiceException;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.ui.ProgressControl;
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.installer.ScriptClass;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.ObservableDirectorySize;
 import com.playonlinux.utils.OperatingSystem;
+import com.playonlinux.version.Version;
 import com.playonlinux.wine.WineDistribution;
 import com.playonlinux.wine.WineException;
 import org.apache.commons.io.FileUtils;

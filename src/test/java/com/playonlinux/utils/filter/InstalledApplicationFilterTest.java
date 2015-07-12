@@ -19,6 +19,8 @@
 package com.playonlinux.utils.filter;
 
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,8 +28,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;

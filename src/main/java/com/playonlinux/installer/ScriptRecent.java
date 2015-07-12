@@ -23,7 +23,9 @@ import com.playonlinux.python.PythonInstaller;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.text.ParseException;
 import java.util.concurrent.ExecutorService;
 

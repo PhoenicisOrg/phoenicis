@@ -18,8 +18,8 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.services.manager.Service;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.services.manager.Service;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.builder.ToStringBuilder;
 

@@ -31,7 +31,10 @@ import org.gnome.gtk.Fixed;
 import org.gnome.gtk.Window;
 import org.gnome.gtk.WindowPosition;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;

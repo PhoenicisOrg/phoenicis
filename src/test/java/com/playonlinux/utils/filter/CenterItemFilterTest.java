@@ -19,6 +19,8 @@
 package com.playonlinux.utils.filter;
 
 import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -26,8 +28,6 @@ import org.mockito.Mockito;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertEquals;
@@ -117,7 +117,7 @@ public class CenterItemFilterTest {
         }
 
         @Override
-        public void update(Observable observable, Object o) {
+        public void update(Observable observable, Object argument) {
             filteredAppsItemDTOs = appsItemDTOs.stream().filter(filter::apply).collect(Collectors.toList());
         }
 
@@ -136,5 +136,6 @@ public class CenterItemFilterTest {
         public List<AppsItemDTO> getFilteredCenterItems() {
             return this.filteredAppsItemDTOs;
         }
+
     }
 }

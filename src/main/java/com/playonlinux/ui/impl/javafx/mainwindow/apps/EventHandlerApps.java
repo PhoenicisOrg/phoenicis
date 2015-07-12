@@ -21,7 +21,6 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.events.EventDispatcher;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;

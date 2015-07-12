@@ -37,7 +37,6 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
 
-
 import static com.playonlinux.lang.Localisation.translate;
 
 @Scan

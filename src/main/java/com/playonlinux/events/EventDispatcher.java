@@ -22,16 +22,10 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.dto.web.ApplicationDTO;
-import com.playonlinux.services.installedapplications.InstalledApplications;
-import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 import com.playonlinux.utils.filter.Filterable;
-import javafx.application.Application;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.Observable;
 
 /**
  * Call version models from the UI
