@@ -20,8 +20,8 @@ package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.services.installedapplications.InstalledApplications;
-import com.playonlinux.services.InstalledVirtualDrives;
-import com.playonlinux.services.RemoteAvailableInstallers;
+import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
+import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
 
 import java.io.File;
 import java.net.MalformedURLException;

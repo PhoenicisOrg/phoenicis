@@ -26,8 +26,12 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
 import com.playonlinux.services.*;
+import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
+import com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation;
 import com.playonlinux.services.installedapplications.InstalledApplications;
 import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
+import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
+import com.playonlinux.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -38,7 +42,7 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
     private static final String INSTALLED_APPLICATION_SERVICE_KEY =
             "com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation";
     private static final String REMOTE_INSTALER_SERVICE_KEY =
-            "com.playonlinux.services.RemoteAvailableInstallersPlayOnLinuxImplementation";
+            "com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation";
 
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;

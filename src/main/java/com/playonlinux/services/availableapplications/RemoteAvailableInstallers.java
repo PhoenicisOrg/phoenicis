@@ -16,23 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services.availableapplications;
 
-import java.io.File;
+import com.playonlinux.services.BackgroundService;
+import com.playonlinux.services.RemoteService;
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.AppsItemDTO;
 
-public class VirtualDrive {
-    private final File virtualDriveFile;
-    private File icon;
+import java.util.List;
+import java.util.Observer;
 
-    public VirtualDrive(File virtualDriveFile) {
-        this.virtualDriveFile = virtualDriveFile;
-    }
-
-    public String getName() {
-        return virtualDriveFile.getName();
-    }
-
-    public File getIcon() {
-        return icon;
-    }
+/**
+ * Represents a service allowing to access to available installers
+ */
+public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService, Observer, BackgroundService {
+    List<CenterCategoryDTO> getCategories();
 }
