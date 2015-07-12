@@ -20,33 +20,25 @@ package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.dto.web.ApplicationDTO;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
-import com.playonlinux.services.*;
 import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation;
 import com.playonlinux.services.installedapplications.InstalledApplications;
-import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
-import com.playonlinux.services.virtualdrives.InstalledVirtualDrives;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
-import com.playonlinux.utils.filter.Filterable;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.Observable;
 
 @Scan
 public final class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
     @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    static ServiceManager playOnLinuxBackgroundServicesManager;
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;

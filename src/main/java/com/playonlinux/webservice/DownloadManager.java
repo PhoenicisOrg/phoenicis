@@ -19,7 +19,7 @@
 package com.playonlinux.webservice;
 
 import com.playonlinux.messages.ParametrableRunnable;
-import com.playonlinux.services.SubmitableBackgroundService;
+import com.playonlinux.services.SubmitableService;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  Represents a download manager
  */
 public class DownloadManager implements
-        SubmitableBackgroundService<HTTPDownloader, ParametrableRunnable<byte[]>> {
+        SubmitableService<HTTPDownloader, ParametrableRunnable<byte[]>> {
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;

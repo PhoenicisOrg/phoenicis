@@ -16,25 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.manager;
 
 /**
  * Manages the background service
  */
-public interface BackgroundServiceManager {
+public interface ServiceManager {
     /**
      * Register a background service. The class name will be use has a custom name
-     * @param backgroundService The background service to register
+     * @param service The background service to register
      * @return the name of the background service
      */
-    String register(BackgroundService backgroundService) throws BackgroundServiceInitializationException;
+    String register(Service service) throws ServiceInitializationException;
 
     /**
      * Register a background service with a custom name
      * @param backgroundServiceName The name of the Background service
-     * @param backgroundService The background service to register
+     * @param service The background service to register
      */
-    void register(String backgroundServiceName, BackgroundService backgroundService) throws BackgroundServiceInitializationException;
+    void register(String backgroundServiceName, Service service) throws ServiceInitializationException;
 
     /**
      * Shutdown all the background services
@@ -43,9 +43,9 @@ public interface BackgroundServiceManager {
 
     /**
      * Unregister a background service
-     * @param backgroundService The background service to register
+     * @param service The background service to register
      */
-    void unregister(BackgroundService backgroundService);
+    void unregister(Service service);
 
     /**
      * Get a background service
@@ -54,7 +54,7 @@ public interface BackgroundServiceManager {
      * @param <T> The type of the background service
      * @return The background service
      */
-    <T extends BackgroundService> T getBackgroundService(String backgroundServiceName, Class<T> backgroundServiceType);
+    <T extends Service> T getBackgroundService(String backgroundServiceName, Class<T> backgroundServiceType);
 
     /**
      * Checks if the background manager currently contains the given service
@@ -66,7 +66,7 @@ public interface BackgroundServiceManager {
     /**
      * Initialize the background service manager
      */
-    void init() throws BackgroundServiceInitializationException;
+    void init() throws ServiceInitializationException;
 
-    <T extends BackgroundService> T getBackgroundService(Class<T> installedApplicationsClass);
+    <T extends Service> T getBackgroundService(Class<T> installedApplicationsClass);
 }

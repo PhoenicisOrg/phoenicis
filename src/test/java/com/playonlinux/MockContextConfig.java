@@ -28,7 +28,7 @@ import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.ServiceManager;
 
 import java.io.IOException;
 
@@ -41,8 +41,8 @@ public class MockContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected BackgroundServiceManager mockBackgroundServiceManager() {
-        return mock(BackgroundServiceManager.class);
+    protected ServiceManager mockBackgroundServiceManager() {
+        return mock(ServiceManager.class);
     }
 
     @Bean

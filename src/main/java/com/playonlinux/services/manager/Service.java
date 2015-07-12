@@ -16,11 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.manager;
 
-import com.playonlinux.messages.ParametrableRunnable;
+public interface Service {
+    void shutdown();
 
-public interface SubmitableBackgroundService<T, U>
-        extends BackgroundService {
-    void submit(T task, U callback, ParametrableRunnable<Exception> error);
+    void start() throws ServiceInitializationException;
 }

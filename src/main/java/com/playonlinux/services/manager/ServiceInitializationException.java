@@ -16,10 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.manager;
 
-public class BackgroundServiceInitializationException extends BackgroundServiceException {
-    public BackgroundServiceInitializationException(Exception e) {
+public class ServiceInitializationException extends ServiceException {
+    public ServiceInitializationException(Exception e) {
         super(e);
     }
 }

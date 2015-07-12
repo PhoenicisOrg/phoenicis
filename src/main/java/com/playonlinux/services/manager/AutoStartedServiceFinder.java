@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.manager;
 
 import org.reflections.Reflections;
 
@@ -24,17 +24,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class AutoStartedBackgroundServiceFinder {
+public class AutoStartedServiceFinder {
     private String packageName = "com.playonlinux";
 
     public Map<String, Class<?>> findClasses() {
         final HashMap<String, Class<?>> results = new HashMap<>();
         final Reflections reflections = new Reflections(this.packageName);
         final Set<Class<?>> classes
-                = reflections.getTypesAnnotatedWith(AutoStartedBackgroundService.class);
+                = reflections.getTypesAnnotatedWith(AutoStartedService.class);
 
         for(Class<?> clazz: classes) {
-            final String serviceName = clazz.getDeclaredAnnotation(AutoStartedBackgroundService.class).name();
+            final String serviceName = clazz.getDeclaredAnnotation(AutoStartedService.class).name();
             results.put(serviceName, clazz);
         }
 

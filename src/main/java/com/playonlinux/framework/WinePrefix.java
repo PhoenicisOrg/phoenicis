@@ -21,9 +21,9 @@ package com.playonlinux.framework;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.version.Version;
 import com.playonlinux.log.ProcessLogger;
-import com.playonlinux.services.BackgroundServiceException;
-import com.playonlinux.services.BackgroundServiceInitializationException;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.ServiceException;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -56,7 +56,7 @@ public class WinePrefix {
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static BackgroundServiceManager backgroundServicesManager;
+    static ServiceManager backgroundServicesManager;
 
     private static final long NEWPREFIXSIZE = 320_000_000;
     private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
@@ -147,7 +147,7 @@ public class WinePrefix {
         observableDirectorySize.addObserver(progressControl);
         try {
             backgroundServicesManager.register(observableDirectorySize);
-        } catch (BackgroundServiceInitializationException e) {
+        } catch (ServiceInitializationException e) {
             throw new ScriptFailureException(e);
         }
 
@@ -208,7 +208,7 @@ public class WinePrefix {
                 backgroundServicesManager.register(processLogger);
             }
             return process;
-        } catch (BackgroundServiceException | WineException e) {
+        } catch (ServiceException | WineException e) {
             throw new ScriptFailureException("Error while running wine:" + e);
         }
     }
@@ -333,7 +333,7 @@ public class WinePrefix {
         observableDirectorySize.addObserver(progressControl);
         try {
             backgroundServicesManager.register(observableDirectorySize);
-        } catch (BackgroundServiceInitializationException e) {
+        } catch (ServiceInitializationException e) {
             throw new ScriptFailureException(e);
         }
 
@@ -373,7 +373,7 @@ public class WinePrefix {
             observableDirectorySize.addObserver(progressControl);
             try {
                 backgroundServicesManager.register(observableDirectorySize);
-            } catch (BackgroundServiceInitializationException e) {
+            } catch (ServiceInitializationException e) {
                 throw new ScriptFailureException(e);
             }
 

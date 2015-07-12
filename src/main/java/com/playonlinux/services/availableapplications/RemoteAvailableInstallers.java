@@ -18,7 +18,7 @@
 
 package com.playonlinux.services.availableapplications;
 
-import com.playonlinux.services.BackgroundService;
+import com.playonlinux.services.manager.Service;
 import com.playonlinux.services.RemoteService;
 import com.playonlinux.utils.filter.Filterable;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
@@ -30,6 +30,6 @@ import java.util.Observer;
 /**
  * Represents a service allowing to access to available installers
  */
-public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService, Observer, BackgroundService {
+public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService, Observer, Service {
     List<CenterCategoryDTO> getCategories();
 }

@@ -23,8 +23,7 @@ import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.services.AutoStartedBackgroundService;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;
@@ -39,7 +38,7 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private Iterator<VirtualDriveDTO> virtualdrivesDTOInterator;
 

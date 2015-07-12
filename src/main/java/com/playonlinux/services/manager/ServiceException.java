@@ -16,18 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.manager;
 
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.services.manager.ServiceException;
-import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.app.PlayOnLinuxException;
 
-public interface RemoteService extends Filterable<AppsItemDTO> {
 
-    boolean isUpdating();
+public class ServiceException extends PlayOnLinuxException {
+    private static final String DEFAULT_MESSAGE = "Unable to initialize the background service";
 
-    boolean hasFailed();
-
-    void refresh() throws ServiceException;
+    public ServiceException() {
+        super(DEFAULT_MESSAGE);
+    }
+    public ServiceException(String message) {
+        super(message);
+    }
+    public ServiceException(String message, Throwable parent) {
+        super(message, parent);
+    }
+    public ServiceException(Throwable parent) {
+        super(DEFAULT_MESSAGE, parent);
+    }
 
 }

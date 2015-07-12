@@ -23,15 +23,15 @@ import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonCommandInterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
-import com.playonlinux.services.BackgroundServiceInitializationException;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.events.EventDispatcher;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.installer.InstallerSource;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
 import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
-import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
+import com.playonlinux.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.lang.LanguageBundleSelector;
 import com.playonlinux.injection.Bean;
@@ -56,7 +56,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     private boolean useCliInterface = false;
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
-    private BackgroundServiceManager playOnLinuxBackgroundServiceManager = new PlayOnLinuxBackgroundServicesManager();
+    private ServiceManager playOnLinuxServiceManager = new PlayOnLinuxServicesManager();
     private boolean useGTKInterface;
     private ExecutorService executor = Executors.newCachedThreadPool();
 
@@ -92,8 +92,8 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     @Bean
-    public BackgroundServiceManager playOnLinuxBackgroundServicesManager() {
-        return playOnLinuxBackgroundServiceManager;
+    public ServiceManager playOnLinuxBackgroundServicesManager() {
+        return playOnLinuxServiceManager;
     }
 
     @Bean
@@ -102,9 +102,9 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     @Bean
-    public DownloadManager downloadManager() throws BackgroundServiceInitializationException {
+    public DownloadManager downloadManager() throws ServiceInitializationException {
         DownloadManager downloadManager = new DownloadManager();
-        playOnLinuxBackgroundServiceManager.register(downloadManager);
+        playOnLinuxServiceManager.register(downloadManager);
         return downloadManager;
     }
 

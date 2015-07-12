@@ -18,14 +18,14 @@
 
 package com.playonlinux.services.installedapplications;
 
-import com.playonlinux.services.BackgroundService;
+import com.playonlinux.services.manager.Service;
 import com.playonlinux.utils.filter.Filterable;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 
 import java.util.Observer;
 
 public interface InstalledApplications
-        extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO>, BackgroundService, Observer {
+        extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO>, Service, Observer {
 
     void addObserver(Observer o);
 }

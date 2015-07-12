@@ -16,10 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.utils.observer;
 
-public interface BackgroundService {
-    void shutdown();
 
-    void start() throws BackgroundServiceInitializationException;
+
+public interface Observable<OBSERVER extends Observer<? extends Observable, ARG>, ARG> {
+
+    void addObserver(OBSERVER o);
+
+    void deleteObserver(OBSERVER o);
+
+    void notifyObservers();
+
+    void notifyObservers(ARG arg);
+
+    void deleteObservers();
+
+    int countObservers();
 }

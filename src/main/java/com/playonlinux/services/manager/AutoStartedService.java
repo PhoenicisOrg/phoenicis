@@ -16,18 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.services.manager;
 
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.services.manager.ServiceException;
-import com.playonlinux.utils.filter.Filterable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface RemoteService extends Filterable<AppsItemDTO> {
-
-    boolean isUpdating();
-
-    boolean hasFailed();
-
-    void refresh() throws ServiceException;
-
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface AutoStartedService {
+    String name();
 }

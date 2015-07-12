@@ -18,7 +18,7 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
@@ -33,7 +33,7 @@ public class PlayOnLinuxApp {
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static BackgroundServiceManager backgroundServiceManager;
+    static ServiceManager serviceManager;
 
     public void start(String[] args) throws InjectionException {
         try(PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig()) {
@@ -46,11 +46,11 @@ public class PlayOnLinuxApp {
 
             playOnLinuxConfig.load();
             playOnLinuxContext.initLogger();
-            backgroundServiceManager.init();
+            serviceManager.init();
 
             controller.startApplication();
 
-            backgroundServiceManager.shutdown();
+            serviceManager.shutdown();
         } catch (PlayOnLinuxException e) {
             System.out.println("Unable to load PlayOnLinux");
             e.printStackTrace();

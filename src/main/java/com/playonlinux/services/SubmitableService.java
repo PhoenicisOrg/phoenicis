@@ -18,23 +18,10 @@
 
 package com.playonlinux.services;
 
-import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.messages.ParametrableRunnable;
+import com.playonlinux.services.manager.Service;
 
-
-public class BackgroundServiceException extends PlayOnLinuxException {
-    private static final String DEFAULT_MESSAGE = "Unable to initialize the background service";
-
-    public BackgroundServiceException() {
-        super(DEFAULT_MESSAGE);
-    }
-    public BackgroundServiceException(String message) {
-        super(message);
-    }
-    public BackgroundServiceException(String message, Throwable parent) {
-        super(message, parent);
-    }
-    public BackgroundServiceException(Throwable parent) {
-        super(DEFAULT_MESSAGE, parent);
-    }
-
+public interface SubmitableService<T, U>
+        extends Service {
+    void submit(T task, U callback, ParametrableRunnable<Exception> error);
 }

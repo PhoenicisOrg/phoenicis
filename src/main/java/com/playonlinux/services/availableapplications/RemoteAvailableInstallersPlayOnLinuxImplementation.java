@@ -21,9 +21,9 @@ package com.playonlinux.services.availableapplications;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.dto.ui.AppsItemScriptDTO;
 import com.playonlinux.dto.web.*;
-import com.playonlinux.services.AutoStartedBackgroundService;
-import com.playonlinux.services.BackgroundServiceInitializationException;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.services.manager.AutoStartedService;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
@@ -41,14 +41,14 @@ import java.util.*;
 import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
 
 @Scan
-@AutoStartedBackgroundService(name = "AvailableInstallersService")
+@AutoStartedService(name = "AvailableInstallersService")
 public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
         implements RemoteAvailableInstallers {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    private static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    private static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private List<CategoryDTO> categoriesDTO = new ArrayList<>();
     private DownloadEnvelope<List<CategoryDTO>> downloadEnvelope;
@@ -119,7 +119,7 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
 
     @Override
-    public void refresh() throws BackgroundServiceInitializationException {
+    public void refresh() throws ServiceInitializationException {
         if(installerSourceWebserviceImplementation != null) {
             installerSourceWebserviceImplementation.deleteObserver(this);
             playOnLinuxBackgroundServicesManager.unregister(installerSourceWebserviceImplementation);
@@ -171,11 +171,11 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     }
 
     @Override
-    public void start() throws BackgroundServiceInitializationException {
+    public void start() throws ServiceInitializationException {
         try {
             webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
         } catch (MalformedURLException e) {
-            throw new BackgroundServiceInitializationException(e);
+            throw new ServiceInitializationException(e);
         }
         this.refresh();
     }

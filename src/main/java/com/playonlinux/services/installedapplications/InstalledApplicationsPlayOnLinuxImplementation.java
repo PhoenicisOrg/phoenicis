@@ -19,7 +19,9 @@
 package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.services.*;
+import com.playonlinux.services.manager.AutoStartedService;
+import com.playonlinux.services.manager.ServiceInitializationException;
+import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -33,14 +35,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Scan
-@AutoStartedBackgroundService(name = "InstalledApplicationsService")
+@AutoStartedService(name = "InstalledApplicationsService")
 public final class InstalledApplicationsPlayOnLinuxImplementation
         extends Observable implements InstalledApplications {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
+    static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private ShortcutSetDirectories shortcutSetDirectories;
     private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
@@ -111,7 +113,7 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
     }
 
     @Override
-    public void start() throws BackgroundServiceInitializationException {
+    public void start() throws ServiceInitializationException {
         final File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
@@ -123,7 +125,7 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
             shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
             iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
         } catch (PlayOnLinuxException e) {
-            throw new BackgroundServiceInitializationException(e);
+            throw new ServiceInitializationException(e);
         }
 
         playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
