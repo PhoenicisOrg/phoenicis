@@ -41,7 +41,7 @@ public interface SetupWindow {
 
     void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow);
 
-    ProgressStep showProgressBar(InterrupterSynchronousMessage message, String textToShow);
+    ProgressControl showProgressBar(InterrupterSynchronousMessage message, String textToShow);
 
     void showPresentationStep(CancelerSynchronousMessage message, String textToShow);
 

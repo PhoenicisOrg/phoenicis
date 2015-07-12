@@ -21,7 +21,7 @@ package com.playonlinux.framework;
 import com.playonlinux.log.LogStream;
 import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.ui.Controller;
-import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.ui.SetupWindow;
 import com.playonlinux.ui.UIMessageSender;
 import com.playonlinux.messages.*;
@@ -247,10 +247,10 @@ public class SetupWizard {
         );
     }
 
-    public ProgressStep progressBar(String textToShow) throws CancelException {
-        UIMessageSender<ProgressStep> progressStepUIMessageSender = controller.createUIMessageSender();
+    public ProgressControl progressBar(String textToShow) throws CancelException {
+        UIMessageSender<ProgressControl> progressStepUIMessageSender = controller.createUIMessageSender();
         return progressStepUIMessageSender.synchronousSendAndGetResult(
-                new InterrupterSynchronousMessage<ProgressStep>() {
+                new InterrupterSynchronousMessage<ProgressControl>() {
                     @Override
                     public void execute(Message message) {
                         this.setResponse(setupWindow.get().showProgressBar((InterrupterSynchronousMessage) message,

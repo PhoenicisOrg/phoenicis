@@ -20,10 +20,11 @@ package com.playonlinux.ui;
 
 import java.util.Observer;
 
-public interface ProgressStep extends Observer {
+/**
+ * Represents a progress control
+ */
+public interface ProgressControl extends Observer {
     void setProgressPercentage(double value);
 
     void setText(String text);
-
-    double getProgressPercentage();
 }

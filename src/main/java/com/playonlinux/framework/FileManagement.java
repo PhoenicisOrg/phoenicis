@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.installer.ScriptClass;
 
@@ -34,7 +34,7 @@ import static com.playonlinux.lang.Localisation.translate;
 @SuppressWarnings("unused")
 public class FileManagement {
     private SetupWizard setupWizard;
-    private ProgressStep progressStep;
+    private ProgressControl progressControl;
 
     private static final int BLOCK_SIZE = 1024;
 
@@ -48,13 +48,13 @@ public class FileManagement {
         this.setupWizard = setupWizard;
     }
 
-    public FileManagement(ProgressStep progressStep) {
-        this.progressStep = progressStep;
+    public FileManagement(ProgressControl progressControl) {
+        this.progressControl = progressControl;
     }
 
     private void defineProgressStep(File sourceFile) throws CancelException {
-        if(this.progressStep == null) {
-            this.progressStep = this.setupWizard.progressBar(
+        if(this.progressControl == null) {
+            this.progressControl = this.setupWizard.progressBar(
                     translate("Please wait while ${application.name} is copying:") + "\n" +
                             sourceFile.getName()
             );
@@ -74,9 +74,9 @@ public class FileManagement {
         {
             totalDataRead += i;
             outputStream.write(data, 0, i);
-            if(progressStep != null) {
+            if(progressControl != null) {
                 int percentCopied = (int) ((totalDataRead * 100) / fileSize);
-                progressStep.setProgressPercentage(percentCopied);
+                progressControl.setProgressPercentage(percentCopied);
             }
 
             if(Thread.interrupted()) {

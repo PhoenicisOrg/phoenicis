@@ -20,11 +20,11 @@ package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.version.Version;
-import com.playonlinux.process.ProcessLogger;
+import com.playonlinux.log.ProcessLogger;
 import com.playonlinux.services.BackgroundServiceException;
 import com.playonlinux.services.BackgroundServiceInitializationException;
 import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.ui.ProgressStep;
+import com.playonlinux.ui.ProgressControl;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.installer.ScriptClass;
@@ -130,7 +130,7 @@ public class WinePrefix {
         }
 
 
-        ProgressStep progressStep = this.setupWizard.progressBar(
+        ProgressControl progressControl = this.setupWizard.progressBar(
                 String.format(
                         translate("Please wait while the virtual drive is being created..."), prefixName
                 )
@@ -144,7 +144,7 @@ public class WinePrefix {
         }
 
         observableDirectorySize.setCheckInterval(10);
-        observableDirectorySize.addObserver(progressStep);
+        observableDirectorySize.addObserver(progressControl);
         try {
             backgroundServicesManager.register(observableDirectorySize);
         } catch (BackgroundServiceInitializationException e) {
@@ -165,7 +165,7 @@ public class WinePrefix {
             killall();
             throw new CancelException(e);
         } finally {
-            observableDirectorySize.deleteObserver(progressStep);
+            observableDirectorySize.deleteObserver(progressControl);
             backgroundServicesManager.unregister(observableDirectorySize);
         }
 
@@ -316,7 +316,7 @@ public class WinePrefix {
      */
     public WinePrefix waitAllWatchDirectory(File directory, long endSize) throws CancelException {
         ObservableDirectorySize observableDirectorySize;
-        ProgressStep progressStep = this.setupWizard.progressBar(
+        ProgressControl progressControl = this.setupWizard.progressBar(
                 String.format(
                         translate("Please wait while the program is being installed..."), prefixName
                 )
@@ -330,7 +330,7 @@ public class WinePrefix {
         }
 
         observableDirectorySize.setCheckInterval(10);
-        observableDirectorySize.addObserver(progressStep);
+        observableDirectorySize.addObserver(progressControl);
         try {
             backgroundServicesManager.register(observableDirectorySize);
         } catch (BackgroundServiceInitializationException e) {
@@ -340,7 +340,7 @@ public class WinePrefix {
         try {
             waitAll();
         } finally {
-            observableDirectorySize.deleteObserver(progressStep);
+            observableDirectorySize.deleteObserver(progressControl);
             backgroundServicesManager.unregister(observableDirectorySize);
         }
 
@@ -355,7 +355,7 @@ public class WinePrefix {
      */
     public WinePrefix delete() throws CancelException {
         if(prefix.getWinePrefixDirectory().exists()) {
-            ProgressStep progressStep = this.setupWizard.progressBar(
+            ProgressControl progressControl = this.setupWizard.progressBar(
                     String.format(
                             translate("Please wait while the virtual drive is being deleted..."), prefixName
                     )
@@ -370,7 +370,7 @@ public class WinePrefix {
             }
 
             observableDirectorySize.setCheckInterval(10);
-            observableDirectorySize.addObserver(progressStep);
+            observableDirectorySize.addObserver(progressControl);
             try {
                 backgroundServicesManager.register(observableDirectorySize);
             } catch (BackgroundServiceInitializationException e) {
@@ -382,7 +382,7 @@ public class WinePrefix {
             } catch (IOException e) {
                 throw new ScriptFailureException("Unable to delete the wineprefix", e);
             } finally {
-                observableDirectorySize.deleteObserver(progressStep);
+                observableDirectorySize.deleteObserver(progressControl);
                 backgroundServicesManager.unregister(observableDirectorySize);
             }
         }

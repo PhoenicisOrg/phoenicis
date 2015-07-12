@@ -21,8 +21,7 @@ package com.playonlinux.webservice;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.dto.AbstractDTO;
-import com.playonlinux.dto.web.DownloadEnvelopeDTO;
-import com.playonlinux.dto.web.ProgressStateDTO;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.services.BackgroundService;
 import org.apache.log4j.Logger;
 
@@ -76,7 +75,7 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
 
 
     private synchronized void update() {
-        DownloadEnvelopeDTO<List<T>> envelopeDTO = new DownloadEnvelopeDTO<>();
+        DownloadEnvelope<List<T>> envelopeDTO = new DownloadEnvelope<>();
         ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder().withState(state).build();
 
         envelopeDTO.setDownloadState(progressStateDTO);

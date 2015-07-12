@@ -16,14 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.webservice;
 
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
-import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 
-import java.util.List;
+public class DownloadEnvelope<ENVELOPE_CONTENT_TYPE> {
 
-public interface RemoteAvailableWineVersions extends Filterable<AppsItemDTO>, RemoteService {
+    ENVELOPE_CONTENT_TYPE envelopeContent;
+    ProgressStateDTO downloadState;
 
+    public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
+        return envelopeContent;
+    }
+
+    public void setEnvelopeContent(ENVELOPE_CONTENT_TYPE envelopeContent) {
+        this.envelopeContent = envelopeContent;
+    }
+
+    public ProgressStateDTO getDownloadState() {
+        return downloadState;
+    }
+
+    public void setDownloadState(ProgressStateDTO downloadState) {
+        this.downloadState = downloadState;
+    }
 }

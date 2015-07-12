@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.dto.web.ProgressStateDTO;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.app.PlayOnLinuxException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
