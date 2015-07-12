@@ -25,7 +25,7 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 @Scan
-public class InjectorTest extends AbstractConfigFile {
+public class InjectorTest extends AbstractConfiguration {
 
     @Inject
     static String checkInjectedString;

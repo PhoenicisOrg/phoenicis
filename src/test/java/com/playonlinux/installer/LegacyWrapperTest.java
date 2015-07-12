@@ -19,7 +19,7 @@
 package com.playonlinux.installer;
 
 import com.playonlinux.MockContextConfig;
-import com.playonlinux.injection.AbstractConfigFile;
+import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.injection.InjectionException;
 
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class LegacyWrapperTest {
 
     @Before
     public void setUp() throws InjectionException {
-        AbstractConfigFile testConfigFile = new MockContextConfig();
+        AbstractConfiguration testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }

@@ -18,13 +18,13 @@
 
 package com.playonlinux.framework;
 
+import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.lang.FallbackLanguageBundle;
 import com.playonlinux.lang.LanguageBundle;
-import com.playonlinux.injection.AbstractConfigFile;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
@@ -44,7 +44,7 @@ public class SetupWizardTest {
     private SetupWizard setupWizard;
     private Controller controllerMock = mock(Controller.class);
 
-    class TestContextConfig extends AbstractConfigFile {
+    class TestContextConfig extends AbstractConfiguration {
         @Bean
         public Controller controller() {
             return controllerMock;

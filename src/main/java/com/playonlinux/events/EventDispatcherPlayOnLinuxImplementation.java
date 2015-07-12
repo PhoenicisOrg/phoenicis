@@ -45,17 +45,12 @@ import java.util.Observable;
 
 @Scan
 public final class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
-    private static final String INSTALLED_APPLICATION_SERVICE_KEY =
-            "com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation";
-    private static final String REMOTE_INSTALER_SERVICE_KEY =
-            "com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation";
-
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
-    
+
     @Inject
     private static ScriptFactory scriptFactory;
 
@@ -80,13 +75,7 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
 
     @Override
     public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
-        if(!playOnLinuxBackgroundServicesManager.containsService(INSTALLED_APPLICATION_SERVICE_KEY)) {
-            playOnLinuxBackgroundServicesManager.register(INSTALLED_APPLICATION_SERVICE_KEY,
-                    new InstalledApplicationsPlayOnLinuxImplementation());
-        }
-
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(INSTALLED_APPLICATION_SERVICE_KEY
-                , InstalledApplications.class);
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(InstalledApplications.class);
     }
 
     @Override
@@ -101,13 +90,7 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
 
     @Override
     public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException {
-        if(!playOnLinuxBackgroundServicesManager.containsService(REMOTE_INSTALER_SERVICE_KEY)) {
-            playOnLinuxBackgroundServicesManager.register(REMOTE_INSTALER_SERVICE_KEY,
-                    new RemoteAvailableInstallersPlayOnLinuxImplementation());
-        }
-
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(REMOTE_INSTALER_SERVICE_KEY
-                , RemoteAvailableInstallers.class);
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(RemoteAvailableInstallers.class);
     }
 
     @Override
