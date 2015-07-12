@@ -24,13 +24,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 
-import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 public class ScriptFactoryDefaultImplementation implements ScriptFactory {
     ExecutorService executorService;
 
-    public Script createInstance(File scriptFile) throws IOException {
-        return createInstance(FileUtils.readFileToString(scriptFile));
+    public Script createInstance(File scriptFile) throws InstallerException {
+        try {
+            return createInstance(FileUtils.readFileToString(scriptFile));
+        } catch (IOException e) {
+            throw new InstallerException(e);
+        }
     }
 
     public Script createInstance(String script) {

@@ -16,16 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.domain.*;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import com.playonlinux.services.*;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -33,7 +33,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 @Scan
-public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
+public final class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
+    private static final String INSTALLED_APPLICATION_SERVICE_KEY =
+            "com.playonlinux.services.InstalledApplicationsPlayOnLinuxImplementation";
+    private static final String REMOTE_INSTALER_SERVICE_KEY =
+            "com.playonlinux.services.RemoteAvailableInstallersPlayOnLinuxImplementation";
+
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
@@ -45,35 +50,32 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
 
     private static final Logger LOGGER = Logger.getLogger(EventDispatcherPlayOnLinuxImplementation.class);
 
-
-    private InstalledApplications installedApplications;
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
     private RemoteAvailableInstallers remoteAvailableInstallers;
 
     @Override
-    public void runLocalScript(File scriptToRun) throws IOException {
+    public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
         Script playonlinuxScript = scriptFactory.createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
 
     @Override
     public void runApplication(String applicationName) throws PlayOnLinuxException {
-        try {
-            Script playonLinuxScript = scriptFactory.createInstance(
-                    new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName)
-            );
-            playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
-        } catch (IOException e) {
-            throw new PlayOnLinuxException("Unable to run this script", e);
-        }
+        Script playonLinuxScript = scriptFactory.createInstance(
+                new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName)
+        );
+        playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
     }
 
     @Override
     public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
-        if(installedApplications == null) {
-            installedApplications = new InstalledApplicationsPlayOnLinuxImplementation();
+        if(!playOnLinuxBackgroundServicesManager.containsService(INSTALLED_APPLICATION_SERVICE_KEY)) {
+            playOnLinuxBackgroundServicesManager.register(INSTALLED_APPLICATION_SERVICE_KEY,
+                    new InstalledApplicationsPlayOnLinuxImplementation());
         }
-        return this.installedApplications;
+
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(INSTALLED_APPLICATION_SERVICE_KEY
+                , InstalledApplications.class);
     }
 
     @Override
@@ -87,16 +89,14 @@ public class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher
 
 
     @Override
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() {
-        if(remoteAvailableInstallers == null) {
-            try {
-                remoteAvailableInstallers = new RemoteAvailableInstallersPlayOnLinuxImplementation();
-            } catch (MalformedURLException e) {
-                LOGGER.error("The URL was malformed", e);
-            }
+    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException {
+        if(!playOnLinuxBackgroundServicesManager.containsService(REMOTE_INSTALER_SERVICE_KEY)) {
+            playOnLinuxBackgroundServicesManager.register(REMOTE_INSTALER_SERVICE_KEY,
+                    new RemoteAvailableInstallersPlayOnLinuxImplementation());
         }
 
-        return this.remoteAvailableInstallers;
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(REMOTE_INSTALER_SERVICE_KEY
+                , RemoteAvailableInstallers.class);
     }
 
     @Override

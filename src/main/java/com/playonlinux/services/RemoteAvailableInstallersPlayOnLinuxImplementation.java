@@ -16,12 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.dto.ui.AppsItemScriptDTO;
 import com.playonlinux.dto.web.*;
-import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.utils.comparator.AlphabeticalOrderComparator;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
@@ -38,7 +37,7 @@ import static com.playonlinux.dto.ui.AppsItemDTO.Builder;
 
 @Scan
 public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Observable
-        implements RemoteAvailableInstallers, Observer {
+        implements RemoteAvailableInstallers {
     @Inject
     private static PlayOnLinuxContext playOnLinuxContext;
 
@@ -47,15 +46,10 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     private List<CategoryDTO> categoriesDTO = new ArrayList<>();
     private DownloadEnvelopeDTO<List<CategoryDTO>> downloadEnvelopeDto;
-    private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
-    private final URL webserviceUrl;
+    private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
+    private URL webserviceUrl;
 
     private List<AppsItemDTO> cache = null;
-
-    public RemoteAvailableInstallersPlayOnLinuxImplementation() throws MalformedURLException {
-        webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
-        this.refresh();
-    }
 
     @Override
     public Iterator<AppsItemDTO> iterator() {
@@ -133,14 +127,14 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
 
     @Override
-    public void refresh() {
-        if(remoteAvailableInstallers != null) {
-            remoteAvailableInstallers.deleteObserver(this);
-            playOnLinuxBackgroundServicesManager.unregister(remoteAvailableInstallers);
+    public void refresh() throws BackgroundServiceInitializationException {
+        if(installerSourceWebserviceImplementation != null) {
+            installerSourceWebserviceImplementation.deleteObserver(this);
+            playOnLinuxBackgroundServicesManager.unregister(installerSourceWebserviceImplementation);
         }
-        remoteAvailableInstallers = new InstallerSourceWebserviceImplementation(webserviceUrl);
-        remoteAvailableInstallers.addObserver(this);
-        playOnLinuxBackgroundServicesManager.register(remoteAvailableInstallers);
+        installerSourceWebserviceImplementation = new InstallerSourceWebserviceImplementation(webserviceUrl);
+        installerSourceWebserviceImplementation.addObserver(this);
+        playOnLinuxBackgroundServicesManager.register(installerSourceWebserviceImplementation);
     }
 
 
@@ -179,4 +173,18 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
         }
     }
 
+    @Override
+    public void shutdown() {
+        deleteObservers();
+    }
+
+    @Override
+    public void start() throws BackgroundServiceInitializationException {
+        try {
+            webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
+        } catch (MalformedURLException e) {
+            throw new BackgroundServiceInitializationException(e);
+        }
+        this.refresh();
+    }
 }

@@ -18,8 +18,12 @@
 
 package com.playonlinux.services;
 
-public interface BackgroundService {
-    void shutdown();
+import com.playonlinux.dto.ui.VirtualDriveDTO;
 
-    void start() throws BackgroundServiceInitializationException;
+import java.util.Observer;
+
+public interface InstalledVirtualDrives extends Iterable<VirtualDriveDTO> {
+    void addObserver(Observer o);
+
+    void deleteObserver(Observer o);
 }

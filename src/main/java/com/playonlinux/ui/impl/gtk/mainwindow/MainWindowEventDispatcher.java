@@ -1,9 +1,10 @@
 package com.playonlinux.ui.impl.gtk.mainwindow;
 
 
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.services.EventDispatcher;
+import com.playonlinux.events.EventDispatcher;
 import org.gnome.gtk.FileChooserAction;
 import org.gnome.gtk.FileChooserDialog;
 import org.gnome.gtk.Window;
@@ -22,7 +23,7 @@ public class MainWindowEventDispatcher {
         this.parent = parent;
     }
 
-    public void runLocalScript() throws IOException {
+    public void runLocalScript() throws PlayOnLinuxException {
         FileChooserDialog fileChooserDialog =
                 new FileChooserDialog("Select a script to run", parent, FileChooserAction.OPEN);
 

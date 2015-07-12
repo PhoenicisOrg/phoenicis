@@ -1,5 +1,6 @@
 package com.playonlinux.ui.impl.gtk.mainwindow;
 
+import com.playonlinux.app.PlayOnLinuxException;
 import org.apache.log4j.Logger;
 import org.gnome.gtk.*;
 
@@ -28,7 +29,7 @@ public class MainWindowMenuBar extends MenuBar {
         runScriptItem.connect((MenuItem.Activate) (MenuItem menuItem) -> {
             try {
                 mainWindowEventDispatcher.runLocalScript();
-            } catch (IOException e) {
+            } catch (PlayOnLinuxException e) {
                 LOGGER.warn(e);
             }
         });

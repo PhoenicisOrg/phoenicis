@@ -26,6 +26,8 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.ScriptClass;
 import com.playonlinux.wine.WineDistribution;
 
+import java.io.File;
+
 @Scan
 @ScriptClass
 @SuppressWarnings("unused")
@@ -42,15 +44,18 @@ public class WineInstallation {
     }
 
     public com.playonlinux.wine.WineInstallation getInstallation() throws ScriptFailureException {
-        try {
-            return new com.playonlinux.wine.WineInstallation.Builder()
-                    .withPath(playOnLinuxContext.makeWinePath(
-                                    version,
-                                    wineDistribution
-                            )
-                    )
+        return new com.playonlinux.wine.WineInstallation.Builder()
+                    .withPath(getInstallationPath())
                     .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
                     .build();
+    }
+
+    private File getInstallationPath() throws ScriptFailureException {
+        try {
+            return playOnLinuxContext.makeWinePath(
+                    version,
+                    wineDistribution
+            );
         } catch (PlayOnLinuxException e) {
             throw new ScriptFailureException(e);
         }
@@ -58,5 +63,10 @@ public class WineInstallation {
 
     public boolean isInstalled() throws ScriptFailureException {
         return getInstallation().exists();
+    }
+
+    public void install() {
+
+
     }
 }

@@ -16,14 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.domain.VirtualDrive;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
-import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 
 import java.io.File;
@@ -33,7 +33,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 @Scan
-public class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable implements InstalledVirtualDrives, Observer {
+public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable implements InstalledVirtualDrives, Observer {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 

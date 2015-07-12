@@ -16,10 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.services.BackgroundServiceManager;
+import com.playonlinux.domain.Shortcut;
+import com.playonlinux.domain.ShortcutSet;
 import com.playonlinux.utils.filter.Filter;
 import com.playonlinux.dto.ui.InstalledApplicationDTO;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -33,43 +34,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Scan
-public class InstalledApplicationsPlayOnLinuxImplementation extends Observable implements InstalledApplications, Observer {
+public final class InstalledApplicationsPlayOnLinuxImplementation
+        extends Observable implements InstalledApplications {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
     static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
-    ShortcutSet shortcutSet;
+    private ShortcutSet shortcutSet;
     private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
     private List<InstalledApplicationDTO> cache;
     private List<InstalledApplicationDTO> installedApplications;
 
-    public InstalledApplicationsPlayOnLinuxImplementation() throws PlayOnLinuxException {
-        File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
-        File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
-        File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
-        URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
-
-        ObservableDirectoryFiles shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
-        ObservableDirectoryFiles iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
-
-        playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
-        playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
-
-        shortcutSet = new ShortcutSet(shortcutDirectoryObservable, iconDirectoryObservable,
-                configFilesDirectory, defaultIcon);
-
-        shortcutSet.addObserver(this);
-    }
-
-    protected void finalize() throws Throwable {
-        try {
-            shortcutSet.deleteObserver(this);
-        } finally {
-            super.finalize();
-        }
-    }
 
     @Override
     public synchronized void update(Observable o, Object arg) {
@@ -137,4 +114,35 @@ public class InstalledApplicationsPlayOnLinuxImplementation extends Observable i
         return copy;
     }
 
+    @Override
+    public void shutdown() {
+        shortcutSet.deleteObserver(this);
+        deleteObservers();
+    }
+
+    @Override
+    public void start() throws BackgroundServiceInitializationException {
+        final File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
+        final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
+        final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
+        final URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
+
+        ObservableDirectoryFiles shortcutDirectoryObservable;
+        ObservableDirectoryFiles iconDirectoryObservable;
+        try {
+            shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
+            iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
+        } catch (PlayOnLinuxException e) {
+            throw new BackgroundServiceInitializationException(e);
+        }
+
+        playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
+        playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
+
+        shortcutSet = new ShortcutSet(shortcutDirectoryObservable, iconDirectoryObservable,
+                configFilesDirectory, defaultIcon);
+
+
+        shortcutSet.addObserver(this);
+    }
 }

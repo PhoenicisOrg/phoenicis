@@ -16,14 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.python;
 
-import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.app.PlayOnLinuxException;
 
-import java.util.Observer;
 
-public interface InstalledVirtualDrives extends Iterable<VirtualDriveDTO> {
-    void addObserver(Observer o);
+public class CommandInterpreterException extends PlayOnLinuxException {
 
-    void deleteObserver(Observer o);
+    public CommandInterpreterException(String message, Exception e) {
+        super(message, e);
+    }
 }

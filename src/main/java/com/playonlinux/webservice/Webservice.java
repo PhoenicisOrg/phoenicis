@@ -88,7 +88,7 @@ abstract public class Webservice<T extends AbstractDTO> extends Observable imple
 
     @Override
     public void shutdown() {
-        // Nothing to do to shutdown this service
+        this.deleteObservers();
     }
 
     @Override

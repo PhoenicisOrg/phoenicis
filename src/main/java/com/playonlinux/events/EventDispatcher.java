@@ -16,20 +16,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.installer;
+package com.playonlinux.events;
+
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.services.InstalledApplications;
+import com.playonlinux.services.InstalledVirtualDrives;
+import com.playonlinux.services.RemoteAvailableInstallers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
+import java.net.MalformedURLException;
 
-import com.playonlinux.services.BackgroundService;
+public interface EventDispatcher {
+    void runLocalScript(File scriptToRun) throws PlayOnLinuxException;
 
-import javax.script.ScriptException;
+    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
 
-public interface ScriptFactory {
-    Script createInstance(String script);
+    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
 
-    Script createInstance(File script) throws InstallerException;
-    
-    ScriptFactory withExecutor(ExecutorService executorService);
+    RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException;
+
+    void onApplicationStarted() throws MalformedURLException;
+
+    void runApplication(String applicationName) throws PlayOnLinuxException;
 }

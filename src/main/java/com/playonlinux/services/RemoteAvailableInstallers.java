@@ -18,8 +18,13 @@
 
 package com.playonlinux.services;
 
-public interface BackgroundService {
-    void shutdown();
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.AppsItemDTO;
 
-    void start() throws BackgroundServiceInitializationException;
+import java.util.List;
+import java.util.Observer;
+
+public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO>, RemoteService, Observer, BackgroundService {
+    List<CenterCategoryDTO> getCategories();
 }

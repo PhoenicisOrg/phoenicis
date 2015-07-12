@@ -61,15 +61,11 @@ public final class BashEnvironmentHelper {
     }
 
     public static String getEnvironmentVar(String variable) throws ScriptFailureException {
-        try {
-            Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
-            Map<String,String> systemEnvironment = System.getenv();
-            
-            mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
-            return playonOnLinuxEnvironment.get(variable);
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException("Unable to get the environment variables", e);
-        }
+        Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
+        Map<String,String> systemEnvironment = System.getenv();
+
+        mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
+        return playonOnLinuxEnvironment.get(variable);
     }
 
     public static String getPath() throws ScriptFailureException {

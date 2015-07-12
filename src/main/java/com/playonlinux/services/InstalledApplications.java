@@ -18,8 +18,13 @@
 
 package com.playonlinux.services;
 
-public interface BackgroundService {
-    void shutdown();
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.dto.ui.InstalledApplicationDTO;
 
-    void start() throws BackgroundServiceInitializationException;
+import java.util.Observer;
+
+public interface InstalledApplications
+        extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO>, BackgroundService, Observer {
+
+    void addObserver(Observer o);
 }

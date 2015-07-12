@@ -94,12 +94,11 @@ public class PlayOnLinuxContext {
         return new File(versionPath);
     }
 
-    public Map<String,String> getSystemEnvironment() throws PlayOnLinuxException {
+    public Map<String,String> getSystemEnvironment() {
         Map<String, String> systemEnvironment = new HashMap<>();
         systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
         systemEnvironment.put("LD_LIBRARY_PATH", this.properties.getProperty("application.environment.ld"));
         systemEnvironment.put("DYLD_LIBRARY_PATH", this.properties.getProperty("application.environment.dyld"));
-
 
         return systemEnvironment;
     }
