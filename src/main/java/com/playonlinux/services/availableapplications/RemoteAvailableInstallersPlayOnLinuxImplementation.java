@@ -30,6 +30,8 @@ import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
+import com.playonlinux.webservice.DownloadEnvelope;
+import com.playonlinux.webservice.ProgressState;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,7 +49,7 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     private static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     private List<CategoryDTO> categoriesDTO = new ArrayList<>();
-    private DownloadEnvelopeDTO<List<CategoryDTO>> downloadEnvelopeDto;
+    private DownloadEnvelope<List<CategoryDTO>> downloadEnvelopeDto;
     private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
 
@@ -77,8 +79,8 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     @Override
     public void update(Observable o, Object arg) {
-        assert(arg instanceof DownloadEnvelopeDTO);
-        downloadEnvelopeDto = (DownloadEnvelopeDTO<List<CategoryDTO>>) arg;
+        assert(arg instanceof DownloadEnvelope);
+        downloadEnvelopeDto = (DownloadEnvelope<List<CategoryDTO>>) arg;
 
         try {
             if(downloadEnvelopeDto.getEnvelopeContent() != null) {
@@ -97,12 +99,12 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     @Override
     public boolean isUpdating() {
-        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
+        return downloadEnvelopeDto.getDownloadState().getState() == ProgressState.State.PROGRESSING;
     }
 
     @Override
     public boolean hasFailed() {
-        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
+        return downloadEnvelopeDto.getDownloadState().getState() == ProgressState.State.FAILED;
     }
 
     @Override

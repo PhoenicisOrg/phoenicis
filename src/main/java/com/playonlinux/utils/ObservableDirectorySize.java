@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.dto.web.ProgressStateDTO;
+import com.playonlinux.webservice.ProgressState;
 import com.playonlinux.app.PlayOnLinuxException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -90,13 +90,13 @@ public class ObservableDirectorySize extends AbstractObservableDirectory {
                 try {
                     lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
                     final double percentage = 100. * (double) (lastDirectorySize - startSize) / (double) (endSize - startSize);
-                    ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder()
-                            .withState(ProgressStateDTO.State.PROGRESSING)
+                    ProgressState progressState = new ProgressState.Builder()
+                            .withState(ProgressState.State.PROGRESSING)
                             .withPercent(percentage)
                             .build();
 
                     this.observableDirectorySize.setChanged();
-                    this.observableDirectorySize.notifyObservers(progressStateDTO);
+                    this.observableDirectorySize.notifyObservers(progressState);
                 } catch(IllegalArgumentException e) {
                     LOGGER.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);
                 }

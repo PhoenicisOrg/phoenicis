@@ -19,7 +19,6 @@
 package com.playonlinux.webservice;
 
 import com.playonlinux.dto.web.ApplicationDTO;
-import com.playonlinux.dto.web.DownloadEnvelopeDTO;
 import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -159,7 +158,7 @@ public class InstallerSourceWebserviceImplementationTest {
 
         @Override
         public void update(Observable o, Object arg) {
-            this.categoryDto = (List<CategoryDTO>) ((DownloadEnvelopeDTO) arg).getEnvelopeContent();
+            this.categoryDto = (List<CategoryDTO>) ((DownloadEnvelope) arg).getEnvelopeContent();
         }
 
         public List<CategoryDTO> getDTO() {

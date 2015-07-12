@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.process;
+package com.playonlinux.log;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -53,13 +53,13 @@ public class ProcessLogger implements BackgroundService {
         final InputStream inputStream = process.getInputStream();
         final InputStream errorStream = process.getErrorStream();
 
-        BufferedReader stdOutReader = new BufferedReader(new InputStreamReader(inputStream));
-        BufferedReader stdErrReader = new BufferedReader(new InputStreamReader(errorStream));
+        final BufferedReader stdOutReader = new BufferedReader(new InputStreamReader(inputStream));
+        final BufferedReader stdErrReader = new BufferedReader(new InputStreamReader(errorStream));
 
         while(running) {
             try {
-                String stdErrNextLine = stdErrReader.readLine();
-                String stdOutNextLine = stdOutReader.readLine();
+                final String stdErrNextLine = stdErrReader.readLine();
+                final String stdOutNextLine = stdOutReader.readLine();
 
 
                 if(stdErrNextLine == null && stdOutNextLine == null && !process.isAlive()) {

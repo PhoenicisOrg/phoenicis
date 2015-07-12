@@ -16,15 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.webservice;
 
 import com.playonlinux.dto.AbstractDTO;
 
-public class ProgressStateDTO implements AbstractDTO {
+public class ProgressState implements AbstractDTO {
     private final State state;
     private final double percent;
 
-    public ProgressStateDTO(Builder builder) {
+    public ProgressState(Builder builder) {
         this.state = builder.state;
         this.percent = builder.percent;
     }
@@ -53,7 +53,7 @@ public class ProgressStateDTO implements AbstractDTO {
         private State state;
         private double percent;
 
-        public Builder(ProgressStateDTO other) {
+        public Builder(ProgressState other) {
             state = other.state;
             percent = other.percent;
         }
@@ -72,8 +72,8 @@ public class ProgressStateDTO implements AbstractDTO {
             return this;
         }
 
-        public ProgressStateDTO build() {
-            return new ProgressStateDTO(this);
+        public ProgressState build() {
+            return new ProgressState(this);
         }
     }
 }

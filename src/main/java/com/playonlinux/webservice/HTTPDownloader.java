@@ -18,8 +18,6 @@
 
 package com.playonlinux.webservice;
 
-import com.playonlinux.dto.web.ProgressStateDTO;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -87,9 +85,9 @@ public class HTTPDownloader extends Observable {
 
     private void changeState() {
         this.setChanged();
-        ProgressStateDTO currentState = new ProgressStateDTO.Builder()
+        ProgressState currentState = new ProgressState.Builder()
                 .withPercent(this.percentage)
-                .withState(ProgressStateDTO.State.valueOf(this.state.name()))
+                .withState(ProgressState.State.valueOf(this.state.name()))
                 .build();
         this.notifyObservers(currentState);
     }

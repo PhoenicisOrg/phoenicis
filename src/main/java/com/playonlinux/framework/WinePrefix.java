@@ -20,7 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.version.Version;
-import com.playonlinux.process.ProcessLogger;
+import com.playonlinux.log.ProcessLogger;
 import com.playonlinux.services.BackgroundServiceException;
 import com.playonlinux.services.BackgroundServiceInitializationException;
 import com.playonlinux.services.BackgroundServiceManager;
