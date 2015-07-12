@@ -18,6 +18,6 @@
 
 package com.playonlinux.utils.observer;
 
-public interface Observer<OBSERVABLE, ARG> {
+public interface Observer<OBSERVABLE extends Observable, ARG> {
     void update(OBSERVABLE observable, ARG argument);
 }

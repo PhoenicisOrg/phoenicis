@@ -20,11 +20,11 @@ package com.playonlinux.utils.observer;
 
 
 
-public interface Observable<OBSERVER extends Observer<? extends Observable, ARG>, ARG> {
+public interface Observable<ARG> {
 
-    void addObserver(OBSERVER o);
+    void addObserver(Observer o);
 
-    void deleteObserver(OBSERVER o);
+    void deleteObserver(Observer o);
 
     void notifyObservers();
 

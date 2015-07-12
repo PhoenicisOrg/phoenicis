@@ -88,7 +88,6 @@ public class ObservableDirectoryFiles extends AbstractObservableDirectory {
             while(this.isRunning()) {
                 File[] directoryContent = observableDirectoryFiles.findFiles();
                 if(!Arrays.equals(directoryContent, lastDirectoryContent)) {
-                    this.observableDirectoryFiles.setChanged();
                     this.observableDirectoryFiles.notifyObservers(directoryContent);
                 }
                 try {

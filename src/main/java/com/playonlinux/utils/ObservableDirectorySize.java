@@ -95,7 +95,6 @@ public class ObservableDirectorySize extends AbstractObservableDirectory {
                             .withPercent(percentage)
                             .build();
 
-                    this.observableDirectorySize.setChanged();
                     this.observableDirectorySize.notifyObservers(progressStateDTO);
                 } catch(IllegalArgumentException e) {
                     LOGGER.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);

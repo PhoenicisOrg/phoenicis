@@ -145,6 +145,7 @@ public class WinePrefix {
 
         observableDirectorySize.setCheckInterval(10);
         observableDirectorySize.addObserver(progressControl);
+
         try {
             backgroundServicesManager.register(observableDirectorySize);
         } catch (ServiceInitializationException e) {

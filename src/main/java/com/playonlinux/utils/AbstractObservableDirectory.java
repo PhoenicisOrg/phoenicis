@@ -20,12 +20,12 @@ package com.playonlinux.utils;
 
 import com.playonlinux.services.manager.Service;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
-import java.util.Observable;
 
-public abstract class AbstractObservableDirectory extends Observable implements Service {
+public abstract class AbstractObservableDirectory extends AbstractObservableImplementation implements Service {
     protected int checkInterval = 1000;
     protected File observedDirectory;
 

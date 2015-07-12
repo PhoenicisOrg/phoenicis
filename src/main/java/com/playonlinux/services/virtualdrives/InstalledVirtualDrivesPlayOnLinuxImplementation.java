@@ -25,15 +25,16 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.utils.ObservableDirectoryFiles;
+import com.playonlinux.utils.observer.Observer;
 
 import java.io.File;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Observable;
-import java.util.Observer;
 
 @Scan
-public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable implements InstalledVirtualDrives, Observer {
+public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Observable
+        implements InstalledVirtualDrives, Observer<ObservableDirectoryFiles, File[]> {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -61,23 +62,22 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
     }
 
     @Override
-    public void update(Observable o, Object directoryContent) {
-        File[] directoryContentCasted = (File[]) directoryContent;
+    public void update(ObservableDirectoryFiles observable, File[] directoryContent) {
         virtualdrivesDTOInterator = new Iterator<VirtualDriveDTO>() {
             volatile int i = 0;
 
             @Override
             public boolean hasNext() {
-                return (directoryContentCasted.length > i);
+                return (directoryContent.length > i);
             }
 
             @Override
             public VirtualDriveDTO next() {
-                if(i >= directoryContentCasted.length) {
+                if(i >= directoryContent.length) {
                     throw new NoSuchElementException();
                 }
                 VirtualDrive virtualDrive =
-                        new VirtualDrive(directoryContentCasted[i]);
+                        new VirtualDrive(directoryContent[i]);
                 i++;
                 return new VirtualDriveDTO.Builder()
                         .withName(virtualDrive.getName())
@@ -94,4 +94,5 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Obser
     public Iterator<VirtualDriveDTO> iterator() {
         return virtualdrivesDTOInterator;
     }
+
 }

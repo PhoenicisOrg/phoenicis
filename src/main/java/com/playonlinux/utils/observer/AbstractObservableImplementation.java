@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractObservableImplementation<OBSERVER extends Observer<? extends Observable, ARG>, ARG>
-        implements Observable<OBSERVER, ARG> {
+public abstract class AbstractObservableImplementation<OBSERVER extends Observer, ARG>
+        implements Observable<ARG> {
     private final List<Observer> observers;
 
     public AbstractObservableImplementation() {
@@ -31,7 +31,7 @@ public class AbstractObservableImplementation<OBSERVER extends Observer<? extend
     }
 
     @Override
-    public synchronized void addObserver(OBSERVER o) {
+    public synchronized void addObserver(Observer o) {
         Objects.requireNonNull(o);
         if (!observers.contains(o)) {
             observers.add(o);
@@ -39,7 +39,7 @@ public class AbstractObservableImplementation<OBSERVER extends Observer<? extend
     }
 
     @Override
-    public synchronized void deleteObserver(OBSERVER o) {
+    public synchronized void deleteObserver(Observer o) {
         observers.remove(o);
     }
 
