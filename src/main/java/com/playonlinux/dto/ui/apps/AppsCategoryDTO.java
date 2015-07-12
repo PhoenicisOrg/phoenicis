@@ -16,16 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.ui;
+package com.playonlinux.dto.ui.apps;
 
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.utils.comparator.Nameable;
 
-public class CenterCategoryDTO implements AbstractDTO, Nameable {
+public class AppsCategoryDTO implements AbstractDTO, Nameable {
 
     private final String name;
 
-    public CenterCategoryDTO(String name) {
+    public AppsCategoryDTO(String name) {
         this.name = name;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Markus Ebner
+ * Copyright (C) 2015 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,26 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.list;
+package com.playonlinux.dto.ui.library;
 
-import com.playonlinux.collections.ObservableArrayList;
-import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.utils.filter.Filterable;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class FilterableList<T> extends ObservableArrayList<T> implements Filterable<T> {
-
-    @Override
-    public List<T> getFiltered(Filter<T> filter) {
-        List<T> filtered = new ArrayList<>();
-        for (T item : this) {
-            if (filter.apply(item)) {
-                filtered.add(item);
-            }
-        }
-        return filtered;
+public class LibraryWindowDTO {
+    public List<InstalledApplicationDTO> getInstalledApplicationDTO() {
+        return installedApplicationDTO;
     }
 
+    final List<InstalledApplicationDTO> installedApplicationDTO;
+
+    public LibraryWindowDTO(List<InstalledApplicationDTO> installedApplicationDTO) {
+        this.installedApplicationDTO = installedApplicationDTO;
+    }
 }

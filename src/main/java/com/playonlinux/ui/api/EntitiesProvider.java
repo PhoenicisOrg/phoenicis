@@ -16,29 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.ui;
+package com.playonlinux.ui.api;
 
-import static org.junit.Assert.assertEquals;
+import com.playonlinux.services.manager.Service;
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.utils.observer.Observable;
 
-import org.junit.Before;
-import org.junit.Test;
+public interface EntitiesProvider<FILTER, OBSERVABLE> extends Filterable<FILTER>, Observable<OBSERVABLE>, Service {
 
-public class CenterCategoryDTOTest {
-
-    private CenterCategoryDTO centerCategoryDTO;
-
-    @Before
-    public void setUp() {
-        this.centerCategoryDTO = new CenterCategoryDTO("Name");
-    }
-    
-    @Test
-    public void testCenterCategoryDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", centerCategoryDTO.getName());
-    }
-
-    @Test
-    public void testCenterCategoryDTO_CreateDTO_iconIsPopulated() {
-        assertEquals("apps/applications-name.png", centerCategoryDTO.getIconName());
-    }
 }

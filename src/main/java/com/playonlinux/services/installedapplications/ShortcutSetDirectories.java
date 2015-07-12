@@ -34,7 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Scan
-class ShortcutSetDirectories extends AbstractObservableImplementation implements Observer<ObservableDirectoryFiles, File[]> {
+class ShortcutSetDirectories
+        extends AbstractObservableImplementation
+        implements Observer<ObservableDirectoryFiles, File[]> {
     
     @Inject
     private static ScriptFactory scriptFactory;
@@ -105,5 +107,6 @@ class ShortcutSetDirectories extends AbstractObservableImplementation implements
         }
         this.notifyObservers(getShortcuts());
     }
+
 
 }

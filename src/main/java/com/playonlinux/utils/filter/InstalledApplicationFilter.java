@@ -17,7 +17,7 @@
  */
 package com.playonlinux.utils.filter;
 
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
 
@@ -28,20 +28,10 @@ import java.net.URL;
  */
 public class InstalledApplicationFilter extends AbstractObservableImplementation implements Filter<InstalledApplicationDTO> {
 
-    private boolean transaction = false;
+    private final String name;
 
-    private String name = "";
-    private URL icon = null;
-
-    @Override
-    public void startTransaction() { transaction = true; }
-
-    @Override
-    public void endTransaction(boolean fire) {
-        transaction = false;
-        if(fire){
-            this.fireUpdate();
-        }
+    public InstalledApplicationFilter(String name) {
+        this.name = name;
     }
 
     @Override
@@ -50,27 +40,5 @@ public class InstalledApplicationFilter extends AbstractObservableImplementation
         return !StringUtils.isNotBlank(name) || item.getName().toLowerCase().contains(name);
     }
 
-    private void fireUpdate() {
-        if(!transaction){
-            this.notifyObservers();
-        }
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name.toLowerCase();
-        fireUpdate();
-    }
-
-    public URL getIcon() {
-        return icon;
-    }
-
-    public void setIcon(URL icon) {
-        this.icon = icon;
-        fireUpdate();
-    }
 }

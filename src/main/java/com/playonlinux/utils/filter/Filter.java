@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2015 Markus Ebner
- *
+ * Copyright (C) 2015 PÂRIS Quentin
+
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,25 +20,13 @@
 package com.playonlinux.utils.filter;
 
 
-import com.playonlinux.utils.observer.Observable;
 
 /**
  * Defines how a list (used in filterables) should look and behave like.
  *
  * @param <T> Type of the item stored within the filterable list.
  */
-public interface Filter<T> extends Observable {
-
-    /**
-     * Start a filter-change transaction. While a transaction is running, the observers aren't notified.
-     */
-    void startTransaction();
-
-    /**
-     * End a filter-change transaction.
-     * @param fire Defines whether to update the observers now.
-     */
-    void endTransaction(boolean fire);
+public interface Filter<T> {
 
     /**
      * Test the given item against the list rules defined within this list.

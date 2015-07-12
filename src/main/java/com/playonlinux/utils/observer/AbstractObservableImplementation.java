@@ -25,6 +25,7 @@ import java.util.Objects;
 public abstract class AbstractObservableImplementation<ARG>
         implements Observable<ARG> {
     private final List<Observer> observers;
+    private ARG lastArgument;
 
     public AbstractObservableImplementation() {
         observers = new ArrayList<>();
@@ -35,6 +36,10 @@ public abstract class AbstractObservableImplementation<ARG>
         Objects.requireNonNull(o);
         if (!observers.contains(o)) {
             observers.add(o);
+        }
+
+        if(lastArgument != null) {
+            o.update(this, lastArgument);
         }
     }
 
@@ -50,6 +55,7 @@ public abstract class AbstractObservableImplementation<ARG>
 
     @Override
     public synchronized void notifyObservers(ARG arg) {
+        lastArgument = arg;
         for(Observer observer: observers) {
             observer.update(this, arg);
         }

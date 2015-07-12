@@ -20,15 +20,21 @@ package com.playonlinux.events;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsWindowDTO;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
-import com.playonlinux.services.installedapplications.InstalledApplications;
+import com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation;
+import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
+import com.playonlinux.services.manager.Service;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
+import com.playonlinux.ui.api.EntitiesProvider;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -48,7 +54,6 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
     private static final Logger LOGGER = Logger.getLogger(EventDispatcherPlayOnLinuxImplementation.class);
 
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
-    private RemoteAvailableInstallers remoteAvailableInstallers;
 
     @Override
     public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
@@ -65,11 +70,6 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
     }
 
     @Override
-    public InstalledApplications getInstalledApplications() throws PlayOnLinuxException {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(InstalledApplications.class);
-    }
-
-    @Override
     public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
         if(virtualDrives == null) {
             virtualDrives = new InstalledVirtualDrivesPlayOnLinuxImplementation();
@@ -80,13 +80,19 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
 
 
     @Override
-    public RemoteAvailableInstallers getRemoteAvailableInstallers() throws PlayOnLinuxException {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(RemoteAvailableInstallers.class);
+    public EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers() {
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(RemoteAvailableInstallersPlayOnLinuxImplementation.class);
     }
 
     @Override
+    public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(InstalledApplicationsPlayOnLinuxImplementation.class);
+    }
+
+
+    @Override
     public void refreshAvailableInstallers() throws PlayOnLinuxException {
-        getRemoteAvailableInstallers().refresh();
+        //getRemoteAvailableInstallers().refresh();
     }
 
 

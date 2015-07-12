@@ -18,23 +18,18 @@
 
 package com.playonlinux.utils.filter;
 
-import com.playonlinux.utils.observer.Observable;
-
-import java.util.List;
 
 /**
- * Defines how a filterable list of items should look and behave like.
+ * Represents of the filterable
  *
- * @param <T> Type of the item stored within this filterable list.
+ * @param <T> Type held by the filter
  */
-public interface Filterable<T> extends Observable {
+public interface Filterable<T> {
 
     /**
-     * Get an iterable with the items of this filterable that match the given list.
-     *
-     * @param filter The list to test the items against.
-     * @return An iterable over all items within this filterable that matched the given list.
+     * Apply a filter
+     * @param filter to apply
      */
-    List<T> getFiltered(Filter<T> filter);
+    void applyFilter(Filter<T> filter);
 
 }

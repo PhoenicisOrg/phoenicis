@@ -19,17 +19,16 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.collections.ObservableArrayList;
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallers;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
+import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.utils.filter.CenterItemFilter;
-import com.playonlinux.utils.list.FilterPromise;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
@@ -37,45 +36,45 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-final public class ViewApps extends HBox implements Observer {
+final public class ViewApps extends HBox implements Observer<Observable, AppsWindowDTO> {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
+
+
     private FailurePanel failurePanel;
-    private ObservableArrayList<CenterCategoryDTO> categories;
-    private FilterPromise<AppsItemDTO> centerItems;
+    private HBox waitPanel;
+
+    private final EntitiesProvider<AppsItemDTO, AppsWindowDTO> centerItems;
     private final MiniatureListWidget availableInstallerListWidget;
 
     private final EventHandlerApps eventHandlerApps;
-    private final CenterItemFilter filter = new CenterItemFilter();
 
     private LeftSideBar leftContent;
     private TextField searchBar;
     private CategoryView categoryView;
-    private HBox waitPanel;
-
     private Node visiblePane;
+
+    private CheckBox testingCheck;
+    private CheckBox noCdNeededCheck;
+    private CheckBox commercialCheck;
+    private AppsCategoryDTO selectedCategory;
 
     public ViewApps(MainWindow parent) {
         eventHandlerApps = new EventHandlerApps();
         this.getStyleClass().add("mainWindowScene");
 
         availableInstallerListWidget = MiniatureListWidget.create();
+        centerItems = eventHandlerApps.getRemoteAvailableInstallers();
 
         leftContent = new LeftSideBar();
 
         this.initWait();
         this.initFailure();
 
-        categories = new ObservableArrayList<>();
-        try {
-            centerItems = new FilterPromise<>(eventHandlerApps.getRemoteAvailableInstallers(), this.filter);
-        } catch (PlayOnLinuxException e) {
-            LOGGER.error(e);
-        }
+
 
         this.drawSideBar();
         this.showWait();
@@ -89,27 +88,23 @@ final public class ViewApps extends HBox implements Observer {
         waitPanel = new WaitPanel();
     }
 
-
     private void drawSideBar() {
         searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> filter.setTitle(searchBar.getText()));
+        searchBar.setOnKeyReleased((e) -> applyFilter(""));
 
-        categoryView = new CategoryView(categories);
-        categoryView.addObserver((cView, category) -> {
-            filter.startTransaction();
-            filter.setCategory(category);
-            filter.setTitle("");
-            filter.endTransaction(true);
-        });
+        categoryView = new CategoryView(this);
 
-        CheckBox testingCheck = new CheckBox(translate("Testing"));
-        testingCheck.setOnMouseReleased(actionEvent -> filter.setShowTesting(testingCheck.isSelected()));
-        CheckBox noCdNeededCheck = new CheckBox(translate("No CD needed"));
-        noCdNeededCheck.setOnMouseReleased(actionEvent -> filter.setShowTesting(noCdNeededCheck.isSelected()));
-        CheckBox commercialCheck = new CheckBox(translate("Commercial"));
-        commercialCheck.setOnMouseReleased(actionEvent -> filter.setShowTesting(commercialCheck.isSelected()));
+        testingCheck = new CheckBox(translate("Testing"));
+        noCdNeededCheck = new CheckBox(translate("No CD needed"));
+        commercialCheck = new CheckBox(translate("Commercial"));
 
-        leftContent.getChildren().addAll(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(), new LeftBarTitle("Filters"),
+        testingCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
+        noCdNeededCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
+        commercialCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
+
+
+        leftContent.getChildren().addAll(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(),
+                new LeftBarTitle("Filters"),
                 testingCheck, noCdNeededCheck, commercialCheck);
 
         this.getChildren().add(leftContent);
@@ -140,18 +135,6 @@ final public class ViewApps extends HBox implements Observer {
         this.getChildren().add(visiblePane);
     }
 
-    private void addApplicationsToList() {
-        availableInstallerListWidget.clear();
-
-        if(centerItems != null) {
-            for(AppsItemDTO item : centerItems){
-                Node itemNode = availableInstallerListWidget.addItem(item.getName());
-                itemNode.setOnMouseClicked((evt) -> showAppDetails(item));
-            }
-        }
-    }
-
-
 
     public void setUpEvents() {
         centerItems.addObserver(this);
@@ -165,26 +148,52 @@ final public class ViewApps extends HBox implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        RemoteAvailableInstallers remoteAvailableInstallers = (RemoteAvailableInstallers) centerItems.getSource();
+    public void update(Observable o, AppsWindowDTO appsWindowDTO) {
+
         Platform.runLater(() -> {
-            if (StringUtils.isBlank(filter.getTitle())) {
-                searchBar.setText("");
+            availableInstallerListWidget.clear();
+
+            if (appsWindowDTO.isDownloading()) {
+                this.showWait();
+            } else if (appsWindowDTO.isDownloadFailed()) {
+                this.showFailure();
+            } else {
+                this.showContent();
+
+                categoryView.addCategories(appsWindowDTO.getCategoryDTOs());
+
+                for (AppsItemDTO appsItemDTO : appsWindowDTO.getAppsItemDTOs()) {
+                    Node itemNode = availableInstallerListWidget.addItem(appsItemDTO.getName());
+                    itemNode.setOnMouseClicked((evt) -> showAppDetails(appsItemDTO));
+                }
             }
-            update(remoteAvailableInstallers);
         });
     }
 
-    private void update(RemoteAvailableInstallers remoteAvailableInstallers) {
-        if(remoteAvailableInstallers.isUpdating()) {
-            this.showWait();
-        } else if(remoteAvailableInstallers.hasFailed()) {
-            this.showFailure();
-        } else {
-            this.showContent();
-            categories.swapContents(remoteAvailableInstallers.getCategories());
-            this.addApplicationsToList();
+
+    public void selectCategory(AppsCategoryDTO category) {
+        this.selectedCategory = category;
+        searchBar.setText("");
+        applyFilter(category.getName());
+    }
+
+    public void applyFilterOnSelectedCategory() {
+        if(selectedCategory != null) {
+            applyFilter(selectedCategory.getName());
         }
+    }
+
+    private void applyFilter(String categoryName) {
+        centerItems.applyFilter(
+                new CenterItemFilter(
+                        categoryName,
+                        searchBar.getText(),
+                        testingCheck.isSelected(),
+                        noCdNeededCheck.isSelected(),
+                        commercialCheck.isSelected()
+                )
+        );
+
     }
 
 }

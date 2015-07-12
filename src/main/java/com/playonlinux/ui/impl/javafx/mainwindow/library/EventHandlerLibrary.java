@@ -19,11 +19,13 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.events.EventDispatcher;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.python.CommandInterpreterException;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.impl.javafx.consolewindow.ConsoleWindow;
 import com.playonlinux.utils.filter.Filterable;
@@ -42,7 +44,7 @@ class EventHandlerLibrary implements UIEventHandler {
 
     private static final Logger LOGGER = Logger.getLogger(EventHandlerLibrary.class);
 
-    public Filterable<InstalledApplicationDTO> getInstalledApplications() throws PlayOnLinuxException {
+    public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
         return mainEventDispatcher.getInstalledApplications();
     }
 

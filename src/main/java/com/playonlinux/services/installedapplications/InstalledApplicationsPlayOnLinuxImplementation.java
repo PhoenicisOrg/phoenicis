@@ -20,29 +20,31 @@ package com.playonlinux.services.installedapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.AutoStartedService;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 import com.playonlinux.utils.filter.Filter;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
-import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.filter.Filterable;
+import com.playonlinux.utils.observer.*;
+import com.playonlinux.utils.observer.Observer;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
 public final class InstalledApplicationsPlayOnLinuxImplementation
-        extends AbstractObservableImplementation implements InstalledApplications {
+        extends AbstractObservableImplementation<LibraryWindowDTO>
+        implements Observer<ShortcutSetDirectories, List<Shortcut>>,
+                   Filterable<InstalledApplicationDTO>,
+                   EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -50,64 +52,47 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
     static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private ShortcutSetDirectories shortcutSetDirectories;
-    private Iterator<InstalledApplicationDTO> shortcutDtoIterator;
-    private List<InstalledApplicationDTO> cache;
-    private List<InstalledApplicationDTO> installedApplications;
+
+    private List<InstalledApplicationDTO> installedApplications = new ArrayList<>();
+    private List<InstalledApplicationDTO> installedApplicationsFiltered = new ArrayList<>();
+
+    private Filter<InstalledApplicationDTO> lastFilter;
+    private ShortcutSetDirectories lastUpdatedObservable;
+    private List<Shortcut> lastUpdatedArgument;
 
 
     @Override
-    public void update(Observable observable, List arg) {
-        shortcutDtoIterator = new Iterator<InstalledApplicationDTO>() {
-            volatile int i = 0;
+    public void update(ShortcutSetDirectories observable, List<Shortcut> argument) {
+        lastUpdatedObservable = observable;
+        lastUpdatedArgument = argument;
 
-            @Override
-            public boolean hasNext() {
-                assert(arg != null);
-                return ((List<Shortcut>) arg).size() > i;
-            }
-
-            @Override
-            public InstalledApplicationDTO next() {
-                assert(arg != null);
-                List<Shortcut> shortcutList = ((List<Shortcut>) arg);
-                if(i >= shortcutList.size()) {
-                    throw new NoSuchElementException();
-                }
-                Shortcut shortcut = shortcutList.get(i);
-                i++;
-                return new InstalledApplicationDTO.Builder()
-                        .withName(shortcut.getShortcutName())
-                        .withIcon(shortcut.getIconPath())
-                        .build();
-            }
-        };
-
-        installedApplications = copyIterator(shortcutDtoIterator);
-        this.notifyObservers();
-    }
-
-    @Override
-    public synchronized Iterator<InstalledApplicationDTO> iterator() {
-        return this.shortcutDtoIterator;
-    }
-
-    @Override
-    public List<InstalledApplicationDTO> getFiltered(Filter<InstalledApplicationDTO> filter) {
-        return installedApplications.stream().filter(filter::apply).collect(Collectors.toList());
-    }
-
-
-    private void updateCache() {
-        if(cache == null) {
-            cache = new ArrayList<>();
+        installedApplications.clear();
+        for(Shortcut shortcut: argument) {
+            installedApplications.add(new InstalledApplicationDTO.Builder()
+                    .withName(shortcut.getShortcutName())
+                    .withIcon(shortcut.getIconPath())
+                    .build());
         }
+
+        applyFilter(lastFilter);
     }
 
-    public static <T> List<T> copyIterator(Iterator<T> iterator) {
-        List<T> copy = new ArrayList<>();
-        while (iterator.hasNext())
-            copy.add(iterator.next());
-        return copy;
+    @Override
+    public void applyFilter(Filter<InstalledApplicationDTO> filter) {
+        lastFilter = filter;
+
+        installedApplicationsFiltered.clear();
+        if(filter != null) {
+            for(InstalledApplicationDTO installedApplicationDTO: installedApplications) {
+                if(filter.apply(installedApplicationDTO)) {
+                    installedApplicationsFiltered.add(installedApplicationDTO);
+                }
+            }
+        } else {
+            installedApplicationsFiltered.addAll(installedApplications);
+        }
+
+        this.notifyObservers(new LibraryWindowDTO(installedApplicationsFiltered));
     }
 
     @Override
@@ -141,5 +126,8 @@ public final class InstalledApplicationsPlayOnLinuxImplementation
 
         shortcutSetDirectories.addObserver(this);
     }
+
+
+
 
 }

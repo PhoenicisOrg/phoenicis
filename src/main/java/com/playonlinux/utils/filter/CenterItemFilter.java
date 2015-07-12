@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Markus Ebner
+ *               2015 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
 
 package com.playonlinux.utils.filter;
 
-import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
 
@@ -27,59 +28,25 @@ import org.apache.commons.lang.StringUtils;
  */
 public class CenterItemFilter extends AbstractObservableImplementation implements Filter<AppsItemDTO> {
 
-    private boolean transaction = false;
+    private final String title;
+    private final String category;
 
-    private String title = "";
-    private String category = null;
-    private boolean showTesting = false;
-    private boolean showNoCd = false;
-    private boolean showCommercial = true;
+    public CenterItemFilter(String category,
+                            String title,
+                            boolean showTesting,
+                            boolean showNoCd,
+                            boolean showCommercial) {
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        if(!title.equalsIgnoreCase(this.title)) {
-            this.title = title.toLowerCase();
-            this.fireUpdate();
-        }
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
         this.category = category;
-        this.fireUpdate();
-    }
-
-    public boolean isShowTesting() {
-        return showTesting;
-    }
-
-    public void setShowTesting(boolean showTesting) {
+        this.title = title;
         this.showTesting = showTesting;
-        this.fireUpdate();
-    }
-
-    public boolean isShowNoCd() {
-        return showNoCd;
-    }
-
-    public void setShowNoCd(boolean showNoCd) {
         this.showNoCd = showNoCd;
-        this.fireUpdate();
-    }
-
-    public boolean isShowCommercial() {
-        return showCommercial;
-    }
-
-    public void setShowCommercial(boolean showCommercial) {
         this.showCommercial = showCommercial;
     }
+
+    private final boolean showTesting;
+    private final boolean showNoCd;
+    private final boolean showCommercial;
 
     @Override
     public boolean apply(AppsItemDTO item) {
@@ -88,7 +55,7 @@ public class CenterItemFilter extends AbstractObservableImplementation implement
         }
 
         if(StringUtils.isNotBlank(title)){
-            if(!item.getName().toLowerCase().contains(title)) {
+            if(!item.getName().toLowerCase().contains(title.toLowerCase())) {
                 return false;
             }
         } else if(category != null && !category.equals(item.getCategoryName())) {
@@ -106,23 +73,5 @@ public class CenterItemFilter extends AbstractObservableImplementation implement
         return !(item.isCommercial() && !showCommercial);
     }
 
-    @Override
-    public void startTransaction() {
-        transaction = true;
-    }
-
-    @Override
-    public void endTransaction(boolean fire) {
-        transaction = false;
-        if(fire){
-            this.fireUpdate();
-        }
-    }
-
-    private void fireUpdate() {
-        if(!transaction){
-            this.notifyObservers();
-        }
-    }
 
 }

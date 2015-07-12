@@ -19,18 +19,28 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.utils.filter.InstalledApplicationFilter;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-public class ViewLibrary extends HBox {
+public class ViewLibrary extends HBox implements Observer<Observable, LibraryWindowDTO> {
 
     private LeftButton runScript;
     private LeftButton runConsole;
@@ -40,11 +50,15 @@ public class ViewLibrary extends HBox {
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
 
+    private final  EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> libraryItems;
+
+
     public ViewLibrary(MainWindow parent) {
         this.parent = parent;
         this.getStyleClass().add("mainWindowScene");
 
         eventHandlerLibrary = new EventHandlerLibrary();
+        libraryItems = eventHandlerLibrary.getInstalledApplications();
 
         this.drawSideBar();
         this.drawContent();
@@ -62,7 +76,7 @@ public class ViewLibrary extends HBox {
         this.getChildren().add(leftContent);
 
         searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> applicationListWidget.search(searchBar.getText()));
+        searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("Run a script"));
         this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("${application.name} console"));
@@ -74,16 +88,12 @@ public class ViewLibrary extends HBox {
         leftContent.getChildren().addAll(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
 
+    private void applyFilter(String searchText) {
+        libraryItems.applyFilter(new InstalledApplicationFilter(searchText));
+    }
+
     public void setUpEvents() {
-        try {
-            eventHandlerLibrary.getInstalledApplications().addObserver(applicationListWidget);
-        } catch (PlayOnLinuxException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(translate("Error while trying to update installer list."));
-            alert.setContentText(String.format("The error was: %s", e));
-            alert.show();
-            LOGGER.error(e);
-        }
+        libraryItems.addObserver(this);
 
         runScript.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -109,7 +119,8 @@ public class ViewLibrary extends HBox {
         return eventHandlerLibrary;
     }
 
-    public TextField getSearchBar() {
-        return searchBar;
+    @Override
+    public void update(Observable observable, LibraryWindowDTO argument) {
+        Platform.runLater(() -> applicationListWidget.setItems(argument.getInstalledApplicationDTO()));
     }
 }

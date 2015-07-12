@@ -16,18 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services;
+package com.playonlinux.dto.ui;
 
-import com.playonlinux.dto.ui.AppsItemDTO;
-import com.playonlinux.services.manager.ServiceException;
-import com.playonlinux.utils.filter.Filterable;
+import static org.junit.Assert.assertEquals;
 
-public interface RemoteService extends Filterable<AppsItemDTO> {
+import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
+import org.junit.Before;
+import org.junit.Test;
 
-    boolean isUpdating();
+public class AppsCategoryDTOTest {
 
-    boolean hasFailed();
+    private AppsCategoryDTO appsCategoryDTO;
 
-    void refresh() throws ServiceException;
+    @Before
+    public void setUp() {
+        this.appsCategoryDTO = new AppsCategoryDTO("Name");
+    }
+    
+    @Test
+    public void testCenterCategoryDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", appsCategoryDTO.getName());
+    }
 
+    @Test
+    public void testCenterCategoryDTO_CreateDTO_iconIsPopulated() {
+        assertEquals("apps/applications-name.png", appsCategoryDTO.getIconName());
+    }
 }

@@ -24,7 +24,6 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.messages.RunnableWithParameter;
 import com.playonlinux.services.manager.Service;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.ui.api.CommandInterpreter;
 import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
 

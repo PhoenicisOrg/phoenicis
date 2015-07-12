@@ -18,10 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
+import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.utils.filter.InstalledApplicationFilter;
-import com.playonlinux.utils.list.FilterPromise;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
 import javafx.application.Platform;
@@ -36,59 +34,37 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
+import java.util.List;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> implements Observer<Observable, Object> {
+class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem>  {
 
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
-    private final InstalledApplicationFilter filter = new InstalledApplicationFilter();
-    private FilterPromise<InstalledApplicationDTO> installedApplications;
-    private static final Logger LOGGER = Logger.getLogger(ApplicationListWidget.class);
 
     public ApplicationListWidget(ViewLibrary parent) {
         this.parent = parent;
         this.rootItem = new TreeItem<>();
         this.setRoot(rootItem);
         this.setShowRoot(false);
-        try {
-            installedApplications = new FilterPromise<>(this.parent.getEventHandler().getInstalledApplications(), this.filter);
-        } catch (PlayOnLinuxException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(translate("Error while trying to fetch installed applications."));
-            alert.setContentText(String.format("The error was: %s", e));
-            alert.show();
-            LOGGER.error(e);
-        }
-        installedApplications.addObserver(this);
+
     }
 
-    public void addItem(String shortcutName, URL iconPath) {
+    public void setItems(List<InstalledApplicationDTO> applicationDTOs) {
+        this.clear();
+        for(InstalledApplicationDTO applicationDTO: applicationDTOs) {
+            this.addItem(applicationDTO.getName(), applicationDTO.getIcon());
+        }
+    }
+
+    private void addItem(String shortcutName, URL iconPath) {
         TreeItem<ApplicationItem> treeItem = new TreeItem<>(new ApplicationItem(shortcutName, iconPath));
         rootItem.getChildren().add(treeItem);
     }
 
-    @Override
-    public synchronized void update(Observable o, Object arg) {
-        // TODO: Something is calling this method twice on startup. Could use some research
-        Platform.runLater(() -> {
-            this.clear();
-            if(StringUtils.isBlank(filter.getName())) {
-                parent.getSearchBar().setText("");
-            }
-            for (InstalledApplicationDTO shortcut : installedApplications) {
-                addItem(shortcut.getName(), shortcut.getIcon());
-            }
-        });
-    }
-
     private void clear() {
         rootItem.getChildren().clear();
-    }
-
-    public void search(String searchBar) {
-        filter.setName(searchBar);
     }
 
     protected class ApplicationItem extends GridPane {

@@ -18,67 +18,38 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.collections.ObservableList;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
-import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.utils.observer.Observer;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-final class CategoryView extends VBox implements Observer {
-    private ObservableList<CenterCategoryDTO> categories;
-    private List<CategorySelectionObserver> observers = new ArrayList<>();
+final class CategoryView extends VBox {
 
-    public CategoryView(ObservableList<CenterCategoryDTO> categoryList) {
-        this.categories = categoryList;
-        categoryList.addObserver(this);
-        this.update(null, null);
+    private final ViewApps parent;
+
+    public CategoryView(ViewApps parent) {
+        this.parent = parent;
         this.getStyleClass().add("leftPaneInside");
     }
 
-
-    @Override
-    public void update(Observable observable, Object o) {
+    public void addCategories(List<AppsCategoryDTO> categories) {
         this.getChildren().clear();
         this.getChildren().addAll(new LeftBarTitle(translate("Category")));
 
-        if (categories.size() > 0) {
-            for (CenterCategoryDTO category : categories) {
+        if (!categories.isEmpty()) {
+            for (AppsCategoryDTO category : categories) {
                 LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
                 categoryButton.getStyleClass().add("leftPaneButtons");
                 this.getChildren().add(categoryButton);
-                categoryButton.setOnMouseClicked(event -> {
-                    this.fireCategorySelection(categoryButton.getName());
-                });
+                categoryButton.setOnMouseClicked(event -> parent.selectCategory(category));
             }
         }
     }
 
-
-    public void addObserver(CategorySelectionObserver o) {
-        this.observers.add(o);
-    }
-
-    public void deleteObserver(CategorySelectionObserver o) {
-        this.observers.remove(o);
-    }
-
-    private void fireCategorySelection(String categoryName) {
-        for (CategorySelectionObserver o : observers) {
-            o.update(this, categoryName);
-        }
-    }
-
-
-    public interface CategorySelectionObserver {
-        void update(CategoryView categoryView, String category);
-    }
 
 
 }

@@ -18,6 +18,9 @@
 
 package com.playonlinux.installer;
 
-public interface InstallerSource {
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.webservice.DownloadEnvelope;
+
+public interface InstallerSource extends Observable<DownloadEnvelope> {
     void populate();
 }
