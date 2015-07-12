@@ -49,7 +49,7 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     private static BackgroundServiceManager playOnLinuxBackgroundServicesManager;
 
     private List<CategoryDTO> categoriesDTO = new ArrayList<>();
-    private DownloadEnvelope<List<CategoryDTO>> downloadEnvelopeDto;
+    private DownloadEnvelope<List<CategoryDTO>> downloadEnvelope;
     private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
 
@@ -80,12 +80,12 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
     @Override
     public void update(Observable o, Object arg) {
         assert(arg instanceof DownloadEnvelope);
-        downloadEnvelopeDto = (DownloadEnvelope<List<CategoryDTO>>) arg;
+        downloadEnvelope = (DownloadEnvelope<List<CategoryDTO>>) arg;
 
         try {
-            if(downloadEnvelopeDto.getEnvelopeContent() != null) {
+            if(downloadEnvelope.getEnvelopeContent() != null) {
                 categoriesDTO = new ArrayList<>(
-                        downloadEnvelopeDto.getEnvelopeContent()
+                        downloadEnvelope.getEnvelopeContent()
                 );
             }
         } finally {
@@ -99,12 +99,12 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation extends Ob
 
     @Override
     public boolean isUpdating() {
-        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
     }
 
     @Override
     public boolean hasFailed() {
-        return downloadEnvelopeDto.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
     }
 
     @Override
