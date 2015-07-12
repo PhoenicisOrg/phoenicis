@@ -19,27 +19,59 @@
 package com.playonlinux.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class PlayOnLinuxBackgroundServicesManager implements BackgroundServiceManager {
-    List<BackgroundService> runningTask;
+public final class PlayOnLinuxBackgroundServicesManager implements BackgroundServiceManager {
+    private final Map<String, BackgroundService> backgroundServices;
 
     public PlayOnLinuxBackgroundServicesManager() {
-        runningTask = new ArrayList<>();
+        backgroundServices = new HashMap<>();
     }
 
-    public BackgroundService register(BackgroundService backgroundService) {
-        runningTask.add(backgroundService);
+    public String register(BackgroundService backgroundService) throws BackgroundServiceInitializationException {
+        final String backgroundName = String.valueOf(backgroundService.hashCode());
+        register(backgroundName, backgroundService);
+        return backgroundName;
+    }
+
+    @Override
+    public void register(String backgroundServiceName, BackgroundService backgroundService) throws BackgroundServiceInitializationException {
+        backgroundServices.put(backgroundServiceName, backgroundService);
         backgroundService.start();
-        return backgroundService;
     }
 
     public void shutdown() {
-        runningTask.forEach(BackgroundService::shutdown);
+        backgroundServices.values().forEach(BackgroundService::shutdown);
     }
 
-    public void unregister(BackgroundService backgroundService) {
-        runningTask.remove(backgroundService);
-        backgroundService.shutdown();
+    synchronized public void unregister(BackgroundService backgroundService) {
+        final List<String> keysToRemove = new ArrayList<>();
+        for(String backgroundServiceKey: backgroundServices.keySet()) {
+            if(backgroundService.equals(backgroundServices.get(backgroundServiceKey))) {
+                keysToRemove.add(backgroundServiceKey);
+                backgroundService.shutdown();
+            }
+        }
+        for(String keyToRemove: keysToRemove) {
+            backgroundServices.remove(keyToRemove);
+        }
+    }
+
+    @Override
+    public <T extends BackgroundService> T getBackgroundService(String backgroundServiceName, Class<T> backgroundServiceType) {
+        final BackgroundService backgroundService = backgroundServices.get(backgroundServiceName);
+
+        if(backgroundServiceType.isAssignableFrom(backgroundService.getClass())) {
+            return (T) backgroundService;
+        } else {
+            throw new IllegalArgumentException("The selected type is not valid");
+        }
+    }
+
+    @Override
+    public boolean containsService(String serviceName) {
+        return backgroundServices.containsKey(serviceName);
     }
 }

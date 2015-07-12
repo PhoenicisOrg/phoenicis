@@ -18,10 +18,48 @@
 
 package com.playonlinux.services;
 
+/**
+ * Manages the background service
+ */
 public interface BackgroundServiceManager {
-    BackgroundService register(BackgroundService backgroundService);
+    /**
+     * Register a background service. The class name will be use has a custom name
+     * @param backgroundService The background service to register
+     * @return the name of the background service
+     */
+    String register(BackgroundService backgroundService) throws BackgroundServiceInitializationException;
 
+    /**
+     * Register a background service with a custom name
+     * @param backgroundServiceName The name of the Background service
+     * @param backgroundService The background service to register
+     */
+    void register(String backgroundServiceName, BackgroundService backgroundService) throws BackgroundServiceInitializationException;
+
+    /**
+     * Shutdown all the background services
+     */
     void shutdown();
 
+    /**
+     * Unregister a background service
+     * @param backgroundService The background service to register
+     */
     void unregister(BackgroundService backgroundService);
+
+    /**
+     * Get a background service
+     * @param backgroundServiceName The name of the background service
+     * @param backgroundServiceType The type of the background service
+     * @param <T> The type of the background service
+     * @return The background service
+     */
+    <T extends BackgroundService> T getBackgroundService(String backgroundServiceName, Class<T> backgroundServiceType);
+
+    /**
+     * Checks if the background manager currently contains the given service
+     * @param serviceName The service to test
+     * @return true if the background manager currently contains the service. False if it does not
+     */
+    boolean containsService(String serviceName);
 }

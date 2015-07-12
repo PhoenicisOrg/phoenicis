@@ -18,8 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.services.EventDispatcher;
-import com.playonlinux.domain.InstalledApplications;
+import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.python.CommandInterpreterException;
+import com.playonlinux.services.InstalledApplications;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -45,7 +46,7 @@ class EventHandlerLibrary implements UIEventHandler {
         return mainEventDispatcher.getInstalledApplications();
     }
 
-    public void runLocalScript(File scriptToRun) throws IOException {
+    public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
         mainEventDispatcher.runLocalScript(scriptToRun);
     }
 
@@ -63,7 +64,7 @@ class EventHandlerLibrary implements UIEventHandler {
             mainEventDispatcher.runApplication(applicationName);
         } catch (PlayOnLinuxException e) {
             LOGGER.error(e);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            final Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to run the application."));
             alert.setContentText(String.format("The error was: %s", e));
             alert.show();
@@ -72,6 +73,14 @@ class EventHandlerLibrary implements UIEventHandler {
 
 
     public void runConsole() {
-        ConsoleWindow consoleWindow = new ConsoleWindow();
+        try {
+            ConsoleWindow consoleWindow = new ConsoleWindow();
+        } catch (CommandInterpreterException e) {
+            LOGGER.error(e);
+            final Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to run the console."));
+            alert.setContentText(String.format("The error was: %s", e));
+            alert.show();
+        }
     }
 }

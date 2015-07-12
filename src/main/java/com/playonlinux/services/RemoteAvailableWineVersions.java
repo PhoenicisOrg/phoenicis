@@ -16,22 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services;
 
-import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
+import com.playonlinux.utils.filter.Filterable;
 
 import java.util.List;
 
-public interface RemoteAvailableInstallers extends Filterable<AppsItemDTO> {
-
-    boolean isUpdating();
-
-    boolean hasFailed();
-
-    List<CenterCategoryDTO> getCategories();
-
-    void refresh();
+public interface RemoteAvailableWineVersions extends Filterable<AppsItemDTO>, RemoteService {
 
 }

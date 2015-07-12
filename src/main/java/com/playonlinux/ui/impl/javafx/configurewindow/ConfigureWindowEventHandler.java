@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
-import com.playonlinux.services.EventDispatcher;
-import com.playonlinux.domain.InstalledVirtualDrives;
+import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.services.InstalledVirtualDrives;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;

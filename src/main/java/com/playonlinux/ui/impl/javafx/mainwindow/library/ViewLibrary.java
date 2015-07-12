@@ -95,7 +95,7 @@ public class ViewLibrary extends HBox {
                 if (scriptToRun != null) {
                     eventHandlerLibrary.runLocalScript(scriptToRun);
                 }
-            } catch (IOException e) {
+            } catch (PlayOnLinuxException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to run the script."));
                 alert.setContentText("The file was not found");

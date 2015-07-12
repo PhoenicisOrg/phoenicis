@@ -67,7 +67,7 @@ public class WineInstallation {
     }
 
     public Process run(File workingDirectory, String executableToRun, Map<String, String> environment,
-                       List<String> arguments) throws IOException {
+                       List<String> arguments) throws WineException {
         List<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
@@ -82,15 +82,19 @@ public class WineInstallation {
 
         this.addPathInfoToEnvironment(wineEnvironment);
 
-        return new WineProcessBuilder()
-                .withCommand(command)
-                .withEnvironment(wineEnvironment)
-                .withWorkingDirectory(workingDirectory)
-                .withApplicationEnvironment(applicationEnvironment)
-                .build();
+        try {
+            return new WineProcessBuilder()
+                    .withCommand(command)
+                    .withEnvironment(wineEnvironment)
+                    .withWorkingDirectory(workingDirectory)
+                    .withApplicationEnvironment(applicationEnvironment)
+                    .build();
+        } catch (IOException e) {
+            throw new WineException(e);
+        }
     }
 
-    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment) throws IOException {
+    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment) throws WineException {
         return this.run(workingDirectory, executableToRun, environment, null);
     }
 
@@ -100,11 +104,7 @@ public class WineInstallation {
         winePrefix.createConfigFile(this.distribution, this.version);
 
         final Process process;
-        try {
-            process = this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
-        } catch (IOException e) {
-            throw new WineException(e);
-        }
+        process = this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
         return process;
     }
 

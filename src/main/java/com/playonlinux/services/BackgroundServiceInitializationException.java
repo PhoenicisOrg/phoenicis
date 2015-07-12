@@ -18,8 +18,8 @@
 
 package com.playonlinux.services;
 
-public interface BackgroundService {
-    void shutdown();
-
-    void start() throws BackgroundServiceInitializationException;
+public class BackgroundServiceInitializationException extends BackgroundServiceException {
+    public BackgroundServiceInitializationException(Exception e) {
+        super(e);
+    }
 }

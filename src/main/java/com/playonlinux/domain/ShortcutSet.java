@@ -20,6 +20,7 @@ package com.playonlinux.domain;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.installer.InstallerException;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.utils.ObservableDirectoryFiles;
 
@@ -98,7 +99,7 @@ public class ShortcutSet extends Observable implements Observer {
                                 .createInstance(shortcutFile));
                     }
                     this.getShortcuts().add(shortcut);
-                } catch (IOException e) {
+                } catch (IOException | InstallerException e) {
                     LOGGER.warn(e);
                 }
             }

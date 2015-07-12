@@ -19,24 +19,22 @@
 package com.playonlinux.services;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.domain.InstalledApplications;
-import com.playonlinux.domain.InstalledVirtualDrives;
-import com.playonlinux.domain.RemoteAvailableInstallers;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 
-public interface EventDispatcher {
-    void runLocalScript(File scriptToRun) throws IOException;
+public class BackgroundServiceException extends PlayOnLinuxException {
+    private static final String DEFAULT_MESSAGE = "Unable to initialize the background service";
 
-    InstalledApplications getInstalledApplications() throws PlayOnLinuxException;
+    public BackgroundServiceException() {
+        super(DEFAULT_MESSAGE);
+    }
+    public BackgroundServiceException(String message) {
+        super(message);
+    }
+    public BackgroundServiceException(String message, Throwable parent) {
+        super(message, parent);
+    }
+    public BackgroundServiceException(Throwable parent) {
+        super(DEFAULT_MESSAGE, parent);
+    }
 
-    InstalledVirtualDrives getInstalledVirtualDrives() throws PlayOnLinuxException;
-
-    RemoteAvailableInstallers getRemoteAvailableInstallers();
-
-    void onApplicationStarted() throws MalformedURLException;
-
-    void runApplication(String applicationName) throws PlayOnLinuxException;
 }

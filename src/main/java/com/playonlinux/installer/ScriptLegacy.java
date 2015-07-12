@@ -54,7 +54,7 @@ public class ScriptLegacy extends Script {
             FileWriter bashScriptWriter = new FileWriter(bashScriptFile);
             bashScriptWriter.write(this.getScriptContent());
             bashScriptWriter.close();
-        } catch (IOException e) {
+        } catch (IOException | InstallerException e) {
             throw new ScriptFailureException(e);
         }
 

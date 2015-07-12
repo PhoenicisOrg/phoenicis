@@ -20,6 +20,7 @@ package com.playonlinux.python;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.services.BackgroundServiceInitializationException;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 
@@ -37,9 +38,13 @@ public class JythonCommandInterpreterFactory implements CommandInterpreterFactor
         this.executorService = executorService;
     }
 
-    public JythonCommandInterpreter createInstance() {
+    public JythonCommandInterpreter createInstance() throws CommandInterpreterException {
         JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);
-        backgroundServiceManager.register(interpreter);
+        try {
+            backgroundServiceManager.register(interpreter);
+        } catch (BackgroundServiceInitializationException e) {
+            throw new CommandInterpreterException("Unable to load Python Interpreter", e);
+        }
         return interpreter;
     }
 }

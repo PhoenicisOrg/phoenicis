@@ -22,13 +22,14 @@ import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.python.InterpreterFactory;
 import com.playonlinux.python.JythonCommandInterpreterFactory;
 import com.playonlinux.python.JythonInterpreterFactory;
+import com.playonlinux.services.BackgroundServiceInitializationException;
 import com.playonlinux.services.BackgroundServiceManager;
-import com.playonlinux.services.EventDispatcher;
+import com.playonlinux.events.EventDispatcher;
 import com.playonlinux.ui.Controller;
 import com.playonlinux.installer.InstallerSource;
 import com.playonlinux.installer.ScriptFactory;
 import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
-import com.playonlinux.services.EventDispatcherPlayOnLinuxImplementation;
+import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
 import com.playonlinux.services.PlayOnLinuxBackgroundServicesManager;
 import com.playonlinux.lang.LanguageBundle;
 import com.playonlinux.lang.LanguageBundleSelector;
@@ -101,7 +102,7 @@ public class PlayOnLinuxConfig extends AbstractConfigFile  {
     }
 
     @Bean
-    public DownloadManager downloadManager() {
+    public DownloadManager downloadManager() throws BackgroundServiceInitializationException {
         DownloadManager downloadManager = new DownloadManager();
         playOnLinuxBackgroundServiceManager.register(downloadManager);
         return downloadManager;

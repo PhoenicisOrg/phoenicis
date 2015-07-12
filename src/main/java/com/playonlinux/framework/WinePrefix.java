@@ -21,6 +21,8 @@ package com.playonlinux.framework;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.domain.Version;
 import com.playonlinux.process.ProcessLogger;
+import com.playonlinux.services.BackgroundServiceException;
+import com.playonlinux.services.BackgroundServiceInitializationException;
 import com.playonlinux.services.BackgroundServiceManager;
 import com.playonlinux.ui.ProgressStep;
 import com.playonlinux.installer.CancelException;
@@ -143,7 +145,11 @@ public class WinePrefix {
 
         observableDirectorySize.setCheckInterval(10);
         observableDirectorySize.addObserver(progressStep);
-        backgroundServicesManager.register(observableDirectorySize);
+        try {
+            backgroundServicesManager.register(observableDirectorySize);
+        } catch (BackgroundServiceInitializationException e) {
+            throw new ScriptFailureException(e);
+        }
 
         Process process;
         try {
@@ -202,7 +208,7 @@ public class WinePrefix {
                 backgroundServicesManager.register(processLogger);
             }
             return process;
-        } catch (IOException e) {
+        } catch (BackgroundServiceException | WineException e) {
             throw new ScriptFailureException("Error while running wine:" + e);
         }
     }
@@ -325,7 +331,11 @@ public class WinePrefix {
 
         observableDirectorySize.setCheckInterval(10);
         observableDirectorySize.addObserver(progressStep);
-        backgroundServicesManager.register(observableDirectorySize);
+        try {
+            backgroundServicesManager.register(observableDirectorySize);
+        } catch (BackgroundServiceInitializationException e) {
+            throw new ScriptFailureException(e);
+        }
 
         try {
             waitAll();
@@ -361,7 +371,11 @@ public class WinePrefix {
 
             observableDirectorySize.setCheckInterval(10);
             observableDirectorySize.addObserver(progressStep);
-            backgroundServicesManager.register(observableDirectorySize);
+            try {
+                backgroundServicesManager.register(observableDirectorySize);
+            } catch (BackgroundServiceInitializationException e) {
+                throw new ScriptFailureException(e);
+            }
 
             try {
                 prefix.delete();

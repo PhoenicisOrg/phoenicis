@@ -18,7 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.domain.RemoteAvailableInstallers;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.services.BackgroundServiceException;
+import com.playonlinux.services.RemoteAvailableInstallers;
 import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.dto.ui.AppsItemDTO;
 import com.playonlinux.utils.filter.CenterItemFilter;
@@ -34,6 +36,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -41,6 +44,7 @@ import java.util.Observer;
 import static com.playonlinux.lang.Localisation.translate;
 
 final public class ViewApps extends HBox implements Observer {
+    private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
     private FailurePanel failurePanel;
     private ObservableArrayList<CenterCategoryDTO> categories;
     private FilterPromise<AppsItemDTO> centerItems;
@@ -68,7 +72,11 @@ final public class ViewApps extends HBox implements Observer {
         this.initFailure();
 
         categories = new ObservableArrayList<>();
-        centerItems = new FilterPromise<>(eventHandlerApps.getRemoteAvailableInstallers(), this.filter);
+        try {
+            centerItems = new FilterPromise<>(eventHandlerApps.getRemoteAvailableInstallers(), this.filter);
+        } catch (PlayOnLinuxException e) {
+            LOGGER.error(e);
+        }
 
         this.drawSideBar();
         this.showWait();
@@ -148,7 +156,13 @@ final public class ViewApps extends HBox implements Observer {
 
     public void setUpEvents() {
         centerItems.addObserver(this);
-        failurePanel.getRetryButton().setOnMouseClicked(event -> this.eventHandlerApps.updateAvailableInstallers());
+        failurePanel.getRetryButton().setOnMouseClicked(event -> {
+            try {
+                this.eventHandlerApps.updateAvailableInstallers();
+            } catch (PlayOnLinuxException e) {
+                LOGGER.warn(e);
+            }
+        });
     }
 
     @Override

@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.consolewindow;
 
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.python.CommandInterpreterException;
 import com.playonlinux.ui.api.CommandInterpreter;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
@@ -48,9 +49,12 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
     @Inject
     private static CommandInterpreterFactory commandInterpreterFactory;
 
-    CommandInterpreter commandInterpreter = commandInterpreterFactory.createInstance();
+    final CommandInterpreter commandInterpreter;
+
     private String nextSymbol = NOT_INSIDE_BLOCK;
-    public ConsoleWindow() {
+
+    public ConsoleWindow() throws CommandInterpreterException {
+        commandInterpreter = commandInterpreterFactory.createInstance();
         final VBox rootPane = new VBox();
 
         final TextField command = new TextField();

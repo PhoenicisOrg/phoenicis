@@ -44,7 +44,7 @@ public class WineInstallationTest {
     }
 
     @Test
-    public void testRun_RunWineVersion_ProcessRunsAndReturnsVersion() throws IOException {
+    public void testRun_RunWineVersion_ProcessRunsAndReturnsVersion() throws IOException, WineException {
         Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "--version", null);
 
         InputStream inputStream = wineProcess.getInputStream();
@@ -54,7 +54,7 @@ public class WineInstallationTest {
     }
 
     @Test
-    public void testRun_RunWineVersionWithArgument_ProcessReturnsHelpMessage() throws IOException {
+    public void testRun_RunWineVersionWithArgument_ProcessReturnsHelpMessage() throws IOException, WineException {
         List<String> arguments = new ArrayList<>();
         arguments.add("/tmp/unexisting");
 
@@ -69,7 +69,7 @@ public class WineInstallationTest {
     }
 
     @Test
-    public void testRun_RunWineVersionWithArgument_ProcessDoesNotReturnHepMessage() throws IOException {
+    public void testRun_RunWineVersionWithArgument_ProcessDoesNotReturnHepMessage() throws IOException, WineException {
         List <String> arguments = new ArrayList<>();
         arguments.add("--help");
 

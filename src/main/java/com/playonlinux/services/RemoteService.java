@@ -16,14 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.domain;
+package com.playonlinux.services;
 
+import com.playonlinux.dto.ui.AppsItemDTO;
+import com.playonlinux.dto.ui.CenterCategoryDTO;
 import com.playonlinux.utils.filter.Filterable;
-import com.playonlinux.dto.ui.InstalledApplicationDTO;
 
-import java.util.Observer;
+import java.util.List;
 
-public interface InstalledApplications extends Filterable<InstalledApplicationDTO>, Iterable<InstalledApplicationDTO> {
+public interface RemoteService extends Filterable<AppsItemDTO> {
 
-    void addObserver(Observer o);
+    boolean isUpdating();
+
+    boolean hasFailed();
+
+    void refresh() throws BackgroundServiceException;
+
 }
