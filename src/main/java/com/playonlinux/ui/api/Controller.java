@@ -16,28 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.cli;
+package com.playonlinux.ui.api;
 
-import com.playonlinux.injection.Scan;
-import com.playonlinux.ui.api.Controller;
-import com.playonlinux.ui.api.SetupWindow;
-import com.playonlinux.ui.api.UIMessageSender;
+public interface Controller {
+    void startApplication();
 
-@Scan
-public class ControllerCLIImplementation implements Controller {
+    SetupWindow createSetupWindowGUIInstance(String title);
 
-    public void startApplication() {
-        // TODO: Implement this
-    }
-
-    public SetupWindow createSetupWindowGUIInstance(String title) {
-        return null;
-    }
-
-    @Override
-    public UIMessageSender createUIMessageSender() {
-        return new UIMessageSenderCLIImplementation();
-    }
-
+    <T> UIMessageSender<T> createUIMessageSender();
 
 }

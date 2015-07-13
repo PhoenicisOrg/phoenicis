@@ -20,7 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.installer.ScriptClass;
-import com.playonlinux.ui.ProgressControl;
+import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.*;
 

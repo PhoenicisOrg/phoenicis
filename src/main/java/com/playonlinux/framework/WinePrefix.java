@@ -28,7 +28,7 @@ import com.playonlinux.log.ProcessLogger;
 import com.playonlinux.services.manager.ServiceException;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.ui.ProgressControl;
+import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.utils.observer.ObservableDirectorySize;

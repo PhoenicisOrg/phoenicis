@@ -24,10 +24,7 @@ import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsWindowDTO;
 import com.playonlinux.filter.CenterItemFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
-import com.playonlinux.ui.impl.javafx.mainwindow.LeftSideBar;
-import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
-import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
@@ -40,22 +37,19 @@ import org.apache.log4j.Logger;
 
 import static com.playonlinux.lang.Localisation.translate;
 
-final public class ViewApps extends HBox implements Observer<Observable, AppsWindowDTO> {
+final public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowDTO> {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
-
 
     private FailurePanel failurePanel;
     private HBox waitPanel;
 
-    private final EntitiesProvider<AppsItemDTO, AppsWindowDTO> centerItems;
+    private final EntitiesProvider<AppsItemDTO, AppsWindowDTO> windowDTOEntitiesProvider;
     private final MiniatureListWidget availableInstallerListWidget;
 
     private final EventHandlerApps eventHandlerApps;
 
-    private LeftSideBar leftContent;
     private TextField searchBar;
     private CategoryView categoryView;
-    private Node visiblePane;
 
     private CheckBox testingCheck;
     private CheckBox noCdNeededCheck;
@@ -63,18 +57,14 @@ final public class ViewApps extends HBox implements Observer<Observable, AppsWin
     private AppsCategoryDTO selectedCategory;
 
     public ViewApps(MainWindow parent) {
+        super(parent);
         eventHandlerApps = new EventHandlerApps();
-        this.getStyleClass().add("mainWindowScene");
 
         availableInstallerListWidget = MiniatureListWidget.create();
-        centerItems = eventHandlerApps.getRemoteAvailableInstallers();
-
-        leftContent = new LeftSideBar();
+        windowDTOEntitiesProvider = eventHandlerApps.getRemoteAvailableInstallers();
 
         this.initWait();
         this.initFailure();
-
-
 
         this.drawSideBar();
         this.showWait();
@@ -88,7 +78,7 @@ final public class ViewApps extends HBox implements Observer<Observable, AppsWin
         waitPanel = new WaitPanel();
     }
 
-    private void drawSideBar() {
+    protected void drawSideBar() {
         searchBar = new TextField();
         searchBar.setOnKeyReleased((e) -> applyFilter(""));
 
@@ -102,42 +92,33 @@ final public class ViewApps extends HBox implements Observer<Observable, AppsWin
         noCdNeededCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
         commercialCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
 
-
-        leftContent.getChildren().addAll(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(),
+        addToSideBar(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(),
                 new LeftBarTitle("Filters"),
                 testingCheck, noCdNeededCheck, commercialCheck);
 
-        this.getChildren().add(leftContent);
+        super.drawSideBar();
     }
 
-
-    private void showContent() {
-        show(availableInstallerListWidget);
+    private void showAvailableApps() {
+        showRightView(availableInstallerListWidget);
     }
 
     private void showWait() {
-        show(waitPanel);
+        showRightView(waitPanel);
     }
 
     private void showFailure() {
-        show(failurePanel);
+        showRightView(failurePanel);
     }
 
     private void showAppDetails(AppsItemDTO item) {
-        show(new AppPanel(eventHandlerApps, item));
+        showRightView(new AppPanel(eventHandlerApps, item));
     }
 
-    private void show(Node nodeToShow) {
-        if(visiblePane != null) {
-            this.getChildren().remove(visiblePane);
-        }
-        this.visiblePane = nodeToShow;
-        this.getChildren().add(visiblePane);
-    }
 
 
     public void setUpEvents() {
-        centerItems.addObserver(this);
+        windowDTOEntitiesProvider.addObserver(this);
         failurePanel.getRetryButton().setOnMouseClicked(event -> {
             try {
                 this.eventHandlerApps.updateAvailableInstallers();
@@ -158,7 +139,7 @@ final public class ViewApps extends HBox implements Observer<Observable, AppsWin
             } else if (appsWindowDTO.isDownloadFailed()) {
                 this.showFailure();
             } else {
-                this.showContent();
+                this.showAvailableApps();
 
                 categoryView.addCategories(appsWindowDTO.getCategoryDTOs());
 
@@ -184,7 +165,7 @@ final public class ViewApps extends HBox implements Observer<Observable, AppsWin
     }
 
     private void applyFilter(String categoryName) {
-        centerItems.applyFilter(
+        windowDTOEntitiesProvider.applyFilter(
                 new CenterItemFilter(
                         categoryName,
                         searchBar.getText(),

@@ -16,13 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui;
+package com.playonlinux.dto.ui.engines;
 
-public interface Controller {
-    void startApplication();
+import com.playonlinux.dto.AbstractDTO;
 
-    SetupWindow createSetupWindowGUIInstance(String title);
-
-    <T> UIMessageSender<T> createUIMessageSender();
-
+public class EnginesWindowDTO implements AbstractDTO {
 }

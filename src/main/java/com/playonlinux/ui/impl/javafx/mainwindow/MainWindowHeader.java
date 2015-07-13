@@ -76,11 +76,15 @@ public class MainWindowHeader extends GridPane {
         node.setOnMouseClicked(eventHandler);
     }
 
-    public void setMyAppsEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setLibraryEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(myApps, eventHandler);
     }
-    public void setCenterEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setAppsEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(appCenter, eventHandler);
+    }
+
+    public void setEnginesEvent(EventHandler<MouseEvent> eventHandler) {
+        setLinkEvents(engines, eventHandler);
     }
 
 }

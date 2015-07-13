@@ -35,7 +35,7 @@ import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.ui.Controller;
+import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;

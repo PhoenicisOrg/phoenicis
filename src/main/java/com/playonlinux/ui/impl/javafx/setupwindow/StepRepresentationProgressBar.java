@@ -22,7 +22,7 @@ import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.messages.AsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchronousMessage;
 import com.playonlinux.messages.Message;
-import com.playonlinux.ui.ProgressControl;
+import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
