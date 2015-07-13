@@ -24,10 +24,10 @@ import com.playonlinux.installer.CancelException;
 import com.playonlinux.log.LogStream;
 import com.playonlinux.log.LogStreamFactory;
 import com.playonlinux.messages.*;
-import com.playonlinux.ui.Controller;
-import com.playonlinux.ui.ProgressControl;
-import com.playonlinux.ui.SetupWindow;
-import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.ui.api.Controller;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.ui.api.SetupWindow;
+import com.playonlinux.ui.api.UIMessageSender;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -90,7 +90,7 @@ public class SetupWizard {
 
     /**
      * Shows a simple showSimpleMessageStep
-     * @param textToShow the text to show
+     * @param textToShow the text to showRightView
      * @throws CancelException
      */
     public void message(String textToShow) throws CancelException {
@@ -125,7 +125,7 @@ public class SetupWizard {
 
     /**
      * Show a free script presentation
-     * @param textToShow the free presentation text to show
+     * @param textToShow the free presentation text to showRightView
      * @throws CancelException
      */
     public void presentation(String textToShow) throws CancelException {
@@ -171,7 +171,7 @@ public class SetupWizard {
     /**
      * Show a custom licence message
      * @param textToShow a message above the licence
-     * @param licenceText the licence text to show
+     * @param licenceText the licence text to showRightView
      * @throws CancelException
      */
     public String licence(String textToShow, String licenceText) throws CancelException {

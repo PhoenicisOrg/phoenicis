@@ -18,9 +18,12 @@
 
 package com.playonlinux.installer;
 
+import com.playonlinux.dto.web.CategoryDTO;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.webservice.DownloadEnvelope;
 
-public interface InstallerSource extends Observable<DownloadEnvelope> {
+import java.util.Collection;
+
+public interface InstallerSource extends Observable<DownloadEnvelope<Collection<CategoryDTO>>> {
     void populate();
 }

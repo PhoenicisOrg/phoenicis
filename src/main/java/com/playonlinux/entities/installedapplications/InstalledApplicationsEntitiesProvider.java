@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services.installedapplications;
+package com.playonlinux.entities.installedapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -40,7 +40,7 @@ import java.util.List;
 
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
-public final class InstalledApplicationsPlayOnLinuxImplementation
+public final class InstalledApplicationsEntitiesProvider
         extends AbstractObservableImplementation<LibraryWindowDTO>
         implements Observer<ShortcutSetDirectories, List<Shortcut>>,
                    EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> {

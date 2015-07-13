@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.mockui.setupwindow;
 
-import com.playonlinux.ui.ProgressControl;
-import com.playonlinux.ui.SetupWindow;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.messages.CancelerSynchronousMessage;
 import com.playonlinux.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.messages.InterrupterSynchronousMessage;
@@ -44,7 +44,7 @@ public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
     public void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow) {
-        assertEquals("Text to show", textToShow);
+        assertEquals("Text to showRightView", textToShow);
         message.setResponse(null);
     }
 
@@ -55,14 +55,14 @@ public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
     public void showTextBoxStep(CancelerSynchronousMessage message, String textToShow, String defaultValue) {
-        assertEquals("Text to show", textToShow);
+        assertEquals("Text to showRightView", textToShow);
         assertEquals("Default value", defaultValue);
         message.setResponse("showTextBoxStep result");
     }
 
     @Override
     public void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems) {
-        assertEquals("Text to show", textToShow);
+        assertEquals("Text to showRightView", textToShow);
         assertEquals("Element 1", menuItems.get(0));
         assertEquals("Element 2", menuItems.get(1));
 
@@ -71,7 +71,7 @@ public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
     public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
-        assertEquals("Text to show", textToShow);
+        assertEquals("Text to showRightView", textToShow);
     }
 
     @Override

@@ -119,7 +119,11 @@ public class PlayOnLinuxContext {
         return this.getClass().getResource("/playonlinux.png");
     }
 
-    public URL makeWebserviceUrl() throws MalformedURLException {
+    public URL makeInstallersWebserviceUrl() throws MalformedURLException {
         return new URL(this.properties.getProperty("webservice.url"));
+    }
+
+    public URL makeWineVersionWebserviceUrl() throws MalformedURLException {
+        return new URL(this.properties.getProperty("webservice.wine.url"));
     }
 }

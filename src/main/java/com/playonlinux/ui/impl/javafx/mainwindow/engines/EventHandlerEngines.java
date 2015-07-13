@@ -16,37 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.apps;
+package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.apps.AppsItemDTO;
-import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
+import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
 import com.playonlinux.events.EventHandler;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
-
+import org.apache.log4j.Logger;
 
 @Scan
-final class EventHandlerApps implements UIEventHandler {
+class EventHandlerEngines implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
+
+    private static final Logger LOGGER = Logger.getLogger(EventHandlerEngines.class);
 
     @Override
     public EventHandler getMainEventHandler() {
         return mainEventHandler;
     }
 
-    public EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers() {
-        return mainEventHandler.getRemoteAvailableInstallers();
-    }
 
-    public void updateAvailableInstallers() throws PlayOnLinuxException {
-        mainEventHandler.refreshAvailableInstallers();
-    }
-
-    public void installApp(AppsItemDTO appsItemDTO, int scriptId) {
-        System.out.println("Will handle installation of script "+scriptId);
+    public EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions() {
+        return mainEventHandler.getRemoteWineVersions();
     }
 }

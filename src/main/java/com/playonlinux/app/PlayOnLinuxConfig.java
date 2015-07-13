@@ -18,8 +18,8 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.events.EventDispatcher;
-import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
+import com.playonlinux.events.EventHandler;
+import com.playonlinux.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.installer.InstallerSource;
@@ -35,7 +35,7 @@ import com.playonlinux.python.JythonInterpreterFactory;
 import com.playonlinux.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.services.manager.ServiceInitializationException;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.ui.Controller;
+import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
@@ -82,8 +82,8 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     @Bean
-    public EventDispatcher eventHandler() {
-            return new EventDispatcherPlayOnLinuxImplementation();
+    public EventHandler eventHandler() {
+            return new EventHandlerPlayOnLinuxImplementation();
     }
 
     @Bean

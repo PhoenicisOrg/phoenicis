@@ -28,11 +28,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
 abstract public class Webservice<T extends AbstractDTO>
-        extends AbstractObservableImplementation<DownloadEnvelope> implements Service {
+        extends AbstractObservableImplementation<DownloadEnvelope<Collection<T>>> implements Service {
     private final URL url;
     private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
     private Semaphore updateSemaphore = new Semaphore(1);
@@ -75,7 +76,7 @@ abstract public class Webservice<T extends AbstractDTO>
 
 
     private synchronized void update() {
-        DownloadEnvelope<List<T>> envelopeDTO = new DownloadEnvelope<>();
+        DownloadEnvelope<Collection<T>> envelopeDTO = new DownloadEnvelope<>();
         ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder().withState(state).build();
 
         envelopeDTO.setDownloadState(progressStateDTO);

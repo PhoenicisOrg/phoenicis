@@ -19,7 +19,7 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.injection.AbstractConfiguration;
-import com.playonlinux.ui.Controller;
+import com.playonlinux.ui.api.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -90,7 +90,7 @@ public class SetupWizardTest {
 
     @Test
     public void testMessage() throws Exception, CancelException {
-        this.setupWizard.message("Text to show");
+        this.setupWizard.message("Text to showRightView");
     }
 
     // TODO
@@ -101,7 +101,7 @@ public class SetupWizardTest {
 
     @Test
     public void testTextbox() throws Exception, CancelException {
-        assertEquals("showTextBoxStep result", this.setupWizard.textbox("Text to show", "Default value"));
+        assertEquals("showTextBoxStep result", this.setupWizard.textbox("Text to showRightView", "Default value"));
     }
 
     @Test
@@ -110,12 +110,12 @@ public class SetupWizardTest {
         items.add("Element 1");
         items.add("Element 2");
 
-        assertEquals("menu result", this.setupWizard.menu("Text to show", items));
+        assertEquals("menu result", this.setupWizard.menu("Text to showRightView", items));
     }
 
     @Test
     public void testWait() throws Exception {
-        this.setupWizard.wait("text to show");
+        this.setupWizard.wait("text to showRightView");
     }
 
 

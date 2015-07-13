@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.events.EventHandler;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
@@ -28,14 +28,14 @@ import com.playonlinux.ui.api.UIEventHandler;
 @Scan
 public class ConfigureWindowEventHandler implements UIEventHandler {
     @Inject
-    static EventDispatcher mainEventDispatcher;
+    static EventHandler mainEventHandler;
 
     public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
-        return mainEventDispatcher.getInstalledVirtualDrives();
+        return mainEventHandler.getInstalledVirtualDrives();
     }
 
     @Override
-    public EventDispatcher getMainEventHandler() {
-        return mainEventDispatcher;
+    public EventHandler getMainEventHandler() {
+        return mainEventHandler;
     }
 }

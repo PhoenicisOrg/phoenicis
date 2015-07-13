@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.services.availableapplications;
+package com.playonlinux.entities.availableapplications;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.dto.ui.ProgressStateDTO;
@@ -50,7 +50,7 @@ import static com.playonlinux.dto.ui.apps.AppsItemDTO.Builder;
 
 @Scan
 @AutoStartedService(name = "AvailableInstallersService")
-public final class RemoteAvailableInstallersPlayOnLinuxImplementation
+public final class AvailableInstallersEntitiesProvider
         extends AbstractObservableImplementation<AppsWindowDTO>
         implements Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
                    EntitiesProvider<AppsItemDTO, AppsWindowDTO> {
@@ -165,7 +165,7 @@ public final class RemoteAvailableInstallersPlayOnLinuxImplementation
     @Override
     public void start() throws ServiceInitializationException {
         try {
-            webserviceUrl = playOnLinuxContext.makeWebserviceUrl();
+            webserviceUrl = playOnLinuxContext.makeInstallersWebserviceUrl();
         } catch (MalformedURLException e) {
             throw new ServiceInitializationException(e);
         }

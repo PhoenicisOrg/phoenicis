@@ -22,7 +22,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.InjectionException;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.services.manager.ServiceManager;
-import com.playonlinux.ui.Controller;
+import com.playonlinux.ui.api.Controller;
 
 @Scan
 public class PlayOnLinuxApp {

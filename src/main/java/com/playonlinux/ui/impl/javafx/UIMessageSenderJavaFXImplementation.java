@@ -21,7 +21,7 @@ package com.playonlinux.ui.impl.javafx;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchronousMessage;
-import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.ui.api.UIMessageSender;
 import javafx.application.Platform;
 
 import java.util.concurrent.CountDownLatch;

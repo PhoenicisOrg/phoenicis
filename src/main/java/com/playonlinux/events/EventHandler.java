@@ -22,6 +22,8 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
+import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
@@ -32,7 +34,7 @@ import java.net.MalformedURLException;
 /**
  * Call version models from the UI
  */
-public interface EventDispatcher {
+public interface EventHandler {
     /**
      * Run a local script
      * @param scriptToRun script to run
@@ -47,9 +49,11 @@ public interface EventDispatcher {
      */
     EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications();
 
-    Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
-
     EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers();
+
+    EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions();
+
+    Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
 
     void onApplicationStarted() throws MalformedURLException;
 

@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.cli;
 
 import com.playonlinux.injection.Scan;
-import com.playonlinux.ui.Controller;
-import com.playonlinux.ui.SetupWindow;
-import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.ui.api.Controller;
+import com.playonlinux.ui.api.SetupWindow;
+import com.playonlinux.ui.api.UIMessageSender;
 
 @Scan
 public class ControllerCLIImplementation implements Controller {

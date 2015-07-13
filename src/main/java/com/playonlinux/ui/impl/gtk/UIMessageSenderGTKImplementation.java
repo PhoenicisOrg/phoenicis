@@ -21,7 +21,7 @@ package com.playonlinux.ui.impl.gtk;
 import com.playonlinux.installer.CancelException;
 import com.playonlinux.messages.Message;
 import com.playonlinux.messages.SynchronousMessage;
-import com.playonlinux.ui.UIMessageSender;
+import com.playonlinux.ui.api.UIMessageSender;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.Executors;

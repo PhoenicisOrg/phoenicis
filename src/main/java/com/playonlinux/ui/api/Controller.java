@@ -16,41 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.ui.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.playonlinux.dto.AbstractDTO;
+public interface Controller {
+    void startApplication();
 
-import java.util.List;
+    SetupWindow createSetupWindowGUIInstance(String title);
 
-/**
- * Represents a category of application
- */
-public class CategoryDTO implements AbstractDTO {
+    <T> UIMessageSender<T> createUIMessageSender();
 
-    int id;
-    CategoryType type;
-    String name;
-    List <ApplicationDTO> applications;
-    
-    public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public CategoryType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<ApplicationDTO> getApplications() {
-        return applications;
-    }
 }

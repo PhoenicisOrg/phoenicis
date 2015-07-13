@@ -16,16 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui;
+package com.playonlinux.ui.api;
 
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.messages.Message;
-import com.playonlinux.messages.SynchronousMessage;
+import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.utils.observer.Observer;
 
-public interface UIMessageSender <RETURN> {
-    RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException;
+/**
+ * Represents a progress control
+ */
+public interface ProgressControl extends Observer<Observable, ProgressStateDTO> {
+    void setProgressPercentage(double value);
 
-    void synchronousSend(Message message);
-
-    void asynchronousSend(Message message);
+    void setText(String text);
 }

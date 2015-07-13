@@ -18,7 +18,6 @@
 
 package com.playonlinux.dto.web;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.utils.comparator.Nameable;
 
@@ -28,7 +27,6 @@ import java.util.List;
 /**
  * Represents an application
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApplicationDTO implements AbstractDTO, Nameable {
 
     private int id;
