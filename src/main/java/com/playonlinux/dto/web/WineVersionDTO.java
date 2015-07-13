@@ -18,8 +18,26 @@
 
 package com.playonlinux.dto.web;
 
-public class WineVersionDTO {
-    private String version;
-    private String url;
-    private String sha1sum;
+import com.playonlinux.dto.AbstractDTO;
+
+public class WineVersionDTO implements AbstractDTO {
+    String version;
+    String url;
+    String sha1sum;
+
+    public WineVersionDTO() {
+        // Needed by Jackson
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getSha1sum() {
+        return sha1sum;
+    }
 }

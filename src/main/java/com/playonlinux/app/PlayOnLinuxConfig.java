@@ -18,8 +18,8 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.events.EventDispatcher;
-import com.playonlinux.events.EventDispatcherPlayOnLinuxImplementation;
+import com.playonlinux.events.EventHandler;
+import com.playonlinux.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.injection.Bean;
 import com.playonlinux.installer.InstallerSource;
@@ -82,8 +82,8 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     @Bean
-    public EventDispatcher eventHandler() {
-            return new EventDispatcherPlayOnLinuxImplementation();
+    public EventHandler eventHandler() {
+            return new EventHandlerPlayOnLinuxImplementation();
     }
 
     @Bean

@@ -18,22 +18,29 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
-import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
+import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
+import com.playonlinux.events.EventHandler;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import org.apache.log4j.Logger;
 
 @Scan
 class EventHandlerEngines implements UIEventHandler {
     @Inject
-    static EventDispatcher mainEventDispatcher;
+    static EventHandler mainEventHandler;
 
     private static final Logger LOGGER = Logger.getLogger(EventHandlerEngines.class);
 
-
     @Override
-    public EventDispatcher getMainEventHandler() {
-        return mainEventDispatcher;
+    public EventHandler getMainEventHandler() {
+        return mainEventHandler;
+    }
+
+
+    public EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions() {
+        return mainEventHandler.getRemoteWineVersions();
     }
 }

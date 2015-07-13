@@ -18,5 +18,12 @@
 
 package com.playonlinux.wine.versions;
 
-public interface WineVersionSource {
+import com.playonlinux.dto.web.WineVersionDistributionDTO;
+import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.webservice.DownloadEnvelope;
+
+import java.util.Collection;
+
+public interface WineVersionSource extends Observable<DownloadEnvelope<Collection<WineVersionDistributionDTO>>> {
+
 }

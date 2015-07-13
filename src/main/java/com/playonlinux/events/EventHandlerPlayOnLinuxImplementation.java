@@ -23,14 +23,17 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
+import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.entities.wineversions.WineVersionEntitiesProvider;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.installer.Script;
 import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.services.availableapplications.RemoteAvailableInstallersPlayOnLinuxImplementation;
-import com.playonlinux.services.installedapplications.InstalledApplicationsPlayOnLinuxImplementation;
+import com.playonlinux.entities.availableapplications.AvailableInstallersEntitiesProvider;
+import com.playonlinux.entities.installedapplications.InstalledApplicationsEntitiesProvider;
 import com.playonlinux.services.manager.ServiceManager;
 import com.playonlinux.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
 import com.playonlinux.ui.api.EntitiesProvider;
@@ -40,7 +43,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 @Scan
-public final class EventDispatcherPlayOnLinuxImplementation implements EventDispatcher {
+public final class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     @Inject
     static ServiceManager playOnLinuxBackgroundServicesManager;
 
@@ -50,7 +53,7 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
     @Inject
     private static ScriptFactory scriptFactory;
 
-    private static final Logger LOGGER = Logger.getLogger(EventDispatcherPlayOnLinuxImplementation.class);
+    private static final Logger LOGGER = Logger.getLogger(EventHandlerPlayOnLinuxImplementation.class);
 
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
 
@@ -79,21 +82,24 @@ public final class EventDispatcherPlayOnLinuxImplementation implements EventDisp
 
 
     @Override
-    public EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers() {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(RemoteAvailableInstallersPlayOnLinuxImplementation.class);
+    public AvailableInstallersEntitiesProvider getRemoteAvailableInstallers() {
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(AvailableInstallersEntitiesProvider.class);
+    }
+
+    @Override
+    public EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions() {
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(WineVersionEntitiesProvider.class);
     }
 
     @Override
     public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(InstalledApplicationsPlayOnLinuxImplementation.class);
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(InstalledApplicationsEntitiesProvider.class);
     }
-
 
     @Override
     public void refreshAvailableInstallers() throws PlayOnLinuxException {
-        //getRemoteAvailableInstallers().refresh();
+        getRemoteAvailableInstallers().refresh();
     }
-
 
     @Override
     public void onApplicationStarted() throws MalformedURLException {

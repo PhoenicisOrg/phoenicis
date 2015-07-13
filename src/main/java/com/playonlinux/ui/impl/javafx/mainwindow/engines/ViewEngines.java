@@ -18,7 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
-import com.playonlinux.dto.ui.engines.EnginesWindowDTO;
+import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
+import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
@@ -30,38 +32,34 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.apache.log4j.Logger;
 
-import static com.playonlinux.lang.Localisation.translate;
-
-public class ViewEngines extends MainWindowView implements Observer<Observable, EnginesWindowDTO> {
+public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowDTO> {
     private static final Logger LOGGER = Logger.getLogger(ViewEngines.class);
     private final EventHandlerEngines eventHandlerLibrary;
     private TextField searchBar;
-
-
+    private EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> entitiesProvider;
+    private TabPane wineDistributions;
 
     public ViewEngines(MainWindow parent) {
         super(parent);
 
         eventHandlerLibrary = new EventHandlerEngines();
-
+        entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
         this.drawSideBar();
-        this.drawContent();
+        this.drawWineVersions();
+
+        showRightView(wineDistributions);
     }
 
-    private void drawContent() {
-        TabPane tabPane = new TabPane();
-        Tab tab = new Tab();
-        tab.setText("new tab");
-        tab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
-        tabPane.getTabs().add(tab);
-
+    private void drawWineVersions() {
+        wineDistributions = new TabPane();
+        wineDistributions.getStyleClass().add("rightPane");
     }
 
     protected void drawSideBar() {
         super.drawSideBar();
 
         searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
+        searchBar.setOnKeyReleased(event -> {});
 
         LeftButton wine = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/engines/wine.png", "Wine");
 
@@ -71,12 +69,8 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
         addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);
     }
 
-    private void applyFilter(String searchText) {
-
-    }
-
     public void setUpEvents() {
-
+        entitiesProvider.addObserver(this);
     }
 
     public EventHandlerEngines getEventHandler() {
@@ -84,7 +78,17 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
     }
 
     @Override
-    public void update(Observable observable, EnginesWindowDTO argument) {
+    public void update(Observable observable, WineVersionsWindowDTO argument) {
+        wineDistributions.getTabs().clear();
 
+
+        for(WineVersionDistributionItemDTO wineVersionDistributionItemDTO: argument.getDistributions()) {
+            Tab wineDistributionTab = new Tab();
+            wineDistributionTab.setClosable(false);
+            wineDistributionTab.setText(wineVersionDistributionItemDTO.getDescription());
+            wineDistributionTab.setContent(new HBox());
+
+            wineDistributions.getTabs().add(wineDistributionTab);
+        }
     }
 }

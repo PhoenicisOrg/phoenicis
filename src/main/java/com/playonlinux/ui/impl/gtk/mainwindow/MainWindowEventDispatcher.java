@@ -2,7 +2,7 @@ package com.playonlinux.ui.impl.gtk.mainwindow;
 
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.events.EventDispatcher;
+import com.playonlinux.events.EventHandler;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import org.gnome.gtk.FileChooserAction;
@@ -14,7 +14,7 @@ import java.io.File;
 @Scan
 public class MainWindowEventDispatcher {
     @Inject
-    static EventDispatcher mainEventDispatcher;
+    static EventHandler mainEventHandler;
 
     private final Window parent;
 
@@ -36,7 +36,7 @@ public class MainWindowEventDispatcher {
             File scriptPath = new File(fileChooserDialog.getFilename());
             fileChooserDialog.hide();
 
-            mainEventDispatcher.runLocalScript(scriptPath);
+            mainEventHandler.runLocalScript(scriptPath);
         } else {
             fileChooserDialog.hide();
         }

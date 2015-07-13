@@ -20,5 +20,16 @@ package com.playonlinux.dto.ui.engines;
 
 import com.playonlinux.dto.AbstractDTO;
 
-public class EnginesWindowDTO implements AbstractDTO {
+import java.util.List;
+
+public class WineVersionsWindowDTO implements AbstractDTO {
+    private final List<WineVersionDistributionItemDTO> distributions;
+
+    public WineVersionsWindowDTO(List<WineVersionDistributionItemDTO> distributions) {
+        this.distributions = distributions;
+    }
+
+    public List<WineVersionDistributionItemDTO> getDistributions() {
+        return distributions;
+    }
 }
