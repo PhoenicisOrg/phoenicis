@@ -22,8 +22,6 @@ import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -36,9 +34,6 @@ public final class MiniatureListWidget extends ScrollPane {
         FlowPane content = new FlowPane();
         return new MiniatureListWidget(content);
     }
-
-    private Image defaultMiniature =
-            new Image(MiniatureListWidget.class.getResource("defaultMiniature.png").toExternalForm());
 
     private MiniatureListWidget(Pane content) {
         super(content);
@@ -65,20 +60,28 @@ public final class MiniatureListWidget extends ScrollPane {
         return element;
     }
 
+    public Node addItem(String appsItem, Node miniature) {
+        final Element element = new Element(appsItem, miniature);
+        content.getChildren().add(element);
+        return element;
+    }
+
+
 
     private class Element extends VBox {
-        private final String appsItem;
+        private final String elementName;
 
-        Element(String appsItem) {
+        Element(String elementName) {
+            this(elementName, new StaticMiniature());
+        }
+
+        Element(String appsItem, Node miniature) {
             this.getStyleClass().add("miniatureListElement");
 
             this.setAlignment(Pos.CENTER);
-            this.appsItem = appsItem;
+            this.elementName = appsItem;
 
-            ImageView miniature = new ImageView(defaultMiniature);
-            miniature.setFitWidth(120);
-            miniature.setFitHeight(90);
-            miniature.getStyleClass().add("miniatureImage");
+
             Text label = new Text(appsItem);
             label.setWrappingWidth(150);
             label.getStyleClass().add("miniatureText");
@@ -89,7 +92,8 @@ public final class MiniatureListWidget extends ScrollPane {
         }
 
         String getName() {
-            return appsItem;
+            return elementName;
         }
     }
+
 }

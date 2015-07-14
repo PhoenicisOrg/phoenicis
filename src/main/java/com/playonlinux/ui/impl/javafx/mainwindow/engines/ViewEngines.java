@@ -19,17 +19,18 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
 import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
+import com.playonlinux.dto.ui.engines.WineVersionItemDTO;
 import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
+import com.playonlinux.ui.impl.javafx.widget.StaticMiniature;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
 import org.apache.log4j.Logger;
 
 public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowDTO> {
@@ -83,10 +84,15 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
 
 
         for(WineVersionDistributionItemDTO wineVersionDistributionItemDTO: argument.getDistributions()) {
-            Tab wineDistributionTab = new Tab();
+            final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
+            final Tab wineDistributionTab = new Tab();
             wineDistributionTab.setClosable(false);
             wineDistributionTab.setText(wineVersionDistributionItemDTO.getDescription());
-            wineDistributionTab.setContent(new HBox());
+            wineDistributionTab.setContent(miniatureListWidget);
+
+            for(WineVersionItemDTO wineVersionItemDTO: wineVersionDistributionItemDTO.getAvailablePackages()) {
+                miniatureListWidget.addItem(wineVersionItemDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+            }
 
             wineDistributions.getTabs().add(wineDistributionTab);
         }
