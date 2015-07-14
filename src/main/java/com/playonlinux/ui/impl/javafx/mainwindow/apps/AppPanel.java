@@ -75,10 +75,10 @@ final class AppPanel extends VBox {
         });
 
 
-        HBox miniaturesPane = new HBox();
+        final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
 
-        ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
+        final ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
         miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
         for(URL imageUrl: appsItemDTO.getMiniaturesUrls()) {
