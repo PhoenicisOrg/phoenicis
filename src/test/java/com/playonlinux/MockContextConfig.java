@@ -21,14 +21,14 @@ package com.playonlinux;
 import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.injection.AbstractConfiguration;
-import com.playonlinux.injection.Bean;
-import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
-import com.playonlinux.log.LogStreamFactory;
-import com.playonlinux.python.InterpreterFactory;
-import com.playonlinux.python.JythonInterpreterFactory;
-import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.core.injection.AbstractConfiguration;
+import com.playonlinux.core.injection.Bean;
+import com.playonlinux.core.scripts.ScriptFactory;
+import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
+import com.playonlinux.core.log.LogStreamFactory;
+import com.playonlinux.core.python.InterpreterFactory;
+import com.playonlinux.core.python.JythonInterpreterFactory;
+import com.playonlinux.core.services.manager.ServiceManager;
 
 import java.io.IOException;
 

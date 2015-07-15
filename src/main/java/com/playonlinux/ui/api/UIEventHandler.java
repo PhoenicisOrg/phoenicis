@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.events.EventHandler;
+import com.playonlinux.ui.events.EventHandler;
 
 public interface UIEventHandler {
     EventHandler getMainEventHandler();

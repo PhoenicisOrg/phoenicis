@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 final class CategoryView extends VBox {
 

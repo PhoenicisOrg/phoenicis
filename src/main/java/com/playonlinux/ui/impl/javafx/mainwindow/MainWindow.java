@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
 

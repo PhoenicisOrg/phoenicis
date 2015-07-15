@@ -18,12 +18,12 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.installer.ScriptClass;
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.Checksum;
-import com.playonlinux.webservice.DownloadException;
-import com.playonlinux.webservice.HTTPDownloader;
+import com.playonlinux.core.webservice.DownloadException;
+import com.playonlinux.core.webservice.HTTPDownloader;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 @ScriptClass
 @SuppressWarnings("unused")

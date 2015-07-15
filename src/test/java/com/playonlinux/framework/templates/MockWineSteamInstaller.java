@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.python.PythonAttribute;
+import com.playonlinux.core.python.PythonAttribute;
 
 import java.util.List;
 

@@ -20,14 +20,14 @@ package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.installer.ScriptClass;
-import com.playonlinux.log.ProcessLogger;
-import com.playonlinux.services.manager.ServiceException;
-import com.playonlinux.services.manager.ServiceInitializationException;
-import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.core.log.ProcessLogger;
+import com.playonlinux.core.services.manager.ServiceException;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
@@ -43,7 +43,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
 @ScriptClass
