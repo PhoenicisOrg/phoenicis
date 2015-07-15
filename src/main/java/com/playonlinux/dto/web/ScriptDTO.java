@@ -38,6 +38,14 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         // Kept for the webservice
     }
 
+    private ScriptDTO(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.compatiblesOperatingSystems = builder.compatiblesOperatingSystems;
+        this.testingOperatingSystems = builder.testingOperatingSystems;
+        this.free = builder.free;
+        this.requiresNoCD = builder.requiresNoCD;
+    }
     public int getId() {
         return id;
     }
@@ -63,5 +71,46 @@ public class ScriptDTO implements AbstractDTO, Nameable {
     }
 
 
+    public static class Builder {
+        private int id;
+        private String name;
+        private List<OperatingSystem> compatiblesOperatingSystems;
+        private List<OperatingSystem> testingOperatingSystems;
+        private Boolean free;
+        private Boolean requiresNoCD;
 
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withCompatibleOperatingSystems(List<OperatingSystem> compatiblesOperatingSystems) {
+            this.compatiblesOperatingSystems = compatiblesOperatingSystems;
+            return this;
+        }
+
+        public Builder withTestingOperatingSystems(List<OperatingSystem> testingOperatingSystems) {
+            this.testingOperatingSystems = testingOperatingSystems;
+            return this;
+        }
+
+        public Builder withFree(Boolean free) {
+            this.free = free;
+            return this;
+        }
+
+        public Builder withRequiresNoCd(Boolean requiresNoCD) {
+            this.requiresNoCD = requiresNoCD;
+            return this;
+        }
+
+        public ScriptDTO build() {
+            return new ScriptDTO(this);
+        }
+    }
 }
