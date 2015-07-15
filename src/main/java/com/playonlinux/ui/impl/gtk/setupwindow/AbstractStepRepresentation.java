@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.messages.CancelerMessage;
+import com.playonlinux.core.messages.CancelerMessage;
 import org.gnome.gtk.Button;
 import org.gnome.gtk.Fixed;
 import org.gnome.gtk.Widget;

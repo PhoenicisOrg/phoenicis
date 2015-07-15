@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.messages.CancelerMessage;
-import com.playonlinux.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.CancelerMessage;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

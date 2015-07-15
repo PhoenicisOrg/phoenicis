@@ -20,9 +20,9 @@ package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
 import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
 import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
-import com.playonlinux.events.EventHandler;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
+import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import org.apache.log4j.Logger;

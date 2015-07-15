@@ -18,15 +18,15 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.installer.ScriptClass;
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.*;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
-/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.scripts.sh syntax
+/* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.core.scripts.sh syntax
  */
 
 // TODO: Create an abstract class for FileManagement and Downloader

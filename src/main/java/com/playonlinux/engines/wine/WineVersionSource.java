@@ -20,7 +20,7 @@ package com.playonlinux.engines.wine;
 
 import com.playonlinux.dto.web.WineVersionDistributionDTO;
 import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.webservice.DownloadEnvelope;
+import com.playonlinux.core.webservice.DownloadEnvelope;
 
 import java.util.Collection;
 

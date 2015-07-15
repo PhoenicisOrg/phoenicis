@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ViewLibrary extends HBox implements Observer<Observable, LibraryWindowDTO> {
 

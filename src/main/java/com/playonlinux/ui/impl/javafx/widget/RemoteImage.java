@@ -18,10 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx.widget;
 
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.messages.ParametrableRunnable;
-import com.playonlinux.webservice.DownloadManager;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.messages.ParametrableRunnable;
+import com.playonlinux.core.webservice.DownloadManager;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;

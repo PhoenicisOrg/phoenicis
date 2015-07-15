@@ -24,17 +24,16 @@ import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
 import com.playonlinux.dto.web.WineVersionDTO;
 import com.playonlinux.dto.web.WineVersionDistributionDTO;
 import com.playonlinux.filter.Filter;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.services.manager.AutoStartedService;
-import com.playonlinux.services.manager.ServiceInitializationException;
-import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.services.manager.AutoStartedService;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import com.playonlinux.utils.observer.Observer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Scan

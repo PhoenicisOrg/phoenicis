@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.messages.CancelerMessage;
-import com.playonlinux.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.CancelerMessage;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import org.gnome.gtk.Label;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {

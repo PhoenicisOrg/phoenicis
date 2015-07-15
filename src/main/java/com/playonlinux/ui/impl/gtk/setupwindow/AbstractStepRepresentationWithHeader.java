@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.messages.CancelerMessage;
+import com.playonlinux.core.messages.CancelerMessage;
 import org.apache.log4j.Logger;
 import org.gnome.gdk.Pixbuf;
 import org.gnome.gdk.RGBA;

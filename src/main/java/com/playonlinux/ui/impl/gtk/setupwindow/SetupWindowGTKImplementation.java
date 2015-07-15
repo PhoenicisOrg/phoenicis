@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.messages.CancelerSynchronousMessage;
-import com.playonlinux.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.messages.InterrupterSynchronousMessage;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.utils.OperatingSystem;

@@ -21,16 +21,16 @@ package com.playonlinux.engines.wine;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.dto.web.WineVersionDistributionDTO;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.services.manager.AutoStartedService;
-import com.playonlinux.services.manager.Service;
-import com.playonlinux.services.manager.ServiceInitializationException;
-import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.services.manager.AutoStartedService;
+import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import com.playonlinux.utils.observer.Observable;
 import com.playonlinux.utils.observer.Observer;
-import com.playonlinux.webservice.DownloadEnvelope;
+import com.playonlinux.core.webservice.DownloadEnvelope;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -83,7 +83,7 @@ public class WineVersionsManager
         } catch (MalformedURLException e) {
             throw new ServiceInitializationException(e);
         }
-        this.refresh();
+        this.refreshWebservice();
     }
 
     public boolean isUpdating() {
@@ -94,7 +94,7 @@ public class WineVersionsManager
         return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
     }
 
-    private void refresh() throws ServiceInitializationException {
+    private void refreshWebservice() throws ServiceInitializationException {
         if(wineversionsSourceWebserviceImplementation != null) {
             wineversionsSourceWebserviceImplementation.deleteObserver(this);
             playOnLinuxBackgroundServicesManager.unregister(wineversionsSourceWebserviceImplementation);

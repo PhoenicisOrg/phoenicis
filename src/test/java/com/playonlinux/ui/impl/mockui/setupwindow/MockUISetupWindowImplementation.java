@@ -20,9 +20,9 @@ package com.playonlinux.ui.impl.mockui.setupwindow;
 
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
-import com.playonlinux.messages.CancelerSynchronousMessage;
-import com.playonlinux.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.messages.InterrupterSynchronousMessage;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 
 import java.io.File;
 import java.net.MalformedURLException;

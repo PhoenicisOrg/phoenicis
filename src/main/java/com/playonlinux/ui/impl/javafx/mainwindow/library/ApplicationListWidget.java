@@ -33,7 +33,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.List;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem>  {
 

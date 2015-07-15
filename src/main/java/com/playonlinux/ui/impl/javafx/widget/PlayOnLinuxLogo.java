@@ -23,7 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 public class PlayOnLinuxLogo extends HBox {
     public PlayOnLinuxLogo() {

@@ -4,7 +4,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import org.apache.log4j.Logger;
 import org.gnome.gtk.*;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 public class MainWindowMenuBar extends MenuBar {
     private static final Logger LOGGER = Logger.getLogger(MainWindowMenuBar.class);

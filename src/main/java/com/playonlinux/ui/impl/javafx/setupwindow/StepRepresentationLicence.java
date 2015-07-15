@@ -18,11 +18,11 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 public class StepRepresentationLicence extends StepRepresentationMessage {
     private final String licenceText;

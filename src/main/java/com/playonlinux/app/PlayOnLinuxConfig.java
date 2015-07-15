@@ -18,29 +18,29 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.events.EventHandler;
-import com.playonlinux.events.EventHandlerPlayOnLinuxImplementation;
-import com.playonlinux.injection.AbstractConfiguration;
-import com.playonlinux.injection.Bean;
-import com.playonlinux.installer.InstallerSource;
-import com.playonlinux.installer.InstallerSourceWebserviceImplementation;
-import com.playonlinux.installer.ScriptFactory;
-import com.playonlinux.installer.ScriptFactoryDefaultImplementation;
-import com.playonlinux.lang.LanguageBundle;
-import com.playonlinux.lang.LanguageBundleSelector;
-import com.playonlinux.log.LogStreamFactory;
-import com.playonlinux.python.InterpreterFactory;
-import com.playonlinux.python.JythonCommandInterpreterFactory;
-import com.playonlinux.python.JythonInterpreterFactory;
-import com.playonlinux.services.manager.PlayOnLinuxServicesManager;
-import com.playonlinux.services.manager.ServiceInitializationException;
-import com.playonlinux.services.manager.ServiceManager;
+import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
+import com.playonlinux.core.injection.AbstractConfiguration;
+import com.playonlinux.core.injection.Bean;
+import com.playonlinux.core.scripts.InstallerSource;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceImplementation;
+import com.playonlinux.core.scripts.ScriptFactory;
+import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
+import com.playonlinux.core.lang.LanguageBundle;
+import com.playonlinux.core.lang.LanguageBundleSelector;
+import com.playonlinux.core.log.LogStreamFactory;
+import com.playonlinux.core.python.InterpreterFactory;
+import com.playonlinux.core.python.JythonCommandInterpreterFactory;
+import com.playonlinux.core.python.JythonInterpreterFactory;
+import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.CommandInterpreterFactory;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.webservice.DownloadManager;
+import com.playonlinux.core.webservice.DownloadManager;
 import com.playonlinux.engines.wine.WineVersionSource;
 import com.playonlinux.engines.wine.WineversionsSourceWebserviceImplementation;
 

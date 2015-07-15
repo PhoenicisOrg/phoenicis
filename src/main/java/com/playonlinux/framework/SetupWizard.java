@@ -18,12 +18,12 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.installer.CancelException;
-import com.playonlinux.log.LogStream;
-import com.playonlinux.log.LogStreamFactory;
-import com.playonlinux.messages.*;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.core.log.LogStream;
+import com.playonlinux.core.log.LogStreamFactory;
+import com.playonlinux.core.messages.*;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
@@ -37,7 +37,7 @@ import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
 public class SetupWizard {

@@ -35,7 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import org.apache.log4j.Logger;
 
-import static com.playonlinux.lang.Localisation.translate;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 final public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowDTO> {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);

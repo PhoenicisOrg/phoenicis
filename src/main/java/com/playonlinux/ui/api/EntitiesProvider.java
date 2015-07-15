@@ -19,7 +19,7 @@
 package com.playonlinux.ui.api;
 
 import com.playonlinux.filter.Filterable;
-import com.playonlinux.services.manager.Service;
+import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.utils.observer.Observable;
 
 public interface EntitiesProvider<FILTER, OBSERVABLE> extends Filterable<FILTER>, Observable<OBSERVABLE>, Service {

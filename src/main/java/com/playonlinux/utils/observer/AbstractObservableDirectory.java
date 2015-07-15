@@ -19,7 +19,7 @@
 package com.playonlinux.utils.observer;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.services.manager.Service;
+import com.playonlinux.core.services.manager.Service;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
