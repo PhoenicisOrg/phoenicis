@@ -269,4 +269,8 @@ public class SetupWizard {
     public LogStream getLogContext() {
         return logContext;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }

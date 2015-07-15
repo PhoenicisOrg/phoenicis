@@ -20,7 +20,7 @@ package com.playonlinux.core.python;
 
 import com.playonlinux.core.messages.RunnableWithParameter;
 
-public interface CommandInterpreter {
+public interface CommandInterpreter extends AutoCloseable {
     /**
      * Send a line to the interpreter
      * @param command command to send

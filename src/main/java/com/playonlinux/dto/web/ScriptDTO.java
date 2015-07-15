@@ -27,7 +27,6 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ScriptDTO implements AbstractDTO, Nameable {
-
     private int id;
     private String name;
     private List<OperatingSystem> compatiblesOperatingSystems;
@@ -38,11 +37,15 @@ public class ScriptDTO implements AbstractDTO, Nameable {
     public ScriptDTO() {
         // Kept for the webservice
     }
-    private ScriptDTO(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-    }
 
+    private ScriptDTO(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.compatiblesOperatingSystems = builder.compatiblesOperatingSystems;
+        this.testingOperatingSystems = builder.testingOperatingSystems;
+        this.free = builder.free;
+        this.requiresNoCD = builder.requiresNoCD;
+    }
     public int getId() {
         return id;
     }
@@ -51,51 +54,63 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         return name;
     }
 
+    public List<OperatingSystem> getCompatiblesOperatingSystems() {
+        return compatiblesOperatingSystems;
+    }
+
+    public Boolean isFree() {
+        return free;
+    }
+
+    public Boolean isRequiresNoCD() {
+        return requiresNoCD;
+    }
+
+    public List<OperatingSystem> getTestingOperatingSystems() {
+        return testingOperatingSystems;
+    }
+
+
     public static class Builder {
-        private String name;
-        private String description;
-        private String iconURL;
-        private List<String> miniaturesUrls;
         private int id;
-
-        public Builder() {
-            // We need a public builder to be able to create a ScriptDTO from scratch
-        }
-
-        public Builder(ScriptDTO scriptDTO) {
-            this.name = scriptDTO.name;
-            this.id = scriptDTO.id;
-        }
+        private String name;
+        private List<OperatingSystem> compatiblesOperatingSystems;
+        private List<OperatingSystem> testingOperatingSystems;
+        private Boolean free;
+        private Boolean requiresNoCD;
 
         public Builder withId(int id) {
             this.id = id;
             return this;
         }
+
         public Builder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder withDescription(String description) {
-            this.description = description;
+        public Builder withCompatibleOperatingSystems(List<OperatingSystem> compatiblesOperatingSystems) {
+            this.compatiblesOperatingSystems = compatiblesOperatingSystems;
             return this;
         }
 
-        public Builder withIconURL(String iconURL) {
-            this.iconURL = iconURL;
+        public Builder withTestingOperatingSystems(List<OperatingSystem> testingOperatingSystems) {
+            this.testingOperatingSystems = testingOperatingSystems;
             return this;
         }
 
-        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
-            this.miniaturesUrls = miniaturesUrls;
+        public Builder withFree(Boolean free) {
+            this.free = free;
             return this;
         }
 
+        public Builder withRequiresNoCd(Boolean requiresNoCD) {
+            this.requiresNoCD = requiresNoCD;
+            return this;
+        }
 
         public ScriptDTO build() {
             return new ScriptDTO(this);
         }
     }
-
-
 }

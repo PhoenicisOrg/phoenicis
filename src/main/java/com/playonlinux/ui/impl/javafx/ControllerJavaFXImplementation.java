@@ -36,8 +36,8 @@ public class ControllerJavaFXImplementation implements Controller {
     }
 
     @Override
-    public UIMessageSender createUIMessageSender() {
-        return new UIMessageSenderJavaFXImplementation();
+    public <T> UIMessageSender<T> createUIMessageSender() {
+        return new UIMessageSenderJavaFXImplementation<>();
     }
 
 

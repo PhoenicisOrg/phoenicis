@@ -51,8 +51,6 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Inject
     private static ScriptFactory scriptFactory;
 
-    private static final Logger LOGGER = Logger.getLogger(EventHandlerPlayOnLinuxImplementation.class);
-
     private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
 
     @Override

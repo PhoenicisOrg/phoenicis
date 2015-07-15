@@ -24,7 +24,10 @@ import java.io.File;
 
 @ScriptClass
 @SuppressWarnings("unused")
-public class SystemUtilities {
+public final class SystemUtilities {
+    private SystemUtilities() {
+        // Utility class
+    }
     static final int KILOBYTE = 1024;
     // TODO: Find a name that do not use the verb "get"
 

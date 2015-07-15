@@ -88,13 +88,17 @@ public class FileManagement {
     }
 
     public FileManagement copy(String sourceFilePath, String destinationFilePath)
-            throws CancelException, InterruptedException, IOException {
+            throws CancelException{
         File sourceFile = new File(sourceFilePath);
         File destinationFile = new File(destinationFilePath);
 
         this.defineProgressStep(sourceFile);
 
-        this.copyFile(sourceFile, destinationFile);
+        try {
+            this.copyFile(sourceFile, destinationFile);
+        } catch (IOException e) {
+            throw new ScriptFailureException(e);
+        }
         return this;
     }
 

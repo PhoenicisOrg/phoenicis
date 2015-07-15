@@ -43,7 +43,6 @@ final class AppPanel extends VBox {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
 
-        //presentationPaneWrapper.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         final WebView descriptionWidget = new WebView();
 
         try {
@@ -52,7 +51,7 @@ final class AppPanel extends VBox {
                             .render(appsItemDTO)
             );
         } catch (IOException e) {
-            LOGGER.error("Unable to load the description");
+            LOGGER.error("Unable to load the description", e);
         }
 
         descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
@@ -60,7 +59,7 @@ final class AppPanel extends VBox {
                 EventListener listener = ev -> {
                     if(ev.getTarget() instanceof HTMLAnchorElementImpl) {
                         String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
-                        int scriptId = Integer.valueOf(link.replace("install://", ""));
+                        int scriptId = Integer.parseInt(link.replace("install://", ""));
                         eventHandlerApps.installApp(appsItemDTO, scriptId);
                     }
                 };

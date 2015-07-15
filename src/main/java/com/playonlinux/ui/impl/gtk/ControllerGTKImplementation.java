@@ -34,7 +34,7 @@ public class ControllerGTKImplementation implements Controller {
 
     public void startApplication() {
         Gtk.init(ARGS);
-        GTKApplication gtkApplication = new GTKApplication();
+        new GTKApplication();
 
         Gtk.main();
     }
@@ -44,8 +44,8 @@ public class ControllerGTKImplementation implements Controller {
     }
 
     @Override
-    public UIMessageSender createUIMessageSender() {
-        return new UIMessageSenderGTKImplementation();
+    public <T> UIMessageSender<T> createUIMessageSender() {
+        return new UIMessageSenderGTKImplementation<>();
     }
 
 

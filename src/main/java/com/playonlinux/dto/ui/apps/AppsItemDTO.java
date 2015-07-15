@@ -85,13 +85,13 @@ public class AppsItemDTO implements AbstractDTO, Nameable, ItemWithMiniatureDTO 
     }
 
     public static class Builder {
-        public String name;
-        public String categoryName;
-        public boolean isCommercial;
-        public boolean isTesting;
-        public boolean requiresNoCd;
-        public String description;
-        public List<URL> miniaturesUrls = new ArrayList<>();
+        private String name;
+        private String categoryName;
+        private boolean isCommercial;
+        private boolean isTesting;
+        private boolean requiresNoCd;
+        private String description;
+        private List<URL> miniaturesUrls = new ArrayList<>();
         private static final Logger LOGGER = Logger.getLogger(AppsItemDTO.class);
         private List<AppsItemScriptDTO> scripts;
 

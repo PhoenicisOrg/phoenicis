@@ -42,10 +42,9 @@ public abstract class AbstractPythonModule<T> {
             if(objectFound instanceof PyType) {
                 PyType typeFound = (PyType)objectFound;
 
-                if(typeFound.isSubType(PyType.fromClass(type))) {
-                    if(typeFound.isCallable() && "__main__".equals(typeFound.getModule().toString())) {
+                if(typeFound.isSubType(PyType.fromClass(type)) &&
+                        typeFound.isCallable() && "__main__".equals(typeFound.getModule().toString())) {
                         pyClasses.add(typeFound);
-                    }
                 }
             }
 
