@@ -41,8 +41,8 @@ import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.webservice.DownloadManager;
-import com.playonlinux.wine.versions.WineVersionSource;
-import com.playonlinux.wine.versions.WineversionsSourceWebserviceImplementation;
+import com.playonlinux.engines.wine.WineVersionSource;
+import com.playonlinux.engines.wine.WineversionsSourceWebserviceImplementation;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

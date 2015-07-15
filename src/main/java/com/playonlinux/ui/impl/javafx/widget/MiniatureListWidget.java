@@ -31,8 +31,7 @@ public final class MiniatureListWidget extends ScrollPane {
     private final Pane content;
 
     public static MiniatureListWidget create() {
-        FlowPane content = new FlowPane();
-        return new MiniatureListWidget(content);
+        return new MiniatureListWidget(new FlowPane());
     }
 
     private MiniatureListWidget(Pane content) {
@@ -66,9 +65,7 @@ public final class MiniatureListWidget extends ScrollPane {
         return element;
     }
 
-
-
-    private class Element extends VBox {
+    private static class Element extends VBox {
         private final String elementName;
 
         Element(String elementName) {

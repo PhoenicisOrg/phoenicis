@@ -42,11 +42,11 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
         service.start();
     }
 
-    public void shutdown() {
+    public synchronized void shutdown() {
         backgroundServices.values().forEach(Service::shutdown);
     }
 
-    synchronized public void unregister(Service service) {
+    public synchronized void unregister(Service service) {
         final List<String> keysToRemove = new ArrayList<>();
         for(String backgroundServiceKey: backgroundServices.keySet()) {
             if(service.equals(backgroundServices.get(backgroundServiceKey))) {

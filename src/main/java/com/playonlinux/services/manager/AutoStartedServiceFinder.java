@@ -18,6 +18,7 @@
 
 package com.playonlinux.services.manager;
 
+import org.apache.commons.lang.StringUtils;
 import org.reflections.Reflections;
 
 import java.util.HashMap;
@@ -35,7 +36,13 @@ public class AutoStartedServiceFinder {
 
         for(Class<?> clazz: classes) {
             final String serviceName = clazz.getDeclaredAnnotation(AutoStartedService.class).name();
-            results.put(serviceName, clazz);
+            final Class<?> serviceType = clazz.getDeclaredAnnotation(AutoStartedService.class).type();
+
+            if(StringUtils.isBlank(serviceName)) {
+                results.put(serviceType.getName(), clazz);
+            } else {
+                results.put(serviceName, clazz);
+            }
         }
 
         return results;
