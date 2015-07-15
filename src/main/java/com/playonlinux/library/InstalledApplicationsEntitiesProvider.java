@@ -97,7 +97,7 @@ public final class InstalledApplicationsEntitiesProvider
 
     @Override
     public void shutdown() {
-        shortcutSetDirectories.deleteObserver(this);
+        shortcutSetDirectories.close();
         deleteObservers();
     }
 

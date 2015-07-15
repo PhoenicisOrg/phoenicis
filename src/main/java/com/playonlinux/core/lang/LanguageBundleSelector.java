@@ -26,7 +26,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
 
-public class LanguageBundleSelector {
+public final class LanguageBundleSelector {
+    private LanguageBundleSelector() {
+        // Utility class
+    }
     /**
      * Select a LanguageBundle for the given resource from the classpath.
      *

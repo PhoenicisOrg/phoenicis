@@ -38,6 +38,7 @@ public class AppsItemScriptDTO implements AbstractDTO, Nameable {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }

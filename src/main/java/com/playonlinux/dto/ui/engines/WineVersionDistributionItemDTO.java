@@ -53,10 +53,10 @@ public class WineVersionDistributionItemDTO implements AbstractDTO {
     }
 
     public static class Builder {
-        public String name;
-        public List<WineVersionItemDTO> installedPackages;
-        public String description;
-        public List<WineVersionItemDTO> availablePackages;
+        private String name;
+        private List<WineVersionItemDTO> installedPackages;
+        private String description;
+        private List<WineVersionItemDTO> availablePackages;
 
         public Builder withName(String name) {
             this.name = name;

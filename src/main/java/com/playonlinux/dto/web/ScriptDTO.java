@@ -27,7 +27,6 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ScriptDTO implements AbstractDTO, Nameable {
-
     private int id;
     private String name;
     private List<OperatingSystem> compatiblesOperatingSystems;
@@ -38,10 +37,6 @@ public class ScriptDTO implements AbstractDTO, Nameable {
     public ScriptDTO() {
         // Kept for the webservice
     }
-    private ScriptDTO(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-    }
 
     public int getId() {
         return id;
@@ -51,51 +46,22 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         return name;
     }
 
-    public static class Builder {
-        private String name;
-        private String description;
-        private String iconURL;
-        private List<String> miniaturesUrls;
-        private int id;
-
-        public Builder() {
-            // We need a public builder to be able to create a ScriptDTO from scratch
-        }
-
-        public Builder(ScriptDTO scriptDTO) {
-            this.name = scriptDTO.name;
-            this.id = scriptDTO.id;
-        }
-
-        public Builder withId(int id) {
-            this.id = id;
-            return this;
-        }
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder withIconURL(String iconURL) {
-            this.iconURL = iconURL;
-            return this;
-        }
-
-        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
-            this.miniaturesUrls = miniaturesUrls;
-            return this;
-        }
-
-
-        public ScriptDTO build() {
-            return new ScriptDTO(this);
-        }
+    public List<OperatingSystem> getCompatiblesOperatingSystems() {
+        return compatiblesOperatingSystems;
     }
+
+    public Boolean isFree() {
+        return free;
+    }
+
+    public Boolean isRequiresNoCD() {
+        return requiresNoCD;
+    }
+
+    public List<OperatingSystem> getTestingOperatingSystems() {
+        return testingOperatingSystems;
+    }
+
 
 
 }

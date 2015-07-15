@@ -32,8 +32,6 @@ class EventHandlerEngines implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 
-    private static final Logger LOGGER = Logger.getLogger(EventHandlerEngines.class);
-
     @Override
     public EventHandler getMainEventHandler() {
         return mainEventHandler;

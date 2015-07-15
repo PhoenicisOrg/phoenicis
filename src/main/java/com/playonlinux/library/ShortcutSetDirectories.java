@@ -27,6 +27,7 @@ import com.playonlinux.utils.observer.ObservableDirectoryFiles;
 import com.playonlinux.utils.observer.Observer;
 import org.apache.log4j.Logger;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,7 @@ import java.util.List;
 @Scan
 class ShortcutSetDirectories
         extends AbstractObservableImplementation
-        implements Observer<ObservableDirectoryFiles, File[]> {
+        implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
     
     @Inject
     private static ScriptFactory scriptFactory;
@@ -61,15 +62,6 @@ class ShortcutSetDirectories
         iconDirectory.addObserver(this);
     }
 
-    protected void finalize() throws Throwable {
-        try {
-            shortcutDirectory.deleteObserver(this);
-            iconDirectory.deleteObserver(this);
-        } finally {
-            super.finalize();
-        }
-    }
-
     public synchronized List<Shortcut> getShortcuts() {
         return shortcuts;
     }
@@ -78,7 +70,7 @@ class ShortcutSetDirectories
     public void update(ObservableDirectoryFiles observableDirectoryFiles, File[] argument) {
         if(observableDirectoryFiles == shortcutDirectory) {
             getShortcuts().clear();
-            for (File shortcutFile : (File[]) argument) {
+            for (File shortcutFile : argument) {
                 try {
                     URL iconURL;
                     File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
@@ -109,4 +101,10 @@ class ShortcutSetDirectories
     }
 
 
+    @Override
+    public void close() {
+        shortcutDirectory.deleteObserver(this);
+        iconDirectory.deleteObserver(this);
+        this.deleteObservers();
+    }
 }
