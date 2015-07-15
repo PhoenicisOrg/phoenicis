@@ -94,7 +94,6 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
         if(currentTask != null) {
             currentTask.cancel(true);
         }
-        executorService.shutdownNow();
     }
 
     @Override
