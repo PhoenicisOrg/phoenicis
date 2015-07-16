@@ -22,7 +22,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
 import com.playonlinux.dto.ui.apps.AppsWindowDTO;
-import com.playonlinux.filter.CenterItemFilter;
+import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
@@ -166,7 +166,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
 
     private void applyFilter(String categoryName) {
         windowDTOEntitiesProvider.applyFilter(
-                new CenterItemFilter(
+                new AppsFilter(
                         categoryName,
                         searchBar.getText(),
                         testingCheck.isSelected(),

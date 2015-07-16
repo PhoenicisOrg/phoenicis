@@ -40,7 +40,7 @@ import java.util.List;
 
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
-public final class InstalledApplicationsEntitiesProvider
+public final class LibraryEntitiesProvider
         extends AbstractObservableImplementation<LibraryWindowDTO>
         implements Observer<ShortcutSetDirectories, List<Shortcut>>,
                    EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> {

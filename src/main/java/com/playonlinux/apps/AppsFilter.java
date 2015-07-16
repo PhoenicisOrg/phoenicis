@@ -17,25 +17,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.filter;
+package com.playonlinux.apps;
 
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
+import com.playonlinux.filter.Filter;
 import com.playonlinux.utils.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * Filter implementation for CenterItems
  */
-public class CenterItemFilter extends AbstractObservableImplementation implements Filter<AppsItemDTO> {
+public class AppsFilter extends AbstractObservableImplementation implements Filter<AppsItemDTO> {
 
     private final String title;
     private final String category;
 
-    public CenterItemFilter(String category,
-                            String title,
-                            boolean showTesting,
-                            boolean showNoCd,
-                            boolean showCommercial) {
+    public AppsFilter(String category,
+                      String title,
+                      boolean showTesting,
+                      boolean showNoCd,
+                      boolean showCommercial) {
 
         this.category = category;
         this.title = title;

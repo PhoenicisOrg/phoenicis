@@ -31,11 +31,10 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.apps.AvailableInstallersEntitiesProvider;
-import com.playonlinux.library.InstalledApplicationsEntitiesProvider;
+import com.playonlinux.library.LibraryEntitiesProvider;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
 import com.playonlinux.ui.api.EntitiesProvider;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -89,7 +88,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
 
     @Override
     public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(InstalledApplicationsEntitiesProvider.class);
+        return playOnLinuxBackgroundServicesManager.getBackgroundService(LibraryEntitiesProvider.class);
     }
 
     @Override
