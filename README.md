@@ -5,7 +5,7 @@ This is the PlayOnLinux and PlayOnMac 5 repository.
 
 ## Build instructions
 ### Install java-gnome
-Run the maven goal clean alone at least one to install java-gnome in your Maven Repository. Otherwise, your build will faild
+Run the maven goal clean alone at least one to install java-gnome in your Maven Repository. Otherwise, your build will fail
 ```
 mvn clean 
 ```
