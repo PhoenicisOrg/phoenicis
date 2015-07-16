@@ -19,7 +19,7 @@
 package com.playonlinux.core.services.virtualdrives;
 
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.core.observer.Observable;
 
 
 public interface InstalledVirtualDrives extends Iterable<VirtualDriveDTO>, Observable {

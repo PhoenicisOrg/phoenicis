@@ -19,7 +19,7 @@
 package com.playonlinux.core.scripts;
 
 import com.playonlinux.dto.web.CategoryDTO;
-import com.playonlinux.utils.observer.Observable;
+import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 
 import java.util.Collection;

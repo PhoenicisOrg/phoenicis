@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.AbstractObservableImplementation;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

@@ -16,8 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.observer;
+package com.playonlinux.core.comparator;
 
-public interface Observer<OBSERVABLE extends Observable, ARG> {
-    void update(OBSERVABLE observable, ARG argument);
+import java.util.Comparator;
+
+public class AlphabeticalOrderComparator<T extends Nameable> implements Comparator<T> {
+    @Override
+    public int compare(T nameable1, T nameable2) {
+        return nameable1.getName().compareTo(nameable2.getName());
+    }
 }

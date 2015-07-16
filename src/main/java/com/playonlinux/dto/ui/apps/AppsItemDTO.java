@@ -20,7 +20,7 @@ package com.playonlinux.dto.ui.apps;
 
 import com.playonlinux.dto.AbstractDTO;
 import com.playonlinux.dto.ui.ItemWithMiniatureDTO;
-import com.playonlinux.utils.comparator.Nameable;
+import com.playonlinux.core.comparator.Nameable;
 import org.apache.log4j.Logger;
 
 import java.net.MalformedURLException;

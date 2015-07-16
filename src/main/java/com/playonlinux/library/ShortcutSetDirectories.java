@@ -22,9 +22,9 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.InstallerException;
 import com.playonlinux.core.scripts.ScriptFactory;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
-import com.playonlinux.utils.observer.ObservableDirectoryFiles;
-import com.playonlinux.utils.observer.Observer;
+import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.Observer;
 import org.apache.log4j.Logger;
 
 import java.io.Closeable;

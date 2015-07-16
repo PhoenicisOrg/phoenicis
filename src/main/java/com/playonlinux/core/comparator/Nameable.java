@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Markus Ebner
+ * Copyright (C) 2015 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.filter;
+package com.playonlinux.core.comparator;
 
-
-/**
- * Represents of the filterable
- *
- * @param <T> Type held by the filter
- */
-public interface Filterable<T> {
-
-    /**
-     * Apply a filter
-     * @param filter to apply
-     */
-    void applyFilter(Filter<T> filter);
-
+public interface Nameable {
+    String getName();
 }

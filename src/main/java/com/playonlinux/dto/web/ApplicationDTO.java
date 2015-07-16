@@ -19,7 +19,7 @@
 package com.playonlinux.dto.web;
 
 import com.playonlinux.dto.AbstractDTO;
-import com.playonlinux.utils.comparator.Nameable;
+import com.playonlinux.core.comparator.Nameable;
 
 import java.util.Comparator;
 import java.util.List;

@@ -20,8 +20,8 @@
 package com.playonlinux.apps;
 
 import com.playonlinux.dto.ui.apps.AppsItemDTO;
-import com.playonlinux.filter.Filter;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.core.filter.Filter;
+import com.playonlinux.core.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
 
 /**
