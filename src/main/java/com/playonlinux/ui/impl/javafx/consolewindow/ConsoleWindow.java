@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015 Markus Ebner
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +38,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
@@ -44,6 +48,9 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
 
     private static final String NOT_INSIDE_BLOCK = ">>> ";
     private static final String INSIDE_BLOCK = "... ";
+
+    private List<String> commandHistory = new ArrayList<>();
+    private int historyIndex = 0;
 
     @Inject
     private static CommandInterpreterFactory commandInterpreterFactory;
@@ -77,6 +84,8 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
             if (event.getCode() == KeyCode.ENTER) {
                 final String commandToSend = command.getText();
                 command.setDisable(true);
+                commandHistory.add(commandToSend);
+                historyIndex++;
                 Text commandText = new Text(nextSymbol + commandToSend + "\n");
                 commandText.getStyleClass().add("commandText");
                 console.getChildren().add(commandText);
@@ -95,6 +104,20 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
                     nextSymbol = NOT_INSIDE_BLOCK;
                 } else {
                     nextSymbol = INSIDE_BLOCK;
+                }
+            }else if(event.getCode() == KeyCode.UP && historyIndex > 0){
+                historyIndex--;
+                System.out.println("HistoryIndex: " + historyIndex);
+                command.setText(commandHistory.get(historyIndex));
+            }else if(event.getCode() == KeyCode.DOWN){
+                historyIndex++;
+                if(historyIndex == commandHistory.size()){
+                    command.setText("");
+                }else if(historyIndex < commandHistory.size()){
+                    System.out.println("HistoryIndex: " + historyIndex);
+                    command.setText(commandHistory.get(historyIndex));
+                }else {
+                    historyIndex = commandHistory.size();
                 }
             }
         });
