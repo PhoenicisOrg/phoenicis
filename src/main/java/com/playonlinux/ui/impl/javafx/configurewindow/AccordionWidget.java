@@ -19,8 +19,8 @@
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.utils.observer.Observer;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
 import javafx.application.Platform;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;

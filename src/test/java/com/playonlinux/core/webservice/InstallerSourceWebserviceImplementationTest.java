@@ -20,8 +20,8 @@ package com.playonlinux.core.webservice;
 
 import com.playonlinux.dto.web.ApplicationDTO;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceImplementation;
-import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.utils.observer.Observer;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;

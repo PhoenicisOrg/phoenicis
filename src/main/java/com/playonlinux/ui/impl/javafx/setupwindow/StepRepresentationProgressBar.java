@@ -84,7 +84,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
 
 
     @Override
-    public void update(com.playonlinux.utils.observer.Observable observable, ProgressStateDTO argument) {
+    public void update(com.playonlinux.core.observer.Observable observable, ProgressStateDTO argument) {
         ProgressStateDTO progressStateDTO = (ProgressStateDTO) argument;
 
         this.setProgressPercentage(progressStateDTO.getPercent());

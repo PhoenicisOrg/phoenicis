@@ -21,11 +21,11 @@ package com.playonlinux.ui.impl.javafx.mainwindow.library;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
-import com.playonlinux.filter.InstalledApplicationFilter;
+import com.playonlinux.library.LibraryFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
-import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.utils.observer.Observer;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -86,7 +86,7 @@ public class ViewLibrary extends HBox implements Observer<Observable, LibraryWin
     }
 
     private void applyFilter(String searchText) {
-        libraryItems.applyFilter(new InstalledApplicationFilter(searchText));
+        libraryItems.applyFilter(new LibraryFilter(searchText));
     }
 
     public void setUpEvents() {

@@ -16,21 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.observer;
+package com.playonlinux.core.observer;
 
-
-
-public interface Observable<ARG> {
-
-    void addObserver(Observer o);
-
-    void deleteObserver(Observer o);
-
-    void notifyObservers();
-
-    void notifyObservers(ARG arg);
-
-    void deleteObservers();
-
-    int countObservers();
+public interface Observer<OBSERVABLE extends Observable, ARG> {
+    void update(OBSERVABLE observable, ARG argument);
 }

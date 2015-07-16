@@ -19,8 +19,8 @@
 package com.playonlinux.ui.api;
 
 import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.utils.observer.Observable;
-import com.playonlinux.utils.observer.Observer;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
 
 /**
  * Represents a progress control

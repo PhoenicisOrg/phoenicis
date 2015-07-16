@@ -15,20 +15,21 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package com.playonlinux.filter;
+package com.playonlinux.library;
 
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.core.filter.Filter;
+import com.playonlinux.core.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * Filter for installed applications in the MainWindow
  */
-public class InstalledApplicationFilter extends AbstractObservableImplementation implements Filter<InstalledApplicationDTO> {
+public class LibraryFilter extends AbstractObservableImplementation implements Filter<InstalledApplicationDTO> {
 
     private final String name;
 
-    public InstalledApplicationFilter(String name) {
+    public LibraryFilter(String name) {
         this.name = name;
     }
 

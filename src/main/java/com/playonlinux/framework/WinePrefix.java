@@ -31,7 +31,7 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.utils.observer.ObservableDirectorySize;
+import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.version.Version;
 import com.playonlinux.wine.WineDistribution;
 import com.playonlinux.wine.WineException;

@@ -19,7 +19,7 @@
 package com.playonlinux.core.webservice;
 
 import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.utils.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.AbstractObservableImplementation;
 
 import java.io.*;
 import java.net.HttpURLConnection;
