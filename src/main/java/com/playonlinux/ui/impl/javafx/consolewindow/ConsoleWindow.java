@@ -105,18 +105,16 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
                 } else {
                     nextSymbol = INSIDE_BLOCK;
                 }
-            }else if(event.getCode() == KeyCode.UP && historyIndex > 0){
+            } else if (event.getCode() == KeyCode.UP && historyIndex > 0) {
                 historyIndex--;
-                System.out.println("HistoryIndex: " + historyIndex);
                 command.setText(commandHistory.get(historyIndex));
-            }else if(event.getCode() == KeyCode.DOWN){
+            } else if (event.getCode() == KeyCode.DOWN) {
                 historyIndex++;
-                if(historyIndex == commandHistory.size()){
+                if (historyIndex == commandHistory.size()) {
                     command.setText("");
-                }else if(historyIndex < commandHistory.size()){
-                    System.out.println("HistoryIndex: " + historyIndex);
+                } else if (historyIndex < commandHistory.size()) {
                     command.setText(commandHistory.get(historyIndex));
-                }else {
+                } else {
                     historyIndex = commandHistory.size();
                 }
             }
