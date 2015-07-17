@@ -41,13 +41,13 @@ public class VersionComparator implements Comparator<Version> {
                 } else if (version1.getLowNumber() == version2.getLowNumber()) {
                     return 0;
                 } else {
-                    return 2;
+                    return -1;
                 }
             } else {
-                return 2;
+                return -1;
             }
         } else {
-            return 2;
+            return -1;
         }
     }
 }

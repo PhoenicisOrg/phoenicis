@@ -24,6 +24,9 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.Controller;
 
+/**
+ * Main PlayOnLinux app
+ */
 @Scan
 public class PlayOnLinuxApp {
     @Inject
@@ -35,7 +38,11 @@ public class PlayOnLinuxApp {
     @Inject
     static ServiceManager serviceManager;
 
-    public void start(String[] args) throws InjectionException {
+    /**
+     * Start the application instance
+     * @param args system arguments
+     */
+    public void start(String[] args) throws PlayOnLinuxException {
         try(PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig()) {
             if (args.length > 0 && "--cli".equals(args[0])) {
                 playOnLinuxConfig.setUseCLIInterface(true);
@@ -51,13 +58,17 @@ public class PlayOnLinuxApp {
             controller.startApplication();
 
             serviceManager.shutdown();
-        } catch (PlayOnLinuxException e) {
-            System.out.println("Unable to load PlayOnLinux");
-            e.printStackTrace();
+        } catch (InjectionException e) {
+            throw new PlayOnLinuxException("Fatal error: Unable to inject dependencies", e);
         }
     }
 
-    public static void main(String[] args) throws InjectionException {
+    /**
+     * Main methods
+     * @param args system arguments
+     * @throws PlayOnLinuxException If any errors occur
+     */
+    public static void main(String[] args) throws PlayOnLinuxException {
         PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start(args);
     }

@@ -220,7 +220,7 @@
 }
 .console {
     -fx-pref-width:60em;
-    -fx-pref-height:20em;
+    -fx-pref-height:40em;
     -fx-padding: 1em;
     -fx-font-family: "Lucida Console";
 }

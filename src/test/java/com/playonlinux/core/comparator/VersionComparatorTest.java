@@ -76,28 +76,28 @@ public class VersionComparatorTest {
 
     @Test
     public void testCompare_LowerVersion() {
-        assertEquals(2,
+        assertEquals(-1,
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("4.2.2")
                 )
         );
 
-        assertEquals(2,
+        assertEquals(-1,
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("4.3.1")
                 )
         );
 
-        assertEquals(2,
+        assertEquals(-1,
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("5.2.1")
                 )
         );
 
-        assertEquals(2,
+        assertEquals(-1,
                 versionComparator.compare(
                         new Version("4.1.3"),
                         new Version("4.2.2")

@@ -19,39 +19,43 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.library.LibraryFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
+import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-public class ViewLibrary extends HBox implements Observer<Observable, LibraryWindowDTO> {
+public class ViewLibrary extends MainWindowView implements Observer<Observable, LibraryWindowDTO> {
 
     private LeftButton runScript;
     private LeftButton runConsole;
-    private final MainWindow parent;
     private static final Logger LOGGER = Logger.getLogger(ViewLibrary.class);
     private ApplicationListWidget applicationListWidget;
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
 
     private final  EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> libraryItems;
+    private TabPane libraryTabs;
 
 
     public ViewLibrary(MainWindow parent) {
-        this.parent = parent;
+        super(parent);
         this.getStyleClass().add("mainWindowScene");
 
         eventHandlerLibrary = new EventHandlerLibrary();
@@ -59,30 +63,39 @@ public class ViewLibrary extends HBox implements Observer<Observable, LibraryWin
 
         this.drawSideBar();
         this.drawContent();
+
+        showRightView(libraryTabs);
     }
 
     private void drawContent() {
+        libraryTabs = new TabPane();
+        libraryTabs.getStyleClass().add("rightPane");
+
+        final Tab installedApplication = new Tab();
+        installedApplication.setClosable(false);
+        installedApplication.setText(translate("My applications"));
+        libraryTabs.getTabs().add(installedApplication);
+
         applicationListWidget = new ApplicationListWidget(this);
         applicationListWidget.getStyleClass().add("rightPane");
-        this.getChildren().add(applicationListWidget);
+
+        installedApplication.setContent(applicationListWidget);
     }
 
-    private void drawSideBar() {
-        LeftSideBar leftContent = new LeftSideBar();
-
-        this.getChildren().add(leftContent);
-
+    protected void drawSideBar() {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("Run a script"));
-        this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("${application.name} console"));
+        this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/console.png", translate("${application.name} console"));
 
         this.runScript.getStyleClass().add("leftPaneButtons");
         this.runConsole.getStyleClass().add("leftPaneButtons");
 
         LeftSpacer spacer = new LeftSpacer();
-        leftContent.getChildren().addAll(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
+        addToSideBar(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
+
+        super.drawSideBar();
     }
 
     private void applyFilter(String searchText) {
@@ -109,7 +122,22 @@ public class ViewLibrary extends HBox implements Observer<Observable, LibraryWin
             }
         });
 
-        runConsole.setOnMouseClicked(event -> eventHandlerLibrary.runConsole());
+        runConsole.setOnMouseClicked(event -> runConsole());
+    }
+
+    private void runConsole() {
+        try {
+            final Tab console = new ConsoleTab();
+            libraryTabs.getTabs().add(console);
+            libraryTabs.getSelectionModel().select(console);
+        } catch (CommandInterpreterException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(translate("Error while trying to run the console."));
+            alert.setContentText("The error was: " + ExceptionUtils.getFullStackTrace(e));
+            LOGGER.warn("Error while trying to run the console", e);
+        }
+
+
     }
 
     public EventHandlerLibrary getEventHandler() {

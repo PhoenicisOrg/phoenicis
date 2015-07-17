@@ -20,7 +20,6 @@ import os
 
 from com.playonlinux.framework import BashEnvironmentHelper
 
-
 class EnvironmentLoader():
     @staticmethod
     def setup(setupWindowNetcatServer):

@@ -60,4 +60,4 @@ class PlayOnLinuxBashInterpreter(Installer):
             except AttributeError:
                 pass
         finally:
-            self.setupWindowManager.closeAll();
+            self.setupWindowManager.closeAll()

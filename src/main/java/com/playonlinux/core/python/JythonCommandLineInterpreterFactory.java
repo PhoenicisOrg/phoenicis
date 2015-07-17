@@ -22,18 +22,18 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.ui.api.CommandInterpreterFactory;
+import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 
 import java.util.concurrent.ExecutorService;
 
 @Scan
-public class JythonCommandInterpreterFactory implements CommandInterpreterFactory {
+public class JythonCommandLineInterpreterFactory implements CommandLineInterpreterFactory {
     @Inject
     private static ServiceManager serviceManager;
 
     private final ExecutorService executorService;
 
-    public JythonCommandInterpreterFactory(ExecutorService executorService) {
+    public JythonCommandLineInterpreterFactory(ExecutorService executorService) {
         this.executorService = executorService;
     }
 

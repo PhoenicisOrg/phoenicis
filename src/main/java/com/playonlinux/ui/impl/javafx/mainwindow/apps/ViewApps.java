@@ -141,7 +141,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
             } else {
                 this.showAvailableApps();
 
-                categoryView.addCategories(appsWindowDTO.getCategoryDTOs());
+                categoryView.setCategories(appsWindowDTO.getCategoryDTOs());
 
                 for (AppsItemDTO appsItemDTO : appsWindowDTO.getAppsItemDTOs()) {
                     Node itemNode = availableInstallerListWidget.addItem(appsItemDTO.getName());

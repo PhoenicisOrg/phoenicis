@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.widget;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.messages.ParametrableRunnable;
+import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressIndicator;
@@ -41,11 +42,13 @@ import java.net.URL;
 @Scan
 public class RemoteImage extends VBox {
     @Inject
-    private static DownloadManager downloadManager;
+    private static ServiceManager serviceManager;
 
     private static final Logger LOGGER = Logger.getLogger(RemoteImage.class);
 
     private URL imageUrl;
+
+    private final DownloadManager downloadManager = serviceManager.getBackgroundService(DownloadManager.class);
 
     public RemoteImage(URL imgeUrl) {
         this.getChildren().add(new ProgressIndicator());

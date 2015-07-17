@@ -32,7 +32,7 @@ public class LeftButton extends HBox {
         this.name = name;
         this.getStyleClass().add("leftButton");
 
-        ImageView iconView = new ImageView(new Image(this.getClass().getResourceAsStream(iconName)));
+        final ImageView iconView = new ImageView(new Image(this.getClass().getResourceAsStream(iconName)));
         iconView.setFitWidth(24);
         iconView.setFitHeight(24);
 

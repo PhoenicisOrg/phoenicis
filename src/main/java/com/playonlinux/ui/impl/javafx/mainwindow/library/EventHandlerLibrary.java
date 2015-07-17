@@ -24,10 +24,8 @@ import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.ui.impl.javafx.consolewindow.ConsoleWindow;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
@@ -72,16 +70,4 @@ class EventHandlerLibrary implements UIEventHandler {
         }
     }
 
-
-    public void runConsole() {
-        try {
-            ConsoleWindow consoleWindow = new ConsoleWindow();
-        } catch (CommandInterpreterException e) {
-            LOGGER.error(e);
-            final Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(translate("Error while trying to run the console."));
-            alert.setContentText(String.format("The error was: %s", e));
-            alert.show();
-        }
-    }
 }

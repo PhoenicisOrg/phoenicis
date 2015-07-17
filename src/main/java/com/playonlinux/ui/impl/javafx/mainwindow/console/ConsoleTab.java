@@ -17,25 +17,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.consolewindow;
+package com.playonlinux.ui.impl.javafx.mainwindow.console;
 
 
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.CommandInterpreter;
 import com.playonlinux.core.python.CommandInterpreterException;
-import com.playonlinux.ui.api.CommandInterpreterFactory;
+import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import javafx.application.Platform;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ import java.util.List;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
-public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
+public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
 
     private static final String NOT_INSIDE_BLOCK = ">>> ";
     private static final String INSIDE_BLOCK = "... ";
@@ -53,30 +51,29 @@ public class ConsoleWindow extends Stage implements PlayOnLinuxWindow {
     private int historyIndex = 0;
 
     @Inject
-    private static CommandInterpreterFactory commandInterpreterFactory;
+    private static CommandLineInterpreterFactory commandLineInterpreterFactory;
 
     final CommandInterpreter commandInterpreter;
 
     private String nextSymbol = NOT_INSIDE_BLOCK;
 
-    public ConsoleWindow() throws CommandInterpreterException {
-        commandInterpreter = commandInterpreterFactory.createInstance();
-        final VBox rootPane = new VBox();
+    public ConsoleTab() throws CommandInterpreterException {
+        final VBox content = new VBox();
+
+        commandInterpreter = commandLineInterpreterFactory.createInstance();
+
+        this.setText(translate("Console"));
+        this.setContent(content);
 
         final TextField command = new TextField();
         command.getStyleClass().add("consoleCommandType");
         final TextFlow console = new TextFlow();
         final ScrollPane consolePane = new ScrollPane(console);
-        rootPane.getStyleClass().add("consoleWindow");
+        content.getStyleClass().add("rightPane");
+
         consolePane.getStyleClass().add("console");
         consolePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        rootPane.getChildren().addAll(consolePane, command);
-
-        Scene scene = new PlayOnLinuxScene(rootPane);
-
-        this.setScene(scene);
-        this.setTitle(translate("${application.name} console"));
-        this.show();
+        content.getChildren().addAll(consolePane, command);
 
         command.requestFocus();
 

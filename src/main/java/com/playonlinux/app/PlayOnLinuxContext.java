@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Contains all the environment settings required by PlayOnLinux
+ */
 public class PlayOnLinuxContext {
     private final Properties properties;
 
@@ -39,6 +42,11 @@ public class PlayOnLinuxContext {
         this.properties = loadProperties();
     }
 
+    /**
+     * Get the name of the property file
+     * @return the name of the suitable property file
+     * @throws PlayOnLinuxException If the current operating system is unknown
+     */
     public String getPropertyFileName() throws PlayOnLinuxException {
         switch (OperatingSystem.fetchCurrentOperationSystem()) {
             case MACOSX:
@@ -49,6 +57,9 @@ public class PlayOnLinuxContext {
         }
     }
 
+    /**
+     * Init logging framework
+     */
     public void initLogger() {
         try {
             PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
@@ -57,6 +68,10 @@ public class PlayOnLinuxContext {
         }
     }
 
+    /**
+     * Get the properties for the current OS
+     * @return The properties
+     */
     public ReplacableProperties loadProperties()  {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
@@ -68,6 +83,7 @@ public class PlayOnLinuxContext {
         }
         return propertiesBeingLoaded;
     }
+
 
     public File makePrefixPathFromName(String prefixName) {
         String prefixPath = String.format("%s/%s",
