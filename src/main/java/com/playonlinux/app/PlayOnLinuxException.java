@@ -18,6 +18,9 @@
 
 package com.playonlinux.app;
 
+/**
+ * PlayOnLinux exception main class
+ */
 public class PlayOnLinuxException extends Exception {
     public PlayOnLinuxException(String message) {
         this(message, null);

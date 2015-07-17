@@ -34,15 +34,20 @@ final class CategoryView extends VBox {
     public CategoryView(ViewApps parent) {
         this.parent = parent;
         this.getStyleClass().add("leftPaneInside");
+        this.clear();
     }
 
-    public void addCategories(List<AppsCategoryDTO> categories) {
+    private void clear() {
         this.getChildren().clear();
-        this.getChildren().addAll(new LeftBarTitle(translate("Category")));
+        this.getChildren().add(new LeftBarTitle(translate("Category")));
+    }
+
+    public void setCategories(List<AppsCategoryDTO> categories) {
+        this.clear();
 
         if (!categories.isEmpty()) {
             for (AppsCategoryDTO category : categories) {
-                LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
+                final LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
                 categoryButton.getStyleClass().add("leftPaneButtons");
                 this.getChildren().add(categoryButton);
                 categoryButton.setOnMouseClicked(event -> parent.selectCategory(category));

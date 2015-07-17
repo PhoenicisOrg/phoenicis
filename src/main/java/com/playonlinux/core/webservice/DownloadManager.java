@@ -20,6 +20,7 @@ package com.playonlinux.core.webservice;
 
 import com.playonlinux.core.messages.ParametrableRunnable;
 import com.playonlinux.core.services.SubmitableService;
+import com.playonlinux.core.services.manager.AutoStartedService;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 /*
  Represents a download manager
  */
+@AutoStartedService
 public class DownloadManager implements
         SubmitableService<HTTPDownloader, ParametrableRunnable<byte[]>> {
     private static final int DEFAULT_POOL_SIZE = 4;

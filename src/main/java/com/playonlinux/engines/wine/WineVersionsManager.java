@@ -19,10 +19,10 @@
 package com.playonlinux.engines.wine;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.dto.web.WineVersionDistributionDTO;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.dto.web.WineVersionDistributionDTO;
 import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -59,7 +59,7 @@ public class WineVersionsManager
     @Override
     public void update(Observable observable, Object argument) {
         /*
-         * Because of some limitations of Java's Generic we need to do this way.
+         * Because of some limitations of Java's Generics we need to do this way.
          */
         // TODO: Observe the local directory
         if(argument instanceof DownloadEnvelope && observable instanceof WineVersionSource) {
