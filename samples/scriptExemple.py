@@ -1,8 +1,7 @@
 from com.playonlinux.framework.templates import Installer
 
 class Example(Installer):
-    logContext = "ExampleScript"
-    title = "TITLE"
+    title = "Example"
 
     def main(self):
         setupWindow = self.getSetupWizard()
@@ -10,6 +9,9 @@ class Example(Installer):
         print "Hello from python!"
 
         setupWindow.message("Test\nTest")
+        selectedFile = setupWindow.browse("Select a file", "/", [".exe", ".doc", ".py"])
+
+        setupWindow.message(selectedFile);
         setupWindow.message("Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
                                   "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
                                   "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 ")

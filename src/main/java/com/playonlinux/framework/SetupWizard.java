@@ -18,6 +18,7 @@
 
 package com.playonlinux.framework;
 
+import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.CancelException;
@@ -35,6 +36,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.playonlinux.core.lang.Localisation.translate;
@@ -43,10 +45,13 @@ import static com.playonlinux.core.lang.Localisation.translate;
 public class SetupWizard {
 
     @Inject
-    private static Controller controller;
+    static Controller controller;
 
     @Inject
-    private static LogStreamFactory logStreamFactory;
+    static LogStreamFactory logStreamFactory;
+
+    @Inject
+    static PlayOnLinuxContext playOnLinuxContext;
 
     private final String title;
 
@@ -203,7 +208,7 @@ public class SetupWizard {
      * @throws CancelException
      */
     public String textbox(String textToShow, String defaultValue) throws CancelException {
-        return (String) messageSender.synchronousSendAndGetResult(
+        return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
@@ -221,7 +226,7 @@ public class SetupWizard {
      * @throws CancelException
      */
     public String menu(String textToShow, List<String> menuItems) throws CancelException {
-        return (String) messageSender.synchronousSendAndGetResult(
+        return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
@@ -230,6 +235,38 @@ public class SetupWizard {
                 }
         );
     }
+
+    /**
+     * Asks the user to choose a file a file
+     * @param textToShow text to show
+     * @return The path of the file
+     * @throws CancelException
+     */
+    public String browse(String textToShow) throws CancelException {
+        return browse(textToShow, playOnLinuxContext.getUserHome(), null);
+    }
+
+    /**
+     * Ask the user to choose a file
+     * @param textToShow text to show
+     * @param directory default directory to browse in
+     * @param allowedExtensions A list containing allowed extensions. All extensions will be allowed if this parameter
+     *                          is set to null
+     * @return The path of the file
+     * @throws CancelException
+     */
+    public String browse(String textToShow, String directory, List<String> allowedExtensions) throws CancelException {
+        return messageSender.synchronousSendAndGetResult(
+                new CancelerSynchronousMessage<String>() {
+                    @Override
+                    public void execute(Message message) {
+                        setupWindow.get().showBrowseStep((CancelerSynchronousMessage) message, textToShow,
+                                new File(directory), allowedExtensions);
+                    }
+                }
+        );
+    }
+
 
     /**
      * Displays a showSimpleMessageStep to the user with a waiting symbol, and releases the script just afterward

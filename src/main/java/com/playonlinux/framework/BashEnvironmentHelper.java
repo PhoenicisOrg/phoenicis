@@ -34,7 +34,7 @@ import static com.playonlinux.wine.WineProcessBuilder.mergeEnvironmentVariables;
 @Scan
 public final class BashEnvironmentHelper {
     @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+    static PlayOnLinuxContext playOnLinuxContext;
 
     private BashEnvironmentHelper() {
         // This is a static class, it should never be instantiated

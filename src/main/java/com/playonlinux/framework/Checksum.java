@@ -16,34 +16,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework.templates;
+package com.playonlinux.framework;
 
-import com.playonlinux.core.scripts.ScriptTemplate;
-import com.playonlinux.core.log.LogStream;
-import com.playonlinux.core.python.PythonAttribute;
+import com.playonlinux.ui.api.ProgressControl;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 
-public abstract class AbstractTemplate implements ScriptTemplate {
-    @PythonAttribute
-    private String title;
+public class Checksum {
+    ProgressControl progressControl;
 
-    protected void print(String message) {
-        OutputStream outputstream;
-        if(title != null) {
-            try {
-                outputstream = new LogStream(title);
-            } catch (IOException e) {
-                outputstream = System.out;
-            }
+    public Checksum progress(ProgressControl progressControl) {
+        this.progressControl = progressControl;
+        return this;
+    }
+
+    public String md5(String file) throws IOException, NoSuchAlgorithmException {
+        if(progressControl != null) {
+            return com.playonlinux.utils.Checksum.calculate(new File(file), "md5", progressControl);
         } else {
-            outputstream = System.out;
+            return com.playonlinux.utils.Checksum.calculate(new File(file), "md5");
         }
-
-        PrintWriter printWriter = new PrintWriter(outputstream);
-        printWriter.println(message);
-        printWriter.flush();
     }
 }
