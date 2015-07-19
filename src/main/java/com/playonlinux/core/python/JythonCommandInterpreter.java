@@ -46,12 +46,12 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
     private final StringWriter returnBuffer;
     private final ExecutorService executorService;
     private Future currentTask;
-    private final StringBuffer commandBuffer;
+    private final StringBuilder commandBuffer;
 
     public JythonCommandInterpreter(ExecutorService executorService) {
         this.returnBuffer = new StringWriter();
         this.executorService = executorService;
-        this.commandBuffer = new StringBuffer();
+        this.commandBuffer = new StringBuilder();
     }
 
     @Override

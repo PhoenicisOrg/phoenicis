@@ -43,6 +43,7 @@ public class AppsItemScriptDTO implements AbstractDTO, Nameable {
         return name;
     }
 
+    @Override
     public String toString() {
         return new ToStringBuilder(this.getClass().getName())
                 .append(this.id)
@@ -76,6 +77,4 @@ public class AppsItemScriptDTO implements AbstractDTO, Nameable {
             return new AppsItemScriptDTO(this);
         }
     }
-
-
 }
