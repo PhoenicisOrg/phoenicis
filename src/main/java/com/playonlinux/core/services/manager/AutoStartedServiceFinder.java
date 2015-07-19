@@ -29,7 +29,7 @@ public class AutoStartedServiceFinder {
     private final static String PACKAGE_NAME = "com.playonlinux";
 
     public Map<String, Class<?>> findClasses() {
-        final HashMap<String, Class<?>> results = new HashMap<>();
+        final Map<String, Class<?>> results = new HashMap<>();
         final Reflections reflections = new Reflections(PACKAGE_NAME);
         final Set<Class<?>> classes
                 = reflections.getTypesAnnotatedWith(AutoStartedService.class);

@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutorService;
 @Scan
 public class JythonCommandLineInterpreterFactory implements CommandLineInterpreterFactory {
     @Inject
-    private static ServiceManager serviceManager;
+    static ServiceManager serviceManager;
 
     private final ExecutorService executorService;
 
@@ -37,6 +37,7 @@ public class JythonCommandLineInterpreterFactory implements CommandLineInterpret
         this.executorService = executorService;
     }
 
+    @Override
     public JythonCommandInterpreter createInstance() throws CommandInterpreterException {
         JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);
         try {

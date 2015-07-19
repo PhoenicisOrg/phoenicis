@@ -68,7 +68,7 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Abstr
 
             @Override
             public boolean hasNext() {
-                return (directoryContent.length > i);
+                return directoryContent.length > i;
             }
 
             @Override
