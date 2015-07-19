@@ -94,4 +94,9 @@ public class MockUISetupWindowImplementation implements SetupWindow {
         // TODO
         
     }
+
+    @Override
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+
+    }
 }

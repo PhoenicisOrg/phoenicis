@@ -35,7 +35,7 @@ import java.util.Set;
 @Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     @Inject
-    private static LogStreamFactory logStreamFactory;
+    static LogStreamFactory logStreamFactory;
 
     private static final String MAIN_METHOD_NAME = "main";
     private static final String DEFINE_LOGCONTEXT_NAME = "title";
@@ -74,7 +74,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private void injectAllPythonAttributes() throws ScriptFailureException {
         Class <?> parentClass = ((PyType) ((PyType) getMainClass().getBase()).getBase()).getProxyType();
 
-        Set<Field> fields = ReflectionUtils.getAllFields(parentClass,
+        final Set<Field> fields = ReflectionUtils.getAllFields(parentClass,
                 ReflectionUtils.withAnnotation(PythonAttribute.class));
 
         for(Field field: fields) {

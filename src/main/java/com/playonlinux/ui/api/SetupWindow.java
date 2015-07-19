@@ -47,5 +47,7 @@ public interface SetupWindow {
 
     void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText);
 
+    void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions);
+
     void close();
 }

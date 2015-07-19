@@ -148,6 +148,13 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
         stepRepresentationLicence.installStep();
     }
 
+    @Override
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+        StepRepresentationBrowse stepRepresentationBrowse =
+                new StepRepresentationBrowse(this, message, textToShow, browseDirectory, extensions);
+        stepRepresentationBrowse.installStep();
+    }
+
 
     @Override
     public void setTopImage(File topImage) throws MalformedURLException {

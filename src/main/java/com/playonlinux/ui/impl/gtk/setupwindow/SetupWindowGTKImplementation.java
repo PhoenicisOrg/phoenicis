@@ -141,6 +141,11 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     }
 
     @Override
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+
+    }
+
+    @Override
     public void close() {
         this.destroy();
     }

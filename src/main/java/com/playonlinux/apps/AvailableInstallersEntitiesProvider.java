@@ -81,7 +81,7 @@ public final class AvailableInstallersEntitiesProvider
                 if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     categoriesDTO.add(new AppsCategoryDTO(categoryDTO.getName()));
                     for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
-                        List<AppsItemScriptDTO> scripts = new ArrayList<>();
+                        final List<AppsItemScriptDTO> scripts = new ArrayList<>();
                         for (ScriptDTO script : applicationDTO.getScripts()) {
                             scripts.add(
                                     new AppsItemScriptDTO.Builder()
@@ -91,7 +91,7 @@ public final class AvailableInstallersEntitiesProvider
                             );
                         }
 
-                        AppsItemDTO appsItemDTO = new Builder() //
+                        final AppsItemDTO appsItemDTO = new Builder() //
                                 .withName(applicationDTO.getName()) //
                                 .withCategoryName(categoryDTO.getName()) //
                                 .withDescription(applicationDTO.getDescription()) //
@@ -153,9 +153,6 @@ public final class AvailableInstallersEntitiesProvider
         installerSourceWebserviceImplementation.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(installerSourceWebserviceImplementation);
     }
-
-
-
 
     @Override
     public void shutdown() {

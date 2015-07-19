@@ -18,7 +18,9 @@
 
 package com.playonlinux.utils;
 
+import com.playonlinux.ui.api.ProgressControl;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,25 +29,44 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 public class Checksum {
     private static final int BLOCK_SIZE = 2048;
 
     public static String calculate(File fileToCheck, String algorithm) throws NoSuchAlgorithmException, IOException {
-        FileInputStream inputStream = new FileInputStream(fileToCheck);
+        final FileInputStream inputStream = new FileInputStream(fileToCheck);
         MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
 
-        return Hex.encodeHexString(getDigest(inputStream, messageDigest));
+        return Hex.encodeHexString(getDigest(inputStream, messageDigest, null, 0));
     }
 
-    private static byte[] getDigest(InputStream inputStream, MessageDigest messageDigest)
+    public static String calculate(File fileToCheck, String algorithm, ProgressControl progressControl) throws NoSuchAlgorithmException, IOException {
+        final FileInputStream inputStream = new FileInputStream(fileToCheck);
+        long sizeInBytes = FileUtils.sizeOf(fileToCheck);
+        MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+
+        return Hex.encodeHexString(getDigest(inputStream, messageDigest, progressControl, sizeInBytes));
+    }
+
+    private static byte[] getDigest(InputStream inputStream, MessageDigest messageDigest,
+                                    ProgressControl progressControl, long sizeInBytes)
             throws IOException {
 
         messageDigest.reset();
         byte[] bytes = new byte[BLOCK_SIZE];
         int numBytes;
+        int readBytes = 0;
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
+            readBytes += numBytes;
+            if(progressControl != null && sizeInBytes != 0) {
+                double percentage = (double) readBytes / (double) sizeInBytes * 100;
+                progressControl.setProgressPercentage(percentage);
+                progressControl.setText(translate("Calculating checksum"));
+            }
         }
         return messageDigest.digest();
     }
+
 }

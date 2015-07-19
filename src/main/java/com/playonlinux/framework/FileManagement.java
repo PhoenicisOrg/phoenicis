@@ -80,7 +80,7 @@ public class FileManagement {
             }
 
             if(Thread.interrupted()) {
-                throw new CancelException();
+                throw new CancelException("The copy process was interrupted");
             }
         }
         inputStream.close();

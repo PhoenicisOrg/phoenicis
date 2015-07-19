@@ -33,7 +33,7 @@ import java.io.File;
 @SuppressWarnings("unused")
 public class WineInstallation {
     @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+    static PlayOnLinuxContext playOnLinuxContext;
 
     private final Version version;
     private final WineDistribution wineDistribution;
