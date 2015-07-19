@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistryKey extends AbstractRegistryNode {
-    List<AbstractRegistryNode> children;
+    private final List<AbstractRegistryNode> children;
 
     @Override
     public String toString() {

@@ -48,15 +48,11 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
 
     public synchronized void unregister(Service service) {
         final List<String> keysToRemove = new ArrayList<>();
-        for(String backgroundServiceKey: backgroundServices.keySet()) {
-            if(service.equals(backgroundServices.get(backgroundServiceKey))) {
-                keysToRemove.add(backgroundServiceKey);
-                service.shutdown();
-            }
-        }
-        for(String keyToRemove: keysToRemove) {
-            backgroundServices.remove(keyToRemove);
-        }
+        backgroundServices.keySet().stream().filter(backgroundServiceKey -> service.equals(backgroundServices.get(backgroundServiceKey))).forEach(backgroundServiceKey -> {
+            keysToRemove.add(backgroundServiceKey);
+            service.shutdown();
+        });
+        keysToRemove.forEach(backgroundServices::remove);
     }
 
     @Override

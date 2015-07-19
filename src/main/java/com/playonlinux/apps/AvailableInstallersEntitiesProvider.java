@@ -61,9 +61,9 @@ public final class AvailableInstallersEntitiesProvider
     @Inject
     private static ServiceManager playOnLinuxBackgroundServicesManager;
 
-    private List<AppsItemDTO> appsItemDTOs = new ArrayList<>();
-    private List<AppsItemDTO> filteredAppsItemsDTOs = new ArrayList<>();
-    private List<AppsCategoryDTO> categoriesDTO = new ArrayList<>();
+    private final List<AppsItemDTO> appsItemDTOs = new ArrayList<>();
+    private final List<AppsItemDTO> filteredAppsItemsDTOs = new ArrayList<>();
+    private final List<AppsCategoryDTO> categoriesDTO = new ArrayList<>();
 
     private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;

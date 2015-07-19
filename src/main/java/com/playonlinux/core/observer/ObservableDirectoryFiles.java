@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ObservableDirectoryFiles extends AbstractObservableDirectory {
+public class ObservableDirectoryFiles extends AbstractObservableDirectory<File[]> {
     private final ObservableDirectoryThread observableDirectoryThread;
 
     public ObservableDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {

@@ -36,7 +36,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.playonlinux.core.lang.Localisation.translate;
@@ -54,9 +53,9 @@ public class SetupWizard {
     static PlayOnLinuxContext playOnLinuxContext;
 
     private final String title;
+    private final UIMessageSender<String> messageSender;
 
-    WeakReference<SetupWindow> setupWindow;
-    UIMessageSender<String> messageSender;
+    private WeakReference<SetupWindow> setupWindow;
     private LogStream logContext;
 
 

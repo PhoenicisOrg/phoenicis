@@ -20,7 +20,7 @@ package com.playonlinux.core.messages;
 
 public abstract class InterrupterSynchronousMessage<RETURN_TYPE> extends SynchronousMessage<RETURN_TYPE>
         implements CancelerMessage {
-    Thread messageSender;
+    final Thread messageSender;
 
     public InterrupterSynchronousMessage() {
         this.messageSender = Thread.currentThread();

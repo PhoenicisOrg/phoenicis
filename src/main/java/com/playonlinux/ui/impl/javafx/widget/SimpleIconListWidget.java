@@ -38,7 +38,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 public class SimpleIconListWidget
         extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
     private final TreeItem<SimpleIconListItem> rootItem;
-    private Image defaultIcon =
+    private final Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
     private static final Logger LOGGER = Logger.getLogger(SimpleIconListWidget.class);
@@ -106,7 +106,7 @@ public class SimpleIconListWidget
 
 
     protected class SimpleIconListItem extends GridPane {
-        private String itemName;
+        private final String itemName;
 
         SimpleIconListItem(String itemName, ImageView iconImageView) {
             this.itemName = itemName;

@@ -31,19 +31,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
-import org.apache.log4j.Logger;
-
 public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowDTO> {
-    private static final Logger LOGGER = Logger.getLogger(ViewEngines.class);
-    private final EventHandlerEngines eventHandlerLibrary;
-    private TextField searchBar;
-    private EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> entitiesProvider;
+    private final EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> entitiesProvider;
     private TabPane wineDistributions;
 
     public ViewEngines(MainWindow parent) {
         super(parent);
 
-        eventHandlerLibrary = new EventHandlerEngines();
+        EventHandlerEngines eventHandlerLibrary = new EventHandlerEngines();
         entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
         this.drawSideBar();
         this.drawWineVersions();
@@ -59,8 +54,9 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
     protected void drawSideBar() {
         super.drawSideBar();
 
-        searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> {});
+        TextField searchBar = new TextField();
+        searchBar.setOnKeyReleased(event -> {
+        });
 
         LeftButton wine = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/engines/wine.png", "Wine");
 
@@ -72,10 +68,6 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
 
     public void setUpEvents() {
         entitiesProvider.addObserver(this);
-    }
-
-    public EventHandlerEngines getEventHandler() {
-        return eventHandlerLibrary;
     }
 
     @Override

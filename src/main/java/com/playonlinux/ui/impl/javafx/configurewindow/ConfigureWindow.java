@@ -26,17 +26,16 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
-    private final PlayOnLinuxWindow parent;
     private static ConfigureWindow instance;
-    private final VirtualDrivesWidget installedVirtualDrivesWidget;
     private final ConfigureWindowEventHandler eventHandler = new ConfigureWindowEventHandler();
+
     /**
      * Get the instance of the configure window.
      * The singleton pattern is only meant to avoid opening this window twice.
      * @param parent: The parent window
      * @return the configureWindow instance
      */
-    public static ConfigureWindow getInstance(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
+    public static ConfigureWindow getInstance(PlayOnLinuxWindow parent) {
         if(instance == null) {
             instance = new ConfigureWindow(parent);
         } else {
@@ -46,11 +45,10 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         return instance;
     }
 
-    private ConfigureWindow(PlayOnLinuxWindow parent) throws PlayOnLinuxException {
+    private ConfigureWindow(PlayOnLinuxWindow parent) {
         super();
-        this.parent = parent;
 
-        this.installedVirtualDrivesWidget = new VirtualDrivesWidget();
+        VirtualDrivesWidget installedVirtualDrivesWidget = new VirtualDrivesWidget();
 
         GridPane gridPane = new GridPane();
         gridPane.add(installedVirtualDrivesWidget, 0, 0);
@@ -67,7 +65,7 @@ public class ConfigureWindow extends Stage implements PlayOnLinuxWindow {
         this.show();
     }
 
-    public void setUpEvents() throws PlayOnLinuxException {
+    public void setUpEvents() {
         /*
         InstalledVirtualDrives installedVirtualDrives = getEventHandler().getInstalledVirtualDrives();
         installedVirtualDrives.addObserver(this.installedVirtualDrivesWidget);

@@ -56,7 +56,7 @@ public class SignatureChecker {
         return this;
     }
 
-    public Boolean check() throws IOException, CMSException, PGPException, NoSuchProviderException, SignatureException {
+    public Boolean check() throws IOException, PGPException, NoSuchProviderException, SignatureException {
         PGPPublicKey pgpSigningKey = readPublicKey(new ByteArrayInputStream(publicKey.getBytes()));
 
         ArmoredInputStream armoredInputStream = new ArmoredInputStream(new ByteArrayInputStream(signature.getBytes()));
@@ -95,14 +95,14 @@ public class SignatureChecker {
 
         PGPPublicKey key = null;
 
-        Iterator<PGPPublicKeyRing> rIt = pgpPub.getKeyRings();
+        Iterator rIt = pgpPub.getKeyRings();
 
 
         while (key == null && rIt.hasNext()) {
-            PGPPublicKeyRing kRing = rIt.next();
-            Iterator<PGPPublicKey> kIt = kRing.getPublicKeys();
+            PGPPublicKeyRing kRing = (PGPPublicKeyRing) rIt.next();
+            Iterator kIt = kRing.getPublicKeys();
             while (key == null && kIt.hasNext()) {
-                key = kIt.next();
+                key = (PGPPublicKey) kIt.next();
             }
         }
 

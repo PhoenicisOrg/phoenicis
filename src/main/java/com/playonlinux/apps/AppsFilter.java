@@ -28,7 +28,6 @@ import org.apache.commons.lang.StringUtils;
  * Filter implementation for CenterItems
  */
 public class AppsFilter extends AbstractObservableImplementation implements Filter<AppsItemDTO> {
-
     private final String title;
     private final String category;
 

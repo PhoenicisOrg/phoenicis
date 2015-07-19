@@ -74,7 +74,7 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Abstr
             @Override
             public VirtualDriveDTO next() {
                 if(i >= directoryContent.length) {
-                    throw new NoSuchElementException();
+                    throw new NoSuchElementException("No next iterated value. Have you called hasNext()?");
                 }
                 VirtualDrive virtualDrive =
                         new VirtualDrive(directoryContent[i]);

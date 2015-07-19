@@ -22,9 +22,10 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 
 public class MainWindowView extends HBox {
-    private LeftSideBar leftContent;
+    private final LeftSideBar leftContent;
+    protected final MainWindow parent;
+
     private Node visiblePane;
-    protected MainWindow parent;
 
     public MainWindowView(MainWindow parent) {
         this.parent = parent;

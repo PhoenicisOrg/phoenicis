@@ -56,11 +56,11 @@ public final class BashEnvironmentHelper {
         }
     }
 
-    public static String getUserRoot() throws ScriptFailureException {
+    public static String getUserRoot() {
         return playOnLinuxContext.loadProperties().getProperty("application.user.root");
     }
 
-    public static String getEnvironmentVar(String variable) throws ScriptFailureException {
+    public static String getEnvironmentVar(String variable) {
         Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
         Map<String,String> systemEnvironment = System.getenv();
 

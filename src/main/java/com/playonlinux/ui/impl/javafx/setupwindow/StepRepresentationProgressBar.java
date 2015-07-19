@@ -28,8 +28,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 
 public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressControl {
-    ProgressBar progressBar = new ProgressBar();
-    Text progressText = new Text("");
+    private final ProgressBar progressBar = new ProgressBar();
+    private final Text progressText = new Text("");
 
     public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, InterrupterSynchronousMessage messageWaitingForResponse,
                                          String textToShow) {

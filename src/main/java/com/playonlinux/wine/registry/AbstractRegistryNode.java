@@ -19,8 +19,9 @@
 package com.playonlinux.wine.registry;
 
 public abstract class AbstractRegistryNode {
+    final String name;
+
     RegistryKey parent;
-    String name;
 
     @Override
     public abstract String toString();

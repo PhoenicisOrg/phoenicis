@@ -97,7 +97,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     }
 
     @Override
-    public void onApplicationStarted() throws MalformedURLException {
+    public void onApplicationStarted() {
         // Will be implemented later
     }
 

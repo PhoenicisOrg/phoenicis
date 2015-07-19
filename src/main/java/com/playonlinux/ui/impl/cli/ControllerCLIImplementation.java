@@ -35,8 +35,8 @@ public class ControllerCLIImplementation implements Controller {
     }
 
     @Override
-    public UIMessageSender createUIMessageSender() {
-        return new UIMessageSenderCLIImplementation();
+    public <T> UIMessageSender<T> createUIMessageSender() {
+        return new UIMessageSenderCLIImplementation<>();
     }
 
 

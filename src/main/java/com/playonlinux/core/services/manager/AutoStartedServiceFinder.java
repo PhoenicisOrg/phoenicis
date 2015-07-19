@@ -26,11 +26,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class AutoStartedServiceFinder {
-    private String packageName = "com.playonlinux";
+    private final static String PACKAGE_NAME = "com.playonlinux";
 
     public Map<String, Class<?>> findClasses() {
         final HashMap<String, Class<?>> results = new HashMap<>();
-        final Reflections reflections = new Reflections(this.packageName);
+        final Reflections reflections = new Reflections(PACKAGE_NAME);
         final Set<Class<?>> classes
                 = reflections.getTypesAnnotatedWith(AutoStartedService.class);
 

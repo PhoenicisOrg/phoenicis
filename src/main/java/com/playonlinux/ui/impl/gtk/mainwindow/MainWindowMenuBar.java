@@ -8,11 +8,9 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 public class MainWindowMenuBar extends MenuBar {
     private static final Logger LOGGER = Logger.getLogger(MainWindowMenuBar.class);
-    private final GTKApplication parent;
     private final MainWindowEventDispatcher mainWindowEventDispatcher;
 
     public MainWindowMenuBar(GTKApplication parent) {
-        this.parent = parent;
         this.mainWindowEventDispatcher = parent.getMainWindowEventDispatcher();
         this.append(createFileMenu());
         this.append(createToolsMenu());
@@ -24,7 +22,7 @@ public class MainWindowMenuBar extends MenuBar {
         final Menu toolsMenu = new Menu();
         final MenuItem runScriptItem = new MenuItem(translate("Run a local script"));
 
-        runScriptItem.connect((MenuItem.Activate) (MenuItem menuItem) -> {
+        runScriptItem.connect((MenuItem menuItem) -> {
             try {
                 mainWindowEventDispatcher.runLocalScript();
             } catch (PlayOnLinuxException e) {

@@ -33,7 +33,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
-    String textToShow;
+    private final String textToShow;
 
     public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow) {
         super(parent, message);

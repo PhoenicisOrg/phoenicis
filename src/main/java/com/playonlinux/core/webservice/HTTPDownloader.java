@@ -25,7 +25,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HTTPDownloader extends AbstractObservableImplementation {
+public class HTTPDownloader extends AbstractObservableImplementation<ProgressStateDTO> {
     private static final int BLOCK_SIZE = 1024;
     private final URL url;
     private State state;
@@ -51,7 +51,6 @@ public class HTTPDownloader extends AbstractObservableImplementation {
 
     private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream) throws DownloadException {
         int fileSize = connection.getContentLength();
-        float totalDataRead = 0;
 
         try {
             BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
@@ -59,6 +58,7 @@ public class HTTPDownloader extends AbstractObservableImplementation {
 
             byte[] data = new byte[BLOCK_SIZE];
             int i;
+            float totalDataRead = 0;
             while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
                 totalDataRead += i;
                 bufferedOutputStream.write(data, 0, i);
@@ -100,6 +100,7 @@ public class HTTPDownloader extends AbstractObservableImplementation {
             throw new DownloadException(String.format("Download of %s has failed", this.url), e);
         }
     }
+
     public void get(OutputStream outputStream) throws DownloadException {
         HttpURLConnection connection;
         try {

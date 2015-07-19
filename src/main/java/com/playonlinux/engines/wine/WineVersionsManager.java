@@ -44,10 +44,10 @@ public class WineVersionsManager
         implements Observer<Observable, Object>, Service {
 
     @Inject
-    private static ServiceManager playOnLinuxBackgroundServicesManager;
+    static ServiceManager playOnLinuxBackgroundServicesManager;
 
     @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+    static PlayOnLinuxContext playOnLinuxContext;
 
 
     private Collection<WineVersionDistributionDTO> wineVersionDistributionDTOs = new ArrayList<>();

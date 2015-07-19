@@ -103,9 +103,7 @@ public class WineInstallation {
         winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
         winePrefix.createConfigFile(this.distribution, this.version);
 
-        final Process process;
-        process = this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
-        return process;
+        return this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
     }
 
     public void killAllProcess(WinePrefix winePrefix) throws IOException {
@@ -140,8 +138,8 @@ public class WineInstallation {
     public static class Builder {
         private File path;
         private Map<String, String> applicationEnvironment;
-        public Version version;
-        public WineDistribution distribution;
+        private Version version;
+        private WineDistribution distribution;
 
         public WineInstallation.Builder withVersion(Version version) {
             this.version = version;
@@ -149,7 +147,7 @@ public class WineInstallation {
         }
 
         public WineInstallation.Builder withDistributionName(WineDistribution distributionName) {
-            this.distribution = distribution;
+            this.distribution = distributionName;
             return this;
         }
 

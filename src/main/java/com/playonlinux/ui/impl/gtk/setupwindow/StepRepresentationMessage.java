@@ -23,7 +23,7 @@ import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import org.gnome.gtk.Label;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
-    String textToShow;
+    private final String textToShow;
 
     public StepRepresentationMessage(SetupWindowGTKImplementation parent, CancelerMessage message, String textToShow) {
         super(parent, message);

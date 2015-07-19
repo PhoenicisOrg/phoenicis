@@ -130,7 +130,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
 
 
 
-    public Object extractAttribute(String attributeToExtract) throws ScriptFailureException {
+    public Object extractAttribute(String attributeToExtract) {
         PyObject pyLogAttribute;
         try {
             pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);

@@ -74,7 +74,7 @@ public class Cabfile {
         }
     }
 
-    private CFHeader getHeader() throws IOException, CabException {
+    private CFHeader getHeader() throws CabException {
         CFHeader cfHeader = new CFHeader(readBytes);
         cfHeader.populate(archiveStream);
         readBytes += cfHeader.getStructureSize();

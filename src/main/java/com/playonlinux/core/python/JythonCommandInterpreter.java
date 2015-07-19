@@ -24,6 +24,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.messages.RunnableWithParameter;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import org.apache.log4j.Logger;
 import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
 
@@ -33,11 +34,13 @@ import java.util.concurrent.Future;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, Service {
-    @Inject
-    private static InterpreterFactory jythonInterpreterFactory;
+    private final static Logger LOGGER = Logger.getLogger(JythonCommandInterpreter.class);
 
     @Inject
-    private static ServiceManager serviceManager;
+    static InterpreterFactory jythonInterpreterFactory;
+
+    @Inject
+    static ServiceManager serviceManager;
 
     private InteractiveInterpreter interactiveInterpreter;
     private final StringWriter returnBuffer;
@@ -59,7 +62,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                 interactiveInterpreter.setOut(returnBuffer);
                 interactiveInterpreter.setErr(returnBuffer);
             } catch (PlayOnLinuxException e) {
-                e.printStackTrace();
+                LOGGER.error(e);
             }
         }
 

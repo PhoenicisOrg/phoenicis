@@ -51,14 +51,10 @@ public class WineInstallation {
     }
 
     private File getInstallationPath() throws ScriptFailureException {
-        try {
-            return playOnLinuxContext.makeWinePath(
-                    version,
-                    wineDistribution
-            );
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
-        }
+        return playOnLinuxContext.makeWinePath(
+                version,
+                wineDistribution
+        );
     }
 
     public boolean isInstalled() throws ScriptFailureException {
@@ -66,7 +62,6 @@ public class WineInstallation {
     }
 
     public void install() {
-
 
     }
 }
