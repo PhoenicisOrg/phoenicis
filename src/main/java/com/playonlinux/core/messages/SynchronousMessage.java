@@ -24,7 +24,7 @@ import java.util.concurrent.Semaphore;
 
 public abstract class SynchronousMessage<RESULT> implements Message {
     private RESULT response;
-    Semaphore semaphore = new Semaphore(0);
+    protected final Semaphore semaphore = new Semaphore(0);
 
     public void run() {
         this.execute(this);

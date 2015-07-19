@@ -28,10 +28,10 @@ import java.net.URL;
 
 public class RemoteScriptDownloader {
     @Inject
-    private static DownloadManager downloadManager;
+    static DownloadManager downloadManager;
 
     @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+    static PlayOnLinuxContext playOnLinuxContext;
 
     private final URL scriptUrl;
 

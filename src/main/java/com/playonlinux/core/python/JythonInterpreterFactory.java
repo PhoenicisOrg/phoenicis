@@ -38,13 +38,11 @@ public class JythonInterpreterFactory implements InterpreterFactory {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
         numberOfInstances++;
-        T interpreter = null;
         try {
-            interpreter = clazz.newInstance();
+            return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             throw new PlayOnLinuxException("Unable to create a Python interpreter", e);
         }
-        return interpreter;
     }
 
     synchronized public void close(PythonInterpreter interpreter) {

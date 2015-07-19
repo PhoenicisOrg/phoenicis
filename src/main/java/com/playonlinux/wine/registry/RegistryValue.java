@@ -30,7 +30,7 @@ public class RegistryValue<TYPE extends AbstractValueType>
         this.content = content;
     }
 
-    public static RegistryValue fromString(String name, String inputString) throws ParseException {
+    public static RegistryValue fromString(String name, String inputString) {
         RegistryValue parsedValue;
         if(inputString.startsWith("\"") && inputString.endsWith("\"")) {
             String valueContentString = inputString.substring(1, inputString.length() - 1);

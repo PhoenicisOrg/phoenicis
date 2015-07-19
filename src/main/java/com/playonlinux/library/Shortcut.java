@@ -28,6 +28,7 @@ class Shortcut {
     private final String shortcutName;
     private final URL iconPath;
     private final Script runScript;
+
     private final File configFile;
 
     public Shortcut(String shorctName, URL iconPath, Script runScript) {
@@ -46,5 +47,13 @@ class Shortcut {
 
     public URL getIconPath() {
         return iconPath;
+    }
+
+    public File getConfigFile() {
+        return configFile;
+    }
+
+    public Script getRunScript() {
+        return runScript;
     }
 }

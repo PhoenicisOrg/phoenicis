@@ -80,8 +80,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
     }
 
-    public void setUpEvents() throws PlayOnLinuxException {
-
+    public void setUpEvents() {
         this.headerPane.setLibraryEvent(evt -> goTo(library));
         this.headerPane.setAppsEvent(evt -> goTo(apps));
         this.headerPane.setEnginesEvent(evt -> goTo(engines));

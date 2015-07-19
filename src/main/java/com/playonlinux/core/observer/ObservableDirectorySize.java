@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 
-public class ObservableDirectorySize extends AbstractObservableDirectory {
+public class ObservableDirectorySize extends AbstractObservableDirectory<ProgressStateDTO> {
     private final long startSize;
     private final long endSize;
     private final ObservableDirectoryThread observableDirectoryThread;
@@ -85,10 +85,9 @@ public class ObservableDirectorySize extends AbstractObservableDirectory {
 
         @Override
         public void run() {
-            long lastDirectorySize;
             while(this.isRunning()) {
                 try {
-                    lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
+                    long lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
                     final double percentage = 100. * (double) (lastDirectorySize - startSize) / (double) (endSize - startSize);
                     ProgressStateDTO progressStateDTO = new ProgressStateDTO.Builder()
                             .withState(ProgressStateDTO.State.PROGRESSING)

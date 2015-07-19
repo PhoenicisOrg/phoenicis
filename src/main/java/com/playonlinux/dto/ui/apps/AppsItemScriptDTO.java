@@ -26,8 +26,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppsItemScriptDTO implements AbstractDTO, Nameable {
 
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     private AppsItemScriptDTO(Builder builder) {
         id = builder.id;

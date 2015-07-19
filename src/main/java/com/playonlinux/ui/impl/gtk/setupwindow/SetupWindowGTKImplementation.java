@@ -42,7 +42,7 @@ import java.util.List;
 public class SetupWindowGTKImplementation extends Window implements SetupWindow {
     private static final Logger LOGGER = Logger.getLogger(SetupWindowGTKImplementation.class);
     private final String title;
-    private Fixed root;
+    private final Fixed root;
     private byte[] topImage;
     private URL leftImage;
 

@@ -18,16 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 
 public class JavaFXApplication extends Application {
-    private static final Logger LOGGER = Logger.getLogger(Application.class);
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,11 +35,7 @@ public class JavaFXApplication extends Application {
         MainWindow mainWindow = new MainWindow();
 
         mainWindow.setUpWindow();
-        try {
-            mainWindow.setUpEvents();
-        } catch (PlayOnLinuxException e) {
-            LOGGER.warn(e);
-        }
+        mainWindow.setUpEvents();
         mainWindow.show();
 
         /*

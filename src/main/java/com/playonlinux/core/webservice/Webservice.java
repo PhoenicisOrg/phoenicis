@@ -34,11 +34,13 @@ import java.util.concurrent.Semaphore;
 
 abstract public class Webservice<T extends AbstractDTO>
         extends AbstractObservableImplementation<DownloadEnvelope<Collection<T>>> implements Service {
-    private final URL url;
-    private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
-    private Semaphore updateSemaphore = new Semaphore(1);
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
+
+    private final URL url;
+    private final Semaphore updateSemaphore = new Semaphore(1);
+
     private List<T> items;
+    private ProgressStateDTO.State state = ProgressStateDTO.State.READY;
 
     public Webservice(URL url) {
         this.url = url;

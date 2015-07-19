@@ -61,9 +61,9 @@ public class WindowsShortcut
      * @throws IOException if an IOException is thrown while reading from the file
      */
     public static boolean isPotentialValidLink(File file) throws IOException {
-        final int minimumLength = 0x64;
         boolean isPotentiallyValid;
         try (InputStream fis = new FileInputStream(file)) {
+            final int minimumLength = 0x64;
             isPotentiallyValid = file.isFile()
                     && file.getName().toLowerCase().endsWith(".lnk")
                     && fis.available() >= minimumLength
@@ -154,11 +154,11 @@ public class WindowsShortcut
             isDirectory = (fileAtts & isDirMask) > 0;
 
             // if the shell settings are present, skip them
-            final int shellOffset = 0x4c;
             final byte hasShellMask = (byte)0x01;
             int shellLen = 0;
             if ((flags & hasShellMask) > 0) {
                 // the plus 2 accounts for the length marker itself
+                final int shellOffset = 0x4c;
                 shellLen = bytesToWord(link, shellOffset) + 2;
             }
 
@@ -170,16 +170,16 @@ public class WindowsShortcut
             isLocal = (fileLocationInfoFlag & 2) == 0;
             // get the local volume and local system values
             //final int localVolumeTableOffsetOffset = 0x0C;
-            final int basenameOffsetOffset = 0x10;
-            final int networkVolumeTableOffsetOffset = 0x14;
             final int finalnameOffsetOffset = 0x18;
             int finalnameOffset = link[fileStart + finalnameOffsetOffset] + fileStart;
             String finalname = getNullDelimitedString(link, finalnameOffset);
             if (isLocal) {
+                final int basenameOffsetOffset = 0x10;
                 int basenameOffset = link[fileStart + basenameOffsetOffset] + fileStart;
                 String basename = getNullDelimitedString(link, basenameOffset);
                 readFile = basename + finalname;
             } else {
+                final int networkVolumeTableOffsetOffset = 0x14;
                 int networkVolumeTableOffset = link[fileStart + networkVolumeTableOffsetOffset] + fileStart;
                 int shareNameOffsetOffset = 0x08;
                 int shareNameOffset = link[networkVolumeTableOffset + shareNameOffsetOffset]

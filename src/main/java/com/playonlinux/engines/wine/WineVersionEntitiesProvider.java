@@ -35,6 +35,7 @@ import com.playonlinux.core.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Scan
 @AutoStartedService(type = WineVersionEntitiesProvider.class)
@@ -45,10 +46,10 @@ public final class WineVersionEntitiesProvider
 
 
     @Inject
-    private static ServiceManager serviceManager;
+    static ServiceManager serviceManager;
 
-    private List<WineVersionDistributionItemDTO> wineVersionDistributionItemDTOs = new ArrayList<>();
-    private List<WineVersionDistributionItemDTO> filteredWineVersionDistributionItemDTOs = new ArrayList<>();
+    private final List<WineVersionDistributionItemDTO> wineVersionDistributionItemDTOs = new ArrayList<>();
+    private final List<WineVersionDistributionItemDTO> filteredWineVersionDistributionItemDTOs = new ArrayList<>();
 
     private Filter<WineVersionDistributionItemDTO> lastFilter;
 
@@ -60,9 +61,7 @@ public final class WineVersionEntitiesProvider
             final List<WineVersionItemDTO> availablePackages = new ArrayList<>();
             final List<WineVersionItemDTO> installedPackages = new ArrayList<>();
 
-            for (WineVersionDTO wineVersionDTO : wineVersionDistributionDTO.getPackages()) {
-                availablePackages.add(new WineVersionItemDTO(wineVersionDTO.getVersion()));
-            }
+            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream().map(wineVersionDTO -> new WineVersionItemDTO(wineVersionDTO.getVersion())).collect(Collectors.toList()));
 
             wineVersionDistributionItemDTOs.add(new WineVersionDistributionItemDTO.Builder()
                             .withName(wineVersionDistributionDTO.getName())
@@ -86,11 +85,7 @@ public final class WineVersionEntitiesProvider
         if(filter == null) {
             filteredWineVersionDistributionItemDTOs.addAll(wineVersionDistributionItemDTOs);
         } else {
-            for (WineVersionDistributionItemDTO wineVersionDistributionItemDTO : wineVersionDistributionItemDTOs) {
-                if (filter.apply(wineVersionDistributionItemDTO)) {
-                    filteredWineVersionDistributionItemDTOs.add(wineVersionDistributionItemDTO);
-                }
-            }
+            filteredWineVersionDistributionItemDTOs.addAll(wineVersionDistributionItemDTOs.stream().filter(filter::apply).collect(Collectors.toList()));
         }
 
         this.notifyObservers(new WineVersionsWindowDTO(filteredWineVersionDistributionItemDTOs));

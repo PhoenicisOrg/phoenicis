@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class Injector {
-    private String packageName;
+    private final String packageName;
     private static final Logger LOGGER = Logger.getLogger(Injector.class);
 
     public Injector(String packageName) {

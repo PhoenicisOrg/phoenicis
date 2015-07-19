@@ -19,7 +19,7 @@
 package com.playonlinux.core.messages;
 
 public abstract class InterrupterAsynchroneousMessage extends AsynchroneousMessage implements CancelerMessage {
-    Thread messageSender;
+    final Thread messageSender;
 
     public InterrupterAsynchroneousMessage() {
         this.messageSender = Thread.currentThread();

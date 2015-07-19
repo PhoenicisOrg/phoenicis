@@ -18,6 +18,7 @@
 
 package com.playonlinux.utils;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,5 +62,10 @@ public class ReplacableProperties extends Properties {
         String globalVariableTranslatedString = this.replaceGlobalVariables(inputString);
 
         return this.replaceLocalVariables(globalVariableTranslatedString);
+    }
+
+    @Override
+    public synchronized Object clone() {
+        return super.clone();
     }
 }

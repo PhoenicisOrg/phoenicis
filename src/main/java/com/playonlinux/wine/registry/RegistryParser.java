@@ -49,10 +49,9 @@ public class RegistryParser {
         BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile));
         RegistryKey root = new RegistryKey(rootName);
         RegistryKey lastNode = null;
-        String currentLine;
         int lineNumber = 1;
         do {
-            currentLine = bufferReader.readLine();
+            String currentLine = bufferReader.readLine();
             if(currentLine == null) {
                 break;
             }
@@ -78,7 +77,7 @@ public class RegistryParser {
                 }
             }
             lineNumber++;
-        } while(currentLine != null);
+        } while(true);
 
         return root;
     }
@@ -115,7 +114,7 @@ public class RegistryParser {
                 } else {
                     parseState = ParseState.READING_VALUE;
                 }
-            } else if(parseState == ParseState.READING_VALUE) {
+            } else {
                 valueBuilder.append(currentChar);
             }
         }

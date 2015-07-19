@@ -101,10 +101,10 @@ public class PlayOnLinuxContext {
         return new File(this.properties.getProperty("application.user.wineprefix"));
     }
 
-    public File makeWinePath(Version version, WineDistribution wineDistribution) throws PlayOnLinuxException {
+    public File makeWinePath(Version version, WineDistribution wineDistribution) {
         String versionPath = String.format("%s/%s/%s",
                 this.properties.getProperty("application.user.wineversions"),
-                wineDistribution.toString(),
+                wineDistribution,
                 version
         );
         return new File(versionPath);

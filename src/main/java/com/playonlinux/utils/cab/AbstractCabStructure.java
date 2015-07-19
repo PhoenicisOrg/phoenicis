@@ -35,7 +35,7 @@ abstract class AbstractCabStructure {
     protected int readVariableField(InputStream inputStream, byte[] results) throws CabException {
         int i = 0;
         while(true) {
-            byte nextByte[] = new byte[1];
+            byte[] nextByte = new byte[1];
             int nbReadbytes;
             try {
                 nbReadbytes = inputStream.read(nextByte);

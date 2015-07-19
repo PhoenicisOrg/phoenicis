@@ -37,6 +37,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
@@ -53,26 +54,18 @@ public final class LibraryEntitiesProvider
 
     private ShortcutSetDirectories shortcutSetDirectories;
 
-    private List<InstalledApplicationDTO> installedApplications = new ArrayList<>();
-    private List<InstalledApplicationDTO> installedApplicationsFiltered = new ArrayList<>();
+    private final List<InstalledApplicationDTO> installedApplications = new ArrayList<>();
+    private final List<InstalledApplicationDTO> installedApplicationsFiltered = new ArrayList<>();
 
     private Filter<InstalledApplicationDTO> lastFilter;
-    private ShortcutSetDirectories lastUpdatedObservable;
-    private List<Shortcut> lastUpdatedArgument;
-
 
     @Override
     public void update(ShortcutSetDirectories observable, List<Shortcut> argument) {
-        lastUpdatedObservable = observable;
-        lastUpdatedArgument = argument;
-
         installedApplications.clear();
-        for(Shortcut shortcut: argument) {
-            installedApplications.add(new InstalledApplicationDTO.Builder()
-                    .withName(shortcut.getShortcutName())
-                    .withIcon(shortcut.getIconPath())
-                    .build());
-        }
+        installedApplications.addAll(argument.stream().map(shortcut -> new InstalledApplicationDTO.Builder()
+                .withName(shortcut.getShortcutName())
+                .withIcon(shortcut.getIconPath())
+                .build()).collect(Collectors.toList()));
 
         applyFilter(lastFilter);
     }
@@ -83,11 +76,7 @@ public final class LibraryEntitiesProvider
 
         installedApplicationsFiltered.clear();
         if(filter != null) {
-            for(InstalledApplicationDTO installedApplicationDTO: installedApplications) {
-                if(filter.apply(installedApplicationDTO)) {
-                    installedApplicationsFiltered.add(installedApplicationDTO);
-                }
-            }
+            installedApplicationsFiltered.addAll(installedApplications.stream().filter(filter::apply).collect(Collectors.toList()));
         } else {
             installedApplicationsFiltered.addAll(installedApplications);
         }

@@ -55,7 +55,7 @@ public interface EventHandler {
 
     Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
 
-    void onApplicationStarted() throws MalformedURLException;
+    void onApplicationStarted();
 
     void runApplication(String applicationName) throws PlayOnLinuxException;
 

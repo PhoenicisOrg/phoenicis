@@ -45,7 +45,7 @@ public class DownloadManager implements
     }
 
     public DownloadManager(int poolSize, int queueSize) {
-        BlockingQueue<Runnable> queue
+        final BlockingQueue<Runnable> queue
                 = new ArrayBlockingQueue<>(queueSize);
 
         threadPoolExecutor = new ThreadPoolExecutor(

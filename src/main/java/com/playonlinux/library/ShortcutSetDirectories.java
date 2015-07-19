@@ -36,17 +36,17 @@ import java.util.List;
 
 @Scan
 class ShortcutSetDirectories
-        extends AbstractObservableImplementation
+        extends AbstractObservableImplementation<List<Shortcut>>
         implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
     
     @Inject
-    private static ScriptFactory scriptFactory;
+    static ScriptFactory scriptFactory;
     
     private final ObservableDirectoryFiles iconDirectory;
     private final File configFilesDirectory;
     private final ObservableDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
-    private List<Shortcut> shortcuts;
+    private final List<Shortcut> shortcuts;
 
     private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
 

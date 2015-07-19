@@ -49,10 +49,9 @@ public class ScriptRecent extends Script {
         BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
         StringBuilder signatureBuilder = new StringBuilder();
 
-        String readLine;
         Boolean insideSignature = false;
         do {
-            readLine = bufferReader.readLine();
+            String readLine = bufferReader.readLine();
             if(readLine == null) {
                 break;
             }

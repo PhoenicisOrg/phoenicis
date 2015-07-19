@@ -42,11 +42,11 @@ import java.net.URL;
 @Scan
 public class RemoteImage extends VBox {
     @Inject
-    private static ServiceManager serviceManager;
+    static ServiceManager serviceManager;
 
     private static final Logger LOGGER = Logger.getLogger(RemoteImage.class);
 
-    private URL imageUrl;
+    private final URL imageUrl;
 
     private final DownloadManager downloadManager = serviceManager.getBackgroundService(DownloadManager.class);
 
