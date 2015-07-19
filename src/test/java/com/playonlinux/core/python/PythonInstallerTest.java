@@ -108,8 +108,7 @@ public class PythonInstallerTest {
         fileOutputStream.write(("from com.playonlinux.framework.templates import MockWineSteamInstaller\n" +
                 "\n" +
                 "class Example(MockWineSteamInstaller):\n" +
-                "    logContext = \"testPythonInstaller_DefineVariableAttributes\"\n" +
-                "    title = \"Example with Steam\"\n" +
+                "    title = \"testPythonInstaller_DefineVariableAttributes\"\n" +
                 "    prefix = \"Prefix\"\n" +
                 "    wineversion = \"1.7.34\"\n" +
                 "    steamId = 130\n" +
