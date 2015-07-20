@@ -26,7 +26,9 @@ import com.google.common.base.Preconditions;
 public class FallbackLanguageBundle implements LanguageBundle {
     private static final FallbackLanguageBundle instance = new FallbackLanguageBundle();
 
-    private FallbackLanguageBundle() {}
+    private FallbackLanguageBundle() {
+
+    }
 
     public static FallbackLanguageBundle getInstance() {
         return instance;
