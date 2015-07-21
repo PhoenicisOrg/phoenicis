@@ -68,22 +68,16 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
                 = SetupWindow.class.getResourceAsStream("/com/playonlinux/ui/setupwindow/defaultTopImage.png");
 
         topImage = IOUtils.toByteArray(topImageStream);
-        try {
-            switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
-                case MACOSX:
-                    this.leftImage = this.getClass().getSuperclass()
-                            .getResource("/com/playonlinux/ui/setupwindow/defaultLeftPlayOnMac.jpg");
-                    break;
-                default:
-                case LINUX:
-                    this.leftImage = this.getClass().getSuperclass()
-                            .getResource("/com/playonlinux/ui/setupwindow/defaultLeftPlayOnLinux.jpg");
-                    break;
-            }
-        } catch (PlayOnLinuxException playOnLinuxException) {
-            LOGGER.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
-            this.leftImage = this.getClass().getSuperclass()
-                    .getResource("/com/playonlinux/ui/setupwindow/defaultLeftPlayOnLinux.jpg");
+        switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
+            case MACOSX:
+                this.leftImage = this.getClass().getSuperclass()
+                        .getResource("/com/playonlinux/ui/setupwindow/defaultLeftPlayOnMac.jpg");
+                break;
+            default:
+            case LINUX:
+                this.leftImage = this.getClass().getSuperclass()
+                        .getResource("/com/playonlinux/ui/setupwindow/defaultLeftPlayOnLinux.jpg");
+                break;
         }
     }
 

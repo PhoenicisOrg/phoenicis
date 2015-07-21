@@ -37,8 +37,8 @@ public class OperatingSystemTest {
         assertEquals(OperatingSystem.FREEBSD, freeBSD);
     }
 
-    @Test(expected = PlayOnLinuxException.class)
-    public void testFromString_generateFromUnknownString_ExceptionIsThrown() throws PlayOnLinuxException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testFromString_generateFromUnknownString_ExceptionIsThrown() {
         OperatingSystem linux = OperatingSystem.fromString("Invalid operating system");
     }
 

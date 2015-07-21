@@ -33,7 +33,7 @@ import com.playonlinux.utils.Architecture;
 import com.playonlinux.utils.OperatingSystem;
 import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.version.Version;
-import com.playonlinux.wine.WineDistribution;
+import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.wine.WineException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -86,7 +86,7 @@ public class WinePrefix {
         }
 
         if(prefix.initialized()) {
-            wineInstallation = new WineInstallation(prefix.fetchVersion(), prefix.fetchDistribution());
+            wineInstallation = new WineInstallation(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
         }
 
         return this;
@@ -119,22 +119,18 @@ public class WinePrefix {
             throw new ScriptFailureException("Prefix must be selected!");
         }
 
-        try {
-            wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
-                    OperatingSystem.fetchCurrentOperationSystem(),
-                    Architecture.valueOf(architecture),
-                    distribution
-            ));
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
-        }
-
+        wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
+                OperatingSystem.fetchCurrentOperationSystem(),
+                Architecture.valueOf(architecture),
+                distribution
+        ), setupWizard);
 
         ProgressControl progressControl = this.setupWizard.progressBar(
                 String.format(
                         translate("Please wait while the virtual drive is being created..."), prefixName
                 )
         );
+
         ObservableDirectorySize observableDirectorySize;
         try {
             observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0,

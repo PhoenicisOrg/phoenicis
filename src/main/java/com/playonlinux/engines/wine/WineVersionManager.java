@@ -18,12 +18,20 @@
 
 package com.playonlinux.engines.wine;
 
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
 import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.webservice.DownloadEnvelope;
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.utils.archive.ArchiveException;
+import com.playonlinux.version.Version;
 
-import java.util.Collection;
+import java.io.File;
 
-public interface WineVersionSource extends Observable<DownloadEnvelope<Collection<WineVersionDistributionWebDTO>>> {
+public interface WineVersionManager extends Observer<Observable, Object>,
+                                           Observable<WineVersionManager>,
+                                           Service {
 
+    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
+
+    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
 }

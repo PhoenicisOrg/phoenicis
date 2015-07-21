@@ -18,27 +18,14 @@
 
 package com.playonlinux.engines.wine;
 
+import com.playonlinux.app.PlayOnLinuxException;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
-import com.playonlinux.core.webservice.Webservice;
-
-import java.net.URL;
-import java.util.List;
-
-
-public class WineversionsSourceWebserviceImplementation extends Webservice<WineVersionDistributionWebDTO>
-        implements WineVersionSource {
-
-
-    public WineversionsSourceWebserviceImplementation(URL url) {
-        super(url);
+public class EngineInstallException extends PlayOnLinuxException {
+    public EngineInstallException(String message, Throwable parent) {
+        super(message, parent);
     }
 
-    @Override
-    protected TypeReference defineTypeReference() {
-        return new TypeReference<List<WineVersionDistributionWebDTO>>() {};
+    public EngineInstallException(String s) {
+        super(s);
     }
-
-
 }

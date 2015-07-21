@@ -18,9 +18,6 @@
 
 package com.playonlinux.utils;
 
-
-import com.playonlinux.app.PlayOnLinuxException;
-
 public enum OperatingSystem {
     MACOSX ("Mac OS X"),
     LINUX ("Linux"),
@@ -37,7 +34,7 @@ public enum OperatingSystem {
         return this.name;
     }
 
-    public static OperatingSystem fromString(String name) throws PlayOnLinuxException {
+    public static OperatingSystem fromString(String name) {
         if("Mac OS X".equals(name)) {
             return OperatingSystem.MACOSX;
         }
@@ -48,7 +45,7 @@ public enum OperatingSystem {
             return OperatingSystem.FREEBSD;
         }
 
-        throw new PlayOnLinuxException(String.format("Incompatible operation system \"%s\"", name));
+        throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", name));
     }
 
     public String fetchShortName() {
@@ -79,7 +76,7 @@ public enum OperatingSystem {
         }
     }
 
-    public static OperatingSystem fetchCurrentOperationSystem() throws PlayOnLinuxException {
+    public static OperatingSystem fetchCurrentOperationSystem() {
         return OperatingSystem.fromString(System.getProperty("os.name"));
     }
 

@@ -16,28 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.utils.archive;
 
-import com.playonlinux.dto.AbstractDTO;
+import com.playonlinux.app.PlayOnLinuxException;
 
-public class WineVersionDTO implements AbstractDTO {
-    String version;
-    String url;
-    String sha1sum;
-
-    public WineVersionDTO() {
-        // Needed by Jackson
+public class ArchiveException extends PlayOnLinuxException {
+    public ArchiveException(String message, Throwable e) {
+        super(message, e);
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getSha1sum() {
-        return sha1sum;
+    public ArchiveException(String message) {
+        super(message);
     }
 }

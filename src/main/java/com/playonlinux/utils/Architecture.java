@@ -18,13 +18,11 @@
 
 package com.playonlinux.utils;
 
-import com.playonlinux.app.PlayOnLinuxException;
-
 public enum Architecture {
     I386,
     AMD64;
 
-    public static Architecture fetchCurrentArchitecture() throws PlayOnLinuxException {
+    public static Architecture fetchCurrentArchitecture() {
         if(OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX) {
             return I386;
         }
@@ -35,7 +33,16 @@ public enum Architecture {
         }
     }
 
-
+    public static Architecture fromWinePackageName(String packageName) {
+        switch (packageName) {
+            case "x86":
+                return I386;
+            case "amd64":
+                return AMD64;
+            default:
+                throw new IllegalArgumentException(String.format("Unknown architecture '%s'", packageName));
+        }
+    }
     public String getNameForWinePackages() {
         switch (this) {
             case AMD64:

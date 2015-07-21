@@ -27,10 +27,12 @@ import com.playonlinux.dto.AbstractDTO;
 public class ProgressStateDTO implements AbstractDTO {
     private final State state;
     private final double percent;
+    private final String progressText;
 
     public ProgressStateDTO(Builder builder) {
         this.state = builder.state;
         this.percent = builder.percent;
+        this.progressText = builder.progressText;
     }
 
     public State getState() {
@@ -56,10 +58,12 @@ public class ProgressStateDTO implements AbstractDTO {
     public static class Builder {
         private State state;
         private double percent;
+        private String progressText;
 
         public Builder(ProgressStateDTO other) {
             state = other.state;
             percent = other.percent;
+            progressText = other.progressText;
         }
 
         public Builder() {
@@ -73,6 +77,11 @@ public class ProgressStateDTO implements AbstractDTO {
 
         public Builder withPercent(double percent) {
             this.percent = percent;
+            return this;
+        }
+
+        public Builder withProgressText(String progressText) {
+            this.progressText = progressText;
             return this;
         }
 

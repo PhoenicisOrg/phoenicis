@@ -12,6 +12,6 @@ class Example(Installer):
 
         checkSum = Checksum().progress(progressBar).md5(selectedFile)
 
-        setupWindow.message("Checksum of %s: %s" % (selectedFile, checkSum))
+        setupWindow.message("Calculated checksum of %s: %s" % (selectedFile, checkSum))
 
         setupWindow.close()

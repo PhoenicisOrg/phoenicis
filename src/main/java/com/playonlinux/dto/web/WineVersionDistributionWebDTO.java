@@ -22,12 +22,12 @@ import com.playonlinux.dto.AbstractDTO;
 
 import java.util.List;
 
-public class WineVersionDistributionDTO implements AbstractDTO {
+public class WineVersionDistributionWebDTO implements AbstractDTO {
     String name;
     String description;
-    List<WineVersionDTO> packages;
+    List<WineVersionWebDTO> packages;
 
-    public WineVersionDistributionDTO() {
+    public WineVersionDistributionWebDTO() {
         // Needed by Jackson
     }
 
@@ -39,7 +39,7 @@ public class WineVersionDistributionDTO implements AbstractDTO {
         return name;
     }
 
-    public List<WineVersionDTO> getPackages() {
+    public List<WineVersionWebDTO> getPackages() {
         return packages;
     }
 

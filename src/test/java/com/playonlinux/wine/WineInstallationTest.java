@@ -38,7 +38,7 @@ public class WineInstallationTest {
     private WineInstallation wineInstallationToTest;
 
     @Before
-    public void getSystemProperties() throws Exception {
+    public void getSystemProperties() {
         URL url = this.getClass().getResource(".");
         this.wineInstallationToTest = new WineInstallation.Builder().withPath(new File(url.getPath())).build();
     }

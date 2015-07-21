@@ -41,19 +41,11 @@ public final class BashEnvironmentHelper {
     }
 
     public static OperatingSystem getOperatinSystem() throws ScriptFailureException {
-        try {
-            return OperatingSystem.fetchCurrentOperationSystem();
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException("Unable to get the current OS name", e);
-        }
+        return OperatingSystem.fetchCurrentOperationSystem();
     }
 
     public static Architecture getArchitecture() throws ScriptFailureException {
-        try {
-            return Architecture.fetchCurrentArchitecture();
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException("Unable to get the current architecture", e);
-        }
+        return Architecture.fetchCurrentArchitecture();
     }
 
     public static String getUserRoot() {

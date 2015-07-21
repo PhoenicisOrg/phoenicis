@@ -18,6 +18,8 @@
 
 package com.playonlinux.utils;
 
+import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.dto.ui.ProgressStateDTO;
 import com.playonlinux.ui.api.ProgressControl;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
@@ -31,26 +33,19 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-public class Checksum {
+public class ChecksumCalculator extends AbstractObservableImplementation<ProgressStateDTO> {
     private static final int BLOCK_SIZE = 2048;
 
-    public static String calculate(File fileToCheck, String algorithm) throws NoSuchAlgorithmException, IOException {
+    public String calculate(File fileToCheck, String algorithm) throws NoSuchAlgorithmException, IOException {
         final FileInputStream inputStream = new FileInputStream(fileToCheck);
         MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
 
-        return Hex.encodeHexString(getDigest(inputStream, messageDigest, null, 0));
+        byte[] digest = getDigest(inputStream, messageDigest, FileUtils.sizeOf(fileToCheck));
+        this.deleteObservers();
+        return Hex.encodeHexString(digest);
     }
 
-    public static String calculate(File fileToCheck, String algorithm, ProgressControl progressControl) throws NoSuchAlgorithmException, IOException {
-        final FileInputStream inputStream = new FileInputStream(fileToCheck);
-        long sizeInBytes = FileUtils.sizeOf(fileToCheck);
-        MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-
-        return Hex.encodeHexString(getDigest(inputStream, messageDigest, progressControl, sizeInBytes));
-    }
-
-    private static byte[] getDigest(InputStream inputStream, MessageDigest messageDigest,
-                                    ProgressControl progressControl, long sizeInBytes)
+    private byte[] getDigest(InputStream inputStream, MessageDigest messageDigest, long sizeInBytes)
             throws IOException {
 
         messageDigest.reset();
@@ -60,13 +55,20 @@ public class Checksum {
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
             readBytes += numBytes;
-            if(progressControl != null && sizeInBytes != 0) {
+            if(sizeInBytes != 0) {
                 double percentage = (double) readBytes / (double) sizeInBytes * 100;
-                progressControl.setProgressPercentage(percentage);
-                progressControl.setText(translate("Calculating checksum"));
+                changeState(percentage);
             }
         }
         return messageDigest.digest();
+    }
+
+    private void changeState(double percentage) {
+        this.notifyObservers(new ProgressStateDTO.Builder()
+                .withPercent(percentage)
+                .withProgressText(translate("Please wait while we are verifying the file..."))
+                .build()
+        );
     }
 
 }
