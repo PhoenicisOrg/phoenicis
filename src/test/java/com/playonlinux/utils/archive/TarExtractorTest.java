@@ -84,6 +84,11 @@ public class TarExtractorTest {
         testUncompress("test2.tar.gz");
     }
 
+    @Test
+    public void testUncompressTarBz2File() throws IOException, ArchiveException {
+        testUncompress("test3.tar.bz2");
+    }
+
     private void testUncompress(String fileName) throws IOException, ArchiveException {
         final File inputFile = new File(inputUrl.getPath(), fileName);
         final File temporaryDirectory = Files.createTempDir();

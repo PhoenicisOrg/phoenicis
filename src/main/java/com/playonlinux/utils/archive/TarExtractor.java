@@ -23,6 +23,7 @@ import com.playonlinux.dto.ui.ProgressStateDTO;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -54,6 +55,7 @@ public class TarExtractor extends AbstractObservableImplementation<ProgressState
         LOGGER.info(String.format("Untaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
         final long finalSize = FileUtils.sizeOf(inputFile);
 
+        // FIXME: Improve the detection process
         if(inputFile.getName().endsWith(".tar")) {
             return uncompressTarFile(inputFile, outputDir, finalSize);
         }
@@ -62,8 +64,19 @@ public class TarExtractor extends AbstractObservableImplementation<ProgressState
             return uncompressTarGzFile(inputFile, outputDir, finalSize);
         }
 
+        if(inputFile.getName().endsWith(".tar.bz2")) {
+            return uncompressTarBz2File(inputFile, outputDir, finalSize);
+        }
 
         throw new ArchiveException("Unrecognized file format");
+    }
+
+    private List<File> uncompressTarBz2File(File inputFile, File outputDir, long finalSize) throws ArchiveException {
+        try(InputStream inputStream = new BZip2CompressorInputStream(new FileInputStream(inputFile))) {
+            return uncompress(inputStream, outputDir, finalSize);
+        } catch (IOException e) {
+            throw new ArchiveException("Unable to open input stream", e);
+        }
     }
 
     private List<File> uncompressTarGzFile(File inputFile, File outputDir, long finalSize) throws ArchiveException {
@@ -129,6 +142,25 @@ public class TarExtractor extends AbstractObservableImplementation<ProgressState
         LOGGER.info(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
 
         try (GZIPInputStream in = new GZIPInputStream(new FileInputStream(inputFile));
+             FileOutputStream out = new FileOutputStream(outputFile)) {
+            IOUtils.copy(in, out);
+        } catch (IOException e) {
+            throw new ArchiveException("Unable to gunzip file", e);
+        }
+        return outputFile;
+    }
+
+    /**
+     * Bunzip2 a file
+     * @param inputFile source file
+     * @param outputFile destionation file
+     * @return the destionation file
+     * @throws ArchiveException if any error occurs
+     */
+    public File bunzip2(final File inputFile, final File outputFile) throws ArchiveException {
+        LOGGER.info(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
+
+        try (BZip2CompressorInputStream in = new BZip2CompressorInputStream(new FileInputStream(inputFile));
              FileOutputStream out = new FileOutputStream(outputFile)) {
             IOUtils.copy(in, out);
         } catch (IOException e) {
