@@ -100,14 +100,17 @@ public class TarExtractorTest {
         assertTrue(new File(temporaryDirectory, "directory1").isDirectory());
         final File file1 = new File(temporaryDirectory, "file1.txt");
         final File file2 = new File(temporaryDirectory, "file2.txt");
+        final File file0 = new File(new File(temporaryDirectory, "directory1"), "file0.txt");
 
         assertTrue(file1.exists());
         assertTrue(file2.exists());
+        assertTrue(file0.exists());
 
         assertEquals("file1content", new String(FileUtils.readFileToByteArray(file1)));
         assertEquals("file2content", new String(FileUtils.readFileToByteArray(file2)));
+        assertEquals("file0content", new String(FileUtils.readFileToByteArray(file0)));
 
-        assertEquals(3, extractedFiles.size());
+        assertEquals(5, extractedFiles.size());
     }
 
     @Test
@@ -119,4 +122,32 @@ public class TarExtractorTest {
 
         assertEquals("PlayOnLinux", new String(FileUtils.readFileToByteArray(outputFile)));
     }
+
+    @Test
+    public void testBunzip2() throws IOException, ArchiveException {
+        final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
+        final File outputFile = File.createTempFile("output", "txt");
+
+        new TarExtractor().bunzip2(inputFile, outputFile);
+
+        assertEquals("PlayOnLinux", new String(FileUtils.readFileToByteArray(outputFile)));
+    }
+
+    @Test(expected = ArchiveException.class)
+    public void testBunzip2_extractGzip() throws IOException, ArchiveException {
+        final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
+        final File outputFile = File.createTempFile("output", "txt");
+
+        new TarExtractor().bunzip2(inputFile, outputFile);
+    }
+
+    @Test(expected = ArchiveException.class)
+    public void tesGunzip_extractBzip2() throws IOException, ArchiveException {
+        final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
+        final File outputFile = File.createTempFile("output", "txt");
+
+        new TarExtractor().gunzip(inputFile, outputFile);
+
+    }
+
 }
