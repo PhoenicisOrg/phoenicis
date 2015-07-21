@@ -19,6 +19,7 @@
 package com.playonlinux.wine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.version.Version;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;

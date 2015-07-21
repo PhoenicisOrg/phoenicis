@@ -23,14 +23,15 @@ import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.archive.ArchiveException;
+import com.playonlinux.version.Version;
 
 import java.io.File;
 
-public interface WineVersionManger extends Observer<Observable, Object>,
-                                           Observable<WineVersionManger>,
+public interface WineVersionManager extends Observer<Observable, Object>,
+                                           Observable<WineVersionManager>,
                                            Service {
 
-    void install(WineVersionCoordinates wineVersionCoordinates, ProgressControl progressControl) throws EngineInstallException;
+    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
 
-    void install(WineVersionCoordinates wineVersionCoordinates, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
+    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
 }

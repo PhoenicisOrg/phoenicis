@@ -19,14 +19,21 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.engines.wine.EngineInstallException;
+import com.playonlinux.engines.wine.WineVersionManager;
+import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.version.Version;
-import com.playonlinux.wine.WineDistribution;
+import com.playonlinux.engines.wine.WineDistribution;
 
 import java.io.File;
+
+import static com.playonlinux.core.lang.Localisation.translate;
+import static java.lang.String.format;
 
 @Scan
 @ScriptClass
@@ -35,12 +42,23 @@ public class WineInstallation {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    @Inject
+    static ServiceManager serviceManager;
+
     private final Version version;
     private final WineDistribution wineDistribution;
+    private final WineVersionManager wineVersionManager;
+    private final SetupWizard setupWizard;
 
-    public WineInstallation(Version version, WineDistribution wineDistribution) {
+    public WineInstallation(String version, String wineDistribution, SetupWizard setupWizard) {
+        this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
+    }
+
+    public WineInstallation(Version version, WineDistribution wineDistribution, SetupWizard setupWizard) {
         this.version = version;
         this.wineDistribution = wineDistribution;
+        this.setupWizard = setupWizard;
+        this.wineVersionManager = serviceManager.getBackgroundService(WineVersionManager.class);
     }
 
     public com.playonlinux.wine.WineInstallation getInstallation() throws ScriptFailureException {
@@ -61,7 +79,22 @@ public class WineInstallation {
         return getInstallation().exists();
     }
 
-    public void install() {
+    public void install() throws CancelException {
+        if(setupWizard != null) {
+            ProgressControl progressControl = setupWizard.progressBar(
+                    format(
+                            translate("Please wait while ${application.name} is installing wine %s"), version
+                    )
+            );
 
+            try {
+                wineVersionManager.install(wineDistribution, version, progressControl);
+            } catch (EngineInstallException e) {
+                throw new CancelException(e);
+            }
+        }
     }
+
+
+
 }

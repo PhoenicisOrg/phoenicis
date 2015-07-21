@@ -37,6 +37,7 @@ import com.playonlinux.dto.web.WineVersionWebDTO;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.archive.ArchiveException;
 import com.playonlinux.utils.archive.TarExtractor;
+import com.playonlinux.version.Version;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,10 +49,10 @@ import java.util.Collection;
 import static java.lang.String.format;
 
 @Scan
-@AutoStartedService(type = WineVersionManger.class)
+@AutoStartedService(type = WineVersionManager.class)
 public class DefaultWineVersionsManager
-        extends AbstractObservableImplementation<WineVersionManger>
-        implements WineVersionManger {
+        extends AbstractObservableImplementation<WineVersionManager>
+        implements WineVersionManager {
 
     @Inject
     static ServiceManager playOnLinuxBackgroundServicesManager;
@@ -119,15 +120,15 @@ public class DefaultWineVersionsManager
     }
 
     @Override
-    public void install(WineVersionCoordinates wineVersionCoordinates, ProgressControl progressControl) throws EngineInstallException {
-        final URL packageUrl = this.makePackageUrl(wineVersionCoordinates);
+    public void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException {
+        final URL packageUrl = this.makePackageUrl(wineDistribution, version);
         final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);
         httpDownloader.addObserver(progressControl);
         try {
             final File temporaryFile = File.createTempFile("wineVersion", "tar");
             temporaryFile.deleteOnExit();
             httpDownloader.get(temporaryFile);
-            install(wineVersionCoordinates, temporaryFile, progressControl);
+            install(wineDistribution, version, temporaryFile, progressControl);
             httpDownloader.deleteObservers();
         } catch (IOException | DownloadException e) {
             throw new EngineInstallException(format("An error occured while trying to download %s", packageUrl), e);
@@ -135,11 +136,11 @@ public class DefaultWineVersionsManager
     }
 
     @Override
-    public void install(WineVersionCoordinates wineVersionCoordinates, File localFile, ProgressControl progressControl) throws EngineInstallException {
+    public void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws EngineInstallException {
         final File wineResources = playOnLinuxContext.makeEnginesPath("wine");
         final File extractPath = new File(wineResources, format("%s/%s",
-                wineVersionCoordinates.getDistribution(),
-                wineVersionCoordinates.getVersion().toString())
+                wineDistribution.getDistributionCode(),
+                version.toString())
         );
 
         final TarExtractor tarExtractor = new TarExtractor();
@@ -156,14 +157,14 @@ public class DefaultWineVersionsManager
 
     }
 
-    private synchronized URL makePackageUrl(WineVersionCoordinates wineVersionCoordinates) throws EngineInstallException {
-        final String coordinateName = wineVersionCoordinates.asName();
+    private synchronized URL makePackageUrl(WineDistribution wineDistribution, Version version) throws EngineInstallException {
+        final String coordinateName = wineDistribution.asNameWithCurrentOperatingSystem();
 
         try {
             for (WineVersionDistributionWebDTO wineVersionDistributionWebDTO : wineVersionDistributionDTOs) {
                 if (coordinateName.equals(wineVersionDistributionWebDTO.getName())) {
                     for (WineVersionWebDTO wineVersionWebDTO : wineVersionDistributionWebDTO.getPackages()) {
-                        if (wineVersionCoordinates.getVersion().toString().equals(wineVersionWebDTO.getVersion())) {
+                        if (version.toString().equals(wineVersionWebDTO.getVersion())) {
                             return new URL(wineVersionWebDTO.getUrl());
                         }
                     }
@@ -173,8 +174,8 @@ public class DefaultWineVersionsManager
             throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
         }
 
-        throw new EngineInstallException(format("The version you are trying to install (%s), does not seem to exists",
-                wineVersionCoordinates.toString()));
+        throw new EngineInstallException(format("The version you are trying to install (%s / %s), does not seem to exists. (Codename: %s)",
+                wineDistribution.toString(), version.toString(), coordinateName));
     }
 
 }
