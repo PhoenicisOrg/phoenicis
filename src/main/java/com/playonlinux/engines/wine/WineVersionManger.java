@@ -18,27 +18,19 @@
 
 package com.playonlinux.engines.wine;
 
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.utils.archive.ArchiveException;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
-import com.playonlinux.core.webservice.Webservice;
+import java.io.File;
 
-import java.net.URL;
-import java.util.List;
+public interface WineVersionManger extends Observer<Observable, Object>,
+                                           Observable<WineVersionManger>,
+                                           Service {
 
+    void install(WineVersionCoordinates wineVersionCoordinates, ProgressControl progressControl) throws EngineInstallException;
 
-public class WineversionsSourceWebserviceImplementation extends Webservice<WineVersionDistributionWebDTO>
-        implements WineVersionSource {
-
-
-    public WineversionsSourceWebserviceImplementation(URL url) {
-        super(url);
-    }
-
-    @Override
-    protected TypeReference defineTypeReference() {
-        return new TypeReference<List<WineVersionDistributionWebDTO>>() {};
-    }
-
-
+    void install(WineVersionCoordinates wineVersionCoordinates, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
 }

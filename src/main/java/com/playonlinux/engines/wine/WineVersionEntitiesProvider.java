@@ -21,8 +21,7 @@ package com.playonlinux.engines.wine;
 import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
 import com.playonlinux.dto.ui.engines.WineVersionItemDTO;
 import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
-import com.playonlinux.dto.web.WineVersionDTO;
-import com.playonlinux.dto.web.WineVersionDistributionDTO;
+import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -41,7 +40,7 @@ import java.util.stream.Collectors;
 @AutoStartedService(type = WineVersionEntitiesProvider.class)
 public final class WineVersionEntitiesProvider
         extends AbstractObservableImplementation<WineVersionsWindowDTO>
-        implements Observer<WineVersionsManager, WineVersionsManager>,
+        implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,
                    EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> {
 
 
@@ -55,9 +54,9 @@ public final class WineVersionEntitiesProvider
 
 
     @Override
-    public void update(WineVersionsManager observable, WineVersionsManager argument) {
+    public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
         assert argument == observable;
-        for (WineVersionDistributionDTO wineVersionDistributionDTO : new ArrayList<>(argument.getWineVersionDistributionDTOs())) {
+        for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(argument.getWineVersionDistributionDTOs())) {
             final List<WineVersionItemDTO> availablePackages = new ArrayList<>();
             final List<WineVersionItemDTO> installedPackages = new ArrayList<>();
 
@@ -100,8 +99,8 @@ public final class WineVersionEntitiesProvider
 
     @Override
     public void start() throws ServiceInitializationException {
-        final WineVersionsManager wineVersionsManager = serviceManager.getBackgroundService(WineVersionsManager.class);
+        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager.getBackgroundService(DefaultWineVersionsManager.class);
 
-        wineVersionsManager.addObserver(this);
+        defaultWineVersionsManager.addObserver(this);
     }
 }

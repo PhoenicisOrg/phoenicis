@@ -75,19 +75,14 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
 
     private void loadImages() {
         this.topImage = this.getClass().getResource("defaultTopImage.png");
-        try {
-            switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
-                case MACOSX:
-                    this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
-                    break;
-                default:
-                case LINUX:
-                    this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
-                    break;
-            }
-        } catch (PlayOnLinuxException playOnLinuxException) {
-            LOGGER.info("Unable to load a setupWindow image. Switching to the default one.", playOnLinuxException);
-            this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
+        switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
+            case MACOSX:
+                this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
+                break;
+            default:
+            case LINUX:
+                this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
+                break;
         }
     }
 

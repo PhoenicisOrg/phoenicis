@@ -21,7 +21,7 @@ package com.playonlinux.framework;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.utils.Checksum;
+import com.playonlinux.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 
@@ -120,7 +120,12 @@ public class Downloader {
     public Downloader check(String expectedChecksum) throws ScriptFailureException {
         String calculatedChecksum;
         try {
-            calculatedChecksum = Checksum.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
+            ChecksumCalculator checksumCalculator = new ChecksumCalculator();
+
+            if(progressControl != null) {
+                checksumCalculator.addObserver(progressControl);
+            }
+            calculatedChecksum = checksumCalculator.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
         } catch (NoSuchAlgorithmException | IOException e) {
             throw new ScriptFailureException(e);
         }
@@ -128,7 +133,7 @@ public class Downloader {
             throw new ScriptFailureException("You must download the file first before running check()!");
         }
         if(!expectedChecksum.equals(calculatedChecksum)) {
-            throw new ScriptFailureException(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
+            throw new ScriptFailureException(String.format("ChecksumCalculator comparison has failed!%n%nServer: %s%nClient: %s",
                     expectedChecksum, calculatedChecksum));
         }
 

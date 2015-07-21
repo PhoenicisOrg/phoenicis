@@ -103,7 +103,7 @@ public class PlayOnLinuxContext {
 
     public File makeWinePath(Version version, WineDistribution wineDistribution) {
         String versionPath = String.format("%s/%s/%s",
-                this.properties.getProperty("application.user.wineversions"),
+                this.properties.getProperty("application.user.engines.wine"),
                 wineDistribution,
                 version
         );
@@ -145,5 +145,9 @@ public class PlayOnLinuxContext {
 
     public String getUserHome() {
         return System.getProperty("user.home");
+    }
+
+    public File makeEnginesPath(String category) {
+        return new File(this.properties.getProperty(String.format("application.user.engines.%s", category)));
     }
 }

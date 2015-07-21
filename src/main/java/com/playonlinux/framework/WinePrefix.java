@@ -119,22 +119,18 @@ public class WinePrefix {
             throw new ScriptFailureException("Prefix must be selected!");
         }
 
-        try {
-            wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
-                    OperatingSystem.fetchCurrentOperationSystem(),
-                    Architecture.valueOf(architecture),
-                    distribution
-            ));
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
-        }
-
+        wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
+                OperatingSystem.fetchCurrentOperationSystem(),
+                Architecture.valueOf(architecture),
+                distribution
+        ));
 
         ProgressControl progressControl = this.setupWizard.progressBar(
                 String.format(
                         translate("Please wait while the virtual drive is being created..."), prefixName
                 )
         );
+
         ObservableDirectorySize observableDirectorySize;
         try {
             observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0,
