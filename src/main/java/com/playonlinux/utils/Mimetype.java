@@ -21,6 +21,7 @@ package com.playonlinux.utils;
 import com.playonlinux.app.PlayOnLinuxException;
 import net.sf.jmimemagic.*;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,12 +34,16 @@ public final class Mimetype {
     }
 
     public static String getMimetype(File inputFile) throws PlayOnLinuxException {
+        Path path = Paths.get(inputFile.getAbsolutePath());
+
         try {
-            Path path = Paths.get(inputFile.getAbsolutePath());
             byte[] data = Files.readAllBytes(path);
             MagicMatch match = Magic.getMagicMatch(data);
             return match.getMimeType();
-        } catch (MagicMatchNotFoundException | MagicException | MagicParseException | IOException e) {
+        } catch (MagicMatchNotFoundException e) {
+            final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+            return mimeTypesMap.getContentType(inputFile);
+        } catch (MagicException | MagicParseException | IOException e) {
             throw new PlayOnLinuxException("Unable to detect mimetype of the file", e);
         }
     }
