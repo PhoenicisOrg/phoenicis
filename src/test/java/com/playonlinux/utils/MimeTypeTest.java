@@ -27,14 +27,27 @@ import java.net.URL;
 import static org.junit.Assert.*;
 
 
-public class MimetypeTest {
-    final URL inputUrl = MimetypeTest.class.getResource("./archive");
+public class MimeTypeTest {
+    final URL inputUrl = MimeTypeTest.class.getResource("./archive");
 
     @Test
-    public void testGetMimetype() throws PlayOnLinuxException {
+    public void testGetMimetype_GZFile() throws PlayOnLinuxException {
         assertEquals("application/x-gzip", MimeType.getMimetype(new File(inputUrl.getPath(), "pol.txt.gz")));
+    }
+
+    public void testGetMimetype_BZ2File() throws PlayOnLinuxException {
         assertEquals("application/x-bzip2", MimeType.getMimetype(new File(inputUrl.getPath(), "pol.txt.bz2")));
+    }
+
+    public void testGetMimetype_TarGZFile() throws PlayOnLinuxException {
         assertEquals("application/x-gzip", MimeType.getMimetype(new File(inputUrl.getPath(), "test2.tar.gz")));
+    }
+
+    public void testGetMimetype_TarBZ2File() throws PlayOnLinuxException {
         assertEquals("application/x-bzip2", MimeType.getMimetype(new File(inputUrl.getPath(), "test3.tar.bz2")));
+    }
+
+    public void testGetMimetype_TarFile() throws PlayOnLinuxException {
+        assertEquals("application/octet-stream", MimeType.getMimetype(new File(inputUrl.getPath(), "test1.tar")));
     }
 }
