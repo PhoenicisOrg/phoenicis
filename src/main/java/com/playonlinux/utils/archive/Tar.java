@@ -18,7 +18,7 @@
 
 package com.playonlinux.utils.archive;
 
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.google.common.io.CountingInputStream;
 import com.playonlinux.dto.ui.ProgressStateDTO;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -26,6 +26,7 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
@@ -45,25 +46,30 @@ public class Tar  {
 
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
-    List<File> uncompressTarBz2File(File inputFile, File outputDir, long finalSize, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
-        try(InputStream inputStream = new BZip2CompressorInputStream(new FileInputStream(inputFile))) {
-            return uncompress(inputStream, outputDir, finalSize, stateCallback);
+    List<File> uncompressTarBz2File(File inputFile, File outputDir, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
+        try(CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile)) ;
+            InputStream inputStream = new BZip2CompressorInputStream(countingInputStream)) {
+            final long finalSize = FileUtils.sizeOf(inputFile);
+            return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
             throw new ArchiveException("Unable to open input stream", e);
         }
     }
 
-    List<File> uncompressTarGzFile(File inputFile, File outputDir, long finalSize, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
-        try(InputStream inputStream = new GZIPInputStream(new FileInputStream(inputFile))) {
-            return uncompress(inputStream, outputDir, finalSize, stateCallback);
+    List<File> uncompressTarGzFile(File inputFile, File outputDir, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
+        try(CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile)) ;
+            InputStream inputStream = new GZIPInputStream(countingInputStream)) {
+            final long finalSize = FileUtils.sizeOf(inputFile);
+            return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
             throw new ArchiveException("Unable to open input stream", e);
         }
     }
 
-    List<File> uncompressTarFile(File inputFile, File outputDir, long finalSize, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
-        try(InputStream inputStream = new FileInputStream(inputFile)) {
-            return uncompress(inputStream, outputDir, finalSize, stateCallback);
+    List<File> uncompressTarFile(File inputFile, File outputDir, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
+        try(CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile))) {
+            final long finalSize = FileUtils.sizeOf(inputFile);
+            return uncompress(countingInputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
             throw new ArchiveException("Unable to open input stream", e);
         }
@@ -71,11 +77,13 @@ public class Tar  {
 
     /**
      * Uncompress a tar
+     *
+     * @param countingInputStream to count the number of byte extracted
      * @param outputDir The directory where files should be extracted
      * @return A list of extracted files
      * @throws ArchiveException if the process fails
      */
-    private List<File> uncompress(final InputStream inputStream, final File outputDir, long finalSize,
+    private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream, final File outputDir, long finalSize,
                                   Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
         final List<File> uncompressedFiles = new LinkedList<>();
         try(ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("tar", inputStream)) {
@@ -98,7 +106,7 @@ public class Tar  {
                 uncompressedFiles.add(outputFile);
 
                 stateCallback.apply(new ProgressStateDTO.Builder()
-                                .withPercent((double) debInputStream.getBytesRead() / (double) finalSize * 100)
+                                .withPercent((double) countingInputStream.getCount() / (double) finalSize * 100)
                                 .withProgressText("Extracting " + outputFile.getName())
                                 .build()
                 );
@@ -122,7 +130,8 @@ public class Tar  {
     public File gunzip(final File inputFile, final File outputFile) throws ArchiveException {
         LOGGER.info(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
 
-        try (GZIPInputStream in = new GZIPInputStream(new FileInputStream(inputFile));
+             try (GZIPInputStream in = new GZIPInputStream(new FileInputStream(inputFile));
+
              FileOutputStream out = new FileOutputStream(outputFile)) {
             IOUtils.copy(in, out);
         } catch (IOException e) {
