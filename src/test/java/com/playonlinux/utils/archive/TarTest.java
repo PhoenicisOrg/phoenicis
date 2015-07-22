@@ -26,10 +26,6 @@ import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.core.lang.FallbackLanguageBundle;
 import com.playonlinux.core.lang.LanguageBundle;
-import com.playonlinux.framework.SetupWizard;
-import com.playonlinux.ui.api.Controller;
-import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
-import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,12 +33,12 @@ import org.junit.Test;
 import java.io.*;
 import java.net.URL;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 
-public class TarExtractorTest {
-    final URL inputUrl = TarExtractorTest.class.getResource(".");
+public class TarTest {
+    final URL inputUrl = TarTest.class.getResource(".");
 
     static class TestContextConfig extends AbstractConfiguration {
         @Bean
@@ -95,7 +91,7 @@ public class TarExtractorTest {
 
         temporaryDirectory.deleteOnExit();
 
-        final List<File> extractedFiles = new TarExtractor().uncompress(inputFile, temporaryDirectory);
+        final List<File> extractedFiles = new Extractor().uncompress(inputFile, temporaryDirectory);
 
         assertTrue(new File(temporaryDirectory, "directory1").isDirectory());
         final File file1 = new File(temporaryDirectory, "file1.txt");
@@ -118,7 +114,7 @@ public class TarExtractorTest {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
 
-        new TarExtractor().gunzip(inputFile, outputFile);
+        new Tar().gunzip(inputFile, outputFile);
 
         assertEquals("PlayOnLinux", new String(FileUtils.readFileToByteArray(outputFile)));
     }
@@ -128,7 +124,7 @@ public class TarExtractorTest {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
 
-        new TarExtractor().bunzip2(inputFile, outputFile);
+        new Tar().bunzip2(inputFile, outputFile);
 
         assertEquals("PlayOnLinux", new String(FileUtils.readFileToByteArray(outputFile)));
     }
@@ -138,7 +134,7 @@ public class TarExtractorTest {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
 
-        new TarExtractor().bunzip2(inputFile, outputFile);
+        new Tar().bunzip2(inputFile, outputFile);
     }
 
     @Test(expected = ArchiveException.class)
@@ -146,7 +142,7 @@ public class TarExtractorTest {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
 
-        new TarExtractor().gunzip(inputFile, outputFile);
+        new Tar().gunzip(inputFile, outputFile);
 
     }
 

@@ -36,7 +36,8 @@ import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.dto.web.WineVersionWebDTO;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.archive.ArchiveException;
-import com.playonlinux.utils.archive.TarExtractor;
+import com.playonlinux.utils.archive.Extractor;
+import com.playonlinux.utils.archive.Tar;
 import com.playonlinux.version.Version;
 
 import java.io.File;
@@ -143,15 +144,15 @@ public class DefaultWineVersionsManager
                 version.toString())
         );
 
-        final TarExtractor tarExtractor = new TarExtractor();
-        tarExtractor.addObserver(progressControl);
+        final Extractor extractor = new Extractor();
+        extractor.addObserver(progressControl);
 
         try {
-            tarExtractor.uncompress(localFile, extractPath);
+            extractor.uncompress(localFile, extractPath);
         } catch (ArchiveException e) {
            throw new EngineInstallException("Unable to extract archive", e);
         } finally {
-            tarExtractor.deleteObservers();
+            extractor.deleteObservers();
         }
 
 

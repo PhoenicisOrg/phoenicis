@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.utils.cab;
+package com.playonlinux.utils.archive.cab;
 
 public enum CompressionType {
     NONE,

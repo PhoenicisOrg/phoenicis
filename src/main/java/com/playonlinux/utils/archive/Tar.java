@@ -25,7 +25,7 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
-import org.apache.commons.io.FileUtils;
+
 import org.apache.log4j.Logger;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
@@ -33,63 +33,37 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
+
+import java.util.function.Function;
 import java.util.zip.GZIPInputStream;
 
-import static com.playonlinux.core.lang.Localisation.translate;
 
 /**
  * Tar extraction utilities
  */
-public class TarExtractor extends AbstractObservableImplementation<ProgressStateDTO>  {
+public class Tar  {
 
-    private static final Logger LOGGER = Logger.getLogger(TarExtractor.class);
+    private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
-    /**
-     * Uncompress a .tar file
-     * @param inputFile input file
-     * @param outputDir output directory
-     * @return list of uncompressed files
-     * @throws ArchiveException
-     */
-    public List<File> uncompress(final File inputFile, final File outputDir) throws ArchiveException {
-        LOGGER.info(String.format("Untaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
-        final long finalSize = FileUtils.sizeOf(inputFile);
-
-        // FIXME: Improve the detection process
-        if(inputFile.getName().endsWith(".tar")) {
-            return uncompressTarFile(inputFile, outputDir, finalSize);
-        }
-
-        if(inputFile.getName().endsWith(".tar.gz")) {
-            return uncompressTarGzFile(inputFile, outputDir, finalSize);
-        }
-
-        if(inputFile.getName().endsWith(".tar.bz2")) {
-            return uncompressTarBz2File(inputFile, outputDir, finalSize);
-        }
-
-        throw new ArchiveException("Unrecognized file format");
-    }
-
-    private List<File> uncompressTarBz2File(File inputFile, File outputDir, long finalSize) throws ArchiveException {
+    List<File> uncompressTarBz2File(File inputFile, File outputDir, long finalSize, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
         try(InputStream inputStream = new BZip2CompressorInputStream(new FileInputStream(inputFile))) {
-            return uncompress(inputStream, outputDir, finalSize);
+            return uncompress(inputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
             throw new ArchiveException("Unable to open input stream", e);
         }
     }
 
-    private List<File> uncompressTarGzFile(File inputFile, File outputDir, long finalSize) throws ArchiveException {
+    List<File> uncompressTarGzFile(File inputFile, File outputDir, long finalSize, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
         try(InputStream inputStream = new GZIPInputStream(new FileInputStream(inputFile))) {
-            return uncompress(inputStream, outputDir, finalSize);
+            return uncompress(inputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
             throw new ArchiveException("Unable to open input stream", e);
         }
     }
 
-    private List<File> uncompressTarFile(File inputFile, File outputDir, long finalSize) throws ArchiveException {
+    List<File> uncompressTarFile(File inputFile, File outputDir, long finalSize, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
         try(InputStream inputStream = new FileInputStream(inputFile)) {
-            return uncompress(inputStream, outputDir, finalSize);
+            return uncompress(inputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
             throw new ArchiveException("Unable to open input stream", e);
         }
@@ -101,7 +75,8 @@ public class TarExtractor extends AbstractObservableImplementation<ProgressState
      * @return A list of extracted files
      * @throws ArchiveException if the process fails
      */
-    private List<File> uncompress(final InputStream inputStream, final File outputDir, long finalSize) throws ArchiveException {
+    private List<File> uncompress(final InputStream inputStream, final File outputDir, long finalSize,
+                                  Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
         final List<File> uncompressedFiles = new LinkedList<>();
         try(ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("tar", inputStream)) {
             TarArchiveEntry entry;
@@ -121,7 +96,11 @@ public class TarExtractor extends AbstractObservableImplementation<ProgressState
                     }
                 }
                 uncompressedFiles.add(outputFile);
-                changeState((double) debInputStream.getBytesRead() / (double) finalSize * 100);
+
+                stateCallback.apply(new ProgressStateDTO.Builder()
+                                .withPercent((double) debInputStream.getBytesRead() / (double) finalSize * 100).build()
+                );
+
             }
         } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
             throw new ArchiveException("Unable to extract the file", e);
@@ -170,11 +149,5 @@ public class TarExtractor extends AbstractObservableImplementation<ProgressState
     }
 
 
-    private void changeState(double percent) {
-        ProgressStateDTO currentState = new ProgressStateDTO.Builder()
-                .withPercent(percent)
-                .withProgressText(translate("Please wait while we are extracting the file..."))
-                .build();
-        this.notifyObservers(currentState);
-    }
+
 }
