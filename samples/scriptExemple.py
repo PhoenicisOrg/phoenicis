@@ -11,7 +11,7 @@ class Example(Installer):
         setupWindow.message("Test\nTest")
         selectedFile = setupWindow.browse("Select a file", "/", [".exe", ".doc", ".py"])
 
-        setupWindow.message(selectedFile);
+        setupWindow.message(selectedFile)
         setupWindow.message("Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
                                   "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
                                   "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 ")

@@ -42,17 +42,17 @@ public class Extractor  extends AbstractObservableImplementation<ProgressStateDT
      */
     public List<File> uncompress(final File inputFile, final File outputDir) throws ArchiveException {
         LOGGER.info(String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
-        final long finalSize = FileUtils.sizeOf(inputFile);
-
 
         try {
             switch (MimeType.getMimetype(inputFile)) {
                 case "application/x-bzip2":
-                    return new Tar().uncompressTarBz2File(inputFile, outputDir, finalSize, this::changeState);
+                    return new Tar().uncompressTarBz2File(inputFile, outputDir, this::changeState);
                 case "application/x-gzip":
-                    return new Tar().uncompressTarGzFile(inputFile, outputDir, finalSize, this::changeState);
+                    return new Tar().uncompressTarGzFile(inputFile, outputDir, this::changeState);
+                case "application/x-xz":
+                    return new Tar().uncompressTarXzFile(inputFile, outputDir, this::changeState);
                 default:
-                    return new Tar().uncompressTarFile(inputFile, outputDir, finalSize, this::changeState);
+                    return new Tar().uncompressTarFile(inputFile, outputDir, this::changeState);
             }
 
         } catch (PlayOnLinuxException e) {
