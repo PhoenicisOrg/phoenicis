@@ -29,10 +29,10 @@ import static com.playonlinux.core.lang.Localisation.translate;
 /* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.core.scripts.sh syntax
  */
 
-// TODO: Create an abstract class for FileManagement and Downloader
+// TODO: Create an abstract class for Files and Downloader
 @ScriptClass
 @SuppressWarnings("unused")
-public class FileManagement {
+public class Files {
     private SetupWizard setupWizard;
     private ProgressControl progressControl;
 
@@ -41,14 +41,14 @@ public class FileManagement {
     /**
      * Create a downloader object that is not hook into any progress bar
      */
-    public FileManagement() {
+    public Files() {
 
     }
-    public FileManagement(SetupWizard setupWizard) {
+    public Files(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
-    public FileManagement(ProgressControl progressControl) {
+    public Files(ProgressControl progressControl) {
         this.progressControl = progressControl;
     }
 
@@ -87,7 +87,7 @@ public class FileManagement {
         outputStream.close();
     }
 
-    public FileManagement copy(String sourceFilePath, String destinationFilePath)
+    public Files copy(String sourceFilePath, String destinationFilePath)
             throws CancelException{
         File sourceFile = new File(sourceFilePath);
         File destinationFile = new File(destinationFilePath);
@@ -103,4 +103,20 @@ public class FileManagement {
     }
 
 
+    public Files mkdir(String directoryToCreate) throws ScriptFailureException {
+        if(!(new File(directoryToCreate).mkdirs())) {
+            throw new ScriptFailureException("Unable to create the directory");
+        }
+        return this;
+    }
+
+    public Files delete(String pathToDelete) throws ScriptFailureException {
+        try {
+            com.playonlinux.utils.Files.remove(new File(pathToDelete));
+        } catch (IOException e) {
+            throw new ScriptFailureException("Unable to delete the file", e);
+        }
+
+        return this;
+    }
 }
