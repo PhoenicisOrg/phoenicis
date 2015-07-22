@@ -28,8 +28,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public final class Mimetype {
-    private Mimetype() {
+public final class MimeType {
+    private MimeType() {
         // Utility class
     }
 
