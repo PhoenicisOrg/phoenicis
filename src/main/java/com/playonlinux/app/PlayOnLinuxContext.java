@@ -150,4 +150,8 @@ public class PlayOnLinuxContext {
     public File makeEnginesPath(String category) {
         return new File(this.properties.getProperty(String.format("application.user.engines.%s", category)));
     }
+
+    public File makeUserRootPath() {
+        return new File(this.properties.getProperty("application.user.root"));
+    }
 }

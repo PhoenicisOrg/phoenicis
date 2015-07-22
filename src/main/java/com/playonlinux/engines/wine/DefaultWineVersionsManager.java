@@ -35,9 +35,9 @@ import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.dto.web.WineVersionWebDTO;
 import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.utils.Files;
 import com.playonlinux.utils.archive.ArchiveException;
 import com.playonlinux.utils.archive.Extractor;
-import com.playonlinux.utils.archive.Tar;
 import com.playonlinux.version.Version;
 
 import java.io.File;
@@ -137,12 +137,17 @@ public class DefaultWineVersionsManager
     }
 
     @Override
+    public void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException {
+        try {
+            Files.remove(getExtractPath(wineDistribution, version));
+        } catch (IOException e) {
+            throw new EngineInstallException(format("An error occured while removing wine %s %s", version, wineDistribution), e);
+        }
+    }
+
+    @Override
     public void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws EngineInstallException {
-        final File wineResources = playOnLinuxContext.makeEnginesPath("wine");
-        final File extractPath = new File(wineResources, format("%s/%s",
-                wineDistribution.getDistributionCode(),
-                version.toString())
-        );
+        final File extractPath = getExtractPath(wineDistribution, version);
 
         final Extractor extractor = new Extractor();
         extractor.addObserver(progressControl);
@@ -156,6 +161,14 @@ public class DefaultWineVersionsManager
         }
 
 
+    }
+
+    private File getExtractPath(WineDistribution wineDistribution, Version version) {
+        final File wineResources = playOnLinuxContext.makeEnginesPath("wine");
+        return new File(wineResources, format("%s/%s",
+                wineDistribution.getDistributionCode(),
+                version.toString())
+        );
     }
 
     private synchronized URL makePackageUrl(WineDistribution wineDistribution, Version version) throws EngineInstallException {

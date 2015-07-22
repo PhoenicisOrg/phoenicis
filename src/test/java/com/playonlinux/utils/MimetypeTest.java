@@ -32,9 +32,9 @@ public class MimetypeTest {
 
     @Test
     public void testGetMimetype() throws PlayOnLinuxException {
-        assertEquals("application/x-gzip", Mimetype.getMimetype(new File(inputUrl.getPath(), "pol.txt.gz")));
-        assertEquals("application/x-bzip2", Mimetype.getMimetype(new File(inputUrl.getPath(), "pol.txt.bz2")));
-        assertEquals("application/x-gzip", Mimetype.getMimetype(new File(inputUrl.getPath(), "test2.tar.gz")));
-        assertEquals("application/x-bzip2", Mimetype.getMimetype(new File(inputUrl.getPath(), "test3.tar.bz2")));
+        assertEquals("application/x-gzip", MimeType.getMimetype(new File(inputUrl.getPath(), "pol.txt.gz")));
+        assertEquals("application/x-bzip2", MimeType.getMimetype(new File(inputUrl.getPath(), "pol.txt.bz2")));
+        assertEquals("application/x-gzip", MimeType.getMimetype(new File(inputUrl.getPath(), "test2.tar.gz")));
+        assertEquals("application/x-bzip2", MimeType.getMimetype(new File(inputUrl.getPath(), "test3.tar.bz2")));
     }
 }

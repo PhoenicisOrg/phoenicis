@@ -1,13 +1,15 @@
 from com.playonlinux.framework.templates import Installer
-from com.playonlinux.framework import WineInstallation
+from com.playonlinux.framework import Files
+from com.playonlinux.framework import Environment
 
 class Example(Installer):
-    title = "Example wine installation"
+    title = "Example safe delete feature"
 
     def main(self):
-        setupWizard = self.getSetupWizard()
+        print "Removing a file in playonlinux root"
+        Files().mkdir(Environment.getUserRoot() + "/test").remove(Environment.getUserRoot() + "/test")
 
-        wineInstallation = WineInstallation("1.7.36", "upstream-x86", setupWizard)
-        wineInstallation.install()
+        print "Removing a file outside playonlinux root"
+        Files().mkdir("/tmp/test").remove("/tmp/test")
 
-        setupWizard.close()
+

@@ -33,5 +33,7 @@ public interface WineVersionManager extends Observer<Observable, Object>,
 
     void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
 
+    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
+
     void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
 }

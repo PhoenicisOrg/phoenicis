@@ -21,13 +21,12 @@ package com.playonlinux.utils.archive;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.observer.AbstractObservableImplementation;
 import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.utils.Mimetype;
+import com.playonlinux.utils.MimeType;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.List;
-import java.util.function.Function;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -47,7 +46,7 @@ public class Extractor  extends AbstractObservableImplementation<ProgressStateDT
 
 
         try {
-            switch (Mimetype.getMimetype(inputFile)) {
+            switch (MimeType.getMimetype(inputFile)) {
                 case "application/x-bzip2":
                     return new Tar().uncompressTarBz2File(inputFile, outputDir, finalSize, this::changeState);
                 case "application/x-gzip":

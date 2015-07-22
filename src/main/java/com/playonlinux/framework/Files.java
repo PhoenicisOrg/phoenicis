@@ -104,13 +104,16 @@ public class Files {
 
 
     public Files mkdir(String directoryToCreate) throws ScriptFailureException {
-        if(!(new File(directoryToCreate).mkdirs())) {
-            throw new ScriptFailureException("Unable to create the directory");
+        try {
+            java.nio.file.Files.createDirectories(new File(directoryToCreate).toPath());
+        } catch (IOException e) {
+            throw new ScriptFailureException(String.format("Unable to create the directory %s", directoryToCreate), e);
         }
+
         return this;
     }
 
-    public Files delete(String pathToDelete) throws ScriptFailureException {
+    public Files remove(String pathToDelete) throws ScriptFailureException {
         try {
             com.playonlinux.utils.Files.remove(new File(pathToDelete));
         } catch (IOException e) {
