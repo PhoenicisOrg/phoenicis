@@ -24,6 +24,7 @@ import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 
 import org.apache.commons.io.FileUtils;
@@ -59,6 +60,16 @@ public class Tar  {
     List<File> uncompressTarGzFile(File inputFile, File outputDir, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
         try(CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile)) ;
             InputStream inputStream = new GZIPInputStream(countingInputStream)) {
+            final long finalSize = FileUtils.sizeOf(inputFile);
+            return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
+        } catch (IOException e) {
+            throw new ArchiveException("Unable to open input stream", e);
+        }
+    }
+
+    List<File> uncompressTarXzFile(File inputFile, File outputDir, Function<ProgressStateDTO, Void> stateCallback) throws ArchiveException {
+        try(CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile)) ;
+            InputStream inputStream = new XZCompressorInputStream(countingInputStream)) {
             final long finalSize = FileUtils.sizeOf(inputFile);
             return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {

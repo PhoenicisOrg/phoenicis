@@ -49,6 +49,8 @@ public class Extractor  extends AbstractObservableImplementation<ProgressStateDT
                     return new Tar().uncompressTarBz2File(inputFile, outputDir, this::changeState);
                 case "application/x-gzip":
                     return new Tar().uncompressTarGzFile(inputFile, outputDir, this::changeState);
+                case "application/x-xz":
+                    return new Tar().uncompressTarXzFile(inputFile, outputDir, this::changeState);
                 default:
                     return new Tar().uncompressTarFile(inputFile, outputDir, this::changeState);
             }
