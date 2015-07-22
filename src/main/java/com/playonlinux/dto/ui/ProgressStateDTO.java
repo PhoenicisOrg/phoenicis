@@ -27,6 +27,7 @@ import com.playonlinux.dto.AbstractDTO;
 public class ProgressStateDTO implements AbstractDTO {
     private final State state;
     private final double percent;
+
     private final String progressText;
 
     public ProgressStateDTO(Builder builder) {
@@ -41,6 +42,10 @@ public class ProgressStateDTO implements AbstractDTO {
 
     public double getPercent() {
         return percent;
+    }
+
+    public String getProgressText() {
+        return progressText;
     }
 
     public enum State {

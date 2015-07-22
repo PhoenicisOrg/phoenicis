@@ -20,7 +20,6 @@
 # This tools is made to run legacy PlayOnLinux v4 scripts
 from com.playonlinux.framework.templates import Installer
 
-
 from BashBinder.BashProcess import BashProcess
 from BashBinder.HealthChecher import HealthChecker
 from BashBinder.NetcatServer import NetcatServer

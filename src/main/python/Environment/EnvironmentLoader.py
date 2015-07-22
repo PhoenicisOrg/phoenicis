@@ -18,7 +18,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 import os
 
-from com.playonlinux.framework import BashEnvironmentHelper
+from com.playonlinux.framework import Environment
 
 class EnvironmentLoader():
     @staticmethod
@@ -26,9 +26,9 @@ class EnvironmentLoader():
         os.environ["PLAYONLINUX"] = os.path.realpath(os.path.join(os.path.dirname(__file__), "../", "../" "bash"))
         os.environ["POL_PORT"] = str(setupWindowNetcatServer.getPort())
         os.environ["POL_COOKIE"] = setupWindowNetcatServer.getCookie()
-        os.environ["POL_OS"] = BashEnvironmentHelper.getOperatinSystem().fetchLegacyName()
-        os.environ["POL_USER_ROOT"] = BashEnvironmentHelper.getUserRoot()
-        os.environ["AMD64_COMPATIBLE"] = str(BashEnvironmentHelper.getArchitecture().name() == "AMD64").upper()
-        os.environ["PATH"] = BashEnvironmentHelper.getPath()
-        os.environ["LD_LIBRARY_PATH"] = BashEnvironmentHelper.getLibraryPath()
-        os.environ["DYLD_LIBRARY_PATH"] = BashEnvironmentHelper.getDyldLibraryPath()
+        os.environ["POL_OS"] = Environment.getOperatinSystem().fetchLegacyName()
+        os.environ["POL_USER_ROOT"] = Environment.getUserRoot()
+        os.environ["AMD64_COMPATIBLE"] = str(Environment.getArchitecture().name() == "AMD64").upper()
+        os.environ["PATH"] = Environment.getPath()
+        os.environ["LD_LIBRARY_PATH"] = Environment.getLibraryPath()
+        os.environ["DYLD_LIBRARY_PATH"] = Environment.getDyldLibraryPath()

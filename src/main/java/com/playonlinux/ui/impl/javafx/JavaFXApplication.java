@@ -20,6 +20,8 @@ package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Application;
+
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,6 +33,9 @@ public class JavaFXApplication extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("common/playonlinux.png")));
         primaryStage.setTitle("PlayOnLinux");
         loadFonts();
+
+        MenuBar menuBar = new MenuBar();
+        menuBar.useSystemMenuBarProperty().set(true);
 
         MainWindow mainWindow = new MainWindow();
 
