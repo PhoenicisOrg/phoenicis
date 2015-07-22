@@ -98,7 +98,9 @@ public class Tar  {
                 uncompressedFiles.add(outputFile);
 
                 stateCallback.apply(new ProgressStateDTO.Builder()
-                                .withPercent((double) debInputStream.getBytesRead() / (double) finalSize * 100).build()
+                                .withPercent((double) debInputStream.getBytesRead() / (double) finalSize * 100)
+                                .withProgressText("Extracting " + outputFile.getName())
+                                .build()
                 );
 
             }

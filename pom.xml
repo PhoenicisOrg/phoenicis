@@ -199,6 +199,7 @@
                         </manifest>
                     </archive>
                 </configuration>
+                <version>2.6</version>
             </plugin>
 
             <plugin>
@@ -249,6 +250,7 @@
                         <exclude>**/com/playonlinux/app/**</exclude>
                     </excludes>
                 </configuration>
+                <version>0.7.5.201505241946</version>
             </plugin>
 
             <plugin>

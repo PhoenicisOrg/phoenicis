@@ -18,7 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXApplication;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
@@ -28,9 +27,9 @@ import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -46,6 +45,10 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     private ViewEngines engines;
 
     private VBox rootPane;
+
+    public MainWindow() {
+
+    }
 
     public void setUpWindow() {
         rootPane = new VBox();

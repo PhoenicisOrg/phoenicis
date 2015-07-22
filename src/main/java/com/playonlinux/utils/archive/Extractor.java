@@ -62,10 +62,7 @@ public class Extractor  extends AbstractObservableImplementation<ProgressStateDT
 
 
     private Void changeState(ProgressStateDTO progressStateDTO) {
-        ProgressStateDTO currentState = new ProgressStateDTO.Builder(progressStateDTO)
-                .withProgressText(translate("Please wait while we are extracting the file..."))
-                .build();
-        this.notifyObservers(currentState);
+        this.notifyObservers(progressStateDTO);
         return null;
     }
 }
