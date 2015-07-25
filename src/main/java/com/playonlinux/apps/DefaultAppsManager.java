@@ -19,12 +19,7 @@
 package com.playonlinux.apps;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
-import com.playonlinux.apps.dto.ui.AppsItemScriptDTO;
-import com.playonlinux.apps.dto.web.ApplicationDTO;
 import com.playonlinux.apps.dto.web.CategoryDTO;
-import com.playonlinux.apps.dto.web.ScriptDTO;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.AbstractObservableImplementation;
@@ -37,9 +32,7 @@ import com.playonlinux.core.webservice.DownloadEnvelope;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Scan
 @AutoStartedService(type = AppsManager.class)
@@ -53,12 +46,10 @@ public class DefaultAppsManager extends AbstractObservableImplementation<Default
     private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
 
-    private final List<AppsCategoryDTO> categoriesDTO = new ArrayList<>();
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     @Override
     public void update(InstallerSource installerSource, DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {
-        this.categoriesDTO.clear();
         this.downloadEnvelope = downloadEnvelope;
         this.notifyObservers(this);
     }
