@@ -22,7 +22,10 @@
 # ---------
 # Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
-
+POL_Debug_Init()
+{
+    POL_Debug_Message "Note: POL_Debug_Init has been called"
+}
 
 POL_Debug_Fatal ()
 {

@@ -25,7 +25,9 @@ import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -40,6 +42,16 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     @Override
     public void setLeftImage(File leftImage) throws MalformedURLException {
         // Nothing to do here, because the mockup has no images
+    }
+
+    @Override
+    public void setTopImage(URL topImage) throws IOException {
+
+    }
+
+    @Override
+    public void setLeftImage(URL leftImage) throws IOException {
+
     }
 
     @Override

@@ -24,12 +24,17 @@ import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public interface SetupWindow {
     void setTopImage(File topImage) throws IOException;
 
     void setLeftImage(File leftImage) throws IOException;
+
+    void setTopImage(URL topImage) throws IOException;
+
+    void setLeftImage(URL leftImage) throws IOException;
 
     void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow);
 

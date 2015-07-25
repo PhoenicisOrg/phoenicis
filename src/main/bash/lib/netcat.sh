@@ -49,6 +49,10 @@ toPythonPipe() {
     ncs "$POL_HOST" "$POL_PORT"
 }
 
+toPythonPipeRet() {
+    ncns "$POL_HOST" "$POL_PORT"
+}
+
 toPython() {
     local command="$1"
     shift
@@ -60,4 +64,17 @@ toPython() {
     done
 
     echo "$POL_COOKIE	$command	$$	$arguments" | toPythonPipe
+}
+
+toPythonRet() {
+    local command="$1"
+    shift
+    arguments="$1"
+    shift
+    for argument in "$@"
+    do
+        arguments="${arguments}	$(POL_EscapeTab "$argument")"
+    done
+
+    echo "$POL_COOKIE	$command	$$	$arguments" | toPythonPipeRet
 }

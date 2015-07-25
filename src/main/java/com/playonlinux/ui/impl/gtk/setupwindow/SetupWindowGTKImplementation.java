@@ -92,6 +92,16 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     }
 
     @Override
+    public void setTopImage(URL topImage) throws IOException {
+
+    }
+
+    @Override
+    public void setLeftImage(URL leftImage) throws IOException {
+
+    }
+
+    @Override
     public void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow) {
         StepRepresentationMessage stepMessage = new StepRepresentationMessage(this, message, textToShow);
         stepMessage.installStep();

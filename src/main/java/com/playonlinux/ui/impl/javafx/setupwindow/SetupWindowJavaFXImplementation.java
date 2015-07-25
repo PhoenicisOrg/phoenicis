@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -89,8 +90,6 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     public void addNode(Node widgetToAdd) {
         this.root.getChildren().add(widgetToAdd);
     }
-
-
 
     @Override
     public void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow) {
@@ -158,6 +157,16 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
     @Override
     public void setLeftImage(File leftImage) throws MalformedURLException {
         this.leftImage = new URL(leftImage.getAbsolutePath());
+    }
+
+    @Override
+    public void setTopImage(URL topImage) throws IOException {
+        this.topImage = topImage;
+    }
+
+    @Override
+    public void setLeftImage(URL leftImage) throws IOException {
+        this.leftImage = leftImage;
     }
 
     public URL getLeftImage() {

@@ -70,7 +70,6 @@ public class Downloader {
 
 
     private Downloader downloadRemoteFile(URL remoteFile, File localFile) throws CancelException {
-
         this.defineProgressStep(remoteFile);
 
         final HTTPDownloader downloader = new HTTPDownloader(remoteFile);
@@ -97,8 +96,6 @@ public class Downloader {
         }
 
         return downloadRemoteFile(remoteFile, temporaryFile);
-
-
     }
 
     public Downloader get(String remoteFile) throws CancelException {
@@ -140,7 +137,7 @@ public class Downloader {
         return this;
     }
 
-    protected String findFileNameFromURL(URL remoteFile) {
+    public String findFileNameFromURL(URL remoteFile) {
         String[] urlParts = remoteFile.getFile().split("/");
         return urlParts[urlParts.length - 1];
     }
