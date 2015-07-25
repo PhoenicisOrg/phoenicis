@@ -18,13 +18,13 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.scripts.InstallerSource;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceImplementation;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
 import com.playonlinux.core.lang.LanguageBundle;
@@ -40,7 +40,7 @@ import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.engines.wine.WineVersionSource;
-import com.playonlinux.engines.wine.WineversionsSourceWebserviceImplementation;
+import com.playonlinux.engines.wine.WineversionsSourceWebserviceDefaultImplementation;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -82,7 +82,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      */
     @Bean
     public InstallerSource installerSource() throws MalformedURLException {
-        return new InstallerSourceWebserviceImplementation(new URL(playOnLinuxContext.getProperty("webservice.url")));
+        return new InstallerSourceWebserviceDefaultImplementation(new URL(playOnLinuxContext.getProperty("webservice.apps.url")));
     }
 
     /**
@@ -92,7 +92,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      */
     @Bean
     public WineVersionSource wineVersionSource() throws MalformedURLException {
-        return new WineversionsSourceWebserviceImplementation(new URL(playOnLinuxContext.getProperty("webservice.wine.url")));
+        return new WineversionsSourceWebserviceDefaultImplementation(new URL(playOnLinuxContext.getProperty("webservice.wine.url")));
     }
 
     /**

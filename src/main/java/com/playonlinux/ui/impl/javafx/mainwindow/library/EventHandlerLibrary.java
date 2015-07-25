@@ -19,13 +19,14 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
+import com.playonlinux.ui.impl.javafx.common.ErrorMessage;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
@@ -63,10 +64,7 @@ class EventHandlerLibrary implements UIEventHandler {
             mainEventHandler.runApplication(applicationName);
         } catch (PlayOnLinuxException e) {
             LOGGER.error(e);
-            final Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(translate("Error while trying to run the application."));
-            alert.setContentText(String.format("The error was: %s", e));
-            alert.show();
+            new ErrorMessage("Error while trying to run the application", e).show();
         }
     }
 

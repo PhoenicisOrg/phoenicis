@@ -18,8 +18,8 @@
 
 package com.playonlinux.core.comparator;
 
-import com.playonlinux.version.Version;
-import com.playonlinux.version.VersionComparator;
+import com.playonlinux.core.version.Version;
+import com.playonlinux.core.version.VersionComparator;
 import org.junit.Before;
 import org.junit.Test;
 

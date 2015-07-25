@@ -1,8 +1,8 @@
 package com.playonlinux.engines.wine;
 
 
-import com.playonlinux.utils.Architecture;
-import com.playonlinux.utils.OperatingSystem;
+import com.playonlinux.core.utils.Architecture;
+import com.playonlinux.core.utils.OperatingSystem;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import static java.lang.String.format;

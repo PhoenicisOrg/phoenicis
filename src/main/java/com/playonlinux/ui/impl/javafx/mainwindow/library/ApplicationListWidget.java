@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;

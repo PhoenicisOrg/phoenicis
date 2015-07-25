@@ -18,7 +18,7 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.utils.ReplacableProperties;
+import com.playonlinux.core.utils.ReplacableProperties;
 import org.junit.Before;
 import org.junit.Test;
 

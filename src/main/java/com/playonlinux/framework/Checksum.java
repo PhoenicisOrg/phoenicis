@@ -19,7 +19,7 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.utils.ChecksumCalculator;
+import com.playonlinux.core.utils.ChecksumCalculator;
 
 import java.io.File;
 import java.io.IOException;

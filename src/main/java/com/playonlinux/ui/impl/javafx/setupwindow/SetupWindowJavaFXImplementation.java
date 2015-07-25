@@ -18,14 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
-import com.playonlinux.utils.OperatingSystem;
+import com.playonlinux.core.utils.OperatingSystem;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

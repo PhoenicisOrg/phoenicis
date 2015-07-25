@@ -18,14 +18,14 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 
 /**
  * Represents a progress control
  */
-public interface ProgressControl extends Observer<Observable, ProgressStateDTO> {
+public interface ProgressControl extends Observer<Observable, ProgressStateEntity> {
     void setProgressPercentage(double value);
 
     void setText(String text);

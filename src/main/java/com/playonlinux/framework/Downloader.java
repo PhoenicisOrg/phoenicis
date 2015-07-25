@@ -21,7 +21,7 @@ package com.playonlinux.framework;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.utils.ChecksumCalculator;
+import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 

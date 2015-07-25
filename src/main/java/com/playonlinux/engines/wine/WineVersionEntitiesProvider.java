@@ -18,10 +18,11 @@
 
 package com.playonlinux.engines.wine;
 
-import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
-import com.playonlinux.engines.wine.dto.web.WineVersionDistributionWebDTO;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
+import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -29,7 +30,6 @@ import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
 import com.playonlinux.core.observer.Observer;
 
 import java.util.ArrayList;
@@ -39,30 +39,30 @@ import java.util.stream.Collectors;
 @Scan
 @AutoStartedService(type = WineVersionEntitiesProvider.class)
 public final class WineVersionEntitiesProvider
-        extends AbstractObservableImplementation<WineVersionsWindowDTO>
+        extends ObservableDefaultImplementation<WineVersionsWindowEntity>
         implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,
-                   EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> {
+                   EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
 
 
     @Inject
     static ServiceManager serviceManager;
 
-    private final List<WineVersionDistributionItemDTO> wineVersionDistributionItemDTOs = new ArrayList<>();
-    private final List<WineVersionDistributionItemDTO> filteredWineVersionDistributionItemDTOs = new ArrayList<>();
+    private final List<WineVersionDistributionItemEntity> wineVersionDistributionItemEntities = new ArrayList<>();
+    private final List<WineVersionDistributionItemEntity> filteredWineVersionDistributionItemEntities = new ArrayList<>();
 
-    private Filter<WineVersionDistributionItemDTO> lastFilter;
+    private Filter<WineVersionDistributionItemEntity> lastFilter;
 
 
     @Override
     public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
         assert argument == observable;
         for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(argument.getWineVersionDistributionDTOs())) {
-            final List<WineVersionItemDTO> availablePackages = new ArrayList<>();
-            final List<WineVersionItemDTO> installedPackages = new ArrayList<>();
+            final List<WineVersionItemEntity> availablePackages = new ArrayList<>();
+            final List<WineVersionItemEntity> installedPackages = new ArrayList<>();
 
-            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream().map(wineVersionDTO -> new WineVersionItemDTO(wineVersionDTO.getVersion())).collect(Collectors.toList()));
+            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream().map(wineVersionDTO -> new WineVersionItemEntity(wineVersionDTO.getVersion())).collect(Collectors.toList()));
 
-            wineVersionDistributionItemDTOs.add(new WineVersionDistributionItemDTO.Builder()
+            wineVersionDistributionItemEntities.add(new WineVersionDistributionItemEntity.Builder()
                             .withName(wineVersionDistributionDTO.getName())
                             .withAvailablePackages(availablePackages)
                             .withInstalledPackages(installedPackages)
@@ -76,18 +76,18 @@ public final class WineVersionEntitiesProvider
     }
 
     @Override
-    public void applyFilter(Filter<WineVersionDistributionItemDTO> filter) {
+    public void applyFilter(Filter<WineVersionDistributionItemEntity> filter) {
         this.lastFilter = filter;
 
-        filteredWineVersionDistributionItemDTOs.clear();
+        filteredWineVersionDistributionItemEntities.clear();
 
         if(filter == null) {
-            filteredWineVersionDistributionItemDTOs.addAll(wineVersionDistributionItemDTOs);
+            filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities);
         } else {
-            filteredWineVersionDistributionItemDTOs.addAll(wineVersionDistributionItemDTOs.stream().filter(filter::apply).collect(Collectors.toList()));
+            filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities.stream().filter(filter::apply).collect(Collectors.toList()));
         }
 
-        this.notifyObservers(new WineVersionsWindowDTO(filteredWineVersionDistributionItemDTOs));
+        this.notifyObservers(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities));
     }
 
 

@@ -18,15 +18,16 @@
 
 package com.playonlinux.apps;
 
-import com.playonlinux.apps.dto.ui.AppsItemScriptDTO;
-import com.playonlinux.apps.dto.web.ApplicationDTO;
-import com.playonlinux.apps.dto.web.CategoryDTO;
-import com.playonlinux.apps.dto.web.ScriptDTO;
+import com.playonlinux.apps.entities.AppEntity;
+import com.playonlinux.apps.entities.AppsCategory;
+import com.playonlinux.apps.entities.ScriptEntity;
+import com.playonlinux.apps.dto.ApplicationDTO;
+import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.apps.dto.ScriptDTO;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.webservice.DownloadEnvelope;
-import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
-import com.playonlinux.apps.dto.ui.AppsWindowDTO;
+import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -34,7 +35,6 @@ import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
 import com.playonlinux.core.observer.Observer;
 
 import java.util.ArrayList;
@@ -44,39 +44,37 @@ import java.util.List;
 @Scan
 @AutoStartedService(type = AppsEntitiesProvider.class)
 public final class AppsEntitiesProvider
-        extends AbstractObservableImplementation<AppsWindowDTO>
+        extends ObservableDefaultImplementation<AppsWindowEntity>
         implements Observer<DefaultAppsManager, DefaultAppsManager>,
-                   EntitiesProvider<AppsItemDTO, AppsWindowDTO> {
+                   EntitiesProvider<AppEntity, AppsWindowEntity> {
 
 
     @Inject
     static ServiceManager serviceManager;
 
-    private final List<AppsItemDTO> appsItemDTOs = new ArrayList<>();
-    private final List<AppsItemDTO> filteredAppsItemsDTOs = new ArrayList<>();
-    private final List<AppsCategoryDTO> categoriesDTO = new ArrayList<>();
+    private final List<AppEntity> appsItemDTOs = new ArrayList<>();
+    private final List<AppEntity> filteredAppsItemsDTOs = new ArrayList<>();
+    private final List<AppsCategory> categoriesDTO = new ArrayList<>();
 
-    private Filter<AppsItemDTO> lastFilter;
+    private Filter<AppEntity> lastFilter;
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
-
-
     @Override
-    public void applyFilter(Filter<AppsItemDTO> filter) {
+    public void applyFilter(Filter<AppEntity> filter) {
         this.lastFilter = filter;
 
         if(filter == null) {
             filteredAppsItemsDTOs.clear();
         } else {
             filteredAppsItemsDTOs.clear();
-            for (AppsItemDTO appsItemDTO : appsItemDTOs) {
+            for (AppEntity appsItemDTO : appsItemDTOs) {
                 if (filter.apply(appsItemDTO)) {
                     filteredAppsItemsDTOs.add(appsItemDTO);
                 }
             }
         }
 
-        this.notifyObservers(new AppsWindowDTO.Builder()
+        this.notifyObservers(new AppsWindowEntity.Builder()
                 .withAppsCategory(categoriesDTO)
                 .withAppsItem(filteredAppsItemsDTOs)
                 .withDownloadFailed(hasFailed())
@@ -86,11 +84,11 @@ public final class AppsEntitiesProvider
 
 
     private boolean isUpdating() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
     }
 
     private boolean hasFailed() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.FAILED;
     }
 
 
@@ -114,19 +112,20 @@ public final class AppsEntitiesProvider
         if(downloadEnvelope.getEnvelopeContent() != null) {
             for (CategoryDTO categoryDTO : downloadEnvelope.getEnvelopeContent()) {
                 if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    categoriesDTO.add(new AppsCategoryDTO(categoryDTO.getName()));
+                    categoriesDTO.add(new AppsCategory(categoryDTO.getName()));
                     for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
-                        final List<AppsItemScriptDTO> scripts = new ArrayList<>();
+                        final List<ScriptEntity> scripts = new ArrayList<>();
                         for (ScriptDTO script : applicationDTO.getScripts()) {
                             scripts.add(
-                                    new AppsItemScriptDTO.Builder()
+                                    new ScriptEntity.Builder()
                                             .withName(script.getName())
                                             .withId(script.getId())
+                                            .withUrl(script.getUrl())
                                             .build()
                             );
                         }
 
-                        final AppsItemDTO appsItemDTO = new AppsItemDTO.Builder() //
+                        final AppEntity appsItemDTO = new AppEntity.Builder() //
                                 .withName(applicationDTO.getName()) //
                                 .withCategoryName(categoryDTO.getName()) //
                                 .withDescription(applicationDTO.getDescription()) //

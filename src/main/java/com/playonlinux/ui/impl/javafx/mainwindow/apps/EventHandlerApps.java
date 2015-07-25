@@ -19,8 +19,11 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
-import com.playonlinux.apps.dto.ui.AppsWindowDTO;
+import com.playonlinux.apps.AppsManagerException;
+import com.playonlinux.apps.InstallerDownloaderEntityProvider;
+import com.playonlinux.apps.entities.AppEntity;
+import com.playonlinux.apps.entities.AppsWindowEntity;
+import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -38,7 +41,7 @@ final class EventHandlerApps implements UIEventHandler {
         return mainEventHandler;
     }
 
-    public EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers() {
+    public EntitiesProvider<AppEntity, AppsWindowEntity> getRemoteAvailableInstallers() {
         return mainEventHandler.getRemoteAvailableInstallers();
     }
 
@@ -46,7 +49,7 @@ final class EventHandlerApps implements UIEventHandler {
         mainEventHandler.refreshAvailableInstallers();
     }
 
-    public void installApp(AppsItemDTO appsItemDTO, int scriptId) {
-        System.out.println("Will handle installation of script "+scriptId);
+    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptId) throws AppsManagerException {
+        return mainEventHandler.getInstallerDownloaderEntityProvider(scriptId);
     }
 }

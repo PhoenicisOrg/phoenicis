@@ -18,13 +18,12 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
-import com.playonlinux.utils.OperatingSystem;
+import com.playonlinux.core.utils.OperatingSystem;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.gnome.gtk.Fixed;

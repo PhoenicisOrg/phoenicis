@@ -46,36 +46,45 @@ public class ScriptRecent extends Script {
 
     @Override
     public String extractSignature() throws ParseException, IOException {
+        return extract(true);
+    }
+
+    @Override
+    public String extractContent() throws ParseException, IOException {
+        return extract(false);
+    }
+
+    private String extract(boolean extractSignature) throws IOException, ParseException {
         BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
         StringBuilder signatureBuilder = new StringBuilder();
 
         Boolean insideSignature = false;
-        do {
-            String readLine = bufferReader.readLine();
-            if(readLine == null) {
-                break;
-            }
-            if(readLine.contains("-----BEGIN PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
+        for(String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
+            if(readLine.contains("-----BEGIN PGP SIGNATURE-----") && readLine.startsWith("#")) {
                 insideSignature = true;
             }
 
-            if(insideSignature) {
+            if(!(insideSignature ^ extractSignature)) {
                 if(readLine.startsWith("#")) {
                     signatureBuilder.append(readLine.substring(1, readLine.length()).trim());
                 }
                 signatureBuilder.append("\n");
             }
 
-            if(readLine.contains("-----END PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
+            if(readLine.contains("-----END PGP SIGNATURE-----") && readLine.startsWith("#")) {
                 insideSignature = false;
             }
-        } while(true);
-
-        String signature = signatureBuilder.toString().trim();
-
-        if(StringUtils.isBlank(signature)) {
-            throw new ParseException("The script has no valid signature!", 0);
         }
-        return signature;
+
+        final String extractedContent = signatureBuilder.toString().trim();
+
+        if(StringUtils.isBlank(extractedContent)) {
+            if(extractSignature) {
+                throw new ParseException("The script has no valid signature!", 0);
+            } else {
+                throw new ParseException("The script has no valid content", 0);
+            }
+        }
+        return extractedContent;
     }
 }

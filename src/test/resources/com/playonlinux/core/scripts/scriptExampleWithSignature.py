@@ -4,11 +4,11 @@ setupWindow = POL_SetupWindow("TITLE")
 
 print "Hello from python!"
 
-# -----BEGIN PGP PUBLIC KEY BLOCK-----
+# -----BEGIN PGP SIGNATURE-----
 # Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
 
 # MOCKED SIGNATURE (PYTHON)
-# -----END PGP PUBLIC KEY BLOCK-----
+# -----END PGP SIGNATURE-----
 
 setupWindow.message("Test\nTest");
 setupWindow.message("Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +

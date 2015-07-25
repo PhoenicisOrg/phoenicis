@@ -20,17 +20,17 @@ package com.playonlinux.dto.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
+import com.playonlinux.apps.entities.AppEntity;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AppsItemDTOTest {
 
-    private AppsItemDTO appsItemDTO;
+    private AppEntity appsItemDTO;
 
     @Before
     public void setUp() {
-        this.appsItemDTO = new AppsItemDTO.Builder()
+        this.appsItemDTO = new AppEntity.Builder()
                 .withName("Name")
                 .withCategoryName("Category")
                 .withDescription("a description")

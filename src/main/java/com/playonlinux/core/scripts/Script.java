@@ -49,7 +49,6 @@ public abstract class Script implements Service {
 
     private final String scriptContent;
 
-
     protected Script(String scriptContent, ExecutorService executor) {
         this.executor = executor;
         this.scriptContent = scriptContent;
@@ -57,7 +56,7 @@ public abstract class Script implements Service {
 
     public static Script.Type detectScriptType(String script) {
         String firstLine = script.split("\n")[0];
-        if("#!/bin/bash".equals(firstLine) || "#!/usr/bin/env playonlinux-bash".equals(firstLine)) {
+        if(firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash")) {
             return Script.Type.LEGACY;
         } else {
             return Script.Type.RECENT;
@@ -73,8 +72,6 @@ public abstract class Script implements Service {
     public String getScriptContent() {
         return scriptContent;
     }
-
-
 
     public enum Type {
         RECENT,
@@ -115,4 +112,6 @@ public abstract class Script implements Service {
     protected abstract void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException;
 
     public abstract String extractSignature() throws ParseException, IOException;
+
+    public abstract String extractContent() throws ParseException, IOException;
 }

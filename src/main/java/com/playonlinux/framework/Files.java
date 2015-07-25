@@ -115,7 +115,7 @@ public class Files {
 
     public Files remove(String pathToDelete) throws ScriptFailureException {
         try {
-            com.playonlinux.utils.Files.remove(new File(pathToDelete));
+            com.playonlinux.core.utils.Files.remove(new File(pathToDelete));
         } catch (IOException e) {
             throw new ScriptFailureException("Unable to delete the file", e);
         }

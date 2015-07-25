@@ -18,6 +18,7 @@
 
 package com.playonlinux.core.scripts;
 
+import com.playonlinux.core.utils.FileAnalyser;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.core.injection.Inject;
 import org.apache.commons.lang.StringUtils;
@@ -28,11 +29,11 @@ import java.text.ParseException;
 import java.util.concurrent.ExecutorService;
 
 public class ScriptLegacy extends Script {
-    private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP PUBLIC KEY BLOCK-----";
-    private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
+    private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP SIGNATURE-----";
+    private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP SIGNATURE-----";
     
     @Inject
-    private static ScriptFactory scriptFactory;
+    static ScriptFactory scriptFactory;
 
 
     protected ScriptLegacy(String script, ExecutorService executorService) {
@@ -64,33 +65,49 @@ public class ScriptLegacy extends Script {
     }
 
     @Override
+    public String extractContent() throws ParseException, IOException {
+        return extract(false);
+    }
+
+    @Override
     public String extractSignature() throws ParseException, IOException {
+        return extract(true).trim();
+    }
+
+    private String extract(boolean extractSignature) throws IOException, ParseException {
         BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
         StringBuilder signatureBuilder = new StringBuilder();
+        String separator = FileAnalyser.identifyLineDelimiter(this.getScriptContent());
 
-        String readLine;
         Boolean insideSignature = false;
-        do {
-            readLine = bufferReader.readLine();
-            if(BEGIN_PGP_KEY_BLOCK_LINE.equals(readLine)) {
+        for(String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
+            if(readLine.contains(BEGIN_PGP_KEY_BLOCK_LINE)) {
                 insideSignature = true;
             }
 
-            if(insideSignature) {
+            if(!(extractSignature ^ insideSignature)) {
                 signatureBuilder.append(readLine);
-                signatureBuilder.append("\n");
+                signatureBuilder.append(separator);
             }
 
-            if(END_PGP_KEY_BLOCK_LINE.equals(readLine)) {
+            if(readLine.contains(END_PGP_KEY_BLOCK_LINE)) {
                 insideSignature = false;
             }
-        } while(readLine != null);
-
-        String signature = signatureBuilder.toString().trim();
-
-        if(StringUtils.isBlank(signature)) {
-            throw new ParseException("The script has no valid signature!", 0);
         }
-        return signature;
+
+        final String extractedContent = signatureBuilder.toString();
+
+        if(StringUtils.isBlank(extractedContent)) {
+            if(extractSignature) {
+                throw new ParseException("The script has no valid signature!", 0);
+            } else {
+                throw new ParseException("The script has no valid content", 0);
+            }
+        }
+
+
+        return extractedContent;
     }
+
+
 }
