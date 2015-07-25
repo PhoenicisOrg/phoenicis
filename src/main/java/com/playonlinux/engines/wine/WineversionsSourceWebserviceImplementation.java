@@ -20,7 +20,7 @@ package com.playonlinux.engines.wine;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
+import com.playonlinux.engines.wine.dto.web.WineVersionDistributionWebDTO;
 import com.playonlinux.core.webservice.Webservice;
 
 import java.net.URL;

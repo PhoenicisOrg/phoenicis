@@ -20,6 +20,7 @@ package com.playonlinux.dto.web;
 
 import static org.junit.Assert.assertEquals;
 
+import com.playonlinux.apps.dto.web.ApplicationDTO;
 import org.junit.Before;
 import org.junit.Test;
 

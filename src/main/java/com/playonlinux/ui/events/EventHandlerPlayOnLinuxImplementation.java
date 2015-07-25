@@ -20,9 +20,10 @@ package com.playonlinux.ui.events;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.apps.AppsManager;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
-import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
@@ -30,14 +31,13 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
-import com.playonlinux.apps.AvailableInstallersEntitiesProvider;
+import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.library.LibraryEntitiesProvider;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 @Scan
 public final class EventHandlerPlayOnLinuxImplementation implements EventHandler {
@@ -75,25 +75,29 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
         return this.virtualDrives;
     }
 
+    @Override
+    public AppsManager getAppsManager() {
+        return playOnLinuxBackgroundServicesManager.getService(AppsManager.class);
+    }
 
     @Override
-    public AvailableInstallersEntitiesProvider getRemoteAvailableInstallers() {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(AvailableInstallersEntitiesProvider.class);
+    public AppsEntitiesProvider getRemoteAvailableInstallers() {
+        return playOnLinuxBackgroundServicesManager.getService(AppsEntitiesProvider.class);
     }
 
     @Override
     public EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions() {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(WineVersionEntitiesProvider.class);
+        return playOnLinuxBackgroundServicesManager.getService(WineVersionEntitiesProvider.class);
     }
 
     @Override
     public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
-        return playOnLinuxBackgroundServicesManager.getBackgroundService(LibraryEntitiesProvider.class);
+        return playOnLinuxBackgroundServicesManager.getService(LibraryEntitiesProvider.class);
     }
 
     @Override
     public void refreshAvailableInstallers() throws PlayOnLinuxException {
-        getRemoteAvailableInstallers().refresh();
+        getAppsManager().refresh();
     }
 
     @Override

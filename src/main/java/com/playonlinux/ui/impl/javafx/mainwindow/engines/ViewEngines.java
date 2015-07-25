@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
-import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
-import com.playonlinux.dto.ui.engines.WineVersionItemDTO;
-import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionItemDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;

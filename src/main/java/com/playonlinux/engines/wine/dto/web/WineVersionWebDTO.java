@@ -16,14 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
+package com.playonlinux.engines.wine.dto.web;
 
-import com.playonlinux.apps.dto.web.CategoryDTO;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.webservice.DownloadEnvelope;
+import com.playonlinux.dto.AbstractDTO;
 
-import java.util.Collection;
+public class WineVersionWebDTO implements AbstractDTO {
+    String version;
+    String url;
+    String sha1sum;
 
-public interface InstallerSource extends Observable<DownloadEnvelope<Collection<CategoryDTO>>> {
-    void populate();
+    public WineVersionWebDTO() {
+        // Needed by Jackson
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getSha1sum() {
+        return sha1sum;
+    }
 }

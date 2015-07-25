@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.apps.dto.web;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.dto.AbstractDTO;

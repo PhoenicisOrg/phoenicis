@@ -20,7 +20,7 @@ package com.playonlinux.dto.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
+import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
 import org.junit.Before;
 import org.junit.Test;
 

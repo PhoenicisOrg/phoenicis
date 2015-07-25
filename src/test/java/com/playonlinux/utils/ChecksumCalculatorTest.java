@@ -28,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
 import static org.junit.Assert.*;
 
 public class ChecksumCalculatorTest {
+
     @Test
     public void testChecksumCalculate_generateAFile_CheckMD5() throws IOException, NoSuchAlgorithmException {
         File temporaryFile = File.createTempFile("testHash", "txt");

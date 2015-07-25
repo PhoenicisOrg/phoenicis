@@ -26,9 +26,10 @@ import com.playonlinux.utils.ReplacableProperties;
 @Scan
 public final class Localisation {
     @Inject
-    private static LanguageBundle bundle;
+    static LanguageBundle bundle;
+
     @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+    static PlayOnLinuxContext playOnLinuxContext;
 
     // This is a static class
     private Localisation() {
@@ -36,8 +37,10 @@ public final class Localisation {
     }
 
     public static String translate(String stringToTranslate) {
-        ReplacableProperties properties;
-        properties = playOnLinuxContext.loadProperties();
+        if(playOnLinuxContext == null || bundle == null) {
+            return stringToTranslate;
+        }
+        ReplacableProperties properties = playOnLinuxContext.loadProperties();
 
         return properties.replaceAllVariables(bundle.translate(stringToTranslate));
     }

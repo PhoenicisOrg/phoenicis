@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
-import com.playonlinux.dto.ui.apps.AppsItemDTO;
-import com.playonlinux.dto.ui.apps.AppsWindowDTO;
+import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
+import com.playonlinux.apps.dto.ui.AppsItemDTO;
+import com.playonlinux.apps.dto.ui.AppsWindowDTO;
 import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;

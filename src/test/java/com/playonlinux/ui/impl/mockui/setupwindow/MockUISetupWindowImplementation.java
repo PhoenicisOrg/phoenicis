@@ -71,7 +71,7 @@ public class MockUISetupWindowImplementation implements SetupWindow {
 
     @Override
     public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
-        assertEquals("Text to showRightView", textToShow);
+        assertEquals("text to showRightView", textToShow);
     }
 
     @Override

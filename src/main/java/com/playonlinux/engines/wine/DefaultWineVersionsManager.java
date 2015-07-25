@@ -24,7 +24,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
+import com.playonlinux.engines.wine.dto.web.WineVersionDistributionWebDTO;
 import com.playonlinux.core.services.manager.AutoStartedService;
 
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -33,7 +33,7 @@ import com.playonlinux.core.observer.AbstractObservableImplementation;
 import com.playonlinux.core.observer.Observable;
 
 import com.playonlinux.core.webservice.DownloadEnvelope;
-import com.playonlinux.dto.web.WineVersionWebDTO;
+import com.playonlinux.engines.wine.dto.web.WineVersionWebDTO;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.utils.Files;
 import com.playonlinux.utils.archive.ArchiveException;
