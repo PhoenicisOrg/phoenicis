@@ -40,7 +40,7 @@ POL_Wine_SetVersionEnv()
         [ "$POL_OS" = "FreeBSD" ] && ARCH_PREFIX="freebsd"
         [ "$POL_OS" = "Linux" ] && ARCH_PREFIX="linux"
         OLDPATH="$PWD"
-        WINEDIR="$POL_USER_ROOT/wine/$ARCH_PREFIX-$POL_ARCH"
+        WINEDIR="$POL_USER_ROOT/engines/wine/upstream-$ARCH_PREFIX-$POL_ARCH"
         mkdir -p "$WINEDIR"
         cd "$WINEDIR"
 
@@ -521,4 +521,17 @@ EOF
 	done) > "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
 	POL_Wine regedit "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
 	rm "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+}
+
+POL_Wine_InstallVersion()
+{
+	# Install a wineversion
+	# Usage: POL_Wine_InstallVersion [VERSION]
+
+	[ ! "$1" = "" ] && export POL_WINEVERSION="$1"
+	[ "$POL_WINEVERSION" = "" ] && POL_Debug_Fatal "No POL_WINEVERSION set"
+	[ "$POL_ARCH" = "" ] && POL_System_SetArch "auto"
+	POL_Debug_Message "Installing wine version path: $POL_WINEVERSION, $POL_ARCH"
+
+	toPython "POL_Wine_InstallVersion" "$POL_WINEVERSION" "$POL_ARCH"
 }

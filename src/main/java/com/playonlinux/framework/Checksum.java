@@ -19,7 +19,6 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.core.utils.ChecksumCalculator;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,11 +33,18 @@ public class Checksum {
     }
 
     public String md5(String file) throws IOException, NoSuchAlgorithmException {
-        ChecksumCalculator checksumCalculator = new ChecksumCalculator();
+        com.playonlinux.core.utils.ChecksumCalculator checksumCalculatorCalculator = new com.playonlinux.core.utils.ChecksumCalculator();
         if(progressControl != null) {
-            checksumCalculator.addObserver(progressControl);
+            checksumCalculatorCalculator.addObserver(progressControl);
         }
-        return checksumCalculator.calculate(new File(file), "md5");
+        return checksumCalculatorCalculator.calculate(new File(file), "md5");
+    }
 
+    public String sha1(String file) throws IOException, NoSuchAlgorithmException {
+        com.playonlinux.core.utils.ChecksumCalculator checksumCalculatorCalculator = new com.playonlinux.core.utils.ChecksumCalculator();
+        if(progressControl != null) {
+            checksumCalculatorCalculator.addObserver(progressControl);
+        }
+        return checksumCalculatorCalculator.calculate(new File(file), "sha1");
     }
 }

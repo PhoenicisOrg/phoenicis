@@ -21,6 +21,8 @@ import os
 
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
+from com.playonlinux.framework import WineInstallation
+
 from java.net import URL
 
 
@@ -157,3 +159,12 @@ class CommandParser(object):
         def POL_Print(self):
             message = self.command[3]
             self.setupWindowManager.wizard.echo(message)
+
+        def POL_Wine_InstallVersion(self):
+            setupWindowId = self.command[2]
+            version = self.command[3]
+            arch = self.command[4]
+
+            wineInstallation = WineInstallation(version, "upstream-%s" % arch,
+                                                self.setupWindowManager.getWindow(setupWindowId))
+            wineInstallation.install()

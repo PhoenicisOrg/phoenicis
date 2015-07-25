@@ -77,7 +77,9 @@ public class Downloader {
             downloader.addObserver(progressControl);
             downloader.get(localFile);
         } catch (DownloadException e) {
-            throw new ScriptFailureException("Unable to download the file", e);
+            throw new ScriptFailureException(String.format(
+                    "Unable to download the file (Remote: %s, Local: %s)", remoteFile, localFile
+            ), e);
         } finally {
             downloader.deleteObserver(progressControl);
         }
@@ -123,14 +125,14 @@ public class Downloader {
                 checksumCalculator.addObserver(progressControl);
             }
             calculatedChecksum = checksumCalculator.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
-        } catch (NoSuchAlgorithmException | IOException e) {
+        } catch (IOException e) {
             throw new ScriptFailureException(e);
         }
         if(this.findDownloadedFile() == null) {
             throw new ScriptFailureException("You must download the file first before running check()!");
         }
         if(!expectedChecksum.equals(calculatedChecksum)) {
-            throw new ScriptFailureException(String.format("ChecksumCalculator comparison has failed!%n%nServer: %s%nClient: %s",
+            throw new ScriptFailureException(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
                     expectedChecksum, calculatedChecksum));
         }
 

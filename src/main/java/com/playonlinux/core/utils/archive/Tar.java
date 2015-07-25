@@ -33,6 +33,7 @@ import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -109,10 +110,22 @@ public class Tar  {
                         Files.createDirectories(outputFile.toPath());
                     }
                 } else {
-                    LOGGER.info(String.format("Creating output file %s.", outputFile.getAbsolutePath()));
-                    try (final OutputStream outputFileStream = new FileOutputStream(outputFile)) {
-                        IOUtils.copy(debInputStream, outputFileStream);
+                    LOGGER.info(String.format("Creating output file %s (%s).", outputFile.getAbsolutePath(), entry.getMode()));
+
+                    if(entry.isSymbolicLink()) {
+                        Files.createSymbolicLink(Paths.get(outputFile.getAbsolutePath()), Paths.get(entry.getLinkName()));
+                    } else {
+                        try (final OutputStream outputFileStream = new FileOutputStream(outputFile)) {
+                            IOUtils.copy(debInputStream, outputFileStream);
+
+                            Files.setPosixFilePermissions(Paths.get(outputFile.getPath()),
+                                    com.playonlinux.core.utils.Files.octToPosixFilePermission(
+                                            entry.getMode()
+                                    )
+                            );
+                        }
                     }
+
                 }
                 uncompressedFiles.add(outputFile);
 
