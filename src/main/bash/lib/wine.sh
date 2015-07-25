@@ -120,7 +120,7 @@ POL_Wine_PrefixCreate()
         LNG_ABORT="$(eval_gettext 'Abort installation')"
 
         OLD_ARCH=""
-        [ -e "$WINEPREFIX/playonlinux.cfg" ] && OLD_ARCH=$(POL_Config_PrefixRead "ARCH")
+        [ -e "$WINEPREFIX/playonlinux.cfg" ] && OLD_ARCH="$(POL_Config_PrefixRead "ARCH")"
         if [ "$OLD_ARCH" = "$POL_USER_ARCH" ]; then
             PREFIX_CHOICES="$LNG_OVERWRITE~$LNG_ERASE~$LNG_ABORT"
         else

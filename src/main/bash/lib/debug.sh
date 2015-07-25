@@ -42,6 +42,10 @@ POL_Debug_Error ()
     echo "($(Get_CurrentDate)) [ERROR] $@"
 }
 
+POL_Debug_LogToPrefix()
+{
+	echo "[$(Get_CurrentDate)] - $@" >> "$WINEPREFIX/playonlinux.log"
+}
 
 POL_Debug_Message ()
 {

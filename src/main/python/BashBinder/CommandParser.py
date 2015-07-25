@@ -132,8 +132,6 @@ class CommandParser(object):
             localFile = os.path.join(currentDirectory,
                                      Downloader(setupWindow).findFileNameFromURL(URL(url)))
 
-            print url
-            print localFile
 
             downloader = Downloader(setupWindow).get(url, localFile)
 

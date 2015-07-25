@@ -539,3 +539,7 @@ find_binary() {
     # find_binary was a private function in the first place
     POL_System_find_file "$@"
 }
+
+POL_Internal_SetXQuartzDisplay() {
+    echo "Note: Ignored POL_Internal_SetXQuartzDisplay"
+}
