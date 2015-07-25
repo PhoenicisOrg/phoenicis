@@ -19,17 +19,17 @@
 package com.playonlinux.ui.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.apps.AppsManager;
 import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.dto.ui.apps.AppsItemDTO;
-import com.playonlinux.dto.ui.apps.AppsWindowDTO;
-import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
-import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
+import com.playonlinux.apps.dto.ui.AppsItemDTO;
+import com.playonlinux.apps.dto.ui.AppsWindowDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
 import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
 import com.playonlinux.dto.ui.library.LibraryWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 /**
  * Call version models from the UI
@@ -48,6 +48,8 @@ public interface EventHandler {
      * @throws PlayOnLinuxException
      */
     EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications();
+
+    AppsManager getAppsManager();
 
     EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers();
 

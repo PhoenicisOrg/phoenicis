@@ -18,7 +18,7 @@
 
 package com.playonlinux.engines.wine;
 
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
+import com.playonlinux.engines.wine.dto.web.WineVersionDistributionWebDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 

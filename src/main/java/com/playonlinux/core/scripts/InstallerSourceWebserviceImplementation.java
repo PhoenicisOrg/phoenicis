@@ -19,7 +19,7 @@
 package com.playonlinux.core.scripts;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.dto.web.CategoryDTO;
+import com.playonlinux.apps.dto.web.CategoryDTO;
 import com.playonlinux.core.webservice.Webservice;
 
 import java.net.URL;

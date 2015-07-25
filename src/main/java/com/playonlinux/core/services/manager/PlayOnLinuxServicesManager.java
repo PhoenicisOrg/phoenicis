@@ -56,7 +56,7 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
     }
 
     @Override
-    public <T extends Service> T getBackgroundService(String backgroundServiceName, Class<T> backgroundServiceType) {
+    public <T extends Service> T getService(String backgroundServiceName, Class<T> backgroundServiceType) {
         final Service service = backgroundServices.get(backgroundServiceName);
 
         if(backgroundServiceType.isAssignableFrom(service.getClass())) {
@@ -67,7 +67,7 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
     }
 
     @Override
-    public <T extends Service> T getBackgroundService(Class<T> backgroundServiceType) {
+    public <T extends Service> T getService(Class<T> backgroundServiceType) {
         for(Service service : backgroundServices.values()) {
             if(backgroundServiceType.isAssignableFrom(service.getClass())) {
                 return (T) service;

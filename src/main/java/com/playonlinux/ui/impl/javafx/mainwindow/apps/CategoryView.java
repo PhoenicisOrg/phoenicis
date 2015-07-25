@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.dto.ui.apps.AppsCategoryDTO;
+import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
 import javafx.scene.layout.VBox;

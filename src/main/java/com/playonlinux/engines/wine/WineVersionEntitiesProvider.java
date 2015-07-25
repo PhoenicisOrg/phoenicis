@@ -18,10 +18,10 @@
 
 package com.playonlinux.engines.wine;
 
-import com.playonlinux.dto.ui.engines.WineVersionDistributionItemDTO;
-import com.playonlinux.dto.ui.engines.WineVersionItemDTO;
-import com.playonlinux.dto.ui.engines.WineVersionsWindowDTO;
-import com.playonlinux.dto.web.WineVersionDistributionWebDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionItemDTO;
+import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
+import com.playonlinux.engines.wine.dto.web.WineVersionDistributionWebDTO;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -99,7 +99,7 @@ public final class WineVersionEntitiesProvider
 
     @Override
     public void start() throws ServiceInitializationException {
-        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager.getBackgroundService(DefaultWineVersionsManager.class);
+        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager.getService(DefaultWineVersionsManager.class);
 
         defaultWineVersionsManager.addObserver(this);
     }

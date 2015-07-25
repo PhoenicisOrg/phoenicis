@@ -58,7 +58,7 @@ public class WineInstallation {
         this.version = version;
         this.wineDistribution = wineDistribution;
         this.setupWizard = setupWizard;
-        this.wineVersionManager = serviceManager.getBackgroundService(WineVersionManager.class);
+        this.wineVersionManager = serviceManager.getService(WineVersionManager.class);
     }
 
     public com.playonlinux.wine.WineInstallation getInstallation() throws ScriptFailureException {

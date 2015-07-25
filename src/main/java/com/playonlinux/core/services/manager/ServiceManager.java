@@ -54,7 +54,7 @@ public interface ServiceManager {
      * @param <T> The type of the background service
      * @return The background service
      */
-    <T extends Service> T getBackgroundService(String backgroundServiceName, Class<T> backgroundServiceType);
+    <T extends Service> T getService(String backgroundServiceName, Class<T> backgroundServiceType);
 
     /**
      * Checks if the background manager currently contains the given service
@@ -68,5 +68,5 @@ public interface ServiceManager {
      */
     void init() throws ServiceInitializationException;
 
-    <T extends Service> T getBackgroundService(Class<T> installedApplicationsClass);
+    <T extends Service> T getService(Class<T> installedApplicationsClass);
 }

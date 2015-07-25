@@ -48,7 +48,7 @@ public class RemoteImage extends VBox {
 
     private final URL imageUrl;
 
-    private final DownloadManager downloadManager = serviceManager.getBackgroundService(DownloadManager.class);
+    private final DownloadManager downloadManager = serviceManager.getService(DownloadManager.class);
 
     public RemoteImage(URL imgeUrl) {
         this.getChildren().add(new ProgressIndicator());

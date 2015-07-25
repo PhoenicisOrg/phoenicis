@@ -16,24 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.engines.wine;
+package com.playonlinux.apps;
 
+import com.playonlinux.apps.dto.web.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.utils.archive.ArchiveException;
-import com.playonlinux.version.Version;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.core.webservice.DownloadEnvelope;
 
-import java.io.File;
+import java.util.Collection;
 
-public interface WineVersionManager extends Observer<Observable, Object>,
-                                            Observable<WineVersionManager>,
-                                            Service {
+public interface AppsManager extends Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
+                                     Observable<DefaultAppsManager>,
+                                     Service {
 
-    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
 
-    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
-
-    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
+    void refresh() throws ServiceInitializationException;
 }

@@ -75,11 +75,11 @@ public class PlayOnLinuxServicesManagerTest {
         playOnLinuxServicesManagerUnderTest.register("backgroundId2", mockBackgroundService2);
 
         assertEquals(mockBackgroundService,
-                playOnLinuxServicesManagerUnderTest.getBackgroundService("backgroundId",
+                playOnLinuxServicesManagerUnderTest.getService("backgroundId",
                         ServiceTestImplementation.class));
 
         assertEquals(mockBackgroundService2,
-                playOnLinuxServicesManagerUnderTest.getBackgroundService("backgroundId2",
+                playOnLinuxServicesManagerUnderTest.getService("backgroundId2",
                         ServiceTestImplementation.class));
 
 

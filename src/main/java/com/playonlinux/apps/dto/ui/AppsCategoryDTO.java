@@ -16,32 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.apps.dto.ui;
 
 import com.playonlinux.dto.AbstractDTO;
+import com.playonlinux.core.comparator.Nameable;
 
-import java.util.List;
+public class AppsCategoryDTO implements AbstractDTO, Nameable {
 
-public class WineVersionDistributionWebDTO implements AbstractDTO {
-    String name;
-    String description;
-    List<WineVersionWebDTO> packages;
+    private final String name;
 
-    public WineVersionDistributionWebDTO() {
-        // Needed by Jackson
-    }
-
-    public String getDescription() {
-        return description;
+    public AppsCategoryDTO(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<WineVersionWebDTO> getPackages() {
-        return packages;
+    public String getIconName() {
+        return "apps/applications-" + name.toLowerCase() + ".png";
     }
-
-
 }
