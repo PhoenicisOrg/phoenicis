@@ -20,10 +20,10 @@ package com.playonlinux.library;
 
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
 import com.playonlinux.core.scripts.InstallerException;
 import com.playonlinux.core.scripts.ScriptFactory;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import org.apache.log4j.Logger;
 
@@ -36,21 +36,21 @@ import java.util.List;
 
 @Scan
 class ShortcutSetDirectories
-        extends AbstractObservableImplementation<List<Shortcut>>
-        implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
+        extends ObservableDefaultImplementation<List<Shortcut>>
+        implements Observer<ObservableDefaultDirectoryFiles, File[]>, Closeable {
     
     @Inject
     static ScriptFactory scriptFactory;
     
-    private final ObservableDirectoryFiles iconDirectory;
+    private final ObservableDefaultDirectoryFiles iconDirectory;
     private final File configFilesDirectory;
-    private final ObservableDirectoryFiles shortcutDirectory;
+    private final ObservableDefaultDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
     private final List<Shortcut> shortcuts;
 
     private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
 
-    public ShortcutSetDirectories(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
+    public ShortcutSetDirectories(ObservableDefaultDirectoryFiles shortcutDirectory, ObservableDefaultDirectoryFiles iconDirectory,
                                   File configFilesDirectory, URL defaultIcon) {
         this.shortcuts = new ArrayList<>();
         this.iconDirectory = iconDirectory;
@@ -67,7 +67,7 @@ class ShortcutSetDirectories
     }
 
     @Override
-    public void update(ObservableDirectoryFiles observableDirectoryFiles, File[] argument) {
+    public void update(ObservableDefaultDirectoryFiles observableDirectoryFiles, File[] argument) {
         if(observableDirectoryFiles == shortcutDirectory) {
             getShortcuts().clear();
             for (File shortcutFile : argument) {

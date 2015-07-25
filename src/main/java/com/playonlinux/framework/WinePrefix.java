@@ -22,6 +22,7 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.observer.ObservableDefaultDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.log.ProcessLogger;
@@ -31,7 +32,6 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.wine.WineException;
@@ -131,9 +131,9 @@ public class WinePrefix {
                 )
         );
 
-        ObservableDirectorySize observableDirectorySize;
+        ObservableDefaultDirectorySize observableDirectorySize;
         try {
-            observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0,
+            observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), 0,
                     NEWPREFIXSIZE);
         } catch (PlayOnLinuxException e) {
             throw new ScriptFailureException(e);
@@ -312,7 +312,7 @@ public class WinePrefix {
      * @throws CancelException if the users cancels or if there is any error
      */
     public WinePrefix waitAllWatchDirectory(File directory, long endSize) throws CancelException {
-        ObservableDirectorySize observableDirectorySize;
+        ObservableDefaultDirectorySize observableDirectorySize;
         ProgressControl progressControl = this.setupWizard.progressBar(
                 String.format(
                         translate("Please wait while the program is being installed..."), prefixName
@@ -320,7 +320,7 @@ public class WinePrefix {
         );
 
         try {
-            observableDirectorySize = new ObservableDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
+            observableDirectorySize = new ObservableDefaultDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
                     endSize);
         } catch (PlayOnLinuxException e) {
             throw new ScriptFailureException(e);
@@ -358,9 +358,9 @@ public class WinePrefix {
                     )
             );
 
-            ObservableDirectorySize observableDirectorySize;
+            ObservableDefaultDirectorySize observableDirectorySize;
             try {
-                observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
+                observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
                         0);
             } catch (PlayOnLinuxException e) {
                 throw new ScriptFailureException(e);

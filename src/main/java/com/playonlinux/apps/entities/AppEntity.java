@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AppsItemEntity implements Entity, ItemWithMiniatureEntity {
+public class AppEntity implements Entity, ItemWithMiniatureEntity {
     private final String name;
     private final String categoryName;
     private final boolean isCommercial;
@@ -36,10 +36,10 @@ public class AppsItemEntity implements Entity, ItemWithMiniatureEntity {
     private final boolean requiresNoCd;
     private final List<URL> miniaturesUrls;
     private final String description;
-    private final List<AppsItemScriptEntity> scripts;
+    private final List<ScriptEntity> scripts;
 
 
-    private AppsItemEntity(Builder builder) {
+    private AppEntity(Builder builder) {
         this.name = builder.name;
         this.categoryName = builder.categoryName;
         this.isCommercial = builder.isCommercial;
@@ -50,7 +50,7 @@ public class AppsItemEntity implements Entity, ItemWithMiniatureEntity {
         this.scripts = builder.scripts;
     }
 
-    public List<AppsItemScriptEntity> getScripts() {
+    public List<ScriptEntity> getScripts() {
         return scripts;
     }
 
@@ -91,8 +91,8 @@ public class AppsItemEntity implements Entity, ItemWithMiniatureEntity {
         private boolean requiresNoCd;
         private String description;
         private List<URL> miniaturesUrls = new ArrayList<>();
-        private static final Logger LOGGER = Logger.getLogger(AppsItemEntity.class);
-        private List<AppsItemScriptEntity> scripts;
+        private static final Logger LOGGER = Logger.getLogger(AppEntity.class);
+        private List<ScriptEntity> scripts;
 
         public Builder withName(String name) {
             this.name = name;
@@ -142,14 +142,14 @@ public class AppsItemEntity implements Entity, ItemWithMiniatureEntity {
             return this;
         }
 
-        public Builder withScripts(List<AppsItemScriptEntity> scripts) {
+        public Builder withScripts(List<ScriptEntity> scripts) {
             this.scripts = scripts;
             return this;
         }
 
-        public AppsItemEntity build() {
+        public AppEntity build() {
             validate();
-            return new AppsItemEntity(this);
+            return new AppEntity(this);
         }
 
         private void validate() {

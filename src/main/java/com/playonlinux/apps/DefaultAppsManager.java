@@ -20,16 +20,17 @@ package com.playonlinux.apps;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
-import com.playonlinux.apps.entities.AppsItemScriptEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.scripts.InstallerSource;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceImplementation;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.core.utils.SignatureChecker;
 import com.playonlinux.core.webservice.DownloadEnvelope;
+import com.playonlinux.core.webservice.HTTPDownloader;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,14 +38,14 @@ import java.util.Collection;
 
 @Scan
 @AutoStartedService(type = AppsManager.class)
-public class DefaultAppsManager extends AbstractObservableImplementation<DefaultAppsManager> implements AppsManager {
+public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultAppsManager> implements AppsManager {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
     static ServiceManager serviceManager;
 
-    private InstallerSourceWebserviceImplementation installerSourceWebserviceImplementation;
+    private InstallerSourceWebserviceDefaultImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
 
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
@@ -61,14 +62,23 @@ public class DefaultAppsManager extends AbstractObservableImplementation<Default
             installerSourceWebserviceImplementation.deleteObserver(this);
             serviceManager.unregister(installerSourceWebserviceImplementation);
         }
-        installerSourceWebserviceImplementation = new InstallerSourceWebserviceImplementation(webserviceUrl);
+        installerSourceWebserviceImplementation = new InstallerSourceWebserviceDefaultImplementation(webserviceUrl);
         installerSourceWebserviceImplementation.addObserver(this);
         serviceManager.register(installerSourceWebserviceImplementation);
     }
 
     @Override
-    public void runScript(AppsItemScriptEntity script) {
+    public InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl) throws AppsManagerException {
+        try {
+            return getDownloaderEntityProvider(new URL(scriptUrl));
+        } catch (MalformedURLException e) {
+            throw new AppsManagerException("The URL was bad formed", e);
+        }
+    }
 
+    @Override
+    public InstallerDownloaderEntityProvider getDownloaderEntityProvider(URL scriptUrl) {
+        return new DefaultInstallerDownloaderEntityProvider(new HTTPDownloader(scriptUrl), new SignatureChecker());
     }
 
     @Override

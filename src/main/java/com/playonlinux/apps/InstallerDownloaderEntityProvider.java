@@ -16,29 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.engines.wine;
+package com.playonlinux.apps;
 
+import com.playonlinux.apps.entities.InstallerDownloaderEntity;
+import com.playonlinux.core.observer.Observable;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
-import com.playonlinux.core.webservice.Webservice;
-
-import java.net.URL;
-import java.util.List;
-
-
-public class WineversionsSourceWebserviceImplementation extends Webservice<WineVersionDistributionWebDTO>
-        implements WineVersionSource {
-
-
-    public WineversionsSourceWebserviceImplementation(URL url) {
-        super(url);
-    }
-
-    @Override
-    protected TypeReference defineTypeReference() {
-        return new TypeReference<List<WineVersionDistributionWebDTO>>() {};
-    }
-
-
+/**
+ * This component provides entities to the API while it is downloading a script (or installer)
+ */
+public interface InstallerDownloaderEntityProvider extends Observable<InstallerDownloaderEntity> {
+    void getScript();
 }

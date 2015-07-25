@@ -26,13 +26,13 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 
-public class ObservableDirectorySize extends AbstractObservableDirectory<ProgressStateEntity> {
+public class ObservableDefaultDirectorySize extends ObservableDefaultDirectory<ProgressStateEntity> {
     private final long startSize;
     private final long endSize;
     private final ObservableDirectoryThread observableDirectoryThread;
-    private static final Logger LOGGER = Logger.getLogger(ObservableDirectorySize.class);
+    private static final Logger LOGGER = Logger.getLogger(ObservableDefaultDirectorySize.class);
 
-    public ObservableDirectorySize(File observedDirectory, long startSize, long endSize) throws PlayOnLinuxException {
+    public ObservableDefaultDirectorySize(File observedDirectory, long startSize, long endSize) throws PlayOnLinuxException {
         this.startSize = startSize;
         this.endSize = endSize;
 
@@ -64,10 +64,10 @@ public class ObservableDirectorySize extends AbstractObservableDirectory<Progres
     }
 
     private class ObservableDirectoryThread extends Thread {
-        private final ObservableDirectorySize observableDirectorySize;
+        private final ObservableDefaultDirectorySize observableDirectorySize;
         private volatile Boolean running;
 
-        ObservableDirectoryThread(ObservableDirectorySize observableDirectorySize) {
+        ObservableDirectoryThread(ObservableDefaultDirectorySize observableDirectorySize) {
             super();
             this.running = false;
             this.observableDirectorySize = observableDirectorySize;

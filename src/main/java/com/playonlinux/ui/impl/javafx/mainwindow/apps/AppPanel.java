@@ -18,8 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.apps.entities.AppsItemEntity;
+import com.playonlinux.apps.AppsManagerException;
+import com.playonlinux.apps.InstallerDownloaderEntityProvider;
+import com.playonlinux.apps.entities.AppEntity;
+import com.playonlinux.ui.impl.javafx.common.ErrorMessage;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
 import com.sun.webkit.dom.HTMLAnchorElementImpl;
 import javafx.concurrent.Worker;
@@ -39,7 +43,7 @@ import java.net.URL;
 final class AppPanel extends VBox {
     private static final Logger LOGGER = Logger.getLogger(AppPanel.class);
 
-    public AppPanel(EventHandlerApps eventHandlerApps, AppsItemEntity appsItemDTO) {
+    public AppPanel(MainWindow parent, EventHandlerApps eventHandlerApps, AppEntity appsItemDTO) {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
 
@@ -47,8 +51,9 @@ final class AppPanel extends VBox {
 
         try {
             descriptionWidget.getEngine().loadContent(
-                    new HtmlTemplate(this.getClass().getResourceAsStream("descriptionTemplate.html"))
-                            .render(appsItemDTO)
+                    new HtmlTemplate(this.getClass()
+                            .getResourceAsStream("descriptionTemplate.html")
+                    ).render(appsItemDTO)
             );
         } catch (IOException e) {
             LOGGER.error("Unable to load the description", e);
@@ -57,15 +62,23 @@ final class AppPanel extends VBox {
         descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
                 EventListener listener = ev -> {
-                    if(ev.getTarget() instanceof HTMLAnchorElementImpl) {
-                        String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
-                        int scriptId = Integer.parseInt(link.replace("install://", ""));
-                        eventHandlerApps.installApp(appsItemDTO, scriptId);
+                    if (ev.getTarget() instanceof HTMLAnchorElementImpl) {
+                        final String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
+
+                        try {
+                            InstallerDownloaderEntityProvider installerDownloaderEntityProvider =
+                                    eventHandlerApps.getInstallerDownloaderEntityProvider(link);
+
+                            installerDownloaderEntityProvider.getScript();
+                        } catch (AppsManagerException e) {
+                            LOGGER.error(e);
+                            new ErrorMessage("Error while trying to download the installer", e).show();
+                        }
                     }
                 };
 
-                Document doc = descriptionWidget.getEngine().getDocument();
-                NodeList lista = doc.getElementsByTagName("a");
+                final Document doc = descriptionWidget.getEngine().getDocument();
+                final NodeList lista = doc.getElementsByTagName("a");
 
                 for (int i = 0; i < lista.getLength(); i++) {
                     ((EventTarget) lista.item(i)).addEventListener("click", listener, false);
@@ -80,7 +93,7 @@ final class AppPanel extends VBox {
         final ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
         miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
-        for(URL imageUrl: appsItemDTO.getMiniaturesUrls()) {
+        for (URL imageUrl : appsItemDTO.getMiniaturesUrls()) {
             RemoteImage remoteImage = new RemoteImage(imageUrl);
             miniaturesPane.getChildren().add(remoteImage);
             remoteImage.download();

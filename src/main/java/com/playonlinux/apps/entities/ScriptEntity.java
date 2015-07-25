@@ -22,14 +22,16 @@ import com.playonlinux.core.entities.Entity;
 import com.playonlinux.core.comparator.Nameable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class AppsItemScriptEntity implements Entity, Nameable {
+public class ScriptEntity implements Entity, Nameable {
 
     private final int id;
     private final String name;
+    private final String url;
 
-    private AppsItemScriptEntity(Builder builder) {
+    private ScriptEntity(Builder builder) {
         id = builder.id;
         name = builder.name;
+        url = builder.url;
     }
 
     public int getId() {
@@ -45,20 +47,27 @@ public class AppsItemScriptEntity implements Entity, Nameable {
     public String toString() {
         return new ToStringBuilder(this.getClass().getName())
                 .append(this.id)
+                .append(this.url)
                 .append(this.name).toString();
+    }
+
+    public String getUrl() {
+        return this.url;
     }
 
     public static class Builder {
         private String name;
         private int id;
+        public String url;
 
         public Builder() {
             // We need a public builder to be able to create a ScriptDTO from scratch
         }
 
-        public Builder(AppsItemScriptEntity scriptDTO) {
-            this.name = scriptDTO.name;
-            this.id = scriptDTO.id;
+        public Builder(ScriptEntity scriptEntity) {
+            this.name = scriptEntity.name;
+            this.id = scriptEntity.id;
+            this.url = scriptEntity.url;
         }
 
         public Builder withName(String name) {
@@ -71,8 +80,13 @@ public class AppsItemScriptEntity implements Entity, Nameable {
             return this;
         }
 
-        public AppsItemScriptEntity build() {
-            return new AppsItemScriptEntity(this);
+        public Builder withUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public ScriptEntity build() {
+            return new ScriptEntity(this);
         }
     }
 }

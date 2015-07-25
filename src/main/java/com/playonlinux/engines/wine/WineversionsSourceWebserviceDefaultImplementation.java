@@ -16,18 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.messages;
+package com.playonlinux.engines.wine;
 
-public abstract class ParametrableRunnable<T> implements Runnable {
-    private T parameter;
 
-    public void setParameter(T parameter) {
-        this.parameter = parameter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
+import com.playonlinux.core.webservice.Webservice;
+
+import java.net.URL;
+import java.util.List;
+
+
+public class WineversionsSourceWebserviceDefaultImplementation extends Webservice<WineVersionDistributionWebDTO>
+        implements WineVersionSource {
+
+
+    public WineversionsSourceWebserviceDefaultImplementation(URL url) {
+        super(url);
     }
-    public abstract void run(T parameter);
 
     @Override
-    public void run() {
-        run(parameter);
+    protected TypeReference defineTypeReference() {
+        return new TypeReference<List<WineVersionDistributionWebDTO>>() {};
     }
+
+
 }

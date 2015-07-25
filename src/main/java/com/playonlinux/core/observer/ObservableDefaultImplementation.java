@@ -18,16 +18,19 @@
 
 package com.playonlinux.core.observer;
 
+import com.playonlinux.apps.InstallerDownloaderEntityProvider;
+
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractObservableImplementation<ARG>
+public abstract class ObservableDefaultImplementation<ARG>
         implements Observable<ARG> {
     private final List<Observer> observers;
     private ARG lastArgument;
 
-    public AbstractObservableImplementation() {
+    public ObservableDefaultImplementation() {
         observers = new ArrayList<>();
     }
 

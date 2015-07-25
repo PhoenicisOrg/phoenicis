@@ -19,15 +19,15 @@
 
 package com.playonlinux.apps;
 
-import com.playonlinux.apps.entities.AppsItemEntity;
+import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.core.filter.Filter;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * Filter implementation for CenterItems
  */
-public class AppsFilter extends AbstractObservableImplementation implements Filter<AppsItemEntity> {
+public class AppsFilter extends ObservableDefaultImplementation implements Filter<AppEntity> {
     private final String title;
     private final String category;
 
@@ -49,7 +49,7 @@ public class AppsFilter extends AbstractObservableImplementation implements Filt
     private final boolean showCommercial;
 
     @Override
-    public boolean apply(AppsItemEntity item) {
+    public boolean apply(AppEntity item) {
         if(StringUtils.isBlank(title) && category == null) {
             return false;
         }

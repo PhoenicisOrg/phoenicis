@@ -18,8 +18,7 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.core.messages.ParametrableRunnable;
-import com.playonlinux.core.services.SubmitableService;
+import com.playonlinux.core.services.SubmittableService;
 import com.playonlinux.core.services.manager.AutoStartedService;
 import org.apache.log4j.Logger;
 
@@ -28,13 +27,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /*
  Represents a download manager
  */
 @AutoStartedService
 public class DownloadManager implements
-        SubmitableService<HTTPDownloader, ParametrableRunnable<byte[]>> {
+                             SubmittableService<HTTPDownloader, Function<byte[], Void>> {
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
@@ -68,25 +68,22 @@ public class DownloadManager implements
     }
 
     @Override
-    public void submit(HTTPDownloader task, ParametrableRunnable<byte[]> callback,
-                       ParametrableRunnable<Exception> error) {
-
+    public void submit(HTTPDownloader task, Function<byte[], Void> callback,
+                       Function<Exception, Void> error) {
 
         threadPoolExecutor.submit(() -> {
             try {
                 byte[] downloadResult = task.getBytes();
-                callback.setParameter(downloadResult);
-                callback.run();
+                callback.apply(downloadResult);
             } catch (DownloadException e) {
                 LOGGER.error(e);
-                error.setParameter(e);
-                error.run();
+                error.apply(e);
             }
         });
     }
 
-    public void submit(URL url, ParametrableRunnable<byte[]> callback,
-                       ParametrableRunnable<Exception> error) {
+    public void submit(URL url, Function<byte[], Void> callback,
+                       Function<Exception, Void> error) {
         HTTPDownloader task = new HTTPDownloader(url);
         submit(task, callback, error);
     }

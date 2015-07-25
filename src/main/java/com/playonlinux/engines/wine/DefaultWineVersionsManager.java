@@ -29,7 +29,7 @@ import com.playonlinux.core.services.manager.AutoStartedService;
 
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observable;
 
 import com.playonlinux.core.webservice.DownloadEnvelope;
@@ -52,7 +52,7 @@ import static java.lang.String.format;
 @Scan
 @AutoStartedService(type = WineVersionManager.class)
 public class DefaultWineVersionsManager
-        extends AbstractObservableImplementation<WineVersionManager>
+        extends ObservableDefaultImplementation<WineVersionManager>
         implements WineVersionManager {
 
     @Inject
@@ -65,7 +65,7 @@ public class DefaultWineVersionsManager
     private Collection<WineVersionDistributionWebDTO> wineVersionDistributionDTOs = new ArrayList<>();
     private DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> downloadEnvelope;
 
-    private WineversionsSourceWebserviceImplementation wineversionsSourceWebserviceImplementation;
+    private WineversionsSourceWebserviceDefaultImplementation wineversionsSourceWebserviceImplementation;
     private URL webserviceUrl;
 
     @Override
@@ -111,7 +111,7 @@ public class DefaultWineVersionsManager
             wineversionsSourceWebserviceImplementation.deleteObserver(this);
             playOnLinuxBackgroundServicesManager.unregister(wineversionsSourceWebserviceImplementation);
         }
-        wineversionsSourceWebserviceImplementation = new WineversionsSourceWebserviceImplementation(webserviceUrl);
+        wineversionsSourceWebserviceImplementation = new WineversionsSourceWebserviceDefaultImplementation(webserviceUrl);
         wineversionsSourceWebserviceImplementation.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(wineversionsSourceWebserviceImplementation);
     }

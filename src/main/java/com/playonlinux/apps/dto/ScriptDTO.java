@@ -33,6 +33,7 @@ public class ScriptDTO implements AbstractDTO, Nameable {
     private List<OperatingSystem> testingOperatingSystems;
     private Boolean free;
     private Boolean requiresNoCD;
+    private String url;
 
     public ScriptDTO() {
         // Kept for the webservice
@@ -45,7 +46,9 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
         this.requiresNoCD = builder.requiresNoCD;
+        this.url = builder.url;
     }
+
     public int getId() {
         return id;
     }
@@ -70,6 +73,10 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         return testingOperatingSystems;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
 
     public static class Builder {
         private int id;
@@ -78,6 +85,7 @@ public class ScriptDTO implements AbstractDTO, Nameable {
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
         private Boolean requiresNoCD;
+        private String url;
 
         public Builder withId(int id) {
             this.id = id;
@@ -86,6 +94,11 @@ public class ScriptDTO implements AbstractDTO, Nameable {
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withUrl(String url) {
+            this.url = url;
             return this;
         }
 

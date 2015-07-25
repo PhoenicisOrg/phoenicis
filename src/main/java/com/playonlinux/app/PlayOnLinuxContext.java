@@ -131,18 +131,6 @@ public class PlayOnLinuxContext {
         return new File(this.properties.getProperty("application.user.shortcuts.config"));
     }
 
-    public URL makeDefaultIconURL() {
-        return this.getClass().getResource("/playonlinux.png");
-    }
-
-    public URL makeInstallersWebserviceUrl() throws MalformedURLException {
-        return new URL(this.properties.getProperty("webservice.url"));
-    }
-
-    public URL makeWineVersionWebserviceUrl() throws MalformedURLException {
-        return new URL(this.properties.getProperty("webservice.wine.url"));
-    }
-
     public String getUserHome() {
         return System.getProperty("user.home");
     }
@@ -153,5 +141,17 @@ public class PlayOnLinuxContext {
 
     public File makeUserRootPath() {
         return new File(this.properties.getProperty("application.user.root"));
+    }
+
+    public URL makeDefaultIconURL() {
+        return this.getClass().getResource("/playonlinux.png");
+    }
+
+    public URL makeInstallersWebserviceUrl() throws MalformedURLException {
+        return new URL(this.properties.getProperty("webservice.apps.url"));
+    }
+
+    public URL makeWineVersionWebserviceUrl() throws MalformedURLException {
+        return new URL(this.properties.getProperty("webservice.wine.url"));
     }
 }

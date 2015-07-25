@@ -23,7 +23,7 @@ import com.playonlinux.core.entities.Entity;
 import java.util.List;
 
 public class AppsWindowEntity implements Entity {
-    public List<AppsItemEntity> getAppsItemDTOs() {
+    public List<AppEntity> getAppsItemDTOs() {
         return appsItemDTOs;
     }
 
@@ -39,7 +39,7 @@ public class AppsWindowEntity implements Entity {
         return downloading;
     }
 
-    final List<AppsItemEntity> appsItemDTOs;
+    final List<AppEntity> appsItemDTOs;
     final List<AppsCategory> categoryDTOs;
     final boolean downloading;
     final boolean downloadFailed;
@@ -52,12 +52,12 @@ public class AppsWindowEntity implements Entity {
     }
 
     public static class Builder {
-        List<AppsItemEntity> appsItemDTOs;
+        List<AppEntity> appsItemDTOs;
         List<AppsCategory> appsCategories;
         boolean downloading;
         boolean downloadFailed;
 
-        public Builder withAppsItem(List<AppsItemEntity> appsItemDTOs) {
+        public Builder withAppsItem(List<AppEntity> appsItemDTOs) {
             this.appsItemDTOs = appsItemDTOs;
             return this;
         }

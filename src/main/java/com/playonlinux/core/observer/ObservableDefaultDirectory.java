@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
 
-public abstract class AbstractObservableDirectory<T> extends AbstractObservableImplementation<T> implements Service {
+public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImplementation<T> implements Service {
     protected int checkInterval = 1000;
     protected File observedDirectory;
 

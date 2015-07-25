@@ -44,6 +44,21 @@ public class ScriptTest {
         );
     }
 
+    @Test
+    public void testDetectType_passALegacyScriptCRLFSeparator_FormatIsDetected() throws IOException {
+        assertEquals(Script.Type.LEGACY, Script.detectScriptType(
+                        FileUtils.readFileToString(
+                                new File(
+                                        this.getClass()
+                                                .getResource("legacyScriptExampleCRLF.sh")
+                                                .getPath()
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
     public void testDetectType_passALegacyScriptWithHeader_FormatIsDetected() throws IOException {
         assertEquals(Script.Type.LEGACY, Script.detectScriptType(
                         FileUtils.readFileToString(
@@ -55,7 +70,6 @@ public class ScriptTest {
                         )
                 )
         );
-
     }
 
     @Test
@@ -76,13 +90,63 @@ public class ScriptTest {
     public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException, InstallerException {
         Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
-        String expectedSignture = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
+        String expectedSignature = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
                 "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
                 "\n" +
                 "MOCKED SIGNATURE\n" +
                 "-----END PGP PUBLIC KEY BLOCK-----";
-        assertEquals(expectedSignture, legacyScriptWithSignature.extractSignature());
+        assertEquals(expectedSignature, legacyScriptWithSignature.extractSignature());
     }
+
+    @Test
+    public void testExtractContent_bashScriptWithSignature_extracted() throws IOException, ParseException, InstallerException {
+        Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
+                .getResource("legacyScriptExampleWithSignature.sh").getPath()));
+        String expectedSignature = "#!/bin/bash\n" +
+                "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\n" +
+                "source \"$PLAYONLINUX/lib/sources\"\n" +
+                "\n" +
+                "TITLE=\"Legacy script\"\n" +
+                "\n" +
+                "POL_SetupWindow_Init\n" +
+                "POL_SetupWindow_message \"Test\"\n" +
+                "POL_SetupWindow_Close\n" +
+                "\n" +
+                "exit";
+        assertEquals(expectedSignature, legacyScriptWithSignature.extractContent());
+    }
+
+
+    @Test
+    public void testExtractSignature_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, InstallerException {
+        Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
+                .getResource("legacyScriptExampleWithSignatureCRLF.sh").getPath()));
+        String expectedSignature = "-----BEGIN PGP PUBLIC KEY BLOCK-----\r\n" +
+                "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\r\n" +
+                "\r\n" +
+                "MOCKED SIGNATURE\r\n" +
+                "-----END PGP PUBLIC KEY BLOCK-----";
+        assertEquals(expectedSignature, legacyScriptWithSignature.extractSignature());
+    }
+
+    @Test
+    public void testExtractContent_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, InstallerException {
+        Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
+                .getResource("legacyScriptExampleWithSignatureCRLF.sh").getPath()));
+        String expectedSignature = "#!/bin/bash\r\n" +
+                "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\r\n" +
+                "source \"$PLAYONLINUX/lib/sources\"\r\n" +
+                "\r\n" +
+                "TITLE=\"Legacy script\"\r\n" +
+                "\r\n" +
+                "POL_SetupWindow_Init\r\n" +
+                "POL_SetupWindow_message \"Test\"\r\n" +
+                "POL_SetupWindow_Close\r\n" +
+                "\r\n" +
+                "exit";
+        assertEquals(expectedSignature, legacyScriptWithSignature.extractContent());
+    }
+
 
     @Test(expected = ParseException.class)
     public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ParseException, InstallerException {

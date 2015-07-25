@@ -19,8 +19,8 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsCategory;
-import com.playonlinux.apps.entities.AppsItemEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
@@ -43,7 +43,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
     private FailurePanel failurePanel;
     private HBox waitPanel;
 
-    private final EntitiesProvider<AppsItemEntity, AppsWindowEntity> windowDTOEntitiesProvider;
+    private final EntitiesProvider<AppEntity, AppsWindowEntity> windowDTOEntitiesProvider;
     private final MiniatureListWidget availableInstallerListWidget;
 
     private final EventHandlerApps eventHandlerApps;
@@ -111,8 +111,8 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
         showRightView(failurePanel);
     }
 
-    private void showAppDetails(AppsItemEntity item) {
-        showRightView(new AppPanel(eventHandlerApps, item));
+    private void showAppDetails(AppEntity item) {
+        showRightView(new AppPanel(parent, eventHandlerApps, item));
     }
 
 
@@ -143,7 +143,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
 
                 categoryView.setCategories(appsWindowEntity.getCategoryDTOs());
 
-                for (AppsItemEntity appsItemDTO : appsWindowEntity.getAppsItemDTOs()) {
+                for (AppEntity appsItemDTO : appsWindowEntity.getAppsItemDTOs()) {
                     Node itemNode = availableInstallerListWidget.addItem(appsItemDTO.getName());
                     itemNode.setOnMouseClicked((evt) -> showAppDetails(appsItemDTO));
                 }

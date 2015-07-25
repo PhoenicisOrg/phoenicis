@@ -16,12 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.services;
+package com.playonlinux.ui.impl.javafx.common;
 
-import com.playonlinux.core.messages.ParametrableRunnable;
-import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.app.PlayOnLinuxException;
+import javafx.scene.control.Alert;
 
-public interface SubmitableService<T, U>
-        extends Service {
-    void submit(T task, U callback, ParametrableRunnable<Exception> error);
+import static com.playonlinux.core.lang.Localisation.translate;
+
+public class ErrorMessage {
+    final Alert alert;
+
+    public ErrorMessage(String message, PlayOnLinuxException exception) {
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(translate(message));
+        alert.setContentText(String.format("The error was: %s", exception));
+    }
+
+    public void show() {
+        alert.show();
+    }
 }

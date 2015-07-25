@@ -19,15 +19,15 @@
 package com.playonlinux.core.utils.archive;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.utils.MimeType;
+import com.playonlinux.core.utils.FileAnalyser;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.List;
 
-public class Extractor  extends AbstractObservableImplementation<ProgressStateEntity> {
+public class Extractor  extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
     /**
@@ -41,7 +41,7 @@ public class Extractor  extends AbstractObservableImplementation<ProgressStateEn
         LOGGER.info(String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         try {
-            switch (MimeType.getMimetype(inputFile)) {
+            switch (FileAnalyser.getMimetype(inputFile)) {
                 case "application/x-bzip2":
                     return new Tar().uncompressTarBz2File(inputFile, outputDir, this::changeState);
                 case "application/x-gzip":

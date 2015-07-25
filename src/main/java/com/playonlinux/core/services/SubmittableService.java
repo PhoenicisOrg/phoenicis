@@ -16,14 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow;
+package com.playonlinux.core.services;
 
-import javafx.scene.text.Text;
+import com.playonlinux.core.services.manager.Service;
 
-public class LeftBarTitle extends Text {
-    public LeftBarTitle(String defaultValue) {
-        super(defaultValue);
-        this.getStyleClass().add("leftBarTitle");
-    }
+import java.util.function.Function;
+
+public interface SubmittableService<T, U>
+        extends Service {
+    void submit(T task, U callback, Function<Exception, Void> error);
 }
-

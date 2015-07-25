@@ -18,7 +18,6 @@
 
 package com.playonlinux.apps;
 
-import com.playonlinux.apps.entities.AppsItemScriptEntity;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
@@ -27,14 +26,16 @@ import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 
+import java.net.URL;
 import java.util.Collection;
 
 public interface AppsManager extends Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
                                      Observable<DefaultAppsManager>,
                                      Service {
 
-
     void refresh() throws ServiceInitializationException;
 
-    void runScript(AppsItemScriptEntity script);
+    InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
+
+    InstallerDownloaderEntityProvider getDownloaderEntityProvider(URL scriptUrl);
 }

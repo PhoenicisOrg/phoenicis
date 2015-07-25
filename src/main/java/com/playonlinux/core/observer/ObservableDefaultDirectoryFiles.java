@@ -25,10 +25,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ObservableDirectoryFiles extends AbstractObservableDirectory<File[]> {
+public class ObservableDefaultDirectoryFiles extends ObservableDefaultDirectory<File[]> {
     private final ObservableDirectoryThread observableDirectoryThread;
 
-    public ObservableDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
+    public ObservableDefaultDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
         this.observedDirectory = observedDirectory;
         validate();
         observableDirectoryThread = new ObservableDirectoryThread(this);
@@ -62,10 +62,10 @@ public class ObservableDirectoryFiles extends AbstractObservableDirectory<File[]
 
 
     private class ObservableDirectoryThread extends Thread {
-        private final ObservableDirectoryFiles observableDirectoryFiles;
+        private final ObservableDefaultDirectoryFiles observableDirectoryFiles;
         private volatile Boolean running;
 
-        ObservableDirectoryThread(ObservableDirectoryFiles observableDirectoryFiles) {
+        ObservableDirectoryThread(ObservableDefaultDirectoryFiles observableDirectoryFiles) {
             super();
             this.running = false;
             this.observableDirectoryFiles = observableDirectoryFiles;

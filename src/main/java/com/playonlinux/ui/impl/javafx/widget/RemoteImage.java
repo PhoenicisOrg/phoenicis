@@ -20,7 +20,6 @@ package com.playonlinux.ui.impl.javafx.widget;
 
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.messages.ParametrableRunnable;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
 import javafx.application.Platform;
@@ -34,6 +33,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.function.Function;
 
 /**
  * This class has been created to facilitate the integration of remote images inside PlayOnLinux app
@@ -58,17 +58,14 @@ public class RemoteImage extends VBox {
 
 
     public void download() {
-        downloadManager.submit(imageUrl, new ParametrableRunnable<byte[]>() {
-                    @Override
-                    public void run(byte[] parameter) {
-                        handleDownloadSuccess(parameter);
-                    }
+        downloadManager.submit(imageUrl,
+                bytes -> {
+                    handleDownloadSuccess(bytes);
+                    return null;
                 },
-                new ParametrableRunnable<Exception>() {
-                    @Override
-                    public void run(Exception parameter) {
-                        handleError();
-                    }
+                e -> {
+                    handleError();
+                    return null;
                 }
         );
     }

@@ -20,6 +20,7 @@ package com.playonlinux.library;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
 import com.playonlinux.library.dto.InstalledApplicationDTO;
 import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.core.filter.Filter;
@@ -29,8 +30,7 @@ import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 
 import java.io.File;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @Scan
 @AutoStartedService(name = "InstalledApplicationsService")
 public final class LibraryEntitiesProvider
-        extends AbstractObservableImplementation<LibraryWindowDTO>
+        extends ObservableDefaultImplementation<LibraryWindowDTO>
         implements Observer<ShortcutSetDirectories, List<Shortcut>>,
                    EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> {
 
@@ -97,11 +97,11 @@ public final class LibraryEntitiesProvider
         final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
         final URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
 
-        ObservableDirectoryFiles shortcutDirectoryObservable;
-        ObservableDirectoryFiles iconDirectoryObservable;
+        ObservableDefaultDirectoryFiles shortcutDirectoryObservable;
+        ObservableDefaultDirectoryFiles iconDirectoryObservable;
         try {
-            shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
-            iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
+            shortcutDirectoryObservable = new ObservableDefaultDirectoryFiles(shortcutDirectory);
+            iconDirectoryObservable = new ObservableDefaultDirectoryFiles(iconDirectory);
         } catch (PlayOnLinuxException e) {
             throw new ServiceInitializationException(e);
         }

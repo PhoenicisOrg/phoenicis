@@ -20,7 +20,10 @@ package com.playonlinux.ui.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.entities.AppsItemEntity;
+import com.playonlinux.apps.AppsManagerException;
+import com.playonlinux.apps.InstallerDownloaderEntityProvider;
+import com.playonlinux.apps.entities.AppEntity;
+import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.containers.VirtualDriveDTO;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
@@ -51,15 +54,18 @@ public interface EventHandler {
 
     AppsManager getAppsManager();
 
-    EntitiesProvider<AppsItemEntity, AppsWindowEntity> getRemoteAvailableInstallers();
+    EntitiesProvider<AppEntity, AppsWindowEntity> getRemoteAvailableInstallers();
 
     EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions();
 
     Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
+
+    InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
 
     void onApplicationStarted();
 
     void runApplication(String applicationName) throws PlayOnLinuxException;
 
     void refreshAvailableInstallers() throws PlayOnLinuxException;
+
 }

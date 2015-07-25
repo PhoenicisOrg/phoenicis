@@ -18,6 +18,7 @@
 
 package com.playonlinux.engines.wine;
 
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
@@ -29,7 +30,6 @@ import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
 import com.playonlinux.core.observer.Observer;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 @Scan
 @AutoStartedService(type = WineVersionEntitiesProvider.class)
 public final class WineVersionEntitiesProvider
-        extends AbstractObservableImplementation<WineVersionsWindowEntity>
+        extends ObservableDefaultImplementation<WineVersionsWindowEntity>
         implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,
                    EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
 

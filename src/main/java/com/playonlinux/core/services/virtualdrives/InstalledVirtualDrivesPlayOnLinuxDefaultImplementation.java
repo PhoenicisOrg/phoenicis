@@ -23,9 +23,9 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.containers.VirtualDriveDTO;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 
 import java.io.File;
@@ -33,8 +33,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 @Scan
-public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends AbstractObservableImplementation
-        implements InstalledVirtualDrives, Observer<ObservableDirectoryFiles, File[]> {
+public final class InstalledVirtualDrivesPlayOnLinuxDefaultImplementation extends ObservableDefaultImplementation
+        implements InstalledVirtualDrives, Observer<ObservableDefaultDirectoryFiles, File[]> {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -43,11 +43,11 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Abstr
 
     private Iterator<VirtualDriveDTO> virtualdrivesDTOInterator;
 
-    final ObservableDirectoryFiles observableWineprefixes;
+    final ObservableDefaultDirectoryFiles observableWineprefixes;
 
-    public InstalledVirtualDrivesPlayOnLinuxImplementation() throws PlayOnLinuxException {
+    public InstalledVirtualDrivesPlayOnLinuxDefaultImplementation() throws PlayOnLinuxException {
         File winePrefixes = playOnLinuxContext.makePrefixesPath();
-        observableWineprefixes = new ObservableDirectoryFiles(winePrefixes);
+        observableWineprefixes = new ObservableDefaultDirectoryFiles(winePrefixes);
 
         observableWineprefixes.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(observableWineprefixes);
@@ -62,7 +62,7 @@ public final class InstalledVirtualDrivesPlayOnLinuxImplementation extends Abstr
     }
 
     @Override
-    public void update(ObservableDirectoryFiles observable, File[] directoryContent) {
+    public void update(ObservableDefaultDirectoryFiles observable, File[] directoryContent) {
         virtualdrivesDTOInterator = new Iterator<VirtualDriveDTO>() {
             volatile int i = 0;
 

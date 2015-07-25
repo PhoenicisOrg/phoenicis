@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.dto.AbstractDTO;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 abstract public class Webservice<T extends AbstractDTO>
-        extends AbstractObservableImplementation<DownloadEnvelope<Collection<T>>> implements Service {
+        extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>> implements Service {
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
 
     private final URL url;

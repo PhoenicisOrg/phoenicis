@@ -19,7 +19,7 @@
 package com.playonlinux.core.webservice;
 
 import com.playonlinux.apps.dto.ApplicationDTO;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceImplementation;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import org.junit.AfterClass;
@@ -45,7 +45,7 @@ public class InstallerSourceWebserviceImplementationTest {
     private static URL mockServerURL;
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
-    private InstallerSourceWebserviceImplementation remoteAvailableInstallers;
+    private InstallerSourceWebserviceDefaultImplementation remoteAvailableInstallers;
     private MockObserver observer;
 
     @BeforeClass
@@ -116,7 +116,7 @@ public class InstallerSourceWebserviceImplementationTest {
         );
 
 
-        remoteAvailableInstallers = new InstallerSourceWebserviceImplementation(mockServerURL);
+        remoteAvailableInstallers = new InstallerSourceWebserviceDefaultImplementation(mockServerURL);
         observer = new MockObserver();
         remoteAvailableInstallers.addObserver(observer);
     }

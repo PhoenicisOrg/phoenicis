@@ -20,17 +20,17 @@ package com.playonlinux.dto.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import com.playonlinux.apps.entities.AppsItemScriptEntity;
+import com.playonlinux.apps.entities.ScriptEntity;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AppItemScriptDTOTest {
 
-    private AppsItemScriptEntity appsItemScriptEntity;
+    private ScriptEntity scriptEntity;
 
     @Before
     public void setUp() {
-        this.appsItemScriptEntity = new AppsItemScriptEntity.Builder()
+        this.scriptEntity = new ScriptEntity.Builder()
                 .withName("Name")
                 .withId(13)
                 .build();
@@ -38,11 +38,11 @@ public class AppItemScriptDTOTest {
     
     @Test
     public void testAppsItemScriptDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", appsItemScriptEntity.getName());
+        assertEquals("Name", scriptEntity.getName());
     }
 
     @Test
     public void testAppsItemScriptDTO_CreateDTO_idIsPopulated() {
-        assertEquals(13, appsItemScriptEntity.getId());
+        assertEquals(13, scriptEntity.getId());
     }
 }

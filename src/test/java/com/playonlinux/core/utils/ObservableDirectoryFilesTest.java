@@ -20,7 +20,7 @@ package com.playonlinux.core.utils;
 
 import com.google.common.io.Files;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class ObservableDirectoryFilesTest {
         expectedEx.expect(PlayOnLinuxException.class);
         expectedEx.expectMessage(String.format("The directory %s does not exist", "/tmp/unexistingDirectory"));
 
-        new ObservableDirectoryFiles(new File("/tmp/unexistingDirectory"));
+        new ObservableDefaultDirectoryFiles(new File("/tmp/unexistingDirectory"));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ObservableDirectoryFilesTest {
         expectedEx.expect(PlayOnLinuxException.class);
         expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-        new ObservableDirectoryFiles(temporaryFile);
+        new ObservableDefaultDirectoryFiles(temporaryFile);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ObservableDirectoryFilesTest {
         File temporaryDirectory = Files.createTempDir();
 
 
-        ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory);
+        ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory);
         observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
         Observer observer = mock(Observer.class);
@@ -79,7 +79,7 @@ public class ObservableDirectoryFilesTest {
         temporaryDirectory.delete();
 
         // Notified once for the creation
-        verify(observer, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
+        verify(observer, times(1)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ObservableDirectoryFilesTest {
             InterruptedException, IOException {
         File temporaryDirectory = Files.createTempDir();
 
-        ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory);
+        ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory);
         observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
         Observer observer = mock(Observer.class);
@@ -102,7 +102,7 @@ public class ObservableDirectoryFilesTest {
 
         temporaryDirectory.delete();
 
-        verify(observer, times(2)).update(any(ObservableDirectoryFiles.class), anyObject());
+        verify(observer, times(2)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
     }
 
 }

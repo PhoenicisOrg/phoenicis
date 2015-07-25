@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
@@ -32,7 +32,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-public class ChecksumCalculator extends AbstractObservableImplementation<ProgressStateEntity> {
+public class ChecksumCalculator extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final int BLOCK_SIZE = 2048;
 
     public String calculate(File fileToCheck, String algorithm) throws NoSuchAlgorithmException, IOException {

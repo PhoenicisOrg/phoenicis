@@ -51,7 +51,7 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
     private int historyIndex = 0;
 
     @Inject
-    private static CommandLineInterpreterFactory commandLineInterpreterFactory;
+    static CommandLineInterpreterFactory commandLineInterpreterFactory;
 
     final CommandInterpreter commandInterpreter;
 

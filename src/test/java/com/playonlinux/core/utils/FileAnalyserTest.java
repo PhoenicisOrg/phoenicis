@@ -22,32 +22,49 @@ import com.playonlinux.app.PlayOnLinuxException;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.*;
 
 
-public class MimeTypeTest {
-    final URL inputUrl = MimeTypeTest.class.getResource("./archive");
+public class FileAnalyserTest {
+    final URL archiveUrl = FileAnalyserTest.class.getResource("./archive");
+    final URL scriptUrl = FileAnalyserTest.class.getResource("../scripts");
 
     @Test
     public void testGetMimetype_GZFile() throws PlayOnLinuxException {
-        assertEquals("application/x-gzip", MimeType.getMimetype(new File(inputUrl.getPath(), "pol.txt.gz")));
+        assertEquals("application/x-gzip", FileAnalyser.getMimetype(new File(archiveUrl.getPath(), "pol.txt.gz")));
     }
 
+    @Test
     public void testGetMimetype_BZ2File() throws PlayOnLinuxException {
-        assertEquals("application/x-bzip2", MimeType.getMimetype(new File(inputUrl.getPath(), "pol.txt.bz2")));
+        assertEquals("application/x-bzip2", FileAnalyser.getMimetype(new File(archiveUrl.getPath(), "pol.txt.bz2")));
     }
 
+    @Test
     public void testGetMimetype_TarGZFile() throws PlayOnLinuxException {
-        assertEquals("application/x-gzip", MimeType.getMimetype(new File(inputUrl.getPath(), "test2.tar.gz")));
+        assertEquals("application/x-gzip", FileAnalyser.getMimetype(new File(archiveUrl.getPath(), "test2.tar.gz")));
     }
 
+    @Test
     public void testGetMimetype_TarBZ2File() throws PlayOnLinuxException {
-        assertEquals("application/x-bzip2", MimeType.getMimetype(new File(inputUrl.getPath(), "test3.tar.bz2")));
+        assertEquals("application/x-bzip2", FileAnalyser.getMimetype(new File(archiveUrl.getPath(), "test3.tar.bz2")));
     }
 
+    @Test
     public void testGetMimetype_TarFile() throws PlayOnLinuxException {
-        assertEquals("application/octet-stream", MimeType.getMimetype(new File(inputUrl.getPath(), "test1.tar")));
+        assertEquals("application/octet-stream", FileAnalyser.getMimetype(new File(archiveUrl.getPath(), "test1.tar")));
     }
+
+    @Test
+    public void testLineSeparatorCRLF() throws IOException {
+        assertEquals("\r\n", FileAnalyser.identifyLineDelimiter(new File(scriptUrl.getPath(), "legacyScriptExampleCRLF.sh")));
+    }
+
+    @Test
+    public void testLineSeparatorLF() throws IOException {
+        assertEquals("\n", FileAnalyser.identifyLineDelimiter(new File(scriptUrl.getPath(), "legacyScriptExample.sh")));
+    }
+
 }

@@ -19,13 +19,13 @@
 package com.playonlinux.core.webservice;
 
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.AbstractObservableImplementation;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HTTPDownloader extends AbstractObservableImplementation<ProgressStateEntity> {
+public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final int BLOCK_SIZE = 1024;
     private final URL url;
     private State state;
@@ -37,7 +37,6 @@ public class HTTPDownloader extends AbstractObservableImplementation<ProgressSta
         SUCCESS,
         FAILED
     }
-
 
     public HTTPDownloader(URL url) {
         this.url = url;

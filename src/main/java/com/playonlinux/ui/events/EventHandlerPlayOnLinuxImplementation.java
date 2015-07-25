@@ -21,7 +21,10 @@ package com.playonlinux.ui.events;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsManager;
+import com.playonlinux.apps.AppsManagerException;
+import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.containers.VirtualDriveDTO;
+import com.playonlinux.core.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxDefaultImplementation;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.library.dto.InstalledApplicationDTO;
@@ -34,7 +37,6 @@ import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.library.LibraryEntitiesProvider;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.core.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxImplementation;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
@@ -50,7 +52,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Inject
     private static ScriptFactory scriptFactory;
 
-    private InstalledVirtualDrivesPlayOnLinuxImplementation virtualDrives;
+    private InstalledVirtualDrivesPlayOnLinuxDefaultImplementation virtualDrives;
 
     @Override
     public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
@@ -69,7 +71,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Override
     public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
         if(virtualDrives == null) {
-            virtualDrives = new InstalledVirtualDrivesPlayOnLinuxImplementation();
+            virtualDrives = new InstalledVirtualDrivesPlayOnLinuxDefaultImplementation();
         }
 
         return this.virtualDrives;
@@ -98,6 +100,11 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Override
     public void refreshAvailableInstallers() throws PlayOnLinuxException {
         getAppsManager().refresh();
+    }
+
+    @Override
+    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException {
+        return getAppsManager().getDownloaderEntityProvider(scriptUrl);
     }
 
     @Override
