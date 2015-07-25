@@ -436,3 +436,89 @@ POL_Wine_WaitExit ()
     wineserver -w || POL_SetupWindow_message "$(eval_gettext 'Press next only when the installation process is finished')" "$TITLE"
     [ "$forceInput" = "true" ] && POL_SetupWindow_message "$(eval_gettext 'Press next only when the installation process is finished')" "$TITLE"
 }
+
+POL_Wine_OverrideDLL()
+{
+	# Override DLLs
+	MODE=$1
+	[ "$MODE" = "disabled" ] && unset MODE
+	shift
+
+	(cat << 'EOF'
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+EOF
+
+	for DLL in "$@"
+	do
+		echo "\"*$DLL\"=\"$MODE\""
+	done) > "$POL_USER_ROOT/tmp/override-dll.reg"
+
+	POL_Debug_Message "Overriding DLLs"
+	POL_SetupWindow_wait_next_signal "$(eval_gettext 'Please wait...')" "$TITLE"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/override-dll.reg"
+	rm "$POL_USER_ROOT/tmp/override-dll.reg"
+}
+POL_Wine_DelOverrideDLL()
+{
+	# Delete override DLLs
+	(cat << 'EOF'
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+EOF
+
+	for DLL in "$@"
+	do
+		echo "\"$DLL\"=-"
+		echo "\"*$DLL\"=-"
+	done) > "$POL_USER_ROOT/tmp/del-override-dll.reg"
+	POL_Debug_Message "Deleting overrides DLLs"
+	POL_SetupWindow_wait_next_signal "Please wait" "$TITLE"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/del-override-dll.reg"
+	rm "$POL_USER_ROOT/tmp/del-override-dll.reg"
+}
+POL_Wine_OverrideDLL_App()
+{
+	# App-specific DLL overrides
+	APP="$1"
+	MODE="$2"
+	[ "$MODE" = "disabled" ] && unset MODE
+	shift 2
+
+	(cat << EOF
+REGEDIT4
+
+[HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\$APP\\DllOverrides]
+EOF
+	for DLL in "$@"
+	do
+		# Who knows what this hack is for?
+		if [ "$DLL" = "comctl32" ]; then
+			rm -rf "$WINEPREFIX/winsxs/manifests/x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.2600.2982_none_deadbeef.manifest"
+		fi
+		echo "\"*$DLL\"=\"$MODE\""
+	done) > "$POL_USER_ROOT/tmp/app-dll-override.reg"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/app-dll-override.reg"
+	rm "$POL_USER_ROOT/tmp/app-dll-override.reg"
+}
+POL_Wine_DelOverrideDLL_App()
+{
+	# Delete app-specific DLL overrides
+	APP="$1"
+	shift
+
+	(cat << EOF
+REGEDIT4
+
+[HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\$APP\\DllOverrides]
+EOF
+	for DLL in "$@"
+	do
+		echo "\"$DLL\"=-"
+		echo "\"*$DLL\"=-"
+	done) > "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+	rm "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+}
