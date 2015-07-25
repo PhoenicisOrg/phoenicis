@@ -23,6 +23,7 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LogStream;
 import com.playonlinux.core.log.LogStreamFactory;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
@@ -107,6 +108,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                 this.runMain(getMainInstance());
             } catch(Exception e) {
                 LOGGER.error("The script encountered an error. Rolling back");
+                LOGGER.error(ExceptionUtils.getStackTrace(e));
                 try {
                     getMainInstance().invoke(ROLLBACK_METHOD_NAME);
                 } catch (Exception rollbackException) {
@@ -114,7 +116,6 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                     rollbackException.initCause(e);
                     throw rollbackException;
                 }
-                throw e;
             } finally {
                 if(logStream != null) {
                     try {

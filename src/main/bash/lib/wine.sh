@@ -40,7 +40,7 @@ POL_Wine_SetVersionEnv()
         [ "$POL_OS" = "FreeBSD" ] && ARCH_PREFIX="freebsd"
         [ "$POL_OS" = "Linux" ] && ARCH_PREFIX="linux"
         OLDPATH="$PWD"
-        WINEDIR="$POL_USER_ROOT/wine/$ARCH_PREFIX-$POL_ARCH"
+        WINEDIR="$POL_USER_ROOT/engines/wine/upstream-$ARCH_PREFIX-$POL_ARCH"
         mkdir -p "$WINEDIR"
         cd "$WINEDIR"
 
@@ -74,6 +74,148 @@ POL_Wine_AutoSetVersionEnv()
     POL_ARCH="$(POL_Config_PrefixRead "ARCH")"
     [ "$POL_WINEVERSION" = "" ] || POL_Wine_SetVersionEnv
 }
+
+POL_Wine_SelectPrefix()
+{
+    # Select a wineprefix and remove unexpected chars
+    # Usage: POL_Wine_SelectPrefix [prefixname]
+    PREFNAME=`printf "$1"| tr -c [[a-zA-Z0-9]\.] '_'`
+    POL_Debug_Message "Selecting prefix: $PREFNAME"
+
+    [ -z "$PREFNAME" ] && POL_Debug_Fatal "Bad or empty virtual drive name selected"
+    export WINEPREFIX="$POL_USER_ROOT/wineprefix/$PREFNAME"
+    export DOSPREFIX="$WINEPREFIX"
+
+    if [ -e "$WINEPREFIX/playonlinux.cfg" ]; then
+        export POL_WINEVERSION="$(POL_Config_PrefixRead VERSION)"
+        POL_System_SetArch "$(POL_Config_PrefixRead ARCH)" "detected"
+    else
+        touch "$WINEPREFIX/playonlinux.cfg" 2> /dev/null
+    fi
+}
+
+
+
+POL_Wine_PrefixCreate()
+{
+    # Create a wineprefix
+    # Usage: POL_Wine_PrefixCreate [VERSION]
+    if [ ! "$1" = "" ]; then
+        POL_Debug_Message "Setting POL_WINEVERSION to $1"
+        export POL_WINEVERSION="$1"
+    elif [ "$POL_WINEVERSION" ]; then
+        POL_Debug_Message "POL_WINEVERSION is already set to $POL_WINEVERSION. Using it"
+    else
+        POL_Debug_Message "No version specified. Using system version ($(wine --version))"
+    fi
+
+    POL_Debug_Message "Creating prefix ($POL_WINEVERSION)..."
+    [ "$POL_ARCH" = "" ] && POL_System_SetArch "auto"
+    [ "$WINEPREFIX" = "" ] && POL_Debug_Fatal "WINEPREFIX is not set!"
+
+    if [ -e "$WINEPREFIX" ]; then
+        POL_Debug_Message "Prefix already exists"
+        LNG_OVERWRITE="$(eval_gettext 'Overwrite (usually works, no guarantee)')"
+        LNG_ERASE="$(eval_gettext 'Erase (virtual drive content will be lost)')"
+        LNG_ABORT="$(eval_gettext 'Abort installation')"
+
+        OLD_ARCH=""
+        [ -e "$WINEPREFIX/playonlinux.cfg" ] && OLD_ARCH="$(POL_Config_PrefixRead "ARCH")"
+        if [ "$OLD_ARCH" = "$POL_USER_ARCH" ]; then
+            PREFIX_CHOICES="$LNG_OVERWRITE~$LNG_ERASE~$LNG_ABORT"
+        else
+            # Settings are not compatible, overwriting is not an option
+            PREFIX_CHOICES="$LNG_ERASE~$LNG_ABORT"
+        fi
+
+        OLD_APP_ANWSER="$APP_ANSWER"
+        PREFNAME="$(basename $WINEPREFIX)"
+        POL_SetupWindow_menu "The target virtual drive $PREFNAME already exists:" "$TITLE" "$PREFIX_CHOICES" "~"
+        case "$APP_ANSWER" in
+            "$LNG_OVERWRITE")
+                # Prefix content is not reproducible, it's tempting to disallow reports
+                # NOBUGREPORT="TRUE"
+                POL_Debug_Message "Overwrite Prefix"
+                # Should we revert what has been autodetected by SelectPrefix here too?
+                ;;
+            "$LNG_ERASE")
+                POL_Debug_Message "Erase Prefix"
+                POL_Wine_PrefixDelete
+                # Revert what could have been autodetected with SelectPrefix
+                POL_ARCH="$POL_USER_ARCH"
+                ;;
+            *)
+                NOBUGREPORT="TRUE"
+                POL_Debug_Fatal "$(eval_gettext 'User abort')"
+                ;;
+        esac
+        APP_ANSWER="$OLD_APP_ANWSER"
+    fi
+
+    POL_SetupWindow_wait "$(eval_gettext 'Please wait while the virtual drive is being created...')" "$TITLE"
+    if [ -e "$WINEPREFIX" ]; then
+        touch "$WINEPREFIX/playonlinux.cfg"
+        if [ ! "$POL_WINEVERSION" = "" ]; then
+            POL_Debug_Message "Setting version to $POL_WINEVERSION"
+            POL_Wine_SetVersionPrefix "$POL_WINEVERSION"
+            POL_Wine_SetVersionEnv
+        fi
+    else    # Prefix does not exit, let's create it
+        if [ "$POL_WINEVERSION" = "" ]; then
+            # System wineversion
+            ## Really bad idea
+            ## export WINEARCH=win32
+            if [ ! "$POL_ARCH" = "" ]; then
+                if [ "$POL_ARCH" = "x86" ]; then
+                    export WINEARCH=win32
+                else
+                    export WINEARCH=win64
+                fi
+                POL_Debug_Message "Setting WINEARCH to $WINEARCH"
+            fi
+
+            wine wineboot
+            POL_Debug_InitPrefix
+
+            if [ -e "$WINEPREFIX/drive_c/windows/syswow64" ] # It is a 64 bits prefix
+            then
+                POL_Config_PrefixWrite "ARCH" "amd64"
+                POL_Debug_LogToPrefix "This is a 64bits prefix!"
+                POL_Config_Write WINE_SYSTEM_ARCH amd64
+            else
+                POL_Config_PrefixWrite "ARCH" "x86"
+                POL_Debug_LogToPrefix "This is a 32bits prefix!"
+                POL_Config_Write WINE_SYSTEM_ARCH x86
+            fi
+        else
+            mkdir -p "$WINEPREFIX"
+            POL_Debug_Message "Using wine $POL_WINEVERSION"
+            POL_Wine_InstallVersion "$POL_WINEVERSION"
+            POL_SetupWindow_wait "$(eval_gettext 'Please wait while the virtual drive is being created...')" "$TITLE"
+            POL_Config_PrefixWrite "ARCH" "$POL_ARCH"
+            POL_Config_PrefixWrite "VERSION" "$POL_WINEVERSION"
+            POL_Wine_AutoSetVersionEnv
+
+            POL_Debug_InitPrefix
+
+            which wineprefixcreate && [ "$(POL_MD5_file "$(which wineprefixcreate)")" != "5c0ee90682746e811698a53415b4765d" ] && [ ! "$(which wineprefixcreate | grep $APPLICATION_TITLE)" = "" ] && wine wineprefixcreate
+            wine wineboot
+        fi
+    fi
+
+    # Make sure that .reg files are created
+    if which wineserver; then
+        wineserver -w
+    else
+        POL_Debug_Message "Warning, wineserver not found"
+        sleep 4
+    fi
+    POL_LoadVar_PROGRAMFILES
+    [ -e "$POL_USER_ROOT/configurations/post_prefixcreate" ] && \
+        source "$POL_USER_ROOT/configurations/post_prefixcreate"
+}
+
+
 
 POL_Wine ()
 {
@@ -122,7 +264,7 @@ POL_Wine ()
 
     if [ "$POL_OS" = "Linux" ] || [ "$POL_OS" = "Mac" ];
     then
-        if [ "$LOGFILE" = "/dev/null" ]; then
+        if [ "$LOGFILE" = "/dev/null" -o "$LOGFILE" = "" ]; then
             $BEFORE_WINE $(POL_Config_Read BEFORE_WINE) wine "$@"  2> >(grep -v menubuilder --line-buffered | tee -a "$WINEPREFIX/playonlinux.log" >&2) > >(tee -a "$WINEPREFIX/playonlinux.log")
             errors=$?
         else
@@ -140,4 +282,256 @@ POL_Wine ()
     fi
     POL_Debug_Message "Wine return: $errors"
     return $errors
+}
+
+POL_Wine_InstallFonts()
+{
+    # Install microsoft fonts
+    # Usage: POL_Wine_InstallFonts
+    pushd .
+    POL_Call POL_Install_corefonts
+    popd
+}
+
+
+
+POL_Wine_WaitBefore ()
+{
+    # Lock bash commands until wine is exited
+    # Usage : POL_Wine_WaitBefore [Program title] (--allow-kill)
+
+
+    [ "$1" = "" ] && message="$(eval_gettext "Please wait...")" || message="$(eval_gettext 'Please wait while $SOFTNAME is installed...')"
+    POL_SetupWindow_wait "$message" "$TITLE"
+
+    return
+
+    # FIXME
+    if [ "$2" = "--allow-kill" ]
+    then
+        allowKill="true"
+    else
+        allowKill="false"
+    fi
+
+
+    if [ "$allowKill" = "true" ]
+    then
+        POL_SetupWindow_wait_button "$message" "$TITLE" "$(eval_gettext 'Install is done')" "wineserver -k" "$(eval_gettext 'Be careful! This will kill install process. If it is not finished, you will have to reinstall $SOFTNAME')"
+    else
+        POL_SetupWindow_wait "$message" "$TITLE"
+    fi
+    
+}
+
+detect_wineprefix()
+{
+	# Read the wineprefix of a shortcut
+	# Usage: detect_wineprefix [Shortcut]
+
+	local file="$POL_USER_ROOT/shortcuts/$1"
+	if [ -e "$file" ]; then
+		local prefix=$(grep '^export WINEPREFIX' "$file")
+		prefix=${prefix:18}
+		prefix=${prefix//"\""/""}
+		prefix=${prefix//"//"/"/"}
+		echo $prefix
+	fi
+}
+
+POL_Wine_SetVersionPrefix()
+{
+	# Usage: POL_Wine_SetVersionPrefix [VERSION]
+	# Change a prefix wine version
+	[ ! "$1" = "" ] && export POL_WINEVERSION="$1"
+	[ "$WINEPREFIX" = "" ] && POL_Debug_Fatal "WINEPREFIX is not set!"
+
+	POL_Config_PrefixWrite "VERSION" "$POL_WINEVERSION"
+}
+
+
+POL_LoadVar_PROGRAMFILES()
+{
+	# Get Program Files folder name and store it to PROGRAMFILES variable
+	# Usage: POL_LoadVar_PROGRAMFILES
+	POL_Debug_Message "Getting Program Files name"
+	[ -z "$WINEPREFIX" ] && POL_Debug_Fatal "WINEPREFIX not set"
+
+	PROGRAMFILES=`POL_Wine cmd /c echo "%ProgramFiles%" |tr -d '\015\012'`
+	if [ "${PROGRAMFILES}" = "%ProgramFiles%" ]
+	then # Var is not defined by wine
+		export PROGRAMFILES="Program Files"
+	else
+		export PROGRAMFILES="${PROGRAMFILES:3}"
+	fi
+}
+
+
+POL_Wine_PrefixDelete()
+{
+    [ -z "$WINEPREFIX" ] && POL_Debug_Fatal "WINEPREFIX not set"
+    local wineprefix="$WINEPREFIX"
+    wineprefix=${wineprefix//"//"/"/"}
+    local shortcuts=()
+    local OLDIFS="$IFS"
+    IFS=$'\n'
+    cd "$POL_USER_ROOT/shortcuts/" &&
+    for shortcut in *
+    do
+        [ "$(detect_wineprefix "$shortcut")" = "$wineprefix" ] && shortcuts+=("$shortcut")
+    done
+    IFS="$OLDIFS"
+
+    # cf MainWindow.DeletePrefix()
+    POL_SetupWindow_wait_next_signal "$(eval_gettext 'Uninstalling...')" "$(eval_gettext '$APPLICATION_TITLE Uninstaller')"
+    if [ "${#shortcuts[@]}" -gt 0 ]; then
+        POL_Debug_Warning "$wineprefix is still in use by ${#shortcuts[@]} shortcuts, removing them first"
+        for shortcut in "${shortcuts[@]}"; do
+            POL_Debug_Message "Removing shortcut $shortcut..."
+            bash "$PLAYONLINUX/bash/uninstall" --non-interactive "$shortcut"
+        done
+    fi
+
+    clean_wineprefix --non-interactive "$WINEPREFIX"
+}
+
+POL_Wine_WaitExit ()
+{
+    # Lock bash commands until wine is exited
+    # Usage : POL_Wine_WaitExit (--force-input) [Program title] (--allow-kill)
+
+    if [ "$1" = "--force-input" ]
+    then
+        forceInput="true"
+        shift
+    else
+        forceInput="false"
+    fi
+
+    [ "$1" = "" ] && message="$(eval_gettext "Please wait...")" || message="$(eval_gettext 'Please wait while $SOFTNAME is installed...')"
+
+
+
+    POL_SetupWindow_wait "$message" "$TITLE"
+    [ "$forceInput" = "true" ] && POL_SetupWindow_message "$(eval_gettext 'Press next only when the installation process is finished')" "$TITLE"
+
+    return
+    # FIXME
+
+
+    SOFTNAME="$1"
+    if [ "$2" = "--allow-kill" ] 
+    then
+        allowKill="true"
+    else
+        allowKill="false"
+    fi
+    
+    if [ "$allowKill" = "true" ]
+    then
+        POL_SetupWindow_wait_button "$message" "$TITLE" "$(eval_gettext 'Install is done')" "wineserver -k" "$(eval_gettext 'Be careful! This will kill install process. If it is not finished, you will have to reinstall $SOFTNAME')"
+    else
+        POL_SetupWindow_wait "$message" "$TITLE"
+    fi
+    wineserver -w || POL_SetupWindow_message "$(eval_gettext 'Press next only when the installation process is finished')" "$TITLE"
+    [ "$forceInput" = "true" ] && POL_SetupWindow_message "$(eval_gettext 'Press next only when the installation process is finished')" "$TITLE"
+}
+
+POL_Wine_OverrideDLL()
+{
+	# Override DLLs
+	MODE=$1
+	[ "$MODE" = "disabled" ] && unset MODE
+	shift
+
+	(cat << 'EOF'
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+EOF
+
+	for DLL in "$@"
+	do
+		echo "\"*$DLL\"=\"$MODE\""
+	done) > "$POL_USER_ROOT/tmp/override-dll.reg"
+
+	POL_Debug_Message "Overriding DLLs"
+	POL_SetupWindow_wait_next_signal "$(eval_gettext 'Please wait...')" "$TITLE"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/override-dll.reg"
+	rm "$POL_USER_ROOT/tmp/override-dll.reg"
+}
+POL_Wine_DelOverrideDLL()
+{
+	# Delete override DLLs
+	(cat << 'EOF'
+REGEDIT4
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+EOF
+
+	for DLL in "$@"
+	do
+		echo "\"$DLL\"=-"
+		echo "\"*$DLL\"=-"
+	done) > "$POL_USER_ROOT/tmp/del-override-dll.reg"
+	POL_Debug_Message "Deleting overrides DLLs"
+	POL_SetupWindow_wait_next_signal "Please wait" "$TITLE"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/del-override-dll.reg"
+	rm "$POL_USER_ROOT/tmp/del-override-dll.reg"
+}
+POL_Wine_OverrideDLL_App()
+{
+	# App-specific DLL overrides
+	APP="$1"
+	MODE="$2"
+	[ "$MODE" = "disabled" ] && unset MODE
+	shift 2
+
+	(cat << EOF
+REGEDIT4
+
+[HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\$APP\\DllOverrides]
+EOF
+	for DLL in "$@"
+	do
+		# Who knows what this hack is for?
+		if [ "$DLL" = "comctl32" ]; then
+			rm -rf "$WINEPREFIX/winsxs/manifests/x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.2600.2982_none_deadbeef.manifest"
+		fi
+		echo "\"*$DLL\"=\"$MODE\""
+	done) > "$POL_USER_ROOT/tmp/app-dll-override.reg"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/app-dll-override.reg"
+	rm "$POL_USER_ROOT/tmp/app-dll-override.reg"
+}
+POL_Wine_DelOverrideDLL_App()
+{
+	# Delete app-specific DLL overrides
+	APP="$1"
+	shift
+
+	(cat << EOF
+REGEDIT4
+
+[HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\$APP\\DllOverrides]
+EOF
+	for DLL in "$@"
+	do
+		echo "\"$DLL\"=-"
+		echo "\"*$DLL\"=-"
+	done) > "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+	POL_Wine regedit "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+	rm "$POL_USER_ROOT/tmp/del-app-dll-override.reg"
+}
+
+POL_Wine_InstallVersion()
+{
+	# Install a wineversion
+	# Usage: POL_Wine_InstallVersion [VERSION]
+
+	[ ! "$1" = "" ] && export POL_WINEVERSION="$1"
+	[ "$POL_WINEVERSION" = "" ] && POL_Debug_Fatal "No POL_WINEVERSION set"
+	[ "$POL_ARCH" = "" ] && POL_System_SetArch "auto"
+	POL_Debug_Message "Installing wine version path: $POL_WINEVERSION, $POL_ARCH"
+
+	toPython "POL_Wine_InstallVersion" "$POL_WINEVERSION" "$POL_ARCH"
 }

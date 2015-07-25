@@ -21,6 +21,9 @@ import os
 
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
+from com.playonlinux.framework import WineInstallation
+
+from java.net import URL
 
 
 class CommandParser(object):
@@ -81,6 +84,18 @@ class CommandParser(object):
 
             self.setupWindowManager.getWindow(setupWindowId).wait(textToShow)
 
+        def POL_SetupWindow_browse(self):
+            setupWindowId = self.command[2]
+            textToShow = self.command[3]
+
+            try:
+                currentDirectory = self.command[4]
+            except IndexError:
+                currentDirectory = ""
+
+            return self.setupWindowManager.getWindow(setupWindowId).browse(textToShow, currentDirectory, allowedFiles)
+
+
         def POL_SetupWindow_textbox(self):
             setupWindowId = self.command[2]
             textToShow = self.command[3]
@@ -102,7 +117,6 @@ class CommandParser(object):
                 separator = "~"
 
             items = self.command[4].split(separator)
-
             return self.setupWindowManager.getWindow(setupWindowId).menu(textToShow, items)
 
         def POL_SetupWindow_Close(self):
@@ -112,9 +126,25 @@ class CommandParser(object):
 
         def POL_Download(self):
             setupWindowId = self.command[2]
+            url = self.command[3]
+            currentDirectory = self.command[4]
+
+            try:
+                checkSum = self.command[5]
+            except IndexError:
+                checkSum = ""
+
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 
-            Downloader(setupWindow).get(self.command[3]).check(self.command[4])
+            localFile = os.path.join(currentDirectory,
+                                     Downloader(setupWindow).findFileNameFromURL(URL(url)))
+
+
+            downloader = Downloader(setupWindow).get(url, localFile)
+
+
+            if(checkSum != ""):
+                downloader.check(checkSum)
         
         def POL_SetupWindow_licence(self):
             setupWindowId = self.command[2]
@@ -125,3 +155,16 @@ class CommandParser(object):
 
         def POL_Throw(self):
             raise ScriptFailureException(self.command[3])
+
+        def POL_Print(self):
+            message = self.command[3]
+            self.setupWindowManager.wizard.echo(message)
+
+        def POL_Wine_InstallVersion(self):
+            setupWindowId = self.command[2]
+            version = self.command[3]
+            arch = self.command[4]
+
+            wineInstallation = WineInstallation(version, "upstream-%s" % arch,
+                                                self.setupWindowManager.getWindow(setupWindowId))
+            wineInstallation.install()

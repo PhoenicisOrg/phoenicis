@@ -31,3 +31,14 @@ POL_Config_PrefixRead ()
 
     cat "$WINEPREFIX/playonlinux.cfg" 2> /dev/null | grep "^$1=" | cut -d\= -f2-
 }
+
+POL_Config_PrefixWrite ()
+{
+	# Write something to current wine prefix's config file
+	# Usage : POL_Config_PrefixWrite [KEY] [VALUE]
+
+	cat "$WINEPREFIX/playonlinux.cfg" 2> /dev/null | grep -v "^$1=" > "$POL_USER_ROOT/tmp/newcfg$$"
+	echo "$1=$2" >> "$POL_USER_ROOT/tmp/newcfg$$"
+	mv "$POL_USER_ROOT/tmp/newcfg$$" "$WINEPREFIX/playonlinux.cfg"
+	POL_Debug_Message "Prefix config write: $1 $2"
+}

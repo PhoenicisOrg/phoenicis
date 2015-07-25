@@ -41,7 +41,7 @@ POL_SetupWindow_Init ()
     [ "$arg2" = "" ] && arg2="None"
     [ "$arg3" = "" ] && arg3="None"
 
-    toPython "POL_SetupWindow_Init" "$arg1"	"$arg2"	"$arg3"
+    toPython "POL_SetupWindow_Init" "$arg1"    "$arg2"    "$arg3"
 
     export SETUPWINDOW_INIT="true"
 }
@@ -52,6 +52,15 @@ POL_SetupWindow_message ()
     # Usage POL_SetupWindow_message [message] [title]
     
     toPython "POL_SetupWindow_message" "$1" "$2"
+}
+
+POL_SetupWindow_browse ()
+{
+    # Shows a text box with a browse button
+    # Usage: POL_SetupWindow_browse [message] [title] [default value] [Supported file types]
+    # Result is sent in $APP_ANSWER variable
+
+    APP_ANSWER="$(toPythonRet "POL_SetupWindow_menu" "$1" "$2" "$3" "$PWD" "$4")"
 }
 
 POL_SetupWindow_presentation ()
@@ -69,6 +78,18 @@ POL_SetupWindow_free_presentation ()
     
     toPython "POL_SetupWindow_free_presentation" "$1" "$2"
 }
+
+POL_SetupWindow_question()
+{
+    # FIXME
+    # Shows a yes/no question
+    # Usage: POL_SetupWindow_question [message] [title]
+    # Result is sent in $APP_ANSWER variable (TRUE or FALSE)
+
+	POL_SetupWindow_menu "$1" "$2" "Yes~No" "~"
+	[ "$APP_ANSWER" = "Yes" ] && APP_ANSWER="TRUE" || APP_ANSWER="FALSE"
+}
+
 
 POL_SetupWindow_Close ()
 {
@@ -88,8 +109,7 @@ POL_SetupWindow_textbox ()
     # Shows a text box
     # Usage: POL_SetupWindow_textbox [message] [title (ignored)] [default value]
     # Result is sent in $APP_ANSWER variable
-
-    APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_textbox	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")" | ncns "$POL_HOST" "$POL_PORT")"
+    APP_ANSWER="$(toPythonRet "POL_SetupWindow_textbox" "$1" "$2" "$3")"
 }
 
 POL_SetupWindow_menu ()
@@ -98,7 +118,8 @@ POL_SetupWindow_menu ()
     # Usage: POL_SetupWindow_menu [message] [title (ignored)] [list] [separator]
     # Result is sent in $APP_ANSWER variable
 
-    APP_ANSWER="$(echo "$POL_COOKIE	POL_SetupWindow_menu	$$	$(POL_EscapeTab "$1")	$(POL_EscapeTab "$3")	$(POL_EscapeTab "$4")" | ncns "$POL_HOST" "$POL_PORT")"
+
+    APP_ANSWER="$(toPythonRet "POL_SetupWindow_menu" "$1" "$3" "$4")"
 }
 
 POL_SetupWindow_wait ()
@@ -120,5 +141,119 @@ POL_SetupWindow_licence ()
     # Shows a licence file, and force the user to accept it to continue
     # Usage POL_SetupWindow_licence [message] [title] [licence's file]
     toPython "POL_SetupWindow_licence" "$1" "$2" "$3"
+}
+
+POL_SetupWindow_icon_menu ()
+{
+    POL_SetupWindow_menu "$@"
+}
+
+POL_SetupWindow_InstallMethod()
+{
+    # Shows a list of install methods
+    # Usage: POL_SetupWindow_InstallMethod [List]
+    # Elements in list are separated by a coma
+    # Accepted methods are STEAM, STEAM_DEMO, LOCAL, CD, DVDROM, DOWNLOAD, ORIGIN, ORIGIN_DEMO, DESURA, DESURA_DEMO
+
+    [ "$1" = "" ] && POL_Debug_Fatal "No method in list"
+    STR=""
+    ICO=""
+    LNG_STEAM="$(eval_gettext "Use Steam Store version")"
+    LNG_STEAM_DEMO="$(eval_gettext "Use Steam Store demo version")"
+    LNG_DESURA="$(eval_gettext "Use Desura Store version")"
+    LNG_DESURA_DEMO="$(eval_gettext "Use Desura Store demo version")"
+    LNG_ORIGIN="$(eval_gettext "Use Origin Store version")"
+    LNG_ORIGIN_DEMO="$(eval_gettext "Use Origin Store demo version")"
+    
+    LNG_LOCAL="$(eval_gettext "Use a setup file in my computer")"
+    LNG_CDROM="$(eval_gettext "Use CD-ROM(s)")"
+    LNG_DVD="$(eval_gettext "Use DVD-ROM(s)")"
+    LNG_DOWNLOAD="$(eval_gettext "Download the program")"
+    
+    if [ ! "$(printf "$1" | grep LOCAL)" = "" ] 
+    then 
+        STR="$STR~$LNG_LOCAL"
+        ICO="$ICO~browse.png"
+    fi
+    if [ ! "$(printf "$1" | grep CD)" = "" ] 
+    then 
+        STR="$STR~$LNG_CDROM"
+        ICO="$ICO~cdrom.png"
+    fi
+    if [ ! "$(printf "$1" | grep DVD)" = "" ] 
+    then 
+        STR="$STR~$LNG_DVD"
+        ICO="$ICO~cdrom.png"
+    fi
+    if [ ! "$(printf "$1" | grep STEAM)" = "" ] 
+    then 
+        STR="$STR~$LNG_STEAM"
+        ICO="$ICO~download.png"
+    fi
+    if [ ! "$(printf "$1" | grep STEAM_DEMO)" = "" ] 
+    then 
+        STR="$STR~$LNG_STEAM_DEMO"
+        ICO="$ICO~download.png"
+    fi
+    
+    if [ ! "$(printf "$1" | grep DESURA)" = "" ] 
+    then 
+        STR="$STR~$LNG_DESURA"
+        ICO="$ICO~download.png"
+    fi
+    if [ ! "$(printf "$1" | grep DESURA_DEMO)" = "" ] 
+    then 
+        STR="$STR~$LNG_DESURA_DEMO"
+        ICO="$ICO~download.png"
+    fi
+    
+    if [ ! "$(printf "$1" | grep ORIGIN)" = "" ] 
+    then 
+        STR="$STR~$LNG_ORIGIN"
+        ICO="$ICO~download.png"
+    fi
+    if [ ! "$(printf "$1" | grep ORIGIN_DEMO)" = "" ] 
+    then 
+        STR="$STR~$LNG_ORIGIN_DEMO"
+        ICO="$ICO~download.png"
+    fi
+    
+    
+    if [ ! "$(printf "$1" | grep DOWNLOAD)" = "" ] 
+    then 
+        STR="$STR~$LNG_DOWNLOAD"
+        ICO="$ICO~download.png"
+    fi
+    
+    STR="${STR:1}"
+    ICO="${ICO:1}"
+    
+    mkdir -p "$POL_USER_ROOT/tmp/cache/icons/InstallMethod"
+    cp "$PLAYONLINUX/resources/images/icones/browse.png" "$POL_USER_ROOT/tmp/cache/icons/InstallMethod"
+    cp "$PLAYONLINUX/resources/images/icones/cdrom.png" "$POL_USER_ROOT/tmp/cache/icons/InstallMethod"
+    cp "$PLAYONLINUX/resources/images/icones/download.png" "$POL_USER_ROOT/tmp/cache/icons/InstallMethod"
+    
+    POL_SetupWindow_icon_menu "$(eval_gettext "Please choose an installation method")" "$TITLE"  "$STR" "~" "$POL_USER_ROOT/tmp/cache/icons/InstallMethod" "$ICO"
+    
+    # Si l'utilisateur n'a rien choisi
+    if [ "$APP_ANSWER" = "" ]
+    then
+        POL_SetupWindow_InstallMethod "$@"
+        return
+    fi
+    
+    [ "$APP_ANSWER" = "$LNG_LOCAL" ] && INSTALL_METHOD="LOCAL"
+    [ "$APP_ANSWER" = "$LNG_STEAM" ] && INSTALL_METHOD="STEAM"
+    [ "$APP_ANSWER" = "$LNG_STEAM_DEMO" ] && INSTALL_METHOD="STEAM_DEMO"
+    [ "$APP_ANSWER" = "$LNG_DESURA" ] && INSTALL_METHOD="DESURA"
+    [ "$APP_ANSWER" = "$LNG_DESURA_DEMO" ] && INSTALL_METHOD="DESURA_DEMO"
+    [ "$APP_ANSWER" = "$LNG_ORIGIN" ] && INSTALL_METHOD="ORIGIN"
+    [ "$APP_ANSWER" = "$LNG_ORIGIN_DEMO" ] && INSTALL_METHOD="ORIGIN_DEMO"
+    [ "$APP_ANSWER" = "$LNG_DOWNLOAD" ] && INSTALL_METHOD="DOWNLOAD"
+    [ "$APP_ANSWER" = "$LNG_DVD" ] && INSTALL_METHOD="DVD"
+    [ "$APP_ANSWER" = "$LNG_CDROM" ] && INSTALL_METHOD="CD"
+    
+    
+    POL_Debug_Message "Install method: $INSTALL_METHOD"
 }
 

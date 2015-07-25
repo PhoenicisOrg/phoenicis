@@ -36,7 +36,7 @@ public abstract class WineSteamInstaller extends Installer {
     List<String> packages;
 
     public void main() {
-        this.print(String.format("Implementation has to be done, but we have access to prefix (%s), " +
+        this.echo(String.format("Implementation has to be done, but we have access to prefix (%s), " +
                 "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have " +
                 "a list: %s", prefix, wineversion, steamId, packages, packages.get(0)));
     }

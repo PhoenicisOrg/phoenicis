@@ -50,3 +50,73 @@ POL_System_SetArch()
 
     POL_Debug_Message "POL_ARCH set to $POL_ARCH"
 }
+
+
+clean_wineprefix()
+{
+    # Detect if a prefix is still use or not.
+    # It not, ask the user if he/she wants to delete it
+    # Usage: clean_wineprefix (--non-interactive) /path/of/the/prefix
+
+    local INTERACTIVE=1
+    if [ "$1" = "--non-interactive" ]; then
+        unset INTERACTIVE
+        shift
+    fi
+    local wineprefix="$1"
+    wineprefix=${wineprefix//"//"/"/"}
+
+    # Done on purpose, do not change!
+    [ "$wineprefix" = "$POL_USER_ROOT/.PlayOnLinux/wineprefix/" ] && (throw ; exit)
+    [ "$wineprefix" = "$POL_USER_ROOT/Library/PlayOnMac/" ] && (throw ; exit)
+
+    # Done without using $POL_USER_ROOT on purpose too; If it's not set or set to a wrong value it could do a lot of damage
+    local TEST
+    [ "$POL_OS" = "Linux" ] && TEST=${wineprefix//".PlayOnLinux/wineprefix/"/""}
+    [ "$POL_OS" = "FreeBSD" ] && TEST=${wineprefix//".PlayOnBSD/wineprefix/"/""}
+    [ "$POL_OS" = "Mac" ] && TEST=${wineprefix//"Library/PlayOnMac/wineprefix/"/""}
+
+    [ "$TEST" = "" ] && exit
+    if [ "$TEST" = "$wineprefix" ]
+    then
+        POL_Debug_Error "The directory is not in $APPLICATION_TITLE"
+    else
+        local used=""
+        local OLDIFS="$IFS"
+        IFS=$'\n'
+        cd "$POL_USER_ROOT/shortcuts/" &&
+        for shortcut in *
+        do
+            [ "$(detect_wineprefix "$shortcut")" = "$wineprefix" ] && used=1
+        done
+        IFS="$OLDIFS"
+        if [ "$used" = 1 ]; then
+            POL_Debug_Warning "$1 is still in use"
+        else
+            local prefix=$(basename "$wineprefix")
+            [ "$INTERACTIVE" ] && POL_SetupWindow_question "$(eval_gettext "Do you want to delete the virtual drive:")\n\n$prefix" "$TITLE"
+            if [ "$APP_ANSWER" = "TRUE" -o -z "$INTERACTIVE" ]
+            then
+                rm -rf "$1"
+            fi
+        fi
+    fi
+}
+
+POL_System_HomeSpaceLeft()
+{
+    # Return the space left in the home partition
+    df -P -k "$HOME" | tail -n1 | awk '{print $4}'
+}
+POL_System_UserRootSpaceLeft()
+{
+    # Return the space left in the PlayOnLinux state partition
+    df -P -k "$POL_USER_ROOT" | tail -n1 | awk '{print $4}'
+}
+POL_System_EnoughSpace()
+{
+    # Set exitcode to 0 if we have enough space, 1 otherwise
+    # Usage POL_System_EnoughSpace [ Space required ]
+
+    [ "$1" -le "$(POL_System_UserRootSpaceLeft)" ]
+}

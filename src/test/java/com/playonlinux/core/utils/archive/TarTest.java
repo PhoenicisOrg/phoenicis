@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -82,6 +83,27 @@ public class TarTest {
     @Test
     public void testUncompressTarBz2File() throws IOException, ArchiveException {
         testUncompress("test3.tar.bz2");
+    }
+
+    @Test
+    public void testUncompress_withSymbolicLinks() throws IOException, ArchiveException {
+        final File inputFile = new File(inputUrl.getPath(), "tarLink.tar.gz");
+        final File temporaryDirectory = Files.createTempDir();
+
+        temporaryDirectory.deleteOnExit();
+
+        final List<File> extractedFiles = new Extractor().uncompress(inputFile, temporaryDirectory);
+
+        final File file1 = new File(temporaryDirectory, "file1.txt");
+        final File file2 = new File(temporaryDirectory, "file1_link.txt");
+
+        assertTrue(file1.exists());
+        assertTrue(file2.exists());
+
+        assertEquals("file1content", new String(FileUtils.readFileToByteArray(file1)));
+        assertEquals("file1content", new String(FileUtils.readFileToByteArray(file2)));
+
+        assertTrue(java.nio.file.Files.isSymbolicLink(Paths.get(file2.getPath())));
     }
 
     private void testUncompress(String fileName) throws IOException, ArchiveException {

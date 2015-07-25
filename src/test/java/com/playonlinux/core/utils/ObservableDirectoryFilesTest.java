@@ -18,7 +18,6 @@
 
 package com.playonlinux.core.utils;
 
-import com.google.common.io.Files;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
@@ -28,7 +27,6 @@ import org.junit.rules.ExpectedException;
 
 import java.io.File;
 import java.io.IOException;
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
@@ -60,7 +58,7 @@ public class ObservableDirectoryFilesTest {
     @Test
     public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified() throws PlayOnLinuxException,
             InterruptedException {
-        File temporaryDirectory = Files.createTempDir();
+        File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
 
         ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory);
@@ -85,7 +83,7 @@ public class ObservableDirectoryFilesTest {
     @Test
     public void testObservableDirectory_createANewFile_ObservableIsNotified() throws PlayOnLinuxException,
             InterruptedException, IOException {
-        File temporaryDirectory = Files.createTempDir();
+        File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
         ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory);
         observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);

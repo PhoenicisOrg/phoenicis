@@ -57,7 +57,7 @@ public class CFData extends AbstractCabStructure {
 
     public String toString() {
         return String.format(
-                "ChecksumCalculator: %s\n" +
+                "Checksum: %s\n" +
                 "Offset: %s\n" +
                 "Compressed size: %s\n" +
                 "Uncompressed size: %s\n",

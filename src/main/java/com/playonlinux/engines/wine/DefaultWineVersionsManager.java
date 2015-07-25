@@ -21,6 +21,7 @@ package com.playonlinux.engines.wine;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.core.entities.ProgressStateEntity;
@@ -34,6 +35,7 @@ import com.playonlinux.core.observer.Observable;
 
 import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.engines.wine.dto.WineVersionWebDTO;
+import com.playonlinux.framework.Checksum;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.archive.ArchiveException;
@@ -44,6 +46,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -123,14 +126,29 @@ public class DefaultWineVersionsManager
     @Override
     public void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException {
         final URL packageUrl = this.makePackageUrl(wineDistribution, version);
+        final String serverSum = this.makeSha1Sum(wineDistribution, version);
+
         final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);
+
         httpDownloader.addObserver(progressControl);
         try {
             final File temporaryFile = File.createTempFile("wineVersion", "tar");
             temporaryFile.deleteOnExit();
             httpDownloader.get(temporaryFile);
-            install(wineDistribution, version, temporaryFile, progressControl);
             httpDownloader.deleteObservers();
+
+            final ChecksumCalculator checksumCalculator = new ChecksumCalculator();
+            checksumCalculator.addObserver(progressControl);
+            final String clientSum = checksumCalculator.calculate(temporaryFile, "sha1");
+            checksumCalculator.deleteObservers();
+            if(!clientSum.equals(serverSum)) {
+                throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch.\n\n" +
+                        "Client hash:%s\n" +
+                        "Server has:%s", clientSum, serverSum));
+            }
+
+            install(wineDistribution, version, temporaryFile, progressControl);
+
         } catch (IOException | DownloadException e) {
             throw new EngineInstallException(format("An error occured while trying to download %s", packageUrl), e);
         }
@@ -166,30 +184,39 @@ public class DefaultWineVersionsManager
     private File getExtractPath(WineDistribution wineDistribution, Version version) {
         final File wineResources = playOnLinuxContext.makeEnginesPath("wine");
         return new File(wineResources, format("%s/%s",
-                wineDistribution.getDistributionCode(),
+                wineDistribution.asNameWithCurrentOperatingSystem(),
                 version.toString())
         );
     }
 
-    private synchronized URL makePackageUrl(WineDistribution wineDistribution, Version version) throws EngineInstallException {
+    private synchronized WineVersionWebDTO getWineVersionFromDistributionAndVersion(WineDistribution wineDistribution, Version version) throws EngineInstallException {
         final String coordinateName = wineDistribution.asNameWithCurrentOperatingSystem();
 
-        try {
-            for (WineVersionDistributionWebDTO wineVersionDistributionWebDTO : wineVersionDistributionDTOs) {
-                if (coordinateName.equals(wineVersionDistributionWebDTO.getName())) {
-                    for (WineVersionWebDTO wineVersionWebDTO : wineVersionDistributionWebDTO.getPackages()) {
-                        if (version.toString().equals(wineVersionWebDTO.getVersion())) {
-                            return new URL(wineVersionWebDTO.getUrl());
-                        }
+        for (WineVersionDistributionWebDTO wineVersionDistributionWebDTO : wineVersionDistributionDTOs) {
+            if (coordinateName.equals(wineVersionDistributionWebDTO.getName())) {
+                for (WineVersionWebDTO wineVersionWebDTO : wineVersionDistributionWebDTO.getPackages()) {
+                    if (version.toString().equals(wineVersionWebDTO.getVersion())) {
+                        return wineVersionWebDTO;
                     }
                 }
             }
-        } catch(MalformedURLException e) {
-            throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
         }
 
         throw new EngineInstallException(format("The version you are trying to install (%s / %s), does not seem to exists. (Codename: %s)",
                 wineDistribution.toString(), version.toString(), coordinateName));
+    }
+    private synchronized String makeSha1Sum(WineDistribution wineDistribution, Version version) throws EngineInstallException {
+        return getWineVersionFromDistributionAndVersion(wineDistribution, version).getSha1sum();
+    }
+
+    private synchronized URL makePackageUrl(WineDistribution wineDistribution, Version version) throws EngineInstallException {
+        try {
+            return new URL(getWineVersionFromDistributionAndVersion(wineDistribution, version).getUrl());
+        } catch(MalformedURLException e) {
+            throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
+        }
+
+
     }
 
 }

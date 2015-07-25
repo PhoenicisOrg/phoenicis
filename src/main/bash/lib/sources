@@ -30,6 +30,10 @@ if [ -z "$PLAYONLINUX_BASH_INCLUDED" ]; then
     source "$PLAYONLINUX/lib/setupWindow.sh"
     source "$PLAYONLINUX/lib/scripts.sh"
     source "$PLAYONLINUX/lib/wine.sh"
+    source "$PLAYONLINUX/lib/legacy.sh"
+    source "$PLAYONLINUX/lib/variables.sh"
+    source "$PLAYONLINUX/lib/shortcut.sh"
+    source "$PLAYONLINUX/lib/utils.sh"
 
     export PLAYONLINUX_BASH_INCLUDED="TRUE"
 fi

@@ -95,7 +95,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
     public void get(File localFile) throws DownloadException {
         try {
             get(new FileOutputStream(localFile));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new DownloadException(String.format("Download of %s has failed", this.url), e);
         }
     }

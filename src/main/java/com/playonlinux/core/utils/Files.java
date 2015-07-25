@@ -18,6 +18,7 @@
 
 package com.playonlinux.core.utils;
 
+import com.google.common.collect.Sets;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -25,6 +26,10 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.lang.String.format;
 
@@ -56,4 +61,52 @@ public final class Files {
         return fileIside != null && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
     }
 
+    private static Set<PosixFilePermission> singleIntToFilePermission(int mode, String groupType) {
+        Set<PosixFilePermission> permissions = new HashSet<>(9);
+
+        if( Arrays.asList(new Integer[]{1, 3, 5, 7}).contains(mode) ) {
+            permissions.add(PosixFilePermission.valueOf(groupType+"_EXECUTE"));
+        }
+
+        if( Arrays.asList(new Integer[]{2, 3, 6, 7}).contains(mode) ) {
+            permissions.add(PosixFilePermission.valueOf(groupType+"_WRITE"));
+        }
+
+        if( Arrays.asList(new Integer[]{4, 5, 6, 7}).contains(mode) ) {
+            permissions.add(PosixFilePermission.valueOf(groupType+"_READ"));
+        }
+
+        return permissions;
+    }
+
+    public static Set<PosixFilePermission> intToPosixFilePermission(int mode) {
+        if(mode >= 1000 || mode < 0) {
+            throw new IllegalArgumentException("Invalid mode "+mode);
+        }
+
+        final int owner = mode / 100;
+        final int group = (mode - owner * 100) / 10;
+        final int others = (mode - owner * 100 - group * 10);
+
+        if(owner > 7 || group > 7 || others > 7) {
+            throw new IllegalArgumentException("Invalid mode "+mode);
+        }
+
+        return Sets.union(
+                Sets.union(
+                    singleIntToFilePermission(owner, "OWNER"),
+                    singleIntToFilePermission(group, "GROUP")
+                ),
+                singleIntToFilePermission(others, "OTHERS")
+        );
+    }
+
+    public static Set<PosixFilePermission> octToPosixFilePermission(int modeOct) {
+        // TODO: optimize this method and make it cleaner
+        int modeInt = Integer.valueOf(Integer.toString(modeOct, 8));
+
+        return intToPosixFilePermission(
+                modeInt
+        );
+    }
 }

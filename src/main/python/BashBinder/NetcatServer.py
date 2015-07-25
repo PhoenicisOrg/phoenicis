@@ -85,11 +85,6 @@ class NetcatServer(threading.Thread):
         self.acceptor.close()
         self._running = False
 
-
-
-
-
-
     def run(self):
         while self._running:
             try:

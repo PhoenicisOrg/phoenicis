@@ -22,7 +22,10 @@
 # ---------
 # Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
-
+POL_Debug_Init()
+{
+    POL_Debug_Message "Note: POL_Debug_Init has been called"
+}
 
 POL_Debug_Fatal ()
 {
@@ -39,22 +42,33 @@ POL_Debug_Error ()
     echo "($(Get_CurrentDate)) [ERROR] $@"
 }
 
+POL_Debug_LogToPrefix()
+{
+	javaecho "[$(Get_CurrentDate)] - $@" >> "$WINEPREFIX/playonlinux.log"
+}
 
 POL_Debug_Message ()
 {
-    echo "($(Get_CurrentDate)) [INFO] $@"
+    javaecho "($(Get_CurrentDate)) [INFO] $@"
 }
 
 POL_Debug_Warning ()
 {
-    echo "($(Get_CurrentDate)) [WARNING] $@"
+    javaecho "($(Get_CurrentDate)) [WARNING] $@"
 }
 
-throw() {
+throw () {
     local message="$1"
     toPython "POL_Throw" "$message"
     exit 1
 }
+
+javaecho ()
+{
+    local message="$1"
+    toPython "POL_Print" "$message"
+}
+
 
 Get_CurrentDate()
 {

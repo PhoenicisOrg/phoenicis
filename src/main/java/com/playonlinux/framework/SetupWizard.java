@@ -79,6 +79,22 @@ public class SetupWizard {
     }
 
     /**
+     * Set the left image
+     * @param leftImage URL of the left image
+     */
+    public void setLeftImage(String leftImage) throws IOException {
+        setupWindow.get().setLeftImage(new File(leftImage));
+    }
+
+   /**
+    * Set the top image
+    * @param topImage URL of the top image
+    */
+   public void setTopImage(String topImage) throws IOException {
+       setupWindow.get().setTopImage(new File(topImage));
+   }
+
+    /**
      * Closes the setupWindow
      */
     public void close() {
@@ -179,7 +195,7 @@ public class SetupWizard {
      * @throws CancelException
      */
     public String licence(String textToShow, String licenceText) throws CancelException {
-        return (String) messageSender.synchronousSendAndGetResult(
+        return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
