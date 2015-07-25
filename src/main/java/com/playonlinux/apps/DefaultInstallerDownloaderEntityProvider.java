@@ -29,15 +29,13 @@ import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.core.utils.SignatureChecker;
-import com.playonlinux.core.webservice.DownloadException;
+import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.webservice.DownloadManager;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import org.apache.log4j.Logger;
 import org.bouncycastle.openpgp.PGPException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.NoSuchProviderException;
@@ -93,8 +91,8 @@ public class DefaultInstallerDownloaderEntityProvider
         try (FileOutputStream fileOutputStream = new FileOutputStream(localFile)) {
             fileOutputStream.write(bytes);
             terminateDownload();
-
         } catch (IOException e) {
+            LOGGER.error(e);
             failure(e);
         }
     }
@@ -142,8 +140,9 @@ public class DefaultInstallerDownloaderEntityProvider
 
             try {
                 this.signatureChecker
-                        .withData(script.extractSignature())
-                        .withData(scriptContent);
+                        .withSignature(script.extractSignature())
+                        .withData(scriptContent)
+                        .withPublicKey(SignatureChecker.getPublicKey());
 
                 if (!signatureChecker.check()) {
                     changeState(State.SIGNATURE_ERROR, 100., scriptContent);

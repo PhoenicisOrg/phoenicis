@@ -9,8 +9,8 @@ POL_SetupWindow_message "Test"
 POL_SetupWindow_Close
 
 exit
------BEGIN PGP PUBLIC KEY BLOCK-----
+-----BEGIN PGP SIGNATURE-----
 Version: GnuPG/MacGPG2 v2.0.17 (Darwin)
 
 MOCKED SIGNATURE
------END PGP PUBLIC KEY BLOCK-----
+-----END PGP SIGNATURE-----

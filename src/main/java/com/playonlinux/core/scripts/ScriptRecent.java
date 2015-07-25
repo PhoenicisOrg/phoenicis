@@ -60,7 +60,7 @@ public class ScriptRecent extends Script {
 
         Boolean insideSignature = false;
         for(String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
-            if(readLine.contains("-----BEGIN PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
+            if(readLine.contains("-----BEGIN PGP SIGNATURE-----") && readLine.startsWith("#")) {
                 insideSignature = true;
             }
 
@@ -71,7 +71,7 @@ public class ScriptRecent extends Script {
                 signatureBuilder.append("\n");
             }
 
-            if(readLine.contains("-----END PGP PUBLIC KEY BLOCK-----") && readLine.startsWith("#")) {
+            if(readLine.contains("-----END PGP SIGNATURE-----") && readLine.startsWith("#")) {
                 insideSignature = false;
             }
         }

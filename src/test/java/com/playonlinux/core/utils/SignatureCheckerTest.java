@@ -18,6 +18,7 @@
 
 package com.playonlinux.core.utils;
 
+import com.playonlinux.core.gpg.SignatureChecker;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.openpgp.PGPException;
 import org.junit.Test;

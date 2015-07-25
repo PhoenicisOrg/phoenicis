@@ -29,8 +29,8 @@ import java.text.ParseException;
 import java.util.concurrent.ExecutorService;
 
 public class ScriptLegacy extends Script {
-    private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP PUBLIC KEY BLOCK-----";
-    private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP PUBLIC KEY BLOCK-----";
+    private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP SIGNATURE-----";
+    private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP SIGNATURE-----";
     
     @Inject
     static ScriptFactory scriptFactory;
@@ -71,7 +71,7 @@ public class ScriptLegacy extends Script {
 
     @Override
     public String extractSignature() throws ParseException, IOException {
-        return extract(true);
+        return extract(true).trim();
     }
 
     private String extract(boolean extractSignature) throws IOException, ParseException {
@@ -93,9 +93,9 @@ public class ScriptLegacy extends Script {
             if(readLine.contains(END_PGP_KEY_BLOCK_LINE)) {
                 insideSignature = false;
             }
-        };
+        }
 
-        final String extractedContent = signatureBuilder.toString().trim();
+        final String extractedContent = signatureBuilder.toString();
 
         if(StringUtils.isBlank(extractedContent)) {
             if(extractSignature) {
@@ -104,6 +104,8 @@ public class ScriptLegacy extends Script {
                 throw new ParseException("The script has no valid content", 0);
             }
         }
+
+
         return extractedContent;
     }
 

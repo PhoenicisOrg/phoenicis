@@ -16,16 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.utils;
+package com.playonlinux.core.gpg;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
 import org.bouncycastle.bcpg.ArmoredInputStream;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.NoSuchProviderException;
 import java.security.Security;
 import java.security.SignatureException;
@@ -78,7 +77,7 @@ public class SignatureChecker {
         try {
             pgpSignature.initVerify(pgpSigningKey, "BC");
         } catch(NoSuchProviderException e) {
-            LOGGER.info("No security provider found. Adding bouncy castle", e);
+            LOGGER.info("No security provider found. Adding bouncy castle. This error can be ignored", e);
             Security.addProvider(new BouncyCastleProvider());
             pgpSignature.initVerify(pgpSigningKey, "BC");
         }
@@ -110,5 +109,29 @@ public class SignatureChecker {
         }
 
         return key;
+    }
+
+    public static String getPublicKey() {
+        final BufferedReader reader =
+                new BufferedReader(new InputStreamReader(SignatureChecker.class.getResourceAsStream("playonlinux.gpg")));
+
+        StringBuilder readPublicKey = new StringBuilder();
+        try {
+            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+                readPublicKey.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+        return readPublicKey.toString();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(SignatureChecker.class)
+                .append(publicKey)
+                .append(signedData)
+                .append(signature)
+                .toString();
     }
 }
