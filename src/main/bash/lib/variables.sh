@@ -98,3 +98,14 @@ export SITE="http://repository.playonlinux.com"
 # Drivers issue
 [ "$(POL_Config_pRead FIX_DRI_PATH)" = "TRUE" ] && [ "$POL_OS" = "Linux" ] && export LIBGL_DRIVERS_PATH="/usr/lib/dri/:/usr/lib64/dri/:/usr/lib32/dri/"
 unset WINEARCH
+
+
+if [ "$POL_OS" = "Mac" ]; then
+    POL_WGET="wget --prefer-family=IPv4 -q"
+else
+    if [ -e "/proc/net/if_inet6" ]; then
+        POL_WGET="env LD_LIBRARY_PATH=$LD_LIBRARY_PATH wget -q"
+    else
+        POL_WGET="env LD_LIBRARY_PATH=$LD_LIBRARY_PATH wget --prefer-family=IPv4 -q"
+    fi
+fi

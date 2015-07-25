@@ -130,7 +130,7 @@ POL_Wine_PrefixCreate()
 
         OLD_APP_ANWSER="$APP_ANSWER"
         PREFNAME="$(basename $WINEPREFIX)"
-        POL_SetupWindow_menu "$(eval_gettext 'The target virtual drive $PREFNAME already exists:')" "$TITLE" "$PREFIX_CHOICES" "~"
+        POL_SetupWindow_menu "The target virtual drive $PREFNAME already exists:" "$TITLE" "$PREFIX_CHOICES" "~"
         case "$APP_ANSWER" in
             "$LNG_OVERWRITE")
                 # Prefix content is not reproducible, it's tempting to disallow reports
