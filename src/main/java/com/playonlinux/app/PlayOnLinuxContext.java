@@ -18,9 +18,9 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.utils.OperatingSystem;
-import com.playonlinux.utils.ReplacableProperties;
-import com.playonlinux.version.Version;
+import com.playonlinux.core.utils.OperatingSystem;
+import com.playonlinux.core.utils.ReplacableProperties;
+import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import org.apache.log4j.PropertyConfigurator;
 

@@ -20,8 +20,8 @@ package com.playonlinux.library;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;

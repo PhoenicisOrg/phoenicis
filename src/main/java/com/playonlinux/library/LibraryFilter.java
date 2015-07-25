@@ -17,7 +17,7 @@
  */
 package com.playonlinux.library;
 
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.AbstractObservableImplementation;
 import org.apache.commons.lang.StringUtils;

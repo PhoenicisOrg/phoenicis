@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.scripts;
 
-import com.playonlinux.apps.dto.web.CategoryDTO;
+import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 

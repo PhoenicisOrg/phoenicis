@@ -18,7 +18,8 @@
 
 package com.playonlinux.apps;
 
-import com.playonlinux.apps.dto.web.CategoryDTO;
+import com.playonlinux.apps.entities.AppsItemScriptEntity;
+import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.scripts.InstallerSource;
@@ -34,4 +35,6 @@ public interface AppsManager extends Observer<InstallerSource, DownloadEnvelope<
 
 
     void refresh() throws ServiceInitializationException;
+
+    void runScript(AppsItemScriptEntity script);
 }

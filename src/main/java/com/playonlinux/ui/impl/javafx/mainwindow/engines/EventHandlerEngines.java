@@ -18,8 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
-import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
+import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -37,7 +37,7 @@ class EventHandlerEngines implements UIEventHandler {
     }
 
 
-    public EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions() {
+    public EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions() {
         return mainEventHandler.getRemoteWineVersions();
     }
 }

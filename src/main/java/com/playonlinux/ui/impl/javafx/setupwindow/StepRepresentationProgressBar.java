@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.dto.ui.ProgressStateDTO;
+import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.messages.AsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.core.messages.Message;
@@ -83,8 +83,8 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
 
 
     @Override
-    public void update(com.playonlinux.core.observer.Observable observable, ProgressStateDTO progressStateDTO) {
-        this.setProgressPercentage(progressStateDTO.getPercent());
-        this.setText(progressStateDTO.getProgressText());
+    public void update(com.playonlinux.core.observer.Observable observable, ProgressStateEntity progressStateEntity) {
+        this.setProgressPercentage(progressStateEntity.getPercent());
+        this.setText(progressStateEntity.getProgressText());
     }
 }

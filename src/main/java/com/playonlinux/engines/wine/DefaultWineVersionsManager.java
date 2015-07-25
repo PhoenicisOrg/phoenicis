@@ -23,8 +23,8 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
-import com.playonlinux.dto.ui.ProgressStateDTO;
-import com.playonlinux.engines.wine.dto.web.WineVersionDistributionWebDTO;
+import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.core.services.manager.AutoStartedService;
 
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -33,12 +33,12 @@ import com.playonlinux.core.observer.AbstractObservableImplementation;
 import com.playonlinux.core.observer.Observable;
 
 import com.playonlinux.core.webservice.DownloadEnvelope;
-import com.playonlinux.engines.wine.dto.web.WineVersionWebDTO;
+import com.playonlinux.engines.wine.dto.WineVersionWebDTO;
 import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.utils.Files;
-import com.playonlinux.utils.archive.ArchiveException;
-import com.playonlinux.utils.archive.Extractor;
-import com.playonlinux.version.Version;
+import com.playonlinux.core.utils.Files;
+import com.playonlinux.core.utils.archive.ArchiveException;
+import com.playonlinux.core.utils.archive.Extractor;
+import com.playonlinux.core.version.Version;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,11 +99,11 @@ public class DefaultWineVersionsManager
     }
 
     public boolean isUpdating() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.PROGRESSING;
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
     }
 
     public boolean hasFailed() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateDTO.State.FAILED;
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.FAILED;
     }
 
     private synchronized void refreshWebservice() throws ServiceInitializationException {

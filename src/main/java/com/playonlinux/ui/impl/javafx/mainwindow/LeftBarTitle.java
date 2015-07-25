@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import javafx.scene.text.Text;
 
-public class LeftBarTitle extends Text {
+class LeftBarTitle extends Text {
     public LeftBarTitle(String defaultValue) {
         super(defaultValue);
         this.getStyleClass().add("leftBarTitle");

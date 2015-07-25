@@ -19,5 +19,5 @@
 package com.playonlinux.apps;
 
 public interface InstallerDownloader {
-    String getString(int scriptId);
+    String getScript(int scriptId);
 }

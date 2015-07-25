@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
+import com.playonlinux.apps.entities.AppsCategory;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
 import javafx.scene.layout.VBox;
@@ -42,11 +42,11 @@ final class CategoryView extends VBox {
         this.getChildren().add(new LeftBarTitle(translate("Category")));
     }
 
-    public void setCategories(List<AppsCategoryDTO> categories) {
+    public void setCategories(List<AppsCategory> categories) {
         this.clear();
 
         if (!categories.isEmpty()) {
-            for (AppsCategoryDTO category : categories) {
+            for (AppsCategory category : categories) {
                 final LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
                 categoryButton.getStyleClass().add("leftPaneButtons");
                 this.getChildren().add(categoryButton);

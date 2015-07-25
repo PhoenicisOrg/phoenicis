@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.apps.dto.web.ApplicationDTO;
+import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceImplementation;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
-import com.playonlinux.apps.dto.web.CategoryDTO;
+import com.playonlinux.apps.dto.CategoryDTO;
 
 
 import java.net.MalformedURLException;

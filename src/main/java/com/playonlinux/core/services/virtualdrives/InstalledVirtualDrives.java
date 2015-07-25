@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.services.virtualdrives;
 
-import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.containers.VirtualDriveDTO;
 import com.playonlinux.core.observer.Observable;
 
 

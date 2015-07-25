@@ -27,7 +27,7 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.EngineInstallException;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.version.Version;
+import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 
 import java.io.File;

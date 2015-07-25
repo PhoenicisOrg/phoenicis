@@ -20,7 +20,7 @@ package com.playonlinux.core.services.virtualdrives;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.dto.ui.VirtualDriveDTO;
+import com.playonlinux.containers.VirtualDriveDTO;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.ServiceManager;

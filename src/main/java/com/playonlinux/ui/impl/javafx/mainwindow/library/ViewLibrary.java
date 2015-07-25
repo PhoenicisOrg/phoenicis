@@ -20,8 +20,8 @@ package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.python.CommandInterpreterException;
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.library.LibraryFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;

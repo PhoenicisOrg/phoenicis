@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.apps.dto.web.ScriptDTO;
+import com.playonlinux.apps.dto.ScriptDTO;
 
 public class ScriptDTOTest {
 

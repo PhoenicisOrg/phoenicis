@@ -19,7 +19,8 @@
 package com.playonlinux.apps;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.apps.dto.web.CategoryDTO;
+import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.apps.entities.AppsItemScriptEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.AbstractObservableImplementation;
@@ -63,6 +64,11 @@ public class DefaultAppsManager extends AbstractObservableImplementation<Default
         installerSourceWebserviceImplementation = new InstallerSourceWebserviceImplementation(webserviceUrl);
         installerSourceWebserviceImplementation.addObserver(this);
         serviceManager.register(installerSourceWebserviceImplementation);
+    }
+
+    @Override
+    public void runScript(AppsItemScriptEntity script) {
+
     }
 
     @Override

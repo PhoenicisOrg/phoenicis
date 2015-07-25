@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
-import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
+import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
@@ -31,8 +31,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
-public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowDTO> {
-    private final EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> entitiesProvider;
+public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowEntity> {
+    private final EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> entitiesProvider;
     private TabPane wineDistributions;
 
     public ViewEngines(MainWindow parent) {
@@ -71,19 +71,19 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
     }
 
     @Override
-    public void update(Observable observable, WineVersionsWindowDTO argument) {
+    public void update(Observable observable, WineVersionsWindowEntity argument) {
         wineDistributions.getTabs().clear();
 
 
-        for(WineVersionDistributionItemDTO wineVersionDistributionItemDTO: argument.getDistributions()) {
+        for(WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument.getDistributions()) {
             final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
             final Tab wineDistributionTab = new Tab();
             wineDistributionTab.setClosable(false);
-            wineDistributionTab.setText(wineVersionDistributionItemDTO.getDescription());
+            wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
             wineDistributionTab.setContent(miniatureListWidget);
 
-            for(WineVersionItemDTO wineVersionItemDTO: wineVersionDistributionItemDTO.getAvailablePackages()) {
-                miniatureListWidget.addItem(wineVersionItemDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+            for(WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity.getAvailablePackages()) {
+                miniatureListWidget.addItem(wineVersionItemEntity.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
             }
 
             wineDistributions.getTabs().add(wineDistributionTab);

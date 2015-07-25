@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.apps.dto.ui.AppsCategoryDTO;
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
-import com.playonlinux.apps.dto.ui.AppsWindowDTO;
+import com.playonlinux.apps.entities.AppsCategory;
+import com.playonlinux.apps.entities.AppsItemEntity;
+import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
@@ -37,13 +37,13 @@ import org.apache.log4j.Logger;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-final public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowDTO> {
+final public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowEntity> {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
 
     private FailurePanel failurePanel;
     private HBox waitPanel;
 
-    private final EntitiesProvider<AppsItemDTO, AppsWindowDTO> windowDTOEntitiesProvider;
+    private final EntitiesProvider<AppsItemEntity, AppsWindowEntity> windowDTOEntitiesProvider;
     private final MiniatureListWidget availableInstallerListWidget;
 
     private final EventHandlerApps eventHandlerApps;
@@ -54,7 +54,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
     private CheckBox testingCheck;
     private CheckBox noCdNeededCheck;
     private CheckBox commercialCheck;
-    private AppsCategoryDTO selectedCategory;
+    private AppsCategory selectedCategory;
 
     public ViewApps(MainWindow parent) {
         super(parent);
@@ -111,7 +111,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
         showRightView(failurePanel);
     }
 
-    private void showAppDetails(AppsItemDTO item) {
+    private void showAppDetails(AppsItemEntity item) {
         showRightView(new AppPanel(eventHandlerApps, item));
     }
 
@@ -129,21 +129,21 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
     }
 
     @Override
-    public void update(Observable o, AppsWindowDTO appsWindowDTO) {
+    public void update(Observable o, AppsWindowEntity appsWindowEntity) {
 
         Platform.runLater(() -> {
             availableInstallerListWidget.clear();
 
-            if (appsWindowDTO.isDownloading()) {
+            if (appsWindowEntity.isDownloading()) {
                 this.showWait();
-            } else if (appsWindowDTO.isDownloadFailed()) {
+            } else if (appsWindowEntity.isDownloadFailed()) {
                 this.showFailure();
             } else {
                 this.showAvailableApps();
 
-                categoryView.setCategories(appsWindowDTO.getCategoryDTOs());
+                categoryView.setCategories(appsWindowEntity.getCategoryDTOs());
 
-                for (AppsItemDTO appsItemDTO : appsWindowDTO.getAppsItemDTOs()) {
+                for (AppsItemEntity appsItemDTO : appsWindowEntity.getAppsItemDTOs()) {
                     Node itemNode = availableInstallerListWidget.addItem(appsItemDTO.getName());
                     itemNode.setOnMouseClicked((evt) -> showAppDetails(appsItemDTO));
                 }
@@ -152,7 +152,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
     }
 
 
-    public void selectCategory(AppsCategoryDTO category) {
+    public void selectCategory(AppsCategory category) {
         this.selectedCategory = category;
         searchBar.setText("");
         applyFilter(category.getName());

@@ -20,13 +20,13 @@ package com.playonlinux.ui.events;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
-import com.playonlinux.apps.dto.ui.AppsWindowDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.apps.entities.AppsItemEntity;
+import com.playonlinux.containers.VirtualDriveDTO;
+import com.playonlinux.apps.entities.AppsWindowEntity;
+import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
@@ -51,9 +51,9 @@ public interface EventHandler {
 
     AppsManager getAppsManager();
 
-    EntitiesProvider<AppsItemDTO, AppsWindowDTO> getRemoteAvailableInstallers();
+    EntitiesProvider<AppsItemEntity, AppsWindowEntity> getRemoteAvailableInstallers();
 
-    EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions();
+    EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions();
 
     Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
 

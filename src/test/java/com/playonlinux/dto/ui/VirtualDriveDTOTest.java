@@ -24,6 +24,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.playonlinux.containers.VirtualDriveDTO;
 import org.junit.Before;
 import org.junit.Test;
 

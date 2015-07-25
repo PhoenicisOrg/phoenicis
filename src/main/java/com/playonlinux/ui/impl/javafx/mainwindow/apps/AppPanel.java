@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
-import com.playonlinux.apps.dto.ui.AppsItemDTO;
+import com.playonlinux.apps.entities.AppsItemEntity;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
 import com.sun.webkit.dom.HTMLAnchorElementImpl;
@@ -39,7 +39,7 @@ import java.net.URL;
 final class AppPanel extends VBox {
     private static final Logger LOGGER = Logger.getLogger(AppPanel.class);
 
-    public AppPanel(EventHandlerApps eventHandlerApps, AppsItemDTO appsItemDTO) {
+    public AppPanel(EventHandlerApps eventHandlerApps, AppsItemEntity appsItemDTO) {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
 

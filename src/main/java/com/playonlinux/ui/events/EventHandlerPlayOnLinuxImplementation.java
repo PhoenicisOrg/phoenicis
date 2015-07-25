@@ -21,11 +21,11 @@ package com.playonlinux.ui.events;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.dto.ui.VirtualDriveDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionDistributionItemDTO;
-import com.playonlinux.engines.wine.dto.ui.WineVersionsWindowDTO;
-import com.playonlinux.dto.ui.library.InstalledApplicationDTO;
-import com.playonlinux.dto.ui.library.LibraryWindowDTO;
+import com.playonlinux.containers.VirtualDriveDTO;
+import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -86,7 +86,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     }
 
     @Override
-    public EntitiesProvider<WineVersionDistributionItemDTO, WineVersionsWindowDTO> getRemoteWineVersions() {
+    public EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions() {
         return playOnLinuxBackgroundServicesManager.getService(WineVersionEntitiesProvider.class);
     }
 
