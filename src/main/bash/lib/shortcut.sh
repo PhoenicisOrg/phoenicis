@@ -103,7 +103,7 @@ POL_Shortcut()
 			# Do nothing on Mac OS
 			if [ -n "$Categories" -a "$POL_OS" = "Linux" ] || [ -n "$Categories" -a "$POL_OS" = "BSD" ]; then
 				LOCALAPPS="$HOME/.local/share/applications"
-				make_desktop_shortcut "$iconPath" "$ICON_FILENAME" "$LOCALAPPS" "$PLAYONLINUX/playonlinux --run \"$ICON_FILENAME\"" "$binary_name" "$Categories" "playonlinux-"
+				POL_Download_Resource "$iconPath" "$ICON_FILENAME" "$LOCALAPPS" "$PLAYONLINUX/playonlinux --run \"$ICON_FILENAME\"" "$binary_name" "$Categories" "playonlinux-"
 			fi
 		fi
 

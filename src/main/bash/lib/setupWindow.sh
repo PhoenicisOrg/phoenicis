@@ -79,6 +79,18 @@ POL_SetupWindow_free_presentation ()
     toPython "POL_SetupWindow_free_presentation" "$1" "$2"
 }
 
+POL_SetupWindow_question()
+{
+    # FIXME
+    # Shows a yes/no question
+    # Usage: POL_SetupWindow_question [message] [title]
+    # Result is sent in $APP_ANSWER variable (TRUE or FALSE)
+
+	POL_SetupWindow_menu "$1" "$2" "Yes~No" "~"
+	[ "$APP_ANSWER" = "Yes" ] && APP_ANSWER="TRUE" || APP_ANSWER="FALSE"
+}
+
+
 POL_SetupWindow_Close ()
 {
     # Close PlayOnLinux setup window.

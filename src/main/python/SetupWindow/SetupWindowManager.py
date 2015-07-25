@@ -21,9 +21,10 @@ from com.playonlinux.framework import SetupWizard
 
 class SetupWindowManager(object):
 
-    def __init__(self):
+    def __init__(self, wizard):
         """:type : dict[int, SetupWizard] """
         self.managedWindows = {}
+        self.wizard = wizard
 
     def getWindow(self, windowId):
         """

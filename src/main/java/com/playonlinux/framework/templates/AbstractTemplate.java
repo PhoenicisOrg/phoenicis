@@ -30,7 +30,7 @@ public abstract class AbstractTemplate implements ScriptTemplate {
     @PythonAttribute
     private String title;
 
-    protected void print(String message) {
+    public void echo(String message) {
         OutputStream outputstream;
         if(title != null) {
             try {

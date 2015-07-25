@@ -30,7 +30,7 @@ class PlayOnLinuxBashInterpreter(Installer):
     title = "PlayOnLinux bash interpreter" # FIXME
 
     def main(self):
-        self.setupWindowManager = SetupWindowManager()
+        self.setupWindowManager = SetupWindowManager(self)
         healthChecker = HealthChecker()
 
         self.netcatServer = NetcatServer(self.setupWindowManager)

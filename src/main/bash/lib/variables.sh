@@ -109,3 +109,5 @@ else
         POL_WGET="env LD_LIBRARY_PATH=$LD_LIBRARY_PATH wget --prefer-family=IPv4 -q"
     fi
 fi
+
+export REPERTOIRE="$POL_USER_ROOT"

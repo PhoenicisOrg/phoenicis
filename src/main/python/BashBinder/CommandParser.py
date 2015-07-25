@@ -126,7 +126,12 @@ class CommandParser(object):
             setupWindowId = self.command[2]
             url = self.command[3]
             currentDirectory = self.command[4]
-            checkSum = self.command[5]
+
+            try:
+                checkSum = self.command[5]
+            except IndexError:
+                checkSum = ""
+
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 
             localFile = os.path.join(currentDirectory,
@@ -134,6 +139,7 @@ class CommandParser(object):
 
 
             downloader = Downloader(setupWindow).get(url, localFile)
+
 
             if(checkSum != ""):
                 downloader.check(checkSum)
@@ -147,3 +153,7 @@ class CommandParser(object):
 
         def POL_Throw(self):
             raise ScriptFailureException(self.command[3])
+
+        def POL_Print(self):
+            message = self.command[3]
+            self.setupWindowManager.wizard.echo(message)

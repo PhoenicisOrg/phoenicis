@@ -44,24 +44,31 @@ POL_Debug_Error ()
 
 POL_Debug_LogToPrefix()
 {
-	echo "[$(Get_CurrentDate)] - $@" >> "$WINEPREFIX/playonlinux.log"
+	javaecho "[$(Get_CurrentDate)] - $@" >> "$WINEPREFIX/playonlinux.log"
 }
 
 POL_Debug_Message ()
 {
-    echo "($(Get_CurrentDate)) [INFO] $@"
+    javaecho "($(Get_CurrentDate)) [INFO] $@"
 }
 
 POL_Debug_Warning ()
 {
-    echo "($(Get_CurrentDate)) [WARNING] $@"
+    javaecho "($(Get_CurrentDate)) [WARNING] $@"
 }
 
-throw() {
+throw () {
     local message="$1"
     toPython "POL_Throw" "$message"
     exit 1
 }
+
+javaecho ()
+{
+    local message="$1"
+    toPython "POL_Print" "$message"
+}
+
 
 Get_CurrentDate()
 {

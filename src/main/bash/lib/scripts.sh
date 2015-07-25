@@ -31,6 +31,95 @@ POL_Download ()
     toPython "POL_Download" "$1" "$PWD" "$2"
 }
 
+POL_SetupWindow_download() {
+	# Download a file and place it to the current directory
+	# Usage: POL_SetupWindow_download [message] [title] [url] [file]
+	# /!\ Scriptors should directly use POL_Download
+        # If provided, make sure the filename is absolute to avoid any misinterpretation from server
+
+    [ "$4" = "" ] && file="$PWD" || file="$4"
+    toPython "POL_Download" "$3" "$file"
+}
+
+POL_Download_GetSize()
+{
+	# Get the size of a distant file
+	# Usage: POL_Download_GetSize [URL]
+
+	wget "$1" --spider --server-response -O - 2>&1 | $SED -ne '/Content-Length/{s/.*: //;p}'	| tail -n1
+}
+
+POL_Download_Resource ()
+{
+	# Download a file and place it in the resource directory (if it does not exist)
+	# Usage: POL_Download_Resource [URL] [MD5] (Folder)
+
+	POL_Debug_Message "Downloading resource $1"
+	local URL="$1"
+	local SERVER_MD5="$2"
+	local SUBFOLDER="$3"
+	local ATTEMPT
+	[ "$4" ] && ATTEMPT="$4" || ATTEMPT=1
+	local FILE="${URL##*/}"
+	mkdir -p "$POL_USER_ROOT/ressources/$SUBFOLDER"
+	cd "$POL_USER_ROOT/ressources/$SUBFOLDER" || POL_Debug_Fatal "Resource subfolder $SUBFOLDER does not exist"
+	POL_Debug_Message "Resource name: $FILE"
+	if [ -e "$FILE" ] && [ "$(POL_MD5_file "$FILE")" = "$SERVER_MD5" ]
+	then
+		POL_Debug_Message "Resource already present"
+	else
+		local WTCACHE=""
+		[ -d "$HOME/.cache/winetricks" ] && WTCACHE="$(find $HOME/.cache/winetricks -type f -a -iname "$FILE" | tail -n 1)"
+		if [ -n "$WTCACHE" -a "$(POL_MD5_file "$WTCACHE")" = "$SERVER_MD5" ]
+		then
+			ln "$WTCACHE" "$FILE" || cp "$WTCACHE" "$FILE"
+			POL_Debug_Message "Resource found in winetricks cache"
+		elif [ "$URL" = "" ]
+		then
+			POL_Debug_Error "URL is missing !"
+		else
+
+			local neededSpace="$(POL_Download_GetSize "$URL")"
+			if [ "$neededSpace" ]; then
+				let neededSpace=neededSpace/1024
+				POL_System_EnoughSpace "$neededSpace" || POL_Debug_Error "$(eval_gettext 'No enough space to download:\n$URL ($neededSpace KB)')"
+			fi
+			[ -e "$FILE" ] && rm "$FILE"
+			echo "Here"
+			POL_SetupWindow_download "Please wait while $APPLICATION_TITLE is downloading: $FILE" "$TITLE" "$URL"
+            echo "Here2"
+
+
+			if [ "$Result" = "Fail" ]; then
+				local APP_ANSWER
+				POL_SetupWindow_question "$URL\n\n$(eval_gettext 'An error happened during download.')\n\n$(eval_gettext 'Do you want to retry?')"
+				if [ "$APP_ANSWER" = "FALSE" ]; then
+					POL_Debug_Error "error during download! ($ATTEMPT attempt)"
+				else
+					POL_Download_Resource "$URL" "$SERVER_MD5" "$SUBFOLDER" "$(( ATTEMPT + 1))"
+				fi
+			elif [ "$SERVER_MD5" = "" ]
+			then
+				POL_Debug_Warning "MD5 is missing !"
+			else
+				local LOCAL_MD5="$(POL_MD5_file "$FILE")"
+				if [ "$LOCAL_MD5" = "$SERVER_MD5" ]
+				then
+					POL_Debug_Message "Download MD5 matches"
+				else
+					local APP_ANSWER
+					POL_SetupWindow_question "$URL\n\n$(eval_gettext 'Error ! Files mismatch\n\nLocal : $LOCAL_MD5\nServer : $SERVER_MD5')\n\n$(eval_gettext 'Do you want to retry?')"
+					if [ "$APP_ANSWER" = "FALSE" ]; then
+						POL_Debug_Error "MD5 sum mismatch ! ($ATTEMPT attempt)"
+					else
+						POL_Download_Resource "$URL" "$SERVER_MD5" "$SUBFOLDER" "$(( ATTEMPT + 1 ))"
+					fi
+				fi
+			fi
+		fi
+	fi
+}
+
 
 POL_System_TmpCreate()
 {

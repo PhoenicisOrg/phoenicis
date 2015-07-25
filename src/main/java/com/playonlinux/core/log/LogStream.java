@@ -53,4 +53,5 @@ public class LogStream extends OutputStream {
         logOutputStream.write(b);
         System.out.write(b);
     }
+
 }
