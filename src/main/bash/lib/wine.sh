@@ -124,14 +124,14 @@ POL_Wine ()
 
     local outputFifo="/tmp/$(POL_Rand)"
     local errFifo="/tmp/$(POL_Rand)"
-
+    local env="$(export | POL_base64 | tr -d '\n\r')"
     mkfifo "$outputFifo"
     mkfifo "$errFifo"
 
     cat "$outputFifo" > /dev/stdout &
     cat "$errFifo" > /dev/stderr &
 
-    exitCode="$(toPythonRet "POL_Wine" "$PWD" "$POL_WINEPREFIX" "$outputFifo" "$errFifo" "$inputFifo" "$@")"
+    exitCode="$(toPythonRet "POL_Wine" "$PWD" "$POL_WINEPREFIX" "$outputFifo" "$errFifo" "$env" "$@")"
 
     if [ "$errors" != 0 -a "$NoErrors" != "True" -a "$POL_IgnoreWineErrors" != "True" ]; then
         POL_Debug_Error "$(eval_gettext 'Wine seems to have crashed\n\nIf your program is running, just ignore this message')"
