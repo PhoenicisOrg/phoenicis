@@ -29,7 +29,8 @@ import java.io.*;
  * This component redirects {@link Process} descriptors into Java {@link OutputStream}
  * and {@link InputStream}
  *
- * This component is run in a separate thread
+ * This component is run in a separate thread.
+ * The thread automatically dies when the process exits
  */
 @Scan
 public class ProcessPipe implements Service {
