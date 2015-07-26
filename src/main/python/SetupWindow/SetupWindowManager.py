@@ -21,21 +21,25 @@ from com.playonlinux.framework import SetupWizard
 
 class SetupWindowManager(object):
 
-    def __init__(self, wizard):
+    def __init__(self, template):
         """:type : dict[int, SetupWizard] """
         self.managedWindows = {}
-        self.wizard = wizard
+        self.template = template
+
 
     def getWindow(self, windowId):
         """
             :param windowId: int
             :rtype: SetupWizard
         """
-        return self.managedWindows[windowId]
+
+        try:
+            return self.managedWindows[windowId]
+        except KeyError:
+            return self.newWindow(windowId, self.template.title)
 
     def newWindow(self, windowId, title):
         self.managedWindows[windowId] = SetupWizard(title)
-        self.managedWindows[windowId].init()
         return self.managedWindows[windowId]
 
     def closeAll(self):

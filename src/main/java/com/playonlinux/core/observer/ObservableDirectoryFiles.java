@@ -78,7 +78,6 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
             super.start();
         }
 
-
         public synchronized void stopChecking() {
             this.running = false;
         }
