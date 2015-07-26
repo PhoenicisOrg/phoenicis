@@ -32,20 +32,23 @@ import org.apache.commons.io.IOUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class WineInstallationTest {
-
     private WineInstallation wineInstallationToTest;
+    private WinePrefix mockWinePrefix = mock(WinePrefix.class);
 
     @Before
     public void getSystemProperties() {
         URL url = this.getClass().getResource(".");
         this.wineInstallationToTest = new WineInstallation.Builder().withPath(new File(url.getPath())).build();
+        when(mockWinePrefix.getAbsolutePath()).thenReturn("/tmp");
     }
 
     @Test
     public void testRun_RunWineVersion_ProcessRunsAndReturnsVersion() throws IOException, WineException {
-        Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "--version", null);
+        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "--version", null);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
@@ -58,7 +61,7 @@ public class WineInstallationTest {
         List<String> arguments = new ArrayList<>();
         arguments.add("/tmp/unexisting");
 
-        Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "--help", null, arguments);
+        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "--help", null, arguments);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
@@ -73,7 +76,7 @@ public class WineInstallationTest {
         List <String> arguments = new ArrayList<>();
         arguments.add("--help");
 
-        Process wineProcess = this.wineInstallationToTest.run(new File("/tmp"), "/tmp/unexisting", null, arguments);
+        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "/tmp/unexisting", null, arguments);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);

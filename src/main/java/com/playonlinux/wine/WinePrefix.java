@@ -206,8 +206,8 @@ public class WinePrefix {
     public WineDistribution fetchDistribution() {
         final ConfigFile prefixConfigFile = getPrefixConfigFile();
         String distribution;
-        if(prefixConfigFile.contains("distribution")) {
-            distribution = prefixConfigFile.readValue("distribution");
+        if(prefixConfigFile.contains("distributionCode")) {
+            distribution = prefixConfigFile.readValue("distributionCode");
         } else {
             distribution = "upstream";
         }

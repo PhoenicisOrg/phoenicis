@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.prefs.BackingStoreException;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 import static java.lang.String.format;
@@ -82,7 +81,7 @@ public class WinePrefix {
      * @param prefixName the name of the prefix
      * @return the same object
      */
-    public WinePrefix select(String prefixName) throws ScriptFailureException {
+    public WinePrefix select(String prefixName) throws CancelException {
         this.prefixName = prefixName;
         try {
             this.prefix = new com.playonlinux.wine.WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
@@ -92,6 +91,9 @@ public class WinePrefix {
 
         if(prefix.initialized()) {
             wineInstallation = new WineInstallation(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
+            if(!wineInstallation.isInstalled()) {
+                wineInstallation.install();
+            }
         }
 
         return this;
@@ -226,7 +228,7 @@ public class WinePrefix {
         try {
             final Process process = wineInstallation
                     .getInstallation()
-                    .run(workingDirectory, executableToRun, environment, arguments);
+                    .run(prefix, workingDirectory, executableToRun, environment, arguments);
 
             if(this.setupWizard.getLogContext() != null) {
                 ProcessLogger processLogger = new ProcessLogger(process, this.setupWizard.getLogContext());
@@ -234,7 +236,7 @@ public class WinePrefix {
             }
             return process;
         } catch (ServiceException | WineException e) {
-            throw new ScriptFailureException("Error while running wine:" + e);
+            throw new ScriptFailureException("Error while running wine:", e);
         }
     }
 
@@ -320,7 +322,7 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix waitAll() throws ScriptFailureException {
+    public WinePrefix waitExit() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
             wineInstallation.getInstallation()
@@ -363,7 +365,7 @@ public class WinePrefix {
         }
 
         try {
-            waitAll();
+            waitExit();
         } finally {
             observableDirectorySize.deleteObserver(progressControl);
             backgroundServicesManager.unregister(observableDirectorySize);
