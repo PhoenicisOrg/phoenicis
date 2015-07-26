@@ -59,6 +59,7 @@ public class Downloader implements SetupWizardComponent {
         setupWizard.registerComponent(downloaderInstance);
         return new Downloader(setupWizard);
     }
+
     public Downloader(ProgressControl progressControl) {
         this.progressControl = progressControl;
     }

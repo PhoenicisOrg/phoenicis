@@ -139,10 +139,10 @@ class CommandParser(object):
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 
             localFile = os.path.join(currentDirectory,
-                                     Downloader(setupWindow).findFileNameFromURL(URL(url)))
+                                     Downloader.wizard(setupWindow).findFileNameFromURL(URL(url)))
 
 
-            downloader = Downloader(setupWindow).get(url, localFile)
+            downloader = Downloader.wizard(setupWindow).get(url, localFile)
 
 
             if(checkSum != ""):
