@@ -38,14 +38,6 @@ public class ObservableDirectoryFilesTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testObservableDirectory_DirectoryDoesNotExist_ExceptionThrown() throws PlayOnLinuxException {
-        expectedEx.expect(PlayOnLinuxException.class);
-        expectedEx.expectMessage(String.format("The directory %s does not exist", "/tmp/unexistingDirectory"));
-
-        new ObservableDefaultDirectoryFiles(new File("/tmp/unexistingDirectory"));
-    }
-
-    @Test
     public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxException, IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
 
