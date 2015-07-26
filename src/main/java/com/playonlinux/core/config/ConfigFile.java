@@ -18,12 +18,16 @@
 
 package com.playonlinux.core.config;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+
+import java.io.IOException;
+
 public interface ConfigFile {
-    void writeValue(String key, String value);
+    void writeValue(String key, String value) throws IOException;
 
     String readValue(String key);
 
     String readValue(String key, String defaultValue);
 
-    void deleteValue(String key);
+    void deleteValue(String key) throws IOException;
 }

@@ -91,7 +91,48 @@ public class CompatibleConfigFileFormatTest {
     }
 
     @Test
-    public void testDeleteValue() {
-
+    public void testDeleteValue_Legacy() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        assertEquals("test=test", compatibleConfigFileFormat.readValue("TEST"));
+        compatibleConfigFileFormat.deleteValue("TEST");
+        assertEquals("", compatibleConfigFileFormat.readValue("TEST"));
+        assertEquals("x86", compatibleConfigFileFormat.readValue("ARCH"));
+        assertEquals("1.7.33", compatibleConfigFileFormat.readValue("VERSION"));
     }
+
+    @Test
+    public void testDeleteValue_jsonFile() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
+        assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
+        assertEquals("staging", compatibleConfigFileFormat.readValue("distributionCode"));
+        compatibleConfigFileFormat.deleteValue("distributionCode");
+        assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
+        assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
+        assertEquals("", compatibleConfigFileFormat.readValue("distributionCode"));
+    }
+
+
+    @Test
+    public void testWriteNewValue_Legacy() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        assertEquals("", compatibleConfigFileFormat.readValue("TEST2"));
+        compatibleConfigFileFormat.writeValue("TEST2", "Content");
+        assertEquals("Content", compatibleConfigFileFormat.readValue("TEST2"));
+        assertEquals("x86", compatibleConfigFileFormat.readValue("ARCH"));
+        assertEquals("1.7.33", compatibleConfigFileFormat.readValue("VERSION"));
+    }
+
+    @Test
+    public void testWriteNewValue_jsonFile() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
+        assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
+        compatibleConfigFileFormat.writeValue("TEST3", "Content3");
+        assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
+        assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
+        assertEquals("Content3", compatibleConfigFileFormat.readValue("TEST3"));
+    }
+
+
 }
