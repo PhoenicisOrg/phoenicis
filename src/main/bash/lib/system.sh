@@ -125,3 +125,8 @@ POL_Rand()
 {
     openssl rand -base64 32 | md5
 }
+
+POL_base64()
+{
+	openssl base64
+}

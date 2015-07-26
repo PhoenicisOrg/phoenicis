@@ -19,6 +19,8 @@
 
 import os
 
+from Environment.EnvironmentFormatter import EnvironmentFormatter
+
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
 from com.playonlinux.framework import WineInstallation
@@ -197,9 +199,8 @@ class CommandParser(object):
             prefixName = self.command[4]
             fifoOut = self.command[5]
             fifoErr = self.command[6]
-            fifoIn = self.command[7]
+            env = EnvironmentFormatter.getEnvironmentVarsFromBashBase64EncodedString(self.command[7])
             prgmName = self.command[8]
-
             args = self.command[9::1]
 
             return Wine.wizard(setupWindow).selectPrefix(prefixName)\
@@ -209,5 +210,5 @@ class CommandParser(object):
                     workingDirectory,
                     prgmName,
                     args,
-                    {}
+                    env
                 ).getLastReturnCode()
