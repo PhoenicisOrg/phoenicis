@@ -39,7 +39,7 @@ POL_Debug_Fatal ()
 POL_Debug_Error ()
 {
     # FIXME: Show a popup message
-    echo "($(Get_CurrentDate)) [ERROR] $@"
+    javaecho "($(Get_CurrentDate)) [ERROR] $@"
 }
 
 POL_Debug_LogToPrefix()

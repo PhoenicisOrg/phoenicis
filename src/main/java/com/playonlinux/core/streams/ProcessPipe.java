@@ -16,12 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.log;
+package com.playonlinux.core.streams;
 
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import jdk.nashorn.internal.runtime.Context;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 
@@ -34,6 +36,7 @@ import java.io.*;
  */
 @Scan
 public class ProcessPipe implements Service {
+    private static final Logger LOGGER = Logger.getLogger(ProcessPipe.class);
     @Inject
     static ServiceManager serviceManager;
 
@@ -63,6 +66,23 @@ public class ProcessPipe implements Service {
     @Override
     public void shutdown() {
         this.running = false;
+        try {
+            this.redirectOutputStream.close();
+        } catch (IOException e) {
+            LOGGER.error("Error occured while trying to close streams", e);
+        }
+
+        try {
+            this.redirectInputStream.close();
+        } catch (IOException e) {
+            LOGGER.error("Error occured while trying to close streams", e);
+        }
+
+        try {
+            this.redirectErrorStream.close();
+        } catch (IOException e) {
+            LOGGER.error("Error occured while trying to close streams", e);
+        }
     }
 
     @Override

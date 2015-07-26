@@ -24,10 +24,11 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
-import com.playonlinux.core.log.ProcessPipe;
+import com.playonlinux.core.streams.ProcessPipe;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.core.streams.TeeOutputStream;
 import com.playonlinux.core.utils.ExeAnalyser;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.core.utils.Architecture;
@@ -36,10 +37,14 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.wine.WineException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.input.NullInputStream;
+import org.apache.commons.io.output.NullOutputStream;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +75,12 @@ public class Wine implements SetupWizardComponent {
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
     private WineInstallation wineInstallation;
-
-    public int getLastReturnCode() {
-        return lastReturnCode;
-    }
-
     private int lastReturnCode = -1;
+
+    private OutputStream outputStream = new NullOutputStream();
+    private OutputStream errorStream = new NullOutputStream();
+    private InputStream inputStream = new NullInputStream(0);
+
 
     private Wine(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
@@ -85,6 +90,36 @@ public class Wine implements SetupWizardComponent {
         Wine wineInstance = new Wine(setupWizard);
         setupWizard.registerComponent(wineInstance);
         return new Wine(setupWizard);
+    }
+
+    /**
+     * Specifies the input stream
+     * @param inputStream the input stream
+     * @return the same object
+     */
+    public Wine withInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+        return this;
+    }
+
+    /**
+     * Specifies the output stream
+     * @param outputStream the output stream
+     * @return the same object
+     */
+    public Wine withOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+        return this;
+    }
+
+    /**
+     * Specifies the error stream
+     * @param errorStream the error stream
+     * @return the same object
+     */
+    public Wine withErrorStream(OutputStream errorStream) {
+        this.errorStream = errorStream;
+        return this;
     }
 
     /**
@@ -237,7 +272,11 @@ public class Wine implements SetupWizardComponent {
                     .run(prefix, workingDirectory, executableToRun, environment, arguments);
 
             if(this.setupWizard.getLogContext() != null) {
-                ProcessPipe processPipe = new ProcessPipe(process, this.setupWizard.getLogContext());
+                ProcessPipe processPipe = new ProcessPipe(process,
+                        new TeeOutputStream(this.setupWizard.getLogContext(), outputStream),
+                        new TeeOutputStream(this.setupWizard.getLogContext(), errorStream),
+                        inputStream
+                );
                 backgroundServicesManager.register(processPipe);
             }
             return process;
@@ -597,6 +636,11 @@ public class Wine implements SetupWizardComponent {
             throw new ScriptFailureException("The prefix must be initialized before running wine");
         }
     }
+
+    public int getLastReturnCode() {
+        return lastReturnCode;
+    }
+
 
     public void close() {
         if(prefix != null) {

@@ -26,7 +26,7 @@ from com.playonlinux.framework import Wine
 from com.playonlinux.core.utils import Architecture
 
 from java.net import URL
-
+from java.io import File, FileInputStream, FileOutputStream
 
 class CommandParser(object):
     def __init__(self, setupWindowManager, command):
@@ -195,13 +195,19 @@ class CommandParser(object):
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
             workingDirectory = self.command[3]
             prefixName = self.command[4]
-            prgmName = self.command[5]
+            fifoOut = self.command[5]
+            fifoErr = self.command[6]
+            fifoIn = self.command[7]
+            prgmName = self.command[8]
 
-            args = self.command[6::1]
+            args = self.command[9::1]
 
-            return Wine.wizard(setupWindow).selectPrefix(prefixName).runForeground(
-                workingDirectory,
-                prgmName,
-                args,
-                {}
-            ).getLastReturnCode()
+            return Wine.wizard(setupWindow).selectPrefix(prefixName)\
+                .withErrorStream(FileOutputStream(File(fifoErr)))\
+                .withOutputStream(FileOutputStream(File(fifoOut)))\
+                .runForeground(
+                    workingDirectory,
+                    prgmName,
+                    args,
+                    {}
+                ).getLastReturnCode()

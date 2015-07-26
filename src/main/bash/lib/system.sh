@@ -120,3 +120,8 @@ POL_System_EnoughSpace()
 
     [ "$1" -le "$(POL_System_UserRootSpaceLeft)" ]
 }
+
+POL_Rand()
+{
+    openssl rand -base64 32 | md5
+}
