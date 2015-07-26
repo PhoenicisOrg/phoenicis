@@ -111,8 +111,7 @@ POL_Wine ()
 {
     # Run the good wineversion and store the result to a logfile
     # Same usage than "wine"
-    mkdir -p "$WINEPREFIX"
-    touch "$WINEPREFIX/playonlinux.log"
+
     local NoErrors
     if [ "$1" = "--ignore-errors" ]; then
         NoErrors="True"
@@ -123,31 +122,6 @@ POL_Wine ()
     POL_Debug_Message "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
     POL_Debug_LogToPrefix "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
 
-        # Either that or monitor "err:process:create_process starting 64-bit process L"xxx" not supported in 32-bit wineprefix\nwine: Bad EXE format for xxx." in logs
-        if [ "$POL_ARCH" = "x86" -a -e "$1" ]; then
-            local EXEFILE="$1"
-            if POL_System_is64bit "$EXEFILE"; then
-                NOBUGREPORT="TRUE" # user mistake
-                POL_Debug_Fatal "$(eval_gettext 'Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives')"
-            fi
-        fi
-
-        if [ ! "$WINEMENUBUILDER_ALERT" ]; then
-        POL_Debug_Message "Notice: PlayOnLinux deliberately disables winemenubuilder. See http://www.playonlinux.com/fr/page-26-Winemenubuilder.html"
-        WINEMENUBUILDER_ALERT="Done"
-    fi
-    if [ "$1" = "regedit" -a ! "$2" = "" ]; then
-        if [ -e "$2" ]; then
-            POL_Debug_LogToPrefix "Content of $2"
-            (echo '-----------'
-             cat "$2"
-             echo '-----------') >> "$WINEPREFIX/playonlinux.log"
-        else
-            POL_Debug_LogToPrefix "regedit parameter '$2' is not a file, not dumped to log"
-        fi
-    elif [ "$1" = "regedit" ]; then
-        POL_Debug_LogToPrefix "User modified something in the registry manually"
-    fi
 
 
 

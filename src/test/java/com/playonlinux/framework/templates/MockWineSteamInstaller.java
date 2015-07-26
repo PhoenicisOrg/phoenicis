@@ -19,6 +19,7 @@
 package com.playonlinux.framework.templates;
 
 import com.playonlinux.core.python.PythonAttribute;
+import com.playonlinux.framework.ScriptFailureException;
 
 import java.util.List;
 
@@ -35,8 +36,8 @@ public abstract class MockWineSteamInstaller extends Installer {
     @PythonAttribute
     List<String> packages;
 
-    public void main() {
-        echo(String.format("Implementation has to be done, but we have access to prefix (%s), " +
+    public void main() throws ScriptFailureException {
+        log(String.format("Implementation has to be done, but we have access to prefix (%s), " +
                 "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have " +
                 "a list: %s", prefix, wineversion, steamId, packages, packages.get(0)));
     }

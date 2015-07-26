@@ -153,7 +153,7 @@ public class Cabfile {
 
                 long dataIndex = cfFolder.getOffsetStartData() + cfFile.getOffsetStartDataInsideFolder();
 
-                System.out.echo("Index: ");
+                System.out.println("Index: ");
                 System.out.println(dataIndex);
 
                 cabfile.jumpTo(dataIndex);

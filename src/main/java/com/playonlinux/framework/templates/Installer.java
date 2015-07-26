@@ -18,10 +18,14 @@
 
 package com.playonlinux.framework.templates;
 
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.core.python.PythonAttribute;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 
 public abstract class Installer extends AbstractTemplate {
@@ -30,6 +34,7 @@ public abstract class Installer extends AbstractTemplate {
 
     /* Template attributes */
     protected SetupWizard setupWizard;
+    private boolean setupWizardInitialized = false;
 
     public void _defaultRollback() {
         if(this.setupWizard != null) {
@@ -38,19 +43,38 @@ public abstract class Installer extends AbstractTemplate {
     }
 
     /* Methods that can be overwritten */
-    public abstract void main();
+    public abstract void main() throws CancelException;
 
     public void rollback() {
         this._defaultRollback();
     }
 
     /* Methods that can be called */
-    protected SetupWizard getSetupWizard() throws IOException {
-        if(this.setupWizard == null) {
-            setupWizard = new SetupWizard(title)
-                .withLogContext(title);
-        }
+    protected SetupWizard getSetupWizard() throws ScriptFailureException {
+        createSetupWizard();
+        initalizeSetupWizard();
+
+
         return setupWizard;
+    }
+
+    private void initalizeSetupWizard() {
+        if(!setupWizardInitialized) {
+            setupWizard.init();
+            setupWizardInitialized = true;
+        }
+    }
+
+    public void log(String message) throws ScriptFailureException {
+        createSetupWizard();
+        setupWizard.log(message);
+    }
+
+    private void createSetupWizard() {
+        if(this.setupWizard == null) {
+            setupWizard = new SetupWizard(title);
+            setupWizardInitialized = false;
+        }
     }
 
 

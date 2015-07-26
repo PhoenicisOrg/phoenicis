@@ -18,21 +18,21 @@
 
 package com.playonlinux.core.log;
 
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-public class LogStreamFactory {
-    private final Map<String, LogStream> loggers;
+@Scan
+public class WinePrefixLogger extends FileLogger {
+    @Inject
+    static PlayOnLinuxContext playOnLinuxContext;
 
-    public LogStreamFactory() {
-        this.loggers = new HashMap<>();
+    WinePrefixLogger(String prefixName) throws IOException {
+        super(new File(playOnLinuxContext.getProperty("application.user.wineprefix"), prefixName+"/playonlinux.log"), true);
     }
 
-    synchronized public LogStream getLogger(String logContext) throws IOException {
-        if(!loggers.containsKey(logContext)) {
-            loggers.put(logContext, new LogStream(logContext));
-        }
-        return loggers.get(logContext);
-    }
+
 }

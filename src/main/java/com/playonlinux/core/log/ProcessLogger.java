@@ -34,10 +34,10 @@ public class ProcessLogger implements Service {
     private static ServiceManager serviceManager;
 
     private final Process process;
-    private final LogStream logContext;
+    private final ScriptLogger logContext;
     private boolean running = true;
 
-    public ProcessLogger(Process process, LogStream logContext) {
+    public ProcessLogger(Process process, ScriptLogger logContext) {
         this.process = process;
         this.logContext = logContext;
     }

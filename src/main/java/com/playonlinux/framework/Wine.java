@@ -133,17 +133,21 @@ public class Wine {
         }
 
         if(prefix.exists()) {
+            log("Prefix already exists");
             try {
                 switch (setupWizard.menu(
                         translate(format("The target virtual drive %s already exists:", prefixName)),
                         Arrays.asList(OVERWRITE, ERASE, ABORT)
                 )) {
                     case OVERWRITE:
+                        log("User choice: OVERWRITE");
                         return this;
                     case ERASE:
+                        log("User choice: ERASE");
                         prefix.delete();
                         break;
                     case ABORT:
+                        log("User choice: ABORT");
                         throw new CancelException("The script was aborted");
                 }
             } catch (IOException e) {
@@ -217,6 +221,9 @@ public class Wine {
         validateWineInstallationInitialized();
 
         validateArchitecture(workingDirectory, executableToRun);
+        if("regedit".equalsIgnoreCase(executableToRun)) {
+            logRegFile(workingDirectory, arguments);
+        }
 
         try {
             final Process process = wineInstallation
@@ -230,6 +237,38 @@ public class Wine {
             return process;
         } catch (ServiceException | WineException e) {
             throw new ScriptFailureException("Error while running wine:", e);
+        }
+    }
+
+    private void logRegFile(File workingDirectory, List<String> pathToRegFile) throws ScriptFailureException {
+        if(pathToRegFile.size() >= 1) {
+            final File regFile = findFile(workingDirectory, pathToRegFile.get(0));
+            if (regFile.exists() && regFile.isFile()) {
+                this.log("Content of " + regFile);
+                this.log("-----------");
+                try {
+                    this.log(FileUtils.readFileToString(regFile));
+                } catch (IOException e) {
+                    LOGGER.warn(e);
+                }
+                this.log("-----------");
+            } else {
+                this.log(regFile + " does not seem to be a file. Not logging");
+            }
+        } else {
+            this.log("User manually modified the registry");
+        }
+    }
+
+    private void log(String message) throws ScriptFailureException {
+        setupWizard.log(message);
+
+        if(prefix != null) {
+            try {
+                prefix.log(message);
+            } catch (IOException e) {
+                setupWizard.log("Unable to log to the wineprefix", e);
+            }
         }
     }
 

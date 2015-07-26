@@ -21,7 +21,7 @@ package com.playonlinux.core.scripts;
 public interface ScriptTemplate {
     void validate();
 
-    void main();
+    void main() throws CancelException;
 
     void rollback();
 }

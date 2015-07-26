@@ -18,39 +18,8 @@
 
 package com.playonlinux.framework.templates;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.log.LogStreamFactory;
 import com.playonlinux.core.scripts.ScriptTemplate;
-import com.playonlinux.core.python.PythonAttribute;
-import org.apache.commons.logging.LogFactory;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
-@Scan
 public abstract class AbstractTemplate implements ScriptTemplate {
-    @PythonAttribute
-    private String title;
 
-    @Inject
-    static LogStreamFactory logFactory;
-
-    public void echo(String message) {
-        OutputStream outputstream;
-        if(title != null) {
-            try {
-                outputstream = logFactory.getLogger(title);
-            } catch (IOException e) {
-                outputstream = System.out;
-            }
-        } else {
-            outputstream = System.out;
-        }
-
-        PrintWriter printWriter = new PrintWriter(outputstream);
-        printWriter.println(message);
-        printWriter.flush();
-    }
 }

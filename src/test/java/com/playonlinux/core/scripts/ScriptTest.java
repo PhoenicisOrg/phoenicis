@@ -219,7 +219,7 @@ public class ScriptTest {
                 "\t\tSetupIs=\"$CDROM/GameData/Setup.exe\"\n" +
                 "\tfi\n" +
                 "\tif [ \"$INSTALL_METHOD\" = \"LOCAL\" ]; then\n" +
-                "\t\tPOL_SetupWindow_browse \"$(eval_gettext 'Please selectPrefix the setup file to run')\" \"$TITLE\"\n" +
+                "\t\tPOL_SetupWindow_browse \"$(eval_gettext 'Please select the setup file to run')\" \"$TITLE\"\n" +
                 "\t\tSetupIs=\"$APP_ANSWER\"\n" +
                 "\tfi\n" +
                 "fi\n" +

@@ -18,12 +18,11 @@
 
 package com.playonlinux.core.python;
 
+import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.log.LogStream;
-import com.playonlinux.core.log.LogStreamFactory;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import com.playonlinux.core.log.ScriptLogger;
 import org.apache.log4j.Logger;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
@@ -36,7 +35,7 @@ import java.util.Set;
 @Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     @Inject
-    static LogStreamFactory logStreamFactory;
+    static LoggerFactory loggerFactory;
 
     private static final String MAIN_METHOD_NAME = "main";
     private static final String DEFINE_LOGCONTEXT_NAME = "title";
@@ -91,12 +90,12 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     public void exec() throws ScriptFailureException {
         if(this.hasMain()) {
             String logContext = this.extractLogContext();
-            LogStream logStream = null;
+            ScriptLogger scriptLogger = null;
 
             if(logContext != null) {
                 try {
-                    logStream = logStreamFactory.getLogger(logContext);
-                    pythonInterpreter.setOut(logStream);
+                    scriptLogger = loggerFactory.getScriptLogger(logContext);
+                    pythonInterpreter.setOut(scriptLogger);
                 } catch (IOException e) {
                     throw new ScriptFailureException(e);
                 }
@@ -117,10 +116,10 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                 }
                 throw e;
             } finally {
-                if(logStream != null) {
+                if(scriptLogger != null) {
                     try {
-                        logStream.flush();
-                        logStream.close();
+                        scriptLogger.flush();
+                        scriptLogger.close();
                     } catch (IOException e) {
                         LOGGER.warn("Unable to flush script log stream", e);
                     }

@@ -159,8 +159,9 @@ class CommandParser(object):
             raise ScriptFailureException(self.command[3])
 
         def POL_Print(self):
+            setupWindowId = self.command[2]
             message = self.command[3]
-            self.setupWindowManager.wizard.echo(message)
+            self.setupWindowManager.getWindow(setupWindowId).log(message)
 
         def POL_Wine_InstallVersion(self):
             setupWindowId = self.command[2]

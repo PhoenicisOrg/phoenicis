@@ -21,20 +21,20 @@ package com.playonlinux.framework;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.core.log.LogStream;
-import com.playonlinux.core.log.LogStreamFactory;
+import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.*;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
+import org.python.modules.Setup;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -43,20 +43,21 @@ import static com.playonlinux.core.lang.Localisation.translate;
 @Scan
 public class SetupWizard {
 
+    private static final Logger LOGGER = Logger.getLogger(Setup.class);
     @Inject
     static Controller controller;
 
     @Inject
-    static LogStreamFactory logStreamFactory;
+    static LoggerFactory loggerFactory;
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     private final String title;
-    private final UIMessageSender<String> messageSender;
+    private UIMessageSender<String> messageSender;
 
     private WeakReference<SetupWindow> setupWindow;
-    private LogStream logContext;
+    private ScriptLogger logContext;
 
 
     /**
@@ -65,8 +66,11 @@ public class SetupWizard {
      * @param title title of the setupWindow
      */
     public SetupWizard(String title) {
-        this.messageSender = controller.createUIMessageSender();
         this.title = title;
+    }
+
+    public void init() {
+        this.messageSender = controller.createUIMessageSender();
 
         messageSender.synchronousSend(
                 new SynchronousMessage() {
@@ -77,7 +81,6 @@ public class SetupWizard {
                 }
         );
     }
-
     /**
      * Set the left image
      * @param leftImage URL of the left image
@@ -311,15 +314,40 @@ public class SetupWizard {
         );
     }
 
-    public SetupWizard withLogContext(String logContextName) throws IOException {
-        if(logContextName != null) {
-            this.logContext = logStreamFactory.getLogger(logContextName);
+    ScriptLogger getLogContext() throws ScriptFailureException {
+        if(logContext != null) {
+            return logContext;
+        } else {
+            try {
+                return loggerFactory.getScriptLogger(title);
+            } catch (IOException e) {
+                throw new ScriptFailureException("Unable to initalise log file", e);
+            }
         }
-        return this;
     }
 
-    public LogStream getLogContext() {
-        return logContext;
+    public void log(String message) throws ScriptFailureException {
+        log(message, null);
+    }
+
+    public void log(String message, Throwable e) throws ScriptFailureException {
+        if(title != null) {
+            OutputStream outputstream = getLogContext();
+            PrintWriter printWriter = new PrintWriter(outputstream);
+            printWriter.println(String.format("[%s] %s", Thread.currentThread().getName(), message));
+            if(e != null) {
+                printWriter.println(String.format("[%s] %s", Thread.currentThread().getName(), ExceptionUtils.getFullStackTrace(e)));
+            }
+            printWriter.flush();
+        } else {
+            LOGGER.warn("Unable to get the log context");
+        }
+
+        LOGGER.info(message);
+        if(e != null) {
+            LOGGER.info(ExceptionUtils.getFullStackTrace(e));
+        }
+
     }
 
     public String getTitle() {

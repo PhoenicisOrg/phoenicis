@@ -28,30 +28,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Scan
-public class LogStream extends OutputStream {
-    private final FileOutputStream logOutputStream;
-
+public class ScriptLogger extends FileLogger {
     @Inject
-    private static PlayOnLinuxContext playOnLinuxContext;
+    static PlayOnLinuxContext playOnLinuxContext;
 
-    public LogStream(String logContext) throws IOException {
-        final File logFile = new File(playOnLinuxContext.getProperty("application.user.logs"), logContext+".log");
-        if(!logFile.exists()) {
-            logFile.createNewFile();
-        }
-        this.logOutputStream = new FileOutputStream(logFile);
+    ScriptLogger(String logContext) throws IOException {
+        super(new File(playOnLinuxContext.getProperty("application.user.logs"), logContext+".log"), true);
     }
 
-    @Override
-    public void flush() throws IOException {
-        this.logOutputStream.flush();
-        super.flush();
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        logOutputStream.write(b);
-        System.out.write(b);
-    }
 
 }

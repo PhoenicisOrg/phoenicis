@@ -18,9 +18,11 @@
 
 package com.playonlinux.wine;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
@@ -33,6 +35,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.*;
@@ -40,7 +43,11 @@ import java.util.*;
 /**
  * Represents a wineprefix
  */
+@Scan
 public class WinePrefix {
+    @Inject
+    static LoggerFactory loggerFactory;
+
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
     private static final String SYSTEM_REGISTRY_FILENAME = "system.reg";
     private static final String SYSTEM_REGISTRY_NODENAME = "HKEY_LOCAL_MACHINE";
@@ -217,5 +224,17 @@ public class WinePrefix {
 
     public ConfigFile getPrefixConfigFile() {
         return new CompatibleConfigFileFormat(new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE));
+    }
+
+    public void log(String message) throws IOException {
+        final OutputStream log = loggerFactory.getWinePrefixLogger(this.fetchName());
+
+        final PrintWriter printWriter = new PrintWriter(log);
+        printWriter.println(message);
+        printWriter.flush();
+    }
+
+    private String fetchName() {
+        return this.getWinePrefixDirectory().getName();
     }
 }
