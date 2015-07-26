@@ -20,6 +20,7 @@ package com.playonlinux.core.observer;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.wine.WineException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
@@ -87,14 +88,16 @@ public class ObservableDefaultDirectorySize extends ObservableDefaultDirectory<P
         public void run() {
             while(this.isRunning()) {
                 try {
-                    long lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
-                    final double percentage = 100. * (double) (lastDirectorySize - startSize) / (double) (endSize - startSize);
-                    ProgressStateEntity progressStateEntity = new ProgressStateEntity.Builder()
-                            .withState(ProgressStateEntity.State.PROGRESSING)
-                            .withPercent(percentage)
-                            .build();
+                    if(observedDirectory.exists()) {
+                        long lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
+                        final double percentage = 100. * (double) (lastDirectorySize - startSize) / (double) (endSize - startSize);
+                        ProgressStateEntity progressStateEntity = new ProgressStateEntity.Builder()
+                                .withState(ProgressStateEntity.State.PROGRESSING)
+                                .withPercent(percentage)
+                                .build();
 
-                    this.observableDirectorySize.notifyObservers(progressStateEntity);
+                        this.observableDirectorySize.notifyObservers(progressStateEntity);
+                    }
                 } catch(IllegalArgumentException e) {
                     LOGGER.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);
                 }

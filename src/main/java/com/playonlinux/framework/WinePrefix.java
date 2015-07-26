@@ -40,26 +40,31 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.BackingStoreException;
 
 import static com.playonlinux.core.lang.Localisation.translate;
+import static java.lang.String.format;
 
 @Scan
 @ScriptClass
 @SuppressWarnings("unused")
 public class WinePrefix {
-    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
-    private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
-
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
     static ServiceManager backgroundServicesManager;
 
+    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
+    private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
     private static final long NEWPREFIXSIZE = 320_000_000;
     private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
+    private static final String OVERWRITE = "Overwrite (usually works, no guarantee)";
+    private static final String ERASE = "Erase (virtual drive content will be lost)";
+    private static final String ABORT = "Abort installation";
 
     private final SetupWizard setupWizard;
 
@@ -104,7 +109,7 @@ public class WinePrefix {
      * @throws CancelException if the prefix cannot be created or if the user cancels the operation
      */
     public WinePrefix create(String version, String distribution) throws CancelException {
-        return this.create(version, DEFAULT_DISTRIBUTION_NAME, DEFAULT_ARCHITECTURE.name());
+        return this.create(version, distribution, DEFAULT_ARCHITECTURE.name());
     }
 
     /**
@@ -119,14 +124,37 @@ public class WinePrefix {
             throw new ScriptFailureException("Prefix must be selected!");
         }
 
+        if(prefix.exists()) {
+            try {
+                switch (setupWizard.menu(
+                        translate(format("The target virtual drive %s already exists:", prefixName)),
+                        Arrays.asList(OVERWRITE, ERASE, ABORT)
+                )) {
+                    case OVERWRITE:
+                        return this;
+                    case ERASE:
+                        prefix.delete();
+                        break;
+                    case ABORT:
+                        throw new CancelException("The script was aborted");
+                }
+            } catch (IOException e) {
+                throw new ScriptFailureException(e);
+            }
+        }
+
         wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
                 OperatingSystem.fetchCurrentOperationSystem(),
                 Architecture.valueOf(architecture),
                 distribution
         ), setupWizard);
 
+        if(!wineInstallation.isInstalled()) {
+            wineInstallation.install();
+        }
+
         ProgressControl progressControl = this.setupWizard.progressBar(
-                String.format(
+                format(
                         translate("Please wait while the virtual drive is being created..."), prefixName
                 )
         );
@@ -314,7 +342,7 @@ public class WinePrefix {
     public WinePrefix waitAllWatchDirectory(File directory, long endSize) throws CancelException {
         ObservableDefaultDirectorySize observableDirectorySize;
         ProgressControl progressControl = this.setupWizard.progressBar(
-                String.format(
+                format(
                         translate("Please wait while the program is being installed..."), prefixName
                 )
         );
@@ -353,7 +381,7 @@ public class WinePrefix {
     public WinePrefix delete() throws CancelException {
         if(prefix.getWinePrefixDirectory().exists()) {
             ProgressControl progressControl = this.setupWizard.progressBar(
-                    String.format(
+                    format(
                             translate("Please wait while the virtual drive is being deleted..."), prefixName
                     )
             );

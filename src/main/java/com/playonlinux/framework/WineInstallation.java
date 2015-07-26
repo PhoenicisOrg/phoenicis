@@ -65,6 +65,8 @@ public class WineInstallation {
         return new com.playonlinux.wine.WineInstallation.Builder()
                     .withPath(getInstallationPath())
                     .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
+                    .withDistribution(wineDistribution)
+                    .withVersion(version)
                     .build();
     }
 
@@ -90,7 +92,7 @@ public class WineInstallation {
             try {
                 wineVersionManager.install(wineDistribution, version, progressControl);
             } catch (EngineInstallException e) {
-                throw new CancelException(e);
+                throw new ScriptFailureException(e);
             }
         }
     }

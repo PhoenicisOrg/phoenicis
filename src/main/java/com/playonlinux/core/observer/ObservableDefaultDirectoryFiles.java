@@ -86,16 +86,18 @@ public class ObservableDefaultDirectoryFiles extends ObservableDefaultDirectory<
         public void run() {
             File[] lastDirectoryContent = null;
             while(this.isRunning()) {
-                File[] directoryContent = observableDirectoryFiles.findFiles();
-                if(!Arrays.equals(directoryContent, lastDirectoryContent)) {
-                    this.observableDirectoryFiles.notifyObservers(directoryContent);
+                if(observedDirectory.exists()) {
+                    File[] directoryContent = observableDirectoryFiles.findFiles();
+                    if (!Arrays.equals(directoryContent, lastDirectoryContent)) {
+                        this.observableDirectoryFiles.notifyObservers(directoryContent);
+                    }
+                    try {
+                        Thread.sleep(checkInterval);
+                    } catch (InterruptedException e) {
+                        this.stopChecking();
+                    }
+                    lastDirectoryContent = directoryContent;
                 }
-                try {
-                    Thread.sleep(checkInterval);
-                } catch (InterruptedException e) {
-                    this.stopChecking();
-                }
-                lastDirectoryContent = directoryContent;
             }
         }
 

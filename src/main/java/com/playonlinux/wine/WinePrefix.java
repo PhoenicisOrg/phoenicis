@@ -19,6 +19,7 @@
 package com.playonlinux.wine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.core.utils.Files;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.wine.registry.RegistryKey;
@@ -51,11 +52,6 @@ public class WinePrefix {
 
     public WinePrefix(File winePrefixDirectory) throws WineException {
         this.winePrefixDirectory = winePrefixDirectory;
-        if(!this.winePrefixDirectory.exists()) {
-            if(!this.winePrefixDirectory.mkdirs()) {
-                throw new WineException("Cannot create prefix: " + getWinePrefixDirectory());
-            }
-        }
     }
 
     private RegistryKey parseRegistryFile(String filename, String nodeName) throws WineException {
@@ -139,11 +135,15 @@ public class WinePrefix {
     }
 
     public void delete() throws IOException {
-        FileUtils.deleteDirectory(this.getWinePrefixDirectory());
+        Files.remove(this.getWinePrefixDirectory());
     }
 
     public boolean initialized() {
-        return false;
+        return new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE).exists();
+    }
+
+    public boolean exists() {
+        return getWinePrefixDirectory().exists();
     }
 
     public void createConfigFile(WineDistribution wineDistribution, Version version) throws WineException {
@@ -156,6 +156,8 @@ public class WinePrefix {
         configContent.put("version", version.toString());
 
         final File configFile = new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE);
+
+        this.createPrefixDirectory();
         if(configFile.exists()) {
             throw new WineException("Prefix already exists: " + getWinePrefixDirectory());
         }
@@ -173,7 +175,17 @@ public class WinePrefix {
         }
     }
 
+    private void createPrefixDirectory() throws WineException {
+        if(!this.winePrefixDirectory.exists()) {
+            if(!this.winePrefixDirectory.mkdirs()) {
+                throw new WineException("Cannot create prefix: " + getWinePrefixDirectory());
+            }
+        }
+    }
+
     public WineDistribution fetchDistribution() {
         return null;
     }
+
+
 }
