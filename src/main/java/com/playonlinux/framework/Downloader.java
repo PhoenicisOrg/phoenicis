@@ -94,7 +94,7 @@ public class Downloader {
             temporaryFile = File.createTempFile(this.findFileNameFromURL(remoteFile), "");
             temporaryFile.deleteOnExit();
         } catch (IOException e) {
-            throw new ScriptFailureException("Unable to create temporary log file", e);
+            throw new ScriptFailureException("Unable to createPrefix temporary log file", e);
         }
 
         return downloadRemoteFile(remoteFile, temporaryFile);

@@ -22,6 +22,8 @@ import os
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
 from com.playonlinux.framework import WineInstallation
+from com.playonlinux.framework import Wine
+from com.playonlinux.core.utils import Architecture
 
 from java.net import URL
 
@@ -168,3 +170,39 @@ class CommandParser(object):
             wineInstallation = WineInstallation(version, "upstream-%s" % arch,
                                                 self.setupWindowManager.getWindow(setupWindowId))
             wineInstallation.install()
+
+        def POL_Wine_PrefixCreate(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+            prefixName = self.command[3]
+            version = self.command[4]
+
+            try:
+                arch = self.command[5]
+                arch = Architecture.fromWinePackageName(arch).name
+            except IndexError:
+                arch = None
+
+            if(arch is not None):
+                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, "upstream", arch)
+            else:
+                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, arch)
+
+
+        def POL_Wine(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+
+            prefixName = self.command[3]
+            version = self.command[4]
+
+            try:
+                arch = self.command[5]
+                arch = Architecture.fromWinePackageName(arch).name
+            except IndexError:
+                arch = None
+
+            if(arch is not None):
+                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, "upstream", arch)
+            else:
+                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, arch)

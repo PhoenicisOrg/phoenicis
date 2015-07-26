@@ -92,7 +92,7 @@ public class ApplicationDTO implements AbstractDTO, Nameable {
         private int id;
 
         public Builder() {
-            // We need a public builder to be able to create a ScriptDTO from scratch
+            // We need a public builder to be able to createPrefix a ScriptDTO from scratch
         }
 
         public Builder(ApplicationDTO applicationDTO) {

@@ -28,6 +28,7 @@ import com.playonlinux.core.log.ProcessLogger;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.core.utils.ExeAnalyser;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.OperatingSystem;
@@ -49,14 +50,14 @@ import static java.lang.String.format;
 @Scan
 @ScriptClass
 @SuppressWarnings("unused")
-public class WinePrefix {
+public class Wine {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
     static ServiceManager backgroundServicesManager;
 
-    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
+    private static final Logger LOGGER = Logger.getLogger(Wine.class);
     private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
     private static final long NEWPREFIXSIZE = 320_000_000;
     private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
@@ -70,7 +71,13 @@ public class WinePrefix {
     private String prefixName;
     private WineInstallation wineInstallation;
 
-    public WinePrefix(SetupWizard setupWizard) {
+    public int getLastReturnCode() {
+        return lastReturnCode;
+    }
+
+    private int lastReturnCode = -1;
+
+    public Wine(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
@@ -80,7 +87,7 @@ public class WinePrefix {
      * @param prefixName the name of the prefix
      * @return the same object
      */
-    public WinePrefix select(String prefixName) throws CancelException {
+    public Wine selectPrefix(String prefixName) throws CancelException {
         this.prefixName = prefixName;
         try {
             this.prefix = new com.playonlinux.wine.WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
@@ -98,8 +105,8 @@ public class WinePrefix {
         return this;
     }
 
-    public WinePrefix create(String version) throws CancelException {
-        return this.create(version, DEFAULT_DISTRIBUTION_NAME);
+    public Wine createPrefix(String version) throws CancelException {
+        return this.createPrefix(version, DEFAULT_DISTRIBUTION_NAME);
     }
 
 
@@ -109,8 +116,8 @@ public class WinePrefix {
      * @return the same object
      * @throws CancelException if the prefix cannot be created or if the user cancels the operation
      */
-    public WinePrefix create(String version, String distribution) throws CancelException {
-        return this.create(version, distribution, DEFAULT_ARCHITECTURE.name());
+    public Wine createPrefix(String version, String distribution) throws CancelException {
+        return this.createPrefix(version, distribution, DEFAULT_ARCHITECTURE.name());
     }
 
     /**
@@ -120,7 +127,7 @@ public class WinePrefix {
      * @return the same object
      * @throws CancelException if the prefix cannot be created or if the user cancels the operation
      */
-    public WinePrefix create(String version, String distribution, String architecture) throws CancelException {
+    public Wine createPrefix(String version, String distribution, String architecture) throws CancelException {
         if(prefix == null) {
             throw new ScriptFailureException("Prefix must be selected!");
         }
@@ -176,7 +183,7 @@ public class WinePrefix {
         } catch (IllegalStateException | ServiceInitializationException e) {
             throw new ScriptFailureException(e);
         } catch (WineException e) {
-            throw new ScriptFailureException("Unable to create the wineprefix", e);
+            throw new ScriptFailureException("Unable to createPrefix the wineprefix", e);
         }
 
         return this;
@@ -187,7 +194,7 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix killall() throws ScriptFailureException {
+    public Wine killall() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
             wineInstallation.getInstallation().killAllProcess(this.prefix);
@@ -203,9 +210,13 @@ public class WinePrefix {
      * @return the process object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    private Process runAndGetProcess(File workingDirectory, String executableToRun, List<String> arguments,
-                                    Map<String, String> environment) throws ScriptFailureException {
+    private Process runAndGetProcess(File workingDirectory,
+                                     String executableToRun,
+                                     List<String> arguments,
+                                     Map<String, String> environment) throws ScriptFailureException {
         validateWineInstallationInitialized();
+
+        validateArchitecture(workingDirectory, executableToRun);
 
         try {
             final Process process = wineInstallation
@@ -222,12 +233,35 @@ public class WinePrefix {
         }
     }
 
+    private void validateArchitecture(File workingDirectory, String executableToRun) {
+        if(wineInstallation.getWineDistribution().getArchitecture() == Architecture.I386) {
+            final File executedFile = findFile(workingDirectory, executableToRun);
+            if(executedFile.exists()) {
+                try {
+                    if(ExeAnalyser.is64Bits(executedFile)) {
+                        throw new IllegalStateException("A 32bit wineprefix cannot execute 64bits executables!");
+                    }
+                } catch (IOException e) {
+                    throw new IllegalStateException(e);
+                }
+            }
+        }
+    }
+
+    private File findFile(File workingDirectory, String executableToRun) {
+        if(new File(workingDirectory, executableToRun).exists()) {
+            return new File(workingDirectory, executableToRun);
+        } else {
+            return new File(executableToRun);
+        }
+    }
+
     /**
      * Run wine in the prefix in background
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix runBackground(File workingDirectory, String executableToRun, List<String> arguments,
+    public Wine runBackground(File workingDirectory, String executableToRun, List<String> arguments,
                                     Map<String, String> environment) throws ScriptFailureException {
         runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
         return this;
@@ -238,7 +272,7 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix runBackground(File executableToRun, List<String> arguments, Map<String, String> environment)
+    public Wine runBackground(File executableToRun, List<String> arguments, Map<String, String> environment)
             throws ScriptFailureException {
         File workingDirectory = executableToRun.getParentFile();
         runBackground(workingDirectory, executableToRun.getAbsolutePath(), arguments, environment);
@@ -250,7 +284,7 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix runBackground(String executableToRun, List<String> arguments, Map<String, String> environment)
+    public Wine runBackground(String executableToRun, List<String> arguments, Map<String, String> environment)
             throws ScriptFailureException {
         runBackground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
         return this;
@@ -261,40 +295,168 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix runBackground(File executableToRun, List<String> arguments) throws ScriptFailureException {
-        runBackground(executableToRun, arguments, null);
+    public Wine runBackground(String executableToRun, List<String> arguments) throws ScriptFailureException {
+        runBackground(new File(executableToRun), arguments, null);
         return this;
     }
-
-    public WinePrefix runBackground(File executableToRun) throws ScriptFailureException {
-        runBackground(executableToRun, (List<String>) null, null);
-        return this;
-    }
-
-    public WinePrefix runBackground(String executableToRun) throws ScriptFailureException {
-        runBackground(executableToRun, null, null);
-        return this;
-    }
-
 
     /**
      * Run wine in the prefix in background
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix runBackground(File workingDirectory, String executableToRun, List<String> arguments)
+    public Wine runBackground(File executableToRun, List<String> arguments) throws ScriptFailureException {
+        runBackground(executableToRun, arguments, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @param executableToRun executable to run (file parameter)
+     * @return the same object
+     * @throws ScriptFailureException
+     */
+    public Wine runBackground(File executableToRun) throws ScriptFailureException {
+        runBackground(executableToRun, (List<String>) null, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @param executableToRun executable to run (string parameter)
+     * @return the same object
+     * @throws ScriptFailureException
+     */
+    public Wine runBackground(String executableToRun) throws ScriptFailureException {
+        runBackground(executableToRun, null, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runBackground(File workingDirectory, String executableToRun, List<String> arguments)
             throws ScriptFailureException {
         runBackground(workingDirectory, executableToRun, arguments, null);
         return this;
     }
 
+
+
     /**
      * Run wine in the prefix in background
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix runBackground(File workingDirectory, String executableToRun) throws ScriptFailureException {
+    public Wine runBackground(File workingDirectory, String executableToRun) throws ScriptFailureException {
         runBackground(workingDirectory, executableToRun, null, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in foreground
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(File workingDirectory, String executableToRun, List<String> arguments,
+                              Map<String, String> environment) throws CancelException {
+        Process process = runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
+        try {
+            lastReturnCode = process.waitFor();
+        } catch (InterruptedException e) {
+            throw new CancelException(e);
+        }
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in foreground
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(File executableToRun, List<String> arguments, Map<String, String> environment)
+            throws CancelException {
+        File workingDirectory = executableToRun.getParentFile();
+        runForeground(workingDirectory, executableToRun.getAbsolutePath(), arguments, environment);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in foreground
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(String executableToRun, List<String> arguments, Map<String, String> environment)
+            throws CancelException {
+        runForeground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in foreground
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(String executableToRun, List<String> arguments) throws CancelException {
+        runForeground(new File(executableToRun), arguments, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in foreground
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(File executableToRun, List<String> arguments) throws CancelException {
+        runForeground(executableToRun, arguments, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @param executableToRun executable to run (file parameter)
+     * @return the same object
+     * @throws ScriptFailureException
+     */
+    public Wine runForeground(File executableToRun) throws CancelException {
+        runForeground(executableToRun, (List<String>) null, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @param executableToRun executable to run (string parameter)
+     * @return the same object
+     * @throws ScriptFailureException
+     */
+    public Wine runForeground(String executableToRun) throws CancelException {
+        runForeground(executableToRun, null, null);
+        return this;
+    }
+
+    /**
+     * Run wine in the prefix in background
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(File workingDirectory, String executableToRun, List<String> arguments)
+            throws CancelException {
+        runForeground(workingDirectory, executableToRun, arguments, null);
+        return this;
+    }
+
+
+
+
+    /**
+     * Run wine in the prefix in background
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(File workingDirectory, String executableToRun) throws CancelException {
+        runForeground(workingDirectory, executableToRun, null, null);
         return this;
     }
 
@@ -304,7 +466,7 @@ public class WinePrefix {
      * @return the same object
      * @throws ScriptFailureException if the wine prefix is not initialized
      */
-    public WinePrefix waitExit() throws ScriptFailureException {
+    public Wine waitExit() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
             wineInstallation.getInstallation()
@@ -316,14 +478,15 @@ public class WinePrefix {
         return this;
     }
 
+
     /**
-     * Wait for all wine application to be terminated and create a progress bar watching for the size of a directory
+     * Wait for all wine application to be terminated and createPrefix a progress bar watching for the size of a directory
      * @param directory Directory to watch
      * @param endSize Expected size of the directory when the installation is terminated
      * @return the same object
      * @throws CancelException if the users cancels or if there is any error
      */
-    public WinePrefix waitAllWatchDirectory(File directory, long endSize) throws CancelException {
+    public Wine waitAllWatchDirectory(File directory, long endSize) throws CancelException {
         ProgressControl progressControl = this.setupWizard.progressBar(
                 format(
                         translate("Please wait while the program is being installed..."), prefixName
@@ -349,7 +512,7 @@ public class WinePrefix {
      * @return the same object
      * @throws CancelException if the users cancels or if there is any error
      */
-    public WinePrefix delete() throws CancelException {
+    public Wine deletePrefix() throws CancelException {
         if(prefix.getWinePrefixDirectory().exists()) {
             ProgressControl progressControl = this.setupWizard.progressBar(
                     format(

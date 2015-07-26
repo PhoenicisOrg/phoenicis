@@ -100,126 +100,15 @@ POL_Wine_PrefixCreate()
 {
     # Create a wineprefix
     # Usage: POL_Wine_PrefixCreate [VERSION]
-    if [ ! "$1" = "" ]; then
-        POL_Debug_Message "Setting POL_WINEVERSION to $1"
-        export POL_WINEVERSION="$1"
-    elif [ "$POL_WINEVERSION" ]; then
-        POL_Debug_Message "POL_WINEVERSION is already set to $POL_WINEVERSION. Using it"
-    else
-        POL_Debug_Message "No version specified. Using system version ($(wine --version))"
-    fi
 
-    POL_Debug_Message "Creating prefix ($POL_WINEVERSION)..."
-    [ "$POL_ARCH" = "" ] && POL_System_SetArch "auto"
-    [ "$WINEPREFIX" = "" ] && POL_Debug_Fatal "WINEPREFIX is not set!"
-
-    if [ -e "$WINEPREFIX" ]; then
-        POL_Debug_Message "Prefix already exists"
-        LNG_OVERWRITE="$(eval_gettext 'Overwrite (usually works, no guarantee)')"
-        LNG_ERASE="$(eval_gettext 'Erase (virtual drive content will be lost)')"
-        LNG_ABORT="$(eval_gettext 'Abort installation')"
-
-        OLD_ARCH=""
-        [ -e "$WINEPREFIX/playonlinux.cfg" ] && OLD_ARCH="$(POL_Config_PrefixRead "ARCH")"
-        if [ "$OLD_ARCH" = "$POL_USER_ARCH" ]; then
-            PREFIX_CHOICES="$LNG_OVERWRITE~$LNG_ERASE~$LNG_ABORT"
-        else
-            # Settings are not compatible, overwriting is not an option
-            PREFIX_CHOICES="$LNG_ERASE~$LNG_ABORT"
-        fi
-
-        OLD_APP_ANWSER="$APP_ANSWER"
-        PREFNAME="$(basename $WINEPREFIX)"
-        POL_SetupWindow_menu "The target virtual drive $PREFNAME already exists:" "$TITLE" "$PREFIX_CHOICES" "~"
-        case "$APP_ANSWER" in
-            "$LNG_OVERWRITE")
-                # Prefix content is not reproducible, it's tempting to disallow reports
-                # NOBUGREPORT="TRUE"
-                POL_Debug_Message "Overwrite Prefix"
-                # Should we revert what has been autodetected by SelectPrefix here too?
-                ;;
-            "$LNG_ERASE")
-                POL_Debug_Message "Erase Prefix"
-                POL_Wine_PrefixDelete
-                # Revert what could have been autodetected with SelectPrefix
-                POL_ARCH="$POL_USER_ARCH"
-                ;;
-            *)
-                NOBUGREPORT="TRUE"
-                POL_Debug_Fatal "$(eval_gettext 'User abort')"
-                ;;
-        esac
-        APP_ANSWER="$OLD_APP_ANWSER"
-    fi
-
-    POL_SetupWindow_wait "$(eval_gettext 'Please wait while the virtual drive is being created...')" "$TITLE"
-    if [ -e "$WINEPREFIX" ]; then
-        touch "$WINEPREFIX/playonlinux.cfg"
-        if [ ! "$POL_WINEVERSION" = "" ]; then
-            POL_Debug_Message "Setting version to $POL_WINEVERSION"
-            POL_Wine_SetVersionPrefix "$POL_WINEVERSION"
-            POL_Wine_SetVersionEnv
-        fi
-    else    # Prefix does not exit, let's create it
-        if [ "$POL_WINEVERSION" = "" ]; then
-            # System wineversion
-            ## Really bad idea
-            ## export WINEARCH=win32
-            if [ ! "$POL_ARCH" = "" ]; then
-                if [ "$POL_ARCH" = "x86" ]; then
-                    export WINEARCH=win32
-                else
-                    export WINEARCH=win64
-                fi
-                POL_Debug_Message "Setting WINEARCH to $WINEARCH"
-            fi
-
-            wine wineboot
-            POL_Debug_InitPrefix
-
-            if [ -e "$WINEPREFIX/drive_c/windows/syswow64" ] # It is a 64 bits prefix
-            then
-                POL_Config_PrefixWrite "ARCH" "amd64"
-                POL_Debug_LogToPrefix "This is a 64bits prefix!"
-                POL_Config_Write WINE_SYSTEM_ARCH amd64
-            else
-                POL_Config_PrefixWrite "ARCH" "x86"
-                POL_Debug_LogToPrefix "This is a 32bits prefix!"
-                POL_Config_Write WINE_SYSTEM_ARCH x86
-            fi
-        else
-            mkdir -p "$WINEPREFIX"
-            POL_Debug_Message "Using wine $POL_WINEVERSION"
-            POL_Wine_InstallVersion "$POL_WINEVERSION"
-            POL_SetupWindow_wait "$(eval_gettext 'Please wait while the virtual drive is being created...')" "$TITLE"
-            POL_Config_PrefixWrite "ARCH" "$POL_ARCH"
-            POL_Config_PrefixWrite "VERSION" "$POL_WINEVERSION"
-            POL_Wine_AutoSetVersionEnv
-
-            POL_Debug_InitPrefix
-
-            which wineprefixcreate && [ "$(POL_MD5_file "$(which wineprefixcreate)")" != "5c0ee90682746e811698a53415b4765d" ] && [ ! "$(which wineprefixcreate | grep $APPLICATION_TITLE)" = "" ] && wine wineprefixcreate
-            wine wineboot
-        fi
-    fi
-
-    # Make sure that .reg files are created
-    if which wineserver; then
-        wineserver -w
-    else
-        POL_Debug_Message "Warning, wineserver not found"
-        sleep 4
-    fi
-    POL_LoadVar_PROGRAMFILES
-    [ -e "$POL_USER_ROOT/configurations/post_prefixcreate" ] && \
-        source "$POL_USER_ROOT/configurations/post_prefixcreate"
+    [ "$POL_WINEPREFIX" = "" ] && throw "Prefix is not selected"
+    toPython "POL_Wine_PrefixCreate" "$POL_WINEPREFIX" "$1" "$POL_ARCH"
 }
 
 
 
 POL_Wine ()
 {
-    POL_Internal_SetXQuartzDisplay
     # Run the good wineversion and store the result to a logfile
     # Same usage than "wine"
     mkdir -p "$WINEPREFIX"

@@ -165,7 +165,7 @@ public class WinePrefix {
     private void createPrefixDirectory() throws WineException {
         if(!this.winePrefixDirectory.exists()) {
             if(!this.winePrefixDirectory.mkdirs()) {
-                throw new WineException("Cannot create prefix: " + getWinePrefixDirectory());
+                throw new WineException("Cannot createPrefix prefix: " + getWinePrefixDirectory());
             }
         }
     }

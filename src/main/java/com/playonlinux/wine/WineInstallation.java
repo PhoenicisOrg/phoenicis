@@ -61,7 +61,7 @@ public class WineInstallation {
         return new File(binaryPath, "wineserver");
     }
 
-    // FIXME: Maybe it would be great to create a class to handle environment issues
+    // FIXME: Maybe it would be great to createPrefix a class to handle environment issues
     private void addPathInfoToEnvironment(Map<String, String> environment) {
         environment.put("PATH", this.binaryPath.getAbsolutePath());
         environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
@@ -139,6 +139,14 @@ public class WineInstallation {
 
     public boolean exists() {
         return this.binaryPath.exists() && this.libraryPath.exists();
+    }
+
+    public WineDistribution getDistribution() {
+        return distribution;
+    }
+
+    public Version getVersion() {
+        return version;
     }
 
 
