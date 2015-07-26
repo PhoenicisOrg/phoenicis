@@ -29,12 +29,32 @@ public class Version {
     final int bigNumber;
     final int intermediateNumber;
     final int lowNumber;
+    final String customName;
 
-    public Version(String versionAsString) {
-        String[] splitVersionAsString = versionAsString.split("\\.");
-        bigNumber = Integer.valueOf(splitVersionAsString[0]);
-        intermediateNumber = Integer.valueOf(splitVersionAsString[1]);
-        lowNumber = Integer.valueOf(splitVersionAsString[2]);
+    public Version(String completeVersionAsString) {
+        final String[] splitCompleteVersion = completeVersionAsString.split("-");
+        final String versionAsString = splitCompleteVersion[0];
+
+        if(splitCompleteVersion.length > 1) {
+            customName = splitCompleteVersion[1];
+        } else {
+            customName = null;
+        }
+
+        final String[] splitVersion = versionAsString.split("\\.");
+        bigNumber = Integer.valueOf(splitVersion[0]);
+
+        if(splitVersion.length <= 1) {
+            intermediateNumber = 0;
+        } else {
+            intermediateNumber = Integer.valueOf(splitVersion[1]);
+        }
+
+        if(splitVersion.length <= 2) {
+            lowNumber = 0;
+        } else {
+            lowNumber = Integer.valueOf(splitVersion[2]);
+        }
     }
 
     public int getBigNumber() {
@@ -77,7 +97,18 @@ public class Version {
                 .toHashCode();
     }
 
+    @Override
     public String toString() {
-        return String.format("%s.%s.%s", bigNumber, intermediateNumber, lowNumber);
+        if(customName == null) {
+            if (lowNumber == 0) {
+                return String.format("%s.%s", bigNumber, intermediateNumber);
+            }
+            return String.format("%s.%s.%s", bigNumber, intermediateNumber, lowNumber);
+        } else {
+            if (lowNumber == 0) {
+                return String.format("%s.%s-%s", bigNumber, intermediateNumber, customName);
+            }
+            return String.format("%s.%s.%s-%s", bigNumber, intermediateNumber, lowNumber, customName);
+        }
     }
 }

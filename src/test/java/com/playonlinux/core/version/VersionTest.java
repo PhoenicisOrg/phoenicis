@@ -72,4 +72,32 @@ public class VersionTest {
         assertNotEquals(version1, version2);
     }
 
+    @Test
+    public void testToStringPaddingZero() {
+        Version version1 = new Version("4.1.0");
+        assertEquals("4.1", version1.toString());
+    }
+
+    @Test
+    public void testEqualsWithoutLastZero() {
+        Version version1 = new Version("4.1.0");
+        Version version2 = new Version("4.1");
+
+        assertEquals(version1, version2);
+    }
+
+    @Test
+    public void testEqualsWithoutLastZeros() {
+        Version version1 = new Version("4.0.0");
+        Version version2 = new Version("4");
+
+        assertEquals(version1, version2);
+    }
+
+    @Test
+    public void tesToStringWithCodeName() {
+        Version version1 = new Version("4-dev");
+
+        assertEquals("4.0-dev", version1.toString());
+    }
 }
