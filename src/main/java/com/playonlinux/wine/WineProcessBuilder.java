@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-// FIXME: Should not be any injection at this stage
-
 public class WineProcessBuilder {
     private Map<String, String> applicationEnvironment;
     private List<String> command;
@@ -67,22 +65,22 @@ public class WineProcessBuilder {
     Process build() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder(command).directory(workingDirectory);
 
-        Map<String, String> processEnvironement = processBuilder.environment();
+        Map<String, String> processEnvironment = processBuilder.environment();
         if(environment != null) {
-            for (String environementVariable : environment.keySet()) {
-                processEnvironement.put(environementVariable, environment.get(environementVariable));
+            for (String environmentVariable : environment.keySet()) {
+                processEnvironment.put(environmentVariable, environment.get(environmentVariable));
             }
         }
 
         Map<String,String> systemEnvironment = System.getenv();
 
-        mergeEnvironmentVariables(systemEnvironment, processEnvironement, "PATH");
-        mergeEnvironmentVariables(systemEnvironment, processEnvironement, "LD_LIBRARY_PATH");
-        mergeEnvironmentVariables(systemEnvironment, processEnvironement, "DYLD_LIBRARY_PATH");
+        mergeEnvironmentVariables(systemEnvironment, processEnvironment, "PATH");
+        mergeEnvironmentVariables(systemEnvironment, processEnvironment, "LD_LIBRARY_PATH");
+        mergeEnvironmentVariables(systemEnvironment, processEnvironment, "DYLD_LIBRARY_PATH");
 
-        mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "PATH");
-        mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "LD_LIBRARY_PATH");
-        mergeEnvironmentVariables(applicationEnvironment, processEnvironement, "DYLD_LIBRARY_PATH");
+        mergeEnvironmentVariables(applicationEnvironment, processEnvironment, "PATH");
+        mergeEnvironmentVariables(applicationEnvironment, processEnvironment, "LD_LIBRARY_PATH");
+        mergeEnvironmentVariables(applicationEnvironment, processEnvironment, "DYLD_LIBRARY_PATH");
 
         return processBuilder.start();
     }

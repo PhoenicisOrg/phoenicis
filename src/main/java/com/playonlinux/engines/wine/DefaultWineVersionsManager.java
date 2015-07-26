@@ -150,7 +150,7 @@ public class DefaultWineVersionsManager
             install(wineDistribution, version, temporaryFile, progressControl);
 
         } catch (IOException | DownloadException e) {
-            throw new EngineInstallException(format("An error occured while trying to download %s", packageUrl), e);
+            throw new EngineInstallException(format("An error occurred while trying to download %s", packageUrl), e);
         }
     }
 
@@ -159,7 +159,7 @@ public class DefaultWineVersionsManager
         try {
             Files.remove(getExtractPath(wineDistribution, version));
         } catch (IOException e) {
-            throw new EngineInstallException(format("An error occured while removing wine %s %s", version, wineDistribution), e);
+            throw new EngineInstallException(format("An error occurred while removing wine %s %s", version, wineDistribution), e);
         }
     }
 

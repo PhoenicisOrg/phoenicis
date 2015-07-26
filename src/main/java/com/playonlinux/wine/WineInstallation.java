@@ -147,7 +147,7 @@ public class WineInstallation {
             return this;
         }
 
-        public WineInstallation.Builder withDistributionName(WineDistribution distributionName) {
+        public WineInstallation.Builder withDistribution(WineDistribution distributionName) {
             this.distribution = distributionName;
             return this;
         }

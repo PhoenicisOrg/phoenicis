@@ -104,7 +104,7 @@ public class PlayOnLinuxContext {
     public File makeWinePath(Version version, WineDistribution wineDistribution) {
         String versionPath = String.format("%s/%s/%s",
                 this.properties.getProperty("application.user.engines.wine"),
-                wineDistribution,
+                wineDistribution.asNameWithCurrentOperatingSystem(),
                 version
         );
         return new File(versionPath);
