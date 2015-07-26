@@ -58,7 +58,7 @@ public class HTTPDownloaderTest {
                 response()
                         .withStatusCode(200)
                         .withHeaders(
-                                new Header("Content-Type", "application/json")
+                                new Header("Content-Type", "application/config")
                         )
                         .withBody("Content file to download")
         );
@@ -82,7 +82,7 @@ public class HTTPDownloaderTest {
                 response()
                         .withStatusCode(200)
                         .withHeaders(
-                                new Header("Content-Type", "application/json")
+                                new Header("Content-Type", "application/config")
                         )
                         .withBody("Content file to download 2")
         );
