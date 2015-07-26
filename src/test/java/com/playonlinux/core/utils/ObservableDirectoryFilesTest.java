@@ -41,7 +41,7 @@ public class ObservableDirectoryFilesTest {
     public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxException, IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
 
-        expectedEx.expect(PlayOnLinuxException.class);
+        expectedEx.expect(IllegalStateException.class);
         expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
         new ObservableDefaultDirectoryFiles(temporaryFile);
@@ -53,23 +53,24 @@ public class ObservableDirectoryFilesTest {
         File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
 
-        ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory);
-        observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
+        try(ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory)) {
+            observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
-        Observer observer = mock(Observer.class);
+            Observer observer = mock(Observer.class);
 
-        observableDirectoryFiles.addObserver(observer);
+            observableDirectoryFiles.addObserver(observer);
 
-        observableDirectoryFiles.start();
+            observableDirectoryFiles.start();
 
-        Thread.sleep(2 * CHECK_INTERVAL);
+            Thread.sleep(2 * CHECK_INTERVAL);
 
-        observableDirectoryFiles.stop();
+            observableDirectoryFiles.stop();
 
-        temporaryDirectory.delete();
+            temporaryDirectory.delete();
+            verify(observer, times(1)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
+        }
 
         // Notified once for the creation
-        verify(observer, times(1)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
     }
 
     @Test
