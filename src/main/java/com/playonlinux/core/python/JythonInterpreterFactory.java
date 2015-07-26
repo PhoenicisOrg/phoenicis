@@ -41,7 +41,7 @@ public class JythonInterpreterFactory implements InterpreterFactory {
         try {
             return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new PlayOnLinuxException("Unable to create a Python interpreter", e);
+            throw new PlayOnLinuxException("Unable to createPrefix a Python interpreter", e);
         }
     }
 

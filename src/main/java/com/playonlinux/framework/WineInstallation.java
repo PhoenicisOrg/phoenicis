@@ -81,6 +81,14 @@ public class WineInstallation {
         return getInstallation().exists();
     }
 
+    public WineDistribution getWineDistribution() {
+        return wineDistribution;
+    }
+
+    public Version getVersion() {
+        return version;
+    }
+    
     public void install() throws CancelException {
         if(setupWizard != null) {
             ProgressControl progressControl = setupWizard.progressBar(

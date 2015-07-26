@@ -104,7 +104,7 @@ public abstract class Script implements Service {
                     serviceManager.unregister(Script.this);
                 }
             } catch(PlayOnLinuxException e) {
-                LOGGER.error("Cannot create interpreter", e);
+                LOGGER.error("Cannot createPrefix interpreter", e);
             }
         });
     }

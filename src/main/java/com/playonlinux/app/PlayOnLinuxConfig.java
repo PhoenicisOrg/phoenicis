@@ -18,6 +18,7 @@
 
 package com.playonlinux.app;
 
+import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.events.EventHandler;
@@ -29,7 +30,6 @@ import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
 import com.playonlinux.core.lang.LanguageBundle;
 import com.playonlinux.core.lang.LanguageBundleSelector;
-import com.playonlinux.core.log.LogStreamFactory;
 import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
@@ -150,12 +150,12 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     }
 
     /**
-     * LogStream factory
+     * ScriptLogger factory
      * @return the bean
      */
     @Bean
-    public LogStreamFactory logStreamFactory() {
-        return new LogStreamFactory();
+    public LoggerFactory logStreamFactory() {
+        return new LoggerFactory();
     }
 
     /**

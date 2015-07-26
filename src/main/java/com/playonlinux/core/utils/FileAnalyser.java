@@ -33,18 +33,31 @@ public final class FileAnalyser {
         // Utility class
     }
 
-    public static String getMimetype(File inputFile) throws PlayOnLinuxException {
+    private static MagicMatch getMatch(File inputFile) throws PlayOnLinuxException, MagicMatchNotFoundException {
         final Path path = Paths.get(inputFile.getAbsolutePath());
 
         try {
             byte[] data = Files.readAllBytes(path);
-            MagicMatch match = Magic.getMagicMatch(data);
-            return match.getMimeType();
+            return Magic.getMagicMatch(data);
+        } catch (MagicException | MagicParseException | IOException e) {
+            throw new PlayOnLinuxException("Unable to detect mimetype of the file", e);
+        }
+    }
+
+    public static String getDescription(File inputFile) throws PlayOnLinuxException {
+        try {
+            return getMatch(inputFile).getDescription();
+        } catch (MagicMatchNotFoundException e) {
+            throw new PlayOnLinuxException("Unable to detect mimetype of the file", e);
+        }
+    }
+
+    public static String getMimetype(File inputFile) throws PlayOnLinuxException {
+        try {
+            return getMatch(inputFile).getMimeType();
         } catch (MagicMatchNotFoundException e) {
             final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
             return mimeTypesMap.getContentType(inputFile);
-        } catch (MagicException | MagicParseException | IOException e) {
-            throw new PlayOnLinuxException("Unable to detect mimetype of the file", e);
         }
     }
 
@@ -53,7 +66,6 @@ public final class FileAnalyser {
      * Identify which line delimiter is used in a file
      * @param fileContent string to analyse
      * @return the line separator as a string. Null if the file has no line separator
-     * @throws IOException if the file cannot be read
      */
     public static String identifyLineDelimiter(String fileContent) {
         if (fileContent.matches("(?s).*(\\r\\n).*")) {     //Windows //$NON-NLS-1$
@@ -66,6 +78,7 @@ public final class FileAnalyser {
             return "\n";  //fallback onto '\n' if nothing matches. //$NON-NLS-1$
         }
     }
+
 
     public static String identifyLineDelimiter(File fileToAnalyse) throws IOException {
         final String fileContent = FileUtils.readFileToString(fileToAnalyse);

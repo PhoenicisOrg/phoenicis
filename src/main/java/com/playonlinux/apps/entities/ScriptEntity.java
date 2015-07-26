@@ -61,7 +61,7 @@ public class ScriptEntity implements Entity, Nameable {
         public String url;
 
         public Builder() {
-            // We need a public builder to be able to create a ScriptDTO from scratch
+            // We need a public builder to be able to createPrefix a ScriptDTO from scratch
         }
 
         public Builder(ScriptEntity scriptEntity) {

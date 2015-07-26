@@ -32,6 +32,10 @@ public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";
     private static final String WINEPREFIX_ENV = "WINEPREFIX";
 
+    /* Disbles winemenubuilder */
+    private static final String WINEDLLOVERRIDES_ENV = "WINEDLLOVERRIDES";
+    private static final String DISABLE_WINEMENUBUILDER = "winemenubuilder.exe=d";
+
     private final File binaryPath;
     private final File libraryPath;
     private final Map<String, String> applicationEnvironment;
@@ -61,7 +65,7 @@ public class WineInstallation {
         return new File(binaryPath, "wineserver");
     }
 
-    // FIXME: Maybe it would be great to create a class to handle environment issues
+    // FIXME: Maybe it would be great to createPrefix a class to handle environment issues
     private void addPathInfoToEnvironment(Map<String, String> environment) {
         environment.put("PATH", this.binaryPath.getAbsolutePath());
         environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
@@ -70,8 +74,12 @@ public class WineInstallation {
     public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun, Map<String, String> environment,
                        List<String> arguments) throws WineException {
 
+        /* Sets the wineprefix */
         final Map<String, String> winePrefixEnvironment = new HashMap<>();
         winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
+
+        /* Disbles winemenubuilder */
+        winePrefixEnvironment.put(WINEDLLOVERRIDES_ENV, DISABLE_WINEMENUBUILDER);
 
         final List<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
@@ -141,6 +149,13 @@ public class WineInstallation {
         return this.binaryPath.exists() && this.libraryPath.exists();
     }
 
+    public WineDistribution getDistribution() {
+        return distribution;
+    }
+
+    public Version getVersion() {
+        return version;
+    }
 
     public static class Builder {
         private File path;

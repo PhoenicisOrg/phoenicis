@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import static org.junit.Assert.*;
 
-public class WinePrefixTest {
+public class WineTest {
 
     @Test
     public void testFindAllExecutables() throws Exception {

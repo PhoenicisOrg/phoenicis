@@ -23,9 +23,9 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
+import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
-import com.playonlinux.core.log.LogStreamFactory;
 import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -51,8 +51,8 @@ public class MockContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected LogStreamFactory logStreamFactory() {
-        return new LogStreamFactory();
+    protected LoggerFactory logStreamFactory() {
+        return new LoggerFactory();
     }
 
     @Bean

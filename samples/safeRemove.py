@@ -3,7 +3,7 @@ from com.playonlinux.framework import Files
 from com.playonlinux.framework import Environment
 
 class Example(Installer):
-    title = "Example safe delete feature"
+    title = "Example safe deletePrefix feature"
 
     def main(self):
         print "Removing a file in playonlinux root"

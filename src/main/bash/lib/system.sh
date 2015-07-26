@@ -55,7 +55,7 @@ POL_System_SetArch()
 clean_wineprefix()
 {
     # Detect if a prefix is still use or not.
-    # It not, ask the user if he/she wants to delete it
+    # It not, ask the user if he/she wants to deletePrefix it
     # Usage: clean_wineprefix (--non-interactive) /path/of/the/prefix
 
     local INTERACTIVE=1

@@ -1,5 +1,5 @@
 from com.playonlinux.framework.templates import Installer
-from com.playonlinux.framework import WinePrefix
+from com.playonlinux.framework import Wine
 
 class Example(Installer):
     title = "Example wine installation"
@@ -7,9 +7,9 @@ class Example(Installer):
     def main(self):
         setupWizard = self.getSetupWizard()
 
-        WinePrefix(self.getSetupWizard()).select("TestPrefix").create("1.7.35")
+        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.35")
 
-        WinePrefix(self.getSetupWizard()).select("TestPrefix").create("1.7.35")
-        WinePrefix(self.getSetupWizard()).select("TestPrefix2").create("1.4.1", "upstream")
+        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.35")
+        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix2").createPrefix("1.4.1", "upstream")
 
         setupWizard.close()

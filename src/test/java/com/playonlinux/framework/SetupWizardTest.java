@@ -81,6 +81,7 @@ public class SetupWizardTest {
         when(controllerMock.createUIMessageSender()).thenReturn(new MockUIMessageSenderImplementation());
 
         this.setupWizard = new SetupWizard("Title");
+        setupWizard.init();
     }
 
     @Test

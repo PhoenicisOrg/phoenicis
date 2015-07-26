@@ -16,12 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
+package com.playonlinux.framework;
 
-public interface ScriptTemplate {
-    void validate();
+public interface SetupWizardComponent extends AutoCloseable {
+    void close();
 
-    void main() throws CancelException;
-
-    void rollback();
 }

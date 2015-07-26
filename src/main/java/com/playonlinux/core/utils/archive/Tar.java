@@ -106,7 +106,7 @@ public class Tar  {
                     LOGGER.info(String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
 
                     if (!outputFile.exists()) {
-                        LOGGER.info(String.format("Attempting to create output directory %s.", outputFile.getAbsolutePath()));
+                        LOGGER.info(String.format("Attempting to createPrefix output directory %s.", outputFile.getAbsolutePath()));
                         Files.createDirectories(outputFile.toPath());
                     }
                 } else {

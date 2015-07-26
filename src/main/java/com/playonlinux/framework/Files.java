@@ -107,7 +107,7 @@ public class Files {
         try {
             java.nio.file.Files.createDirectories(new File(directoryToCreate).toPath());
         } catch (IOException e) {
-            throw new ScriptFailureException(String.format("Unable to create the directory %s", directoryToCreate), e);
+            throw new ScriptFailureException(String.format("Unable to createPrefix the directory %s", directoryToCreate), e);
         }
 
         return this;
@@ -117,7 +117,7 @@ public class Files {
         try {
             com.playonlinux.core.utils.Files.remove(new File(pathToDelete));
         } catch (IOException e) {
-            throw new ScriptFailureException("Unable to delete the file", e);
+            throw new ScriptFailureException("Unable to deletePrefix the file", e);
         }
 
         return this;

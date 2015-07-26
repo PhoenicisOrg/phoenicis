@@ -18,9 +18,12 @@
 
 package com.playonlinux.wine;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.log.LoggerFactory;
+import com.playonlinux.core.log.WinePrefixLogger;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
@@ -33,6 +36,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.*;
@@ -40,7 +44,11 @@ import java.util.*;
 /**
  * Represents a wineprefix
  */
-public class WinePrefix {
+@Scan
+public class WinePrefix implements AutoCloseable {
+    @Inject
+    static LoggerFactory loggerFactory;
+
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
     private static final String SYSTEM_REGISTRY_FILENAME = "system.reg";
     private static final String SYSTEM_REGISTRY_NODENAME = "HKEY_LOCAL_MACHINE";
@@ -52,7 +60,9 @@ public class WinePrefix {
     private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] {"iexplore.exe", "notepad.exe"};
 
     private final File winePrefixDirectory;
+    private PrintWriter printWriterLogger = null;
     private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
+    private WinePrefixLogger logOutputStream = null;
 
     public WinePrefix(File winePrefixDirectory) throws WineException {
         this.winePrefixDirectory = winePrefixDirectory;
@@ -165,7 +175,7 @@ public class WinePrefix {
     private void createPrefixDirectory() throws WineException {
         if(!this.winePrefixDirectory.exists()) {
             if(!this.winePrefixDirectory.mkdirs()) {
-                throw new WineException("Cannot create prefix: " + getWinePrefixDirectory());
+                throw new WineException("Cannot createPrefix prefix: " + getWinePrefixDirectory());
             }
         }
     }
@@ -217,5 +227,31 @@ public class WinePrefix {
 
     public ConfigFile getPrefixConfigFile() {
         return new CompatibleConfigFileFormat(new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE));
+    }
+
+    public void log(String message) throws IOException {
+        if(printWriterLogger == null) {
+            logOutputStream = loggerFactory.getWinePrefixLogger(this.fetchName());
+            printWriterLogger = new PrintWriter(logOutputStream);
+            printWriterLogger.println(message);
+            printWriterLogger.flush();
+        }
+    }
+
+    private String fetchName() {
+        return this.getWinePrefixDirectory().getName();
+    }
+
+    @Override
+    public void close()  {
+        if(printWriterLogger != null) {
+            printWriterLogger.flush();
+            printWriterLogger.close();
+            try {
+                loggerFactory.close(logOutputStream);
+            } catch (IOException e) {
+                LOGGER.warn("The log stream could not be closed");
+            }
+        }
     }
 }

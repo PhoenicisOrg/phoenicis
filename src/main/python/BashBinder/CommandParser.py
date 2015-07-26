@@ -22,6 +22,8 @@ import os
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
 from com.playonlinux.framework import WineInstallation
+from com.playonlinux.framework import Wine
+from com.playonlinux.core.utils import Architecture
 
 from java.net import URL
 
@@ -137,10 +139,10 @@ class CommandParser(object):
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
 
             localFile = os.path.join(currentDirectory,
-                                     Downloader(setupWindow).findFileNameFromURL(URL(url)))
+                                     Downloader.wizard(setupWindow).findFileNameFromURL(URL(url)))
 
 
-            downloader = Downloader(setupWindow).get(url, localFile)
+            downloader = Downloader.wizard(setupWindow).get(url, localFile)
 
 
             if(checkSum != ""):
@@ -157,8 +159,9 @@ class CommandParser(object):
             raise ScriptFailureException(self.command[3])
 
         def POL_Print(self):
+            setupWindowId = self.command[2]
             message = self.command[3]
-            self.setupWindowManager.wizard.echo(message)
+            self.setupWindowManager.getWindow(setupWindowId).log(message)
 
         def POL_Wine_InstallVersion(self):
             setupWindowId = self.command[2]
@@ -168,3 +171,37 @@ class CommandParser(object):
             wineInstallation = WineInstallation(version, "upstream-%s" % arch,
                                                 self.setupWindowManager.getWindow(setupWindowId))
             wineInstallation.install()
+
+        def POL_Wine_PrefixCreate(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+            prefixName = self.command[3]
+            version = self.command[4]
+
+            try:
+                arch = self.command[5]
+                arch = str(Architecture.fromWinePackageName(arch).name())
+            except IndexError:
+                arch = None
+
+            if(arch is not None):
+                Wine.wizard(setupWindow).selectPrefix(prefixName).createPrefix(version, "upstream", arch)
+            else:
+                Wine.wizard(setupWindow).selectPrefix(prefixName).createPrefix(version, arch)
+
+
+        def POL_Wine(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+            workingDirectory = self.command[3]
+            prefixName = self.command[4]
+            prgmName = self.command[5]
+
+            args = self.command[6::1]
+
+            return Wine.wizard(setupWindow).selectPrefix(prefixName).runForeground(
+                workingDirectory,
+                prgmName,
+                args,
+                os.environ
+            ).getLastReturnCode()
