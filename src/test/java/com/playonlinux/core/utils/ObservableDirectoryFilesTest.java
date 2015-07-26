@@ -78,22 +78,23 @@ public class ObservableDirectoryFilesTest {
             InterruptedException, IOException {
         File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
-        ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory);
-        observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
+        try(ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory)) {
+            observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
-        Observer observer = mock(Observer.class);
-        observableDirectoryFiles.addObserver(observer);
-        observableDirectoryFiles.start();
-        File createdFile = new File(temporaryDirectory, "file.txt");
-        Thread.sleep(2 * CHECK_INTERVAL);
-        createdFile.createNewFile();
-        Thread.sleep(10 * CHECK_INTERVAL);
+            Observer observer = mock(Observer.class);
+            observableDirectoryFiles.addObserver(observer);
+            observableDirectoryFiles.start();
+            File createdFile = new File(temporaryDirectory, "file.txt");
+            Thread.sleep(2 * CHECK_INTERVAL);
+            createdFile.createNewFile();
+            Thread.sleep(10 * CHECK_INTERVAL);
 
-        observableDirectoryFiles.stop();
+            observableDirectoryFiles.stop();
 
-        temporaryDirectory.delete();
+            temporaryDirectory.delete();
 
-        verify(observer, times(2)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
+            verify(observer, times(2)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
+        }
     }
 
 }
