@@ -25,6 +25,12 @@ import com.playonlinux.core.services.manager.ServiceManager;
 
 import java.io.*;
 
+/**
+ * This component redirects {@link Process} descriptors into Java {@link OutputStream}
+ * and {@link InputStream}
+ *
+ * This component is run in a separate thread
+ */
 @Scan
 public class ProcessPipe implements Service {
     @Inject
@@ -36,6 +42,13 @@ public class ProcessPipe implements Service {
     private final InputStream redirectInputStream;
     private boolean running = true;
 
+    /**
+     * Creates an instance
+     * @param process The given process
+     * @param outputStream the OutputStream where stdout will be redirected to
+     * @param errorStream the OutputStream where stderr will be redirected to
+     * @param inputStream the InputStream where stdin will take data from
+     */
     public ProcessPipe(Process process,
                        OutputStream outputStream,
                        OutputStream errorStream,
