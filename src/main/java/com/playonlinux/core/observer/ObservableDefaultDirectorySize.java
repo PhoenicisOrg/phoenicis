@@ -18,9 +18,7 @@
 
 package com.playonlinux.core.observer;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.wine.WineException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
@@ -33,7 +31,7 @@ public class ObservableDefaultDirectorySize extends ObservableDefaultDirectory<P
     private final ObservableDirectoryThread observableDirectoryThread;
     private static final Logger LOGGER = Logger.getLogger(ObservableDefaultDirectorySize.class);
 
-    public ObservableDefaultDirectorySize(File observedDirectory, long startSize, long endSize) throws PlayOnLinuxException {
+    public ObservableDefaultDirectorySize(File observedDirectory, long startSize, long endSize) {
         this.startSize = startSize;
         this.endSize = endSize;
 

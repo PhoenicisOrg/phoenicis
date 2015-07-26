@@ -19,7 +19,6 @@
 package com.playonlinux.framework;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultDirectorySize;
@@ -155,47 +154,30 @@ public class WinePrefix {
             wineInstallation.install();
         }
 
-        ProgressControl progressControl = this.setupWizard.progressBar(
+        final ProgressControl progressControl = this.setupWizard.progressBar(
                 format(
                         translate("Please wait while the virtual drive is being created..."), prefixName
                 )
         );
 
-        ObservableDefaultDirectorySize observableDirectorySize;
-        try {
-            observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), 0,
-                    NEWPREFIXSIZE);
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
-        }
-
-        observableDirectorySize.setCheckInterval(10);
-        observableDirectorySize.addObserver(progressControl);
-
-        try {
+        try(ObservableDefaultDirectorySize observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), 0,
+                NEWPREFIXSIZE)) {
+            observableDirectorySize.setCheckInterval(10);
+            observableDirectorySize.addObserver(progressControl);
             backgroundServicesManager.register(observableDirectorySize);
-        } catch (ServiceInitializationException e) {
+            Process process = wineInstallation.getInstallation().createPrefix(this.prefix);
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                process.destroy();
+                killall();
+                throw new CancelException(e);
+            }
+        } catch (IllegalStateException | ServiceInitializationException e) {
             throw new ScriptFailureException(e);
-        }
-
-        Process process;
-        try {
-            process = wineInstallation.getInstallation().createPrefix(this.prefix);
         } catch (WineException e) {
             throw new ScriptFailureException("Unable to create the wineprefix", e);
         }
-
-        try {
-            process.waitFor();
-        } catch (InterruptedException e) {
-            process.destroy();
-            killall();
-            throw new CancelException(e);
-        } finally {
-            observableDirectorySize.deleteObserver(progressControl);
-            backgroundServicesManager.unregister(observableDirectorySize);
-        }
-
 
         return this;
     }
@@ -342,33 +324,20 @@ public class WinePrefix {
      * @throws CancelException if the users cancels or if there is any error
      */
     public WinePrefix waitAllWatchDirectory(File directory, long endSize) throws CancelException {
-        ObservableDefaultDirectorySize observableDirectorySize;
         ProgressControl progressControl = this.setupWizard.progressBar(
                 format(
                         translate("Please wait while the program is being installed..."), prefixName
                 )
         );
 
-        try {
-            observableDirectorySize = new ObservableDefaultDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
-                    endSize);
-        } catch (PlayOnLinuxException e) {
-            throw new ScriptFailureException(e);
-        }
-
-        observableDirectorySize.setCheckInterval(10);
-        observableDirectorySize.addObserver(progressControl);
-        try {
+        try (ObservableDefaultDirectorySize observableDirectorySize = new ObservableDefaultDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
+        endSize)){
+            observableDirectorySize.setCheckInterval(10);
+            observableDirectorySize.addObserver(progressControl);
             backgroundServicesManager.register(observableDirectorySize);
-        } catch (ServiceInitializationException e) {
-            throw new ScriptFailureException(e);
-        }
-
-        try {
             waitExit();
-        } finally {
-            observableDirectorySize.deleteObserver(progressControl);
-            backgroundServicesManager.unregister(observableDirectorySize);
+        } catch (IllegalStateException | ServiceInitializationException e) {
+            throw new ScriptFailureException(e);
         }
 
 
@@ -388,29 +357,15 @@ public class WinePrefix {
                     )
             );
 
-            ObservableDefaultDirectorySize observableDirectorySize;
-            try {
-                observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
-                        0);
-            } catch (PlayOnLinuxException e) {
-                throw new ScriptFailureException(e);
-            }
-
-            observableDirectorySize.setCheckInterval(10);
-            observableDirectorySize.addObserver(progressControl);
-            try {
+            try(ObservableDefaultDirectorySize observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
+                    0)) {
+                observableDirectorySize.setCheckInterval(10);
+                observableDirectorySize.addObserver(progressControl);
                 backgroundServicesManager.register(observableDirectorySize);
-            } catch (ServiceInitializationException e) {
-                throw new ScriptFailureException(e);
-            }
-
-            try {
                 prefix.delete();
-            } catch (IOException e) {
-                throw new ScriptFailureException("Unable to delete the wineprefix", e);
-            } finally {
-                observableDirectorySize.deleteObserver(progressControl);
-                backgroundServicesManager.unregister(observableDirectorySize);
+            } catch (IOException | ServiceInitializationException | IllegalStateException e) {
+                throw new ScriptFailureException(e);
+
             }
         }
 
