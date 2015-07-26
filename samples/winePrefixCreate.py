@@ -10,5 +10,6 @@ class Example(Installer):
         WinePrefix(self.getSetupWizard()).select("TestPrefix").create("1.7.35")
 
         WinePrefix(self.getSetupWizard()).select("TestPrefix").create("1.7.35")
+        WinePrefix(self.getSetupWizard()).select("TestPrefix2").create("1.4.1", "upstream")
 
         setupWizard.close()
