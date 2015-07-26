@@ -19,6 +19,8 @@
 package com.playonlinux.wine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.core.config.CompatibleConfigFileFormat;
+import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.utils.Files;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.core.version.Version;
@@ -147,32 +149,22 @@ public class WinePrefix {
     }
 
     public void createConfigFile(WineDistribution wineDistribution, Version version) throws WineException {
-        final Map<String, String> configContent = new HashMap<>();
-        final ObjectMapper objectMapper = new ObjectMapper();
-
-        configContent.put("distributionCode", wineDistribution.getDistributionCode());
-        configContent.put("operatingSystem", wineDistribution.getOperatingSystem().name());
-        configContent.put("architecture", wineDistribution.getArchitecture().name());
-        configContent.put("version", version.toString());
-
-        final File configFile = new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE);
-
         this.createPrefixDirectory();
-        if(configFile.exists()) {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+
+        if(initialized()) {
             throw new WineException("Prefix already exists: " + getWinePrefixDirectory());
         }
 
         try {
-            if(configFile.createNewFile()) {
-                try (PrintWriter fileOutputWriter = new PrintWriter(configFile)) {
-                    objectMapper.writeValue(fileOutputWriter, configContent);
-                }
-            } else {
-                throw new WineException("Cannot create file: " + configFile);
-            }
+            prefixConfigFile.writeValue("distributionCode", wineDistribution.getDistributionCode());
+            prefixConfigFile.writeValue("operatingSystem", wineDistribution.getOperatingSystem().name());
+            prefixConfigFile.writeValue("architecture", wineDistribution.getArchitecture().name());
+            prefixConfigFile.writeValue("version", version.toString());
         } catch (IOException e) {
-            throw new WineException(e);
+            throw new WineException("Error while writing data on config file", e);
         }
+
     }
 
     private void createPrefixDirectory() throws WineException {
@@ -187,5 +179,7 @@ public class WinePrefix {
         return null;
     }
 
-
+    public ConfigFile getPrefixConfigFile() {
+        return new CompatibleConfigFileFormat(new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE));
+    }
 }

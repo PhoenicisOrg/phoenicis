@@ -135,4 +135,29 @@ public class CompatibleConfigFileFormatTest {
     }
 
 
+    @Test
+    public void testWriteExistingValue_Legacy() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        assertEquals("x86", compatibleConfigFileFormat.readValue("ARCH"));
+        compatibleConfigFileFormat.writeValue("ARCH", "amd64");
+        assertEquals("amd64", compatibleConfigFileFormat.readValue("ARCH"));
+    }
+
+    @Test
+    public void testWriteExistingValue_jsonFile() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
+        compatibleConfigFileFormat.writeValue("architecture", "AMD64");
+        assertEquals("AMD64", compatibleConfigFileFormat.readValue("architecture"));
+    }
+
+    @Test
+    public void testWriteNewValue_unexistingFile() throws IOException {
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(File.createTempFile("test", "json"));
+        assertEquals("", compatibleConfigFileFormat.readValue("TEST3"));
+        compatibleConfigFileFormat.writeValue("TEST3", "Content3");
+        assertEquals("Content3", compatibleConfigFileFormat.readValue("TEST3"));
+    }
+
+
 }
