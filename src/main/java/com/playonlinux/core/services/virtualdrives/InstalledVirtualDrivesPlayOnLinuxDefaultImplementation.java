@@ -23,7 +23,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.containers.VirtualDriveDTO;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
+import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
@@ -34,7 +34,7 @@ import java.util.NoSuchElementException;
 
 @Scan
 public final class InstalledVirtualDrivesPlayOnLinuxDefaultImplementation extends ObservableDefaultImplementation
-        implements InstalledVirtualDrives, Observer<ObservableDefaultDirectoryFiles, File[]> {
+        implements InstalledVirtualDrives, Observer<ObservableDirectoryFiles, File[]> {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -43,11 +43,11 @@ public final class InstalledVirtualDrivesPlayOnLinuxDefaultImplementation extend
 
     private Iterator<VirtualDriveDTO> virtualdrivesDTOInterator;
 
-    final ObservableDefaultDirectoryFiles observableWineprefixes;
+    final ObservableDirectoryFiles observableWineprefixes;
 
     public InstalledVirtualDrivesPlayOnLinuxDefaultImplementation() throws PlayOnLinuxException {
         File winePrefixes = playOnLinuxContext.makePrefixesPath();
-        observableWineprefixes = new ObservableDefaultDirectoryFiles(winePrefixes);
+        observableWineprefixes = new ObservableDirectoryFiles(winePrefixes);
 
         observableWineprefixes.addObserver(this);
         playOnLinuxBackgroundServicesManager.register(observableWineprefixes);
@@ -62,7 +62,7 @@ public final class InstalledVirtualDrivesPlayOnLinuxDefaultImplementation extend
     }
 
     @Override
-    public void update(ObservableDefaultDirectoryFiles observable, File[] directoryContent) {
+    public void update(ObservableDirectoryFiles observable, File[] directoryContent) {
         virtualdrivesDTOInterator = new Iterator<VirtualDriveDTO>() {
             volatile int i = 0;
 

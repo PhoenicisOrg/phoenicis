@@ -20,7 +20,7 @@ package com.playonlinux.library;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
+import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.library.dto.InstalledApplicationDTO;
 import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.core.filter.Filter;
@@ -97,11 +97,11 @@ public final class LibraryEntitiesProvider
         final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
         final URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
 
-        ObservableDefaultDirectoryFiles shortcutDirectoryObservable;
-        ObservableDefaultDirectoryFiles iconDirectoryObservable;
+        ObservableDirectoryFiles shortcutDirectoryObservable;
+        ObservableDirectoryFiles iconDirectoryObservable;
         try {
-            shortcutDirectoryObservable = new ObservableDefaultDirectoryFiles(shortcutDirectory);
-            iconDirectoryObservable = new ObservableDefaultDirectoryFiles(iconDirectory);
+            shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
+            iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
         } catch (PlayOnLinuxException e) {
             throw new ServiceInitializationException(e);
         }

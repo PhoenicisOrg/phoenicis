@@ -25,10 +25,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ObservableDefaultDirectoryFiles extends ObservableDefaultDirectory<File[]> {
+public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
     private final ObservableDirectoryThread observableDirectoryThread;
 
-    public ObservableDefaultDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
+    public ObservableDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
         this.observedDirectory = observedDirectory;
         validate();
         observableDirectoryThread = new ObservableDirectoryThread(this);
@@ -41,8 +41,9 @@ public class ObservableDefaultDirectoryFiles extends ObservableDefaultDirectory<
     }
 
     @Override
-    public void stop() {
+    public void shutdown() {
         observableDirectoryThread.stopChecking();
+        super.shutdown();
     }
 
 
@@ -62,10 +63,10 @@ public class ObservableDefaultDirectoryFiles extends ObservableDefaultDirectory<
 
 
     private class ObservableDirectoryThread extends Thread {
-        private final ObservableDefaultDirectoryFiles observableDirectoryFiles;
+        private final ObservableDirectoryFiles observableDirectoryFiles;
         private volatile Boolean running;
 
-        ObservableDirectoryThread(ObservableDefaultDirectoryFiles observableDirectoryFiles) {
+        ObservableDirectoryThread(ObservableDirectoryFiles observableDirectoryFiles) {
             super();
             this.running = false;
             this.observableDirectoryFiles = observableDirectoryFiles;
