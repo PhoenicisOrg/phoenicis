@@ -56,6 +56,10 @@ public class CompatibleConfigFileFormat implements ConfigFile {
         return readValue(key, "");
     }
 
+    @Override
+    public boolean contains(String key) {
+        return this.getMap().containsKey(key);
+    }
 
     @Override
     public synchronized String readValue(String key, String defaultValue) {

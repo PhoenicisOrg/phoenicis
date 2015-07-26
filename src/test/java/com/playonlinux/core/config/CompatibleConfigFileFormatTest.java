@@ -37,14 +37,14 @@ public class CompatibleConfigFileFormatTest {
     public void setUp() throws IOException {
         tmpLegacy = File.createTempFile("legacy", "txt");
         tmpLegacy.deleteOnExit();
-        try(PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpLegacy))) {
+        try(final PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpLegacy))) {
             printWriterLegacy.write("ARCH=x86\nVERSION=1.7.33\nTEST=test=test");
             printWriterLegacy.flush();
         }
 
         tmpNew = File.createTempFile("new", "txt");
         tmpNew.deleteOnExit();
-        try(PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpNew))) {
+        try(final PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpNew))) {
             printWriterLegacy.write("{\"distributionCode\":\"staging\",\"operatingSystem\":\"MACOSX\",\"version\":\"1.7.35\",\"architecture\":\"I386\"}");
             printWriterLegacy.flush();
         }

@@ -33,14 +33,14 @@ public enum Architecture {
         }
     }
 
-    public static Architecture fromWinePackageName(String packageName) {
-        switch (packageName) {
+    public static Architecture fromWinePackageName(String architectureName) {
+        switch (architectureName) {
             case "x86":
                 return I386;
             case "amd64":
                 return AMD64;
             default:
-                throw new IllegalArgumentException(String.format("Unknown architecture '%s'", packageName));
+                throw new IllegalArgumentException(String.format("Unknown architecture '%s'", architectureName));
         }
     }
     public String getNameForWinePackages() {

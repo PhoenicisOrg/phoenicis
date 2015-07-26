@@ -21,7 +21,9 @@ package com.playonlinux.wine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
+import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.Files;
+import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.wine.registry.RegistryKey;
@@ -82,14 +84,6 @@ public class WinePrefix {
 
     private File getDriveCPath() {
         return new File(winePrefixDirectory, DRIVE_C);
-    }
-
-    public Version fetchVersion() {
-        return null;
-    }
-
-    public String fetchArchitecture() {
-        return null;
     }
 
     public String getAbsolutePath() {
@@ -167,6 +161,7 @@ public class WinePrefix {
 
     }
 
+
     private void createPrefixDirectory() throws WineException {
         if(!this.winePrefixDirectory.exists()) {
             if(!this.winePrefixDirectory.mkdirs()) {
@@ -175,8 +170,49 @@ public class WinePrefix {
         }
     }
 
+    public Version fetchVersion() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if(prefixConfigFile.contains("version")) {
+            return new Version(prefixConfigFile.readValue("version"));
+        } else if (prefixConfigFile.contains("VERSION")) {
+            return new Version(prefixConfigFile.readValue("VERSION"));
+        }
+
+        // FIXME: Handle this case with a default version
+        throw new IllegalStateException("Prefix does not contain any version information");
+    }
+
+    public OperatingSystem fetchOperatingSystem() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if(prefixConfigFile.contains("operatinSystem")) {
+            return OperatingSystem.valueOf(prefixConfigFile.readValue("operatingSystem"));
+        }
+
+        return OperatingSystem.fetchCurrentOperationSystem();
+    }
+
+    public Architecture fetchArchitecture() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if(prefixConfigFile.contains("architecture")) {
+            return Architecture.valueOf(prefixConfigFile.readValue("architecture"));
+        } else if (prefixConfigFile.contains("ARCH")) {
+            return Architecture.fromWinePackageName(prefixConfigFile.readValue("ARCH"));
+        }
+
+        // FIXME : Handle this case with a default architecture
+        throw new IllegalStateException("Prefix does not contain any architecture information");
+    }
+
     public WineDistribution fetchDistribution() {
-        return null;
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        String distribution;
+        if(prefixConfigFile.contains("distribution")) {
+            distribution = prefixConfigFile.readValue("distribution");
+        } else {
+            distribution = "upstream";
+        }
+
+        return new WineDistribution(fetchOperatingSystem(), fetchArchitecture(), distribution);
     }
 
     public ConfigFile getPrefixConfigFile() {

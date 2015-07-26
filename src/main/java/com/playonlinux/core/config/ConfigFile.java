@@ -27,6 +27,8 @@ public interface ConfigFile {
 
     String readValue(String key);
 
+    boolean contains(String key);
+
     String readValue(String key, String defaultValue);
 
     void deleteValue(String key) throws IOException;
