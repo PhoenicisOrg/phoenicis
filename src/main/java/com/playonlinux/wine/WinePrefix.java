@@ -27,8 +27,8 @@ import com.playonlinux.core.log.WinePrefixLogger;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 import org.apache.commons.io.FileUtils;
@@ -36,10 +36,11 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Represents a wineprefix

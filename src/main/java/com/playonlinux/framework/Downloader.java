@@ -20,16 +20,15 @@ package com.playonlinux.framework;
 
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
-import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 

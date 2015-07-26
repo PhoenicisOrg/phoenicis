@@ -22,10 +22,11 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
-import jdk.nashorn.internal.runtime.Context;
 import org.apache.log4j.Logger;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * This component redirects {@link Process} descriptors into Java {@link OutputStream}

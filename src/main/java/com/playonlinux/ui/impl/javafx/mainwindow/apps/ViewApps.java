@@ -19,15 +19,18 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsCategory;
 import com.playonlinux.apps.entities.AppsWindowEntity;
-import com.playonlinux.apps.AppsFilter;
-import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
-import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.ui.api.EntitiesProvider;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
+import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;

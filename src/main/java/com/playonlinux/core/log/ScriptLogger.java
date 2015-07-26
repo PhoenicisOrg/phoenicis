@@ -23,9 +23,7 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @Scan
 public class ScriptLogger extends FileLogger {

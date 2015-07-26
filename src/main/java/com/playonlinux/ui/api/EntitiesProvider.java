@@ -19,8 +19,8 @@
 package com.playonlinux.ui.api;
 
 import com.playonlinux.core.filter.Filterable;
-import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.services.manager.Service;
 
 public interface EntitiesProvider<FILTER, OBSERVABLE> extends Filterable<FILTER>, Observable<OBSERVABLE>, Service {
 

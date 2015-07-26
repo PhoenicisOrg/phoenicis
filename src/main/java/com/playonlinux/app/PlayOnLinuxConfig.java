@@ -18,29 +18,29 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.core.log.LoggerFactory;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
-import com.playonlinux.ui.api.CommandLineInterpreterFactory;
-import com.playonlinux.ui.events.EventHandler;
-import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
-import com.playonlinux.core.scripts.InstallerSource;
-import com.playonlinux.core.scripts.ScriptFactory;
-import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
 import com.playonlinux.core.lang.LanguageBundle;
 import com.playonlinux.core.lang.LanguageBundleSelector;
+import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
+import com.playonlinux.core.scripts.InstallerSource;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
+import com.playonlinux.core.scripts.ScriptFactory;
+import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.engines.wine.WineVersionSource;
+import com.playonlinux.engines.wine.WineversionsSourceWebserviceDefaultImplementation;
+import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.Controller;
+import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.engines.wine.WineVersionSource;
-import com.playonlinux.engines.wine.WineversionsSourceWebserviceDefaultImplementation;
 
 import java.net.MalformedURLException;
 import java.net.URL;

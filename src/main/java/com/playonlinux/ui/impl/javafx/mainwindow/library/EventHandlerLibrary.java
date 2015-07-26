@@ -19,21 +19,18 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
-import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
+import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.impl.javafx.common.ErrorMessage;
-import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.MalformedURLException;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
 class EventHandlerLibrary implements UIEventHandler {

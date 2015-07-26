@@ -19,8 +19,8 @@
 package com.playonlinux.core.utils.archive;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.utils.FileAnalyser;
 import org.apache.log4j.Logger;
 

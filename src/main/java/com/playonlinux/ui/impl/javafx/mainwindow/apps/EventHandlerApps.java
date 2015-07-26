@@ -23,12 +23,11 @@ import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
-import com.playonlinux.apps.entities.ScriptEntity;
-import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
+import com.playonlinux.ui.events.EventHandler;
 
 
 @Scan

@@ -18,8 +18,6 @@
 
 package com.playonlinux.wine.registry;
 
-import java.text.ParseException;
-
 public class RegistryValue<TYPE extends AbstractValueType>
         extends AbstractRegistryNode {
 

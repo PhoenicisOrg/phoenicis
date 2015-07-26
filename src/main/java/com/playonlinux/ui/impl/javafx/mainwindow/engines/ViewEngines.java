@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.engines;
 
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
@@ -25,8 +27,6 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.widget.StaticMiniature;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;

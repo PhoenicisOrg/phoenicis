@@ -21,22 +21,19 @@ package com.playonlinux.core.utils.archive;
 import com.google.common.io.CountingInputStream;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.function.Function;
 import java.util.zip.GZIPInputStream;
 

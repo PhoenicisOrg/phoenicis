@@ -18,8 +18,6 @@
 
 package com.playonlinux.core.config;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-
 import java.io.IOException;
 
 public interface ConfigFile {
