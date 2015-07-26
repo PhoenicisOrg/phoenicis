@@ -120,7 +120,7 @@ public class PythonInstallerTest {
 
         pythonInstaller.exec();
 
-        assertEquals("Implementation has to be done, but we have access to prefix (Prefix), " +
+        assertEquals("[main] Implementation has to be done, but we have access to prefix (Prefix), " +
                 "wineversion (1.7.34), steamId (130) and packages (['package1', 'package2'])." +
                 " First package (to check that we have a list: package1\n", FileUtils.readFileToString(temporaryOutput));
     }
