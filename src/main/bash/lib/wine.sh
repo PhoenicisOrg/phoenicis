@@ -118,6 +118,8 @@ POL_Wine ()
         shift
     fi
 
+    [ "$POL_WINEPREFIX" = "" ] && export POL_WINEPREFIX="$(basename "$WINEPREFIX")"
+
     POL_Wine_AutoSetVersionEnv
     POL_Debug_Message "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
     POL_Debug_LogToPrefix "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"

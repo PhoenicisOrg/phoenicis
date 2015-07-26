@@ -58,7 +58,7 @@ class CommandParser(object):
             else:
                 windowTitle = "${application.name} Wizard";
 
-            self.setupWindowManager.newWindow(setupWindowId, windowTitle)
+            self.setupWindowManager.newWindow(setupWindowId, windowTitle).init()
 
         def POL_SetupWindow_message(self):
             setupWindowId = self.command[2]
@@ -161,9 +161,8 @@ class CommandParser(object):
             raise ScriptFailureException(self.command[3])
 
         def POL_Print(self):
-            setupWindowId = self.command[2]
             message = self.command[3]
-            self.setupWindowManager.getWindow(setupWindowId).log(message)
+            self.setupWindowManager.template.log(message)
 
         def POL_Wine_InstallVersion(self):
             setupWindowId = self.command[2]

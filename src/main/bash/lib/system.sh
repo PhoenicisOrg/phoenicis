@@ -130,3 +130,8 @@ POL_base64()
 {
 	openssl base64
 }
+
+POL_RequiredVersion()
+{
+    return 0;
+}
