@@ -84,7 +84,7 @@ POL_Wine_SelectPrefix()
 
     [ -z "$PREFNAME" ] && POL_Debug_Fatal "Bad or empty virtual drive name selected"
     export WINEPREFIX="$POL_USER_ROOT/wineprefix/$PREFNAME"
-    export DOSPREFIX="$WINEPREFIX"
+    export POL_WINEPREFIX="$PREFNAME"
 
     if [ -e "$WINEPREFIX/playonlinux.cfg" ]; then
         export POL_WINEVERSION="$(POL_Config_PrefixRead VERSION)"

@@ -18,19 +18,25 @@
 
 package com.playonlinux.core.observer;
 
-import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.core.services.manager.ServiceManager;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.io.File;
 
-public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImplementation<T> implements Service {
+@Scan
+public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImplementation<T> implements Service, AutoCloseable{
+    @Inject
+    static ServiceManager serviceManager;
+
     protected int checkInterval = 1000;
     protected File observedDirectory;
 
-    protected void validate() throws PlayOnLinuxException {
+    protected void validate() {
         if(observedDirectory.exists() && !observedDirectory.isDirectory()) {
-            throw new PlayOnLinuxException(String.format("The file %s is not a valid directory",
+            throw new IllegalStateException(String.format("The file %s is not a valid directory",
                     observedDirectory.toString()));
         }
     }
@@ -59,5 +65,10 @@ public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImp
         this.stop();
     }
 
+    @Override
+    public void close() {
+        this.deleteObservers();
+        serviceManager.unregister(this);
+    }
 
 }

@@ -64,7 +64,7 @@ public class InstallerSourceWebserviceImplementationTest {
                 response()
                         .withStatusCode(200)
                         .withHeaders(
-                                new Header("Content-Type", "application/json")
+                                new Header("Content-Type", "application/config")
                         )
                         .withBody("[\n" +
                                 "    {\n" +

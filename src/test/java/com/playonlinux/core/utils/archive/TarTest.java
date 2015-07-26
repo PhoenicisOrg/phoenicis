@@ -40,36 +40,6 @@ import static org.junit.Assert.*;
 public class TarTest {
     final URL inputUrl = TarTest.class.getResource(".");
 
-    static class TestContextConfig extends AbstractConfiguration {
-        @Bean
-        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
-            return new PlayOnLinuxContext();
-        }
-
-        @Bean
-        protected LanguageBundle languageBundle() {
-            return FallbackLanguageBundle.getInstance();
-        }
-
-        @Override
-        protected String definePackage() {
-            return "com.playonlinux";
-        }
-
-        @Override
-        public void close() throws Exception {
-
-        }
-    }
-
-    @Before
-    public void setUp() throws InjectionException {
-        TestContextConfig testContextConfig = new TestContextConfig();
-        testContextConfig.setStrictLoadingPolicy(false);
-        testContextConfig.load();
-    }
-
-
     @Test
     public void testUncompressTarFile() throws IOException, ArchiveException {
         testUncompress("test1.tar");

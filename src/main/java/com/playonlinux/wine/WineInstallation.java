@@ -67,19 +67,24 @@ public class WineInstallation {
         environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
     }
 
-    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment,
+    public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun, Map<String, String> environment,
                        List<String> arguments) throws WineException {
-        List<String> command = new ArrayList<>();
+
+        final Map<String, String> winePrefixEnvironment = new HashMap<>();
+        winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
+
+        final List<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
         if(arguments != null) {
             command.addAll(arguments);
         }
 
-        Map<String, String> wineEnvironment = new HashMap<>();
+        final Map<String, String> wineEnvironment = new HashMap<>();
         if(environment != null) {
             wineEnvironment.putAll(environment);
         }
+        wineEnvironment.putAll(winePrefixEnvironment);
 
         this.addPathInfoToEnvironment(wineEnvironment);
 
@@ -95,16 +100,17 @@ public class WineInstallation {
         }
     }
 
-    public Process run(File workingDirectory, String executableToRun, Map<String, String> environment) throws WineException {
-        return this.run(workingDirectory, executableToRun, environment, null);
+    public Process createPrefix(WinePrefix winePrefix) throws WineException {
+        winePrefix.createConfigFile(this.distribution, this.version);
+        return this.run(winePrefix, winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND);
     }
 
-    public Process createPrefix(WinePrefix winePrefix) throws WineException {
-        Map<String, String> winePrefixEnvironment = new HashMap<>();
-        winePrefixEnvironment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
-        winePrefix.createConfigFile(this.distribution, this.version);
+    public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun, Map<String, String> environment) throws WineException {
+        return this.run(winePrefix, workingDirectory, executableToRun, environment, null);
+    }
 
-        return this.run(winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND, winePrefixEnvironment);
+    private Process run(WinePrefix winePrefix, File workingDirectgory, String executableToRun) throws WineException {
+        return this.run(winePrefix, workingDirectgory, executableToRun, null);
     }
 
     public void killAllProcess(WinePrefix winePrefix) throws IOException {
@@ -116,11 +122,11 @@ public class WineInstallation {
     }
 
     private void runWineServerCommand(WinePrefix winePrefix, String parameter) throws IOException {
-        Map<String, String> environment = new HashMap<>();
+        final Map<String, String> environment = new HashMap<>();
         this.addPathInfoToEnvironment(environment);
         environment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
 
-        List<String> command = new ArrayList<>();
+        final List<String> command = new ArrayList<>();
         command.add(this.fetchWineServerExecutablePath().getAbsolutePath());
         command.add(parameter);
 

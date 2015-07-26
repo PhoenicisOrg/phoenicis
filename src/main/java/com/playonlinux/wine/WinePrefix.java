@@ -19,7 +19,11 @@
 package com.playonlinux.wine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.core.config.CompatibleConfigFileFormat;
+import com.playonlinux.core.config.ConfigFile;
+import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.Files;
+import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.wine.registry.RegistryKey;
@@ -82,14 +86,6 @@ public class WinePrefix {
         return new File(winePrefixDirectory, DRIVE_C);
     }
 
-    public Version fetchVersion() {
-        return null;
-    }
-
-    public String fetchArchitecture() {
-        return null;
-    }
-
     public String getAbsolutePath() {
         return this.winePrefixDirectory.getAbsolutePath();
     }
@@ -147,33 +143,24 @@ public class WinePrefix {
     }
 
     public void createConfigFile(WineDistribution wineDistribution, Version version) throws WineException {
-        final Map<String, String> configContent = new HashMap<>();
-        final ObjectMapper objectMapper = new ObjectMapper();
-
-        configContent.put("distributionCode", wineDistribution.getDistributionCode());
-        configContent.put("operatingSystem", wineDistribution.getOperatingSystem().name());
-        configContent.put("architecture", wineDistribution.getArchitecture().name());
-        configContent.put("version", version.toString());
-
-        final File configFile = new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE);
-
         this.createPrefixDirectory();
-        if(configFile.exists()) {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+
+        if(initialized()) {
             throw new WineException("Prefix already exists: " + getWinePrefixDirectory());
         }
 
         try {
-            if(configFile.createNewFile()) {
-                try (PrintWriter fileOutputWriter = new PrintWriter(configFile)) {
-                    objectMapper.writeValue(fileOutputWriter, configContent);
-                }
-            } else {
-                throw new WineException("Cannot create file: " + configFile);
-            }
+            prefixConfigFile.writeValue("distributionCode", wineDistribution.getDistributionCode());
+            prefixConfigFile.writeValue("operatingSystem", wineDistribution.getOperatingSystem().name());
+            prefixConfigFile.writeValue("architecture", wineDistribution.getArchitecture().name());
+            prefixConfigFile.writeValue("version", version.toString());
         } catch (IOException e) {
-            throw new WineException(e);
+            throw new WineException("Error while writing data on config file", e);
         }
+
     }
+
 
     private void createPrefixDirectory() throws WineException {
         if(!this.winePrefixDirectory.exists()) {
@@ -183,9 +170,52 @@ public class WinePrefix {
         }
     }
 
-    public WineDistribution fetchDistribution() {
-        return null;
+    public Version fetchVersion() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if(prefixConfigFile.contains("version")) {
+            return new Version(prefixConfigFile.readValue("version"));
+        } else if (prefixConfigFile.contains("VERSION")) {
+            return new Version(prefixConfigFile.readValue("VERSION"));
+        }
+
+        // FIXME: Handle this case with a default version
+        throw new IllegalStateException("Prefix does not contain any version information");
     }
 
+    public OperatingSystem fetchOperatingSystem() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if(prefixConfigFile.contains("operatinSystem")) {
+            return OperatingSystem.valueOf(prefixConfigFile.readValue("operatingSystem"));
+        }
 
+        return OperatingSystem.fetchCurrentOperationSystem();
+    }
+
+    public Architecture fetchArchitecture() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if(prefixConfigFile.contains("architecture")) {
+            return Architecture.valueOf(prefixConfigFile.readValue("architecture"));
+        } else if (prefixConfigFile.contains("ARCH")) {
+            return Architecture.fromWinePackageName(prefixConfigFile.readValue("ARCH"));
+        }
+
+        // FIXME : Handle this case with a default architecture
+        throw new IllegalStateException("Prefix does not contain any architecture information");
+    }
+
+    public WineDistribution fetchDistribution() {
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        String distribution;
+        if(prefixConfigFile.contains("distributionCode")) {
+            distribution = prefixConfigFile.readValue("distributionCode");
+        } else {
+            distribution = "upstream";
+        }
+
+        return new WineDistribution(fetchOperatingSystem(), fetchArchitecture(), distribution);
+    }
+
+    public ConfigFile getPrefixConfigFile() {
+        return new CompatibleConfigFileFormat(new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE));
+    }
 }
