@@ -7,9 +7,9 @@ class Example(Installer):
     def main(self):
         setupWizard = self.getSetupWizard()
 
-        Wine(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.35")
+        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.35")
 
-        Wine(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.35")
-        Wine(self.getSetupWizard()).selectPrefix("TestPrefix2").createPrefix("1.4.1", "upstream")
+        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.35")
+        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix2").createPrefix("1.4.1", "upstream")
 
         setupWizard.close()

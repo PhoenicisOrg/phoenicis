@@ -35,7 +35,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 @ScriptClass
 @SuppressWarnings("unused")
-public class Downloader {
+public class Downloader implements SetupWizardComponent {
     String MD5_CHECKSUM = "md5";
 
     private SetupWizard setupWizard;
@@ -50,10 +50,15 @@ public class Downloader {
 
     }
 
-    public Downloader(SetupWizard setupWizard) {
+    private Downloader(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
+    public static Downloader wizard(SetupWizard setupWizard) {
+        Downloader downloaderInstance = new Downloader(setupWizard);
+        setupWizard.registerComponent(downloaderInstance);
+        return new Downloader(setupWizard);
+    }
     public Downloader(ProgressControl progressControl) {
         this.progressControl = progressControl;
     }
@@ -149,4 +154,8 @@ public class Downloader {
     }
 
 
+    @Override
+    public void close() {
+        // Nothing to do for the moment
+    }
 }

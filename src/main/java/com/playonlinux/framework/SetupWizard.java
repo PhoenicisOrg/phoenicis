@@ -36,14 +36,16 @@ import org.python.modules.Setup;
 
 import java.io.*;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
-public class SetupWizard {
-
+public class SetupWizard implements AutoCloseable {
     private static final Logger LOGGER = Logger.getLogger(Setup.class);
+
     @Inject
     static Controller controller;
 
@@ -59,6 +61,7 @@ public class SetupWizard {
     private WeakReference<SetupWindow> setupWindow;
     private ScriptLogger logContext;
 
+    private final List<WeakReference<SetupWizardComponent>> components;
 
     /**
      * Create the setupWindow
@@ -67,6 +70,7 @@ public class SetupWizard {
      */
     public SetupWizard(String title) {
         this.title = title;
+        this.components = new ArrayList<>();
     }
 
     public void init() {
@@ -109,7 +113,10 @@ public class SetupWizard {
                     }
                 }
         );
+
+        closeComponents();
     }
+
 
     /**
      * Shows a simple showSimpleMessageStep
@@ -353,4 +360,19 @@ public class SetupWizard {
     public String getTitle() {
         return title;
     }
+
+    public void registerComponent(SetupWizardComponent setupWizardComponent) {
+        components.add(new WeakReference<>(setupWizardComponent));
+    }
+
+    private void closeComponents() {
+        for(WeakReference<SetupWizardComponent> setupWizardComponentWeakReference: components) {
+            SetupWizardComponent componentToClose = setupWizardComponentWeakReference.get();
+            if(componentToClose != null) {
+                componentToClose.close();
+            }
+        }
+    }
+
+
 }

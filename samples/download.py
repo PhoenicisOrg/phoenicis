@@ -7,6 +7,6 @@ class Example(Installer):
     def main(self):
         setupWizard = self.getSetupWizard()
 
-        Downloader(setupWizard).get("http://download.spotify.com/Spotify%20Installer.exe", "/tmp/test.exe")
+        Downloader.wizard(setupWizard).get("http://download.spotify.com/Spotify%20Installer.exe", "/tmp/test.exe")
 
         setupWizard.close()

@@ -23,6 +23,7 @@ import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.ScriptLogger;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
@@ -118,8 +119,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
             } finally {
                 if(scriptLogger != null) {
                     try {
-                        scriptLogger.flush();
-                        scriptLogger.close();
+                        loggerFactory.close(scriptLogger);
                     } catch (IOException e) {
                         LOGGER.warn("Unable to flush script log stream", e);
                     }

@@ -50,7 +50,7 @@ import static java.lang.String.format;
 @Scan
 @ScriptClass
 @SuppressWarnings("unused")
-public class Wine {
+public class Wine implements SetupWizardComponent {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -77,8 +77,14 @@ public class Wine {
 
     private int lastReturnCode = -1;
 
-    public Wine(SetupWizard setupWizard) {
+    private Wine(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
+    }
+
+    public static Wine wizard(SetupWizard setupWizard) {
+        Wine wineInstance = new Wine(setupWizard);
+        setupWizard.registerComponent(wineInstance);
+        return new Wine(setupWizard);
     }
 
     /**
@@ -410,6 +416,18 @@ public class Wine {
         return this;
     }
 
+
+    /**
+     * Run wine in the prefix in foreground
+     * @return the same object
+     * @throws ScriptFailureException if the wine prefix is not initialized
+     */
+    public Wine runForeground(String workingDirectory, String executableToRun, List<String> arguments,
+                              Map<String, String> environment) throws CancelException {
+        return runForeground(new File(workingDirectory), executableToRun, arguments, environment);
+    }
+
+
     /**
      * Run wine in the prefix in foreground
      * @return the same object
@@ -577,6 +595,12 @@ public class Wine {
     private void validateWineInstallationInitialized() throws ScriptFailureException {
         if(wineInstallation == null) {
             throw new ScriptFailureException("The prefix must be initialized before running wine");
+        }
+    }
+
+    public void close() {
+        if(prefix != null) {
+            prefix.close();
         }
     }
 

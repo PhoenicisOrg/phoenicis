@@ -59,4 +59,18 @@ public class LoggerFactory {
         }
         return winePrefixLoggers.get(prefixName);
     }
+
+    public synchronized void close(ScriptLogger scriptLogger) throws IOException {
+        scriptLogger.flush();
+        scriptLogger.close();
+        scriptLoggers.values().remove(scriptLogger);
+    }
+
+    public synchronized void close(WinePrefixLogger winePrefixLogger) throws IOException {
+        winePrefixLogger.flush();
+        winePrefixLogger.close();
+        scriptLoggers.values().remove(winePrefixLogger);
+    }
+
+
 }

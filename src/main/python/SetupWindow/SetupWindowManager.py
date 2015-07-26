@@ -35,6 +35,7 @@ class SetupWindowManager(object):
 
     def newWindow(self, windowId, title):
         self.managedWindows[windowId] = SetupWizard(title)
+        self.managedWindows[windowId].init()
         return self.managedWindows[windowId]
 
     def closeAll(self):

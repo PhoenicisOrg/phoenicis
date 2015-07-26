@@ -122,23 +122,8 @@ POL_Wine ()
     POL_Debug_Message "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
     POL_Debug_LogToPrefix "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
 
+    errors="$(toPythonRet "POL_Wine" "$PWD" "$POL_WINEPREFIX" "$@")"
 
-
-
-    if [ "$POL_OS" = "Linux" ] || [ "$POL_OS" = "Mac" ];
-    then
-        if [ "$LOGFILE" = "/dev/null" -o "$LOGFILE" = "" ]; then
-            $BEFORE_WINE $(POL_Config_Read BEFORE_WINE) wine "$@"  2> >(grep -v menubuilder --line-buffered | tee -a "$WINEPREFIX/playonlinux.log" >&2) > >(tee -a "$WINEPREFIX/playonlinux.log")
-            errors=$?
-        else
-            $BEFORE_WINE $(POL_Config_Read BEFORE_WINE) wine "$@" 2> >(grep -v menubuilder --line-buffered | tee -a "$LOGFILE" "$WINEPREFIX/playonlinux.log" >&2) > >(tee -a "$LOGFILE" "$WINEPREFIX/playonlinux.log")
-            errors=$?
-        fi
-    else
-        # FIXME
-        $BEFORE_WINE $(POL_Config_Read BEFORE_WINE) wine "$@"  2> "$WINEPREFIX/playonlinux.log" > "$WINEPREFIX/playonlinux.log"
-        errors=$?
-    fi
 
     if [ "$errors" != 0 -a "$NoErrors" != "True" -a "$POL_IgnoreWineErrors" != "True" ]; then
         POL_Debug_Error "$(eval_gettext 'Wine seems to have crashed\n\nIf your program is running, just ignore this message')"

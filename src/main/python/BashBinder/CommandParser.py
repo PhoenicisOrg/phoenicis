@@ -180,30 +180,28 @@ class CommandParser(object):
 
             try:
                 arch = self.command[5]
-                arch = Architecture.fromWinePackageName(arch).name
+                arch = str(Architecture.fromWinePackageName(arch).name())
             except IndexError:
                 arch = None
 
             if(arch is not None):
-                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, "upstream", arch)
+                Wine.wizard(setupWindow).selectPrefix(prefixName).createPrefix(version, "upstream", arch)
             else:
-                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, arch)
+                Wine.wizard(setupWindow).selectPrefix(prefixName).createPrefix(version, arch)
 
 
         def POL_Wine(self):
             setupWindowId = self.command[2]
             setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+            workingDirectory = self.command[3]
+            prefixName = self.command[4]
+            prgmName = self.command[5]
 
-            prefixName = self.command[3]
-            version = self.command[4]
+            args = self.command[6::1]
 
-            try:
-                arch = self.command[5]
-                arch = Architecture.fromWinePackageName(arch).name
-            except IndexError:
-                arch = None
-
-            if(arch is not None):
-                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, "upstream", arch)
-            else:
-                Wine(setupWindow).selectPrefix(prefixName).createPrefix(version, arch)
+            return Wine.wizard(setupWindow).selectPrefix(prefixName).runForeground(
+                workingDirectory,
+                prgmName,
+                args,
+                os.environ
+            ).getLastReturnCode()
