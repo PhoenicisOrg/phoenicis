@@ -63,7 +63,8 @@ public class WineProcessBuilder {
 
 
     Process build() throws IOException {
-        ProcessBuilder processBuilder = new ProcessBuilder(command).directory(workingDirectory);
+        ProcessBuilder processBuilder = new ProcessBuilder(command)
+                .directory(workingDirectory);
 
         Map<String, String> processEnvironment = processBuilder.environment();
         if(environment != null) {

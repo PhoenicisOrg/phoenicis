@@ -122,14 +122,26 @@ POL_Wine ()
     POL_Debug_Message "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
     POL_Debug_LogToPrefix "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
 
-    errors="$(toPythonRet "POL_Wine" "$PWD" "$POL_WINEPREFIX" "$@")"
+    local outputFifo="/tmp/$(POL_Rand)"
+    local errFifo="/tmp/$(POL_Rand)"
 
+    mkfifo "$outputFifo"
+    mkfifo "$errFifo"
+
+    cat "$outputFifo" > /dev/stdout &
+    cat "$errFifo" > /dev/stderr &
+
+    exitCode="$(toPythonRet "POL_Wine" "$PWD" "$POL_WINEPREFIX" "$outputFifo" "$errFifo" "$inputFifo" "$@")"
 
     if [ "$errors" != 0 -a "$NoErrors" != "True" -a "$POL_IgnoreWineErrors" != "True" ]; then
         POL_Debug_Error "$(eval_gettext 'Wine seems to have crashed\n\nIf your program is running, just ignore this message')"
     fi
-    POL_Debug_Message "Wine return: $errors"
-    return $errors
+    POL_Debug_Message "Wine return: $exitCode"
+
+    rm "$outputFifo"
+    rm "$errFifo"
+
+    return $exitCode
 }
 
 POL_Wine_InstallFonts()
@@ -215,34 +227,6 @@ POL_LoadVar_PROGRAMFILES()
 }
 
 
-POL_Wine_PrefixDelete()
-{
-    [ -z "$WINEPREFIX" ] && POL_Debug_Fatal "WINEPREFIX not set"
-    local wineprefix="$WINEPREFIX"
-    wineprefix=${wineprefix//"//"/"/"}
-    local shortcuts=()
-    local OLDIFS="$IFS"
-    IFS=$'\n'
-    cd "$POL_USER_ROOT/shortcuts/" &&
-    for shortcut in *
-    do
-        [ "$(detect_wineprefix "$shortcut")" = "$wineprefix" ] && shortcuts+=("$shortcut")
-    done
-    IFS="$OLDIFS"
-
-    # cf MainWindow.DeletePrefix()
-    POL_SetupWindow_wait_next_signal "$(eval_gettext 'Uninstalling...')" "$(eval_gettext '$APPLICATION_TITLE Uninstaller')"
-    if [ "${#shortcuts[@]}" -gt 0 ]; then
-        POL_Debug_Warning "$wineprefix is still in use by ${#shortcuts[@]} shortcuts, removing them first"
-        for shortcut in "${shortcuts[@]}"; do
-            POL_Debug_Message "Removing shortcut $shortcut..."
-            bash "$PLAYONLINUX/bash/uninstall" --non-interactive "$shortcut"
-        done
-    fi
-
-    clean_wineprefix --non-interactive "$WINEPREFIX"
-}
-
 POL_Wine_WaitExit ()
 {
     # Lock bash commands until wine is exited
@@ -308,6 +292,7 @@ EOF
 	POL_Wine regedit "$POL_USER_ROOT/tmp/override-dll.reg"
 	rm "$POL_USER_ROOT/tmp/override-dll.reg"
 }
+
 POL_Wine_DelOverrideDLL()
 {
 	# Delete override DLLs
