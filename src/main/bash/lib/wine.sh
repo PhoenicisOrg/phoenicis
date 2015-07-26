@@ -308,6 +308,7 @@ EOF
 	POL_Wine regedit "$POL_USER_ROOT/tmp/override-dll.reg"
 	rm "$POL_USER_ROOT/tmp/override-dll.reg"
 }
+
 POL_Wine_DelOverrideDLL()
 {
 	# Delete override DLLs

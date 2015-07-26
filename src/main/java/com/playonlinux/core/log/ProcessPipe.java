@@ -23,23 +23,27 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 @Scan
-public class ProcessLogger implements Service {
+public class ProcessPipe implements Service {
     @Inject
-    private static ServiceManager serviceManager;
+    static ServiceManager serviceManager;
 
     private final Process process;
-    private final ScriptLogger logContext;
+    private final OutputStream redirectOutputStream;
+    private final OutputStream redirectErrorStream;
+    private final InputStream redirectInputStream;
     private boolean running = true;
 
-    public ProcessLogger(Process process, ScriptLogger logContext) {
+    public ProcessPipe(Process process,
+                       OutputStream outputStream,
+                       OutputStream errorStream,
+                       InputStream inputStream) {
         this.process = process;
-        this.logContext = logContext;
+        this.redirectOutputStream = outputStream;
+        this.redirectErrorStream = errorStream;
+        this.redirectInputStream = inputStream;
     }
 
     @Override
@@ -51,27 +55,39 @@ public class ProcessLogger implements Service {
     public void start() {
         final InputStream inputStream = process.getInputStream();
         final InputStream errorStream = process.getErrorStream();
+        final OutputStream outputStream = process.getOutputStream();
 
-        final BufferedReader stdOutReader = new BufferedReader(new InputStreamReader(inputStream));
-        final BufferedReader stdErrReader = new BufferedReader(new InputStreamReader(errorStream));
+
+        byte[] blocksStderr = new byte[128];
+        byte[] blocksStdout = new byte[128];
+        byte[] blocksStdin = new byte[128];
 
         while(running) {
             try {
-                final String stdErrNextLine = stdErrReader.readLine();
-                final String stdOutNextLine = stdOutReader.readLine();
+                boolean readStderr = errorStream.read(blocksStderr) != -1;
+                boolean readStdout = inputStream.read(blocksStdout) != -1;
+                boolean readStdin = redirectInputStream.read(blocksStdin) != -1;
 
+                if(process.isAlive() && readStdin) {
+                    outputStream.write(blocksStdin);
+                    outputStream.flush();
+                }
 
-                if(stdErrNextLine == null && stdOutNextLine == null && !process.isAlive()) {
+                if(readStderr) {
+                    redirectErrorStream.write(blocksStderr);
+                    redirectErrorStream.flush();
+                }
+
+                if(readStdout) {
+                    redirectOutputStream.write(blocksStdout);
+                    redirectOutputStream.flush();
+                }
+
+                if(!process.isAlive() && !readStderr && !readStdout) {
                     running = false;
+                    break;
                 }
 
-                if(stdErrNextLine != null) {
-                    logContext.write((stdErrNextLine + "\n").getBytes());
-                }
-
-                if(stdOutNextLine != null) {
-                    logContext.write((stdOutNextLine + "\n").getBytes());
-                }
 
             } catch (IOException e) {
                 running = false;

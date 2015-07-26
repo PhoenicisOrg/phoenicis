@@ -13,5 +13,9 @@ POL_Wine_PrefixCreate "1.7.35"
 POL_Wine winecfg
 POL_Wine winecfg arg1 arg2 arg3
 
+POL_LoadVar_PROGRAMFILES
+
+POL_SetupWindow_message "$PROGRAMFILES"
+
 POL_SetupWindow_Close
 exit

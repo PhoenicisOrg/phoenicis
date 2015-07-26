@@ -24,7 +24,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
-import com.playonlinux.core.log.ProcessLogger;
+import com.playonlinux.core.log.ProcessPipe;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -237,8 +237,8 @@ public class Wine implements SetupWizardComponent {
                     .run(prefix, workingDirectory, executableToRun, environment, arguments);
 
             if(this.setupWizard.getLogContext() != null) {
-                ProcessLogger processLogger = new ProcessLogger(process, this.setupWizard.getLogContext());
-                backgroundServicesManager.register(processLogger);
+                ProcessPipe processPipe = new ProcessPipe(process, this.setupWizard.getLogContext());
+                backgroundServicesManager.register(processPipe);
             }
             return process;
         } catch (ServiceException | WineException e) {

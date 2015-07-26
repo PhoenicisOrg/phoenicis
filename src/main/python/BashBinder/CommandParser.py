@@ -203,5 +203,5 @@ class CommandParser(object):
                 workingDirectory,
                 prgmName,
                 args,
-                os.environ
+                {}
             ).getLastReturnCode()
