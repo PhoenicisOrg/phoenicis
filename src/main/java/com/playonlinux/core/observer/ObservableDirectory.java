@@ -27,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.io.File;
 
 @Scan
-public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImplementation<T> implements Service, AutoCloseable{
+public abstract class ObservableDirectory<T> extends ObservableDefaultImplementation<T> implements Service, AutoCloseable{
     @Inject
     static ServiceManager serviceManager;
 
@@ -48,8 +48,6 @@ public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImp
     @Override
     public abstract void start();
 
-    public abstract void stop();
-
     public File getObservedDirectory() {
         return observedDirectory;
     }
@@ -62,12 +60,11 @@ public abstract class ObservableDefaultDirectory<T> extends ObservableDefaultImp
     }
     @Override
     public void shutdown() {
-        this.stop();
+        this.deleteObservers();
     }
 
     @Override
     public void close() {
-        this.deleteObservers();
         serviceManager.unregister(this);
     }
 

@@ -25,13 +25,13 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 
-public class ObservableDefaultDirectorySize extends ObservableDefaultDirectory<ProgressStateEntity> {
+public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEntity> {
     private final long startSize;
     private final long endSize;
     private final ObservableDirectoryThread observableDirectoryThread;
-    private static final Logger LOGGER = Logger.getLogger(ObservableDefaultDirectorySize.class);
+    private static final Logger LOGGER = Logger.getLogger(ObservableDirectorySize.class);
 
-    public ObservableDefaultDirectorySize(File observedDirectory, long startSize, long endSize) {
+    public ObservableDirectorySize(File observedDirectory, long startSize, long endSize) {
         this.startSize = startSize;
         this.endSize = endSize;
 
@@ -47,10 +47,10 @@ public class ObservableDefaultDirectorySize extends ObservableDefaultDirectory<P
     }
 
     @Override
-    public void stop() {
+    public void shutdown() {
         observableDirectoryThread.stopChecking();
+        super.shutdown();
     }
-
     public File getObservedDirectory() {
         return observedDirectory;
     }
@@ -63,10 +63,10 @@ public class ObservableDefaultDirectorySize extends ObservableDefaultDirectory<P
     }
 
     private class ObservableDirectoryThread extends Thread {
-        private final ObservableDefaultDirectorySize observableDirectorySize;
+        private final ObservableDirectorySize observableDirectorySize;
         private volatile Boolean running;
 
-        ObservableDirectoryThread(ObservableDefaultDirectorySize observableDirectorySize) {
+        ObservableDirectoryThread(ObservableDirectorySize observableDirectorySize) {
             super();
             this.running = false;
             this.observableDirectorySize = observableDirectorySize;

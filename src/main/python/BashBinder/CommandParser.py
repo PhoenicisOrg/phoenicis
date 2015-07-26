@@ -28,7 +28,7 @@ from com.playonlinux.framework import Wine
 from com.playonlinux.core.utils import Architecture
 
 from java.net import URL
-from java.io import File, FileInputStream, FileOutputStream
+from java.io import File, FileOutputStream
 
 class CommandParser(object):
     def __init__(self, setupWindowManager, command):

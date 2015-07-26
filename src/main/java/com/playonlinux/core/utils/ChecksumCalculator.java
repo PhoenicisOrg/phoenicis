@@ -18,8 +18,8 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 

@@ -22,9 +22,9 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LoggerFactory;
-import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.*;
+import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
@@ -38,7 +38,6 @@ import java.io.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.WeakHashMap;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 

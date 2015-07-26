@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.cli;
 
-import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.messages.Message;
 import com.playonlinux.core.messages.SynchronousMessage;
+import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.UIMessageSender;
 
 public class UIMessageSenderCLIImplementation<T> implements UIMessageSender<T> {

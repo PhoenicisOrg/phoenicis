@@ -18,7 +18,10 @@
 
 package com.playonlinux.core.utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public final class ExeAnalyser {

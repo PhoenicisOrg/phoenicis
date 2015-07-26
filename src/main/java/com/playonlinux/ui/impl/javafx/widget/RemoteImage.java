@@ -33,7 +33,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.function.Function;
 
 /**
  * This class has been created to facilitate the integration of remote images inside PlayOnLinux app

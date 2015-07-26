@@ -18,19 +18,19 @@
 
 package com.playonlinux.engines.wine;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
-import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
-import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
-import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
+import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
+import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.core.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;

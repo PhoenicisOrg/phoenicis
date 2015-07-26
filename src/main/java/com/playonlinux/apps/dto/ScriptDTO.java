@@ -19,9 +19,9 @@
 package com.playonlinux.apps.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.AbstractDTO;
 import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.core.comparator.Nameable;
 
 import java.util.List;
 

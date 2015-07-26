@@ -18,8 +18,8 @@
 
 package com.playonlinux.apps.dto;
 
-import com.playonlinux.core.dto.AbstractDTO;
 import com.playonlinux.core.comparator.Nameable;
+import com.playonlinux.core.dto.AbstractDTO;
 
 import java.util.Comparator;
 import java.util.List;

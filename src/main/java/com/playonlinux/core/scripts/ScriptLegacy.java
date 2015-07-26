@@ -18,9 +18,9 @@
 
 package com.playonlinux.core.scripts;
 
+import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.utils.FileAnalyser;
 import com.playonlinux.framework.ScriptFailureException;
-import com.playonlinux.core.injection.Inject;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 

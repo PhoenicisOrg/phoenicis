@@ -20,7 +20,6 @@ package com.playonlinux.ui.impl.javafx;
 
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import javafx.application.Application;
-
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;

@@ -19,34 +19,30 @@
 package com.playonlinux.engines.wine;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.utils.ChecksumCalculator;
-import com.playonlinux.core.webservice.DownloadException;
-import com.playonlinux.core.webservice.HTTPDownloader;
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.AutoStartedService;
-
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.Observable;
-
-import com.playonlinux.core.webservice.DownloadEnvelope;
-import com.playonlinux.engines.wine.dto.WineVersionWebDTO;
-import com.playonlinux.framework.Checksum;
-import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.archive.ArchiveException;
 import com.playonlinux.core.utils.archive.Extractor;
 import com.playonlinux.core.version.Version;
+import com.playonlinux.core.webservice.DownloadEnvelope;
+import com.playonlinux.core.webservice.DownloadException;
+import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
+import com.playonlinux.engines.wine.dto.WineVersionWebDTO;
+import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 

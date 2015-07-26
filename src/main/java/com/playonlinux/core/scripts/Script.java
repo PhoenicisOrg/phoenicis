@@ -19,12 +19,12 @@
 package com.playonlinux.core.scripts;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.framework.ScriptFailureException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.PyException;

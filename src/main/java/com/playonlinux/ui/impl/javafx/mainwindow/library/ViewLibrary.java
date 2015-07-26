@@ -19,15 +19,15 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.python.CommandInterpreterException;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
-import com.playonlinux.library.LibraryFilter;
-import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.python.CommandInterpreterException;
+import com.playonlinux.library.LibraryFilter;
+import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.dto.LibraryWindowDTO;
+import com.playonlinux.ui.api.EntitiesProvider;
+import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;

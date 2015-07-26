@@ -27,7 +27,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -47,28 +49,23 @@ public class LegacyWrapperTest {
     @Test
     public void testLegacyWrapper() throws Exception {
         File tmpFile = new File("/tmp/POL_WrapperTest");
-        //ensure temporary file does not exist before running the testScript
-        if(tmpFile.exists()){
-            tmpFile.delete();
+        if(tmpFile.exists() && !tmpFile.delete()) {
+            fail();
         }
+
         File testScript = new File(this.getClass().getResource("wrapperTestScript.sh").getPath());
-        ExecutorService mockExecutorService = mock(ExecutorService.class);
-        Future mockFuture = mock(Future.class);
-        when(mockExecutorService.submit(any(Runnable.class))).thenAnswer(invocation -> {
-            Object[] args = invocation.getArguments();
-            Runnable runnable = (Runnable) args[0];
-            runnable.run();
-            return mockFuture;
-        });
+
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         final ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation()
-                .withExecutor(mockExecutorService);
+                .withExecutor(executorService);
 
-        final Script testScriptWrapper = scriptFactory
-                .createInstance(testScript);
+        final Script testScriptWrapper = scriptFactory.createInstance(testScript);
 
         testScriptWrapper.start();
-        //file should exist now
+        executorService.shutdown();
+        executorService.awaitTermination(5, TimeUnit.SECONDS);
+
         assertTrue(tmpFile.exists());
     }
 

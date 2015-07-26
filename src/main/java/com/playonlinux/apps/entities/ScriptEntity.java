@@ -18,8 +18,8 @@
 
 package com.playonlinux.apps.entities;
 
-import com.playonlinux.core.entities.Entity;
 import com.playonlinux.core.comparator.Nameable;
+import com.playonlinux.core.entities.Entity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class ScriptEntity implements Entity, Nameable {

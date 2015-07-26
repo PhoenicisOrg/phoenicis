@@ -18,9 +18,17 @@
 
 package com.playonlinux.core.utils;
 
+import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.observer.ObservableDefaultDirectoryFiles;
+import com.playonlinux.core.injection.AbstractConfiguration;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.InjectionException;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.core.services.manager.ServiceManager;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -31,9 +39,20 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
+@Scan
 public class ObservableDirectoryFilesTest {
+    @Inject
+    static ServiceManager serviceManager;
 
     private static final int CHECK_INTERVAL = 100;
+
+    @BeforeClass
+    public static void setUpClass() throws InjectionException {
+        AbstractConfiguration testConfigFile = new MockContextConfig();
+        testConfigFile.setStrictLoadingPolicy(false);
+        testConfigFile.load();
+    }
+
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
@@ -44,7 +63,7 @@ public class ObservableDirectoryFilesTest {
         expectedEx.expect(IllegalStateException.class);
         expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-        new ObservableDefaultDirectoryFiles(temporaryFile);
+        new ObservableDirectoryFiles(temporaryFile);
     }
 
     @Test
@@ -52,8 +71,9 @@ public class ObservableDirectoryFilesTest {
             InterruptedException {
         File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
+        reset(serviceManager);
 
-        try(ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory)) {
+        try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
             observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
             Observer observer = mock(Observer.class);
@@ -64,13 +84,11 @@ public class ObservableDirectoryFilesTest {
 
             Thread.sleep(2 * CHECK_INTERVAL);
 
-            observableDirectoryFiles.stop();
-
             temporaryDirectory.delete();
-            verify(observer, times(1)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
+            verify(observer, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
         }
 
-        // Notified once for the creation
+        verify(serviceManager).unregister(any(Service.class));
     }
 
     @Test
@@ -78,7 +96,9 @@ public class ObservableDirectoryFilesTest {
             InterruptedException, IOException {
         File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
-        try(ObservableDefaultDirectoryFiles observableDirectoryFiles = new ObservableDefaultDirectoryFiles(temporaryDirectory)) {
+        reset(serviceManager);
+
+        try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
             observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
             Observer observer = mock(Observer.class);
@@ -89,12 +109,12 @@ public class ObservableDirectoryFilesTest {
             createdFile.createNewFile();
             Thread.sleep(10 * CHECK_INTERVAL);
 
-            observableDirectoryFiles.stop();
-
             temporaryDirectory.delete();
 
-            verify(observer, times(2)).update(any(ObservableDefaultDirectoryFiles.class), anyObject());
+            verify(observer, times(2)).update(any(ObservableDirectoryFiles.class), anyObject());
         }
+
+        verify(serviceManager).unregister(any(Service.class));
     }
 
 }

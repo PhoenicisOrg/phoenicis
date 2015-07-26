@@ -18,7 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.configurewindow;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;

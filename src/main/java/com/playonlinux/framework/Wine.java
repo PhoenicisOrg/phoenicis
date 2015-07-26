@@ -21,20 +21,20 @@ package com.playonlinux.framework;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.observer.ObservableDefaultDirectorySize;
+import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
-import com.playonlinux.core.streams.ProcessPipe;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.core.streams.ProcessPipe;
 import com.playonlinux.core.streams.TeeOutputStream;
-import com.playonlinux.core.utils.ExeAnalyser;
-import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.core.utils.Architecture;
+import com.playonlinux.core.utils.ExeAnalyser;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
+import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.NullInputStream;
@@ -212,7 +212,7 @@ public class Wine implements SetupWizardComponent {
                 )
         );
 
-        try(ObservableDefaultDirectorySize observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), 0,
+        try(ObservableDirectorySize observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0,
                 NEWPREFIXSIZE)) {
             observableDirectorySize.setCheckInterval(10);
             observableDirectorySize.addObserver(progressControl);
@@ -589,7 +589,7 @@ public class Wine implements SetupWizardComponent {
                 )
         );
 
-        try (ObservableDefaultDirectorySize observableDirectorySize = new ObservableDefaultDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
+        try (ObservableDirectorySize observableDirectorySize = new ObservableDirectorySize(directory, FileUtils.sizeOfDirectory(directory),
         endSize)){
             observableDirectorySize.setCheckInterval(10);
             observableDirectorySize.addObserver(progressControl);
@@ -616,7 +616,7 @@ public class Wine implements SetupWizardComponent {
                     )
             );
 
-            try(ObservableDefaultDirectorySize observableDirectorySize = new ObservableDefaultDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
+            try(ObservableDirectorySize observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
                     0)) {
                 observableDirectorySize.setCheckInterval(10);
                 observableDirectorySize.addObserver(progressControl);

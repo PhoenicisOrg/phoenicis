@@ -18,8 +18,8 @@
 
 package com.playonlinux.wine;
 
-import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.WineDistribution;
 
 import java.io.File;
 import java.io.IOException;

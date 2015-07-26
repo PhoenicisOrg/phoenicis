@@ -28,10 +28,16 @@ import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
 import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
+import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
 public class MockContextConfig extends AbstractConfiguration {
@@ -41,8 +47,21 @@ public class MockContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected ServiceManager mockBackgroundServiceManager() {
-        return mock(ServiceManager.class);
+    protected ServiceManager mockBackgroundServiceManager() throws ServiceInitializationException {
+        final ServiceManager serviceManager = mock(ServiceManager.class);
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            ((Service) args[0]).start();
+            return null;
+        }).when(serviceManager).register(any(Service.class));
+
+        doAnswer(invocationOnMock -> {
+            Object[] args = invocationOnMock.getArguments();
+            ((Service) args[0]).shutdown();
+            return null;
+        }).when(serviceManager).unregister(any(Service.class));
+
+        return serviceManager;
     }
 
     @Bean
