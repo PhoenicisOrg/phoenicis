@@ -19,10 +19,12 @@
 package com.playonlinux;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.utils.Files;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -41,6 +43,7 @@ import java.util.List;
 @Scan
 public class PlayOnLinuxIntegrationTest {
     @Inject static PlayOnLinuxContext playOnLinuxContext;
+    @Inject static InterpreterFactory jythonInterpreterFactory;
 
     public static void setUp() throws InjectionException, IOException {
         AbstractConfiguration testConfigFile = new IntegrationContextConfig();
@@ -52,7 +55,7 @@ public class PlayOnLinuxIntegrationTest {
         home.mkdirs();
     }
 
-    public static Test suite() throws InjectionException, IOException {
+    public static Test suite() throws InjectionException, IOException, PlayOnLinuxException {
         setUp();
         final TestSuite suite = new TestSuite("PythonIntegrationCase");
 
@@ -62,7 +65,7 @@ public class PlayOnLinuxIntegrationTest {
         assert pythonFiles != null;
         for(File file: pythonFiles) {
             if(!"__init__.py".equals(file.getName())) {
-                final PythonInterpreter pythonInterpreter = new PythonInterpreter();
+                final PythonInterpreter pythonInterpreter = jythonInterpreterFactory.createInstance();
                 pythonInterpreter.setOut(new NullOutputStream());
                 pythonInterpreter.setErr(new NullOutputStream());
                 pythonInterpreter.execfile(file.getAbsolutePath());
@@ -81,6 +84,8 @@ public class PlayOnLinuxIntegrationTest {
 
                     }
                 }
+
+                jythonInterpreterFactory.close(pythonInterpreter);
             }
         }
 
