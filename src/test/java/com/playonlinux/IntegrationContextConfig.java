@@ -18,7 +18,7 @@
 
 package com.playonlinux;
 
-import com.playonlinux.app.MockPlayOnLinuxContext;
+import com.playonlinux.app.MockIntegrationContext;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.mock;
 public class IntegrationContextConfig extends AbstractConfiguration {
     @Bean
     protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
-        return new MockPlayOnLinuxContext();
+        return new MockIntegrationContext();
     }
 
     @Bean
