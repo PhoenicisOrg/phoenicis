@@ -211,3 +211,24 @@ class CommandParser(object):
                     args,
                     env
                 ).getLastReturnCode()
+
+
+        def POL_Config_PrefixRead(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+
+            prefixName = self.command[3]
+            key = self.command[4]
+
+            return Wine(setupWindow).selectPrefix(prefixName).config().readValue(key)
+
+
+        def POL_Config_PrefixWrite(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+
+            prefixName = self.command[3]
+            key = self.command[4]
+            value = self.command[5]
+
+            return Wine(setupWindow).selectPrefix(prefixName).config().writeValue(key, value)

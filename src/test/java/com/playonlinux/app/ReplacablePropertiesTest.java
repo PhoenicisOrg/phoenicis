@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
 public class ReplacablePropertiesTest {
 
     private ReplacableProperties properties;
-    private final String PROPERTIES_FILENAME = "com/playonlinux/app/playonlinuxpropertiestest.properties";
+    private final String PROPERTIES_FILENAME = "com/playonlinux/app/playonlinuxtest.properties";
 
     @Before
     public void setUp() throws IOException {
