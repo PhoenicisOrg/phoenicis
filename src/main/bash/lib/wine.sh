@@ -23,58 +23,6 @@
 # Please note that this library is deprecated and only intended for PlayOnLinux v4 backward compatibility
 
 
-
-POL_Wine_SetVersionEnv()
-{
-    # Usage: POL_Wine_SetWineVersion [VERSION]
-    # Get first argument's wine version and set PATH environment variable
-    [ ! "$1" = "" ] && export POL_WINEVERSION="$1"
-    [ "$POL_WINEVERSION" = "" ] && POL_Debug_Warning "No POL_WINEVERSION set, assuming it is reset"
-    [ "$POL_WINEVERSION" = "" ] && export POL_WINEVERSION="--reset"
-    if [ ! "$POL_WINEVERSION" = "" ]
-    then
-        [ "$POL_ARCH" = "" ] && POL_System_SetArch "auto"
-
-        #POL_Debug_Message "Setting wine version path: $POL_WINEVERSION, $POL_ARCH"
-        [ "$POL_OS" = "Mac" ] && ARCH_PREFIX="darwin"
-        [ "$POL_OS" = "FreeBSD" ] && ARCH_PREFIX="freebsd"
-        [ "$POL_OS" = "Linux" ] && ARCH_PREFIX="linux"
-        OLDPATH="$PWD"
-        WINEDIR="$POL_USER_ROOT/engines/wine/upstream-$ARCH_PREFIX-$POL_ARCH"
-        mkdir -p "$WINEDIR"
-        cd "$WINEDIR"
-
-        if [ "$POL_WINEVERSION" = "--reset" ]
-        then
-            export PATH="$PATH_ORIGIN"
-            export LD_LIBRARY_PATH="$LD_PATH_ORIGIN"
-            [ "$POL_OS" = "FreeBSD" ] && export LD_32_LIBRARY_PATH="$LD_32_PATH_ORIGIN"
-            export POL_WINEVERSION=""
-        else
-            if [ ! -e "$WINEDIR/$POL_WINEVERSION" ]
-            then
-                POL_Debug_Message "$WINEDIR/$POL_WINEVERSION does not exist"
-                POL_Debug_Message "Wine $POL_WINEVERSION not installed. Installing it"
-                POL_Wine_InstallVersion "$POL_WINEVERSION"
-            fi
-            export PATH="$WINEDIR/$POL_WINEVERSION/bin/:$PATH"
-            export LD_LIBRARY_PATH="$WINEDIR/$POL_WINEVERSION/lib/:$WINEDIR/$POL_WINEVERSION/lib64/:$LD_LIBRARY_PATH"
-            [ "$POL_OS" = "FreeBSD" ] && export LD_32_LIBRARY_PATH="$WINEDIR/$POL_WINEVERSION/lib/:$LD_32_LIBRARY_PATH"
-        fi
-    fi
-    cd "$OLDPATH"
-}
-
-POL_Wine_AutoSetVersionEnv()
-{
-    # Get the current prefix's version and set PATH environment variable
-    # Usage: POL_Wine_AutoSetVersionEnv
-    [ "$WINEPREFIX" = "" ] && POL_Debug_Fatal "WINEPREFIX is not set!"
-    POL_WINEVERSION="$(POL_Config_PrefixRead "VERSION")"
-    POL_ARCH="$(POL_Config_PrefixRead "ARCH")"
-    [ "$POL_WINEVERSION" = "" ] || POL_Wine_SetVersionEnv
-}
-
 POL_Wine_SelectPrefix()
 {
     # Select a wineprefix and remove unexpected chars
@@ -120,7 +68,6 @@ POL_Wine ()
 
     [ "$POL_WINEPREFIX" = "" ] && export POL_WINEPREFIX="$(basename "$WINEPREFIX")"
 
-    POL_Wine_AutoSetVersionEnv
     POL_Debug_Message "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
     POL_Debug_LogToPrefix "Running wine-$POL_WINEVERSION "$@" (Working directory : $PWD)"
 
@@ -184,31 +131,6 @@ POL_Wine_WaitBefore ()
         POL_SetupWindow_wait "$message" "$TITLE"
     fi
     
-}
-
-detect_wineprefix()
-{
-	# Read the wineprefix of a shortcut
-	# Usage: detect_wineprefix [Shortcut]
-
-	local file="$POL_USER_ROOT/shortcuts/$1"
-	if [ -e "$file" ]; then
-		local prefix=$(grep '^export WINEPREFIX' "$file")
-		prefix=${prefix:18}
-		prefix=${prefix//"\""/""}
-		prefix=${prefix//"//"/"/"}
-		echo $prefix
-	fi
-}
-
-POL_Wine_SetVersionPrefix()
-{
-	# Usage: POL_Wine_SetVersionPrefix [VERSION]
-	# Change a prefix wine version
-	[ ! "$1" = "" ] && export POL_WINEVERSION="$1"
-	[ "$WINEPREFIX" = "" ] && POL_Debug_Fatal "WINEPREFIX is not set!"
-
-	POL_Config_PrefixWrite "VERSION" "$POL_WINEVERSION"
 }
 
 
