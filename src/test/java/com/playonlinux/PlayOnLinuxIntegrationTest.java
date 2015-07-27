@@ -27,8 +27,6 @@ import com.playonlinux.core.utils.Files;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.apache.commons.io.output.NullOutputStream;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 import org.python.core.*;
@@ -56,7 +54,7 @@ public class PlayOnLinuxIntegrationTest {
 
     public static Test suite() throws InjectionException, IOException {
         setUp();
-        final TestSuite suite = new TestSuite("PythonIntegrationTest");
+        final TestSuite suite = new TestSuite("PythonIntegrationCase");
 
         URL integrationResources = PlayOnLinuxIntegrationTest.class.getResource("integration");
         File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
@@ -76,7 +74,7 @@ public class PlayOnLinuxIntegrationTest {
                         List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
 
                         for(Object methodName: (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
-                            suite.addTest(new PythonIntegrationTest(pythonInterpreter,
+                            suite.addTest(new PythonIntegrationCase(pythonInterpreter,
                                     (String) className, (String) methodName
                             ));
                         }

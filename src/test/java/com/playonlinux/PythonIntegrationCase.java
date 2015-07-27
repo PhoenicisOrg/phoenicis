@@ -25,14 +25,14 @@ import org.python.util.PythonInterpreter;
 
 import java.util.List;
 
-public class PythonIntegrationTest implements Test {
+public class PythonIntegrationCase implements Test {
     private final String methodName;
     private final String className;
     private final PythonInterpreter pythonInterpreter;
 
     int numberOfTest = 0;
 
-    public PythonIntegrationTest(PythonInterpreter pythonInterpreter, String className, String methodName) {
+    public PythonIntegrationCase(PythonInterpreter pythonInterpreter, String className, String methodName) {
         numberOfTest++;
         this.pythonInterpreter = pythonInterpreter;
         this.className = className;
