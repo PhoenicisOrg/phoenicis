@@ -16,32 +16,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.app;
+package com.playonlinux.contexts;
 
-import com.playonlinux.apps.AppsEntitiesProvider;
-import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.DefaultAppsManager;
 import com.playonlinux.core.services.manager.ServiceImplementationDefinition;
 import com.playonlinux.core.services.manager.ServiceManagerConfiguration;
-import com.playonlinux.core.webservice.DownloadManager;
 import com.playonlinux.engines.wine.DefaultWineVersionsManager;
 import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
 import com.playonlinux.engines.wine.WineVersionManager;
-import com.playonlinux.library.LibraryEntitiesProvider;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class PlayOnLinuxServicesConfiguration implements ServiceManagerConfiguration {
+/**
+ * Loads all the component required test wine version manager
+ */
+public class WineVersionServicesContext implements ServiceManagerConfiguration {
+
     @Override
     public Iterator<ServiceImplementationDefinition> iterator() {
         return Arrays.asList(
-                new ServiceImplementationDefinition(DownloadManager.class, DownloadManager.class),
-                new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
-                new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class),
                 new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
-                new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class),
-                new ServiceImplementationDefinition(LibraryEntitiesProvider.class, LibraryEntitiesProvider.class)
+                new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class)
         ).iterator();
     }
 }

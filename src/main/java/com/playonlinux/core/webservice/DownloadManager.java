@@ -61,7 +61,7 @@ public class DownloadManager implements
     }
 
     @Override
-    public void start() {
+    public void init() {
         // Nothing to start here
     }
 

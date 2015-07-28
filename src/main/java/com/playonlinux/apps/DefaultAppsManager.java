@@ -85,7 +85,7 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         try {
             webserviceUrl = playOnLinuxContext.makeInstallersWebserviceUrl();
         } catch (MalformedURLException e) {

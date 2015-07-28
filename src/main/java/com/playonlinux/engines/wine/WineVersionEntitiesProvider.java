@@ -96,7 +96,7 @@ public final class WineVersionEntitiesProvider
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager.getService(DefaultWineVersionsManager.class);
 
         defaultWineVersionsManager.addObserver(this);

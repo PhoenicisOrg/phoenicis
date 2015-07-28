@@ -86,7 +86,7 @@ public class DefaultWineVersionsManager
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         try {
             webserviceUrl = playOnLinuxContext.makeWineVersionWebserviceUrl();
         } catch (MalformedURLException e) {

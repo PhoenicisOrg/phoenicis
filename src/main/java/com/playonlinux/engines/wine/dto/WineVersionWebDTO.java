@@ -19,6 +19,7 @@
 package com.playonlinux.engines.wine.dto;
 
 import com.playonlinux.core.dto.AbstractDTO;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class WineVersionWebDTO implements AbstractDTO {
     String version;
@@ -39,5 +40,12 @@ public class WineVersionWebDTO implements AbstractDTO {
 
     public String getSha1sum() {
         return sha1sum;
+    }
+
+    public String toString() {
+        return new ToStringBuilder(WineVersionWebDTO.class)
+                .append("version", version)
+                .append("url", url)
+                .append("sha1sum", sha1sum).toString();
     }
 }

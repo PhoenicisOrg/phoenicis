@@ -16,38 +16,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.engines.wine.dto;
+package com.playonlinux.integration;
 
-import com.playonlinux.core.dto.AbstractDTO;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
+import junit.framework.Test;
+import junit.framework.TestResult;
 
-import java.util.List;
+import java.io.IOException;
 
-public class WineVersionDistributionWebDTO implements AbstractDTO {
-    String name;
-    String description;
-    List<WineVersionWebDTO> packages;
+public class TearDownTest implements Test {
+    PlayOnLinuxIntegrationRunner integrationRunner;
 
-    public WineVersionDistributionWebDTO() {
-        // Needed by Jackson
+    public TearDownTest(PlayOnLinuxIntegrationRunner integrationRunner) {
+        this.integrationRunner = integrationRunner;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public int countTestCases() {
+        return 1;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public void run(TestResult result) {
+        result.startTest(this);
+        try {
+            integrationRunner.tearDown();
+        } catch (IOException ignored) {
+        }
     }
 
-    public List<WineVersionWebDTO> getPackages() {
-        return packages;
-    }
-
+    @Override
     public String toString() {
-        return new ToStringBuilder(WineVersionDistributionWebDTO.class)
-                .append("name", name)
-                .append("description", description)
-                .append("packages", packages).toString();
+        return "Cleaning";
     }
+
 }

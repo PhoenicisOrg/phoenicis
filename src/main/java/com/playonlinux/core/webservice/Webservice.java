@@ -93,7 +93,7 @@ abstract public class Webservice<T extends AbstractDTO>
     }
 
     @Override
-    public synchronized void start() {
+    public synchronized void init() {
         new Thread() {
             @Override
             public void run() {

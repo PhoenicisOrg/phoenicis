@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux;
+package com.playonlinux.integration;
 
 import junit.framework.Test;
 import junit.framework.TestResult;
@@ -30,10 +30,8 @@ public class PythonIntegrationCase implements Test {
     private final String className;
     private final PythonInterpreter pythonInterpreter;
 
-    int numberOfTest = 0;
 
     public PythonIntegrationCase(PythonInterpreter pythonInterpreter, String className, String methodName) {
-        numberOfTest++;
         this.pythonInterpreter = pythonInterpreter;
         this.className = className;
         this.methodName = methodName;
@@ -41,7 +39,7 @@ public class PythonIntegrationCase implements Test {
 
     @Override
     public int countTestCases() {
-        return numberOfTest;
+        return 1;
     }
 
     @Override
@@ -50,31 +48,10 @@ public class PythonIntegrationCase implements Test {
         try {
             pythonInterpreter.exec("suite = unittest.TestSuite()");
             pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
-
+            pythonInterpreter.exec("suite.debug()");
             pythonInterpreter.exec("runner = unittest.TextTestRunner()");
-            pythonInterpreter.exec("results = runner.run(suite)");
-            Boolean wasSuccessFull =
-                    ((PyBoolean) pythonInterpreter.eval("results.wasSuccessful()")).getBooleanValue();
+            pythonInterpreter.eval("results = runner.run(suite)\n");
 
-            PyList failures = ((PyList) pythonInterpreter.eval("results.failures"));
-            PyList errors = ((PyList) pythonInterpreter.eval("results.errors"));
-
-            StringBuilder stacktrace = new StringBuilder();
-            for(Object pyListItem: failures) {
-                for(Object result: (PyTuple) pyListItem) {
-                    stacktrace.append(result.toString()).append("\n");
-                }
-            }
-
-            for(Object pyListItem: errors) {
-                for(Object result: (PyTuple) pyListItem) {
-                    stacktrace.append(result.toString()).append("\n");
-                }
-            }
-
-            if (!wasSuccessFull) {
-                testResult.addError(this, new Exception(stacktrace.toString()));
-            }
             pythonInterpreter.cleanup();
         } catch (PyException e) {
             testResult.addError(this, e.getCause());

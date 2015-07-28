@@ -57,7 +57,7 @@ public class SetupWizard implements AutoCloseable {
     private final String title;
     private UIMessageSender<String> messageSender;
 
-    private WeakReference<SetupWindow> setupWindow;
+    private SetupWindow setupWindow;
     private ScriptLogger logContext;
 
     private final List<WeakReference<SetupWizardComponent>> components;
@@ -79,7 +79,7 @@ public class SetupWizard implements AutoCloseable {
                 new SynchronousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow = new WeakReference<>(controller.createSetupWindowGUIInstance(translate(title)));
+                        setupWindow = controller.createSetupWindowGUIInstance(translate(title));
                     }
                 }
         );
@@ -89,7 +89,7 @@ public class SetupWizard implements AutoCloseable {
      * @param leftImage URL of the left image
      */
     public void setLeftImage(String leftImage) throws IOException {
-        setupWindow.get().setLeftImage(new File(leftImage));
+        setupWindow.setLeftImage(new File(leftImage));
     }
 
    /**
@@ -97,7 +97,7 @@ public class SetupWizard implements AutoCloseable {
     * @param topImage URL of the top image
     */
    public void setTopImage(String topImage) throws IOException {
-       setupWindow.get().setTopImage(new File(topImage));
+       setupWindow.setTopImage(new File(topImage));
    }
 
     /**
@@ -108,7 +108,7 @@ public class SetupWizard implements AutoCloseable {
                 new SynchronousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().close();
+                        setupWindow.close();
                     }
                 }
         );
@@ -127,7 +127,7 @@ public class SetupWizard implements AutoCloseable {
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showSimpleMessageStep((CancelerSynchronousMessage) message, textToShow);
+                        setupWindow.showSimpleMessageStep((CancelerSynchronousMessage) message, textToShow);
                     }
                 }
         );
@@ -162,7 +162,7 @@ public class SetupWizard implements AutoCloseable {
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showPresentationStep((CancelerSynchronousMessage) message, textToShow);
+                        setupWindow.showPresentationStep((CancelerSynchronousMessage) message, textToShow);
                     }
                 }
         );
@@ -208,7 +208,7 @@ public class SetupWizard implements AutoCloseable {
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showLicenceStep((CancelerSynchronousMessage) message, textToShow, licenceText);
+                        setupWindow.showLicenceStep((CancelerSynchronousMessage) message, textToShow, licenceText);
                     }
                 }
         );
@@ -236,7 +236,7 @@ public class SetupWizard implements AutoCloseable {
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showTextBoxStep((CancelerSynchronousMessage) message, textToShow, defaultValue);
+                        setupWindow.showTextBoxStep((CancelerSynchronousMessage) message, textToShow, defaultValue);
                     }
                 }
         );
@@ -254,7 +254,7 @@ public class SetupWizard implements AutoCloseable {
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showMenuStep((CancelerSynchronousMessage) message, textToShow, menuItems);
+                        setupWindow.showMenuStep((CancelerSynchronousMessage) message, textToShow, menuItems);
                     }
                 }
         );
@@ -284,7 +284,7 @@ public class SetupWizard implements AutoCloseable {
                 new CancelerSynchronousMessage<String>() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showBrowseStep((CancelerSynchronousMessage) message, textToShow,
+                        setupWindow.showBrowseStep((CancelerSynchronousMessage) message, textToShow,
                                 new File(directory), allowedExtensions);
                     }
                 }
@@ -301,7 +301,7 @@ public class SetupWizard implements AutoCloseable {
                 new InterrupterAsynchroneousMessage() {
                     @Override
                     public void execute(Message message) {
-                        setupWindow.get().showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
+                        setupWindow.showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
                     }
                 }
         );
@@ -313,7 +313,7 @@ public class SetupWizard implements AutoCloseable {
                 new InterrupterSynchronousMessage<ProgressControl>() {
                     @Override
                     public void execute(Message message) {
-                        this.setResponse(setupWindow.get().showProgressBar((InterrupterSynchronousMessage) message,
+                        this.setResponse(setupWindow.showProgressBar((InterrupterSynchronousMessage) message,
                                 textToShow));
                     }
                 }

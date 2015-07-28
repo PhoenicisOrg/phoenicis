@@ -96,7 +96,7 @@ public final class AppsEntitiesProvider
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         final AppsManager appsManager = serviceManager.getService(AppsManager.class);
         appsManager.addObserver(this);
     }

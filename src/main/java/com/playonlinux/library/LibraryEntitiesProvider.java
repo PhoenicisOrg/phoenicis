@@ -89,7 +89,7 @@ public final class LibraryEntitiesProvider
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         final File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();

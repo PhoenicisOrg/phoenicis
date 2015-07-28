@@ -19,6 +19,7 @@
 package com.playonlinux.core.observer;
 
 import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.log4j.Logger;
@@ -51,6 +52,12 @@ public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEn
         observableDirectoryThread.stopChecking();
         super.shutdown();
     }
+
+    @Override
+    public void init() throws ServiceInitializationException {
+        this.start();
+    }
+
     public File getObservedDirectory() {
         return observedDirectory;
     }

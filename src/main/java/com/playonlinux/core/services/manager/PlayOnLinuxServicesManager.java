@@ -43,7 +43,7 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
     @Override
     public void register(String backgroundServiceName, Service service) throws ServiceInitializationException {
         backgroundServices.put(backgroundServiceName, service);
-        service.start();
+        service.init();
     }
 
     public synchronized void shutdown() {
