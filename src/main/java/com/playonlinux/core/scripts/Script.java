@@ -79,7 +79,7 @@ public abstract class Script implements Service {
     }
 
     @Override
-    public void start() {
+    public void init() {
         runningScript = executor.submit(() -> {
             try {
 

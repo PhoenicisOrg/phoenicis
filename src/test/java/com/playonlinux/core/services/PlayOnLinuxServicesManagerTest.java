@@ -41,7 +41,7 @@ public class PlayOnLinuxServicesManagerTest {
     public void testRegister() throws ServiceInitializationException {
         Service mockService = mock(Service.class);
         playOnLinuxServicesManagerUnderTest.register(mockService);
-        verify(mockService).start();
+        verify(mockService).init();
     }
 
     @Test
@@ -94,7 +94,7 @@ public class PlayOnLinuxServicesManagerTest {
         }
 
         @Override
-        public void start() {
+        public void init() {
             // Not needed for the test
         }
     }

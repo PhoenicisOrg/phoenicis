@@ -105,7 +105,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
     }
 
     @Override
-    public void start() {
+    public void init() {
         // Nothing to start
     }
 }

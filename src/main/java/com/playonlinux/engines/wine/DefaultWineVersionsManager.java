@@ -24,7 +24,6 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.utils.ChecksumCalculator;
@@ -49,7 +48,6 @@ import java.util.Collection;
 import static java.lang.String.format;
 
 @Scan
-@AutoStartedService(type = WineVersionManager.class)
 public class DefaultWineVersionsManager
         extends ObservableDefaultImplementation<WineVersionManager>
         implements WineVersionManager {
@@ -88,7 +86,7 @@ public class DefaultWineVersionsManager
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         try {
             webserviceUrl = playOnLinuxContext.makeWineVersionWebserviceUrl();
         } catch (MalformedURLException e) {

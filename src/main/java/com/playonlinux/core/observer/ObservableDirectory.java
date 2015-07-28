@@ -44,8 +44,7 @@ public abstract class ObservableDirectory<T> extends ObservableDefaultImplementa
     public void setCheckInterval(int checkInterval) {
         this.checkInterval = checkInterval;
     }
-
-    @Override
+    
     public abstract void start();
 
     public File getObservedDirectory() {

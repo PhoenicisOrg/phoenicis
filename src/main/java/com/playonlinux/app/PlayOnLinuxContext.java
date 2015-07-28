@@ -152,6 +152,8 @@ public class PlayOnLinuxContext {
     }
 
     public URL makeWineVersionWebserviceUrl() throws MalformedURLException {
-        return new URL(this.properties.getProperty("webservice.wine.url"));
+        return new URL(String.format(this.properties.getProperty("webservice.wine.url"),
+                OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
+        );
     }
 }

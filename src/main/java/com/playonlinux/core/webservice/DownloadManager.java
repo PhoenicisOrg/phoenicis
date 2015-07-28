@@ -19,7 +19,6 @@
 package com.playonlinux.core.webservice;
 
 import com.playonlinux.core.services.SubmittableService;
-import com.playonlinux.core.services.manager.AutoStartedService;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
@@ -32,7 +31,6 @@ import java.util.function.Function;
 /*
  Represents a download manager
  */
-@AutoStartedService
 public class DownloadManager implements
                              SubmittableService<HTTPDownloader, Function<byte[], Void>> {
     private static final int DEFAULT_POOL_SIZE = 4;
@@ -63,7 +61,7 @@ public class DownloadManager implements
     }
 
     @Override
-    public void start() {
+    public void init() {
         // Nothing to start here
     }
 

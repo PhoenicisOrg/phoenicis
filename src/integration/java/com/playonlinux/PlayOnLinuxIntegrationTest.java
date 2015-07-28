@@ -18,17 +18,16 @@
 
 package com.playonlinux;
 
-import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.InterpreterFactory;
-import com.playonlinux.core.utils.Files;
+import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
+import com.playonlinux.integration.PythonIntegrationCase;
+import com.playonlinux.integration.TearDownTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.commons.io.output.NullOutputStream;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 import org.python.core.*;
@@ -42,17 +41,11 @@ import java.util.List;
 @RunWith(AllTests.class)
 @Scan
 public class PlayOnLinuxIntegrationTest {
-    @Inject static PlayOnLinuxContext playOnLinuxContext;
     @Inject static InterpreterFactory jythonInterpreterFactory;
+    private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
     public static void setUp() throws InjectionException, IOException {
-        AbstractConfiguration testConfigFile = new IntegrationContextConfig();
-        testConfigFile.setStrictLoadingPolicy(false);
-        testConfigFile.load();
-
-        File home = new File(playOnLinuxContext.getProperty("application.user.root"));
-        Files.remove(home);
-        home.mkdirs();
+        integrationRunner.initialize();
     }
 
     public static Test suite() throws InjectionException, IOException, PlayOnLinuxException {
@@ -64,10 +57,8 @@ public class PlayOnLinuxIntegrationTest {
 
         assert pythonFiles != null;
         for(File file: pythonFiles) {
-            if(!"__init__.py".equals(file.getName())) {
+            if(!"__init__.py".equals(file.getName()) && file.getName().endsWith(".py")) {
                 final PythonInterpreter pythonInterpreter = jythonInterpreterFactory.createInstance();
-                pythonInterpreter.setOut(new NullOutputStream());
-                pythonInterpreter.setErr(new NullOutputStream());
                 pythonInterpreter.execfile(file.getAbsolutePath());
                 PyStringMap pyDictionary = (PyStringMap) pythonInterpreter.eval("globals()");
 
@@ -89,6 +80,8 @@ public class PlayOnLinuxIntegrationTest {
             }
         }
 
+        /* Shutdown hook */
+        suite.addTest(new TearDownTest(integrationRunner));
         return suite;
     }
 

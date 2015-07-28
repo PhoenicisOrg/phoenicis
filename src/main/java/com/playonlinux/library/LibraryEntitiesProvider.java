@@ -26,7 +26,6 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.library.dto.InstalledApplicationDTO;
@@ -40,7 +39,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Scan
-@AutoStartedService(name = "InstalledApplicationsService")
 public final class LibraryEntitiesProvider
         extends ObservableDefaultImplementation<LibraryWindowDTO>
         implements Observer<ShortcutSetDirectories, List<Shortcut>>,
@@ -91,7 +89,7 @@ public final class LibraryEntitiesProvider
     }
 
     @Override
-    public void start() throws ServiceInitializationException {
+    public void init() throws ServiceInitializationException {
         final File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
         final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();

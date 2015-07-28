@@ -31,8 +31,6 @@ import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
 
@@ -51,7 +49,7 @@ public class MockContextConfig extends AbstractConfiguration {
         final ServiceManager serviceManager = mock(ServiceManager.class);
         doAnswer(invocationOnMock -> {
             Object[] args = invocationOnMock.getArguments();
-            ((Service) args[0]).start();
+            ((Service) args[0]).init();
             return null;
         }).when(serviceManager).register(any(Service.class));
 

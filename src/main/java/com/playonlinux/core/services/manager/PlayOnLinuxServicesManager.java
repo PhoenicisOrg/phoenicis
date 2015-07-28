@@ -18,12 +18,16 @@
 
 package com.playonlinux.core.services.manager;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class PlayOnLinuxServicesManager implements ServiceManager {
+    private final static Logger LOGGER = Logger.getLogger(ServiceManager.class);
+
     private final Map<String, Service> backgroundServices;
 
     public PlayOnLinuxServicesManager() {
@@ -39,7 +43,7 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
     @Override
     public void register(String backgroundServiceName, Service service) throws ServiceInitializationException {
         backgroundServices.put(backgroundServiceName, service);
-        service.start();
+        service.init();
     }
 
     public synchronized void shutdown() {
@@ -74,7 +78,7 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
             }
         }
 
-        throw new IllegalArgumentException("The selected type is not valid");
+        throw new IllegalArgumentException("The selected type ("+backgroundServiceType.getName()+") is not valid. Existing services: "+backgroundServices.values().toString());
     }
 
     @Override
@@ -83,15 +87,14 @@ public final class PlayOnLinuxServicesManager implements ServiceManager {
     }
 
     @Override
-    public void init() throws ServiceInitializationException {
-        final AutoStartedServiceFinder autoStartedBackgroundServiceFinder = new AutoStartedServiceFinder();
-        final Map<String, Class<?>> autoLoadedBackgroundServices
-                = autoStartedBackgroundServiceFinder.findClasses();
-
-        for(String backgroundServiceKey: autoLoadedBackgroundServices.keySet()) {
+    public void init(ServiceManagerConfiguration serviceManagerConfiguration) throws ServiceInitializationException {
+        for(ServiceImplementationDefinition serviceImplementationDefinition: serviceManagerConfiguration) {
             try {
-                this.register(backgroundServiceKey,
-                        (Service) autoLoadedBackgroundServices.get(backgroundServiceKey).newInstance());
+                LOGGER.info(String.format("Registering component service: %s -> %s",
+                        serviceImplementationDefinition.getInterfaces(),
+                        serviceImplementationDefinition.getImplementation()));
+                this.register(serviceImplementationDefinition.getInterfaces().getName(),
+                        serviceImplementationDefinition.getImplementation().newInstance());
             } catch (ReflectiveOperationException e) {
                 throw new ServiceInitializationException(e);
             }

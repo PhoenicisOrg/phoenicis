@@ -21,5 +21,5 @@ package com.playonlinux.core.services.manager;
 public interface Service {
     void shutdown();
 
-    void start() throws ServiceInitializationException;
+    void init() throws ServiceInitializationException;
 }

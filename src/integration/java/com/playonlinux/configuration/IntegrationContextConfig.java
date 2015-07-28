@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux;
+package com.playonlinux.configuration;
 
 import com.playonlinux.app.MockIntegrationContext;
 import com.playonlinux.app.PlayOnLinuxContext;
@@ -28,15 +28,23 @@ import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
+import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.mock.MockIntegratioUI;
+import com.playonlinux.ui.api.Controller;
+import com.playonlinux.ui.api.SetupWindow;
+import com.playonlinux.ui.api.UIMessageSender;
+import com.playonlinux.ui.impl.cli.UIMessageSenderCLIImplementation;
 
 import java.io.IOException;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class IntegrationContextConfig extends AbstractConfiguration {
     @Bean
@@ -49,7 +57,7 @@ public class IntegrationContextConfig extends AbstractConfiguration {
         final ServiceManager serviceManager = mock(ServiceManager.class);
         doAnswer(invocationOnMock -> {
             Object[] args = invocationOnMock.getArguments();
-            ((Service) args[0]).start();
+            ((Service) args[0]).init();
             return null;
         }).when(serviceManager).register(any(Service.class));
 
@@ -77,11 +85,26 @@ public class IntegrationContextConfig extends AbstractConfiguration {
         return new ScriptFactoryDefaultImplementation();
     }
 
+    @Bean
+    protected ServiceManager serviceManager() throws ServiceInitializationException {
+        return new PlayOnLinuxServicesManager();
+    }
+
     @Override
     protected String definePackage() {
         return "com.playonlinux";
     }
 
+    @Bean
+    protected Controller controller() {
+        Controller mockController = mock(Controller.class);
+        SetupWindow mockSetupWindow = mock(SetupWindow.class);
+        when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(mockSetupWindow);
+        UIMessageSender<Object> mockUIMessageSender = new UIMessageSenderCLIImplementation();
+        when(mockController.createUIMessageSender()).thenReturn(mockUIMessageSender);
+        when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(new MockIntegratioUI());
+        return mockController;
+    }
     @Override
     public void close() {
 

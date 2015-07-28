@@ -87,7 +87,7 @@ public class ProcessPipe implements Service {
     }
 
     @Override
-    public void start() {
+    public void init() {
         final InputStream inputStream = process.getInputStream();
         final InputStream errorStream = process.getErrorStream();
         final OutputStream outputStream = process.getOutputStream();

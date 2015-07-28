@@ -38,7 +38,7 @@ public class DownloadManagerTest {
         when(httpDownloaderMock.getBytes()).thenReturn("Download result".getBytes());
 
         DownloadManager downloadManager = new DownloadManager();
-        downloadManager.start();
+        downloadManager.init();
 
 
         downloadManager.submit(httpDownloaderMock, parameter -> {

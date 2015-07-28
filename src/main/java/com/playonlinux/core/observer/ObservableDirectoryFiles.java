@@ -19,6 +19,7 @@
 package com.playonlinux.core.observer;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
 
 import java.io.File;
 import java.util.Arrays;
@@ -44,6 +45,11 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
     public void shutdown() {
         observableDirectoryThread.stopChecking();
         super.shutdown();
+    }
+
+    @Override
+    public void init() throws ServiceInitializationException {
+        this.start();
     }
 
 
