@@ -5,7 +5,7 @@ from java.lang import IllegalArgumentException
 
 import unittest
 
-class TestExample(unittest.TestCase):
+class TestSafeRemove(unittest.TestCase):
     def setUp(self):
         pass
 

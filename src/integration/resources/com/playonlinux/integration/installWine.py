@@ -9,7 +9,7 @@ import unittest, time, os
 from com.playonlinux.core.utils import OperatingSystem
 
 
-class TestExample(unittest.TestCase):
+class TestInstallWine(unittest.TestCase):
     def setUp(self):
         ServiceManagerGetter.serviceManager.init(WineVersionServicesContext())
 
