@@ -43,6 +43,7 @@ public class TearDownTest implements Test {
             integrationRunner.tearDown();
         } catch (IOException ignored) {
         }
+        result.endTest(this);
     }
 
     @Override
