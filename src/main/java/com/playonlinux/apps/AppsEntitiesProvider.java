@@ -31,7 +31,6 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
@@ -42,7 +41,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Scan
-@AutoStartedService(type = AppsEntitiesProvider.class)
 public final class AppsEntitiesProvider
         extends ObservableDefaultImplementation<AppsWindowEntity>
         implements Observer<DefaultAppsManager, DefaultAppsManager>,

@@ -66,7 +66,7 @@ public interface ServiceManager {
     /**
      * Initialize the background service manager
      */
-    void init() throws ServiceInitializationException;
+    void init(ServiceManagerConfiguration serviceManagerConfiguration) throws ServiceInitializationException;
 
-    <T extends Service> T getService(Class<T> installedApplicationsClass);
+    <T extends Service> T getService(Class<T> backgroundServiceType);
 }

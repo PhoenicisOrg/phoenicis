@@ -23,7 +23,6 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
@@ -37,7 +36,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Scan
-@AutoStartedService(type = WineVersionEntitiesProvider.class)
 public final class WineVersionEntitiesProvider
         extends ObservableDefaultImplementation<WineVersionsWindowEntity>
         implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,

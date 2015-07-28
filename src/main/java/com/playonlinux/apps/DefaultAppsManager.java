@@ -26,7 +26,6 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
-import com.playonlinux.core.services.manager.AutoStartedService;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
@@ -37,7 +36,6 @@ import java.net.URL;
 import java.util.Collection;
 
 @Scan
-@AutoStartedService(type = AppsManager.class)
 public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultAppsManager> implements AppsManager {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
