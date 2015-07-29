@@ -209,7 +209,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <archive>f
+                    <archive>
                         <manifest>
                             <mainClass>com.playonlinux.app.PlayOnLinuxApp</mainClass>
                             <packageName>com.playonlinux.app</packageName>
