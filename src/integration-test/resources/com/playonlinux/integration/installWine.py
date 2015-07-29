@@ -27,11 +27,11 @@ class TestInstallWine(unittest.TestCase):
         wineInstallation = WineInstallation("1.7.36", "upstream-x86", setupWizard)
         wineInstallation.install()
 
-        print "Checking that wine binary is installed"
-        self.assertTrue(os.path.exists("%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" %
-                        (Environment.getUserRoot(),
-                            OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages))
-        )
+        installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" % (Environment.getUserRoot(),
+         OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
+
+        print "Checking that wine binary is installed in %s" % installationPath
+        self.assertTrue(os.path.exists(installationPath))
 
 
     def tearDown(self):

@@ -47,7 +47,7 @@ public class PythonIntegrationCase implements Test {
             pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
             pythonInterpreter.exec("suite.debug()");
             pythonInterpreter.exec("runner = unittest.TextTestRunner()");
-            pythonInterpreter.eval("results = runner.run(suite)\n");
+            pythonInterpreter.eval("results = runner.run(suite)");
 
             pythonInterpreter.cleanup();
         } catch (Throwable e) {
