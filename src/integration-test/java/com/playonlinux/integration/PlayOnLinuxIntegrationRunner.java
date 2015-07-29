@@ -42,6 +42,8 @@ public class PlayOnLinuxIntegrationRunner {
         File home = new File(playOnLinuxContext.getProperty("application.user.root"));
         Files.remove(home);
         home.mkdirs();
+
+        System.out.println("PlayOnLinux integration initialized");
     }
 
 

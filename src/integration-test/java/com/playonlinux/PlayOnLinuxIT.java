@@ -26,8 +26,9 @@ import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
 import com.playonlinux.integration.PythonIntegrationCase;
 import com.playonlinux.integration.TearDown;
-import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.AllTests;
 import org.python.core.*;
@@ -38,20 +39,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-@RunWith(AllTests.class)
 @Scan
 public class PlayOnLinuxIT {
     @Inject static InterpreterFactory jythonInterpreterFactory;
     private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
+    @BeforeClass
     public static void setUp() throws InjectionException, IOException {
         integrationRunner.initialize();
     }
 
-    public static Test suite() throws InjectionException, IOException, PlayOnLinuxException {
-        setUp();
-        final TestSuite suite = new TestSuite("PythonIntegrationCase");
-
+    @Test
+    public void jythonTests() throws InjectionException, IOException, PlayOnLinuxException {
         URL integrationResources = PlayOnLinuxIT.class.getResource("integration");
         File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
 
@@ -68,9 +67,9 @@ public class PlayOnLinuxIT {
                         List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
 
                         for(Object methodName: (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
-                            suite.addTest(new PythonIntegrationCase(pythonInterpreter,
+                            new PythonIntegrationCase(pythonInterpreter,
                                     (String) className, (String) methodName
-                            ));
+                            ).run();
                         }
 
                     }
@@ -80,9 +79,6 @@ public class PlayOnLinuxIT {
             }
         }
 
-        /* Shutdown hook */
-        suite.addTest(new TearDown(integrationRunner));
-        return suite;
     }
 
 }

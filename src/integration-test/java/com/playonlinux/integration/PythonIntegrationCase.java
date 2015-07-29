@@ -18,11 +18,9 @@
 
 package com.playonlinux.integration;
 
-import junit.framework.Test;
-import junit.framework.TestResult;
 import org.python.util.PythonInterpreter;
 
-public class PythonIntegrationCase implements Test {
+public class PythonIntegrationCase {
     private final String methodName;
     private final String className;
     private final PythonInterpreter pythonInterpreter;
@@ -34,27 +32,19 @@ public class PythonIntegrationCase implements Test {
         this.methodName = methodName;
     }
 
-    @Override
-    public int countTestCases() {
-        return 1;
-    }
 
-    @Override
-    public void run(TestResult testResult) {
-        testResult.startTest(this);
-        try {
-            pythonInterpreter.exec("suite = unittest.TestSuite()");
-            pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
-            pythonInterpreter.exec("suite.debug()");
-            pythonInterpreter.exec("runner = unittest.TextTestRunner()");
-            pythonInterpreter.eval("runner.run(suite)");
 
-            pythonInterpreter.cleanup();
-        } catch (Throwable e) {
-            testResult.addError(this, e);
-        } finally {
-            testResult.endTest(this);
-        }
+    public void run() {
+
+        System.out.println("--------------------------------------------------------------------------------");
+        System.out.println("INTEGRATION TEST: "+toString());
+        System.out.println("--------------------------------------------------------------------------------");
+        pythonInterpreter.exec("suite = unittest.TestSuite()");
+        pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
+        pythonInterpreter.eval("suite.debug()");
+
+        pythonInterpreter.cleanup();
+
     }
 
     @Override
