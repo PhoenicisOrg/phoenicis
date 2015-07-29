@@ -10,10 +10,9 @@ from com.playonlinux.core.utils import OperatingSystem
 
 
 class TestInstallWine(unittest.TestCase):
-    def setUp(self):
+    def testInstallWineVersion(self):
         ServiceManagerGetter.serviceManager.init(WineVersionServicesContext())
 
-    def testInstallWineVersion(self):
         setupWizard = SetupWizard("Mock setup wizard")
         setupWizard.init()
 
@@ -30,8 +29,8 @@ class TestInstallWine(unittest.TestCase):
         installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" % (Environment.getUserRoot(),
          OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
 
+        ServiceManagerGetter.serviceManager.shutdown()
+
         print "Checking that wine binary is installed in %s" % installationPath
         self.assertTrue(os.path.exists(installationPath))
 
-    def tearDown(self):
-        ServiceManagerGetter.serviceManager.shutdown()
