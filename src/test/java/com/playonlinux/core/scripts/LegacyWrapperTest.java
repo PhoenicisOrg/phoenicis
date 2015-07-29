@@ -23,6 +23,7 @@ import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.InjectionException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -46,6 +47,7 @@ public class LegacyWrapperTest {
     }
 
     @Test
+    @Ignore
     public void testLegacyWrapper() throws Exception {
         final File tmpFile = File.createTempFile("temporary", "text");
         tmpFile.mkdirs();
