@@ -87,6 +87,7 @@ public class Injector {
     }
 
     public void injectAllBeans(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans) throws InjectionException {
+        LOGGER.debug("Loading dependencies...");
         Set<Class<?>> componentClasses = this.getComponentClasses();
 
         for(Class<?> componentClass: componentClasses) {

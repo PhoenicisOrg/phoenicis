@@ -33,7 +33,7 @@ import java.util.Iterator;
 public class WineVersionServicesContext implements ServiceManagerConfiguration {
 
     @Override
-    public Iterator<ServiceImplementationDefinition> iterator() {
+    public synchronized Iterator<ServiceImplementationDefinition> iterator() {
         return Arrays.asList(
                 new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
                 new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class)

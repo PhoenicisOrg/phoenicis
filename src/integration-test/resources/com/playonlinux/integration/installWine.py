@@ -1,6 +1,5 @@
 from com.playonlinux.integration import ServiceManagerGetter
 from com.playonlinux.framework import SetupWizard, WineInstallation
-from com.playonlinux.contexts import WineVersionServicesContext
 from com.playonlinux.framework import Environment
 
 from java.lang import Class
@@ -11,7 +10,7 @@ from com.playonlinux.core.utils import OperatingSystem
 
 class TestInstallWine(unittest.TestCase):
     def testInstallWineVersion(self):
-        ServiceManagerGetter.serviceManager.init(WineVersionServicesContext())
+        ServiceManagerGetter().init("com.playonlinux.contexts.WineVersionServicesContext")
 
         setupWizard = SetupWizard("Mock setup wizard")
         setupWizard.init()
