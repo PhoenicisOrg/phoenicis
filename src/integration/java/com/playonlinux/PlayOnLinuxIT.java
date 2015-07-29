@@ -25,7 +25,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
 import com.playonlinux.integration.PythonIntegrationCase;
-import com.playonlinux.integration.TearDownTest;
+import com.playonlinux.integration.TearDown;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.runner.RunWith;
@@ -40,7 +40,7 @@ import java.util.List;
 
 @RunWith(AllTests.class)
 @Scan
-public class PlayOnLinuxIntegrationTest {
+public class PlayOnLinuxIT {
     @Inject static InterpreterFactory jythonInterpreterFactory;
     private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
@@ -52,7 +52,7 @@ public class PlayOnLinuxIntegrationTest {
         setUp();
         final TestSuite suite = new TestSuite("PythonIntegrationCase");
 
-        URL integrationResources = PlayOnLinuxIntegrationTest.class.getResource("integration");
+        URL integrationResources = PlayOnLinuxIT.class.getResource("integration");
         File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
 
         assert pythonFiles != null;
@@ -81,7 +81,7 @@ public class PlayOnLinuxIntegrationTest {
         }
 
         /* Shutdown hook */
-        suite.addTest(new TearDownTest(integrationRunner));
+        suite.addTest(new TearDown(integrationRunner));
         return suite;
     }
 

@@ -24,10 +24,10 @@ import junit.framework.TestResult;
 
 import java.io.IOException;
 
-public class TearDownTest implements Test {
+public class TearDown implements Test {
     PlayOnLinuxIntegrationRunner integrationRunner;
 
-    public TearDownTest(PlayOnLinuxIntegrationRunner integrationRunner) {
+    public TearDown(PlayOnLinuxIntegrationRunner integrationRunner) {
         this.integrationRunner = integrationRunner;
     }
 

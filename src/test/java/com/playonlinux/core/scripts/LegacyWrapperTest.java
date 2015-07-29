@@ -31,12 +31,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
+
 
 public class LegacyWrapperTest {
-
-
     @Before
     public void setUp() throws InjectionException {
         AbstractConfiguration testConfigFile = new MockContextConfig();
