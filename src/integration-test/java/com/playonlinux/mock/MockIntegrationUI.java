@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-public class MockIntegratioUI implements com.playonlinux.ui.api.SetupWindow {
+public class MockIntegrationUI implements com.playonlinux.ui.api.SetupWindow {
     @Override
     public void setTopImage(File topImage) throws IOException {
 

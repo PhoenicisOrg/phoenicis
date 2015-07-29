@@ -9,7 +9,7 @@ import unittest, time, os
 from com.playonlinux.core.utils import OperatingSystem
 
 
-class TestExample(unittest.TestCase):
+class TestInstallWine(unittest.TestCase):
     def setUp(self):
         ServiceManagerGetter.serviceManager.init(WineVersionServicesContext())
 
@@ -27,12 +27,11 @@ class TestExample(unittest.TestCase):
         wineInstallation = WineInstallation("1.7.36", "upstream-x86", setupWizard)
         wineInstallation.install()
 
-        print "Checking that wine binary is installed"
-        self.assertTrue("%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" %
-                        (os.path.exists(Environment.getUserRoot(),
-                            OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages))
-        )
+        installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" % (Environment.getUserRoot(),
+         OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
 
+        print "Checking that wine binary is installed in %s" % installationPath
+        self.assertTrue(os.path.exists(installationPath))
 
     def tearDown(self):
         ServiceManagerGetter.serviceManager.shutdown()

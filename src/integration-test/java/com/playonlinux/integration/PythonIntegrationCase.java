@@ -20,10 +20,7 @@ package com.playonlinux.integration;
 
 import junit.framework.Test;
 import junit.framework.TestResult;
-import org.python.core.*;
 import org.python.util.PythonInterpreter;
-
-import java.util.List;
 
 public class PythonIntegrationCase implements Test {
     private final String methodName;
@@ -50,11 +47,9 @@ public class PythonIntegrationCase implements Test {
             pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
             pythonInterpreter.exec("suite.debug()");
             pythonInterpreter.exec("runner = unittest.TextTestRunner()");
-            pythonInterpreter.eval("results = runner.run(suite)\n");
+            pythonInterpreter.eval("runner.run(suite)");
 
             pythonInterpreter.cleanup();
-        } catch (PyException e) {
-            testResult.addError(this, e.getCause());
         } catch (Throwable e) {
             testResult.addError(this, e);
         } finally {
