@@ -26,6 +26,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -43,25 +47,45 @@ public class LegacyWrapperTest {
 
     @Test
     public void testLegacyWrapper() throws Exception {
-        File tmpFile = new File("/tmp/POL_WrapperTest");
+        final File tmpFile = File.createTempFile("temporary", "text");
+        tmpFile.mkdirs();
+        final File scriptFile = File.createTempFile("script", "sh");
+        scriptFile.deleteOnExit();
+        tmpFile.deleteOnExit();
+
+        final PrintWriter printWriter = new PrintWriter(scriptFile);
+
+        final String scriptContent = "#!/bin/bash\n" +
+                "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\n" +
+                "source \"$PLAYONLINUX/lib/sources\"\n" +
+                "\n" +
+                "TITLE=\"Legacy script\"\n" +
+                "echo \"Inside bash\"\n" +
+                "touch "+tmpFile.getAbsolutePath()+"\n" +
+                "\n" +
+                "exit";
+
+        printWriter.println(scriptContent);
+        printWriter.close();
+
         if(tmpFile.exists() && !tmpFile.delete()) {
             fail();
         }
-
-        File testScript = new File(this.getClass().getResource("wrapperTestScript.sh").getPath());
 
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         final ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation()
                 .withExecutor(executorService);
 
-        final Script testScriptWrapper = scriptFactory.createInstance(testScript);
+        final Script testScriptWrapper = scriptFactory.createInstance(scriptFile);
 
         testScriptWrapper.init();
+
         executorService.shutdown();
         executorService.awaitTermination(5, TimeUnit.SECONDS);
 
         assertTrue(tmpFile.exists());
+        tmpFile.delete();
     }
 
 
