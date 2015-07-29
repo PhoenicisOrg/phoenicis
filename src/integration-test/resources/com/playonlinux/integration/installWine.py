@@ -28,8 +28,8 @@ class TestInstallWine(unittest.TestCase):
         wineInstallation.install()
 
         print "Checking that wine binary is installed"
-        self.assertTrue("%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" %
-                        (os.path.exists(Environment.getUserRoot(),
+        self.assertTrue(os.path.exists("%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" %
+                        (Environment.getUserRoot(),
                             OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages))
         )
 
