@@ -32,7 +32,7 @@ import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.mock.MockIntegratioUI;
+import com.playonlinux.mock.MockIntegrationUI;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
@@ -102,7 +102,7 @@ public class IntegrationContextConfig extends AbstractConfiguration {
         when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(mockSetupWindow);
         UIMessageSender<Object> mockUIMessageSender = new UIMessageSenderCLIImplementation();
         when(mockController.createUIMessageSender()).thenReturn(mockUIMessageSender);
-        when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(new MockIntegratioUI());
+        when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(new MockIntegrationUI());
         return mockController;
     }
     @Override
