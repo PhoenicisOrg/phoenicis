@@ -26,6 +26,7 @@ import com.playonlinux.core.python.CommandInterpreter;
 import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
+import com.playonlinux.ui.common.CommandHistory;
 import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -36,9 +37,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
@@ -47,7 +45,7 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
     private static final String NOT_INSIDE_BLOCK = ">>> ";
     private static final String INSIDE_BLOCK = "... ";
 
-    private CommandHistory commandHistory = new CommandHistory();
+    private final CommandHistory commandHistory = new CommandHistory();
 
     @Inject
     static CommandLineInterpreterFactory commandLineInterpreterFactory;

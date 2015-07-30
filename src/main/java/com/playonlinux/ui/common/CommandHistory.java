@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.console;
+package com.playonlinux.ui.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,48 +26,53 @@ import java.util.List;
  */
 public class CommandHistory {
 
-    private List<Item> history = new ArrayList<>();
+    private final List<Item> history = new ArrayList<>();
     private int historyPosition = 0;
 
-    public void add(Item item){
+    public void add(Item item) {
         this.history.add(item);
         historyPosition = this.history.size();
     }
 
-    public Item up(){
-        if(historyPosition > 0){
+    public Item up() {
+        if (historyPosition > 0) {
             historyPosition--;
         }
         return current();
     }
 
-    public Item down(){
+    public Item down() {
         historyPosition = (historyPosition < history.size()) ? (historyPosition + 1) : history.size();
         return current();
     }
 
-    public Item current(){
-        if(history.size() > 0 && historyPosition < history.size()){
+    public Item current() {
+        if (history.size() > 0 && historyPosition < history.size()) {
             return history.get(historyPosition);
         }
         return Item.empty;
     }
 
 
-    public static class Item {
+    public static final class Item {
 
-        public static Item empty = new Item("", 0);
+        public static final Item empty = new Item("", 0);
 
-        private String command;
-        private int cursorPosition;
+        private final String command;
+        private final int cursorPosition;
 
-        public Item(String command, int cursorPosition){
+        public Item(String command, int cursorPosition) {
             this.command = command;
             this.cursorPosition = cursorPosition;
         }
 
-        public String getCommand(){ return command; }
-        public int getCursorPosition(){ return cursorPosition; }
+        public String getCommand() {
+            return command;
+        }
+
+        public int getCursorPosition() {
+            return cursorPosition;
+        }
 
     }
 
