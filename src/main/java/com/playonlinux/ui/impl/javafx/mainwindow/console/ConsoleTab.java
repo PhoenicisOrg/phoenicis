@@ -99,18 +99,18 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
                 } else {
                     nextSymbol = INSIDE_BLOCK;
                 }
-            } else if (event.getCode() == KeyCode.UP) {
+            }
+        });
+
+        command.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.UP) {
                 CommandHistory.Item historyItem = commandHistory.up();
-                Platform.runLater(() -> {
-                    command.setText(historyItem.getCommand());
-                    command.positionCaret(historyItem.getCursorPosition());
-                });
+                command.setText(historyItem.getCommand());
+                command.positionCaret(historyItem.getCursorPosition());
             } else if (event.getCode() == KeyCode.DOWN) {
                 CommandHistory.Item historyItem = commandHistory.down();
-                Platform.runLater(() -> {
-                    command.setText(historyItem.getCommand());
-                    command.positionCaret(historyItem.getCursorPosition());
-                });
+                command.setText(historyItem.getCommand());
+                command.positionCaret(historyItem.getCursorPosition());
             }
         });
 
