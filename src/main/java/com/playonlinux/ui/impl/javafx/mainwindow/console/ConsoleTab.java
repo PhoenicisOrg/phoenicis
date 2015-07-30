@@ -47,8 +47,7 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
     private static final String NOT_INSIDE_BLOCK = ">>> ";
     private static final String INSIDE_BLOCK = "... ";
 
-    private List<String> commandHistory = new ArrayList<>();
-    private int historyIndex = 0;
+    private CommandHistory commandHistory = new CommandHistory();
 
     @Inject
     static CommandLineInterpreterFactory commandLineInterpreterFactory;
@@ -80,9 +79,9 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
         command.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 final String commandToSend = command.getText();
+                final int cursorPosition = command.getCaretPosition();
                 command.setDisable(true);
-                commandHistory.add(commandToSend);
-                historyIndex++;
+                commandHistory.add(new CommandHistory.Item(commandToSend, cursorPosition));
                 Text commandText = new Text(nextSymbol + commandToSend + "\n");
                 commandText.getStyleClass().add("commandText");
                 console.getChildren().add(commandText);
@@ -102,21 +101,22 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
                 } else {
                     nextSymbol = INSIDE_BLOCK;
                 }
-            } else if (event.getCode() == KeyCode.UP && historyIndex > 0) {
-                historyIndex--;
-                command.setText(commandHistory.get(historyIndex));
+            } else if (event.getCode() == KeyCode.UP) {
+                CommandHistory.Item historyItem = commandHistory.up();
+                Platform.runLater(() -> {
+                    command.setText(historyItem.getCommand());
+                    command.positionCaret(historyItem.getCursorPosition());
+                });
             } else if (event.getCode() == KeyCode.DOWN) {
-                historyIndex++;
-                if (historyIndex == commandHistory.size()) {
-                    command.setText("");
-                } else if (historyIndex < commandHistory.size()) {
-                    command.setText(commandHistory.get(historyIndex));
-                } else {
-                    historyIndex = commandHistory.size();
-                }
+                CommandHistory.Item historyItem = commandHistory.down();
+                Platform.runLater(() -> {
+                    command.setText(historyItem.getCommand());
+                    command.positionCaret(historyItem.getCursorPosition());
+                });
             }
         });
 
         this.setOnCloseRequest(event -> commandInterpreter.close());
     }
+
 }
