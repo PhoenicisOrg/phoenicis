@@ -80,7 +80,7 @@ public class ObservableDirectoryFilesTest {
 
             observableDirectoryFiles.addObserver(observer);
 
-            observableDirectoryFiles.start();
+            observableDirectoryFiles.init();
 
             Thread.sleep(2 * CHECK_INTERVAL);
 
@@ -103,7 +103,7 @@ public class ObservableDirectoryFilesTest {
 
             Observer observer = mock(Observer.class);
             observableDirectoryFiles.addObserver(observer);
-            observableDirectoryFiles.start();
+            observableDirectoryFiles.init();
             File createdFile = new File(temporaryDirectory, "file.txt");
             Thread.sleep(2 * CHECK_INTERVAL);
             createdFile.createNewFile();

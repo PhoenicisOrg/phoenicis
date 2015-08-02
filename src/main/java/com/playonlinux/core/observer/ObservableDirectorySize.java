@@ -43,11 +43,6 @@ public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEn
     }
 
     @Override
-    public void start() {
-        observableDirectoryThread.start();
-    }
-
-    @Override
     public void shutdown() {
         observableDirectoryThread.stopChecking();
         super.shutdown();
@@ -55,7 +50,7 @@ public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEn
 
     @Override
     public void init() throws ServiceInitializationException {
-        this.start();
+        this.observableDirectoryThread.start();
     }
 
     public File getObservedDirectory() {
