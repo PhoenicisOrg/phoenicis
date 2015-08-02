@@ -39,11 +39,9 @@ public class PythonIntegrationCase {
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("INTEGRATION TEST: "+toString());
         System.out.println("--------------------------------------------------------------------------------");
-        pythonInterpreter.eval("suite = unittest.TestSuite()");
-        pythonInterpreter.eval("suite.addTest(" + className + "(\"" + methodName + "\"))");
+        pythonInterpreter.exec("suite = unittest.TestSuite()");
+        pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
         pythonInterpreter.eval("suite.debug()");
-
-        pythonInterpreter.cleanup();
 
     }
 
