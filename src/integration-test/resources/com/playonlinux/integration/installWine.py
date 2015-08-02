@@ -10,6 +10,7 @@ from com.playonlinux.core.utils import OperatingSystem
 
 class TestInstallWine(unittest.TestCase):
     def testInstallWineVersion(self):
+        time.sleep(2000)
         ServiceManagerGetter().init("com.playonlinux.contexts.WineVersionServicesContext")
 
         setupWizard = SetupWizard("Mock setup wizard")

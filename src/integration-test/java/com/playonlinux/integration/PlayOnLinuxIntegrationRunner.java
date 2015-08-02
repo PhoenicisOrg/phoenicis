@@ -34,7 +34,7 @@ public class PlayOnLinuxIntegrationRunner {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
-    public void initialize() throws InjectionException, IOException, InterruptedException {
+    public void initialize() throws InjectionException, IOException {
         AbstractConfiguration testConfigFile = new IntegrationContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
@@ -44,8 +44,6 @@ public class PlayOnLinuxIntegrationRunner {
         home.mkdirs();
 
         System.out.println("PlayOnLinux integration initialized");
-
-        Thread.sleep(2000);
     }
 
 
