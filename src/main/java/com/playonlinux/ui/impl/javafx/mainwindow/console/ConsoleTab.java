@@ -26,6 +26,7 @@ import com.playonlinux.core.python.CommandInterpreter;
 import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
+import com.playonlinux.ui.common.CommandHistory;
 import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -36,9 +37,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
@@ -47,8 +45,7 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
     private static final String NOT_INSIDE_BLOCK = ">>> ";
     private static final String INSIDE_BLOCK = "... ";
 
-    private List<String> commandHistory = new ArrayList<>();
-    private int historyIndex = 0;
+    private final CommandHistory commandHistory = new CommandHistory();
 
     @Inject
     static CommandLineInterpreterFactory commandLineInterpreterFactory;
@@ -80,9 +77,9 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
         command.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 final String commandToSend = command.getText();
+                final int cursorPosition = command.getCaretPosition();
                 command.setDisable(true);
-                commandHistory.add(commandToSend);
-                historyIndex++;
+                commandHistory.add(new CommandHistory.Item(commandToSend, cursorPosition));
                 Text commandText = new Text(nextSymbol + commandToSend + "\n");
                 commandText.getStyleClass().add("commandText");
                 console.getChildren().add(commandText);
@@ -102,21 +99,22 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
                 } else {
                     nextSymbol = INSIDE_BLOCK;
                 }
-            } else if (event.getCode() == KeyCode.UP && historyIndex > 0) {
-                historyIndex--;
-                command.setText(commandHistory.get(historyIndex));
+            }
+        });
+
+        command.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.UP) {
+                CommandHistory.Item historyItem = commandHistory.up();
+                command.setText(historyItem.getCommand());
+                command.positionCaret(historyItem.getCursorPosition());
             } else if (event.getCode() == KeyCode.DOWN) {
-                historyIndex++;
-                if (historyIndex == commandHistory.size()) {
-                    command.setText("");
-                } else if (historyIndex < commandHistory.size()) {
-                    command.setText(commandHistory.get(historyIndex));
-                } else {
-                    historyIndex = commandHistory.size();
-                }
+                CommandHistory.Item historyItem = commandHistory.down();
+                command.setText(historyItem.getCommand());
+                command.positionCaret(historyItem.getCursorPosition());
             }
         });
 
         this.setOnCloseRequest(event -> commandInterpreter.close());
     }
+
 }
