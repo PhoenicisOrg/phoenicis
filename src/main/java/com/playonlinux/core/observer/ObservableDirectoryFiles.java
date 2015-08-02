@@ -37,11 +37,6 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
 
 
     @Override
-    public void start() {
-        observableDirectoryThread.start();
-    }
-
-    @Override
     public void shutdown() {
         observableDirectoryThread.stopChecking();
         super.shutdown();
@@ -49,7 +44,7 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
 
     @Override
     public void init() throws ServiceInitializationException {
-        this.start();
+        this.observableDirectoryThread.start();
     }
 
 
