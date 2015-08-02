@@ -45,7 +45,7 @@ public class PlayOnLinuxIT {
     private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
     @BeforeClass
-    public static void setUp() throws InjectionException, IOException {
+    public static void setUp() throws InjectionException, IOException, InterruptedException {
         integrationRunner.initialize();
     }
 
