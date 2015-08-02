@@ -110,7 +110,6 @@ public final class LibraryEntitiesProvider
         shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
                 configFilesDirectory, defaultIcon);
 
-
         shortcutSetDirectories.addObserver(this);
     }
 
