@@ -50,6 +50,9 @@ public class PlayOnLinuxApp {
             if (args.length > 0 && "--gtk".equals(args[0])) {
                 playOnLinuxConfig.setUseGTKInterface(true);
             }
+            if(args.length > 0 && "--qt".equals(args[0])) {
+                playOnLinuxConfig.setUseQtInterface(true);
+            }
 
             playOnLinuxConfig.load();
             playOnLinuxContext.initLogger();
