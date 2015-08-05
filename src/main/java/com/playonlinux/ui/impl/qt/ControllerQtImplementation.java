@@ -48,10 +48,9 @@ public class ControllerQtImplementation implements Controller {
         return null;
     }
 
-    //FIXME
     @Override
     public <T> UIMessageSender<T> createUIMessageSender() {
-        return null;
+        return new UIMessageSenderQtImplementation<>();
     }
 
 
