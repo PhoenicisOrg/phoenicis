@@ -41,6 +41,7 @@ import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
+import com.playonlinux.ui.impl.qt.ControllerQtImplementation;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -58,18 +59,22 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
     private ServiceManager playOnLinuxServiceManager = new PlayOnLinuxServicesManager();
     private boolean useGTKInterface;
+    private boolean useQtInterface;
     private ExecutorService executor = Executors.newCachedThreadPool();
 
     /**
      * This bean represents the UI controller
+     *
      * @return the bean
      */
     @Bean
     public Controller controller() {
-        if(useCliInterface) {
+        if (useCliInterface) {
             return new ControllerCLIImplementation();
-        } else if(useGTKInterface) {
+        } else if (useGTKInterface) {
             return new ControllerGTKImplementation();
+        } else if (useQtInterface) {
+            return new ControllerQtImplementation();
         } else {
             return new ControllerJavaFXImplementation();
         }
@@ -77,6 +82,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Source data for scripts
+     *
      * @return the bean
      * @throws MalformedURLException if the URL in the config file is malformed
      */
@@ -87,6 +93,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Source data for wine versions
+     *
      * @return the bean
      * @throws MalformedURLException if the URL in the config file is malformed
      */
@@ -97,15 +104,17 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Represents the UI event handler
+     *
      * @return the bean
      */
     @Bean
     public EventHandler eventHandler() {
-            return new EventHandlerPlayOnLinuxImplementation();
+        return new EventHandlerPlayOnLinuxImplementation();
     }
 
     /**
      * PlayOnLinux context
+     *
      * @return the bean
      */
     @Bean
@@ -115,6 +124,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * PlayOnLinux service manager
+     *
      * @return the bean
      */
     @Bean
@@ -124,6 +134,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * PlayOnLinux language bundle
+     *
      * @return the bean
      */
     @Bean
@@ -133,6 +144,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Command interpreter factory. Used for the console window
+     *
      * @return the bean
      */
     @Bean
@@ -142,6 +154,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Script interpreter factory
+     *
      * @return the bean
      */
     @Bean
@@ -151,6 +164,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * ScriptLogger factory
+     *
      * @return the bean
      */
     @Bean
@@ -160,6 +174,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Script factory
+     *
      * @return the script
      */
     @Bean
@@ -169,6 +184,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * PlayOnLinux default executor service
+     *
      * @return
      */
     private ExecutorService defaultExecutor() {
@@ -182,6 +198,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Set the CLI interface
+     *
      * @param enabled Determine if this interface should be used or not
      */
     public void setUseCLIInterface(boolean enabled) {
@@ -190,10 +207,20 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Use the GTK interface
+     *
      * @param useGTKInterface Determine is the interface should be used or not
      */
     public void setUseGTKInterface(boolean useGTKInterface) {
         this.useGTKInterface = useGTKInterface;
+    }
+
+    /**
+     * Use the Qt interface
+     *
+     * @param useQtInterface Determine is the interface should be used or not
+     */
+    public void setUseQtInterface(boolean useQtInterface) {
+        this.useQtInterface = useQtInterface;
     }
 
     @Override

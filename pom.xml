@@ -107,6 +107,11 @@
             <version>4.1</version>
         </dependency>
         <dependency>
+            <groupId>com.trolltech</groupId>
+            <artifactId>qtjambi</artifactId>
+            <version>4.8.7</version>
+        </dependency>
+        <dependency>
             <groupId>jmimemagic</groupId>
             <artifactId>jmimemagic</artifactId>
             <version>0.1.2</version>
