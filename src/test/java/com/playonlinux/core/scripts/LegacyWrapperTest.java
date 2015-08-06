@@ -43,8 +43,8 @@ public class LegacyWrapperTest {
         testConfigFile.load();
     }
 
-    @Test
     @Ignore
+    @Test
     public void testLegacyWrapper() throws Exception {
         final File tmpFile = File.createTempFile("temporary", "text");
         tmpFile.mkdirs();

@@ -55,8 +55,8 @@
 
 .menuEntry {
     -fx-font-family: "Roboto Light";
-    -fx-font-size: 1.6em;
-    -fx-translate-y: 0.2em;
+    -fx-font-size: 1.4em;
+    -fx-translate-y: 0.4em;
     -fx-fill: #FFFFFF;
     -fx-cursor: hand;
 }
