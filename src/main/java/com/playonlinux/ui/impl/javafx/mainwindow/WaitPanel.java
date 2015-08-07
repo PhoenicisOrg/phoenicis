@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.apps;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
 
-final class WaitPanel extends HBox {
+public class WaitPanel extends HBox {
     public WaitPanel() {
         ProgressIndicator progressIndicator = new ProgressIndicator();
         progressIndicator.setPrefWidth(64);

@@ -34,7 +34,7 @@ public class MockPlayOnLinuxContext extends PlayOnLinuxContext {
         try {
             propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream("test.properties"));
         } catch (IOException e) {
-            throw new PlayOnLinuxRuntimeError("Cannot load properties", e);
+            throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
         }
         return propertiesBeingLoaded;
     }

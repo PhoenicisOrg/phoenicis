@@ -18,5 +18,13 @@
 
 package com.playonlinux.core.dto;
 
+/**
+ * Represents a DTO.
+ * A DTO <b>must</b> obey the following rules:
+ * <ul>
+ *     <li>A DTO must be immutable (all fields are final)</li>
+ *     <li>A DTO must have only getters and setters or a builder (= no business logic)</li>
+ * </ul>
+ */
 public interface AbstractDTO {
 }

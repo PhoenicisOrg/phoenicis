@@ -18,6 +18,10 @@
 
 package com.playonlinux.core.services.manager;
 
+/**
+ * Represents the definition of the implementation of a given service.
+ * This class holds the interface name of the services and the chosen implementation
+ */
 public class ServiceImplementationDefinition {
     private final Class<? extends Service> interfaces;
 
@@ -37,10 +41,18 @@ public class ServiceImplementationDefinition {
     }
 
 
+    /**
+     * Getter
+     * @return The interface that needs to be implemented
+     */
     public Class<? extends Service> getImplementation() {
         return implementation;
     }
 
+    /**
+     * Getter
+     * @return The actual implementation of the interface
+     */
     public Class<? extends Service> getInterfaces() {
         return interfaces;
     }

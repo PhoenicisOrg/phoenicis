@@ -32,7 +32,11 @@ import com.playonlinux.library.LibraryEntitiesProvider;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class PlayOnLinuxServicesConfiguration implements ServiceManagerConfiguration {
+/**
+ * Default service configuration of PlayOnLinux
+ * The order the services are declared matters
+ */
+class PlayOnLinuxServicesConfiguration implements ServiceManagerConfiguration {
     @Override
     public Iterator<ServiceImplementationDefinition> iterator() {
         return Arrays.asList(

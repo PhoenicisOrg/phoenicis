@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.apps;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,7 +28,7 @@ import javafx.scene.text.TextAlignment;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-final class FailurePanel extends VBox {
+public class FailurePanel extends VBox {
     private final Button retryButton;
 
     public FailurePanel() {

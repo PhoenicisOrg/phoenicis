@@ -34,7 +34,7 @@ public class MockIntegrationContext extends PlayOnLinuxContext {
         try {
             propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream("integration.properties"));
         } catch (IOException e) {
-            throw new PlayOnLinuxRuntimeError("Cannot load properties", e);
+            throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
         }
         return propertiesBeingLoaded;
     }

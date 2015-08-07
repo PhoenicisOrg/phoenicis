@@ -64,7 +64,7 @@ public class PlayOnLinuxContext {
         try {
             PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
         } catch (PlayOnLinuxException e) {
-            throw new PlayOnLinuxRuntimeError("Cannot initialize logger", e);
+            throw new PlayOnLinuxRuntimeException("Cannot initialize logger", e);
         }
     }
 
@@ -79,7 +79,7 @@ public class PlayOnLinuxContext {
             String filename = this.getPropertyFileName();
             propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
         } catch (PlayOnLinuxException | IOException e) {
-            throw new PlayOnLinuxRuntimeError("Cannot load properties", e);
+            throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
         }
         return propertiesBeingLoaded;
     }
