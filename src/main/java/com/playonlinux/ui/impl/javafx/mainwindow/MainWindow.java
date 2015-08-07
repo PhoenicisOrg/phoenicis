@@ -46,10 +46,6 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
     private VBox rootPane;
 
-    public MainWindow() {
-
-    }
-
     public void setUpWindow() {
         rootPane = new VBox();
 

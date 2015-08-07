@@ -27,6 +27,7 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.widget.StaticMiniature;
+import javafx.application.Platform;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -41,9 +42,8 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
     public ViewEngines(MainWindow parent) {
         super(parent);
 
-        EventHandlerEngines eventHandlerLibrary = new EventHandlerEngines();
+        final EventHandlerEngines eventHandlerLibrary = new EventHandlerEngines();
         entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
-
 
         this.initWait();
         this.initFailure();
@@ -99,29 +99,30 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
 
     @Override
     public void update(Observable observable, WineVersionsWindowEntity argument) {
+        Platform.runLater(() -> {
+                    if (argument.isDownloading()) {
+                        this.showWait();
+                    } else if (argument.isDownloadFailed()) {
+                        this.showFailure();
+                    } else {
+                        this.showWineVersions();
+                        wineDistributions.getTabs().clear();
 
-        if (argument.isDownloading()) {
-            this.showWait();
-        } else if (argument.isDownloadFailed()) {
-            this.showFailure();
-        } else {
-            showWineVersions();
-            wineDistributions.getTabs().clear();
+                        for (WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument.getDistributions()) {
+                            final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
+                            final Tab wineDistributionTab = new Tab();
+                            wineDistributionTab.setClosable(false);
+                            wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
+                            wineDistributionTab.setContent(miniatureListWidget);
 
-            for(WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument.getDistributions()) {
-                final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
-                final Tab wineDistributionTab = new Tab();
-                wineDistributionTab.setClosable(false);
-                wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
-                wineDistributionTab.setContent(miniatureListWidget);
+                            for (WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity.getAvailablePackages()) {
+                                miniatureListWidget.addItem(wineVersionItemEntity.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+                            }
 
-                for(WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity.getAvailablePackages()) {
-                    miniatureListWidget.addItem(wineVersionItemEntity.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+                            wineDistributions.getTabs().add(wineDistributionTab);
+                        }
+                    }
                 }
-
-                wineDistributions.getTabs().add(wineDistributionTab);
-            }
-        }
-
+        );
     }
 }

@@ -82,7 +82,6 @@ public class Wine implements SetupWizardComponent {
     private OutputStream errorStream = new NullOutputStream();
     private InputStream inputStream = new NullInputStream(0);
 
-
     private Wine(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }

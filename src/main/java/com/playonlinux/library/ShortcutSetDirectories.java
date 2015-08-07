@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Scan
-class ShortcutSetDirectories
-        extends ObservableDefaultImplementation<List<Shortcut>>
+class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortcut>>
         implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
     
     @Inject
