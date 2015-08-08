@@ -18,27 +18,33 @@
 
 package com.playonlinux.ui.impl.javafx;
 
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import com.playonlinux.ui.impl.javafx.setupwindow.SetupWindowJavaFXImplementation;
 
-@Scan
+/**
+ * JavaFX implementation of PlayOnLinux controller
+ */
 public class ControllerJavaFXImplementation implements Controller {
-
+    @Override
     public void startApplication() {
         JavaFXApplication.launch(JavaFXApplication.class);
     }
 
+    @Override
     public SetupWindow createSetupWindowGUIInstance(String title) {
-        return new SetupWindowJavaFXImplementation(title);
+        final MainWindow mainWindow = JavaFXApplication.getMainWindow();
+        final ViewLibrary viewLibrary = mainWindow.getLibrary();
+        final SetupWindowJavaFXImplementation setupWindowTab = new SetupWindowJavaFXImplementation(title, viewLibrary);
+        viewLibrary.createNewTab(setupWindowTab);
+        return setupWindowTab;
     }
 
     @Override
     public <T> UIMessageSender<T> createUIMessageSender() {
         return new UIMessageSenderJavaFXImplementation<>();
     }
-
-
 }

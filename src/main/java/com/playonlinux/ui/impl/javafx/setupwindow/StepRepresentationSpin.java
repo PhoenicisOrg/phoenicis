@@ -33,7 +33,7 @@ public class StepRepresentationSpin extends StepRepresentationMessage {
         super.drawStepContent();
 
         ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setLayoutX(230);
+        progressIndicator.setLayoutX(330);
         progressIndicator.setLayoutY(100);
 
         this.addToContentPanel(progressIndicator);

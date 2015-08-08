@@ -47,10 +47,13 @@ public interface EventHandler {
     /**
      * Get installed applications
      * @return installed applications observable
-     * @throws PlayOnLinuxException
      */
     EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications();
 
+    /**
+     * Get the Available Apps Manager
+     * @return The actual component
+     */
     AppsManager getAppsManager();
 
     EntitiesProvider<AppEntity, AppsWindowEntity> getRemoteAvailableInstallers();

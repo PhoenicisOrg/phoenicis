@@ -49,7 +49,7 @@ public class MainWindowView extends HBox {
         this.getChildren().add(visiblePane);
     }
 
-    protected MainWindow getParentWindow() {
+    public MainWindow getParentWindow() {
         return parent;
     }
 }

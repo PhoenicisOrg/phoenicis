@@ -24,12 +24,25 @@ import java.util.List;
 
 public class WineVersionsWindowEntity implements Entity {
     private final List<WineVersionDistributionItemEntity> distributions;
+    private final boolean downloading;
+    private final boolean downloadFailed;
 
-    public WineVersionsWindowEntity(List<WineVersionDistributionItemEntity> distributions) {
+    public WineVersionsWindowEntity(List<WineVersionDistributionItemEntity> distributions,
+                                    boolean downloading, boolean downloadFailed) {
         this.distributions = distributions;
+        this.downloading = downloading;
+        this.downloadFailed = downloadFailed;
     }
 
     public List<WineVersionDistributionItemEntity> getDistributions() {
         return distributions;
+    }
+
+    public boolean isDownloading() {
+        return downloading;
+    }
+
+    public boolean isDownloadFailed() {
+        return downloadFailed;
     }
 }

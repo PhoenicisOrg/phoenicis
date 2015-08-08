@@ -34,19 +34,22 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ChecksumCalculator extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final int BLOCK_SIZE = 2048;
+    private static final String WAIT_MESSAGE = translate("Please wait while we are verifying the file...");
 
     public String calculate(File fileToCheck, String algorithm) throws IOException {
-        final FileInputStream inputStream = new FileInputStream(fileToCheck);
-        MessageDigest messageDigest;
-        try {
-            messageDigest = MessageDigest.getInstance(algorithm);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException(e);
-        }
+        final long fileSize = FileUtils.sizeOf(fileToCheck);
+        try(final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
+            MessageDigest messageDigest;
+            try {
+                messageDigest = MessageDigest.getInstance(algorithm);
+            } catch (NoSuchAlgorithmException e) {
+                throw new IllegalArgumentException(e);
+            }
 
-        byte[] digest = getDigest(inputStream, messageDigest, FileUtils.sizeOf(fileToCheck));
-        this.deleteObservers();
-        return Hex.encodeHexString(digest);
+            byte[] digest = getDigest(inputStream, messageDigest, fileSize);
+            this.deleteObservers();
+            return Hex.encodeHexString(digest);
+        }
     }
 
     private byte[] getDigest(InputStream inputStream, MessageDigest messageDigest, long sizeInBytes)
@@ -70,7 +73,7 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
     private void changeState(double percentage) {
         this.notifyObservers(new ProgressStateEntity.Builder()
                 .withPercent(percentage)
-                .withProgressText(translate("Please wait while we are verifying the file..."))
+                .withProgressText(WAIT_MESSAGE)
                 .build()
         );
     }

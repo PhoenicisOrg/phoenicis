@@ -18,6 +18,10 @@
 
 package com.playonlinux.core.services.manager;
 
+/**
+ * Represents a Service Manager Configuration.
+ * Any implementation must provide an interator if {@link ServiceImplementationDefinition}
+ */
 public interface ServiceManagerConfiguration extends Iterable<ServiceImplementationDefinition> {
 
 }

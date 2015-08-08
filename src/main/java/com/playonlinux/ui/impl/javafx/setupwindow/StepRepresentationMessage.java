@@ -23,7 +23,7 @@ import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import javafx.scene.text.Text;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
-    String textToShow;
+    private final String textToShow;
 
     public StepRepresentationMessage(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow) {
         super(parent, message);
@@ -35,8 +35,8 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
         Text textWidget = new Text(textToShow);
         textWidget.setLayoutX(10);
         textWidget.setLayoutY(20);
-        textWidget.setWrappingWidth(500);
-        textWidget.prefWidth(500);
+        textWidget.setWrappingWidth(700);
+        textWidget.prefWidth(700);
 
         this.addToContentPanel(textWidget);
     }

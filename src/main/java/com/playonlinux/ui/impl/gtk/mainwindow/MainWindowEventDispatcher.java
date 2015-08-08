@@ -1,6 +1,5 @@
 package com.playonlinux.ui.impl.gtk.mainwindow;
 
-
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;

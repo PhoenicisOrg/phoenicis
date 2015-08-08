@@ -26,6 +26,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class PlayOnLinuxContext {
         try {
             PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
         } catch (PlayOnLinuxException e) {
-            throw new PlayOnLinuxRuntimeError("Cannot initialize logger", e);
+            throw new PlayOnLinuxRuntimeException("Cannot initialize logger", e);
         }
     }
 
@@ -75,12 +76,12 @@ public class PlayOnLinuxContext {
     public ReplacableProperties loadProperties()  {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
-        try {
-            String filename = this.getPropertyFileName();
-            propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(filename));
+        try(InputStream properties = PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(this.getPropertyFileName())) {
+            propertiesBeingLoaded.load(properties);
         } catch (PlayOnLinuxException | IOException e) {
-            throw new PlayOnLinuxRuntimeError("Cannot load properties", e);
+            throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
         }
+
         return propertiesBeingLoaded;
     }
 

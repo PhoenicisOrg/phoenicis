@@ -71,6 +71,9 @@ public final class WineVersionEntitiesProvider
 
 
         applyFilter(lastFilter);
+        this.notifyObservers(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities,
+                argument.isUpdating(), argument.hasFailed()));
+
     }
 
     @Override
@@ -84,8 +87,6 @@ public final class WineVersionEntitiesProvider
         } else {
             filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities.stream().filter(filter::apply).collect(Collectors.toList()));
         }
-
-        this.notifyObservers(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities));
     }
 
 

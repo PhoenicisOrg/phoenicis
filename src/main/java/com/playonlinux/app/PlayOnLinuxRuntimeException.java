@@ -20,15 +20,15 @@ package com.playonlinux.app;
 
 import org.apache.commons.lang.ArrayUtils;
 
-public class PlayOnLinuxRuntimeError extends Error {
+public class PlayOnLinuxRuntimeException extends RuntimeException {
     private final String message;
     private final Throwable parent;
 
-    public PlayOnLinuxRuntimeError(String message) {
+    public PlayOnLinuxRuntimeException(String message) {
         this(message, null);
     }
 
-    public PlayOnLinuxRuntimeError(String message, Throwable parent) {
+    public PlayOnLinuxRuntimeException(String message, Throwable parent) {
         super(message);
         this.message = message;
         this.parent = parent;

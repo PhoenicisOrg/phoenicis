@@ -29,11 +29,11 @@ import com.trolltech.qt.gui.QApplication;
 /**
  * Controller and entrypoint for POL's Qt-Gui implementation.
  */
-@Scan
 public class ControllerQtImplementation implements Controller {
 
     public static final String[] ARGS = new String[0];
 
+    @Override
     public void startApplication() {
         QApplication.initialize(ARGS);
 
@@ -44,6 +44,7 @@ public class ControllerQtImplementation implements Controller {
     }
 
     //FIXME
+    @Override
     public SetupWindow createSetupWindowGUIInstance(String title) {
         return null;
     }

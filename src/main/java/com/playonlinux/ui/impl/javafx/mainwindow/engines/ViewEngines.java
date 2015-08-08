@@ -27,35 +27,62 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.widget.StaticMiniature;
+import javafx.application.Platform;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowEntity> {
     private final EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> entitiesProvider;
     private TabPane wineDistributions;
+    private FailurePanel failurePanel;
+    private HBox waitPanel;
 
     public ViewEngines(MainWindow parent) {
         super(parent);
 
-        EventHandlerEngines eventHandlerLibrary = new EventHandlerEngines();
+        final EventHandlerEngines eventHandlerLibrary = new EventHandlerEngines();
         entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
-        this.drawSideBar();
-        this.drawWineVersions();
 
-        showRightView(wineDistributions);
+        this.initWait();
+        this.initFailure();
+        this.initWineVersions();
+
+        this.drawSideBar();
+        this.showWait();
     }
 
-    private void drawWineVersions() {
+    private void initFailure() {
+        failurePanel = new FailurePanel();
+    }
+
+    private void initWait() {
+        waitPanel = new WaitPanel();
+    }
+
+    private void initWineVersions() {
         wineDistributions = new TabPane();
         wineDistributions.getStyleClass().add("rightPane");
+    }
+
+    private void showWait() {
+        showRightView(waitPanel);
+    }
+
+    private void showFailure() {
+        showRightView(failurePanel);
+    }
+
+    private void showWineVersions() {
+        showRightView(wineDistributions);
     }
 
     protected void drawSideBar() {
         super.drawSideBar();
 
-        TextField searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> {
+        final TextField searchBar = new TextField();
+            searchBar.setOnKeyReleased(event -> {
         });
 
         LeftButton wine = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/engines/wine.png", "Wine");
@@ -72,21 +99,30 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
 
     @Override
     public void update(Observable observable, WineVersionsWindowEntity argument) {
-        wineDistributions.getTabs().clear();
+        Platform.runLater(() -> {
+                    if (argument.isDownloading()) {
+                        this.showWait();
+                    } else if (argument.isDownloadFailed()) {
+                        this.showFailure();
+                    } else {
+                        this.showWineVersions();
+                        wineDistributions.getTabs().clear();
 
+                        for (WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument.getDistributions()) {
+                            final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
+                            final Tab wineDistributionTab = new Tab();
+                            wineDistributionTab.setClosable(false);
+                            wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
+                            wineDistributionTab.setContent(miniatureListWidget);
 
-        for(WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument.getDistributions()) {
-            final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
-            final Tab wineDistributionTab = new Tab();
-            wineDistributionTab.setClosable(false);
-            wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
-            wineDistributionTab.setContent(miniatureListWidget);
+                            for (WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity.getAvailablePackages()) {
+                                miniatureListWidget.addItem(wineVersionItemEntity.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+                            }
 
-            for(WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity.getAvailablePackages()) {
-                miniatureListWidget.addItem(wineVersionItemEntity.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
-            }
-
-            wineDistributions.getTabs().add(wineDistributionTab);
-        }
+                            wineDistributions.getTabs().add(wineDistributionTab);
+                        }
+                    }
+                }
+        );
     }
 }

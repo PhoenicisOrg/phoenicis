@@ -16,12 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-/*
-* {
-     -fx-font-family: Roboto;
-}
-*/
-
 #header {
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
@@ -227,4 +221,27 @@
 .consoleCommandType {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
+}
+
+/*
+ * Setup Window stuffs
+ */ 
+
+#header {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-background-color:#FFFFFF;
+}
+
+#footer {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+}
+
+#panelForTopheader {
+    -fx-padding: 30px;
+    -fx-background-color: #F4F4F4;
+    -fx-border-color: #CCCCCC;
 }

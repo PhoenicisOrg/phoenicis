@@ -16,21 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#header {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 1px;
-    -fx-background-color:#FFFFFF;
-}
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
-#footer {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 1px;
-}
+import javafx.geometry.Pos;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.HBox;
 
-#panelForTopheader {
-    -fx-padding: 30px;
-    -fx-background-color: #F4F4F4;
-    -fx-border-color: #CCCCCC;
+public class WaitPanel extends HBox {
+    public WaitPanel() {
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.setPrefWidth(64);
+        progressIndicator.setPrefHeight(64);
+
+
+        this.getStyleClass().add("rightPane");
+
+        this.getChildren().add(progressIndicator);
+        this.setAlignment(Pos.CENTER);
+    }
 }

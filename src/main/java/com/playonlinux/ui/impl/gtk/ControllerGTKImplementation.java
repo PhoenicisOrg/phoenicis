@@ -26,7 +26,6 @@ import com.playonlinux.ui.impl.gtk.mainwindow.GTKApplication;
 import com.playonlinux.ui.impl.gtk.setupwindow.SetupWindowGTKImplementation;
 import org.gnome.gtk.Gtk;
 
-
 @Scan
 public class ControllerGTKImplementation implements Controller {
 

@@ -45,7 +45,7 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
         listViewWidget.setItems(FXCollections.observableArrayList(menuItems));
         listViewWidget.setLayoutX(10);
         listViewWidget.setLayoutY(40);
-        listViewWidget.setPrefSize(500, 240);
+        listViewWidget.setPrefSize(700, 328);
 
         this.addToContentPanel(listViewWidget);
     }
