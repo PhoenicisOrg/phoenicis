@@ -19,14 +19,17 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.core.messages.CancelerMessage;
+import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 
+// TODO: Fix this class using CSS and containers instead of static sizes
 abstract class AbstractStepRepresentation {
     private final CancelerMessage messageWaitingForResponse;
     private final SetupWindowJavaFXImplementation parent;
@@ -39,6 +42,10 @@ abstract class AbstractStepRepresentation {
 
     protected SetupWindowJavaFXImplementation getParent() {
         return this.parent;
+    }
+
+    protected Stage getParentWindow() {
+        return this.parent.getParentWindow();
     }
 
     protected Pane getParentRoot() {
@@ -71,20 +78,20 @@ abstract class AbstractStepRepresentation {
 
     protected void drawFooter() {
         Pane footer = new Pane();
-        footer.setPrefSize(522, 45);
+        footer.setPrefSize(722, 45);
         footer.setLayoutX(-1);
-        footer.setLayoutY(356);
+        footer.setLayoutY(444);
         footer.setId("footer");
         this.addToStep(footer);
 
         nextButton = new Button("Next");
         nextButton.setLayoutY(9);
-        nextButton.setLayoutX(435);
+        nextButton.setLayoutX(635);
         nextButton.setPrefSize(70, 28);
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setLayoutY(9);
-        cancelButton.setLayoutX(355);
+        cancelButton.setLayoutX(555);
         cancelButton.setPrefSize(70, 28);
 
         footer.getChildren().addAll(nextButton, cancelButton);

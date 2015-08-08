@@ -26,6 +26,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class JavaFXApplication extends Application {
+    private static MainWindow mainWindow;
 
     @Override
     public void start(Stage primaryStage) {
@@ -33,10 +34,7 @@ public class JavaFXApplication extends Application {
         primaryStage.setTitle("PlayOnLinux");
         loadFonts();
 
-        MenuBar menuBar = new MenuBar();
-        menuBar.useSystemMenuBarProperty().set(true);
-
-        MainWindow mainWindow = new MainWindow();
+        mainWindow = new MainWindow();
 
         mainWindow.setUpWindow();
         mainWindow.setUpEvents();
@@ -55,6 +53,10 @@ public class JavaFXApplication extends Application {
         }
         */
 
+    }
+
+    public static MainWindow getMainWindow() {
+        return mainWindow;
     }
 
     private void loadFonts() {

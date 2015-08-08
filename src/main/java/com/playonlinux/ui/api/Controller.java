@@ -18,11 +18,26 @@
 
 package com.playonlinux.ui.api;
 
+/**
+ * Represents a UI controller
+ */
 public interface Controller {
+    /**
+     * Start the UI
+     */
     void startApplication();
 
+    /**
+     * Creates a {@link SetupWindow} instance
+     * @param title The title of the setupwindow
+     * @return The created instance
+     */
     SetupWindow createSetupWindowGUIInstance(String title);
 
+    /**
+     * Creates a {@link UIMessageSender}
+     * @param <T> The type returned by messages
+     * @return The created instance
+     */
     <T> UIMessageSender<T> createUIMessageSender();
-
 }

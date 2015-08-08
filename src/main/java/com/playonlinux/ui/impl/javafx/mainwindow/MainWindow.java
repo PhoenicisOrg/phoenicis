@@ -56,7 +56,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         Scene scene = new PlayOnLinuxScene(rootPane);
         headerPane = new MainWindowHeader();
 
-        goTo(library);
+        getLibrary();
 
         this.setScene(scene);
         this.setTitle(translate("${application.name}"));
@@ -77,6 +77,11 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
             }
         });
 
+    }
+
+    public ViewLibrary getLibrary() {
+        goTo(library);
+        return library;
     }
 
     public void setUpEvents() {

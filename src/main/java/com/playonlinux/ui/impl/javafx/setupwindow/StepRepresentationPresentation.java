@@ -53,7 +53,7 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         leftImage.setLayoutY(0);
 
         Pane contentPane = new Pane();
-        contentPane.setPrefSize(370, 355);
+        contentPane.setPrefSize(570, 443);
         contentPane.setLayoutX(151);
         contentPane.setLayoutY(0);
         contentPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));

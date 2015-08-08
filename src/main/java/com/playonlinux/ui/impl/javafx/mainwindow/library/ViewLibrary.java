@@ -28,6 +28,7 @@ import com.playonlinux.library.dto.LibraryWindowDTO;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
+import com.playonlinux.ui.impl.javafx.setupwindow.SetupWindowJavaFXImplementation;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
@@ -127,17 +128,22 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
 
     private void runConsole() {
         try {
-            final Tab console = new ConsoleTab();
-            libraryTabs.getTabs().add(console);
-            libraryTabs.getSelectionModel().select(console);
+            createNewTab(new ConsoleTab());
         } catch (CommandInterpreterException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to run the console."));
             alert.setContentText("The error was: " + ExceptionUtils.getFullStackTrace(e));
             LOGGER.warn("Error while trying to run the console", e);
         }
+    }
 
+    public void createNewTab(Tab tab) {
+        libraryTabs.getTabs().add(tab);
+        libraryTabs.getSelectionModel().select(tab);
+    }
 
+    public void closeTab(Tab tab) {
+        libraryTabs.getTabs().remove(tab);
     }
 
     public EventHandlerLibrary getEventHandler() {
@@ -148,4 +154,6 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
     public void update(Observable observable, LibraryWindowDTO argument) {
         Platform.runLater(() -> applicationListWidget.setItems(argument.getInstalledApplicationDTO()));
     }
+
+
 }

@@ -43,13 +43,13 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
         super.drawStepContent();
         progressBar.setLayoutY(60);
         progressBar.setLayoutX(30);
-        progressBar.setPrefSize(460, 30);
+        progressBar.setPrefSize(660, 30);
         this.addToContentPanel(progressBar);
 
         progressText.setLayoutX(10);
         progressText.setLayoutY(120);
-        progressText.setWrappingWidth(500);
-        progressText.prefWidth(500);
+        progressText.setWrappingWidth(700);
+        progressText.prefWidth(700);
         this.addToContentPanel(progressText);
     }
 

@@ -30,7 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
-    Pane contentPanel;
+    private Pane contentPanel;
 
     AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent, CancelerMessage messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
@@ -47,16 +47,16 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
      * Draw the header at the top of the window
      */
     private void drawHeader() {
-        String title = this.getParentWizardTitle(); // FIXME: use this variable to draw the title of the window
+        final String title = this.getParentWizardTitle(); // FIXME: use this variable to draw the title of the window
         Pane header = new Pane();
         header.setId("header");
-        header.setPrefSize(522, 65);
+        header.setPrefSize(722, 65);
         header.setLayoutX(-1);
         header.setLayoutY(-1);
         header.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
         ImageView topImage = new ImageView(this.createTopImage());
-        topImage.setLayoutX(426);
+        topImage.setLayoutX(626);
 
         header.getChildren().add(topImage);
         this.addToStep(header);
@@ -65,7 +65,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
     private void drawPanelForTopHeader() {
         Pane panel = new Pane();
         panel.setId("panelForTopheader");
-        panel.setPrefSize(522, 294);
+        panel.setPrefSize(722, 382);
         panel.setLayoutX(-1);
         panel.setLayoutY(63);
         this.addToStep(panel);

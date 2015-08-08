@@ -22,11 +22,14 @@ import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.core.utils.OperatingSystem;
+import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
+import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -37,26 +40,26 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class SetupWindowJavaFXImplementation extends Stage implements SetupWindow {
+import static com.playonlinux.core.lang.Localisation.translate;
+
+public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow {
     private final Pane root;
     private final String wizardTitle;
 
     private URL topImage;
     private URL leftImage;
 
-    private static final Logger LOGGER = Logger.getLogger(SetupWindowJavaFXImplementation.class);
+    private final ViewLibrary parentView;
 
-    public SetupWindowJavaFXImplementation(String title) {
+    public SetupWindowJavaFXImplementation(String title, ViewLibrary parentView) {
         super();
         this.root = new Pane();
-        Scene scene = new PlayOnLinuxScene(root, 520, 400);
-        scene.getStylesheets().add(this.getClass().getResource("setupWindow.css").toExternalForm());
 
         this.wizardTitle = title;
+        this.parentView = parentView;
 
-        this.setTitle(title);
-        this.setScene(scene);
-        this.show();
+        this.setText(translate(title));
+        this.setContent(root);
 
         this.loadImages();
     }
@@ -148,6 +151,10 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
         stepRepresentationBrowse.installStep();
     }
 
+    @Override
+    public void close() {
+        this.parentView.closeTab(this);
+    }
 
     @Override
     public void setTopImage(File topImage) throws MalformedURLException {
@@ -175,5 +182,9 @@ public class SetupWindowJavaFXImplementation extends Stage implements SetupWindo
 
     public URL getTopImage() {
         return topImage;
+    }
+
+    public Stage getParentWindow() {
+        return this.parentView.getParentWindow();
     }
 }
