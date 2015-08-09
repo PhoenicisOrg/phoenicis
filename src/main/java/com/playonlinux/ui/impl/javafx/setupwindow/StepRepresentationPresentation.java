@@ -46,15 +46,17 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
 
     @Override
     protected void drawStepContent() {
-        String title = this.getParentWizardTitle();
+        final String title = this.getParentWizardTitle();
 
-        ImageView leftImage = new ImageView(this.createLeftImage());
+        final ImageView leftImage = new ImageView(this.createLeftImage());
         leftImage.setLayoutX(0);
         leftImage.setLayoutY(0);
+        leftImage.setFitHeight(444);
+        leftImage.setFitWidth(187);
 
         Pane contentPane = new Pane();
-        contentPane.setPrefSize(570, 443);
-        contentPane.setLayoutX(151);
+        contentPane.setPrefSize(533, 444);
+        contentPane.setLayoutX(188);
         contentPane.setLayoutY(0);
         contentPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
