@@ -108,6 +108,7 @@ public class ApplicationDTO implements AbstractDTO, Nameable {
             this.id = id;
             return this;
         }
+
         public Builder withName(String name) {
             this.name = name;
             return this;
@@ -128,8 +129,8 @@ public class ApplicationDTO implements AbstractDTO, Nameable {
             return this;
         }
 
-        public Builder withScriptInformations(ScriptDTO scriptDTO) {
-            this.scripts = scripts;
+        public Builder withScriptInformations(List<ScriptDTO> scriptDTO) {
+            this.scripts = scriptDTO;
             return this;
         }
 

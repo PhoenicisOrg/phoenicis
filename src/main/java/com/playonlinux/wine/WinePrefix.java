@@ -93,7 +93,7 @@ public class WinePrefix implements AutoCloseable {
         return parseRegistryFile(USER_REGISTRY_FILENAME, USER_REGISTRY_NODENAME);
     }
 
-    private File getDriveCPath() {
+    public File getDriveCPath() {
         return new File(winePrefixDirectory, DRIVE_C);
     }
 

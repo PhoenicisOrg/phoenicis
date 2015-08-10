@@ -46,40 +46,36 @@ public class RegistryParser {
     }
 
     public RegistryKey parseFile() throws IOException, ParseException {
-        BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile));
-        RegistryKey root = new RegistryKey(rootName);
-        RegistryKey lastNode = null;
-        int lineNumber = 1;
-        do {
-            String currentLine = bufferReader.readLine();
-            if(currentLine == null) {
-                break;
-            }
-
-            if(currentLine.startsWith(";")
-                    || currentLine.startsWith("#")
-                    || StringUtils.isBlank(currentLine)
-                    || currentLine.startsWith("@")) {
-                lineNumber++;
-                continue;
-            }
-
-            if(currentLine.startsWith("[")) {
-                lastNode = this.parseDirectoryLine(root, currentLine);
-            } else {
-                if(lineNumber == 1) {
+        try(BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile))) {
+            final RegistryKey root = new RegistryKey(rootName);
+            RegistryKey lastNode = null;
+            int lineNumber = 1;
+            for(String currentLine = bufferReader.readLine(); currentLine != null; currentLine = bufferReader.readLine()) {
+                if (currentLine.startsWith(";")
+                        || currentLine.startsWith("#")
+                        || StringUtils.isBlank(currentLine)
+                        || currentLine.startsWith("@")) {
                     lineNumber++;
                     continue;
-                } else if(lastNode == null) {
-                    throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
-                } else {
-                    this.parseValueLine(lastNode, currentLine, lineNumber);
                 }
-            }
-            lineNumber++;
-        } while(true);
 
-        return root;
+                if (currentLine.startsWith("[")) {
+                    lastNode = this.parseDirectoryLine(root, currentLine);
+                } else {
+                    if (lineNumber == 1) {
+                        lineNumber++;
+                        continue;
+                    } else if (lastNode == null) {
+                        throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
+                    } else {
+                        this.parseValueLine(lastNode, currentLine, lineNumber);
+                    }
+                }
+                lineNumber++;
+            }
+
+            return root;
+        }
     }
 
     private void parseValueLine(RegistryKey lastNode, String currentLine, int lineNumber) throws ParseException {
@@ -87,9 +83,10 @@ public class RegistryParser {
             throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
         }
 
+        final StringBuilder nameBuilder = new StringBuilder();
+        final StringBuilder valueBuilder = new StringBuilder();
+
         ParseState parseState = ParseState.INITIAL;
-        StringBuilder nameBuilder = new StringBuilder();
-        StringBuilder valueBuilder = new StringBuilder();
         Boolean ignoreNextQuote = false;
 
         for(int i = 0; i < currentLine.length(); i++) {
@@ -119,7 +116,7 @@ public class RegistryParser {
             }
         }
 
-        String name = nameBuilder.toString();
+        final String name = nameBuilder.toString();
         try {
             RegistryValue value = RegistryValue.fromString(name, valueBuilder.toString());
             lastNode.addChild(value);
@@ -129,8 +126,8 @@ public class RegistryParser {
     }
 
     private RegistryKey parseDirectoryLine(RegistryKey root, String currentLine) {
-        String extractedLine = extractDirectoryLine(currentLine);
-        String[] splitLine = extractedLine.split("\\\\\\\\");
+        final String extractedLine = extractDirectoryLine(currentLine);
+        final String[] splitLine = extractedLine.split("\\\\\\\\");
         RegistryKey currentKey = root;
         for(String registryKeyName: splitLine) {
             RegistryKey childrenSearched = (RegistryKey) currentKey.getChild(registryKeyName);

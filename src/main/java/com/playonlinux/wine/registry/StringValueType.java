@@ -21,12 +21,17 @@ package com.playonlinux.wine.registry;
 public class StringValueType extends AbstractValueType {
     private final String content;
 
-    StringValueType(String content) {
+    public StringValueType(String content) {
         this.content = content;
     }
 
     @Override
     String getText() {
         return content;
+    }
+
+    @Override
+    public String toRegString() {
+        return String.format("\"%s\"", getText());
     }
 }

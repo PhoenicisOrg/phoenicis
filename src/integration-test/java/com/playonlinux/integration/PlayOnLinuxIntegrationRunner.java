@@ -35,7 +35,7 @@ public class PlayOnLinuxIntegrationRunner {
     static PlayOnLinuxContext playOnLinuxContext;
 
     public void initialize() throws InjectionException, IOException {
-        AbstractConfiguration testConfigFile = new IntegrationContextConfig();
+        final AbstractConfiguration testConfigFile = new IntegrationContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
 

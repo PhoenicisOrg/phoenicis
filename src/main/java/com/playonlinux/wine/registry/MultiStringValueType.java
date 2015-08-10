@@ -29,4 +29,9 @@ public class MultiStringValueType extends AbstractValueType {
     String getText() {
         return content;
     }
+
+    @Override
+    public String toRegString() {
+        return String.format("str(7):\"%s\"", getText());
+    }
 }

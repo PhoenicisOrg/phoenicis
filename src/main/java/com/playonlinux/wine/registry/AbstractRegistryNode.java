@@ -26,6 +26,8 @@ public abstract class AbstractRegistryNode {
     @Override
     public abstract String toString();
 
+    public abstract String toRegString();
+
     AbstractRegistryNode(String name) {
         this.name = name;
     }

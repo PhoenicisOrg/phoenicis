@@ -23,7 +23,7 @@ from Environment.EnvironmentFormatter import EnvironmentFormatter
 
 from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
-from com.playonlinux.framework import WineInstallation
+from com.playonlinux.framework import WineVersion
 from com.playonlinux.framework import Wine
 from com.playonlinux.core.utils import Architecture
 
@@ -169,9 +169,9 @@ class CommandParser(object):
             version = self.command[3]
             arch = self.command[4]
 
-            wineInstallation = WineInstallation(version, "upstream-%s" % arch,
+            wineVersion = WineVersion(version, "upstream-%s" % arch,
                                                 self.setupWindowManager.getWindow(setupWindowId))
-            wineInstallation.install()
+            wineVersion.install()
 
         def POL_Wine_PrefixCreate(self):
             setupWindowId = self.command[2]
