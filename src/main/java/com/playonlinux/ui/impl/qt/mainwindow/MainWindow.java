@@ -19,10 +19,7 @@
 package com.playonlinux.ui.impl.qt.mainwindow;
 
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.trolltech.qt.gui.QCloseEvent;
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.*;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -33,13 +30,23 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
     private UI_MainWindow ui;
 
-    public MainWindow(){
+    private QActionGroup viewSizeGroup = new QActionGroup(this);
+
+    public MainWindow() {
         super();
 
         ui = new UI_MainWindow();
         ui.setupUi(this);
+        setupUi();
 
         this.show();
+    }
+
+    private void setupUi() {
+        viewSizeGroup.addAction(ui.actionSmall_Icons);
+        viewSizeGroup.addAction(ui.actionMedium_Icons);
+        viewSizeGroup.addAction(ui.actionLarge_Icons);
+        viewSizeGroup.addAction(ui.actionVery_Large_Icons);
     }
 
 
@@ -47,7 +54,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     /* EVENTS */
 
     @Override
-    protected void closeEvent(QCloseEvent e){
+    protected void closeEvent(QCloseEvent e) {
         QMessageBox confirmDialog = new QMessageBox();
         confirmDialog.setWindowTitle(translate("${application.name}"));
         confirmDialog.setText(translate("Are you sure you want to close all ${application.name} windows?"));
@@ -57,7 +64,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         confirmDialog.setEscapeButton(QMessageBox.StandardButton.Cancel);
         confirmDialog.setDefaultButton(QMessageBox.StandardButton.Cancel);
         confirmDialog.exec();
-        if(confirmDialog.clickedButton() == confirmDialog.escapeButton()){
+        if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
             e.ignore();
         }
     }
