@@ -19,10 +19,9 @@
 package com.playonlinux.ui.impl.qt.mainwindow;
 
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.trolltech.qt.gui.QCloseEvent;
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.*;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -31,15 +30,46 @@ import static com.playonlinux.core.lang.Localisation.translate;
  */
 public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
-    private UI_MainWindow ui;
+    private MainWindowMenuBar menuBar;
+    private MainWindowToolBar toolBar;
+    private MainWindowActionSideBar actionSideBar;
 
-    public MainWindow(){
-        super();
+    private QWidget centralwidget;
+    private QHBoxLayout mainLayout;
 
-        ui = new UI_MainWindow();
-        ui.setupUi(this);
+    private MainWindowShortcutList shortcutList;
+
+
+    public MainWindow() {
+        setupUi();
+        retranslateUi();
 
         this.show();
+    }
+
+    private void setupUi(){
+        menuBar = new MainWindowMenuBar(this);
+        this.setMenuBar(menuBar);
+
+        toolBar = new MainWindowToolBar(this);
+        addToolBar(Qt.ToolBarArea.TopToolBarArea, toolBar);
+
+        actionSideBar = new MainWindowActionSideBar(this);
+        addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, actionSideBar);
+
+        centralwidget = new QWidget(this);
+        setCentralWidget(centralwidget);
+        mainLayout = new QHBoxLayout(centralwidget);
+        mainLayout.setMargin(0);
+
+        shortcutList = new MainWindowShortcutList(this);
+        mainLayout.addWidget(shortcutList);
+
+        resize(new QSize(800, 600).expandedTo(minimumSizeHint()));
+    }
+
+    private void retranslateUi(){
+        setWindowTitle(translate("PlayOnLinux"));
     }
 
 
@@ -47,7 +77,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     /* EVENTS */
 
     @Override
-    protected void closeEvent(QCloseEvent e){
+    protected void closeEvent(QCloseEvent e) {
         QMessageBox confirmDialog = new QMessageBox();
         confirmDialog.setWindowTitle(translate("${application.name}"));
         confirmDialog.setText(translate("Are you sure you want to close all ${application.name} windows?"));
@@ -57,7 +87,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         confirmDialog.setEscapeButton(QMessageBox.StandardButton.Cancel);
         confirmDialog.setDefaultButton(QMessageBox.StandardButton.Cancel);
         confirmDialog.exec();
-        if(confirmDialog.clickedButton() == confirmDialog.escapeButton()){
+        if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
             e.ignore();
         }
     }
