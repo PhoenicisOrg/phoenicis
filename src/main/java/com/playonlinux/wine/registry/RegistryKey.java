@@ -32,16 +32,24 @@ public class RegistryKey extends AbstractRegistryNode {
                 .append(this.name).append("\n");
         for(AbstractRegistryNode child: children) {
             for(String line: child.toString().split("\n")) {
-                stringBuilder
-                        .append("| ")
-                        .append(line)
-                        .append("\n");
+                stringBuilder.append("| ").append(line).append("\n");
             }
         }
         return stringBuilder.toString();
     }
 
-    RegistryKey(String name) {
+    @Override
+    public String toRegString() {
+        final List<String> registryPath = new ArrayList<>();
+        for(AbstractRegistryNode registryNode = this; registryNode != null;
+            registryNode = registryNode.parent) {
+            registryPath.add(0, registryNode.getName());
+        }
+
+        return "\n"+"["+String.join("\\", registryPath)+"]";
+    }
+
+    public RegistryKey(String name) {
         super(name);
         children = new ArrayList<>();
     }
@@ -80,5 +88,11 @@ public class RegistryKey extends AbstractRegistryNode {
             }
         }
         return currentLevel;
+    }
+
+    public void addChildren(AbstractRegistryNode... nodes) {
+        for(AbstractRegistryNode node: nodes) {
+            addChild(node);
+        }
     }
 }

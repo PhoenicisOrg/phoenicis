@@ -35,4 +35,9 @@ public class BinaryValueType extends AbstractValueType {
         }
         return String.join(",", binariesAsString);
     }
+
+    @Override
+    public String toRegString() {
+        return String.format("hex:%s", this.getText());
+    }
 }

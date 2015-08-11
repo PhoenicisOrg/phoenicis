@@ -88,27 +88,27 @@ public class SignatureChecker {
 
 
     private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) throws IOException, PGPException {
-        InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream);
-        PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
+        try(InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream)) {
+            PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
+            PGPPublicKey key = null;
 
-        PGPPublicKey key = null;
-
-        Iterator rIt = pgpPub.getKeyRings();
+            Iterator rIt = pgpPub.getKeyRings();
 
 
-        while (key == null && rIt.hasNext()) {
-            PGPPublicKeyRing kRing = (PGPPublicKeyRing) rIt.next();
-            Iterator kIt = kRing.getPublicKeys();
-            while (key == null && kIt.hasNext()) {
-                key = (PGPPublicKey) kIt.next();
+            while (key == null && rIt.hasNext()) {
+                PGPPublicKeyRing kRing = (PGPPublicKeyRing) rIt.next();
+                Iterator kIt = kRing.getPublicKeys();
+                while (key == null && kIt.hasNext()) {
+                    key = (PGPPublicKey) kIt.next();
+                }
             }
-        }
 
-        if (key == null) {
-            throw new IllegalArgumentException("Can't find encryption key in key ring.");
-        }
+            if (key == null) {
+                throw new IllegalArgumentException("Can't find encryption key in key ring.");
+            }
 
-        return key;
+            return key;
+        }
     }
 
     public static String getPublicKey() {

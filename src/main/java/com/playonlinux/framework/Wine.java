@@ -18,6 +18,7 @@
 
 package com.playonlinux.framework;
 
+import com.google.common.io.*;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.injection.Inject;
@@ -37,6 +38,7 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
+import com.playonlinux.wine.registry.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.output.NullOutputStream;
@@ -46,9 +48,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 import static java.lang.String.format;
@@ -75,7 +75,7 @@ public class Wine implements SetupWizardComponent {
 
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
-    private WineInstallation wineInstallation;
+    private WineVersion wineVersion;
     private int lastReturnCode = -1;
 
     private OutputStream outputStream = new NullOutputStream();
@@ -137,9 +137,9 @@ public class Wine implements SetupWizardComponent {
         }
 
         if(prefix.initialized()) {
-            wineInstallation = new WineInstallation(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
-            if(!wineInstallation.isInstalled()) {
-                wineInstallation.install();
+            wineVersion = new WineVersion(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
+            if(!wineVersion.isInstalled()) {
+                wineVersion.install();
             }
         }
 
@@ -196,14 +196,14 @@ public class Wine implements SetupWizardComponent {
             }
         }
 
-        wineInstallation = new WineInstallation(new Version(version), new WineDistribution(
+        wineVersion = new WineVersion(new Version(version), new WineDistribution(
                 OperatingSystem.fetchCurrentOperationSystem(),
                 Architecture.valueOf(architecture),
                 distribution
         ), setupWizard);
 
-        if(!wineInstallation.isInstalled()) {
-            wineInstallation.install();
+        if(!wineVersion.isInstalled()) {
+            wineVersion.install();
         }
 
         final ProgressControl progressControl = this.setupWizard.progressBar(
@@ -217,7 +217,7 @@ public class Wine implements SetupWizardComponent {
             observableDirectorySize.setCheckInterval(10);
             observableDirectorySize.addObserver(progressControl);
             backgroundServicesManager.register(observableDirectorySize);
-            Process process = wineInstallation.getInstallation().createPrefix(this.prefix);
+            Process process = wineVersion.getInstallation().createPrefix(this.prefix);
             try {
                 process.waitFor();
             } catch (InterruptedException e) {
@@ -242,7 +242,7 @@ public class Wine implements SetupWizardComponent {
     public Wine killall() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
-            wineInstallation.getInstallation().killAllProcess(this.prefix);
+            wineVersion.getInstallation().killAllProcess(this.prefix);
         } catch (IOException logged) {
             LOGGER.warn("Unable to kill wine processes", logged);
         }
@@ -260,14 +260,14 @@ public class Wine implements SetupWizardComponent {
                                      List<String> arguments,
                                      Map<String, String> environment) throws ScriptFailureException {
         validateWineInstallationInitialized();
-
         validateArchitecture(workingDirectory, executableToRun);
+
         if("regedit".equalsIgnoreCase(executableToRun)) {
             logRegFile(workingDirectory, arguments);
         }
 
         try {
-            final Process process = wineInstallation
+            final Process process = wineVersion
                     .getInstallation()
                     .run(prefix, workingDirectory, executableToRun, environment, arguments);
 
@@ -318,7 +318,7 @@ public class Wine implements SetupWizardComponent {
     }
 
     private void validateArchitecture(File workingDirectory, String executableToRun) {
-        if(wineInstallation.getWineDistribution().getArchitecture() == Architecture.I386) {
+        if(wineVersion.getWineDistribution().getArchitecture() == Architecture.I386) {
             final File executedFile = findFile(workingDirectory, executableToRun);
             if(executedFile.exists()) {
                 try {
@@ -565,7 +565,7 @@ public class Wine implements SetupWizardComponent {
     public Wine waitExit() throws ScriptFailureException {
         validateWineInstallationInitialized();
         try {
-            wineInstallation.getInstallation()
+            wineVersion.getInstallation()
                     .waitAllProcesses(this.prefix);
         } catch (IOException logged) {
             LOGGER.warn("Unable to wait for wine processes", logged);
@@ -631,10 +631,54 @@ public class Wine implements SetupWizardComponent {
         return this;
     }
 
+    /**
+     * Overides DLLs parameters
+     * @param dllsToOverride a Map containing the dlls to overide (key = name of the dll, value = [disabled, builtin, native])
+     * @return the same object
+     */
+    public Wine overrideDlls(Map<String, String> dllsToOverride) throws ScriptFailureException {
+        validateWineInstallationInitialized();
+        final RegistryKey hkeyCurrentUser = new RegistryKey("HKEY_CURRENT_USER");
+        final RegistryKey software = new RegistryKey("Software");
+        final RegistryKey wine = new RegistryKey("Wine");
+        final RegistryKey dllOverrides = new RegistryKey("DllOverrides");
+
+        hkeyCurrentUser.addChild(software);
+        software.addChild(wine);
+        wine.addChild(dllOverrides);
+
+        for(String dll: dllsToOverride.keySet()) {
+            final RegistryValue<StringValueType> dllNode = new RegistryValue<>("*"+dll,
+                    new StringValueType(dllsToOverride.get(dll)));
+            dllOverrides.addChild(dllNode);
+        }
+
+        writeToRegistry(hkeyCurrentUser);
+
+        return this;
+    }
+
     private void validateWineInstallationInitialized() throws ScriptFailureException {
-        if(wineInstallation == null) {
+        if(wineVersion == null) {
             throw new ScriptFailureException("The prefix must be initialized before running wine");
         }
+    }
+
+    private void writeToRegistry(AbstractRegistryNode node) throws ScriptFailureException {
+        final RegistryWriter registryWriter = new RegistryWriter();
+        final File temporaryRegFile;
+        try {
+            temporaryRegFile = File.createTempFile("registry", "pol");
+            temporaryRegFile.deleteOnExit();
+            com.google.common.io.Files.write(registryWriter.generateRegFileContent(node).getBytes(), temporaryRegFile);
+        } catch (IOException e) {
+            throw new ScriptFailureException(e);
+        }
+
+        final List<String> arguments = new ArrayList<>();
+        arguments.add(temporaryRegFile.getAbsolutePath());
+
+        this.runAndGetProcess(prefix.getDriveCPath(), "regedit", arguments, new HashMap<>());
     }
 
     public ConfigFile config() {

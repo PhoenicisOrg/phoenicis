@@ -38,7 +38,7 @@ import static java.lang.String.format;
 @Scan
 @ScriptClass
 @SuppressWarnings("unused")
-public class WineInstallation {
+public class WineVersion {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -50,11 +50,11 @@ public class WineInstallation {
     private final WineVersionManager wineVersionManager;
     private final SetupWizard setupWizard;
 
-    public WineInstallation(String version, String wineDistribution, SetupWizard setupWizard) {
+    public WineVersion(String version, String wineDistribution, SetupWizard setupWizard) {
         this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
     }
 
-    public WineInstallation(Version version, WineDistribution wineDistribution, SetupWizard setupWizard) {
+    public WineVersion(Version version, WineDistribution wineDistribution, SetupWizard setupWizard) {
         this.version = version;
         this.wineDistribution = wineDistribution;
         this.setupWizard = setupWizard;

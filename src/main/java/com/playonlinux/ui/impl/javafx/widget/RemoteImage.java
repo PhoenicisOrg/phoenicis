@@ -74,36 +74,37 @@ public class RemoteImage extends VBox {
     }
 
     public void handleDownloadSuccess(byte[] content) {
+        try(InputStream inputStream = new ByteArrayInputStream(content)) {
+            Image downloadedImage = new Image(inputStream);
+            ImageView downloadedImageView = new ImageView(downloadedImage);
+            Platform.runLater(() -> {
+                this.getChildren().clear();
 
-        InputStream inputStream = new ByteArrayInputStream(content);
-        Image downloadedImage = new Image(inputStream);
-        ImageView downloadedImageView = new ImageView(downloadedImage);
-        Platform.runLater(() -> {
-            this.getChildren().clear();
-
-            double fitWidth;
-            double fitHeight;
+                double fitWidth;
+                double fitHeight;
 
 
-            if(downloadedImage.getWidth() / downloadedImage.getHeight()
-                    > this.getWidth() / this.getHeight()) {
-                fitWidth = this.getCalculationWidth();
-                fitHeight = downloadedImage.getHeight() * (this.getCalculationWidth() / downloadedImage.getWidth());
-            } else {
-                fitHeight = this.getCalculationHeight();
-                fitWidth = downloadedImage.getWidth() * (this.getCalculationHeight() / downloadedImage.getHeight());
-            }
+                if (downloadedImage.getWidth() / downloadedImage.getHeight()
+                        > this.getWidth() / this.getHeight()) {
+                    fitWidth = this.getCalculationWidth();
+                    fitHeight = downloadedImage.getHeight() * (this.getCalculationWidth() / downloadedImage.getWidth());
+                } else {
+                    fitHeight = this.getCalculationHeight();
+                    fitWidth = downloadedImage.getWidth() * (this.getCalculationHeight() / downloadedImage.getHeight());
+                }
 
-            this.getChildren().add(downloadedImageView);
-            downloadedImageView.setFitHeight(fitHeight);
-            downloadedImageView.setFitWidth(fitWidth);
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                LOGGER.warn(e);
-            }
-        });
-
+                this.getChildren().add(downloadedImageView);
+                downloadedImageView.setFitHeight(fitHeight);
+                downloadedImageView.setFitWidth(fitWidth);
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    LOGGER.warn(e);
+                }
+            });
+        } catch (IOException e) {
+            LOGGER.warn(e);
+        }
     }
 
     public double getCalculationWidth() {

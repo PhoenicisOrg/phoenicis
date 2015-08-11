@@ -23,7 +23,7 @@ public class RegistryValue<TYPE extends AbstractValueType>
 
     private final TYPE content;
 
-    RegistryValue(String name, TYPE content) {
+    public RegistryValue(String name, TYPE content) {
         super(name);
         this.content = content;
     }
@@ -40,7 +40,7 @@ public class RegistryValue<TYPE extends AbstractValueType>
             parsedValue = new RegistryValue<>(name, new StringValueType(valueContentString));
         } else if(inputString.contains(":")) {
             int colPosition = inputString.indexOf(':');
-            String valueTypeString = inputString.substring(0, colPosition);
+            final String valueTypeString = inputString.substring(0, colPosition);
             String valueContentString = inputString.substring(colPosition + 1, inputString.length());
             if(valueContentString.endsWith("\\0")) {
                 valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
@@ -85,5 +85,10 @@ public class RegistryValue<TYPE extends AbstractValueType>
     @Override
     public String toString() {
         return String.format("- (%s) %s -> %s", content.getClass().getSimpleName(), this.getName(), content.getText());
+    }
+
+    @Override
+    public String toRegString() {
+        return String.format("\"%s\"=%s", this.getName(), content.toRegString());
     }
 }

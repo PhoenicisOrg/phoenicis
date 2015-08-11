@@ -35,7 +35,6 @@ import java.util.Map;
  * The class is able to read POLv4 format, but it will store everything in v5 format (json)
  */
 public class CompatibleConfigFileFormat implements ConfigFile {
-
     private static final Logger LOGGER  = Logger.getLogger(CompatibleConfigFileFormat.class);
     private final File configFile;
     private final ObjectMapper mapper;
@@ -78,7 +77,7 @@ public class CompatibleConfigFileFormat implements ConfigFile {
                 }
             }
         } catch (JsonParseException | JsonMappingException e) {
-            LOGGER.info("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file", e);
+            LOGGER.info("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file");
             return getLegacyMap();
         } catch (IOException e) {
             LOGGER.info("Error while reading the file. Will assume that the config file is empty");

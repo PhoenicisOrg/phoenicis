@@ -54,7 +54,7 @@ public class AppsFilter extends ObservableDefaultImplementation implements Filte
             return false;
         }
 
-        if(StringUtils.isNotBlank(title)){
+        if(StringUtils.isNotBlank(title)) {
             if(!item.getName().toLowerCase().contains(title.toLowerCase())) {
                 return false;
             }
@@ -62,11 +62,11 @@ public class AppsFilter extends ObservableDefaultImplementation implements Filte
             return false;
         }
 
-        if (item.isTesting() && !showTesting) {
+        if(item.isTesting() && !showTesting) {
             return false;
         }
 
-        if (item.isRequiresNoCd() && !showNoCd) {
+        if(item.isRequiresNoCd() && !showNoCd) {
             return false;
         }
 

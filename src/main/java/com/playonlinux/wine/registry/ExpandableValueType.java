@@ -29,4 +29,9 @@ public class ExpandableValueType extends AbstractValueType {
     String getText() {
         return content;
     }
+
+    @Override
+    public String toRegString() {
+        return String.format("str(2):\"%s\"", getText());
+    }
 }

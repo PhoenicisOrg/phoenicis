@@ -20,4 +20,6 @@ package com.playonlinux.wine.registry;
 
 public abstract class AbstractValueType {
     abstract String getText();
+
+    public abstract String toRegString();
 }

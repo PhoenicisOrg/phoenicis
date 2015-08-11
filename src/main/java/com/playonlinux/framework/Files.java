@@ -29,10 +29,9 @@ import static com.playonlinux.core.lang.Localisation.translate;
 /* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.core.scripts.sh syntax
  */
 
-// TODO: Create an abstract class for Files and Downloader
 @ScriptClass
 @SuppressWarnings("unused")
-public class Files {
+public class Files implements SetupWizardComponent {
     private SetupWizard setupWizard;
     private ProgressControl progressControl;
 
@@ -46,6 +45,12 @@ public class Files {
     }
     public Files(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
+    }
+
+    public static Files wizard(SetupWizard setupWizard) {
+        Files filesInstance = new Files(setupWizard);
+        setupWizard.registerComponent(filesInstance);
+        return new Files(setupWizard);
     }
 
     public Files(ProgressControl progressControl) {
@@ -121,5 +126,10 @@ public class Files {
         }
 
         return this;
+    }
+
+    @Override
+    public void close() {
+        // Nothing to do for the moment
     }
 }
