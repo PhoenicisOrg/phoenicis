@@ -24,7 +24,6 @@ import java.io.File;
 import java.net.URL;
 
 class Shortcut {
-
     private final String shortcutName;
     private final URL iconPath;
     private final Script runScript;

@@ -16,23 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.services.virtualdrives;
+package com.playonlinux.containers;
 
 import java.io.File;
 
-public class VirtualDrive {
-    private final File virtualDriveFile;
-    private File icon;
+public class Container {
+    private final File containerPath;
 
-    public VirtualDrive(File virtualDriveFile) {
-        this.virtualDriveFile = virtualDriveFile;
+    public Container(File containerPath) {
+        this.containerPath = containerPath;
+    }
+
+    public File getContainerPath() {
+        return containerPath;
     }
 
     public String getName() {
-        return virtualDriveFile.getName();
-    }
-
-    public File getIcon() {
-        return icon;
+        return containerPath.getName();
     }
 }

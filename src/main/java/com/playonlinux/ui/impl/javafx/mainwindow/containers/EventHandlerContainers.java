@@ -16,18 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.library.dto;
+package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import java.util.List;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.containers.entities.ContainerEntity;
+import com.playonlinux.containers.entities.ContainersWindowEntity;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
+import com.playonlinux.ui.api.EntitiesProvider;
+import com.playonlinux.ui.events.EventHandler;
 
-public class LibraryWindowDTO {
-    public List<InstalledApplicationDTO> getInstalledApplicationDTO() {
-        return installedApplicationDTO;
-    }
+@Scan
+public class EventHandlerContainers {
+    @Inject
+    static EventHandler mainEventHandler;
 
-    final List<InstalledApplicationDTO> installedApplicationDTO;
-
-    public LibraryWindowDTO(List<InstalledApplicationDTO> installedApplicationDTO) {
-        this.installedApplicationDTO = installedApplicationDTO;
+    EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers() {
+        return mainEventHandler.getContainers();
     }
 }

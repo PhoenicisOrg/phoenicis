@@ -18,7 +18,7 @@
 
 package com.playonlinux.dto.ui;
 
-import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,24 +28,24 @@ import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 
-public class InstalledApplicationDTOTest {
+public class InstalledApplicationEntityTest {
 
-    private InstalledApplicationDTO installedApplicationDto;
+    private InstalledApplicationEntity installedApplicationEntity;
 
     @Before
     public void setUp() throws MalformedURLException {
-        this.installedApplicationDto = new InstalledApplicationDTO.Builder()
+        this.installedApplicationEntity = new InstalledApplicationEntity.Builder()
                 .withName("Name")
                 .withIcon(new URL("file://"+new File("/tmp/icon").getAbsolutePath()))
                 .build();
     }
     @Test
     public void testShortcutDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", installedApplicationDto.getName());
+        assertEquals("Name", installedApplicationEntity.getName());
     }
 
     @Test
     public void testShortcutDTO_CreateDTO_iconIsPopulated() {
-        assertEquals("file:/tmp/icon", installedApplicationDto.getIcon().toString());
+        assertEquals("file:/tmp/icon", installedApplicationEntity.getIcon().toString());
     }
 }

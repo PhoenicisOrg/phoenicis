@@ -23,12 +23,11 @@ import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.library.LibraryFilter;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
+import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
-import com.playonlinux.ui.impl.javafx.setupwindow.SetupWindowJavaFXImplementation;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
@@ -42,7 +41,7 @@ import java.io.File;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-public class ViewLibrary extends MainWindowView implements Observer<Observable, LibraryWindowDTO> {
+public class ViewLibrary extends MainWindowView implements Observer<Observable, LibraryWindowEntity> {
 
     private LeftButton runScript;
     private LeftButton runConsole;
@@ -51,7 +50,7 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
 
-    private final  EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> libraryItems;
+    private final  EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> libraryItems;
     private TabPane libraryTabs;
 
 
@@ -89,9 +88,6 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("Run a script"));
         this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/console.png", translate("${application.name} console"));
-
-        this.runScript.getStyleClass().add("leftPaneButtons");
-        this.runConsole.getStyleClass().add("leftPaneButtons");
 
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
@@ -151,8 +147,8 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
     }
 
     @Override
-    public void update(Observable observable, LibraryWindowDTO argument) {
-        Platform.runLater(() -> applicationListWidget.setItems(argument.getInstalledApplicationDTO()));
+    public void update(Observable observable, LibraryWindowEntity argument) {
+        Platform.runLater(() -> applicationListWidget.setItems(argument.getInstalledApplicationEntity()));
     }
 
 

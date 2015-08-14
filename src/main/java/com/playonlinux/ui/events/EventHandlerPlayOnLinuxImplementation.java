@@ -24,19 +24,20 @@ import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
-import com.playonlinux.containers.VirtualDriveDTO;
+import com.playonlinux.containers.ContainersEntitiesProvider;
+import com.playonlinux.containers.entities.ContainerEntity;
+import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.core.services.virtualdrives.InstalledVirtualDrivesPlayOnLinuxDefaultImplementation;
 import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.library.LibraryEntitiesProvider;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
+import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
@@ -52,8 +53,6 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Inject
     private static ScriptFactory scriptFactory;
 
-    private InstalledVirtualDrivesPlayOnLinuxDefaultImplementation virtualDrives;
-
     @Override
     public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
         Script playonlinuxScript = scriptFactory.createInstance(scriptToRun);
@@ -68,14 +67,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
         playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
     }
 
-    @Override
-    public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
-        if(virtualDrives == null) {
-            virtualDrives = new InstalledVirtualDrivesPlayOnLinuxDefaultImplementation();
-        }
 
-        return this.virtualDrives;
-    }
 
     @Override
     public AppsManager getAppsManager() {
@@ -93,7 +85,12 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     }
 
     @Override
-    public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
+    public EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers() {
+        return playOnLinuxBackgroundServicesManager.getService(ContainersEntitiesProvider.class);
+    }
+
+    @Override
+    public EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getInstalledApplications() {
         return playOnLinuxBackgroundServicesManager.getService(LibraryEntitiesProvider.class);
     }
 

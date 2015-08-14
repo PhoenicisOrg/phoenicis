@@ -32,6 +32,7 @@ public class MainWindowHeader extends GridPane {
     private final Text appCenter;
     private final Text engines;
     private final Text settings;
+    private final Text containers;
 
     public MainWindowHeader() {
         super();
@@ -61,6 +62,9 @@ public class MainWindowHeader extends GridPane {
         appCenter = new Text("Apps");
         appCenter.getStyleClass().add("menuEntry");
 
+        containers = new Text("Containers");
+        containers.getStyleClass().add("menuEntry");
+
         engines = new Text("Engines");
         engines.getStyleClass().add("menuEntry");
 
@@ -68,7 +72,7 @@ public class MainWindowHeader extends GridPane {
         settings.getStyleClass().add("menuEntry");
 
 
-        menuPane.getChildren().addAll(myApps, appCenter, engines, settings);
+        menuPane.getChildren().addAll(myApps, appCenter, containers, engines, settings);
 
     }
 
@@ -79,12 +83,15 @@ public class MainWindowHeader extends GridPane {
     public void setLibraryEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(myApps, eventHandler);
     }
+
     public void setAppsEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(appCenter, eventHandler);
     }
-
     public void setEnginesEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(engines, eventHandler);
+    }
+    public void setContainersEvent(EventHandler<MouseEvent> eventHandler) {
+        setLinkEvents(containers, eventHandler);
     }
 
 }

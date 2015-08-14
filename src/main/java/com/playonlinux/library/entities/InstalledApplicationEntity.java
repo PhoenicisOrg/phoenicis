@@ -16,17 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.library.dto;
+package com.playonlinux.library.entities;
 
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.entities.Entity;
 
 import java.net.URL;
 
-public class InstalledApplicationDTO implements AbstractDTO {
+public class InstalledApplicationEntity implements Entity {
     private final URL icon;
     private final String name;
 
-    public InstalledApplicationDTO(Builder builder) {
+    public InstalledApplicationEntity(Builder builder) {
         this.name = builder.name;
         this.icon = builder.icon;
     }
@@ -53,8 +53,8 @@ public class InstalledApplicationDTO implements AbstractDTO {
             return this;
         }
 
-        public InstalledApplicationDTO build() {
-            return new InstalledApplicationDTO(this);
+        public InstalledApplicationEntity build() {
+            return new InstalledApplicationEntity(this);
         }
     }
 }

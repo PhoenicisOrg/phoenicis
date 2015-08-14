@@ -16,26 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.configurewindow;
+package com.playonlinux.containers.entities;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.containers.VirtualDriveDTO;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
-import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.ui.events.EventHandler;
+import java.util.List;
 
-@Scan
-public class ConfigureWindowEventHandler implements UIEventHandler {
-    @Inject
-    static EventHandler mainEventHandler;
+public class ContainersWindowEntity {
+    private final List<ContainerEntity> containerEntities;
 
-    public Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException {
-        return mainEventHandler.getInstalledVirtualDrives();
+    public ContainersWindowEntity(List<ContainerEntity> containerEntities) {
+        this.containerEntities = containerEntities;
     }
 
-    @Override
-    public EventHandler getMainEventHandler() {
-        return mainEventHandler;
+    public List<ContainerEntity> getContainerEntities() {
+        return containerEntities;
     }
 }
