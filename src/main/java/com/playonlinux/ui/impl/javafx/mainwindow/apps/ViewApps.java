@@ -148,6 +148,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
                 for (AppsCategory category : appsWindowEntity.getCategoryDTOs()) {
                     final LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
+                    leftButtonList.add(categoryButton);
                 }
 
                 categoryView.setButtons(leftButtonList);
