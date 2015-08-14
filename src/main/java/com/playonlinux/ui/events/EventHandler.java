@@ -24,11 +24,12 @@ import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
-import com.playonlinux.containers.VirtualDriveDTO;
+import com.playonlinux.containers.entities.ContainerEntity;
+import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
+import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
@@ -48,7 +49,7 @@ public interface EventHandler {
      * Get installed applications
      * @return installed applications observable
      */
-    EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications();
+    EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getInstalledApplications();
 
     /**
      * Get the Available Apps Manager
@@ -60,7 +61,7 @@ public interface EventHandler {
 
     EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions();
 
-    Iterable<VirtualDriveDTO> getInstalledVirtualDrives() throws PlayOnLinuxException;
+    EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers();
 
     InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
 

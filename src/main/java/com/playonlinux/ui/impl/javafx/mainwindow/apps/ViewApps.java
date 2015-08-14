@@ -35,9 +35,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.playonlinux.core.lang.Localisation.translate;
 
-final public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowEntity> {
+public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowEntity> {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
 
     private FailurePanel failurePanel;
@@ -49,7 +52,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
     private final EventHandlerApps eventHandlerApps;
 
     private TextField searchBar;
-    private CategoryView categoryView;
+    private LeftButtonGroup categoryView;
 
     private CheckBox testingCheck;
     private CheckBox noCdNeededCheck;
@@ -82,7 +85,7 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
         searchBar = new TextField();
         searchBar.setOnKeyReleased((e) -> applyFilter(""));
 
-        categoryView = new CategoryView(this);
+        categoryView = new LeftButtonGroup(translate("Categories"));
 
         testingCheck = new CheckBox(translate("Testing"));
         noCdNeededCheck = new CheckBox(translate("No CD needed"));
@@ -141,7 +144,15 @@ final public class ViewApps extends MainWindowView implements Observer<Observabl
             } else {
                 this.showAvailableApps();
 
-                categoryView.setCategories(appsWindowEntity.getCategoryDTOs());
+                final List<LeftButton> leftButtonList = new ArrayList<>();
+                for (AppsCategory category : appsWindowEntity.getCategoryDTOs()) {
+                    final LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
+                    categoryButton.getStyleClass().add("leftPaneButtons");
+                    this.getChildren().add(categoryButton);
+                    categoryButton.setOnMouseClicked(event -> selectCategory(category));
+                }
+
+                categoryView.setButtons(leftButtonList);
 
                 for (AppEntity appsItemDTO : appsWindowEntity.getAppsItemDTOs()) {
                     Node itemNode = availableInstallerListWidget.addItem(appsItemDTO.getName());

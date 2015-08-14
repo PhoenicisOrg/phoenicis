@@ -21,6 +21,9 @@ package com.playonlinux.app;
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.DefaultAppsManager;
+import com.playonlinux.containers.ContainersEntitiesProvider;
+import com.playonlinux.containers.ContainersManager;
+import com.playonlinux.containers.DefaultContainersManager;
 import com.playonlinux.core.services.manager.ServiceImplementationDefinition;
 import com.playonlinux.core.services.manager.ServiceManagerConfiguration;
 import com.playonlinux.core.webservice.DownloadManager;
@@ -45,7 +48,9 @@ class PlayOnLinuxServicesConfiguration implements ServiceManagerConfiguration {
                 new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class),
                 new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
                 new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class),
-                new ServiceImplementationDefinition(LibraryEntitiesProvider.class, LibraryEntitiesProvider.class)
+                new ServiceImplementationDefinition(LibraryEntitiesProvider.class, LibraryEntitiesProvider.class),
+                new ServiceImplementationDefinition(ContainersManager.class, DefaultContainersManager.class),
+                new ServiceImplementationDefinition(ContainersEntitiesProvider.class, ContainersEntitiesProvider.class)
         ).iterator();
     }
 }

@@ -16,12 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.services.virtualdrives;
+package com.playonlinux.library.entities;
 
-import com.playonlinux.containers.VirtualDriveDTO;
-import com.playonlinux.core.observer.Observable;
+import java.util.List;
 
+public class LibraryWindowEntity {
+    final List<InstalledApplicationEntity> installedApplicationEntity;
 
-public interface InstalledVirtualDrives extends Iterable<VirtualDriveDTO>, Observable {
+    public LibraryWindowEntity(List<InstalledApplicationEntity> installedApplicationEntity) {
+        this.installedApplicationEntity = installedApplicationEntity;
+    }
 
+    public List<InstalledApplicationEntity> getInstalledApplicationEntity() {
+        return installedApplicationEntity;
+    }
 }

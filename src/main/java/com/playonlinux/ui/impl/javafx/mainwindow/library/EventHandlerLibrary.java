@@ -21,8 +21,8 @@ package com.playonlinux.ui.impl.javafx.mainwindow.library;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
+import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
@@ -39,7 +39,7 @@ class EventHandlerLibrary implements UIEventHandler {
 
     private static final Logger LOGGER = Logger.getLogger(EventHandlerLibrary.class);
 
-    public EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> getInstalledApplications() {
+    public EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getInstalledApplications() {
         return mainEventHandler.getInstalledApplications();
     }
 
@@ -65,4 +65,7 @@ class EventHandlerLibrary implements UIEventHandler {
         }
     }
 
+    public void configureApplication(String applicationName) {
+        System.out.println("Configure "+applicationName);
+    }
 }

@@ -16,43 +16,36 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.apps;
+package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.apps.entities.AppsCategory;
-import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
-import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
+
 import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-import static com.playonlinux.core.lang.Localisation.translate;
 
-final class CategoryView extends VBox {
+public final class LeftButtonGroup extends VBox {
 
-    private final ViewApps parent;
+    private final String name;
 
-    public CategoryView(ViewApps parent) {
-        this.parent = parent;
+    public LeftButtonGroup(String name) {
+        this.name = name;
         this.getStyleClass().add("leftPaneInside");
         this.clear();
     }
 
     private void clear() {
         this.getChildren().clear();
-        this.getChildren().add(new LeftBarTitle(translate("Category")));
+        this.getChildren().add(new LeftBarTitle(name));
     }
 
-    public void setCategories(List<AppsCategory> categories) {
+    public void setButtons(List<LeftButton> buttons) {
         this.clear();
 
-        if (!categories.isEmpty()) {
-            for (AppsCategory category : categories) {
-                final LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
-                categoryButton.getStyleClass().add("leftPaneButtons");
-                this.getChildren().add(categoryButton);
-                categoryButton.setOnMouseClicked(event -> parent.selectCategory(category));
-            }
+        for(LeftButton leftButton: buttons) {
+            this.getChildren().addAll(leftButton);
         }
+
     }
 
 

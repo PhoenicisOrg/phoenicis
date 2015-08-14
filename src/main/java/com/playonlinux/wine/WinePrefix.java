@@ -162,6 +162,7 @@ public class WinePrefix implements AutoCloseable {
         }
 
         try {
+            prefixConfigFile.writeValue("containerType", "wineprefix");
             prefixConfigFile.writeValue("distributionCode", wineDistribution.getDistributionCode());
             prefixConfigFile.writeValue("operatingSystem", wineDistribution.getOperatingSystem().name());
             prefixConfigFile.writeValue("architecture", wineDistribution.getArchitecture().name());

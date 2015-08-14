@@ -98,7 +98,7 @@ public class PlayOnLinuxContext {
         return this.properties.getProperty(property);
     }
 
-    public File makePrefixesPath() {
+    public File makeContainersPath() {
         return new File(this.properties.getProperty("application.user.wineprefix"));
     }
 

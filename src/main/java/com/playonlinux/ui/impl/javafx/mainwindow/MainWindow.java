@@ -22,6 +22,7 @@ import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXApplication;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.ui.impl.javafx.mainwindow.apps.ViewApps;
+import com.playonlinux.ui.impl.javafx.mainwindow.containers.ViewContainers;
 import com.playonlinux.ui.impl.javafx.mainwindow.engines.ViewEngines;
 import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import javafx.application.Platform;
@@ -43,6 +44,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     private ViewLibrary library;
     private ViewApps apps;
     private ViewEngines engines;
+    private ViewContainers containers;
 
     private VBox rootPane;
 
@@ -52,6 +54,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         library = new ViewLibrary(this);
         apps = new ViewApps(this);
         engines = new ViewEngines(this);
+        containers = new ViewContainers(this);
 
         Scene scene = new PlayOnLinuxScene(rootPane);
         headerPane = new MainWindowHeader();
@@ -88,6 +91,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         this.headerPane.setLibraryEvent(evt -> goTo(library));
         this.headerPane.setAppsEvent(evt -> goTo(apps));
         this.headerPane.setEnginesEvent(evt -> goTo(engines));
+        this.headerPane.setContainersEvent(evt -> goTo(containers));
         library.setUpEvents();
         apps.setUpEvents();
         engines.setUpEvents();

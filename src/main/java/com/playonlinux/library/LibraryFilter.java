@@ -19,13 +19,13 @@ package com.playonlinux.library;
 
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * Filter for installed applications in the MainWindow
  */
-public class LibraryFilter extends ObservableDefaultImplementation implements Filter<InstalledApplicationDTO> {
+public class LibraryFilter extends ObservableDefaultImplementation implements Filter<InstalledApplicationEntity> {
 
     private final String name;
 
@@ -34,7 +34,7 @@ public class LibraryFilter extends ObservableDefaultImplementation implements Fi
     }
 
     @Override
-    public boolean apply(InstalledApplicationDTO item) {
+    public boolean apply(InstalledApplicationEntity item) {
         // We want to return the whole list for empty search string. Otherwise compare strings.
         return !StringUtils.isNotBlank(name) || item.getName().toLowerCase().contains(name);
     }

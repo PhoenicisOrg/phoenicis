@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
-import com.playonlinux.library.dto.InstalledApplicationDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -48,9 +48,9 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     }
 
-    public void setItems(List<InstalledApplicationDTO> applicationDTOs) {
+    public void setItems(List<InstalledApplicationEntity> applicationDTOs) {
         this.clear();
-        for(InstalledApplicationDTO applicationDTO: applicationDTOs) {
+        for(InstalledApplicationEntity applicationDTO: applicationDTOs) {
             this.addItem(applicationDTO.getName(), applicationDTO.getIcon());
         }
     }
@@ -68,9 +68,9 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
         ApplicationItem(String applicationName, URL iconPath) {
             this.setPrefHeight(60.);
-            Text applicationNameLabel = new Text(applicationName);
+            final Text applicationNameLabel = new Text(applicationName);
 
-            ImageView iconImageView = new ImageView(new Image(iconPath.toExternalForm()));
+            final ImageView iconImageView = new ImageView(new Image(iconPath.toExternalForm()));
             iconImageView.setFitHeight(40);
             iconImageView.setFitWidth(40);
 
@@ -80,14 +80,24 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             this.add(iconImageView, 0, 0);
 
 
-            ImageView playImageView = new ImageView(this.getClass().getResource("play.png").toExternalForm());
+            final ImageView playImageView = new ImageView(this.getClass().getResource("play.png").toExternalForm());
             playImageView.setFitHeight(16);
             playImageView.setFitWidth(16);
 
-            Button runButton = new Button(translate("Run"), playImageView);
+            final ImageView configureImageView = new ImageView(this.getClass().getResource("configure.png").toExternalForm());
+            configureImageView.setFitHeight(16);
+            configureImageView.setFitWidth(16);
+
+            final Button runButton = new Button(translate("Run"), playImageView);
             runButton.setOnMouseClicked(evt -> parent.getEventHandler().runApplication(applicationName));
             runButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
+            final Button configureButton = new Button(translate("Configure"), configureImageView);
+            configureButton.setOnMouseClicked(evt -> parent.getEventHandler().configureApplication(applicationName));
+            configureButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
             this.add(runButton, 2, 0);
+            this.add(configureButton, 3, 0);
         }
 
 
@@ -97,15 +107,18 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             columnConstraint.setPercentWidth(15);
 
             ColumnConstraints columnConstraint2 = new ColumnConstraints();
-            columnConstraint2.setPercentWidth(75);
+            columnConstraint2.setPercentWidth(65);
 
             ColumnConstraints columnConstraint3 = new ColumnConstraints();
+            columnConstraint3.setPercentWidth(10);
+
+            ColumnConstraints columnConstraint4 = new ColumnConstraints();
             columnConstraint3.setPercentWidth(10);
 
             this.getColumnConstraints().add(columnConstraint);
             this.getColumnConstraints().add(columnConstraint2);
             this.getColumnConstraints().add(columnConstraint3);
-
+            this.getColumnConstraints().add(columnConstraint4);
         }
     }
 }

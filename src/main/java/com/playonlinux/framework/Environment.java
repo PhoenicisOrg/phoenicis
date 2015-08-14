@@ -51,6 +51,10 @@ public final class Environment {
         return playOnLinuxContext.loadProperties().getProperty("application.user.root");
     }
 
+    public static String getUserHome() {
+        return System.getProperty("user.home");
+    }
+
     public static String getEnvironmentVar(String variable) {
         Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
         Map<String,String> systemEnvironment = System.getenv();

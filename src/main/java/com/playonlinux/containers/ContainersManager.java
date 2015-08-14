@@ -16,19 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.configurewindow;
+package com.playonlinux.containers;
 
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.GridPane;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.services.manager.Service;
 
+import java.io.File;
+import java.util.List;
 
-public class AccordionPanel extends TitledPane {
-    public AccordionPanel(String name) {
-        this.setText(name);
-        this.setContent(new PaneContent());
-    }
-
-    private class PaneContent extends GridPane {
-
-    }
+public interface ContainersManager extends Observable<ContainersManager>,
+                                           Observer<ObservableDirectoryFiles, File[]>,
+                                           Service {
+    List<Container> getContainers();
 }

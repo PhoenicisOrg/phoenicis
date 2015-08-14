@@ -28,8 +28,8 @@ import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.library.dto.InstalledApplicationDTO;
-import com.playonlinux.library.dto.LibraryWindowDTO;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
+import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
@@ -40,9 +40,9 @@ import java.util.stream.Collectors;
 
 @Scan
 public final class LibraryEntitiesProvider
-        extends ObservableDefaultImplementation<LibraryWindowDTO>
+        extends ObservableDefaultImplementation<LibraryWindowEntity>
         implements Observer<ShortcutSetDirectories, List<Shortcut>>,
-                   EntitiesProvider<InstalledApplicationDTO, LibraryWindowDTO> {
+                   EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -52,15 +52,15 @@ public final class LibraryEntitiesProvider
 
     private ShortcutSetDirectories shortcutSetDirectories;
 
-    private final List<InstalledApplicationDTO> installedApplications = new ArrayList<>();
-    private final List<InstalledApplicationDTO> installedApplicationsFiltered = new ArrayList<>();
+    private final List<InstalledApplicationEntity> installedApplications = new ArrayList<>();
+    private final List<InstalledApplicationEntity> installedApplicationsFiltered = new ArrayList<>();
 
-    private Filter<InstalledApplicationDTO> lastFilter;
+    private Filter<InstalledApplicationEntity> lastFilter;
 
     @Override
     public void update(ShortcutSetDirectories observable, List<Shortcut> argument) {
         installedApplications.clear();
-        installedApplications.addAll(argument.stream().map(shortcut -> new InstalledApplicationDTO.Builder()
+        installedApplications.addAll(argument.stream().map(shortcut -> new InstalledApplicationEntity.Builder()
                 .withName(shortcut.getShortcutName())
                 .withIcon(shortcut.getIconPath())
                 .build()).collect(Collectors.toList()));
@@ -69,7 +69,7 @@ public final class LibraryEntitiesProvider
     }
 
     @Override
-    public void applyFilter(Filter<InstalledApplicationDTO> filter) {
+    public void applyFilter(Filter<InstalledApplicationEntity> filter) {
         lastFilter = filter;
 
         installedApplicationsFiltered.clear();
@@ -79,7 +79,7 @@ public final class LibraryEntitiesProvider
             installedApplicationsFiltered.addAll(installedApplications);
         }
 
-        this.notifyObservers(new LibraryWindowDTO(installedApplicationsFiltered));
+        this.notifyObservers(new LibraryWindowEntity(installedApplicationsFiltered));
     }
 
     @Override
