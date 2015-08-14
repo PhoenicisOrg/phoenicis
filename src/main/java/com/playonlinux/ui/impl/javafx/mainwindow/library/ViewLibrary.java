@@ -89,9 +89,6 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
         this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("Run a script"));
         this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/console.png", translate("${application.name} console"));
 
-        this.runScript.getStyleClass().add("leftPaneButtons");
-        this.runConsole.getStyleClass().add("leftPaneButtons");
-
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
 

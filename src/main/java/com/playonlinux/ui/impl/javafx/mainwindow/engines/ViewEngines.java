@@ -87,8 +87,6 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
 
         LeftButton wine = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/engines/wine.png", "Wine");
 
-        wine.getStyleClass().add("leftPaneButtons");
-
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);
     }
