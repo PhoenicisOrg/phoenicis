@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 import com.playonlinux.containers.Container;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
+import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
@@ -54,8 +55,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
 
     protected void drawSideBar() {
         searchBar = new TextField();
-        searchBar.setOnKeyReleased((e) -> applyFilter(""));
-
+        searchBar.setOnKeyReleased((e) -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), containersView);
 
@@ -63,8 +63,8 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
 
-    private void applyFilter(String containerName) {
-
+    private void applyFilter(String searchText) {
+        this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
     @Override

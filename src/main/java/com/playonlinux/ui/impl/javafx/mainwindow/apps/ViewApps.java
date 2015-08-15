@@ -118,8 +118,6 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         showRightView(new AppPanel(parent, eventHandlerApps, item));
     }
 
-
-
     public void setUpEvents() {
         windowDTOEntitiesProvider.addObserver(this);
         failurePanel.getRetryButton().setOnMouseClicked(event -> {
