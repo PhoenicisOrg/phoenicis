@@ -40,6 +40,7 @@ public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEn
                 .withWineDistribution(this.underlyingWinePrefix.fetchDistribution().getDistributionCode())
                 .withWineVersion(this.underlyingWinePrefix.fetchVersion().toString())
                 .withAutomaticallyUpdated(this.underlyingWinePrefix.isAutomaticallyUpdated())
+                .withGLSL(this.underlyingWinePrefix.useGLSL())
                 .build();
     }
 

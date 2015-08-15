@@ -21,6 +21,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
 import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -33,14 +34,14 @@ import static com.playonlinux.core.lang.Localisation.translate;
 public class WinePrefixContainerConfigurationView extends ContainerConfigurationView<WinePrefixContainerEntity> {
     public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity) {
         super(containerEntity);
+        this.getTabs().add(drawDisplayTab(containerEntity));
     }
 
     @Override
     protected Tab drawInformationTab(WinePrefixContainerEntity containerEntity) {
         final Tab informationTab = new Tab(translate("Information"));
         final VBox informationPane = new VBox();
-        final Text title = new Text(translate("Information"));
-        title.getStyleClass().add("title");
+        final Text title = new TextWithStyle(translate("Information"), "title");
 
         informationPane.getStyleClass().add("containerConfigurationPane");
         informationPane.getChildren().add(title);
@@ -63,7 +64,6 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), "captionTitle"), 0, 4);
         informationContentPane.add(new Text(containerEntity.getWineDistribution()), 1, 4);
 
-
         informationContentPane.getRowConstraints().addAll(
                 new RowConstraints(20.),
                 new RowConstraints(20.),
@@ -81,6 +81,62 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         informationTab.setContent(informationPane);
         return informationTab;
     }
+
+
+    protected Tab drawDisplayTab(WinePrefixContainerEntity containerEntity) {
+        final Tab displayTab = new Tab(translate("Display"));
+        final VBox displayPane = new VBox();
+        final Text title = new TextWithStyle(translate("Display settings"), "title");
+
+        displayPane.getStyleClass().add("containerConfigurationPane");
+        displayPane.getChildren().add(title);
+
+        final GridPane displayContentPane = new GridPane();
+        displayContentPane.getStyleClass().add("grid");
+
+        displayContentPane.add(new TextWithStyle(translate("GLSL support"), "captionTitle"), 0, 0);
+        displayContentPane.add(new ComboBox<>(), 1, 0);
+
+        displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), "captionTitle"), 0, 1);
+        displayContentPane.add(new ComboBox<>(), 1, 1);
+
+        displayContentPane.add(new TextWithStyle(translate("Video memory size"), "captionTitle"), 0, 2);
+        displayContentPane.add(new ComboBox<>(), 1, 2);
+
+        displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), "captionTitle"), 0, 3);
+        displayContentPane.add(new ComboBox<>(), 1, 3);
+
+        displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), "captionTitle"), 0, 4);
+        displayContentPane.add(new ComboBox<>(), 1, 4);
+
+        displayContentPane.add(new TextWithStyle(translate("Multisampling"), "captionTitle"), 0, 5);
+        displayContentPane.add(new ComboBox<>(), 1, 5);
+
+        displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), "captionTitle"), 0, 6);
+        displayContentPane.add(new ComboBox<>(), 1, 6);
+
+        displayContentPane.getRowConstraints().addAll(
+                new RowConstraints(50.),
+                new RowConstraints(50.),
+                new RowConstraints(50.),
+                new RowConstraints(50.),
+                new RowConstraints(50.),
+                new RowConstraints(50.),
+                new RowConstraints(50.),
+                new RowConstraints(50.)
+        );
+
+        displayContentPane.getColumnConstraints().addAll(
+                new ColumnConstraintsWithPercentage(30),
+                new ColumnConstraintsWithPercentage(70)
+        );
+
+        displayPane.getChildren().addAll(displayContentPane);
+        displayTab.setContent(displayPane);
+        return displayTab;
+    }
+
+
 }
 
 

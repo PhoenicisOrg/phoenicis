@@ -23,6 +23,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
     private final String wineDistribution;
     private final String wineArchitecture;
     private final boolean isAutomaticallyUpdated;
+    private final boolean useGLSL;
 
     private WinePrefixContainerEntity(Builder builder) {
         super(builder.name, builder.path);
@@ -30,6 +31,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         this.wineDistribution = builder.wineDistribution;
         this.wineVersion = builder.wineVersion;
         this.isAutomaticallyUpdated = builder.isAutomaticallyUpdated;
+        this.useGLSL = builder.useGLSL;
     }
 
     public String getWineArchitecture() {
@@ -44,7 +46,6 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return wineVersion;
     }
 
-
     public static class Builder {
         private String wineVersion;
         private String wineDistribution;
@@ -52,6 +53,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         private String path;
         private String name;
         public boolean isAutomaticallyUpdated;
+        private boolean useGLSL = false;
 
         public WinePrefixContainerEntity build() {
             return new WinePrefixContainerEntity(this);
@@ -84,6 +86,11 @@ public class WinePrefixContainerEntity extends ContainerEntity {
 
         public Builder withAutomaticallyUpdated(boolean isAutomaticallyUpdated) {
             this.isAutomaticallyUpdated = isAutomaticallyUpdated;
+            return this;
+        }
+
+        public Builder withGLSL(boolean useGLSL) {
+            this.useGLSL = useGLSL;
             return this;
         }
     }
