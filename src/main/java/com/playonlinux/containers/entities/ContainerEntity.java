@@ -22,12 +22,18 @@ import com.playonlinux.core.entities.Entity;
 
 public class ContainerEntity implements Entity {
     private final String name;
+    private final String path;
 
-    public ContainerEntity(String name) {
+    public ContainerEntity(String name, String path) {
         this.name = name;
+        this.path = path;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

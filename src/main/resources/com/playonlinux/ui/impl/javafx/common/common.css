@@ -244,3 +244,14 @@
     -fx-background-color: #F4F4F4;
     -fx-border-color: #CCCCCC;
 }
+
+.containerConfigurationPane {
+    -fx-padding: 10px;
+}
+.containerConfigurationPane > .grid {
+   -fx-padding : 10px;
+}
+
+.captionTitle {
+    -fx-font-weight: bold;
+}

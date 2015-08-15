@@ -16,18 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.containers;
+package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.Service;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
-import java.io.File;
-import java.util.List;
+public abstract class ContainerConfigurationView<T> extends TabPane {
+    public ContainerConfigurationView(T containerEntity) {
+        this.getStyleClass().add("rightPane");
+        this.getTabs().add(drawInformationTab(containerEntity));
+    }
 
-public interface ContainersManager extends Observable<ContainersManager>,
-                                           Observer<ObservableDirectoryFiles, File[]>,
-                                           Service {
-    List<AbstractContainer> getAbstractContainers();
+    abstract protected Tab drawInformationTab(T container);
 }

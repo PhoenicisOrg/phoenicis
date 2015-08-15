@@ -18,9 +18,9 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import com.playonlinux.containers.Container;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
+import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
@@ -32,12 +32,12 @@ import java.util.List;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-
 public class ViewContainers extends MainWindowView implements Observer<Observable, ContainersWindowEntity> {
     private final EventHandlerContainers eventHandlerContainers;
     private final LeftButtonGroup containersView;
 
     private TextField searchBar;
+    private MessagePanel selectContainerPanel;
 
     public ViewContainers(MainWindow parent) {
         super(parent);
@@ -48,33 +48,47 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
 
         this.drawSideBar();
         eventHandlerContainers.getContainers().addObserver(this);
+
+        initSelectContainerPane();
+        showRightView(selectContainerPanel);
     }
 
-
+    private void initSelectContainerPane() {
+        this.selectContainerPanel = new MessagePanel(translate("Please select a container to configure"));
+    }
 
     protected void drawSideBar() {
         searchBar = new TextField();
-        searchBar.setOnKeyReleased((e) -> applyFilter(""));
-
+        searchBar.setOnKeyReleased((e) -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), containersView);
 
         super.drawSideBar();
     }
 
-
-    private void applyFilter(String containerName) {
-
+    private void applyFilter(String searchText) {
+        this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
     @Override
     public void update(Observable observable, ContainersWindowEntity argument) {
         final List<LeftButton> leftButtonList = new ArrayList<>();
 
-        for(ContainerEntity containersWindowEntity: argument.getContainerEntities()) {
-            leftButtonList.add(new LeftButton("containers/container.png", containersWindowEntity.getName()));
+        for(ContainerEntity containerEntity: argument.getContainerEntities()) {
+            final LeftButton containerSelector = new LeftButton("containers/container.png", containerEntity.getName());
+            leftButtonList.add(containerSelector);
+            containerSelector.setOnMouseClicked(event -> selectContainer(containerEntity));
         }
 
         containersView.setButtons(leftButtonList);
+    }
+
+    private void selectContainer(ContainerEntity containerEntity) {
+        /* Not perfect. Needs more abstraction  */
+        if(containerEntity instanceof WinePrefixContainerEntity) {
+            this.showRightView(new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity));
+        } else {
+            this.showRightView(new GenericContainerConfigurationView(containerEntity));
+        }
     }
 }

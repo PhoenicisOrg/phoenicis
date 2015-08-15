@@ -130,11 +130,7 @@ public class Wine implements SetupWizardComponent {
      */
     public Wine selectPrefix(String prefixName) throws CancelException {
         this.prefixName = prefixName;
-        try {
-            this.prefix = new com.playonlinux.wine.WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
-        } catch (WineException e) {
-            throw new ScriptFailureException(e);
-        }
+        this.prefix = new com.playonlinux.wine.WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
 
         if(prefix.initialized()) {
             wineVersion = new WineVersion(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);

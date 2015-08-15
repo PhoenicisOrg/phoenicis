@@ -31,6 +31,8 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
+import com.playonlinux.wine.registry.RegistryValue;
+import com.playonlinux.wine.registry.StringValueType;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -47,6 +49,8 @@ import java.util.Collection;
  */
 @Scan
 public class WinePrefix implements AutoCloseable {
+    private static final Version DEFAULT_VERSION = new Version("1.7.49"); // FIXME
+
     @Inject
     static LoggerFactory loggerFactory;
 
@@ -65,7 +69,7 @@ public class WinePrefix implements AutoCloseable {
     private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
     private WinePrefixLogger logOutputStream = null;
 
-    public WinePrefix(File winePrefixDirectory) throws WineException {
+    public WinePrefix(File winePrefixDirectory) {
         this.winePrefixDirectory = winePrefixDirectory;
     }
 
@@ -162,7 +166,7 @@ public class WinePrefix implements AutoCloseable {
         }
 
         try {
-            prefixConfigFile.writeValue("containerType", "wineprefix");
+            prefixConfigFile.writeValue("containerType", "WinePrefixContainer");
             prefixConfigFile.writeValue("distributionCode", wineDistribution.getDistributionCode());
             prefixConfigFile.writeValue("operatingSystem", wineDistribution.getOperatingSystem().name());
             prefixConfigFile.writeValue("architecture", wineDistribution.getArchitecture().name());
@@ -191,7 +195,11 @@ public class WinePrefix implements AutoCloseable {
         }
 
         // FIXME: Handle this case with a default version
-        throw new IllegalStateException("Prefix does not contain any version information");
+        return DEFAULT_VERSION;
+    }
+
+    public boolean isAutomaticallyUpdated() {
+        return (getPrefixConfigFile().contains("version") || getPrefixConfigFile().contains("VERSION"));
     }
 
     public OperatingSystem fetchOperatingSystem() {
@@ -211,8 +219,8 @@ public class WinePrefix implements AutoCloseable {
             return Architecture.fromWinePackageName(prefixConfigFile.readValue("ARCH"));
         }
 
-        // FIXME : Handle this case with a default architecture
-        throw new IllegalStateException("Prefix does not contain any architecture information");
+        // FIXME : Fix the config file
+        return Architecture.I386;
     }
 
     public WineDistribution fetchDistribution() {
@@ -254,6 +262,16 @@ public class WinePrefix implements AutoCloseable {
             } catch (IOException e) {
                 LOGGER.warn("The log stream could not be closed");
             }
+        }
+    }
+
+    public boolean useGLSL() {
+        // FIXME: Makes this method safer
+        try {
+            return "enabled".equals(((RegistryValue<StringValueType>)
+                    this.fetchUserRegistry().getChild("Software","Wine","Direct3D","UseGLSL")).getText());
+        } catch (WineException e) {
+            return false;
         }
     }
 }

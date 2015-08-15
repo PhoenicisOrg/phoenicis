@@ -18,7 +18,6 @@
 
 package com.playonlinux.containers;
 
-import com.playonlinux.apps.AppsManager;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.filter.Filter;
@@ -41,18 +40,26 @@ public final class ContainersEntitiesProvider
 
     @Inject
     private static ServiceManager serviceManager;
+    private Filter<ContainerEntity> lastFilter;
+
+    private ContainersManager containersManager;
+
 
     @Override
     public void applyFilter(Filter<ContainerEntity> filter) {
-
+        this.lastFilter = filter;
+        update(containersManager, containersManager);
     }
 
     @Override
     public void update(ContainersManager observable, ContainersManager argument) {
         final List<ContainerEntity> containerEntities = new ArrayList<>();
-
-        for(Container container: argument.getContainers()) {
-            containerEntities.add(new ContainerEntity(container.getName()));
+        this.containersManager = argument;
+        for(AbstractContainer container : containersManager.getAbstractContainers()) {
+            final ContainerEntity containerEntity = container.createEntity();
+            if(lastFilter == null || lastFilter.apply(containerEntity)) {
+                containerEntities.add(containerEntity);
+            }
         }
         final ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
 

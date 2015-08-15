@@ -16,22 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.containers;
+package com.playonlinux.ui.impl.javafx.common;
 
-import java.io.File;
+import javafx.scene.layout.ColumnConstraints;
 
-public class Container {
-    private final File containerPath;
-
-    public Container(File containerPath) {
-        this.containerPath = containerPath;
-    }
-
-    public File getContainerPath() {
-        return containerPath;
-    }
-
-    public String getName() {
-        return containerPath.getName();
+public class ColumnConstraintsWithPercentage extends ColumnConstraints {
+    public ColumnConstraintsWithPercentage(double percentage) {
+        super();
+        this.setPercentWidth(percentage);
     }
 }
