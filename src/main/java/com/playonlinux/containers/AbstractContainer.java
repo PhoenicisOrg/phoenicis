@@ -18,16 +18,24 @@
 
 package com.playonlinux.containers;
 
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.containers.entities.ContainerEntity;
 
 import java.io.File;
-import java.util.List;
 
-public interface ContainersManager extends Observable<ContainersManager>,
-                                           Observer<ObservableDirectoryFiles, File[]>,
-                                           Service {
-    List<AbstractContainer> getAbstractContainers();
+public abstract class AbstractContainer<ENTITY extends ContainerEntity> {
+    protected final File containerPath;
+
+    public AbstractContainer(File containerPath) {
+        this.containerPath = containerPath;
+    }
+
+    public File getContainerPath() {
+        return containerPath;
+    }
+
+    public String getName() {
+        return containerPath.getName();
+    }
+
+    public abstract ENTITY createEntity();
 }

@@ -16,18 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.containers;
+package com.playonlinux.ui.impl.javafx.common;
 
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.Service;
 
-import java.io.File;
-import java.util.List;
+import javafx.scene.text.Text;
 
-public interface ContainersManager extends Observable<ContainersManager>,
-                                           Observer<ObservableDirectoryFiles, File[]>,
-                                           Service {
-    List<AbstractContainer> getAbstractContainers();
+public class TextWithStyle extends Text {
+    public TextWithStyle(String content, String captionTitle) {
+        super(content);
+        this.getStyleClass().add(captionTitle);
+    }
 }

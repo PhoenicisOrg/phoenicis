@@ -55,8 +55,8 @@ public final class ContainersEntitiesProvider
     public void update(ContainersManager observable, ContainersManager argument) {
         final List<ContainerEntity> containerEntities = new ArrayList<>();
         this.containersManager = argument;
-        for(Container container: containersManager.getContainers()) {
-            final ContainerEntity containerEntity = new ContainerEntity(container.getName());
+        for(AbstractContainer container : containersManager.getAbstractContainers()) {
+            final ContainerEntity containerEntity = container.createEntity();
             if(lastFilter == null || lastFilter.apply(containerEntity)) {
                 containerEntities.add(containerEntity);
             }

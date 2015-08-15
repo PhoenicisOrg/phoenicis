@@ -20,11 +20,14 @@ package com.playonlinux.containers;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.config.CompatibleConfigFileFormat;
+import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.*;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,17 +45,26 @@ public class DefaultContainersManager
     static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private ObservableDirectoryFiles containersDirectoryObservable;
-    private final List<Container> containers = new ArrayList<>();
+    private final List<AbstractContainer<?>> abstractContainers = new ArrayList<>();
 
-    public List<Container> getContainers() {
-        return new ArrayList<>(containers);
+    public List<AbstractContainer> getAbstractContainers() {
+        return new ArrayList<>(abstractContainers);
     }
 
     @Override
     public void update(ObservableDirectoryFiles observable, File[] argument) {
-        containers.clear();
+        abstractContainers.clear();
         for(File file: argument) {
-            containers.add(new Container(file));
+            final ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
+            String containerType = containerConfigFile.readValue("containerType");
+            if(StringUtils.isBlank(containerType)) {
+                containerType = "WinePrefix";
+            }
+
+            /* TODO: Improve abstraction here */
+            if("WinePrefix".equals(containerType)) {
+                abstractContainers.add(new WinePrefixContainer(file));
+            }
         }
 
         notifyObservers(this);
