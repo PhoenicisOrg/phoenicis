@@ -16,12 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
+package com.playonlinux.wine.configurations;
 
-public interface ScriptTemplate {
-    void validate();
+import com.playonlinux.wine.parameters.MouseWarpOverride;
 
-    void main() throws CancelException;
-
-    void rollback();
+/**
+ * Represents a {@link com.playonlinux.wine.WinePrefix} Input configuration
+ */
+public interface WinePrefixInputConfiguration {
+    /**
+     *
+     * @return The {@link MouseWarpOverride} value
+     */
+    MouseWarpOverride getMouseWarpOverride();
 }

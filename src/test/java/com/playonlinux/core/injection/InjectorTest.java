@@ -31,7 +31,7 @@ public class InjectorTest extends AbstractConfiguration {
     static String checkInjectedString;
 
     @Inject
-    static File unmappedDependecy;
+    static File unmappedDependency;
 
     @Bean
     String injectedString() {
@@ -43,22 +43,31 @@ public class InjectorTest extends AbstractConfiguration {
         this.setStrictLoadingPolicy(false);
         this.load();
         assertEquals(this.injectedString(), checkInjectedString);
+        this.close();
     }
 
-    @Test(expected=InjectionException.class)
-    public void testInjector_InjectAStringWithStrictPolicyAndUnmappedDependency_ThrowsException()
+    @Test
+    public void testInjector_InjectAStringAndClean_StringIsInjectedAndCleaned() throws InjectionException {
+        this.setStrictLoadingPolicy(false);
+        this.load();
+        assertEquals(this.injectedString(), checkInjectedString);
+        this.close();
+        assertEquals(null, checkInjectedString);
+    }
+
+    @Test(expected = InjectionException.class)
+    public void testInjector_InjectAStringWithStrictPolicyAndUnmappedDependency()
             throws InjectionException {
         this.setStrictLoadingPolicy(true);
-        this.load();
+        try {
+            this.load();
+        } finally {
+            this.close();
+        }
     }
 
     @Override
     protected String definePackage() {
         return "com.playonlinux";
-    }
-
-    @Override
-    public void close() throws Exception {
-
     }
 }

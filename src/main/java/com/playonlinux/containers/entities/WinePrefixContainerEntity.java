@@ -34,6 +34,8 @@ public class WinePrefixContainerEntity extends ContainerEntity {
     private final StrictDrawOrdering strictDrawOrdering;
     private final VideoMemorySize videoMemorySize;
     private final DirectDrawRenderer directDrawRenderer;
+    private final AlwaysOffscreen alwaysOffscreen;
+    private final MouseWarpOverride mouseWarpOverride;
 
     private WinePrefixContainerEntity(Builder builder) {
         super(builder.name, builder.path);
@@ -48,8 +50,11 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         this.strictDrawOrdering = builder.strictDrawOrdering;
         this.videoMemorySize = builder.videoMemorySize;
         this.directDrawRenderer = builder.directDrawRenderer;
+        this.alwaysOffscreen = builder.alwaysOffscreen;
+        this.mouseWarpOverride = builder.mouseWarpOverride;
     }
 
+    /* General */
     public String getWineArchitecture() {
         return wineArchitecture;
     }
@@ -62,6 +67,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return wineVersion;
     }
 
+    /* Graphics */
     public GLSL getGlslValue() {
         return glslValue;
     }
@@ -90,6 +96,15 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return multisampling;
     }
 
+    public AlwaysOffscreen getAlwaysOffscreen() {
+        return alwaysOffscreen;
+    }
+
+    /* Input */
+    public MouseWarpOverride getMouseWarpOverride() {
+        return mouseWarpOverride;
+    }
+
     public static class Builder {
         private String wineVersion;
         private String wineDistribution;
@@ -104,6 +119,8 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         private StrictDrawOrdering strictDrawOrdering = StrictDrawOrdering.DEFAULT;
         private VideoMemorySize videoMemorySize = new VideoMemorySize(true, 0);
         private DirectDrawRenderer directDrawRenderer = DirectDrawRenderer.DEFAULT;
+        private AlwaysOffscreen alwaysOffscreen = AlwaysOffscreen.DEFAULT;
+        private MouseWarpOverride mouseWarpOverride = MouseWarpOverride.DEFAULT;
 
         public WinePrefixContainerEntity build() {
             return new WinePrefixContainerEntity(this);
@@ -171,6 +188,16 @@ public class WinePrefixContainerEntity extends ContainerEntity {
 
         public Builder withDirectDrawRenderer(DirectDrawRenderer directDrawRenderer) {
             this.directDrawRenderer = directDrawRenderer;
+            return this;
+        }
+
+        public Builder withAlwaysOffscreen(AlwaysOffscreen alwaysOffscreen) {
+            this.alwaysOffscreen = alwaysOffscreen;
+            return this;
+        }
+
+        public Builder withMouseWarpOverride(MouseWarpOverride mouseWarpOverride) {
+            this.mouseWarpOverride = mouseWarpOverride;
             return this;
         }
     }

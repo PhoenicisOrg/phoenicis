@@ -21,7 +21,7 @@ package com.playonlinux.core.scripts;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.python.InterpreterFactory;
+import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.framework.ScriptFailureException;
@@ -41,7 +41,7 @@ public abstract class Script implements Service {
     private static ServiceManager serviceManager;
 
     @Inject
-    private static InterpreterFactory jythonInterpreterFactory;
+    private static JythonInterpreterFactory jythonJythonInterpreterFactory;
 
     private static final Logger LOGGER = Logger.getLogger(Script.class);
     private final ExecutorService executor;
@@ -83,7 +83,7 @@ public abstract class Script implements Service {
         runningScript = executor.submit(() -> {
             try {
 
-                PythonInterpreter pythonInterpreter = jythonInterpreterFactory.createInstance();
+                PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
 
                 try {
                     executeScript(pythonInterpreter);
@@ -100,7 +100,7 @@ public abstract class Script implements Service {
                 } finally {
                     LOGGER.info("Cleaning up");
                     pythonInterpreter.cleanup();
-                    jythonInterpreterFactory.close(pythonInterpreter);
+                    jythonJythonInterpreterFactory.close(pythonInterpreter);
                     serviceManager.unregister(Script.this);
                 }
             } catch(PlayOnLinuxException e) {

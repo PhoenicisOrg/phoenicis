@@ -16,15 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.dto;
+package com.playonlinux.core.entities;
+
+import com.playonlinux.core.comparator.Nameable;
 
 /**
- * Represents a DTO.
- * A DTO <b>must</b> obey the following rules:
- * <ul>
- *     <li>A DTO must be immutable (all fields are final)</li>
- *     <li>A DTO must have only getters and setters or a builder (= no business logic)</li>
- * </ul>
+ * Represents a nameable entity
  */
-public interface AbstractDTO {
+public interface NameableEntity extends Entity, Nameable {
+
 }

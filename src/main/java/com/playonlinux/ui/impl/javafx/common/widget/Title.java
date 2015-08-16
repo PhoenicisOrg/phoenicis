@@ -16,15 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.python;
+package com.playonlinux.ui.impl.javafx.common.widget;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import org.python.util.PythonInterpreter;
+import javafx.scene.text.Text;
 
-public interface InterpreterFactory {
-    PythonInterpreter createInstance() throws PlayOnLinuxException;
-
-    <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException;
-
-    void close(PythonInterpreter interpreter);
+public class Title extends Text {
+    public Title(String defaultValue) {
+        super(defaultValue);
+        this.getStyleClass().add("title");
+    }
 }
+

@@ -29,9 +29,7 @@ import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
-import com.playonlinux.wine.configurations.DefaultWinePrefixDisplayConfiguration;
-import com.playonlinux.wine.configurations.RegistryWinePrefixDisplayConfiguration;
-import com.playonlinux.wine.configurations.WinePrefixDisplayConfiguration;
+import com.playonlinux.wine.configurations.*;
 import com.playonlinux.wine.registry.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -270,6 +268,14 @@ public class WinePrefix implements AutoCloseable {
             return new RegistryWinePrefixDisplayConfiguration(fetchUserRegistry());
         } catch (WineException e) {
             return new DefaultWinePrefixDisplayConfiguration();
+        }
+    }
+
+    public WinePrefixInputConfiguration getInputConfiguration() {
+        try {
+            return new RegistryWinePrefixInputConfiguration(fetchUserRegistry());
+        } catch (WineException e) {
+            return new DefaultWinePrefixInputConfiguration();
         }
     }
 }

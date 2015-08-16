@@ -18,7 +18,13 @@
 
 package com.playonlinux.framework;
 
+/**
+ * Represents a component that has the same Lifecycle than a {@link SetupWizard}
+ */
 public interface SetupWizardComponent extends AutoCloseable {
-    void close();
 
+    /**
+     * Close the component
+     */
+    void close();
 }

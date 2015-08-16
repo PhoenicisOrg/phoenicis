@@ -16,14 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.widget;
+package com.playonlinux.core.dto;
 
-import javafx.scene.text.Text;
-
-public class Title extends Text {
-    public Title(String defaultValue) {
-        super(defaultValue);
-        this.getStyleClass().add("title");
-    }
+/**
+ * Represents a DTO.
+ * A DTO <b>must</b> obey the following rules:
+ * <ul>
+ *     <li>A DTO must be immutable (all fields are final)</li>
+ *     <li>A DTO must have only getters and setters or a builder (= no business logic)</li>
+ * </ul>
+ */
+public interface DTO {
 }
-

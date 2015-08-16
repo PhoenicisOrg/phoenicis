@@ -20,11 +20,12 @@ package com.playonlinux.core.python;
 
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.scripts.ScriptTemplate;
+import com.playonlinux.framework.templates.ScriptTemplate;
 
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.InjectionException;
 import org.apache.commons.io.FileUtils;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,18 +36,18 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class PythonInstallerTest {
-    private JythonInterpreterFactory jythonInterpreterFactory;
+    private DefaultJythonJythonInterpreterFactory defaultJythonInterpreterFactory;
+    private static AbstractConfiguration testConfigFile = new MockContextConfig();
 
     @BeforeClass
     public static void setUpClass() throws InjectionException {
-        AbstractConfiguration testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }
 
     @Before
     public void setUp() {
-        jythonInterpreterFactory = new JythonInterpreterFactory();
+        defaultJythonInterpreterFactory = new DefaultJythonJythonInterpreterFactory();
     }
 
     @Test
@@ -64,7 +65,7 @@ public class PythonInstallerTest {
                 "    def title(self):\n" +
                 "        return \"Mock Log Context\"\n").getBytes());
 
-        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
+        PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -85,7 +86,7 @@ public class PythonInstallerTest {
                 "   def main(self):\n" +
                 "        pass\n").getBytes());
 
-        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
+        PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -114,7 +115,7 @@ public class PythonInstallerTest {
                 "    steamId = 130\n" +
                 "    packages = [\"package1\", \"package2\"]\n").getBytes());
 
-        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
+        PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -123,5 +124,10 @@ public class PythonInstallerTest {
         assertTrue(FileUtils.readFileToString(temporaryOutput).contains("Implementation has to be done, but we have access to prefix (Prefix), " +
                 "wineversion (1.7.34), steamId (130) and packages (['package1', 'package2'])." +
                 " First package (to check that we have a list: package1\n"));
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws InjectionException {
+        testConfigFile.close();
     }
 }

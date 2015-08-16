@@ -85,16 +85,19 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
                 console.getChildren().add(commandText);
                 command.setText("");
 
-                if (commandInterpreter.sendLine(commandToSend, message -> Platform.runLater(() -> {
-                    if (!StringUtils.isBlank(message)) {
-                        Text resultText = new Text(message);
-                        resultText.getStyleClass().add("resultText");
-                        console.getChildren().add(resultText);
-                    }
-                    command.setDisable(false);
-                    command.requestFocus();
-                    consolePane.setVvalue(consolePane.getVmax());
-                }))) {
+                if (commandInterpreter.sendLine(commandToSend, message -> {
+                            Platform.runLater(() -> {
+                                if (!StringUtils.isBlank(message)) {
+                                    Text resultText = new Text(message);
+                                    resultText.getStyleClass().add("resultText");
+                                    console.getChildren().add(resultText);
+                                }
+                                command.setDisable(false);
+                                command.requestFocus();
+                                consolePane.setVvalue(consolePane.getVmax());
+                            });
+                            return null;
+                })) {
                     nextSymbol = NOT_INSIDE_BLOCK;
                 } else {
                     nextSymbol = INSIDE_BLOCK;

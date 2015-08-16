@@ -18,8 +18,11 @@
 
 package com.playonlinux.core.python;
 
-import com.playonlinux.core.messages.RunnableWithParameter;
+import java.util.function.Function;
 
+/**
+ * This is a command interpreter
+ */
 public interface CommandInterpreter extends AutoCloseable {
     /**
      * Send a line to the interpreter
@@ -28,7 +31,8 @@ public interface CommandInterpreter extends AutoCloseable {
      * @return true if the command is directly interpreted (complete). False if the command is incomplete
      * (if statements, ...)
      */
-    boolean sendLine(String command, RunnableWithParameter<String> callback);
+    boolean sendLine(String command, Function<String, Void> callback);
 
+    @Override
     void close();
 }

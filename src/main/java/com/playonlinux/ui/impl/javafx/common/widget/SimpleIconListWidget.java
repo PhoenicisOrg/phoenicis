@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.widget;
+package com.playonlinux.ui.impl.javafx.common.widget;
 
 import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;

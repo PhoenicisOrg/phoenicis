@@ -114,4 +114,21 @@ public class Injector {
         }
 
     }
+
+    public void cleanUpAllBeans() {
+        Set<Class<?>> componentClasses = this.getComponentClasses();
+
+        for(Class<?> componentClass: componentClasses) {
+            List<Field> fields = this.getAnnotatedFields(componentClass, Inject.class);
+            for(Field field: fields) {
+                field.setAccessible(true);
+                try {
+                    field.set(null, null);
+                } catch (IllegalAccessException e) {
+                    LOGGER.warn(String.format("Unable to clean %s on class %s. Error while injecting.",
+                            field.getType().toString(), componentClass.getName()), e);
+                }
+            }
+        }
+    }
 }

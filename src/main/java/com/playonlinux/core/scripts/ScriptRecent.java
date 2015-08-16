@@ -20,6 +20,7 @@ package com.playonlinux.core.scripts;
 
 import com.playonlinux.core.python.PythonInstaller;
 import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.framework.templates.ScriptTemplate;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 

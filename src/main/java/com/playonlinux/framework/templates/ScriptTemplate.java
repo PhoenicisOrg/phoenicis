@@ -16,8 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.messages;
+package com.playonlinux.framework.templates;
 
-public interface RunnableWithParameter<T>  {
-    void run(T parameter);
+import com.playonlinux.core.scripts.CancelException;
+
+/**
+ * Represents a Script teplate
+ */
+public interface ScriptTemplate {
+    /**
+     * Perform some validation before running the script. (Typically configuration checking
+     * @return true if the validation is successful, false otherwise
+     */
+    boolean validate();
+
+    /**
+     * Main method of the script
+     * @throws CancelException If the script is canceled
+     * (by the user, or by a {@link com.playonlinux.framework.ScriptFailureException})
+     */
+    void main() throws CancelException;
+
+    /**
+     * Method to perform if any error occurs during the script
+     */
+    void rollback();
 }

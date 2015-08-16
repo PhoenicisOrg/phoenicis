@@ -22,6 +22,7 @@ import com.playonlinux.MockContextConfig;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.InjectionException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,14 +37,14 @@ import static org.junit.Assert.*;
 
 
 public class LegacyWrapperTest {
+    private AbstractConfiguration testConfigFile = new MockContextConfig();
+
     @Before
     public void setUp() throws InjectionException {
-        AbstractConfiguration testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }
 
-    @Ignore
     @Test
     public void testLegacyWrapper() throws Exception {
         final File tmpFile = File.createTempFile("temporary", "text");
@@ -87,6 +88,9 @@ public class LegacyWrapperTest {
         tmpFile.delete();
     }
 
-
+    @After
+    public void tearDown() throws InjectionException {
+        testConfigFile.close();
+    }
 
 }

@@ -19,7 +19,7 @@
 package com.playonlinux.apps.dto;
 
 import com.playonlinux.core.comparator.Nameable;
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Represents an application
  */
-public class ApplicationDTO implements AbstractDTO, Nameable {
+public class ApplicationDTO implements DTO, Nameable {
 
     private int id;
     private String name;

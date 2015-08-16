@@ -22,15 +22,11 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.python.InterpreterFactory;
+import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
 import com.playonlinux.integration.PythonIntegrationCase;
-import com.playonlinux.integration.TearDown;
-import junit.framework.TestSuite;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.AllTests;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
 
@@ -41,7 +37,7 @@ import java.util.List;
 
 @Scan
 public class PlayOnLinuxIT {
-    @Inject static InterpreterFactory jythonInterpreterFactory;
+    @Inject static JythonInterpreterFactory jythonJythonInterpreterFactory;
     private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
     @BeforeClass
@@ -51,32 +47,36 @@ public class PlayOnLinuxIT {
 
     @Test
     public void jythonTests() throws InjectionException, IOException, PlayOnLinuxException {
-        URL integrationResources = PlayOnLinuxIT.class.getResource("integration");
-        File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
+        try {
+            URL integrationResources = PlayOnLinuxIT.class.getResource("integration");
+            File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
 
-        assert pythonFiles != null;
-        for(File file: pythonFiles) {
-            if(!"__init__.py".equals(file.getName()) && file.getName().endsWith(".py")) {
-                final PythonInterpreter pythonInterpreter = jythonInterpreterFactory.createInstance();
-                pythonInterpreter.execfile(file.getAbsolutePath());
-                PyStringMap pyDictionary = (PyStringMap) pythonInterpreter.eval("globals()");
+            assert pythonFiles != null;
+            for (File file : pythonFiles) {
+                if (!"__init__.py".equals(file.getName()) && file.getName().endsWith(".py")) {
+                    final PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
+                    pythonInterpreter.execfile(file.getAbsolutePath());
+                    PyStringMap pyDictionary = (PyStringMap) pythonInterpreter.eval("globals()");
 
-                for(Object className: pyDictionary.keys()) {
-                    if (((String) className).startsWith("Test")) {
-                        PyType pyType = (PyType) pyDictionary.__getitem__((String) className);
-                        List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
+                    for (Object className : pyDictionary.keys()) {
+                        if (((String) className).startsWith("Test")) {
+                            PyType pyType = (PyType) pyDictionary.__getitem__((String) className);
+                            List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
 
-                        for(Object methodName: (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
-                            new PythonIntegrationCase(pythonInterpreter,
-                                    (String) className, (String) methodName
-                            ).run();
+                            for (Object methodName : (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
+                                new PythonIntegrationCase(pythonInterpreter,
+                                        (String) className, (String) methodName
+                                ).run();
+                            }
+
                         }
-
                     }
-                }
 
-                jythonInterpreterFactory.close(pythonInterpreter);
+                    jythonJythonInterpreterFactory.close(pythonInterpreter);
+                }
             }
+        } finally {
+            integrationRunner.close();
         }
 
     }

@@ -25,5 +25,9 @@ import com.playonlinux.core.observer.Observable;
  * This component provides entities to the API while it is downloading a script (or installer)
  */
 public interface InstallerDownloaderEntityProvider extends Observable<InstallerDownloaderEntity> {
+
+    /**
+     * Get the script
+     */
     void getScript();
 }

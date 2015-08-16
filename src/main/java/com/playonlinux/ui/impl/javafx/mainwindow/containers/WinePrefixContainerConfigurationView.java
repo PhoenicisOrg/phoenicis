@@ -21,12 +21,22 @@ package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
 import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
+
 import com.playonlinux.wine.parameters.*;
 import com.sun.javafx.collections.ImmutableObservableList;
 import com.sun.javafx.collections.ObservableListWrapper;
+
 import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tab;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
@@ -35,14 +45,16 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Function;
 
 import static com.playonlinux.core.lang.Localisation.translate;
-
 
 public class WinePrefixContainerConfigurationView extends ContainerConfigurationView<WinePrefixContainerEntity> {
     public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity) {
         super(containerEntity);
         this.getTabs().add(drawDisplayTab(containerEntity));
+        this.getTabs().add(drawInputTab(containerEntity));
+        this.getTabs().add(drawToolsTab(containerEntity));
     }
 
     @Override
@@ -144,7 +156,15 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), "captionTitle"), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
+        final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox  = new ComboBox<>();
+        alwaysOffscreenComboBox.setValue(containerEntity.getAlwaysOffscreen());
+        addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
+        displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), "captionTitle"), 0, 7);
+        displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
+
+
         displayContentPane.getRowConstraints().addAll(
+                new RowConstraints(50.),
                 new RowConstraints(50.),
                 new RowConstraints(50.),
                 new RowConstraints(50.),
@@ -164,6 +184,119 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         displayTab.setContent(displayPane);
         displayTab.setClosable(false);
         return displayTab;
+    }
+
+
+    protected Tab drawInputTab(WinePrefixContainerEntity containerEntity) {
+        final Tab inputTab = new Tab(translate("Input"));
+        final VBox inputPane = new VBox();
+        final Text title = new TextWithStyle(translate("Input settings"), "title");
+
+        inputPane.getStyleClass().add("containerConfigurationPane");
+        inputPane.getChildren().add(title);
+
+        final GridPane inputContentPane = new GridPane();
+        inputContentPane.getStyleClass().add("grid");
+
+        final ComboBox<MouseWarpOverride> mouseWarpOverrideComboBox = new ComboBox<>();
+        mouseWarpOverrideComboBox.setValue(containerEntity.getMouseWarpOverride());
+        addItems(mouseWarpOverrideComboBox, MouseWarpOverride.class);
+        inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), "captionTitle"), 0, 0);
+        inputContentPane.add(mouseWarpOverrideComboBox, 1, 0);
+
+        inputContentPane.getRowConstraints().addAll(
+                new RowConstraints(50.)
+        );
+
+        inputContentPane.getColumnConstraints().addAll(
+                new ColumnConstraintsWithPercentage(30),
+                new ColumnConstraintsWithPercentage(70)
+        );
+
+        inputPane.getChildren().addAll(inputContentPane);
+        inputTab.setContent(inputPane);
+        inputTab.setClosable(false);
+        return inputTab;
+    }
+
+
+    protected Tab drawToolsTab(WinePrefixContainerEntity containerEntity) {
+        final Tab toolsTab = new Tab(translate("Tools"));
+        final VBox toolsPane = new VBox();
+        final Text title = new TextWithStyle(translate("Wine tools"), "title");
+
+        toolsPane.getStyleClass().add("containerConfigurationPane");
+        toolsPane.getChildren().add(title);
+
+        final GridPane toolsContentPane = new GridPane();
+        toolsContentPane.getStyleClass().add("grid");
+
+        toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png"), 0, 0);
+        toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
+
+        toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png"), 1, 0);
+        toolsContentPane.add(wineToolCaption(translate("Registry Editor")), 1, 1);
+
+        toolsContentPane.add(wineToolButton(translate("Windows reboot"), "rebootPrefix.png"), 2, 0);
+        toolsContentPane.add(wineToolCaption(translate("Windows reboot")), 2, 1);
+
+        toolsContentPane.add(wineToolButton(translate("Repair virtual drive"), "repair.png"), 3, 0);
+        toolsContentPane.add(wineToolCaption(translate("Repair virtual drive")), 3, 1);
+
+
+
+        toolsContentPane.add(wineToolButton(translate("Command prompt"), "cmd.png"), 0, 3);
+        toolsContentPane.add(wineToolCaption(translate("Command prompt")), 0, 4);
+
+        toolsContentPane.add(wineToolButton(translate("Task manager"), "taskmgr.png"), 1, 3);
+        toolsContentPane.add(wineToolCaption(translate("Task manager")), 1, 4);
+
+        toolsContentPane.add(wineToolButton(translate("Kill processes"), "killProcesses.png"), 2, 3);
+        toolsContentPane.add(wineToolCaption(translate("Kill processes")), 2, 4);
+
+        toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstaller.png"), 3, 3);
+        toolsContentPane.add(wineToolCaption(translate("Wine uninstaller")), 3, 4);
+
+        toolsPane.getChildren().addAll(toolsContentPane);
+
+        toolsContentPane.getColumnConstraints().addAll(
+                new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25)
+        );
+
+        toolsContentPane.getRowConstraints().addAll(
+                new RowConstraints(96.),
+                new RowConstraints(25.),
+                new RowConstraints(30.),
+                new RowConstraints(96.),
+                new RowConstraints(25.)
+        );
+
+
+        toolsTab.setContent(toolsPane);
+        toolsTab.setClosable(false);
+        return toolsTab;
+    }
+
+    private Text wineToolCaption(String caption) {
+        final Text text = new TextWithStyle(caption, "wineToolCaption");
+        GridPane.setHalignment(text, HPos.CENTER);
+        GridPane.setValignment(text, VPos.CENTER);
+        return text;
+    }
+
+    private Button wineToolButton(String caption, String imageName) {
+        final Button button = new Button(caption,
+                new ImageView(
+                        new Image(this.getClass().getResourceAsStream(imageName), 48., 48., true, true)
+                )
+        );
+        button.getStyleClass().addAll("wineToolButton");
+        GridPane.setHalignment(button, HPos.CENTER);
+
+        return button;
     }
 
     private void addItemsVideoMemorySize(ComboBox<VideoMemorySize> videoMemorySizeComboBox) {

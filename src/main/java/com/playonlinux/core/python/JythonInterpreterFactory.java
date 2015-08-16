@@ -19,39 +19,31 @@
 package com.playonlinux.core.python;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import org.python.core.Py;
-import org.python.core.PyDictionary;
-import org.python.core.PySystemState;
-import org.python.modules.zipimport.zipimport;
 import org.python.util.PythonInterpreter;
 
-import java.io.File;
+/**
+ * Represents a Jython's {@link PythonInterpreter} factory
+ */
+public interface JythonInterpreterFactory {
+    /**
+     * Creates an instance of a {@link PythonInterpreter} and keeps its reference
+     * @return The instance
+     * @throws PlayOnLinuxException If the interpreter cannot be created
+     */
+    PythonInterpreter createInstance() throws PlayOnLinuxException;
 
-public class JythonInterpreterFactory implements InterpreterFactory {
-    private int numberOfInstances = 0;
+    /**
+     * Creates an instance of a class extending {@link PythonInterpreter} and keeps its reference
+     * @param clazz The type of the class
+     * @param <T> The type of the class
+     * @return The instance
+     * @throws PlayOnLinuxException If the interpreter cannot be created
+     */
+    <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException;
 
-    synchronized public PythonInterpreter createInstance() throws PlayOnLinuxException {
-        return createInstance(PythonInterpreter.class);
-    }
-
-    synchronized public <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException {
-        File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
-        System.setProperty("python.path", pythonPath.getAbsolutePath());
-        numberOfInstances++;
-        try {
-            return clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new PlayOnLinuxException("Unable to createPrefix a Python interpreter", e);
-        }
-    }
-
-    synchronized public void close(PythonInterpreter interpreter) {
-        interpreter.cleanup();
-        numberOfInstances--;
-        if(numberOfInstances == 0) {
-            Py.defaultSystemState = new PySystemState();
-            zipimport._zip_directory_cache = new PyDictionary();
-        }
-    }
-
+    /**
+     * Close an interpreter and clean Jython cache to free memory if it is required
+     * @param interpreter The interpreter to close
+     */
+    void close(PythonInterpreter interpreter);
 }

@@ -1,6 +1,7 @@
 from com.playonlinux.integration import ServiceManagerGetter
-from com.playonlinux.framework import SetupWizard, WineInstallation
+from com.playonlinux.framework import SetupWizard, WineVersion
 from com.playonlinux.framework import Environment
+from com.playonlinux.engines.wine import WineVersionManager
 
 from java.lang import Class
 
@@ -16,14 +17,16 @@ class TestInstallWine(unittest.TestCase):
         setupWizard = SetupWizard("Mock setup wizard")
         setupWizard.init()
 
-        wineVersionManager = ServiceManagerGetter.serviceManager\
-            .getService(Class.forName("com.playonlinux.engines.wine.WineVersionManager"))
+        wineVersionManager = ServiceManagerGetter.serviceManager.getService(WineVersionManager)
 
         while(wineVersionManager.isUpdating()):
             print "Updating wine version list..."
             time.sleep(2)
 
-        wineInstallation = WineInstallation("1.7.36", "upstream-x86", setupWizard)
+        if(wineVersionManager.hasFailed()):
+            raise Exception("Failed to download the list of wineversions")
+
+        wineInstallation = WineVersion("1.7.36", "upstream-x86", setupWizard)
         wineInstallation.install()
 
         installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" % (Environment.getUserRoot(),

@@ -27,7 +27,7 @@ import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
-import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
+import com.playonlinux.ui.impl.javafx.common.widget.MiniatureListWidget;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;

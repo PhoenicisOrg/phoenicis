@@ -249,9 +249,19 @@
     -fx-padding: 10px;
 }
 .containerConfigurationPane > .grid {
-   -fx-padding : 10px;
+    -fx-padding : 10px;
 }
 
 .captionTitle {
     -fx-font-weight: bold;
+}
+
+.wineToolButton {
+    -fx-pref-width: 96px;
+    -fx-pref-height: 96px;
+    -fx-content-display: graphic-only;
+}
+.wineToolCaption {
+    -fx-font-size: 0.85em;
+    -fx-pref-width: 96px;
 }

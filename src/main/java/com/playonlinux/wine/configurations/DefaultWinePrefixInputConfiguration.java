@@ -16,10 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework.templates;
+package com.playonlinux.wine.configurations;
 
-import com.playonlinux.core.scripts.ScriptTemplate;
+import com.playonlinux.wine.parameters.*;
 
-public abstract class AbstractTemplate implements ScriptTemplate {
-
+public class DefaultWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
+    @Override
+    public MouseWarpOverride getMouseWarpOverride() {
+        return MouseWarpOverride.DEFAULT;
+    }
 }

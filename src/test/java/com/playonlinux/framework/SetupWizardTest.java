@@ -30,6 +30,7 @@ import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
 import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,6 +44,7 @@ import static org.mockito.Mockito.when;
 public class SetupWizardTest {
     private SetupWizard setupWizard;
     private Controller controllerMock = mock(Controller.class);
+    private TestContextConfig testContextConfig = new TestContextConfig();
 
     class TestContextConfig extends AbstractConfiguration {
         @Bean
@@ -64,16 +66,10 @@ public class SetupWizardTest {
         protected LanguageBundle languageBundle() {
             return FallbackLanguageBundle.getInstance();
         }
-
-        @Override
-        public void close() throws Exception {
-
-        }
     }
 
     @Before
     public void setUp() throws InjectionException {
-        TestContextConfig testContextConfig = new TestContextConfig();
         testContextConfig.setStrictLoadingPolicy(false);
         testContextConfig.load();
 
@@ -90,7 +86,7 @@ public class SetupWizardTest {
     }
 
     @Test
-    public void testMessage() throws Exception, CancelException {
+    public void testMessage() throws Exception {
         this.setupWizard.message("Text to showRightView");
     }
 
@@ -101,12 +97,12 @@ public class SetupWizardTest {
     }
 
     @Test
-    public void testTextbox() throws Exception, CancelException {
+    public void testTextbox() throws Exception {
         assertEquals("showTextBoxStep result", this.setupWizard.textbox("Text to showRightView", "Default value"));
     }
 
     @Test
-    public void testMenu() throws Exception, CancelException {
+    public void testMenu() throws Exception {
         ArrayList<String> items = new ArrayList<>();
         items.add("Element 1");
         items.add("Element 2");
@@ -120,4 +116,8 @@ public class SetupWizardTest {
     }
 
 
+    @After
+    public void tearDown() throws InjectionException {
+        testContextConfig.close();
+    }
 }

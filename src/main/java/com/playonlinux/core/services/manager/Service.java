@@ -18,8 +18,20 @@
 
 package com.playonlinux.core.services.manager;
 
+/**
+ * Represents a Service
+ * Services are central PlayOnLinux components.
+ * They are all registered on startup, or one by one during integration tests
+ */
 public interface Service {
+    /**
+     * Shutdown the service
+     */
     void shutdown();
 
+    /**
+     * Initialize the service
+     * @throws ServiceInitializationException If any error occurs during the initialization of the service
+     */
     void init() throws ServiceInitializationException;
 }

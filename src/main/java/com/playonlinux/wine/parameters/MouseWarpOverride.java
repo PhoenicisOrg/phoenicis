@@ -16,11 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.entities;
+package com.playonlinux.wine.parameters;
 
-import com.playonlinux.core.comparator.Nameable;
-import com.playonlinux.core.dto.AbstractDTO;
+import static com.playonlinux.core.lang.Localisation.translate;
 
-public interface ItemWithMiniatureEntity extends AbstractDTO, Nameable {
+public enum MouseWarpOverride {
+    DEFAULT(translate("Default")),
+    DISABLED(translate("Disabled")),
+    ENABLED(translate("Enabled")),
+    FORCE(translate("Force"));
 
+    private final String translatedName;
+
+    MouseWarpOverride(String translatedName) {
+        this.translatedName = translatedName;
+    }
+
+    @Override
+    public String toString() {
+        return translatedName;
+    }
 }

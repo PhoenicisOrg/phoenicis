@@ -24,9 +24,9 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.log.LoggerFactory;
+import com.playonlinux.core.python.DefaultJythonJythonInterpreterFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
-import com.playonlinux.core.python.InterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -63,8 +63,8 @@ public class MockContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected InterpreterFactory jythonInterpreterFactory() {
-        return new JythonInterpreterFactory();
+    protected JythonInterpreterFactory jythonInterpreterFactory() {
+        return new DefaultJythonJythonInterpreterFactory();
     }
 
     @Bean
@@ -80,10 +80,5 @@ public class MockContextConfig extends AbstractConfiguration {
     @Override
     protected String definePackage() {
         return "com.playonlinux";
-    }
-
-    @Override
-    public void close() {
-
     }
 }

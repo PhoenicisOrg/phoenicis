@@ -20,18 +20,55 @@ package com.playonlinux.wine.configurations;
 
 import com.playonlinux.wine.parameters.*;
 
+/**
+ * Represents all Display Configuration of a {@link com.playonlinux.wine.WinePrefix}
+ */
 public interface WinePrefixDisplayConfiguration {
+    /**
+     *
+     * @return The {@link GLSL} value
+     */
     GLSL getGLSL();
 
+    /**
+     *
+     * @return The {@link DirectDrawRenderer} value
+     */
     DirectDrawRenderer getDirectDrawRenderer();
 
+    /**
+     *
+     * @return The {@link Multisampling} value
+     */
     Multisampling getMultisampling();
 
+    /**
+     *
+     * @return The {@link OffscreenRenderingMode} value
+     */
     OffscreenRenderingMode getOffscreenRenderingMode();
 
+    /**
+     *
+     * @return The {@link RenderTargetModeLock} value
+     */
     RenderTargetModeLock getRenderTargetModeLock();
 
+    /**
+     *
+     * @return The {@link StrictDrawOrdering} value
+     */
     StrictDrawOrdering getStrictDrawOrdering();
 
+    /**
+     *
+     * @return The {@link AlwaysOffscreen} value
+     */
+    AlwaysOffscreen getAlwaysOffscreen();
+
+    /**
+     *
+     * @return The {@link VideoMemorySize} value
+     */
     VideoMemorySize getVideoMemorySize();
 }

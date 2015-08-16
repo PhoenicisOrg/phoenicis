@@ -18,14 +18,14 @@
 
 package com.playonlinux.apps.dto;
 
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 
 import java.util.List;
 
 /**
  * Represents a category of application
  */
-public class CategoryDTO implements AbstractDTO {
+public class CategoryDTO implements DTO {
 
     int id;
     CategoryType type;

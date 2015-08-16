@@ -24,7 +24,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.log.LoggerFactory;
-import com.playonlinux.core.python.InterpreterFactory;
+import com.playonlinux.core.python.DefaultJythonJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
@@ -71,8 +71,8 @@ public class IntegrationContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected InterpreterFactory jythonInterpreterFactory() {
-        return new JythonInterpreterFactory();
+    protected JythonInterpreterFactory jythonInterpreterFactory() {
+        return new DefaultJythonJythonInterpreterFactory();
     }
 
     @Bean
@@ -104,9 +104,5 @@ public class IntegrationContextConfig extends AbstractConfiguration {
         when(mockController.createUIMessageSender()).thenReturn(mockUIMessageSender);
         when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(new MockIntegrationUI());
         return mockController;
-    }
-    @Override
-    public void close() {
-
     }
 }

@@ -16,28 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.widget;
+package com.playonlinux.ui.impl.javafx.common.widget;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+public class StaticMiniature extends ImageView {
+    public static final Image DEFAULT_MINIATURE =
+            new Image(MiniatureListWidget.class.getResource("defaultMiniature.png").toExternalForm());
 
-public class PlayOnLinuxLogo extends HBox {
-    public PlayOnLinuxLogo() {
-        super();
-        Image logoImage = new Image(this.getClass().getResourceAsStream("/playonlinux.png"));
-        ImageView logoView = new ImageView(logoImage);
-        logoView.setFitWidth(28);
-        logoView.setFitHeight(28);
+    public static final Image WINE_MINIATURE =
+            new Image(MiniatureListWidget.class.getResource("wineMiniature.png").toExternalForm());
 
-        Text text = new Text(translate("${application.name}").toLowerCase());
-        text.setId("logoText");
+    public StaticMiniature(Image defaultImage) {
+        super(defaultImage);
+        this.setFitWidth(120);
+        this.setFitHeight(90);
+        this.getStyleClass().add("miniatureImage");
+    }
 
-        this.getChildren().add(logoView);
-        this.getChildren().add(text);
-
+    public StaticMiniature() {
+        this(DEFAULT_MINIATURE);
     }
 }

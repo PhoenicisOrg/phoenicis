@@ -52,6 +52,11 @@ public class DefaultWinePrefixDisplayConfiguration implements WinePrefixDisplayC
     }
 
     @Override
+    public AlwaysOffscreen getAlwaysOffscreen() {
+        return AlwaysOffscreen.DEFAULT;
+    }
+
+    @Override
     public VideoMemorySize getVideoMemorySize() {
         return new VideoMemorySize(true, 0);
     }
