@@ -31,7 +31,9 @@ import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.mockito.Matchers.any;

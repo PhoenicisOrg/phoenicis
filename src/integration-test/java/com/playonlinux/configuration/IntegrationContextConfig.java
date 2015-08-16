@@ -53,24 +53,6 @@ public class IntegrationContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected ServiceManager mockBackgroundServiceManager() throws ServiceInitializationException {
-        final ServiceManager serviceManager = mock(ServiceManager.class);
-        doAnswer(invocationOnMock -> {
-            Object[] args = invocationOnMock.getArguments();
-            ((Service) args[0]).init();
-            return null;
-        }).when(serviceManager).register(any(Service.class));
-
-        doAnswer(invocationOnMock -> {
-            Object[] args = invocationOnMock.getArguments();
-            ((Service) args[0]).shutdown();
-            return null;
-        }).when(serviceManager).unregister(any(Service.class));
-
-        return serviceManager;
-    }
-
-    @Bean
     protected JythonInterpreterFactory jythonInterpreterFactory() {
         return new DefaultJythonJythonInterpreterFactory();
     }
