@@ -45,15 +45,15 @@ public class DefaultContainersManager
     static ServiceManager playOnLinuxBackgroundServicesManager;
 
     private ObservableDirectoryFiles containersDirectoryObservable;
-    private final List<AbstractContainer<?>> abstractContainers = new ArrayList<>();
+    private final List<AbstractContainer<?>> containers = new ArrayList<>();
 
-    public List<AbstractContainer> getAbstractContainers() {
-        return new ArrayList<>(abstractContainers);
+    public List<AbstractContainer> getContainers() {
+        return new ArrayList<>(containers);
     }
 
     @Override
     public void update(ObservableDirectoryFiles observable, File[] argument) {
-        abstractContainers.clear();
+        containers.clear();
         for(File file: argument) {
             final ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
             String containerType = containerConfigFile.readValue("containerType");
@@ -63,7 +63,7 @@ public class DefaultContainersManager
 
             /* TODO: Improve abstraction here */
             if("WinePrefix".equals(containerType)) {
-                abstractContainers.add(new WinePrefixContainer(file));
+                containers.add(new WinePrefixContainer(file));
             }
         }
 

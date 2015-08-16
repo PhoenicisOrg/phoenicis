@@ -16,8 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.messages;
+package com.playonlinux.core.entities;
 
-public interface RunnableWithParameter<T>  {
-    void run(T parameter);
+import com.playonlinux.core.comparator.Nameable;
+
+/**
+ * Represents a nameable entity
+ */
+public interface NameableEntity extends Entity, Nameable {
+
 }

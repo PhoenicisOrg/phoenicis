@@ -20,13 +20,13 @@ package com.playonlinux.apps.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.playonlinux.core.comparator.Nameable;
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.utils.OperatingSystem;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ScriptDTO implements AbstractDTO, Nameable {
+public class ScriptDTO implements DTO, Nameable {
     private int id;
     private String name;
     private List<OperatingSystem> compatiblesOperatingSystems;

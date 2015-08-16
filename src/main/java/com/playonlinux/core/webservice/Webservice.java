@@ -20,7 +20,7 @@ package com.playonlinux.core.webservice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.Service;
@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-abstract public class Webservice<T extends AbstractDTO>
+abstract public class Webservice<T extends DTO>
         extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>> implements Service {
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
 

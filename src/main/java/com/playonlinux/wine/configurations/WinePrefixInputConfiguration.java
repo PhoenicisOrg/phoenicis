@@ -20,6 +20,13 @@ package com.playonlinux.wine.configurations;
 
 import com.playonlinux.wine.parameters.MouseWarpOverride;
 
+/**
+ * Represents a {@link com.playonlinux.wine.WinePrefix} Input configuration
+ */
 public interface WinePrefixInputConfiguration {
+    /**
+     *
+     * @return The {@link MouseWarpOverride} value
+     */
     MouseWarpOverride getMouseWarpOverride();
 }

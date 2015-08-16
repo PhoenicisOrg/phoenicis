@@ -18,7 +18,12 @@
 
 package com.playonlinux.core.messages;
 
+/**
+ * Represents a message that can cancel its sender
+ */
 public interface CancelerMessage extends Message {
+    /**
+     * Sends the cancel signal
+     */
     void sendCancelSignal();
-
 }

@@ -19,7 +19,7 @@
 package com.playonlinux.core.services.manager;
 
 /**
- * Manages the background service
+ * Manages the PlayOnLinux {@link Service}
  */
 public interface ServiceManager {
     /**

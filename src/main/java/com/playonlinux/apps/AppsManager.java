@@ -29,13 +29,31 @@ import com.playonlinux.core.webservice.DownloadEnvelope;
 import java.net.URL;
 import java.util.Collection;
 
+/**
+ * Available application manager
+ */
 public interface AppsManager extends Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
                                      Observable<DefaultAppsManager>,
                                      Service {
 
+    /**
+     * Refresh the list of available application from the web service
+     * @throws ServiceInitializationException
+     */
     void refresh() throws ServiceInitializationException;
 
+    /**
+     * Returns an UI EntityProvider that will be observed while downloading a script
+     * @param scriptUrl The url of the script to be downloaded as a string
+     * @return The entity provider
+     * @throws AppsManagerException if the URL was malformed
+     */
     InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
 
+    /**
+     * Returns an UI EntityProvider that will be observed while downloading a script
+     * @param scriptUrl The url of the script to be downloaded as a {@link URL} object
+     * @return The entity provider
+     */
     InstallerDownloaderEntityProvider getDownloaderEntityProvider(URL scriptUrl);
 }

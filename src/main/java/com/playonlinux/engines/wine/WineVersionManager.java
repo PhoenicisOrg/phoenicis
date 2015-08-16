@@ -27,13 +27,40 @@ import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;
 
+/**
+ * PlayOnLinux Wine Version Manager
+ */
 public interface WineVersionManager extends Observer<Observable, Object>,
                                             Observable<WineVersionManager>,
                                             Service {
-
+    /**
+     * Install a Wine Version
+     *
+     * @param wineDistribution {@link WineDistribution} to install
+     * @param version {@link Version} to install
+     * @param progressControl {@link ProgressControl} to show the progress of the process
+     * @throws EngineInstallException if any error occurs
+     */
     void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
 
-    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
+    /**
+     * Install a Wine Version
+     *
+     * @param wineDistribution {@link WineDistribution} to install
+     * @param version {@link Version} to install
+     * @param localFile The local file containing the version to install
+     * @param progressControl {@link ProgressControl} to show the progress of the process
+     * @throws EngineInstallException if any error occurs
+     */
+    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws EngineInstallException;
 
-    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws ArchiveException, EngineInstallException;
+    /**
+     * Uninstall a wine version
+     *
+     * @param wineDistribution {@link WineDistribution} to uninstall
+     * @param version {@link Version} to uninstall
+     * @param progressControl {@link ProgressControl} to show the progress of the process
+     * @throws EngineInstallException if any error occurs
+     */
+    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
 }

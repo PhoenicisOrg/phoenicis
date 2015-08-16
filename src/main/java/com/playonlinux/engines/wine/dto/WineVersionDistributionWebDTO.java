@@ -18,12 +18,12 @@
 
 package com.playonlinux.engines.wine.dto;
 
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.List;
 
-public class WineVersionDistributionWebDTO implements AbstractDTO {
+public class WineVersionDistributionWebDTO implements DTO {
     String name;
     String description;
     List<WineVersionWebDTO> packages;

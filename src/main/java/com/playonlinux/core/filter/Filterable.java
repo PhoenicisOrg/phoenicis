@@ -20,7 +20,7 @@ package com.playonlinux.core.filter;
 
 
 /**
- * Represents of the filterable
+ * Represents a filterable object
  *
  * @param <T> Type held by the filter
  */

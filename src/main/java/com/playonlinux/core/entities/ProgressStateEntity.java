@@ -18,13 +18,13 @@
 
 package com.playonlinux.core.entities;
 
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 
 /**
  * Represent a progress state that will be sent to the UI.
  * The UI will be able to represent this progress state (progressbar, etc...)
  */
-public class ProgressStateEntity implements AbstractDTO {
+public class ProgressStateEntity implements DTO {
     private final State state;
     private final double percent;
 

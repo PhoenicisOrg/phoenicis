@@ -18,6 +18,13 @@
 
 package com.playonlinux.core.messages;
 
+/**
+ * Represents a message
+ */
 public interface Message extends Runnable {
+    /**
+     * The method carried by the message
+     * @param message Reference to itself
+     */
     void execute(Message message);
 }

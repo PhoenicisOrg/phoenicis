@@ -35,7 +35,7 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class PythonInstallerTest {
-    private JythonInterpreterFactory jythonInterpreterFactory;
+    private DefaultJythonJythonInterpreterFactory defaultJythonInterpreterFactory;
 
     @BeforeClass
     public static void setUpClass() throws InjectionException {
@@ -46,7 +46,7 @@ public class PythonInstallerTest {
 
     @Before
     public void setUp() {
-        jythonInterpreterFactory = new JythonInterpreterFactory();
+        defaultJythonInterpreterFactory = new DefaultJythonJythonInterpreterFactory();
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PythonInstallerTest {
                 "    def title(self):\n" +
                 "        return \"Mock Log Context\"\n").getBytes());
 
-        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
+        PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -85,7 +85,7 @@ public class PythonInstallerTest {
                 "   def main(self):\n" +
                 "        pass\n").getBytes());
 
-        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
+        PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 
@@ -114,7 +114,7 @@ public class PythonInstallerTest {
                 "    steamId = 130\n" +
                 "    packages = [\"package1\", \"package2\"]\n").getBytes());
 
-        PythonInterpreter interpreter = jythonInterpreterFactory.createInstance();
+        PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(interpreter, ScriptTemplate.class);
 

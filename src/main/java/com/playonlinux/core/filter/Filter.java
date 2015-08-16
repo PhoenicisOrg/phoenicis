@@ -19,8 +19,6 @@
 
 package com.playonlinux.core.filter;
 
-
-
 /**
  * Defines how a list (used in filterables) should look and behave like.
  *

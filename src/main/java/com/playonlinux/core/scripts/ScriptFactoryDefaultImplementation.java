@@ -36,13 +36,13 @@ public class ScriptFactoryDefaultImplementation implements ScriptFactory {
         }
     }
 
-    public Script createInstance(String script) {
-        switch(Script.detectScriptType(script)) {
+    public Script createInstance(String scriptContent) {
+        switch(Script.detectScriptType(scriptContent)) {
             case LEGACY:
-                return new ScriptLegacy(script, executorService);
+                return new ScriptLegacy(scriptContent, executorService);
             case RECENT:
             default:
-                return new ScriptRecent(script, executorService);
+                return new ScriptRecent(scriptContent, executorService);
         }
     }
 

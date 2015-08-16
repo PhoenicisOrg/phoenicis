@@ -22,15 +22,11 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.python.InterpreterFactory;
+import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
 import com.playonlinux.integration.PythonIntegrationCase;
-import com.playonlinux.integration.TearDown;
-import junit.framework.TestSuite;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.AllTests;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;
 
@@ -41,7 +37,7 @@ import java.util.List;
 
 @Scan
 public class PlayOnLinuxIT {
-    @Inject static InterpreterFactory jythonInterpreterFactory;
+    @Inject static JythonInterpreterFactory jythonJythonInterpreterFactory;
     private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
     @BeforeClass
@@ -57,7 +53,7 @@ public class PlayOnLinuxIT {
         assert pythonFiles != null;
         for(File file: pythonFiles) {
             if(!"__init__.py".equals(file.getName()) && file.getName().endsWith(".py")) {
-                final PythonInterpreter pythonInterpreter = jythonInterpreterFactory.createInstance();
+                final PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
                 pythonInterpreter.execfile(file.getAbsolutePath());
                 PyStringMap pyDictionary = (PyStringMap) pythonInterpreter.eval("globals()");
 
@@ -75,7 +71,7 @@ public class PlayOnLinuxIT {
                     }
                 }
 
-                jythonInterpreterFactory.close(pythonInterpreter);
+                jythonJythonInterpreterFactory.close(pythonInterpreter);
             }
         }
 

@@ -18,10 +18,10 @@
 
 package com.playonlinux.engines.wine.dto;
 
-import com.playonlinux.core.dto.AbstractDTO;
+import com.playonlinux.core.dto.DTO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-public class WineVersionWebDTO implements AbstractDTO {
+public class WineVersionWebDTO implements DTO {
     String version;
     String url;
     String sha1sum;

@@ -44,6 +44,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.String.format;
 
@@ -73,6 +77,7 @@ public class DefaultWineVersionsManager
         // TODO: Observe the local directory
         if(argument instanceof DownloadEnvelope && observable instanceof WineVersionSource) {
             this.downloadEnvelope = (DownloadEnvelope<Collection<WineVersionDistributionWebDTO>>) argument;
+
             if(downloadEnvelope.getEnvelopeContent() != null) {
                 this.wineVersionDistributionDTOs = downloadEnvelope.getEnvelopeContent();
             }
@@ -199,6 +204,7 @@ public class DefaultWineVersionsManager
         throw new EngineInstallException(format("The version you are trying to install (%s / %s), does not seem to exists. (Codename: %s)",
                 wineDistribution.toString(), version.toString(), coordinateName));
     }
+
     private synchronized String makeSha1Sum(WineDistribution wineDistribution, Version version) throws EngineInstallException {
         return getWineVersionFromDistributionAndVersion(wineDistribution, version).getSha1sum();
     }
@@ -209,8 +215,6 @@ public class DefaultWineVersionsManager
         } catch(MalformedURLException e) {
             throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
         }
-
-
     }
 
 }

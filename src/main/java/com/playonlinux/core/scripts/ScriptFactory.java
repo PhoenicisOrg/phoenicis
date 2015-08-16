@@ -21,10 +21,29 @@ package com.playonlinux.core.scripts;
 import java.io.File;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * {@link Script} factory
+ */
 public interface ScriptFactory {
-    Script createInstance(String script);
+    /**
+     * Create an instance of a Script
+     * @param scriptContent the content of the script
+     * @return The script object
+     */
+    Script createInstance(String scriptContent);
 
-    Script createInstance(File script) throws InstallerException;
-    
+    /**
+     * Create an instance of a Script
+     * @param scriptPath the path of the script
+     * @return The script object
+     * @throws InstallerException if the file cannot be opened
+     */
+    Script createInstance(File scriptPath) throws InstallerException;
+
+    /**
+     * Override the default executor
+     * @param executorService The new executor
+     * @return the same factory
+     */
     ScriptFactory withExecutor(ExecutorService executorService);
 }

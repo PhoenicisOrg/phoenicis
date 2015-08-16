@@ -18,6 +18,13 @@
 
 package com.playonlinux.core.comparator;
 
+/**
+ * Represents a object that have a name
+ */
 public interface Nameable {
+    /**
+     *
+     * @return The name of the object
+     */
     String getName();
 }

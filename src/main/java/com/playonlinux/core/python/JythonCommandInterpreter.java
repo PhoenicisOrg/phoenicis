@@ -21,7 +21,6 @@ package com.playonlinux.core.python;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
-import com.playonlinux.core.messages.RunnableWithParameter;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
 import org.apache.log4j.Logger;
@@ -31,13 +30,14 @@ import org.python.util.InteractiveInterpreter;
 import java.io.StringWriter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.function.Function;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, Service {
     private final static Logger LOGGER = Logger.getLogger(JythonCommandInterpreter.class);
 
     @Inject
-    static InterpreterFactory jythonInterpreterFactory;
+    static JythonInterpreterFactory jythonJythonInterpreterFactory;
 
     @Inject
     static ServiceManager serviceManager;
@@ -55,10 +55,10 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
     }
 
     @Override
-    public boolean sendLine(String command, RunnableWithParameter<String> callback) {
+    public boolean sendLine(String command, Function<String, Void> callback) {
         if(interactiveInterpreter == null) {
             try {
-                interactiveInterpreter = jythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
+                interactiveInterpreter = jythonJythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
                 interactiveInterpreter.setOut(returnBuffer);
                 interactiveInterpreter.setErr(returnBuffer);
             } catch (PlayOnLinuxException e) {
@@ -70,7 +70,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
         if(command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
             commandBuffer.append("\n");
-            callback.run("");
+            callback.apply("");
             return false;
         } else {
             String completeCommand = commandBuffer.toString();
@@ -79,9 +79,9 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                 returnBuffer.getBuffer().setLength(0);
                 try {
                     interactiveInterpreter.exec(completeCommand);
-                    callback.run(returnBuffer.toString());
+                    callback.apply(returnBuffer.toString());
                 } catch (PyException e) {
-                    callback.run(e.toString());
+                    callback.apply(e.toString());
                 }
             });
             return true;
@@ -92,7 +92,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
     @Override
     public void shutdown() {
         if(this.interactiveInterpreter != null) {
-            jythonInterpreterFactory.close(this.interactiveInterpreter);
+            jythonJythonInterpreterFactory.close(this.interactiveInterpreter);
         }
         if(currentTask != null) {
             currentTask.cancel(true);

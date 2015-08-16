@@ -19,7 +19,7 @@
 package com.playonlinux.apps.entities;
 
 import com.playonlinux.core.entities.Entity;
-import com.playonlinux.core.entities.ItemWithMiniatureEntity;
+import com.playonlinux.core.entities.NameableEntity;
 import org.apache.log4j.Logger;
 
 import java.net.MalformedURLException;
@@ -27,8 +27,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class AppEntity implements Entity, ItemWithMiniatureEntity {
+public class AppEntity implements Entity, NameableEntity {
     private final String name;
     private final String categoryName;
     private final boolean isCommercial;

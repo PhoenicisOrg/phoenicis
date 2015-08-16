@@ -26,8 +26,15 @@ import com.playonlinux.core.services.manager.Service;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Manage PlayOnLinux containers
+ */
 public interface ContainersManager extends Observable<ContainersManager>,
                                            Observer<ObservableDirectoryFiles, File[]>,
                                            Service {
-    List<AbstractContainer> getAbstractContainers();
+    /**
+     * Get the list of containers
+     * @return The list of containers
+     */
+    List<AbstractContainer> getContainers();
 }
