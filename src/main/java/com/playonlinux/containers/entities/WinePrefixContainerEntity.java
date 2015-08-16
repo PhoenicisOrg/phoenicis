@@ -18,12 +18,22 @@
 
 package com.playonlinux.containers.entities;
 
+import com.playonlinux.wine.parameters.*;
+
+import static com.playonlinux.core.lang.Localisation.translate;
+
 public class WinePrefixContainerEntity extends ContainerEntity {
     private final String wineVersion;
     private final String wineDistribution;
     private final String wineArchitecture;
     private final boolean isAutomaticallyUpdated;
-    private final boolean useGLSL;
+    private final GLSL glslValue;
+    private final Multisampling multisampling;
+    private final OffscreenRenderingMode offscreenRenderingMode;
+    private final RenderTargetModeLock renderTargetModeLock;
+    private final StrictDrawOrdering strictDrawOrdering;
+    private final VideoMemorySize videoMemorySize;
+    private final DirectDrawRenderer directDrawRenderer;
 
     private WinePrefixContainerEntity(Builder builder) {
         super(builder.name, builder.path);
@@ -31,7 +41,13 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         this.wineDistribution = builder.wineDistribution;
         this.wineVersion = builder.wineVersion;
         this.isAutomaticallyUpdated = builder.isAutomaticallyUpdated;
-        this.useGLSL = builder.useGLSL;
+        this.glslValue = builder.glslValue;
+        this.multisampling = builder.multisampling;
+        this.offscreenRenderingMode = builder.offscreenRenderingMode;
+        this.renderTargetModeLock = builder.renderTargetModeLock;
+        this.strictDrawOrdering = builder.strictDrawOrdering;
+        this.videoMemorySize = builder.videoMemorySize;
+        this.directDrawRenderer = builder.directDrawRenderer;
     }
 
     public String getWineArchitecture() {
@@ -46,6 +62,34 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return wineVersion;
     }
 
+    public GLSL getGlslValue() {
+        return glslValue;
+    }
+
+    public DirectDrawRenderer getDirectDrawRenderer() {
+        return directDrawRenderer;
+    }
+
+    public VideoMemorySize getVideoMemorySize() {
+        return videoMemorySize;
+    }
+
+    public OffscreenRenderingMode getOffscreenRenderingMode() {
+        return offscreenRenderingMode;
+    }
+
+    public RenderTargetModeLock getRenderTargetModeLock() {
+        return renderTargetModeLock;
+    }
+
+    public StrictDrawOrdering getStrictDrawOrdering() {
+        return strictDrawOrdering;
+    }
+
+    public Multisampling getMultisampling() {
+        return multisampling;
+    }
+
     public static class Builder {
         private String wineVersion;
         private String wineDistribution;
@@ -53,7 +97,13 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         private String path;
         private String name;
         public boolean isAutomaticallyUpdated;
-        private boolean useGLSL = false;
+        private GLSL glslValue = GLSL.DEFAULT;
+        private Multisampling multisampling = Multisampling.DEFAULT;
+        private OffscreenRenderingMode offscreenRenderingMode = OffscreenRenderingMode.DEFAULT;
+        private RenderTargetModeLock renderTargetModeLock = RenderTargetModeLock.DEFAULT;
+        private StrictDrawOrdering strictDrawOrdering = StrictDrawOrdering.DEFAULT;
+        private VideoMemorySize videoMemorySize = new VideoMemorySize(true, 0);
+        private DirectDrawRenderer directDrawRenderer = DirectDrawRenderer.DEFAULT;
 
         public WinePrefixContainerEntity build() {
             return new WinePrefixContainerEntity(this);
@@ -89,8 +139,38 @@ public class WinePrefixContainerEntity extends ContainerEntity {
             return this;
         }
 
-        public Builder withGLSL(boolean useGLSL) {
-            this.useGLSL = useGLSL;
+        public Builder withGLSL(GLSL glslValue) {
+            this.glslValue = glslValue;
+            return this;
+        }
+
+        public Builder withMultisampling(Multisampling multisampling) {
+            this.multisampling = multisampling;
+            return this;
+        }
+
+        public Builder withOffscreenRenderingMode(OffscreenRenderingMode offscreenRenderingMode) {
+            this.offscreenRenderingMode = offscreenRenderingMode;
+            return this;
+        }
+
+        public Builder withRenderTargetModeLock(RenderTargetModeLock renderTargetModeLock) {
+            this.renderTargetModeLock = renderTargetModeLock;
+            return this;
+        }
+
+        public Builder withStrictDrawOrdering(StrictDrawOrdering strictDrawOrdering) {
+            this.strictDrawOrdering = strictDrawOrdering;
+            return this;
+        }
+
+        public Builder withVideoMemorySize(VideoMemorySize videoMemorySize) {
+            this.videoMemorySize = videoMemorySize;
+            return this;
+        }
+
+        public Builder withDirectDrawRenderer(DirectDrawRenderer directDrawRenderer) {
+            this.directDrawRenderer = directDrawRenderer;
             return this;
         }
     }

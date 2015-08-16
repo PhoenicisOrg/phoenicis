@@ -40,7 +40,13 @@ public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEn
                 .withWineDistribution(this.underlyingWinePrefix.fetchDistribution().getDistributionCode())
                 .withWineVersion(this.underlyingWinePrefix.fetchVersion().toString())
                 .withAutomaticallyUpdated(this.underlyingWinePrefix.isAutomaticallyUpdated())
-                .withGLSL(this.underlyingWinePrefix.useGLSL())
+                .withGLSL(this.underlyingWinePrefix.getDisplayConfiguration().getGLSL())
+                .withMultisampling(this.underlyingWinePrefix.getDisplayConfiguration().getMultisampling())
+                .withOffscreenRenderingMode(this.underlyingWinePrefix.getDisplayConfiguration().getOffscreenRenderingMode())
+                .withStrictDrawOrdering(this.underlyingWinePrefix.getDisplayConfiguration().getStrictDrawOrdering())
+                .withRenderTargetModeLock(this.underlyingWinePrefix.getDisplayConfiguration().getRenderTargetModeLock())
+                .withVideoMemorySize(this.underlyingWinePrefix.getDisplayConfiguration().getVideoMemorySize())
+                .withDirectDrawRenderer(this.underlyingWinePrefix.getDisplayConfiguration().getDirectDrawRenderer())
                 .build();
     }
 
