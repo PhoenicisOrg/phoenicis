@@ -23,8 +23,10 @@ import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.framework.SetupWizard;
 
-
-public abstract class Installer extends AbstractTemplate {
+/**
+ * Most abstract {@link ScriptTemplate}
+ */
+public abstract class Installer implements ScriptTemplate {
     @PythonAttribute
     private String title;
 
@@ -38,9 +40,10 @@ public abstract class Installer extends AbstractTemplate {
         }
     }
 
-    /* Methods that can be overwritten */
+    @Override
     public abstract void main() throws CancelException;
 
+    @Override
     public void rollback() {
         this._defaultRollback();
     }
@@ -49,8 +52,6 @@ public abstract class Installer extends AbstractTemplate {
     protected SetupWizard getSetupWizard() throws ScriptFailureException {
         createSetupWizard();
         initalizeSetupWizard();
-
-
         return setupWizard;
     }
 
@@ -72,6 +73,4 @@ public abstract class Installer extends AbstractTemplate {
             setupWizardInitialized = false;
         }
     }
-
-
 }

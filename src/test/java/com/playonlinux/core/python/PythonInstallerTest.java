@@ -20,7 +20,7 @@ package com.playonlinux.core.python;
 
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.scripts.ScriptTemplate;
+import com.playonlinux.framework.templates.ScriptTemplate;
 
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.InjectionException;

@@ -36,6 +36,7 @@ public abstract class WineSteamInstaller extends Installer {
     @PythonAttribute
     List<String> packages;
 
+    @Override
     public void main() throws ScriptFailureException {
         this.getSetupWizard().log(String.format("Implementation has to be done, but we have access to prefix (%s), " +
                 "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have " +
