@@ -29,7 +29,6 @@ import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
-import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.mock.MockIntegrationUI;
@@ -40,9 +39,7 @@ import com.playonlinux.ui.impl.cli.UIMessageSenderCLIImplementation;
 
 import java.io.IOException;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -50,24 +47,6 @@ public class IntegrationContextConfig extends AbstractConfiguration {
     @Bean
     protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
         return new MockIntegrationContext();
-    }
-
-    @Bean
-    protected ServiceManager mockBackgroundServiceManager() throws ServiceInitializationException {
-        final ServiceManager serviceManager = mock(ServiceManager.class);
-        doAnswer(invocationOnMock -> {
-            Object[] args = invocationOnMock.getArguments();
-            ((Service) args[0]).init();
-            return null;
-        }).when(serviceManager).register(any(Service.class));
-
-        doAnswer(invocationOnMock -> {
-            Object[] args = invocationOnMock.getArguments();
-            ((Service) args[0]).shutdown();
-            return null;
-        }).when(serviceManager).unregister(any(Service.class));
-
-        return serviceManager;
     }
 
     @Bean
