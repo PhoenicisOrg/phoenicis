@@ -16,13 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.common;
+package com.playonlinux.ui.impl.javafx.common.widget;
 
 import javafx.scene.text.Text;
 
-public class TextWithStyle extends Text {
-    public TextWithStyle(String content, String captionTitle) {
-        super(content);
-        this.getStyleClass().add(captionTitle);
+public class Title extends Text {
+    public Title(String defaultValue) {
+        super(defaultValue);
+        this.getStyleClass().add("title");
     }
 }
+

@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.common;
+package com.playonlinux.wine.configurations;
 
-import javafx.scene.text.Text;
+import com.playonlinux.wine.parameters.*;
 
-public class TextWithStyle extends Text {
-    public TextWithStyle(String content, String captionTitle) {
-        super(content);
-        this.getStyleClass().add(captionTitle);
+public class DefaultWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
+    @Override
+    public MouseWarpOverride getMouseWarpOverride() {
+        return MouseWarpOverride.DEFAULT;
     }
 }

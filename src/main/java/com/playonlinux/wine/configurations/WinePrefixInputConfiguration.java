@@ -16,26 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.widget;
+package com.playonlinux.wine.configurations;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import com.playonlinux.wine.parameters.MouseWarpOverride;
 
-public class StaticMiniature extends ImageView {
-    public static final Image DEFAULT_MINIATURE =
-            new Image(MiniatureListWidget.class.getResource("defaultMiniature.png").toExternalForm());
-
-    public static final Image WINE_MINIATURE =
-            new Image(MiniatureListWidget.class.getResource("wineMiniature.png").toExternalForm());
-
-    public StaticMiniature(Image defaultImage) {
-        super(defaultImage);
-        this.setFitWidth(120);
-        this.setFitHeight(90);
-        this.getStyleClass().add("miniatureImage");
-    }
-
-    public StaticMiniature() {
-        this(DEFAULT_MINIATURE);
-    }
+public interface WinePrefixInputConfiguration {
+    MouseWarpOverride getMouseWarpOverride();
 }

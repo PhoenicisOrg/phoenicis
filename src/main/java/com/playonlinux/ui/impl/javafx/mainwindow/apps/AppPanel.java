@@ -24,7 +24,7 @@ import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.ui.impl.javafx.common.ErrorMessage;
 import com.playonlinux.ui.impl.javafx.common.HtmlTemplate;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
-import com.playonlinux.ui.impl.javafx.widget.RemoteImage;
+import com.playonlinux.ui.impl.javafx.common.widget.RemoteImage;
 import com.sun.webkit.dom.HTMLAnchorElementImpl;
 import javafx.concurrent.Worker;
 import javafx.scene.control.ScrollPane;

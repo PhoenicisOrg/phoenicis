@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-import com.playonlinux.ui.impl.javafx.widget.PlayOnLinuxLogo;
+import com.playonlinux.ui.impl.javafx.common.widget.PlayOnLinuxLogo;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;

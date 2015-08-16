@@ -25,8 +25,8 @@ import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
-import com.playonlinux.ui.impl.javafx.widget.MiniatureListWidget;
-import com.playonlinux.ui.impl.javafx.widget.StaticMiniature;
+import com.playonlinux.ui.impl.javafx.common.widget.MiniatureListWidget;
+import com.playonlinux.ui.impl.javafx.common.widget.StaticMiniature;
 import javafx.application.Platform;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -83,7 +83,7 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
 
         final TextField searchBar = new TextField();
             searchBar.setOnKeyReleased(event -> {
-        });
+            });
 
         LeftButton wine = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/engines/wine.png", "Wine");
 
