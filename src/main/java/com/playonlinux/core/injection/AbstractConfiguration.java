@@ -44,13 +44,15 @@ public abstract class AbstractConfiguration implements AutoCloseable {
             throw new InjectionException("The operation was canceled", e);
         }
 
-        Injector injector = new Injector(definePackage());
+        final Injector injector = new Injector(definePackage());
         Map<Class<?>, Object> beans = injector.loadAllBeans(this);
         injector.injectAllBeans(strictLoadingPolicy, beans);
     }
 
     @Override
     public void close() {
+        final Injector injector = new Injector(definePackage());
+        injector.cleanUpAllBeans();
         staticContextLock.release();
     }
 }

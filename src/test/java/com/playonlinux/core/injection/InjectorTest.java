@@ -46,8 +46,17 @@ public class InjectorTest extends AbstractConfiguration {
         this.close();
     }
 
+    @Test
+    public void testInjector_InjectAStringAndClean_StringIsInjectedAndCleaned() throws InjectionException {
+        this.setStrictLoadingPolicy(false);
+        this.load();
+        assertEquals(this.injectedString(), checkInjectedString);
+        this.close();
+        assertEquals(null, checkInjectedString);
+    }
+
     @Test(expected = InjectionException.class)
-    public void testInjector_InjectAStringWithStrictPolicyAndUnmappedDependency_ThrowsException()
+    public void testInjector_InjectAStringWithStrictPolicyAndUnmappedDependency()
             throws InjectionException {
         this.setStrictLoadingPolicy(true);
         try {
