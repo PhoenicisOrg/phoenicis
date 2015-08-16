@@ -131,6 +131,22 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
     }
 
     @Override
+    public AlwaysOffscreen getAlwaysOffscreen() {
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "AlwaysOffscreen");
+        if(registryChild instanceof RegistryValue) {
+            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+                case "enabled":
+                    return AlwaysOffscreen.ENABLED;
+                case "disabled":
+                    return AlwaysOffscreen.DISABLED;
+                default:
+                    return AlwaysOffscreen.DEFAULT;
+            }
+        }
+        return AlwaysOffscreen.DEFAULT;
+    }
+
+    @Override
     public VideoMemorySize getVideoMemorySize() {
         final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "VideoMemorySize");
         if(registryChild instanceof RegistryValue) {

@@ -144,7 +144,15 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), "captionTitle"), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
+        final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox  = new ComboBox<>();
+        alwaysOffscreenComboBox.setValue(containerEntity.getAlwaysOffscreen());
+        addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
+        displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), "captionTitle"), 0, 7);
+        displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
+
+
         displayContentPane.getRowConstraints().addAll(
+                new RowConstraints(50.),
                 new RowConstraints(50.),
                 new RowConstraints(50.),
                 new RowConstraints(50.),

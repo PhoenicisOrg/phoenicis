@@ -34,6 +34,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
     private final StrictDrawOrdering strictDrawOrdering;
     private final VideoMemorySize videoMemorySize;
     private final DirectDrawRenderer directDrawRenderer;
+    private final AlwaysOffscreen alwaysOffscreen;
 
     private WinePrefixContainerEntity(Builder builder) {
         super(builder.name, builder.path);
@@ -48,6 +49,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         this.strictDrawOrdering = builder.strictDrawOrdering;
         this.videoMemorySize = builder.videoMemorySize;
         this.directDrawRenderer = builder.directDrawRenderer;
+        this.alwaysOffscreen = builder.alwaysOffscreen;
     }
 
     public String getWineArchitecture() {
@@ -90,6 +92,10 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return multisampling;
     }
 
+    public AlwaysOffscreen getAlwaysOffscreen() {
+        return alwaysOffscreen;
+    }
+
     public static class Builder {
         private String wineVersion;
         private String wineDistribution;
@@ -104,6 +110,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         private StrictDrawOrdering strictDrawOrdering = StrictDrawOrdering.DEFAULT;
         private VideoMemorySize videoMemorySize = new VideoMemorySize(true, 0);
         private DirectDrawRenderer directDrawRenderer = DirectDrawRenderer.DEFAULT;
+        private AlwaysOffscreen alwaysOffscreen = AlwaysOffscreen.DEFAULT;
 
         public WinePrefixContainerEntity build() {
             return new WinePrefixContainerEntity(this);
@@ -171,6 +178,11 @@ public class WinePrefixContainerEntity extends ContainerEntity {
 
         public Builder withDirectDrawRenderer(DirectDrawRenderer directDrawRenderer) {
             this.directDrawRenderer = directDrawRenderer;
+            return this;
+        }
+
+        public Builder withAlwaysOffscreen(AlwaysOffscreen alwaysOffscreen) {
+            this.alwaysOffscreen = alwaysOffscreen;
             return this;
         }
     }

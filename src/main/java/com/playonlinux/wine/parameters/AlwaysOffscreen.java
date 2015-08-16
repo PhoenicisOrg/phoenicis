@@ -16,24 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.wine.configurations;
+package com.playonlinux.wine.parameters;
 
-import com.playonlinux.wine.parameters.*;
+import static com.playonlinux.core.lang.Localisation.translate;
 
-public interface WinePrefixDisplayConfiguration {
-    GLSL getGLSL();
+public enum AlwaysOffscreen {
+    DEFAULT(translate("Default")),
+    DISABLED(translate("Disabled")),
+    ENABLED(translate("Enabled"));
 
-    DirectDrawRenderer getDirectDrawRenderer();
+    private final String translatedName;
 
-    Multisampling getMultisampling();
+    AlwaysOffscreen(String translatedName) {
+        this.translatedName = translatedName;
+    }
 
-    OffscreenRenderingMode getOffscreenRenderingMode();
-
-    RenderTargetModeLock getRenderTargetModeLock();
-
-    StrictDrawOrdering getStrictDrawOrdering();
-
-    AlwaysOffscreen getAlwaysOffscreen();
-
-    VideoMemorySize getVideoMemorySize();
+    @Override
+    public String toString() {
+        return translatedName;
+    }
 }
