@@ -19,7 +19,8 @@
 package com.playonlinux.core.injection;
 
 import java.util.Map;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public abstract class AbstractConfiguration implements AutoCloseable {
@@ -31,19 +32,14 @@ public abstract class AbstractConfiguration implements AutoCloseable {
     boolean strictLoadingPolicy = true;
     
     protected abstract String definePackage();
-    private final Semaphore staticContextLock = new Semaphore(1);
+    private static final Lock staticContextLock = new ReentrantLock();
 
     public void setStrictLoadingPolicy(Boolean strictLoadingPolicy) {
         this.strictLoadingPolicy = strictLoadingPolicy;
     }
 
     public void load() throws InjectionException {
-        try {
-            staticContextLock.acquire();
-        } catch (InterruptedException e) {
-            throw new InjectionException("Injection was interrupted", e);
-        }
-
+        staticContextLock.lock();
         Injector injector = new Injector(definePackage());
         Map<Class<?>, Object> beans = injector.loadAllBeans(this);
         injector.injectAllBeans(strictLoadingPolicy, beans);
@@ -51,6 +47,6 @@ public abstract class AbstractConfiguration implements AutoCloseable {
 
     @Override
     public void close() {
-        staticContextLock.release();
+        staticContextLock.unlock();
     }
 }

@@ -20,10 +20,13 @@ class TestInstallWine(unittest.TestCase):
         wineVersionManager = ServiceManagerGetter.serviceManager.getService(WineVersionManager)
 
         print ServiceManagerGetter.serviceManager
+
         while(wineVersionManager.isUpdating()):
             print "Updating wine version list..."
             time.sleep(2)
 
+        if(wineVersionManager.hasFailed()):
+            raise Exception("Failed to download the list of wineversions")
 
         wineInstallation = WineVersion("1.7.36", "upstream-x86", setupWizard)
         wineInstallation.install()

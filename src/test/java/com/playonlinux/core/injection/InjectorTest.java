@@ -31,7 +31,7 @@ public class InjectorTest extends AbstractConfiguration {
     static String checkInjectedString;
 
     @Inject
-    static File unmappedDependecy;
+    static File unmappedDependency;
 
     @Bean
     String injectedString() {
