@@ -81,9 +81,4 @@ public class MockContextConfig extends AbstractConfiguration {
     protected String definePackage() {
         return "com.playonlinux";
     }
-
-    @Override
-    public void close() {
-
-    }
 }

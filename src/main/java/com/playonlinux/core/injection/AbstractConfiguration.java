@@ -19,6 +19,7 @@
 package com.playonlinux.core.injection;
 
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 
 public abstract class AbstractConfiguration implements AutoCloseable {
@@ -30,16 +31,26 @@ public abstract class AbstractConfiguration implements AutoCloseable {
     boolean strictLoadingPolicy = true;
     
     protected abstract String definePackage();
+    private final Semaphore staticContextLock = new Semaphore(1);
 
     public void setStrictLoadingPolicy(Boolean strictLoadingPolicy) {
         this.strictLoadingPolicy = strictLoadingPolicy;
     }
 
     public void load() throws InjectionException {
+        try {
+            staticContextLock.acquire();
+        } catch (InterruptedException e) {
+            throw new InjectionException("Injection was interrupted", e);
+        }
+
         Injector injector = new Injector(definePackage());
         Map<Class<?>, Object> beans = injector.loadAllBeans(this);
         injector.injectAllBeans(strictLoadingPolicy, beans);
     }
 
-
+    @Override
+    public void close() {
+        staticContextLock.release();
+    }
 }

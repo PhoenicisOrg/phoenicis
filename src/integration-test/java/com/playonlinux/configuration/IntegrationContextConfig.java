@@ -105,8 +105,4 @@ public class IntegrationContextConfig extends AbstractConfiguration {
         when(mockController.createSetupWindowGUIInstance(anyString())).thenReturn(new MockIntegrationUI());
         return mockController;
     }
-    @Override
-    public void close() {
-
-    }
 }

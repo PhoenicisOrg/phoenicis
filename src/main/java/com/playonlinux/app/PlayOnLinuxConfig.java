@@ -226,5 +226,6 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     @Override
     public void close() {
         executor.shutdownNow();
+        super.close();
     }
 }
