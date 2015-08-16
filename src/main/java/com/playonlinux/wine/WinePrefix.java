@@ -29,10 +29,10 @@ import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
-import com.playonlinux.wine.registry.RegistryKey;
-import com.playonlinux.wine.registry.RegistryParser;
-import com.playonlinux.wine.registry.RegistryValue;
-import com.playonlinux.wine.registry.StringValueType;
+import com.playonlinux.wine.configurations.DefaultWinePrefixDisplayConfiguration;
+import com.playonlinux.wine.configurations.RegistryWinePrefixDisplayConfiguration;
+import com.playonlinux.wine.configurations.WinePrefixDisplayConfiguration;
+import com.playonlinux.wine.registry.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -265,13 +265,11 @@ public class WinePrefix implements AutoCloseable {
         }
     }
 
-    public boolean useGLSL() {
-        // FIXME: Makes this method safer
+    public WinePrefixDisplayConfiguration getDisplayConfiguration() {
         try {
-            return "enabled".equals(((RegistryValue<StringValueType>)
-                    this.fetchUserRegistry().getChild("Software","Wine","Direct3D","UseGLSL")).getText());
+            return new RegistryWinePrefixDisplayConfiguration(fetchUserRegistry());
         } catch (WineException e) {
-            return false;
+            return new DefaultWinePrefixDisplayConfiguration();
         }
     }
 }
