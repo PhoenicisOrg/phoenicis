@@ -28,6 +28,7 @@ import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,10 +46,10 @@ public class ObservableDirectoryFilesTest {
     static ServiceManager serviceManager;
 
     private static final int CHECK_INTERVAL = 100;
+    private static final AbstractConfiguration testConfigFile = new MockContextConfig();
 
     @BeforeClass
     public static void setUpClass() throws InjectionException {
-        AbstractConfiguration testConfigFile = new MockContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
     }
@@ -117,4 +118,9 @@ public class ObservableDirectoryFilesTest {
         verify(serviceManager).unregister(any(Service.class));
     }
 
+    @AfterClass
+    public static void tearDownClass() throws InjectionException {
+        testConfigFile.setStrictLoadingPolicy(false);
+        testConfigFile.close();
+    }
 }

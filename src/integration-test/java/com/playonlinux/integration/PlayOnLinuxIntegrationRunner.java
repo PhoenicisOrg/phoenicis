@@ -34,8 +34,9 @@ public class PlayOnLinuxIntegrationRunner {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    private final AbstractConfiguration testConfigFile = new IntegrationContextConfig();
+
     public void initialize() throws InjectionException, IOException {
-        final AbstractConfiguration testConfigFile = new IntegrationContextConfig();
         testConfigFile.setStrictLoadingPolicy(false);
         testConfigFile.load();
 
@@ -52,4 +53,7 @@ public class PlayOnLinuxIntegrationRunner {
         Files.remove(home);
     }
 
+    public void close() {
+        testConfigFile.close();
+    }
 }

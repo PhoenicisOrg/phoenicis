@@ -47,32 +47,36 @@ public class PlayOnLinuxIT {
 
     @Test
     public void jythonTests() throws InjectionException, IOException, PlayOnLinuxException {
-        URL integrationResources = PlayOnLinuxIT.class.getResource("integration");
-        File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
+        try {
+            URL integrationResources = PlayOnLinuxIT.class.getResource("integration");
+            File[] pythonFiles = new File(integrationResources.getPath()).listFiles();
 
-        assert pythonFiles != null;
-        for(File file: pythonFiles) {
-            if(!"__init__.py".equals(file.getName()) && file.getName().endsWith(".py")) {
-                final PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
-                pythonInterpreter.execfile(file.getAbsolutePath());
-                PyStringMap pyDictionary = (PyStringMap) pythonInterpreter.eval("globals()");
+            assert pythonFiles != null;
+            for (File file : pythonFiles) {
+                if (!"__init__.py".equals(file.getName()) && file.getName().endsWith(".py")) {
+                    final PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
+                    pythonInterpreter.execfile(file.getAbsolutePath());
+                    PyStringMap pyDictionary = (PyStringMap) pythonInterpreter.eval("globals()");
 
-                for(Object className: pyDictionary.keys()) {
-                    if (((String) className).startsWith("Test")) {
-                        PyType pyType = (PyType) pyDictionary.__getitem__((String) className);
-                        List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
+                    for (Object className : pyDictionary.keys()) {
+                        if (((String) className).startsWith("Test")) {
+                            PyType pyType = (PyType) pyDictionary.__getitem__((String) className);
+                            List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
 
-                        for(Object methodName: (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
-                            new PythonIntegrationCase(pythonInterpreter,
-                                    (String) className, (String) methodName
-                            ).run();
+                            for (Object methodName : (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
+                                new PythonIntegrationCase(pythonInterpreter,
+                                        (String) className, (String) methodName
+                                ).run();
+                            }
+
                         }
-
                     }
-                }
 
-                jythonJythonInterpreterFactory.close(pythonInterpreter);
+                    jythonJythonInterpreterFactory.close(pythonInterpreter);
+                }
             }
+        } finally {
+            integrationRunner.close();
         }
 
     }
