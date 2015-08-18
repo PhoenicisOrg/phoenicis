@@ -56,16 +56,16 @@ public class ToolBar extends QToolBar {
         actionToolRun = new QAction(mainWindow);
         actionToolRun.setCheckable(false);
         actionToolRun.setChecked(false);
-        actionToolRun.setIcon(IconHelper.fromResource(getClass(), "toolBar/play.png"));
+        actionToolRun.setIcon(IconHelper.fromResource(getClass(), "play.png"));
         actionToolRun.setIconVisibleInMenu(true);
         actionToolClose = new QAction(mainWindow);
-        actionToolClose.setIcon(IconHelper.fromResource(getClass(), "toolBar/stop.png"));
+        actionToolClose.setIcon(IconHelper.fromResource(getClass(), "stop.png"));
         actionToolInstall = new QAction(mainWindow);
-        actionToolInstall.setIcon(IconHelper.fromResource(getClass(), "toolBar/install.png"));
+        actionToolInstall.setIcon(IconHelper.fromResource(getClass(), "install.png"));
         actionToolRemove = new QAction(mainWindow);
-        actionToolRemove.setIcon(IconHelper.fromResource(getClass(), "toolBar/delete.png"));
+        actionToolRemove.setIcon(IconHelper.fromResource(getClass(), "delete.png"));
         actionToolConfigure = new QAction(mainWindow);
-        actionToolConfigure.setIcon(IconHelper.fromResource(getClass(), "toolBar/configure.png"));
+        actionToolConfigure.setIcon(IconHelper.fromResource(getClass(), "configure.png"));
 
         addAction(actionToolRun);
         addAction(actionToolClose);
