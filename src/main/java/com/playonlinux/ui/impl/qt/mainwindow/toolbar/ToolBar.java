@@ -16,9 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.ui.impl.qt.mainwindow.toolbar;
 
 import com.playonlinux.ui.impl.qt.common.IconHelper;
+import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
@@ -29,7 +30,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 /**
  * ToolBar of the MainWindow
  */
-public class MainWindowToolBar extends QToolBar {
+public class ToolBar extends QToolBar {
 
     private MainWindow mainWindow;
 
@@ -40,7 +41,7 @@ public class MainWindowToolBar extends QToolBar {
     private QAction actionToolConfigure;
 
 
-    public MainWindowToolBar(MainWindow mainWindow){
+    public ToolBar(MainWindow mainWindow){
         super(mainWindow);
         this.mainWindow = mainWindow;
 

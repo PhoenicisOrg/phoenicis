@@ -16,38 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.ui.impl.qt.mainwindow.menubar;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
-import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.QApplication;
+import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.gui.QFileDialog;
 import com.trolltech.qt.gui.QMainWindow;
-import org.gnome.gtk.FileChooserAction;
-import org.gnome.gtk.FileChooserDialog;
-
-import java.io.File;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 /**
- * EventDispatcher for the Qt-MainWindow.
+ * EventHandler responsible for every interaction with the MenuBar.
  */
-@Scan
-public class MainWindowEventHandler implements UIEventHandler {
+public class MenuBarEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 
-    private final QMainWindow parent;
+    private final MainWindow parent;
 
-    public MainWindowEventHandler(QMainWindow parent) {
+
+    public MenuBarEventHandler(MainWindow parent){
         this.parent = parent;
     }
-
 
     @Override
     public EventHandler getMainEventHandler() {
@@ -55,17 +45,18 @@ public class MainWindowEventHandler implements UIEventHandler {
     }
 
 
-    /* MenuBar */
 
     public void runLocalScript() {
         QFileDialog fileDialog = new QFileDialog(parent);
         fileDialog.setViewMode(QFileDialog.ViewMode.List);
         fileDialog.setAcceptMode(QFileDialog.AcceptMode.AcceptOpen);
         fileDialog.show();
+
+        //TODO: pass through
     }
 
     public void exit() {
-        QApplication.exit();
+        parent.exit();
     }
 
 

@@ -16,28 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.ui.impl.qt.mainwindow.shortcuts;
 
-import com.trolltech.qt.gui.QTreeView;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.ui.api.UIEventHandler;
+import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 
 /**
- * Shortcut-List of the MainWindow
+ * EventHandler responsible for all interactions done with the ShortcutList.
  */
-public class MainWindowShortcutList extends QTreeView {
+public class ShortcutEventHandler implements UIEventHandler {
+    @Inject
+    static EventHandler mainEventHandler;
 
-    public MainWindowShortcutList(MainWindow mainWindow){
-        super(mainWindow);
+    private final MainWindow parent;
 
-        setupUi();
-        retranslateUi();
+
+    public ShortcutEventHandler(MainWindow parent){
+        this.parent = parent;
     }
 
-    private void setupUi(){
-
-    }
-
-    private void retranslateUi(){
-
+    @Override
+    public EventHandler getMainEventHandler() {
+        return mainEventHandler;
     }
 
 }

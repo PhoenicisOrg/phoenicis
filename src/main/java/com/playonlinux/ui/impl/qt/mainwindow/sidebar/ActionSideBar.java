@@ -16,8 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
 
+import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QDockWidget;
@@ -28,12 +29,12 @@ import static com.playonlinux.core.lang.Localisation.translate;
 /**
  * Action SideBar of the MainWindow, containing all possible actions regarding the current context.
  */
-public class MainWindowActionSideBar extends QDockWidget {
+public class ActionSideBar extends QDockWidget {
 
     public QWidget actionsSideBarContent;
 
 
-    public MainWindowActionSideBar(MainWindow mainWindow){
+    public ActionSideBar(MainWindow mainWindow){
         super(mainWindow);
 
         setupUi();

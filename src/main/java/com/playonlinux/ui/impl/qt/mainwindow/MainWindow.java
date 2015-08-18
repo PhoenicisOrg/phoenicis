@@ -19,6 +19,10 @@
 package com.playonlinux.ui.impl.qt.mainwindow;
 
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
+import com.playonlinux.ui.impl.qt.mainwindow.menubar.MenuBar;
+import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
+import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionSideBar;
+import com.playonlinux.ui.impl.qt.mainwindow.toolbar.ToolBar;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.*;
@@ -29,17 +33,14 @@ import static com.playonlinux.core.lang.Localisation.translate;
  * MainWindow of PlayOnLinux's Qt-Gui implementation.
  */
 public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
-
-    private final MainWindowEventHandler eventDispatcher = new MainWindowEventHandler(this);
-
-    private MainWindowMenuBar menuBar;
-    private MainWindowToolBar toolBar;
-    private MainWindowActionSideBar actionSideBar;
+    private MenuBar menuBar;
+    private ToolBar toolBar;
+    private ActionSideBar actionSideBar;
 
     private QWidget centralwidget;
     private QHBoxLayout mainLayout;
 
-    private MainWindowShortcutList shortcutList;
+    private ShortcutList shortcutList;
 
 
     public MainWindow() {
@@ -50,19 +51,15 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     }
 
 
-    public MainWindowEventHandler getEventHandler() {
-        return eventDispatcher;
-    }
-
 
     private void setupUi() {
-        menuBar = new MainWindowMenuBar(this);
+        menuBar = new MenuBar(this);
         this.setMenuBar(menuBar);
 
-        toolBar = new MainWindowToolBar(this);
+        toolBar = new ToolBar(this);
         addToolBar(Qt.ToolBarArea.TopToolBarArea, toolBar);
 
-        actionSideBar = new MainWindowActionSideBar(this);
+        actionSideBar = new ActionSideBar(this);
         addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, actionSideBar);
 
         centralwidget = new QWidget(this);
@@ -70,7 +67,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         mainLayout = new QHBoxLayout(centralwidget);
         mainLayout.setMargin(0);
 
-        shortcutList = new MainWindowShortcutList(this);
+        shortcutList = new ShortcutList(this);
         mainLayout.addWidget(shortcutList);
 
         resize(new QSize(800, 600).expandedTo(minimumSizeHint()));
@@ -82,10 +79,13 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
 
 
-    /* EVENTS */
+    /* CONTROL METHODS */
 
-    @Override
-    protected void closeEvent(QCloseEvent e) {
+    /**
+     * Request the Application to exit.
+     * @return False when the user aborted the exit, True otherwise.
+     */
+    public boolean exit(){
         QMessageBox confirmDialog = new QMessageBox();
         confirmDialog.setWindowTitle(translate("${application.name}"));
         confirmDialog.setText(translate("Are you sure you want to close all ${application.name} windows?"));
@@ -96,6 +96,18 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         confirmDialog.setDefaultButton(QMessageBox.StandardButton.Cancel);
         confirmDialog.exec();
         if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    /* EVENTS */
+
+    @Override
+    protected void closeEvent(QCloseEvent e) {
+        if(!exit()){
             e.ignore();
         }
     }

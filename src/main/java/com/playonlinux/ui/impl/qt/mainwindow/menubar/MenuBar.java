@@ -16,9 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.ui.impl.qt.mainwindow.menubar;
 
 import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.*;
 
@@ -27,8 +28,9 @@ import static com.playonlinux.core.lang.Localisation.translate;
 /**
  * MenuBar of the MainWindow
  */
-public class MainWindowMenuBar extends QMenuBar {
-    private MainWindow mainWindow;
+public class MenuBar extends QMenuBar {
+    private final MenuBarEventHandler eventHandler;
+    private final QMainWindow parent;
 
     private QMenu menuFile;
     private QMenu menuDisplay;
@@ -64,8 +66,10 @@ public class MainWindowMenuBar extends QMenuBar {
     private QActionGroup displayIconSizeGroup;
 
 
-    public MainWindowMenuBar(MainWindow mainWindow) {
-        this.mainWindow = mainWindow;
+    public MenuBar(MainWindow mainWindow) {
+        eventHandler = new MenuBarEventHandler(mainWindow);
+        this.parent = mainWindow;
+
         setupUi();
         retranslateUi();
         connectSlots();
@@ -75,15 +79,15 @@ public class MainWindowMenuBar extends QMenuBar {
         /* MENU: FILE */
         menuFile = new QMenu(this);
 
-        actionRun = new QAction(mainWindow);
+        actionRun = new QAction(parent);
         actionRun.setIcon(QIcon.fromTheme("document-open"));
-        actionInstall = new QAction(mainWindow);
+        actionInstall = new QAction(parent);
         actionInstall.setIcon(QIcon.fromTheme("list-add"));
-        actionRemove = new QAction(mainWindow);
+        actionRemove = new QAction(parent);
         actionRemove.setIcon(QIcon.fromTheme("edit-delete"));
-        actionDonate = new QAction(mainWindow);
+        actionDonate = new QAction(parent);
         actionDonate.setIcon(QIcon.fromTheme("help-donate"));
-        actionExit = new QAction(mainWindow);
+        actionExit = new QAction(parent);
         actionExit.setIcon(QIcon.fromTheme("application-exit"));
 
         menuFile.addAction(actionRun);
@@ -97,13 +101,13 @@ public class MainWindowMenuBar extends QMenuBar {
         /* MENU: DISPLAY */
         menuDisplay = new QMenu(this);
 
-        actionSmall_Icons = new QAction(mainWindow);
+        actionSmall_Icons = new QAction(parent);
         actionSmall_Icons.setCheckable(true);
-        actionMedium_Icons = new QAction(mainWindow);
+        actionMedium_Icons = new QAction(parent);
         actionMedium_Icons.setCheckable(true);
-        actionLarge_Icons = new QAction(mainWindow);
+        actionLarge_Icons = new QAction(parent);
         actionLarge_Icons.setCheckable(true);
-        actionVery_Large_Icons = new QAction(mainWindow);
+        actionVery_Large_Icons = new QAction(parent);
         actionVery_Large_Icons.setCheckable(true);
 
         menuDisplay.addAction(actionSmall_Icons);
@@ -121,16 +125,16 @@ public class MainWindowMenuBar extends QMenuBar {
         /* MENU: TOOLS */
         menuTools = new QMenu(this);
 
-        actionWineVersions = new QAction(mainWindow);
+        actionWineVersions = new QAction(parent);
         actionWineVersions.setIcon(QIcon.fromTheme("wine"));
-        actionLocalScript = new QAction(mainWindow);
+        actionLocalScript = new QAction(parent);
         actionLocalScript.setIcon(QIcon.fromTheme("application-x-shellscript"));
-        actionConsole = new QAction(mainWindow);
+        actionConsole = new QAction(parent);
         actionConsole.setIcon(QIcon.fromTheme("utilities-terminal"));
 
-        actionCloseAll = new QAction(mainWindow);
+        actionCloseAll = new QAction(parent);
         actionCloseAll.setIcon(QIcon.fromTheme("process-stop"));
-        actionDebugger = new QAction(mainWindow);
+        actionDebugger = new QAction(parent);
         actionDebugger.setIcon(QIcon.fromTheme("debug-run"));
 
         menuTools.addAction(actionWineVersions);
@@ -145,7 +149,7 @@ public class MainWindowMenuBar extends QMenuBar {
         /* MENU: SETTINGS */
         menuSettings = new QMenu(this);
 
-        actionNetwork = new QAction(mainWindow);
+        actionNetwork = new QAction(parent);
         actionNetwork.setIcon(QIcon.fromTheme("network-wired"));
 
         menuSettings.addAction(actionNetwork);
@@ -154,15 +158,15 @@ public class MainWindowMenuBar extends QMenuBar {
         /* MENU: HELP */
         menuHelp = new QMenu(this);
 
-        actionAbout = new QAction(mainWindow);
+        actionAbout = new QAction(parent);
         actionAbout.setIcon(QIcon.fromTheme("help-about"));
-        actionSoftware = new QAction(mainWindow);
+        actionSoftware = new QAction(parent);
         actionSoftware.setIcon(QIcon.fromTheme("applications-other"));
-        actionNews = new QAction(mainWindow);
+        actionNews = new QAction(parent);
         actionNews.setIcon(QIcon.fromTheme("message-news"));
-        actionForums = new QAction(mainWindow);
+        actionForums = new QAction(parent);
         actionForums.setIcon(QIcon.fromTheme("user-identity"));
-        actionBugs = new QAction(mainWindow);
+        actionBugs = new QAction(parent);
         actionBugs.setIcon(QIcon.fromTheme("tools-report-bug"));
 
         menuHelp.addAction(actionAbout);
@@ -176,9 +180,9 @@ public class MainWindowMenuBar extends QMenuBar {
         /* MENU: CONTACT */
         menuContact = new QMenu(this);
 
-        actionGooglePlus = new QAction(mainWindow);
-        actionTwitter = new QAction(mainWindow);
-        actionFacebook = new QAction(mainWindow);
+        actionGooglePlus = new QAction(parent);
+        actionTwitter = new QAction(parent);
+        actionFacebook = new QAction(parent);
 
         menuContact.addAction(actionTwitter);
         menuContact.addAction(actionGooglePlus);
@@ -279,13 +283,13 @@ public class MainWindowMenuBar extends QMenuBar {
 
     //FILE
     private void actionRun_triggered() {
-        mainWindow.getEventHandler().runLocalScript();
+        eventHandler.runLocalScript();
     }
     private void actionInstall_triggered() {}
     private void actionRemove_triggered() {}
     private void actionDonate_triggered() {}
     private void actionExit_triggered() {
-        mainWindow.getEventHandler().exit();
+        eventHandler.exit();
     }
 
 
