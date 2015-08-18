@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow;
 
+import com.playonlinux.app.PlayOnLinuxException;
+import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.*;
 
 import static com.playonlinux.core.lang.Localisation.translate;
@@ -62,14 +64,14 @@ public class MainWindowMenuBar extends QMenuBar {
     private QActionGroup displayIconSizeGroup;
 
 
-
-    public MainWindowMenuBar(MainWindow mainWindow){
+    public MainWindowMenuBar(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         setupUi();
         retranslateUi();
+        connectSlots();
     }
-    
-    private void setupUi(){
+
+    private void setupUi() {
         /* MENU: FILE */
         menuFile = new QMenu(this);
 
@@ -172,7 +174,6 @@ public class MainWindowMenuBar extends QMenuBar {
         menuContact.addAction(actionFacebook);
 
 
-
         addAction(menuFile.menuAction());
         addAction(menuDisplay.menuAction());
         addAction(menuTools.menuAction());
@@ -181,7 +182,7 @@ public class MainWindowMenuBar extends QMenuBar {
         addAction(menuContact.menuAction());
     }
 
-    private void retranslateUi(){
+    private void retranslateUi() {
         /* MENU: FILE */
         menuFile.setTitle(translate("File"));
         actionRun.setText(translate("Run"));
@@ -223,5 +224,100 @@ public class MainWindowMenuBar extends QMenuBar {
         actionTwitter.setText(translate("Twitter"));
         actionFacebook.setText(translate("Facebook"));
     }
-    
+
+    private void connectSlots() {
+        /* MENU: FILES */
+        actionRun.triggered.connect(this, "actionRun_triggered()");
+        actionInstall.triggered.connect(this, "actionInstall_triggered()");
+        actionRemove.triggered.connect(this, "actionRemove_triggered()");
+        actionDonate.triggered.connect(this, "actionDonate_triggered()");
+        actionExit.triggered.connect(this, "actionExit_triggered()");
+
+        /* MENU: DISPLAY */
+        actionSmall_Icons.triggered.connect(this, "actionSmall_Icons_triggered(boolean)");
+        actionMedium_Icons.triggered.connect(this, "actionMedium_Icons_triggered(boolean)");
+        actionLarge_Icons.triggered.connect(this, "actionLarge_Icons_triggered(boolean)");
+        actionVery_Large_Icons.triggered.connect(this, "actionVery_Large_Icons_triggered(boolean)");
+
+        /* MENU: TOOLS */
+        actionWineVersions.triggered.connect(this, "actionWineVersions_triggered()");
+        actionLocalScript.triggered.connect(this, "actionLocalScript_triggered()");
+        actionConsole.triggered.connect(this, "actionConsole_triggered()");
+        actionCloseAll.triggered.connect(this, "actionCloseAll_triggered()");
+        actionDebugger.triggered.connect(this, "actionDebugger_triggered()");
+
+        /* MENU: SETTINGS */
+        actionNetwork.triggered.connect(this, "actionNetwork_triggered()");
+
+        /* MENU: HELP */
+        actionAbout.triggered.connect(this, "actionAbout_triggered()");
+        actionSoftware.triggered.connect(this, "actionSoftware_triggered()");
+        actionNews.triggered.connect(this, "actionNews_triggered()");
+        actionForums.triggered.connect(this, "actionForums_triggered()");
+        actionBugs.triggered.connect(this, "actionBugs_triggered()");
+
+        /* MENU: CONTACT */
+        actionGooglePlus.triggered.connect(this, "actionGooglePlus_triggered()");
+        actionTwitter.triggered.connect(this, "actionTwitter_triggered()");
+        actionFacebook.triggered.connect(this, "actionFacebook_triggered()");
+    }
+
+
+    /* SIGNAL HANDLERS */
+
+
+    //FILE
+    private void actionRun_triggered() {
+        mainWindow.getEventHandler().runLocalScript();
+    }
+    private void actionInstall_triggered() {}
+    private void actionRemove_triggered() {}
+    private void actionDonate_triggered() {}
+    private void actionExit_triggered() {
+        mainWindow.getEventHandler().exit();
+    }
+
+
+    //DISPLAY
+    private void actionSmall_Icons_triggered(boolean checked) {}
+    private void actionMedium_Icons_triggered(boolean checked) {}
+    private void actionLarge_Icons_triggered(boolean checked) {}
+    private void actionVery_Large_Icons_triggered(boolean checked) {}
+
+    //TOOLS
+    private void actionWineVersions_triggered() {}
+    private void actionLocalScript_triggered() {}
+    private void actionConsole_triggered() {}
+    private void actionCloseAll_triggered() {}
+    private void actionDebugger_triggered() {}
+
+    //SETTINGS
+    private void actionNetwork_triggered() {}
+
+    //HELP
+    private void actionAbout_triggered() {}
+    private void actionSoftware_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/supported_apps.html"));
+    }
+    private void actionNews_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/news.html"));
+    }
+    private void actionForums_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/forums.html"));
+    }
+    private void actionBugs_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/bugs.html"));
+    }
+
+    //CONTACT
+    private void actionGooglePlus_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://plus.google.com/+playonlinux"));
+    }
+    private void actionTwitter_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://twitter.com/PlayOnLinux"));
+    }
+    private void actionFacebook_triggered() {
+        QDesktopServices.openUrl(new QUrl("https://www.facebook.com/playonlinux"));
+    }
+
 }

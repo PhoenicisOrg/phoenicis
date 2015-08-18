@@ -30,6 +30,8 @@ import static com.playonlinux.core.lang.Localisation.translate;
  */
 public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
+    private final MainWindowEventHandler eventDispatcher = new MainWindowEventHandler(this);
+
     private MainWindowMenuBar menuBar;
     private MainWindowToolBar toolBar;
     private MainWindowActionSideBar actionSideBar;
@@ -47,7 +49,13 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         this.show();
     }
 
-    private void setupUi(){
+
+    public MainWindowEventHandler getEventHandler() {
+        return eventDispatcher;
+    }
+
+
+    private void setupUi() {
         menuBar = new MainWindowMenuBar(this);
         this.setMenuBar(menuBar);
 
@@ -68,7 +76,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         resize(new QSize(800, 600).expandedTo(minimumSizeHint()));
     }
 
-    private void retranslateUi(){
+    private void retranslateUi() {
         setWindowTitle(translate("PlayOnLinux"));
     }
 
