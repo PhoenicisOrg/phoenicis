@@ -82,6 +82,7 @@ public class MainWindowMenuBar extends QMenuBar {
         actionRemove = new QAction(mainWindow);
         actionRemove.setIcon(QIcon.fromTheme("edit-delete"));
         actionDonate = new QAction(mainWindow);
+        actionDonate.setIcon(QIcon.fromTheme("help-donate"));
         actionExit = new QAction(mainWindow);
         actionExit.setIcon(QIcon.fromTheme("application-exit"));
 
@@ -121,10 +122,16 @@ public class MainWindowMenuBar extends QMenuBar {
         menuTools = new QMenu(this);
 
         actionWineVersions = new QAction(mainWindow);
+        actionWineVersions.setIcon(QIcon.fromTheme("wine"));
         actionLocalScript = new QAction(mainWindow);
+        actionLocalScript.setIcon(QIcon.fromTheme("application-x-shellscript"));
         actionConsole = new QAction(mainWindow);
+        actionConsole.setIcon(QIcon.fromTheme("utilities-terminal"));
+
         actionCloseAll = new QAction(mainWindow);
+        actionCloseAll.setIcon(QIcon.fromTheme("process-stop"));
         actionDebugger = new QAction(mainWindow);
+        actionDebugger.setIcon(QIcon.fromTheme("debug-run"));
 
         menuTools.addAction(actionWineVersions);
         menuTools.addSeparator();
@@ -150,9 +157,13 @@ public class MainWindowMenuBar extends QMenuBar {
         actionAbout = new QAction(mainWindow);
         actionAbout.setIcon(QIcon.fromTheme("help-about"));
         actionSoftware = new QAction(mainWindow);
+        actionSoftware.setIcon(QIcon.fromTheme("applications-other"));
         actionNews = new QAction(mainWindow);
+        actionNews.setIcon(QIcon.fromTheme("message-news"));
         actionForums = new QAction(mainWindow);
+        actionForums.setIcon(QIcon.fromTheme("user-identity"));
         actionBugs = new QAction(mainWindow);
+        actionBugs.setIcon(QIcon.fromTheme("tools-report-bug"));
 
         menuHelp.addAction(actionAbout);
         menuHelp.addSeparator();
