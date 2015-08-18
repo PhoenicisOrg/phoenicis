@@ -23,6 +23,8 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
+import com.playonlinux.core.lang.LanguageBundle;
+import com.playonlinux.core.lang.LanguageBundleSelector;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.DefaultJythonJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
@@ -38,6 +40,7 @@ import com.playonlinux.ui.api.UIMessageSender;
 import com.playonlinux.ui.impl.cli.UIMessageSenderCLIImplementation;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -52,6 +55,11 @@ public class IntegrationContextConfig extends AbstractConfiguration {
     @Bean
     protected JythonInterpreterFactory jythonInterpreterFactory() {
         return new DefaultJythonJythonInterpreterFactory();
+    }
+
+    @Bean
+    protected LanguageBundle languageBundle() {
+        return LanguageBundleSelector.forLocale(Locale.ENGLISH);
     }
 
     @Bean
