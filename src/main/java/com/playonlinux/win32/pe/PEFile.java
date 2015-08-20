@@ -25,13 +25,14 @@ public class PEFile {
     final ImageDOSHeader imageDOSHeader;
     final byte[] realModeStubProgram;
     final ImageNTHeaders imageNTHeaders;
-    final ImageOptionalHeader imageOptionalHeader;
+    final SectionHeader[] sectionHeaders;
 
-    public PEFile(ImageDOSHeader imageDOSHeader, byte[] realModeStubProgram, ImageNTHeaders imageNTHeaders, ImageOptionalHeader imageOptionalHeader) {
+    public PEFile(ImageDOSHeader imageDOSHeader, byte[] realModeStubProgram, ImageNTHeaders imageNTHeaders,
+                  SectionHeader[] sectionHeaders) {
         this.imageDOSHeader = imageDOSHeader;
         this.realModeStubProgram = realModeStubProgram;
         this.imageNTHeaders = imageNTHeaders;
-        this.imageOptionalHeader = imageOptionalHeader;
+        this.sectionHeaders = sectionHeaders;
     }
 
     public Architecture getArchitecture() {

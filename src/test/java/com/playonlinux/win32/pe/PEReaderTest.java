@@ -110,6 +110,12 @@ public class PEReaderTest {
         assertEquals(96, peFile.imageDOSHeader.e_lfanew.intValue());
     }
 
+    @Test
+    public void testSectionHeaderNames() {
+        assertEquals(".text\u0000\u0000\u0000", new String(peFile.sectionHeaders[0].name));
+        assertEquals(".reloc\u0000\u0000", new String(peFile.sectionHeaders[1].name));
+        assertEquals(".rsrc\u0000\u0000\u0000", new String(peFile.sectionHeaders[2].name));
+    }
 
     @Test
     public void testRealModeStubProgram() {
