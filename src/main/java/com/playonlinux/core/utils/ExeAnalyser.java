@@ -18,6 +18,9 @@
 
 package com.playonlinux.core.utils;
 
+import com.playonlinux.win32.pe.PEFile;
+import com.playonlinux.win32.pe.PEReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,30 +38,25 @@ public final class ExeAnalyser {
      * @return true if the file is a 64bit executable. False otherwise
      */
     public static boolean is64Bits(File file) throws IOException {
-        try(InputStream inputStream = new FileInputStream(file)) {
-            int state = 1;
-            for(int c = inputStream.read(); c != -1; c = inputStream.read()) {
-                if(state == 1 && c == 0x50) {
-                    state = 2;
-                    continue;
-                }
-                if(state == 2 && c == 0x45) {
-                    state = 3;
-                    continue;
-                } else if(state == 2) {
-                    state = 1;
-                }
-
-                if(state == 3) {
-                    if(c == 0x4C) {
-                        return false;
-                    } else if(c == 0x64){
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
+        return isArchitecture(file, PEFile.Architecture.AMD64);
     }
+
+    /**
+     * Checks if the file is a 32bits executable
+     * @param file the file to analyse
+     * @return true if the file is a 32bit executable. False otherwise
+     */
+    public static boolean is32Bits(File file) throws IOException {
+        return isArchitecture(file, PEFile.Architecture.I386);
+    }
+
+
+    private static boolean isArchitecture(File file, PEFile.Architecture architecture) throws IOException {
+        try(InputStream inputStream = new FileInputStream(file)) {
+            PEFile peFile = PEReader.parseExecutable(inputStream);
+            return peFile.getArchitecture() == architecture;
+        }
+    }
+
+
 }

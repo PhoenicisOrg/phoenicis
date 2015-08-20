@@ -19,6 +19,9 @@
 package com.playonlinux.win32.pe;
 
 public class PEFile {
+    public enum Architecture {
+        AMD64, I386, IA64
+    }
     final ImageDOSHeader imageDOSHeader;
     final byte[] realModeStubProgram;
     final ImageNTHeaders imageNTHeaders;
@@ -29,5 +32,19 @@ public class PEFile {
         this.realModeStubProgram = realModeStubProgram;
         this.imageNTHeaders = imageNTHeaders;
         this.imageOptionalHeader = imageOptionalHeader;
+    }
+
+    public Architecture getArchitecture() {
+        switch (imageNTHeaders.fileHeader.machine.getUnsignedValue()) {
+            case 0x14c:
+                return Architecture.I386;
+            case 0x8664:
+                return Architecture.AMD64;
+            case 0x0200:
+                return Architecture.IA64;
+            default:
+                throw new IllegalArgumentException("The file is not a valid .exe file");
+        }
+
     }
 }

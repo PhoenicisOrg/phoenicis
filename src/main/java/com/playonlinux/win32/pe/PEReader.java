@@ -21,8 +21,12 @@ package com.playonlinux.win32.pe;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class PEReader {
-    public PEFile parseExecutable(InputStream executableInputStream) throws IOException {
+public final class PEReader {
+    PEReader() {
+        // Utility class
+    }
+
+    public static PEFile parseExecutable(InputStream executableInputStream) throws IOException {
         final byte[] byteImageDosHeader = new byte[ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
         executableInputStream.read(byteImageDosHeader);
         ImageDOSHeader imageDOSHeader = new ImageDOSHeader(byteImageDosHeader);
@@ -37,7 +41,7 @@ public class PEReader {
         int optionalHeaderSize = imageNTHeaders.fileHeader.sizeOfOptionalHeader.getUnsignedValue();
 
         final byte[] optionalHeader = new byte[optionalHeaderSize];
-        
+
         executableInputStream.read(optionalHeader);
 
         imageNTHeaders.readOptionalHeader(optionalHeader);
