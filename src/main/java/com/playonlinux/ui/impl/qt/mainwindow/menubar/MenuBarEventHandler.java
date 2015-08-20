@@ -19,15 +19,16 @@
 package com.playonlinux.ui.impl.qt.mainwindow.menubar;
 
 import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.gui.QFileDialog;
-import com.trolltech.qt.gui.QMainWindow;
 
 /**
  * EventHandler responsible for every interaction with the MenuBar.
  */
+@Scan
 public class MenuBarEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
@@ -35,7 +36,7 @@ public class MenuBarEventHandler implements UIEventHandler {
     private final MainWindow parent;
 
 
-    public MenuBarEventHandler(MainWindow parent){
+    public MenuBarEventHandler(MainWindow parent) {
         this.parent = parent;
     }
 
@@ -43,7 +44,6 @@ public class MenuBarEventHandler implements UIEventHandler {
     public EventHandler getMainEventHandler() {
         return mainEventHandler;
     }
-
 
 
     public void runLocalScript() {
