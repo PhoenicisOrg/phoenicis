@@ -18,6 +18,8 @@
 
 package com.playonlinux.win32.pe;
 
+import org.apache.commons.io.input.CountingInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,26 +28,36 @@ public final class PEReader {
         // Utility class
     }
 
-    public static PEFile parseExecutable(InputStream executableInputStream) throws IOException {
-        final byte[] byteImageDosHeader = new byte[ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
-        executableInputStream.read(byteImageDosHeader);
-        ImageDOSHeader imageDOSHeader = new ImageDOSHeader(byteImageDosHeader);
-        final byte[] realModeStubProgram = new byte[imageDOSHeader.e_lfanew - ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
-        executableInputStream.read(realModeStubProgram);
+    public static PEFile parseExecutable(InputStream inputStream) throws IOException {
+        try(CountingInputStream executableInputStream = new CountingInputStream(inputStream)) {
+            /* DOS Header */
+            final byte[] byteImageDosHeader = new byte[ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
+            executableInputStream.read(byteImageDosHeader);
+            ImageDOSHeader imageDOSHeader = new ImageDOSHeader(byteImageDosHeader);
 
-        final byte[] byteImageNTHeader = new byte[ImageNTHeaders.IMAGE_NT_HEADER_SIZE];
-        executableInputStream.read(byteImageNTHeader);
+            /* Real mode stub program */
+            final byte[] realModeStubProgram = new byte[imageDOSHeader.e_lfanew - ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
+            executableInputStream.read(realModeStubProgram);
 
-        ImageNTHeaders imageNTHeaders = new ImageNTHeaders(byteImageNTHeader);
+            /* NT Headers */
+            final byte[] byteImageNTHeader = new byte[ImageNTHeaders.IMAGE_NT_HEADER_SIZE];
+            executableInputStream.read(byteImageNTHeader);
+            ImageNTHeaders imageNTHeaders = new ImageNTHeaders(byteImageNTHeader);
+            int optionalHeaderSize = imageNTHeaders.fileHeader.sizeOfOptionalHeader.getUnsignedValue();
+            final byte[] optionalHeader = new byte[optionalHeaderSize];
+            executableInputStream.read(optionalHeader);
+            imageNTHeaders.readOptionalHeader(optionalHeader);
 
-        int optionalHeaderSize = imageNTHeaders.fileHeader.sizeOfOptionalHeader.getUnsignedValue();
+            /* Sections headers */
+            int numberOfSectionHeaders = imageNTHeaders.fileHeader.numberOfSections.getUnsignedValue();
+            SectionHeader[] sectionHeaders = new SectionHeader[numberOfSectionHeaders];
+            for(int i = 0; i < numberOfSectionHeaders; i++) {
+                byte[] sectionHeaderBytes = new byte[SectionHeader.SECTION_HEADER_SIZE];
+                executableInputStream.read(sectionHeaderBytes);
+                sectionHeaders[i] = new SectionHeader(sectionHeaderBytes);
+            }
 
-        final byte[] optionalHeader = new byte[optionalHeaderSize];
-
-        executableInputStream.read(optionalHeader);
-
-        imageNTHeaders.readOptionalHeader(optionalHeader);
-
-        return new PEFile(imageDOSHeader, realModeStubProgram, imageNTHeaders, null);
+            return new PEFile(imageDOSHeader, realModeStubProgram, imageNTHeaders, sectionHeaders);
+        }
     }
 }
