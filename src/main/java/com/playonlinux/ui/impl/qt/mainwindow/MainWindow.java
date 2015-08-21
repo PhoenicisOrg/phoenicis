@@ -98,6 +98,8 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
             return false;
         }
+
+        QApplication.exit();
         return true;
     }
 
@@ -107,9 +109,8 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
     @Override
     protected void closeEvent(QCloseEvent e) {
-        if(!exit()){
-            e.ignore();
-        }
+        exit();
+        e.ignore();
     }
 
 }

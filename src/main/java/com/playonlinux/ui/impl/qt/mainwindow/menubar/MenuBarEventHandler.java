@@ -23,6 +23,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
+import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QFileDialog;
 
 /**
