@@ -20,6 +20,7 @@ package com.playonlinux.ui.impl.qt.mainwindow.menubar;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.*;
 
@@ -29,8 +30,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
  * MenuBar of the MainWindow
  */
 public class MenuBar extends QMenuBar {
-    private final MenuBarEventHandler eventHandler;
-    private final QMainWindow parent;
+    private final MainWindow mainWindow;
 
     private QMenu menuFile;
     private QMenu menuDisplay;
@@ -67,8 +67,8 @@ public class MenuBar extends QMenuBar {
 
 
     public MenuBar(MainWindow mainWindow) {
-        eventHandler = new MenuBarEventHandler(mainWindow);
-        this.parent = mainWindow;
+        super(mainWindow);
+        this.mainWindow = mainWindow;
 
         setupUi();
         retranslateUi();
@@ -79,15 +79,15 @@ public class MenuBar extends QMenuBar {
         /* MENU: FILE */
         menuFile = new QMenu(this);
 
-        actionRun = new QAction(parent);
+        actionRun = new QAction(mainWindow);
         actionRun.setIcon(QIcon.fromTheme("document-open"));
-        actionInstall = new QAction(parent);
+        actionInstall = new QAction(mainWindow);
         actionInstall.setIcon(QIcon.fromTheme("list-add"));
-        actionRemove = new QAction(parent);
+        actionRemove = new QAction(mainWindow);
         actionRemove.setIcon(QIcon.fromTheme("edit-delete"));
-        actionDonate = new QAction(parent);
+        actionDonate = new QAction(mainWindow);
         actionDonate.setIcon(QIcon.fromTheme("help-donate"));
-        actionExit = new QAction(parent);
+        actionExit = new QAction(mainWindow);
         actionExit.setIcon(QIcon.fromTheme("application-exit"));
 
         menuFile.addAction(actionRun);
@@ -101,13 +101,13 @@ public class MenuBar extends QMenuBar {
         /* MENU: DISPLAY */
         menuDisplay = new QMenu(this);
 
-        actionSmall_Icons = new QAction(parent);
+        actionSmall_Icons = new QAction(mainWindow);
         actionSmall_Icons.setCheckable(true);
-        actionMedium_Icons = new QAction(parent);
+        actionMedium_Icons = new QAction(mainWindow);
         actionMedium_Icons.setCheckable(true);
-        actionLarge_Icons = new QAction(parent);
+        actionLarge_Icons = new QAction(mainWindow);
         actionLarge_Icons.setCheckable(true);
-        actionVery_Large_Icons = new QAction(parent);
+        actionVery_Large_Icons = new QAction(mainWindow);
         actionVery_Large_Icons.setCheckable(true);
 
         menuDisplay.addAction(actionSmall_Icons);
@@ -125,16 +125,16 @@ public class MenuBar extends QMenuBar {
         /* MENU: TOOLS */
         menuTools = new QMenu(this);
 
-        actionWineVersions = new QAction(parent);
+        actionWineVersions = new QAction(mainWindow);
         actionWineVersions.setIcon(QIcon.fromTheme("wine"));
-        actionLocalScript = new QAction(parent);
+        actionLocalScript = new QAction(mainWindow);
         actionLocalScript.setIcon(QIcon.fromTheme("application-x-shellscript"));
-        actionConsole = new QAction(parent);
+        actionConsole = new QAction(mainWindow);
         actionConsole.setIcon(QIcon.fromTheme("utilities-terminal"));
 
-        actionCloseAll = new QAction(parent);
+        actionCloseAll = new QAction(mainWindow);
         actionCloseAll.setIcon(QIcon.fromTheme("process-stop"));
-        actionDebugger = new QAction(parent);
+        actionDebugger = new QAction(mainWindow);
         actionDebugger.setIcon(QIcon.fromTheme("debug-run"));
 
         menuTools.addAction(actionWineVersions);
@@ -149,7 +149,7 @@ public class MenuBar extends QMenuBar {
         /* MENU: SETTINGS */
         menuSettings = new QMenu(this);
 
-        actionNetwork = new QAction(parent);
+        actionNetwork = new QAction(mainWindow);
         actionNetwork.setIcon(QIcon.fromTheme("network-wired"));
 
         menuSettings.addAction(actionNetwork);
@@ -158,15 +158,15 @@ public class MenuBar extends QMenuBar {
         /* MENU: HELP */
         menuHelp = new QMenu(this);
 
-        actionAbout = new QAction(parent);
+        actionAbout = new QAction(mainWindow);
         actionAbout.setIcon(QIcon.fromTheme("help-about"));
-        actionSoftware = new QAction(parent);
+        actionSoftware = new QAction(mainWindow);
         actionSoftware.setIcon(QIcon.fromTheme("applications-other"));
-        actionNews = new QAction(parent);
+        actionNews = new QAction(mainWindow);
         actionNews.setIcon(QIcon.fromTheme("message-news"));
-        actionForums = new QAction(parent);
+        actionForums = new QAction(mainWindow);
         actionForums.setIcon(QIcon.fromTheme("user-identity"));
-        actionBugs = new QAction(parent);
+        actionBugs = new QAction(mainWindow);
         actionBugs.setIcon(QIcon.fromTheme("tools-report-bug"));
 
         menuHelp.addAction(actionAbout);
@@ -180,9 +180,9 @@ public class MenuBar extends QMenuBar {
         /* MENU: CONTACT */
         menuContact = new QMenu(this);
 
-        actionGooglePlus = new QAction(parent);
-        actionTwitter = new QAction(parent);
-        actionFacebook = new QAction(parent);
+        actionGooglePlus = new QAction(mainWindow);
+        actionTwitter = new QAction(mainWindow);
+        actionFacebook = new QAction(mainWindow);
 
         menuContact.addAction(actionTwitter);
         menuContact.addAction(actionGooglePlus);
@@ -283,21 +283,34 @@ public class MenuBar extends QMenuBar {
 
     //FILE
     private void actionRun_triggered() {
-        eventHandler.runLocalScript();
+        mainWindow.getEventHandler().runLocalScript();
     }
     private void actionInstall_triggered() {}
     private void actionRemove_triggered() {}
     private void actionDonate_triggered() {}
     private void actionExit_triggered() {
-        eventHandler.exit();
+        mainWindow.getEventHandler().exit();
     }
 
 
     //DISPLAY
-    private void actionSmall_Icons_triggered(boolean checked) {}
-    private void actionMedium_Icons_triggered(boolean checked) {}
-    private void actionLarge_Icons_triggered(boolean checked) {}
-    private void actionVery_Large_Icons_triggered(boolean checked) {}
+    private void actionSmall_Icons_triggered(boolean checked) {
+        if(checked){
+            mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.SMALL);
+        }
+    }
+    private void actionMedium_Icons_triggered(boolean checked) {
+        if(checked){
+            mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.MEDIUM);
+        }}
+    private void actionLarge_Icons_triggered(boolean checked) {
+        if(checked){
+            mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.LARGE);
+        }}
+    private void actionVery_Large_Icons_triggered(boolean checked) {
+        if(checked){
+            mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.VERY_LARGE);
+        }}
 
     //TOOLS
     private void actionWineVersions_triggered() {}
@@ -312,27 +325,27 @@ public class MenuBar extends QMenuBar {
     //HELP
     private void actionAbout_triggered() {}
     private void actionSoftware_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/supported_apps.html"));
+        mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/supported_apps.html");
     }
     private void actionNews_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/news.html"));
+        mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/news.html");
     }
     private void actionForums_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/forums.html"));
+        mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/forums.html");
     }
     private void actionBugs_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://www.playonlinux.com/en/bugs.html"));
+        mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/bugs.html");
     }
 
     //CONTACT
     private void actionGooglePlus_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://plus.google.com/+playonlinux"));
+        mainWindow.getEventHandler().openLink("https://plus.google.com/+playonlinux");
     }
     private void actionTwitter_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://twitter.com/PlayOnLinux"));
+        mainWindow.getEventHandler().openLink("https://twitter.com/PlayOnLinux");
     }
     private void actionFacebook_triggered() {
-        QDesktopServices.openUrl(new QUrl("https://www.facebook.com/playonlinux"));
+        mainWindow.getEventHandler().openLink("https://www.facebook.com/playonlinux");
     }
 
 }

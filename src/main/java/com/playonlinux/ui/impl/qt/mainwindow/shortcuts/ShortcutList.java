@@ -18,29 +18,46 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.shortcuts;
 
-
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
-import com.trolltech.qt.gui.QTreeView;
+import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.gui.*;
 
 
 /**
  * List of installed Shortcuts displayed in the MainWindow.
  */
-public class ShortcutList extends QTreeView {
+public class ShortcutList extends QListView {
 
-    public ShortcutList(MainWindow mainWindow){
+    public enum IconSize {
+        SMALL(new QSize(16,16)),
+        MEDIUM(new QSize(24,24)),
+        LARGE(new QSize(32,32)),
+        VERY_LARGE(new QSize(48,48));
+
+        private QSize size;
+
+        IconSize(QSize size){
+            this.size = size;
+        }
+
+        public QSize value(){
+            return size;
+        }
+
+    }
+
+    private final MainWindow mainWindow;
+
+
+    public ShortcutList(MainWindow mainWindow) {
         super(mainWindow);
+        this.mainWindow = mainWindow;
 
         setupUi();
-        retranslateUi();
     }
 
-    private void setupUi(){
-
-    }
-
-    private void retranslateUi(){
-
+    private void setupUi() {
+        this.setModel(new ShortcutListModel(mainWindow.getEventHandler(), IconSize.VERY_LARGE));
     }
 
 }

@@ -26,6 +26,9 @@ import com.playonlinux.ui.impl.qt.mainwindow.toolbar.ToolBar;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.*;
+import org.gnome.gtk.Toolbar;
+
+import java.awt.*;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -33,6 +36,9 @@ import static com.playonlinux.core.lang.Localisation.translate;
  * MainWindow of PlayOnLinux's Qt-Gui implementation.
  */
 public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
+
+    private final MainWindowEventHandler eventHandler;
+
     private MenuBar menuBar;
     private ToolBar toolBar;
     private ActionSideBar actionSideBar;
@@ -44,12 +50,13 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
 
     public MainWindow() {
+        eventHandler = new MainWindowEventHandler(this);
+
         setupUi();
         retranslateUi();
 
         this.show();
     }
-
 
 
     private void setupUi() {
@@ -78,30 +85,19 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     }
 
 
-
-    /* CONTROL METHODS */
-
-    /**
-     * Request the Application to exit.
-     * @return False when the user aborted the exit, True otherwise.
-     */
-    public boolean exit(){
-        QMessageBox confirmDialog = new QMessageBox();
-        confirmDialog.setWindowTitle(translate("${application.name}"));
-        confirmDialog.setText(translate("Are you sure you want to close all ${application.name} windows?"));
-        confirmDialog.setIcon(QMessageBox.Icon.Question);
-        confirmDialog.addButton(QMessageBox.StandardButton.Ok);
-        confirmDialog.addButton(QMessageBox.StandardButton.Cancel);
-        confirmDialog.setEscapeButton(QMessageBox.StandardButton.Cancel);
-        confirmDialog.setDefaultButton(QMessageBox.StandardButton.Cancel);
-        confirmDialog.exec();
-        if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
-            return false;
-        }
-
-        QApplication.exit();
-        return true;
+    public MainWindowEventHandler getEventHandler() {
+        return eventHandler;
     }
+
+
+
+    /* COMPONENT GETTERS */
+    //grant access to ui components for the MainWindowEventHandler within the mainwindow namespace only
+    protected MenuBar getMenuBar(){ return menuBar; }
+    protected ToolBar getToolBar(){ return toolBar; }
+    protected ActionSideBar getSideBar(){ return actionSideBar; }
+    protected ShortcutList getShortcutList(){ return shortcutList; }
+
 
 
 
@@ -109,7 +105,7 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
     @Override
     protected void closeEvent(QCloseEvent e) {
-        exit();
+        eventHandler.exit();
         e.ignore();
     }
 
