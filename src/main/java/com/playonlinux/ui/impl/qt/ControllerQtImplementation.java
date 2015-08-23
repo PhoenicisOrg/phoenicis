@@ -19,7 +19,6 @@
 package com.playonlinux.ui.impl.qt;
 
 
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;

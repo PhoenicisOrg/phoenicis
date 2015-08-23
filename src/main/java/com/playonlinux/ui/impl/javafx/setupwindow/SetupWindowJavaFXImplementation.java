@@ -22,17 +22,13 @@ import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
-import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
 import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;

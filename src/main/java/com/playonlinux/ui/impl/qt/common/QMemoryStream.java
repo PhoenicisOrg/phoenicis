@@ -18,7 +18,6 @@
 
 package com.playonlinux.ui.impl.qt.common;
 
-import com.trolltech.qt.core.QByteArray;
 import com.trolltech.qt.core.QIODevice;
 
 import java.io.IOException;

@@ -18,10 +18,8 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.menubar;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
-import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.*;
 
 import static com.playonlinux.core.lang.Localisation.translate;
