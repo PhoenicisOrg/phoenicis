@@ -18,7 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.injection.Inject;

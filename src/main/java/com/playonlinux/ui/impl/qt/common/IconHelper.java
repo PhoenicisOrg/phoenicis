@@ -18,14 +18,8 @@
 
 package com.playonlinux.ui.impl.qt.common;
 
-import com.trolltech.qt.core.QByteArray;
 import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QImage;
-import com.trolltech.qt.gui.QImageReader;
 import com.trolltech.qt.gui.QPixmap;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
 
 /**
  * Small helper class for easing the use of images and icons.

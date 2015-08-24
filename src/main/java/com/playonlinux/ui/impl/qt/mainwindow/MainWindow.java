@@ -26,7 +26,6 @@ import com.playonlinux.ui.impl.qt.mainwindow.toolbar.ToolBar;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.*;
-import org.gnome.gtk.Toolbar;
 
 import java.awt.*;
 
