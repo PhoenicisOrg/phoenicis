@@ -20,6 +20,13 @@ package com.playonlinux.ui.api;
 
 import com.playonlinux.ui.events.EventHandler;
 
+/**
+ * Component that handle events trigered by the UI
+ */
 public interface UIEventHandler {
+    /**
+     * Get the main PlayOnLinux event handler
+     * @return The main event handler
+     */
     EventHandler getMainEventHandler();
 }

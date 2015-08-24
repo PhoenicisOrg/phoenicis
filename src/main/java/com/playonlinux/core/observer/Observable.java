@@ -18,19 +18,42 @@
 
 package com.playonlinux.core.observer;
 
-
-
+/**
+ * Defines an observable (see Observable pattern)
+ * @param <ARG> The type of the argument
+ */
 public interface Observable<ARG> {
+    /**
+     * Register an obverser
+     * @param observer the observer to add
+     */
+    void addObserver(Observer observer);
 
-    void addObserver(Observer o);
+    /**
+     * Register an observer
+     * @param observer the observer to add
+     */
+    void deleteObserver(Observer observer);
 
-    void deleteObserver(Observer o);
-
+    /**
+     * Notify all the observers
+     */
     void notifyObservers();
 
+    /**
+     * Notify an observer with an argument
+     * @param arg the argument to pass
+     */
     void notifyObservers(ARG arg);
 
+    /**
+     * Delete an observer
+     */
     void deleteObservers();
 
+    /**
+     * Get the number of observers
+     * @return the number of observers
+     */
     int countObservers();
 }

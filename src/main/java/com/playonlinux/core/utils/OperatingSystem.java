@@ -18,12 +18,15 @@
 
 package com.playonlinux.core.utils;
 
+/**
+ * Represents a supported Operating System
+ */
 public enum OperatingSystem {
     MACOSX ("Mac OS X"),
     LINUX ("Linux"),
     FREEBSD ("FreeBSD");
 
-    private String name = "";
+    private final String name;
 
     OperatingSystem(String name) {
         this.name = name;
@@ -34,15 +37,19 @@ public enum OperatingSystem {
         return this.name;
     }
 
+    /**
+     * Creates a Operating System from the name
+     * @param name The name
+     * @return The operating system
+     */
     public static OperatingSystem fromString(String name) {
-        if("Mac OS X".equals(name)) {
-            return OperatingSystem.MACOSX;
-        }
-        if("Linux".equals(name)) {
-            return OperatingSystem.LINUX;
-        }
-        if("FreeBSD".equals(name)) {
-            return OperatingSystem.FREEBSD;
+        switch(name) {
+            case "Mac OS X":
+                return MACOSX;
+            case "Linux":
+                return LINUX;
+            case "FreeBSD":
+                return FREEBSD;
         }
 
         throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", name));
@@ -52,6 +59,10 @@ public enum OperatingSystem {
         return this.name();
     }
 
+    /**
+     *
+     * @return PlayOnLinux v4 compatible short name
+     */
     public String fetchLegacyName() {
         switch (this) {
             case FREEBSD:
@@ -64,6 +75,10 @@ public enum OperatingSystem {
         }
     }
 
+    /**
+     *
+     * @return The name used for the wine packages
+     */
     public String getNameForWinePackages() {
         switch (this) {
             case FREEBSD:
@@ -76,6 +91,10 @@ public enum OperatingSystem {
         }
     }
 
+    /**
+     * Fetch the current Operating System
+     * @return The current operating system
+     */
     public static OperatingSystem fetchCurrentOperationSystem() {
         return OperatingSystem.fromString(System.getProperty("os.name"));
     }

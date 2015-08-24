@@ -46,8 +46,8 @@ public class ImageDOSHeader {
     final Word[] e_res = new Word[4];       // Reserved Words
     final Word e_oemid;                     // OEM identifier (for e_oeminfo)
     final Word e_oeminfo;                   // OEM information; e_oemid specific
-    final Word[] e_res2 = new Word[10];    // Reserved Words
-    final Integer e_lfanew;                    // File address of new exe header
+    final Word[] e_res2 = new Word[10];     // Reserved Words
+    final Integer e_lfanew;                 // File address of new exe header
 
     ImageDOSHeader(byte[] bytes) {
         if(bytes.length != IMAGE_DOS_HEADER_SIZE) {
@@ -80,7 +80,6 @@ public class ImageDOSHeader {
         }
 
         e_ovno = new Word(bytes, 58);
-
         e_lfanew = ByteBuffer.wrap(bytes, 60, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
     }
 }

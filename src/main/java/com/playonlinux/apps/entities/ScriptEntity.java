@@ -22,6 +22,9 @@ import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.entities.Entity;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+/**
+ * Entity that represents a script.
+ */
 public class ScriptEntity implements Entity, Nameable {
 
     private final int id;

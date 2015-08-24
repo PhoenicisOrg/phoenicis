@@ -22,6 +22,9 @@ import com.playonlinux.core.entities.Entity;
 
 import java.util.List;
 
+/**
+ * Represents the main entity to the available application feature
+ */
 public class AppsWindowEntity implements Entity {
     public List<AppEntity> getAppsItemDTOs() {
         return appsItemDTOs;

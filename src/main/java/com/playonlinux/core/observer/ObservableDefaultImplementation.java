@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Default {@link Observable} implementation
+ * @param <ARG> The type of the argument
+ *
+ */
 public abstract class ObservableDefaultImplementation<ARG>
         implements Observable<ARG> {
     private final List<Observer> observers;
@@ -32,20 +37,20 @@ public abstract class ObservableDefaultImplementation<ARG>
     }
 
     @Override
-    public synchronized void addObserver(Observer o) {
-        Objects.requireNonNull(o);
-        if (!observers.contains(o)) {
-            observers.add(o);
+    public synchronized void addObserver(Observer observer) {
+        Objects.requireNonNull(observer);
+        if (!observers.contains(observer)) {
+            observers.add(observer);
         }
 
         if(lastArgument != null) {
-            o.update(this, lastArgument);
+            observer.update(this, lastArgument);
         }
     }
 
     @Override
-    public synchronized void deleteObserver(Observer o) {
-        observers.remove(o);
+    public synchronized void deleteObserver(Observer observer) {
+        observers.remove(observer);
     }
 
     @Override

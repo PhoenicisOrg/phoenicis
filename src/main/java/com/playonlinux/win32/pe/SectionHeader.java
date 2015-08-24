@@ -18,6 +18,8 @@
 
 package com.playonlinux.win32.pe;
 
+import com.playonlinux.win32.ULong;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -25,34 +27,30 @@ public class SectionHeader {
     public static final int SECTION_HEADER_SIZE = 40;
 
     final byte[] name = new byte[8];
-    final Integer physicalAddressOrVirtualSize;
-    final Integer virtualAddress;
-    final Integer sizeOfRawData;
-    final Integer pointerToRawData;
-    final Integer pointerToRelocations;
-    final Integer pointerToLinenumbers;
+    final ULong physicalAddressOrVirtualSize;
+    final ULong virtualAddress;
+    final ULong sizeOfRawData;
+    final ULong pointerToRawData;
+    final ULong pointerToRelocations;
+    final ULong pointerToLinenumbers;
     final Short numberOfRelocations;
     final Short numberOfLineNumbers;
-    final Integer characteristics;
+    final ULong characteristics;
 
     public SectionHeader(byte[] bytes) {
         if(bytes.length != SECTION_HEADER_SIZE) {
             throw new IllegalStateException("Section Header should be "+SECTION_HEADER_SIZE+" bytes");
         }
         System.arraycopy(bytes, 0, name, 0, 8);
-        physicalAddressOrVirtualSize = readInteger(bytes, 8);
-        virtualAddress = readInteger(bytes, 12);
-        sizeOfRawData = readInteger(bytes, 16);
-        pointerToRawData = readInteger(bytes, 20);
-        pointerToRelocations = readInteger(bytes, 24);
-        pointerToLinenumbers = readInteger(bytes, 28);
+        physicalAddressOrVirtualSize = new ULong(bytes, 8);
+        virtualAddress = new ULong(bytes, 12);
+        sizeOfRawData = new ULong(bytes, 16);
+        pointerToRawData = new ULong(bytes, 20);
+        pointerToRelocations = new ULong(bytes, 24);
+        pointerToLinenumbers = new ULong(bytes, 28);
         numberOfRelocations = readShort(bytes, 32);
         numberOfLineNumbers = readShort(bytes, 34);
-        characteristics = readInteger(bytes, 36);
-    }
-
-    private Integer readInteger(byte[] bytes, int offset) {
-        return ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
+        characteristics = new ULong(bytes, 36);
     }
 
     private Short readShort(byte[] bytes, int offset) {

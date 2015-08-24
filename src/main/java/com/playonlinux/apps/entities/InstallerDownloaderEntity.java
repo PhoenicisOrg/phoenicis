@@ -18,6 +18,9 @@
 
 package com.playonlinux.apps.entities;
 
+/**
+ * Entity that represents the state of a script that is being downloaded
+ */
 public class InstallerDownloaderEntity {
 
     public boolean isFailed() {

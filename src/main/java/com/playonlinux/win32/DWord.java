@@ -18,33 +18,16 @@
 
 package com.playonlinux.win32;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 /**
  * Represents a WIN32 DWORD
  * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
  */
-public class DWord {
-    private final int dword;
-
-    public DWord(int dword) {
-        this.dword = dword;
-    }
-
-    public DWord(byte... bytes) {
-        dword = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
-    }
-
+public class DWord extends ULong {
     public DWord(byte[] bytes, int offset) {
-        dword = ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getShort();
+        super(bytes, offset);
     }
 
-    public int get() {
-        return dword;
-    }
-
-    public long getUnsignedValue() {
-        return dword & 0xffff;
+    public DWord(int offset) {
+        super(offset);
     }
 }

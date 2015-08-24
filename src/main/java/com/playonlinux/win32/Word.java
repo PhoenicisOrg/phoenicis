@@ -18,33 +18,12 @@
 
 package com.playonlinux.win32;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 /**
  * Represents a WIN32 WORD
  * A 16-bit unsigned integer. The range is 0 through 65535 decimal.
  */
-public class Word {
-    private final short word;
-
-    public Word(short word) {
-        this.word = word;
-    }
-
-    public Word(byte... bytes) {
-        word = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
-    }
-
+public class Word extends UShort {
     public Word(byte[] bytes, int offset) {
-        word = ByteBuffer.wrap(bytes, offset, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
-    }
-
-    public short get() {
-        return word;
-    }
-
-    public int getUnsignedValue() {
-        return word & 0xffff;
+        super(bytes, offset);
     }
 }
