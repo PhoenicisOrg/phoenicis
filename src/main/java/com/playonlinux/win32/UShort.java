@@ -16,19 +16,35 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.win32;
 
-import com.playonlinux.core.python.CommandInterpreter;
-import com.playonlinux.core.python.CommandInterpreterException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
- * {@link CommandInterpreter} factory
+ * Represents a WIN32 WORD
+ * A 16-bit unsigned integer. The range is 0 through 65535 decimal.
  */
-public interface CommandLineInterpreterFactory {
-    /**
-     * Creates a instance of {@link CommandInterpreter}
-     * @return a {@link CommandInterpreter}
-     * @throws CommandInterpreterException if the service manager fails to create an interpreter
-     */
-    CommandInterpreter createInstance() throws CommandInterpreterException;
+public class UShort {
+    private final short word;
+
+    public UShort(short word) {
+        this.word = word;
+    }
+
+    public UShort(byte... bytes) {
+        word = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getShort();
+    }
+
+    public UShort(byte[] bytes, int offset) {
+        word = ByteBuffer.wrap(bytes, offset, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
+    }
+
+    public short get() {
+        return word;
+    }
+
+    public int getUnsignedValue() {
+        return word & 0xffff;
+    }
 }

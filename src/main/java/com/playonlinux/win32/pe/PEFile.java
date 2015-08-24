@@ -18,20 +18,25 @@
 
 package com.playonlinux.win32.pe;
 
+import com.playonlinux.win32.pe.rsrc.RsrcSection;
+
 public class PEFile {
     public enum Architecture {
         AMD64, I386, IA64
     }
-    final ImageDOSHeader imageDOSHeader;
-    final byte[] realModeStubProgram;
-    final ImageNTHeaders imageNTHeaders;
-    final ImageOptionalHeader imageOptionalHeader;
+    final public ImageDOSHeader imageDOSHeader;
+    final public byte[] realModeStubProgram;
+    final public ImageNTHeaders imageNTHeaders;
+    final public SectionHeader[] sectionHeaders;
+    final public RsrcSection resourceSection;
 
-    public PEFile(ImageDOSHeader imageDOSHeader, byte[] realModeStubProgram, ImageNTHeaders imageNTHeaders, ImageOptionalHeader imageOptionalHeader) {
+    public PEFile(ImageDOSHeader imageDOSHeader, byte[] realModeStubProgram, ImageNTHeaders imageNTHeaders,
+                  SectionHeader[] sectionHeaders, RsrcSection resourceSection) {
         this.imageDOSHeader = imageDOSHeader;
         this.realModeStubProgram = realModeStubProgram;
         this.imageNTHeaders = imageNTHeaders;
-        this.imageOptionalHeader = imageOptionalHeader;
+        this.sectionHeaders = sectionHeaders;
+        this.resourceSection = resourceSection;
     }
 
     public Architecture getArchitecture() {

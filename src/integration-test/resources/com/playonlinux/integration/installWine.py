@@ -3,11 +3,9 @@ from com.playonlinux.framework import SetupWizard, WineVersion
 from com.playonlinux.framework import Environment
 from com.playonlinux.engines.wine import WineVersionManager
 
-from java.lang import Class
-
 import unittest, time, os
-from com.playonlinux.core.utils import OperatingSystem
 
+from com.playonlinux.core.utils import OperatingSystem
 
 class TestInstallWine(unittest.TestCase):
     def testInstallWineVersion(self):
@@ -29,11 +27,12 @@ class TestInstallWine(unittest.TestCase):
         wineInstallation = WineVersion("1.7.36", "upstream-x86", setupWizard)
         wineInstallation.install()
 
-        installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" % (Environment.getUserRoot(),
-         OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
+        installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" %\
+                           (Environment.getUserRoot(), OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
 
         ServiceManagerGetter.serviceManager.shutdown()
 
         print "Checking that wine binary is installed in %s" % installationPath
+
         self.assertTrue(os.path.exists(installationPath))
 

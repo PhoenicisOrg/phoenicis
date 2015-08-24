@@ -16,19 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.win32;
 
-import com.playonlinux.core.python.CommandInterpreter;
-import com.playonlinux.core.python.CommandInterpreterException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
- * {@link CommandInterpreter} factory
+ * Represents a WIN32 ULONG
+ * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
  */
-public interface CommandLineInterpreterFactory {
-    /**
-     * Creates a instance of {@link CommandInterpreter}
-     * @return a {@link CommandInterpreter}
-     * @throws CommandInterpreterException if the service manager fails to create an interpreter
-     */
-    CommandInterpreter createInstance() throws CommandInterpreterException;
+public class ULong {
+    private final int ulong;
+
+    public ULong(int ulong) {
+        this.ulong = ulong;
+    }
+
+    public ULong(byte[] bytes, int offset) {
+        ulong = ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
+    }
+
+    public int get() {
+        return ulong;
+    }
+
+    public long getUnsignedValue() {
+        return ulong & 0xFFFFFFFFL;
+    }
 }

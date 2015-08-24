@@ -27,6 +27,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an application {@link Entity}
+ */
 public class AppEntity implements Entity, NameableEntity {
     private final String name;
     private final String categoryName;

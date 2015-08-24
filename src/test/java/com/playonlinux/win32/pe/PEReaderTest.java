@@ -26,12 +26,11 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class PEReaderTest {
-    private PEReader peReader = new PEReader();
     private PEFile peFile;
 
     @Before
     public void setUp() throws IOException {
-        peFile = peReader.parseExecutable(this.getClass().getResourceAsStream("winecfg.exe"));
+        peFile = PEReader.parseExecutable(this.getClass().getResourceAsStream("winecfg.exe"));
     }
 
     @Test
@@ -86,6 +85,31 @@ public class PEReaderTest {
     }
 
     @Test
+    public void testOptionalHeaderSizeOfInitializedData() {
+        assertEquals(0, peFile.imageNTHeaders.optionalHeader.sizeOfInitializedData.get());
+    }
+
+    @Test
+    public void testOptionalHeaderSizeOfUninitializedData() {
+        assertEquals(0, peFile.imageNTHeaders.optionalHeader.sizeOfUninitializedData.get());
+    }
+
+    @Test
+    public void testOptionalHeaderBaseOfCode() {
+        assertEquals(0x1000, peFile.imageNTHeaders.optionalHeader.baseOfCode.get());
+    }
+
+    @Test
+    public void testOptionalHeaderImageBase() {
+        assertEquals(0x10000000, peFile.imageNTHeaders.optionalHeader.imageBase.getUnsignedValue());
+    }
+
+    @Test
+    public void testOptionalHeaderBaseOfData() {
+        assertEquals(0, peFile.imageNTHeaders.optionalHeader.baseOfData.get());
+    }
+
+    @Test
     public void testOptionalHeaderSizeOfHeaders() {
         assertEquals(512, peFile.imageNTHeaders.optionalHeader.sizeOfHeaders.getUnsignedValue());
     }
@@ -110,6 +134,38 @@ public class PEReaderTest {
         assertEquals(96, peFile.imageDOSHeader.e_lfanew.intValue());
     }
 
+    @Test
+    public void testSectionHeaderNames() {
+        assertEquals(".text\u0000\u0000\u0000", new String(peFile.sectionHeaders[0].name));
+        assertEquals(".reloc\u0000\u0000", new String(peFile.sectionHeaders[1].name));
+        assertEquals(".rsrc\u0000\u0000\u0000", new String(peFile.sectionHeaders[2].name));
+    }
+
+    @Test
+    public void testRsrcSizeOfRawData() {
+        assertEquals(0xB8038, peFile.sectionHeaders[2].sizeOfRawData.get());
+    }
+
+    @Test
+    public void testRsrcVirtualAddress() {
+        assertEquals(0x00003000, peFile.sectionHeaders[2].virtualAddress.get());
+    }
+
+    @Test
+    public void testVirtuaSize() {
+        assertEquals(0x000B9000, peFile.sectionHeaders[2].physicalAddressOrVirtualSize.get());
+    }
+
+    @Test
+    public void testCharacteristic() {
+        assertEquals(0x40000040, peFile.sectionHeaders[2].characteristics.get());
+    }
+
+    @Test
+    public void testResourceSection() {
+        assertEquals(1, peFile.resourceSection.imageResourceDirectory.numberOfNamedEntries.getUnsignedValue());
+        assertEquals(4, peFile.resourceSection.imageResourceDirectory.numberOfIdEntries.getUnsignedValue());
+    }
 
     @Test
     public void testRealModeStubProgram() {

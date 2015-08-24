@@ -23,6 +23,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Any static attribute with the {@link Inject} annotation in a class annotated with {@link Scan} will be populated
+ * once an {@link AbstractConfiguration} file is loaded
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Inject {

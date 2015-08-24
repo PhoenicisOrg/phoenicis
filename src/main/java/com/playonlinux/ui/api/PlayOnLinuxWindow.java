@@ -18,6 +18,9 @@
 
 package com.playonlinux.ui.api;
 
+/**
+ * A PlayOnLinux Window
+ */
 public interface PlayOnLinuxWindow {
 
 }

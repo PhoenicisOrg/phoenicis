@@ -22,6 +22,11 @@ import com.playonlinux.core.filter.Filterable;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.services.manager.Service;
 
+/**
+ * This components provides entities to a UI {@link com.playonlinux.core.observer.Observer}
+ * @param <FILTER> The type of the object that is going to be filtered
+ * @param <OBSERVABLE> The type of entity that is going to be observed
+ */
 public interface EntitiesProvider<FILTER, OBSERVABLE> extends Filterable<FILTER>, Observable<OBSERVABLE>, Service {
 
 }

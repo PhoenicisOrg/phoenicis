@@ -16,19 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.win32.pe.rsrc;
 
-import com.playonlinux.core.python.CommandInterpreter;
-import com.playonlinux.core.python.CommandInterpreterException;
+import com.playonlinux.win32.ULong;
+import com.playonlinux.win32.UShort;
 
-/**
- * {@link CommandInterpreter} factory
- */
-public interface CommandLineInterpreterFactory {
-    /**
-     * Creates a instance of {@link CommandInterpreter}
-     * @return a {@link CommandInterpreter}
-     * @throws CommandInterpreterException if the service manager fails to create an interpreter
-     */
-    CommandInterpreter createInstance() throws CommandInterpreterException;
+public class ImageResourceDirectoryEntry {
+    final ULong nameOrId;
+    final ULong offsetToData;
+
+    public ImageResourceDirectoryEntry(byte[] bytes, int offset) {
+        this.nameOrId = new ULong(bytes, offset);
+        this.offsetToData = new ULong(bytes, offset + 4);
+    }
 }

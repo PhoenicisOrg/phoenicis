@@ -46,7 +46,6 @@ public final class AppsEntitiesProvider
         implements Observer<DefaultAppsManager, DefaultAppsManager>,
                    EntitiesProvider<AppEntity, AppsWindowEntity> {
 
-
     @Inject
     static ServiceManager serviceManager;
 
