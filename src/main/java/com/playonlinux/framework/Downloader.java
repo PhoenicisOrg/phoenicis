@@ -23,6 +23,7 @@ import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;
@@ -37,7 +38,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 public class Downloader implements SetupWizardComponent {
     String MD5_CHECKSUM = "md5";
 
-    private SetupWizard setupWizard;
+    private DefaultSetupWizard setupWizard;
     private ProgressControl progressControl;
 
     private File downloadedFile;
@@ -49,11 +50,11 @@ public class Downloader implements SetupWizardComponent {
 
     }
 
-    private Downloader(SetupWizard setupWizard) {
+    private Downloader(DefaultSetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
-    public static Downloader wizard(SetupWizard setupWizard) {
+    public static Downloader wizard(DefaultSetupWizard setupWizard) {
         Downloader downloaderInstance = new Downloader(setupWizard);
         setupWizard.registerComponent(downloaderInstance);
         return new Downloader(setupWizard);

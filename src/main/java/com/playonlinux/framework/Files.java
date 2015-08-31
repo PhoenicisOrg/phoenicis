@@ -20,6 +20,7 @@ package com.playonlinux.framework;
 
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.*;
@@ -32,7 +33,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class Files implements SetupWizardComponent {
-    private SetupWizard setupWizard;
+    private DefaultSetupWizard setupWizard;
     private ProgressControl progressControl;
 
     private static final int BLOCK_SIZE = 1024;
@@ -43,11 +44,11 @@ public class Files implements SetupWizardComponent {
     public Files() {
 
     }
-    public Files(SetupWizard setupWizard) {
+    public Files(DefaultSetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
-    public static Files wizard(SetupWizard setupWizard) {
+    public static Files wizard(DefaultSetupWizard setupWizard) {
         Files filesInstance = new Files(setupWizard);
         setupWizard.registerComponent(filesInstance);
         return new Files(setupWizard);

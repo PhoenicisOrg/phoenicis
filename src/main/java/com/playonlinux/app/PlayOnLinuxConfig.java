@@ -187,7 +187,8 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      *
      * @return the exectuor service
      */
-    private ExecutorService defaultExecutor() {
+    @Bean
+    public ExecutorService defaultExecutor() {
         return executor;
     }
 

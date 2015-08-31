@@ -49,6 +49,7 @@ public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEn
                 .withDirectDrawRenderer(this.underlyingWinePrefix.getDisplayConfiguration().getDirectDrawRenderer())
                 .withAlwaysOffscreen(this.underlyingWinePrefix.getDisplayConfiguration().getAlwaysOffscreen())
                 .withMouseWarpOverride(this.underlyingWinePrefix.getInputConfiguration().getMouseWarpOverride())
+                .withWinePrefixDirectory(this.underlyingWinePrefix.getWinePrefixDirectory())
                 .build();
     }
 

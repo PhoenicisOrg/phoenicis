@@ -16,15 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.framework.wizard;
 
-/**
- * Represents a component that has the same Lifecycle than a {@link SetupWizard}
- */
-public interface SetupWizardComponent extends AutoCloseable {
-
-    /**
-     * Close the component
-     */
+public interface WineWizard extends ChoiceWizard, ProgressWizard, LogWizard {
+    @Override
     void close();
 }

@@ -25,6 +25,8 @@ import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.*;
 import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.framework.wizard.CompleteSetupWizard;
+import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
@@ -42,7 +44,7 @@ import java.util.List;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
-public class SetupWizard implements AutoCloseable {
+public class DefaultSetupWizard implements CompleteSetupWizard {
     private static final Logger LOGGER = Logger.getLogger(Setup.class);
 
     @Inject
@@ -67,11 +69,12 @@ public class SetupWizard implements AutoCloseable {
      *
      * @param title title of the setupWindow
      */
-    public SetupWizard(String title) {
+    public DefaultSetupWizard(String title) {
         this.title = title;
         this.components = new ArrayList<>();
     }
 
+    @Override
     public void init() {
         this.messageSender = controller.createUIMessageSender();
 
@@ -84,10 +87,12 @@ public class SetupWizard implements AutoCloseable {
                 }
         );
     }
+
     /**
      * Set the left image
      * @param leftImage URL of the left image
      */
+    @Override
     public void setLeftImage(String leftImage) throws IOException {
         setupWindow.setLeftImage(new File(leftImage));
     }
@@ -96,6 +101,7 @@ public class SetupWizard implements AutoCloseable {
     * Set the top image
     * @param topImage URL of the top image
     */
+   @Override
    public void setTopImage(String topImage) throws IOException {
        setupWindow.setTopImage(new File(topImage));
    }
@@ -103,6 +109,7 @@ public class SetupWizard implements AutoCloseable {
     /**
      * Closes the setupWindow
      */
+    @Override
     public void close() {
         messageSender.synchronousSend(
                 new SynchronousMessage() {
@@ -122,6 +129,7 @@ public class SetupWizard implements AutoCloseable {
      * @param textToShow the text to showRightView
      * @throws CancelException
      */
+    @Override
     public void message(String textToShow) throws CancelException {
         messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
@@ -142,6 +150,7 @@ public class SetupWizard implements AutoCloseable {
      * @param prefixName the name of the prefix for that program
      * @throws CancelException
      */
+    @Override
     public void presentation(String programName, String programEditor, String editorURL, String scriptorName, String prefixName) throws CancelException {
         final String textToShow = String.format(translate("This wizard will help you install %1$s on your computer.\n\n"
                 + "This program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s"
@@ -157,6 +166,7 @@ public class SetupWizard implements AutoCloseable {
      * @param textToShow the free presentation text to showRightView
      * @throws CancelException
      */
+    @Override
     public void presentation(String textToShow) throws CancelException {
         messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
@@ -174,6 +184,7 @@ public class SetupWizard implements AutoCloseable {
      * @param licenceFile the licence file to display (with 'from java.io import File')
      * @throws CancelException
      */
+    @Override
     public void licenceFile(String textToShow, File licenceFile) throws CancelException {
         try {
             final FileInputStream content = new FileInputStream(licenceFile);
@@ -193,6 +204,7 @@ public class SetupWizard implements AutoCloseable {
      * @throws ScriptFailureException
      * @throws CancelException
      */
+    @Override
     public void licenceFile(String textToShow, String licenceFilePath) throws CancelException {
         licenceFile(textToShow, new File(licenceFilePath));
     }
@@ -203,6 +215,7 @@ public class SetupWizard implements AutoCloseable {
      * @param licenceText the licence text to showRightView
      * @throws CancelException
      */
+    @Override
     public String licence(String textToShow, String licenceText) throws CancelException {
         return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
@@ -220,6 +233,7 @@ public class SetupWizard implements AutoCloseable {
      * @return the value the user entered
      * @throws CancelException
      */
+    @Override
     public String textbox(String textToShow) throws CancelException {
         return this.textbox(textToShow, "");
     }
@@ -231,6 +245,7 @@ public class SetupWizard implements AutoCloseable {
      * @return the value the user entered
      * @throws CancelException
      */
+    @Override
     public String textbox(String textToShow, String defaultValue) throws CancelException {
         return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
@@ -249,6 +264,7 @@ public class SetupWizard implements AutoCloseable {
      * @return the value the user entered (as string)
      * @throws CancelException
      */
+    @Override
     public String menu(String textToShow, List<String> menuItems) throws CancelException {
         return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
@@ -266,6 +282,7 @@ public class SetupWizard implements AutoCloseable {
      * @return The path of the file
      * @throws CancelException
      */
+    @Override
     public String browse(String textToShow) throws CancelException {
         return browse(textToShow, playOnLinuxContext.getUserHome(), null);
     }
@@ -279,6 +296,7 @@ public class SetupWizard implements AutoCloseable {
      * @return The path of the file
      * @throws CancelException
      */
+    @Override
     public String browse(String textToShow, String directory, List<String> allowedExtensions) throws CancelException {
         return messageSender.synchronousSendAndGetResult(
                 new CancelerSynchronousMessage<String>() {
@@ -296,6 +314,7 @@ public class SetupWizard implements AutoCloseable {
      * Displays a showSimpleMessageStep to the user with a waiting symbol, and releases the script just afterward
      * @param textToShow a text that will be shown
      */
+    @Override
     public void wait(String textToShow) {
         messageSender.asynchronousSend(
                 new InterrupterAsynchroneousMessage() {
@@ -307,6 +326,7 @@ public class SetupWizard implements AutoCloseable {
         );
     }
 
+    @Override
     public ProgressControl progressBar(String textToShow) throws CancelException {
         UIMessageSender<ProgressControl> progressStepUIMessageSender = controller.createUIMessageSender();
         return progressStepUIMessageSender.synchronousSendAndGetResult(
@@ -320,7 +340,8 @@ public class SetupWizard implements AutoCloseable {
         );
     }
 
-    ScriptLogger getLogContext() throws ScriptFailureException {
+    @Override
+    public ScriptLogger getLogContext() throws ScriptFailureException {
         if(logContext != null) {
             return logContext;
         } else {
@@ -332,10 +353,12 @@ public class SetupWizard implements AutoCloseable {
         }
     }
 
+    @Override
     public void log(String message) throws ScriptFailureException {
         log(message, null);
     }
 
+    @Override
     public void log(String message, Throwable e) throws ScriptFailureException {
         if(title != null) {
             OutputStream outputstream = getLogContext();
@@ -356,10 +379,12 @@ public class SetupWizard implements AutoCloseable {
 
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public void registerComponent(SetupWizardComponent setupWizardComponent) {
         components.add(new WeakReference<>(setupWizardComponent));
     }

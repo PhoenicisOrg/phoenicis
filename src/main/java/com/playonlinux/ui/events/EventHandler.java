@@ -24,6 +24,7 @@ import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
+import com.playonlinux.containers.WineContainerEventHandler;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
@@ -101,4 +102,5 @@ public interface EventHandler {
      */
     void refreshAvailableInstallers() throws PlayOnLinuxException;
 
+    WineContainerEventHandler getWineContainerEventHandler();
 }

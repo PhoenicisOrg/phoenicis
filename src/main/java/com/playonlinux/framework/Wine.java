@@ -18,7 +18,6 @@
 
 package com.playonlinux.framework;
 
-import com.google.common.io.*;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.injection.Inject;
@@ -36,6 +35,8 @@ import com.playonlinux.core.utils.ExeAnalyser;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
+import com.playonlinux.framework.wizard.SetupWizardComponent;
+import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
 import com.playonlinux.wine.registry.*;
@@ -71,7 +72,7 @@ public class Wine implements SetupWizardComponent {
     private static final String ERASE = "Erase (virtual drive content will be lost)";
     private static final String ABORT = "Abort installation";
 
-    private final SetupWizard setupWizard;
+    private final WineWizard setupWizard;
 
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
@@ -82,11 +83,11 @@ public class Wine implements SetupWizardComponent {
     private OutputStream errorStream = new NullOutputStream();
     private InputStream inputStream = new NullInputStream(0);
 
-    private Wine(SetupWizard setupWizard) {
+    private Wine(WineWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
-    public static Wine wizard(SetupWizard setupWizard) {
+    public static Wine wizard(WineWizard setupWizard) {
         Wine wineInstance = new Wine(setupWizard);
         setupWizard.registerComponent(wineInstance);
         return new Wine(setupWizard);

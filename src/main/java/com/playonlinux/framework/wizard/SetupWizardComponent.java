@@ -16,31 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
+package com.playonlinux.framework.wizard;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
+import com.playonlinux.framework.DefaultSetupWizard;
 
 /**
- * Represents a progress control
+ * Represents a component that has the same Lifecycle than a {@link DefaultSetupWizard}
  */
-public interface ProgressControl extends Observer<Observable, ProgressStateEntity> {
-    /**
-     * Set the percentage of the progress bar
-     * @param value The value to set
-     */
-    void setProgressPercentage(double value);
+public interface SetupWizardComponent extends AutoCloseable {
 
     /**
-     * The text of the progressbar
-     * @param text The text to set
+     * Close the component
      */
-    void setText(String text);
-
-    @Override
-    default void update(Observable observable, ProgressStateEntity argument) {
-        setProgressPercentage(argument.getPercent());
-        setText(argument.getProgressText());
-    }
+    void close();
 }
