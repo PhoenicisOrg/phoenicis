@@ -43,6 +43,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -168,7 +169,6 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), "captionTitle"), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
 
-
         displayContentPane.getRowConstraints().addAll(
                 new RowConstraints(50.),
                 new RowConstraints(50.),
@@ -189,6 +189,12 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         displayPane.getChildren().addAll(displayContentPane);
         displayTab.setContent(displayPane);
         displayTab.setClosable(false);
+
+        lockableElements.addAll(Arrays.asList(
+                glslComboBox, directDrawRendererComboBox, offscreenRenderingModeComboBox,
+                renderTargetModeLockComboBox, multisamplingComboBox, strictDrawOrderingComboBox,
+                alwaysOffscreenComboBox, videoMemorySizeComboBox));
+
         return displayTab;
     }
 
@@ -222,6 +228,8 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         inputPane.getChildren().addAll(inputContentPane);
         inputTab.setContent(inputPane);
         inputTab.setClosable(false);
+
+        lockableElements.add(mouseWarpOverrideComboBox);
         return inputTab;
     }
 
@@ -237,13 +245,11 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        final Button wineConfigButton = wineToolButton(translate("Configure Wine"), "winecfg.png",
+        toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
                 (e) -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), (arg) -> {
                     unlockAll();
                     return null;
-                }));
-        lockableElements.add(wineConfigButton);
-        toolsContentPane.add(wineConfigButton, 0, 0);
+                })), 0, 0);
 
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
 
@@ -295,6 +301,7 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         final Text text = new TextWithStyle(caption, "wineToolCaption");
         GridPane.setHalignment(text, HPos.CENTER);
         GridPane.setValignment(text, VPos.CENTER);
+        lockableElements.add(text);
         return text;
     }
 
@@ -309,6 +316,7 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
             lockAll();
             eventHandler.handle(event);
         });
+        lockableElements.add(button);
         GridPane.setHalignment(button, HPos.CENTER);
 
         return button;
