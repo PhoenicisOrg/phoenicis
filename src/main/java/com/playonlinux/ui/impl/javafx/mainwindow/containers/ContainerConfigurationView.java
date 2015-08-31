@@ -42,7 +42,8 @@ public abstract class ContainerConfigurationView<T> extends VBox implements Prog
         this.tabPane = new TabPane();
         progressPane = new ToolBar(progressState, progressBar);
         this.getChildren().add(tabPane);
-
+        this.getChildren().add(progressPane);
+        hideToolbar();
         this.getStyleClass().add("rightPane");
         this.tabPane.getTabs().add(drawInformationTab(containerEntity));
 
@@ -71,10 +72,10 @@ public abstract class ContainerConfigurationView<T> extends VBox implements Prog
     }
 
     public void showToolbar() {
-        this.getChildren().add(progressPane);
+        progressPane.setVisible(true);
     }
 
     public void hideToolbar() {
-        this.getChildren().remove(progressBar);
+        progressPane.setVisible(false);
     }
 }
