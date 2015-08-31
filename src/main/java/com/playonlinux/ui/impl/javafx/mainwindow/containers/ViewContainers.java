@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -38,6 +39,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
 
     private TextField searchBar;
     private MessagePanel selectContainerPanel;
+    private final WeakHashMap<ContainerEntity, ContainerConfigurationView<?>> containerConfigurationViewsCache;
 
     public ViewContainers(MainWindow parent) {
         super(parent);
@@ -51,6 +53,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
 
         initSelectContainerPane();
         showRightView(selectContainerPanel);
+        containerConfigurationViewsCache = new WeakHashMap<>();
     }
 
     private void initSelectContainerPane() {
@@ -84,11 +87,21 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
     private void selectContainer(ContainerEntity containerEntity) {
+        if(containerConfigurationViewsCache.keySet().contains(containerEntity)) {
+            this.showRightView(containerConfigurationViewsCache.get(containerEntity));
+        } else {
+            ContainerConfigurationView<?> containerConfigurationView = createContainerConfigurationView(containerEntity);
+            containerConfigurationViewsCache.put(containerEntity, containerConfigurationView);
+            this.showRightView(containerConfigurationView);
+        }
+    }
+
+    private ContainerConfigurationView<?> createContainerConfigurationView(ContainerEntity containerEntity) {
         /* Not perfect. Needs more abstraction  */
         if(containerEntity instanceof WinePrefixContainerEntity) {
-            this.showRightView(new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, eventHandlerContainers));
+            return new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, eventHandlerContainers);
         } else {
-            this.showRightView(new GenericContainerConfigurationView(containerEntity));
+            return new GenericContainerConfigurationView(containerEntity);
         }
     }
 }
