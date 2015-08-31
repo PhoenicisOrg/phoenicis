@@ -16,28 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.containers;
+package com.playonlinux.framework.wizard;
 
-import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.framework.NullSetupWizard;
-import com.playonlinux.framework.Wine;
-import org.apache.log4j.Logger;
+import com.playonlinux.core.log.ScriptLogger;
+import com.playonlinux.framework.ScriptFailureException;
 
-import java.io.File;
+public interface LogWizard {
+    ScriptLogger getLogContext() throws ScriptFailureException;
 
-public class ContainerEventHandler {
-    private static final Logger LOGGER = Logger.getLogger(ContainerEventHandler.class);
+    void log(String message) throws ScriptFailureException;
 
-    public void runWinecfg(File winePrefixDirectory) {
-        Wine wine = null;
-        try {
-            wine = Wine.wizard(new NullSetupWizard())
-                    .selectPrefix(winePrefixDirectory.getName())
-                    .runBackground("winecfg");
-        } catch (CancelException e) {
-            LOGGER.info(e);
-        }
+    void log(String message, Throwable e) throws ScriptFailureException;
 
-        wine.close();
-    }
 }

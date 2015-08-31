@@ -23,6 +23,7 @@ import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;

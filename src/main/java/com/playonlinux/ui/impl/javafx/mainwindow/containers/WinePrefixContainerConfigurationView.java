@@ -58,6 +58,8 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         this.eventHandlerContainers = eventHandlerContainers;
     }
 
+
+
     @Override
     protected Tab drawInformationTab(WinePrefixContainerEntity containerEntity) {
         final Tab informationTab = new Tab(translate("Information"));
@@ -233,7 +235,7 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         toolsContentPane.getStyleClass().add("grid");
 
         toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
-                (e) -> eventHandlerContainers.getDomainEventHander().runWinecfg(containerEntity.getWinePrefixDirectory())), 0, 0);
+                (e) -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory())), 0, 0);
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
 
         toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png", null), 1, 0);

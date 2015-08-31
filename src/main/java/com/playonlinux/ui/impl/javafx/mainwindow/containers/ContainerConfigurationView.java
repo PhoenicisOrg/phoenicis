@@ -18,14 +18,52 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
+import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.ui.api.ProgressControl;
+import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
-public abstract class ContainerConfigurationView<T> extends TabPane {
+import java.util.List;
+
+public abstract class ContainerConfigurationView<T> extends VBox implements ProgressControl {
+    private final TabPane tabPane;
+    private final ToolBar progressPane;
+    private final ProgressBar progressBar = new ProgressBar();
+    private final Text progressState = new Text();
+
     public ContainerConfigurationView(T containerEntity) {
+        this.tabPane = new TabPane();
+        progressPane = new ToolBar(progressState, progressBar);
+        this.getChildren().add(tabPane);
+        this.getChildren().add(progressPane);
+
         this.getStyleClass().add("rightPane");
-        this.getTabs().add(drawInformationTab(containerEntity));
+        this.tabPane.getTabs().add(drawInformationTab(containerEntity));
     }
 
     abstract protected Tab drawInformationTab(T container);
+
+    public List<Tab> getTabs() {
+        return tabPane.getTabs();
+    }
+
+    public WineWizard getMiniWizard() {
+        return new ContainerConfigurationMiniSetupWizard(this);
+    }
+
+    @Override
+    public void setProgressPercentage(double value) {
+        Platform.runLater(() -> progressBar.setProgress(value));
+    }
+
+    @Override
+    public void setText(String text) {
+        Platform.runLater(() -> progressState.setText(text));
+    }
 }

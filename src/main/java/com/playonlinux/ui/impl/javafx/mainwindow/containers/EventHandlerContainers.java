@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import com.playonlinux.containers.ContainerEventHandler;
+import com.playonlinux.containers.WineContainerEventHandler;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.injection.Inject;
@@ -35,7 +35,7 @@ public class EventHandlerContainers {
         return mainEventHandler.getContainers();
     }
 
-    public ContainerEventHandler getDomainEventHander() {
-        return mainEventHandler.getContainerEventHandler();
+    public WineContainerEventHandler getDomainEventHander() {
+        return mainEventHandler.getWineContainerEventHandler();
     }
 }

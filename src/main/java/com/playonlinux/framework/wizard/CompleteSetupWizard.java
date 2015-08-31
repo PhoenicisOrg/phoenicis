@@ -16,19 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.framework.wizard;
 
-import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public interface SetupWizard extends AutoCloseable {
-    void init();
-
+public interface CompleteSetupWizard extends SetupWizard, ProgressWizard, ChoiceWizard, LogWizard {
     void setLeftImage(String leftImage) throws IOException;
 
     void setTopImage(String topImage) throws IOException;
@@ -49,23 +45,9 @@ public interface SetupWizard extends AutoCloseable {
 
     String textbox(String textToShow, String defaultValue) throws CancelException;
 
-    String menu(String textToShow, List<String> menuItems) throws CancelException;
-
     String browse(String textToShow) throws CancelException;
 
     String browse(String textToShow, String directory, List<String> allowedExtensions) throws CancelException;
 
     void wait(String textToShow);
-
-    ProgressControl progressBar(String textToShow) throws CancelException;
-
-    ScriptLogger getLogContext() throws ScriptFailureException;
-
-    void log(String message) throws ScriptFailureException;
-
-    void log(String message, Throwable e) throws ScriptFailureException;
-
-    String getTitle();
-
-    void registerComponent(SetupWizardComponent setupWizardComponent);
 }

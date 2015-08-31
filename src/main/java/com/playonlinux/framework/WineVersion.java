@@ -28,6 +28,7 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.EngineInstallException;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.engines.wine.WineVersionManager;
+import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;
 
 import java.io.File;
@@ -48,13 +49,13 @@ public class WineVersion {
     private final Version version;
     private final WineDistribution wineDistribution;
     private final WineVersionManager wineVersionManager;
-    private final SetupWizard setupWizard;
+    private final WineWizard setupWizard;
 
-    public WineVersion(String version, String wineDistribution, DefaultSetupWizard setupWizard) {
+    public WineVersion(String version, String wineDistribution, WineWizard setupWizard) {
         this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
     }
 
-    public WineVersion(Version version, WineDistribution wineDistribution, SetupWizard setupWizard) {
+    public WineVersion(Version version, WineDistribution wineDistribution, WineWizard setupWizard) {
         this.version = version;
         this.wineDistribution = wineDistribution;
         this.setupWizard = setupWizard;

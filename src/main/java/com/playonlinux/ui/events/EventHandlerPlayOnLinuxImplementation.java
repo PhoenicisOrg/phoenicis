@@ -24,7 +24,7 @@ import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
-import com.playonlinux.containers.ContainerEventHandler;
+import com.playonlinux.containers.WineContainerEventHandler;
 import com.playonlinux.containers.ContainersEntitiesProvider;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
@@ -54,7 +54,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Inject
     private static ScriptFactory scriptFactory;
 
-    private final ContainerEventHandler containerEventHandler = new ContainerEventHandler();
+    private final WineContainerEventHandler wineContainerEventHandler = new WineContainerEventHandler();
 
     @Override
     public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
@@ -103,8 +103,8 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     }
 
     @Override
-    public ContainerEventHandler getContainerEventHandler() {
-        return containerEventHandler;
+    public WineContainerEventHandler getWineContainerEventHandler() {
+        return wineContainerEventHandler;
     }
 
     @Override

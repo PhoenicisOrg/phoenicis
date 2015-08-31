@@ -16,15 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.framework.wizard;
 
-/**
- * Represents a component that has the same Lifecycle than a {@link DefaultSetupWizard}
- */
-public interface SetupWizardComponent extends AutoCloseable {
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.ui.api.ProgressControl;
 
-    /**
-     * Close the component
-     */
-    void close();
+public interface ProgressWizard extends SetupWizard {
+    ProgressControl progressBar(String textToShow) throws CancelException;
 }
