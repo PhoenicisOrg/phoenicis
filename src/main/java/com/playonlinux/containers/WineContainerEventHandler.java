@@ -43,8 +43,7 @@ public class WineContainerEventHandler {
                     containerSetupWizard.init();
                     try (Wine ignored = Wine.wizard(containerSetupWizard)
                             .selectPrefix(winePrefixDirectory.getName())
-                            .runBackground("winecfg")
-                            .waitExit()) {
+                            .runForeground("winecfg")) {
                     } catch (CancelException e) {
                         LOGGER.info(e);
                     }
