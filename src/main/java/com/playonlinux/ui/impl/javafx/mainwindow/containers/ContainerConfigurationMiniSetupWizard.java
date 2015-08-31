@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ContainerConfigurationMiniSetupWizard implements WineWizard {
-    private final ProgressControl progressControl;
+    private final ContainerConfigurationView<?> progressControl;
     private final List<SetupWizardComponent> setupWizardComponents = new ArrayList<>();
 
-    ContainerConfigurationMiniSetupWizard(ProgressControl progressControl) {
+    ContainerConfigurationMiniSetupWizard(ContainerConfigurationView<?> progressControl) {
         this.progressControl = progressControl;
     }
 
@@ -49,7 +49,7 @@ class ContainerConfigurationMiniSetupWizard implements WineWizard {
 
     @Override
     public void init() {
-        // Nothing to init
+        progressControl.showToolbar();
     }
 
     @Override
@@ -64,6 +64,7 @@ class ContainerConfigurationMiniSetupWizard implements WineWizard {
 
     @Override
     public void close() {
+        progressControl.hideToolbar();
         for(SetupWizardComponent setupWizardComponent: setupWizardComponents) {
             setupWizardComponent.close();
         }

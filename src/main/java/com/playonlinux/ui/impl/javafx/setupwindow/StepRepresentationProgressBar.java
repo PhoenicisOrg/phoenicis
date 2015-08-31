@@ -60,7 +60,6 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
 
     @Override
     public void setProgressPercentage(double value) {
-        System.out.println(value);
         UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
         messageSender.asynchronousSend(new AsynchroneousMessage() {
                                            @Override

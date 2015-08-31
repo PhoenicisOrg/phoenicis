@@ -19,4 +19,6 @@
 package com.playonlinux.framework.wizard;
 
 public interface WineWizard extends ChoiceWizard, ProgressWizard, LogWizard {
+    @Override
+    void close();
 }

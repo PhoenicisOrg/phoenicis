@@ -36,6 +36,7 @@ public class WineContainerEventHandler {
     private static final Logger LOGGER = Logger.getLogger(WineContainerEventHandler.class);
 
     public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory) {
+        containerSetupWizard.init();
         executorService.submit(() -> {
                     try (Wine ignored = Wine.wizard(containerSetupWizard)
                             .selectPrefix(winePrefixDirectory.getName())
@@ -45,5 +46,6 @@ public class WineContainerEventHandler {
                     }
                 }
         );
+        containerSetupWizard.close();
     }
 }
