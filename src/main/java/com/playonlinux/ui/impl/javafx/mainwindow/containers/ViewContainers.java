@@ -86,7 +86,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     private void selectContainer(ContainerEntity containerEntity) {
         /* Not perfect. Needs more abstraction  */
         if(containerEntity instanceof WinePrefixContainerEntity) {
-            this.showRightView(new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity));
+            this.showRightView(new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, eventHandlerContainers));
         } else {
             this.showRightView(new GenericContainerConfigurationView(containerEntity));
         }

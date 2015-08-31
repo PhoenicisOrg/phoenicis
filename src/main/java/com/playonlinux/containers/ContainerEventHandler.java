@@ -16,15 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.containers;
 
-/**
- * Represents a component that has the same Lifecycle than a {@link DefaultSetupWizard}
- */
-public interface SetupWizardComponent extends AutoCloseable {
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.framework.NullSetupWizard;
+import com.playonlinux.framework.Wine;
+import org.apache.log4j.Logger;
 
-    /**
-     * Close the component
-     */
-    void close();
+import java.io.File;
+
+public class ContainerEventHandler {
+    private static final Logger LOGGER = Logger.getLogger(ContainerEventHandler.class);
+
+    public void runWinecfg(File winePrefixDirectory) {
+        Wine wine = null;
+        try {
+            wine = Wine.wizard(new NullSetupWizard())
+                    .selectPrefix(winePrefixDirectory.getName())
+                    .runBackground("winecfg");
+        } catch (CancelException e) {
+            LOGGER.info(e);
+        }
+
+        wine.close();
+    }
 }

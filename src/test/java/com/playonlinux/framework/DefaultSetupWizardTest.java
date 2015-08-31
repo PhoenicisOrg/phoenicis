@@ -21,7 +21,6 @@ package com.playonlinux.framework;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.lang.FallbackLanguageBundle;
 import com.playonlinux.core.lang.LanguageBundle;
@@ -41,8 +40,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SetupWizardTest {
-    private SetupWizard setupWizard;
+public class DefaultSetupWizardTest {
+    private DefaultSetupWizard setupWizard;
     private Controller controllerMock = mock(Controller.class);
     private TestContextConfig testContextConfig = new TestContextConfig();
 
@@ -76,7 +75,7 @@ public class SetupWizardTest {
         when(controllerMock.createSetupWindowGUIInstance("Title")).thenReturn(new MockUISetupWindowImplementation());
         when(controllerMock.createUIMessageSender()).thenReturn(new MockUIMessageSenderImplementation());
 
-        this.setupWizard = new SetupWizard("Title");
+        this.setupWizard = new DefaultSetupWizard("Title");
         setupWizard.init();
     }
 

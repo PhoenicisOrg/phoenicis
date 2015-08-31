@@ -50,7 +50,7 @@ public class WineVersion {
     private final WineVersionManager wineVersionManager;
     private final SetupWizard setupWizard;
 
-    public WineVersion(String version, String wineDistribution, SetupWizard setupWizard) {
+    public WineVersion(String version, String wineDistribution, DefaultSetupWizard setupWizard) {
         this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
     }
 

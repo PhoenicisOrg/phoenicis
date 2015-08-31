@@ -20,6 +20,8 @@ package com.playonlinux.containers.entities;
 
 import com.playonlinux.wine.parameters.*;
 
+import java.io.File;
+
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public class WinePrefixContainerEntity extends ContainerEntity {
@@ -36,6 +38,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
     private final DirectDrawRenderer directDrawRenderer;
     private final AlwaysOffscreen alwaysOffscreen;
     private final MouseWarpOverride mouseWarpOverride;
+    private final File winePrefixDirectory;
 
     private WinePrefixContainerEntity(Builder builder) {
         super(builder.name, builder.path);
@@ -52,6 +55,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         this.directDrawRenderer = builder.directDrawRenderer;
         this.alwaysOffscreen = builder.alwaysOffscreen;
         this.mouseWarpOverride = builder.mouseWarpOverride;
+        this.winePrefixDirectory = builder.winePrefixDirectory;
     }
 
     /* General */
@@ -105,6 +109,10 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return mouseWarpOverride;
     }
 
+    public File getWinePrefixDirectory() {
+        return winePrefixDirectory;
+    }
+
     public static class Builder {
         private String wineVersion;
         private String wineDistribution;
@@ -121,6 +129,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         private DirectDrawRenderer directDrawRenderer = DirectDrawRenderer.DEFAULT;
         private AlwaysOffscreen alwaysOffscreen = AlwaysOffscreen.DEFAULT;
         private MouseWarpOverride mouseWarpOverride = MouseWarpOverride.DEFAULT;
+        private File winePrefixDirectory;
 
         public WinePrefixContainerEntity build() {
             return new WinePrefixContainerEntity(this);
@@ -198,6 +207,11 @@ public class WinePrefixContainerEntity extends ContainerEntity {
 
         public Builder withMouseWarpOverride(MouseWarpOverride mouseWarpOverride) {
             this.mouseWarpOverride = mouseWarpOverride;
+            return this;
+        }
+
+        public Builder withWinePrefixDirectory(File winePrefixDirectory) {
+            this.winePrefixDirectory = winePrefixDirectory;
             return this;
         }
     }

@@ -18,7 +18,6 @@
 
 package com.playonlinux.framework;
 
-import com.google.common.io.*;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.injection.Inject;
