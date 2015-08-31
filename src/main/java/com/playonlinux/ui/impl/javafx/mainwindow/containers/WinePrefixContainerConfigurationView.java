@@ -30,6 +30,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
@@ -49,6 +50,8 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 public class WinePrefixContainerConfigurationView extends ContainerConfigurationView<WinePrefixContainerEntity> {
     private final EventHandlerContainers eventHandlerContainers;
+
+    private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity, EventHandlerContainers eventHandlerContainers) {
         super(containerEntity);
@@ -234,8 +237,14 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
-                (e) -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory())), 0, 0);
+        final Button wineConfigButton = wineToolButton(translate("Configure Wine"), "winecfg.png",
+                (e) -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), (arg) -> {
+                    unlockAll();
+                    return null;
+                }));
+        lockableElements.add(wineConfigButton);
+        toolsContentPane.add(wineConfigButton, 0, 0);
+
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
 
         toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png", null), 1, 0);
@@ -296,10 +305,25 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
                 )
         );
         button.getStyleClass().addAll("wineToolButton");
-        button.setOnMouseClicked(eventHandler);
+        button.setOnMouseClicked(event -> {
+            lockAll();
+            eventHandler.handle(event);
+        });
         GridPane.setHalignment(button, HPos.CENTER);
 
         return button;
+    }
+
+    private void unlockAll() {
+        for(Node element: lockableElements) {
+            element.setDisable(false);
+        }
+    }
+
+    private void lockAll() {
+        for(Node element: lockableElements) {
+            element.setDisable(true);
+        }
     }
 
     private void addItemsVideoMemorySize(ComboBox<VideoMemorySize> videoMemorySizeComboBox) {

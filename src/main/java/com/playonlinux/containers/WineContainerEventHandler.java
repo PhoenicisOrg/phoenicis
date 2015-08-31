@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 @Scan
 public class WineContainerEventHandler {
@@ -35,17 +36,22 @@ public class WineContainerEventHandler {
 
     private static final Logger LOGGER = Logger.getLogger(WineContainerEventHandler.class);
 
-    public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory) {
-        containerSetupWizard.init();
+    public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Function<Void, Void> callBack) {
+
         executorService.submit(() -> {
+                    LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
+                    containerSetupWizard.init();
                     try (Wine ignored = Wine.wizard(containerSetupWizard)
                             .selectPrefix(winePrefixDirectory.getName())
-                            .runBackground("winecfg")) {
+                            .runBackground("winecfg")
+                            .waitExit()) {
                     } catch (CancelException e) {
                         LOGGER.info(e);
                     }
+                    callBack.apply(null);
+                    containerSetupWizard.close();
                 }
         );
-        containerSetupWizard.close();
+
     }
 }
