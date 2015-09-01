@@ -21,6 +21,6 @@ package com.playonlinux.framework.wizard;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.ProgressControl;
 
-public interface ProgressWizard extends SetupWizard {
+public interface ProgressWizard extends Wizard {
     ProgressControl progressBar(String textToShow) throws CancelException;
 }

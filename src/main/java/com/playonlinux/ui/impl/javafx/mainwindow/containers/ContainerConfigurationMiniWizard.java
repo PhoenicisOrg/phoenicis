@@ -28,11 +28,11 @@ import com.playonlinux.ui.api.ProgressControl;
 import java.util.ArrayList;
 import java.util.List;
 
-class ContainerConfigurationMiniSetupWizard implements WineWizard {
+class ContainerConfigurationMiniWizard implements WineWizard {
     private final ContainerConfigurationView<?> progressControl;
     private final List<SetupWizardComponent> setupWizardComponents = new ArrayList<>();
 
-    ContainerConfigurationMiniSetupWizard(ContainerConfigurationView<?> progressControl) {
+    ContainerConfigurationMiniWizard(ContainerConfigurationView<?> progressControl) {
         this.progressControl = progressControl;
     }
 

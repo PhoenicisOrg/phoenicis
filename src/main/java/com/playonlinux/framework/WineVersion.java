@@ -51,7 +51,13 @@ public class WineVersion {
     private final WineVersionManager wineVersionManager;
     private final WineWizard setupWizard;
 
-    public WineVersion(String version, String wineDistribution, WineWizard setupWizard) {
+    /**
+     * Python constructor
+     * @param version Version as string
+     * @param wineDistribution Distribution as String
+     * @param setupWizard Setup wizard to use
+     */
+    public WineVersion(String version, String wineDistribution, SetupWizard setupWizard) {
         this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
     }
 

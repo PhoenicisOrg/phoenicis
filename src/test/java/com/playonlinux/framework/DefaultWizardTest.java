@@ -40,8 +40,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DefaultSetupWizardTest {
-    private DefaultSetupWizard setupWizard;
+public class DefaultWizardTest {
+    private DefaultWizard setupWizard;
     private Controller controllerMock = mock(Controller.class);
     private TestContextConfig testContextConfig = new TestContextConfig();
 
@@ -75,7 +75,7 @@ public class DefaultSetupWizardTest {
         when(controllerMock.createSetupWindowGUIInstance("Title")).thenReturn(new MockUISetupWindowImplementation());
         when(controllerMock.createUIMessageSender()).thenReturn(new MockUIMessageSenderImplementation());
 
-        this.setupWizard = new DefaultSetupWizard("Title");
+        this.setupWizard = new DefaultWizard("Title");
         setupWizard.init();
     }
 

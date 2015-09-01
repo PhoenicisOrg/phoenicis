@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework.wizard;
 
-public interface SetupWizard extends AutoCloseable {
+public interface Wizard extends AutoCloseable {
     void init();
 
     String getTitle();
