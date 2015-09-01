@@ -123,9 +123,9 @@ public class WinePrefix implements AutoCloseable {
     private Collection<File> findAllFilesByExtension(String extension, File searchPath) {
         final Collection<File> candidates = new ArrayList<>();
         final File[] filesInSearchPath = searchPath.listFiles();
-        assert filesInSearchPath != null;
+
         for(File candidate: filesInSearchPath) {
-            if(candidate.isDirectory()) {
+            if(candidate.isDirectory() && !java.nio.file.Files.isSymbolicLink(candidate.toPath())) {
                 candidates.addAll(findAllFilesByExtension(extension, candidate));
             } else if(candidate.getName().toLowerCase().endsWith(extension.toLowerCase()) &&
                     !checkSearchExcludedFiles(candidate.getName())) {

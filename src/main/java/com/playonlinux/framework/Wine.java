@@ -692,4 +692,7 @@ public class Wine implements SetupWizardComponent {
         }
     }
 
+    public Collection<File> findExecutables() {
+        return prefix.findAllExecutables();
+    }
 }

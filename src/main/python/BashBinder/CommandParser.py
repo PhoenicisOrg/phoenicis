@@ -25,6 +25,8 @@ from com.playonlinux.framework import Downloader
 from com.playonlinux.framework import ScriptFailureException
 from com.playonlinux.framework import WineVersion
 from com.playonlinux.framework import Wine
+from com.playonlinux.framework import WineShortcut
+
 from com.playonlinux.core.utils import Architecture
 
 from java.net import URL
@@ -220,7 +222,7 @@ class CommandParser(object):
             prefixName = self.command[3]
             key = self.command[4]
 
-            return Wine(setupWindow).selectPrefix(prefixName).config().readValue(key)
+            return Wine.wizard(setupWindow).selectPrefix(prefixName).config().readValue(key)
 
 
         def POL_Config_PrefixWrite(self):
@@ -232,3 +234,21 @@ class CommandParser(object):
             value = self.command[5]
 
             return Wine(setupWindow).selectPrefix(prefixName).config().writeValue(key, value)
+
+        def POL_Shortcut(self):
+            setupWindowId = self.command[2]
+            setupWindow = self.setupWindowManager.getWindow(setupWindowId)
+
+            winePrefix = self.command[3]
+            binary = self.command[4]
+            shortcutName = self.command[5]
+            websiteIcon = self.command[6]
+            argument = self.command[7]
+            categories = self.command[8]
+
+            WineShortcut.wizard(setupWindow)\
+                .withArguments([argument])\
+                .withExecutableName(binary)\
+                .withWinePrefix(winePrefix)\
+                .withName(shortcutName)\
+                .create()
