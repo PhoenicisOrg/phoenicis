@@ -49,7 +49,7 @@ public final class PEReader {
         }
 
         if(rsrcSectionHeader == null) {
-            throw new IllegalStateException("No .rsrc sections found in the given executable");
+            return null;
         }
 
         long numberToSkip = rsrcSectionHeader.pointerToRawData.getUnsignedValue() - executableInputStream.getCount();
