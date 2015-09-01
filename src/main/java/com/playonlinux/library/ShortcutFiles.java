@@ -18,26 +18,21 @@
 
 package com.playonlinux.library;
 
-import com.playonlinux.core.scripts.Script;
-
 import java.io.File;
 import java.net.URL;
 
-class Shortcut {
+/**
+ * Contains the files required to represent a shortcut
+ */
+class ShortcutFiles {
     private final String shortcutName;
     private final URL iconPath;
-    private final Script runScript;
+    private final File shortcutFile;
 
-    private final File configFile;
-
-    public Shortcut(String shorctName, URL iconPath, Script runScript) {
-        this(shorctName, iconPath, runScript, null);
-    }
-    public Shortcut(String shortcutName, URL iconPath, Script runScript, File configFile) {
+    public ShortcutFiles(String shortcutName, URL iconPath, File shortcutFile) {
         this.shortcutName = shortcutName;
         this.iconPath = iconPath;
-        this.runScript = runScript;
-        this.configFile = configFile;
+        this.shortcutFile = shortcutFile;
     }
     
     public String getShortcutName() {
@@ -48,11 +43,7 @@ class Shortcut {
         return iconPath;
     }
 
-    public File getConfigFile() {
-        return configFile;
-    }
-
-    public Script getRunScript() {
-        return runScript;
+    public File getShortcutFile() {
+        return shortcutFile;
     }
 }

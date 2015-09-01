@@ -18,6 +18,7 @@
 
 package com.playonlinux.app;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.lang.LanguageBundle;
@@ -190,6 +191,15 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     @Bean
     public ExecutorService defaultExecutor() {
         return executor;
+    }
+
+    /**
+     * Jackson ObjectMapper
+     * @return the object mapper
+     */
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     @Override

@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 @Scan
 public final class LibraryEntitiesProvider
         extends ObservableDefaultImplementation<LibraryWindowEntity>
-        implements Observer<ShortcutSetDirectories, List<Shortcut>>,
+        implements Observer<ShortcutSetDirectories, List<ShortcutFiles>>,
                    EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
 
     @Inject
@@ -58,7 +58,7 @@ public final class LibraryEntitiesProvider
     private Filter<InstalledApplicationEntity> lastFilter;
 
     @Override
-    public void update(ShortcutSetDirectories observable, List<Shortcut> argument) {
+    public void update(ShortcutSetDirectories observable, List<ShortcutFiles> argument) {
         installedApplications.clear();
         installedApplications.addAll(argument.stream().map(shortcut -> new InstalledApplicationEntity.Builder()
                 .withName(shortcut.getShortcutName())
@@ -90,9 +90,8 @@ public final class LibraryEntitiesProvider
 
     @Override
     public void init() throws ServiceInitializationException {
-        final File shortcutDirectory = playOnLinuxContext.makeShortcutsScriptsPath();
+        final File shortcutDirectory = playOnLinuxContext.makeShortcutsPath();
         final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
-        final File configFilesDirectory = playOnLinuxContext.makeShortcutsConfigPath();
         final URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
 
         ObservableDirectoryFiles shortcutDirectoryObservable;
@@ -107,8 +106,7 @@ public final class LibraryEntitiesProvider
         playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
         playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
 
-        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
-                configFilesDirectory, defaultIcon);
+        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable, defaultIcon);
 
         shortcutSetDirectories.addObserver(this);
     }

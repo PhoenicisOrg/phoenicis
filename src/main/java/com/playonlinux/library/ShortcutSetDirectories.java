@@ -35,25 +35,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Scan
-class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortcut>>
+class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>>
         implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
     
     @Inject
     static ScriptFactory scriptFactory;
     
     private final ObservableDirectoryFiles iconDirectory;
-    private final File configFilesDirectory;
     private final ObservableDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
-    private final List<Shortcut> shortcuts;
+    private final List<ShortcutFiles> shortcutFiles;
 
     private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
 
     public ShortcutSetDirectories(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
-                                  File configFilesDirectory, URL defaultIcon) {
-        this.shortcuts = new ArrayList<>();
+                                  URL defaultIcon) {
+        this.shortcutFiles = new ArrayList<>();
         this.iconDirectory = iconDirectory;
-        this.configFilesDirectory = configFilesDirectory;
         this.defaultIcon = defaultIcon;
         this.shortcutDirectory = shortcutDirectory;
 
@@ -61,14 +59,14 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
         iconDirectory.addObserver(this);
     }
 
-    public synchronized List<Shortcut> getShortcuts() {
-        return shortcuts;
+    public synchronized List<ShortcutFiles> getShortcutFiles() {
+        return shortcutFiles;
     }
 
     @Override
     public void update(ObservableDirectoryFiles observableDirectoryFiles, File[] argument) {
         if(observableDirectoryFiles == shortcutDirectory) {
-            getShortcuts().clear();
+            getShortcutFiles().clear();
             for (File shortcutFile : argument) {
                 try {
                     URL iconURL;
@@ -79,24 +77,17 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
                         iconURL = new URL("file://"+iconFile.getAbsolutePath());
                     }
 
-                    File configFile = new File(configFilesDirectory, shortcutFile.getName());
+                    ShortcutFiles shortcutFiles;
 
-                    Shortcut shortcut;
-                    if (configFile.exists()) {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, scriptFactory
-                                .createInstance(shortcutFile),
-                                configFile);
-                    } else {
-                        shortcut = new Shortcut(shortcutFile.getName(), iconURL, scriptFactory
-                                .createInstance(shortcutFile));
-                    }
-                    this.getShortcuts().add(shortcut);
-                } catch (IOException | InstallerException e) {
+                    shortcutFiles = new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile);
+
+                    this.getShortcutFiles().add(shortcutFiles);
+                } catch (IOException e) {
                     LOGGER.warn(e);
                 }
             }
         }
-        this.notifyObservers(getShortcuts());
+        this.notifyObservers(getShortcutFiles());
     }
 
 

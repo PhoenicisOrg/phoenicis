@@ -120,16 +120,16 @@ public class PlayOnLinuxContext {
         return systemEnvironment;
     }
 
-    public File makeShortcutsScriptsPath() {
-        return new File(this.properties.getProperty("application.user.shortcuts.scripts"));
+    public File makeShortcutsPath() {
+        File shortcutPath = new File(this.properties.getProperty("application.user.shortcuts.scripts"));
+        if(!shortcutPath.exists()) {
+            shortcutPath.mkdirs();
+        }
+        return shortcutPath;
     }
 
     public File makeShortcutsIconsPath() {
         return new File(this.properties.getProperty("application.user.shortcuts.icons"));
-    }
-
-    public File makeShortcutsConfigPath() {
-        return new File(this.properties.getProperty("application.user.shortcuts.config"));
     }
 
     public String getUserHome() {

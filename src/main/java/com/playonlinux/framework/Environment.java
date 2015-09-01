@@ -63,6 +63,10 @@ public final class Environment {
         return playonOnLinuxEnvironment.get(variable);
     }
 
+    public static String getShortcutsPath() {
+        return playOnLinuxContext.makeShortcutsPath().getAbsolutePath();
+    }
+
     public static String getPath() throws ScriptFailureException {
         return getEnvironmentVar("PATH");
     }

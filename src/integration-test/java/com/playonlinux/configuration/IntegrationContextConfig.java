@@ -18,6 +18,7 @@
 
 package com.playonlinux.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.app.MockIntegrationContext;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -75,6 +76,11 @@ public class IntegrationContextConfig extends AbstractConfiguration {
     @Bean
     protected ServiceManager serviceManager() throws ServiceInitializationException {
         return new PlayOnLinuxServicesManager();
+    }
+
+    @Bean
+    protected ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     @Override
