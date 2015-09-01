@@ -58,7 +58,7 @@ public abstract class ContainerConfigurationView<T> extends VBox implements Prog
     }
 
     public WineWizard getMiniWizard() {
-        return new ContainerConfigurationMiniSetupWizard(this);
+        return new ContainerConfigurationMiniWizard(this);
     }
 
     @Override

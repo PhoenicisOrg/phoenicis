@@ -33,7 +33,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class Files implements SetupWizardComponent {
-    private DefaultSetupWizard setupWizard;
+    private DefaultWizard setupWizard;
     private ProgressControl progressControl;
 
     private static final int BLOCK_SIZE = 1024;
@@ -44,11 +44,11 @@ public class Files implements SetupWizardComponent {
     public Files() {
 
     }
-    public Files(DefaultSetupWizard setupWizard) {
+    public Files(DefaultWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
-    public static Files wizard(DefaultSetupWizard setupWizard) {
+    public static Files wizard(DefaultWizard setupWizard) {
         Files filesInstance = new Files(setupWizard);
         setupWizard.registerComponent(filesInstance);
         return new Files(setupWizard);

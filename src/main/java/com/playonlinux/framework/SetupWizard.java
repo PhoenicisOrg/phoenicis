@@ -25,7 +25,7 @@ import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.*;
 import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.framework.wizard.CompleteSetupWizard;
+import com.playonlinux.framework.wizard.CompleteWizard;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.ProgressControl;
@@ -44,7 +44,7 @@ import java.util.List;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 @Scan
-public class DefaultSetupWizard implements CompleteSetupWizard {
+public class SetupWizard implements CompleteWizard {
     private static final Logger LOGGER = Logger.getLogger(Setup.class);
 
     @Inject
@@ -69,7 +69,7 @@ public class DefaultSetupWizard implements CompleteSetupWizard {
      *
      * @param title title of the setupWindow
      */
-    public DefaultSetupWizard(String title) {
+    public SetupWizard(String title) {
         this.title = title;
         this.components = new ArrayList<>();
     }

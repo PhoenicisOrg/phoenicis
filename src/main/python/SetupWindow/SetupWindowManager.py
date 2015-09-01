@@ -22,7 +22,7 @@ from com.playonlinux.framework import SetupWizard
 class SetupWindowManager(object):
 
     def __init__(self, template):
-        """:type : dict[int, DefaultSetupWizard] """
+        """:type : dict[int, DefaultWizard] """
         self.managedWindows = {}
         self.template = template
 
@@ -30,7 +30,7 @@ class SetupWindowManager(object):
     def getWindow(self, windowId):
         """
             :param windowId: int
-            :rtype: DefaultSetupWizard
+            :rtype: DefaultWizard
         """
 
         try:
