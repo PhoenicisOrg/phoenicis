@@ -18,10 +18,10 @@
 
 package com.playonlinux.framework.wizard;
 
-import com.playonlinux.framework.DefaultWizard;
+import com.playonlinux.framework.SetupWizard;
 
 /**
- * Represents a component that has the same Lifecycle than a {@link DefaultWizard}
+ * Represents a component that has the same Lifecycle than a {@link SetupWizard}
  */
 public interface SetupWizardComponent extends AutoCloseable {
 
