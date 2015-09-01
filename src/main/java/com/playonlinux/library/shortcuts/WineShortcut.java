@@ -73,6 +73,18 @@ public class WineShortcut implements Shortcut {
         private String executableName;
         private List<String> arguments;
 
+        public String getWorkingDirectory() {
+            return workingDirectory;
+        }
+
+        public String getWinePrefix() {
+            return winePrefix;
+        }
+
+        public String getExecutableName() {
+            return executableName;
+        }
+
         public Builder withWineDebug(String wineDebug) {
             this.wineDebug = wineDebug;
             return this;
@@ -101,5 +113,8 @@ public class WineShortcut implements Shortcut {
         public WineShortcut create() {
             return new WineShortcut(this);
         }
+
+
+
     }
 }

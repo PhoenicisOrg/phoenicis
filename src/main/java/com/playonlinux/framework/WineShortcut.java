@@ -21,6 +21,7 @@ package com.playonlinux.framework;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.library.LibraryException;
@@ -31,6 +32,10 @@ import java.util.List;
 
 import static java.lang.String.format;
 
+/**
+ * Wine shortcut creator framework tool
+ * TODO: Handle icons, arguments, categories, desktop creation, etc...
+ */
 @Scan
 @ScriptClass
 @SuppressWarnings("unused")
@@ -82,7 +87,9 @@ public class WineShortcut implements SetupWizardComponent {
         return this;
     }
 
-    public void create() throws ScriptFailureException {
+    public void create() throws CancelException {
+        findWorkingDirectoryIfNotSet();
+
         final ShortcutCreator shortcutCreator = new ShortcutCreator();
         if(name == null) {
             throw new ScriptFailureException("You must provide a valid name for your shortcut. Aborting");
@@ -94,6 +101,19 @@ public class WineShortcut implements SetupWizardComponent {
             );
         } catch (LibraryException e) {
             throw new ScriptFailureException(e);
+        }
+    }
+
+    private void findWorkingDirectoryIfNotSet() throws CancelException {
+        if(wineShortcutBuilder.getWorkingDirectory() == null
+                && wineShortcutBuilder.getWinePrefix() != null
+                && wineShortcutBuilder.getExecutableName() != null) {
+            for (File executable : Wine.wizard(setupWizard).selectPrefix(wineShortcutBuilder.getWinePrefix()).findExecutables()) {
+                if(executable.getName().equals(wineShortcutBuilder.getExecutableName())) {
+                    wineShortcutBuilder.withWorkingDirectory(executable.getParent());
+                    break;
+                }
+            }
         }
     }
 
