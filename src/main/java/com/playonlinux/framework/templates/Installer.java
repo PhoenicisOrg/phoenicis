@@ -20,7 +20,7 @@ package com.playonlinux.framework.templates;
 
 import com.playonlinux.core.python.PythonAttribute;
 import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.framework.DefaultWizard;
+import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.framework.ScriptFailureException;
 
 /**
@@ -31,7 +31,7 @@ public abstract class Installer implements ScriptTemplate {
     private String title;
 
     /* Template attributes */
-    protected DefaultWizard setupWizard;
+    protected SetupWizard setupWizard;
     private boolean setupWizardInitialized = false;
 
     public void _defaultRollback() {
@@ -49,7 +49,7 @@ public abstract class Installer implements ScriptTemplate {
     }
 
     /* Methods that can be called */
-    protected DefaultWizard getSetupWizard() throws ScriptFailureException {
+    protected SetupWizard getSetupWizard() throws ScriptFailureException {
         createSetupWizard();
         initalizeSetupWizard();
         return setupWizard;
@@ -69,7 +69,7 @@ public abstract class Installer implements ScriptTemplate {
 
     private void createSetupWizard() {
         if(this.setupWizard == null) {
-            setupWizard = new DefaultWizard(title);
+            setupWizard = new SetupWizard(title);
             setupWizardInitialized = false;
         }
     }
