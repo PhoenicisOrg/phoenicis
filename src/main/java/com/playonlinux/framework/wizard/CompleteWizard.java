@@ -24,7 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public interface CompleteWizard extends Wizard, ProgressWizard, ChoiceWizard, LogWizard {
+public interface CompleteWizard extends Wizard, ProgressWizard, ChoiceWizard, LogWizard, WineWizard {
     void setLeftImage(String leftImage) throws IOException;
 
     void setTopImage(String topImage) throws IOException;
