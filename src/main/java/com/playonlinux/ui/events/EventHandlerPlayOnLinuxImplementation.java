@@ -65,7 +65,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Override
     public void runApplication(String applicationName) throws PlayOnLinuxException {
         Script playonLinuxScript = scriptFactory.createInstance(
-                new File(playOnLinuxContext.makeShortcutsScriptsPath(), applicationName)
+                new File(playOnLinuxContext.makeShortcutsPath(), applicationName)
         );
         playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
     }
