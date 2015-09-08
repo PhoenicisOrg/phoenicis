@@ -51,8 +51,6 @@ public class MainWindowEventHandler implements UIEventHandler {
 
     public MainWindowEventHandler(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
-
-        //TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
     }
 
 
@@ -64,6 +62,14 @@ public class MainWindowEventHandler implements UIEventHandler {
 
 
     /* GENERAL */
+
+    /**
+     * Initialize the EventHandler
+     */
+    public void init(){
+        //TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
+        mainWindow.getShortcutMenu().setVisible(false);
+    }
 
     /**
      * Request the application to exit
@@ -94,8 +100,6 @@ public class MainWindowEventHandler implements UIEventHandler {
     public void openLink(String url){
         QDesktopServices.openUrl(new QUrl(url));
     }
-
-
 
 
     /* POL CONTROL */
@@ -144,6 +148,11 @@ public class MainWindowEventHandler implements UIEventHandler {
      */
     public void setDisplaySize(ShortcutList.IconSize viewSize){
         mainWindow.getShortcutList().setIconSize(viewSize.value());
+    }
+
+    public void shortcutSelected(String title){
+        mainWindow.getShortcutMenu().setTitle(title);
+        mainWindow.getShortcutMenu().setVisible(true);
     }
 
 }

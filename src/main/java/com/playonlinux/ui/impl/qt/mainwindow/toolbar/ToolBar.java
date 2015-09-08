@@ -18,7 +18,7 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.toolbar;
 
-import com.playonlinux.ui.impl.qt.common.IconHelper;
+import com.playonlinux.ui.impl.qt.common.ResourceHelper;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
@@ -54,18 +54,15 @@ public class ToolBar extends QToolBar {
         setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon);
 
         actionToolRun = new QAction(mainWindow);
-        actionToolRun.setCheckable(false);
-        actionToolRun.setChecked(false);
-        actionToolRun.setIcon(IconHelper.fromResource(getClass(), "play.png"));
-        actionToolRun.setIconVisibleInMenu(true);
+        actionToolRun.setIcon(ResourceHelper.getIcon("shortcut/run.png"));
         actionToolClose = new QAction(mainWindow);
-        actionToolClose.setIcon(IconHelper.fromResource(getClass(), "stop.png"));
+        actionToolClose.setIcon(ResourceHelper.getIcon("shortcut/stop.png"));
         actionToolInstall = new QAction(mainWindow);
-        actionToolInstall.setIcon(IconHelper.fromResource(getClass(), "install.png"));
+        actionToolInstall.setIcon(ResourceHelper.getIcon("shortcut/install.png"));
         actionToolRemove = new QAction(mainWindow);
-        actionToolRemove.setIcon(IconHelper.fromResource(getClass(), "delete.png"));
+        actionToolRemove.setIcon(ResourceHelper.getIcon("shortcut/uninstall.png"));
         actionToolConfigure = new QAction(mainWindow);
-        actionToolConfigure.setIcon(IconHelper.fromResource(getClass(), "configure.png"));
+        actionToolConfigure.setIcon(ResourceHelper.getIcon("shortcut/configure.png"));
 
         addAction(actionToolRun);
         addAction(actionToolClose);

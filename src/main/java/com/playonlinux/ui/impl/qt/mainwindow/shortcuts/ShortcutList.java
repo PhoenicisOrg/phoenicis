@@ -19,6 +19,7 @@
 package com.playonlinux.ui.impl.qt.mainwindow.shortcuts;
 
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
+import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.gui.*;
 
@@ -60,4 +61,14 @@ public class ShortcutList extends QListView {
         this.setModel(new ShortcutListModel(mainWindow.getEventHandler(), IconSize.VERY_LARGE));
     }
 
+
+
+    /* EVENT HANDLERS */
+
+    @Override
+    protected void selectionChanged(QItemSelection selected, QItemSelection deselected) {
+        super.selectionChanged(selected, deselected);
+        String item = (String)model().data(selected.indexes().get(0));
+        mainWindow.getEventHandler().shortcutSelected(item);
+    }
 }

@@ -19,8 +19,10 @@
 package com.playonlinux.ui.impl.qt.mainwindow;
 
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
+import com.playonlinux.ui.impl.qt.common.ResourceHelper;
 import com.playonlinux.ui.impl.qt.mainwindow.menubar.MenuBar;
 import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
+import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenu;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionSideBar;
 import com.playonlinux.ui.impl.qt.mainwindow.toolbar.ToolBar;
 import com.trolltech.qt.core.QSize;
@@ -40,7 +42,10 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
     private MenuBar menuBar;
     private ToolBar toolBar;
+
     private ActionSideBar actionSideBar;
+    private ActionMenu polMenu;
+    private ShortcutSidebarMenu shortcutMenu;
 
     private QWidget centralwidget;
     private QHBoxLayout mainLayout;
@@ -54,11 +59,14 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         setupUi();
         retranslateUi();
 
+        eventHandler.init();
         this.show();
     }
 
 
     private void setupUi() {
+        setStyleSheet(ResourceHelper.getStyleSheet(getClass(), "style.css"));
+
         menuBar = new MenuBar(this);
         this.setMenuBar(menuBar);
 
@@ -67,6 +75,10 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
         actionSideBar = new ActionSideBar(this);
         addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, actionSideBar);
+        polMenu = new StaticSidebarMenu(this);
+        shortcutMenu = new ShortcutSidebarMenu(this);
+        actionSideBar.addMenu(polMenu);
+        actionSideBar.addMenu(shortcutMenu);
 
         centralwidget = new QWidget(this);
         setCentralWidget(centralwidget);
@@ -89,13 +101,27 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     }
 
 
-
     /* COMPONENT GETTERS */
     //grant access to ui components for the MainWindowEventHandler within the mainwindow namespace only
-    protected MenuBar getMenuBar(){ return menuBar; }
-    protected ToolBar getToolBar(){ return toolBar; }
-    protected ActionSideBar getSideBar(){ return actionSideBar; }
-    protected ShortcutList getShortcutList(){ return shortcutList; }
+    protected MenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    protected ToolBar getToolBar() {
+        return toolBar;
+    }
+
+    protected ActionSideBar getSideBar() {
+        return actionSideBar;
+    }
+
+    protected ShortcutSidebarMenu getShortcutMenu() {
+        return shortcutMenu;
+    }
+
+    protected ShortcutList getShortcutList() {
+        return shortcutList;
+    }
 
 
 

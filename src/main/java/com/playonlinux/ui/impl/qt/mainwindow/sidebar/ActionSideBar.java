@@ -21,8 +21,10 @@ package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.QDockWidget;
-import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -31,8 +33,11 @@ import static com.playonlinux.core.lang.Localisation.translate;
  */
 public class ActionSideBar extends QDockWidget {
 
-    public QWidget actionsSideBarContent;
+    private QWidget menuList;
+    private QVBoxLayout menuListLayout;
+    private QSpacerItem menuListSpacer;
 
+    private final List<ActionMenu> subMenus = new ArrayList<>();
 
     public ActionSideBar(MainWindow mainWindow){
         super(mainWindow);
@@ -42,16 +47,36 @@ public class ActionSideBar extends QDockWidget {
     }
 
     private void setupUi(){
+        setProperty("class", "ActionSideBar");
         setMinimumSize(new QSize(200, 40));
         setFeatures(QDockWidget.DockWidgetFeature.createQFlags(QDockWidget.DockWidgetFeature.DockWidgetFloatable, QDockWidget.DockWidgetFeature.DockWidgetMovable));
         setAllowedAreas(Qt.DockWidgetArea.createQFlags(Qt.DockWidgetArea.LeftDockWidgetArea, Qt.DockWidgetArea.RightDockWidgetArea));
 
-        actionsSideBarContent = new QWidget();
-        setWidget(actionsSideBarContent);
+        menuList = new QWidget();
+        menuListLayout = new QVBoxLayout(menuList);
+        menuList.setLayout(menuListLayout);
+        menuListLayout.setContentsMargins(0, 0, 0, 0);
+        menuListLayout.setSpacing(0);
+        menuListSpacer = new QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding);
+        menuListLayout.addItem(menuListSpacer);
+        setWidget(menuList);
     }
 
     private void retranslateUi(){
         setWindowTitle(translate("Actions"));
     }
+
+
+    public ActionMenu addMenu(String title){
+        ActionMenu newMenu = new ActionMenu(this, title);
+        addMenu(newMenu);
+        return newMenu;
+    }
+
+    public void addMenu(ActionMenu menu){
+        subMenus.add(menu);
+        menuListLayout.insertWidget((subMenus.size() - 1), menu);
+    }
+
 
 }
