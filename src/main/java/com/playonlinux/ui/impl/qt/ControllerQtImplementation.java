@@ -23,7 +23,7 @@ import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QApplication;
 
 /**
  * Controller and entrypoint for POL's Qt-Gui implementation.

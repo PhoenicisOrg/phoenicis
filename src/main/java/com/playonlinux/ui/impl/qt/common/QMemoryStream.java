@@ -30,15 +30,15 @@ public class QMemoryStream extends QIODevice {
 
     private InputStream innerStream;
 
-    public QMemoryStream(InputStream innerStream){
+    public QMemoryStream(InputStream innerStream) {
         this.innerStream = innerStream;
     }
 
     @Override
     public int readData(byte[] bytes) {
-        try{
+        try {
             return innerStream.read(bytes);
-        }catch(IOException e){
+        } catch (IOException e) {
             //FIXME
             e.printStackTrace();
             return -1;

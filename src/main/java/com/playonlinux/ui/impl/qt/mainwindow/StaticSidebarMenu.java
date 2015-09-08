@@ -21,8 +21,6 @@ package com.playonlinux.ui.impl.qt.mainwindow;
 import com.playonlinux.ui.impl.qt.common.ResourceHelper;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenu;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenuItem;
-import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionSideBar;
-import com.trolltech.qt.gui.QIcon;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -45,23 +43,22 @@ public class StaticSidebarMenu extends ActionMenu {
         this.connectSlots();
     }
 
-    private void setupUi(){
+    private void setupUi() {
         installMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/install.png"), translate("Install"));
         runScriptMenuItem = addMenuItem(ResourceHelper.getIcon("script/open.png"), translate("Run a script"));
     }
 
-    private void connectSlots(){
+    private void connectSlots() {
         installMenuItem.clicked.connect(this, "installMenuItem_clicked()");
         runScriptMenuItem.clicked.connect(this, "runScriptMenuItem_clicked()");
     }
 
 
-
-    private void installMenuItem_clicked(){
+    private void installMenuItem_clicked() {
         //TODO: link to Install-Window
     }
 
-    private void runScriptMenuItem_clicked(){
+    private void runScriptMenuItem_clicked() {
         mainWindow.getEventHandler().runLocalScript();
     }
 

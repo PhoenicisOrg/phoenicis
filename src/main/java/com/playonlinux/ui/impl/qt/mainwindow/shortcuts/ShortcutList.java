@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.qt.mainwindow.shortcuts;
 
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
-import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.QSize;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QItemSelection;
+import com.trolltech.qt.gui.QListView;
 
 
 /**
@@ -30,18 +30,18 @@ import com.trolltech.qt.gui.*;
 public class ShortcutList extends QListView {
 
     public enum IconSize {
-        SMALL(new QSize(16,16)),
-        MEDIUM(new QSize(24,24)),
-        LARGE(new QSize(32,32)),
-        VERY_LARGE(new QSize(48,48));
+        SMALL(new QSize(16, 16)),
+        MEDIUM(new QSize(24, 24)),
+        LARGE(new QSize(32, 32)),
+        VERY_LARGE(new QSize(48, 48));
 
         private QSize size;
 
-        IconSize(QSize size){
+        IconSize(QSize size) {
             this.size = size;
         }
 
-        public QSize value(){
+        public QSize value() {
             return size;
         }
 
@@ -68,7 +68,7 @@ public class ShortcutList extends QListView {
     @Override
     protected void selectionChanged(QItemSelection selected, QItemSelection deselected) {
         super.selectionChanged(selected, deselected);
-        String item = (String)model().data(selected.indexes().get(0));
+        String item = (String) model().data(selected.indexes().get(0));
         mainWindow.getEventHandler().shortcutSelected(item);
     }
 }

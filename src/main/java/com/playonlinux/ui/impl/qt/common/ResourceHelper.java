@@ -36,11 +36,12 @@ public final class ResourceHelper {
 
     /**
      * Load the resource of the given class with the given path as an image.
-     * @param c Class who's resources should be searched for the given resourcePath.
+     *
+     * @param c            Class who's resources should be searched for the given resourcePath.
      * @param resourcePath Relative path to the resource starting from the classes package.
      * @return QIcon, created from the loaded resource.
      */
-    public static QIcon getIcon(Class<?> c, String resourcePath){
+    public static QIcon getIcon(Class<?> c, String resourcePath) {
         //get classPath to class's resources
         String classPath = c.getPackage().getName().replace('.', '/');
 
@@ -49,14 +50,15 @@ public final class ResourceHelper {
 
     /**
      * Load a shared resource as image.
+     *
      * @param resourcePath Relative path to the shared resource folder.
      * @return QIcon, created from the loaded resource.
      */
-    public static QIcon getIcon(String resourcePath){
+    public static QIcon getIcon(String resourcePath) {
         return getIcon(ResourceHelper.class, resourcePath);
     }
 
-    public static String getStyleSheet(Class<?> c, String resourcePath){
+    public static String getStyleSheet(Class<?> c, String resourcePath) {
         StringWriter styleWriter = new StringWriter();
         InputStream styleStream = c.getResourceAsStream(resourcePath);
         try {

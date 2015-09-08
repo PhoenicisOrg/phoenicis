@@ -283,9 +283,16 @@ public class MenuBar extends QMenuBar {
     private void actionRun_triggered() {
         mainWindow.getEventHandler().runLocalScript();
     }
-    private void actionInstall_triggered() {}
-    private void actionRemove_triggered() {}
-    private void actionDonate_triggered() {}
+
+    private void actionInstall_triggered() {
+    }
+
+    private void actionRemove_triggered() {
+    }
+
+    private void actionDonate_triggered() {
+    }
+
     private void actionExit_triggered() {
         mainWindow.getEventHandler().exit();
     }
@@ -293,44 +300,65 @@ public class MenuBar extends QMenuBar {
 
     //DISPLAY
     private void actionSmall_Icons_triggered(boolean checked) {
-        if(checked){
+        if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.SMALL);
         }
     }
+
     private void actionMedium_Icons_triggered(boolean checked) {
-        if(checked){
+        if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.MEDIUM);
-        }}
+        }
+    }
+
     private void actionLarge_Icons_triggered(boolean checked) {
-        if(checked){
+        if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.LARGE);
-        }}
+        }
+    }
+
     private void actionVery_Large_Icons_triggered(boolean checked) {
-        if(checked){
+        if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.VERY_LARGE);
-        }}
+        }
+    }
 
     //TOOLS
-    private void actionWineVersions_triggered() {}
-    private void actionLocalScript_triggered() {}
-    private void actionConsole_triggered() {}
-    private void actionCloseAll_triggered() {}
-    private void actionDebugger_triggered() {}
+    private void actionWineVersions_triggered() {
+    }
+
+    private void actionLocalScript_triggered() {
+    }
+
+    private void actionConsole_triggered() {
+    }
+
+    private void actionCloseAll_triggered() {
+    }
+
+    private void actionDebugger_triggered() {
+    }
 
     //SETTINGS
-    private void actionNetwork_triggered() {}
+    private void actionNetwork_triggered() {
+    }
 
     //HELP
-    private void actionAbout_triggered() {}
+    private void actionAbout_triggered() {
+    }
+
     private void actionSoftware_triggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/supported_apps.html");
     }
+
     private void actionNews_triggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/news.html");
     }
+
     private void actionForums_triggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/forums.html");
     }
+
     private void actionBugs_triggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/bugs.html");
     }
@@ -339,9 +367,11 @@ public class MenuBar extends QMenuBar {
     private void actionGooglePlus_triggered() {
         mainWindow.getEventHandler().openLink("https://plus.google.com/+playonlinux");
     }
+
     private void actionTwitter_triggered() {
         mainWindow.getEventHandler().openLink("https://twitter.com/PlayOnLinux");
     }
+
     private void actionFacebook_triggered() {
         mainWindow.getEventHandler().openLink("https://www.facebook.com/playonlinux");
     }

@@ -20,14 +20,16 @@ package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
 
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QSizePolicy;
 
 /**
  * Item within a menu of the ActionSideBar.
  */
 public class ActionMenuItem extends QPushButton {
 
-    public ActionMenuItem(ActionMenu menu, QIcon icon, String text){
+    public ActionMenuItem(ActionMenu menu, QIcon icon, String text) {
         super(menu);
         setAttribute(Qt.WidgetAttribute.WA_Hover, true);
         setupUi();
@@ -36,7 +38,7 @@ public class ActionMenuItem extends QPushButton {
         setText(text);
     }
 
-    private void setupUi(){
+    private void setupUi() {
         setProperty("class", "ActionMenuItem");
         setIconSize(new QSize(16, 16));
         setFlat(true);

@@ -41,7 +41,7 @@ public class ToolBar extends QToolBar {
     private QAction actionToolConfigure;
 
 
-    public ToolBar(MainWindow mainWindow){
+    public ToolBar(MainWindow mainWindow) {
         super(mainWindow);
         this.mainWindow = mainWindow;
 
@@ -49,7 +49,7 @@ public class ToolBar extends QToolBar {
         retranslateUi();
     }
 
-    private void setupUi(){
+    private void setupUi() {
         setIconSize(new QSize(32, 32));
         setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon);
 
@@ -73,7 +73,7 @@ public class ToolBar extends QToolBar {
         addAction(actionToolConfigure);
     }
 
-    private void retranslateUi(){
+    private void retranslateUi() {
         setWindowTitle(translate("toolBar"));
 
         actionToolRun.setText(translate("Run"));

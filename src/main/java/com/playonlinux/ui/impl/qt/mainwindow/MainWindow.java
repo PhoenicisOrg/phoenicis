@@ -27,9 +27,10 @@ import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionSideBar;
 import com.playonlinux.ui.impl.qt.mainwindow.toolbar.ToolBar;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.*;
-
-import java.awt.*;
+import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QMainWindow;
+import com.trolltech.qt.gui.QWidget;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 

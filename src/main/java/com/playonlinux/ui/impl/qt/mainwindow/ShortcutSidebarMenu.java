@@ -19,11 +19,8 @@
 package com.playonlinux.ui.impl.qt.mainwindow;
 
 import com.playonlinux.ui.impl.qt.common.ResourceHelper;
-import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenu;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenuItem;
-import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionSideBar;
-import com.trolltech.qt.gui.QIcon;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -41,7 +38,7 @@ public class ShortcutSidebarMenu extends ActionMenu {
     private ActionMenuItem createMenuItem;
     private ActionMenuItem openDirectoryMenuItem;
     private ActionMenuItem uninstallMenuItem;
-    
+
     public ShortcutSidebarMenu(MainWindow mainWindow) {
         super(mainWindow.getSideBar(), "");
         this.mainWindow = mainWindow;
@@ -49,8 +46,8 @@ public class ShortcutSidebarMenu extends ActionMenu {
         setupUi();
         connectSlots();
     }
-    
-    private void setupUi(){
+
+    private void setupUi() {
         runMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/run.png"), translate("Run"));
         closeMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/stop.png"), translate("Close"));
         debugMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/debug.png"), translate("Debug"));
@@ -60,7 +57,7 @@ public class ShortcutSidebarMenu extends ActionMenu {
         uninstallMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/uninstall.png"), translate("Uninstall"));
     }
 
-    private void connectSlots(){
+    private void connectSlots() {
         runMenuItem.clicked.connect(this, "runMenuItem_clicked()");
         closeMenuItem.clicked.connect(this, "closeMenuItem_clicked()");
         debugMenuItem.clicked.connect(this, "debugMenuItem_clicked()");
@@ -73,32 +70,32 @@ public class ShortcutSidebarMenu extends ActionMenu {
 
     /* EVENT HANDLERS */
 
-    private void runMenuItem_clicked(){
+    private void runMenuItem_clicked() {
         //TODO: connect
     }
 
-    private void closeMenuItem_clicked(){
+    private void closeMenuItem_clicked() {
         //TODO: connect
     }
 
-    private void debugMenuItem_clicked(){
+    private void debugMenuItem_clicked() {
         //TODO: connect
     }
 
-    private void configureMenuItem_clicked(){
+    private void configureMenuItem_clicked() {
         //TODO: connect
     }
 
-    private void createMenuItem_clicked(){
+    private void createMenuItem_clicked() {
         //TODO: connect
     }
 
-    private void openDirectoryMenuItem_clicked(){
+    private void openDirectoryMenuItem_clicked() {
         //TODO: connect
     }
 
-    private void uninstallMenuItem_clicked(){
+    private void uninstallMenuItem_clicked() {
         //TODO: connect
     }
-    
+
 }

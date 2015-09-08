@@ -66,13 +66,14 @@ public class MainWindowEventHandler implements UIEventHandler {
     /**
      * Initialize the EventHandler
      */
-    public void init(){
+    public void init() {
         //TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
         mainWindow.getShortcutMenu().setVisible(false);
     }
 
     /**
      * Request the application to exit
+     *
      * @return False when the user aborted the application exiting, True otherwise.
      */
     public boolean exit() {
@@ -94,10 +95,8 @@ public class MainWindowEventHandler implements UIEventHandler {
     }
 
 
-
-
     /* GENERAL */
-    public void openLink(String url){
+    public void openLink(String url) {
         QDesktopServices.openUrl(new QUrl(url));
     }
 
@@ -115,7 +114,7 @@ public class MainWindowEventHandler implements UIEventHandler {
         fileDialog.setFileMode(QFileDialog.FileMode.ExistingFile);
         fileDialog.setViewMode(QFileDialog.ViewMode.List);
         fileDialog.setAcceptMode(QFileDialog.AcceptMode.AcceptOpen);
-        if(fileDialog.exec() == QDialog.DialogCode.Accepted.value()){
+        if (fileDialog.exec() == QDialog.DialogCode.Accepted.value()) {
             File scriptFile = new File(fileDialog.selectedFiles().get(0));
 
             //save folder to restore next time
@@ -136,21 +135,23 @@ public class MainWindowEventHandler implements UIEventHandler {
 
     /**
      * Get the EntityProvider for the registered shortcuts.
+     *
      * @return EntityProvider containing the registered shortcuts.
      */
-    public EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getShortcuts(){
+    public EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getShortcuts() {
         return mainEventHandler.getInstalledApplications();
     }
 
     /**
      * Set the iconSize within the ShortcutList
+     *
      * @param viewSize Size of the icons displayed within the ShortcutList
      */
-    public void setDisplaySize(ShortcutList.IconSize viewSize){
+    public void setDisplaySize(ShortcutList.IconSize viewSize) {
         mainWindow.getShortcutList().setIconSize(viewSize.value());
     }
 
-    public void shortcutSelected(String title){
+    public void shortcutSelected(String title) {
         mainWindow.getShortcutMenu().setTitle(title);
         mainWindow.getShortcutMenu().setVisible(true);
     }

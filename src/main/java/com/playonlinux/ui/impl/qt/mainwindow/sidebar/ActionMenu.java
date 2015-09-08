@@ -18,10 +18,9 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
 
-import com.trolltech.qt.gui.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.trolltech.qt.gui.QGroupBox;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QVBoxLayout;
 
 /**
  * Menu displayed within the ActionSideBar.
@@ -30,22 +29,22 @@ public class ActionMenu extends QGroupBox {
 
     QVBoxLayout menuLayout;
 
-    public ActionMenu(ActionSideBar sideBar, String title){
+    public ActionMenu(ActionSideBar sideBar, String title) {
         super(sideBar);
         setupUi();
         setTitle(title);
     }
 
-    private void setupUi(){
+    private void setupUi() {
         setProperty("class", "ActionMenu");
         menuLayout = new QVBoxLayout(this);
         setLayout(menuLayout);
         menuLayout.setSpacing(2);
-        menuLayout.setContentsMargins(12,0,6,12);
+        menuLayout.setContentsMargins(12, 0, 6, 12);
         setFlat(true);
     }
 
-    public ActionMenuItem addMenuItem(QIcon icon, String title){
+    public ActionMenuItem addMenuItem(QIcon icon, String title) {
         ActionMenuItem newMenuItem = new ActionMenuItem(this, icon, title);
         menuLayout.addWidget(newMenuItem);
         return newMenuItem;

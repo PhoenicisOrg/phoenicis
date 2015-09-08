@@ -39,14 +39,14 @@ public class ActionSideBar extends QDockWidget {
 
     private final List<ActionMenu> subMenus = new ArrayList<>();
 
-    public ActionSideBar(MainWindow mainWindow){
+    public ActionSideBar(MainWindow mainWindow) {
         super(mainWindow);
 
         setupUi();
         retranslateUi();
     }
 
-    private void setupUi(){
+    private void setupUi() {
         setProperty("class", "ActionSideBar");
         setMinimumSize(new QSize(200, 40));
         setFeatures(QDockWidget.DockWidgetFeature.createQFlags(QDockWidget.DockWidgetFeature.DockWidgetFloatable, QDockWidget.DockWidgetFeature.DockWidgetMovable));
@@ -62,18 +62,18 @@ public class ActionSideBar extends QDockWidget {
         setWidget(menuList);
     }
 
-    private void retranslateUi(){
+    private void retranslateUi() {
         setWindowTitle(translate("Actions"));
     }
 
 
-    public ActionMenu addMenu(String title){
+    public ActionMenu addMenu(String title) {
         ActionMenu newMenu = new ActionMenu(this, title);
         addMenu(newMenu);
         return newMenu;
     }
 
-    public void addMenu(ActionMenu menu){
+    public void addMenu(ActionMenu menu) {
         subMenus.add(menu);
         menuListLayout.insertWidget((subMenus.size() - 1), menu);
     }
