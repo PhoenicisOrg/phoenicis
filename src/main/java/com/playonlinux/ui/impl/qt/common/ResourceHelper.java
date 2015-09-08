@@ -20,23 +20,53 @@ package com.playonlinux.ui.impl.qt.common;
 
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QPixmap;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 
 /**
  * Small helper class for easing the use of images and icons.
  */
-public final class IconHelper {
+public final class ResourceHelper {
+
+    private static final Logger LOGGER = Logger.getLogger(ResourceHelper.class);
 
     /**
-     * Load the resource of the given class with the given path to the resource.
-     * @param c Class who's resources should be searched for the given resourcePath.
+     * Load the resource of the given class with the given path as an image.
+     *
+     * @param c            Class who's resources should be searched for the given resourcePath.
      * @param resourcePath Relative path to the resource starting from the classes package.
      * @return QIcon, created from the loaded resource.
      */
-    public static QIcon fromResource(Class<?> c, String resourcePath){
+    public static QIcon getIcon(Class<?> c, String resourcePath) {
         //get classPath to class's resources
         String classPath = c.getPackage().getName().replace('.', '/');
 
         return new QIcon(new QPixmap("classpath:" + classPath + "/" + resourcePath));
+    }
+
+    /**
+     * Load a shared resource as image.
+     *
+     * @param resourcePath Relative path to the shared resource folder.
+     * @return QIcon, created from the loaded resource.
+     */
+    public static QIcon getIcon(String resourcePath) {
+        return getIcon(ResourceHelper.class, resourcePath);
+    }
+
+    public static String getStyleSheet(Class<?> c, String resourcePath) {
+        StringWriter styleWriter = new StringWriter();
+        InputStream styleStream = c.getResourceAsStream(resourcePath);
+        try {
+            IOUtils.copy(styleStream, styleWriter, "UTF-8");
+        } catch (IOException e) {
+            LOGGER.error(e);
+        }
+        return styleWriter.toString();
     }
 
 }

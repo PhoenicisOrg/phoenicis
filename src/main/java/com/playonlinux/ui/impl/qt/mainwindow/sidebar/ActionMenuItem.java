@@ -16,37 +16,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.common;
+package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
 
-import com.trolltech.qt.core.QIODevice;
-
-import java.io.IOException;
-import java.io.InputStream;
+import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QSizePolicy;
 
 /**
- * An implementation of QIODevice for Java InMemoryStreams.
+ * Item within a menu of the ActionSideBar.
  */
-public class QMemoryStream extends QIODevice {
+public class ActionMenuItem extends QPushButton {
 
-    private InputStream innerStream;
+    public ActionMenuItem(ActionMenu menu, QIcon icon, String text) {
+        super(menu);
+        setAttribute(Qt.WidgetAttribute.WA_Hover, true);
+        setupUi();
 
-    public QMemoryStream(InputStream innerStream) {
-        this.innerStream = innerStream;
+        setIcon(icon);
+        setText(text);
     }
 
-    @Override
-    public int readData(byte[] bytes) {
-        try {
-            return innerStream.read(bytes);
-        } catch (IOException e) {
-            //FIXME
-            e.printStackTrace();
-            return -1;
-        }
+    private void setupUi() {
+        setProperty("class", "ActionMenuItem");
+        setIconSize(new QSize(16, 16));
+        setFlat(true);
+        setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed);
     }
 
-    @Override
-    public int writeData(byte[] bytes) {
-        return -1; //we don't need write-support at the moment.
-    }
 }

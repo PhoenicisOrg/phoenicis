@@ -24,8 +24,13 @@ import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindowEventHandler;
-import com.trolltech.qt.core.*;
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.core.QAbstractListModel;
+import com.trolltech.qt.core.QModelIndex;
+import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QPixmap;
 
 import java.util.ArrayList;
 import java.util.List;
