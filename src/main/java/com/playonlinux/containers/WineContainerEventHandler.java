@@ -37,7 +37,6 @@ public class WineContainerEventHandler {
     private static final Logger LOGGER = Logger.getLogger(WineContainerEventHandler.class);
 
     public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Function<Void, Void> callBack) {
-
         executorService.submit(() -> {
                     LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
                     containerSetupWizard.init();

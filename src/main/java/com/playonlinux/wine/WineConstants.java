@@ -16,16 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.library.shortcuts;
+package com.playonlinux.wine;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.framework.wizard.WineWizard;
-
-/**
- * Represents a shortcut
- */
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
-public interface Shortcut {
-    void execute(WineWizard wineWizard) throws CancelException;
+public class WineConstants {
+    public static final String WINEDEBUG = "WINEDEBUG";
 }

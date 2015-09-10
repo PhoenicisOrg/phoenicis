@@ -25,6 +25,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -344,6 +345,7 @@ public class Wine implements SetupWizardComponent {
      */
     public Wine runBackground(File workingDirectory, String executableToRun, List<String> arguments,
                                     Map<String, String> environment) throws ScriptFailureException {
+
         runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
         return this;
     }

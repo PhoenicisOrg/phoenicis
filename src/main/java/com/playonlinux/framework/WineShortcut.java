@@ -30,15 +30,12 @@ import com.playonlinux.library.ShortcutCreator;
 import java.io.File;
 import java.util.List;
 
-import static java.lang.String.format;
-
 /**
  * Wine shortcut creator framework tool
  * TODO: Handle icons, arguments, categories, desktop creation, etc...
  */
 @Scan
 @ScriptClass
-@SuppressWarnings("unused")
 public class WineShortcut implements SetupWizardComponent {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -116,7 +113,6 @@ public class WineShortcut implements SetupWizardComponent {
             }
         }
     }
-
 
     @Override
     public void close() {

@@ -20,16 +20,20 @@ package com.playonlinux.ui.impl.javafx.common;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import javafx.scene.control.Alert;
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ErrorMessage {
+    final static Logger LOGGER = Logger.getLogger(ErrorMessage.class);
     final Alert alert;
 
     public ErrorMessage(String message, PlayOnLinuxException exception) {
+        LOGGER.error(ExceptionUtils.getStackTrace(exception));
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(translate(message));
-        alert.setContentText(String.format("The error was: %s", exception));
+        alert.setContentText(String.format("The error was: %s", ExceptionUtils.getStackTrace(exception)));
     }
 
     public void show() {
