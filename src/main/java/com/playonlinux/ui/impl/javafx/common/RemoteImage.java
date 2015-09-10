@@ -38,21 +38,19 @@ import java.net.URL;
  * This class has been created to facilitate the integration of remote images inside PlayOnLinux app
  * In general, we should avoid adding such mechanism in the UI implementation
  */
-@Scan
 public class RemoteImage extends VBox {
-    @Inject
-    static ServiceManager serviceManager;
 
     private static final Logger LOGGER = Logger.getLogger(RemoteImage.class);
 
     private final URL imageUrl;
 
-    private final DownloadManager downloadManager = serviceManager.getService(DownloadManager.class);
+    private final DownloadManager downloadManager;
 
-    public RemoteImage(URL imgeUrl) {
+    public RemoteImage(ServiceManager serviceManager, URL imgeUrl) {
         this.getChildren().add(new ProgressIndicator());
         this.getStyleClass().add("downloadImageWaiting");
         this.imageUrl = imgeUrl;
+        this.downloadManager = serviceManager.getService(DownloadManager.class);
     }
 
 

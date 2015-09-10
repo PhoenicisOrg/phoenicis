@@ -94,7 +94,7 @@ final class AppPanel extends VBox {
         miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
         for (URL imageUrl : appsItemDTO.getMiniaturesUrls()) {
-            RemoteImage remoteImage = new RemoteImage(imageUrl);
+            RemoteImage remoteImage = new RemoteImage(eventHandlerApps.getServiceManager(), imageUrl);
             miniaturesPane.getChildren().add(remoteImage);
             remoteImage.download();
         }
