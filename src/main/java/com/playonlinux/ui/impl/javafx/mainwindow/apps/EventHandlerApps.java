@@ -25,6 +25,7 @@ import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
@@ -34,6 +35,9 @@ import com.playonlinux.ui.events.EventHandler;
 final class EventHandlerApps implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
+
+    @Inject
+    static ServiceManager serviceManager;
 
     @Override
     public EventHandler getMainEventHandler() {
@@ -50,5 +54,9 @@ final class EventHandlerApps implements UIEventHandler {
 
     public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptId) throws AppsManagerException {
         return mainEventHandler.getInstallerDownloaderEntityProvider(scriptId);
+    }
+
+    public ServiceManager getServiceManager() {
+        return serviceManager;
     }
 }

@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 /**
  * This component redirects {@link Process} descriptors into Java {@link OutputStream}
@@ -51,6 +52,7 @@ public class ProcessPipe implements Service {
     private final OutputStream redirectErrorStream;
     private final InputStream redirectInputStream;
     private boolean running = true;
+    private Future<?> task;
 
     /**
      * Creates an instance
@@ -71,6 +73,10 @@ public class ProcessPipe implements Service {
 
     @Override
     public void shutdown() {
+        if(task != null) {
+            task.cancel(true);
+        }
+
         this.running = false;
         try {
             this.redirectOutputStream.close();
@@ -93,7 +99,7 @@ public class ProcessPipe implements Service {
 
     @Override
     public void init() {
-        executorService.submit(() -> {
+        this.task = executorService.submit(() -> {
             final InputStream inputStream = process.getInputStream();
             final InputStream errorStream = process.getErrorStream();
             final OutputStream outputStream = process.getOutputStream();
