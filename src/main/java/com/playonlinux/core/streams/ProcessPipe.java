@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.ExecutorService;
 
 /**
  * This component redirects {@link Process} descriptors into Java {@link OutputStream}
@@ -38,8 +39,12 @@ import java.io.OutputStream;
 @Scan
 public class ProcessPipe implements Service {
     private static final Logger LOGGER = Logger.getLogger(ProcessPipe.class);
+
     @Inject
     static ServiceManager serviceManager;
+
+    @Inject
+    static ExecutorService executorService;
 
     private final Process process;
     private final OutputStream redirectOutputStream;
@@ -88,48 +93,50 @@ public class ProcessPipe implements Service {
 
     @Override
     public void init() {
-        final InputStream inputStream = process.getInputStream();
-        final InputStream errorStream = process.getErrorStream();
-        final OutputStream outputStream = process.getOutputStream();
+        executorService.submit(() -> {
+            final InputStream inputStream = process.getInputStream();
+            final InputStream errorStream = process.getErrorStream();
+            final OutputStream outputStream = process.getOutputStream();
 
 
-        byte[] blocksStderr = new byte[128];
-        byte[] blocksStdout = new byte[128];
-        byte[] blocksStdin = new byte[128];
+            byte[] blocksStderr = new byte[128];
+            byte[] blocksStdout = new byte[128];
+            byte[] blocksStdin = new byte[128];
 
-        while(running) {
-            try {
-                boolean readStderr = errorStream.read(blocksStderr) != -1;
-                boolean readStdout = inputStream.read(blocksStdout) != -1;
-                boolean readStdin = redirectInputStream.read(blocksStdin) != -1;
+            while (running) {
+                try {
+                    boolean readStderr = errorStream.read(blocksStderr) != -1;
+                    boolean readStdout = inputStream.read(blocksStdout) != -1;
+                    boolean readStdin = redirectInputStream.read(blocksStdin) != -1;
 
-                if(process.isAlive() && readStdin) {
-                    outputStream.write(blocksStdin);
-                    outputStream.flush();
-                }
+                    if (process.isAlive() && readStdin) {
+                        outputStream.write(blocksStdin);
+                        outputStream.flush();
+                    }
 
-                if(readStderr) {
-                    redirectErrorStream.write(blocksStderr);
-                    redirectErrorStream.flush();
-                }
+                    if (readStderr) {
+                        redirectErrorStream.write(blocksStderr);
+                        redirectErrorStream.flush();
+                    }
 
-                if(readStdout) {
-                    redirectOutputStream.write(blocksStdout);
-                    redirectOutputStream.flush();
-                }
+                    if (readStdout) {
+                        redirectOutputStream.write(blocksStdout);
+                        redirectOutputStream.flush();
+                    }
 
-                if(!process.isAlive() && !readStderr && !readStdout) {
+                    if (!process.isAlive() && !readStderr && !readStdout) {
+                        running = false;
+                        break;
+                    }
+
+
+                } catch (IOException e) {
                     running = false;
-                    break;
                 }
-
-
-            } catch (IOException e) {
-                running = false;
             }
-        }
 
-        this.stop();
+            this.stop();
+        });
     }
 
     private void stop() {

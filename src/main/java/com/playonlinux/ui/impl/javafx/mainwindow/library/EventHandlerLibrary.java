@@ -21,8 +21,10 @@ package com.playonlinux.ui.impl.javafx.mainwindow.library;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
@@ -36,6 +38,9 @@ import java.net.MalformedURLException;
 class EventHandlerLibrary implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
+
+    @Inject
+    static Controller controller;
 
     private static final Logger LOGGER = Logger.getLogger(EventHandlerLibrary.class);
 
@@ -57,11 +62,19 @@ class EventHandlerLibrary implements UIEventHandler {
     }
 
     public void runApplication(String applicationName) {
+        final SetupWizard setupWizard = new SetupWizard(applicationName);
+
         try {
-            mainEventHandler.runApplication(applicationName);
+            setupWizard.init();
+            mainEventHandler.getLibraryEventHandler().runApplication(
+                    setupWizard,
+                    applicationName
+            );
         } catch (PlayOnLinuxException e) {
             LOGGER.error(e);
             new ErrorMessage("Error while trying to run the application", e).show();
+        } finally {
+            setupWizard.close();
         }
     }
 

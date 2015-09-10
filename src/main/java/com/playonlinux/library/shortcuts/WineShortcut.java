@@ -19,12 +19,16 @@
 package com.playonlinux.library.shortcuts;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.library.runners.WineShortcutRunner;
 
 import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+@JsonDeserialize(builder = WineShortcut.Builder.class)
 public class WineShortcut implements Shortcut {
     private final String wineDebug;
     private final String winePrefix;
@@ -61,8 +65,8 @@ public class WineShortcut implements Shortcut {
     }
 
     @Override
-    public void execute() {
-        new WineShortcutRunner(this).run();
+    public void execute(WineWizard wineWizard) throws CancelException {
+        new WineShortcutRunner(this).run(wineWizard);
     }
 
     @JsonPOJOBuilder(buildMethodName = "create", withPrefix = "with")
@@ -113,8 +117,5 @@ public class WineShortcut implements Shortcut {
         public WineShortcut create() {
             return new WineShortcut(this);
         }
-
-
-
     }
 }

@@ -29,6 +29,7 @@ import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
+import com.playonlinux.library.LibraryEventHandler;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
@@ -76,6 +77,8 @@ public interface EventHandler {
      */
     EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers();
 
+    LibraryEventHandler getLibraryEventHandler();
+
     /**
      * Get a entity provider to download a script
      * @param scriptUrl The script URL as a string
@@ -88,13 +91,6 @@ public interface EventHandler {
      * Events to be run when the application is started
      */
     void onApplicationStarted();
-
-    /**
-     * Starts the UI
-     * @param applicationName The name of the application
-     * @throws PlayOnLinuxException If any error occur
-     */
-    void runApplication(String applicationName) throws PlayOnLinuxException;
 
     /**
      * Refresh the lsit of available installers

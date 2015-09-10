@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.events;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsEntitiesProvider;
@@ -37,16 +38,23 @@ import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.library.LibraryEntitiesProvider;
+import com.playonlinux.library.LibraryEventHandler;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.library.shortcuts.Shortcut;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 @Scan
 public final class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     @Inject
     static ServiceManager playOnLinuxBackgroundServicesManager;
+
+    @Inject
+    static ObjectMapper objectMapper;
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -55,22 +63,13 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     private static ScriptFactory scriptFactory;
 
     private final WineContainerEventHandler wineContainerEventHandler = new WineContainerEventHandler();
+    private final LibraryEventHandler libraryEventHandler = new LibraryEventHandler();
 
     @Override
     public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
         Script playonlinuxScript = scriptFactory.createInstance(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
-
-    @Override
-    public void runApplication(String applicationName) throws PlayOnLinuxException {
-        Script playonLinuxScript = scriptFactory.createInstance(
-                new File(playOnLinuxContext.makeShortcutsPath(), applicationName)
-        );
-        playOnLinuxBackgroundServicesManager.register(playonLinuxScript);
-    }
-
-
 
     @Override
     public AppsManager getAppsManager() {
@@ -105,6 +104,11 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Override
     public WineContainerEventHandler getWineContainerEventHandler() {
         return wineContainerEventHandler;
+    }
+
+    @Override
+    public LibraryEventHandler getLibraryEventHandler() {
+        return libraryEventHandler;
     }
 
     @Override

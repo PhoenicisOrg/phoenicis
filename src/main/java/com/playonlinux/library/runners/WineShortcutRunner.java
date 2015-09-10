@@ -18,7 +18,15 @@
 
 package com.playonlinux.library.runners;
 
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.framework.Wine;
+import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.library.shortcuts.WineShortcut;
+import com.playonlinux.wine.WineConstants;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WineShortcutRunner {
     private final WineShortcut wineShortcut;
@@ -27,7 +35,15 @@ public class WineShortcutRunner {
         this.wineShortcut = wineShortcut;
     }
 
-    public void run() {
-        System.out.println("Will run " + wineShortcut.getExecutableName());
+    public void run(WineWizard wineWizard) throws CancelException {
+        final Map<String, String> wineDebugMap = new HashMap<>();
+        wineDebugMap.put(WineConstants.WINEDEBUG, wineShortcut.getWineDebug());
+        Wine.wizard(wineWizard).selectPrefix(wineShortcut.getWinePrefix())
+                .runBackground(
+                        new File(wineShortcut.getWorkingDirectory()),
+                        wineShortcut.getExecutableName(),
+                        wineShortcut.getArguments(),
+                        wineDebugMap
+                );
     }
 }
