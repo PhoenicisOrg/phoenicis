@@ -83,7 +83,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
 
     protected void drawSideBar() {
         searchBar = new TextField();
-        searchBar.setOnKeyReleased((e) -> applyFilter(""));
+        searchBar.setOnKeyReleased(e -> applyFilter(""));
 
         categoryView = new LeftButtonGroup(translate("Categories"));
 
@@ -91,9 +91,9 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         noCdNeededCheck = new CheckBox(translate("No CD needed"));
         commercialCheck = new CheckBox(translate("Commercial"));
 
-        testingCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
-        noCdNeededCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
-        commercialCheck.setOnMouseClicked((e) -> applyFilterOnSelectedCategory());
+        testingCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
+        noCdNeededCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
+        commercialCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
 
         addToSideBar(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(),
                 new LeftBarTitle("Filters"),
@@ -153,7 +153,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
 
                 for (AppEntity appsItemDTO : appsWindowEntity.getAppsItemDTOs()) {
                     Node itemNode = availableInstallerListWidget.addItem(appsItemDTO.getName());
-                    itemNode.setOnMouseClicked((evt) -> showAppDetails(appsItemDTO));
+                    itemNode.setOnMouseClicked(evt -> showAppDetails(appsItemDTO));
                 }
             }
         });
