@@ -74,6 +74,9 @@ public class SetupWizard implements CompleteWizard {
         this.components = new ArrayList<>();
     }
 
+    /**
+     * Creates the window
+     */
     @Override
     public void init() {
         this.messageSender = controller.createUIMessageSender();
