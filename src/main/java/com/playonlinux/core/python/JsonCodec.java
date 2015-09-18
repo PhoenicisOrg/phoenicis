@@ -18,8 +18,6 @@
 
 package com.playonlinux.core.python;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;

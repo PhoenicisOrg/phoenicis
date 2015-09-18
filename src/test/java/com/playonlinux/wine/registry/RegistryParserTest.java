@@ -70,8 +70,6 @@ public class RegistryParserTest {
         RegistryKey parsedFile = registryParser.parseFile();
 
         assertEquals(1541, parsedFile.toString().split("\n").length);
-
-        System.out.println(parsedFile);
     }
 
 

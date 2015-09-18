@@ -24,7 +24,6 @@ import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
-
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;

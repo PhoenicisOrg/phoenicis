@@ -18,7 +18,7 @@
 
 package com.playonlinux.wine.configurations;
 
-import com.playonlinux.wine.parameters.*;
+import com.playonlinux.wine.parameters.MouseWarpOverride;
 
 public class DefaultWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
     @Override

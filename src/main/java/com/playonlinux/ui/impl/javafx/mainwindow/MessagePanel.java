@@ -23,8 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
-import static com.playonlinux.core.lang.Localisation.translate;
-
 public class MessagePanel extends VBox {
     public MessagePanel(String message) {
         this.getStyleClass().add("rightPane");

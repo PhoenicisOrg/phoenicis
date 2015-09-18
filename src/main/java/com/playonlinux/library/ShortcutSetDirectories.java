@@ -23,7 +23,6 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.scripts.InstallerException;
 import com.playonlinux.core.scripts.ScriptFactory;
 import org.apache.log4j.Logger;
 

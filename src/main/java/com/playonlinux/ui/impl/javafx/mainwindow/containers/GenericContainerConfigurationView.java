@@ -19,8 +19,6 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
 import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.Observable;
 import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
 import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
 import javafx.scene.control.Tab;
