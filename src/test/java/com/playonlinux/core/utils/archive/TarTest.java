@@ -124,7 +124,7 @@ public class TarTest {
     public void testBunzip2_extractGzip() throws IOException, ArchiveException {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
-
+        outputFile.deleteOnExit();
         new Tar().bunzip2(inputFile, outputFile);
     }
 
@@ -132,7 +132,7 @@ public class TarTest {
     public void tesGunzip_extractBzip2() throws IOException, ArchiveException {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
-
+        outputFile.deleteOnExit();
         new Tar().gunzip(inputFile, outputFile);
 
     }

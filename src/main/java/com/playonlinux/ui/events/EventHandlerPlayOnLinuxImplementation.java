@@ -25,8 +25,8 @@ import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
-import com.playonlinux.containers.WineContainerEventHandler;
 import com.playonlinux.containers.ContainersEntitiesProvider;
+import com.playonlinux.containers.WineContainerEventHandler;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.injection.Inject;
@@ -41,12 +41,9 @@ import com.playonlinux.library.LibraryEntitiesProvider;
 import com.playonlinux.library.LibraryEventHandler;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
-import com.playonlinux.library.shortcuts.Shortcut;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
 
 @Scan
 public final class EventHandlerPlayOnLinuxImplementation implements EventHandler {

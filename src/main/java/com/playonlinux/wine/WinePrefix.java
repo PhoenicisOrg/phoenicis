@@ -30,7 +30,8 @@ import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.wine.configurations.*;
-import com.playonlinux.wine.registry.*;
+import com.playonlinux.wine.registry.RegistryKey;
+import com.playonlinux.wine.registry.RegistryParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 

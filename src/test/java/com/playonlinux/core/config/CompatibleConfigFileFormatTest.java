@@ -153,7 +153,9 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testWriteNewValue_unexistingFile() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(File.createTempFile("test", "json"));
+        final File temporaryFile = File.createTempFile("test", "json");
+        temporaryFile.deleteOnExit();
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(temporaryFile);
         assertEquals("", compatibleConfigFileFormat.readValue("TEST3"));
         compatibleConfigFileFormat.writeValue("TEST3", "Content3");
         assertEquals("Content3", compatibleConfigFileFormat.readValue("TEST3"));

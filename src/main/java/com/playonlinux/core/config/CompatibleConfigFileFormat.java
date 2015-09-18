@@ -77,10 +77,10 @@ public class CompatibleConfigFileFormat implements ConfigFile {
                 }
             }
         } catch (JsonParseException | JsonMappingException e) {
-            LOGGER.info("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file");
+            LOGGER.debug("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file", e);
             return getLegacyMap();
         } catch (IOException e) {
-            LOGGER.info("Error while reading the file. Will assume that the config file is empty");
+            LOGGER.debug("Error while reading the file. Will assume that the config file is empty", e);
         }
         return results;
     }

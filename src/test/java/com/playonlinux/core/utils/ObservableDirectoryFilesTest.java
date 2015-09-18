@@ -60,7 +60,7 @@ public class ObservableDirectoryFilesTest {
     @Test
     public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxException, IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
-
+        temporaryFile.deleteOnExit();
         expectedEx.expect(IllegalStateException.class);
         expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
@@ -77,16 +77,17 @@ public class ObservableDirectoryFilesTest {
         try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
             observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
-            Observer observer = mock(Observer.class);
+            Observer mockObserver = mock(Observer.class);
 
-            observableDirectoryFiles.addObserver(observer);
+            observableDirectoryFiles.addObserver(mockObserver);
 
             observableDirectoryFiles.init();
 
             Thread.sleep(2 * CHECK_INTERVAL);
 
             temporaryDirectory.delete();
-            verify(observer, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
+
+            verify(mockObserver, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
         }
 
         verify(serviceManager).unregister(any(Service.class));

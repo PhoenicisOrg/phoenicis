@@ -44,6 +44,7 @@ public class WineVersionDistributionWebDTO implements DTO {
         return packages;
     }
 
+    @Override
     public String toString() {
         return new ToStringBuilder(WineVersionDistributionWebDTO.class)
                 .append("name", name)

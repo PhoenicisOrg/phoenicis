@@ -42,6 +42,7 @@ public class WineVersionWebDTO implements DTO {
         return sha1sum;
     }
 
+    @Override
     public String toString() {
         return new ToStringBuilder(WineVersionWebDTO.class)
                 .append("version", version)

@@ -86,7 +86,7 @@ public final class Files {
 
         final int owner = mode / 100;
         final int group = (mode - owner * 100) / 10;
-        final int others = (mode - owner * 100 - group * 10);
+        final int others = mode - owner * 100 - group * 10;
 
         if(owner > 7 || group > 7 || others > 7) {
             throw new IllegalArgumentException("Invalid mode "+mode);
@@ -103,7 +103,7 @@ public final class Files {
 
     public static Set<PosixFilePermission> octToPosixFilePermission(int modeOct) {
         // TODO: optimize this method and make it cleaner
-        int modeInt = Integer.valueOf(Integer.toString(modeOct, 8));
+        int modeInt = Integer.parseInt(Integer.toString(modeOct, 8));
 
         return intToPosixFilePermission(
                 modeInt

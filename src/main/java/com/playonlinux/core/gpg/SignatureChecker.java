@@ -77,7 +77,7 @@ public class SignatureChecker {
         try {
             pgpSignature.initVerify(pgpSigningKey, "BC");
         } catch(NoSuchProviderException e) {
-            // LOGGER.info("No security provider found. Adding bouncy castle. This error can be ignored", e);
+            LOGGER.debug("No security provider found. Adding bouncy castle. This error can be ignored", e);
             Security.addProvider(new BouncyCastleProvider());
             pgpSignature.initVerify(pgpSigningKey, "BC");
         }

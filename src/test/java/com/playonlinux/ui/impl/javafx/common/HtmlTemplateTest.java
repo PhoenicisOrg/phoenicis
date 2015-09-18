@@ -34,7 +34,7 @@ public class HtmlTemplateTest {
     @Before
     public void setUp() throws IOException {
         testTemplate = File.createTempFile("test", "html");
-
+        testTemplate.deleteOnExit();
         OutputStream outputStream = new FileOutputStream(testTemplate);
 
         outputStream.write(

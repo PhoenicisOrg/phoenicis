@@ -22,8 +22,6 @@ import com.playonlinux.wine.parameters.*;
 
 import java.io.File;
 
-import static com.playonlinux.core.lang.Localisation.translate;
-
 public class WinePrefixContainerEntity extends ContainerEntity {
     private final String wineVersion;
     private final String wineDistribution;

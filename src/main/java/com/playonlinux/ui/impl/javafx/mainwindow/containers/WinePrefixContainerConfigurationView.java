@@ -21,11 +21,9 @@ package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
 import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
-
 import com.playonlinux.wine.parameters.*;
 import com.sun.javafx.collections.ImmutableObservableList;
 import com.sun.javafx.collections.ObservableListWrapper;
-
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;

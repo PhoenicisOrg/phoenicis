@@ -16,13 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.wine.configurations;
+package com.playonlinux.containers.entities;
 
-import com.playonlinux.wine.parameters.MouseWarpOverride;
+import org.junit.Test;
 
-public class DefaultWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
-    @Override
-    public MouseWarpOverride getMouseWarpOverride() {
-        return MouseWarpOverride.DEFAULT;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+
+public class ContainersWindowEntityTest {
+    @Test
+    public void testGetContainerEntities() {
+        List<ContainerEntity> mockContainerEntities = new ArrayList<>();
+        mockContainerEntities.add(mock(ContainerEntity.class));
+        mockContainerEntities.add(mock(ContainerEntity.class));
+
+        ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(mockContainerEntities);
+
+        assertSame(mockContainerEntities, containersWindowEntity.getContainerEntities());
     }
 }

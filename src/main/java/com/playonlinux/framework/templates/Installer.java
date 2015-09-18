@@ -20,8 +20,8 @@ package com.playonlinux.framework.templates;
 
 import com.playonlinux.core.python.PythonAttribute;
 import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.framework.SetupWizard;
 
 /**
  * Most abstract {@link ScriptTemplate}

@@ -19,7 +19,6 @@
 package com.playonlinux.win32.pe.rsrc;
 
 import com.playonlinux.win32.ULong;
-import com.playonlinux.win32.UShort;
 
 public class ImageResourceDirectoryEntry {
     final ULong nameOrId;

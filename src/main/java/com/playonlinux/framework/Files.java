@@ -44,7 +44,8 @@ public class Files implements SetupWizardComponent {
     public Files() {
 
     }
-    public Files(SetupWizard setupWizard) {
+
+    private Files(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
 
