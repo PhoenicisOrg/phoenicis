@@ -38,10 +38,10 @@ import java.util.concurrent.Future;
 @Scan
 public abstract class Script implements Service {
     @Inject
-    private static ServiceManager serviceManager;
+    static ServiceManager serviceManager;
 
     @Inject
-    private static JythonInterpreterFactory jythonJythonInterpreterFactory;
+    static JythonInterpreterFactory jythonJythonInterpreterFactory;
 
     private static final Logger LOGGER = Logger.getLogger(Script.class);
     private final ExecutorService executor;

@@ -23,6 +23,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.Wine;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.wine.WineConstants;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -31,18 +32,18 @@ import java.util.function.Function;
 
 @Scan
 public class WineContainerEventHandler {
+    private static final Logger LOGGER = Logger.getLogger(WineContainerEventHandler.class);
     @Inject
     static ExecutorService executorService;
-
-    private static final Logger LOGGER = Logger.getLogger(WineContainerEventHandler.class);
 
     public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Function<Void, Void> callBack) {
         executorService.submit(() -> {
                     LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
                     containerSetupWizard.init();
-                    try (Wine ignored = Wine.wizard(containerSetupWizard)
-                            .selectPrefix(winePrefixDirectory.getName())
-                            .runForeground("winecfg")) {
+                    try {
+                        Wine.wizard(containerSetupWizard)
+                                .selectPrefix(winePrefixDirectory.getName())
+                                .runForeground(WineConstants.WINECFG);
                     } catch (CancelException e) {
                         LOGGER.info(e);
                     }

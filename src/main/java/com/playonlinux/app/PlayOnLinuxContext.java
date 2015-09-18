@@ -22,6 +22,8 @@ import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.utils.ReplacableProperties;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.io.File;
@@ -64,6 +66,7 @@ public class PlayOnLinuxContext {
     public void initLogger() {
         try {
             PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
+            Logger.getRootLogger().setLevel(Level.INFO);
         } catch (PlayOnLinuxException e) {
             throw new PlayOnLinuxRuntimeException("Cannot initialize logger", e);
         }
@@ -76,8 +79,8 @@ public class PlayOnLinuxContext {
     public ReplacableProperties loadProperties()  {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
-        try(InputStream properties = PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(this.getPropertyFileName())) {
-            propertiesBeingLoaded.load(properties);
+        try(InputStream propertiesToLoad = PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(this.getPropertyFileName())) {
+            propertiesBeingLoaded.load(propertiesToLoad);
         } catch (PlayOnLinuxException | IOException e) {
             throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
         }

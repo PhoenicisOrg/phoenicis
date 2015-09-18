@@ -45,7 +45,6 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
 
     private InstallerSourceWebserviceDefaultImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
-
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     @Override
@@ -56,7 +55,7 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
 
     @Override
     public void refresh() throws ServiceInitializationException {
-        if(installerSourceWebserviceImplementation != null) {
+        if (installerSourceWebserviceImplementation != null) {
             installerSourceWebserviceImplementation.deleteObserver(this);
             serviceManager.unregister(installerSourceWebserviceImplementation);
         }

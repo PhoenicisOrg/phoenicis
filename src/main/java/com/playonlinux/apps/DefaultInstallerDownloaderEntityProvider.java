@@ -111,9 +111,9 @@ public class DefaultInstallerDownloaderEntityProvider
     }
 
     private void changeState(State state, double percentage, String scriptContent) {
-        boolean finished = (state == State.SUCCESS || state == State.FAILED);
-        boolean failed = (state == State.FAILED);
-        boolean signatureError = (state == State.SIGNATURE_ERROR);
+        boolean finished = state == State.SUCCESS || state == State.FAILED;
+        boolean failed = state == State.FAILED;
+        boolean signatureError = state == State.SIGNATURE_ERROR;
 
         notifyObservers(new InstallerDownloaderEntity(finished, failed, signatureError, percentage, scriptContent));
     }

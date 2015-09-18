@@ -128,15 +128,15 @@ public class AppEntity implements Entity, NameableEntity {
 
 
         public Builder withMiniaturesUrlsString(List<String> miniaturesUrlsAsString) {
-            List<URL> miniaturesUrls = new ArrayList<>();
+            List<URL> newMiniaturesUrls = new ArrayList<>();
             for(String url: miniaturesUrlsAsString) {
                 try {
-                    miniaturesUrls.add(new URL(url));
+                    newMiniaturesUrls.add(new URL(url));
                 } catch (MalformedURLException e) {
                     LOGGER.warn(String.format("%s was malformed. Ignored", url), e);
                 }
             }
-            return withMiniaturesUrls(miniaturesUrls);
+            return withMiniaturesUrls(newMiniaturesUrls);
         }
 
         private Builder withMiniaturesUrls(List<URL> miniaturesUrls) {
