@@ -32,7 +32,7 @@ public class RegistryParserTest {
     @Test
     public void testRegistryParser_parseSimpleFile_testKeyTree() throws IOException, ParseException {
         File temporaryFile = File.createTempFile("registry", "test");
-
+        temporaryFile.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(temporaryFile);
 
         byte[] bytes = ("[A\\\\B\\\\C] 1430602912\n" +
@@ -78,7 +78,7 @@ public class RegistryParserTest {
     @Test
     public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException, ParseException {
         File temporaryFile = File.createTempFile("registry", "test");
-
+        temporaryFile.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(temporaryFile);
 
         byte[] bytes = ("[Software\\\\Wine\\\\DllOverrides] 1431283548\n" +

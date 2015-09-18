@@ -64,6 +64,7 @@ public class HTTPDownloaderTest {
         );
 
         File temporaryFile = File.createTempFile("test", "txt");
+        temporaryFile.deleteOnExit();
         new HTTPDownloader(mockServerURL).get(temporaryFile);
 
         String fileContent = IOUtils.toString(new FileReader(temporaryFile));

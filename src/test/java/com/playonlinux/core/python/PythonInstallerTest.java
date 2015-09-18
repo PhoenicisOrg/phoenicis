@@ -53,6 +53,7 @@ public class PythonInstallerTest {
     @Test
     public void testPythonInstaller_DefineLogContextWithMethod_ContextIsSet() throws IOException, PlayOnLinuxException {
         File temporaryScript = File.createTempFile("testDefineLogContext", "py");
+        temporaryScript.deleteOnExit();
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
         fileOutputStream.write(("#!/usr/bin/env/python\n" +
@@ -76,6 +77,7 @@ public class PythonInstallerTest {
     @Test
     public void testPythonInstaller_DefineLogContextWithAttribute_ContextIsSet() throws IOException, PlayOnLinuxException {
         File temporaryScript = File.createTempFile("testDefineLogContext", "py");
+        temporaryScript.deleteOnExit();
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
         fileOutputStream.write(("#!/usr/bin/env/python\n" +
@@ -104,6 +106,8 @@ public class PythonInstallerTest {
         }
 
         File temporaryScript = File.createTempFile("defineVariableAttributes", "py");
+        temporaryScript.deleteOnExit();
+
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
         fileOutputStream.write(("from com.playonlinux.framework.templates import MockWineSteamInstaller\n" +

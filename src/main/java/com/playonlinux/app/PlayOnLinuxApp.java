@@ -72,7 +72,7 @@ public class PlayOnLinuxApp {
      * @throws PlayOnLinuxException If any errors occur
      */
     public static void main(String[] args) throws PlayOnLinuxException {
-        PlayOnLinuxApp application =  new PlayOnLinuxApp();
+        final PlayOnLinuxApp application =  new PlayOnLinuxApp();
         application.start(args);
     }
 
