@@ -18,16 +18,23 @@
 
 package com.playonlinux.engines.wine.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.playonlinux.core.dto.DTO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class WineVersionWebDTO implements DTO {
-    String version;
-    String url;
-    String sha1sum;
+    private final String version;
+    private final String url;
+    private final String sha1sum;
 
-    public WineVersionWebDTO() {
-        // Needed by Jackson
+    @JsonCreator
+    public WineVersionWebDTO(@JsonProperty("version") String version,
+                             @JsonProperty("url") String url,
+                             @JsonProperty("sha1sum") String sha1sum) {
+        this.version = version;
+        this.url = url;
+        this.sha1sum = sha1sum;
     }
 
     public String getVersion() {

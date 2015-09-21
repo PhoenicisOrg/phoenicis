@@ -19,7 +19,7 @@
 package com.playonlinux.framework.wizard;
 
 import com.playonlinux.core.log.ScriptLogger;
-import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.core.scripts.ScriptFailureException;
 
 public interface LogWizard {
     ScriptLogger getLogContext() throws ScriptFailureException;

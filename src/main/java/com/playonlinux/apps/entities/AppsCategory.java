@@ -21,7 +21,6 @@ package com.playonlinux.apps.entities;
 import com.playonlinux.core.comparator.Nameable;
 
 public class AppsCategory implements Nameable {
-
     private final String name;
 
     public AppsCategory(String name) {

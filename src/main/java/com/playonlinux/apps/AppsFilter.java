@@ -30,6 +30,9 @@ import org.apache.commons.lang.StringUtils;
 public class AppsFilter extends ObservableDefaultImplementation implements Filter<AppEntity> {
     private final String title;
     private final String category;
+    private final boolean showTesting;
+    private final boolean showNoCd;
+    private final boolean showCommercial;
 
     public AppsFilter(String category,
                       String title,
@@ -44,33 +47,24 @@ public class AppsFilter extends ObservableDefaultImplementation implements Filte
         this.showCommercial = showCommercial;
     }
 
-    private final boolean showTesting;
-    private final boolean showNoCd;
-    private final boolean showCommercial;
-
     @Override
     public boolean apply(AppEntity item) {
-        if(StringUtils.isBlank(title) && category == null) {
+        if (StringUtils.isBlank(title) && category == null) {
             return false;
         }
 
-        if(StringUtils.isNotBlank(title)) {
-            if(!item.getName().toLowerCase().contains(title.toLowerCase())) {
+        if (StringUtils.isNotBlank(title)) {
+            if (!item.getName().toLowerCase().contains(title.toLowerCase())) {
                 return false;
             }
-        } else if(category != null && !category.equals(item.getCategoryName())) {
+        } else if (category != null && !category.equals(item.getCategoryName())) {
             return false;
         }
 
-        if(item.isTesting() && !showTesting) {
-            return false;
-        }
+        return !(item.isTesting() && !showTesting)
+                && !(item.isRequiresNoCd() && !showNoCd)
+                && !(item.isCommercial() && !showCommercial);
 
-        if(item.isRequiresNoCd() && !showNoCd) {
-            return false;
-        }
-
-        return !(item.isCommercial() && !showCommercial);
     }
 
 

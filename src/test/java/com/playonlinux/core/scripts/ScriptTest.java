@@ -87,7 +87,7 @@ public class ScriptTest {
     }
 
     @Test
-    public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException, InstallerException {
+    public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
         Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignature = "-----BEGIN PGP SIGNATURE-----\n" +
@@ -99,7 +99,7 @@ public class ScriptTest {
     }
 
     @Test
-    public void testExtractContent_bashScriptWithSignature_extracted() throws IOException, ParseException, InstallerException {
+    public void testExtractContent_bashScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
         Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignature = "#!/bin/bash\n" +
@@ -119,7 +119,7 @@ public class ScriptTest {
 
 
     @Test
-    public void testExtractSignature_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, InstallerException {
+    public void testExtractSignature_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, ScriptFailureException {
         Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignatureCRLF.sh").getPath()));
         String expectedSignature = "-----BEGIN PGP SIGNATURE-----\r\n" +
@@ -131,7 +131,7 @@ public class ScriptTest {
     }
 
     @Test
-    public void testExtractContent_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, InstallerException {
+    public void testExtractContent_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, ScriptFailureException {
         Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignatureCRLF.sh").getPath()));
         String expectedSignature = "#!/bin/bash\r\n" +
@@ -149,8 +149,8 @@ public class ScriptTest {
     }
 
 
-    @Test(expected = ParseException.class)
-    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ParseException, InstallerException {
+    @Test(expected = ScriptFailureException.class)
+    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ScriptFailureException {
         Script legacyScriptWithoutSignature = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("legacyScriptExample.sh").getPath()));
         legacyScriptWithoutSignature.extractSignature();
@@ -158,7 +158,7 @@ public class ScriptTest {
 
 
     @Test
-    public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException, InstallerException {
+    public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
         Script script = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("scriptExampleWithSignature.py").getPath()));
         String expectedSignture = "-----BEGIN PGP SIGNATURE-----\n" +
@@ -169,15 +169,15 @@ public class ScriptTest {
         assertEquals(expectedSignture, script.extractSignature());
     }
 
-    @Test(expected = ParseException.class)
-    public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ParseException, InstallerException {
+    @Test(expected = ScriptFailureException.class)
+    public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ScriptFailureException {
         Script script = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("scriptExample.py").getPath()));
         script.extractSignature();
     }
 
-    @Test(expected = ParseException.class)
-    public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ParseException, InstallerException {
+    @Test(expected = ScriptFailureException.class)
+    public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ScriptFailureException {
         Script script = new ScriptFactoryDefaultImplementation().createInstance(
                 new File(this.getClass().getResource("emptyScript").getPath()));
         script.extractSignature();
@@ -186,7 +186,7 @@ public class ScriptTest {
 
 
     @Test
-    public void testExtractScript_withRealScript_extracted() throws IOException, ParseException, InstallerException {
+    public void testExtractScript_withRealScript_extracted() throws IOException, ScriptFailureException {
         Script legacyScriptWithSignature = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
                 .getResource("realScript.sh").getPath()));
         String expectedScript = "#!/bin/bash\n" +

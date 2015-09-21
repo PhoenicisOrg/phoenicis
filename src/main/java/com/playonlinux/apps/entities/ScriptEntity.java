@@ -26,7 +26,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Entity that represents a script.
  */
 public class ScriptEntity implements Entity, Nameable {
-
     private final int id;
     private final String name;
     private final String url;

@@ -20,7 +20,6 @@ package com.playonlinux.core.scripts;
 
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.utils.FileAnalyser;
-import com.playonlinux.framework.ScriptFailureException;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
@@ -54,7 +53,7 @@ public class ScriptLegacy extends Script {
             FileWriter bashScriptWriter = new FileWriter(bashScriptFile);
             bashScriptWriter.write(this.getScriptContent());
             bashScriptWriter.close();
-        } catch (IOException | InstallerException e) {
+        } catch (IOException e) {
             throw new ScriptFailureException(e);
         }
 
@@ -65,13 +64,21 @@ public class ScriptLegacy extends Script {
     }
 
     @Override
-    public String extractContent() throws ParseException, IOException {
-        return extract(false);
+    public String extractContent() throws ScriptFailureException {
+        try {
+            return extract(false);
+        } catch (IOException | ParseException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     @Override
-    public String extractSignature() throws ParseException, IOException {
-        return extract(true).trim();
+    public String extractSignature() throws ScriptFailureException {
+        try {
+            return extract(true).trim();
+        } catch (IOException | ParseException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     private String extract(boolean extractSignature) throws IOException, ParseException {

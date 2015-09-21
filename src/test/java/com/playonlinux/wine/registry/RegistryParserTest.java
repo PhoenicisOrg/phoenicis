@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 public class RegistryParserTest {
 
     @Test
-    public void testRegistryParser_parseSimpleFile_testKeyTree() throws IOException, ParseException {
+    public void testRegistryParser_parseSimpleFile_testKeyTree() throws IOException, RegistryException {
         File temporaryFile = File.createTempFile("registry", "test");
         temporaryFile.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(temporaryFile);
@@ -63,7 +63,7 @@ public class RegistryParserTest {
 
 
     @Test
-    public void testParse_realRegFile_testObjectPopulated() throws IOException, ParseException {
+    public void testParse_realRegFile_testObjectPopulated() throws RegistryException {
         File registryFile = new File(this.getClass().getResource("user.reg").getFile());
 
         RegistryParser registryParser = new RegistryParser(registryFile, "User");
@@ -74,7 +74,7 @@ public class RegistryParserTest {
 
 
     @Test
-    public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException, ParseException {
+    public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException, RegistryException {
         File temporaryFile = File.createTempFile("registry", "test");
         temporaryFile.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(temporaryFile);

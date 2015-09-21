@@ -211,11 +211,11 @@ public class WindowsShortcut
      * for an Intel only OS.
      */
     private static int bytesToWord(byte[] bytes, int off) {
-        return ((bytes[off + 1] & 0xff) << 8) | (bytes[off] & 0xff);
+        return (bytes[off + 1] & 0xff) << 8 | bytes[off] & 0xff;
     }
 
     private static int bytesToDword(byte[] bytes, int off) {
-        return (bytesToWord(bytes, off + 2) << 16) | bytesToWord(bytes, off);
+        return bytesToWord(bytes, off + 2) << 16 | bytesToWord(bytes, off);
     }
 
 }

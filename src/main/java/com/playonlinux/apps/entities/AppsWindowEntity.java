@@ -26,6 +26,11 @@ import java.util.List;
  * Represents the main entity to the available application feature
  */
 public class AppsWindowEntity implements Entity {
+    private final List<AppEntity> appsItemDTOs;
+    private final List<AppsCategory> categoryDTOs;
+    private final boolean downloading;
+    private final boolean downloadFailed;
+
     public List<AppEntity> getAppsItemDTOs() {
         return appsItemDTOs;
     }
@@ -41,11 +46,6 @@ public class AppsWindowEntity implements Entity {
     public boolean isDownloading() {
         return downloading;
     }
-
-    final List<AppEntity> appsItemDTOs;
-    final List<AppsCategory> categoryDTOs;
-    final boolean downloading;
-    final boolean downloadFailed;
 
     private AppsWindowEntity(Builder builder) {
         appsItemDTOs = builder.appsItemDTOs;

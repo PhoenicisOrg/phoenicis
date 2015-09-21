@@ -25,11 +25,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * Represents a version
  */
 public class Version {
-
-    final int bigNumber;
-    final int intermediateNumber;
-    final int lowNumber;
-    final String customName;
+    private final int bigNumber;
+    private final int intermediateNumber;
+    private final int lowNumber;
+    private final String customName;
 
     public Version(String completeVersionAsString) {
         final String[] splitCompleteVersion = completeVersionAsString.split("-");

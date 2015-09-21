@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.apps.dto.ApplicationDTO;
+import com.playonlinux.apps.dto.    ApplicationDTO;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;

@@ -21,7 +21,7 @@ package com.playonlinux.library.entities;
 import java.util.List;
 
 public class LibraryWindowEntity {
-    final List<InstalledApplicationEntity> installedApplicationEntity;
+    private final List<InstalledApplicationEntity> installedApplicationEntity;
 
     public LibraryWindowEntity(List<InstalledApplicationEntity> installedApplicationEntity) {
         this.installedApplicationEntity = installedApplicationEntity;

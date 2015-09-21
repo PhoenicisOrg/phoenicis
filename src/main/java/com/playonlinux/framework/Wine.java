@@ -25,6 +25,7 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;

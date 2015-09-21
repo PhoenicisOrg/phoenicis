@@ -18,7 +18,11 @@
 
 package com.playonlinux.wine;
 
-public class WineConstants {
+public final class WineConstants {
+    private WineConstants() {
+        // This is a static class
+    }
+
     public static final String WINEDEBUG = "WINEDEBUG";
 
     public static final String WINECFG = "winecfg";

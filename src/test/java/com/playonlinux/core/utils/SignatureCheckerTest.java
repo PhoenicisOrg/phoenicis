@@ -106,7 +106,7 @@ public class SignatureCheckerTest {
 
     @Test
     public void testSignatureChecker_withValidSignature_returnTrue() throws IOException,
-            CMSException, PGPException, NoSuchProviderException, SignatureException {
+            CMSException, PGPException, NoSuchProviderException, SignatureException, com.playonlinux.core.gpg.SignatureException {
         SignatureChecker signatureChecker = new SignatureChecker()
                 .withSignature(SIGNATURE)
                 .withData(SCRIPT)
@@ -117,7 +117,7 @@ public class SignatureCheckerTest {
 
     @Test
     public void testSignatureChecker_withInvalidValidSignature_returnFalse() throws IOException, CMSException,
-            PGPException, NoSuchProviderException, SignatureException {
+            PGPException, NoSuchProviderException, SignatureException, com.playonlinux.core.gpg.SignatureException {
         SignatureChecker signatureChecker = new SignatureChecker()
                 .withSignature(SIGNATURE)
                 .withData(SCRIPT.replace("a","b"))

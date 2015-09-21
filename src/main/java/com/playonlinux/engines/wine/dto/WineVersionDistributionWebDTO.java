@@ -18,18 +18,25 @@
 
 package com.playonlinux.engines.wine.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.playonlinux.core.dto.DTO;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.List;
 
 public class WineVersionDistributionWebDTO implements DTO {
-    String name;
-    String description;
-    List<WineVersionWebDTO> packages;
+    private final String name;
+    private final String description;
+    private final List<WineVersionWebDTO> packages;
 
-    public WineVersionDistributionWebDTO() {
-        // Needed by Jackson
+    @JsonCreator
+    public WineVersionDistributionWebDTO(@JsonProperty("name") String name,
+                                         @JsonProperty("description") String description,
+                                         @JsonProperty("packages") List<WineVersionWebDTO> packages) {
+        this.name = name;
+        this.description = description;
+        this.packages = packages;
     }
 
     public String getDescription() {

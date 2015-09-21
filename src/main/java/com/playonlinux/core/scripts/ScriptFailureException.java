@@ -16,31 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.win32;
+package com.playonlinux.core.scripts;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+public class ScriptFailureException extends CancelException {
 
-/**
- * Represents a WIN32 ULONG
- * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
- */
-public class ULong {
-    private final int ulongContent;
+    private static final String DEFAULT_MESSAGE = "The script has encountered a fatal error";
 
-    public ULong(int ulongContent) {
-        this.ulongContent = ulongContent;
+    public ScriptFailureException() {
+        super(DEFAULT_MESSAGE);
     }
-
-    public ULong(byte[] bytes, int offset) {
-        ulongContent = ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
+    public ScriptFailureException(String message) {
+        super(message);
     }
-
-    public int get() {
-        return ulongContent;
+    public ScriptFailureException(String message, Throwable parent) {
+        super(message, parent);
     }
-
-    public long getUnsignedValue() {
-        return ulongContent & 0xFFFFFFFFL;
+    public ScriptFailureException(Throwable parent) {
+        super(DEFAULT_MESSAGE, parent);
     }
 }

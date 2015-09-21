@@ -22,6 +22,7 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import org.apache.commons.lang.mutable.MutableBoolean;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class ProcessPipe implements Service {
     private final OutputStream redirectOutputStream;
     private final OutputStream redirectErrorStream;
     private final InputStream redirectInputStream;
-    private boolean running = true;
+    private MutableBoolean running = new MutableBoolean(true);
     private Future<?> task;
 
     /**
@@ -77,7 +78,7 @@ public class ProcessPipe implements Service {
             task.cancel(true);
         }
 
-        this.running = false;
+        this.running.setValue(false);
         try {
             this.redirectOutputStream.close();
         } catch (IOException e) {
@@ -99,53 +100,10 @@ public class ProcessPipe implements Service {
 
     @Override
     public void init() {
-        this.task = executorService.submit(() -> {
-            final InputStream inputStream = process.getInputStream();
-            final InputStream errorStream = process.getErrorStream();
-            final OutputStream outputStream = process.getOutputStream();
-
-
-            byte[] blocksStderr = new byte[128];
-            byte[] blocksStdout = new byte[128];
-            byte[] blocksStdin = new byte[128];
-
-            while (running) {
-                try {
-                    boolean readStderr = errorStream.read(blocksStderr) != -1;
-                    boolean readStdout = inputStream.read(blocksStdout) != -1;
-                    boolean readStdin = redirectInputStream.read(blocksStdin) != -1;
-
-                    if (process.isAlive() && readStdin) {
-                        outputStream.write(blocksStdin);
-                        outputStream.flush();
-                    }
-
-                    if (readStderr) {
-                        redirectErrorStream.write(blocksStderr);
-                        redirectErrorStream.flush();
-                    }
-
-                    if (readStdout) {
-                        redirectOutputStream.write(blocksStdout);
-                        redirectOutputStream.flush();
-                    }
-
-                    if (!process.isAlive() && !readStderr && !readStdout) {
-                        running = false;
-                        break;
-                    }
-
-
-                } catch (IOException e) {
-                    running = false;
-                }
-            }
-
-            this.stop();
-        });
+        this.task = executorService.submit(new ProcessPipeBackgroundThread(this, running, process, redirectInputStream, redirectErrorStream, redirectOutputStream));
     }
 
-    private void stop() {
+    void stop() {
         serviceManager.unregister(this);
     }
 }

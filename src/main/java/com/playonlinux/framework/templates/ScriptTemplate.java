@@ -19,6 +19,7 @@
 package com.playonlinux.framework.templates;
 
 import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.core.scripts.ScriptFailureException;
 
 /**
  * Represents a Script teplate
@@ -33,7 +34,7 @@ public interface ScriptTemplate {
     /**
      * Main method of the script
      * @throws CancelException If the script is canceled
-     * (by the user, or by a {@link com.playonlinux.framework.ScriptFailureException})
+     * (by the user, or by a {@link ScriptFailureException})
      */
     void main() throws CancelException;
 

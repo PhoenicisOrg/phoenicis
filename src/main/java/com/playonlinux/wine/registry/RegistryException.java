@@ -16,25 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.framework;
+package com.playonlinux.wine.registry;
 
-import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.wine.WineException;
 
-
-public class ScriptFailureException extends CancelException {
-
-    private static final String DEFAULT_MESSAGE = "The script has encountered a fatal error";
-
-    public ScriptFailureException() {
-        super(DEFAULT_MESSAGE);
-    }
-    public ScriptFailureException(String message) {
-        super(message);
-    }
-    public ScriptFailureException(String message, Throwable parent) {
-        super(message, parent);
-    }
-    public ScriptFailureException(Throwable parent) {
-        super(DEFAULT_MESSAGE, parent);
+public class RegistryException extends WineException {
+    public RegistryException(String s, Exception e) {
+        super(s, e);
     }
 }
