@@ -83,7 +83,7 @@ public final class PEReader {
     }
 
     private static byte[] readRealModeStubProgram(InputStream executableInputStream, ImageDOSHeader imageDOSHeader) throws IOException {
-        final byte[] realModeStubProgram = new byte[imageDOSHeader.e_lfanew - ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
+        final byte[] realModeStubProgram = new byte[imageDOSHeader.eLfanew - ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
         executableInputStream.read(realModeStubProgram);
         return realModeStubProgram;
     }

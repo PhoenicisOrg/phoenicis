@@ -37,7 +37,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class Downloader implements SetupWizardComponent {
-    String MD5_CHECKSUM = "md5";
+    private final static String MD5_CHECKSUM = "md5";
 
     private SetupWizard setupWizard;
     private ProgressControl progressControl;
