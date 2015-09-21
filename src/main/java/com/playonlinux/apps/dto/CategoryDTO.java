@@ -18,6 +18,8 @@
 
 package com.playonlinux.apps.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
 
 import java.util.List;
@@ -25,13 +27,20 @@ import java.util.List;
 /**
  * Represents a category of application
  */
+@JsonDeserialize(builder = CategoryDTO.Builder.class)
 public class CategoryDTO implements DTO {
+    private final int id;
+    private final CategoryType type;
+    private final String name;
+    private final List<ApplicationDTO> applications;
 
-    int id;
-    CategoryType type;
-    String name;
-    List <ApplicationDTO> applications;
-    
+    private CategoryDTO(Builder builder) {
+        this.id = builder.id;
+        this.type = builder.type;
+        this.name = builder.name;
+        this.applications = builder.applications;
+    }
+
     public enum CategoryType {
         INSTALLERS,
         FUNCTIONS
@@ -51,5 +60,37 @@ public class CategoryDTO implements DTO {
 
     public List<ApplicationDTO> getApplications() {
         return applications;
+    }
+
+    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+    public static class Builder {
+        private int id;
+        private CategoryType type;
+        private String name;
+        private List<ApplicationDTO> applications;
+
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withType(CategoryType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withApplications(List<ApplicationDTO> applications) {
+            this.applications = applications;
+            return this;
+        }
+
+        public CategoryDTO build() {
+            return new CategoryDTO(this);
+        }
     }
 }

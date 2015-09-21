@@ -35,6 +35,7 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public final class LibraryEntitiesProvider
 
     private ShortcutSetDirectories shortcutSetDirectories;
 
-    private final List<InstalledApplicationEntity> installedApplications = new ArrayList<>();
+    private final Collection<InstalledApplicationEntity> installedApplications = new ArrayList<>();
     private final List<InstalledApplicationEntity> installedApplicationsFiltered = new ArrayList<>();
 
     private Filter<InstalledApplicationEntity> lastFilter;

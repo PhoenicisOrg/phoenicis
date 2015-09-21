@@ -78,7 +78,7 @@ public class InstallerSourceWebserviceImplementationTest {
                                 "                    \"scripts\": [\n" +
                                 "                        {\n" +
                                 "                            \"scriptName\": \"7-Zip\",\n" +
-                                "                            \"compatiblesOperatingSystems\": [\n" +
+                                "                            \"compatibleOperatingSystems\": [\n" +
                                 "                                \"LINUX\",\n" +
                                 "                                \"MACOSX\"\n" +
                                 "                            ],\n" +
@@ -97,7 +97,7 @@ public class InstallerSourceWebserviceImplementationTest {
                                 "                    \"scripts\": [\n" +
                                 "                        {\n" +
                                 "                            \"scriptName\": \"Amazon Kindle\",\n" +
-                                "                            \"compatiblesOperatingSystems\": [\n" +
+                                "                            \"compatibleOperatingSystems\": [\n" +
                                 "                                \"LINUX\",\n" +
                                 "                                \"MACOSX\"\n" +
                                 "                            ],\n" +

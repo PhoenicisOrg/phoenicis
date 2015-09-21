@@ -18,6 +18,8 @@
 
 package com.playonlinux.apps.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
 
@@ -27,24 +29,20 @@ import java.util.List;
 /**
  * Represents an application
  */
+@JsonDeserialize(builder = ApplicationDTO.Builder.class)
 public class ApplicationDTO implements DTO, Nameable {
-
-    private int id;
-    private String name;
-    private String description;
-    private String iconUrl;
-    private List<String> miniaturesUrls;
-    private List<ScriptDTO> scripts;
-
-    public ApplicationDTO() {
-        // Kept for the webservice
-    }
+    private final int id;
+    private final String name;
+    private final String description;
+    private final String iconUrl;
+    private final List<String> miniaturesUrls;
+    private final List<ScriptDTO> scripts;
 
     private ApplicationDTO(Builder builder) {
         id = builder.id;
         name = builder.name;
         description = builder.description;
-        iconUrl = builder.iconURL;
+        iconUrl = builder.iconUrl;
         miniaturesUrls = builder.miniaturesUrls;
         scripts = builder.scripts;
     }
@@ -80,13 +78,11 @@ public class ApplicationDTO implements DTO, Nameable {
         }
     }
 
-    /**
-     * Build this DTO
-     */
+    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String name;
         private String description;
-        private String iconURL;
+        private String iconUrl;
         private List<String> miniaturesUrls;
         private List<ScriptDTO> scripts;
         private int id;
@@ -98,7 +94,7 @@ public class ApplicationDTO implements DTO, Nameable {
         public Builder(ApplicationDTO applicationDTO) {
             this.name = applicationDTO.name;
             this.description = applicationDTO.description;
-            this.iconURL = applicationDTO.iconUrl;
+            this.iconUrl = applicationDTO.iconUrl;
             this.miniaturesUrls = applicationDTO.miniaturesUrls;
             this.scripts = applicationDTO.scripts;
             this.id = applicationDTO.id;
@@ -119,8 +115,8 @@ public class ApplicationDTO implements DTO, Nameable {
             return this;
         }
 
-        public Builder withIconURL(String iconURL) {
-            this.iconURL = iconURL;
+        public Builder withIconUrl(String iconUrl) {
+            this.iconUrl = iconUrl;
             return this;
         }
 
@@ -129,7 +125,7 @@ public class ApplicationDTO implements DTO, Nameable {
             return this;
         }
 
-        public Builder withScriptInformations(List<ScriptDTO> scriptDTO) {
+        public Builder withScripts(List<ScriptDTO> scriptDTO) {
             this.scripts = scriptDTO;
             return this;
         }

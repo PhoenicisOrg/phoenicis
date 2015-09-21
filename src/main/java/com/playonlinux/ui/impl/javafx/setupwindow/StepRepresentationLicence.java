@@ -38,7 +38,7 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
     @Override
     protected void drawStepContent() {
         super.drawStepContent();
-        
+
         TextArea licenceWidget = new TextArea(licenceText);
         licenceWidget.setLayoutX(10);
         licenceWidget.setLayoutY(100);
@@ -47,9 +47,9 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
         licenceWidget.setMinHeight(308);
         licenceWidget.setMaxHeight(308);
         licenceWidget.setEditable(false);
-        
+
         CheckBox confirmWidget = new CheckBox(translate("I agree"));
-        confirmWidget.setOnAction((event) -> {
+        confirmWidget.setOnAction(event -> {
             isAgree = !isAgree;
             confirmWidget.setSelected(isAgree);
             setNextButtonEnabled(isAgree);
@@ -57,7 +57,7 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
         confirmWidget.setLayoutX(10);
         confirmWidget.setLayoutY(418);
         setNextButtonEnabled(false);
-        
+
         this.addToStep(licenceWidget);
         this.addToStep(confirmWidget);
     }

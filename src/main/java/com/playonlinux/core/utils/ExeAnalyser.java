@@ -52,8 +52,8 @@ public final class ExeAnalyser {
 
 
     private static boolean isArchitecture(File file, PEFile.Architecture architecture) throws IOException {
-        try(InputStream inputStream = new FileInputStream(file)) {
-            PEFile peFile = PEReader.parseExecutable(inputStream);
+        try (InputStream inputStream = new FileInputStream(file)) {
+            final PEFile peFile = PEReader.parseExecutable(inputStream);
             return peFile.getArchitecture() == architecture;
         }
     }

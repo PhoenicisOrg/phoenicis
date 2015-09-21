@@ -32,13 +32,13 @@ public class ScriptDTOTest {
     @Before
     public void setUp() {
         this.scriptDTO = new ScriptDTO.Builder()
-                .withName("Name")
+                .withScriptName("Name")
                 .withId(13)
                 .build();
     }
     @Test
     public void testScriptDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", scriptDTO.getName());
+        assertEquals("Name", scriptDTO.getScriptName());
     }
 
     @Test

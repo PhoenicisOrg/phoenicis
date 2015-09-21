@@ -26,7 +26,6 @@ class SetupWindowManager(object):
         self.managedWindows = {}
         self.template = template
 
-
     def getWindow(self, windowId):
         """
             :param windowId: int

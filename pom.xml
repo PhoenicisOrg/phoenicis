@@ -117,8 +117,6 @@
             <version>0.1.2</version>
         </dependency>
 
-
-
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -139,8 +137,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 
     <build>
         <resources>
@@ -376,14 +372,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
-
     </build>
-
-
-
-
-
 </project>

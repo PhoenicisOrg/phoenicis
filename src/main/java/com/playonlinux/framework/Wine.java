@@ -88,7 +88,7 @@ public class Wine implements SetupWizardComponent {
     }
 
     public static Wine wizard(WineWizard setupWizard) {
-        Wine wineInstance = new Wine(setupWizard);
+        final SetupWizardComponent wineInstance = new Wine(setupWizard);
         setupWizard.registerComponent(wineInstance);
         return new Wine(setupWizard);
     }
@@ -209,8 +209,8 @@ public class Wine implements SetupWizardComponent {
                 )
         );
 
-        try(ObservableDirectorySize observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0,
-                NEWPREFIXSIZE)) {
+        try(ObservableDirectorySize observableDirectorySize =
+                    new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0, NEWPREFIXSIZE)) {
             observableDirectorySize.setCheckInterval(10);
             observableDirectorySize.addObserver(progressControl);
             backgroundServicesManager.register(observableDirectorySize);

@@ -53,9 +53,9 @@ abstract public class Webservice<T extends DTO>
             this.update();
 
             try {
-                ObjectMapper mapper = new ObjectMapper();
-                HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
-                String result = httpDownloader.get();
+                final ObjectMapper mapper = new ObjectMapper();
+                final HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
+                final String result = httpDownloader.get();
                 items = mapper.readValue(result, this.defineTypeReference());
                 this.state = ProgressStateEntity.State.SUCCESS;
             } catch(DownloadException e) {

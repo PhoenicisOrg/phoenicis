@@ -95,7 +95,7 @@ public class Downloader implements SetupWizardComponent {
     }
 
     public Downloader get(URL remoteFile) throws CancelException {
-        File temporaryFile;
+        final File temporaryFile;
         try {
             temporaryFile = File.createTempFile(this.findFileNameFromURL(remoteFile), "");
             temporaryFile.deleteOnExit();
