@@ -19,6 +19,8 @@
 package com.playonlinux.apps.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.utils.OperatingSystem;
@@ -26,23 +28,20 @@ import com.playonlinux.core.utils.OperatingSystem;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO implements DTO, Nameable {
-    private int id;
-    private String name;
-    private List<OperatingSystem> compatiblesOperatingSystems;
-    private List<OperatingSystem> testingOperatingSystems;
-    private Boolean free;
-    private Boolean requiresNoCD;
-    private String url;
-
-    public ScriptDTO() {
-        // Kept for the webservice
-    }
+    private final int id;
+    private final String scriptName;
+    private final List<OperatingSystem> compatibleOperatingSystems;
+    private final List<OperatingSystem> testingOperatingSystems;
+    private final Boolean free;
+    private final Boolean requiresNoCD;
+    private final String url;
 
     private ScriptDTO(Builder builder) {
         this.id = builder.id;
-        this.name = builder.name;
-        this.compatiblesOperatingSystems = builder.compatiblesOperatingSystems;
+        this.scriptName = builder.scriptName;
+        this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
         this.requiresNoCD = builder.requiresNoCD;
@@ -53,12 +52,17 @@ public class ScriptDTO implements DTO, Nameable {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getScriptName() {
+        return scriptName;
     }
 
-    public List<OperatingSystem> getCompatiblesOperatingSystems() {
-        return compatiblesOperatingSystems;
+    @Override
+    public String getName() {
+        return scriptName;
+    }
+
+    public List<OperatingSystem> getCompatibleOperatingSystems() {
+        return compatibleOperatingSystems;
     }
 
     public Boolean isFree() {
@@ -77,11 +81,11 @@ public class ScriptDTO implements DTO, Nameable {
         return url;
     }
 
-
+    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private int id;
-        private String name;
-        private List<OperatingSystem> compatiblesOperatingSystems;
+        private String scriptName;
+        private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
         private Boolean requiresNoCD;
@@ -92,8 +96,8 @@ public class ScriptDTO implements DTO, Nameable {
             return this;
         }
 
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withScriptName(String name) {
+            this.scriptName = name;
             return this;
         }
 
@@ -102,8 +106,8 @@ public class ScriptDTO implements DTO, Nameable {
             return this;
         }
 
-        public Builder withCompatibleOperatingSystems(List<OperatingSystem> compatiblesOperatingSystems) {
-            this.compatiblesOperatingSystems = compatiblesOperatingSystems;
+        public Builder withCompatibleOperatingSystems(List<OperatingSystem> compatibleOperatingSystems) {
+            this.compatibleOperatingSystems = compatibleOperatingSystems;
             return this;
         }
 
@@ -117,7 +121,7 @@ public class ScriptDTO implements DTO, Nameable {
             return this;
         }
 
-        public Builder withRequiresNoCd(Boolean requiresNoCD) {
+        public Builder withRequiresNoCD(Boolean requiresNoCD) {
             this.requiresNoCD = requiresNoCD;
             return this;
         }

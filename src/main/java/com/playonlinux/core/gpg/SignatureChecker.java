@@ -32,18 +32,30 @@ import java.util.Iterator;
 
 import static org.bouncycastle.openpgp.PGPUtil.getDecoderStream;
 
-
+/**
+ * Verifies the signature of a script
+ */
 public class SignatureChecker {
     private String publicKey;
     private String signedData;
     private String signature;
     private static final Logger LOGGER = Logger.getLogger(SignatureChecker.class);
 
+    /**
+     * Define the signature
+     * @param signature The signature
+     * @return the same object
+     */
     public SignatureChecker withSignature(String signature) {
         this.signature = signature;
         return this;
     }
 
+    /**
+     * Define the data
+     * @param signedData The data to verify
+     * @return the same object
+     */
     public SignatureChecker withData(String signedData) {
         this.signedData = signedData;
         return this;

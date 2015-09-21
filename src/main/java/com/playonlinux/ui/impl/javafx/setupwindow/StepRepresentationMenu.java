@@ -18,6 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import com.playonlinux.core.messages.CancelerMessage;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
@@ -26,11 +27,10 @@ import java.util.List;
 
 
 public class StepRepresentationMenu extends StepRepresentationMessage {
-    final List<String> menuItems;
-    final ListView<String> listViewWidget;
+    private final List<String> menuItems;
+    private final ListView<String> listViewWidget;
 
-    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, CancelerSynchronousMessage messageWaitingForResponse, String textToShow,
-                                  List<String> menuItems) {
+    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, CancelerMessage messageWaitingForResponse, String textToShow, List<String> menuItems) {
         super(parent, messageWaitingForResponse, textToShow);
 
         this.menuItems = menuItems;
@@ -53,8 +53,8 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event ->
-            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).
-                    setResponse(listViewWidget.getFocusModel().getFocusedItem())
+                        ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).
+                                setResponse(listViewWidget.getFocusModel().getFocusedItem())
         );
     }
 

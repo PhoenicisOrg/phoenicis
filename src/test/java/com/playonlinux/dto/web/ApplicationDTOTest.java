@@ -34,7 +34,7 @@ public class ApplicationDTOTest {
                 .withName("Name")
                 .withId(13)
                 .withDescription("a description")
-                .withIconURL("a icon url")
+                .withIconUrl("a icon url")
                 .build();
     }
     @Test

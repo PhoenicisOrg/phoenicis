@@ -50,7 +50,6 @@ public final class WineVersionEntitiesProvider
 
     private Filter<WineVersionDistributionItemEntity> lastFilter;
 
-
     @Override
     public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
         assert argument == observable;
