@@ -22,7 +22,7 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
-import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import org.apache.log4j.Logger;
 import org.python.core.*;
 import org.python.util.PythonInterpreter;

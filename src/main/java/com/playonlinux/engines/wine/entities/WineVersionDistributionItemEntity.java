@@ -23,6 +23,9 @@ import com.playonlinux.core.entities.Entity;
 import java.util.List;
 
 public class WineVersionDistributionItemEntity implements Entity {
+    private final String description;
+    private final List<WineVersionItemEntity> availablePackages;
+    private final List<WineVersionItemEntity> installedPackages;
     private final String name;
 
     public List<WineVersionItemEntity> getAvailablePackages() {
@@ -40,10 +43,6 @@ public class WineVersionDistributionItemEntity implements Entity {
     public String getName() {
         return name;
     }
-
-    private final String description;
-    private final List<WineVersionItemEntity> availablePackages;
-    private final List<WineVersionItemEntity> installedPackages;
 
     private WineVersionDistributionItemEntity(Builder builder) {
         this.name = builder.name;

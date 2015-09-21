@@ -73,14 +73,8 @@ public class WinePrefix implements AutoCloseable {
     }
 
     private RegistryKey parseRegistryFile(String filename, String nodeName) throws WineException {
-        try {
-            RegistryParser registryParser = new RegistryParser(new File(winePrefixDirectory, filename), nodeName);
-            return registryParser.parseFile();
-        } catch (IOException e) {
-            throw new UninitializedWineprefixException("The virtual drive seems to be uninitialized", e);
-        } catch (ParseException e) {
-            throw new UninitializedWineprefixException("The virtual drive registry files seem to be corrupted", e);
-        }
+        RegistryParser registryParser = new RegistryParser(new File(winePrefixDirectory, filename), nodeName);
+        return registryParser.parseFile();
     }
 
     /**
@@ -137,7 +131,7 @@ public class WinePrefix implements AutoCloseable {
     }
 
     private boolean checkSearchExcludedFiles(String candidateName) {
-        return (Arrays.binarySearch(SEARCH_EXCLUDED_EXECUTABLE, candidateName) == 0);
+        return Arrays.binarySearch(SEARCH_EXCLUDED_EXECUTABLE, candidateName) == 0;
     }
 
     public Collection<File> findAllExecutables() {
@@ -178,10 +172,8 @@ public class WinePrefix implements AutoCloseable {
 
 
     private void createPrefixDirectory() throws WineException {
-        if(!this.winePrefixDirectory.exists()) {
-            if(!this.winePrefixDirectory.mkdirs()) {
+        if(!this.winePrefixDirectory.exists() && !this.winePrefixDirectory.mkdirs()) {
                 throw new WineException("Cannot createPrefix prefix: " + getWinePrefixDirectory());
-            }
         }
     }
 
@@ -198,7 +190,7 @@ public class WinePrefix implements AutoCloseable {
     }
 
     public boolean isAutomaticallyUpdated() {
-        return (getPrefixConfigFile().contains("version") || getPrefixConfigFile().contains("VERSION"));
+        return getPrefixConfigFile().contains("version") || getPrefixConfigFile().contains("VERSION");
     }
 
     public OperatingSystem fetchOperatingSystem() {
@@ -224,7 +216,7 @@ public class WinePrefix implements AutoCloseable {
 
     public WineDistribution fetchDistribution() {
         final ConfigFile prefixConfigFile = getPrefixConfigFile();
-        String distribution;
+        final String distribution;
         if(prefixConfigFile.contains("distributionCode")) {
             distribution = prefixConfigFile.readValue("distributionCode");
         } else {
@@ -259,7 +251,7 @@ public class WinePrefix implements AutoCloseable {
             try {
                 loggerFactory.close(logOutputStream);
             } catch (IOException e) {
-                LOGGER.warn("The log stream could not be closed");
+                LOGGER.warn("The log stream could not be closed", e);
             }
         }
     }

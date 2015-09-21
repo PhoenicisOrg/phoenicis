@@ -19,7 +19,6 @@
 package com.playonlinux.core.scripts;
 
 import com.playonlinux.core.python.PythonInstaller;
-import com.playonlinux.framework.ScriptFailureException;
 import com.playonlinux.framework.templates.ScriptTemplate;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
@@ -43,19 +42,25 @@ public class ScriptRecent extends Script {
         pythonInstaller.exec();
     }
 
-
-
     @Override
-    public String extractSignature() throws ParseException, IOException {
-        return extract(true);
+    public String extractSignature() throws ScriptFailureException {
+        try {
+            return extract(true);
+        } catch (ParseException | IOException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     @Override
-    public String extractContent() throws ParseException, IOException {
-        return extract(false);
+    public String extractContent() throws ScriptFailureException {
+        try {
+            return extract(false);
+        } catch (ParseException | IOException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
-    private String extract(boolean extractSignature) throws IOException, ParseException {
+    private String extract(boolean extractSignature) throws ParseException, IOException {
         BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
         StringBuilder signatureBuilder = new StringBuilder();
 

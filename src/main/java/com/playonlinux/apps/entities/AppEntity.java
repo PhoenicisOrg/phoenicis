@@ -40,7 +40,6 @@ public class AppEntity implements Entity, NameableEntity {
     private final String description;
     private final List<ScriptEntity> scripts;
 
-
     private AppEntity(Builder builder) {
         this.name = builder.name;
         this.categoryName = builder.categoryName;
@@ -159,6 +158,5 @@ public class AppEntity implements Entity, NameableEntity {
                 throw new IllegalArgumentException("You must give a category name");
             }
         }
-
     }
 }

@@ -20,7 +20,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.framework.ScriptFailureException;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;

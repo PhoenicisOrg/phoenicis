@@ -139,6 +139,5 @@ public final class AppsEntitiesProvider
             }
         }
         applyFilter(lastFilter);
-
     }
 }

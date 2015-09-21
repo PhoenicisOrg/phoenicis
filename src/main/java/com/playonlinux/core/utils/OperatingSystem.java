@@ -50,9 +50,9 @@ public enum OperatingSystem {
                 return LINUX;
             case "FreeBSD":
                 return FREEBSD;
+            default:
+                throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", name));
         }
-
-        throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", name));
     }
 
     public String fetchShortName() {

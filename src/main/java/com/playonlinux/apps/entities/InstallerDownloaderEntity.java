@@ -22,6 +22,23 @@ package com.playonlinux.apps.entities;
  * Entity that represents the state of a script that is being downloaded
  */
 public class InstallerDownloaderEntity {
+    private final boolean finished;
+    private final boolean failed;
+    private final boolean signatureError;
+    private final double percentage;
+    private final String scriptContent;
+
+    public InstallerDownloaderEntity(boolean finished,
+                                     boolean failed,
+                                     boolean signatureError,
+                                     double percentage,
+                                     String scriptContent) {
+        this.finished = finished;
+        this.failed = failed;
+        this.signatureError = signatureError;
+        this.percentage = percentage;
+        this.scriptContent = scriptContent;
+    }
 
     public boolean isFailed() {
         return failed;
@@ -43,17 +60,5 @@ public class InstallerDownloaderEntity {
         return signatureError;
     }
 
-    private final boolean finished;
-    private final boolean failed;
-    private final boolean signatureError;
-    private final double percentage;
-    private final String scriptContent;
 
-    public InstallerDownloaderEntity(boolean finished, boolean failed, boolean signatureError, double percentage, String scriptContent) {
-        this.finished = finished;
-        this.failed = failed;
-        this.signatureError = signatureError;
-        this.percentage = percentage;
-        this.scriptContent = scriptContent;
-    }
 }

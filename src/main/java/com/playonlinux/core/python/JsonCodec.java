@@ -35,7 +35,7 @@ public class JsonCodec {
         return new ObjectMapper().writeValueAsString(map);
     }
 
-    public static Map<String, Object> loads(String json) throws IOException {
+    public static Map loads(String json) throws IOException {
         return new ObjectMapper().readValue(json, Map.class);
     }
 }

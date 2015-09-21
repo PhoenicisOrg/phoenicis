@@ -19,8 +19,6 @@
 package com.playonlinux.win32.pe.rsrc;
 
 public class ImageResourceNamedDirectoryEntry extends ImageResourceDirectoryEntry {
-    //private final String name;
-
     public ImageResourceNamedDirectoryEntry(byte[] bytes, int offset) {
         super(bytes, offset);
     }

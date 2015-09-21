@@ -31,6 +31,7 @@ public enum  DirectDrawRenderer {
         this.translatedName = translatedName;
     }
 
+    @Override
     public String toString() {
         return translatedName;
     }

@@ -22,6 +22,7 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.OperatingSystem;
 

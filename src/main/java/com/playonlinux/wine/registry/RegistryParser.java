@@ -20,10 +20,7 @@ package com.playonlinux.wine.registry;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 
 /***
@@ -45,7 +42,7 @@ public class RegistryParser {
         this.rootName = rootName;
     }
 
-    public RegistryKey parseFile() throws IOException, ParseException {
+    public RegistryKey parseFile() throws RegistryException {
         try(BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile))) {
             final RegistryKey root = new RegistryKey(rootName);
             RegistryKey lastNode = null;
@@ -61,20 +58,21 @@ public class RegistryParser {
 
                 if (currentLine.startsWith("[")) {
                     lastNode = this.parseDirectoryLine(root, currentLine);
+                } else if (lineNumber == 1) {
+                    lineNumber++;
+                    continue;
+                } else if (lastNode == null) {
+                    throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
                 } else {
-                    if (lineNumber == 1) {
-                        lineNumber++;
-                        continue;
-                    } else if (lastNode == null) {
-                        throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
-                    } else {
-                        this.parseValueLine(lastNode, currentLine, lineNumber);
-                    }
+                    this.parseValueLine(lastNode, currentLine, lineNumber);
                 }
+
                 lineNumber++;
             }
 
             return root;
+        } catch (IOException | ParseException e) {
+            throw new RegistryException("Error while parsing the registry", e);
         }
     }
 

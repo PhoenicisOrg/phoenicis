@@ -23,6 +23,7 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.EngineInstallException;

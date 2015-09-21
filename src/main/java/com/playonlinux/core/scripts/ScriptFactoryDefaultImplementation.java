@@ -28,14 +28,16 @@ import java.util.concurrent.ExecutorService;
 public class ScriptFactoryDefaultImplementation implements ScriptFactory {
     ExecutorService executorService;
 
-    public Script createInstance(File scriptFile) throws InstallerException {
+    @Override
+    public Script createInstance(File scriptFile) throws ScriptFailureException {
         try {
             return createInstance(FileUtils.readFileToString(scriptFile));
         } catch (IOException e) {
-            throw new InstallerException(e);
+            throw new ScriptFailureException(e);
         }
     }
 
+    @Override
     public Script createInstance(String scriptContent) {
         switch(Script.detectScriptType(scriptContent)) {
             case LEGACY:
@@ -46,6 +48,7 @@ public class ScriptFactoryDefaultImplementation implements ScriptFactory {
         }
     }
 
+    @Override
     public ScriptFactoryDefaultImplementation withExecutor(ExecutorService executorService) {
         this.executorService = executorService;
         return this;

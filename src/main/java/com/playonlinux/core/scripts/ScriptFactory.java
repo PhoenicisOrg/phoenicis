@@ -36,9 +36,9 @@ public interface ScriptFactory {
      * Create an instance of a Script
      * @param scriptPath the path of the script
      * @return The script object
-     * @throws InstallerException if the file cannot be opened
+     * @throws ScriptFailureException if the file cannot be opened
      */
-    Script createInstance(File scriptPath) throws InstallerException;
+    Script createInstance(File scriptPath) throws ScriptFailureException;
 
     /**
      * Override the default executor

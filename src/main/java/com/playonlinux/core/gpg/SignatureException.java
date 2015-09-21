@@ -16,31 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.win32;
+package com.playonlinux.core.gpg;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import com.playonlinux.app.PlayOnLinuxException;
 
-/**
- * Represents a WIN32 ULONG
- * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
- */
-public class ULong {
-    private final int ulongContent;
-
-    public ULong(int ulongContent) {
-        this.ulongContent = ulongContent;
-    }
-
-    public ULong(byte[] bytes, int offset) {
-        ulongContent = ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
-    }
-
-    public int get() {
-        return ulongContent;
-    }
-
-    public long getUnsignedValue() {
-        return ulongContent & 0xFFFFFFFFL;
+public class SignatureException extends PlayOnLinuxException {
+    public SignatureException(String s, Exception e) {
+        super(s, e);
     }
 }

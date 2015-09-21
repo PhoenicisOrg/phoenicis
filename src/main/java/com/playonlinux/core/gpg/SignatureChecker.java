@@ -27,7 +27,6 @@ import org.bouncycastle.openpgp.*;
 import java.io.*;
 import java.security.NoSuchProviderException;
 import java.security.Security;
-import java.security.SignatureException;
 import java.util.Iterator;
 
 import static org.bouncycastle.openpgp.PGPUtil.getDecoderStream;
@@ -66,46 +65,54 @@ public class SignatureChecker {
         return this;
     }
 
-    public Boolean check() throws IOException, PGPException, NoSuchProviderException, SignatureException {
-        PGPPublicKey pgpSigningKey = readPublicKey(new ByteArrayInputStream(publicKey.getBytes()));
+    public Boolean check() throws SignatureException {
+        final PGPPublicKey pgpSigningKey = readPublicKey(new ByteArrayInputStream(publicKey.getBytes()));
 
-        ArmoredInputStream armoredInputStream = new ArmoredInputStream(new ByteArrayInputStream(signature.getBytes()));
-
-        PGPObjectFactory pgpObjectFactory = new PGPObjectFactory(armoredInputStream);
-
-        Object nextObject = pgpObjectFactory.nextObject();
-        PGPSignature pgpSignature = null;
-        if (nextObject instanceof PGPSignatureList) {
-            PGPSignatureList list = (PGPSignatureList) nextObject;
-            if (!list.isEmpty()) {
-                pgpSignature = list.get(0);
-            }
+        final ArmoredInputStream armoredInputStream;
+        try {
+            armoredInputStream = new ArmoredInputStream(new ByteArrayInputStream(signature.getBytes()));
+        } catch (IOException e) {
+            throw new SignatureException("Failed to verify signature", e);
         }
 
-        if(pgpSignature == null) {
-            return false;
-        }
+        final PGPObjectFactory pgpObjectFactory = new PGPObjectFactory(armoredInputStream);
 
         try {
-            pgpSignature.initVerify(pgpSigningKey, "BC");
-        } catch(NoSuchProviderException e) {
-            LOGGER.debug("No security provider found. Adding bouncy castle. This error can be ignored", e);
-            Security.addProvider(new BouncyCastleProvider());
-            pgpSignature.initVerify(pgpSigningKey, "BC");
-        }
+            final Object nextObject = pgpObjectFactory.nextObject();
+            PGPSignature pgpSignature = null;
+            if (nextObject instanceof PGPSignatureList) {
+                PGPSignatureList list = (PGPSignatureList) nextObject;
+                if (!list.isEmpty()) {
+                    pgpSignature = list.get(0);
+                }
+            }
 
-        pgpSignature.update(signedData.getBytes());
-        return pgpSignature.verify();
+            if(pgpSignature == null) {
+                return false;
+            }
+
+            try {
+                pgpSignature.initVerify(pgpSigningKey, "BC");
+            } catch(NoSuchProviderException e) {
+                LOGGER.debug("No security provider found. Adding bouncy castle. This error can be ignored", e);
+                Security.addProvider(new BouncyCastleProvider());
+                pgpSignature.initVerify(pgpSigningKey, "BC");
+            }
+
+            pgpSignature.update(signedData.getBytes());
+            return pgpSignature.verify();
+        } catch (IOException | PGPException | NoSuchProviderException | java.security.SignatureException e) {
+            throw new SignatureException("Failed to verify signature", e);
+        }
     }
 
 
-    private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) throws IOException, PGPException {
+    private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) throws SignatureException {
         try(InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream)) {
-            PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
+            final PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
             PGPPublicKey key = null;
 
             Iterator rIt = pgpPub.getKeyRings();
-
 
             while (key == null && rIt.hasNext()) {
                 PGPPublicKeyRing kRing = (PGPPublicKeyRing) rIt.next();
@@ -120,6 +127,8 @@ public class SignatureChecker {
             }
 
             return key;
+        } catch (IOException | PGPException e) {
+            throw new SignatureException("Failed to read public key", e);
         }
     }
 
@@ -127,7 +136,7 @@ public class SignatureChecker {
         final BufferedReader reader =
                 new BufferedReader(new InputStreamReader(SignatureChecker.class.getResourceAsStream("playonlinux.gpg")));
 
-        StringBuilder readPublicKey = new StringBuilder();
+        final StringBuilder readPublicKey = new StringBuilder();
         try {
             for(String line = reader.readLine(); line != null; line = reader.readLine()) {
                 readPublicKey.append(line).append("\n");

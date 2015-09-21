@@ -25,6 +25,7 @@ import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.*;
 import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.framework.wizard.CompleteWizard;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.Controller;

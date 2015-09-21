@@ -111,6 +111,10 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         return winePrefixDirectory;
     }
 
+    public boolean isAutomaticallyUpdated() {
+        return isAutomaticallyUpdated;
+    }
+
     public static class Builder {
         private String wineVersion;
         private String wineDistribution;

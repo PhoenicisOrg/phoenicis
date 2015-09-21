@@ -24,7 +24,6 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.framework.ScriptFailureException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
@@ -82,36 +81,38 @@ public abstract class Script implements Service {
     public void init() {
         runningScript = executor.submit(() -> {
             try {
-
-                PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
-
-                try {
-                    executeScript(pythonInterpreter);
-                } catch (PyException e) {
-                    if (e.getCause() instanceof ScriptFailureException) {
-                        LOGGER.error("The script encountered an error");
-                    }
-                    if (e.getCause() instanceof CancelException) {
-                        LOGGER.info("The script has been canceled");
-                    }
-                    LOGGER.error(ExceptionUtils.getStackTrace(e));
-                } catch (ScriptFailureException e) {
-                    LOGGER.error("The script encountered an error", e);
-                } finally {
-                    LOGGER.info("Cleaning up");
-                    pythonInterpreter.cleanup();
-                    jythonJythonInterpreterFactory.close(pythonInterpreter);
-                    serviceManager.unregister(Script.this);
-                }
+                createScriptInstance();
             } catch(PlayOnLinuxException e) {
                 LOGGER.error("Cannot createPrefix interpreter", e);
             }
         });
     }
 
+    private void createScriptInstance() throws PlayOnLinuxException {
+        final PythonInterpreter pythonInterpreter = jythonJythonInterpreterFactory.createInstance();
+        try {
+            executeScript(pythonInterpreter);
+        } catch (PyException e) {
+            if (e.getCause() instanceof ScriptFailureException) {
+                LOGGER.error("The script encountered an error");
+            }
+            if (e.getCause() instanceof CancelException) {
+                LOGGER.info("The script has been canceled");
+            }
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+        } catch (ScriptFailureException e) {
+            LOGGER.error("The script encountered an error", e);
+        } finally {
+            LOGGER.info("Cleaning up");
+            pythonInterpreter.cleanup();
+            jythonJythonInterpreterFactory.close(pythonInterpreter);
+            serviceManager.unregister(Script.this);
+        }
+    }
+
     protected abstract void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException;
 
-    public abstract String extractSignature() throws ParseException, IOException;
+    public abstract String extractSignature() throws ScriptFailureException;
 
-    public abstract String extractContent() throws ParseException, IOException;
+    public abstract String extractContent() throws ScriptFailureException;
 }

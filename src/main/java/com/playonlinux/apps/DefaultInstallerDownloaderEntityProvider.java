@@ -21,25 +21,23 @@ package com.playonlinux.apps;
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.gpg.SignatureChecker;
+import com.playonlinux.core.gpg.SignatureException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.scripts.InstallerException;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import org.apache.log4j.Logger;
-import org.bouncycastle.openpgp.PGPException;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.NoSuchProviderException;
-import java.security.SignatureException;
 import java.text.ParseException;
 
 @Scan
@@ -150,11 +148,13 @@ public class DefaultInstallerDownloaderEntityProvider
                     changeState(State.SUCCESS, 100.);
                     startScript(script);
                 }
-            } catch (ParseException | PGPException | SignatureException | NoSuchProviderException e) {
+            } catch (SignatureException e) {
                 LOGGER.error(e);
                 changeState(State.SIGNATURE_ERROR, 100, scriptContent);
+            } catch (ServiceInitializationException e) {
+
             }
-        } catch (InstallerException | ParseException | IOException | ServiceInitializationException e) {
+        } catch (ScriptFailureException e) {
             LOGGER.error(e);
             changeState(State.FAILED);
         }
