@@ -35,7 +35,7 @@ public class PEReaderTest {
 
     @Test
     public void testMagicNumber() {
-        assertEquals(0x5A4D, peFile.imageDOSHeader.e_magic.get());
+        assertEquals(0x5A4D, peFile.imageDOSHeader.eMagic.get());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class PEReaderTest {
 
     @Test
     public void testRealModeStubProgramSize() {
-        assertEquals(96, peFile.imageDOSHeader.e_lfanew.intValue());
+        assertEquals(96, peFile.imageDOSHeader.eLfanew.intValue());
     }
 
     @Test

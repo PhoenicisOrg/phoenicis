@@ -29,57 +29,57 @@ import java.nio.ByteOrder;
 public class ImageDOSHeader {
     public static final int IMAGE_DOS_HEADER_SIZE = 64;
 
-    final Word e_magic;                     // Magic number
-    final Word e_cblp;                      // Bytes on last page of file
-    final Word e_cp;                        // Pages in file
-    final Word e_crlc;                      // Relocations
-    final Word e_cparhdr;                   // Size of header in paragraphs
-    final Word e_minalloc;                  // Minimum extra paragraphs needed
-    final Word e_maxalloc;                  // Maximum extra paragraphs needed
-    final Word e_ss;                        // Initial (relative) SS value
-    final Word e_sp;                        // Initial SP value
-    final Word e_csum;                      // Checksum
-    final Word e_ip;                        // Initial IP value
-    final Word e_cs;                        // Initial (relative) CS value
-    final Word e_lfarlc;                    // File address of relocation table
-    final Word e_ovno;                      // Overlay number
-    final Word[] e_res = new Word[4];       // Reserved Words
-    final Word e_oemid;                     // OEM identifier (for e_oeminfo)
-    final Word e_oeminfo;                   // OEM information; e_oemid specific
-    final Word[] e_res2 = new Word[10];     // Reserved Words
-    final Integer e_lfanew;                 // File address of new exe header
+    final Word eMagic;                     // Magic number
+    final Word eCblp;                      // Bytes on last page of file
+    final Word eCp;                        // Pages in file
+    final Word eCrlc;                      // Relocations
+    final Word eCparhdr;                   // Size of header in paragraphs
+    final Word eMinalloc;                  // Minimum extra paragraphs needed
+    final Word eMaxalloc;                  // Maximum extra paragraphs needed
+    final Word eSs;                        // Initial (relative) SS value
+    final Word eSp;                        // Initial SP value
+    final Word eCsum;                      // Checksum
+    final Word eIp;                        // Initial IP value
+    final Word eCs;                        // Initial (relative) CS value
+    final Word eLfarlc;                    // File address of relocation table
+    final Word eOvno;                      // Overlay number
+    final Word[] eRes = new Word[4];       // Reserved Words
+    final Word eOemid;                     // OEM identifier (for eOeminfo)
+    final Word eOeminfo;                   // OEM information; eOemid specific
+    final Word[] eRes2 = new Word[10];     // Reserved Words
+    final Integer eLfanew;                 // File address of new exe header
 
     ImageDOSHeader(byte[] bytes) {
         if(bytes.length != IMAGE_DOS_HEADER_SIZE) {
             throw new IllegalStateException("An ImageDOSHeader should be "+IMAGE_DOS_HEADER_SIZE+" bytes long");
         }
 
-        e_magic = new Word(bytes, 0);
-        e_cblp = new Word(bytes, 2);
-        e_cp = new Word(bytes, 4);
-        e_crlc = new Word(bytes, 6);
-        e_cparhdr = new Word(bytes, 8);
-        e_minalloc = new Word(bytes, 10);
-        e_maxalloc = new Word(bytes, 12);
-        e_ss = new Word(bytes, 14);
-        e_sp = new Word(bytes, 16);
-        e_csum = new Word(bytes, 18);
-        e_ip = new Word(bytes, 20);
-        e_cs = new Word(bytes, 22);
-        e_lfarlc = new Word(bytes, 24);
+        eMagic = new Word(bytes, 0);
+        eCblp = new Word(bytes, 2);
+        eCp = new Word(bytes, 4);
+        eCrlc = new Word(bytes, 6);
+        eCparhdr = new Word(bytes, 8);
+        eMinalloc = new Word(bytes, 10);
+        eMaxalloc = new Word(bytes, 12);
+        eSs = new Word(bytes, 14);
+        eSp = new Word(bytes, 16);
+        eCsum = new Word(bytes, 18);
+        eIp = new Word(bytes, 20);
+        eCs = new Word(bytes, 22);
+        eLfarlc = new Word(bytes, 24);
 
         for(int i = 0; i < 4; i++) {
-            e_res[i] = new Word(bytes, 26 + 2*i);
+            eRes[i] = new Word(bytes, 26 + 2*i);
         }
 
-        e_oemid = new Word(bytes, 34);
-        e_oeminfo = new Word(bytes, 36);
+        eOemid = new Word(bytes, 34);
+        eOeminfo = new Word(bytes, 36);
 
         for(int i = 0; i < 10; i++) {
-            e_res2[i] = new Word(bytes, 38 + 2*i);
+            eRes2[i] = new Word(bytes, 38 + 2*i);
         }
 
-        e_ovno = new Word(bytes, 58);
-        e_lfanew = ByteBuffer.wrap(bytes, 60, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
+        eOvno = new Word(bytes, 58);
+        eLfanew = ByteBuffer.wrap(bytes, 60, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
     }
 }
