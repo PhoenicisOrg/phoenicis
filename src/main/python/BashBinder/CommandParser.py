@@ -22,7 +22,7 @@ import os
 from Environment.EnvironmentFormatter import EnvironmentFormatter
 
 from com.playonlinux.framework import Downloader
-from com.playonlinux.framework import ScriptFailureException
+from com.playonlinux.core.scripts import ScriptFailureException
 from com.playonlinux.framework import WineVersion
 from com.playonlinux.framework import Wine
 from com.playonlinux.framework import WineShortcut
