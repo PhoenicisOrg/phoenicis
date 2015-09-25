@@ -61,7 +61,7 @@ public final class Files {
         return fileIside != null && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
     }
 
-    private static Set<PosixFilePermission> singleIntToFilePermission(int mode, String groupType) {
+    private static Set<PosixFilePermission> singleIntToFilePermission(Integer mode, String groupType) {
         Set<PosixFilePermission> permissions = new HashSet<>(9);
 
         if( Arrays.asList(new Integer[]{1, 3, 5, 7}).contains(mode) ) {

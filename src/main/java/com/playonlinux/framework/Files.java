@@ -51,7 +51,7 @@ public class Files implements SetupWizardComponent {
     }
 
     public static Files wizard(SetupWizard setupWizard) {
-        Files filesInstance = new Files(setupWizard);
+        final SetupWizardComponent filesInstance = new Files(setupWizard);
         setupWizard.registerComponent(filesInstance);
         return new Files(setupWizard);
     }
@@ -73,8 +73,8 @@ public class Files implements SetupWizardComponent {
         int fileSize = (int) sourceFile.length();
         float totalDataRead = 0;
 
-        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile), BLOCK_SIZE);
+        final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+        final BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile), BLOCK_SIZE);
 
         byte[] data = new byte[BLOCK_SIZE];
         int i;
@@ -83,7 +83,7 @@ public class Files implements SetupWizardComponent {
             totalDataRead += i;
             outputStream.write(data, 0, i);
             if(progressControl != null) {
-                int percentCopied = (int) ((totalDataRead * 100) / fileSize);
+                int percentCopied = (int) (totalDataRead * 100 / fileSize);
                 progressControl.setProgressPercentage(percentCopied);
             }
 
@@ -109,7 +109,6 @@ public class Files implements SetupWizardComponent {
         }
         return this;
     }
-
 
     public Files mkdir(String directoryToCreate) throws ScriptFailureException {
         try {

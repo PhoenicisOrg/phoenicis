@@ -39,7 +39,7 @@ public class AppsItemDTOTest {
                 .withTesting(true)
                 .build();
     }
-    
+
     @Test
     public void testAppsItemScriptDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", appsItemDTO.getName());
