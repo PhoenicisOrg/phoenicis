@@ -22,6 +22,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Cabfile {
@@ -77,7 +78,7 @@ public class Cabfile {
     private CFHeader getHeader() throws CabException {
         CFHeader cfHeader = new CFHeader(readBytes);
         cfHeader.populate(archiveStream);
-        readBytes += cfHeader.getStructureSize();
+        readBytes += (long) cfHeader.getStructureSize();
 
         return cfHeader;
     }
@@ -85,21 +86,21 @@ public class Cabfile {
     public CFFolder getFolder() throws CabException {
         CFFolder cfFolder = new CFFolder(readBytes);
         cfFolder.populate(archiveStream);
-        readBytes += cfFolder.getStructureSize();
+        readBytes += (long) cfFolder.getStructureSize();
         return cfFolder;
     }
 
     public CFFile getFile() throws CabException {
         CFFile cfFile = new CFFile(readBytes);
         cfFile.populate(archiveStream);
-        readBytes += cfFile.getStructureSize();
+        readBytes += (long) cfFile.getStructureSize();
         return cfFile;
     }
 
     public CFData getData(CompressionType compressionType) throws CabException {
         CFData cfData = new CFData(readBytes, compressionType);
         cfData.populate(archiveStream);
-        readBytes += cfData.getStructureSize();
+        readBytes += (long) cfData.getStructureSize();
         return cfData;
     }
 
@@ -116,33 +117,33 @@ public class Cabfile {
         File tahoma32 = new File("/Users/tinou/Downloads/arial32.exe");
         Cabfile cabfile = new Cabfile(tahoma32);
         int offset = cabfile.findCabOffset();
-        System.out.println(offset);
+        //System.out.println(offset);
         CFHeader header = cabfile.getHeader();
 
-        List <CFFolder> cfFolders = new ArrayList<>();
+        Collection<CFFolder> cfFolders = new ArrayList<>();
         for(int i = 0; i < header.getNumberOfFolders(); i++) {
             CFFolder cfFolder = cabfile.getFolder();
             cfFolders.add(cfFolder);
-            System.out.println(cfFolder);
+            //System.out.println(cfFolder);
         }
 
 
         cabfile.jumpTo(header.coffFiles[0]);
 
-        List<CFFile> cfiles = new ArrayList<>();
+        Collection<CFFile> cfiles = new ArrayList<>();
         for(int i = 0; i < header.getNumberOfFiles(); i++) {
             CFFile cfile = cabfile.getFile();
             cfiles.add(cfile);
-            System.out.println(cfile);
+            //System.out.println(cfile);
         }
 
         CFData cfData = cabfile.getData(CompressionType.NONE);
-        System.out.println(cfData);
-        System.out.println(Hex.encodeHexString(cfData.ab));
+        //System.out.println(cfData);
+        //System.out.println(Hex.encodeHexString(cfData.ab));
 
         CFData cfData2 = cabfile.getData(CompressionType.NONE);
-        System.out.println(cfData2);
-        System.out.println(Hex.encodeHexString(cfData2.ab));
+        //System.out.println(cfData2);
+        //System.out.println(Hex.encodeHexString(cfData2.ab));
 
 
         /*

@@ -76,14 +76,6 @@ public class CFFolder extends AbstractCabStructure {
         throw new CabException("Unsupported compression type");
     }
 
-    public void dump() {
-        System.out.println(Hex.encodeHexString(coffCabStart));
-        System.out.println(Hex.encodeHexString(cCFData));
-        System.out.println(Hex.encodeHexString(typeCompress));
-
-        System.out.println(this);
-    }
-
     public String toString() {
         String compressType;
         try {

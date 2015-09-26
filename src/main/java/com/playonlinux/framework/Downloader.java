@@ -56,7 +56,7 @@ public class Downloader implements SetupWizardComponent {
     }
 
     public static Downloader wizard(SetupWizard setupWizard) {
-        Downloader downloaderInstance = new Downloader(setupWizard);
+        final SetupWizardComponent downloaderInstance = new Downloader(setupWizard);
         setupWizard.registerComponent(downloaderInstance);
         return new Downloader(setupWizard);
     }

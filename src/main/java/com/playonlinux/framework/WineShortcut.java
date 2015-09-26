@@ -50,7 +50,7 @@ public class WineShortcut implements SetupWizardComponent {
     }
 
     public static WineShortcut wizard(SetupWizard setupWizard) {
-        WineShortcut wineInstance = new WineShortcut(setupWizard);
+        final SetupWizardComponent wineInstance = new WineShortcut(setupWizard);
         setupWizard.registerComponent(wineInstance);
         return new WineShortcut(setupWizard);
     }

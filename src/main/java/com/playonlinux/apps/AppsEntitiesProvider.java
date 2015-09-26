@@ -49,7 +49,7 @@ public final class AppsEntitiesProvider
     @Inject
     static ServiceManager serviceManager;
 
-    private final List<AppEntity> appsItemDTOs = new ArrayList<>();
+    private final Collection<AppEntity> appsItemDTOs = new ArrayList<>();
     private final List<AppEntity> filteredAppsItemsDTOs = new ArrayList<>();
     private final List<AppsCategory> categoriesDTO = new ArrayList<>();
 

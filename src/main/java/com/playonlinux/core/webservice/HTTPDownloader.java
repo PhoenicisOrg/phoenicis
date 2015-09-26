@@ -57,12 +57,12 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
 
             byte[] data = new byte[BLOCK_SIZE];
             int i;
-            float totalDataRead = 0;
+            float totalDataRead = 0.0F;
             while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
-                totalDataRead += i;
+                totalDataRead += (float) i;
                 bufferedOutputStream.write(data, 0, i);
 
-                this.percentage = (float) ((totalDataRead * 100.) / fileSize);
+                this.percentage = totalDataRead * (float) 100 / (float) fileSize;
                 this.state = State.PROGRESSING;
                 this.changeState();
 
@@ -86,7 +86,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
 
     private void changeState() {
         ProgressStateEntity currentState = new ProgressStateEntity.Builder()
-                .withPercent(this.percentage)
+                .withPercent((double) this.percentage)
                 .withState(ProgressStateEntity.State.valueOf(this.state.name()))
                 .build();
         this.notifyObservers(currentState);

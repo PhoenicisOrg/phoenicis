@@ -26,10 +26,12 @@ import com.playonlinux.ui.api.UIMessageSender;
 @Scan
 public class ControllerCLIImplementation implements Controller {
 
+    @Override
     public void startApplication() {
         // TODO: Implement this
     }
 
+    @Override
     public SetupWindow createSetupWindowGUIInstance(String title) {
         return null;
     }

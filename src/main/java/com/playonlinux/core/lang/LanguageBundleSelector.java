@@ -53,7 +53,7 @@ public final class LanguageBundleSelector {
         return FallbackLanguageBundle.getInstance();
     }
 
-    private static CatalogLanguageBundle forLocaleIdOrNull(String localeId) {
+    private static LanguageBundle forLocaleIdOrNull(String localeId) {
         URL poResourceUrl = Localisation.class.getResource("/locale/po/" + localeId + ".po");
         if (poResourceUrl == null) {
             return null;
@@ -62,7 +62,7 @@ public final class LanguageBundleSelector {
         }
     }
 
-    private static CatalogLanguageBundle parseCatalogBundle(URL poResourceUrl) {
+    private static LanguageBundle parseCatalogBundle(URL poResourceUrl) {
         PoParser parser = new PoParser();
         try (InputStream inputStream = poResourceUrl.openStream()) {
             return new CatalogLanguageBundle(parser.parseCatalog(inputStream, false));

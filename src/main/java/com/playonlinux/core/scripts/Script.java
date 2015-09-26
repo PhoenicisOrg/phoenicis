@@ -54,7 +54,7 @@ public abstract class Script implements Service {
     }
 
     public static Script.Type detectScriptType(String script) {
-        String firstLine = script.split("\n")[0];
+        final String firstLine = script.split("\n")[0];
         if(firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash")) {
             return Script.Type.LEGACY;
         } else {

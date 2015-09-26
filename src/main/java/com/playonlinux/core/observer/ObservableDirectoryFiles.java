@@ -20,6 +20,7 @@ package com.playonlinux.core.observer;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.util.Arrays;
@@ -27,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
+    private static final Logger LOGGER = Logger.getLogger(ObservableDirectoryFiles.class);
     private final ObservableDirectoryThread observableDirectoryThread;
 
     public ObservableDirectoryFiles(File observedDirectory) throws PlayOnLinuxException {
@@ -93,8 +95,9 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
                         this.observableDirectoryFiles.notifyObservers(directoryContent);
                     }
                     try {
-                        Thread.sleep(checkInterval);
+                        Thread.sleep((long) checkInterval);
                     } catch (InterruptedException e) {
+                        LOGGER.debug(e);
                         this.stopChecking();
                     }
                     lastDirectoryContent = directoryContent;

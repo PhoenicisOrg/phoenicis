@@ -126,7 +126,7 @@ public class AppEntity implements Entity, NameableEntity {
         }
 
 
-        public Builder withMiniaturesUrlsString(List<String> miniaturesUrlsAsString) {
+        public Builder withMiniaturesUrlsString(Iterable<String> miniaturesUrlsAsString) {
             List<URL> newMiniaturesUrls = new ArrayList<>();
             for(String url: miniaturesUrlsAsString) {
                 try {

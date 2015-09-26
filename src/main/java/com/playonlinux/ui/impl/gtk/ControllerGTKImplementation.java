@@ -31,6 +31,7 @@ public class ControllerGTKImplementation implements Controller {
 
     public static final String[] ARGS = new String[0];
 
+    @Override
     public void startApplication() {
         Gtk.init(ARGS);
         new GTKApplication();
@@ -38,6 +39,7 @@ public class ControllerGTKImplementation implements Controller {
         Gtk.main();
     }
 
+    @Override
     public SetupWindow createSetupWindowGUIInstance(String title) {
         return new SetupWindowGTKImplementation(title);
     }

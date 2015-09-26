@@ -67,8 +67,8 @@ abstract public class Webservice<T extends DTO>
             } finally {
                 this.update();
             }
-        } catch (InterruptedException ignored) {
-            LOGGER.info(String.format("The download was interrupted: %s", url), ignored);
+        } catch (InterruptedException e) {
+            LOGGER.info(String.format("The download was interrupted: %s", url), e);
         } finally {
             updateSemaphore.release();
         }

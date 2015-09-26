@@ -152,7 +152,7 @@ public class DefaultInstallerDownloaderEntityProvider
                 LOGGER.error(e);
                 changeState(State.SIGNATURE_ERROR, 100, scriptContent);
             } catch (ServiceInitializationException e) {
-
+                LOGGER.info(e);
             }
         } catch (ScriptFailureException e) {
             LOGGER.error(e);

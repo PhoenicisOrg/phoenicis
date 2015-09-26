@@ -28,7 +28,7 @@ public final class SystemUtilities {
     private SystemUtilities() {
         // Utility class
     }
-    static final int KILOBYTE = 1024;
+    static final long KILOBYTE = 1024L;
     // TODO: Find a name that do not use the verb "get"
 
     public static long getFreeSpace(File directory) {

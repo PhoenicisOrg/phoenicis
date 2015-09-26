@@ -42,21 +42,21 @@ public class CommandHistory {
     }
 
     public Item down() {
-        historyPosition = (historyPosition < history.size()) ? (historyPosition + 1) : history.size();
+        historyPosition = historyPosition < history.size() ? historyPosition + 1 : history.size();
         return current();
     }
 
     public Item current() {
-        if (history.size() > 0 && historyPosition < history.size()) {
+        if (!history.isEmpty() && historyPosition < history.size()) {
             return history.get(historyPosition);
         }
-        return Item.empty;
+        return Item.EMPTY;
     }
 
 
     public static final class Item {
 
-        public static final Item empty = new Item("", 0);
+        public static final Item EMPTY = new Item("", 0);
 
         private final String command;
         private final int cursorPosition;

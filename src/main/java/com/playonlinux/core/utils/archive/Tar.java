@@ -127,7 +127,7 @@ public class Tar  {
                 uncompressedFiles.add(outputFile);
 
                 stateCallback.apply(new ProgressStateEntity.Builder()
-                                .withPercent((double) countingInputStream.getCount() / (double) finalSize * 100)
+                                .withPercent((double) countingInputStream.getCount() / (double) finalSize * (double) 100)
                                 .withProgressText("Extracting " + outputFile.getName())
                                 .build()
                 );

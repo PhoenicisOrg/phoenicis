@@ -26,6 +26,7 @@ public abstract class InterrupterSynchronousMessage<RETURN_TYPE> extends Synchro
         this.messageSender = Thread.currentThread();
     }
 
+    @Override
     public void sendCancelSignal() {
         messageSender.interrupt();
     }

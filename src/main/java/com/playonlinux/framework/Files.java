@@ -71,7 +71,7 @@ public class Files implements SetupWizardComponent {
 
     private void copyFile(File sourceFile, File destinationFile) throws IOException, CancelException {
         int fileSize = (int) sourceFile.length();
-        float totalDataRead = 0;
+        float totalDataRead = 0.0F;
 
         final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
         final BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile), BLOCK_SIZE);
@@ -80,11 +80,11 @@ public class Files implements SetupWizardComponent {
         int i;
         while((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0)
         {
-            totalDataRead += i;
+            totalDataRead += (float) i;
             outputStream.write(data, 0, i);
             if(progressControl != null) {
-                int percentCopied = (int) (totalDataRead * 100 / fileSize);
-                progressControl.setProgressPercentage(percentCopied);
+                int percentCopied = (int) (totalDataRead * (float) 100 / (float) fileSize);
+                progressControl.setProgressPercentage((double) percentCopied);
             }
 
             if(Thread.interrupted()) {

@@ -20,6 +20,7 @@ package com.playonlinux.core.messages;
 
 public abstract class AsynchroneousMessage implements Message {
 
+    @Override
     public void run() {
         this.execute(this);
     }

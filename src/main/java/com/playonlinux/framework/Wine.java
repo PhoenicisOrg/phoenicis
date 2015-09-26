@@ -26,6 +26,7 @@ import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.scripts.ScriptFailureException;
+import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -67,7 +68,7 @@ public class Wine implements SetupWizardComponent {
 
     private static final Logger LOGGER = Logger.getLogger(Wine.class);
     private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
-    private static final long NEWPREFIXSIZE = 320_000_000;
+    private static final long NEWPREFIXSIZE = 320_000_000L;
     private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
     private static final String OVERWRITE = "Overwrite (usually works, no guarantee)";
     private static final String ERASE = "Erase (virtual drive content will be lost)";
@@ -211,7 +212,7 @@ public class Wine implements SetupWizardComponent {
         );
 
         try(ObservableDirectorySize observableDirectorySize =
-                    new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0, NEWPREFIXSIZE)) {
+                    new ObservableDirectorySize(prefix.getWinePrefixDirectory(), 0L, NEWPREFIXSIZE)) {
             observableDirectorySize.setCheckInterval(10);
             observableDirectorySize.addObserver(progressControl);
             backgroundServicesManager.register(observableDirectorySize);
@@ -270,7 +271,7 @@ public class Wine implements SetupWizardComponent {
                     .run(prefix, workingDirectory, executableToRun, environment, arguments);
 
             if(this.setupWizard.getLogContext() != null) {
-                ProcessPipe processPipe = new ProcessPipe(process,
+                final Service processPipe = new ProcessPipe(process,
                         new TeeOutputStream(this.setupWizard.getLogContext(), outputStream),
                         new TeeOutputStream(this.setupWizard.getLogContext(), errorStream),
                         inputStream
@@ -616,7 +617,7 @@ public class Wine implements SetupWizardComponent {
             );
 
             try(ObservableDirectorySize observableDirectorySize = new ObservableDirectorySize(prefix.getWinePrefixDirectory(), prefix.getSize(),
-                    0)) {
+                    0L)) {
                 observableDirectorySize.setCheckInterval(10);
                 observableDirectorySize.addObserver(progressControl);
                 backgroundServicesManager.register(observableDirectorySize);
@@ -688,6 +689,7 @@ public class Wine implements SetupWizardComponent {
         return lastReturnCode;
     }
 
+    @Override
     public void close() {
         if(prefix != null) {
             prefix.close();

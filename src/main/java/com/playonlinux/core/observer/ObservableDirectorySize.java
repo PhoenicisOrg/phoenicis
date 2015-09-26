@@ -53,15 +53,9 @@ public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEn
         this.observableDirectoryThread.start();
     }
 
+    @Override
     public File getObservedDirectory() {
         return observedDirectory;
-    }
-
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append(observedDirectory.getName())
-                .append(checkInterval)
-                .toString();
     }
 
     private class ObservableDirectoryThread extends Thread {
@@ -103,8 +97,9 @@ public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEn
                 }
 
                 try {
-                    Thread.sleep(checkInterval);
+                    Thread.sleep((long) checkInterval);
                 } catch (InterruptedException e) {
+                    LOGGER.debug(e);
                     this.stopChecking();
                 }
             }
