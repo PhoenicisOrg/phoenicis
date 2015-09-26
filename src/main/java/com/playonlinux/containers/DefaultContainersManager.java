@@ -48,6 +48,7 @@ public class DefaultContainersManager
     private ObservableDirectoryFiles containersDirectoryObservable;
     private final List<AbstractContainer<?>> containers = new ArrayList<>();
 
+    @Override
     public List<AbstractContainer> getContainers() {
         return new ArrayList<>(containers);
     }

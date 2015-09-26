@@ -32,6 +32,7 @@ import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public final class WineVersionEntitiesProvider
     @Inject
     static ServiceManager serviceManager;
 
-    private final List<WineVersionDistributionItemEntity> wineVersionDistributionItemEntities = new ArrayList<>();
+    private final Collection<WineVersionDistributionItemEntity> wineVersionDistributionItemEntities = new ArrayList<>();
     private final List<WineVersionDistributionItemEntity> filteredWineVersionDistributionItemEntities = new ArrayList<>();
 
     private Filter<WineVersionDistributionItemEntity> lastFilter;

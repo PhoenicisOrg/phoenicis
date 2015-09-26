@@ -37,17 +37,17 @@ public class CommandHistoryTest {
 
     @Test
     public void testHistory() {
-        //empty history should always return an empty item.
-        assertEquals(CommandHistory.Item.empty, history.current());
+        //EMPTY history should always return an EMPTY item.
+        assertEquals(CommandHistory.Item.EMPTY, history.current());
         history.up();
         history.up();
-        assertEquals(CommandHistory.Item.empty, history.current());
+        assertEquals(CommandHistory.Item.EMPTY, history.current());
         history.down();
-        assertEquals(CommandHistory.Item.empty, history.current());
+        assertEquals(CommandHistory.Item.EMPTY, history.current());
 
         history.add(testItems[0]);
-        //history should be reset to point to an empty item after adding a new item
-        assertEquals(CommandHistory.Item.empty, history.current());
+        //history should be reset to point to an EMPTY item after adding a new item
+        assertEquals(CommandHistory.Item.EMPTY, history.current());
         //after going one up, history should be at the latest added item.
         assertEquals(testItems[0], history.up());
         assertEquals(testItems[0], history.current());
@@ -55,13 +55,13 @@ public class CommandHistoryTest {
         //have no effect => still pointing to the oldest item
         assertEquals(testItems[0], history.up());
         assertEquals(testItems[0], history.current());
-        //going back down should result in the history pointing to an empty item
-        assertEquals(CommandHistory.Item.empty, history.down());
-        assertEquals(CommandHistory.Item.empty, history.current());
+        //going back down should result in the history pointing to an EMPTY item
+        assertEquals(CommandHistory.Item.EMPTY, history.down());
+        assertEquals(CommandHistory.Item.EMPTY, history.current());
 
         history.add(testItems[1]);
-        //history should always point to an empty item after adding a new item
-        assertEquals(CommandHistory.Item.empty, history.current());
+        //history should always point to an EMPTY item after adding a new item
+        assertEquals(CommandHistory.Item.EMPTY, history.current());
         //after going one up, history should be at the latest added item.
         assertEquals(testItems[1], history.up());
         assertEquals(testItems[1], history.current());

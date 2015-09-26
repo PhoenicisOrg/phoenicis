@@ -137,8 +137,9 @@ public class DefaultWineVersionsManager
             final String clientSum = checksumCalculator.calculate(temporaryFile, "sha1");
             checksumCalculator.deleteObservers();
             if(!clientSum.equals(serverSum)) {
-                throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch.\n\n" +
-                        "Client hash:%s\n" +
+                throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch." +
+                        System.lineSeparator() + System.lineSeparator() +
+                        "Client hash:%s" + System.lineSeparator() +
                         "Server has:%s", clientSum, serverSum));
             }
 

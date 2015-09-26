@@ -19,20 +19,19 @@
 package com.playonlinux.core.lang;
 
 import com.google.common.base.Preconditions;
-import com.playonlinux.core.comparator.Nameable;
 
 /**
  * LanguageBundle that doesn't translate at all.
  */
 public class FallbackLanguageBundle implements LanguageBundle {
-    private static final FallbackLanguageBundle instance = new FallbackLanguageBundle();
+    private static final FallbackLanguageBundle INSTANCE = new FallbackLanguageBundle();
 
     private FallbackLanguageBundle() {
 
     }
 
     public static FallbackLanguageBundle getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override

@@ -18,12 +18,9 @@
 
 package com.playonlinux.library;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.scripts.ScriptFactory;
 import org.apache.log4j.Logger;
 
 import java.io.Closeable;
@@ -33,12 +30,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-@Scan
 class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>>
         implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
-    
-    @Inject
-    static ScriptFactory scriptFactory;
     
     private final ObservableDirectoryFiles iconDirectory;
     private final ObservableDirectoryFiles shortcutDirectory;
@@ -76,11 +69,7 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
                         iconURL = new URL("file://"+iconFile.getAbsolutePath());
                     }
 
-                    ShortcutFiles shortcutFiles;
-
-                    shortcutFiles = new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile);
-
-                    this.getShortcutFiles().add(shortcutFiles);
+                    this.getShortcutFiles().add(new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile));
                 } catch (IOException e) {
                     LOGGER.warn(e);
                 }

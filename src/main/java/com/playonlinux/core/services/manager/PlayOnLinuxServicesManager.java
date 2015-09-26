@@ -34,6 +34,7 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
         backgroundServices = new HashMap<>();
     }
 
+    @Override
     public String register(Service service) throws ServiceInitializationException {
         final String backgroundName = String.valueOf(service.hashCode());
         register(backgroundName, service);
@@ -46,10 +47,12 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
         service.init();
     }
 
+    @Override
     public synchronized void shutdown() {
         backgroundServices.values().forEach(Service::shutdown);
     }
 
+    @Override
     public synchronized void unregister(Service service) {
         final List<String> keysToRemove = new ArrayList<>();
         backgroundServices.keySet().stream().filter(backgroundServiceKey -> service.equals(backgroundServices.get(backgroundServiceKey))).forEach(backgroundServiceKey -> {

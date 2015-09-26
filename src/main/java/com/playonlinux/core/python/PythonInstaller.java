@@ -60,7 +60,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public boolean hasMain() {
-        return !(this.getCandidateClasses().isEmpty());
+        return !this.getCandidateClasses().isEmpty();
     }
 
     public void runMain(PyObject mainInstance) {

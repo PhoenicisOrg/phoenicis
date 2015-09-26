@@ -31,6 +31,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
         this.userRegsitry = userRegistry;
     }
 
+    @Override
     public GLSL getGLSL() {
         final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "UseGLSL");
         if(registryChild instanceof RegistryValue) {

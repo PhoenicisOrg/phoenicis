@@ -21,6 +21,7 @@ package com.playonlinux.win32.pe;
 import com.playonlinux.win32.pe.rsrc.RsrcSection;
 
 public class PEFile {
+
     public enum Architecture {
         AMD64, I386, IA64
     }

@@ -24,6 +24,7 @@ public abstract class CancelerSynchronousMessage<RESULT> extends SynchronousMess
         implements CancelerMessage {
     private Boolean processCanceled = false;
 
+    @Override
     public RESULT getResponse() throws CancelException {
         RESULT response = super.getResponse();
 
@@ -34,6 +35,7 @@ public abstract class CancelerSynchronousMessage<RESULT> extends SynchronousMess
         return response;
     }
 
+    @Override
     public void sendCancelSignal() {
         this.processCanceled = true;
         super.semaphore.release();

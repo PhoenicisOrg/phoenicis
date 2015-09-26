@@ -82,9 +82,9 @@ public class ScriptLegacy extends Script {
     }
 
     private String extract(boolean extractSignature) throws IOException, ParseException {
-        BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
-        StringBuilder signatureBuilder = new StringBuilder();
-        String separator = FileAnalyser.identifyLineDelimiter(this.getScriptContent());
+        final BufferedReader bufferReader = new BufferedReader(new StringReader(this.getScriptContent()));
+        final StringBuilder signatureBuilder = new StringBuilder();
+        final String separator = FileAnalyser.identifyLineDelimiter(this.getScriptContent());
 
         Boolean insideSignature = false;
         for(String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
@@ -111,7 +111,6 @@ public class ScriptLegacy extends Script {
                 throw new ParseException("The script has no valid content", 0);
             }
         }
-
 
         return extractedContent;
     }

@@ -59,6 +59,7 @@ public class ApplicationDTO implements DTO, Nameable {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }

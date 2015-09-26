@@ -31,7 +31,7 @@ public class ReplacableProperties extends Properties {
         return replaceLocalVariables(rawProperty);
     }
 
-    private String matchAndReplace(String rawProperty, String regex, Properties propertyObject) {
+    private String matchAndReplace(CharSequence rawProperty, String regex, Properties propertyObject) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(rawProperty);
         StringBuffer transformedPropertyStringBuffer = new StringBuffer(rawProperty.length());
@@ -49,15 +49,15 @@ public class ReplacableProperties extends Properties {
         return transformedPropertyStringBuffer.toString();
     }
 
-    private String replaceGlobalVariables(String inputString) {
+    private String replaceGlobalVariables(CharSequence inputString) {
         return matchAndReplace(inputString, "\\$\\{([^\\}]*)\\}", System.getProperties());
     }
 
-    private String replaceLocalVariables(String inputString) {
+    private String replaceLocalVariables(CharSequence inputString) {
         return matchAndReplace(inputString, "\\$\\{([^\\}]*)\\}", this);
     }
 
-    public String replaceAllVariables(String inputString) {
+    public String replaceAllVariables(CharSequence inputString) {
         String globalVariableTranslatedString = this.replaceGlobalVariables(inputString);
 
         return this.replaceLocalVariables(globalVariableTranslatedString);

@@ -58,7 +58,7 @@ public class WineVersion {
      * @param wineDistribution Distribution as String
      * @param setupWizard Setup wizard to use
      */
-    public WineVersion(String version, String wineDistribution, SetupWizard setupWizard) {
+    public WineVersion(String version, String wineDistribution, WineWizard setupWizard) {
         this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
     }
 

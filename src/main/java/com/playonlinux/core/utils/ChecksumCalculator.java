@@ -62,8 +62,8 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
             readBytes += numBytes;
-            if(sizeInBytes != 0) {
-                double percentage = (double) readBytes / (double) sizeInBytes * 100;
+            if(sizeInBytes != 0L) {
+                double percentage = (double) readBytes / (double) sizeInBytes * (double) 100;
                 changeState(percentage);
             }
         }

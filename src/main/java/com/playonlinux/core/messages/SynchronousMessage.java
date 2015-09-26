@@ -26,6 +26,7 @@ public abstract class SynchronousMessage<RESULT> implements Message {
     private RESULT response;
     protected final Semaphore semaphore = new Semaphore(0);
 
+    @Override
     public void run() {
         this.execute(this);
     }

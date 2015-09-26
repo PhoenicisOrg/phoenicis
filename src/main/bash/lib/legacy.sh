@@ -182,7 +182,7 @@ POL_SetupWindow_make_shortcut()
 {
     # Make a shortcut into PlayOnLinux
     # Use POL_Shortcut
-    # Usage: POL_SetupWindow_make_shortcut [Prefix name] [Program's directory] [Program's file] [POL Website icon] [Name of the sortcut] [Leave empty] [Argument]
+    # Usage: POL_SetupWindow_make_shortcut [Prefix name] [Program's directory] [Program's file] [POL Website icon] [Name of the sortcut] [Leave EMPTY] [Argument]
     
     POL_Debug_Warning "Deprecated function! Use POL_Shortcut"
 
@@ -308,7 +308,7 @@ POL_SetupError()
 creer_lanceur_base ()
 {
     # Needed for POL_SetupWindow_make_shortcut
-    # Usage: POL_SetupWindow_make_shortcut [Prefix name] [Program's directory] [Program's file] [POL Website icon] [Name of the sortcut] [Leave empty] [Argument]
+    # Usage: POL_SetupWindow_make_shortcut [Prefix name] [Program's directory] [Program's file] [POL Website icon] [Name of the sortcut] [Leave EMPTY] [Argument]
     
     # 1 = Wineprefix
     # 2 = Repertoire

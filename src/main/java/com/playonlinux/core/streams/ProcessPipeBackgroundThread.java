@@ -20,6 +20,7 @@ package com.playonlinux.core.streams;
 
 
 import org.apache.commons.lang.mutable.MutableBoolean;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +28,7 @@ import java.io.OutputStream;
 
 public class ProcessPipeBackgroundThread implements Runnable {
     public static final int BLOCK_SIZE = 128;
+    private static final Logger LOGGER = Logger.getLogger(ProcessPipeBackgroundThread.class);
     private final Process process;
     private final MutableBoolean running;
     private final InputStream redirectInputStream;
@@ -84,8 +86,8 @@ public class ProcessPipeBackgroundThread implements Runnable {
                         break;
                     }
 
-
                 } catch (IOException e) {
+                    LOGGER.debug(e);
                     running.setValue(false);
                 }
             }

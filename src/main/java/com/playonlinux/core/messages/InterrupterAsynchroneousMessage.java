@@ -25,6 +25,7 @@ public abstract class InterrupterAsynchroneousMessage extends AsynchroneousMessa
         this.messageSender = Thread.currentThread();
     }
 
+    @Override
     public void sendCancelSignal() {
         messageSender.interrupt();
     }

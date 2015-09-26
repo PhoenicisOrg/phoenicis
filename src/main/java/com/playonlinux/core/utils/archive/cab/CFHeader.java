@@ -52,6 +52,7 @@ public class CFHeader extends AbstractCabStructure {
     }
 
 
+    @Override
     public void populate(InputStream inputStream) throws CabException {
         try {
             structureSize += 8;
