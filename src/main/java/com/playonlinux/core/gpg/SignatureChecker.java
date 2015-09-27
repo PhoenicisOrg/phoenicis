@@ -91,18 +91,22 @@ public class SignatureChecker {
                 return false;
             }
 
-            try {
-                pgpSignature.initVerify(pgpSigningKey, "BC");
-            } catch(NoSuchProviderException e) {
-                LOGGER.debug("No security provider found. Adding bouncy castle. This error can be ignored", e);
-                Security.addProvider(new BouncyCastleProvider());
-                pgpSignature.initVerify(pgpSigningKey, "BC");
-            }
+            initVerify(pgpSignature, pgpSigningKey);
 
             pgpSignature.update(signedData.getBytes());
             return pgpSignature.verify();
         } catch (IOException | PGPException | NoSuchProviderException | java.security.SignatureException e) {
             throw new SignatureException("Failed to verify signature", e);
+        }
+    }
+
+    private void initVerify(PGPSignature pgpSignature, PGPPublicKey pgpSigningKey) throws PGPException, NoSuchProviderException {
+        try {
+            pgpSignature.initVerify(pgpSigningKey, "BC");
+        } catch(NoSuchProviderException e) {
+            LOGGER.debug("No security provider found. Adding bouncy castle. This message can be ignored", e);
+            Security.addProvider(new BouncyCastleProvider());
+            pgpSignature.initVerify(pgpSigningKey, "BC");
         }
     }
 
