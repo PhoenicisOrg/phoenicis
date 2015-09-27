@@ -40,10 +40,14 @@ public class Files implements SetupWizardComponent {
     private static final int BLOCK_SIZE = 1024;
 
     /**
-     * Create a downloader object that is not hook into any progress bar
+     * Create a downloader object that is not hooked to any progress bar
      */
     public Files() {
 
+    }
+
+    public Files(ProgressControl progressControl) {
+        this.progressControl = progressControl;
     }
 
     private Files(SetupWizard setupWizard) {
@@ -54,10 +58,6 @@ public class Files implements SetupWizardComponent {
         final SetupWizardComponent filesInstance = new Files(setupWizard);
         setupWizard.registerComponent(filesInstance);
         return new Files(setupWizard);
-    }
-
-    public Files(ProgressControl progressControl) {
-        this.progressControl = progressControl;
     }
 
     private void defineProgressStep(File sourceFile) throws CancelException {

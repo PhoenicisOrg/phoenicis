@@ -51,7 +51,7 @@ public abstract class ContainerConfigurationView<T> extends VBox implements Prog
         progressState.setWrappingWidth(max(50, 710 - 150)); // FIXME
     }
 
-    abstract protected Tab drawInformationTab(T container);
+    protected abstract Tab drawInformationTab(T container);
 
     public List<Tab> getTabs() {
         return tabPane.getTabs();

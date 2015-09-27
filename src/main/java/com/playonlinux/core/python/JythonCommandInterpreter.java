@@ -34,7 +34,7 @@ import java.util.function.Function;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, Service {
-    private final static Logger LOGGER = Logger.getLogger(JythonCommandInterpreter.class);
+    private static final Logger LOGGER = Logger.getLogger(JythonCommandInterpreter.class);
 
     @Inject
     static JythonInterpreterFactory jythonJythonInterpreterFactory;

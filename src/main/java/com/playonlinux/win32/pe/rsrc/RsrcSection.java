@@ -21,7 +21,7 @@ package com.playonlinux.win32.pe.rsrc;
 
 public class RsrcSection {
     public final ImageResourceDirectory imageResourceDirectory;
-    public final ImageResourceDirectoryEntry imageResourceDirectoryEntry[];
+    public final ImageResourceDirectoryEntry[] imageResourceDirectoryEntry;
     public RsrcSection(byte[] bytes) {
         imageResourceDirectory = new ImageResourceDirectory(bytes);
         imageResourceDirectoryEntry = new ImageResourceDirectoryEntry[
@@ -32,12 +32,12 @@ public class RsrcSection {
         int i = 0;
         for(; i < imageResourceDirectory.numberOfNamedEntries.getUnsignedValue(); i++) {
             imageResourceDirectoryEntry[i] = new ImageResourceNamedDirectoryEntry(bytes,
-                    imageResourceDirectory.IMAGE_RESOURCE_DIRECTORY_SIZE);
+                    ImageResourceDirectory.IMAGE_RESOURCE_DIRECTORY_SIZE);
         }
 
         for(; i < imageResourceDirectory.numberOfIdEntries.getUnsignedValue(); i++) {
             imageResourceDirectoryEntry[i] = new ImageResourceDirectoryEntry(bytes,
-                    imageResourceDirectory.IMAGE_RESOURCE_DIRECTORY_SIZE);
+                    ImageResourceDirectory.IMAGE_RESOURCE_DIRECTORY_SIZE);
         }
     }
 }

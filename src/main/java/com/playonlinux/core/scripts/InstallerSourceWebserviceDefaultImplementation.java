@@ -37,6 +37,8 @@ public class InstallerSourceWebserviceDefaultImplementation extends Webservice<C
 
     @Override
     protected TypeReference defineTypeReference() {
-        return new TypeReference<List<CategoryDTO>>() {};
+        return new TypeReference<List<CategoryDTO>>() {
+
+        };
     }
 }

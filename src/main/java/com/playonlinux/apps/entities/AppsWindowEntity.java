@@ -31,6 +31,13 @@ public class AppsWindowEntity implements Entity {
     private final boolean downloading;
     private final boolean downloadFailed;
 
+    private AppsWindowEntity(Builder builder) {
+        appsItemDTOs = builder.appsItemDTOs;
+        categoryDTOs = builder.appsCategories;
+        downloadFailed = builder.downloadFailed;
+        downloading = builder.downloading;
+    }
+
     public List<AppEntity> getAppsItemDTOs() {
         return appsItemDTOs;
     }
@@ -45,13 +52,6 @@ public class AppsWindowEntity implements Entity {
 
     public boolean isDownloading() {
         return downloading;
-    }
-
-    private AppsWindowEntity(Builder builder) {
-        appsItemDTOs = builder.appsItemDTOs;
-        categoryDTOs = builder.appsCategories;
-        downloadFailed = builder.downloadFailed;
-        downloading = builder.downloading;
     }
 
     public static class Builder {

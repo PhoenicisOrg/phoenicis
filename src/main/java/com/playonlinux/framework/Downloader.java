@@ -37,7 +37,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 @ScriptClass
 @SuppressWarnings("unused")
 public class Downloader implements SetupWizardComponent {
-    private final static String MD5_CHECKSUM = "md5";
+    private static final String MD5_CHECKSUM = "md5";
 
     private SetupWizard setupWizard;
     private ProgressControl progressControl;
@@ -73,7 +73,6 @@ public class Downloader implements SetupWizardComponent {
             );
         }
     }
-
 
 
     private Downloader downloadRemoteFile(URL remoteFile, File localFile) throws CancelException {

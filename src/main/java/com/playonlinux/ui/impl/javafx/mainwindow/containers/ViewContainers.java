@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 import static com.playonlinux.core.lang.Localisation.translate;
@@ -38,7 +39,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
 
     private TextField searchBar;
     private MessagePanel selectContainerPanel;
-    private final WeakHashMap<ContainerEntity, ContainerConfigurationView<?>> containerConfigurationViewsCache;
+    private final Map<ContainerEntity, ContainerConfigurationView<?>> containerConfigurationViewsCache;
 
     public ViewContainers(MainWindow parent) {
         super(parent);
@@ -59,9 +60,10 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
         this.selectContainerPanel = new MessagePanel(translate("Please select a container to configure"));
     }
 
+    @Override
     protected void drawSideBar() {
         searchBar = new TextField();
-        searchBar.setOnKeyReleased((e) -> applyFilter(searchBar.getText()));
+        searchBar.setOnKeyReleased(e -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), containersView);
 

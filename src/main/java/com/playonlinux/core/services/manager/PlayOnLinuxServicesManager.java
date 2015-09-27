@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayOnLinuxServicesManager implements ServiceManager {
-    private final static Logger LOGGER = Logger.getLogger(ServiceManager.class);
+    private static final Logger LOGGER = Logger.getLogger(ServiceManager.class);
 
     private final Map<String, Service> backgroundServices;
 

@@ -28,6 +28,13 @@ public class WineVersionDistributionItemEntity implements Entity {
     private final List<WineVersionItemEntity> installedPackages;
     private final String name;
 
+    private WineVersionDistributionItemEntity(Builder builder) {
+        this.name = builder.name;
+        this.description = builder.description;
+        this.availablePackages = builder.availablePackages;
+        this.installedPackages = builder.installedPackages;
+    }
+
     public List<WineVersionItemEntity> getAvailablePackages() {
         return availablePackages;
     }
@@ -42,13 +49,6 @@ public class WineVersionDistributionItemEntity implements Entity {
 
     public String getName() {
         return name;
-    }
-
-    private WineVersionDistributionItemEntity(Builder builder) {
-        this.name = builder.name;
-        this.description = builder.description;
-        this.availablePackages = builder.availablePackages;
-        this.installedPackages = builder.installedPackages;
     }
 
     public static class Builder {

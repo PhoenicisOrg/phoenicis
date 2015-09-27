@@ -28,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public class MainWindowHeader extends GridPane {
+    private static final String MENU_ENTRY_CSS_CLASS = "menuEntry";
     private final Text myApps;
     private final Text appCenter;
     private final Text engines;
@@ -57,23 +58,21 @@ public class MainWindowHeader extends GridPane {
         this.add(menuPane, 1, 0);
 
         myApps = new Text("Library");
-        myApps.getStyleClass().add("menuEntry");
+        myApps.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
 
         appCenter = new Text("Apps");
-        appCenter.getStyleClass().add("menuEntry");
+        appCenter.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
 
         containers = new Text("Containers");
-        containers.getStyleClass().add("menuEntry");
+        containers.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
 
         engines = new Text("Engines");
-        engines.getStyleClass().add("menuEntry");
+        engines.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
 
         settings = new Text("Settings");
-        settings.getStyleClass().add("menuEntry");
-
+        settings.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
 
         menuPane.getChildren().addAll(myApps, appCenter, containers, engines, settings);
-
     }
 
     private void setLinkEvents(Node node, EventHandler<MouseEvent> eventHandler) {

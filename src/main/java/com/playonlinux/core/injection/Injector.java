@@ -18,7 +18,6 @@
 
 package com.playonlinux.core.injection;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 

@@ -30,7 +30,7 @@ abstract class AbstractCabStructure {
     }
 
 
-    abstract public void populate(InputStream inputStream) throws CabException;
+    public abstract void populate(InputStream inputStream) throws CabException;
 
     protected int readVariableField(InputStream inputStream, byte[] results) throws CabException {
         int i = 0;

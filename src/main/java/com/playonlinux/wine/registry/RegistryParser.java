@@ -32,8 +32,10 @@ import java.text.ParseException;
  */
 public class RegistryParser {
     private static final char QUOTE = '"';
+    private static final String PARSE_ERROR_MESSAGE = "Invalid registry file. Error found line %s";
     private final File registryFile;
     private final String rootName;
+
     enum ParseState {
         INITIAL,
         READING_NAME,
@@ -65,7 +67,7 @@ public class RegistryParser {
                     lineNumber++;
                     continue;
                 } else if (lastNode == null) {
-                    throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
+                    throw new ParseException(String.format(PARSE_ERROR_MESSAGE, lineNumber), 0);
                 } else {
                     this.parseValueLine(lastNode, currentLine, lineNumber);
                 }
@@ -81,7 +83,7 @@ public class RegistryParser {
 
     private void parseValueLine(RegistryKey lastNode, String currentLine, int lineNumber) throws ParseException {
         if(!currentLine.startsWith("\"")) {
-            throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
+            throw new ParseException(String.format(PARSE_ERROR_MESSAGE, lineNumber), 0);
         }
 
         final StringBuilder nameBuilder = new StringBuilder();
@@ -108,7 +110,7 @@ public class RegistryParser {
                 }
             } else if(parseState == ParseState.SEPARATOR) {
                 if(currentChar != '=') {
-                    throw new ParseException(String.format("Invalid registry file. Error found line %s", lineNumber), 0);
+                    throw new ParseException(String.format(PARSE_ERROR_MESSAGE, lineNumber), 0);
                 } else {
                     parseState = ParseState.READING_VALUE;
                 }
@@ -140,7 +142,6 @@ public class RegistryParser {
                 currentKey = newChild;
             }
         }
-
         return currentKey;
     }
 

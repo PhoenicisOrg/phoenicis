@@ -30,6 +30,7 @@ public final class LanguageBundleSelector {
     private LanguageBundleSelector() {
         // Utility class
     }
+
     /**
      * Select a LanguageBundle for the given resource from the classpath.
      *
@@ -41,13 +42,17 @@ public final class LanguageBundleSelector {
         String fullTag = new Locale(locale.getLanguage(), locale.getCountry())
                 .toLanguageTag().replace('-', '_');
         LanguageBundle bundle = forLocaleIdOrNull(fullTag);
-        if (bundle != null) { return bundle; }
+        if (bundle != null) {
+            return bundle;
+        }
 
         // then, try the base language tag (just xx for language)
         String languageTag = new Locale(locale.getLanguage())
                 .toLanguageTag().replace('-', '_');
         bundle = forLocaleIdOrNull(languageTag);
-        if (bundle != null) { return bundle; }
+        if (bundle != null) {
+            return bundle;
+        }
 
         // if neither was found, fall back on defaults
         return FallbackLanguageBundle.getInstance();

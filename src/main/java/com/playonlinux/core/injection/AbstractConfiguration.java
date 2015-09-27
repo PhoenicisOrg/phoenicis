@@ -26,10 +26,11 @@ import java.util.concurrent.Semaphore;
  * Two configuration files cannot be loaded at the same time, seems they are using the static context.
  */
 public abstract class AbstractConfiguration implements AutoCloseable {
-    boolean strictLoadingPolicy = true;
+    private static volatile Semaphore staticContextLock = new Semaphore(1);
+
+    protected boolean strictLoadingPolicy = true;
     
     protected abstract String definePackage();
-    private volatile static Semaphore staticContextLock = new Semaphore(1);
 
     /**
      * If this is set to true, the injector will throw an exception if a non defined bean in the config file

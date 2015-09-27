@@ -31,12 +31,12 @@ public class DefaultJythonJythonInterpreterFactory implements JythonInterpreterF
     private int numberOfInstances = 0;
 
     @Override
-    synchronized public PythonInterpreter createInstance() throws PlayOnLinuxException {
+    public synchronized PythonInterpreter createInstance() throws PlayOnLinuxException {
         return createInstance(PythonInterpreter.class);
     }
 
     @Override
-    synchronized public <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException {
+    public synchronized <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
         numberOfInstances++;
@@ -48,7 +48,7 @@ public class DefaultJythonJythonInterpreterFactory implements JythonInterpreterF
     }
 
     @Override
-    synchronized public void close(PythonInterpreter interpreter) {
+    public synchronized void close(PythonInterpreter interpreter) {
         interpreter.cleanup();
         numberOfInstances--;
         if(numberOfInstances == 0) {

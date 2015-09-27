@@ -42,8 +42,8 @@ import java.util.zip.GZIPInputStream;
  * Tar extraction utilities
  */
 public class Tar  {
-
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
+    private static final String TAR_ERROR_MESSAGE = "Unable to open input stream";
 
     List<File> uncompressTarBz2File(File inputFile, File outputDir, Function<ProgressStateEntity, Void> stateCallback) throws ArchiveException {
         try(CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile)) ;
@@ -51,7 +51,7 @@ public class Tar  {
             final long finalSize = FileUtils.sizeOf(inputFile);
             return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
-            throw new ArchiveException("Unable to open input stream", e);
+            throw new ArchiveException(TAR_ERROR_MESSAGE, e);
         }
     }
 
@@ -61,7 +61,7 @@ public class Tar  {
             final long finalSize = FileUtils.sizeOf(inputFile);
             return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
-            throw new ArchiveException("Unable to open input stream", e);
+            throw new ArchiveException(TAR_ERROR_MESSAGE, e);
         }
     }
 
@@ -71,7 +71,7 @@ public class Tar  {
             final long finalSize = FileUtils.sizeOf(inputFile);
             return uncompress(inputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
-            throw new ArchiveException("Unable to open input stream", e);
+            throw new ArchiveException(TAR_ERROR_MESSAGE, e);
         }
     }
 
@@ -80,7 +80,7 @@ public class Tar  {
             final long finalSize = FileUtils.sizeOf(inputFile);
             return uncompress(countingInputStream, countingInputStream, outputDir, finalSize, stateCallback);
         } catch (IOException e) {
-            throw new ArchiveException("Unable to open input stream", e);
+            throw new ArchiveException(TAR_ERROR_MESSAGE, e);
         }
     }
 
