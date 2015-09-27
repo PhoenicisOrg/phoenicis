@@ -28,12 +28,12 @@ import java.util.List;
 public class WineVersionDistributionWebDTO implements DTO {
     private final String name;
     private final String description;
-    private final List<WineVersionWebDTO> packages;
+    private final List<WineVersionDTO> packages;
 
     @JsonCreator
     public WineVersionDistributionWebDTO(@JsonProperty("name") String name,
                                          @JsonProperty("description") String description,
-                                         @JsonProperty("packages") List<WineVersionWebDTO> packages) {
+                                         @JsonProperty("packages") List<WineVersionDTO> packages) {
         this.name = name;
         this.description = description;
         this.packages = packages;
@@ -47,7 +47,7 @@ public class WineVersionDistributionWebDTO implements DTO {
         return name;
     }
 
-    public List<WineVersionWebDTO> getPackages() {
+    public List<WineVersionDTO> getPackages() {
         return packages;
     }
 
