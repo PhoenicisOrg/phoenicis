@@ -18,12 +18,9 @@
 
 package com.playonlinux.core.utils.archive.cab;
 
-import org.apache.commons.codec.binary.Hex;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class Cabfile {
     private final InputStream archiveStream;
