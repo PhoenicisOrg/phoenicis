@@ -81,6 +81,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                     interactiveInterpreter.exec(completeCommand);
                     callback.apply(returnBuffer.toString());
                 } catch (PyException e) {
+                    LOGGER.debug(e);
                     callback.apply(e.toString());
                 }
             });

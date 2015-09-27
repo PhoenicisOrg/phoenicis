@@ -260,6 +260,7 @@ public class WinePrefix implements AutoCloseable {
         try {
             return new RegistryWinePrefixDisplayConfiguration(fetchUserRegistry());
         } catch (WineException e) {
+            LOGGER.debug(e);
             return new DefaultWinePrefixDisplayConfiguration();
         }
     }
@@ -268,6 +269,7 @@ public class WinePrefix implements AutoCloseable {
         try {
             return new RegistryWinePrefixInputConfiguration(fetchUserRegistry());
         } catch (WineException e) {
+            LOGGER.debug(e);
             return new DefaultWinePrefixInputConfiguration();
         }
     }

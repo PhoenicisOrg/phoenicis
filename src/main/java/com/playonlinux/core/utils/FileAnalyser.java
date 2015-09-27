@@ -21,6 +21,7 @@ package com.playonlinux.core.utils;
 import com.playonlinux.app.PlayOnLinuxException;
 import net.sf.jmimemagic.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
@@ -30,6 +31,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public final class FileAnalyser {
+    private static final Logger LOGGER = Logger.getLogger(FileAnalyser.class);
+
     private FileAnalyser() {
         // Utility class
     }
@@ -57,6 +60,7 @@ public final class FileAnalyser {
         try {
             return getMatch(inputFile).getMimeType();
         } catch (MagicMatchNotFoundException e) {
+            LOGGER.debug(e);
             final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
             return mimeTypesMap.getContentType(inputFile);
         }

@@ -4,6 +4,7 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.ui.events.EventHandler;
+import org.apache.log4j.Logger;
 import org.gnome.gtk.FileChooserAction;
 import org.gnome.gtk.FileChooserDialog;
 import org.gnome.gtk.Window;
@@ -12,6 +13,8 @@ import java.io.File;
 
 @Scan
 public class MainWindowEventDispatcher {
+    private static final Logger LOGGER = Logger.getLogger(MainWindowEventDispatcher.class);
+
     @Inject
     static EventHandler mainEventHandler;
 
@@ -27,7 +30,8 @@ public class MainWindowEventDispatcher {
 
         try {
             fileChooserDialog.run();
-        } catch (org.gnome.glib.FatalError ignored) {
+        } catch (org.gnome.glib.FatalError e) {
+            LOGGER.debug(e);
             // FIXME: Catch properly this exception
         }
 
