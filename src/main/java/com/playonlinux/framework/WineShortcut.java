@@ -106,9 +106,11 @@ public class WineShortcut implements SetupWizardComponent {
         if(wineShortcutBuilder.getWorkingDirectory() == null
                 && wineShortcutBuilder.getWinePrefix() != null
                 && wineShortcutBuilder.getExecutableName() != null) {
+
             for (File executable : Wine.wizard(setupWizard).selectPrefix(wineShortcutBuilder.getWinePrefix()).findExecutables()) {
-                if(executable.getName().equals(wineShortcutBuilder.getExecutableName())) {
+                if(executable.getName().equalsIgnoreCase(wineShortcutBuilder.getExecutableName())) {
                     wineShortcutBuilder.withWorkingDirectory(executable.getParent());
+                    wineShortcutBuilder.withExecutableName(executable.getName());
                     break;
                 }
             }
