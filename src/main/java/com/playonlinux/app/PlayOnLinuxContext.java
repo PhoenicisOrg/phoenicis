@@ -160,4 +160,17 @@ public class PlayOnLinuxContext {
                 OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
         );
     }
+
+    public File makeLocalGeckoPath() {
+        final File geckoPath = new File(this.properties.getProperty("application.user.engines.wine.gecko"));
+        geckoPath.mkdir();
+        return geckoPath;
+    }
+
+    public File makeLocalMonoPath() {
+        final File monoPath = new File(this.properties.getProperty("application.user.engines.wine.gecko"));
+        monoPath.mkdir();
+        return monoPath;
+    }
+
 }
