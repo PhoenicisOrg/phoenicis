@@ -48,6 +48,10 @@ import java.util.List;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public class WinePrefixContainerConfigurationView extends ContainerConfigurationView<WinePrefixContainerEntity> {
+    private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
+    private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
+    private static final String TITLE_CSS_CLASS = "title";
+
     private final EventHandlerContainers eventHandlerContainers;
 
     private final List<Node> lockableElements = new ArrayList<>();
@@ -66,27 +70,27 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
     protected Tab drawInformationTab(WinePrefixContainerEntity containerEntity) {
         final Tab informationTab = new Tab(translate("Information"));
         final VBox informationPane = new VBox();
-        final Text title = new TextWithStyle(translate("Information"), "title");
+        final Text title = new TextWithStyle(translate("Information"), TITLE_CSS_CLASS);
 
-        informationPane.getStyleClass().add("containerConfigurationPane");
+        informationPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         informationPane.getChildren().add(title);
 
         final GridPane informationContentPane = new GridPane();
         informationContentPane.getStyleClass().add("grid");
 
-        informationContentPane.add(new TextWithStyle(translate("Name:"), "captionTitle"), 0, 0);
+        informationContentPane.add(new TextWithStyle(translate("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         informationContentPane.add(new Text(containerEntity.getName()), 1, 0);
 
-        informationContentPane.add(new TextWithStyle(translate("Path:"), "captionTitle"), 0, 1);
+        informationContentPane.add(new TextWithStyle(translate("Path:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         informationContentPane.add(new Text(containerEntity.getPath()), 1, 1);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine version:"), "captionTitle"), 0, 2);
+        informationContentPane.add(new TextWithStyle(translate("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         informationContentPane.add(new Text(containerEntity.getWineVersion()), 1, 2);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine architecture:"), "captionTitle"), 0, 3);
+        informationContentPane.add(new TextWithStyle(translate("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         informationContentPane.add(new Text(containerEntity.getWineArchitecture()), 1, 3);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), "captionTitle"), 0, 4);
+        informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         informationContentPane.add(new Text(containerEntity.getWineDistribution()), 1, 4);
 
         informationContentPane.getRowConstraints().addAll(
@@ -112,9 +116,9 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
     protected Tab drawDisplayTab(WinePrefixContainerEntity containerEntity) {
         final Tab displayTab = new Tab(translate("Display"));
         final VBox displayPane = new VBox();
-        final Text title = new TextWithStyle(translate("Display settings"), "title");
+        final Text title = new TextWithStyle(translate("Display settings"), TITLE_CSS_CLASS);
 
-        displayPane.getStyleClass().add("containerConfigurationPane");
+        displayPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         displayPane.getChildren().add(title);
 
         final GridPane displayContentPane = new GridPane();
@@ -123,48 +127,48 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         final ComboBox<GLSL> glslComboBox = new ComboBox<>();
         glslComboBox.setValue(containerEntity.getGlslValue());
         addItems(glslComboBox, GLSL.class);
-        displayContentPane.add(new TextWithStyle(translate("GLSL support"), "captionTitle"), 0, 0);
+        displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
 
         final ComboBox<DirectDrawRenderer> directDrawRendererComboBox = new ComboBox<>();
         directDrawRendererComboBox.setValue(containerEntity.getDirectDrawRenderer());
         addItems(directDrawRendererComboBox, DirectDrawRenderer.class);
-        displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), "captionTitle"), 0, 1);
+        displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         displayContentPane.add(directDrawRendererComboBox, 1, 1);
 
         final ComboBox<VideoMemorySize> videoMemorySizeComboBox = new ComboBox<>();
         videoMemorySizeComboBox.setValue(containerEntity.getVideoMemorySize());
         addItemsVideoMemorySize(videoMemorySizeComboBox);
-        displayContentPane.add(new TextWithStyle(translate("Video memory size"), "captionTitle"), 0, 2);
+        displayContentPane.add(new TextWithStyle(translate("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         displayContentPane.add(videoMemorySizeComboBox, 1, 2);
 
         final ComboBox<OffscreenRenderingMode> offscreenRenderingModeComboBox = new ComboBox<>();
         offscreenRenderingModeComboBox.setValue(containerEntity.getOffscreenRenderingMode());
         addItems(offscreenRenderingModeComboBox, OffscreenRenderingMode.class);
-        displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), "captionTitle"), 0, 3);
+        displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         displayContentPane.add(offscreenRenderingModeComboBox, 1, 3);
 
         final ComboBox<RenderTargetModeLock> renderTargetModeLockComboBox = new ComboBox<>();
         renderTargetModeLockComboBox.setValue(containerEntity.getRenderTargetModeLock());
-        displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), "captionTitle"), 0, 4);
+        displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         displayContentPane.add(renderTargetModeLockComboBox, 1, 4);
 
         final ComboBox<Multisampling> multisamplingComboBox = new ComboBox<>();
         multisamplingComboBox.setValue(containerEntity.getMultisampling());
         addItems(multisamplingComboBox, Multisampling.class);
-        displayContentPane.add(new TextWithStyle(translate("Multisampling"), "captionTitle"), 0, 5);
+        displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
         final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox  = new ComboBox<>();
         strictDrawOrderingComboBox.setValue(containerEntity.getStrictDrawOrdering());
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
-        displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), "captionTitle"), 0, 6);
+        displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
         final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox  = new ComboBox<>();
         alwaysOffscreenComboBox.setValue(containerEntity.getAlwaysOffscreen());
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
-        displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), "captionTitle"), 0, 7);
+        displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
 
         displayContentPane.getRowConstraints().addAll(
@@ -200,9 +204,9 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
     protected Tab drawInputTab(WinePrefixContainerEntity containerEntity) {
         final Tab inputTab = new Tab(translate("Input"));
         final VBox inputPane = new VBox();
-        final Text title = new TextWithStyle(translate("Input settings"), "title");
+        final Text title = new TextWithStyle(translate("Input settings"), TITLE_CSS_CLASS);
 
-        inputPane.getStyleClass().add("containerConfigurationPane");
+        inputPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         inputPane.getChildren().add(title);
 
         final GridPane inputContentPane = new GridPane();
@@ -211,7 +215,7 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         final ComboBox<MouseWarpOverride> mouseWarpOverrideComboBox = new ComboBox<>();
         mouseWarpOverrideComboBox.setValue(containerEntity.getMouseWarpOverride());
         addItems(mouseWarpOverrideComboBox, MouseWarpOverride.class);
-        inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), "captionTitle"), 0, 0);
+        inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         inputContentPane.add(mouseWarpOverrideComboBox, 1, 0);
 
         inputContentPane.getRowConstraints().addAll(
@@ -235,16 +239,16 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
     protected Tab drawToolsTab(WinePrefixContainerEntity containerEntity) {
         final Tab toolsTab = new Tab(translate("Tools"));
         final VBox toolsPane = new VBox();
-        final Text title = new TextWithStyle(translate("Wine tools"), "title");
+        final Text title = new TextWithStyle(translate("Wine tools"), TITLE_CSS_CLASS);
 
-        toolsPane.getStyleClass().add("containerConfigurationPane");
+        toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         toolsPane.getChildren().add(title);
 
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
         toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
-                (e) -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), (arg) -> {
+                e -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), arg -> {
                     unlockAll();
                     return null;
                 })), 0, 0);

@@ -48,6 +48,7 @@ public class MainWindowEventHandler implements UIEventHandler {
 
     private final MainWindow mainWindow;
 
+    private String lastLocalScriptDir = QDir.homePath() + "/";
 
     public MainWindowEventHandler(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
@@ -99,11 +100,6 @@ public class MainWindowEventHandler implements UIEventHandler {
     public void openLink(String url) {
         QDesktopServices.openUrl(new QUrl(url));
     }
-
-
-    /* POL CONTROL */
-
-    private String lastLocalScriptDir = QDir.homePath() + "/";
 
     /**
      * Run a local script within the interpreter.

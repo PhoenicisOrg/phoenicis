@@ -37,7 +37,9 @@ public class WineversionsSourceWebserviceDefaultImplementation extends Webservic
 
     @Override
     protected TypeReference defineTypeReference() {
-        return new TypeReference<List<WineVersionDistributionWebDTO>>() {};
+        return new TypeReference<List<WineVersionDistributionWebDTO>>() {
+
+        };
     }
 
 

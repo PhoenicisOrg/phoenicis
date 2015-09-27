@@ -30,10 +30,6 @@ import javafx.scene.text.Text;
 public final class MiniatureListWidget extends ScrollPane {
     private final Pane content;
 
-    public static MiniatureListWidget create() {
-        return new MiniatureListWidget(new FlowPane());
-    }
-
     private MiniatureListWidget(Pane content) {
         super(content);
 
@@ -47,6 +43,10 @@ public final class MiniatureListWidget extends ScrollPane {
         this.setCache(true);
         this.setCacheHint(CacheHint.QUALITY);
 
+    }
+
+    public static MiniatureListWidget create() {
+        return new MiniatureListWidget(new FlowPane());
     }
 
     public void clear() {

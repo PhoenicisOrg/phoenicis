@@ -26,8 +26,8 @@ import org.apache.log4j.Logger;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ErrorMessage {
-    final static Logger LOGGER = Logger.getLogger(ErrorMessage.class);
-    final Alert alert;
+    private static final Logger LOGGER = Logger.getLogger(ErrorMessage.class);
+    private final Alert alert;
 
     public ErrorMessage(String message, PlayOnLinuxException exception) {
         LOGGER.error(ExceptionUtils.getStackTrace(exception));

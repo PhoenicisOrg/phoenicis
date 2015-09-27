@@ -54,7 +54,7 @@ public class ImageOptionalHeader {
     final DWord sizeOfHeapCommit;
     final DWord loaderFlags;
     final DWord numberOfRvaAndSizes;
-    final ImageDataDirectory dataDirectory[];
+    final ImageDataDirectory[] dataDirectory;
 
     public ImageOptionalHeader(byte[] bytes) {
         magic = new Word(bytes, 0);

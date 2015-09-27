@@ -93,12 +93,12 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
 
     @Override
     public void setTopImage(URL topImage) throws IOException {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
     public void setLeftImage(URL leftImage) throws IOException {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
@@ -110,22 +110,22 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
 
     @Override
     public void showYesNoQuestionStep() {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
     public void showTextBoxStep(CancelerSynchronousMessage message, String textToShow, String defaultValue) {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
     public void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems) {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
     public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
@@ -135,16 +135,20 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
 
     @Override
     public void showPresentationStep(CancelerSynchronousMessage message, String textToShow) {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
     public void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText) {
-        throw new UnsupportedOperationException("GTK interface is not fully implemented");
+        raiseUnsupported();
     }
 
     @Override
     public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+        raiseUnsupported();
+    }
+
+    private void raiseUnsupported() {
         throw new UnsupportedOperationException("GTK interface is not fully implemented");
     }
 

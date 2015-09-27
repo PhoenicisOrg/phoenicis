@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
-abstract public class Webservice<T extends DTO>
+public abstract class Webservice<T extends DTO>
         extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>> implements Service {
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
 

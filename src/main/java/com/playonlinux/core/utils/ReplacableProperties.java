@@ -62,9 +62,4 @@ public class ReplacableProperties extends Properties {
 
         return this.replaceLocalVariables(globalVariableTranslatedString);
     }
-
-    @Override
-    public synchronized Object clone() {
-        return super.clone();
-    }
 }
