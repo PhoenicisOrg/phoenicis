@@ -37,8 +37,6 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 

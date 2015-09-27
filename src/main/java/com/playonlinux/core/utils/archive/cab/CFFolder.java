@@ -18,7 +18,6 @@
 
 package com.playonlinux.core.utils.archive.cab;
 
-import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
