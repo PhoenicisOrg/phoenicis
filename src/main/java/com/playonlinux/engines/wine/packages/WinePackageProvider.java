@@ -38,7 +38,9 @@ public class WinePackageProvider<T extends WinePackage> {
     }
 
     public void installPackageForWineVersion(File extractPath, Observer progressControl) throws EngineInstallException {
-        if(!winePackage.getPackageDestination().exists()) {
+        final File destinationFile = new File(winePackage.getPackageDestination(), winePackage.getPackageFileName());
+
+        if(!destinationFile.exists()) {
             installPackageInLocalCache(progressControl);
         }
 
@@ -47,7 +49,7 @@ public class WinePackageProvider<T extends WinePackage> {
 
     private void installPackageInWineVersionDirectory(File extractPath) throws EngineInstallException {
         final File localArchive = winePackage.getPackageDestination();
-        final File linkDestination = new File(extractPath, String.format("share/wine/%s", winePackage.getPackageFileName()));
+        final File linkDestination = new File(extractPath, String.format("share/wine/%s", winePackage.getPackageTypeName()));
 
         try {
             Files.createSymbolicLink(linkDestination.toPath(), localArchive.toPath());
@@ -60,7 +62,8 @@ public class WinePackageProvider<T extends WinePackage> {
         try {
             final URL packageUrl = winePackage.getPackageUrl();
             final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);
-            final File destinationFile = winePackage.getPackageDestination();
+            final File destinationDirectory = winePackage.getPackageDestination();
+            final File destinationFile = new File(destinationDirectory, winePackage.getPackageFileName());
             final String packageChecksum = winePackage.getPackageChecksum();
 
             httpDownloader.addObserver(progressControl);
@@ -73,7 +76,7 @@ public class WinePackageProvider<T extends WinePackage> {
             checksumCalculator.deleteObservers();
 
             if(!clientSum.equals(packageChecksum)) {
-                //destinationFile.delete();
+                destinationFile.delete();
                 throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch." +
                         System.lineSeparator() + System.lineSeparator() +
                         "Client hash:%s" + System.lineSeparator() +

@@ -40,7 +40,7 @@ public class GeckoWinePackage implements WinePackage {
 
     @Override
     public File getPackageDestination() {
-        return new File(playOnLinuxContext.makeLocalGeckoPath(), wineVersionDTO.getGeckoFile());
+        return playOnLinuxContext.makeLocalGeckoPath();
     }
 
     @Override
@@ -56,5 +56,10 @@ public class GeckoWinePackage implements WinePackage {
     @Override
     public String getPackageChecksum() {
         return wineVersionDTO.getGeckoMd5();
+    }
+
+    @Override
+    public String getPackageTypeName() {
+        return "gecko";
     }
 }

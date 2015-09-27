@@ -40,7 +40,7 @@ public class MonoWinePackage implements WinePackage {
 
     @Override
     public File getPackageDestination() {
-        return new File(playOnLinuxContext.makeLocalMonoPath(), wineVersionDTO.getMonoFile());
+        return playOnLinuxContext.makeLocalMonoPath();
     }
 
     @Override
@@ -56,5 +56,10 @@ public class MonoWinePackage implements WinePackage {
     @Override
     public String getPackageChecksum() {
         return wineVersionDTO.getMonoMd5();
+    }
+
+    @Override
+    public String getPackageTypeName() {
+        return "mono";
     }
 }

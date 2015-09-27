@@ -31,4 +31,5 @@ public interface WinePackage {
 
     String getPackageChecksum();
 
+    String getPackageTypeName();
 }
