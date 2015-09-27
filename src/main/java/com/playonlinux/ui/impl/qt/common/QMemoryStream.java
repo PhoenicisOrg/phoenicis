@@ -19,6 +19,7 @@
 package com.playonlinux.ui.impl.qt.common;
 
 import com.trolltech.qt.core.QIODevice;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ import java.io.InputStream;
  * An implementation of QIODevice for Java InMemoryStreams.
  */
 public class QMemoryStream extends QIODevice {
-
+    private static final Logger LOGGER = Logger.getLogger(QMemoryStream.class);
     private InputStream innerStream;
 
     public QMemoryStream(InputStream innerStream) {
@@ -40,7 +41,7 @@ public class QMemoryStream extends QIODevice {
             return innerStream.read(bytes);
         } catch (IOException e) {
             //FIXME
-            e.printStackTrace();
+            LOGGER.debug(e);
             return -1;
         }
     }
