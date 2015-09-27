@@ -121,7 +121,7 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         private String wineArchitecture;
         private String path;
         private String name;
-        public boolean isAutomaticallyUpdated;
+        private boolean isAutomaticallyUpdated;
         private GLSL glslValue = GLSL.DEFAULT;
         private Multisampling multisampling = Multisampling.DEFAULT;
         private OffscreenRenderingMode offscreenRenderingMode = OffscreenRenderingMode.DEFAULT;

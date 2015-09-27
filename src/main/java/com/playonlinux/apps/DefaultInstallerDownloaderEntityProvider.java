@@ -45,6 +45,7 @@ public class DefaultInstallerDownloaderEntityProvider
         implements InstallerDownloaderEntityProvider,
                    Observer<HTTPDownloader, ProgressStateEntity> {
 
+    public static final double PERCENTAGE = 100.;
     @Inject
     static ScriptFactory scriptFactory;
 
@@ -131,32 +132,32 @@ public class DefaultInstallerDownloaderEntityProvider
     }
 
     private void terminateDownload() {
+
         try {
             final Script script = scriptFactory.createInstance(localFile);
             final String scriptContent = script.extractContent();
 
-            try {
-                this.signatureChecker
-                        .withSignature(script.extractSignature())
-                        .withData(scriptContent)
-                        .withPublicKey(SignatureChecker.getPublicKey());
+            this.signatureChecker
+                    .withSignature(script.extractSignature())
+                    .withData(scriptContent)
+                    .withPublicKey(SignatureChecker.getPublicKey());
 
-                if (!signatureChecker.check()) {
-                    changeState(State.SIGNATURE_ERROR, 100., scriptContent);
-                } else {
-                    changeState(State.SUCCESS, 100.);
-                    startScript(script);
-                }
-            } catch (SignatureException e) {
-                LOGGER.error(e);
-                changeState(State.SIGNATURE_ERROR, 100, scriptContent);
-            } catch (ServiceInitializationException e) {
-                LOGGER.info(e);
+            if (!signatureChecker.check()) {
+                changeState(State.SIGNATURE_ERROR, 100., scriptContent);
+            } else {
+                changeState(State.SUCCESS, PERCENTAGE);
+                startScript(script);
             }
+        } catch (SignatureException e) {
+            LOGGER.error(e);
+            changeState(State.SIGNATURE_ERROR, 100.);
+        } catch (ServiceInitializationException e) {
+            LOGGER.info(e);
         } catch (ScriptFailureException e) {
             LOGGER.error(e);
             changeState(State.FAILED);
         }
+
     }
 
     private void startScript(Script script) throws ServiceInitializationException {

@@ -18,6 +18,7 @@
 
 package com.playonlinux.core.injection;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 
@@ -93,26 +94,30 @@ public class Injector {
         for(Class<?> componentClass: componentClasses) {
             List<Field> fields = this.getAnnotatedFields(componentClass, Inject.class);
             for(Field field: fields){
-                if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
-                    LOGGER.debug("Loaded beans:");
-                    LOGGER.debug(beans);
-                    throw new InjectionException(String.format("Unable to inject %s on class %s. Check your config file",
-                            field.getType().toString(), componentClass.getName()), null);
-                } else if(beans.containsKey(field.getType())){
-                    try {
-                        field.setAccessible(true);
-                        field.set(null, beans.get(field.getType()));
-                    } catch (Exception e) {
-                        String injectErrorString = String.format("Unable to inject %s on class %s. Error while injecting.",
-                                field.getType().toString(), componentClass.getName());
-
-                        LOGGER.fatal(injectErrorString, e);
-                        throw new InjectionException(injectErrorString, e);
-                    }
-                }
+                injectOneBean(strictLoadingPolicy, beans, field, componentClass);
             }
         }
 
+    }
+
+    private void injectOneBean(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans, Field field, Class<?> componentClass) throws InjectionException {
+        if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
+            LOGGER.debug("Loaded beans:");
+            LOGGER.debug(beans);
+            throw new InjectionException(String.format("Unable to inject %s on class %s. Check your config file",
+                    field.getType().toString(), componentClass.getName()), null);
+        } else if(beans.containsKey(field.getType())){
+            try {
+                field.setAccessible(true);
+                field.set(null, beans.get(field.getType()));
+            } catch (Exception e) {
+                String injectErrorString = String.format("Unable to inject %s on class %s. Error while injecting.",
+                        field.getType().toString(), componentClass.getName());
+
+                LOGGER.fatal(injectErrorString, e);
+                throw new InjectionException(injectErrorString, e);
+            }
+        }
     }
 
     public void cleanUpAllBeans() {

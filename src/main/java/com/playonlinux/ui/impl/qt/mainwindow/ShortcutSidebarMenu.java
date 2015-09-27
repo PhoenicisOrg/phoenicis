@@ -28,7 +28,6 @@ import static com.playonlinux.core.lang.Localisation.translate;
  * Context-aware Sidebar-Menu providing controls for the selected Shortcut
  */
 public class ShortcutSidebarMenu extends ActionMenu {
-
     private final MainWindow mainWindow;
 
     private ActionMenuItem runMenuItem;

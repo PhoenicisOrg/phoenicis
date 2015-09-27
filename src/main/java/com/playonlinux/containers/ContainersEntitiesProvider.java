@@ -73,7 +73,7 @@ public final class ContainersEntitiesProvider
 
     @Override
     public void init() throws ServiceInitializationException {
-        final ContainersManager containersManager = serviceManager.getService(ContainersManager.class);
-        containersManager.addObserver(this);
+        final ContainersManager containersManagerService = serviceManager.getService(ContainersManager.class);
+        containersManagerService.addObserver(this);
     }
 }

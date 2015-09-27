@@ -39,6 +39,7 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Scan
 public final class AppsEntitiesProvider
@@ -64,11 +65,7 @@ public final class AppsEntitiesProvider
             filteredAppsItemsDTOs.clear();
         } else {
             filteredAppsItemsDTOs.clear();
-            for (AppEntity appsItemDTO : appsItemDTOs) {
-                if (filter.apply(appsItemDTO)) {
-                    filteredAppsItemsDTOs.add(appsItemDTO);
-                }
-            }
+            filteredAppsItemsDTOs.addAll(appsItemDTOs.stream().filter(filter::apply).collect(Collectors.toList()));
         }
 
         this.notifyObservers(new AppsWindowEntity.Builder()

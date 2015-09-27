@@ -60,7 +60,7 @@ public class ScriptEntity implements Entity, Nameable {
     public static class Builder {
         private String name;
         private int id;
-        public String url;
+        private String url;
 
         public Builder() {
             // We need a public builder to be able to createPrefix a ScriptDTO from scratch
