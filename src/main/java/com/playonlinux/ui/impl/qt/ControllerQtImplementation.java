@@ -28,8 +28,7 @@ import com.trolltech.qt.gui.QApplication;
  * Controller and entrypoint for POL's Qt-Gui implementation.
  */
 public class ControllerQtImplementation implements Controller {
-
-    public static final String[] ARGS = new String[0];
+    private static final String[] ARGS = new String[0];
 
     @Override
     public void startApplication() {

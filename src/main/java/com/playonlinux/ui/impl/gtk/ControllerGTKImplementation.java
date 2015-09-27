@@ -28,14 +28,13 @@ import org.gnome.gtk.Gtk;
 
 @Scan
 public class ControllerGTKImplementation implements Controller {
-
-    public static final String[] ARGS = new String[0];
+    private static final String[] ARGS = new String[0];
+    private GTKApplication gtkApplication;
 
     @Override
     public void startApplication() {
         Gtk.init(ARGS);
-        new GTKApplication();
-
+        gtkApplication = new GTKApplication();
         Gtk.main();
     }
 
@@ -49,5 +48,7 @@ public class ControllerGTKImplementation implements Controller {
         return new UIMessageSenderGTKImplementation<>();
     }
 
-
+    public GTKApplication getGtkApplication() {
+        return gtkApplication;
+    }
 }
