@@ -264,35 +264,6 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.4.201502262128</version>
 
-                <executions>
-                    <execution>
-                        <id>prepare-unit-test-agent</id>
-                        <configuration>
-                        </configuration>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco-site</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>prepare-it-test-agent</id>
-                        <configuration>
-                            <propertyName>jacoco.agent.argLine</propertyName>
-                            <destFile>${sonar.jacoco.itReportPath}</destFile>
-                            <append>true</append>
-                        </configuration>
-                        <goals>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>
-                    </execution>
-
-                </executions>
                 <configuration>
                     <excludes>
                         <exclude>**/com/playonlinux/ui/impl/**</exclude>
