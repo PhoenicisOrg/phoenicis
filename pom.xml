@@ -28,6 +28,7 @@
 
     <properties>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
+        <sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
     </properties>
 
     <dependencies>
@@ -261,13 +262,43 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.4.201502262128</version>
+
+                <executions>
+                    <execution>
+                        <id>prepare-unit-test-agent</id>
+                        <configuration>
+                        </configuration>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>prepare-it-test-agent</id>
+                        <configuration>
+                            <propertyName>jacoco.agent.argLine</propertyName>
+                            <destFile>${sonar.jacoco.itReportPath}</destFile>
+                            <append>true</append>
+                        </configuration>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                </executions>
                 <configuration>
                     <excludes>
                         <exclude>**/com/playonlinux/ui/impl/**</exclude>
                         <exclude>**/com/playonlinux/app/**</exclude>
                     </excludes>
                 </configuration>
-                <version>0.7.4.201502262128</version>
             </plugin>
 
             <plugin>
