@@ -57,43 +57,43 @@ public class ShortcutSidebarMenu extends ActionMenu {
     }
 
     private void connectSlots() {
-        runMenuItem.clicked.connect(this, "runMenuItem_clicked()");
-        closeMenuItem.clicked.connect(this, "closeMenuItem_clicked()");
-        debugMenuItem.clicked.connect(this, "debugMenuItem_clicked()");
-        configureMenuItem.clicked.connect(this, "configureMenuItem_clicked()");
-        createMenuItem.clicked.connect(this, "createMenuItem_clicked()");
-        openDirectoryMenuItem.clicked.connect(this, "openDirectoryMenuItem_clicked()");
-        uninstallMenuItem.clicked.connect(this, "uninstallMenuItem_clicked()");
+        runMenuItem.clicked.connect(this, "runMenuItemClicked()");
+        closeMenuItem.clicked.connect(this, "closeMenuItemClicked()");
+        debugMenuItem.clicked.connect(this, "debugMenuItemClicked()");
+        configureMenuItem.clicked.connect(this, "configureMenuItemClicked()");
+        createMenuItem.clicked.connect(this, "createMenuItemClicked()");
+        openDirectoryMenuItem.clicked.connect(this, "openDirectoryMenuItemClicked()");
+        uninstallMenuItem.clicked.connect(this, "uninstallMenuItemClicked()");
     }
 
 
     /* EVENT HANDLERS */
 
-    private void runMenuItem_clicked() {
+    private void runMenuItemClicked() {
         //TODO: connect
     }
 
-    private void closeMenuItem_clicked() {
+    private void closeMenuItemClicked() {
         //TODO: connect
     }
 
-    private void debugMenuItem_clicked() {
+    private void debugMenuItemClicked() {
         //TODO: connect
     }
 
-    private void configureMenuItem_clicked() {
+    private void configureMenuItemClicked() {
         //TODO: connect
     }
 
-    private void createMenuItem_clicked() {
+    private void createMenuItemClicked() {
         //TODO: connect
     }
 
-    private void openDirectoryMenuItem_clicked() {
+    private void openDirectoryMenuItemClicked() {
         //TODO: connect
     }
 
-    private void uninstallMenuItem_clicked() {
+    private void uninstallMenuItemClicked() {
         //TODO: connect
     }
 

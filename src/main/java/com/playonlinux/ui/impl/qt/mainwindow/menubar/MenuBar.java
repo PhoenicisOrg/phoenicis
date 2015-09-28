@@ -240,39 +240,39 @@ public class MenuBar extends QMenuBar {
 
     private void connectSlots() {
         /* MENU: FILES */
-        actionRun.triggered.connect(this, "actionRun_triggered()");
-        actionInstall.triggered.connect(this, "actionInstall_triggered()");
-        actionRemove.triggered.connect(this, "actionRemove_triggered()");
+        actionRun.triggered.connect(this, "actionRunTriggered()");
+        actionInstall.triggered.connect(this, "actionInstallTriggered()");
+        actionRemove.triggered.connect(this, "actionRemoveTriggered()");
         actionDonate.triggered.connect(this, "actionDonate_triggered()");
-        actionExit.triggered.connect(this, "actionExit_triggered()");
+        actionExit.triggered.connect(this, "actionExitTriggered()");
 
         /* MENU: DISPLAY */
-        actionSmall_Icons.triggered.connect(this, "actionSmall_Icons_triggered(boolean)");
-        actionMedium_Icons.triggered.connect(this, "actionMedium_Icons_triggered(boolean)");
-        actionLarge_Icons.triggered.connect(this, "actionLarge_Icons_triggered(boolean)");
-        actionVery_Large_Icons.triggered.connect(this, "actionVery_Large_Icons_triggered(boolean)");
+        actionSmall_Icons.triggered.connect(this, "actionSmallIconsTriggered(boolean)");
+        actionMedium_Icons.triggered.connect(this, "actionMediumIconsTriggered(boolean)");
+        actionLarge_Icons.triggered.connect(this, "actionLargeIconsTriggered(boolean)");
+        actionVery_Large_Icons.triggered.connect(this, "actionVeryLargeIconsTriggered(boolean)");
 
         /* MENU: TOOLS */
-        actionWineVersions.triggered.connect(this, "actionWineVersions_triggered()");
+        actionWineVersions.triggered.connect(this, "actionWineVersionsTriggered()");
         actionLocalScript.triggered.connect(this, "actionLocalScript_triggered()");
-        actionConsole.triggered.connect(this, "actionConsole_triggered()");
-        actionCloseAll.triggered.connect(this, "actionCloseAll_triggered()");
-        actionDebugger.triggered.connect(this, "actionDebugger_triggered()");
+        actionConsole.triggered.connect(this, "actionConsoleTriggered()");
+        actionCloseAll.triggered.connect(this, "actionCloseAllTriggered()");
+        actionDebugger.triggered.connect(this, "actionDebuggerTriggered()");
 
         /* MENU: SETTINGS */
-        actionNetwork.triggered.connect(this, "actionNetwork_triggered()");
+        actionNetwork.triggered.connect(this, "actionNetworkTriggered()");
 
         /* MENU: HELP */
-        actionAbout.triggered.connect(this, "actionAbout_triggered()");
-        actionSoftware.triggered.connect(this, "actionSoftware_triggered()");
-        actionNews.triggered.connect(this, "actionNews_triggered()");
-        actionForums.triggered.connect(this, "actionForums_triggered()");
-        actionBugs.triggered.connect(this, "actionBugs_triggered()");
+        actionAbout.triggered.connect(this, "actionAboutTriggered()");
+        actionSoftware.triggered.connect(this, "actionSoftwareTriggered()");
+        actionNews.triggered.connect(this, "actionNewsTriggered()");
+        actionForums.triggered.connect(this, "actionForumsTriggered()");
+        actionBugs.triggered.connect(this, "actionBugsTriggered()");
 
         /* MENU: CONTACT */
-        actionGooglePlus.triggered.connect(this, "actionGooglePlus_triggered()");
-        actionTwitter.triggered.connect(this, "actionTwitter_triggered()");
-        actionFacebook.triggered.connect(this, "actionFacebook_triggered()");
+        actionGooglePlus.triggered.connect(this, "actionGooglePlusTriggered()");
+        actionTwitter.triggered.connect(this, "actionTwitterTriggered()");
+        actionFacebook.triggered.connect(this, "actionFacebookTriggered()");
     }
 
 
@@ -280,99 +280,99 @@ public class MenuBar extends QMenuBar {
 
 
     //FILE
-    private void actionRun_triggered() {
+    private void actionRunTriggered() {
         mainWindow.getEventHandler().runLocalScript();
     }
 
-    private void actionInstall_triggered() {
+    private void actionInstallTriggered() {
     }
 
-    private void actionRemove_triggered() {
+    private void actionRemoveTriggered() {
     }
 
     private void actionDonate_triggered() {
     }
 
-    private void actionExit_triggered() {
+    private void actionExitTriggered() {
         mainWindow.getEventHandler().exit();
     }
 
 
     //DISPLAY
-    private void actionSmall_Icons_triggered(boolean checked) {
+    private void actionSmallIconsTriggered(boolean checked) {
         if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.SMALL);
         }
     }
 
-    private void actionMedium_Icons_triggered(boolean checked) {
+    private void actionMediumIconsTriggered(boolean checked) {
         if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.MEDIUM);
         }
     }
 
-    private void actionLarge_Icons_triggered(boolean checked) {
+    private void actionLargeIconsTriggered(boolean checked) {
         if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.LARGE);
         }
     }
 
-    private void actionVery_Large_Icons_triggered(boolean checked) {
+    private void actionVeryLargeIconsTriggered(boolean checked) {
         if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.VERY_LARGE);
         }
     }
 
     //TOOLS
-    private void actionWineVersions_triggered() {
+    private void actionWineVersionsTriggered() {
     }
 
     private void actionLocalScript_triggered() {
     }
 
-    private void actionConsole_triggered() {
+    private void actionConsoleTriggered() {
     }
 
-    private void actionCloseAll_triggered() {
+    private void actionCloseAllTriggered() {
     }
 
-    private void actionDebugger_triggered() {
+    private void actionDebuggerTriggered() {
     }
 
     //SETTINGS
-    private void actionNetwork_triggered() {
+    private void actionNetworkTriggered() {
     }
 
     //HELP
-    private void actionAbout_triggered() {
+    private void actionAboutTriggered() {
     }
 
-    private void actionSoftware_triggered() {
+    private void actionSoftwareTriggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/supported_apps.html");
     }
 
-    private void actionNews_triggered() {
+    private void actionNewsTriggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/news.html");
     }
 
-    private void actionForums_triggered() {
+    private void actionForumsTriggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/forums.html");
     }
 
-    private void actionBugs_triggered() {
+    private void actionBugsTriggered() {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/bugs.html");
     }
 
     //CONTACT
-    private void actionGooglePlus_triggered() {
+    private void actionGooglePlusTriggered() {
         mainWindow.getEventHandler().openLink("https://plus.google.com/+playonlinux");
     }
 
-    private void actionTwitter_triggered() {
+    private void actionTwitterTriggered() {
         mainWindow.getEventHandler().openLink("https://twitter.com/PlayOnLinux");
     }
 
-    private void actionFacebook_triggered() {
+    private void actionFacebookTriggered() {
         mainWindow.getEventHandler().openLink("https://www.facebook.com/playonlinux");
     }
 
