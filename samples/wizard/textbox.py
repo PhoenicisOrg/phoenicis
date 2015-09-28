@@ -4,7 +4,7 @@ class Example(Installer):
     title = "Example textbox"
 
     def main(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
 
         result = setupWindow.textbox("Please enter a text here:")
         setupWindow.message("You have written: %s" % result)

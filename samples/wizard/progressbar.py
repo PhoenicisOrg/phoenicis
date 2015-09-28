@@ -6,7 +6,7 @@ class Example(Installer):
     title = "Example progressbar"
 
     def main(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
 
         progressBar = setupWindow.progressBar("Please wait...")
 

@@ -5,8 +5,8 @@ class Example(Installer):
     title = "Example wine installation"
 
     def main(self):
-        setupWizard = self.getSetupWizard()
+        setupWizard = self.setupWizard()
 
-        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.33", "upstream").overrideDlls({"gdiplus":"builtin"}).runBackground("winecfg").waitExit()
+        Wine.wizard(self.setupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.33", "upstream").overrideDlls({"gdiplus":"builtin"}).runBackground("winecfg").waitExit()
 
         setupWizard.close()

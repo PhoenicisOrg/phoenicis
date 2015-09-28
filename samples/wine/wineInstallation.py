@@ -5,7 +5,7 @@ class Example(Installer):
     title = "Example wine installation"
 
     def main(self):
-        setupWizard = self.getSetupWizard()
+        setupWizard = self.setupWizard()
 
         version = setupWizard.textbox("Choose a version", "1.7.36")
         distribution = setupWizard.textbox("Choose a distribution", "upstream-x86")

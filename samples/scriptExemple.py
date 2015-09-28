@@ -4,7 +4,7 @@ class Example(Installer):
     title = "Example"
 
     def main(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
 
         print "Hello from python!"
 
@@ -25,6 +25,6 @@ class Example(Installer):
         setupWindow.close()
 
     def rollback(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
         setupWindow.message("It seems that everything has crashed. Last chance to rollback")
         Installer.rollback(self)
