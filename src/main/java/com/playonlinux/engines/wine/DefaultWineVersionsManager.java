@@ -61,7 +61,6 @@ public class DefaultWineVersionsManager
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
-
     private Collection<WineVersionDistributionWebDTO> wineVersionDistributionDTOs = new ArrayList<>();
     private DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> downloadEnvelope;
 
