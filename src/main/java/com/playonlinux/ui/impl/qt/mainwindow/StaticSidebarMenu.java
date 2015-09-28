@@ -49,16 +49,16 @@ public class StaticSidebarMenu extends ActionMenu {
     }
 
     private void connectSlots() {
-        installMenuItem.clicked.connect(this, "installMenuItem_clicked()");
-        runScriptMenuItem.clicked.connect(this, "runScriptMenuItem_clicked()");
+        installMenuItem.clicked.connect(this, "installMenuItemClicked()");
+        runScriptMenuItem.clicked.connect(this, "runScriptMenuItemClicked()");
     }
 
 
-    private void installMenuItem_clicked() {
+    private void installMenuItemClicked() {
         //TODO: link to Install-Window
     }
 
-    private void runScriptMenuItem_clicked() {
+    private void runScriptMenuItemClicked() {
         mainWindow.getEventHandler().runLocalScript();
     }
 
