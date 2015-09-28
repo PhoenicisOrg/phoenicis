@@ -305,7 +305,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/integration-test/java</source>
+                                <source>${project.basedir}/src/integration-test/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -338,6 +338,11 @@
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>verify</id>
@@ -359,21 +364,7 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <!-- Runs integration tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18</version>
-                <executions>
-                    <execution>
-                        <id>integration-tests</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
 </project>
