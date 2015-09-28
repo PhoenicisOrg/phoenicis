@@ -172,27 +172,8 @@ public class Wine implements SetupWizardComponent {
             throw new ScriptFailureException("Prefix must be selected!");
         }
 
-        if(prefix.exists()) {
-            log("Prefix already exists");
-            try {
-                switch (setupWizard.menu(
-                        translate(format("The target virtual drive %s already exists:", prefixName)),
-                        Arrays.asList(OVERWRITE, ERASE, ABORT)
-                )) {
-                    case OVERWRITE:
-                        log("User choice: OVERWRITE");
-                        return this;
-                    case ERASE:
-                        log("User choice: ERASE");
-                        prefix.delete();
-                        break;
-                    case ABORT:
-                        log("User choice: ABORT");
-                        throw new CancelException("The script was aborted");
-                }
-            } catch (IOException e) {
-                throw new ScriptFailureException(e);
-            }
+        if(prefix.exists() && userWantsToOverWritePrefix()) {
+            return this;
         }
 
         wineVersion = new WineVersion(new Version(version), new WineDistribution(
@@ -217,13 +198,7 @@ public class Wine implements SetupWizardComponent {
             observableDirectorySize.addObserver(progressControl);
             backgroundServicesManager.register(observableDirectorySize);
             Process process = wineVersion.getInstallation().createPrefix(this.prefix);
-            try {
-                process.waitFor();
-            } catch (InterruptedException e) {
-                process.destroy();
-                killall();
-                throw new CancelException(e);
-            }
+            waitWineProcess(process);
         } catch (IllegalStateException | ServiceInitializationException e) {
             throw new ScriptFailureException(e);
         } catch (WineException e) {
@@ -231,6 +206,41 @@ public class Wine implements SetupWizardComponent {
         }
 
         return this;
+    }
+
+    private void waitWineProcess(Process process) throws CancelException {
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            process.destroy();
+            killall();
+            throw new CancelException(e);
+        }
+    }
+
+    private boolean userWantsToOverWritePrefix() throws CancelException {
+        try {
+            log("Prefix already exists");
+
+            switch (setupWizard.menu(
+                    translate(format("The target virtual drive %s already exists:", prefixName)),
+                    Arrays.asList(OVERWRITE, ERASE, ABORT)
+            )) {
+                case OVERWRITE:
+                    log("User choice: OVERWRITE");
+                    return true;
+                case ERASE:
+                    log("User choice: ERASE");
+                    prefix.delete();
+                    return false;
+                case ABORT:
+                default:
+                    log("User choice: ABORT");
+                    throw new CancelException("The script was aborted");
+            }
+        } catch (IOException e) {
+            throw new ScriptFailureException(e);
+        }
     }
 
     /**
@@ -285,7 +295,7 @@ public class Wine implements SetupWizardComponent {
     }
 
     private void logRegFile(File workingDirectory, List<String> pathToRegFile) throws ScriptFailureException {
-        if(pathToRegFile.size() >= 1) {
+        if(!pathToRegFile.isEmpty()) {
             final File regFile = findFile(workingDirectory, pathToRegFile.get(0));
             if (regFile.exists() && regFile.isFile()) {
                 this.log("Content of " + regFile);
@@ -317,17 +327,15 @@ public class Wine implements SetupWizardComponent {
     }
 
     private void validateArchitecture(File workingDirectory, String executableToRun) {
-        if(wineVersion.getWineDistribution().getArchitecture() == Architecture.I386) {
-            final File executedFile = findFile(workingDirectory, executableToRun);
-            if(executedFile.exists()) {
-                try {
-                    if(ExeAnalyser.is64Bits(executedFile)) {
-                        throw new IllegalStateException("A 32bit wineprefix cannot execute 64bits executables!");
-                    }
-                } catch (IOException e) {
-                    throw new IllegalStateException(e);
+        try {
+            if(wineVersion.getWineDistribution().getArchitecture() == Architecture.I386) {
+                final File executedFile = findFile(workingDirectory, executableToRun);
+                if(executedFile.exists() && ExeAnalyser.is64Bits(executedFile)) {
+                    throw new IllegalStateException("A 32bit wineprefix cannot execute 64bits executables!");
                 }
             }
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
     }
 
