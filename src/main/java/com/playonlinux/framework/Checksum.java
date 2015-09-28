@@ -32,7 +32,7 @@ public class Checksum {
         return this;
     }
 
-    public String md5(String file) throws IOException, NoSuchAlgorithmException {
+    public String md5(String file) throws IOException {
         com.playonlinux.core.utils.ChecksumCalculator checksumCalculatorCalculator = new com.playonlinux.core.utils.ChecksumCalculator();
         if(progressControl != null) {
             checksumCalculatorCalculator.addObserver(progressControl);
@@ -40,7 +40,7 @@ public class Checksum {
         return checksumCalculatorCalculator.calculate(new File(file), "md5");
     }
 
-    public String sha1(String file) throws IOException, NoSuchAlgorithmException {
+    public String sha1(String file) throws IOException {
         com.playonlinux.core.utils.ChecksumCalculator checksumCalculatorCalculator = new com.playonlinux.core.utils.ChecksumCalculator();
         if(progressControl != null) {
             checksumCalculatorCalculator.addObserver(progressControl);
