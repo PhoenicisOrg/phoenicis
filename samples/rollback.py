@@ -4,7 +4,7 @@ class Example(Installer):
     title = "Rollback"
 
     def main(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
 
         setupWindow.message("We are going to make this script crash")
         raise
@@ -12,6 +12,6 @@ class Example(Installer):
         setupWindow.close()
 
     def rollback(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
         setupWindow.message("It seems that everything has crashed. Last chance to rollback")
         Installer.rollback(self)

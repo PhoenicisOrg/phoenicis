@@ -5,8 +5,8 @@ class Example(Installer):
     title = "Example wine installation"
 
     def main(self):
-        setupWizard = self.getSetupWizard()
+        setupWizard = self.setupWizard()
 
-        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").runBackground("winecfg").waitExit()
+        Wine.wizard(self.setupWizard()).selectPrefix("TestPrefix").runBackground("winecfg").waitExit()
 
         setupWizard.close()

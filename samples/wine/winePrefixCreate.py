@@ -5,11 +5,11 @@ class Example(Installer):
     title = "Example wine installation"
 
     def main(self):
-        setupWizard = self.getSetupWizard()
+        setupWizard = self.setupWizard()
 
-        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.36")
+        Wine.wizard(self.setupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.36")
 
-        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.36")
-        Wine.wizard(self.getSetupWizard()).selectPrefix("TestPrefix2").createPrefix("1.4.1", "upstream")
+        Wine.wizard(self.setupWizard()).selectPrefix("TestPrefix").createPrefix("1.7.36")
+        Wine.wizard(self.setupWizard()).selectPrefix("TestPrefix2").createPrefix("1.4.1", "upstream")
 
         setupWizard.close()

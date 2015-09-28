@@ -5,7 +5,7 @@ class Example(Installer):
     title = "Example checksum"
 
     def main(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
 
         selectedFile = setupWindow.browse("Select a file")
         progressBar = setupWindow.progressBar("Please wait ...")

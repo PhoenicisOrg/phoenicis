@@ -7,7 +7,7 @@ class Example(Installer):
     title = "Example Exe analyser"
 
     def main(self):
-        setupWindow = self.getSetupWizard()
+        setupWindow = self.setupWizard()
 
         selectedFile = setupWindow.browse("Select a file")
 
