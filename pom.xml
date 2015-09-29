@@ -305,7 +305,7 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${project.basedir}/src/integration-test/java</source>
+                                <source>src/integration-test/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -335,12 +335,13 @@
                 <executions>
                     <execution>
                         <id>integration-test</id>
+                        <phase>integration-test</phase>
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
                             <includes>
-                                <include>**/*IT.java</include>
+                                <include>**</include>
                             </includes>
                         </configuration>
                     </execution>

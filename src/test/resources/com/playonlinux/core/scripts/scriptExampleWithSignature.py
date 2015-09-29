@@ -1,6 +1,6 @@
-import com.playonlinux.framework.SetupWindowCommander as POL_SetupWindow
+from com.playonlinux.framework import SetupWizard
 
-setupWindow = POL_SetupWindow("TITLE")
+setupWindow = SetupWizard("TITLE")
 
 print "Hello from python!"
 
@@ -10,14 +10,14 @@ print "Hello from python!"
 # MOCKED SIGNATURE (PYTHON)
 # -----END PGP SIGNATURE-----
 
-setupWindow.message("Test\nTest");
+setupWindow.message("Test\nTest")
 setupWindow.message("Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
                           "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 " +
                           "Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 ");
 
-result = setupWindow.textbox("Test 3");
+result = setupWindow.textbox("Test 3")
 print result
 
-setupWindow.message("Test 4");
-setupWindow.message("Test 5");
+setupWindow.message("Test 4")
+setupWindow.message("Test 5")
 
