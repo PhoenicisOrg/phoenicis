@@ -74,7 +74,7 @@ public class SignatureCheckerTest {
             "-----END PGP SIGNATURE-----";
 
     private static final String PUBLIC_KEY = "-----BEGIN PGP PUBLIC KEY BLOCK-----\n" +
-            "Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
+            "Comment: GPGTools - http://gpgtools.org\n" +
             "\n" +
             "mQGiBE0ozSYRBADdPem93uvIqrZGpkM8pSxKjyK5PmXhfBsCTRowU09b3OL1eqXP\n" +
             "s1k+waRy6YFK+jwA+wp8vPeGUUDeINMPayL+g+5hXitgoMWrna/64PPLaDf0cqSP\n" +
@@ -102,7 +102,7 @@ public class SignatureCheckerTest {
             "ghoOaMtjdexZKpJnEpkqbe8Qs2/qiEkEGBECAAkFAk0ozSYCGwwACgkQ5TH6yaoT\n" +
             "ykftZQCfTCroby2HAxhIFRO9+3ACr6bIDkYAnjS2zGBJ44bNFBYHet4DmI9JfEw1\n" +
             "=PAJ4\n" +
-            "-----END PGP PUBLIC KEY BLOCK-----";
+            "-----END PGP PUBLIC KEY BLOCK-----\n";
 
     @Test
     public void testSignatureChecker_withValidSignature_returnTrue() throws IOException,
@@ -126,4 +126,8 @@ public class SignatureCheckerTest {
         assertFalse(signatureChecker.check());
     }
 
+    @Test
+    public void testGetPublicKey() {
+        assertEquals(PUBLIC_KEY, SignatureChecker.getPublicKey());
+    }
 }

@@ -169,6 +169,38 @@ public class ScriptTest {
         assertEquals(expectedSignture, script.extractSignature());
     }
 
+
+    @Test
+    public void testExtractContent_pythonScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
+        final Script script = new ScriptFactoryDefaultImplementation().createInstance(new File(this.getClass()
+                .getResource("scriptExampleWithSignature.py").getPath()));
+
+
+        assertEquals("from com.playonlinux.framework import SetupWizard\n" +
+                "\n" +
+                "setupWindow = SetupWizard(\"TITLE\")\n" +
+                "\n" +
+                "print \"Hello from python!\"\n" +
+                "\n" +
+                "# -----BEGIN PGP SIGNATURE-----\n" +
+                "# Version: GnuPG/MacGPG2 v2.0.17 (Darwin)\n" +
+                "\n" +
+                "# MOCKED SIGNATURE (PYTHON)\n" +
+                "# -----END PGP SIGNATURE-----\n" +
+                "\n" +
+                "setupWindow.message(\"Test\\nTest\")\n" +
+                "setupWindow.message(\"Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 \" +\n" +
+                "                          \"Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 \" +\n" +
+                "                          \"Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 \");\n" +
+                "\n" +
+                "result = setupWindow.textbox(\"Test 3\")\n" +
+                "print result\n" +
+                "\n" +
+                "setupWindow.message(\"Test 4\")\n" +
+                "setupWindow.message(\"Test 5\")\n" +
+                "\n", script.extractContent());
+    }
+
     @Test(expected = ScriptFailureException.class)
     public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ScriptFailureException {
         Script script = new ScriptFactoryDefaultImplementation().createInstance(
