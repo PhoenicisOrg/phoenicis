@@ -20,6 +20,7 @@ package com.playonlinux.apps;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -46,6 +47,14 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
     private InstallerSourceWebserviceDefaultImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
+
+    public boolean isUpdating() {
+        return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
+    }
+
+    public boolean hasFailed() {
+        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.FAILED;
+    }
 
     @Override
     public void update(InstallerSource installerSource, DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {

@@ -16,23 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.apps.entities;
+package com.playonlinux.dto.ui;
 
-import com.playonlinux.core.comparator.Nameable;
+import static org.junit.Assert.assertEquals;
 
-public class AppsCategory implements Nameable {
-    private final String name;
+import com.playonlinux.apps.entities.AppsCategoryEntity;
+import org.junit.Before;
+import org.junit.Test;
 
-    public AppsCategory(String name) {
-        this.name = name;
+public class AppsCategoryEntityTest {
+
+    private AppsCategoryEntity appsCategoryEntity;
+
+    @Before
+    public void setUp() {
+        this.appsCategoryEntity = new AppsCategoryEntity("Name");
+    }
+    
+    @Test
+    public void testCenterCategoryDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", appsCategoryEntity.getName());
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public String getIconName() {
-        return "apps/applications-" + name.toLowerCase() + ".png";
+    @Test
+    public void testCenterCategoryDTO_CreateDTO_iconIsPopulated() {
+        assertEquals("apps/applications-name.png", appsCategoryEntity.getIconName());
     }
 }

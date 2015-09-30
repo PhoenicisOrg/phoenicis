@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class AppsWindowEntity implements Entity {
     private final List<AppEntity> appsItemDTOs;
-    private final List<AppsCategory> categoryDTOs;
+    private final List<AppsCategoryEntity> categoryDTOs;
     private final boolean downloading;
     private final boolean downloadFailed;
 
@@ -42,7 +42,7 @@ public class AppsWindowEntity implements Entity {
         return appsItemDTOs;
     }
 
-    public List<AppsCategory> getCategoryDTOs() {
+    public List<AppsCategoryEntity> getCategoryDTOs() {
         return categoryDTOs;
     }
 
@@ -56,7 +56,7 @@ public class AppsWindowEntity implements Entity {
 
     public static class Builder {
         List<AppEntity> appsItemDTOs;
-        List<AppsCategory> appsCategories;
+        List<AppsCategoryEntity> appsCategories;
         boolean downloading;
         boolean downloadFailed;
 
@@ -65,7 +65,7 @@ public class AppsWindowEntity implements Entity {
             return this;
         }
 
-        public Builder withAppsCategory(List<AppsCategory> appsCategories) {
+        public Builder withAppsCategory(List<AppsCategoryEntity> appsCategories) {
             this.appsCategories = appsCategories;
             return this;
         }
