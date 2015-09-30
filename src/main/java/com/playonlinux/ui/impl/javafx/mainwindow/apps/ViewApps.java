@@ -21,7 +21,7 @@ package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.apps.entities.AppEntity;
-import com.playonlinux.apps.entities.AppsCategory;
+import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
@@ -57,7 +57,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
     private CheckBox testingCheck;
     private CheckBox noCdNeededCheck;
     private CheckBox commercialCheck;
-    private AppsCategory selectedCategory;
+    private AppsCategoryEntity selectedCategory;
 
     public ViewApps(MainWindow parent) {
         super(parent);
@@ -143,7 +143,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
                 this.showAvailableApps();
 
                 final List<LeftButton> leftButtonList = new ArrayList<>();
-                for (AppsCategory category : appsWindowEntity.getCategoryDTOs()) {
+                for (AppsCategoryEntity category : appsWindowEntity.getCategoryDTOs()) {
                     final LeftButton categoryButton = new LeftButton(category.getIconName(), category.getName());
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
@@ -160,7 +160,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
     }
 
 
-    public void selectCategory(AppsCategory category) {
+    public void selectCategory(AppsCategoryEntity category) {
         this.selectedCategory = category;
         searchBar.setText("");
         applyFilter(category.getName());

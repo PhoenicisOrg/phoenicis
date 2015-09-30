@@ -44,8 +44,8 @@ public class DefaultInstallerDownloaderEntityProvider
         extends ObservableDefaultImplementation<InstallerDownloaderEntity>
         implements InstallerDownloaderEntityProvider,
                    Observer<HTTPDownloader, ProgressStateEntity> {
-
     public static final double PERCENTAGE = 100.;
+
     @Inject
     static ScriptFactory scriptFactory;
 
@@ -132,7 +132,6 @@ public class DefaultInstallerDownloaderEntityProvider
     }
 
     private void terminateDownload() {
-
         try {
             final Script script = scriptFactory.createInstance(localFile);
             final String scriptContent = script.extractContent();

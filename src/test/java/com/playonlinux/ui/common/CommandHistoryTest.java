@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class CommandHistoryTest {
 
@@ -38,39 +39,39 @@ public class CommandHistoryTest {
     @Test
     public void testHistory() {
         //EMPTY history should always return an EMPTY item.
-        assertEquals(CommandHistory.Item.EMPTY, history.current());
+        assertSame(CommandHistory.Item.EMPTY, history.current());
         history.up();
         history.up();
-        assertEquals(CommandHistory.Item.EMPTY, history.current());
+        assertSame(CommandHistory.Item.EMPTY, history.current());
         history.down();
-        assertEquals(CommandHistory.Item.EMPTY, history.current());
+        assertSame(CommandHistory.Item.EMPTY, history.current());
 
         history.add(testItems[0]);
         //history should be reset to point to an EMPTY item after adding a new item
-        assertEquals(CommandHistory.Item.EMPTY, history.current());
+        assertSame(CommandHistory.Item.EMPTY, history.current());
         //after going one up, history should be at the latest added item.
-        assertEquals(testItems[0], history.up());
-        assertEquals(testItems[0], history.current());
+        assertSame(testItems[0], history.up());
+        assertSame(testItems[0], history.current());
         //calling up even though the history is already pointing to the oldest item should
         //have no effect => still pointing to the oldest item
-        assertEquals(testItems[0], history.up());
-        assertEquals(testItems[0], history.current());
+        assertSame(testItems[0], history.up());
+        assertSame(testItems[0], history.current());
         //going back down should result in the history pointing to an EMPTY item
-        assertEquals(CommandHistory.Item.EMPTY, history.down());
-        assertEquals(CommandHistory.Item.EMPTY, history.current());
+        assertSame(CommandHistory.Item.EMPTY, history.down());
+        assertSame(CommandHistory.Item.EMPTY, history.current());
 
         history.add(testItems[1]);
         //history should always point to an EMPTY item after adding a new item
-        assertEquals(CommandHistory.Item.EMPTY, history.current());
+        assertSame(CommandHistory.Item.EMPTY, history.current());
         //after going one up, history should be at the latest added item.
-        assertEquals(testItems[1], history.up());
-        assertEquals(testItems[1], history.current());
+        assertSame(testItems[1], history.up());
+        assertSame(testItems[1], history.current());
         //after going up once more, history should point at the second latest added item.
-        assertEquals(testItems[0], history.up());
-        assertEquals(testItems[0], history.current());
+        assertSame(testItems[0], history.up());
+        assertSame(testItems[0], history.current());
         //going back down, history should again point to the latest added item
-        assertEquals(testItems[1], history.down());
-        assertEquals(testItems[1], history.current());
+        assertSame(testItems[1], history.down());
+        assertSame(testItems[1], history.current());
     }
 
 }

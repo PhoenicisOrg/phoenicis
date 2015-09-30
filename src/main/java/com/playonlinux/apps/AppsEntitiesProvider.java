@@ -22,7 +22,7 @@ import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 import com.playonlinux.apps.entities.AppEntity;
-import com.playonlinux.apps.entities.AppsCategory;
+import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.core.entities.ProgressStateEntity;
@@ -52,7 +52,7 @@ public final class AppsEntitiesProvider
 
     private final Collection<AppEntity> appsItemDTOs = new ArrayList<>();
     private final List<AppEntity> filteredAppsItemsDTOs = new ArrayList<>();
-    private final List<AppsCategory> categoriesDTO = new ArrayList<>();
+    private final List<AppsCategoryEntity> categoriesDTO = new ArrayList<>();
 
     private Filter<AppEntity> lastFilter;
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
@@ -106,7 +106,7 @@ public final class AppsEntitiesProvider
         if(downloadEnvelope.getEnvelopeContent() != null) {
             for (CategoryDTO categoryDTO : downloadEnvelope.getEnvelopeContent()) {
                 if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    categoriesDTO.add(new AppsCategory(categoryDTO.getName()));
+                    categoriesDTO.add(new AppsCategoryEntity(categoryDTO.getName()));
                     for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
                         final List<ScriptEntity> scripts = new ArrayList<>();
                         for (ScriptDTO script : applicationDTO.getScripts()) {
