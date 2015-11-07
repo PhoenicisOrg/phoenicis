@@ -108,7 +108,7 @@ public abstract class Script implements Service {
         }
     }
 
-    protected abstract void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException;
+    public abstract void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException;
 
     public abstract String extractSignature() throws ScriptFailureException;
 

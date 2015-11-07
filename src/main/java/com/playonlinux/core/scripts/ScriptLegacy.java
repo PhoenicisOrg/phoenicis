@@ -40,13 +40,12 @@ public class ScriptLegacy extends Script {
     }
 
     @Override
-    protected void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException {
+    public void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException {
         // FIXME: Use the properties here
         Script playonlinuxBashInterpreter;
         File bashScriptFile;
         try {
-            playonlinuxBashInterpreter = scriptFactory
-                    .createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+            playonlinuxBashInterpreter = scriptFactory.createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
 
             bashScriptFile = File.createTempFile("script", "sh");
             bashScriptFile.deleteOnExit();
@@ -92,7 +91,7 @@ public class ScriptLegacy extends Script {
                 insideSignature = true;
             }
 
-            if(!(extractSignature ^ insideSignature)) {
+            if(extractSignature == insideSignature) {
                 signatureBuilder.append(readLine);
                 signatureBuilder.append(separator);
             }

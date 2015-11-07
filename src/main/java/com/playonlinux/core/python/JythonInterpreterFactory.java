@@ -28,9 +28,8 @@ public interface JythonInterpreterFactory {
     /**
      * Creates an instance of a {@link PythonInterpreter} and keeps its reference
      * @return The instance
-     * @throws PlayOnLinuxException If the interpreter cannot be created
      */
-    PythonInterpreter createInstance() throws PlayOnLinuxException;
+    PythonInterpreter createInstance() throws PythonException;
 
     /**
      * Creates an instance of a class extending {@link PythonInterpreter} and keeps its reference

@@ -20,8 +20,6 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.console;
 
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.CommandInterpreter;
 import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
@@ -39,7 +37,6 @@ import org.apache.commons.lang.StringUtils;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-@Scan
 public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
 
     private static final String NOT_INSIDE_BLOCK = ">>> ";
@@ -47,14 +44,11 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
 
     private final CommandHistory commandHistory = new CommandHistory();
 
-    @Inject
-    static CommandLineInterpreterFactory commandLineInterpreterFactory;
-
     final CommandInterpreter commandInterpreter;
 
     private String nextSymbol = NOT_INSIDE_BLOCK;
 
-    public ConsoleTab() throws CommandInterpreterException {
+    public ConsoleTab(CommandLineInterpreterFactory commandLineInterpreterFactory) throws CommandInterpreterException {
         final VBox content = new VBox();
 
         commandInterpreter = commandLineInterpreterFactory.createInstance();
