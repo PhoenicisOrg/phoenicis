@@ -22,9 +22,11 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.python.CommandInterpreterException;
+import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.library.LibraryFilter;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.mainwindow.*;
 import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
@@ -43,6 +45,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ViewLibrary extends MainWindowView implements Observer<Observable, LibraryWindowEntity> {
 
+    private final CommandLineInterpreterFactory jythonInterpreterFactory;
     private LeftButton runScript;
     private LeftButton runConsole;
     private static final Logger LOGGER = Logger.getLogger(ViewLibrary.class);
@@ -60,6 +63,7 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
 
         eventHandlerLibrary = new EventHandlerLibrary();
         libraryItems = eventHandlerLibrary.getInstalledApplications();
+        jythonInterpreterFactory = eventHandlerLibrary.getJythonInterpreterFactory();
 
         this.drawSideBar();
         this.drawContent();
@@ -124,7 +128,7 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
 
     private void runConsole() {
         try {
-            createNewTab(new ConsoleTab());
+            createNewTab(new ConsoleTab(jythonInterpreterFactory));
         } catch (CommandInterpreterException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to run the console."));

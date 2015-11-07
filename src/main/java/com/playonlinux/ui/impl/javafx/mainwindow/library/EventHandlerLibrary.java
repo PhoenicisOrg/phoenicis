@@ -21,9 +21,11 @@ package com.playonlinux.ui.impl.javafx.mainwindow.library;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.framework.SetupWizard;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
@@ -41,6 +43,9 @@ class EventHandlerLibrary implements UIEventHandler {
 
     @Inject
     static Controller controller;
+
+    @Inject
+    static JythonCommandLineInterpreterFactory jythonInterpreterFactory;
 
     private static final Logger LOGGER = Logger.getLogger(EventHandlerLibrary.class);
 
@@ -80,5 +85,9 @@ class EventHandlerLibrary implements UIEventHandler {
 
     public void configureApplication(String applicationName) {
         System.out.println("Configure "+applicationName);
+    }
+
+    public CommandLineInterpreterFactory getJythonInterpreterFactory() {
+        return jythonInterpreterFactory;
     }
 }

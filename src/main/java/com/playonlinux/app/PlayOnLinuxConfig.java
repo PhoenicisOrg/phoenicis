@@ -24,9 +24,7 @@ import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.lang.LanguageBundle;
 import com.playonlinux.core.lang.LanguageBundleSelector;
 import com.playonlinux.core.log.LoggerFactory;
-import com.playonlinux.core.python.DefaultJythonJythonInterpreterFactory;
-import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
-import com.playonlinux.core.python.JythonInterpreterFactory;
+import com.playonlinux.core.python.*;
 import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.scripts.ScriptFactory;
@@ -35,7 +33,6 @@ import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.WineVersionSource;
 import com.playonlinux.engines.wine.WineversionsSourceWebserviceDefaultImplementation;
-import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
@@ -149,7 +146,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      * @return the bean
      */
     @Bean
-    public CommandLineInterpreterFactory commandLineInterpreterFactory() {
+    public JythonCommandLineInterpreterFactory jythonCommandLineInterpreterFactory() {
         return new JythonCommandLineInterpreterFactory(defaultExecutor());
     }
 
@@ -160,7 +157,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      */
     @Bean
     public JythonInterpreterFactory interpreterFactory() {
-        return new DefaultJythonJythonInterpreterFactory();
+        return new DefaultJythonInterpreterFactory();
     }
 
     /**

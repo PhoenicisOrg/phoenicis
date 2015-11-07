@@ -35,7 +35,7 @@ public class ScriptRecent extends Script {
     }
 
     @Override
-    protected void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException {
+    public void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException {
         pythonInterpreter.exec(this.getScriptContent());
         PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
 

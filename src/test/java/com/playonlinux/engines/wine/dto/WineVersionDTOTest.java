@@ -26,23 +26,6 @@ import static org.junit.Assert.*;
 
 
 public class WineVersionDTOTest {
-    @Test
-    public void blablaTest() {
-        WeakReference<Integer[]> maRef = new WeakReference<>(new Integer[]{3});
-        Integer[] referenceNormale = maRef.get();
-        System.out.println(maRef.get()[0]);
-
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.out.println(referenceNormale);
-        System.out.println(maRef.get()[0]);
-        maRef.get()[0] = 2;
-    }
-
     final WineVersionDTO wineVersionDTO = new WineVersionDTO.Builder()
             .withVersion("Version")
             .withGeckoFile("GeckoFile")

@@ -18,7 +18,6 @@
 
 package com.playonlinux.core.python;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import org.python.core.Py;
 import org.python.core.PyDictionary;
 import org.python.core.PySystemState;
@@ -27,23 +26,23 @@ import org.python.util.PythonInterpreter;
 
 import java.io.File;
 
-public class DefaultJythonJythonInterpreterFactory implements JythonInterpreterFactory {
+public class DefaultJythonInterpreterFactory implements JythonInterpreterFactory {
     private int numberOfInstances = 0;
 
     @Override
-    public synchronized PythonInterpreter createInstance() throws PlayOnLinuxException {
+    public synchronized PythonInterpreter createInstance() throws PythonException {
         return createInstance(PythonInterpreter.class);
     }
 
     @Override
-    public synchronized <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException {
+    public synchronized <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PythonException {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
         numberOfInstances++;
         try {
             return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new PlayOnLinuxException("Unable to create a Python interpreter", e);
+            throw new PythonException("Unable to create a Python interpreter", e);
         }
     }
 

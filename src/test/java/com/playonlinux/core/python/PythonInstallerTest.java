@@ -36,7 +36,7 @@ import java.io.*;
 import static org.junit.Assert.*;
 
 public class PythonInstallerTest {
-    private DefaultJythonJythonInterpreterFactory defaultJythonInterpreterFactory;
+    private DefaultJythonInterpreterFactory defaultJythonInterpreterFactory;
     private static AbstractConfiguration testConfigFile = new MockContextConfig();
 
     @BeforeClass
@@ -47,7 +47,7 @@ public class PythonInstallerTest {
 
     @Before
     public void setUp() {
-        defaultJythonInterpreterFactory = new DefaultJythonJythonInterpreterFactory();
+        defaultJythonInterpreterFactory = new DefaultJythonInterpreterFactory();
     }
 
     @Test

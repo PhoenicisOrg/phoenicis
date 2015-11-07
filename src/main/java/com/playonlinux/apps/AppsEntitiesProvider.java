@@ -39,6 +39,7 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Scan
@@ -135,6 +136,7 @@ public final class AppsEntitiesProvider
                 }
             }
         }
+
         applyFilter(lastFilter);
     }
 }
