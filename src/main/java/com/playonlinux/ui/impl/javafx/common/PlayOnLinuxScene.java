@@ -22,13 +22,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class PlayOnLinuxScene extends Scene {
+    private static final String DEFAULT_THEME = PlayOnLinuxScene.class.getResource("defaultTheme.css").toExternalForm();
+    private static final String DARK_THEME = PlayOnLinuxScene.class.getResource("darkTheme.css").toExternalForm();
+
     public PlayOnLinuxScene(Parent parent, int width, int height) {
         super(parent, width, height);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+        this.getStylesheets().add(DEFAULT_THEME);
     }
 
     public PlayOnLinuxScene(Parent parent) {
         super(parent);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource("common.css").toExternalForm());
+        this.getStylesheets().add(DEFAULT_THEME);
+    }
+
+    public String getDefaultTheme() {
+        return DEFAULT_THEME;
+    }
+
+    public String getDarkTheme() {
+        return DARK_THEME;
     }
 }
