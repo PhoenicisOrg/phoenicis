@@ -35,11 +35,17 @@ public class PlayOnLinuxScene extends Scene {
         this.getStylesheets().add(DEFAULT_THEME);
     }
 
-    public String getDefaultTheme() {
-        return DEFAULT_THEME;
-    }
-
-    public String getDarkTheme() {
-        return DARK_THEME;
+    public String getTheme(Themes theme) {
+        switch(theme) {
+            case DEFAULT: {
+                return DEFAULT_THEME;
+            }
+            case DARK: {
+                return DARK_THEME;
+            }
+            default: {
+                return DEFAULT_THEME;
+            }
+        }
     }
 }

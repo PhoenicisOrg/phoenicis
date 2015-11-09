@@ -48,18 +48,18 @@ public class ViewSettings extends MainWindowView {
         // TODO: Save selected theme in config
         switch (themes.getSelectionModel().getSelectedItem()) {
             case DEFAULT: {
-                this.getScene().getStylesheets().remove(parent.getPlayOnLinuxScene().getDefaultTheme());
-                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getDefaultTheme());
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getTheme(Themes.DEFAULT));
                 break;
             }
             case DARK: {
-                this.getScene().getStylesheets().remove(parent.getPlayOnLinuxScene().getDefaultTheme());
-                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getDarkTheme());
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getTheme(Themes.DARK));
                 break;
             }
             default: {
-                this.getScene().getStylesheets().remove(parent.getPlayOnLinuxScene().getDefaultTheme());
-                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getDefaultTheme());
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getTheme(Themes.DEFAULT));
                 break;
             }
         }
