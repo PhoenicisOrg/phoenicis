@@ -87,9 +87,9 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
 
         categoryView = new LeftButtonGroup(translate("Categories"));
 
-        testingCheck = new CheckBox(translate("Testing"));
-        noCdNeededCheck = new CheckBox(translate("No CD needed"));
-        commercialCheck = new CheckBox(translate("Commercial"));
+        testingCheck = new LeftCheckBox(translate("Testing"));
+        noCdNeededCheck = new LeftCheckBox(translate("No CD needed"));
+        commercialCheck = new LeftCheckBox(translate("Commercial"));
 
         testingCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
         noCdNeededCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());

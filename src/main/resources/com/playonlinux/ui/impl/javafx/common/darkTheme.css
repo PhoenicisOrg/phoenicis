@@ -40,11 +40,10 @@
 }
 
 #headerPane {
-    -fx-background-color: linear-gradient(#428bca, #116395);
+    -fx-background-color: linear-gradient(#485563, #29323c);
     -fx-pref-width: 100%;
     -fx-pref-height: 3em;
     -fx-padding: 0.5em;
-
 }
 
 .menuEntry {
@@ -62,18 +61,6 @@
 .mainWindowScene {
     -fx-min-height: 35.2em;
     -fx-fit-to-height: true;
-}
-
-.leftPane {
-    -fx-background-color: #3c3f41;
-    -fx-min-height: 40em;
-    -fx-pref-width: 15em;
-    -fx-padding: 1em;
-    -fx-spacing: 0.4em;
-}
-
-.leftPaneInside {
-    -fx-spacing: 0.4em;
 }
 
 #menuPane {
@@ -98,19 +85,13 @@
     -fx-background-radius: 1em;
 }
 
+/* LEFT PANE START */
 .leftBarTitle {
     -fx-font-family: "Roboto Regular";
     -fx-font-size: 1.1em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-}
-
-.title {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 1.4em;
-    -fx-alignment: baseline-left;
-    -fx-translate-y: -0.1em;
-    -fx-fill: #428bca;
+    -fx-fill: #FFFFFF;
 }
 
 .leftButton {
@@ -120,15 +101,42 @@
     -fx-font-family: "Roboto Light";
     -fx-translate-y: 0.4em;
     -fx-translate-x: 0.5em;
+    -fx-fill: #FFFFFF;
 }
 .leftButton:hover {
-    -fx-background-color: #D3D3D3;
+    -fx-background-color: #9f9da6;
     -fx-background-insets: 0,1,2;
     -fx-background-radius: 3,2,1;
 }
 
 .leftSpacer {
     -fx-pref-height: 0.8em;
+}
+
+.leftPane {
+    -fx-background-color: #3c3f41;
+    -fx-min-height: 40em;
+    -fx-pref-width: 15em;
+    -fx-padding: 1em;
+    -fx-spacing: 0.4em;
+}
+
+.leftPaneInside {
+    -fx-spacing: 0.4em;
+}
+
+.leftPaneCheckBox .text {
+    -fx-fill: #FFFFFF;
+}
+
+/* LEFT PANE END */
+
+.title {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 1.4em;
+    -fx-alignment: baseline-left;
+    -fx-translate-y: -0.1em;
+    -fx-fill: #428bca;
 }
 
 .miniatureText {
