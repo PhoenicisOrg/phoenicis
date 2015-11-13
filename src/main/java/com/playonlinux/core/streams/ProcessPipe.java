@@ -41,7 +41,8 @@ import com.playonlinux.core.services.manager.ServiceManager;
  */
 @Scan
 public class ProcessPipe implements Service {
-    private static final Logger LOGGER = Logger.getLogger(ProcessPipe.class);
+	private static final Logger LOGGER = Logger.getLogger(ProcessPipe.class);
+    private static final String LOG_ERROR_CLOSING_STREAMS = "Error occured while trying to close streams";
 
     @Inject
     static ServiceManager serviceManager;
@@ -83,19 +84,19 @@ public class ProcessPipe implements Service {
         try {
             this.redirectOutputStream.close();
         } catch (IOException e) {
-            LOGGER.error("Error occured while trying to close streams", e);
+            LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
         }
 
         try {
             this.redirectInputStream.close();
         } catch (IOException e) {
-            LOGGER.error("Error occured while trying to close streams", e);
+            LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
         }
 
         try {
             this.redirectErrorStream.close();
         } catch (IOException e) {
-            LOGGER.error("Error occured while trying to close streams", e);
+            LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
         }
     }
 
