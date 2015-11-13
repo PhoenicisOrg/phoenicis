@@ -22,70 +22,70 @@ package com.playonlinux.core.utils;
  * Represents a supported Operating System
  */
 public enum OperatingSystem {
-	MACOSX("Mac OS X", "Mac", "darwin"), LINUX("Linux", "Linux", "linux"), FREEBSD("FreeBSD", "FreeBSD", "freebsd");
+    MACOSX("Mac OS X", "Mac", "darwin"), LINUX("Linux", "Linux", "linux"), FREEBSD("FreeBSD", "FreeBSD", "freebsd");
 
-	private final String fullName;
-	private final String legacyName;
-	private final String winePackage;
+    private final String fullName;
+    private final String legacyName;
+    private final String winePackage;
 
-	OperatingSystem(String fullName, String legacyName, String winePackage) {
-		this.fullName = fullName;
-		this.legacyName = legacyName;
-		this.winePackage = winePackage;
+    OperatingSystem(String fullName, String legacyName, String winePackage) {
+	this.fullName = fullName;
+	this.legacyName = legacyName;
+	this.winePackage = winePackage;
+    }
+
+    /**
+     * Creates a Operating System from the name
+     *
+     * @param fullName
+     *            The name
+     * @return The operating system
+     */
+    public static OperatingSystem fromString(String fullName) {
+	for (OperatingSystem system : OperatingSystem.values()) {
+	    if (system.getFullName().equals(fullName)) {
+		return system;
+	    }
 	}
 
-	/**
-	 * Creates a Operating System from the name
-	 * 
-	 * @param fullName
-	 *            The name
-	 * @return The operating system
-	 */
-	public static OperatingSystem fromString(String fullName) {
-		for (OperatingSystem system : OperatingSystem.values()) {
-			if (system.getFullName().equals(fullName)) {
-				return system;
-			}
-		}
+	throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
+    }
 
-		throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
-	}
+    /**
+     * Fetch the current Operating System
+     *
+     * @return The current operating system
+     */
+    public static OperatingSystem fetchCurrentOperationSystem() {
+	return OperatingSystem.fromString(System.getProperty("os.name"));
+    }
 
-	/**
-	 * Fetch the current Operating System
-	 * 
-	 * @return The current operating system
-	 */
-	public static OperatingSystem fetchCurrentOperationSystem() {
-		return OperatingSystem.fromString(System.getProperty("os.name"));
-	}
+    /**
+     *
+     * @return PlayOnLinux v4 compatible short name
+     */
+    public String getFullName() {
+	return fullName;
+    }
 
-	/**
-	 *
-	 * @return PlayOnLinux v4 compatible short name
-	 */
-	public String getFullName() {
-		return fullName;
-	}
+    /**
+     *
+     * @return PlayOnLinux v4 compatible short name
+     */
+    public String getLegacyName() {
+	return legacyName;
+    }
 
-	/**
-	 *
-	 * @return PlayOnLinux v4 compatible short name
-	 */
-	public String getLegacyName() {
-		return legacyName;
-	}
+    /**
+     *
+     * @return The name used for the wine packages
+     */
+    public String getWinePackage() {
+	return winePackage;
+    }
 
-	/**
-	 *
-	 * @return The name used for the wine packages
-	 */
-	public String getWinePackage() {
-		return winePackage;
-	}
-
-	@Override
-	public String toString() {
-		return this.fullName;
-	}
+    @Override
+    public String toString() {
+	return this.fullName;
+    }
 }
