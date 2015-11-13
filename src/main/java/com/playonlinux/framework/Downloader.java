@@ -54,15 +54,15 @@ public class Downloader implements SetupWizardComponent {
     private Downloader(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
+    
+    public Downloader(ProgressControl progressControl) {
+        this.progressControl = progressControl;
+    }
 
     public static Downloader wizard(SetupWizard setupWizard) {
         final SetupWizardComponent downloaderInstance = new Downloader(setupWizard);
         setupWizard.registerComponent(downloaderInstance);
         return new Downloader(setupWizard);
-    }
-
-    public Downloader(ProgressControl progressControl) {
-        this.progressControl = progressControl;
     }
 
     private void defineProgressStep(URL remoteFile) throws CancelException {
