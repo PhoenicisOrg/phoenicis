@@ -53,18 +53,24 @@ import com.playonlinux.wine.registry.RegistryParser;
  */
 @Scan
 public class WinePrefix implements AutoCloseable {
-    private static final Version DEFAULT_VERSION = new Version("1.7.49"); // FIXME
+	private static final Version DEFAULT_VERSION = new Version("1.7.49"); // FIXME
 
     @Inject
     static LoggerFactory loggerFactory;
 
+	private static final String ARCHITECTURE = "architecture";
+	private static final String CONTAINER_TYPE = "containerType";
+    private static final String DISTRIBUTION_CODE = "distributionCode";
+    private static final String DRIVE_C = "drive_c";
+    private static final String EXECUTABLE_EXTENSION = "exe";
+	private static final String OPERATING_SYSTEM = "operatingSystem";
+    private static final String USER_REGISTRY_FILENAME = "user.reg";
+    private static final String USER_REGISTRY_NODENAME = "HKEY_CURRENT_USER";
     private static final String PLAYONLINUX_WINEPREFIX_CONFIGFILE = "playonlinux.cfg";
     private static final String SYSTEM_REGISTRY_FILENAME = "system.reg";
     private static final String SYSTEM_REGISTRY_NODENAME = "HKEY_LOCAL_MACHINE";
-    private static final String USER_REGISTRY_FILENAME = "user.reg";
-    private static final String USER_REGISTRY_NODENAME = "HKEY_CURRENT_USER";
-    private static final String EXECUTABLE_EXTENSION = "exe";
-    private static final String DRIVE_C = "drive_c";
+	private static final String VERSION_LC = "version";
+	private static final String VERSION_UC = "VERSION";
 
     private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] {"iexplore.exe", "notepad.exe"};
 
@@ -164,11 +170,11 @@ public class WinePrefix implements AutoCloseable {
         }
 
         try {
-            prefixConfigFile.writeValue("containerType", "WinePrefixContainer");
-            prefixConfigFile.writeValue("distributionCode", wineDistribution.getDistributionCode());
-            prefixConfigFile.writeValue("operatingSystem", wineDistribution.getOperatingSystem().name());
-            prefixConfigFile.writeValue("architecture", wineDistribution.getArchitecture().name());
-            prefixConfigFile.writeValue("version", version.toString());
+            prefixConfigFile.writeValue(CONTAINER_TYPE, "WinePrefixContainer");
+            prefixConfigFile.writeValue(DISTRIBUTION_CODE, wineDistribution.getDistributionCode());
+            prefixConfigFile.writeValue(OPERATING_SYSTEM, wineDistribution.getOperatingSystem().name());
+            prefixConfigFile.writeValue(ARCHITECTURE, wineDistribution.getArchitecture().name());
+            prefixConfigFile.writeValue(VERSION_LC, version.toString());
         } catch (IOException e) {
             throw new WineException("Error while writing data on config file", e);
         }
@@ -184,10 +190,10 @@ public class WinePrefix implements AutoCloseable {
 
     public Version fetchVersion() {
         final ConfigFile prefixConfigFile = getPrefixConfigFile();
-        if(prefixConfigFile.contains("version")) {
-            return new Version(prefixConfigFile.readValue("version"));
-        } else if (prefixConfigFile.contains("VERSION")) {
-            return new Version(prefixConfigFile.readValue("VERSION"));
+        if(prefixConfigFile.contains(VERSION_LC)) {
+            return new Version(prefixConfigFile.readValue(VERSION_LC));
+        } else if (prefixConfigFile.contains(VERSION_UC)) {
+            return new Version(prefixConfigFile.readValue(VERSION_UC));
         }
 
         // FIXME: Handle this case with a default version
@@ -195,13 +201,13 @@ public class WinePrefix implements AutoCloseable {
     }
 
     public boolean isAutomaticallyUpdated() {
-        return getPrefixConfigFile().contains("version") || getPrefixConfigFile().contains("VERSION");
+        return getPrefixConfigFile().contains(VERSION_LC) || getPrefixConfigFile().contains(VERSION_UC);
     }
 
     public OperatingSystem fetchOperatingSystem() {
         final ConfigFile prefixConfigFile = getPrefixConfigFile();
         if(prefixConfigFile.contains("operatinSystem")) {
-            return OperatingSystem.valueOf(prefixConfigFile.readValue("operatingSystem"));
+            return OperatingSystem.valueOf(prefixConfigFile.readValue(OPERATING_SYSTEM));
         }
 
         return OperatingSystem.fetchCurrentOperationSystem();
@@ -209,8 +215,8 @@ public class WinePrefix implements AutoCloseable {
 
     public Architecture fetchArchitecture() {
         final ConfigFile prefixConfigFile = getPrefixConfigFile();
-        if(prefixConfigFile.contains("architecture")) {
-            return Architecture.valueOf(prefixConfigFile.readValue("architecture"));
+        if(prefixConfigFile.contains(ARCHITECTURE)) {
+            return Architecture.valueOf(prefixConfigFile.readValue(ARCHITECTURE));
         } else if (prefixConfigFile.contains("ARCH")) {
             return Architecture.fromWinePackageName(prefixConfigFile.readValue("ARCH"));
         }
@@ -222,8 +228,8 @@ public class WinePrefix implements AutoCloseable {
     public WineDistribution fetchDistribution() {
         final ConfigFile prefixConfigFile = getPrefixConfigFile();
         final String distribution;
-        if(prefixConfigFile.contains("distributionCode")) {
-            distribution = prefixConfigFile.readValue("distributionCode");
+        if(prefixConfigFile.contains(DISTRIBUTION_CODE)) {
+            distribution = prefixConfigFile.readValue(DISTRIBUTION_CODE);
         } else {
             distribution = "upstream";
         }
