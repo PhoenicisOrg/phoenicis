@@ -44,7 +44,7 @@ public class WineDistribution {
 
     public String asNameWithCurrentOperatingSystem() {
         return format("%s-%s-%s", distributionCode,
-                OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages(),
+                OperatingSystem.fetchCurrentOperationSystem().getWinePackage(),
                 architecture.getNameForWinePackages()
         );
     }
