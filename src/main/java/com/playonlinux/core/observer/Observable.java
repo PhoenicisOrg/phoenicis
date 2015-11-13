@@ -20,9 +20,9 @@ package com.playonlinux.core.observer;
 
 /**
  * Defines an observable (see Observable pattern)
- * @param <ARG> The type of the argument
+ * @param <A> The type of the argument
  */
-public interface Observable<ARG> {
+public interface Observable<A> {
     /**
      * Register an obverser
      * @param observer the observer to add
@@ -44,7 +44,7 @@ public interface Observable<ARG> {
      * Notify an observer with an argument
      * @param arg the argument to pass
      */
-    void notifyObservers(ARG arg);
+    void notifyObservers(A arg);
 
     /**
      * Delete an observer

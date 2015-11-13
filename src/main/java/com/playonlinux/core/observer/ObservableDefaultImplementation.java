@@ -24,13 +24,13 @@ import java.util.Objects;
 
 /**
  * Default {@link Observable} implementation
- * @param <ARG> The type of the argument
+ * @param <A> The type of the argument
  *
  */
-public abstract class ObservableDefaultImplementation<ARG>
-        implements Observable<ARG> {
+public abstract class ObservableDefaultImplementation<A>
+        implements Observable<A> {
     private final List<Observer> observers;
-    private ARG lastArgument;
+    private A lastArgument;
 
     public ObservableDefaultImplementation() {
         observers = new ArrayList<>();
@@ -59,7 +59,7 @@ public abstract class ObservableDefaultImplementation<ARG>
     }
 
     @Override
-    public synchronized void notifyObservers(ARG arg) {
+    public synchronized void notifyObservers(A arg) {
         lastArgument = arg;
         for(Observer observer: observers) {
             observer.update(this, arg);

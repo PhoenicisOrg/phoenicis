@@ -22,7 +22,7 @@ import java.io.File;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 
-public abstract class AbstractContainer<ENTITY extends ContainerEntity> {
+public abstract class AbstractContainer<E extends ContainerEntity> {
     protected final File containerPath;
 
     public AbstractContainer(File containerPath) {
@@ -37,5 +37,5 @@ public abstract class AbstractContainer<ENTITY extends ContainerEntity> {
         return containerPath.getName();
     }
 
-    public abstract ENTITY createEntity();
+    public abstract E createEntity();
 }

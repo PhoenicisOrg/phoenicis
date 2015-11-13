@@ -24,16 +24,16 @@ import com.playonlinux.core.scripts.CancelException;
 
 /**
  * Component that sends messages into the UI thread
- * @param <RETURN> The return type of the message
+ * @param <R> The return type of the message
  */
-public interface UIMessageSender <RETURN> {
+public interface UIMessageSender <R> {
     /**
      * Send a message synchronously, wait for the result and return it
      * @param message The message to pass
      * @return The result of the message
      * @throws CancelException if the users decides to cancel the message
      */
-    RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException;
+    R synchronousSendAndGetResult(SynchronousMessage<R> message) throws CancelException;
 
     /**
      * Sends a message, and wait for the end of its execution
