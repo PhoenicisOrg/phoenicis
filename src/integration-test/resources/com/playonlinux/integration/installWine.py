@@ -28,7 +28,7 @@ class TestInstallWine(unittest.TestCase):
         wineInstallation.install()
 
         installationPath = "%s/engines/wine/upstream-%s-x86/1.7.36/bin/wine" %\
-                           (Environment.getUserRoot(), OperatingSystem.fetchCurrentOperationSystem().getNameForWinePackages())
+                           (Environment.getUserRoot(), OperatingSystem.fetchCurrentOperationSystem().getWinePackage())
 
         ServiceManagerGetter.serviceManager.shutdown()
 
