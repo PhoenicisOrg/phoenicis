@@ -32,7 +32,9 @@ import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStateEntity> {
-    private static final int BLOCK_SIZE = 1024;
+    private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
+    
+	private static final int BLOCK_SIZE = 1024;
     private final URL url;
     private State state;
     private float percentage;
@@ -82,7 +84,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
         } catch(IOException | InterruptedException e) {
             this.state = State.FAILED;
             this.changeState();
-            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
         this.state = State.SUCCESS;
         this.changeState();
@@ -102,7 +104,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
         try {
             get(new FileOutputStream(localFile));
         } catch (IOException e) {
-            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
     }
 
@@ -111,7 +113,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
         try {
             connection = openConnection(url);
         } catch (IOException e) {
-            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
 
         this.saveConnectionToStream(connection, outputStream);
