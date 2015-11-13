@@ -32,7 +32,19 @@ import com.playonlinux.wine.registry.RegistryValue;
 import com.playonlinux.wine.registry.StringValueType;
 
 public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplayConfiguration {
-    private final RegistryKey userRegsitry;
+	private static final String ALWAYS_OFFSCREEN = "AlwaysOffscreen";
+	private static final String DIRECT3D = "Direct3D";
+	private static final String DIRECT_DRAW_RENDERER = "DirectDrawRenderer";
+	private static final String OFFSCREEN_RENDERING_MODE = "OffscreenRenderingMode";
+	private static final String MULTISAMPLING = "Multisampling";
+	private static final String RENDER_TARGET_MODE_LOCK = "RenderTargetModeLock";
+	private static final String STRICT_DRAW_ORDERING = "StrictDrawOrdering";
+	private static final String USE_GLSL = "UseGLSL";
+    private static final String VIDEO_MEMORY_SIZE = "VideoMemorySize";
+	private static final String WINE = "Wine";
+	private static final String SOFTWARE = "Software";
+	
+	private final RegistryKey userRegsitry;
 
     public RegistryWinePrefixDisplayConfiguration(RegistryKey userRegistry) {
         this.userRegsitry = userRegistry;
@@ -40,7 +52,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public GLSL getGLSL() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "UseGLSL");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, USE_GLSL);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "enabled":
@@ -56,7 +68,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public DirectDrawRenderer getDirectDrawRenderer() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "DirectDrawRenderer");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, DIRECT_DRAW_RENDERER);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "gdi":
@@ -72,7 +84,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public Multisampling getMultisampling() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "Multisampling");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, MULTISAMPLING);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "enabled":
@@ -88,7 +100,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public OffscreenRenderingMode getOffscreenRenderingMode() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "OffscreenRenderingMode");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, OFFSCREEN_RENDERING_MODE);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "fbo":
@@ -106,7 +118,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public RenderTargetModeLock getRenderTargetModeLock() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "RenderTargetModeLock");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, RENDER_TARGET_MODE_LOCK);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "disabled":
@@ -124,7 +136,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public StrictDrawOrdering getStrictDrawOrdering() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "StrictDrawOrdering");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, STRICT_DRAW_ORDERING);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "enabled":
@@ -140,7 +152,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public AlwaysOffscreen getAlwaysOffscreen() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "AlwaysOffscreen");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, ALWAYS_OFFSCREEN);
         if(registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "enabled":
@@ -156,7 +168,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
 
     @Override
     public VideoMemorySize getVideoMemorySize() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "Direct3D", "VideoMemorySize");
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, VIDEO_MEMORY_SIZE);
         if(registryChild instanceof RegistryValue) {
             try {
                 int videoMemorySize = Integer.valueOf(((RegistryValue<StringValueType>) registryChild).getText());
