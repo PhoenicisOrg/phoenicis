@@ -18,11 +18,12 @@
 
 package com.playonlinux.ui.impl.qt.common;
 
-import com.trolltech.qt.core.QIODevice;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.log4j.Logger;
+
+import com.trolltech.qt.core.QIODevice;
 
 /**
  * An implementation of QIODevice for Java InMemoryStreams.

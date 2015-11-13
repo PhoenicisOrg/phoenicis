@@ -18,11 +18,15 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.menubar;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
-import com.trolltech.qt.gui.*;
-
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QActionGroup;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QMenu;
+import com.trolltech.qt.gui.QMenuBar;
 
 /**
  * MenuBar of the MainWindow

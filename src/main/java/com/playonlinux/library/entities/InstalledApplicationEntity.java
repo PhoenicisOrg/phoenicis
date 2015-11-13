@@ -18,9 +18,9 @@
 
 package com.playonlinux.library.entities;
 
-import com.playonlinux.core.entities.Entity;
-
 import java.net.URL;
+
+import com.playonlinux.core.entities.Entity;
 
 public class InstalledApplicationEntity implements Entity {
     private final URL icon;

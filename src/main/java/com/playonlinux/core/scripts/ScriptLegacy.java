@@ -18,14 +18,19 @@
 
 package com.playonlinux.core.scripts;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.utils.FileAnalyser;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
+import java.text.ParseException;
+import java.util.concurrent.ExecutorService;
+
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
-import java.io.*;
-import java.text.ParseException;
-import java.util.concurrent.ExecutorService;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.utils.FileAnalyser;
 
 public class ScriptLegacy extends Script {
     private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP SIGNATURE-----";

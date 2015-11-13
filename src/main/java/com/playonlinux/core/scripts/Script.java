@@ -18,19 +18,20 @@
 
 package com.playonlinux.core.scripts;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
+import org.python.core.PyException;
+import org.python.util.PythonInterpreter;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
-import org.python.core.PyException;
-import org.python.util.PythonInterpreter;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 @Scan
 public abstract class Script implements Service {

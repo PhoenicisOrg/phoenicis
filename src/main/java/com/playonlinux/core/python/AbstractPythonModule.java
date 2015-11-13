@@ -18,12 +18,12 @@
 
 package com.playonlinux.core.python;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.python.core.PyObject;
 import org.python.core.PyType;
 import org.python.util.PythonInterpreter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractPythonModule<T> {
     protected final Class<T> type;

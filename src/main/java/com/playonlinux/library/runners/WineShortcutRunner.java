@@ -18,15 +18,15 @@
 
 package com.playonlinux.library.runners;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.Wine;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.library.shortcuts.WineShortcut;
 import com.playonlinux.wine.WineConstants;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WineShortcutRunner {
     private final WineShortcut wineShortcut;

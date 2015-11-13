@@ -18,9 +18,9 @@
 
 package com.playonlinux.containers;
 
-import com.playonlinux.containers.entities.ContainerEntity;
-
 import java.io.File;
+
+import com.playonlinux.containers.entities.ContainerEntity;
 
 public abstract class AbstractContainer<ENTITY extends ContainerEntity> {
     protected final File containerPath;

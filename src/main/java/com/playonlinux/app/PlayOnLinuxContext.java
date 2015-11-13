@@ -18,14 +18,6 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.core.utils.ReplacableProperties;
-import com.playonlinux.core.version.Version;
-import com.playonlinux.engines.wine.WineDistribution;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +26,15 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.playonlinux.core.utils.OperatingSystem;
+import com.playonlinux.core.utils.ReplacableProperties;
+import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.WineDistribution;
 
 /**
  * Contains all the environment settings required by PlayOnLinux

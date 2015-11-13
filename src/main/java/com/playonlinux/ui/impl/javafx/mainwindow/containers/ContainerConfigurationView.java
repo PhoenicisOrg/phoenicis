@@ -18,8 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
+import static java.lang.Integer.max;
+
+import java.util.List;
+
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;
+
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tab;
@@ -27,10 +32,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import java.util.List;
-
-import static java.lang.Integer.max;
 
 public abstract class ContainerConfigurationView<T> extends VBox implements ProgressControl {
     private final TabPane tabPane;

@@ -26,7 +26,14 @@ import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.common.widget.MiniatureListWidget;
 import com.playonlinux.ui.impl.javafx.common.widget.StaticMiniature;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.ui.impl.javafx.mainwindow.FailurePanel;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
+import com.playonlinux.ui.impl.javafx.mainwindow.WaitPanel;
+
 import javafx.application.Platform;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;

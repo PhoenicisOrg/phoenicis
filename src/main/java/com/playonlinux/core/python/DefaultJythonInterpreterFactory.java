@@ -18,13 +18,13 @@
 
 package com.playonlinux.core.python;
 
+import java.io.File;
+
 import org.python.core.Py;
 import org.python.core.PyDictionary;
 import org.python.core.PySystemState;
 import org.python.modules.zipimport.zipimport;
 import org.python.util.PythonInterpreter;
-
-import java.io.File;
 
 public class DefaultJythonInterpreterFactory implements JythonInterpreterFactory {
     private int numberOfInstances = 0;

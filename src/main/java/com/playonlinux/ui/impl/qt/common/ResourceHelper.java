@@ -18,14 +18,15 @@
 
 package com.playonlinux.ui.impl.qt.common;
 
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QPixmap;
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QPixmap;
 
 /**
  * Small helper class for easing the use of images and icons.

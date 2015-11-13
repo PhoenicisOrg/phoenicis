@@ -18,13 +18,21 @@
 
 package com.playonlinux.app;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.lang.LanguageBundle;
 import com.playonlinux.core.lang.LanguageBundleSelector;
 import com.playonlinux.core.log.LoggerFactory;
-import com.playonlinux.core.python.*;
+import com.playonlinux.core.python.DefaultJythonInterpreterFactory;
+import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
+import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.scripts.ScriptFactory;
@@ -40,12 +48,6 @@ import com.playonlinux.ui.impl.cli.ControllerCLIImplementation;
 import com.playonlinux.ui.impl.gtk.ControllerGTKImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.ui.impl.qt.ControllerQtImplementation;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * PlayOnLinux beans configuration file

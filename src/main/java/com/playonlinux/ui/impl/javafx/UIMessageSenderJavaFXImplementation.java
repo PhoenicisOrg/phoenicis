@@ -18,13 +18,14 @@
 
 package com.playonlinux.ui.impl.javafx;
 
+import java.util.concurrent.CountDownLatch;
+
 import com.playonlinux.core.messages.Message;
 import com.playonlinux.core.messages.SynchronousMessage;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.UIMessageSender;
-import javafx.application.Platform;
 
-import java.util.concurrent.CountDownLatch;
+import javafx.application.Platform;
 
 public class UIMessageSenderJavaFXImplementation<RETURN> implements UIMessageSender<RETURN> {
     public static void runAndWait(Runnable action) {

@@ -18,11 +18,11 @@
 
 package com.playonlinux.core.scripts;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
+
+import org.apache.commons.io.FileUtils;
 
 
 public class ScriptFactoryDefaultImplementation implements ScriptFactory {

@@ -18,8 +18,9 @@
 
 package com.playonlinux.win32.pe;
 
-import com.playonlinux.win32.DWord;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.playonlinux.win32.DWord;
 
 /**
  * PE Executable ImageNTHeaders

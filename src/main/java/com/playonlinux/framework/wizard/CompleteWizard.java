@@ -18,11 +18,11 @@
 
 package com.playonlinux.framework.wizard;
 
-import com.playonlinux.core.scripts.CancelException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import com.playonlinux.core.scripts.CancelException;
 
 public interface CompleteWizard extends Wizard, ProgressWizard, ChoiceWizard, LogWizard, WineWizard {
     void setLeftImage(String leftImage) throws IOException;

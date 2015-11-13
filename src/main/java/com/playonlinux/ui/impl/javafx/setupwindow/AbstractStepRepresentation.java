@@ -18,15 +18,16 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import java.net.URL;
+
 import com.playonlinux.core.messages.CancelerMessage;
+
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.net.URL;
 
 // TODO: Fix this class using CSS and containers instead of static sizes
 abstract class AbstractStepRepresentation {

@@ -18,12 +18,28 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
+
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
 import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
-import com.playonlinux.wine.parameters.*;
+import com.playonlinux.wine.parameters.AlwaysOffscreen;
+import com.playonlinux.wine.parameters.DirectDrawRenderer;
+import com.playonlinux.wine.parameters.GLSL;
+import com.playonlinux.wine.parameters.MouseWarpOverride;
+import com.playonlinux.wine.parameters.Multisampling;
+import com.playonlinux.wine.parameters.OffscreenRenderingMode;
+import com.playonlinux.wine.parameters.RenderTargetModeLock;
+import com.playonlinux.wine.parameters.StrictDrawOrdering;
+import com.playonlinux.wine.parameters.VideoMemorySize;
 import com.sun.javafx.collections.ImmutableObservableList;
 import com.sun.javafx.collections.ObservableListWrapper;
+
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -39,13 +55,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.List;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class WinePrefixContainerConfigurationView extends ContainerConfigurationView<WinePrefixContainerEntity> {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";

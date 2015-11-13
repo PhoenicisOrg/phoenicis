@@ -18,17 +18,18 @@
 
 package com.playonlinux.library;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
-import com.playonlinux.core.observer.Observer;
-import org.apache.log4j.Logger;
-
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.core.observer.ObservableDirectoryFiles;
+import com.playonlinux.core.observer.Observer;
 
 class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>>
         implements Observer<ObservableDirectoryFiles, File[]>, Closeable {

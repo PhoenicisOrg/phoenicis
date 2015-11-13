@@ -18,10 +18,10 @@
 
 package com.playonlinux.core.utils.archive.cab;
 
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.log4j.Logger;
 
 public class CFFolder extends AbstractCabStructure {
     byte[] coffCabStart = new byte[4];

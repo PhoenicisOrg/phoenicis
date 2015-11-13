@@ -18,9 +18,9 @@
 
 package com.playonlinux.core.messages;
 
-import com.playonlinux.core.scripts.CancelException;
-
 import java.util.concurrent.Semaphore;
+
+import com.playonlinux.core.scripts.CancelException;
 
 public abstract class SynchronousMessage<RESULT> implements Message {
     private RESULT response;

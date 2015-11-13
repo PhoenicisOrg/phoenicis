@@ -18,15 +18,19 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
 
-import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
-import com.trolltech.qt.core.QSize;
-import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.*;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
+import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QDockWidget;
+import com.trolltech.qt.gui.QSizePolicy;
+import com.trolltech.qt.gui.QSpacerItem;
+import com.trolltech.qt.gui.QVBoxLayout;
+import com.trolltech.qt.gui.QWidget;
 
 /**
  * Action SideBar of the MainWindow, containing all possible actions regarding the current context.

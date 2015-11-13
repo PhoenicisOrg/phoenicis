@@ -18,8 +18,9 @@
 
 package com.playonlinux.core.python;
 
-import com.playonlinux.app.PlayOnLinuxException;
 import org.python.util.PythonInterpreter;
+
+import com.playonlinux.app.PlayOnLinuxException;
 
 /**
  * Represents a Jython's {@link PythonInterpreter} factory

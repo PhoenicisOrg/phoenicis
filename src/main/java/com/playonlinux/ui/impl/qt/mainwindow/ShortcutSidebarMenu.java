@@ -18,11 +18,11 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import com.playonlinux.ui.impl.qt.common.ResourceHelper;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenu;
 import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenuItem;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 /**
  * Context-aware Sidebar-Menu providing controls for the selected Shortcut

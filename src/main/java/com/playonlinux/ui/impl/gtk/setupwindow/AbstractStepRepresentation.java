@@ -18,13 +18,14 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.core.messages.CancelerMessage;
+import java.net.URL;
+
 import org.gnome.gtk.Button;
 import org.gnome.gtk.Fixed;
 import org.gnome.gtk.Widget;
 import org.gnome.gtk.Window;
 
-import java.net.URL;
+import com.playonlinux.core.messages.CancelerMessage;
 
 abstract class AbstractStepRepresentation {
     private final CancelerMessage messageWaitingForResponse;

@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,8 +27,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class FailurePanel extends VBox {
     private final Button retryButton;

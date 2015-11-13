@@ -18,6 +18,15 @@
 
 package com.playonlinux.engines.wine;
 
+import static java.lang.String.format;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.injection.Inject;
@@ -40,15 +49,6 @@ import com.playonlinux.engines.wine.packages.GeckoWinePackage;
 import com.playonlinux.engines.wine.packages.MonoWinePackage;
 import com.playonlinux.engines.wine.packages.WinePackageProvider;
 import com.playonlinux.ui.api.ProgressControl;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static java.lang.String.format;
 
 @Scan
 public class DefaultWineVersionsManager

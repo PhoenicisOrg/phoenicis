@@ -18,13 +18,13 @@
 
 package com.playonlinux.engines.wine;
 
+import java.io.File;
+
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.ui.api.ProgressControl;
-
-import java.io.File;
 
 /**
  * PlayOnLinux Wine Version Manager

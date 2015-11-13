@@ -18,6 +18,12 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.io.File;
+
+import org.apache.log4j.Logger;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -29,12 +35,11 @@ import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
 import com.trolltech.qt.core.QDir;
 import com.trolltech.qt.core.QUrl;
-import com.trolltech.qt.gui.*;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QDesktopServices;
+import com.trolltech.qt.gui.QDialog;
+import com.trolltech.qt.gui.QFileDialog;
+import com.trolltech.qt.gui.QMessageBox;
 
 /**
  * EventHandler implementation that connects all MainWindow components

@@ -18,17 +18,18 @@
 
 package com.playonlinux.containers;
 
+import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
+
+import org.apache.log4j.Logger;
+
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.Wine;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.wine.WineConstants;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.function.Function;
 
 @Scan
 public class WineContainerEventHandler {

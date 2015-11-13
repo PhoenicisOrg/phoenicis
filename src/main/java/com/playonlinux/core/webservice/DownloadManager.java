@@ -18,15 +18,16 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.core.services.SubmittableService;
-import org.apache.log4j.Logger;
-
 import java.net.URL;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+
+import org.apache.log4j.Logger;
+
+import com.playonlinux.core.services.SubmittableService;
 
 /*
  Represents a download manager

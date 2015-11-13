@@ -18,13 +18,18 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.core.messages.CancelerMessage;
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 import org.gnome.gdk.Pixbuf;
 import org.gnome.gdk.RGBA;
-import org.gnome.gtk.*;
+import org.gnome.gtk.Fixed;
+import org.gnome.gtk.Image;
+import org.gnome.gtk.Layout;
+import org.gnome.gtk.StateFlags;
+import org.gnome.gtk.Widget;
 
-import java.io.IOException;
+import com.playonlinux.core.messages.CancelerMessage;
 
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {

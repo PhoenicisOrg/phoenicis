@@ -18,11 +18,12 @@
 
 package com.playonlinux.win32.pe;
 
-import com.playonlinux.win32.pe.rsrc.RsrcSection;
-import org.apache.commons.io.input.CountingInputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.commons.io.input.CountingInputStream;
+
+import com.playonlinux.win32.pe.rsrc.RsrcSection;
 
 public final class PEReader {
     PEReader() {

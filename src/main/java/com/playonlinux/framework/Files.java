@@ -18,15 +18,20 @@
 
 package com.playonlinux.framework;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.ProgressControl;
-
-import java.io.*;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 /* A builder pattern could be used here but we chose not to use it to facilitate com.playonlinux.core.scripts.sh syntax
  */

@@ -18,9 +18,9 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.core.scripts.ScriptClass;
-
 import java.io.File;
+
+import com.playonlinux.core.scripts.ScriptClass;
 
 @ScriptClass
 @SuppressWarnings("unused")

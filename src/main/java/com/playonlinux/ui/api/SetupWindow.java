@@ -18,14 +18,14 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
-import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.core.messages.InterrupterSynchronousMessage;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 
 /**
  * Represents a Setup Window.

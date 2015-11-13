@@ -18,14 +18,15 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
-import javafx.scene.control.Button;
-import javafx.stage.FileChooser;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.io.File;
 import java.util.List;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+
+import javafx.scene.control.Button;
+import javafx.stage.FileChooser;
 
 public class StepRepresentationBrowse extends StepRepresentationMessage {
     private final File browseDirectory;

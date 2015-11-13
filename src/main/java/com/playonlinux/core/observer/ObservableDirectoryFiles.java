@@ -18,14 +18,15 @@
 
 package com.playonlinux.core.observer;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
-import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
 
 public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
     private static final Logger LOGGER = Logger.getLogger(ObservableDirectoryFiles.class);

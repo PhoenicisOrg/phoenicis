@@ -18,20 +18,26 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.containers.entities.WinePrefixContainerEntity;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
-import javafx.scene.control.TextField;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.containers.entities.ContainerEntity;
+import com.playonlinux.containers.entities.ContainersWindowEntity;
+import com.playonlinux.containers.entities.WinePrefixContainerEntity;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftButtonGroup;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
+import com.playonlinux.ui.impl.javafx.mainwindow.MessagePanel;
+
+import javafx.scene.control.TextField;
 
 public class ViewContainers extends MainWindowView implements Observer<Observable, ContainersWindowEntity> {
     private final EventHandlerContainers eventHandlerContainers;

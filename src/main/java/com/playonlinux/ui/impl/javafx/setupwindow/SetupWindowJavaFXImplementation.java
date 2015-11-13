@@ -18,17 +18,7 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
-import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.core.messages.InterrupterSynchronousMessage;
-import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.ui.api.SetupWindow;
-import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +26,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
+import com.playonlinux.core.utils.OperatingSystem;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.ui.api.SetupWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
+
+import javafx.scene.Node;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow {
     private final Pane root;

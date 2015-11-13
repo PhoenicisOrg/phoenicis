@@ -18,12 +18,12 @@
 
 package com.playonlinux.core.scripts;
 
+import java.net.URL;
+import java.util.List;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.webservice.Webservice;
-
-import java.net.URL;
-import java.util.List;
 
 
 /**

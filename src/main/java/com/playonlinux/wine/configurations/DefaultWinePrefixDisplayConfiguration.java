@@ -18,7 +18,14 @@
 
 package com.playonlinux.wine.configurations;
 
-import com.playonlinux.wine.parameters.*;
+import com.playonlinux.wine.parameters.AlwaysOffscreen;
+import com.playonlinux.wine.parameters.DirectDrawRenderer;
+import com.playonlinux.wine.parameters.GLSL;
+import com.playonlinux.wine.parameters.Multisampling;
+import com.playonlinux.wine.parameters.OffscreenRenderingMode;
+import com.playonlinux.wine.parameters.RenderTargetModeLock;
+import com.playonlinux.wine.parameters.StrictDrawOrdering;
+import com.playonlinux.wine.parameters.VideoMemorySize;
 
 public class DefaultWinePrefixDisplayConfiguration implements WinePrefixDisplayConfiguration {
     @Override

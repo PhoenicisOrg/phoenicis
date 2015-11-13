@@ -18,12 +18,18 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final int BLOCK_SIZE = 1024;

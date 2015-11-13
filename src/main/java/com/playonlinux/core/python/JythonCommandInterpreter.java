@@ -18,19 +18,20 @@
 
 package com.playonlinux.core.python;
 
+import java.io.StringWriter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.function.Function;
+
+import org.apache.log4j.Logger;
+import org.python.core.PyException;
+import org.python.util.InteractiveInterpreter;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
-import org.apache.log4j.Logger;
-import org.python.core.PyException;
-import org.python.util.InteractiveInterpreter;
-
-import java.io.StringWriter;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.function.Function;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, Service {

@@ -18,19 +18,20 @@
 
 package com.playonlinux.core.webservice;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.Service;
-import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.Semaphore;
 
 public abstract class Webservice<T extends DTO>
         extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>> implements Service {

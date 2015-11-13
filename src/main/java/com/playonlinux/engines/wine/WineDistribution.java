@@ -1,11 +1,12 @@
 package com.playonlinux.engines.wine;
 
 
-import com.playonlinux.core.utils.Architecture;
-import com.playonlinux.core.utils.OperatingSystem;
+import static java.lang.String.format;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import static java.lang.String.format;
+import com.playonlinux.core.utils.Architecture;
+import com.playonlinux.core.utils.OperatingSystem;
 
 public class WineDistribution {
     private final OperatingSystem operatingSystem;

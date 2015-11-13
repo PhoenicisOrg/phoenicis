@@ -18,6 +18,9 @@
 
 package com.playonlinux.framework;
 
+import java.io.File;
+import java.util.List;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -27,9 +30,6 @@ import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.library.LibraryException;
 import com.playonlinux.library.ShortcutCreator;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * Wine shortcut creator framework tool

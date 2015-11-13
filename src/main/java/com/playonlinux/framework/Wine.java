@@ -18,6 +18,25 @@
 
 package com.playonlinux.framework;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+import static java.lang.String.format;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.input.NullInputStream;
+import org.apache.commons.io.output.NullOutputStream;
+import org.apache.log4j.Logger;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.injection.Inject;
@@ -41,20 +60,11 @@ import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
-import com.playonlinux.wine.registry.*;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.input.NullInputStream;
-import org.apache.commons.io.output.NullOutputStream;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-
-import static com.playonlinux.core.lang.Localisation.translate;
-import static java.lang.String.format;
+import com.playonlinux.wine.registry.AbstractRegistryNode;
+import com.playonlinux.wine.registry.RegistryKey;
+import com.playonlinux.wine.registry.RegistryValue;
+import com.playonlinux.wine.registry.RegistryWriter;
+import com.playonlinux.wine.registry.StringValueType;
 
 @Scan
 @ScriptClass

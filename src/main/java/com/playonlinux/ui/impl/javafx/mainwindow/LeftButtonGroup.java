@@ -19,9 +19,9 @@
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
 
-import javafx.scene.layout.VBox;
-
 import java.util.List;
+
+import javafx.scene.layout.VBox;
 
 
 public final class LeftButtonGroup extends VBox {

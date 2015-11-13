@@ -18,16 +18,17 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
 import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
+
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class GenericContainerConfigurationView extends ContainerConfigurationView<ContainerEntity> {
     public GenericContainerConfigurationView(ContainerEntity containerEntity) {

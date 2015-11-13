@@ -18,6 +18,14 @@
 
 package com.playonlinux.ui.impl.javafx.common.widget;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.log4j.Logger;
+
 import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
@@ -27,13 +35,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class SimpleIconListWidget
         extends TreeView<SimpleIconListWidget.SimpleIconListItem> {

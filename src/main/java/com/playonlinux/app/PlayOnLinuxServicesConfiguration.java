@@ -18,6 +18,9 @@
 
 package com.playonlinux.app;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.DefaultAppsManager;
@@ -31,9 +34,6 @@ import com.playonlinux.engines.wine.DefaultWineVersionsManager;
 import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.library.LibraryEntitiesProvider;
-
-import java.util.Arrays;
-import java.util.Iterator;
 
 /**
  * Default service configuration of PlayOnLinux

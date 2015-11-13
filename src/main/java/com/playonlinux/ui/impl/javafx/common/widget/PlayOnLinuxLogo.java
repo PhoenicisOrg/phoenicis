@@ -18,12 +18,12 @@
 
 package com.playonlinux.ui.impl.javafx.common.widget;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class PlayOnLinuxLogo extends HBox {
     public PlayOnLinuxLogo() {

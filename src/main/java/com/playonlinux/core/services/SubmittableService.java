@@ -18,9 +18,9 @@
 
 package com.playonlinux.core.services;
 
-import com.playonlinux.core.services.manager.Service;
-
 import java.util.function.Function;
+
+import com.playonlinux.core.services.manager.Service;
 
 /**
  * Represents a service that can receive taskes

@@ -18,17 +18,17 @@
 
 package com.playonlinux.engines.wine.packages;
 
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.utils.ChecksumCalculator;
-import com.playonlinux.core.webservice.DownloadException;
-import com.playonlinux.core.webservice.HTTPDownloader;
-import com.playonlinux.engines.wine.EngineInstallException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
+
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.utils.ChecksumCalculator;
+import com.playonlinux.core.webservice.DownloadException;
+import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.engines.wine.EngineInstallException;
 
 public class WinePackageProvider<T extends WinePackage> {
     private final T winePackage;

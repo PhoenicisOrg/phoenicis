@@ -18,7 +18,11 @@
 
 package com.playonlinux.ui.impl.gtk.mainwindow;
 
-import org.gnome.gtk.*;
+import org.gnome.gtk.Gtk;
+import org.gnome.gtk.MenuBar;
+import org.gnome.gtk.VBox;
+import org.gnome.gtk.Window;
+import org.gnome.gtk.WindowPosition;
 
 
 public class GTKApplication extends Window {

@@ -18,6 +18,11 @@
 
 package com.playonlinux.framework;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+import static java.lang.String.format;
+
+import java.io.File;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
@@ -31,11 +36,6 @@ import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;
-
-import java.io.File;
-
-import static com.playonlinux.core.lang.Localisation.translate;
-import static java.lang.String.format;
 
 @Scan
 @ScriptClass

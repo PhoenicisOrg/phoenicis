@@ -18,10 +18,10 @@
 
 package com.playonlinux.core.python;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Jython 2.5.3 does not handle json library. This class is a workaround

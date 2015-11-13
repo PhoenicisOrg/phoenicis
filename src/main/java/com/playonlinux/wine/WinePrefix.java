@@ -18,6 +18,16 @@
 
 package com.playonlinux.wine;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.injection.Inject;
@@ -29,18 +39,14 @@ import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
-import com.playonlinux.wine.configurations.*;
+import com.playonlinux.wine.configurations.DefaultWinePrefixDisplayConfiguration;
+import com.playonlinux.wine.configurations.DefaultWinePrefixInputConfiguration;
+import com.playonlinux.wine.configurations.RegistryWinePrefixDisplayConfiguration;
+import com.playonlinux.wine.configurations.RegistryWinePrefixInputConfiguration;
+import com.playonlinux.wine.configurations.WinePrefixDisplayConfiguration;
+import com.playonlinux.wine.configurations.WinePrefixInputConfiguration;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Represents a wineprefix

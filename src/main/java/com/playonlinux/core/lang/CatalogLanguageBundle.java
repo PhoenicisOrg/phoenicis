@@ -18,9 +18,10 @@
 
 package com.playonlinux.core.lang;
 
-import com.google.common.base.Preconditions;
 import org.fedorahosted.tennera.jgettext.Catalog;
 import org.fedorahosted.tennera.jgettext.Message;
+
+import com.google.common.base.Preconditions;
 
 /**
  * Language bundle from gnu gettext PO files using jgettext.
