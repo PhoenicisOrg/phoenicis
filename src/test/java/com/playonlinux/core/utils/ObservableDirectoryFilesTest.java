@@ -18,6 +18,22 @@
 
 package com.playonlinux.core.utils;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.AbstractConfiguration;
@@ -28,17 +44,6 @@ import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.io.File;
-import java.io.IOException;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
 
 @Scan
 public class ObservableDirectoryFilesTest {

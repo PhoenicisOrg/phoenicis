@@ -18,9 +18,9 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.core.utils.ReplacableProperties;
-
 import java.io.IOException;
+
+import com.playonlinux.core.utils.ReplacableProperties;
 
 public class MockPlayOnLinuxContext extends PlayOnLinuxContext {
 

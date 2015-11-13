@@ -18,10 +18,10 @@
 
 package com.playonlinux.framework.templates;
 
+import java.util.List;
+
 import com.playonlinux.core.python.PythonAttribute;
 import com.playonlinux.core.scripts.ScriptFailureException;
-
-import java.util.List;
 
 public abstract class MockWineSteamInstaller extends Installer {
     @PythonAttribute

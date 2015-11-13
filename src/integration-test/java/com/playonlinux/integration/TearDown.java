@@ -18,11 +18,10 @@
 
 package com.playonlinux.integration;
 
-import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
+import java.io.IOException;
+
 import junit.framework.Test;
 import junit.framework.TestResult;
-
-import java.io.IOException;
 
 public class TearDown implements Test {
     PlayOnLinuxIntegrationRunner integrationRunner;

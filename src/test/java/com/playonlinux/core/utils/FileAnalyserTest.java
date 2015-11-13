@@ -18,14 +18,15 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import com.playonlinux.app.PlayOnLinuxException;
 
 
 public class FileAnalyserTest {

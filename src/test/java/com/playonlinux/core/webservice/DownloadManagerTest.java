@@ -19,13 +19,15 @@
 package com.playonlinux.core.webservice;
 
 
-import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 import java.util.function.Function;
 
-import static org.mockito.Mockito.*;
+import org.junit.Test;
 
 public class DownloadManagerTest {
 

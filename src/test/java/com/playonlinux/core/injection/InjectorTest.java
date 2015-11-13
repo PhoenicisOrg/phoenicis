@@ -18,11 +18,11 @@
 
 package com.playonlinux.core.injection;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 @Scan
 public class InjectorTest extends AbstractConfiguration {

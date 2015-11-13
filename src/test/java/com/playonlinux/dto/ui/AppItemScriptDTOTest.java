@@ -20,9 +20,10 @@ package com.playonlinux.dto.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import com.playonlinux.apps.entities.ScriptEntity;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.playonlinux.apps.entities.ScriptEntity;
 
 public class AppItemScriptDTOTest {
 

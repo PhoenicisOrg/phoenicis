@@ -20,9 +20,10 @@ package com.playonlinux.dto.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import com.playonlinux.apps.entities.AppsCategoryEntity;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.playonlinux.apps.entities.AppsCategoryEntity;
 
 public class AppsCategoryEntityTest {
 

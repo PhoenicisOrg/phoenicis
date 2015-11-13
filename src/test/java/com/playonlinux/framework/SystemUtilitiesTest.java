@@ -18,13 +18,13 @@
 
 package com.playonlinux.framework;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class SystemUtilitiesTest {
     @Test

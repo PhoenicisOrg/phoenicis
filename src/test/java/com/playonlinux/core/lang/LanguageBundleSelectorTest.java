@@ -18,10 +18,11 @@
 
 package com.playonlinux.core.lang;
 
-import java.util.Locale;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import java.util.Locale;
+
+import org.junit.Test;
 
 public class LanguageBundleSelectorTest {
     @Test

@@ -18,16 +18,16 @@
 
 package com.playonlinux.integration;
 
-import com.playonlinux.configuration.IntegrationContextConfig;
+import java.io.File;
+import java.io.IOException;
+
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.configuration.IntegrationContextConfig;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.utils.Files;
-
-import java.io.File;
-import java.io.IOException;
 
 @Scan
 public class PlayOnLinuxIntegrationRunner {

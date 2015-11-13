@@ -18,14 +18,14 @@
 
 package com.playonlinux.core.scripts;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
-import static org.junit.Assert.*;
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class ScriptTest {
 

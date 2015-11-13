@@ -18,14 +18,16 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.*;
-import java.net.URL;
-import java.util.MissingFormatArgumentException;
-
-import static org.junit.Assert.*;
 
 public class HtmlTemplateTest {
 

@@ -18,10 +18,12 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.app.PlayOnLinuxException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.playonlinux.app.PlayOnLinuxException;
 
 
 public class OperatingSystemTest {

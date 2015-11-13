@@ -18,27 +18,27 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.ui.api.Controller;
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.lang.FallbackLanguageBundle;
-import com.playonlinux.core.lang.LanguageBundle;
-import com.playonlinux.core.injection.Bean;
-import com.playonlinux.core.injection.InjectionException;
-import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
-import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.injection.AbstractConfiguration;
+import com.playonlinux.core.injection.Bean;
+import com.playonlinux.core.injection.InjectionException;
+import com.playonlinux.core.lang.FallbackLanguageBundle;
+import com.playonlinux.core.lang.LanguageBundle;
+import com.playonlinux.ui.api.Controller;
+import com.playonlinux.ui.impl.mockui.MockUIMessageSenderImplementation;
+import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementation;
 
 public class SetupWizardTest {
     private SetupWizard setupWizard;

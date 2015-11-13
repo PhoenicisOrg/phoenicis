@@ -18,6 +18,17 @@
 
 package com.playonlinux;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.python.core.PyStringMap;
+import org.python.core.PyType;
+import org.python.util.PythonInterpreter;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.InjectionException;
@@ -25,15 +36,6 @@ import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.integration.PlayOnLinuxIntegrationRunner;
 import com.playonlinux.integration.PythonIntegrationCase;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.python.core.*;
-import org.python.util.PythonInterpreter;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
 
 @Scan
 public class PlayOnLinuxIT {

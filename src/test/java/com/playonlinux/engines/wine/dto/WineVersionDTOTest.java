@@ -18,11 +18,9 @@
 
 package com.playonlinux.engines.wine.dto;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-
-import java.lang.ref.WeakReference;
-
-import static org.junit.Assert.*;
 
 
 public class WineVersionDTOTest {

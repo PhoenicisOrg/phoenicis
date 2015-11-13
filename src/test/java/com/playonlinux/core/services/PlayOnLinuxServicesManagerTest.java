@@ -18,15 +18,16 @@
 
 package com.playonlinux.core.services;
 
-import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
-import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
+import com.playonlinux.core.services.manager.Service;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
 
 
 public class PlayOnLinuxServicesManagerTest {
