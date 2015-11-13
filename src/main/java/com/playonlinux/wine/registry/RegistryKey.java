@@ -24,6 +24,11 @@ import java.util.List;
 public class RegistryKey extends AbstractRegistryNode {
     private final List<AbstractRegistryNode> children;
 
+    public RegistryKey(String name) {
+        super(name);
+        children = new ArrayList<>();
+    }
+    
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -47,11 +52,6 @@ public class RegistryKey extends AbstractRegistryNode {
         }
 
         return "\n"+"["+String.join("\\", registryPath)+"]";
-    }
-
-    public RegistryKey(String name) {
-        super(name);
-        children = new ArrayList<>();
     }
 
     public void addChild(AbstractRegistryNode newChildren) {

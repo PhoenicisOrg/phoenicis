@@ -23,14 +23,14 @@ public abstract class AbstractRegistryNode {
 
     RegistryKey parent;
 
+    AbstractRegistryNode(String name) {
+        this.name = name;
+    }
+    
     @Override
     public abstract String toString();
 
     public abstract String toRegString();
-
-    AbstractRegistryNode(String name) {
-        this.name = name;
-    }
 
     void setParent(RegistryKey parent) {
         this.parent = parent;
