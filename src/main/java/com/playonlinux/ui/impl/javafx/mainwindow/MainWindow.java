@@ -25,9 +25,9 @@ import com.playonlinux.ui.impl.javafx.mainwindow.apps.ViewApps;
 import com.playonlinux.ui.impl.javafx.mainwindow.containers.ViewContainers;
 import com.playonlinux.ui.impl.javafx.mainwindow.engines.ViewEngines;
 import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
+import com.playonlinux.ui.impl.javafx.mainwindow.settings.ViewSettings;
 import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -45,6 +45,8 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     private ViewApps apps;
     private ViewEngines engines;
     private ViewContainers containers;
+    private ViewSettings settings;
+    private PlayOnLinuxScene scene;
 
     private VBox rootPane;
 
@@ -55,8 +57,9 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         apps = new ViewApps(this);
         engines = new ViewEngines(this);
         containers = new ViewContainers(this);
+        settings = new ViewSettings(this);
 
-        Scene scene = new PlayOnLinuxScene(rootPane);
+        scene = new PlayOnLinuxScene(rootPane);
         headerPane = new MainWindowHeader();
 
         getLibrary();
@@ -92,6 +95,7 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         this.headerPane.setAppsEvent(evt -> goTo(apps));
         this.headerPane.setEnginesEvent(evt -> goTo(engines));
         this.headerPane.setContainersEvent(evt -> goTo(containers));
+        this.headerPane.setSettingsEvent(evt -> goTo(settings));
         library.setUpEvents();
         apps.setUpEvents();
         engines.setUpEvents();
@@ -100,6 +104,10 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     public void goTo(Node view) {
         rootPane.getChildren().clear();
         rootPane.getChildren().addAll(headerPane, view);
+    }
+
+    public PlayOnLinuxScene getPlayOnLinuxScene() {
+        return scene;
     }
 
 

@@ -92,5 +92,8 @@ public class MainWindowHeader extends GridPane {
     public void setContainersEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(containers, eventHandler);
     }
+    public void setSettingsEvent(EventHandler<MouseEvent> eventHandler) {
+        setLinkEvents(settings, eventHandler);
+    }
 
 }
