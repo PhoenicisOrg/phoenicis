@@ -70,45 +70,45 @@ public class ProcessPipe implements Service {
      *            the InputStream where stdin will take data from
      */
     public ProcessPipe(Process process, OutputStream outputStream, OutputStream errorStream, InputStream inputStream) {
-	this.process = process;
-	this.redirectOutputStream = outputStream;
-	this.redirectErrorStream = errorStream;
-	this.redirectInputStream = inputStream;
+        this.process = process;
+        this.redirectOutputStream = outputStream;
+        this.redirectErrorStream = errorStream;
+        this.redirectInputStream = inputStream;
     }
 
     @Override
     public void shutdown() {
-	if (task != null) {
-	    task.cancel(true);
-	}
+        if (task != null) {
+            task.cancel(true);
+        }
 
-	this.running.setValue(false);
-	try {
-	    this.redirectOutputStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
-	}
+        this.running.setValue(false);
+        try {
+            this.redirectOutputStream.close();
+        } catch (IOException e) {
+            LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
+        }
 
-	try {
-	    this.redirectInputStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
-	}
+        try {
+            this.redirectInputStream.close();
+        } catch (IOException e) {
+            LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
+        }
 
-	try {
-	    this.redirectErrorStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
-	}
+        try {
+            this.redirectErrorStream.close();
+        } catch (IOException e) {
+            LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
+        }
     }
 
     @Override
     public void init() {
-	this.task = executorService.submit(new ProcessPipeBackgroundThread(this, running, process, redirectInputStream,
-		redirectErrorStream, redirectOutputStream));
+        this.task = executorService.submit(new ProcessPipeBackgroundThread(this, running, process, redirectInputStream,
+                redirectErrorStream, redirectOutputStream));
     }
 
     void stop() {
-	serviceManager.unregister(this);
+        serviceManager.unregister(this);
     }
 }

@@ -31,8 +31,7 @@ public class ScriptLogger extends FileLogger {
     static PlayOnLinuxContext playOnLinuxContext;
 
     ScriptLogger(String logContext) throws IOException {
-        super(new File(playOnLinuxContext.getProperty("application.user.logs"), logContext+".log"), true);
+        super(new File(playOnLinuxContext.getProperty("application.user.logs"), logContext + ".log"), true);
     }
-
 
 }

@@ -18,7 +18,6 @@
 
 package com.playonlinux.engines.wine;
 
-
 import java.net.URL;
 import java.util.List;
 
@@ -26,10 +25,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.playonlinux.core.webservice.Webservice;
 import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 
-
 public class WineversionsSourceWebserviceDefaultImplementation extends Webservice<WineVersionDistributionWebDTO>
         implements WineVersionSource {
-
 
     public WineversionsSourceWebserviceDefaultImplementation(URL url) {
         super(url);
@@ -41,6 +38,5 @@ public class WineversionsSourceWebserviceDefaultImplementation extends Webservic
 
         };
     }
-
 
 }

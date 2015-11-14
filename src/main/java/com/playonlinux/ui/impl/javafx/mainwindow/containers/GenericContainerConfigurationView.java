@@ -54,21 +54,14 @@ public class GenericContainerConfigurationView extends ContainerConfigurationVie
         informationContentPane.add(new TextWithStyle(translate("Path:"), "captionTitle"), 0, 1);
         informationContentPane.add(new Text(containerEntity.getPath()), 1, 1);
 
-        informationContentPane.getRowConstraints().addAll(
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.)
-        );
+        informationContentPane.getRowConstraints().addAll(new RowConstraints(20.), new RowConstraints(20.),
+                new RowConstraints(20.));
 
-        informationContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(20),
-                new ColumnConstraintsWithPercentage(80)
-        );
+        informationContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(20),
+                new ColumnConstraintsWithPercentage(80));
 
         informationPane.getChildren().addAll(informationContentPane);
         informationTab.setContent(informationPane);
         return informationTab;
     }
 }
-
-

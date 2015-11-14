@@ -65,7 +65,7 @@ class ContainerConfigurationMiniWizard implements WineWizard {
     @Override
     public void close() {
         progressControl.hideToolbar();
-        for(SetupWizardComponent setupWizardComponent: setupWizardComponents) {
+        for (SetupWizardComponent setupWizardComponent : setupWizardComponents) {
             setupWizardComponent.close();
         }
     }

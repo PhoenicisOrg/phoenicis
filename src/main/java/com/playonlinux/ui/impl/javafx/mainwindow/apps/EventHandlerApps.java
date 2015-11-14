@@ -30,7 +30,6 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
 
-
 @Scan
 final class EventHandlerApps implements UIEventHandler {
     @Inject
@@ -52,7 +51,8 @@ final class EventHandlerApps implements UIEventHandler {
         mainEventHandler.refreshAvailableInstallers();
     }
 
-    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptId) throws AppsManagerException {
+    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptId)
+            throws AppsManagerException {
         return mainEventHandler.getInstallerDownloaderEntityProvider(scriptId);
     }
 

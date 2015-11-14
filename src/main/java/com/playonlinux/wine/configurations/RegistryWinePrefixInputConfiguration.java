@@ -33,8 +33,9 @@ public class RegistryWinePrefixInputConfiguration implements WinePrefixInputConf
 
     @Override
     public MouseWarpOverride getMouseWarpOverride() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "DirectInput", "MouseWarpOverride");
-        if(registryChild instanceof RegistryValue) {
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "DirectInput",
+                "MouseWarpOverride");
+        if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<StringValueType>) registryChild).getText()) {
                 case "enable":
                     return MouseWarpOverride.ENABLED;

@@ -23,11 +23,10 @@ import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import javafx.scene.control.ProgressIndicator;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
-    public StepRepresentationSpin(SetupWindowJavaFXImplementation parent, InterrupterAsynchroneousMessage messageWaitingForResponse,
-                                  String textToShow) {
+    public StepRepresentationSpin(SetupWindowJavaFXImplementation parent,
+            InterrupterAsynchroneousMessage messageWaitingForResponse, String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
     }
-
 
     @Override
     protected void drawStepContent() {

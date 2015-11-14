@@ -34,7 +34,6 @@ public class StaticSidebarMenu extends ActionMenu {
     private ActionMenuItem installMenuItem;
     private ActionMenuItem runScriptMenuItem;
 
-
     public StaticSidebarMenu(MainWindow mainWindow) {
         super(mainWindow.getSideBar(), "PlayOnLinux");
         this.mainWindow = mainWindow;
@@ -53,9 +52,8 @@ public class StaticSidebarMenu extends ActionMenu {
         runScriptMenuItem.clicked.connect(this, "runScriptMenuItemClicked()");
     }
 
-
     private void installMenuItemClicked() {
-        //TODO: link to Install-Window
+        // TODO: link to Install-Window
     }
 
     private void runScriptMenuItemClicked() {

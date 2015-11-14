@@ -59,15 +59,11 @@ public class PythonInstallerTest {
         temporaryScript.deleteOnExit();
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
-        fileOutputStream.write(("#!/usr/bin/env/python\n" +
-                "from com.playonlinux.framework.templates import Installer\n" +
-                "\n" +
-                "class PlayOnLinuxBashInterpreter(Installer):\n" +
-                "    def main(self):\n" +
-                "        pass\n" +
+        fileOutputStream.write(("#!/usr/bin/env/python\n"
+                + "from com.playonlinux.framework.templates import Installer\n" + "\n"
+                + "class PlayOnLinuxBashInterpreter(Installer):\n" + "    def main(self):\n" + "        pass\n" +
 
-                "    def title(self):\n" +
-                "        return \"Mock Log Context\"\n").getBytes());
+        "    def title(self):\n" + "        return \"Mock Log Context\"\n").getBytes());
 
         PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
@@ -76,20 +72,17 @@ public class PythonInstallerTest {
         assertEquals("Mock Log Context", pythonInstaller.extractLogContext());
     }
 
-
     @Test
-    public void testPythonInstaller_DefineLogContextWithAttribute_ContextIsSet() throws IOException, PlayOnLinuxException {
+    public void testPythonInstaller_DefineLogContextWithAttribute_ContextIsSet()
+            throws IOException, PlayOnLinuxException {
         File temporaryScript = File.createTempFile("testDefineLogContext", "py");
         temporaryScript.deleteOnExit();
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
-        fileOutputStream.write(("#!/usr/bin/env/python\n" +
-                "from com.playonlinux.framework.templates import Installer\n" +
-                "\n" +
-                "class PlayOnLinuxBashInterpreter(Installer):\n" +
-                "   title = \"Mock Log Context 2\"\n" +
-                "   def main(self):\n" +
-                "        pass\n").getBytes());
+        fileOutputStream
+                .write(("#!/usr/bin/env/python\n" + "from com.playonlinux.framework.templates import Installer\n" + "\n"
+                        + "class PlayOnLinuxBashInterpreter(Installer):\n" + "   title = \"Mock Log Context 2\"\n"
+                        + "   def main(self):\n" + "        pass\n").getBytes());
 
         PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
@@ -98,13 +91,13 @@ public class PythonInstallerTest {
         assertEquals("Mock Log Context 2", pythonInstaller.extractLogContext());
     }
 
-
     @Test
-    public void testPythonInstaller_DefineVariableAttributes_AttributesAreSet() throws IOException, PlayOnLinuxException {
+    public void testPythonInstaller_DefineVariableAttributes_AttributesAreSet()
+            throws IOException, PlayOnLinuxException {
         File temporaryOutput = new File("/tmp/testPythonInstaller_DefineVariableAttributes.log");
         temporaryOutput.deleteOnExit();
 
-        if(temporaryOutput.exists()) {
+        if (temporaryOutput.exists()) {
             temporaryOutput.delete();
         }
 
@@ -113,14 +106,11 @@ public class PythonInstallerTest {
 
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryScript);
 
-        fileOutputStream.write(("from com.playonlinux.framework.templates import MockWineSteamInstaller\n" +
-                "\n" +
-                "class Example(MockWineSteamInstaller):\n" +
-                "    title = \"testPythonInstaller_DefineVariableAttributes\"\n" +
-                "    prefix = \"Prefix\"\n" +
-                "    wineversion = \"1.7.34\"\n" +
-                "    steamId = 130\n" +
-                "    packages = [\"package1\", \"package2\"]\n").getBytes());
+        fileOutputStream.write(("from com.playonlinux.framework.templates import MockWineSteamInstaller\n" + "\n"
+                + "class Example(MockWineSteamInstaller):\n"
+                + "    title = \"testPythonInstaller_DefineVariableAttributes\"\n" + "    prefix = \"Prefix\"\n"
+                + "    wineversion = \"1.7.34\"\n" + "    steamId = 130\n"
+                + "    packages = [\"package1\", \"package2\"]\n").getBytes());
 
         PythonInterpreter interpreter = defaultJythonInterpreterFactory.createInstance();
         interpreter.execfile(temporaryScript.getAbsolutePath());
@@ -128,9 +118,10 @@ public class PythonInstallerTest {
 
         pythonInstaller.exec();
 
-        assertTrue(FileUtils.readFileToString(temporaryOutput).contains("Implementation has to be done, but we have access to prefix (Prefix), " +
-                "wineversion (1.7.34), steamId (130) and packages (['package1', 'package2'])." +
-                " First package (to check that we have a list: package1\n"));
+        assertTrue(FileUtils.readFileToString(temporaryOutput)
+                .contains("Implementation has to be done, but we have access to prefix (Prefix), "
+                        + "wineversion (1.7.34), steamId (130) and packages (['package1', 'package2'])."
+                        + " First package (to check that we have a list: package1\n"));
     }
 
     @AfterClass

@@ -18,7 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
-
 import javafx.scene.layout.VBox;
 
 public class LeftSideBar extends VBox {

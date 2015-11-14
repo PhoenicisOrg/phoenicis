@@ -41,6 +41,7 @@ public class ReplacablePropertiesTest {
     public String getProperty(String key) {
         return this.properties.getProperty(key);
     }
+
     @Test
     public void testGetProperty_TestSimpleValue_CorrectValueIsReturned() {
         assertEquals("test", getProperty("property1"));

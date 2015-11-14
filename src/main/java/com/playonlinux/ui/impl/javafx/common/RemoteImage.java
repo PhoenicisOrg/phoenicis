@@ -35,8 +35,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 /**
- * This class has been created to facilitate the integration of remote images inside PlayOnLinux app
- * In general, we should avoid adding such mechanism in the UI implementation
+ * This class has been created to facilitate the integration of remote images
+ * inside PlayOnLinux app In general, we should avoid adding such mechanism in
+ * the UI implementation
  */
 public class RemoteImage extends VBox {
 
@@ -53,18 +54,14 @@ public class RemoteImage extends VBox {
         this.downloadManager = serviceManager.getService(DownloadManager.class);
     }
 
-
     public void download() {
-        downloadManager.submit(imageUrl,
-                bytes -> {
-                    handleDownloadSuccess(bytes);
-                    return null;
-                },
-                e -> {
-                    handleError();
-                    return null;
-                }
-        );
+        downloadManager.submit(imageUrl, bytes -> {
+            handleDownloadSuccess(bytes);
+            return null;
+        } , e -> {
+            handleError();
+            return null;
+        });
     }
 
     private void handleError() {
@@ -72,7 +69,7 @@ public class RemoteImage extends VBox {
     }
 
     public void handleDownloadSuccess(byte[] content) {
-        try(InputStream inputStream = new ByteArrayInputStream(content)) {
+        try (InputStream inputStream = new ByteArrayInputStream(content)) {
             Image downloadedImage = new Image(inputStream);
             ImageView downloadedImageView = new ImageView(downloadedImage);
             Platform.runLater(() -> {
@@ -81,9 +78,7 @@ public class RemoteImage extends VBox {
                 double fitWidth;
                 double fitHeight;
 
-
-                if (downloadedImage.getWidth() / downloadedImage.getHeight()
-                        > this.getWidth() / this.getHeight()) {
+                if (downloadedImage.getWidth() / downloadedImage.getHeight() > this.getWidth() / this.getHeight()) {
                     fitWidth = this.getCalculationWidth();
                     fitHeight = downloadedImage.getHeight() * (this.getCalculationWidth() / downloadedImage.getWidth());
                 } else {
@@ -106,7 +101,7 @@ public class RemoteImage extends VBox {
     }
 
     public double getCalculationWidth() {
-        if(this.getMaxWidth() == -1) {
+        if (this.getMaxWidth() == -1) {
             return this.getWidth();
         } else {
             return this.getMaxWidth();
@@ -114,7 +109,7 @@ public class RemoteImage extends VBox {
     }
 
     public double getCalculationHeight() {
-        if(this.getMaxHeight() == -1) {
+        if (this.getMaxHeight() == -1) {
             return this.getHeight();
         } else {
             return this.getMaxHeight();

@@ -32,8 +32,8 @@ import com.playonlinux.library.LibraryException;
 import com.playonlinux.library.ShortcutCreator;
 
 /**
- * Wine shortcut creator framework tool
- * TODO: Handle icons, arguments, categories, desktop creation, etc...
+ * Wine shortcut creator framework tool TODO: Handle icons, arguments,
+ * categories, desktop creation, etc...
  */
 @Scan
 @ScriptClass
@@ -89,26 +89,24 @@ public class WineShortcut implements SetupWizardComponent {
         findWorkingDirectoryIfNotSet();
 
         final ShortcutCreator shortcutCreator = new ShortcutCreator();
-        if(name == null) {
+        if (name == null) {
             throw new ScriptFailureException("You must provide a valid name for your shortcut. Aborting");
         }
         try {
-            shortcutCreator.createShortcut(
-                    new File(playOnLinuxContext.makeShortcutsPath(), name),
-                    wineShortcutBuilder.create()
-            );
+            shortcutCreator.createShortcut(new File(playOnLinuxContext.makeShortcutsPath(), name),
+                    wineShortcutBuilder.create());
         } catch (LibraryException e) {
             throw new ScriptFailureException(e);
         }
     }
 
     private void findWorkingDirectoryIfNotSet() throws CancelException {
-        if(wineShortcutBuilder.getWorkingDirectory() == null
-                && wineShortcutBuilder.getWinePrefix() != null
+        if (wineShortcutBuilder.getWorkingDirectory() == null && wineShortcutBuilder.getWinePrefix() != null
                 && wineShortcutBuilder.getExecutableName() != null) {
 
-            for (File executable : Wine.wizard(setupWizard).selectPrefix(wineShortcutBuilder.getWinePrefix()).findExecutables()) {
-                if(executable.getName().equalsIgnoreCase(wineShortcutBuilder.getExecutableName())) {
+            for (File executable : Wine.wizard(setupWizard).selectPrefix(wineShortcutBuilder.getWinePrefix())
+                    .findExecutables()) {
+                if (executable.getName().equalsIgnoreCase(wineShortcutBuilder.getExecutableName())) {
                     wineShortcutBuilder.withWorkingDirectory(executable.getParent());
                     wineShortcutBuilder.withExecutableName(executable.getName());
                     break;

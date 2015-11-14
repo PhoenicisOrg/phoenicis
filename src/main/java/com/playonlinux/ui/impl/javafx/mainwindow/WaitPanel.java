@@ -28,7 +28,6 @@ public class WaitPanel extends HBox {
         progressIndicator.setPrefWidth(64);
         progressIndicator.setPrefHeight(64);
 
-
         this.getStyleClass().add("rightPane");
 
         this.getChildren().add(progressIndicator);

@@ -22,7 +22,7 @@ import com.playonlinux.core.messages.Message;
 import com.playonlinux.core.messages.SynchronousMessage;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.UIMessageSender;
-import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.core.QCoreApplication;
 
 /**
  * Implementation of the UIMessageSender for the Qt-GUI of POL.
@@ -37,11 +37,11 @@ public class UIMessageSenderQtImplementation<R> implements UIMessageSender<R> {
 
     @Override
     public void synchronousSend(Message message) {
-        QApplication.invokeAndWait(message);
+        QCoreApplication.invokeAndWait(message);
     }
 
     @Override
     public void asynchronousSend(Message message) {
-        QApplication.invokeLater(message);
+        QCoreApplication.invokeLater(message);
     }
 }

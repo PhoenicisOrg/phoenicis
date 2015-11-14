@@ -33,8 +33,7 @@ public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEn
 
     @Override
     public WinePrefixContainerEntity createEntity() {
-        return new WinePrefixContainerEntity.Builder()
-                .withName(this.containerPath.getName())
+        return new WinePrefixContainerEntity.Builder().withName(this.containerPath.getName())
                 .withPath(this.containerPath.getAbsolutePath())
                 .withWineArchitecture(this.underlyingWinePrefix.fetchArchitecture().name())
                 .withWineDistribution(this.underlyingWinePrefix.fetchDistribution().getDistributionCode())
@@ -42,15 +41,15 @@ public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEn
                 .withAutomaticallyUpdated(this.underlyingWinePrefix.isAutomaticallyUpdated())
                 .withGLSL(this.underlyingWinePrefix.getDisplayConfiguration().getGLSL())
                 .withMultisampling(this.underlyingWinePrefix.getDisplayConfiguration().getMultisampling())
-                .withOffscreenRenderingMode(this.underlyingWinePrefix.getDisplayConfiguration().getOffscreenRenderingMode())
+                .withOffscreenRenderingMode(
+                        this.underlyingWinePrefix.getDisplayConfiguration().getOffscreenRenderingMode())
                 .withStrictDrawOrdering(this.underlyingWinePrefix.getDisplayConfiguration().getStrictDrawOrdering())
                 .withRenderTargetModeLock(this.underlyingWinePrefix.getDisplayConfiguration().getRenderTargetModeLock())
                 .withVideoMemorySize(this.underlyingWinePrefix.getDisplayConfiguration().getVideoMemorySize())
                 .withDirectDrawRenderer(this.underlyingWinePrefix.getDisplayConfiguration().getDirectDrawRenderer())
                 .withAlwaysOffscreen(this.underlyingWinePrefix.getDisplayConfiguration().getAlwaysOffscreen())
                 .withMouseWarpOverride(this.underlyingWinePrefix.getInputConfiguration().getMouseWarpOverride())
-                .withWinePrefixDirectory(this.underlyingWinePrefix.getWinePrefixDirectory())
-                .build();
+                .withWinePrefixDirectory(this.underlyingWinePrefix.getWinePrefixDirectory()).build();
     }
 
 }

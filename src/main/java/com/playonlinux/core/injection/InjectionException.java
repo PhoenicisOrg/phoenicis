@@ -19,6 +19,10 @@
 package com.playonlinux.core.injection;
 
 public class InjectionException extends Exception {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5869124568189664088L;
     private final String error;
 
     public InjectionException(String error, Throwable e) {

@@ -35,11 +35,10 @@ public class InstalledApplicationEntityTest {
 
     @Before
     public void setUp() throws MalformedURLException {
-        this.installedApplicationEntity = new InstalledApplicationEntity.Builder()
-                .withName("Name")
-                .withIcon(new URL("file://"+new File("/tmp/icon").getAbsolutePath()))
-                .build();
+        this.installedApplicationEntity = new InstalledApplicationEntity.Builder().withName("Name")
+                .withIcon(new URL("file://" + new File("/tmp/icon").getAbsolutePath())).build();
     }
+
     @Test
     public void testShortcutDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", installedApplicationEntity.getName());

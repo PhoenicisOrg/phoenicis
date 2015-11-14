@@ -34,13 +34,13 @@ public class ControllerQtImplementation implements Controller {
     public void startApplication() {
         QApplication.initialize(ARGS);
 
-        MainWindow w = new MainWindow();
+        new MainWindow();
 
         QApplication.execStatic();
         QApplication.shutdown();
     }
 
-    //FIXME
+    // FIXME
     @Override
     public SetupWindow createSetupWindowGUIInstance(String title) {
         return null;
@@ -50,6 +50,5 @@ public class ControllerQtImplementation implements Controller {
     public <T> UIMessageSender<T> createUIMessageSender() {
         return new UIMessageSenderQtImplementation<>();
     }
-
 
 }

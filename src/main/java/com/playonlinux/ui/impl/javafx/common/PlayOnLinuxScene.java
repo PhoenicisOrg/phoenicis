@@ -36,7 +36,7 @@ public class PlayOnLinuxScene extends Scene {
     }
 
     public String getTheme(Themes theme) {
-        switch(theme) {
+        switch (theme) {
             case DEFAULT: {
                 return DEFAULT_THEME;
             }

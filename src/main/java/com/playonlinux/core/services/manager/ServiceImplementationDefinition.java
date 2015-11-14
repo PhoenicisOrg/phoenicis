@@ -19,30 +19,27 @@
 package com.playonlinux.core.services.manager;
 
 /**
- * Represents the definition of the implementation of a given service.
- * This class holds the interface name of the services and the chosen implementation
+ * Represents the definition of the implementation of a given service. This
+ * class holds the interface name of the services and the chosen implementation
  */
 public class ServiceImplementationDefinition {
     private final Class<? extends Service> interfaces;
 
     private final Class<? extends Service> implementation;
 
-    public ServiceImplementationDefinition(
-            Class<? extends Service> interfaces,
-            Class<? extends Service> implementation)
-    {
-        if(!interfaces.isAssignableFrom(implementation)) {
-            throw new IllegalArgumentException(String.format("%s is not an assignable form of %s",
-                    interfaces.getName(),
+    public ServiceImplementationDefinition(Class<? extends Service> interfaces,
+            Class<? extends Service> implementation) {
+        if (!interfaces.isAssignableFrom(implementation)) {
+            throw new IllegalArgumentException(String.format("%s is not an assignable form of %s", interfaces.getName(),
                     implementation.getName()));
         }
         this.interfaces = interfaces;
         this.implementation = implementation;
     }
 
-
     /**
      * Getter
+     * 
      * @return The interface that needs to be implemented
      */
     public Class<? extends Service> getImplementation() {
@@ -51,6 +48,7 @@ public class ServiceImplementationDefinition {
 
     /**
      * Getter
+     * 
      * @return The actual implementation of the interface
      */
     public Class<? extends Service> getInterfaces() {

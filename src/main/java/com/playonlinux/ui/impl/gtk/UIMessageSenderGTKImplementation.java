@@ -28,7 +28,7 @@ import com.playonlinux.core.messages.SynchronousMessage;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.UIMessageSender;
 
-public class UIMessageSenderGTKImplementation<R> implements UIMessageSender<R>  {
+public class UIMessageSenderGTKImplementation<R> implements UIMessageSender<R> {
     private static final Logger LOGGER = Logger.getLogger(UIMessageSenderGTKImplementation.class);
 
     @Override

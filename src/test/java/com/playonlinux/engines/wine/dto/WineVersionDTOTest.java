@@ -22,19 +22,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-
 public class WineVersionDTOTest {
-    final WineVersionDTO wineVersionDTO = new WineVersionDTO.Builder()
-            .withVersion("Version")
-            .withGeckoFile("GeckoFile")
-            .withGeckoMd5("GeckoMD5")
-            .withGeckoUrl("GeckoUrl")
-            .withMonoFile("GeckoFile")
-            .withMonoFile("MonoFile")
-            .withMonoMd5("MonoMD5")
-            .withSha1sum("Sha1Sum")
-            .withMonoUrl("MonoUrl")
-            .withUrl("URL").build();
+    final WineVersionDTO wineVersionDTO = new WineVersionDTO.Builder().withVersion("Version").withGeckoFile("GeckoFile")
+            .withGeckoMd5("GeckoMD5").withGeckoUrl("GeckoUrl").withMonoFile("GeckoFile").withMonoFile("MonoFile")
+            .withMonoMd5("MonoMD5").withSha1sum("Sha1Sum").withMonoUrl("MonoUrl").withUrl("URL").build();
 
     @Test
     public void testGetVersion() {

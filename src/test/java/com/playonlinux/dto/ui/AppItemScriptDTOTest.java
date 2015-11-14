@@ -31,12 +31,9 @@ public class AppItemScriptDTOTest {
 
     @Before
     public void setUp() {
-        this.scriptEntity = new ScriptEntity.Builder()
-                .withName("Name")
-                .withId(13)
-                .build();
+        this.scriptEntity = new ScriptEntity.Builder().withName("Name").withId(13).build();
     }
-    
+
     @Test
     public void testAppsItemScriptDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", scriptEntity.getName());

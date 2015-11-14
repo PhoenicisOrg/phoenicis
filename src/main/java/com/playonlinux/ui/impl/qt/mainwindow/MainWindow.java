@@ -53,7 +53,6 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
 
     private ShortcutList shortcutList;
 
-
     public MainWindow() {
         eventHandler = new MainWindowEventHandler(this);
 
@@ -63,7 +62,6 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         eventHandler.init();
         this.show();
     }
-
 
     private void setupUi() {
         setStyleSheet(ResourceHelper.getStyleSheet(getClass(), "style.css"));
@@ -96,14 +94,13 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         setWindowTitle(translate("PlayOnLinux"));
     }
 
-
     public MainWindowEventHandler getEventHandler() {
         return eventHandler;
     }
 
-
     /* COMPONENT GETTERS */
-    //grant access to ui components for the MainWindowEventHandler within the mainwindow namespace only
+    // grant access to ui components for the MainWindowEventHandler within the
+    // mainwindow namespace only
     protected MenuBar getMenuBar() {
         return menuBar;
     }
@@ -123,9 +120,6 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     protected ShortcutList getShortcutList() {
         return shortcutList;
     }
-
-
-
 
     /* EVENTS */
 

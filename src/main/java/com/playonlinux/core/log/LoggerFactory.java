@@ -36,12 +36,15 @@ public class LoggerFactory {
 
     /**
      * Get a script logger
-     * @param logContext (usually the name of the script)
+     * 
+     * @param logContext
+     *            (usually the name of the script)
      * @return the logger (an outputstream)
-     * @throws IOException if the file cannot be opened for any reason
+     * @throws IOException
+     *             if the file cannot be opened for any reason
      */
     public synchronized ScriptLogger getScriptLogger(String logContext) throws IOException {
-        if(!scriptLoggers.containsKey(logContext)) {
+        if (!scriptLoggers.containsKey(logContext)) {
             scriptLoggers.put(logContext, new ScriptLogger(logContext));
         }
         return scriptLoggers.get(logContext);
@@ -49,12 +52,15 @@ public class LoggerFactory {
 
     /**
      * Get a wineprefix logger
-     * @param prefixName the name of the prefix
+     * 
+     * @param prefixName
+     *            the name of the prefix
      * @return the logger (an outputstream)
-     * @throws IOException if the file cannot be opened for any reason
+     * @throws IOException
+     *             if the file cannot be opened for any reason
      */
     public synchronized WinePrefixLogger getWinePrefixLogger(String prefixName) throws IOException {
-        if(!winePrefixLoggers.containsKey(prefixName)) {
+        if (!winePrefixLoggers.containsKey(prefixName)) {
             winePrefixLoggers.put(prefixName, new WinePrefixLogger(prefixName));
         }
         return winePrefixLoggers.get(prefixName);
@@ -71,6 +77,5 @@ public class LoggerFactory {
         winePrefixLogger.close();
         scriptLoggers.values().remove(winePrefixLogger);
     }
-
 
 }

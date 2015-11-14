@@ -27,23 +27,33 @@ import com.playonlinux.app.PlayOnLinuxException;
  */
 public interface JythonInterpreterFactory {
     /**
-     * Creates an instance of a {@link PythonInterpreter} and keeps its reference
+     * Creates an instance of a {@link PythonInterpreter} and keeps its
+     * reference
+     * 
      * @return The instance
      */
     PythonInterpreter createInstance() throws PythonException;
 
     /**
-     * Creates an instance of a class extending {@link PythonInterpreter} and keeps its reference
-     * @param clazz The type of the class
-     * @param <T> The type of the class
+     * Creates an instance of a class extending {@link PythonInterpreter} and
+     * keeps its reference
+     * 
+     * @param clazz
+     *            The type of the class
+     * @param <T>
+     *            The type of the class
      * @return The instance
-     * @throws PlayOnLinuxException If the interpreter cannot be created
+     * @throws PlayOnLinuxException
+     *             If the interpreter cannot be created
      */
     <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PlayOnLinuxException;
 
     /**
-     * Close an interpreter and clean Jython cache to free memory if it is required
-     * @param interpreter The interpreter to close
+     * Close an interpreter and clean Jython cache to free memory if it is
+     * required
+     * 
+     * @param interpreter
+     *            The interpreter to close
      */
     void close(PythonInterpreter interpreter);
 }

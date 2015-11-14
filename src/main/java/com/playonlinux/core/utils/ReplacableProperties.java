@@ -23,6 +23,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ReplacableProperties extends Properties {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2371119797065647794L;
+
     @Override
     public String getProperty(String key) {
         String rawProperty = super.getProperty(key);
@@ -36,12 +41,12 @@ public class ReplacableProperties extends Properties {
         Matcher matcher = pattern.matcher(rawProperty);
         StringBuffer transformedPropertyStringBuffer = new StringBuffer(rawProperty.length());
 
-        while(matcher.find()) {
+        while (matcher.find()) {
             String propertyMatched = matcher.group(1);
-            if(propertyObject.getProperty(propertyMatched) != null) {
+            if (propertyObject.getProperty(propertyMatched) != null) {
                 matcher.appendReplacement(transformedPropertyStringBuffer, propertyObject.getProperty(propertyMatched));
             } else {
-                matcher.appendReplacement(transformedPropertyStringBuffer, "\\${"+propertyMatched+"}");
+                matcher.appendReplacement(transformedPropertyStringBuffer, "\\${" + propertyMatched + "}");
             }
         }
         matcher.appendTail(transformedPropertyStringBuffer);

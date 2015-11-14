@@ -36,9 +36,8 @@ import com.playonlinux.MockContextConfig;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.InjectionException;
 
-
 public class LegacyWrapperTest {
-    private AbstractConfiguration testConfigFile = new MockContextConfig();
+    private final AbstractConfiguration testConfigFile = new MockContextConfig();
 
     @Before
     public void setUp() throws InjectionException {
@@ -57,27 +56,20 @@ public class LegacyWrapperTest {
 
         final PrintWriter printWriter = new PrintWriter(scriptFile);
 
-        final String scriptContent = "#!/bin/bash\n" +
-                "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\n" +
-                "source \"$PLAYONLINUX/lib/sources\"\n" +
-                "\n" +
-                "TITLE=\"Legacy script\"\n" +
-                "echo \"Inside bash\"\n" +
-                "touch "+tmpFile.getAbsolutePath()+"\n" +
-                "\n" +
-                "exit";
+        final String scriptContent = "#!/bin/bash\n" + "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\n"
+                + "source \"$PLAYONLINUX/lib/sources\"\n" + "\n" + "TITLE=\"Legacy script\"\n"
+                + "echo \"Inside bash\"\n" + "touch " + tmpFile.getAbsolutePath() + "\n" + "\n" + "exit";
 
         printWriter.println(scriptContent);
         printWriter.close();
 
-        if(tmpFile.exists() && !tmpFile.delete()) {
+        if (tmpFile.exists() && !tmpFile.delete()) {
             fail();
         }
 
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        final ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation()
-                .withExecutor(executorService);
+        final ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation().withExecutor(executorService);
 
         final Script testScriptWrapper = scriptFactory.createInstance(scriptFile);
 

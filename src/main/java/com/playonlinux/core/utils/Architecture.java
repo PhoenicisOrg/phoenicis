@@ -22,18 +22,18 @@ package com.playonlinux.core.utils;
  * Represents an architecture
  */
 public enum Architecture {
-    I386,
-    AMD64;
+    I386, AMD64;
 
     /**
      * Find the current architecture
+     * 
      * @return The current architecture
      */
     public static Architecture fetchCurrentArchitecture() {
-        if(OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX) {
+        if (OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX) {
             return I386;
         }
-        if("x86".equals(System.getProperty("os.arch"))) {
+        if ("x86".equals(System.getProperty("os.arch"))) {
             return I386;
         } else {
             return AMD64;
@@ -50,7 +50,6 @@ public enum Architecture {
                 throw new IllegalArgumentException(String.format("Unknown architecture '%s'", architectureName));
         }
     }
-
 
     public String getNameForWinePackages() {
         switch (this) {

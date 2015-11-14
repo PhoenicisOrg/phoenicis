@@ -21,10 +21,7 @@ package com.playonlinux.wine.parameters;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public enum RenderTargetModeLock {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    READDRAW("readdraw"),
-    READTEX("readtext");
+    DEFAULT(translate("Default")), DISABLED(translate("Disabled")), READDRAW("readdraw"), READTEX("readtext");
 
     private final String translatedName;
 

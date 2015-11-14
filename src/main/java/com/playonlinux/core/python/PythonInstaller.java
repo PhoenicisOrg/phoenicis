@@ -58,7 +58,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     private PyObject getMainInstance() {
-        if(mainInstance == null) {
+        if (mainInstance == null) {
             mainInstance = this.getMainClass().__call__();
         }
         return mainInstance;
@@ -77,12 +77,12 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     private void injectAllPythonAttributes() throws ScriptFailureException {
-        Class <?> parentClass = ((PyType) ((PyType) getMainClass().getBase()).getBase()).getProxyType();
+        Class<?> parentClass = ((PyType) ((PyType) getMainClass().getBase()).getBase()).getProxyType();
 
         final Set<Field> fields = ReflectionUtils.getAllFields(parentClass,
                 ReflectionUtils.withAnnotation(PythonAttribute.class));
 
-        for(Field field: fields) {
+        for (Field field : fields) {
             field.setAccessible(true);
             try {
                 field.set(getMainInstance().__tojava__(type), this.extractAttribute(field.getName()));
@@ -93,11 +93,11 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public void exec() throws ScriptFailureException {
-        if(this.hasMain()) {
+        if (this.hasMain()) {
             String logContext = this.extractLogContext();
             ScriptLogger scriptLogger = null;
 
-            if(logContext != null) {
+            if (logContext != null) {
                 try {
                     scriptLogger = loggerFactory.getScriptLogger(logContext);
                     pythonInterpreter.setOut(scriptLogger);
@@ -110,7 +110,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
 
             try {
                 this.runMain(getMainInstance());
-            } catch(Exception e) {
+            } catch (Exception e) {
                 LOGGER.error("The script encountered an error. Rolling back");
                 try {
                     getMainInstance().invoke(ROLLBACK_METHOD_NAME);
@@ -121,7 +121,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                 }
                 throw e;
             } finally {
-                if(scriptLogger != null) {
+                if (scriptLogger != null) {
                     try {
                         loggerFactory.close(scriptLogger);
                     } catch (IOException e) {
@@ -131,8 +131,6 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
             }
         }
     }
-
-
 
     public Object extractAttribute(String attributeToExtract) {
         PyObject pyLogAttribute;

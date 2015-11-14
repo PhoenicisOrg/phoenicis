@@ -26,6 +26,7 @@ import com.playonlinux.ui.events.EventHandler;
 public interface UIEventHandler {
     /**
      * Get the main PlayOnLinux event handler
+     * 
      * @return The main event handler
      */
     EventHandler getMainEventHandler();

@@ -38,8 +38,8 @@ public class FailurePanel extends VBox {
         this.setAlignment(Pos.CENTER);
 
         Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(translate("Connecting to ${application.name} failed.\n" +
-                "Please check your connection and try again."));
+        failureNotificationLbl.setText(translate(
+                "Connecting to ${application.name} failed.\n" + "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
         ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));

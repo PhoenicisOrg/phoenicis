@@ -28,7 +28,8 @@ import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
 
 @Scan
-public abstract class ObservableDirectory<T> extends ObservableDefaultImplementation<T> implements Service, AutoCloseable{
+public abstract class ObservableDirectory<T> extends ObservableDefaultImplementation<T>
+        implements Service, AutoCloseable {
     @Inject
     static ServiceManager serviceManager;
 
@@ -36,9 +37,9 @@ public abstract class ObservableDirectory<T> extends ObservableDefaultImplementa
     protected File observedDirectory;
 
     protected void validate() {
-        if(observedDirectory.exists() && !observedDirectory.isDirectory()) {
-            throw new IllegalStateException(String.format("The file %s is not a valid directory",
-                    observedDirectory.toString()));
+        if (observedDirectory.exists() && !observedDirectory.isDirectory()) {
+            throw new IllegalStateException(
+                    String.format("The file %s is not a valid directory", observedDirectory.toString()));
         }
     }
 
@@ -50,12 +51,11 @@ public abstract class ObservableDirectory<T> extends ObservableDefaultImplementa
         return observedDirectory;
     }
 
+    @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append(observedDirectory.getName())
-                .append(checkInterval)
-                .toString();
+        return new ToStringBuilder(this).append(observedDirectory.getName()).append(checkInterval).toString();
     }
+
     @Override
     public void shutdown() {
         this.deleteObservers();

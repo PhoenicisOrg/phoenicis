@@ -31,17 +31,15 @@ public class ApplicationDTOTest {
 
     @Before
     public void setUp() {
-        this.applicationDTO = new ApplicationDTO.Builder()
-                .withName("Name")
-                .withId(13)
-                .withDescription("a description")
-                .withIconUrl("a icon url")
-                .build();
+        this.applicationDTO = new ApplicationDTO.Builder().withName("Name").withId(13).withDescription("a description")
+                .withIconUrl("a icon url").build();
     }
+
     @Test
     public void testApplicationDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", applicationDTO.getName());
     }
+
     @Test
     public void testApplicationDTO_CreateDTO_idIsPopulated() {
         assertEquals(13, applicationDTO.getId());

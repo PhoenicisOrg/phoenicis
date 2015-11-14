@@ -31,7 +31,7 @@ public class SystemUtilitiesTest {
     public void testGetFreeSpace_compareWithDf() throws IOException, InterruptedException {
         String directory = "/";
 
-        String command = "df -P -k "+directory+"";
+        String command = "df -P -k " + directory + "";
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
         long actualValue = SystemUtilities.getFreeSpace(directory);
@@ -41,7 +41,6 @@ public class SystemUtilitiesTest {
 
         long expectedValue = Integer.valueOf(firstList.split("[ .]+")[3]);
 
-
-        assertEquals((double)expectedValue, (double)actualValue, 500.);
+        assertEquals(expectedValue, actualValue, 500.);
     }
 }

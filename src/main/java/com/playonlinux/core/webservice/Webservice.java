@@ -33,8 +33,8 @@ import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.Service;
 
-public abstract class Webservice<T extends DTO>
-        extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>> implements Service {
+public abstract class Webservice<T extends DTO> extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>>
+        implements Service {
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
 
     private final URL url;
@@ -59,7 +59,7 @@ public abstract class Webservice<T extends DTO>
                 final String result = httpDownloader.get();
                 items = mapper.readValue(result, this.defineTypeReference());
                 this.state = ProgressStateEntity.State.SUCCESS;
-            } catch(DownloadException e) {
+            } catch (DownloadException e) {
                 LOGGER.warn(String.format("Error while downloading %s", url), e);
                 this.state = ProgressStateEntity.State.FAILED;
             } catch (IOException e) {
@@ -76,7 +76,6 @@ public abstract class Webservice<T extends DTO>
     }
 
     protected abstract TypeReference defineTypeReference();
-
 
     private synchronized void update() {
         DownloadEnvelope<Collection<T>> envelopeDTO = new DownloadEnvelope<>();

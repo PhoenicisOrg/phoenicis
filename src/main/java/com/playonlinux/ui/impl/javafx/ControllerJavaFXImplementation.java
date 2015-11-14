@@ -25,13 +25,15 @@ import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import com.playonlinux.ui.impl.javafx.setupwindow.SetupWindowJavaFXImplementation;
 
+import javafx.application.Application;
+
 /**
  * JavaFX implementation of PlayOnLinux controller
  */
 public class ControllerJavaFXImplementation implements Controller {
     @Override
     public void startApplication() {
-        JavaFXApplication.launch(JavaFXApplication.class);
+        Application.launch(JavaFXApplication.class);
     }
 
     @Override

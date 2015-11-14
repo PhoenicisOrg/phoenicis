@@ -126,10 +126,9 @@ public class AppEntity implements Entity, NameableEntity {
             return this;
         }
 
-
         public Builder withMiniaturesUrlsString(Iterable<String> miniaturesUrlsAsString) {
             List<URL> newMiniaturesUrls = new ArrayList<>();
-            for(String url: miniaturesUrlsAsString) {
+            for (String url : miniaturesUrlsAsString) {
                 try {
                     newMiniaturesUrls.add(new URL(url));
                 } catch (MalformedURLException e) {
@@ -155,7 +154,7 @@ public class AppEntity implements Entity, NameableEntity {
         }
 
         private void validate() {
-            if(categoryName == null) {
+            if (categoryName == null) {
                 throw new IllegalArgumentException("You must give a category name");
             }
         }

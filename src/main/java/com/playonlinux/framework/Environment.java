@@ -58,7 +58,7 @@ public final class Environment {
 
     public static String getEnvironmentVar(String variable) {
         Map<String, String> playonOnLinuxEnvironment = playOnLinuxContext.getSystemEnvironment();
-        Map<String,String> systemEnvironment = System.getenv();
+        Map<String, String> systemEnvironment = System.getenv();
 
         mergeEnvironmentVariables(systemEnvironment, playonOnLinuxEnvironment, variable);
         return playonOnLinuxEnvironment.get(variable);

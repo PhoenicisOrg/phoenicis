@@ -29,11 +29,11 @@ import com.playonlinux.core.services.manager.Service;
 /**
  * Manage PlayOnLinux containers
  */
-public interface ContainersManager extends Observable<ContainersManager>,
-                                           Observer<ObservableDirectoryFiles, File[]>,
-                                           Service {
+public interface ContainersManager
+        extends Observable<ContainersManager>, Observer<ObservableDirectoryFiles, File[]>, Service {
     /**
      * Get the list of containers
+     * 
      * @return The list of containers
      */
     List<AbstractContainer> getContainers();

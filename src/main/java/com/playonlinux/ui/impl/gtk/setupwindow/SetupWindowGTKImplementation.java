@@ -64,11 +64,11 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     }
 
     private void loadImages() throws IOException {
-        InputStream topImageStream
-                = SetupWindow.class.getResourceAsStream("/com/playonlinux/ui/setupwindow/defaultTopImage.png");
+        InputStream topImageStream = SetupWindow.class
+                .getResourceAsStream("/com/playonlinux/ui/setupwindow/defaultTopImage.png");
 
         topImage = IOUtils.toByteArray(topImageStream);
-        switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
+        switch (OperatingSystem.fetchCurrentOperationSystem()) {
             case MACOSX:
                 this.leftImage = this.getClass().getSuperclass()
                         .getResource("/com/playonlinux/ui/setupwindow/defaultLeftPlayOnMac.jpg");
@@ -145,7 +145,8 @@ public class SetupWindowGTKImplementation extends Window implements SetupWindow 
     }
 
     @Override
-    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory,
+            List<String> extensions) {
         raiseUnsupported();
     }
 

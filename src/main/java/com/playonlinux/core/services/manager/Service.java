@@ -19,9 +19,8 @@
 package com.playonlinux.core.services.manager;
 
 /**
- * Represents a Service
- * Services are central PlayOnLinux components.
- * They are all registered on startup, or one by one during integration tests
+ * Represents a Service Services are central PlayOnLinux components. They are
+ * all registered on startup, or one by one during integration tests
  */
 public interface Service {
     /**
@@ -31,7 +30,9 @@ public interface Service {
 
     /**
      * Initialize the service
-     * @throws ServiceInitializationException If any error occurs during the initialization of the service
+     * 
+     * @throws ServiceInitializationException
+     *             If any error occurs during the initialization of the service
      */
     void init() throws ServiceInitializationException;
 }

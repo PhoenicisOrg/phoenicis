@@ -90,7 +90,8 @@ public class MockIntegrationUI implements com.playonlinux.ui.api.SetupWindow {
     }
 
     @Override
-    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory,
+            List<String> extensions) {
 
     }
 

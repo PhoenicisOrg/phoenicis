@@ -44,24 +44,14 @@ public class HTTPDownloaderTest {
     @BeforeClass
     public static void setUp() throws MalformedURLException {
         mockServer = new ClientAndServer(MOCKSERVER_PORT);
-        mockServerURL = new URL("http://localhost:"+MOCKSERVER_PORT+"/test.txt");
-        mockServerURLFile2 = new URL("http://localhost:"+MOCKSERVER_PORT+"/test2.txt");
+        mockServerURL = new URL("http://localhost:" + MOCKSERVER_PORT + "/test.txt");
+        mockServerURLFile2 = new URL("http://localhost:" + MOCKSERVER_PORT + "/test2.txt");
     }
 
     @Test
     public void testGet_DownloadFile_FileIsDownloaded() throws Exception {
-        mockServer.when(
-                request()
-                        .withMethod("GET")
-                        .withPath("/test.txt")
-        ).respond(
-                response()
-                        .withStatusCode(200)
-                        .withHeaders(
-                                new Header("Content-Type", "application/config")
-                        )
-                        .withBody("Content file to download")
-        );
+        mockServer.when(request().withMethod("GET").withPath("/test.txt")).respond(response().withStatusCode(200)
+                .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download"));
 
         File temporaryFile = File.createTempFile("test", "txt");
         temporaryFile.deleteOnExit();
@@ -72,21 +62,10 @@ public class HTTPDownloaderTest {
         assertEquals("Content file to download", fileContent);
     }
 
-
     @Test
     public void testGet_DownloadFileInAString_FileIsDownloaded() throws Exception {
-        mockServer.when(
-                request()
-                        .withMethod("GET")
-                        .withPath("/test2.txt")
-        ).respond(
-                response()
-                        .withStatusCode(200)
-                        .withHeaders(
-                                new Header("Content-Type", "application/config")
-                        )
-                        .withBody("Content file to download 2")
-        );
+        mockServer.when(request().withMethod("GET").withPath("/test2.txt")).respond(response().withStatusCode(200)
+                .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download 2"));
 
         String result = new HTTPDownloader(mockServerURLFile2).get();
 

@@ -20,8 +20,7 @@ package com.playonlinux.ui.impl.javafx.common;
 
 public enum Themes {
 
-    DEFAULT("Default theme"),
-    DARK("Dark theme");
+    DEFAULT("Default theme"), DARK("Dark theme");
 
     private final String name;
 
@@ -33,6 +32,7 @@ public enum Themes {
         return otherName != null && name.equals(otherName);
     }
 
+    @Override
     public String toString() {
         return this.name;
     }

@@ -33,9 +33,9 @@ import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
+import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.core.QDir;
 import com.trolltech.qt.core.QUrl;
-import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QDesktopServices;
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QFileDialog;
@@ -59,13 +59,10 @@ public class MainWindowEventHandler implements UIEventHandler {
         this.mainWindow = mainWindow;
     }
 
-
     @Override
     public EventHandler getMainEventHandler() {
         return mainEventHandler;
     }
-
-
 
     /* GENERAL */
 
@@ -73,14 +70,15 @@ public class MainWindowEventHandler implements UIEventHandler {
      * Initialize the EventHandler
      */
     public void init() {
-        //TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
+        // TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
         mainWindow.getShortcutMenu().setVisible(false);
     }
 
     /**
      * Request the application to exit
      *
-     * @return False when the user aborted the application exiting, True otherwise.
+     * @return False when the user aborted the application exiting, True
+     *         otherwise.
      */
     public boolean exit() {
         QMessageBox confirmDialog = new QMessageBox();
@@ -96,10 +94,9 @@ public class MainWindowEventHandler implements UIEventHandler {
             return false;
         }
 
-        QApplication.exit();
+        QCoreApplication.exit();
         return true;
     }
-
 
     /* GENERAL */
     public void openLink(String url) {
@@ -118,19 +115,17 @@ public class MainWindowEventHandler implements UIEventHandler {
         if (fileDialog.exec() == QDialog.DialogCode.Accepted.value()) {
             File scriptFile = new File(fileDialog.selectedFiles().get(0));
 
-            //save folder to restore next time
+            // save folder to restore next time
             lastLocalScriptDir = scriptFile.getParent();
 
             try {
                 mainEventHandler.runLocalScript(scriptFile);
             } catch (PlayOnLinuxException e) {
                 LOGGER.error(e);
-                //TODO: DISPLAY ERROR
+                // TODO: DISPLAY ERROR
             }
         }
     }
-
-
 
     /* SHORTCUTS */
 
@@ -146,7 +141,8 @@ public class MainWindowEventHandler implements UIEventHandler {
     /**
      * Set the iconSize within the ShortcutList
      *
-     * @param viewSize Size of the icons displayed within the ShortcutList
+     * @param viewSize
+     *            Size of the icons displayed within the ShortcutList
      */
     public void setDisplaySize(ShortcutList.IconSize viewSize) {
         mainWindow.getShortcutList().setIconSize(viewSize.value());

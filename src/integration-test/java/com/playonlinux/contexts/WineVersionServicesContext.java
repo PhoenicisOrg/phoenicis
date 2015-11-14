@@ -34,9 +34,10 @@ public class WineVersionServicesContext implements ServiceManagerConfiguration {
 
     @Override
     public synchronized Iterator<ServiceImplementationDefinition> iterator() {
-        return Arrays.asList(
-                new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
-                new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class)
-        ).iterator();
+        return Arrays
+                .asList(new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
+                        new ServiceImplementationDefinition(WineVersionEntitiesProvider.class,
+                                WineVersionEntitiesProvider.class))
+                .iterator();
     }
 }

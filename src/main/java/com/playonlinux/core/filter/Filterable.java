@@ -18,17 +18,19 @@
 
 package com.playonlinux.core.filter;
 
-
 /**
  * Represents a filterable object
  *
- * @param <T> Type held by the filter
+ * @param <T>
+ *            Type held by the filter
  */
 public interface Filterable<T> {
 
     /**
      * Apply a filter
-     * @param filter to apply
+     * 
+     * @param filter
+     *            to apply
      */
     void applyFilter(Filter<T> filter);
 

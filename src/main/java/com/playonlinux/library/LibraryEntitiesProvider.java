@@ -40,10 +40,9 @@ import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class LibraryEntitiesProvider
-        extends ObservableDefaultImplementation<LibraryWindowEntity>
+public final class LibraryEntitiesProvider extends ObservableDefaultImplementation<LibraryWindowEntity>
         implements Observer<ShortcutSetDirectories, List<ShortcutFiles>>,
-                   EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
+        EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -61,10 +60,11 @@ public final class LibraryEntitiesProvider
     @Override
     public void update(ShortcutSetDirectories observable, List<ShortcutFiles> argument) {
         installedApplications.clear();
-        installedApplications.addAll(argument.stream().map(shortcut -> new InstalledApplicationEntity.Builder()
-                .withName(shortcut.getShortcutName())
-                .withIcon(shortcut.getIconPath())
-                .build()).collect(Collectors.toList()));
+        installedApplications
+                .addAll(argument
+                        .stream().map(shortcut -> new InstalledApplicationEntity.Builder()
+                                .withName(shortcut.getShortcutName()).withIcon(shortcut.getIconPath()).build())
+                .collect(Collectors.toList()));
 
         applyFilter(lastFilter);
     }
@@ -74,8 +74,9 @@ public final class LibraryEntitiesProvider
         lastFilter = filter;
 
         installedApplicationsFiltered.clear();
-        if(filter != null) {
-            installedApplicationsFiltered.addAll(installedApplications.stream().filter(filter::apply).collect(Collectors.toList()));
+        if (filter != null) {
+            installedApplicationsFiltered
+                    .addAll(installedApplications.stream().filter(filter::apply).collect(Collectors.toList()));
         } else {
             installedApplicationsFiltered.addAll(installedApplications);
         }
@@ -107,12 +108,10 @@ public final class LibraryEntitiesProvider
         playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
         playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
 
-        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable, defaultIcon);
+        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
+                defaultIcon);
 
         shortcutSetDirectories.addObserver(this);
     }
-
-
-
 
 }

@@ -28,10 +28,10 @@ import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindowEventHandler;
 import com.trolltech.qt.core.QAbstractListModel;
+import com.trolltech.qt.core.QCoreApplication;
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QPixmap;
 
@@ -44,7 +44,6 @@ public class ShortcutListModel extends QAbstractListModel implements Observer<Ob
     private final EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> libraryItemProvider;
     private final QSize maxIconSize;
 
-
     public ShortcutListModel(MainWindowEventHandler eventHandler, ShortcutList.IconSize maxIconSize) {
         this.maxIconSize = maxIconSize.value();
 
@@ -52,14 +51,14 @@ public class ShortcutListModel extends QAbstractListModel implements Observer<Ob
         libraryItemProvider.addObserver(this);
     }
 
-
     @Override
     public Object data(QModelIndex index, int role) {
         if (index.row() < rowCount()) {
             if (role == Qt.ItemDataRole.DecorationRole) {
                 String imageFile = libraryItems.get(index.row()).getIcon().getFile();
-                //return QIcon that is fed by a QPixmap with the image @ the maximal displaySize
-                //QIcon then handles the sizing by  setIconSize()
+                // return QIcon that is fed by a QPixmap with the image @ the
+                // maximal displaySize
+                // QIcon then handles the sizing by setIconSize()
                 return new QIcon(new QPixmap(imageFile).scaled(maxIconSize));
             } else if (role == Qt.ItemDataRole.DisplayRole) {
                 return libraryItems.get(index.row()).getName();
@@ -74,11 +73,10 @@ public class ShortcutListModel extends QAbstractListModel implements Observer<Ob
         return libraryItems.size();
     }
 
-
-    //Register for changes and notify the view.
+    // Register for changes and notify the view.
     @Override
     public void update(Observable observable, LibraryWindowEntity shortcuts) {
-        QApplication.invokeLater(() -> {
+        QCoreApplication.invokeLater(() -> {
             layoutAboutToBeChanged.emit();
             libraryItems = new ArrayList<>(shortcuts.getInstalledApplicationEntity());
             layoutChanged.emit();

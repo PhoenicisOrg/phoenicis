@@ -27,22 +27,29 @@ import java.util.concurrent.ExecutorService;
 public interface ScriptFactory {
     /**
      * Create an instance of a Script
-     * @param scriptContent the content of the script
+     * 
+     * @param scriptContent
+     *            the content of the script
      * @return The script object
      */
     Script createInstance(String scriptContent);
 
     /**
      * Create an instance of a Script
-     * @param scriptPath the path of the script
+     * 
+     * @param scriptPath
+     *            the path of the script
      * @return The script object
-     * @throws ScriptFailureException if the file cannot be opened
+     * @throws ScriptFailureException
+     *             if the file cannot be opened
      */
     Script createInstance(File scriptPath) throws ScriptFailureException;
 
     /**
      * Override the default executor
-     * @param executorService The new executor
+     * 
+     * @param executorService
+     *            The new executor
      * @return the same factory
      */
     ScriptFactory withExecutor(ExecutorService executorService);

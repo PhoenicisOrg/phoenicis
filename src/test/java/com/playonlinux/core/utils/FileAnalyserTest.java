@@ -28,7 +28,6 @@ import org.junit.Test;
 
 import com.playonlinux.app.PlayOnLinuxException;
 
-
 public class FileAnalyserTest {
     final URL archiveUrl = FileAnalyserTest.class.getResource("./archive");
     final URL scriptUrl = FileAnalyserTest.class.getResource("../scripts");
@@ -60,7 +59,8 @@ public class FileAnalyserTest {
 
     @Test
     public void testLineSeparatorCRLF() throws IOException {
-        assertEquals("\r\n", FileAnalyser.identifyLineDelimiter(new File(scriptUrl.getPath(), "legacyScriptExampleCRLF.sh")));
+        assertEquals("\r\n",
+                FileAnalyser.identifyLineDelimiter(new File(scriptUrl.getPath(), "legacyScriptExampleCRLF.sh")));
     }
 
     @Test

@@ -34,10 +34,7 @@ public class RegistryParserTest {
         temporaryFile.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(temporaryFile);
 
-        byte[] bytes = ("[A\\\\B\\\\C] 1430602912\n" +
-                "\"C\"=\"1\"\n" +
-                "\"D\"=\"2\"\n" +
-                "\"E\"=\"3\"").getBytes();
+        byte[] bytes = ("[A\\\\B\\\\C] 1430602912\n" + "\"C\"=\"1\"\n" + "\"D\"=\"2\"\n" + "\"E\"=\"3\"").getBytes();
 
         outputStream.write(bytes);
         outputStream.flush();
@@ -60,7 +57,6 @@ public class RegistryParserTest {
         assertEquals(1, levelTwoNode.getChildren().size());
     }
 
-
     @Test
     public void testParse_realRegFile_testObjectPopulated() throws RegistryException {
         File registryFile = new File(this.getClass().getResource("user.reg").getFile());
@@ -71,24 +67,20 @@ public class RegistryParserTest {
         assertEquals(1541, parsedFile.toString().split("\n").length);
     }
 
-
     @Test
     public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException, RegistryException {
         File temporaryFile = File.createTempFile("registry", "test");
         temporaryFile.deleteOnExit();
         FileOutputStream outputStream = new FileOutputStream(temporaryFile);
 
-        byte[] bytes = ("[Software\\\\Wine\\\\DllOverrides] 1431283548\n" +
-                "\"*d3dx9_24\"=\"native, builtin\\0\"\n" +
-                "\"*d3dx9_25\"=\"native, builtin\\0\"\n" +
-                "\"*d3dx9_26\"=\"native, builtin\\0\"").getBytes();
+        byte[] bytes = ("[Software\\\\Wine\\\\DllOverrides] 1431283548\n" + "\"*d3dx9_24\"=\"native, builtin\\0\"\n"
+                + "\"*d3dx9_25\"=\"native, builtin\\0\"\n" + "\"*d3dx9_26\"=\"native, builtin\\0\"").getBytes();
 
         RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
         outputStream.write(bytes);
         outputStream.flush();
 
-        RegistryValue<StringValueType> registryValue = (RegistryValue<StringValueType>) registryParser
-                .parseFile()
+        RegistryValue<StringValueType> registryValue = (RegistryValue<StringValueType>) registryParser.parseFile()
                 .getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
 
         assertEquals("*d3dx9_24", registryValue.getName());

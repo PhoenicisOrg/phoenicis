@@ -38,9 +38,10 @@ public abstract class WineSteamInstaller extends Installer {
 
     @Override
     public void main() throws ScriptFailureException {
-        this.setupWizard().log(String.format("Implementation has to be done, but we have access to prefix (%s), " +
-                "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have " +
-                "a list: %s", prefix, wineversion, steamId, packages, packages.get(0)));
+        this.setupWizard()
+                .log(String.format("Implementation has to be done, but we have access to prefix (%s), "
+                        + "wineversion (%s), steamId (%s) and packages (%s). First package (to check that we have "
+                        + "a list: %s", prefix, wineversion, steamId, packages, packages.get(0)));
 
         setupWizard().close();
     }

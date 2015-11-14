@@ -26,8 +26,8 @@ public class MainWindowEventDispatcher {
     }
 
     public void runLocalScript() throws PlayOnLinuxException {
-        FileChooserDialog fileChooserDialog =
-                new FileChooserDialog("Select a script to run", parent, FileChooserAction.OPEN);
+        FileChooserDialog fileChooserDialog = new FileChooserDialog("Select a script to run", parent,
+                FileChooserAction.OPEN);
 
         try {
             fileChooserDialog.run();

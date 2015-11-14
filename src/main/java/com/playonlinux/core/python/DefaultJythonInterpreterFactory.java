@@ -36,7 +36,8 @@ public class DefaultJythonInterpreterFactory implements JythonInterpreterFactory
 
     @Override
     public synchronized <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PythonException {
-        File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
+        File pythonPath = new File("src/main/python"); // TODO: Pass this in the
+                                                       // properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
         numberOfInstances++;
         try {
@@ -50,7 +51,7 @@ public class DefaultJythonInterpreterFactory implements JythonInterpreterFactory
     public synchronized void close(PythonInterpreter interpreter) {
         interpreter.cleanup();
         numberOfInstances--;
-        if(numberOfInstances == 0) {
+        if (numberOfInstances == 0) {
             Py.defaultSystemState = new PySystemState();
             zipimport._zip_directory_cache = new PyDictionary();
         }

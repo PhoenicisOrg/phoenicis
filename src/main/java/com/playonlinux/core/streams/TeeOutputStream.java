@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Represent a TeeOutputStream. Contrary to other implementation, multiple streams can be passed
- * in the constructor
+ * Represent a TeeOutputStream. Contrary to other implementation, multiple
+ * streams can be passed in the constructor
  */
 public class TeeOutputStream extends OutputStream {
     private final OutputStream[] outputStreams;
@@ -34,21 +34,21 @@ public class TeeOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        for(OutputStream outputStream: outputStreams) {
+        for (OutputStream outputStream : outputStreams) {
             outputStream.write(b);
         }
     }
 
     @Override
     public void flush() throws IOException {
-        for(OutputStream outputStream: outputStreams) {
+        for (OutputStream outputStream : outputStreams) {
             outputStream.flush();
         }
     }
 
     @Override
     public void close() throws IOException {
-        for(OutputStream outputStream: outputStreams) {
+        for (OutputStream outputStream : outputStreams) {
             outputStream.close();
         }
     }

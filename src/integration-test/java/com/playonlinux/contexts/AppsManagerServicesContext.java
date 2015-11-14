@@ -34,9 +34,9 @@ public class AppsManagerServicesContext implements ServiceManagerConfiguration {
 
     @Override
     public synchronized Iterator<ServiceImplementationDefinition> iterator() {
-        return Arrays.asList(
-                new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
-                new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class)
-        ).iterator();
+        return Arrays
+                .asList(new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
+                        new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class))
+                .iterator();
     }
 }

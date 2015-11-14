@@ -38,31 +38,19 @@ public class FilesTest {
         testOneCaseIntToPosixFilePermission(590);
     }
 
-
     @Test
     public void testIntToPosixFilePermission_allAccess() {
-        testOneCaseIntToPosixFilePermission(777,
-                PosixFilePermission.GROUP_EXECUTE,
-                PosixFilePermission.GROUP_READ,
-                PosixFilePermission.GROUP_WRITE,
-                PosixFilePermission.OTHERS_EXECUTE,
-                PosixFilePermission.OTHERS_READ,
-                PosixFilePermission.OTHERS_WRITE,
-                PosixFilePermission.OWNER_EXECUTE,
-                PosixFilePermission.OWNER_READ,
+        testOneCaseIntToPosixFilePermission(777, PosixFilePermission.GROUP_EXECUTE, PosixFilePermission.GROUP_READ,
+                PosixFilePermission.GROUP_WRITE, PosixFilePermission.OTHERS_EXECUTE, PosixFilePermission.OTHERS_READ,
+                PosixFilePermission.OTHERS_WRITE, PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.OWNER_READ,
                 PosixFilePermission.OTHERS_WRITE);
     }
 
     @Test
     public void testIntToPosixFilePermission_intermediate() {
-        testOneCaseIntToPosixFilePermission(755,
-                PosixFilePermission.GROUP_EXECUTE,
-                PosixFilePermission.GROUP_READ,
-                PosixFilePermission.OTHERS_EXECUTE,
-                PosixFilePermission.OTHERS_READ,
-                PosixFilePermission.OWNER_EXECUTE,
-                PosixFilePermission.OWNER_READ,
-                PosixFilePermission.OWNER_WRITE);
+        testOneCaseIntToPosixFilePermission(755, PosixFilePermission.GROUP_EXECUTE, PosixFilePermission.GROUP_READ,
+                PosixFilePermission.OTHERS_EXECUTE, PosixFilePermission.OTHERS_READ, PosixFilePermission.OWNER_EXECUTE,
+                PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE);
     }
 
     @Test
@@ -75,7 +63,7 @@ public class FilesTest {
 
         assertEquals(permissions.length, permissionsSet.size());
 
-        for(PosixFilePermission permission: permissions) {
+        for (PosixFilePermission permission : permissions) {
             assertTrue(permissionsSet.contains(permission));
         }
     }

@@ -27,16 +27,16 @@ public class VersionComparator implements Comparator<Version> {
 
     @Override
     public int compare(Version version1, Version version2) {
-        if(version1.equals(version2)) {
+        if (version1.equals(version2)) {
             return 0;
         }
-        if(version1.getBigNumber() > version2.getBigNumber()) {
+        if (version1.getBigNumber() > version2.getBigNumber()) {
             return 1;
-        } else if(version1.getBigNumber() == version2.getBigNumber()) {
-            if(version1.getIntermediateNumber() > version2.getIntermediateNumber()) {
+        } else if (version1.getBigNumber() == version2.getBigNumber()) {
+            if (version1.getIntermediateNumber() > version2.getIntermediateNumber()) {
                 return 1;
-            } else if(version1.getIntermediateNumber() == version2.getIntermediateNumber()) {
-                if(version1.getLowNumber() > version2.getLowNumber()) {
+            } else if (version1.getIntermediateNumber() == version2.getIntermediateNumber()) {
+                if (version1.getLowNumber() > version2.getLowNumber()) {
                     return 1;
                 } else if (version1.getLowNumber() == version2.getLowNumber()) {
                     return 0;

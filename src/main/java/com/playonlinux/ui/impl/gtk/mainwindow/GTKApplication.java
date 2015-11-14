@@ -24,7 +24,6 @@ import org.gnome.gtk.VBox;
 import org.gnome.gtk.Window;
 import org.gnome.gtk.WindowPosition;
 
-
 public class GTKApplication extends Window {
     private MainWindowEventDispatcher mainWindowEventDispatcher;
 
@@ -42,14 +41,11 @@ public class GTKApplication extends Window {
 
         MenuBar menuBar = new MainWindowMenuBar(this);
 
-
-
         vBox.packStart(menuBar, false, false, 3);
         setDefaultSize(515, 450);
         setPosition(WindowPosition.CENTER);
 
         add(vBox);
-
 
         showAll();
 

@@ -26,15 +26,19 @@ import com.playonlinux.core.scripts.ScriptFailureException;
  */
 public interface ScriptTemplate {
     /**
-     * Perform some validation before running the script. (Typically configuration checking
+     * Perform some validation before running the script. (Typically
+     * configuration checking
+     * 
      * @return true if the validation is successful, false otherwise
      */
     boolean validate();
 
     /**
      * Main method of the script
-     * @throws CancelException If the script is canceled
-     * (by the user, or by a {@link ScriptFailureException})
+     * 
+     * @throws CancelException
+     *             If the script is canceled (by the user, or by a
+     *             {@link ScriptFailureException})
      */
     void main() throws CancelException;
 

@@ -33,17 +33,14 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class ContainersEntitiesProvider
-        extends ObservableDefaultImplementation<ContainersWindowEntity>
-        implements Observer<ContainersManager, ContainersManager>,
-                   EntitiesProvider<ContainerEntity, ContainersWindowEntity> {
+public final class ContainersEntitiesProvider extends ObservableDefaultImplementation<ContainersWindowEntity> implements
+        Observer<ContainersManager, ContainersManager>, EntitiesProvider<ContainerEntity, ContainersWindowEntity> {
 
     @Inject
     private static ServiceManager serviceManager;
     private Filter<ContainerEntity> lastFilter;
 
     private ContainersManager containersManager;
-
 
     @Override
     public void applyFilter(Filter<ContainerEntity> filter) {
@@ -55,9 +52,9 @@ public final class ContainersEntitiesProvider
     public void update(ContainersManager observable, ContainersManager argument) {
         final List<ContainerEntity> containerEntities = new ArrayList<>();
         this.containersManager = argument;
-        for(AbstractContainer container : containersManager.getContainers()) {
+        for (AbstractContainer container : containersManager.getContainers()) {
             final ContainerEntity containerEntity = container.createEntity();
-            if(lastFilter == null || lastFilter.apply(containerEntity)) {
+            if (lastFilter == null || lastFilter.apply(containerEntity)) {
                 containerEntities.add(containerEntity);
             }
         }

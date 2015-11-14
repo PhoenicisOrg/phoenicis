@@ -37,11 +37,9 @@ import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class WineVersionEntitiesProvider
-        extends ObservableDefaultImplementation<WineVersionsWindowEntity>
+public final class WineVersionEntitiesProvider extends ObservableDefaultImplementation<WineVersionsWindowEntity>
         implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,
-                   EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
-
+        EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -54,21 +52,20 @@ public final class WineVersionEntitiesProvider
     @Override
     public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
         assert argument == observable;
-        for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(argument.getWineVersionDistributionDTOs())) {
+        for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(
+                argument.getWineVersionDistributionDTOs())) {
             final List<WineVersionItemEntity> availablePackages = new ArrayList<>();
             final List<WineVersionItemEntity> installedPackages = new ArrayList<>();
 
-            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream().map(wineVersionDTO -> new WineVersionItemEntity(wineVersionDTO.getVersion())).collect(Collectors.toList()));
+            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream()
+                    .map(wineVersionDTO -> new WineVersionItemEntity(wineVersionDTO.getVersion()))
+                    .collect(Collectors.toList()));
 
-            wineVersionDistributionItemEntities.add(new WineVersionDistributionItemEntity.Builder()
-                            .withName(wineVersionDistributionDTO.getName())
-                            .withAvailablePackages(availablePackages)
-                            .withInstalledPackages(installedPackages)
-                            .withDescription(wineVersionDistributionDTO.getDescription())
-                            .build()
-            );
+            wineVersionDistributionItemEntities
+                    .add(new WineVersionDistributionItemEntity.Builder().withName(wineVersionDistributionDTO.getName())
+                            .withAvailablePackages(availablePackages).withInstalledPackages(installedPackages)
+                            .withDescription(wineVersionDistributionDTO.getDescription()).build());
         }
-
 
         applyFilter(lastFilter);
         this.notifyObservers(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities,
@@ -82,14 +79,13 @@ public final class WineVersionEntitiesProvider
 
         filteredWineVersionDistributionItemEntities.clear();
 
-        if(filter == null) {
+        if (filter == null) {
             filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities);
         } else {
-            filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities.stream().filter(filter::apply).collect(Collectors.toList()));
+            filteredWineVersionDistributionItemEntities.addAll(
+                    wineVersionDistributionItemEntities.stream().filter(filter::apply).collect(Collectors.toList()));
         }
     }
-
-
 
     @Override
     public void shutdown() {
@@ -98,7 +94,8 @@ public final class WineVersionEntitiesProvider
 
     @Override
     public void init() throws ServiceInitializationException {
-        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager.getService(DefaultWineVersionsManager.class);
+        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager
+                .getService(DefaultWineVersionsManager.class);
 
         defaultWineVersionsManager.addObserver(this);
     }

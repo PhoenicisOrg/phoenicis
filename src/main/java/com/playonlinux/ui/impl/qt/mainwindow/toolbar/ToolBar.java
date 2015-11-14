@@ -32,14 +32,13 @@ import com.trolltech.qt.gui.QToolBar;
  */
 public class ToolBar extends QToolBar {
 
-    private MainWindow mainWindow;
+    private final MainWindow mainWindow;
 
     private QAction actionToolRun;
     private QAction actionToolClose;
     private QAction actionToolInstall;
     private QAction actionToolRemove;
     private QAction actionToolConfigure;
-
 
     public ToolBar(MainWindow mainWindow) {
         super(mainWindow);
@@ -83,7 +82,8 @@ public class ToolBar extends QToolBar {
         actionToolInstall.setText(translate("Install"));
         actionToolInstall.setToolTip(translate("Install new software"));
         actionToolRemove.setText(translate("Remove"));
-        actionToolRemove.setToolTip(translate("Delete the application that the currently selected shortcut belongs to"));
+        actionToolRemove
+                .setToolTip(translate("Delete the application that the currently selected shortcut belongs to"));
         actionToolConfigure.setText(translate("Configure"));
         actionToolConfigure.setToolTip(translate("Configure the currently selected shortcut"));
     }

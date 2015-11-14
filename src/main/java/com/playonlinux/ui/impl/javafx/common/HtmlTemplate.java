@@ -31,7 +31,6 @@ import java.util.Map;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 
-
 public class HtmlTemplate {
     private final InputStream inputStream;
     private final DefaultMustacheFactory mf;
@@ -57,7 +56,8 @@ public class HtmlTemplate {
 
     private Map<String, String> globalScope() {
         Map<String, String> scopes = new HashMap<>();
-        scopes.put("LOGO", this.getClass().getResource("/com/playonlinux/ui/impl/javafx/common/playonlinux.png").toExternalForm());
+        scopes.put("LOGO",
+                this.getClass().getResource("/com/playonlinux/ui/impl/javafx/common/playonlinux.png").toExternalForm());
         return scopes;
     }
 }

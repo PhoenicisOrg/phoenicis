@@ -18,7 +18,6 @@
 
 package com.playonlinux.engines.wine.packages;
 
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;

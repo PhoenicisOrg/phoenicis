@@ -1,6 +1,5 @@
 package com.playonlinux.engines.wine;
 
-
 import static java.lang.String.format;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -21,13 +20,13 @@ public class WineDistribution {
 
     /**
      * Construct from a short code string with the current operating system.
-     * @param shortCodeName the short code name (e.g. staging-x86)
+     * 
+     * @param shortCodeName
+     *            the short code name (e.g. staging-x86)
      */
     public WineDistribution(String shortCodeName) {
         this(OperatingSystem.fetchCurrentOperationSystem(),
-                Architecture.fromWinePackageName(shortCodeName.split("-")[1]),
-                shortCodeName.split("-")[0]
-        );
+                Architecture.fromWinePackageName(shortCodeName.split("-")[1]), shortCodeName.split("-")[0]);
     }
 
     public Architecture getArchitecture() {
@@ -43,20 +42,14 @@ public class WineDistribution {
     }
 
     public String asNameWithCurrentOperatingSystem() {
-        return format("%s-%s-%s", distributionCode,
-                OperatingSystem.fetchCurrentOperationSystem().getWinePackage(),
-                architecture.getNameForWinePackages()
-        );
+        return format("%s-%s-%s", distributionCode, OperatingSystem.fetchCurrentOperationSystem().getWinePackage(),
+                architecture.getNameForWinePackages());
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(WineDistribution.class)
-                .append(operatingSystem)
-                .append(architecture)
-                .append(distributionCode)
-                .toString();
+        return new ToStringBuilder(WineDistribution.class).append(operatingSystem).append(architecture)
+                .append(distributionCode).toString();
     }
-
 
 }

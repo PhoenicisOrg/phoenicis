@@ -19,7 +19,6 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.console;
 
-
 import static com.playonlinux.core.lang.Localisation.translate;
 
 import org.apache.commons.lang.StringUtils;
@@ -82,17 +81,17 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
                 command.setText("");
 
                 if (commandInterpreter.sendLine(commandToSend, message -> {
-                            Platform.runLater(() -> {
-                                if (!StringUtils.isBlank(message)) {
-                                    Text resultText = new Text(message);
-                                    resultText.getStyleClass().add("resultText");
-                                    console.getChildren().add(resultText);
-                                }
-                                command.setDisable(false);
-                                command.requestFocus();
-                                consolePane.setVvalue(consolePane.getVmax());
-                            });
-                            return null;
+                    Platform.runLater(() -> {
+                        if (!StringUtils.isBlank(message)) {
+                            Text resultText = new Text(message);
+                            resultText.getStyleClass().add("resultText");
+                            console.getChildren().add(resultText);
+                        }
+                        command.setDisable(false);
+                        command.requestFocus();
+                        consolePane.setVvalue(consolePane.getVmax());
+                    });
+                    return null;
                 })) {
                     nextSymbol = NOT_INSIDE_BLOCK;
                 } else {

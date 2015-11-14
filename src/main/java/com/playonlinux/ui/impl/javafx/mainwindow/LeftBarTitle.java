@@ -26,4 +26,3 @@ public class LeftBarTitle extends Text {
         this.getStyleClass().add("leftBarTitle");
     }
 }
-

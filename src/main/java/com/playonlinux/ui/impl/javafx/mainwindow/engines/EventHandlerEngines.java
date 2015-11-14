@@ -36,7 +36,6 @@ class EventHandlerEngines implements UIEventHandler {
         return mainEventHandler;
     }
 
-
     public EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions() {
         return mainEventHandler.getRemoteWineVersions();
     }

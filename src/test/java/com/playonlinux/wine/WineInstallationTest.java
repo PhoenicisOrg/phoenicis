@@ -36,7 +36,7 @@ import org.junit.Test;
 
 public class WineInstallationTest {
     private WineInstallation wineInstallationToTest;
-    private WinePrefix mockWinePrefix = mock(WinePrefix.class);
+    private final WinePrefix mockWinePrefix = mock(WinePrefix.class);
 
     @Before
     public void getSystemProperties() {
@@ -60,31 +60,31 @@ public class WineInstallationTest {
         List<String> arguments = new ArrayList<>();
         arguments.add("/tmp/unexisting");
 
-        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "--help", null, arguments);
+        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "--help", null,
+                arguments);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
 
-        assertEquals("Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program\n" +
-                "       wine --help                   Display this help and exit\n" +
-                "       wine --version                Output version information and exit\n", processOutput);
+        assertEquals("Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program\n"
+                + "       wine --help                   Display this help and exit\n"
+                + "       wine --version                Output version information and exit\n", processOutput);
     }
 
     @Test
     public void testRun_RunWineVersionWithArgument_ProcessDoesNotReturnHepMessage() throws IOException, WineException {
-        List <String> arguments = new ArrayList<>();
+        List<String> arguments = new ArrayList<>();
         arguments.add("--help");
 
-        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "/tmp/unexisting", null, arguments);
+        Process wineProcess = this.wineInstallationToTest.run(mockWinePrefix, new File("/tmp"), "/tmp/unexisting", null,
+                arguments);
 
         InputStream inputStream = wineProcess.getInputStream();
         String processOutput = IOUtils.toString(inputStream);
 
-        assertNotEquals("Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program\n" +
-                "       wine --help                   Display this help and exit\n" +
-                "       wine --version                Output version information and exit\n", processOutput);
+        assertNotEquals("Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program\n"
+                + "       wine --help                   Display this help and exit\n"
+                + "       wine --version                Output version information and exit\n", processOutput);
     }
-
-
 
 }

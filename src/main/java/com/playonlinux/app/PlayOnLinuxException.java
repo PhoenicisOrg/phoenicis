@@ -22,6 +22,11 @@ package com.playonlinux.app;
  * PlayOnLinux exception main class
  */
 public class PlayOnLinuxException extends Exception {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5585485206915024227L;
+
     public PlayOnLinuxException(String message) {
         this(message, null);
     }

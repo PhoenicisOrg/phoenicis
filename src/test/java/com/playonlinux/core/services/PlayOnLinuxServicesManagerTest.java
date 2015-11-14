@@ -29,7 +29,6 @@ import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 
-
 public class PlayOnLinuxServicesManagerTest {
     private PlayOnLinuxServicesManager playOnLinuxServicesManagerUnderTest;
 
@@ -76,17 +75,12 @@ public class PlayOnLinuxServicesManagerTest {
         playOnLinuxServicesManagerUnderTest.register("backgroundId2", mockBackgroundService2);
 
         assertEquals(mockBackgroundService,
-                playOnLinuxServicesManagerUnderTest.getService("backgroundId",
-                        ServiceTestImplementation.class));
+                playOnLinuxServicesManagerUnderTest.getService("backgroundId", ServiceTestImplementation.class));
 
         assertEquals(mockBackgroundService2,
-                playOnLinuxServicesManagerUnderTest.getService("backgroundId2",
-                        ServiceTestImplementation.class));
-
+                playOnLinuxServicesManagerUnderTest.getService("backgroundId2", ServiceTestImplementation.class));
 
     }
-
-
 
     class ServiceTestImplementation implements Service {
         @Override

@@ -40,17 +40,19 @@ public class PlayOnLinuxApp {
 
     /**
      * Start the application instance
-     * @param args system arguments
+     * 
+     * @param args
+     *            system arguments
      */
     public void start(String[] args) throws PlayOnLinuxException {
-        try(PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig()) {
+        try (PlayOnLinuxConfig playOnLinuxConfig = new PlayOnLinuxConfig()) {
             if (args.length > 0 && "--cli".equals(args[0])) {
                 playOnLinuxConfig.setUseCLIInterface(true);
             }
             if (args.length > 0 && "--gtk".equals(args[0])) {
                 playOnLinuxConfig.setUseGTKInterface(true);
             }
-            if(args.length > 0 && "--qt".equals(args[0])) {
+            if (args.length > 0 && "--qt".equals(args[0])) {
                 playOnLinuxConfig.setUseQtInterface(true);
             }
 
@@ -68,11 +70,14 @@ public class PlayOnLinuxApp {
 
     /**
      * Main methods
-     * @param args system arguments
-     * @throws PlayOnLinuxException If any errors occur
+     * 
+     * @param args
+     *            system arguments
+     * @throws PlayOnLinuxException
+     *             If any errors occur
      */
     public static void main(String[] args) throws PlayOnLinuxException {
-        final PlayOnLinuxApp application =  new PlayOnLinuxApp();
+        final PlayOnLinuxApp application = new PlayOnLinuxApp();
         application.start(args);
     }
 

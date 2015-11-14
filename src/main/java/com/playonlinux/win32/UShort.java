@@ -22,8 +22,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 /**
- * Represents a WIN32 WORD
- * A 16-bit unsigned integer. The range is 0 through 65535 decimal.
+ * Represents a WIN32 WORD A 16-bit unsigned integer. The range is 0 through
+ * 65535 decimal.
  */
 public class UShort {
     private final short word;

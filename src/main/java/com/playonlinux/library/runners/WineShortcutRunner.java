@@ -38,12 +38,8 @@ public class WineShortcutRunner {
     public void run(WineWizard wineWizard) throws CancelException {
         final Map<String, String> wineDebugMap = new HashMap<>();
         wineDebugMap.put(WineConstants.WINEDEBUG, wineShortcut.getWineDebug());
-        Wine.wizard(wineWizard).selectPrefix(wineShortcut.getWinePrefix())
-                .runBackground(
-                        new File(wineShortcut.getWorkingDirectory()),
-                        wineShortcut.getExecutableName(),
-                        wineShortcut.getArguments(),
-                        wineDebugMap
-                );
+        Wine.wizard(wineWizard).selectPrefix(wineShortcut.getWinePrefix()).runBackground(
+                new File(wineShortcut.getWorkingDirectory()), wineShortcut.getExecutableName(),
+                wineShortcut.getArguments(), wineDebugMap);
     }
 }

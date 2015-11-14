@@ -52,5 +52,4 @@ public class DownloadExceptionTest {
         throw new DownloadException("Exception message", mockException);
     }
 
-
 }

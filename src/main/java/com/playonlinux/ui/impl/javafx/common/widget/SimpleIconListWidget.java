@@ -36,11 +36,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-public class SimpleIconListWidget
-        extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
+public class SimpleIconListWidget extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
     private final TreeItem<SimpleIconListItem> rootItem;
-    private final Image defaultIcon =
-            new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
+    private final Image defaultIcon = new Image(
+            SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
     private static final Logger LOGGER = Logger.getLogger(SimpleIconListWidget.class);
 
@@ -65,10 +64,9 @@ public class SimpleIconListWidget
         rootItem.getChildren().add(treeItem);
     }
 
-
     public void addItem(String itemName, File iconPath) {
         try {
-            addItem(itemName, new URL("file://"+iconPath.getAbsolutePath()));
+            addItem(itemName, new URL("file://" + iconPath.getAbsolutePath()));
         } catch (MalformedURLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             String errorTitle = String.format(translate("Error while trying to load the icon %s."),
@@ -85,15 +83,13 @@ public class SimpleIconListWidget
     }
 
     public void addChangeListener(SimpleIconChangeListener simpleIconChangeListener) {
-        getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        simpleIconChangeListener.changed(newValue.getValue().getValue()
-                        );
-                    } else {
-                        simpleIconChangeListener.changed(null);
-                    }
-                });
+        getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                simpleIconChangeListener.changed(newValue.getValue().getValue());
+            } else {
+                simpleIconChangeListener.changed(null);
+            }
+        });
     }
 
     public void clear() {
@@ -104,7 +100,6 @@ public class SimpleIconListWidget
         TreeItem<SimpleIconListItem> item = this.getSelectionModel().getSelectedItem();
         return item.getValue().getValue();
     }
-
 
     protected class SimpleIconListItem extends GridPane {
         private final String itemName;
@@ -137,4 +132,3 @@ public class SimpleIconListWidget
         void changed(String newValue);
     }
 }
-

@@ -48,8 +48,10 @@ public class PlayOnLinuxContext {
 
     /**
      * Get the name of the property file
+     * 
      * @return the name of the suitable property file
-     * @throws PlayOnLinuxException If the current operating system is unknown
+     * @throws PlayOnLinuxException
+     *             If the current operating system is unknown
      */
     public String getPropertyFileName() throws PlayOnLinuxException {
         switch (OperatingSystem.fetchCurrentOperationSystem()) {
@@ -66,7 +68,8 @@ public class PlayOnLinuxContext {
      */
     public void initLogger() {
         try {
-            PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
+            PropertyConfigurator
+                    .configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
             Logger.getRootLogger().setLevel(Level.INFO);
         } catch (PlayOnLinuxException e) {
             throw new PlayOnLinuxRuntimeException("Cannot initialize logger", e);
@@ -75,12 +78,14 @@ public class PlayOnLinuxContext {
 
     /**
      * Get the properties for the current OS
+     * 
      * @return The properties
      */
-    public ReplacableProperties loadProperties()  {
+    public ReplacableProperties loadProperties() {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
-        try(InputStream propertiesToLoad = PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(this.getPropertyFileName())) {
+        try (InputStream propertiesToLoad = PlayOnLinuxContext.class.getClassLoader()
+                .getResourceAsStream(this.getPropertyFileName())) {
             propertiesBeingLoaded.load(propertiesToLoad);
         } catch (PlayOnLinuxException | IOException e) {
             throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
@@ -89,12 +94,9 @@ public class PlayOnLinuxContext {
         return propertiesBeingLoaded;
     }
 
-
     public File makePrefixPathFromName(String prefixName) {
-        String prefixPath = String.format("%s/%s",
-                this.properties.getProperty("application.user.wineprefix"),
-                prefixName
-        );
+        String prefixPath = String.format("%s/%s", this.properties.getProperty("application.user.wineprefix"),
+                prefixName);
         return new File(prefixPath);
     }
 
@@ -107,15 +109,12 @@ public class PlayOnLinuxContext {
     }
 
     public File makeWinePath(Version version, WineDistribution wineDistribution) {
-        String versionPath = String.format("%s/%s/%s",
-                this.properties.getProperty("application.user.engines.wine"),
-                wineDistribution.asNameWithCurrentOperatingSystem(),
-                version
-        );
+        String versionPath = String.format("%s/%s/%s", this.properties.getProperty("application.user.engines.wine"),
+                wineDistribution.asNameWithCurrentOperatingSystem(), version);
         return new File(versionPath);
     }
 
-    public Map<String,String> getSystemEnvironment() {
+    public Map<String, String> getSystemEnvironment() {
         Map<String, String> systemEnvironment = new HashMap<>();
         systemEnvironment.put("PATH", this.properties.getProperty("application.environment.path"));
         systemEnvironment.put("LD_LIBRARY_PATH", this.properties.getProperty("application.environment.ld"));
@@ -126,7 +125,7 @@ public class PlayOnLinuxContext {
 
     public File makeShortcutsPath() {
         File shortcutPath = new File(this.properties.getProperty("application.user.shortcuts.scripts"));
-        if(!shortcutPath.exists()) {
+        if (!shortcutPath.exists()) {
             shortcutPath.mkdirs();
         }
         return shortcutPath;
@@ -158,8 +157,7 @@ public class PlayOnLinuxContext {
 
     public URL makeWineVersionWebserviceUrl() throws MalformedURLException {
         return new URL(String.format(this.properties.getProperty("webservice.wine.url"),
-                OperatingSystem.fetchCurrentOperationSystem().getWinePackage())
-        );
+                OperatingSystem.fetchCurrentOperationSystem().getWinePackage()));
     }
 
     public File makeLocalGeckoPath() {

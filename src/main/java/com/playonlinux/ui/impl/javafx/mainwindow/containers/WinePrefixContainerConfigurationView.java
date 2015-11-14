@@ -65,15 +65,14 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity, EventHandlerContainers eventHandlerContainers) {
+    public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity,
+            EventHandlerContainers eventHandlerContainers) {
         super(containerEntity);
         this.getTabs().add(drawDisplayTab(containerEntity));
         this.getTabs().add(drawInputTab(containerEntity));
         this.getTabs().add(drawToolsTab(containerEntity));
         this.eventHandlerContainers = eventHandlerContainers;
     }
-
-
 
     @Override
     protected Tab drawInformationTab(WinePrefixContainerEntity containerEntity) {
@@ -102,25 +101,17 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         informationContentPane.add(new Text(containerEntity.getWineDistribution()), 1, 4);
 
-        informationContentPane.getRowConstraints().addAll(
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.)
-        );
+        informationContentPane.getRowConstraints().addAll(new RowConstraints(20.), new RowConstraints(20.),
+                new RowConstraints(20.), new RowConstraints(20.), new RowConstraints(20.));
 
-        informationContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(20),
-                new ColumnConstraintsWithPercentage(80)
-        );
+        informationContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(20),
+                new ColumnConstraintsWithPercentage(80));
 
         informationPane.getChildren().addAll(informationContentPane);
         informationTab.setContent(informationPane);
         informationTab.setClosable(false);
         return informationTab;
     }
-
 
     protected Tab drawDisplayTab(WinePrefixContainerEntity containerEntity) {
         final Tab displayTab = new Tab(translate("Display"));
@@ -168,47 +159,35 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
-        final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox  = new ComboBox<>();
+        final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
         strictDrawOrderingComboBox.setValue(containerEntity.getStrictDrawOrdering());
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
-        final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox  = new ComboBox<>();
+        final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
         alwaysOffscreenComboBox.setValue(containerEntity.getAlwaysOffscreen());
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
 
-        displayContentPane.getRowConstraints().addAll(
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.)
-        );
+        displayContentPane.getRowConstraints().addAll(new RowConstraints(50.), new RowConstraints(50.),
+                new RowConstraints(50.), new RowConstraints(50.), new RowConstraints(50.), new RowConstraints(50.),
+                new RowConstraints(50.), new RowConstraints(50.), new RowConstraints(50.));
 
-        displayContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(30),
-                new ColumnConstraintsWithPercentage(70)
-        );
+        displayContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
+                new ColumnConstraintsWithPercentage(70));
 
         displayPane.getChildren().addAll(displayContentPane);
         displayTab.setContent(displayPane);
         displayTab.setClosable(false);
 
-        lockableElements.addAll(Arrays.asList(
-                glslComboBox, directDrawRendererComboBox, offscreenRenderingModeComboBox,
+        lockableElements.addAll(Arrays.asList(glslComboBox, directDrawRendererComboBox, offscreenRenderingModeComboBox,
                 renderTargetModeLockComboBox, multisamplingComboBox, strictDrawOrderingComboBox,
                 alwaysOffscreenComboBox, videoMemorySizeComboBox));
 
         return displayTab;
     }
-
 
     protected Tab drawInputTab(WinePrefixContainerEntity containerEntity) {
         final Tab inputTab = new Tab(translate("Input"));
@@ -227,14 +206,10 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         inputContentPane.add(mouseWarpOverrideComboBox, 1, 0);
 
-        inputContentPane.getRowConstraints().addAll(
-                new RowConstraints(50.)
-        );
+        inputContentPane.getRowConstraints().addAll(new RowConstraints(50.));
 
-        inputContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(30),
-                new ColumnConstraintsWithPercentage(70)
-        );
+        inputContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
+                new ColumnConstraintsWithPercentage(70));
 
         inputPane.getChildren().addAll(inputContentPane);
         inputTab.setContent(inputPane);
@@ -243,7 +218,6 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         lockableElements.add(mouseWarpOverrideComboBox);
         return inputTab;
     }
-
 
     protected Tab drawToolsTab(WinePrefixContainerEntity containerEntity) {
         final Tab toolsTab = new Tab(translate("Tools"));
@@ -257,10 +231,12 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         toolsContentPane.getStyleClass().add("grid");
 
         toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
-                e -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), arg -> {
-                    unlockAll();
-                    return null;
-                })), 0, 0);
+                e -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(),
+                        containerEntity.getWinePrefixDirectory(), arg -> {
+                            unlockAll();
+                            return null;
+                        })),
+                0, 0);
 
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
 
@@ -287,21 +263,12 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
 
         toolsPane.getChildren().addAll(toolsContentPane);
 
-        toolsContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(25),
-                new ColumnConstraintsWithPercentage(25),
-                new ColumnConstraintsWithPercentage(25),
-                new ColumnConstraintsWithPercentage(25)
-        );
+        toolsContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25), new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25));
 
-        toolsContentPane.getRowConstraints().addAll(
-                new RowConstraints(96.),
-                new RowConstraints(25.),
-                new RowConstraints(30.),
-                new RowConstraints(96.),
-                new RowConstraints(25.)
-        );
-
+        toolsContentPane.getRowConstraints().addAll(new RowConstraints(96.), new RowConstraints(25.),
+                new RowConstraints(30.), new RowConstraints(96.), new RowConstraints(25.));
 
         toolsTab.setContent(toolsPane);
         toolsTab.setClosable(false);
@@ -318,10 +285,7 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
 
     private Button wineToolButton(String caption, String imageName, EventHandler<? super MouseEvent> eventHandler) {
         final Button button = new Button(caption,
-                new ImageView(
-                        new Image(this.getClass().getResourceAsStream(imageName), 48., 48., true, true)
-                )
-        );
+                new ImageView(new Image(this.getClass().getResourceAsStream(imageName), 48., 48., true, true)));
         button.getStyleClass().addAll("wineToolButton");
         button.setOnMouseClicked(event -> {
             lockAll();
@@ -334,13 +298,13 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
     }
 
     private void unlockAll() {
-        for(Node element: lockableElements) {
+        for (Node element : lockableElements) {
             element.setDisable(false);
         }
     }
 
     private void lockAll() {
-        for(Node element: lockableElements) {
+        for (Node element : lockableElements) {
             element.setDisable(true);
         }
     }
@@ -349,14 +313,11 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         videoMemorySizeComboBox.setItems(new ImmutableObservableList<>(VideoMemorySize.possibleValues()));
     }
 
-    private <T extends Enum> void addItems(ComboBox<T> comboBox , Class<T> clazz) {
+    private <T extends Enum> void addItems(ComboBox<T> comboBox, Class<T> clazz) {
         final List<T> possibleValues = new ArrayList<>(EnumSet.allOf(clazz));
 
         final ObservableList<T> possibleValuesObservable = new ObservableListWrapper<>(possibleValues);
         comboBox.setItems(possibleValuesObservable);
     }
 
-
 }
-
-

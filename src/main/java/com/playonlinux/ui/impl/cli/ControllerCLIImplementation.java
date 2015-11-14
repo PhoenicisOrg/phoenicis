@@ -41,5 +41,4 @@ public class ControllerCLIImplementation implements Controller {
         return new UIMessageSenderCLIImplementation<>();
     }
 
-
 }

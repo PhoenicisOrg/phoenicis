@@ -21,10 +21,8 @@ package com.playonlinux.wine.parameters;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public enum MouseWarpOverride {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled")),
-    FORCE(translate("Force"));
+    DEFAULT(translate("Default")), DISABLED(translate("Disabled")), ENABLED(translate("Enabled")), FORCE(
+            translate("Force"));
 
     private final String translatedName;
 

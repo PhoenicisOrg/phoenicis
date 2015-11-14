@@ -39,8 +39,11 @@ public class LibraryEventHandler {
 
     /**
      * Starts the UI
-     * @param applicationName The name of the application
-     * @throws PlayOnLinuxException If any error occur
+     * 
+     * @param applicationName
+     *            The name of the application
+     * @throws PlayOnLinuxException
+     *             If any error occur
      */
     public void runApplication(WineWizard wineWizard, String applicationName) throws PlayOnLinuxException {
         final File shortcutFile = new File(playOnLinuxContext.makeShortcutsPath(), applicationName);

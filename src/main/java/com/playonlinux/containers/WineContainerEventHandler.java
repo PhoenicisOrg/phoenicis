@@ -39,19 +39,17 @@ public class WineContainerEventHandler {
 
     public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Function<Void, Void> callBack) {
         executorService.submit(() -> {
-                    LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
-                    containerSetupWizard.init();
-                    try {
-                        Wine.wizard(containerSetupWizard)
-                                .selectPrefix(winePrefixDirectory.getName())
-                                .runForeground(WineConstants.WINECFG);
-                    } catch (CancelException e) {
-                        LOGGER.info(e);
-                    }
-                    callBack.apply(null);
-                    containerSetupWizard.close();
-                }
-        );
+            LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
+            containerSetupWizard.init();
+            try {
+                Wine.wizard(containerSetupWizard).selectPrefix(winePrefixDirectory.getName())
+                        .runForeground(WineConstants.WINECFG);
+            } catch (CancelException e) {
+                LOGGER.info(e);
+            }
+            callBack.apply(null);
+            containerSetupWizard.close();
+        });
 
     }
 }

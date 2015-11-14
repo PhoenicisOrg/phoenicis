@@ -31,11 +31,9 @@ public class ScriptDTOTest {
 
     @Before
     public void setUp() {
-        this.scriptDTO = new ScriptDTO.Builder()
-                .withScriptName("Name")
-                .withId(13)
-                .build();
+        this.scriptDTO = new ScriptDTO.Builder().withScriptName("Name").withId(13).build();
     }
+
     @Test
     public void testScriptDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", scriptDTO.getScriptName());

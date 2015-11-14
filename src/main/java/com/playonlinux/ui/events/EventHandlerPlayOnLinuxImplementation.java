@@ -109,7 +109,8 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     }
 
     @Override
-    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException {
+    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl)
+            throws AppsManagerException {
         return getAppsManager().getDownloaderEntityProvider(scriptUrl);
     }
 
@@ -117,7 +118,5 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     public void onApplicationStarted() {
         // Will be implemented later
     }
-
-
 
 }

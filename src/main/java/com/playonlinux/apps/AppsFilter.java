@@ -35,11 +35,7 @@ public class AppsFilter extends ObservableDefaultImplementation implements Filte
     private final boolean showNoCd;
     private final boolean showCommercial;
 
-    public AppsFilter(String category,
-                      String title,
-                      boolean showTesting,
-                      boolean showNoCd,
-                      boolean showCommercial) {
+    public AppsFilter(String category, String title, boolean showTesting, boolean showNoCd, boolean showCommercial) {
 
         this.category = category;
         this.title = title;
@@ -62,11 +58,9 @@ public class AppsFilter extends ObservableDefaultImplementation implements Filte
             return false;
         }
 
-        return !(item.isTesting() && !showTesting)
-                && !(item.isRequiresNoCd() && !showNoCd)
+        return !(item.isTesting() && !showTesting) && !(item.isRequiresNoCd() && !showNoCd)
                 && !(item.isCommercial() && !showCommercial);
 
     }
-
 
 }

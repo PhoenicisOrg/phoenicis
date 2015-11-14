@@ -28,5 +28,6 @@ public interface SetupWizardComponent extends AutoCloseable {
     /**
      * Close the component
      */
+    @Override
     void close();
 }

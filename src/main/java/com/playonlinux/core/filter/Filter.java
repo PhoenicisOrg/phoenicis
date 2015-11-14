@@ -22,15 +22,18 @@ package com.playonlinux.core.filter;
 /**
  * Defines how a list (used in filterables) should look and behave like.
  *
- * @param <T> Type of the item stored within the filterable list.
+ * @param <T>
+ *            Type of the item stored within the filterable list.
  */
 public interface Filter<T> {
 
     /**
      * Test the given item against the list rules defined within this list.
      *
-     * @param item Item to test against the list rules.
-     * @return {@code true} if the given item matches the list rules, {@code false} otherwise.
+     * @param item
+     *            Item to test against the list rules.
+     * @return {@code true} if the given item matches the list rules,
+     *         {@code false} otherwise.
      */
     boolean apply(T item);
 

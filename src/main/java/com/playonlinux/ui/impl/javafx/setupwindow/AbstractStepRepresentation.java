@@ -132,5 +132,4 @@ abstract class AbstractStepRepresentation {
 
     }
 
-
 }
