@@ -38,6 +38,7 @@ import com.playonlinux.ui.impl.javafx.mainwindow.FailurePanel;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButtonGroup;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftCheckBox;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
@@ -90,22 +91,22 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         waitPanel = new WaitPanel();
     }
 
+    @Override
     protected void drawSideBar() {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(e -> applyFilter(""));
 
         categoryView = new LeftButtonGroup(translate("Categories"));
 
-        testingCheck = new CheckBox(translate("Testing"));
-        noCdNeededCheck = new CheckBox(translate("No CD needed"));
-        commercialCheck = new CheckBox(translate("Commercial"));
+        testingCheck = new LeftCheckBox(translate("Testing"));
+        noCdNeededCheck = new LeftCheckBox(translate("No CD needed"));
+        commercialCheck = new LeftCheckBox(translate("Commercial"));
 
         testingCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
         noCdNeededCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
         commercialCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
 
-        addToSideBar(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(),
-                new LeftBarTitle("Filters"),
+        addToSideBar(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(), new LeftBarTitle("Filters"),
                 testingCheck, noCdNeededCheck, commercialCheck);
 
         super.drawSideBar();
@@ -168,7 +169,6 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         });
     }
 
-
     public void selectCategory(AppsCategoryEntity category) {
         this.selectedCategory = category;
         searchBar.setText("");
@@ -176,21 +176,14 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
     }
 
     public void applyFilterOnSelectedCategory() {
-        if(selectedCategory != null) {
+        if (selectedCategory != null) {
             applyFilter(selectedCategory.getName());
         }
     }
 
     private void applyFilter(String categoryName) {
-        windowDTOEntitiesProvider.applyFilter(
-                new AppsFilter(
-                        categoryName,
-                        searchBar.getText(),
-                        testingCheck.isSelected(),
-                        noCdNeededCheck.isSelected(),
-                        commercialCheck.isSelected()
-                )
-        );
+        windowDTOEntitiesProvider.applyFilter(new AppsFilter(categoryName, searchBar.getText(),
+                testingCheck.isSelected(), noCdNeededCheck.isSelected(), commercialCheck.isSelected()));
 
     }
 
