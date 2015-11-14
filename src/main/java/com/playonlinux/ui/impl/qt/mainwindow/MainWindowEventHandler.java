@@ -78,19 +78,6 @@ public class MainWindowEventHandler implements UIEventHandler {
      * @return False when the user aborted the application exiting, True otherwise.
      */
     public boolean exit() {
-        QMessageBox confirmDialog = new QMessageBox();
-        confirmDialog.setWindowTitle(translate("${application.name}"));
-        confirmDialog.setText(translate("Are you sure you want to close all ${application.name} windows?"));
-        confirmDialog.setIcon(QMessageBox.Icon.Question);
-        confirmDialog.addButton(QMessageBox.StandardButton.Ok);
-        confirmDialog.addButton(QMessageBox.StandardButton.Cancel);
-        confirmDialog.setEscapeButton(QMessageBox.StandardButton.Cancel);
-        confirmDialog.setDefaultButton(QMessageBox.StandardButton.Cancel);
-        confirmDialog.exec();
-        if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
-            return false;
-        }
-
         QApplication.exit();
         return true;
     }
