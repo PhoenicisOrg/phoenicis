@@ -18,13 +18,13 @@
 
 package com.playonlinux.core.python;
 
+import java.util.concurrent.ExecutorService;
+
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
-
-import java.util.concurrent.ExecutorService;
 
 @Scan
 public class JythonCommandLineInterpreterFactory implements CommandLineInterpreterFactory {

@@ -18,15 +18,15 @@
 
 package com.playonlinux.wine;
 
-import com.playonlinux.core.version.Version;
-import com.playonlinux.engines.wine.WineDistribution;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.WineDistribution;
 
 public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";

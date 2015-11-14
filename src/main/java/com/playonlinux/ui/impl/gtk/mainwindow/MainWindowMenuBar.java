@@ -1,10 +1,15 @@
 package com.playonlinux.ui.impl.gtk.mainwindow;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import org.apache.log4j.Logger;
-import org.gnome.gtk.*;
-
 import static com.playonlinux.core.lang.Localisation.translate;
+
+import org.apache.log4j.Logger;
+import org.gnome.gtk.Menu;
+import org.gnome.gtk.MenuBar;
+import org.gnome.gtk.MenuItem;
+import org.gnome.gtk.SeparatorMenuItem;
+import org.gnome.gtk.Widget;
+
+import com.playonlinux.app.PlayOnLinuxException;
 
 public class MainWindowMenuBar extends MenuBar {
     private static final Logger LOGGER = Logger.getLogger(MainWindowMenuBar.class);

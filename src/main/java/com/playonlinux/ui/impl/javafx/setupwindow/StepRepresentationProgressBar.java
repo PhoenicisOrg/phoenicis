@@ -24,6 +24,7 @@ import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 import com.playonlinux.core.messages.Message;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.impl.javafx.UIMessageSenderJavaFXImplementation;
+
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
 

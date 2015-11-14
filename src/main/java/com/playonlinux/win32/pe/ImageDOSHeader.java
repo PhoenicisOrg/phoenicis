@@ -18,10 +18,10 @@
 
 package com.playonlinux.win32.pe;
 
-import com.playonlinux.win32.Word;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import com.playonlinux.win32.Word;
 
 /**
  * PE Executable ImageDOSHeader

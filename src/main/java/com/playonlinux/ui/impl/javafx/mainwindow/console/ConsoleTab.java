@@ -20,11 +20,16 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.console;
 
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.playonlinux.core.python.CommandInterpreter;
 import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.common.CommandHistory;
+
 import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -33,9 +38,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import org.apache.commons.lang.StringUtils;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
 

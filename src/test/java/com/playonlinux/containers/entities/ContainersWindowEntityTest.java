@@ -18,13 +18,13 @@
 
 package com.playonlinux.containers.entities;
 
-import org.junit.Test;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import org.junit.Test;
 
 public class ContainersWindowEntityTest {
     @Test

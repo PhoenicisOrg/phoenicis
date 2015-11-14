@@ -18,11 +18,10 @@
 
 package com.playonlinux.framework;
 
-import com.playonlinux.ui.api.ProgressControl;
-
 import java.io.File;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+
+import com.playonlinux.ui.api.ProgressControl;
 
 public class Checksum {
     ProgressControl progressControl;

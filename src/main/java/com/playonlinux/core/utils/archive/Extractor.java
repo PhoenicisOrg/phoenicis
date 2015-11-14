@@ -18,14 +18,15 @@
 
 package com.playonlinux.core.utils.archive;
 
+import java.io.File;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.utils.FileAnalyser;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.util.List;
 
 public class Extractor  extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);

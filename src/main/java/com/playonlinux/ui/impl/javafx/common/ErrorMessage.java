@@ -18,12 +18,14 @@
 
 package com.playonlinux.ui.impl.javafx.common;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import javafx.scene.control.Alert;
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.app.PlayOnLinuxException;
+
+import javafx.scene.control.Alert;
 
 public class ErrorMessage {
     private static final Logger LOGGER = Logger.getLogger(ErrorMessage.class);

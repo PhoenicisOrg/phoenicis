@@ -18,12 +18,12 @@
 
 package com.playonlinux.core.webservice;
 
+import static org.mockito.Mockito.mock;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentMatcher;
-
-import static org.mockito.Mockito.mock;
 
 public class DownloadExceptionTest {
     @Rule

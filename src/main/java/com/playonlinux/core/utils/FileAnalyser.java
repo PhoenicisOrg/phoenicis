@@ -18,17 +18,24 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.app.PlayOnLinuxException;
-import net.sf.jmimemagic.*;
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-
-import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import javax.activation.MimetypesFileTypeMap;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+
+import com.playonlinux.app.PlayOnLinuxException;
+
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatch;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
 
 public final class FileAnalyser {
     private static final Logger LOGGER = Logger.getLogger(FileAnalyser.class);

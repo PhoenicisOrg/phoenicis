@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.qt.common.ResourceHelper;
 import com.playonlinux.ui.impl.qt.mainwindow.menubar.MenuBar;
@@ -31,8 +33,6 @@ import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QWidget;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 /**
  * MainWindow of PlayOnLinux's Qt-Gui implementation.

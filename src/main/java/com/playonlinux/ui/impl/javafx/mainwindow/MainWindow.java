@@ -18,6 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.util.Optional;
+
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.impl.javafx.JavaFXApplication;
 import com.playonlinux.ui.impl.javafx.common.PlayOnLinuxScene;
@@ -26,6 +30,7 @@ import com.playonlinux.ui.impl.javafx.mainwindow.containers.ViewContainers;
 import com.playonlinux.ui.impl.javafx.mainwindow.engines.ViewEngines;
 import com.playonlinux.ui.impl.javafx.mainwindow.library.ViewLibrary;
 import com.playonlinux.ui.impl.javafx.mainwindow.settings.ViewSettings;
+
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -33,10 +38,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Optional;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class MainWindow extends Stage implements PlayOnLinuxWindow {
 
@@ -68,8 +69,6 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
         this.setTitle(translate("${application.name}"));
         this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("common/playonlinux.png")));
         this.show();
-
-
 
         this.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -109,6 +108,5 @@ public class MainWindow extends Stage implements PlayOnLinuxWindow {
     public PlayOnLinuxScene getPlayOnLinuxScene() {
         return scene;
     }
-
 
 }

@@ -18,6 +18,12 @@
 
 package com.playonlinux.apps;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
+
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.gpg.SignatureChecker;
@@ -33,11 +39,6 @@ import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
 import com.playonlinux.core.webservice.HTTPDownloader;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 @Scan
 public class DefaultInstallerDownloaderEntityProvider

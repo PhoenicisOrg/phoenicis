@@ -18,6 +18,9 @@
 
 package com.playonlinux.library;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -25,9 +28,6 @@ import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.library.shortcuts.Shortcut;
-
-import java.io.File;
-import java.io.IOException;
 
 @Scan
 public class LibraryEventHandler {

@@ -18,24 +18,19 @@
 
 package com.playonlinux.core.utils.archive;
 
-import com.google.common.io.Files;
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.Bean;
-import com.playonlinux.core.injection.InjectionException;
-import com.playonlinux.core.lang.FallbackLanguageBundle;
-import com.playonlinux.core.lang.LanguageBundle;
-import org.apache.commons.io.FileUtils;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
+
+import com.google.common.io.Files;
 
 public class TarTest {
     final URL inputUrl = TarTest.class.getResource(".");

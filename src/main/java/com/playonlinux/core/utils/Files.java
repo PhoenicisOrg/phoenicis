@@ -18,11 +18,7 @@
 
 package com.playonlinux.core.utils;
 
-import com.google.common.collect.Sets;
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
-import org.apache.commons.io.FileUtils;
+import static java.lang.String.format;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +27,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.lang.String.format;
+import org.apache.commons.io.FileUtils;
+
+import com.google.common.collect.Sets;
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
 
 @Scan
 public final class Files {

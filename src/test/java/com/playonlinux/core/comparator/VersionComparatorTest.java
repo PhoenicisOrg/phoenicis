@@ -18,12 +18,13 @@
 
 package com.playonlinux.core.comparator;
 
-import com.playonlinux.core.version.Version;
-import com.playonlinux.core.version.VersionComparator;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.playonlinux.core.version.Version;
+import com.playonlinux.core.version.VersionComparator;
 
 public class VersionComparatorTest {
     VersionComparator versionComparator;

@@ -19,6 +19,7 @@
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
 import com.playonlinux.core.messages.CancelerMessage;
+
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.Image;

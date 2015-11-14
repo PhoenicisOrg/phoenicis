@@ -18,14 +18,18 @@
 
 package com.playonlinux.core.injection;
 
-import org.apache.log4j.Logger;
-import org.reflections.Reflections;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.reflections.Reflections;
 
 public class Injector {
     private final String packageName;

@@ -18,26 +18,26 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.apps.dto.    ApplicationDTO;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
+import static org.junit.Assert.assertEquals;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
+
+import com.playonlinux.apps.dto.    ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
-
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
+import com.playonlinux.core.observer.Observable;
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 
 
 public class InstallerSourceWebserviceImplementationTest {

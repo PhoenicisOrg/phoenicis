@@ -18,12 +18,12 @@
 
 package com.playonlinux.core.messages;
 
-import com.playonlinux.core.scripts.CancelException;
-
 import java.util.concurrent.Semaphore;
 
-public abstract class SynchronousMessage<RESULT> implements Message {
-    private RESULT response;
+import com.playonlinux.core.scripts.CancelException;
+
+public abstract class SynchronousMessage<R> implements Message {
+    private R response;
     protected final Semaphore semaphore = new Semaphore(0);
 
     @Override
@@ -31,7 +31,7 @@ public abstract class SynchronousMessage<RESULT> implements Message {
         this.execute(this);
     }
 
-    public RESULT getResponse() throws CancelException {
+    public R getResponse() throws CancelException {
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
@@ -40,7 +40,7 @@ public abstract class SynchronousMessage<RESULT> implements Message {
         return this.response;
     }
 
-    public void setResponse(RESULT response) {
+    public void setResponse(R response) {
         this.response = response;
         semaphore.release();
     }

@@ -18,6 +18,9 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.shortcuts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
@@ -31,9 +34,6 @@ import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QPixmap;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Model for the ShortcutList, automatically keeping track of changes.

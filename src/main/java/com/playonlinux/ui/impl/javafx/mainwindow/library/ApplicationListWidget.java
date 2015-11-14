@@ -18,7 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.net.URL;
+import java.util.List;
+
 import com.playonlinux.library.entities.InstalledApplicationEntity;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -29,11 +35,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-
-import java.net.URL;
-import java.util.List;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem>  {
 

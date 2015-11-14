@@ -18,12 +18,13 @@
 
 package com.playonlinux.core.observer;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
+import java.io.File;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
+import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
 
 public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEntity> {
     private final long startSize;

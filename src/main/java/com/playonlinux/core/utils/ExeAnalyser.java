@@ -18,13 +18,13 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.win32.pe.PEFile;
-import com.playonlinux.win32.pe.PEReader;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.playonlinux.win32.pe.PEFile;
+import com.playonlinux.win32.pe.PEReader;
 
 
 public final class ExeAnalyser {

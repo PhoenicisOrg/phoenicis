@@ -18,10 +18,12 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.app.PlayOnLinuxException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.playonlinux.app.PlayOnLinuxException;
 
 
 public class OperatingSystemTest {
@@ -44,9 +46,9 @@ public class OperatingSystemTest {
 
     @Test
     public void testFetchShortName_fetchShortNames_namesAreCorrect() throws PlayOnLinuxException {
-        assertEquals("LINUX", OperatingSystem.LINUX.fetchShortName());
-        assertEquals("MACOSX", OperatingSystem.MACOSX.fetchShortName());
-        assertEquals("FREEBSD", OperatingSystem.FREEBSD.fetchShortName());
+        assertEquals("LINUX", OperatingSystem.LINUX.name());
+        assertEquals("MACOSX", OperatingSystem.MACOSX.name());
+        assertEquals("FREEBSD", OperatingSystem.FREEBSD.name());
     }
 
     @Test

@@ -18,9 +18,9 @@
 
 package com.playonlinux.engines.wine.entities;
 
-import com.playonlinux.core.entities.Entity;
-
 import java.util.List;
+
+import com.playonlinux.core.entities.Entity;
 
 public class WineVersionDistributionItemEntity implements Entity {
     private final String description;

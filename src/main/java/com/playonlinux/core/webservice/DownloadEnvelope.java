@@ -20,16 +20,16 @@ package com.playonlinux.core.webservice;
 
 import com.playonlinux.core.entities.ProgressStateEntity;
 
-public class DownloadEnvelope<ENVELOPE_CONTENT_TYPE> {
+public class DownloadEnvelope<C> {
 
-    ENVELOPE_CONTENT_TYPE envelopeContent;
+    C envelopeContent;
     ProgressStateEntity downloadState;
 
-    public ENVELOPE_CONTENT_TYPE getEnvelopeContent() {
+    public C getEnvelopeContent() {
         return envelopeContent;
     }
 
-    public void setEnvelopeContent(ENVELOPE_CONTENT_TYPE envelopeContent) {
+    public void setEnvelopeContent(C envelopeContent) {
         this.envelopeContent = envelopeContent;
     }
 

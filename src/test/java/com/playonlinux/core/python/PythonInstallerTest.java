@@ -18,12 +18,13 @@
 
 package com.playonlinux.core.python;
 
-import com.playonlinux.MockContextConfig;
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.framework.templates.ScriptTemplate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.InjectionException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,9 +32,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.python.util.PythonInterpreter;
 
-import java.io.*;
-
-import static org.junit.Assert.*;
+import com.playonlinux.MockContextConfig;
+import com.playonlinux.app.PlayOnLinuxException;
+import com.playonlinux.core.injection.AbstractConfiguration;
+import com.playonlinux.core.injection.InjectionException;
+import com.playonlinux.framework.templates.ScriptTemplate;
 
 public class PythonInstallerTest {
     private DefaultJythonInterpreterFactory defaultJythonInterpreterFactory;

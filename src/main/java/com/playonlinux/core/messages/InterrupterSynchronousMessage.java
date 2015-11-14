@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.messages;
 
-public abstract class InterrupterSynchronousMessage<RETURN_TYPE> extends SynchronousMessage<RETURN_TYPE>
+public abstract class InterrupterSynchronousMessage<R> extends SynchronousMessage<R>
         implements CancelerMessage {
     final Thread messageSender;
 

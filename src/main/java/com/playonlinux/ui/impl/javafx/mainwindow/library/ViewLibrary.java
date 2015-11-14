@@ -18,30 +18,35 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.library;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.io.File;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.log4j.Logger;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.python.CommandInterpreterException;
-import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.library.LibraryFilter;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
 import com.playonlinux.ui.impl.javafx.mainwindow.console.ConsoleTab;
+
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ViewLibrary extends MainWindowView implements Observer<Observable, LibraryWindowEntity> {
 

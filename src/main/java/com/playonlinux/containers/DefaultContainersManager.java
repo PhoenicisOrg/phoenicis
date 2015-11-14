@@ -18,6 +18,12 @@
 
 package com.playonlinux.containers;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
@@ -28,11 +34,6 @@ import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
-import org.apache.commons.lang.StringUtils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 @Scan
 public class DefaultContainersManager

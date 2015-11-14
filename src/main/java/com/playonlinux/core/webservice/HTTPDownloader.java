@@ -18,112 +18,115 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+
 public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStateEntity> {
+    private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
+
     private static final int BLOCK_SIZE = 1024;
     private final URL url;
     private State state;
     private float percentage;
 
     public enum State {
-        READY,
-        PROGRESSING,
-        SUCCESS,
-        FAILED
+	READY, PROGRESSING, SUCCESS, FAILED
     }
 
     public HTTPDownloader(URL url) {
-        this.url = url;
-        this.state = State.READY;
-        this.changeState();
+	this.url = url;
+	this.state = State.READY;
+	this.changeState();
     }
 
     private HttpURLConnection openConnection(URL remoteFile) throws IOException {
-        return (HttpURLConnection) remoteFile.openConnection();
+	return (HttpURLConnection) remoteFile.openConnection();
     }
 
-    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream) throws DownloadException {
-        int fileSize = connection.getContentLength();
+    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
+	    throws DownloadException {
+	int fileSize = connection.getContentLength();
 
-        try {
-            BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE);
+	try {
+	    BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
+	    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE);
 
-            byte[] data = new byte[BLOCK_SIZE];
-            int i;
-            float totalDataRead = 0.0F;
-            while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
-                totalDataRead += (float) i;
-                bufferedOutputStream.write(data, 0, i);
+	    byte[] data = new byte[BLOCK_SIZE];
+	    int i;
+	    float totalDataRead = 0.0F;
+	    while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
+		totalDataRead += i;
+		bufferedOutputStream.write(data, 0, i);
 
-                this.percentage = totalDataRead * (float) 100 / (float) fileSize;
-                this.state = State.PROGRESSING;
-                this.changeState();
+		this.percentage = totalDataRead * 100 / fileSize;
+		this.state = State.PROGRESSING;
+		this.changeState();
 
-                if (Thread.currentThread().isInterrupted()) {
-                    throw new InterruptedException("The download has been aborted");
-                }
-            }
+		if (Thread.currentThread().isInterrupted()) {
+		    throw new InterruptedException("The download has been aborted");
+		}
+	    }
 
-            inputStream.close();
-            bufferedOutputStream.close();
-        } catch(IOException | InterruptedException e) {
-            this.state = State.FAILED;
-            this.changeState();
-            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
-        }
-        this.state = State.SUCCESS;
-        this.changeState();
+	    inputStream.close();
+	    bufferedOutputStream.close();
+	} catch (IOException | InterruptedException e) {
+	    this.state = State.FAILED;
+	    this.changeState();
+	    throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+	}
+	this.state = State.SUCCESS;
+	this.changeState();
 
     }
-
 
     private void changeState() {
-        ProgressStateEntity currentState = new ProgressStateEntity.Builder()
-                .withPercent((double) this.percentage)
-                .withState(ProgressStateEntity.State.valueOf(this.state.name()))
-                .build();
-        this.notifyObservers(currentState);
+	ProgressStateEntity currentState = new ProgressStateEntity.Builder().withPercent(this.percentage)
+		.withState(ProgressStateEntity.State.valueOf(this.state.name())).build();
+	this.notifyObservers(currentState);
     }
 
     public void get(File localFile) throws DownloadException {
-        try {
-            get(new FileOutputStream(localFile));
-        } catch (IOException e) {
-            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
-        }
+	try {
+	    get(new FileOutputStream(localFile));
+	} catch (IOException e) {
+	    throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+	}
     }
 
     public void get(OutputStream outputStream) throws DownloadException {
-        HttpURLConnection connection;
-        try {
-            connection = openConnection(url);
-        } catch (IOException e) {
-            throw new DownloadException(String.format("Download of %s has failed", this.url), e);
-        }
+	HttpURLConnection connection;
+	try {
+	    connection = openConnection(url);
+	} catch (IOException e) {
+	    throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+	}
 
-        this.saveConnectionToStream(connection, outputStream);
+	this.saveConnectionToStream(connection, outputStream);
 
     }
 
     public String get() throws DownloadException {
-        return new String(getBytes());
+	return new String(getBytes());
     }
 
     public byte[] getBytes() throws DownloadException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        get(outputStream);
-        try {
-            outputStream.flush();
-        } catch (IOException e) {
-            throw new DownloadException("Download failed", e);
-        }
-        return outputStream.toByteArray();
+	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	get(outputStream);
+	try {
+	    outputStream.flush();
+	} catch (IOException e) {
+	    throw new DownloadException("Download failed", e);
+	}
+	return outputStream.toByteArray();
     }
 }

@@ -18,15 +18,16 @@
 
 package com.playonlinux.dto.ui;
 
-import com.playonlinux.library.entities.InstalledApplicationEntity;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.playonlinux.library.entities.InstalledApplicationEntity;
 
 public class InstalledApplicationEntityTest {
 

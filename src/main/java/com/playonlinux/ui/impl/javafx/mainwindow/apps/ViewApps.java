@@ -18,6 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.apps;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.apps.entities.AppEntity;
@@ -27,18 +34,21 @@ import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.impl.javafx.common.widget.MiniatureListWidget;
-import com.playonlinux.ui.impl.javafx.mainwindow.*;
+import com.playonlinux.ui.impl.javafx.mainwindow.FailurePanel;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftButtonGroup;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftCheckBox;
+import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
+import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
+import com.playonlinux.ui.impl.javafx.mainwindow.WaitPanel;
+
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import org.apache.log4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowEntity> {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
@@ -81,6 +91,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         waitPanel = new WaitPanel();
     }
 
+    @Override
     protected void drawSideBar() {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(e -> applyFilter(""));
@@ -95,8 +106,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         noCdNeededCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
         commercialCheck.setOnMouseClicked(e -> applyFilterOnSelectedCategory());
 
-        addToSideBar(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(),
-                new LeftBarTitle("Filters"),
+        addToSideBar(searchBar, new LeftSpacer(), categoryView, new LeftSpacer(), new LeftBarTitle("Filters"),
                 testingCheck, noCdNeededCheck, commercialCheck);
 
         super.drawSideBar();
@@ -159,7 +169,6 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         });
     }
 
-
     public void selectCategory(AppsCategoryEntity category) {
         this.selectedCategory = category;
         searchBar.setText("");
@@ -167,21 +176,14 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
     }
 
     public void applyFilterOnSelectedCategory() {
-        if(selectedCategory != null) {
+        if (selectedCategory != null) {
             applyFilter(selectedCategory.getName());
         }
     }
 
     private void applyFilter(String categoryName) {
-        windowDTOEntitiesProvider.applyFilter(
-                new AppsFilter(
-                        categoryName,
-                        searchBar.getText(),
-                        testingCheck.isSelected(),
-                        noCdNeededCheck.isSelected(),
-                        commercialCheck.isSelected()
-                )
-        );
+        windowDTOEntitiesProvider.applyFilter(new AppsFilter(categoryName, searchBar.getText(),
+                testingCheck.isSelected(), noCdNeededCheck.isSelected(), commercialCheck.isSelected()));
 
     }
 

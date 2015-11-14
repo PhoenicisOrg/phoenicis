@@ -19,10 +19,11 @@
 
 package com.playonlinux.apps;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Filter implementation for CenterItems

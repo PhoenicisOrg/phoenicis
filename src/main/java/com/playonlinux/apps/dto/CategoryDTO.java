@@ -18,11 +18,11 @@
 
 package com.playonlinux.apps.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
-
-import java.util.List;
 
 /**
  * Represents a category of application

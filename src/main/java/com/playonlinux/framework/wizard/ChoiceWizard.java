@@ -18,9 +18,9 @@
 
 package com.playonlinux.framework.wizard;
 
-import com.playonlinux.core.scripts.CancelException;
-
 import java.util.List;
+
+import com.playonlinux.core.scripts.CancelException;
 
 public interface ChoiceWizard {
     String menu(String textToShow, List<String> menuItems) throws CancelException;

@@ -18,11 +18,11 @@
 
 package com.playonlinux.mock;
 
+import static java.lang.String.format;
+
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.ui.api.ProgressControl;
-
-import static java.lang.String.format;
 
 
 public class MockProgressControl implements ProgressControl {

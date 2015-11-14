@@ -18,14 +18,15 @@
 
 package com.playonlinux.apps.entities;
 
-import com.playonlinux.core.entities.Entity;
-import com.playonlinux.core.entities.NameableEntity;
-import org.apache.log4j.Logger;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.playonlinux.core.entities.Entity;
+import com.playonlinux.core.entities.NameableEntity;
 
 /**
  * Represents an application {@link Entity}

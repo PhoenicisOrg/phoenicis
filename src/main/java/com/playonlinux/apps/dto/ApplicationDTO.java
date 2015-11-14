@@ -18,13 +18,13 @@
 
 package com.playonlinux.apps.dto;
 
+import java.util.Comparator;
+import java.util.List;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
-
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Represents an application

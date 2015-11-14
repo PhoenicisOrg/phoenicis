@@ -18,9 +18,17 @@
 
 package com.playonlinux.containers.entities;
 
-import com.playonlinux.wine.parameters.*;
-
 import java.io.File;
+
+import com.playonlinux.wine.parameters.AlwaysOffscreen;
+import com.playonlinux.wine.parameters.DirectDrawRenderer;
+import com.playonlinux.wine.parameters.GLSL;
+import com.playonlinux.wine.parameters.MouseWarpOverride;
+import com.playonlinux.wine.parameters.Multisampling;
+import com.playonlinux.wine.parameters.OffscreenRenderingMode;
+import com.playonlinux.wine.parameters.RenderTargetModeLock;
+import com.playonlinux.wine.parameters.StrictDrawOrdering;
+import com.playonlinux.wine.parameters.VideoMemorySize;
 
 public class WinePrefixContainerEntity extends ContainerEntity {
     private final String wineVersion;

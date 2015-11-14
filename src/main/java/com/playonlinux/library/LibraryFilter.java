@@ -17,10 +17,11 @@
  */
 package com.playonlinux.library;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Filter for installed applications in the MainWindow

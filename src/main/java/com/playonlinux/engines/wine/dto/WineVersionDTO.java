@@ -18,10 +18,11 @@
 
 package com.playonlinux.engines.wine.dto;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonDeserialize(builder = WineVersionDTO.Builder.class)
 public class WineVersionDTO implements DTO {

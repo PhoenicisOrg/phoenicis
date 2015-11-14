@@ -18,15 +18,15 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.ui.api.ProgressControl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class ContainerConfigurationMiniWizard implements WineWizard {
     private final ContainerConfigurationView<?> progressControl;

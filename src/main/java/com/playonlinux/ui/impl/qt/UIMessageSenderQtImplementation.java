@@ -27,10 +27,10 @@ import com.trolltech.qt.gui.QApplication;
 /**
  * Implementation of the UIMessageSender for the Qt-GUI of POL.
  */
-public class UIMessageSenderQtImplementation<RETURN> implements UIMessageSender<RETURN> {
+public class UIMessageSenderQtImplementation<R> implements UIMessageSender<R> {
 
     @Override
-    public RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException {
+    public R synchronousSendAndGetResult(SynchronousMessage<R> message) throws CancelException {
         synchronousSend(message);
         return message.getResponse();
     }

@@ -18,10 +18,7 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.io.FileUtils;
+import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +27,11 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.FileUtils;
+
+import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 public class ChecksumCalculator extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final int BLOCK_SIZE = 2048;

@@ -18,6 +18,13 @@
 
 package com.playonlinux.configuration;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+import java.util.Locale;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.app.MockIntegrationContext;
 import com.playonlinux.app.PlayOnLinuxContext;
@@ -39,13 +46,6 @@ import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
 import com.playonlinux.ui.impl.cli.UIMessageSenderCLIImplementation;
-
-import java.io.IOException;
-import java.util.Locale;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class IntegrationContextConfig extends AbstractConfiguration {
     @Bean

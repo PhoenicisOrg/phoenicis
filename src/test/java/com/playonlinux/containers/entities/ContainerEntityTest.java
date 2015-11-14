@@ -18,9 +18,9 @@
 
 package com.playonlinux.containers.entities;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class ContainerEntityTest {
     private final ContainerEntity containerEntity = new ContainerEntity("name", "path");

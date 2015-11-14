@@ -18,14 +18,13 @@
 
 package com.playonlinux.wine.registry;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class RegistryParserTest {
 

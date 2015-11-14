@@ -18,6 +18,9 @@
 
 package com.playonlinux.containers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.filter.Filter;
@@ -28,9 +31,6 @@ import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.ui.api.EntitiesProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Scan
 public final class ContainersEntitiesProvider

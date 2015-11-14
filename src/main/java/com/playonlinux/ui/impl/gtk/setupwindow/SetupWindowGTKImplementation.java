@@ -18,18 +18,6 @@
 
 package com.playonlinux.ui.impl.gtk.setupwindow;
 
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
-import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.core.messages.InterrupterSynchronousMessage;
-import com.playonlinux.core.utils.OperatingSystem;
-import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.ui.api.SetupWindow;
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.gnome.gtk.Fixed;
-import org.gnome.gtk.Window;
-import org.gnome.gtk.WindowPosition;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,6 +25,19 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+import org.gnome.gtk.Fixed;
+import org.gnome.gtk.Window;
+import org.gnome.gtk.WindowPosition;
+
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
+import com.playonlinux.core.utils.OperatingSystem;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.ui.api.SetupWindow;
 
 public class SetupWindowGTKImplementation extends Window implements SetupWindow {
     private static final Logger LOGGER = Logger.getLogger(SetupWindowGTKImplementation.class);

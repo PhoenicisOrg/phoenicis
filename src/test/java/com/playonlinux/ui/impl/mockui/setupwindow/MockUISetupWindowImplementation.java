@@ -18,11 +18,7 @@
 
 package com.playonlinux.ui.impl.mockui.setupwindow;
 
-import com.playonlinux.ui.api.ProgressControl;
-import com.playonlinux.ui.api.SetupWindow;
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
-import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.core.messages.InterrupterSynchronousMessage;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +26,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
+import com.playonlinux.ui.api.ProgressControl;
+import com.playonlinux.ui.api.SetupWindow;
 
 public class MockUISetupWindowImplementation implements SetupWindow {
 

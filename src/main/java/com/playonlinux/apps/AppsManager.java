@@ -18,6 +18,9 @@
 
 package com.playonlinux.apps;
 
+import java.net.URL;
+import java.util.Collection;
+
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
@@ -25,9 +28,6 @@ import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.webservice.DownloadEnvelope;
-
-import java.net.URL;
-import java.util.Collection;
 
 /**
  * Available application manager

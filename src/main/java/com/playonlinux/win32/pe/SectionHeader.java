@@ -18,10 +18,10 @@
 
 package com.playonlinux.win32.pe;
 
-import com.playonlinux.win32.ULong;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import com.playonlinux.win32.ULong;
 
 public class SectionHeader {
     public static final int SECTION_HEADER_SIZE = 40;

@@ -18,6 +18,13 @@
 
 package com.playonlinux.framework;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.scripts.ScriptFailureException;
@@ -26,13 +33,6 @@ import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.ProgressControl;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 @ScriptClass
 @SuppressWarnings("unused")
@@ -54,15 +54,15 @@ public class Downloader implements SetupWizardComponent {
     private Downloader(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
+    
+    public Downloader(ProgressControl progressControl) {
+        this.progressControl = progressControl;
+    }
 
     public static Downloader wizard(SetupWizard setupWizard) {
         final SetupWizardComponent downloaderInstance = new Downloader(setupWizard);
         setupWizard.registerComponent(downloaderInstance);
         return new Downloader(setupWizard);
-    }
-
-    public Downloader(ProgressControl progressControl) {
-        this.progressControl = progressControl;
     }
 
     private void defineProgressStep(URL remoteFile) throws CancelException {

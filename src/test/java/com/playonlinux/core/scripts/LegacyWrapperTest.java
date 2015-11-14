@@ -18,14 +18,8 @@
 
 package com.playonlinux.core.scripts;
 
-import com.playonlinux.MockContextConfig;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.InjectionException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -33,7 +27,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.playonlinux.MockContextConfig;
+import com.playonlinux.core.injection.AbstractConfiguration;
+import com.playonlinux.core.injection.InjectionException;
 
 
 public class LegacyWrapperTest {

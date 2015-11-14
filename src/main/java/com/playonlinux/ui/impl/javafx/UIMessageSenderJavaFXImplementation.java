@@ -18,15 +18,16 @@
 
 package com.playonlinux.ui.impl.javafx;
 
+import java.util.concurrent.CountDownLatch;
+
 import com.playonlinux.core.messages.Message;
 import com.playonlinux.core.messages.SynchronousMessage;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.UIMessageSender;
+
 import javafx.application.Platform;
 
-import java.util.concurrent.CountDownLatch;
-
-public class UIMessageSenderJavaFXImplementation<RETURN> implements UIMessageSender<RETURN> {
+public class UIMessageSenderJavaFXImplementation<R> implements UIMessageSender<R> {
     public static void runAndWait(Runnable action) {
         if (action == null)
             throw new NullPointerException("action");
@@ -55,7 +56,7 @@ public class UIMessageSenderJavaFXImplementation<RETURN> implements UIMessageSen
     }
 
     @Override
-    public RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException {
+    public R synchronousSendAndGetResult(SynchronousMessage<R> message) throws CancelException {
         UIMessageSenderJavaFXImplementation.runAndWait(message);
         return message.getResponse();
     }

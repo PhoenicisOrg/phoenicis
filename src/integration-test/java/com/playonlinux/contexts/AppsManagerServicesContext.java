@@ -18,17 +18,14 @@
 
 package com.playonlinux.contexts;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.DefaultAppsManager;
 import com.playonlinux.core.services.manager.ServiceImplementationDefinition;
 import com.playonlinux.core.services.manager.ServiceManagerConfiguration;
-import com.playonlinux.engines.wine.DefaultWineVersionsManager;
-import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
-import com.playonlinux.engines.wine.WineVersionManager;
-
-import java.util.Arrays;
-import java.util.Iterator;
 
 /**
  * Loads all the component required test wine version manager

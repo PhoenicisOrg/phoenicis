@@ -18,20 +18,21 @@
 
 package com.playonlinux.ui.impl.gtk;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+
+import org.apache.log4j.Logger;
+
 import com.playonlinux.core.messages.Message;
 import com.playonlinux.core.messages.SynchronousMessage;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.ui.api.UIMessageSender;
-import org.apache.log4j.Logger;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
-
-public class UIMessageSenderGTKImplementation<RETURN> implements UIMessageSender<RETURN>  {
+public class UIMessageSenderGTKImplementation<R> implements UIMessageSender<R>  {
     private static final Logger LOGGER = Logger.getLogger(UIMessageSenderGTKImplementation.class);
 
     @Override
-    public RETURN synchronousSendAndGetResult(SynchronousMessage<RETURN> message) throws CancelException {
+    public R synchronousSendAndGetResult(SynchronousMessage<R> message) throws CancelException {
         this.synchronousSend(message);
         return message.getResponse();
     }

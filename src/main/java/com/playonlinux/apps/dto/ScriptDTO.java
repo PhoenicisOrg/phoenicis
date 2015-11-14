@@ -18,14 +18,14 @@
 
 package com.playonlinux.apps.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.utils.OperatingSystem;
-
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)

@@ -18,11 +18,9 @@
 
 package com.playonlinux.wine.registry;
 
-import org.junit.Test;
-
-import java.io.File;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class RegistryWriterTest {
 

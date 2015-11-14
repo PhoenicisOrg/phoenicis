@@ -18,12 +18,13 @@
 
 package com.playonlinux.ui.impl.javafx.setupwindow;
 
+import java.util.List;
+
 import com.playonlinux.core.messages.CancelerMessage;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
+
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
-
-import java.util.List;
 
 
 public class StepRepresentationMenu extends StepRepresentationMessage {

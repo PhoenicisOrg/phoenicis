@@ -18,10 +18,10 @@
 
 package com.playonlinux.containers;
 
+import java.io.File;
+
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.wine.WinePrefix;
-
-import java.io.File;
 
 public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEntity> {
     private final WinePrefix underlyingWinePrefix;

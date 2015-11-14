@@ -18,13 +18,15 @@
 
 package com.playonlinux.wine;
 
-import com.google.common.io.Files;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import com.google.common.io.Files;
 
 public class WineTest {
 

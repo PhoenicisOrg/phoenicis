@@ -18,13 +18,14 @@
 
 package com.playonlinux.app;
 
-import com.playonlinux.core.utils.ReplacableProperties;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.playonlinux.core.utils.ReplacableProperties;
 
 public class ReplacablePropertiesTest {
 

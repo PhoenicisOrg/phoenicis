@@ -18,14 +18,14 @@
 
 package com.playonlinux.ui.impl.qt.mainwindow.toolbar;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 import com.playonlinux.ui.impl.qt.common.ResourceHelper;
 import com.playonlinux.ui.impl.qt.mainwindow.MainWindow;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QToolBar;
-
-import static com.playonlinux.core.lang.Localisation.translate;
 
 /**
  * ToolBar of the MainWindow

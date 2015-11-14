@@ -18,19 +18,24 @@
 
 package com.playonlinux.core.python;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.python.core.PyException;
+import org.python.core.PyMethod;
+import org.python.core.PyNone;
+import org.python.core.PyObject;
+import org.python.core.PyType;
+import org.python.util.PythonInterpreter;
+import org.reflections.ReflectionUtils;
+
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.ScriptFailureException;
-import org.apache.log4j.Logger;
-import org.python.core.*;
-import org.python.util.PythonInterpreter;
-import org.reflections.ReflectionUtils;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Set;
 
 @Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {

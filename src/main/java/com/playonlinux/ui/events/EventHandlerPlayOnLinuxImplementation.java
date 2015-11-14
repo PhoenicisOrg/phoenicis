@@ -18,6 +18,8 @@
 
 package com.playonlinux.ui.events;
 
+import java.io.File;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
@@ -42,8 +44,6 @@ import com.playonlinux.library.LibraryEventHandler;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
-
-import java.io.File;
 
 @Scan
 public final class EventHandlerPlayOnLinuxImplementation implements EventHandler {

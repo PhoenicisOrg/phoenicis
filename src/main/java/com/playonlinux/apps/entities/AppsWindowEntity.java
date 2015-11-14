@@ -18,9 +18,9 @@
 
 package com.playonlinux.apps.entities;
 
-import com.playonlinux.core.entities.Entity;
-
 import java.util.List;
+
+import com.playonlinux.core.entities.Entity;
 
 /**
  * Represents the main entity to the available application feature

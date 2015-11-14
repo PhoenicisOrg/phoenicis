@@ -18,15 +18,15 @@
 
 package com.playonlinux.mock;
 
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
-import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
-import com.playonlinux.core.messages.InterrupterSynchronousMessage;
-import com.playonlinux.ui.api.ProgressControl;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+
+import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
+import com.playonlinux.core.messages.InterrupterSynchronousMessage;
+import com.playonlinux.ui.api.ProgressControl;
 
 public class MockIntegrationUI implements com.playonlinux.ui.api.SetupWindow {
     @Override

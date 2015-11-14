@@ -18,14 +18,14 @@
 
 package com.playonlinux.library.shortcuts;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.library.runners.WineShortcutRunner;
-
-import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonDeserialize(builder = WineShortcut.Builder.class)

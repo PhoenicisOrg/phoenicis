@@ -18,13 +18,13 @@
 
 package com.playonlinux.framework;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class DownloaderTest {
     Downloader downloader;

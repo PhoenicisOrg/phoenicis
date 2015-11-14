@@ -18,12 +18,12 @@
 
 package com.playonlinux.wine.registry;
 
-public class RegistryValue<TYPE extends AbstractValueType>
+public class RegistryValue<T extends AbstractValueType>
         extends AbstractRegistryNode {
 
-    private final TYPE content;
+    private final T content;
 
-    public RegistryValue(String name, TYPE content) {
+    public RegistryValue(String name, T content) {
         super(name);
         this.content = content;
     }

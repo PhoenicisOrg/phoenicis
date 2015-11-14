@@ -18,9 +18,10 @@
 
 package com.playonlinux.apps.entities;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.entities.Entity;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Entity that represents a script.

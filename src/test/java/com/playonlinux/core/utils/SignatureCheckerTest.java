@@ -18,16 +18,19 @@
 
 package com.playonlinux.core.utils;
 
-import com.playonlinux.core.gpg.SignatureChecker;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.openpgp.PGPException;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 
-import static org.junit.Assert.*;
+import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.openpgp.PGPException;
+import org.junit.Test;
+
+import com.playonlinux.core.gpg.SignatureChecker;
 
 public class SignatureCheckerTest {
     private static final String SCRIPT = "#!/bin/bash\n" +

@@ -18,6 +18,10 @@
 
 package com.playonlinux.apps;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collection;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.entities.ProgressStateEntity;
@@ -31,10 +35,6 @@ import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.core.webservice.HTTPDownloader;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
 
 @Scan
 public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultAppsManager> implements AppsManager {
