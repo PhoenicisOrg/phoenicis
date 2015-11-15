@@ -20,25 +20,19 @@ package com.playonlinux.core.services.manager;
 
 import com.playonlinux.app.PlayOnLinuxException;
 
+
 public class ServiceException extends PlayOnLinuxException {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8236265941254251730L;
     private static final String DEFAULT_MESSAGE = "Unable to initialize the background service";
 
     public ServiceException() {
         super(DEFAULT_MESSAGE);
     }
-
     public ServiceException(String message) {
         super(message);
     }
-
     public ServiceException(String message, Throwable parent) {
         super(message, parent);
     }
-
     public ServiceException(Throwable parent) {
         super(DEFAULT_MESSAGE, parent);
     }

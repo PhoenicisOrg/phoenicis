@@ -18,12 +18,8 @@
 
 package com.playonlinux.wine;
 
-public class UninitializedWineprefixException extends WineException {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5071594964383517322L;
+public class UninitializedWineprefixException extends WineException {
 
     public UninitializedWineprefixException(String s) {
         super(s);

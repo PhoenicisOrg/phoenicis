@@ -56,7 +56,8 @@ public class InjectorTest extends AbstractConfiguration {
     }
 
     @Test(expected = InjectionException.class)
-    public void testInjector_InjectAStringWithStrictPolicyAndUnmappedDependency() throws InjectionException {
+    public void testInjector_InjectAStringWithStrictPolicyAndUnmappedDependency()
+            throws InjectionException {
         this.setStrictLoadingPolicy(true);
         try {
             this.load();

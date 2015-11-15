@@ -57,7 +57,7 @@ public class TarTest {
 
         temporaryDirectory.deleteOnExit();
 
-        new Extractor().uncompress(inputFile, temporaryDirectory);
+        final List<File> extractedFiles = new Extractor().uncompress(inputFile, temporaryDirectory);
 
         final File file1 = new File(temporaryDirectory, "file1.txt");
         final File file2 = new File(temporaryDirectory, "file1_link.txt");

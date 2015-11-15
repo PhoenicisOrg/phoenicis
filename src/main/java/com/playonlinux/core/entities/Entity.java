@@ -19,12 +19,11 @@
 package com.playonlinux.core.entities;
 
 /**
- * Represents an entity. An entity aims to transfer data to the UI An entity
- * <b>must</b> obey the following rules:
+ * Represents an entity. An entity aims to transfer data to the UI
+ * An entity <b>must</b> obey the following rules:
  * <ul>
- * <li>An entity must be immutable (all fields are final)</li>
- * <li>An entity must have only getters and setters or a builder (= no business
- * logic)</li>
+ *     <li>An entity must be immutable (all fields are final)</li>
+ *     <li>An entity must have only getters and setters or a builder (= no business logic)</li>
  * </ul>
  */
 public interface Entity {

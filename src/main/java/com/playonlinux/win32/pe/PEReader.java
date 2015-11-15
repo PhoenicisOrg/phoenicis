@@ -31,7 +31,7 @@ public final class PEReader {
     }
 
     public static PEFile parseExecutable(InputStream inputStream) throws IOException {
-        try (CountingInputStream executableInputStream = new CountingInputStream(inputStream)) {
+        try(CountingInputStream executableInputStream = new CountingInputStream(inputStream)) {
             final ImageDOSHeader imageDOSHeader = readDosHeader(executableInputStream);
             final byte[] realModeStubProgram = readRealModeStubProgram(executableInputStream, imageDOSHeader);
             final ImageNTHeaders imageNTHeaders = readImageNTHeaders(executableInputStream);
@@ -41,8 +41,7 @@ public final class PEReader {
         }
     }
 
-    private static RsrcSection readResourceSection(CountingInputStream executableInputStream,
-            SectionHeader[] sectionHeaders) throws IOException {
+    private static RsrcSection readResourceSection(CountingInputStream executableInputStream, SectionHeader[] sectionHeaders) throws IOException {
         SectionHeader rsrcSectionHeader = null;
         for (SectionHeader sectionHeader : sectionHeaders) {
             if (".rsrc\u0000\u0000\u0000".equals(new String(sectionHeader.name))) {
@@ -50,7 +49,7 @@ public final class PEReader {
             }
         }
 
-        if (rsrcSectionHeader == null) {
+        if(rsrcSectionHeader == null) {
             return null;
         }
 
@@ -62,11 +61,10 @@ public final class PEReader {
         return new RsrcSection(rsrcSection);
     }
 
-    private static SectionHeader[] readSectionHeaders(CountingInputStream executableInputStream,
-            ImageNTHeaders imageNTHeaders) throws IOException {
+    private static SectionHeader[] readSectionHeaders(CountingInputStream executableInputStream, ImageNTHeaders imageNTHeaders) throws IOException {
         final int numberOfSectionHeaders = imageNTHeaders.fileHeader.numberOfSections.getUnsignedValue();
         final SectionHeader[] sectionHeaders = new SectionHeader[numberOfSectionHeaders];
-        for (int i = 0; i < numberOfSectionHeaders; i++) {
+        for(int i = 0; i < numberOfSectionHeaders; i++) {
             byte[] sectionHeaderBytes = new byte[SectionHeader.SECTION_HEADER_SIZE];
             executableInputStream.read(sectionHeaderBytes);
             sectionHeaders[i] = new SectionHeader(sectionHeaderBytes);
@@ -85,8 +83,7 @@ public final class PEReader {
         return imageNTHeaders;
     }
 
-    private static byte[] readRealModeStubProgram(InputStream executableInputStream, ImageDOSHeader imageDOSHeader)
-            throws IOException {
+    private static byte[] readRealModeStubProgram(InputStream executableInputStream, ImageDOSHeader imageDOSHeader) throws IOException {
         final byte[] realModeStubProgram = new byte[imageDOSHeader.eLfanew - ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
         executableInputStream.read(realModeStubProgram);
         return realModeStubProgram;

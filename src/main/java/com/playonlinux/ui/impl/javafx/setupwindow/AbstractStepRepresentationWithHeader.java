@@ -33,8 +33,7 @@ import javafx.scene.paint.Color;
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     private Pane contentPanel;
 
-    AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent,
-            CancelerMessage messageWaitingForResponse) {
+    AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent, CancelerMessage messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
     }
 
@@ -45,12 +44,11 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
     public void addToContentPanel(Node contentToAdd) {
         this.contentPanel.getChildren().add(contentToAdd);
     }
-
     /**
      * Draw the header at the top of the window
      */
     private void drawHeader() {
-        this.getParentWizardTitle();
+        final String title = this.getParentWizardTitle(); // FIXME: use this variable to draw the title of the window
         Pane header = new Pane();
         header.setId("header");
         header.setPrefSize(722, 65);
@@ -79,7 +77,6 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         return new Image(this.getParentTopImage().toString());
     }
 
-    @Override
     public void installStep() {
         this.clearAllOnParent();
         this.drawHeader();

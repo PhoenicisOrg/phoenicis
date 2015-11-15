@@ -22,34 +22,29 @@ import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 /**
- * Represents a configuration file. Two configuration files cannot be loaded at
- * the same time, seems they are using the static context.
+ * Represents a configuration file.
+ * Two configuration files cannot be loaded at the same time, seems they are using the static context.
  */
 public abstract class AbstractConfiguration implements AutoCloseable {
     private static volatile Semaphore staticContextLock = new Semaphore(1);
 
     protected boolean strictLoadingPolicy = true;
-
+    
     protected abstract String definePackage();
 
     /**
-     * If this is set to true, the injector will throw an exception if a non
-     * defined bean in the config file is being injected. Otherwise, the object
-     * will stay to null (useful for a testing context)
+     * If this is set to true, the injector will throw an exception if a non defined bean in the config file
+     * is being injected. Otherwise, the object will stay to null (useful for a testing context)
      *
-     * @param strictLoadingPolicy
-     *            should be true if it enabled, false if is not
+     * @param strictLoadingPolicy should be true if it enabled, false if is not
      */
     public void setStrictLoadingPolicy(Boolean strictLoadingPolicy) {
         this.strictLoadingPolicy = strictLoadingPolicy;
     }
 
     /**
-     * Loads a configuration file. If another configuration file is already
-     * loaded, blocks until it is closed.
-     * 
-     * @throws InjectionException
-     *             if the load process is interrupted
+     * Loads a configuration file. If another configuration file is already loaded, blocks until it is closed.
+     * @throws InjectionException if the load process is interrupted
      */
     public final void load() throws InjectionException {
         try {

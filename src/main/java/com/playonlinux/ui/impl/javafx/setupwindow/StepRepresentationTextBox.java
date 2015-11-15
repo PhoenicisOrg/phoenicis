@@ -26,8 +26,8 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final String defaultValue;
     private TextField textField;
 
-    public StepRepresentationTextBox(SetupWindowJavaFXImplementation parent,
-            CancelerSynchronousMessage messageWaitingForResponse, String textToShow, String defaultValue) {
+    public StepRepresentationTextBox(SetupWindowJavaFXImplementation parent, CancelerSynchronousMessage messageWaitingForResponse, String textToShow,
+                                     String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
 
         this.defaultValue = defaultValue;
@@ -47,8 +47,9 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event -> ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse())
-                .setResponse(textField.getText()));
+        this.setNextButtonAction(event ->
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(textField.getText())
+        );
     }
 
 }

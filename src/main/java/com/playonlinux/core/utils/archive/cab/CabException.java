@@ -21,11 +21,6 @@ package com.playonlinux.core.utils.archive.cab;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class CabException extends PlayOnLinuxException {
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4165303733459045283L;
-
     public CabException(String message) {
         super(message);
     }

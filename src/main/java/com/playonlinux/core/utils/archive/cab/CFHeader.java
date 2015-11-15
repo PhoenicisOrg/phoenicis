@@ -51,6 +51,7 @@ public class CFHeader extends AbstractCabStructure {
         super(offset);
     }
 
+
     @Override
     public void populate(InputStream inputStream) throws CabException {
         try {
@@ -67,22 +68,23 @@ public class CFHeader extends AbstractCabStructure {
             structureSize += inputStream.read(setID);
             structureSize += inputStream.read(iCabinet);
 
-            /*
-             * FIXME: Read the flag structureSize +=
-             * inputStream.read(cbCFHeader); structureSize +=
-             * inputStream.read(cbCFFolder); structureSize +=
-             * inputStream.read(cbCFData);
-             */
 
-            // structureSize += readVariableField(inputStream, abReserve);
-            // structureSize += readVariableField(inputStream, szCabinetPrev);
-            // structureSize += readVariableField(inputStream, szDiskPrev);
-            // structureSize += readVariableField(inputStream, szCabinetNext);
-            // structureSize += readVariableField(inputStream, szDiskNext);
+            /* FIXME: Read the flag
+            structureSize += inputStream.read(cbCFHeader);
+            structureSize += inputStream.read(cbCFFolder);
+            structureSize += inputStream.read(cbCFData);
+            */
+
+            //structureSize += readVariableField(inputStream, abReserve);
+            //structureSize += readVariableField(inputStream, szCabinetPrev);
+            //structureSize += readVariableField(inputStream, szDiskPrev);
+            //structureSize += readVariableField(inputStream, szCabinetNext);
+            //structureSize += readVariableField(inputStream, szDiskNext);
         } catch (IOException e) {
             throw new CabException("Unable to parse header", e);
         }
     }
+
 
     public int getNumberOfFiles() {
         // Maybe it needs to be checked
@@ -94,16 +96,37 @@ public class CFHeader extends AbstractCabStructure {
         return (cFolders[0] & 0xFF) + (cFolders[1] & 0xFF) * 16;
     }
 
-    @Override
+
     public String toString() {
         return String.format(
-                "Offset: %s\n" + "Size: %s\n" + "Signature: %s\n" + "Reserved1: %s\n" + "cbCabinet: %s\n"
-                        + "Reserved2: %s\n" + "coffFiles: %s\n" + "Reserved3: %s\n" + "VersionMinor: %s\n"
-                        + "VersionMajor: %s\n" + "cFolders: %s\n" + "cFiles: %s\n" + "cbCFData: %s\n"
-                        + "cbCFFolder: %s",
-                offset, getStructureSize(), Arrays.toString(signature), Arrays.toString(reserved1),
-                Arrays.toString(cbCabinet), Arrays.toString(reserved2), Arrays.toString(coffFiles),
-                Arrays.toString(reserved3), versionMinor[0], versionMajor[0], Arrays.toString(cFolders),
-                Arrays.toString(cFiles), cbCFData[0], cbCFFolder[0]);
+                "Offset: %s\n" +
+                "Size: %s\n" +
+                "Signature: %s\n" +
+                "Reserved1: %s\n" +
+                "cbCabinet: %s\n" +
+                "Reserved2: %s\n" +
+                "coffFiles: %s\n" +
+                "Reserved3: %s\n" +
+                "VersionMinor: %s\n" +
+                "VersionMajor: %s\n" +
+                "cFolders: %s\n" +
+                "cFiles: %s\n" +
+                "cbCFData: %s\n" +
+                "cbCFFolder: %s",
+                offset,
+                getStructureSize(),
+                Arrays.toString(signature),
+                Arrays.toString(reserved1),
+                Arrays.toString(cbCabinet),
+                Arrays.toString(reserved2),
+                Arrays.toString(coffFiles),
+                Arrays.toString(reserved3),
+                versionMinor[0],
+                versionMajor[0],
+                Arrays.toString(cFolders),
+                Arrays.toString(cFiles),
+                cbCFData[0],
+                cbCFFolder[0]
+        );
     }
 }

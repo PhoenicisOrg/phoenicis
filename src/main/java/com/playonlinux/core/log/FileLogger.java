@@ -28,7 +28,7 @@ class FileLogger extends OutputStream {
     private final boolean echoOnStdout;
 
     FileLogger(File logFile, boolean echoOnStdout) throws IOException {
-        if (!logFile.exists()) {
+        if(!logFile.exists()) {
             logFile.createNewFile();
         }
         this.logOutputStream = new FileOutputStream(logFile);
@@ -38,7 +38,7 @@ class FileLogger extends OutputStream {
     @Override
     public synchronized void flush() throws IOException {
         this.logOutputStream.flush();
-        if (echoOnStdout) {
+        if(echoOnStdout) {
             System.out.flush();
         }
         super.flush();
@@ -48,7 +48,7 @@ class FileLogger extends OutputStream {
     public synchronized void write(int b) throws IOException {
         logOutputStream.write(b);
 
-        if (echoOnStdout) {
+        if(echoOnStdout) {
             System.out.write(b);
         }
     }

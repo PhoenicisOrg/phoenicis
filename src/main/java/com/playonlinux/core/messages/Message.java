@@ -24,9 +24,7 @@ package com.playonlinux.core.messages;
 public interface Message extends Runnable {
     /**
      * The method carried by the message
-     * 
-     * @param message
-     *            Reference to itself
+     * @param message Reference to itself
      */
     void execute(Message message);
 }

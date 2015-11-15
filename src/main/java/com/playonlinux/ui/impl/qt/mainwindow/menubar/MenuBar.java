@@ -67,6 +67,7 @@ public class MenuBar extends QMenuBar {
 
     private QActionGroup displayIconSizeGroup;
 
+
     public MenuBar(MainWindow mainWindow) {
         super(mainWindow);
         this.mainWindow = mainWindow;
@@ -98,6 +99,7 @@ public class MenuBar extends QMenuBar {
         menuFile.addAction(actionDonate);
         menuFile.addAction(actionExit);
 
+
         /* MENU: DISPLAY */
         menuDisplay = new QMenu(this);
 
@@ -120,6 +122,7 @@ public class MenuBar extends QMenuBar {
         displayIconSizeGroup.addAction(actionMedium_Icons);
         displayIconSizeGroup.addAction(actionLarge_Icons);
         displayIconSizeGroup.addAction(actionVery_Large_Icons);
+
 
         /* MENU: TOOLS */
         menuTools = new QMenu(this);
@@ -144,6 +147,7 @@ public class MenuBar extends QMenuBar {
         menuTools.addSeparator();
         menuTools.addAction(actionDebugger);
 
+
         /* MENU: SETTINGS */
         menuSettings = new QMenu(this);
 
@@ -151,6 +155,7 @@ public class MenuBar extends QMenuBar {
         actionNetwork.setIcon(QIcon.fromTheme("network-wired"));
 
         menuSettings.addAction(actionNetwork);
+
 
         /* MENU: HELP */
         menuHelp = new QMenu(this);
@@ -173,6 +178,7 @@ public class MenuBar extends QMenuBar {
         menuHelp.addAction(actionForums);
         menuHelp.addAction(actionBugs);
 
+
         /* MENU: CONTACT */
         menuContact = new QMenu(this);
 
@@ -183,6 +189,7 @@ public class MenuBar extends QMenuBar {
         menuContact.addAction(actionTwitter);
         menuContact.addAction(actionGooglePlus);
         menuContact.addAction(actionFacebook);
+
 
         addAction(menuFile.menuAction());
         addAction(menuDisplay.menuAction());
@@ -272,9 +279,11 @@ public class MenuBar extends QMenuBar {
         actionFacebook.triggered.connect(this, "actionFacebookTriggered()");
     }
 
+
     /* SIGNAL HANDLERS */
 
-    // FILE
+
+    //FILE
     private void actionRunTriggered() {
         mainWindow.getEventHandler().runLocalScript();
     }
@@ -292,7 +301,8 @@ public class MenuBar extends QMenuBar {
         mainWindow.getEventHandler().exit();
     }
 
-    // DISPLAY
+
+    //DISPLAY
     private void actionSmallIconsTriggered(boolean checked) {
         if (checked) {
             mainWindow.getEventHandler().setDisplaySize(ShortcutList.IconSize.SMALL);
@@ -317,7 +327,7 @@ public class MenuBar extends QMenuBar {
         }
     }
 
-    // TOOLS
+    //TOOLS
     private void actionWineVersionsTriggered() {
     }
 
@@ -333,11 +343,11 @@ public class MenuBar extends QMenuBar {
     private void actionDebuggerTriggered() {
     }
 
-    // SETTINGS
+    //SETTINGS
     private void actionNetworkTriggered() {
     }
 
-    // HELP
+    //HELP
     private void actionAboutTriggered() {
     }
 
@@ -357,7 +367,7 @@ public class MenuBar extends QMenuBar {
         mainWindow.getEventHandler().openLink("https://www.playonlinux.com/en/bugs.html");
     }
 
-    // CONTACT
+    //CONTACT
     private void actionGooglePlusTriggered() {
         mainWindow.getEventHandler().openLink("https://plus.google.com/+playonlinux");
     }

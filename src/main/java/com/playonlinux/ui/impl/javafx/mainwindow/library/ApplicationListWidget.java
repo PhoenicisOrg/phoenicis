@@ -36,7 +36,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
-class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem> {
+class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationItem>  {
 
     private final TreeItem<ApplicationItem> rootItem;
     private final ViewLibrary parent;
@@ -51,7 +51,7 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
 
     public void setItems(List<InstalledApplicationEntity> applicationDTOs) {
         this.clear();
-        for (InstalledApplicationEntity applicationDTO : applicationDTOs) {
+        for(InstalledApplicationEntity applicationDTO: applicationDTOs) {
             this.addItem(applicationDTO.getName(), applicationDTO.getIcon());
         }
     }
@@ -80,12 +80,12 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             this.add(applicationNameLabel, 1, 0);
             this.add(iconImageView, 0, 0);
 
+
             final ImageView playImageView = new ImageView(this.getClass().getResource("play.png").toExternalForm());
             playImageView.setFitHeight(16);
             playImageView.setFitWidth(16);
 
-            final ImageView configureImageView = new ImageView(
-                    this.getClass().getResource("configure.png").toExternalForm());
+            final ImageView configureImageView = new ImageView(this.getClass().getResource("configure.png").toExternalForm());
             configureImageView.setFitHeight(16);
             configureImageView.setFitWidth(16);
 
@@ -100,6 +100,8 @@ class ApplicationListWidget extends TreeView<ApplicationListWidget.ApplicationIt
             this.add(runButton, 2, 0);
             this.add(configureButton, 3, 0);
         }
+
+
 
         private void addConstraints() {
             ColumnConstraints columnConstraint = new ColumnConstraints();

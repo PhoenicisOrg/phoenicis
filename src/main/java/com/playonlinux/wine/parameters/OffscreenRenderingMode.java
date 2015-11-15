@@ -19,7 +19,10 @@
 package com.playonlinux.wine.parameters;
 
 public enum OffscreenRenderingMode {
-    DEFAULT("Default"), FBO("FBO"), BACKBUFFER("Backbuffer"), PBUFFER("PBuffer");
+    DEFAULT("Default"),
+    FBO("FBO"),
+    BACKBUFFER("Backbuffer"),
+    PBUFFER("PBuffer");
 
     private final String translatedName;
 

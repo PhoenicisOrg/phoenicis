@@ -36,29 +36,77 @@ public class VersionComparatorTest {
 
     @Test
     public void testCompare_equalsVersion() {
-        assertEquals(0, versionComparator.compare(new Version("4.2.1"), new Version("4.2.1")));
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2.1"),
+                        new Version("4.2.1")
+                )
+        );
     }
 
     @Test
     public void testCompare_HigherVersion() {
-        assertEquals(1, versionComparator.compare(new Version("4.2.2"), new Version("4.2.1")));
+        assertEquals(1,
+                versionComparator.compare(
+                        new Version("4.2.2"),
+                        new Version("4.2.1")
+                )
+        );
 
-        assertEquals(1, versionComparator.compare(new Version("4.3.1"), new Version("4.2.1")));
+        assertEquals(1,
+                versionComparator.compare(
+                        new Version("4.3.1"),
+                        new Version("4.2.1")
+                )
+        );
 
-        assertEquals(1, versionComparator.compare(new Version("5.2.1"), new Version("4.2.1")));
+        assertEquals(1,
+                versionComparator.compare(
+                        new Version("5.2.1"),
+                        new Version("4.2.1")
+                )
+        );
 
-        assertEquals(1, versionComparator.compare(new Version("4.2.2"), new Version("4.1.3")));
+        assertEquals(1,
+                versionComparator.compare(
+                        new Version("4.2.2"),
+                        new Version("4.1.3")
+                )
+        );
     }
 
     @Test
     public void testCompare_LowerVersion() {
-        assertEquals(-1, versionComparator.compare(new Version("4.2.1"), new Version("4.2.2")));
+        assertEquals(-1,
+                versionComparator.compare(
+                        new Version("4.2.1"),
+                        new Version("4.2.2")
+                )
+        );
 
-        assertEquals(-1, versionComparator.compare(new Version("4.2.1"), new Version("4.3.1")));
+        assertEquals(-1,
+                versionComparator.compare(
+                        new Version("4.2.1"),
+                        new Version("4.3.1")
+                )
+        );
 
-        assertEquals(-1, versionComparator.compare(new Version("4.2.1"), new Version("5.2.1")));
+        assertEquals(-1,
+                versionComparator.compare(
+                        new Version("4.2.1"),
+                        new Version("5.2.1")
+                )
+        );
 
-        assertEquals(-1, versionComparator.compare(new Version("4.1.3"), new Version("4.2.2")));
+        assertEquals(-1,
+                versionComparator.compare(
+                        new Version("4.1.3"),
+                        new Version("4.2.2")
+                )
+        );
     }
+
+
+
 
 }

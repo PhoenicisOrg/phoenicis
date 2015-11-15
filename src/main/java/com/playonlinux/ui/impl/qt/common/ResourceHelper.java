@@ -38,16 +38,12 @@ public final class ResourceHelper {
     /**
      * Load the resource of the given class with the given path as an image.
      *
-     * @param c
-     *            Class who's resources should be searched for the given
-     *            resourcePath.
-     * @param resourcePath
-     *            Relative path to the resource starting from the classes
-     *            package.
+     * @param c            Class who's resources should be searched for the given resourcePath.
+     * @param resourcePath Relative path to the resource starting from the classes package.
      * @return QIcon, created from the loaded resource.
      */
     public static QIcon getIcon(Class<?> c, String resourcePath) {
-        // get classPath to class's resources
+        //get classPath to class's resources
         String classPath = c.getPackage().getName().replace('.', '/');
 
         return new QIcon(new QPixmap("classpath:" + classPath + "/" + resourcePath));
@@ -56,8 +52,7 @@ public final class ResourceHelper {
     /**
      * Load a shared resource as image.
      *
-     * @param resourcePath
-     *            Relative path to the shared resource folder.
+     * @param resourcePath Relative path to the shared resource folder.
      * @return QIcon, created from the loaded resource.
      */
     public static QIcon getIcon(String resourcePath) {

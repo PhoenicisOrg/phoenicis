@@ -54,12 +54,13 @@ public abstract class Script implements Service {
 
     public static Script.Type detectScriptType(String script) {
         final String firstLine = script.split("\n")[0];
-        if (firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash")) {
+        if(firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash")) {
             return Script.Type.LEGACY;
         } else {
             return Script.Type.RECENT;
         }
     }
+
 
     @Override
     public void shutdown() {
@@ -71,7 +72,8 @@ public abstract class Script implements Service {
     }
 
     public enum Type {
-        RECENT, LEGACY
+        RECENT,
+        LEGACY
     }
 
     @Override
@@ -79,7 +81,7 @@ public abstract class Script implements Service {
         runningScript = executor.submit(() -> {
             try {
                 createScriptInstance();
-            } catch (PlayOnLinuxException e) {
+            } catch(PlayOnLinuxException e) {
                 LOGGER.error("Cannot createPrefix interpreter", e);
             }
         });

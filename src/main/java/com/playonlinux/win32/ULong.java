@@ -22,8 +22,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 /**
- * Represents a WIN32 ULONG A 32-bit unsigned integer. The range is 0 through
- * 4294967295 decimal.
+ * Represents a WIN32 ULONG
+ * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
  */
 public class ULong {
     private final int ulongContent;

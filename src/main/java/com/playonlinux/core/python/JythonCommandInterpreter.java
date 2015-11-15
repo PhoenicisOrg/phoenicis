@@ -57,7 +57,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
     @Override
     public boolean sendLine(String command, Function<String, Void> callback) {
-        if (interactiveInterpreter == null) {
+        if(interactiveInterpreter == null) {
             try {
                 interactiveInterpreter = jythonJythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
                 interactiveInterpreter.setOut(returnBuffer);
@@ -69,7 +69,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
         commandBuffer.append(command);
 
-        if (command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
+        if(command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
             commandBuffer.append("\n");
             callback.apply("");
             return false;
@@ -93,10 +93,10 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
     @Override
     public void shutdown() {
-        if (this.interactiveInterpreter != null) {
+        if(this.interactiveInterpreter != null) {
             jythonJythonInterpreterFactory.close(this.interactiveInterpreter);
         }
-        if (currentTask != null) {
+        if(currentTask != null) {
             currentTask.cancel(true);
         }
     }

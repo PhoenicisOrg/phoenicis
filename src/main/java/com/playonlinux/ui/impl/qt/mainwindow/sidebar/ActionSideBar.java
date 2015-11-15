@@ -33,8 +33,7 @@ import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
 /**
- * Action SideBar of the MainWindow, containing all possible actions regarding
- * the current context.
+ * Action SideBar of the MainWindow, containing all possible actions regarding the current context.
  */
 public class ActionSideBar extends QDockWidget {
 
@@ -54,10 +53,8 @@ public class ActionSideBar extends QDockWidget {
     private void setupUi() {
         setProperty("class", "ActionSideBar");
         setMinimumSize(new QSize(200, 40));
-        setFeatures(QDockWidget.DockWidgetFeature.createQFlags(QDockWidget.DockWidgetFeature.DockWidgetFloatable,
-                QDockWidget.DockWidgetFeature.DockWidgetMovable));
-        setAllowedAreas(Qt.DockWidgetArea.createQFlags(Qt.DockWidgetArea.LeftDockWidgetArea,
-                Qt.DockWidgetArea.RightDockWidgetArea));
+        setFeatures(QDockWidget.DockWidgetFeature.createQFlags(QDockWidget.DockWidgetFeature.DockWidgetFloatable, QDockWidget.DockWidgetFeature.DockWidgetMovable));
+        setAllowedAreas(Qt.DockWidgetArea.createQFlags(Qt.DockWidgetArea.LeftDockWidgetArea, Qt.DockWidgetArea.RightDockWidgetArea));
 
         menuList = new QWidget();
         menuListLayout = new QVBoxLayout(menuList);
@@ -73,6 +70,7 @@ public class ActionSideBar extends QDockWidget {
         setWindowTitle(translate("Actions"));
     }
 
+
     public ActionMenu addMenu(String title) {
         ActionMenu newMenu = new ActionMenu(this, title);
         addMenu(newMenu);
@@ -83,5 +81,6 @@ public class ActionSideBar extends QDockWidget {
         subMenus.add(menu);
         menuListLayout.insertWidget((subMenus.size() - 1), menu);
     }
+
 
 }

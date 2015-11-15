@@ -29,9 +29,8 @@ import javafx.application.Platform;
 
 public class UIMessageSenderJavaFXImplementation<R> implements UIMessageSender<R> {
     public static void runAndWait(Runnable action) {
-        if (action == null) {
+        if (action == null)
             throw new NullPointerException("action");
-        }
 
         // runBackground synchronously on JavaFX thread
         if (Platform.isFxApplicationThread()) {
@@ -63,7 +62,7 @@ public class UIMessageSenderJavaFXImplementation<R> implements UIMessageSender<R
     }
 
     @Override
-    public void synchronousSend(Message message) {
+    public void synchronousSend(Message message){
         UIMessageSenderJavaFXImplementation.runAndWait(message);
     }
 

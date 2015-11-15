@@ -44,7 +44,6 @@ public class ChecksumCalculatorTest {
         FileOutputStream fileOutputStream = new FileOutputStream(temporaryFile);
 
         fileOutputStream.write("TEST".getBytes());
-        assertEquals("984816fd329622876e14907634264e6f332e9fb3",
-                new ChecksumCalculator().calculate(temporaryFile, "SHA1"));
+        assertEquals("984816fd329622876e14907634264e6f332e9fb3", new ChecksumCalculator().calculate(temporaryFile, "SHA1"));
     }
 }

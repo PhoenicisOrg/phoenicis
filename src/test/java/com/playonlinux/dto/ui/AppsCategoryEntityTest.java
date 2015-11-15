@@ -33,7 +33,7 @@ public class AppsCategoryEntityTest {
     public void setUp() {
         this.appsCategoryEntity = new AppsCategoryEntity("Name");
     }
-
+    
     @Test
     public void testCenterCategoryDTO_CreateDTO_nameIsPopulated() {
         assertEquals("Name", appsCategoryEntity.getName());

@@ -19,11 +19,6 @@
 package com.playonlinux.core.services.manager;
 
 public class ServiceInitializationException extends ServiceException {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4253854738984824927L;
-
     public ServiceInitializationException(Exception e) {
         super(e);
     }

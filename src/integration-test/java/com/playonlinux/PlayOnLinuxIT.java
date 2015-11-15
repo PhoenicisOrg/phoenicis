@@ -39,8 +39,7 @@ import com.playonlinux.integration.PythonIntegrationCase;
 
 @Scan
 public class PlayOnLinuxIT {
-    @Inject
-    static JythonInterpreterFactory jythonJythonInterpreterFactory;
+    @Inject static JythonInterpreterFactory jythonJythonInterpreterFactory;
     private static PlayOnLinuxIntegrationRunner integrationRunner = new PlayOnLinuxIntegrationRunner();
 
     @BeforeClass
@@ -67,8 +66,9 @@ public class PlayOnLinuxIT {
                             List<String> methods = (List<String>) pyType.__getattr__("__dict__").invoke("keys");
 
                             for (Object methodName : (methods.stream().filter(s -> s.startsWith("test")).toArray())) {
-                                new PythonIntegrationCase(pythonInterpreter, (String) className, (String) methodName)
-                                        .run();
+                                new PythonIntegrationCase(pythonInterpreter,
+                                        (String) className, (String) methodName
+                                ).run();
                             }
 
                         }

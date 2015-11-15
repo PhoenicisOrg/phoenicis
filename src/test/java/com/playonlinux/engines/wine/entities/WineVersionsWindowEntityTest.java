@@ -39,8 +39,7 @@ public class WineVersionsWindowEntityTest {
         return wineVersionDistributionItemEntities;
     }
 
-    private final WineVersionsWindowEntity wineVersionsWindowEntityUnderTest = new WineVersionsWindowEntity(
-            wineVersionDistributionItemEntities, true, false);
+    private final WineVersionsWindowEntity wineVersionsWindowEntityUnderTest = new WineVersionsWindowEntity(wineVersionDistributionItemEntities, true, false);
 
     @Test
     public void testGetDistributions() {

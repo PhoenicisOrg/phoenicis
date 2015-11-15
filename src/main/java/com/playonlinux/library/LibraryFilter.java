@@ -36,9 +36,9 @@ public class LibraryFilter extends ObservableDefaultImplementation implements Fi
 
     @Override
     public boolean apply(InstalledApplicationEntity item) {
-        // We want to return the whole list for EMPTY search string. Otherwise
-        // compare strings.
+        // We want to return the whole list for EMPTY search string. Otherwise compare strings.
         return !StringUtils.isNotBlank(name) || item.getName().toLowerCase().contains(name);
     }
+
 
 }

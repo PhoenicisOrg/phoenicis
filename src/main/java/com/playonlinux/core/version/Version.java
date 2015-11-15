@@ -34,7 +34,7 @@ public class Version {
         final String[] splitCompleteVersion = completeVersionAsString.split("-");
         final String versionAsString = splitCompleteVersion[0];
 
-        if (splitCompleteVersion.length > 1) {
+        if(splitCompleteVersion.length > 1) {
             customName = splitCompleteVersion[1];
         } else {
             customName = null;
@@ -43,13 +43,13 @@ public class Version {
         final String[] splitVersion = versionAsString.split("\\.");
         bigNumber = Integer.valueOf(splitVersion[0]);
 
-        if (splitVersion.length <= 1) {
+        if(splitVersion.length <= 1) {
             intermediateNumber = 0;
         } else {
             intermediateNumber = Integer.valueOf(splitVersion[1]);
         }
 
-        if (splitVersion.length <= 2) {
+        if(splitVersion.length <= 2) {
             lowNumber = 0;
         } else {
             lowNumber = Integer.valueOf(splitVersion[2]);
@@ -80,18 +80,25 @@ public class Version {
 
         Version version = (Version) o;
 
-        return new EqualsBuilder().append(bigNumber, version.bigNumber)
-                .append(intermediateNumber, version.intermediateNumber).append(lowNumber, version.lowNumber).isEquals();
+        return new EqualsBuilder()
+                .append(bigNumber, version.bigNumber)
+                .append(intermediateNumber, version.intermediateNumber)
+                .append(lowNumber, version.lowNumber)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(bigNumber).append(intermediateNumber).append(lowNumber).toHashCode();
+        return new HashCodeBuilder()
+                .append(bigNumber)
+                .append(intermediateNumber)
+                .append(lowNumber)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        if (customName == null) {
+        if(customName == null) {
             if (lowNumber == 0) {
                 return String.format("%s.%s", bigNumber, intermediateNumber);
             }

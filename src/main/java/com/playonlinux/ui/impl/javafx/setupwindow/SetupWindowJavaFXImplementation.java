@@ -75,7 +75,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
 
     private void loadImages() {
         this.topImage = this.getClass().getResource("defaultTopImage.png");
-        switch (OperatingSystem.fetchCurrentOperationSystem()) {
+        switch ( OperatingSystem.fetchCurrentOperationSystem() ) {
             case MACOSX:
                 this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
                 break;
@@ -85,6 +85,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
                 break;
         }
     }
+
 
     public void addNode(Node widgetToAdd) {
         this.root.getChildren().add(widgetToAdd);
@@ -128,23 +129,22 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
 
     @Override
     public void showPresentationStep(CancelerSynchronousMessage message, String textToShow) {
-        StepRepresentationPresentation stepRepresentationPresentation = new StepRepresentationPresentation(this,
-                message, textToShow);
+        StepRepresentationPresentation stepRepresentationPresentation =
+                new StepRepresentationPresentation(this, message, textToShow);
         stepRepresentationPresentation.installStep();
     }
 
     @Override
     public void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText) {
-        StepRepresentationLicence stepRepresentationLicence = new StepRepresentationLicence(this, message, textToShow,
-                licenceText);
+        StepRepresentationLicence stepRepresentationLicence =
+                new StepRepresentationLicence(this, message, textToShow, licenceText);
         stepRepresentationLicence.installStep();
     }
 
     @Override
-    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory,
-            List<String> extensions) {
-        StepRepresentationBrowse stepRepresentationBrowse = new StepRepresentationBrowse(this, message, textToShow,
-                browseDirectory, extensions);
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
+        StepRepresentationBrowse stepRepresentationBrowse =
+                new StepRepresentationBrowse(this, message, textToShow, browseDirectory, extensions);
         stepRepresentationBrowse.installStep();
     }
 

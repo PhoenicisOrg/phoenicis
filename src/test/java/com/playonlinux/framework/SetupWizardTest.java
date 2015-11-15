@@ -42,8 +42,8 @@ import com.playonlinux.ui.impl.mockui.setupwindow.MockUISetupWindowImplementatio
 
 public class SetupWizardTest {
     private SetupWizard setupWizard;
-    private final Controller controllerMock = mock(Controller.class);
-    private final TestContextConfig testContextConfig = new TestContextConfig();
+    private Controller controllerMock = mock(Controller.class);
+    private TestContextConfig testContextConfig = new TestContextConfig();
 
     class TestContextConfig extends AbstractConfiguration {
         @Bean
@@ -113,6 +113,7 @@ public class SetupWizardTest {
     public void testWait() throws Exception {
         this.setupWizard.wait("text to showRightView");
     }
+
 
     @After
     public void tearDown() throws InjectionException {

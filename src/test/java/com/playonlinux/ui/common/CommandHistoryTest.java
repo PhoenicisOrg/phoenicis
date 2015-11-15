@@ -27,7 +27,7 @@ public class CommandHistoryTest {
 
     private final CommandHistory history = new CommandHistory();
 
-    private final CommandHistory.Item[] testItems = new CommandHistory.Item[2];
+    private CommandHistory.Item[] testItems = new CommandHistory.Item[2];
 
     @Before
     public void setUp() {
@@ -37,7 +37,7 @@ public class CommandHistoryTest {
 
     @Test
     public void testHistory() {
-        // EMPTY history should always return an EMPTY item.
+        //EMPTY history should always return an EMPTY item.
         assertSame(CommandHistory.Item.EMPTY, history.current());
         history.up();
         history.up();
@@ -46,33 +46,29 @@ public class CommandHistoryTest {
         assertSame(CommandHistory.Item.EMPTY, history.current());
 
         history.add(testItems[0]);
-        // history should be reset to point to an EMPTY item after adding a new
-        // item
+        //history should be reset to point to an EMPTY item after adding a new item
         assertSame(CommandHistory.Item.EMPTY, history.current());
-        // after going one up, history should be at the latest added item.
+        //after going one up, history should be at the latest added item.
         assertSame(testItems[0], history.up());
         assertSame(testItems[0], history.current());
-        // calling up even though the history is already pointing to the oldest
-        // item should
-        // have no effect => still pointing to the oldest item
+        //calling up even though the history is already pointing to the oldest item should
+        //have no effect => still pointing to the oldest item
         assertSame(testItems[0], history.up());
         assertSame(testItems[0], history.current());
-        // going back down should result in the history pointing to an EMPTY
-        // item
+        //going back down should result in the history pointing to an EMPTY item
         assertSame(CommandHistory.Item.EMPTY, history.down());
         assertSame(CommandHistory.Item.EMPTY, history.current());
 
         history.add(testItems[1]);
-        // history should always point to an EMPTY item after adding a new item
+        //history should always point to an EMPTY item after adding a new item
         assertSame(CommandHistory.Item.EMPTY, history.current());
-        // after going one up, history should be at the latest added item.
+        //after going one up, history should be at the latest added item.
         assertSame(testItems[1], history.up());
         assertSame(testItems[1], history.current());
-        // after going up once more, history should point at the second latest
-        // added item.
+        //after going up once more, history should point at the second latest added item.
         assertSame(testItems[0], history.up());
         assertSame(testItems[0], history.current());
-        // going back down, history should again point to the latest added item
+        //going back down, history should again point to the latest added item
         assertSame(testItems[1], history.down());
         assertSame(testItems[1], history.current());
     }

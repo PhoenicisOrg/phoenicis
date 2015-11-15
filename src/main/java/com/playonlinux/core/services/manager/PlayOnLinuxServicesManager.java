@@ -55,12 +55,10 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
     @Override
     public synchronized void unregister(Service service) {
         final List<String> keysToRemove = new ArrayList<>();
-        backgroundServices.keySet().stream()
-                .filter(backgroundServiceKey -> service.equals(backgroundServices.get(backgroundServiceKey)))
-                .forEach(backgroundServiceKey -> {
-                    keysToRemove.add(backgroundServiceKey);
-                    service.shutdown();
-                });
+        backgroundServices.keySet().stream().filter(backgroundServiceKey -> service.equals(backgroundServices.get(backgroundServiceKey))).forEach(backgroundServiceKey -> {
+            keysToRemove.add(backgroundServiceKey);
+            service.shutdown();
+        });
         keysToRemove.forEach(backgroundServices::remove);
     }
 
@@ -68,7 +66,7 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
     public <T extends Service> T getService(String backgroundServiceName, Class<T> backgroundServiceType) {
         final Service service = backgroundServices.get(backgroundServiceName);
 
-        if (backgroundServiceType.isAssignableFrom(service.getClass())) {
+        if(backgroundServiceType.isAssignableFrom(service.getClass())) {
             return (T) service;
         } else {
             throw new IllegalArgumentException("The selected type is not valid");
@@ -77,14 +75,13 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
 
     @Override
     public <T extends Service> T getService(Class<T> backgroundServiceType) {
-        for (Service service : backgroundServices.values()) {
-            if (backgroundServiceType.isAssignableFrom(service.getClass())) {
+        for(Service service : backgroundServices.values()) {
+            if(backgroundServiceType.isAssignableFrom(service.getClass())) {
                 return (T) service;
             }
         }
 
-        throw new IllegalArgumentException("The selected type (" + backgroundServiceType.getName()
-                + ") is not valid. Existing services: " + backgroundServices.values().toString());
+        throw new IllegalArgumentException("The selected type ("+backgroundServiceType.getName()+") is not valid. Existing services: "+backgroundServices.values().toString());
     }
 
     @Override
@@ -94,7 +91,7 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
 
     @Override
     public void init(ServiceManagerConfiguration serviceManagerConfiguration) throws ServiceInitializationException {
-        for (ServiceImplementationDefinition serviceImplementationDefinition : serviceManagerConfiguration) {
+        for(ServiceImplementationDefinition serviceImplementationDefinition: serviceManagerConfiguration) {
             try {
                 LOGGER.info(String.format("Registering component service: %s -> %s",
                         serviceImplementationDefinition.getInterfaces(),
@@ -106,5 +103,6 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
             }
         }
     }
+
 
 }

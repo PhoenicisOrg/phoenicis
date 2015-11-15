@@ -78,6 +78,7 @@ public final class MiniatureListWidget extends ScrollPane {
             this.setAlignment(Pos.CENTER);
             this.elementName = appsItem;
 
+
             Text label = new Text(appsItem);
             label.setWrappingWidth(150);
             label.getStyleClass().add("miniatureText");

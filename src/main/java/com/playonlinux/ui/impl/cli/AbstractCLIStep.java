@@ -34,15 +34,15 @@ public abstract class AbstractCLIStep {
         System.out.println("\n");
         String input;
 
-        if (defineDefaultValue() == null) {
-            input = System.console()
-                    .readLine(String.format("< %s [%s] > ", defineInputMessage(), defineDefaultValue()));
-            if (StringUtils.isBlank(input)) {
+        if(defineDefaultValue() == null) {
+            input = System.console().readLine(String.format("< %s [%s] > ", defineInputMessage(), defineDefaultValue()));
+            if(StringUtils.isBlank(input)) {
                 input = defineDefaultValue();
             }
         } else {
             input = System.console().readLine(String.format("< %s >", defineInputMessage()));
         }
     }
+
 
 }

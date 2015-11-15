@@ -104,12 +104,11 @@ public class MockUISetupWindowImplementation implements SetupWindow {
     @Override
     public void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText) {
         // TODO
-
+        
     }
 
     @Override
-    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory,
-            List<String> extensions) {
+    public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
 
     }
 }

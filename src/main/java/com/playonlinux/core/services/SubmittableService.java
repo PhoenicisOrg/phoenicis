@@ -24,23 +24,17 @@ import com.playonlinux.core.services.manager.Service;
 
 /**
  * Represents a service that can receive taskes
- * 
- * @param <T>
- *            The type of the tasks
- * @param <U>
- *            The type of the callbacks
+ * @param <T> The type of the tasks
+ * @param <U> The type of the callbacks
  */
-public interface SubmittableService<T, U> extends Service {
+public interface SubmittableService<T, U>
+        extends Service {
 
     /**
      * Submit a task
-     * 
-     * @param task
-     *            The task to submit
-     * @param callback
-     *            The callback if the the action is successful
-     * @param error
-     *            The callback if any error occur
+     * @param task The task to submit
+     * @param callback The callback if the the action is successful
+     * @param error The callback if any error occur
      */
     void submit(T task, U callback, Function<Exception, Void> error);
 }

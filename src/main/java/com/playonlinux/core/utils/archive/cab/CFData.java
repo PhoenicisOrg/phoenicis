@@ -43,21 +43,29 @@ public class CFData extends AbstractCabStructure {
             structureSize += inputStream.read(cbData);
             structureSize += inputStream.read(cbUncomp);
 
-            // structureSize += readVariableField(inputStream, abReserve);
+            //structureSize += readVariableField(inputStream, abReserve);
 
             ab = new byte[(int) getCompressedSize()];
 
             structureSize += inputStream.read(ab);
+
 
         } catch (IOException e) {
             throw new CabException("Unable to extract CFFolder", e);
         }
     }
 
-    @Override
     public String toString() {
-        return String.format("Checksum: %s\n" + "Offset: %s\n" + "Compressed size: %s\n" + "Uncompressed size: %s\n",
-                Arrays.toString(csum), offset, getCompressedSize(), getUncompressedSize());
+        return String.format(
+                "Checksum: %s\n" +
+                "Offset: %s\n" +
+                "Compressed size: %s\n" +
+                "Uncompressed size: %s\n",
+                Arrays.toString(csum),
+                offset,
+                getCompressedSize(),
+                getUncompressedSize()
+                );
     }
 
     public long getCompressedSize() {
@@ -67,5 +75,6 @@ public class CFData extends AbstractCabStructure {
     public long getUncompressedSize() {
         return this.decodeLittleEndian(cbUncomp);
     }
+
 
 }

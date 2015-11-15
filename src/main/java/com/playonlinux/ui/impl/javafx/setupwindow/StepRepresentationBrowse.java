@@ -30,11 +30,11 @@ import javafx.stage.FileChooser;
 
 public class StepRepresentationBrowse extends StepRepresentationMessage {
     private final File browseDirectory;
-    private final List<String> extensions;
+    private List<String> extensions;
     private File selectedFile;
 
     public StepRepresentationBrowse(SetupWindowJavaFXImplementation parent, CancelerSynchronousMessage message,
-            String textToShow, File browseDirectory, List<String> extensions) {
+                                    String textToShow, File browseDirectory, List<String> extensions) {
         super(parent, message, textToShow);
         this.browseDirectory = browseDirectory;
         this.extensions = extensions;
@@ -44,27 +44,28 @@ public class StepRepresentationBrowse extends StepRepresentationMessage {
     public void drawStepContent() {
         super.drawStepContent();
 
-        final Button browseButton = new Button(translate("Browse"));
+        final  Button browseButton = new Button(translate("Browse"));
         browseButton.setLayoutX(200);
         browseButton.setLayoutY(100);
         browseButton.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
-            if (extensions != null) {
-                fileChooser.setSelectedExtensionFilter(
-                        new FileChooser.ExtensionFilter(translate("Allowed files"), extensions));
+            if(extensions != null) {
+                fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(translate("Allowed files"), extensions));
             }
             fileChooser.setInitialDirectory(browseDirectory);
 
             selectedFile = fileChooser.showOpenDialog(this.getParentWindow());
         });
 
+
         this.addToStep(browseButton);
     }
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event -> ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse())
-                .setResponse(selectedFile.toString()));
+        this.setNextButtonAction(event ->
+                        ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(selectedFile.toString())
+        );
     }
 
 }

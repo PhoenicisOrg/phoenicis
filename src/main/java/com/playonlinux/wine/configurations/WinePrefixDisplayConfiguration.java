@@ -28,8 +28,7 @@ import com.playonlinux.wine.parameters.StrictDrawOrdering;
 import com.playonlinux.wine.parameters.VideoMemorySize;
 
 /**
- * Represents all Display Configuration of a
- * {@link com.playonlinux.wine.WinePrefix}
+ * Represents all Display Configuration of a {@link com.playonlinux.wine.WinePrefix}
  */
 public interface WinePrefixDisplayConfiguration {
     /**

@@ -42,8 +42,10 @@ import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class AppsEntitiesProvider extends ObservableDefaultImplementation<AppsWindowEntity>
-        implements Observer<DefaultAppsManager, DefaultAppsManager>, EntitiesProvider<AppEntity, AppsWindowEntity> {
+public final class AppsEntitiesProvider
+        extends ObservableDefaultImplementation<AppsWindowEntity>
+        implements Observer<DefaultAppsManager, DefaultAppsManager>,
+                   EntitiesProvider<AppEntity, AppsWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -59,17 +61,21 @@ public final class AppsEntitiesProvider extends ObservableDefaultImplementation<
     public void applyFilter(Filter<AppEntity> filter) {
         this.lastFilter = filter;
 
-        if (filter == null) {
+        if(filter == null) {
             filteredAppsItemsDTOs.clear();
         } else {
             filteredAppsItemsDTOs.clear();
             filteredAppsItemsDTOs.addAll(appsItemDTOs.stream().filter(filter::apply).collect(Collectors.toList()));
         }
 
-        this.notifyObservers(
-                new AppsWindowEntity.Builder().withAppsCategory(categoriesDTO).withAppsItem(filteredAppsItemsDTOs)
-                        .withDownloadFailed(hasFailed()).withDownloading(isUpdating()).build());
+        this.notifyObservers(new AppsWindowEntity.Builder()
+                .withAppsCategory(categoriesDTO)
+                .withAppsItem(filteredAppsItemsDTOs)
+                .withDownloadFailed(hasFailed())
+                .withDownloading(isUpdating())
+                .build());
     }
+
 
     private boolean isUpdating() {
         return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
@@ -78,6 +84,7 @@ public final class AppsEntitiesProvider extends ObservableDefaultImplementation<
     private boolean hasFailed() {
         return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.FAILED;
     }
+
 
     @Override
     public void shutdown() {
@@ -96,15 +103,20 @@ public final class AppsEntitiesProvider extends ObservableDefaultImplementation<
         this.downloadEnvelope = argument.getDownloadEnvelope();
         this.categoriesDTO.clear();
 
-        if (downloadEnvelope.getEnvelopeContent() != null) {
+        if(downloadEnvelope.getEnvelopeContent() != null) {
             for (CategoryDTO categoryDTO : downloadEnvelope.getEnvelopeContent()) {
                 if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     categoriesDTO.add(new AppsCategoryEntity(categoryDTO.getName()));
                     for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
                         final List<ScriptEntity> scripts = new ArrayList<>();
                         for (ScriptDTO script : applicationDTO.getScripts()) {
-                            scripts.add(new ScriptEntity.Builder().withName(script.getName()).withId(script.getId())
-                                    .withUrl(script.getUrl()).build());
+                            scripts.add(
+                                    new ScriptEntity.Builder()
+                                            .withName(script.getName())
+                                            .withId(script.getId())
+                                            .withUrl(script.getUrl())
+                                            .build()
+                            );
                         }
 
                         final AppEntity appsItemDTO = new AppEntity.Builder() //
@@ -115,7 +127,8 @@ public final class AppsEntitiesProvider extends ObservableDefaultImplementation<
                                 .withTesting(false) //
                                 .withCommercial(false) //
                                 .withMiniaturesUrlsString(applicationDTO.getMiniaturesUrls()) //
-                                .withScripts(scripts).build();
+                                .withScripts(scripts)
+                                .build();
 
                         appsItemDTOs.add(appsItemDTO);
                     }

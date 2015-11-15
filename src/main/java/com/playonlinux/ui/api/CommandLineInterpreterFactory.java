@@ -27,10 +27,8 @@ import com.playonlinux.core.python.CommandInterpreterException;
 public interface CommandLineInterpreterFactory {
     /**
      * Creates a instance of {@link CommandInterpreter}
-     * 
      * @return a {@link CommandInterpreter}
-     * @throws CommandInterpreterException
-     *             if the service manager fails to create an interpreter
+     * @throws CommandInterpreterException if the service manager fails to create an interpreter
      */
     CommandInterpreter createInstance() throws CommandInterpreterException;
 }

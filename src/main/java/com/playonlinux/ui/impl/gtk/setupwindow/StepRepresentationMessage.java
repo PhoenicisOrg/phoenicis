@@ -43,8 +43,9 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(
-                event -> ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null));
+        this.setNextButtonAction(event ->
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
+        );
     }
 
 }

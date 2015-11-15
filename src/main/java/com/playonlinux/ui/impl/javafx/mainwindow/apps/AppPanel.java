@@ -52,9 +52,11 @@ final class AppPanel extends VBox {
         final WebView descriptionWidget = new WebView();
 
         try {
-            descriptionWidget.getEngine()
-                    .loadContent(new HtmlTemplate(this.getClass().getResourceAsStream("descriptionTemplate.html"))
-                            .render(appsItemDTO));
+            descriptionWidget.getEngine().loadContent(
+                    new HtmlTemplate(this.getClass()
+                            .getResourceAsStream("descriptionTemplate.html")
+                    ).render(appsItemDTO)
+            );
         } catch (IOException e) {
             LOGGER.error("Unable to load the description", e);
         }
@@ -66,8 +68,8 @@ final class AppPanel extends VBox {
                         final String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
 
                         try {
-                            InstallerDownloaderEntityProvider installerDownloaderEntityProvider = eventHandlerApps
-                                    .getInstallerDownloaderEntityProvider(link);
+                            InstallerDownloaderEntityProvider installerDownloaderEntityProvider =
+                                    eventHandlerApps.getInstallerDownloaderEntityProvider(link);
 
                             installerDownloaderEntityProvider.getScript();
                         } catch (AppsManagerException e) {
@@ -85,6 +87,7 @@ final class AppPanel extends VBox {
                 }
             }
         });
+
 
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");

@@ -29,8 +29,8 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
     private final String licenceText;
     private boolean isAgree;
 
-    public StepRepresentationLicence(SetupWindowJavaFXImplementation parent,
-            CancelerSynchronousMessage messageWaitingForResponse, String textToShow, String licenceText) {
+    public StepRepresentationLicence(SetupWindowJavaFXImplementation parent, CancelerSynchronousMessage messageWaitingForResponse, String textToShow,
+                                     String licenceText) {
         super(parent, messageWaitingForResponse, textToShow);
 
         this.licenceText = licenceText;

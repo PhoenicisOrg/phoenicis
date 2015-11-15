@@ -52,8 +52,7 @@ public class ShortcutSidebarMenu extends ActionMenu {
         debugMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/debug.png"), translate("Debug"));
         configureMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/configure.png"), translate("Configure"));
         createMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/create.png"), translate("Create Shortcut"));
-        openDirectoryMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/openDir.png"),
-                translate("Open directory"));
+        openDirectoryMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/openDir.png"), translate("Open directory"));
         uninstallMenuItem = addMenuItem(ResourceHelper.getIcon("shortcut/uninstall.png"), translate("Uninstall"));
     }
 
@@ -67,34 +66,35 @@ public class ShortcutSidebarMenu extends ActionMenu {
         uninstallMenuItem.clicked.connect(this, "uninstallMenuItemClicked()");
     }
 
+
     /* EVENT HANDLERS */
 
     private void runMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
     private void closeMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
     private void debugMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
     private void configureMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
     private void createMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
     private void openDirectoryMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
     private void uninstallMenuItemClicked() {
-        // TODO: connect
+        //TODO: connect
     }
 
 }

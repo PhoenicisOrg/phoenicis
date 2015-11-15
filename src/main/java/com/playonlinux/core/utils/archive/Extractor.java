@@ -28,22 +28,18 @@ import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.utils.FileAnalyser;
 
-public class Extractor extends ObservableDefaultImplementation<ProgressStateEntity> {
+public class Extractor  extends ObservableDefaultImplementation<ProgressStateEntity> {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
     /**
      * Uncompress a .tar file
-     * 
-     * @param inputFile
-     *            input file
-     * @param outputDir
-     *            output directory
+     * @param inputFile input file
+     * @param outputDir output directory
      * @return list of uncompressed files
      * @throws ArchiveException
      */
     public List<File> uncompress(final File inputFile, final File outputDir) throws ArchiveException {
-        LOGGER.info(
-                String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        LOGGER.info(String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         try {
             switch (FileAnalyser.getMimetype(inputFile)) {
@@ -61,6 +57,7 @@ public class Extractor extends ObservableDefaultImplementation<ProgressStateEnti
             throw new ArchiveException("Unrecognized file format", e);
         }
     }
+
 
     private Void changeState(ProgressStateEntity progressStateEntity) {
         this.notifyObservers(progressStateEntity);

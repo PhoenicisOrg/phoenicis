@@ -85,13 +85,12 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
         showRightView(wineDistributions);
     }
 
-    @Override
     protected void drawSideBar() {
         super.drawSideBar();
 
         final TextField searchBar = new TextField();
-        searchBar.setOnKeyReleased(event -> {
-        });
+            searchBar.setOnKeyReleased(event -> {
+            });
 
         LeftButton wine = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/engines/wine.png", "Wine");
 
@@ -106,31 +105,29 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
     @Override
     public void update(Observable observable, WineVersionsWindowEntity argument) {
         Platform.runLater(() -> {
-            if (argument.isDownloading()) {
-                this.showWait();
-            } else if (argument.isDownloadFailed()) {
-                this.showFailure();
-            } else {
-                this.showWineVersions();
-                wineDistributions.getTabs().clear();
+                    if (argument.isDownloading()) {
+                        this.showWait();
+                    } else if (argument.isDownloadFailed()) {
+                        this.showFailure();
+                    } else {
+                        this.showWineVersions();
+                        wineDistributions.getTabs().clear();
 
-                for (WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument
-                        .getDistributions()) {
-                    final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
-                    final Tab wineDistributionTab = new Tab();
-                    wineDistributionTab.setClosable(false);
-                    wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
-                    wineDistributionTab.setContent(miniatureListWidget);
+                        for (WineVersionDistributionItemEntity wineVersionDistributionItemEntity : argument.getDistributions()) {
+                            final MiniatureListWidget miniatureListWidget = MiniatureListWidget.create();
+                            final Tab wineDistributionTab = new Tab();
+                            wineDistributionTab.setClosable(false);
+                            wineDistributionTab.setText(wineVersionDistributionItemEntity.getDescription());
+                            wineDistributionTab.setContent(miniatureListWidget);
 
-                    for (WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity
-                            .getAvailablePackages()) {
-                        miniatureListWidget.addItem(wineVersionItemEntity.getVersion(),
-                                new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+                            for (WineVersionItemEntity wineVersionItemEntity : wineVersionDistributionItemEntity.getAvailablePackages()) {
+                                miniatureListWidget.addItem(wineVersionItemEntity.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+                            }
+
+                            wineDistributions.getTabs().add(wineDistributionTab);
+                        }
                     }
-
-                    wineDistributions.getTabs().add(wineDistributionTab);
                 }
-            }
-        });
+        );
     }
 }

@@ -8,8 +8,7 @@ import com.playonlinux.core.services.manager.ServiceManagerConfiguration;
 
 @Scan
 public class ServiceManagerGetter {
-    @Inject
-    public static ServiceManager serviceManager;
+    @Inject public static ServiceManager serviceManager;
 
     public void init(String className) throws ServiceInitializationException, ReflectiveOperationException {
         serviceManager.init((ServiceManagerConfiguration) Class.forName(className).newInstance());

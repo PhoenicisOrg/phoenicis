@@ -51,6 +51,7 @@ public class MainWindowHeader extends GridPane {
 
         this.setId("headerPane");
 
+
         this.add(playOnLinuxLogo, 0, 0);
 
         HBox menuPane = new HBox();
@@ -86,15 +87,12 @@ public class MainWindowHeader extends GridPane {
     public void setAppsEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(appCenter, eventHandler);
     }
-
     public void setEnginesEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(engines, eventHandler);
     }
-
     public void setContainersEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(containers, eventHandler);
     }
-
     public void setSettingsEvent(EventHandler<MouseEvent> eventHandler) {
         setLinkEvents(settings, eventHandler);
     }

@@ -28,57 +28,42 @@ import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
 import com.playonlinux.core.messages.InterrupterSynchronousMessage;
 
 /**
- * Represents a Setup Window. This interfaces needs to be implemented by the UI.
+ * Represents a Setup Window.
+ * This interfaces needs to be implemented by the UI.
  */
 public interface SetupWindow {
     /**
      * Set the top image
-     * 
-     * @param topImage
-     *            The top image to set
-     * @throws IOException
-     *             If the top image cannot be loaded
+     * @param topImage The top image to set
+     * @throws IOException If the top image cannot be loaded
      */
     void setTopImage(File topImage) throws IOException;
 
     /**
      * Set the left image
-     * 
-     * @param leftImage
-     *            The left image to set
-     * @throws IOException
-     *             If the left image cannot be loaded
+     * @param leftImage The left image to set
+     * @throws IOException If the left image cannot be loaded
      */
     void setLeftImage(File leftImage) throws IOException;
 
     /**
      * Set the top image
-     * 
-     * @param topImage
-     *            The top image to set
-     * @throws IOException
-     *             If the top image cannot be loaded
+     * @param topImage The top image to set
+     * @throws IOException If the top image cannot be loaded
      */
     void setTopImage(URL topImage) throws IOException;
 
     /**
      * Set the left image
-     * 
-     * @param leftImage
-     *            The left image to set
-     * @throws IOException
-     *             If the left image cannot be loaded
+     * @param leftImage The left image to set
+     * @throws IOException If the left image cannot be loaded
      */
     void setLeftImage(URL leftImage) throws IOException;
 
     /**
      * Show a simple message and block until a response is given
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
      */
     void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow);
 
@@ -86,92 +71,58 @@ public interface SetupWindow {
 
     /**
      * Show a a text box and block until a response is given
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
-     * @param defaultValue
-     *            The default value
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
+     * @param defaultValue The default value
      */
     void showTextBoxStep(CancelerSynchronousMessage message, String textToShow, String defaultValue);
 
     /**
      * Show a menu step and block until a response is given
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
-     * @param menuItems
-     *            The items in the menu
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
+     * @param menuItems The items in the menu
      */
     void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems);
 
     /**
      * Show a wait message, and returns immediately
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
      */
     void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow);
 
     /**
      * Show a progress bar and returns immediately
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
      * @return a {@link ProgressControl} object that can be manipulated later
      */
     ProgressControl showProgressBar(InterrupterSynchronousMessage message, String textToShow);
 
     /**
      * Shows a presentation step and blocks until a response is given
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
      */
     void showPresentationStep(CancelerSynchronousMessage message, String textToShow);
 
     /**
      * Shows a licence step and blocks until a response is given
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
-     * @param licenceText
-     *            The licence content
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
+     * @param licenceText The licence content
      */
     void showLicenceStep(CancelerSynchronousMessage message, String textToShow, String licenceText);
 
     /**
      * Shows a file browser step, and blocks until a response is given
-     * 
-     * @param message
-     *            The {@link com.playonlinux.core.messages.Message} object that
-     *            will handle the response
-     * @param textToShow
-     *            The text to show to the user
-     * @param browseDirectory
-     *            The default directory to browse
-     * @param extensions
-     *            Allowed extensions
+     * @param message The {@link com.playonlinux.core.messages.Message} object that will handle the response
+     * @param textToShow The text to show to the user
+     * @param browseDirectory The default directory to browse
+     * @param extensions Allowed extensions
      */
-    void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory,
-            List<String> extensions);
+    void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions);
 
     /**
      * Close the SetupWindow

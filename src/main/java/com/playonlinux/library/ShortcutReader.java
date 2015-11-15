@@ -30,7 +30,7 @@ public class ShortcutReader {
     @Inject
     static ObjectMapper objectMapper;
 
-    public Shortcut readShortcut(ShortcutFiles shortcutFiles) throws LibraryException {
+    public Shortcut readShortcut (ShortcutFiles shortcutFiles) throws LibraryException {
         try {
             return objectMapper.readValue(shortcutFiles.getShortcutFile(), Shortcut.class);
         } catch (IOException e) {

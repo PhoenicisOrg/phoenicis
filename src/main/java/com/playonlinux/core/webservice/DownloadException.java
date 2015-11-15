@@ -21,11 +21,6 @@ package com.playonlinux.core.webservice;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class DownloadException extends PlayOnLinuxException {
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7858410165072539365L;
-
     public DownloadException(String message) {
         super(message);
     }

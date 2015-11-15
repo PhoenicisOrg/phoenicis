@@ -23,13 +23,17 @@ import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.gui.QItemSelection;
 import com.trolltech.qt.gui.QListView;
 
+
 /**
  * List of installed Shortcuts displayed in the MainWindow.
  */
 public class ShortcutList extends QListView {
 
     public enum IconSize {
-        SMALL(new QSize(16, 16)), MEDIUM(new QSize(24, 24)), LARGE(new QSize(32, 32)), VERY_LARGE(new QSize(48, 48));
+        SMALL(new QSize(16, 16)),
+        MEDIUM(new QSize(24, 24)),
+        LARGE(new QSize(32, 32)),
+        VERY_LARGE(new QSize(48, 48));
 
         private QSize size;
 
@@ -45,6 +49,7 @@ public class ShortcutList extends QListView {
 
     private final MainWindow mainWindow;
 
+
     public ShortcutList(MainWindow mainWindow) {
         super(mainWindow);
         this.mainWindow = mainWindow;
@@ -55,6 +60,8 @@ public class ShortcutList extends QListView {
     private void setupUi() {
         this.setModel(new ShortcutListModel(mainWindow.getEventHandler(), IconSize.VERY_LARGE));
     }
+
+
 
     /* EVENT HANDLERS */
 

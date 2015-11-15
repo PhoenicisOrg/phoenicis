@@ -25,16 +25,19 @@ public class PythonIntegrationCase {
     private final String className;
     private final PythonInterpreter pythonInterpreter;
 
+
     public PythonIntegrationCase(PythonInterpreter pythonInterpreter, String className, String methodName) {
         this.pythonInterpreter = pythonInterpreter;
         this.className = className;
         this.methodName = methodName;
     }
 
+
+
     public void run() {
 
         System.out.println("--------------------------------------------------------------------------------");
-        System.out.println("INTEGRATION TEST: " + toString());
+        System.out.println("INTEGRATION TEST: "+toString());
         System.out.println("--------------------------------------------------------------------------------");
         pythonInterpreter.exec("suite = unittest.TestSuite()");
         pythonInterpreter.exec("suite.addTest(" + className + "(\"" + methodName + "\"))");
@@ -44,6 +47,6 @@ public class PythonIntegrationCase {
 
     @Override
     public String toString() {
-        return className + "_" + methodName;
+        return className+"_"+methodName;
     }
 }

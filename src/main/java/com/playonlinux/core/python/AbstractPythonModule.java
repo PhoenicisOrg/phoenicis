@@ -35,21 +35,23 @@ public abstract class AbstractPythonModule<T> {
     }
 
     protected List<PyType> getCandidateClasses() {
-        List<PyType> pyClasses = new ArrayList<>();
+        List <PyType> pyClasses = new ArrayList<>();
 
-        for (PyObject localObject : pythonInterpreter.getLocals().asIterable()) {
+        for(PyObject localObject: pythonInterpreter.getLocals().asIterable()) {
             PyObject objectFound = pythonInterpreter.get(localObject.asString());
-            if (objectFound instanceof PyType) {
-                PyType typeFound = (PyType) objectFound;
+            if(objectFound instanceof PyType) {
+                PyType typeFound = (PyType)objectFound;
 
-                if (typeFound.isSubType(PyType.fromClass(type)) && typeFound.isCallable()
-                        && "__main__".equals(typeFound.getModule().toString())) {
-                    pyClasses.add(typeFound);
+                if(typeFound.isSubType(PyType.fromClass(type)) &&
+                        typeFound.isCallable() && "__main__".equals(typeFound.getModule().toString())) {
+                        pyClasses.add(typeFound);
                 }
             }
 
         }
         return pyClasses;
     }
+
+
 
 }

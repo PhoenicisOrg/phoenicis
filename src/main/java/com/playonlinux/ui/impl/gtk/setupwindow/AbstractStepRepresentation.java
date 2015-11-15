@@ -61,6 +61,7 @@ abstract class AbstractStepRepresentation {
         return this.parent.getWizardTitle();
     }
 
+
     protected CancelerMessage getMessageAwaitingForResponse() {
         return messageWaitingForResponse;
     }
@@ -119,9 +120,10 @@ abstract class AbstractStepRepresentation {
     }
 
     protected void clearAllOnParent() {
-        for (Widget child : getParentRoot().getChildren()) {
+        for(Widget child: getParentRoot().getChildren()) {
             child.destroy();
         }
     }
+
 
 }

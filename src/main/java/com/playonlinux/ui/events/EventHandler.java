@@ -42,45 +42,37 @@ import com.playonlinux.ui.api.EntitiesProvider;
 public interface EventHandler {
     /**
      * Run a local script
-     * 
-     * @param scriptToRun
-     *            script to run
-     * @throws PlayOnLinuxException
-     *             if any error occurs
+     * @param scriptToRun script to run
+     * @throws PlayOnLinuxException if any error occurs
      */
     void runLocalScript(File scriptToRun) throws PlayOnLinuxException;
 
     /**
      * Get installed applications
-     * 
      * @return installed applications observable
      */
     EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getInstalledApplications();
 
     /**
      * Get the Available Apps Manager
-     * 
      * @return The actual component
      */
     AppsManager getAppsManager();
 
     /**
      * Remote available installer entity provider
-     * 
      * @return the entity provider
      */
     EntitiesProvider<AppEntity, AppsWindowEntity> getRemoteAvailableInstallers();
 
     /**
      * WineVersion entity provider
-     * 
      * @return the entity provider
      */
     EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> getRemoteWineVersions();
 
     /**
      * Containers entity provider
-     * 
      * @return the entity provider
      */
     EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers();
@@ -89,15 +81,11 @@ public interface EventHandler {
 
     /**
      * Get a entity provider to download a script
-     * 
-     * @param scriptUrl
-     *            The script URL as a string
+     * @param scriptUrl The script URL as a string
      * @return the entity provider
-     * @throws AppsManagerException
-     *             if the URL is malformed
+     * @throws AppsManagerException if the URL is malformed
      */
-    InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl)
-            throws AppsManagerException;
+    InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
 
     /**
      * Events to be run when the application is started
@@ -106,9 +94,7 @@ public interface EventHandler {
 
     /**
      * Refresh the lsit of available installers
-     * 
-     * @throws PlayOnLinuxException
-     *             If any error occur
+     * @throws PlayOnLinuxException If any error occur
      */
     void refreshAvailableInstallers() throws PlayOnLinuxException;
 

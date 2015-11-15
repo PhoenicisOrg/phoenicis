@@ -80,24 +80,24 @@ public class ObservableDirectorySize extends ObservableDirectory<ProgressStateEn
 
         @Override
         public void run() {
-            while (this.isRunning()) {
+            while(this.isRunning()) {
                 try {
-                    if (observedDirectory.exists()) {
+                    if(observedDirectory.exists()) {
                         long lastDirectorySize = FileUtils.sizeOfDirectory(observedDirectory);
-                        final double percentage = 100. * (lastDirectorySize - startSize) / (endSize - startSize);
+                        final double percentage = 100. * (double) (lastDirectorySize - startSize) / (double) (endSize - startSize);
                         ProgressStateEntity progressStateEntity = new ProgressStateEntity.Builder()
-                                .withState(ProgressStateEntity.State.PROGRESSING).withPercent(percentage).build();
+                                .withState(ProgressStateEntity.State.PROGRESSING)
+                                .withPercent(percentage)
+                                .build();
 
                         this.observableDirectorySize.notifyObservers(progressStateEntity);
                     }
-                } catch (IllegalArgumentException e) {
-                    LOGGER.info(String.format(
-                            "Got IllegalArgumentException while checking the directory size: %s. Ignoring",
-                            observedDirectory), e);
+                } catch(IllegalArgumentException e) {
+                    LOGGER.info(String.format("Got IllegalArgumentException while checking the directory size: %s. Ignoring", observedDirectory), e);
                 }
 
                 try {
-                    Thread.sleep(checkInterval);
+                    Thread.sleep((long) checkInterval);
                 } catch (InterruptedException e) {
                     LOGGER.debug(e);
                     this.stopChecking();

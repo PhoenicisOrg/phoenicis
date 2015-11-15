@@ -28,17 +28,13 @@ import com.playonlinux.core.observer.Observer;
 public interface ProgressControl extends Observer<Observable, ProgressStateEntity> {
     /**
      * Set the percentage of the progress bar
-     * 
-     * @param value
-     *            The value to set
+     * @param value The value to set
      */
     void setProgressPercentage(double value);
 
     /**
      * The text of the progressbar
-     * 
-     * @param text
-     *            The text to set
+     * @param text The text to set
      */
     void setText(String text);
 

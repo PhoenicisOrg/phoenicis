@@ -29,9 +29,9 @@ public enum OperatingSystem {
     private final String winePackage;
 
     OperatingSystem(String fullName, String legacyName, String winePackage) {
-        this.fullName = fullName;
-        this.legacyName = legacyName;
-        this.winePackage = winePackage;
+	this.fullName = fullName;
+	this.legacyName = legacyName;
+	this.winePackage = winePackage;
     }
 
     /**
@@ -42,13 +42,13 @@ public enum OperatingSystem {
      * @return The operating system
      */
     public static OperatingSystem fromString(String fullName) {
-        for (OperatingSystem system : OperatingSystem.values()) {
-            if (system.getFullName().equals(fullName)) {
-                return system;
-            }
-        }
+	for (OperatingSystem system : OperatingSystem.values()) {
+	    if (system.getFullName().equals(fullName)) {
+		return system;
+	    }
+	}
 
-        throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
+	throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
     }
 
     /**
@@ -57,7 +57,7 @@ public enum OperatingSystem {
      * @return The current operating system
      */
     public static OperatingSystem fetchCurrentOperationSystem() {
-        return OperatingSystem.fromString(System.getProperty("os.name"));
+	return OperatingSystem.fromString(System.getProperty("os.name"));
     }
 
     /**
@@ -65,7 +65,7 @@ public enum OperatingSystem {
      * @return PlayOnLinux v4 compatible short name
      */
     public String getFullName() {
-        return fullName;
+	return fullName;
     }
 
     /**
@@ -73,7 +73,7 @@ public enum OperatingSystem {
      * @return PlayOnLinux v4 compatible short name
      */
     public String getLegacyName() {
-        return legacyName;
+	return legacyName;
     }
 
     /**
@@ -81,11 +81,11 @@ public enum OperatingSystem {
      * @return The name used for the wine packages
      */
     public String getWinePackage() {
-        return winePackage;
+	return winePackage;
     }
 
     @Override
     public String toString() {
-        return this.fullName;
+	return this.fullName;
     }
 }

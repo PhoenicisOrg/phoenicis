@@ -32,11 +32,12 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     private final ProgressBar progressBar = new ProgressBar();
     private final Text progressText = new Text("");
 
-    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent,
-            InterrupterSynchronousMessage messageWaitingForResponse, String textToShow) {
+    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, InterrupterSynchronousMessage messageWaitingForResponse,
+                                         String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);
     }
+
 
     @Override
     protected void drawStepContent() {
@@ -62,23 +63,25 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     public void setProgressPercentage(double value) {
         UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
         messageSender.asynchronousSend(new AsynchroneousMessage() {
-            @Override
-            public void execute(Message message) {
-                progressBar.setProgress(value / 100.);
-            }
-        });
+                                           @Override
+                                           public void execute(Message message) {
+                                               progressBar.setProgress(value / 100.);
+                                           }
+                                       }
+        );
     }
 
     @Override
     public void setText(String text) {
         UIMessageSenderJavaFXImplementation messageSender = new UIMessageSenderJavaFXImplementation();
         messageSender.asynchronousSend(new AsynchroneousMessage() {
-            @Override
-            public void execute(Message message) {
-                progressText.setText(text);
-            }
-        });
+                                           @Override
+                                           public void execute(Message message) {
+                                               progressText.setText(text);
+                                           }
+                                       });
     }
+
 
     @Override
     public void update(com.playonlinux.core.observer.Observable observable, ProgressStateEntity progressStateEntity) {

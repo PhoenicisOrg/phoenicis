@@ -26,13 +26,10 @@ import java.util.function.Function;
 public interface CommandInterpreter extends AutoCloseable {
     /**
      * Send a line to the interpreter
-     * 
-     * @param command
-     *            command to send
-     * @param callback
-     *            callback to run when the command is sent
-     * @return true if the command is directly interpreted (complete). False if
-     *         the command is incomplete (if statements, ...)
+     * @param command command to send
+     * @param callback callback to run when the command is sent
+     * @return true if the command is directly interpreted (complete). False if the command is incomplete
+     * (if statements, ...)
      */
     boolean sendLine(String command, Function<String, Void> callback);
 

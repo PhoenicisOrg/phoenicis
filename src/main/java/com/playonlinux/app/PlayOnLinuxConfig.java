@@ -56,11 +56,11 @@ import com.playonlinux.ui.impl.qt.ControllerQtImplementation;
 public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     private boolean useCliInterface = false;
-    private final PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
-    private final ServiceManager playOnLinuxServiceManager = new PlayOnLinuxServicesManager();
+    private PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
+    private ServiceManager playOnLinuxServiceManager = new PlayOnLinuxServicesManager();
     private boolean useGTKInterface;
     private boolean useQtInterface;
-    private final ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor = Executors.newCachedThreadPool();
 
     /**
      * This bean represents the UI controller
@@ -84,26 +84,22 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      * Source data for scripts
      *
      * @return the bean
-     * @throws MalformedURLException
-     *             if the URL in the config file is malformed
+     * @throws MalformedURLException if the URL in the config file is malformed
      */
     @Bean
     public InstallerSource installerSource() throws MalformedURLException {
-        return new InstallerSourceWebserviceDefaultImplementation(
-                new URL(playOnLinuxContext.getProperty("webservice.apps.url")));
+        return new InstallerSourceWebserviceDefaultImplementation(new URL(playOnLinuxContext.getProperty("webservice.apps.url")));
     }
 
     /**
      * Source data for wine versions
      *
      * @return the bean
-     * @throws MalformedURLException
-     *             if the URL in the config file is malformed
+     * @throws MalformedURLException if the URL in the config file is malformed
      */
     @Bean
     public WineVersionSource wineVersionSource() throws MalformedURLException {
-        return new WineversionsSourceWebserviceDefaultImplementation(
-                new URL(playOnLinuxContext.getProperty("webservice.wine.url")));
+        return new WineversionsSourceWebserviceDefaultImplementation(new URL(playOnLinuxContext.getProperty("webservice.wine.url")));
     }
 
     /**
@@ -198,7 +194,6 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Jackson ObjectMapper
-     * 
      * @return the object mapper
      */
     @Bean
@@ -214,8 +209,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     /**
      * Set the CLI interface
      *
-     * @param enabled
-     *            Determine if this interface should be used or not
+     * @param enabled Determine if this interface should be used or not
      */
     public void setUseCLIInterface(boolean enabled) {
         this.useCliInterface = enabled;
@@ -224,8 +218,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     /**
      * Use the GTK interface
      *
-     * @param useGTKInterface
-     *            Determine is the interface should be used or not
+     * @param useGTKInterface Determine is the interface should be used or not
      */
     public void setUseGTKInterface(boolean useGTKInterface) {
         this.useGTKInterface = useGTKInterface;
@@ -234,8 +227,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     /**
      * Use the Qt interface
      *
-     * @param useQtInterface
-     *            Determine is the interface should be used or not
+     * @param useQtInterface Determine is the interface should be used or not
      */
     public void setUseQtInterface(boolean useQtInterface) {
         this.useQtInterface = useQtInterface;

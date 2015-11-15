@@ -18,9 +18,11 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow;
 
+
 import java.util.List;
 
 import javafx.scene.layout.VBox;
+
 
 public final class LeftButtonGroup extends VBox {
 
@@ -40,10 +42,12 @@ public final class LeftButtonGroup extends VBox {
     public void setButtons(List<LeftButton> buttons) {
         this.clear();
 
-        for (LeftButton leftButton : buttons) {
+        for(LeftButton leftButton: buttons) {
             this.getChildren().addAll(leftButton);
         }
 
     }
+
+
 
 }

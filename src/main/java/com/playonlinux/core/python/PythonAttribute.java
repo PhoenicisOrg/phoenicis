@@ -24,13 +24,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Represents a Jython Attribute. A Jython attribute will be injected when the
- * script class is loaded:
+ * Represents a Jython Attribute. A Jython attribute will be injected when the script class is loaded:
  * <ul>
- * <li>If the corresponding python attribute is defined, it will be injected
- * </li>
- * <li>If the corresponding python method is defined, it will be evaluated and
- * the result will be injected</li>
+ *     <li>If the corresponding python attribute is defined, it will be injected</li>
+ *     <li>If the corresponding python method is defined, it will be evaluated and the result will be injected</li>
  * </ul>
  */
 @Retention(RetentionPolicy.RUNTIME)

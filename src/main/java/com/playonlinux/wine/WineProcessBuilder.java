@@ -30,14 +30,14 @@ public class WineProcessBuilder {
     private Map<String, String> environment;
 
     public static void mergeEnvironmentVariables(Map<String, String> environmentSource,
-            Map<String, String> environmentDestination, String environmentVariable) {
-        if (environmentSource == null) {
+                                                  Map<String, String> environmentDestination, String environmentVariable) {
+        if(environmentSource == null) {
             return;
         }
 
-        if (environmentSource.containsKey(environmentVariable)) {
-            environmentDestination.put(environmentVariable,
-                    environmentDestination.get(environmentVariable) + ":" + environmentSource.get(environmentVariable));
+        if(environmentSource.containsKey(environmentVariable)) {
+            environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable) + ":"
+                    + environmentSource.get(environmentVariable));
         }
     }
 
@@ -61,17 +61,19 @@ public class WineProcessBuilder {
         return this;
     }
 
+
     Process build() throws IOException {
-        ProcessBuilder processBuilder = new ProcessBuilder(command).directory(workingDirectory);
+        ProcessBuilder processBuilder = new ProcessBuilder(command)
+                .directory(workingDirectory);
 
         Map<String, String> processEnvironment = processBuilder.environment();
-        if (environment != null) {
+        if(environment != null) {
             for (String environmentVariable : environment.keySet()) {
                 processEnvironment.put(environmentVariable, environment.get(environmentVariable));
             }
         }
 
-        Map<String, String> systemEnvironment = System.getenv();
+        Map<String,String> systemEnvironment = System.getenv();
 
         mergeEnvironmentVariables(systemEnvironment, processEnvironment, "PATH");
         mergeEnvironmentVariables(systemEnvironment, processEnvironment, "LD_LIBRARY_PATH");
@@ -83,5 +85,6 @@ public class WineProcessBuilder {
 
         return processBuilder.start();
     }
+
 
 }

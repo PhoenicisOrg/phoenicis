@@ -28,13 +28,11 @@ public class MockIntegrationContext extends PlayOnLinuxContext {
         super();
     }
 
-    @Override
     public ReplacableProperties loadProperties() {
         ReplacableProperties propertiesBeingLoaded = new ReplacableProperties();
 
         try {
-            propertiesBeingLoaded
-                    .load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream("integration.properties"));
+            propertiesBeingLoaded.load(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream("integration.properties"));
         } catch (IOException e) {
             throw new PlayOnLinuxRuntimeException("Cannot load properties", e);
         }

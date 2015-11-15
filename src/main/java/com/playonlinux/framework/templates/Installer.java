@@ -35,7 +35,7 @@ public abstract class Installer implements ScriptTemplate {
     private boolean setupWizardInitialized = false;
 
     public void _defaultRollback() {
-        if (this.setupWizard != null) {
+        if(this.setupWizard != null) {
             setupWizard.close();
         }
     }
@@ -56,7 +56,7 @@ public abstract class Installer implements ScriptTemplate {
     }
 
     private void initalizeSetupWizard() {
-        if (!setupWizardInitialized) {
+        if(!setupWizardInitialized) {
             setupWizard.init();
             setupWizardInitialized = true;
         }
@@ -68,7 +68,7 @@ public abstract class Installer implements ScriptTemplate {
     }
 
     private void createSetupWizard() {
-        if (this.setupWizard == null) {
+        if(this.setupWizard == null) {
             setupWizard = new SetupWizard(title);
             setupWizardInitialized = false;
         }

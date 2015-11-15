@@ -23,22 +23,16 @@ package com.playonlinux.core.services.manager;
  */
 public interface ServiceManager {
     /**
-     * Register a background service. The class name will be use has a custom
-     * name
-     * 
-     * @param service
-     *            The background service to register
+     * Register a background service. The class name will be use has a custom name
+     * @param service The background service to register
      * @return the name of the background service
      */
     String register(Service service) throws ServiceInitializationException;
 
     /**
      * Register a background service with a custom name
-     * 
-     * @param backgroundServiceName
-     *            The name of the Background service
-     * @param service
-     *            The background service to register
+     * @param backgroundServiceName The name of the Background service
+     * @param service The background service to register
      */
     void register(String backgroundServiceName, Service service) throws ServiceInitializationException;
 
@@ -49,43 +43,31 @@ public interface ServiceManager {
 
     /**
      * Unregister a background service
-     * 
-     * @param service
-     *            The background service to register
+     * @param service The background service to register
      */
     void unregister(Service service);
 
     /**
      * Get a background service
-     * 
-     * @param backgroundServiceName
-     *            The name of the background service
-     * @param backgroundServiceType
-     *            The type of the background service
-     * @param <T>
-     *            The type of the background service
+     * @param backgroundServiceName The name of the background service
+     * @param backgroundServiceType The type of the background service
+     * @param <T> The type of the background service
      * @return The background service
      */
     <T extends Service> T getService(String backgroundServiceName, Class<T> backgroundServiceType);
 
     /**
      * Get a bacgkground service
-     * 
-     * @param backgroundServiceType
-     *            The type of the background service
-     * @param <T>
-     *            The type of the background service
+     * @param backgroundServiceType The type of the background service
+     * @param <T> The type of the background service
      * @return The background service
      */
     <T extends Service> T getService(Class<T> backgroundServiceType);
 
     /**
      * Checks if the background manager currently contains the given service
-     * 
-     * @param serviceName
-     *            The service to test
-     * @return true if the background manager currently contains the service.
-     *         False if it does not
+     * @param serviceName The service to test
+     * @return true if the background manager currently contains the service. False if it does not
      */
     boolean containsService(String serviceName);
 

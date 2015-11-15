@@ -34,7 +34,7 @@ class ShortcutFiles {
         this.iconPath = iconPath;
         this.shortcutFile = shortcutFile;
     }
-
+    
     public String getShortcutName() {
         return shortcutName;
     }

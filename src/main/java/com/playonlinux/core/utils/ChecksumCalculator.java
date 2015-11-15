@@ -39,7 +39,7 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
 
     public String calculate(File fileToCheck, String algorithm) throws IOException {
         final long fileSize = FileUtils.sizeOf(fileToCheck);
-        try (final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
+        try(final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
             MessageDigest messageDigest;
             try {
                 messageDigest = MessageDigest.getInstance(algorithm);
@@ -63,8 +63,8 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
             readBytes += numBytes;
-            if (sizeInBytes != 0L) {
-                double percentage = (double) readBytes / (double) sizeInBytes * 100;
+            if(sizeInBytes != 0L) {
+                double percentage = (double) readBytes / (double) sizeInBytes * (double) 100;
                 changeState(percentage);
             }
         }
@@ -72,8 +72,11 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
     }
 
     private void changeState(double percentage) {
-        this.notifyObservers(
-                new ProgressStateEntity.Builder().withPercent(percentage).withProgressText(WAIT_MESSAGE).build());
+        this.notifyObservers(new ProgressStateEntity.Builder()
+                .withPercent(percentage)
+                .withProgressText(WAIT_MESSAGE)
+                .build()
+        );
     }
 
 }

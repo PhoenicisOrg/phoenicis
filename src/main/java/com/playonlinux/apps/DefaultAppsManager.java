@@ -49,8 +49,7 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     public boolean isUpdating() {
-        return downloadEnvelope == null
-                || downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
+        return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
     }
 
     public boolean hasFailed() {

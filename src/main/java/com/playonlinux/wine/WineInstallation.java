@@ -50,6 +50,8 @@ public class WineInstallation {
         this.distribution = builder.distribution;
     }
 
+
+
     // TODO
     public String fetchVersion() {
         return null;
@@ -63,15 +65,14 @@ public class WineInstallation {
         return new File(binaryPath, "wineserver");
     }
 
-    // FIXME: Maybe it would be great to createPrefix a class to handle
-    // environment issues
+    // FIXME: Maybe it would be great to createPrefix a class to handle environment issues
     private void addPathInfoToEnvironment(Map<String, String> environment) {
         environment.put("PATH", this.binaryPath.getAbsolutePath());
         environment.put("LD_LIBRARY_PATH", this.libraryPath.getAbsolutePath());
     }
 
-    public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun,
-            Map<String, String> environment, List<String> arguments) throws WineException {
+    public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun, Map<String, String> environment,
+                       List<String> arguments) throws WineException {
 
         /* Sets the wineprefix */
         final Map<String, String> winePrefixEnvironment = new HashMap<>();
@@ -83,12 +84,12 @@ public class WineInstallation {
         final List<String> command = new ArrayList<>();
         command.add(this.fetchWineExecutablePath().getAbsolutePath());
         command.add(executableToRun);
-        if (arguments != null) {
+        if(arguments != null) {
             command.addAll(arguments);
         }
 
         final Map<String, String> wineEnvironment = new HashMap<>();
-        if (environment != null) {
+        if(environment != null) {
             wineEnvironment.putAll(environment);
         }
         wineEnvironment.putAll(winePrefixEnvironment);
@@ -96,8 +97,12 @@ public class WineInstallation {
         this.addPathInfoToEnvironment(wineEnvironment);
 
         try {
-            return new WineProcessBuilder().withCommand(command).withEnvironment(wineEnvironment)
-                    .withWorkingDirectory(workingDirectory).withApplicationEnvironment(applicationEnvironment).build();
+            return new WineProcessBuilder()
+                    .withCommand(command)
+                    .withEnvironment(wineEnvironment)
+                    .withWorkingDirectory(workingDirectory)
+                    .withApplicationEnvironment(applicationEnvironment)
+                    .build();
         } catch (IOException e) {
             throw new WineException(e);
         }
@@ -108,8 +113,7 @@ public class WineInstallation {
         return this.run(winePrefix, winePrefix.getWinePrefixDirectory(), WINEPREFIXCREATE_COMMAND);
     }
 
-    public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun,
-            Map<String, String> environment) throws WineException {
+    public Process run(WinePrefix winePrefix, File workingDirectory, String executableToRun, Map<String, String> environment) throws WineException {
         return this.run(winePrefix, workingDirectory, executableToRun, environment, null);
     }
 
@@ -134,7 +138,10 @@ public class WineInstallation {
         command.add(this.fetchWineServerExecutablePath().getAbsolutePath());
         command.add(parameter);
 
-        new WineProcessBuilder().withCommand(command).withEnvironment(environment).build();
+        new WineProcessBuilder()
+                .withCommand(command)
+                .withEnvironment(environment)
+                .build();
 
     }
 
@@ -181,5 +188,7 @@ public class WineInstallation {
         }
 
     }
+
+
 
 }

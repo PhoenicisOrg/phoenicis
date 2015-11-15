@@ -36,7 +36,8 @@ import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 
 @Scan
-public class DefaultContainersManager extends ObservableDefaultImplementation<ContainersManager>
+public class DefaultContainersManager
+        extends ObservableDefaultImplementation<ContainersManager>
         implements ContainersManager {
 
     @Inject
@@ -56,15 +57,15 @@ public class DefaultContainersManager extends ObservableDefaultImplementation<Co
     @Override
     public void update(ObservableDirectoryFiles observable, File[] argument) {
         containers.clear();
-        for (File file : argument) {
+        for(File file: argument) {
             final ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
             String containerType = containerConfigFile.readValue("containerType");
-            if (StringUtils.isBlank(containerType)) {
+            if(StringUtils.isBlank(containerType)) {
                 containerType = "WinePrefix";
             }
 
             /* TODO: Improve abstraction here */
-            if ("WinePrefix".equals(containerType)) {
+            if("WinePrefix".equals(containerType)) {
                 containers.add(new WinePrefixContainer(file));
             }
         }
@@ -90,5 +91,6 @@ public class DefaultContainersManager extends ObservableDefaultImplementation<Co
 
         containersDirectoryObservable.addObserver(this);
     }
+
 
 }

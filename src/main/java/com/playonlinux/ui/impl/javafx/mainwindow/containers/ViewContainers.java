@@ -77,15 +77,14 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
     private void applyFilter(String searchText) {
-        this.eventHandlerContainers.getContainers()
-                .applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
+        this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
     @Override
     public void update(Observable observable, ContainersWindowEntity argument) {
         final List<LeftButton> leftButtonList = new ArrayList<>();
 
-        for (ContainerEntity containerEntity : argument.getContainerEntities()) {
+        for(ContainerEntity containerEntity: argument.getContainerEntities()) {
             final LeftButton containerSelector = new LeftButton("containers/container.png", containerEntity.getName());
             leftButtonList.add(containerSelector);
             containerSelector.setOnMouseClicked(event -> selectContainer(containerEntity));
@@ -95,21 +94,19 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
     private void selectContainer(ContainerEntity containerEntity) {
-        if (containerConfigurationViewsCache.keySet().contains(containerEntity)) {
+        if(containerConfigurationViewsCache.keySet().contains(containerEntity)) {
             this.showRightView(containerConfigurationViewsCache.get(containerEntity));
         } else {
-            ContainerConfigurationView<?> containerConfigurationView = createContainerConfigurationView(
-                    containerEntity);
+            ContainerConfigurationView<?> containerConfigurationView = createContainerConfigurationView(containerEntity);
             containerConfigurationViewsCache.put(containerEntity, containerConfigurationView);
             this.showRightView(containerConfigurationView);
         }
     }
 
     private ContainerConfigurationView<?> createContainerConfigurationView(ContainerEntity containerEntity) {
-        /* Not perfect. Needs more abstraction */
-        if (containerEntity instanceof WinePrefixContainerEntity) {
-            return new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity,
-                    eventHandlerContainers);
+        /* Not perfect. Needs more abstraction  */
+        if(containerEntity instanceof WinePrefixContainerEntity) {
+            return new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, eventHandlerContainers);
         } else {
             return new GenericContainerConfigurationView(containerEntity);
         }

@@ -19,5 +19,8 @@
 package com.playonlinux.core.utils.archive.cab;
 
 public enum CompressionType {
-    NONE, MSZIP, QUANTUM, LZX
+    NONE,
+    MSZIP,
+    QUANTUM,
+    LZX
 }

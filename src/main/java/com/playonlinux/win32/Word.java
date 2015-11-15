@@ -19,8 +19,8 @@
 package com.playonlinux.win32;
 
 /**
- * Represents a WIN32 WORD A 16-bit unsigned integer. The range is 0 through
- * 65535 decimal.
+ * Represents a WIN32 WORD
+ * A 16-bit unsigned integer. The range is 0 through 65535 decimal.
  */
 public class Word extends UShort {
     public Word(byte[] bytes, int offset) {

@@ -56,142 +56,142 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
     private final RegistryKey userRegsitry;
 
     public RegistryWinePrefixDisplayConfiguration(RegistryKey userRegistry) {
-        this.userRegsitry = userRegistry;
+	this.userRegsitry = userRegistry;
     }
 
     @Override
     public GLSL getGLSL() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, USE_GLSL);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case ENABLED:
-                    return GLSL.ENABLED;
-                case DISABLED:
-                    return GLSL.DISABLED;
-                default:
-                    return GLSL.DEFAULT;
-            }
-        }
-        return GLSL.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, USE_GLSL);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case ENABLED:
+		return GLSL.ENABLED;
+	    case DISABLED:
+		return GLSL.DISABLED;
+	    default:
+		return GLSL.DEFAULT;
+	    }
+	}
+	return GLSL.DEFAULT;
     }
 
     @Override
     public DirectDrawRenderer getDirectDrawRenderer() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
-                DIRECT_DRAW_RENDERER);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case GDI:
-                    return DirectDrawRenderer.GDI;
-                case OPENGL:
-                    return DirectDrawRenderer.OPENGL;
-                default:
-                    return DirectDrawRenderer.DEFAULT;
-            }
-        }
-        return DirectDrawRenderer.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
+		DIRECT_DRAW_RENDERER);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case GDI:
+		return DirectDrawRenderer.GDI;
+	    case OPENGL:
+		return DirectDrawRenderer.OPENGL;
+	    default:
+		return DirectDrawRenderer.DEFAULT;
+	    }
+	}
+	return DirectDrawRenderer.DEFAULT;
     }
 
     @Override
     public Multisampling getMultisampling() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, MULTISAMPLING);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case ENABLED:
-                    return Multisampling.ENABLED;
-                case DISABLED:
-                    return Multisampling.DISABLED;
-                default:
-                    return Multisampling.DEFAULT;
-            }
-        }
-        return Multisampling.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D, MULTISAMPLING);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case ENABLED:
+		return Multisampling.ENABLED;
+	    case DISABLED:
+		return Multisampling.DISABLED;
+	    default:
+		return Multisampling.DEFAULT;
+	    }
+	}
+	return Multisampling.DEFAULT;
     }
 
     @Override
     public OffscreenRenderingMode getOffscreenRenderingMode() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
-                OFFSCREEN_RENDERING_MODE);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case FBO:
-                    return OffscreenRenderingMode.FBO;
-                case BACKBUFFER:
-                    return OffscreenRenderingMode.BACKBUFFER;
-                case PBUFFER:
-                    return OffscreenRenderingMode.PBUFFER;
-                default:
-                    return OffscreenRenderingMode.DEFAULT;
-            }
-        }
-        return OffscreenRenderingMode.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
+		OFFSCREEN_RENDERING_MODE);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case FBO:
+		return OffscreenRenderingMode.FBO;
+	    case BACKBUFFER:
+		return OffscreenRenderingMode.BACKBUFFER;
+	    case PBUFFER:
+		return OffscreenRenderingMode.PBUFFER;
+	    default:
+		return OffscreenRenderingMode.DEFAULT;
+	    }
+	}
+	return OffscreenRenderingMode.DEFAULT;
     }
 
     @Override
     public RenderTargetModeLock getRenderTargetModeLock() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
-                RENDER_TARGET_MODE_LOCK);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case DISABLED:
-                    return RenderTargetModeLock.DISABLED;
-                case READDRAW:
-                    return RenderTargetModeLock.READDRAW;
-                case READTEX:
-                    return RenderTargetModeLock.READTEX;
-                default:
-                    return RenderTargetModeLock.DEFAULT;
-            }
-        }
-        return RenderTargetModeLock.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
+		RENDER_TARGET_MODE_LOCK);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case DISABLED:
+		return RenderTargetModeLock.DISABLED;
+	    case READDRAW:
+		return RenderTargetModeLock.READDRAW;
+	    case READTEX:
+		return RenderTargetModeLock.READTEX;
+	    default:
+		return RenderTargetModeLock.DEFAULT;
+	    }
+	}
+	return RenderTargetModeLock.DEFAULT;
     }
 
     @Override
     public StrictDrawOrdering getStrictDrawOrdering() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
-                STRICT_DRAW_ORDERING);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case ENABLED:
-                    return StrictDrawOrdering.ENABLED;
-                case DISABLED:
-                    return StrictDrawOrdering.DISABLED;
-                default:
-                    return StrictDrawOrdering.DEFAULT;
-            }
-        }
-        return StrictDrawOrdering.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
+		STRICT_DRAW_ORDERING);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case ENABLED:
+		return StrictDrawOrdering.ENABLED;
+	    case DISABLED:
+		return StrictDrawOrdering.DISABLED;
+	    default:
+		return StrictDrawOrdering.DEFAULT;
+	    }
+	}
+	return StrictDrawOrdering.DEFAULT;
     }
 
     @Override
     public AlwaysOffscreen getAlwaysOffscreen() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
-                ALWAYS_OFFSCREEN);
-        if (registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
-                case ENABLED:
-                    return AlwaysOffscreen.ENABLED;
-                case DISABLED:
-                    return AlwaysOffscreen.DISABLED;
-                default:
-                    return AlwaysOffscreen.DEFAULT;
-            }
-        }
-        return AlwaysOffscreen.DEFAULT;
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
+		ALWAYS_OFFSCREEN);
+	if (registryChild instanceof RegistryValue) {
+	    switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+	    case ENABLED:
+		return AlwaysOffscreen.ENABLED;
+	    case DISABLED:
+		return AlwaysOffscreen.DISABLED;
+	    default:
+		return AlwaysOffscreen.DEFAULT;
+	    }
+	}
+	return AlwaysOffscreen.DEFAULT;
     }
 
     @Override
     public VideoMemorySize getVideoMemorySize() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
-                VIDEO_MEMORY_SIZE);
-        if (registryChild instanceof RegistryValue) {
-            try {
-                int videoMemorySize = Integer.valueOf(((RegistryValue<StringValueType>) registryChild).getText());
-                return new VideoMemorySize(false, videoMemorySize);
-            } catch (NumberFormatException e) {
-                return new VideoMemorySize(true, 0);
-            }
-        }
-        return new VideoMemorySize(true, 0);
+	final AbstractRegistryNode registryChild = this.userRegsitry.getChild(SOFTWARE, WINE, DIRECT3D,
+		VIDEO_MEMORY_SIZE);
+	if (registryChild instanceof RegistryValue) {
+	    try {
+		int videoMemorySize = Integer.valueOf(((RegistryValue<StringValueType>) registryChild).getText());
+		return new VideoMemorySize(false, videoMemorySize);
+	    } catch (NumberFormatException e) {
+		return new VideoMemorySize(true, 0);
+	    }
+	}
+	return new VideoMemorySize(true, 0);
     }
 }

@@ -23,29 +23,23 @@ package com.playonlinux.core.lang;
  */
 public interface LanguageBundle {
     /**
-     * Try to translate the given message in with this bundle in the default
-     * context.
+     * Try to translate the given message in with this bundle in the default context.
      *
-     * @param toTranslate
-     *            The string to translate.
-     * @return The translated string or <code>toTranslate</code> if this string
-     *         could not be translated with this bundle. Never null.
-     * @throws NullPointerException
-     *             if toTranslate is null.
+     * @param toTranslate The string to translate.
+     * @return The translated string or <code>toTranslate</code> if this string could not be translated with this
+     * bundle. Never null.
+     * @throws NullPointerException if toTranslate is null.
      */
     String translate(String toTranslate);
 
     /**
      * Try to translate the given message in the given context with this bundle.
      *
-     * @param toTranslate
-     *            The string to translate.
-     * @param context
-     *            The context ID in which to translate this string. May be null.
-     * @return The translated string or <code>toTranslate</code> if this string
-     *         could not be translated with this bundle. Never null.
-     * @throws NullPointerException
-     *             if toTranslate is null.
+     * @param toTranslate The string to translate.
+     * @param context     The context ID in which to translate this string. May be null.
+     * @return The translated string or <code>toTranslate</code> if this string could not be translated with this
+     * bundle. Never null.
+     * @throws NullPointerException if toTranslate is null.
      */
     String translate(String context, String toTranslate);
 }

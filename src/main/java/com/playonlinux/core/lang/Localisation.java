@@ -37,7 +37,7 @@ public final class Localisation {
     }
 
     public static String translate(String stringToTranslate) {
-        if (playOnLinuxContext == null || bundle == null) {
+        if(playOnLinuxContext == null || bundle == null) {
             return stringToTranslate;
         }
         ReplacableProperties properties = playOnLinuxContext.loadProperties();

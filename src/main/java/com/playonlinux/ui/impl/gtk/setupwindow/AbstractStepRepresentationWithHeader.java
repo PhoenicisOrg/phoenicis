@@ -31,24 +31,24 @@ import org.gnome.gtk.Widget;
 
 import com.playonlinux.core.messages.CancelerMessage;
 
+
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     private static final Logger LOGGER = Logger.getLogger(AbstractStepRepresentationWithHeader.class);
     Fixed contentPanel;
 
-    AbstractStepRepresentationWithHeader(SetupWindowGTKImplementation parent,
-            CancelerMessage messageWaitingForResponse) {
+    AbstractStepRepresentationWithHeader(SetupWindowGTKImplementation parent, CancelerMessage messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
     }
+
 
     public void addToContentPanel(Widget contentToAdd, int x, int y) {
         this.contentPanel.put(contentToAdd, x, y);
     }
-
     /**
      * Draw the header at the top of the window
      */
     private void drawHeader() {
-        this.getParentWizardTitle();
+        String title = this.getParentWizardTitle(); // FIXME: use this variable to draw the title of the window
         Layout header = new Layout();
         header.overrideBackground(StateFlags.NORMAL, RGBA.WHITE);
         header.setSizeRequest(522, 65);
@@ -76,7 +76,6 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         return this.getParentTopImage();
     }
 
-    @Override
     public void installStep() {
         this.clearAllOnParent();
         this.drawHeader();
@@ -86,5 +85,6 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         this.setStepEvents();
         this.drawStepContent();
     }
+
 
 }

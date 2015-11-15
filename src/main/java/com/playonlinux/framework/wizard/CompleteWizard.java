@@ -31,8 +31,7 @@ public interface CompleteWizard extends Wizard, ProgressWizard, ChoiceWizard, Lo
 
     void message(String textToShow) throws CancelException;
 
-    void presentation(String programName, String programEditor, String editorURL, String scriptorName,
-            String prefixName) throws CancelException;
+    void presentation(String programName, String programEditor, String editorURL, String scriptorName, String prefixName) throws CancelException;
 
     void presentation(String textToShow) throws CancelException;
 

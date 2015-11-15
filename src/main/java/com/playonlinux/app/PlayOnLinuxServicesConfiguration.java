@@ -36,22 +36,21 @@ import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.library.LibraryEntitiesProvider;
 
 /**
- * Default service configuration of PlayOnLinux The order the services are
- * declared matters
+ * Default service configuration of PlayOnLinux
+ * The order the services are declared matters
  */
 class PlayOnLinuxServicesConfiguration implements ServiceManagerConfiguration {
     @Override
     public Iterator<ServiceImplementationDefinition> iterator() {
-        return Arrays
-                .asList(new ServiceImplementationDefinition(DownloadManager.class, DownloadManager.class),
-                        new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
-                        new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class),
-                        new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
-                        new ServiceImplementationDefinition(WineVersionEntitiesProvider.class,
-                                WineVersionEntitiesProvider.class),
+        return Arrays.asList(
+                new ServiceImplementationDefinition(DownloadManager.class, DownloadManager.class),
+                new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
+                new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class),
+                new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
+                new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class),
                 new ServiceImplementationDefinition(LibraryEntitiesProvider.class, LibraryEntitiesProvider.class),
                 new ServiceImplementationDefinition(ContainersManager.class, DefaultContainersManager.class),
-                new ServiceImplementationDefinition(ContainersEntitiesProvider.class, ContainersEntitiesProvider.class))
-                .iterator();
+                new ServiceImplementationDefinition(ContainersEntitiesProvider.class, ContainersEntitiesProvider.class)
+        ).iterator();
     }
 }

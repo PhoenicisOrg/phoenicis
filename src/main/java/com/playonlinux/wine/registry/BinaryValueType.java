@@ -29,8 +29,8 @@ public class BinaryValueType extends AbstractValueType {
     String getText() {
         final String[] binariesAsString = new String[binaries.length];
         int i = 0;
-        for (byte readByte : binaries) {
-            binariesAsString[i] = Integer.toString(readByte + 128);
+        for(byte readByte: binaries) {
+            binariesAsString[i] = Integer.toString((int)readByte + 128);
             i++;
         }
         return String.join(",", binariesAsString);

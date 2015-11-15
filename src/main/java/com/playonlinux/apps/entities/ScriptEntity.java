@@ -48,8 +48,10 @@ public class ScriptEntity implements Entity, Nameable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this.getClass().getName()).append(this.id).append(this.url).append(this.name)
-                .toString();
+        return new ToStringBuilder(this.getClass().getName())
+                .append(this.id)
+                .append(this.url)
+                .append(this.name).toString();
     }
 
     public String getUrl() {
@@ -62,8 +64,7 @@ public class ScriptEntity implements Entity, Nameable {
         private String url;
 
         public Builder() {
-            // We need a public builder to be able to createPrefix a ScriptDTO
-            // from scratch
+            // We need a public builder to be able to createPrefix a ScriptDTO from scratch
         }
 
         public Builder(ScriptEntity scriptEntity) {

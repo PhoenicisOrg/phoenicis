@@ -30,7 +30,7 @@ import com.trolltech.qt.core.QIODevice;
  */
 public class QMemoryStream extends QIODevice {
     private static final Logger LOGGER = Logger.getLogger(QMemoryStream.class);
-    private final InputStream innerStream;
+    private InputStream innerStream;
 
     public QMemoryStream(InputStream innerStream) {
         this.innerStream = innerStream;
@@ -41,7 +41,7 @@ public class QMemoryStream extends QIODevice {
         try {
             return innerStream.read(bytes);
         } catch (IOException e) {
-            // FIXME
+            //FIXME
             LOGGER.debug(e);
             return -1;
         }
@@ -49,6 +49,6 @@ public class QMemoryStream extends QIODevice {
 
     @Override
     public int writeData(byte[] bytes) {
-        return -1; // we don't need write-support at the moment.
+        return -1; //we don't need write-support at the moment.
     }
 }

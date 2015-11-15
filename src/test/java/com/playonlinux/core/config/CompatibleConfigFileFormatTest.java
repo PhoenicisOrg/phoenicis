@@ -28,6 +28,7 @@ import java.io.PrintWriter;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class CompatibleConfigFileFormatTest {
     private File tmpLegacy;
     private File tmpNew;
@@ -36,16 +37,15 @@ public class CompatibleConfigFileFormatTest {
     public void setUp() throws IOException {
         tmpLegacy = File.createTempFile("legacy", "txt");
         tmpLegacy.deleteOnExit();
-        try (final PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpLegacy))) {
+        try(final PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpLegacy))) {
             printWriterLegacy.write("ARCH=x86\nVERSION=1.7.33\nTEST=test=test");
             printWriterLegacy.flush();
         }
 
         tmpNew = File.createTempFile("new", "txt");
         tmpNew.deleteOnExit();
-        try (final PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpNew))) {
-            printWriterLegacy.write(
-                    "{\"distributionCode\":\"staging\",\"operatingSystem\":\"MACOSX\",\"version\":\"1.7.35\",\"architecture\":\"I386\"}");
+        try(final PrintWriter printWriterLegacy = new PrintWriter(new FileOutputStream(tmpNew))) {
+            printWriterLegacy.write("{\"distributionCode\":\"staging\",\"operatingSystem\":\"MACOSX\",\"version\":\"1.7.35\",\"architecture\":\"I386\"}");
             printWriterLegacy.flush();
         }
     }
@@ -67,6 +67,7 @@ public class CompatibleConfigFileFormatTest {
         final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
         assertEquals("test=test", compatibleConfigFileFormat.readValue("TEST"));
     }
+
 
     @Test
     public void testReadValue_legacyFile_Unexisting() {
@@ -111,6 +112,7 @@ public class CompatibleConfigFileFormatTest {
         assertEquals("", compatibleConfigFileFormat.readValue("distributionCode"));
     }
 
+
     @Test
     public void testWriteNewValue_Legacy() throws IOException {
         final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
@@ -131,6 +133,7 @@ public class CompatibleConfigFileFormatTest {
         assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
         assertEquals("Content3", compatibleConfigFileFormat.readValue("TEST3"));
     }
+
 
     @Test
     public void testWriteExistingValue_Legacy() throws IOException {
@@ -157,5 +160,6 @@ public class CompatibleConfigFileFormatTest {
         compatibleConfigFileFormat.writeValue("TEST3", "Content3");
         assertEquals("Content3", compatibleConfigFileFormat.readValue("TEST3"));
     }
+
 
 }

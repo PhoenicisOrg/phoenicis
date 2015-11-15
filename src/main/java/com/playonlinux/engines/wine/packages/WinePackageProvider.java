@@ -40,7 +40,7 @@ public class WinePackageProvider<T extends WinePackage> {
     public void installPackageForWineVersion(File extractPath, Observer progressControl) throws EngineInstallException {
         final File destinationFile = new File(winePackage.getPackageDestination(), winePackage.getPackageFileName());
 
-        if (!destinationFile.exists()) {
+        if(!destinationFile.exists()) {
             installPackageInLocalCache(progressControl);
         }
 
@@ -49,8 +49,7 @@ public class WinePackageProvider<T extends WinePackage> {
 
     private void installPackageInWineVersionDirectory(File extractPath) throws EngineInstallException {
         final File localArchive = winePackage.getPackageDestination();
-        final File linkDestination = new File(extractPath,
-                String.format("share/wine/%s", winePackage.getPackageTypeName()));
+        final File linkDestination = new File(extractPath, String.format("share/wine/%s", winePackage.getPackageTypeName()));
 
         try {
             Files.createSymbolicLink(linkDestination.toPath(), localArchive.toPath());
@@ -76,12 +75,12 @@ public class WinePackageProvider<T extends WinePackage> {
             final String clientSum = checksumCalculator.calculate(destinationFile, "md5");
             checksumCalculator.deleteObservers();
 
-            if (!clientSum.equals(packageChecksum)) {
+            if(!clientSum.equals(packageChecksum)) {
                 destinationFile.delete();
-                throw new EngineInstallException(String.format(
-                        "Error while downloading the file. Hash mismatch." + System.lineSeparator()
-                                + System.lineSeparator() + "Client hash:%s" + System.lineSeparator() + "Server hash:%s",
-                        clientSum, packageChecksum));
+                throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch." +
+                        System.lineSeparator() + System.lineSeparator() +
+                        "Client hash:%s" + System.lineSeparator() +
+                        "Server hash:%s", clientSum, packageChecksum));
             }
 
         } catch (MalformedURLException e) {

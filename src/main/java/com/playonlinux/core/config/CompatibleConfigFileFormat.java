@@ -32,11 +32,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Represents a PlayOnLinux config file. The class is able to read POLv4 format,
- * but it will store everything in v5 format (json)
+ * Represents a PlayOnLinux config file.
+ * The class is able to read POLv4 format, but it will store everything in v5 format (json)
  */
 public class CompatibleConfigFileFormat implements ConfigFile {
-    private static final Logger LOGGER = Logger.getLogger(CompatibleConfigFileFormat.class);
+    private static final Logger LOGGER  = Logger.getLogger(CompatibleConfigFileFormat.class);
     private final File configFile;
     private final ObjectMapper mapper;
 
@@ -72,8 +72,8 @@ public class CompatibleConfigFileFormat implements ConfigFile {
         final Map<String, String> results = new HashMap<>();
         try {
             final Map<?, ?> tmpResults = mapper.readValue(configFile, Map.class);
-            for (Object key : tmpResults.keySet()) {
-                if (key instanceof String && tmpResults.get(key) instanceof String) {
+            for(Object key: tmpResults.keySet()) {
+                if(key instanceof String && tmpResults.get(key) instanceof String) {
                     results.put((String) key, (String) tmpResults.get(key));
                 }
             }
@@ -88,14 +88,14 @@ public class CompatibleConfigFileFormat implements ConfigFile {
 
     private Map<String, String> getLegacyMap() {
         final Map<String, String> result = new HashMap<>();
-        try (final BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile))) {
-            for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
+        try(final BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile))) {
+            for(String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
                 final String[] splitLine = line.split("=");
 
                 final String newKey = splitLine[0];
                 final StringBuilder newValueBuilder = new StringBuilder();
-                for (int i = 1; i < splitLine.length; i++) {
-                    if (i != 1) {
+                for(int i = 1; i < splitLine.length; i++) {
+                    if(i != 1) {
                         newValueBuilder.append('=');
                     }
                     newValueBuilder.append(splitLine[i]);
@@ -116,5 +116,6 @@ public class CompatibleConfigFileFormat implements ConfigFile {
         values.remove(key);
         mapper.writeValue(configFile, values);
     }
+
 
 }

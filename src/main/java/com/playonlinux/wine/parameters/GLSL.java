@@ -21,7 +21,9 @@ package com.playonlinux.wine.parameters;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 public enum GLSL {
-    DEFAULT(translate("Default")), DISABLED(translate("Disabled")), ENABLED(translate("Enabled"));
+    DEFAULT(translate("Default")),
+    DISABLED(translate("Disabled")),
+    ENABLED(translate("Enabled"));
 
     private final String translatedName;
 

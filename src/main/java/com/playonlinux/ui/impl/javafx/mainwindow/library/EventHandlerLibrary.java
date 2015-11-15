@@ -72,7 +72,10 @@ class EventHandlerLibrary implements UIEventHandler {
 
         try {
             setupWizard.init();
-            mainEventHandler.getLibraryEventHandler().runApplication(setupWizard, applicationName);
+            mainEventHandler.getLibraryEventHandler().runApplication(
+                    setupWizard,
+                    applicationName
+            );
         } catch (PlayOnLinuxException e) {
             LOGGER.error(e);
             new ErrorMessage("Error while trying to run the application", e).show();
@@ -82,7 +85,7 @@ class EventHandlerLibrary implements UIEventHandler {
     }
 
     public void configureApplication(String applicationName) {
-        System.out.println("Configure " + applicationName);
+        System.out.println("Configure "+applicationName);
     }
 
     public CommandLineInterpreterFactory getJythonInterpreterFactory() {

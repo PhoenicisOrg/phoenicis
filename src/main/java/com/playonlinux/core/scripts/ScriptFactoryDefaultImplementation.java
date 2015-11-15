@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.io.FileUtils;
 
+
 public class ScriptFactoryDefaultImplementation implements ScriptFactory {
     ExecutorService executorService;
 
@@ -38,7 +39,7 @@ public class ScriptFactoryDefaultImplementation implements ScriptFactory {
 
     @Override
     public Script createInstance(String scriptContent) {
-        switch (Script.detectScriptType(scriptContent)) {
+        switch(Script.detectScriptType(scriptContent)) {
             case LEGACY:
                 return new ScriptLegacy(scriptContent, executorService);
             case RECENT:

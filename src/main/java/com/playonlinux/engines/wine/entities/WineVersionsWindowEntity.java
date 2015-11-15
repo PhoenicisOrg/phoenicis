@@ -27,8 +27,8 @@ public class WineVersionsWindowEntity implements Entity {
     private final boolean downloading;
     private final boolean downloadFailed;
 
-    public WineVersionsWindowEntity(List<WineVersionDistributionItemEntity> distributions, boolean downloading,
-            boolean downloadFailed) {
+    public WineVersionsWindowEntity(List<WineVersionDistributionItemEntity> distributions,
+                                    boolean downloading, boolean downloadFailed) {
         this.distributions = distributions;
         this.downloading = downloading;
         this.downloadFailed = downloadFailed;

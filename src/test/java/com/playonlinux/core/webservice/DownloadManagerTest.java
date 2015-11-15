@@ -18,6 +18,7 @@
 
 package com.playonlinux.core.webservice;
 
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,10 +42,12 @@ public class DownloadManagerTest {
         DownloadManager downloadManager = new DownloadManager();
         downloadManager.init();
 
+
         downloadManager.submit(httpDownloaderMock, parameter -> {
             lock.release();
             return null;
-        } , callBackError);
+        }, callBackError);
+
 
         lock.acquire();
         downloadManager.shutdown();

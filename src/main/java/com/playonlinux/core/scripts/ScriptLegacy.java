@@ -35,9 +35,10 @@ import com.playonlinux.core.utils.FileAnalyser;
 public class ScriptLegacy extends Script {
     private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP SIGNATURE-----";
     private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP SIGNATURE-----";
-
+    
     @Inject
     static ScriptFactory scriptFactory;
+
 
     protected ScriptLegacy(String script, ExecutorService executorService) {
         super(script, executorService);
@@ -49,8 +50,7 @@ public class ScriptLegacy extends Script {
         Script playonlinuxBashInterpreter;
         File bashScriptFile;
         try {
-            playonlinuxBashInterpreter = scriptFactory
-                    .createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+            playonlinuxBashInterpreter = scriptFactory.createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
 
             bashScriptFile = File.createTempFile("script", "sh");
             bashScriptFile.deleteOnExit();
@@ -60,6 +60,7 @@ public class ScriptLegacy extends Script {
         } catch (IOException e) {
             throw new ScriptFailureException(e);
         }
+
 
         pythonInterpreter.set("__scriptToWrap__", bashScriptFile.getAbsolutePath());
 
@@ -90,25 +91,25 @@ public class ScriptLegacy extends Script {
         final String separator = FileAnalyser.identifyLineDelimiter(this.getScriptContent());
 
         Boolean insideSignature = false;
-        for (String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
-            if (readLine.contains(BEGIN_PGP_KEY_BLOCK_LINE)) {
+        for(String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
+            if(readLine.contains(BEGIN_PGP_KEY_BLOCK_LINE)) {
                 insideSignature = true;
             }
 
-            if (extractSignature == insideSignature) {
+            if(extractSignature == insideSignature) {
                 signatureBuilder.append(readLine);
                 signatureBuilder.append(separator);
             }
 
-            if (readLine.contains(END_PGP_KEY_BLOCK_LINE)) {
+            if(readLine.contains(END_PGP_KEY_BLOCK_LINE)) {
                 insideSignature = false;
             }
         }
 
         final String extractedContent = signatureBuilder.toString();
 
-        if (StringUtils.isBlank(extractedContent)) {
-            if (extractSignature) {
+        if(StringUtils.isBlank(extractedContent)) {
+            if(extractSignature) {
                 throw new ParseException("The script has no valid signature!", 0);
             } else {
                 throw new ParseException("The script has no valid content", 0);
@@ -117,5 +118,6 @@ public class ScriptLegacy extends Script {
 
         return extractedContent;
     }
+
 
 }

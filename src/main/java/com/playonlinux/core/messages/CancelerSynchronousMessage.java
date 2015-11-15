@@ -20,14 +20,15 @@ package com.playonlinux.core.messages;
 
 import com.playonlinux.core.scripts.CancelException;
 
-public abstract class CancelerSynchronousMessage<R> extends SynchronousMessage<R> implements CancelerMessage {
+public abstract class CancelerSynchronousMessage<R> extends SynchronousMessage<R>
+        implements CancelerMessage {
     private Boolean processCanceled = false;
 
     @Override
     public R getResponse() throws CancelException {
         R response = super.getResponse();
 
-        if (this.processCanceled) {
+        if(this.processCanceled) {
             throw new CancelException();
         }
 

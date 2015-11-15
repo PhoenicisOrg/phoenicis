@@ -31,8 +31,8 @@ public class WinePrefixLogger extends FileLogger {
     static PlayOnLinuxContext playOnLinuxContext;
 
     WinePrefixLogger(String prefixName) throws IOException {
-        super(new File(playOnLinuxContext.getProperty("application.user.wineprefix"), prefixName + "/playonlinux.log"),
-                true);
+        super(new File(playOnLinuxContext.getProperty("application.user.wineprefix"), prefixName+"/playonlinux.log"), true);
     }
+
 
 }

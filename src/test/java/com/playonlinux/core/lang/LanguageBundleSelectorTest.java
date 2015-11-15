@@ -27,8 +27,7 @@ import org.junit.Test;
 public class LanguageBundleSelectorTest {
     @Test
     public void testMissingCountry() {
-        // Test a locale has language and country and should fall back on
-        // language
+        // Test a locale has language and country and should fall back on language
         LanguageBundle bundle = LanguageBundleSelector.forLocale(Locale.GERMANY);
         assertEquals("Fehler melden", bundle.translate("Report a bug"));
     }
@@ -50,8 +49,7 @@ public class LanguageBundleSelectorTest {
     @Test
     public void testFallback() {
         // Test an unsupported locale
-        // todo: use a language that doesn't return "undefined" for the language
-        // tag? i.e. real language
+        // todo: use a language that doesn't return "undefined" for the language tag? i.e. real language
         LanguageBundle bundle = LanguageBundleSelector.forLocale(new Locale("##", "##"));
         assertEquals("Report a bug", bundle.translate("Report a bug"));
     }

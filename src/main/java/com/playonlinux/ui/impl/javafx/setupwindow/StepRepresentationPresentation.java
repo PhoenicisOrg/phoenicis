@@ -36,8 +36,7 @@ import javafx.scene.text.Text;
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     private final String textToShow;
 
-    public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, CancelerMessage message,
-            String textToShow) {
+    public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, CancelerMessage message, String textToShow) {
         super(parent, message);
         this.textToShow = textToShow;
     }
@@ -80,8 +79,9 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(
-                event -> ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null));
+        this.setNextButtonAction(event ->
+            ((CancelerSynchronousMessage) this.getMessageAwaitingForResponse()).setResponse(null)
+        );
     }
 
 }

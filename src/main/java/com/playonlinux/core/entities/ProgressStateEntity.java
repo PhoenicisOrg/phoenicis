@@ -21,8 +21,8 @@ package com.playonlinux.core.entities;
 import com.playonlinux.core.dto.DTO;
 
 /**
- * Represent a progress state that will be sent to the UI. The UI will be able
- * to represent this progress state (progressbar, etc...)
+ * Represent a progress state that will be sent to the UI.
+ * The UI will be able to represent this progress state (progressbar, etc...)
  */
 public class ProgressStateEntity implements DTO {
     private final State state;
@@ -49,7 +49,10 @@ public class ProgressStateEntity implements DTO {
     }
 
     public enum State {
-        READY, PROGRESSING, SUCCESS, FAILED
+        READY,
+        PROGRESSING,
+        SUCCESS,
+        FAILED
     }
 
     @Override

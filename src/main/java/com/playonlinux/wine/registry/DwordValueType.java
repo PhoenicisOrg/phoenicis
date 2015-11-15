@@ -32,6 +32,6 @@ public class DwordValueType extends AbstractValueType {
 
     @Override
     public String toRegString() {
-        return "dword:" + getText();
+        return "dword:"+getText();
     }
 }

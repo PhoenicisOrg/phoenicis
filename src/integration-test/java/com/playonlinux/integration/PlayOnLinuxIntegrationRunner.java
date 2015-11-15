@@ -47,6 +47,7 @@ public class PlayOnLinuxIntegrationRunner {
         System.out.println("PlayOnLinux integration initialized");
     }
 
+
     public void tearDown() throws IOException {
         File home = new File(playOnLinuxContext.getProperty("application.user.root"));
         Files.remove(home);

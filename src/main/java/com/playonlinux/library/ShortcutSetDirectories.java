@@ -33,7 +33,7 @@ import com.playonlinux.core.observer.Observer;
 
 class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>>
         implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
-
+    
     private final ObservableDirectoryFiles iconDirectory;
     private final ObservableDirectoryFiles shortcutDirectory;
     private final URL defaultIcon;
@@ -42,7 +42,7 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
     private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
 
     public ShortcutSetDirectories(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
-            URL defaultIcon) {
+                                  URL defaultIcon) {
         this.shortcutFiles = new ArrayList<>();
         this.iconDirectory = iconDirectory;
         this.defaultIcon = defaultIcon;
@@ -58,7 +58,7 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
 
     @Override
     public void update(ObservableDirectoryFiles observableDirectoryFiles, File[] argument) {
-        if (observableDirectoryFiles == shortcutDirectory) {
+        if(observableDirectoryFiles == shortcutDirectory) {
             getShortcutFiles().clear();
             for (File shortcutFile : argument) {
                 try {
@@ -67,7 +67,7 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
                     if (!iconFile.exists()) {
                         iconURL = defaultIcon;
                     } else {
-                        iconURL = new URL("file://" + iconFile.getAbsolutePath());
+                        iconURL = new URL("file://"+iconFile.getAbsolutePath());
                     }
 
                     this.getShortcutFiles().add(new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile));
@@ -78,6 +78,7 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
         }
         this.notifyObservers(getShortcutFiles());
     }
+
 
     @Override
     public void close() {

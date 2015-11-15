@@ -38,6 +38,7 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
         observableDirectoryThread = new ObservableDirectoryThread(this);
     }
 
+
     @Override
     public void shutdown() {
         observableDirectoryThread.stopChecking();
@@ -49,12 +50,13 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
         this.observableDirectoryThread.start();
     }
 
+
     /* TODO: Test this method with better coverage */
     protected File[] findFiles() {
         File[] files = observedDirectory.listFiles();
         List<File> filesFiltered = new LinkedList<>();
         assert files != null;
-        for (File file : files) {
+        for(File file: files) {
             if (!file.getName().startsWith(".")) {
                 filesFiltered.add(file);
             }
@@ -62,6 +64,7 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
 
         return filesFiltered.toArray(new File[filesFiltered.size()]);
     }
+
 
     private class ObservableDirectoryThread extends Thread {
         private final ObservableDirectoryFiles observableDirectoryFiles;
@@ -86,14 +89,14 @@ public class ObservableDirectoryFiles extends ObservableDirectory<File[]> {
         @Override
         public void run() {
             File[] lastDirectoryContent = null;
-            while (this.isRunning()) {
-                if (observedDirectory.exists()) {
+            while(this.isRunning()) {
+                if(observedDirectory.exists()) {
                     File[] directoryContent = observableDirectoryFiles.findFiles();
                     if (!Arrays.equals(directoryContent, lastDirectoryContent)) {
                         this.observableDirectoryFiles.notifyObservers(directoryContent);
                     }
                     try {
-                        Thread.sleep(checkInterval);
+                        Thread.sleep((long) checkInterval);
                     } catch (InterruptedException e) {
                         LOGGER.debug(e);
                         this.stopChecking();

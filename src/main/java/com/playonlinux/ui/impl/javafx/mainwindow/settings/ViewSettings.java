@@ -23,7 +23,6 @@ import com.playonlinux.ui.impl.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindow;
 import com.playonlinux.ui.impl.javafx.mainwindow.MainWindowView;
-
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 
@@ -35,7 +34,6 @@ public class ViewSettings extends MainWindowView {
         this.drawSideBar();
     }
 
-    @Override
     protected void drawSideBar() {
         super.drawSideBar();
         themes = new ComboBox<>();

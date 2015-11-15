@@ -42,7 +42,7 @@ public class MainWindowView extends HBox {
     }
 
     protected void showRightView(Node nodeToShow) {
-        if (visiblePane != null) {
+        if(visiblePane != null) {
             this.getChildren().remove(visiblePane);
         }
         this.visiblePane = nodeToShow;

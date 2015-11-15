@@ -26,6 +26,7 @@ import java.io.InputStream;
 import com.playonlinux.win32.pe.PEFile;
 import com.playonlinux.win32.pe.PEReader;
 
+
 public final class ExeAnalyser {
     private ExeAnalyser() {
         // Utility class
@@ -33,9 +34,7 @@ public final class ExeAnalyser {
 
     /**
      * Checks if the file is a 64bits executable
-     * 
-     * @param file
-     *            the file to analyse
+     * @param file the file to analyse
      * @return true if the file is a 64bit executable. False otherwise
      */
     public static boolean is64Bits(File file) throws IOException {
@@ -44,14 +43,13 @@ public final class ExeAnalyser {
 
     /**
      * Checks if the file is a 32bits executable
-     * 
-     * @param file
-     *            the file to analyse
+     * @param file the file to analyse
      * @return true if the file is a 32bit executable. False otherwise
      */
     public static boolean is32Bits(File file) throws IOException {
         return isArchitecture(file, PEFile.Architecture.I386);
     }
+
 
     private static boolean isArchitecture(File file, PEFile.Architecture architecture) throws IOException {
         try (InputStream inputStream = new FileInputStream(file)) {
@@ -59,5 +57,6 @@ public final class ExeAnalyser {
             return peFile.getArchitecture() == architecture;
         }
     }
+
 
 }

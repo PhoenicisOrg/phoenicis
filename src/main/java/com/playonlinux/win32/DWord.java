@@ -19,8 +19,8 @@
 package com.playonlinux.win32;
 
 /**
- * Represents a WIN32 DWORD A 32-bit unsigned integer. The range is 0 through
- * 4294967295 decimal.
+ * Represents a WIN32 DWORD
+ * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
  */
 public class DWord extends ULong {
     public DWord(byte[] bytes, int offset) {

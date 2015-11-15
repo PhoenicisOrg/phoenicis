@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class RegistryKeyTest {
 
     RegistryKey a1;
@@ -30,6 +31,7 @@ public class RegistryKeyTest {
     RegistryKey b2;
     RegistryKey c1;
     RegistryKey c2;
+
 
     @Before
     public void setUp() {
@@ -53,19 +55,25 @@ public class RegistryKeyTest {
         c2.addChild(v3);
     }
 
+
     @Test
     public void testRegistryKey_testGetChildWithMultipleArguments() throws Exception {
         assertEquals("Content 1", ((RegistryValue) a1.getChild("B2", "C1", "V1")).getText());
-        assertEquals("Content 2", ((RegistryValue) a1.getChild("B2", "C2", "V2")).getText());
-        assertEquals("Content 3", ((RegistryValue) a1.getChild("B2", "C2", "V3")).getText());
+        assertEquals("Content 2", ((RegistryValue) a1.getChild("B2", "C2", "V2")).getText() );
+        assertEquals("Content 3", ((RegistryValue) a1.getChild("B2", "C2", "V3")).getText() );
 
         assertEquals("C1", a1.getChild("B2", "C1").getName());
     }
 
     @Test
     public void testRegistryKey_toString_goodFormat() {
-        assertEquals("+ A1\n" + "| + B1\n" + "| + B2\n" + "| | + C1\n" + "| | | - (StringValueType) V1 -> Content 1\n"
-                + "| | + C2\n" + "| | | - (StringValueType) V2 -> Content 2\n"
-                + "| | | - (StringValueType) V3 -> Content 3\n", a1.toString());
+        assertEquals("+ A1\n" +
+                "| + B1\n" +
+                "| + B2\n" +
+                "| | + C1\n" +
+                "| | | - (StringValueType) V1 -> Content 1\n" +
+                "| | + C2\n" +
+                "| | | - (StringValueType) V2 -> Content 2\n" +
+                "| | | - (StringValueType) V3 -> Content 3\n", a1.toString());
     }
 }

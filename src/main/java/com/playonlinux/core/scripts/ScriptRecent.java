@@ -37,8 +37,7 @@ public class ScriptRecent extends Script {
     @Override
     public void executeScript(PythonInterpreter pythonInterpreter) throws ScriptFailureException {
         pythonInterpreter.exec(this.getScriptContent());
-        PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter,
-                ScriptTemplate.class);
+        PythonInstaller<ScriptTemplate> pythonInstaller = new PythonInstaller<>(pythonInterpreter, ScriptTemplate.class);
 
         pythonInstaller.exec();
     }
@@ -50,26 +49,26 @@ public class ScriptRecent extends Script {
             StringBuilder signatureBuilder = new StringBuilder();
 
             Boolean insideSignature = false;
-            for (String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
-                if (readLine.contains("-----BEGIN PGP SIGNATURE-----") && readLine.startsWith("#")) {
+            for(String readLine = bufferReader.readLine(); readLine != null; readLine = bufferReader.readLine()) {
+                if(readLine.contains("-----BEGIN PGP SIGNATURE-----") && readLine.startsWith("#")) {
                     insideSignature = true;
                 }
 
-                if (insideSignature) {
-                    if (readLine.startsWith("#")) {
+                if(insideSignature) {
+                    if(readLine.startsWith("#")) {
                         signatureBuilder.append(readLine.substring(1, readLine.length()).trim());
                     }
                     signatureBuilder.append("\n");
                 }
 
-                if (readLine.contains("-----END PGP SIGNATURE-----") && readLine.startsWith("#")) {
+                if(readLine.contains("-----END PGP SIGNATURE-----") && readLine.startsWith("#")) {
                     insideSignature = false;
                 }
             }
 
             final String extractedContent = signatureBuilder.toString().trim();
 
-            if (StringUtils.isBlank(extractedContent)) {
+            if(StringUtils.isBlank(extractedContent)) {
                 throw new ScriptFailureException("The script has no valid signature!");
             }
             return extractedContent;
@@ -82,5 +81,6 @@ public class ScriptRecent extends Script {
     public String extractContent() throws ScriptFailureException {
         return this.getScriptContent();
     }
+
 
 }

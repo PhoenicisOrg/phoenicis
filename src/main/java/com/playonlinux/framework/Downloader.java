@@ -54,7 +54,7 @@ public class Downloader implements SetupWizardComponent {
     private Downloader(SetupWizard setupWizard) {
         this.setupWizard = setupWizard;
     }
-
+    
     public Downloader(ProgressControl progressControl) {
         this.progressControl = progressControl;
     }
@@ -66,12 +66,14 @@ public class Downloader implements SetupWizardComponent {
     }
 
     private void defineProgressStep(URL remoteFile) throws CancelException {
-        if (this.progressControl == null) {
-            this.progressControl = this.setupWizard
-                    .progressBar(translate("Please wait while ${application.name} is downloading:") + "\n"
-                            + this.findFileNameFromURL(remoteFile));
+        if(this.progressControl == null) {
+            this.progressControl = this.setupWizard.progressBar(
+                    translate("Please wait while ${application.name} is downloading:") + "\n" +
+                    this.findFileNameFromURL(remoteFile)
+            );
         }
     }
+
 
     private Downloader downloadRemoteFile(URL remoteFile, File localFile) throws CancelException {
         this.defineProgressStep(remoteFile);
@@ -81,8 +83,9 @@ public class Downloader implements SetupWizardComponent {
             downloader.addObserver(progressControl);
             downloader.get(localFile);
         } catch (DownloadException e) {
-            throw new ScriptFailureException(
-                    String.format("Unable to download the file (Remote: %s, Local: %s)", remoteFile, localFile), e);
+            throw new ScriptFailureException(String.format(
+                    "Unable to download the file (Remote: %s, Local: %s)", remoteFile, localFile
+            ), e);
         } finally {
             downloader.deleteObserver(progressControl);
         }
@@ -124,17 +127,17 @@ public class Downloader implements SetupWizardComponent {
         try {
             ChecksumCalculator checksumCalculator = new ChecksumCalculator();
 
-            if (progressControl != null) {
+            if(progressControl != null) {
                 checksumCalculator.addObserver(progressControl);
             }
             calculatedChecksum = checksumCalculator.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
         } catch (IOException e) {
             throw new ScriptFailureException(e);
         }
-        if (this.findDownloadedFile() == null) {
+        if(this.findDownloadedFile() == null) {
             throw new ScriptFailureException("You must download the file first before running check()!");
         }
-        if (!expectedChecksum.equals(calculatedChecksum)) {
+        if(!expectedChecksum.equals(calculatedChecksum)) {
             throw new ScriptFailureException(String.format("Checksum comparison has failed!%n%nServer: %s%nClient: %s",
                     expectedChecksum, calculatedChecksum));
         }
@@ -150,6 +153,7 @@ public class Downloader implements SetupWizardComponent {
     public File findDownloadedFile() {
         return downloadedFile;
     }
+
 
     @Override
     public void close() {

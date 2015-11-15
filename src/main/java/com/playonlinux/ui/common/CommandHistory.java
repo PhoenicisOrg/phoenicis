@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Small helper intended for keeping track of commands that have been entered
- * into the console window.
+ * Small helper intended for keeping track of commands that have been entered into the console window.
  */
 public class CommandHistory {
 
@@ -53,6 +52,7 @@ public class CommandHistory {
         }
         return Item.EMPTY;
     }
+
 
     public static final class Item {
 

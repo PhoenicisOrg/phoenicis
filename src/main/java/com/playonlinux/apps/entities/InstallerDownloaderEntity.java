@@ -28,8 +28,11 @@ public class InstallerDownloaderEntity {
     private final double percentage;
     private final String scriptContent;
 
-    public InstallerDownloaderEntity(boolean finished, boolean failed, boolean signatureError, double percentage,
-            String scriptContent) {
+    public InstallerDownloaderEntity(boolean finished,
+                                     boolean failed,
+                                     boolean signatureError,
+                                     double percentage,
+                                     String scriptContent) {
         this.finished = finished;
         this.failed = failed;
         this.signatureError = signatureError;
@@ -56,5 +59,6 @@ public class InstallerDownloaderEntity {
     public boolean isSignatureError() {
         return signatureError;
     }
+
 
 }

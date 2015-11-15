@@ -42,7 +42,8 @@ public class CategoryDTO implements DTO {
     }
 
     public enum CategoryType {
-        INSTALLERS, FUNCTIONS
+        INSTALLERS,
+        FUNCTIONS
     }
 
     public int getId() {

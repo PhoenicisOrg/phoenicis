@@ -31,8 +31,14 @@ public class AppsItemDTOTest {
 
     @Before
     public void setUp() {
-        this.appsItemDTO = new AppEntity.Builder().withName("Name").withCategoryName("Category")
-                .withDescription("a description").withCommercial(true).withRequiresNoCd(true).withTesting(true).build();
+        this.appsItemDTO = new AppEntity.Builder()
+                .withName("Name")
+                .withCategoryName("Category")
+                .withDescription("a description")
+                .withCommercial(true)
+                .withRequiresNoCd(true)
+                .withTesting(true)
+                .build();
     }
 
     @Test
@@ -44,7 +50,7 @@ public class AppsItemDTOTest {
     public void testAppsItemScriptDTO_CreateDTO_categoryIsPopulated() {
         assertEquals("Category", appsItemDTO.getCategoryName());
     }
-
+    
     @Test
     public void testAppsItemScriptDTO_CreateDTO_descrtiptionIsPopulated() {
         assertEquals("a description", appsItemDTO.getDescription());
@@ -54,7 +60,7 @@ public class AppsItemDTOTest {
     public void testAppsItemScriptDTO_CreateDTO_commercialIsSet() {
         assertEquals(true, appsItemDTO.isCommercial());
     }
-
+    
     @Test
     public void testAppsItemScriptDTO_CreateDTO_testingIsSet() {
         assertEquals(true, appsItemDTO.isRequiresNoCd());

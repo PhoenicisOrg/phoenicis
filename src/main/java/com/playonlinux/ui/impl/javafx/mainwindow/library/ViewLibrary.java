@@ -58,8 +58,9 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
 
-    private final EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> libraryItems;
+    private final  EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> libraryItems;
     private TabPane libraryTabs;
+
 
     public ViewLibrary(MainWindow parent) {
         super(parent);
@@ -90,15 +91,12 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
         installedApplication.setContent(applicationListWidget);
     }
 
-    @Override
     protected void drawSideBar() {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
-        this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png",
-                translate("Run a script"));
-        this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/console.png",
-                translate("${application.name} console"));
+        this.runScript = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/script.png", translate("Run a script"));
+        this.runConsole = new LeftButton("/com/playonlinux/ui/impl/javafx/mainwindow/library/console.png", translate("${application.name} console"));
 
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
@@ -161,5 +159,6 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
     public void update(Observable observable, LibraryWindowEntity argument) {
         Platform.runLater(() -> applicationListWidget.setItems(argument.getInstalledApplicationEntity()));
     }
+
 
 }
