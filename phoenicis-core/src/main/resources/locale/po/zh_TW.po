@@ -1,0 +1,2224 @@
+# Chinese (Traditional) translation for playonlinux
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the playonlinux package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+# Bill, 2013.
+# Bill <cges30901@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: playonlinux\n"
+"Report-Msgid-Bugs-To: MulX <os2mule@gmail.com>\n"
+"POT-Creation-Date: 2015-04-13 19:00+0200\n"
+"PO-Revision-Date: 2014-04-06 06:02+0000\n"
+"Last-Translator: Bill <cges30901@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-04-14 05:09+0000\n"
+"X-Generator: Launchpad (build 17423)\n"
+"Language: zh_TW\n"
+
+#: Capture plugin:2, Detour plugin:4
+msgid "Which application do you want to apply the modification to?"
+msgstr "請問您要修改哪個程式？"
+
+#: Capture plugin:3
+msgid ""
+"This plugin wil allow you to capture you applications under PlayOnLinux"
+msgstr "這個擴充元件可以幫助您取得在PlayOnLinux下的程式列表。"
+
+#: Capture plugin:4
+msgid "Capture menu (OpenGL)"
+msgstr "取得目錄（OpenGL）"
+
+#: Capture plugin:5
+msgid "Capture menu (not OpenGL)"
+msgstr "取得目錄（非OpenGL）"
+
+#: Capture plugin:6
+msgid "Begin the capture of an application"
+msgstr "開始擷取程式"
+
+#: Capture plugin:7
+msgid "Play a captured file"
+msgstr "啟動已擷取檔案"
+
+#: Capture plugin:8
+msgid "Convert a captured file to video"
+msgstr "把選取的檔案轉換成影片"
+
+#: Capture plugin:9
+#, sh-format
+msgid ""
+"Press Next then click on the window\\nyou want to capture.\\nCapture will "
+"start automatically after 5 seconds.\\nOnly video will be captured."
+msgstr "請按下一步並且點選您想要\\n擷取的視窗\\n。擷取會在五秒鐘後自動進行\\n。只有影片會被擷取。"
+
+#: Capture plugin:10
+msgid "Capture will begin..."
+msgstr "開始取得程式...."
+
+#: Capture plugin:11
+msgid "Press <SHIFT>+F8 to start or stop capture"
+msgstr "按下<SHIFT>+F8用來開始和終止獲取程式"
+
+#: Capture plugin:12
+msgid "Press <SHIFT>+F8 to stop capture"
+msgstr "按下<SHIFT>+F8來停止取得程式"
+
+#: Capture plugin:13
+msgid "Capture in progress..."
+msgstr "正在取得程式..."
+
+#: Capture plugin:14
+msgid "Choose an action to perform"
+msgstr "選擇一項動作以執行"
+
+#: Capture plugin:15
+msgid "Please choose a PID capture file to play"
+msgstr "請選擇一個 PID capture 檔案執行"
+
+#: Capture plugin:16
+msgid "Please choose an OGV capture file to play"
+msgstr "請選擇一個 OGV capture 檔案執行"
+
+#: Capture plugin:17
+msgid "Please choose a capture file to convert"
+msgstr "請選擇一個 capture 檔案執行"
+
+#: Capture plugin:18
+msgid "You must choose a capture to read"
+msgstr "您必須選擇一個 capture 來讀取"
+
+#: Capture plugin:19
+msgid "You must choose a capture to convert"
+msgstr "您必須選擇一個 capture 以進行轉檔"
+
+#: Capture plugin:20
+msgid "Please wait while the PlayOnLinux logo is created..."
+msgstr "請稍候，正在產生PlayOnLinux的logo"
+
+#: Capture plugin:21
+msgid "Add the PlayOnLinux logo to your video?"
+msgstr "是否在您的影片裡面加上PlayOnLinux的浮水印"
+
+#: Capture plugin:22
+msgid ""
+"Warning: For correct video encoding,\\nresolution MUST be a multiple of 16"
+msgstr "警告：為了轉檔上的正確\\n解析度必須為16的倍數"
+
+#: Capture plugin:23
+msgid ""
+"Ubuntu users must add the MEDIBUNTU repository\\nfor this conversion format "
+"to work properly."
+msgstr "Ubuntu的使用者必須先安裝MEDIBUNTU函式庫\\n以進行此轉檔作業"
+
+#: Capture plugin:24
+msgid "Choose the video format for conversion"
+msgstr "選擇要轉換的影片格式"
+
+#: Capture plugin:25
+msgid ""
+"Define your encoding options for pass 1 \\n (leave defaults if you do not "
+"know what to do)"
+msgstr "定義您的編碼設定pass 1\\n（請選擇預設，如果您不曉得該如何設定）"
+
+#: Capture plugin:26
+msgid ""
+"Define your encoding options for pass 2 \\n (leave defaults if you do not "
+"know what to do)"
+msgstr "定義您的編碼設定pass 2\\n（請選擇預設，如果您不曉得該如何設定）"
+
+#: Capture plugin:27
+msgid ""
+"Define your encoding options \\n (leave defaults if you do not know what to "
+"do)"
+msgstr "定義您的編碼設定\\n（請選擇預設，如果您不曉得該如何設定）"
+
+#: Capture plugin:28
+msgid "Please wait while your video is being encoded..."
+msgstr "請稍候，影片正在編碼中...."
+
+#: Capture plugin:29
+msgid "Conversion done"
+msgstr "轉檔完畢"
+
+#: Advanced Wine Configuration Plugin:4
+msgid "Choose an option to modify"
+msgstr "選擇一個選項以修改"
+
+#: Advanced Wine Configuration Plugin:5
+msgid "All"
+msgstr "全部"
+
+#: Advanced Wine Configuration Plugin:6
+msgid "You must choose a game to modify"
+msgstr "您必須選擇一個遊戲以轉換"
+
+#: Advanced Wine Configuration Plugin:7
+msgid ""
+"Welcome in Advanced Wine Configuration, an optimization’s system for Wine "
+"created by GNU_Raziel. If you does not know what to choose, LEAVE DEFAULTS"
+msgstr "歡迎來到「進階Wine設定」，一個Wine的優化系統，使用GNU_Raziel製作，如果您不知道如何設定的話，請點選使用預設選項。"
+
+#: Advanced Wine Configuration Plugin:8
+msgid "Choose a game"
+msgstr "選擇一個遊戲"
+
+#: Advanced Wine Configuration Plugin:9
+msgid "You did not select a game"
+msgstr "您並未選擇遊戲"
+
+#: Advanced Wine Configuration Plugin:10
+msgid "Choose DirectDraw Renderer Mode?"
+msgstr "是否選擇DirectDraw渲染模式？"
+
+#: Advanced Wine Configuration Plugin:11
+msgid "Activate GLSL Support?"
+msgstr "是否啟動GLSL支援？"
+
+#: Advanced Wine Configuration Plugin:13
+msgid "Choose Offscreen Rendering Mode?"
+msgstr "是否選擇Offscreen Rendering模式？"
+
+#: Advanced Wine Configuration Plugin:14
+msgid "Choose Render Target Lock Mode?"
+msgstr "是否選擇鎖定目標渲染模式？"
+
+#: Advanced Wine Configuration Plugin:15
+msgid "Activate Multisampling support?"
+msgstr "是否啟動多重採樣支援？"
+
+#: Advanced Wine Configuration Plugin:16
+msgid "Activate the mouse warp override?"
+msgstr "是否啟動滑鼠綁定？"
+
+#: Advanced Wine Configuration Plugin:17
+msgid "Optimisation done"
+msgstr "優化完成"
+
+#: Detour plugin:3
+msgid ""
+"Welcome in Detour, a plugin witch enable you to create post-install shorcuts."
+msgstr "歡迎來到Detour，這是一個可以讓您建立已安裝程式連結的套件"
+
+#: Detour plugin:5
+msgid "Choose an application"
+msgstr "選擇一個程式"
+
+#: Detour plugin:6
+msgid "Operation done"
+msgstr "執行完畢"
+
+#: bash/bug_report:32
+#, sh-format
+msgid "Report a bug"
+msgstr "回報錯誤"
+
+#: bash/bug_report:37
+#, sh-format
+msgid ""
+"Please give the more details as you can, otherwise, it will be very "
+"difficult to help you"
+msgstr ""
+
+#: bash/bug_report:37
+#, sh-format
+msgid ""
+"This wizard will help you to report a bug about an officially supported "
+"program."
+msgstr "這個精靈將幫助你回報被官方支援的程式的錯誤。"
+
+#: bash/bug_report:41
+#, sh-format
+msgid ""
+"Your $APPLICATION_TITLE version is not up to date.\\nYou must update "
+"$APPLICATION_TITLE before sending a bug report.\\nThank you"
+msgstr ""
+"您的 $APPLICATION_TITLE 版本是並不是最新的.\\n發送錯誤報告之前, 您必須更新 $APPLICATION_TITLE.\\n謝謝"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "I have a problem with a software"
+msgstr "我有一個和軟體相關的問題"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "My problem concerns $APPLICATION_TITLE itself"
+msgstr "我的問是涉及到 $APPLICATION_TITLE 本身"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "What kind of problem do you have?"
+msgstr "你遇到哪個類型的問題？"
+
+#: bash/bug_report:51
+#, sh-format
+msgid "Don't join any log file"
+msgstr "不附加任何日誌檔"
+
+#: bash/bug_report:54 bash/manual_install:27 bash/manual_install:100
+#: bash/manual_install:106 bash/manual_install:191
+#, sh-format
+msgid "Manual installation"
+msgstr "手動安裝"
+
+#: bash/bug_report:55 bash/run_exe:24
+#, sh-format
+msgid "Automatic installation"
+msgstr "自動安裝"
+
+#: bash/bug_report:66
+#, sh-format
+msgid "Choose the log file corresponding to your software."
+msgstr "請選擇和你的軟體相對應的日誌檔"
+
+#: bash/bug_report:73
+#, sh-format
+msgid "Please explain your problem clearly (english only):"
+msgstr "請用英文清楚地描述你的問題："
+
+#: bash/bug_report:77
+#, sh-format
+msgid "Sorry, we need a detailed description."
+msgstr "抱歉，我們需要詳細的描述。"
+
+#: bash/bug_report:101
+#, sh-format
+msgid "Thank you !\\n\\nYour report has been sent."
+msgstr ""
+
+#: bash/create_prefix:26
+#, sh-format
+msgid "Virtual drive creator"
+msgstr "虛擬磁碟制作器"
+
+#: bash/create_prefix:29
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE virtual drive creator.\\n\\nThis tool will "
+"help you to make a new virtual drive"
+msgstr "歡迎使用 $APPLICATION_TITLE 虛擬磁碟製作器。\\n\\n這個工具將幫助你製作一個新的虛擬磁碟"
+
+#: bash/create_prefix:31 bash/manual_install:169
+#, sh-format
+msgid "What kind of virtual drive do you want to create"
+msgstr "你要製作什麼類型的虛擬磁碟"
+
+#: bash/create_prefix:55
+#, sh-format
+msgid ""
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
+"manager)"
+msgstr "（如果這個清單是空的，請使用 Wine 版本管理員來安裝一個 Wine 版本）"
+
+#: bash/create_prefix:55 bash/manual_install:156
+#, sh-format
+msgid "Which version of Wine would you like to use?"
+msgstr "你想要使用哪個版本的 Wine？"
+
+#: bash/create_prefix:63
+#, sh-format
+msgid "Choose the name of the virtual drive"
+msgstr "為這個虛擬磁碟命名"
+
+#: bash/expert/Executer:22 bash/expert/Executer:27 bash/expert/Executer:29
+#: python/mainwindow.py:275
+#, sh-format
+msgid "Run a local script"
+msgstr "執行一個本地腳本"
+
+#: bash/expert/Executer:27
+#, sh-format
+msgid ""
+"This wizard will help you to run an unofficial $APPLICATION_TITLE Script."
+msgstr "這個精靈會幫助你執行非官方的 $APPLICATION_TITLE 腳本。"
+
+#: bash/expert/Executer:29
+#, sh-format
+msgid "Choose a valid $APPLICATION_TITLE script to run."
+msgstr "選擇一個有效的 $APPLICATION_TITLE 腳本來執行。"
+
+#: bash/expert/Executer:38
+#, sh-format
+msgid "Error!"
+msgstr "錯誤！"
+
+#: bash/expert/Executer:38
+#, sh-format
+msgid "File not found!"
+msgstr "找不到檔案！"
+
+#: bash/install:27 bash/install:29 python/install.py:458 python/install.py:460
+#: python/install.py:580
+#, sh-format
+msgid "Please read this"
+msgstr "請閱讀"
+
+#: bash/install_wver:27
+#, sh-format
+msgid "This wizard will help you to install Wine: "
+msgstr "這個精靈將幫助你安裝 Wine： "
+
+#: bash/install_wver:27
+#, sh-format
+msgid "on the $APPLICATION_TITLE environment."
+msgstr "在 $APPLICATION_TITLE 環境下。"
+
+#: bash/installpolpackages:29 bash/polconfigurator:23 bash/winebash:27
+#, sh-format
+msgid "$APPLICATION_TITLE Application Configurator"
+msgstr "$APPLICATION_TITLE 應用程式設定"
+
+#: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
+#: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
+#, sh-format
+msgid "Please wait..."
+msgstr "請稍候…"
+
+#: bash/killall:26
+#, sh-format
+msgid ""
+"Are you sure you want to shutdown all active $APPLICATION_TITLE applications?"
+msgstr "你確定要關閉所有活動的 $APPLICATION_TITLE 應用程式？"
+
+#: bash/make_shortcut:25
+#, sh-format
+msgid "$APPLICATION_TITLE shortcut creator"
+msgstr "$APPLICATION_TITLE 捷徑建立器"
+
+#: bash/make_shortcut:30
+#, sh-format
+msgid "Please choose a software to package"
+msgstr "請選擇一個要打包的軟體"
+
+#: bash/make_shortcut:35
+#, sh-format
+msgid "Creating shortcut..."
+msgstr "正在建立捷徑..."
+
+#: bash/make_shortcut:37
+#, sh-format
+msgid "The shortcut has been placed on your desktop"
+msgstr "捷徑已被建立在你的桌面"
+
+#: bash/make_shortcut:57
+#, sh-format
+msgid "Copying virtual drive"
+msgstr "正在複制虛擬磁碟"
+
+#: bash/manual_install:52
+#, sh-format
+msgid "Autorun"
+msgstr "自動執行"
+
+#: bash/manual_install:52
+#, sh-format
+msgid "No setup location found in autorun.inf"
+msgstr ""
+
+#: bash/manual_install:100
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE manual installation wizard.\\n\\nThis script "
+"will allow you to install any program on $APPLICATION_TITLE and use it with "
+"all the tools\\n\\nWarning: We are unable to guarantee that your application "
+"will work perfectly."
+msgstr ""
+
+#: bash/manual_install:102
+#, sh-format
+msgid "Install a program in a new virtual drive"
+msgstr "在新的虛擬磁碟中安裝程式"
+
+#: bash/manual_install:103
+#, sh-format
+msgid "Edit or update an existing application"
+msgstr "編輯或更新現有的應用程式"
+
+#: bash/manual_install:106
+#, sh-format
+msgid "What would you like to do?"
+msgstr "你想做什麼?"
+
+#: bash/manual_install:117
+#, sh-format
+msgid ""
+"Please type a name for your application's virtual drive.\\nThis name "
+"shouldn't contain spaces."
+msgstr "請輸入應用程式虛擬磁碟的名稱。\\n此名稱不能包含空格。"
+
+#: bash/manual_install:126
+#, sh-format
+msgid "Please choose a program"
+msgstr "請選擇一個程式"
+
+#: bash/manual_install:138
+#, sh-format
+msgid "Use another version of Wine"
+msgstr "使用另一個版本的 Wine"
+
+#: bash/manual_install:139 bash/manual_install:191 bash/polconfigurator:102
+#: python/configure.py:232 python/mainwindow.py:583 python/mainwindow.py:615
+#, sh-format
+msgid "Configure Wine"
+msgstr "配置 Wine"
+
+#: bash/manual_install:140
+#, sh-format
+msgid "Install some libraries"
+msgstr "安裝函式庫"
+
+#: bash/manual_install:143
+#, sh-format
+msgid "If you don't know, unselect all"
+msgstr "如果你不知道的話，全部都不要選取"
+
+#: bash/manual_install:143
+#, sh-format
+msgid "What would you like to do before installation?"
+msgstr "在安裝之前你想要先做什麼？"
+
+#: bash/manual_install:203 lib/com.playonlinux.framework.lib:468
+#, sh-format
+msgid "Please make your choice"
+msgstr "請選擇"
+
+#: bash/manual_install:232
+#, sh-format
+msgid "Looking for runnable CD-ROMs"
+msgstr "尋找可執行的 CD-ROM 中"
+
+#: bash/manual_install:255
+#, sh-format
+msgid "Select another file"
+msgstr "選擇另一個檔案"
+
+#: bash/manual_install:263
+#, sh-format
+msgid "Please choose a way to install your program"
+msgstr "請選擇一個方法來安裝你的程式"
+
+#: bash/manual_install:272
+#, sh-format
+msgid "Please select the install file to run."
+msgstr "請選擇要執行的安裝檔。"
+
+#: bash/manual_install:284
+#, sh-format
+msgid "You must choose a file!"
+msgstr "你必須選擇一個檔案！"
+
+#: bash/manual_install:290
+#, sh-format
+msgid "$APPLICATION_TITLE is installing your application..."
+msgstr "$APPLICATION_TITLE 正在安裝你的應用程式..."
+
+#: bash/playonlinux-pkg:27
+#, sh-format
+msgid "Usage: "
+msgstr "用法： "
+
+#: bash/playonlinux-pkg:29
+#, sh-format
+msgid "\tChoose a file"
+msgstr "\t選擇一個檔案"
+
+#: bash/playonlinux-pkg:31
+#, sh-format
+msgid "\tExtract the package"
+msgstr "\t解壓縮套件"
+
+#: bash/playonlinux-pkg:33
+#, sh-format
+msgid "\tInstall the package"
+msgstr "\t安裝套件"
+
+#: bash/playonlinux-pkg:35
+#, sh-format
+msgid "\tShow this message"
+msgstr "\t顯示這個訊息"
+
+#: bash/playonlinux-pkg:38
+#, sh-format
+msgid "$APPLICATION_TITLE package manager: "
+msgstr ""
+
+#: bash/playonlinux-pkg:55
+#, sh-format
+msgid "Choose a package to install"
+msgstr "選擇要安裝的套件"
+
+#: bash/playonlinux-pkg:55
+#, sh-format
+msgid "PlayOnLinux package manager"
+msgstr "套件管理員"
+
+#: bash/playonlinux-pkg:69
+#, sh-format
+msgid "Unable to find the file: "
+msgstr "無法找到檔案： "
+
+#: bash/playonlinux-pkg:75 bash/playonlinux-pkg:96 bash/playonlinux-pkg:107
+#: bash/playonlinux-pkg:112
+#, sh-format
+msgid " isn't a valid PlayOnLinux package!"
+msgstr " 不是一個有效的 PlayOnLinux 套件！"
+
+#: bash/playonlinux-pkg:75 bash/playonlinux-pkg:90 bash/playonlinux-pkg:96
+#: bash/playonlinux-pkg:107 bash/playonlinux-pkg:112
+#, sh-format
+msgid "This file: "
+msgstr "這個檔案： "
+
+#: bash/playonlinux-pkg:90
+#, sh-format
+msgid " does not exist!"
+msgstr " 不存在!"
+
+#: bash/playonlinux-pkg:103
+#, sh-format
+msgid "Extracting: "
+msgstr "解壓縮 "
+
+#: bash/playonlinux-pkg:115
+#, sh-format
+msgid "Running..."
+msgstr "執行中…"
+
+#: bash/playonlinux-pkg:119
+#, sh-format
+msgid "Cleaning..."
+msgstr "清除中..."
+
+#: bash/polconfigurator:34
+#, sh-format
+msgid "Killing programs in the virtual drive..."
+msgstr ""
+
+#: bash/polconfigurator:86
+#, sh-format
+msgid "Icon selection"
+msgstr "圖示選擇"
+
+#: bash/polconfigurator:86
+#, sh-format
+msgid "Please select an icon file"
+msgstr "請選擇一個圖示檔"
+
+#: bash/polconfigurator:93
+#, sh-format
+msgid "Bad file extension"
+msgstr "無效的副檔名"
+
+#: bash/polconfigurator:93
+#, sh-format
+msgid "is not an icon extension"
+msgstr "不是圖示的副檔名"
+
+#: bash/polconfigurator:103 python/configure.py:240 python/mainwindow.py:587
+#: python/mainwindow.py:628
+#, sh-format
+msgid "Registry Editor"
+msgstr "註冊表編緝器"
+
+#: bash/polconfigurator:104
+#, sh-format
+msgid "Kill all prefix processes"
+msgstr ""
+
+#: bash/polconfigurator:105
+#, sh-format
+msgid "Update wineprefix"
+msgstr ""
+
+#: bash/polconfigurator:106
+#, sh-format
+msgid "Simulate Windows reboot"
+msgstr "模擬 Windows 重開機"
+
+#: bash/polconfigurator:107
+#, sh-format
+msgid "Use Advanced Wine Configuration plugin"
+msgstr ""
+
+#: bash/polconfigurator:108
+#, sh-format
+msgid "Use PlayOnLinux's configurator for"
+msgstr ""
+
+#: bash/polconfigurator:110
+#, sh-format
+msgid "Change the icon"
+msgstr "更改圖示"
+
+#: bash/polconfigurator:111
+#, sh-format
+msgid "Use WineTricks"
+msgstr "使用 WineTricks"
+
+#: bash/polconfigurator:130
+#, sh-format
+msgid "Please choose an action to perform"
+msgstr "選擇要執行的動作"
+
+#: bash/read_pc_cd:25
+#, sh-format
+msgid "PC CD-ROM reader"
+msgstr "光碟讀取器"
+
+#: bash/read_pc_cd:33
+#, sh-format
+msgid ""
+"This tool will help your Mac to read the PC part of a CD-ROM.\\n\\nUse this "
+"tool ONLY if you CD-ROM is a hybride CD-ROM (Compatible with Windows and "
+"MacOS), and if you are not able to see the Windows part"
+msgstr ""
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "Eject a PC CD-ROM"
+msgstr "退出光碟"
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "Read a PC CD-ROM"
+msgstr "讀取光碟"
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "What do you want to do?"
+msgstr "你想做什麼?"
+
+#: bash/read_pc_cd:38
+#, sh-format
+msgid ""
+"Please insert your CD-ROM, and press next only when Finder has found the Mac "
+"OS part of your CD-ROM"
+msgstr ""
+
+#: bash/read_pc_cd:51
+#, sh-format
+msgid "Please choose a CD-ROM"
+msgstr "請選擇一張光碟"
+
+#: bash/read_pc_cd:97
+#, sh-format
+msgid "Please choose a CD-ROM to eject"
+msgstr "請選擇要彈出的光碟"
+
+#: bash/run_app:85
+#, sh-format
+msgid "Please choose a software to run"
+msgstr "請選擇要運行的軟體"
+
+#: bash/run_app:115
+#, sh-format
+msgid "$APPLICATION_TITLE debugger is starting..."
+msgstr "$APPLICATION_TITLE 除錯器正在啟動..."
+
+#: bash/run_app:118
+#, sh-format
+msgid "$PACKAGE crashed.\\nClick on debug link to get more details."
+msgstr ""
+
+#: bash/run_app:120
+#, sh-format
+msgid "$PACKAGE crashed."
+msgstr "$PACKAGE 當機。"
+
+#: bash/run_exe:33
+#, sh-format
+msgid "Waiting XQuartz to be installed"
+msgstr ""
+
+#: bash/run_exe:70
+#, sh-format
+msgid "$APPLICATION_TITLE is analysing your application"
+msgstr "$APPLICATION_TITLE 正在分析你的應用程式"
+
+#: bash/run_exe:81
+#, sh-format
+msgid "Do you want $APPLICATION_TITLE to install it automatically for you?"
+msgstr "你想要讓 $APPLICATION_TITLE 自動幫你安裝嗎？"
+
+#: bash/run_exe:81
+#, sh-format
+msgid "We have detected that the program you want to install is :"
+msgstr "我們偵測到你想要安裝的程式是："
+
+#: bash/run_exe:97
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE assistant.\\nIt will help you to install $file "
+"on your computer.\\n\\nBe careful! This program is not officially supported "
+"by $APPLICATION_TITLE.\\nTherefore, it might not work as expected"
+msgstr ""
+"歡迎使用 $APPLICATION_TITLE 助手。\\n它將幫助你在你的電腦上安裝 $file 。\\n\\n請小心！這個程式不被 "
+"$APPLICATION_TITLE 官方所支援。\\n因此它也許無法如預期般工作。"
+
+#: bash/run_exe:98
+#, sh-format
+msgid "What is the name of you program?"
+msgstr ""
+
+#: bash/run_exe:111
+#, sh-format
+msgid "Installation finished."
+msgstr "安裝完成。"
+
+#: bash/startup_after_server:38
+#, sh-format
+msgid "PlayOnMac needs to install XQuartz to work properly."
+msgstr ""
+
+#: bash/startup_after_server:39
+#, sh-format
+msgid "PlayOnMac will help you to simplify this step"
+msgstr ""
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "Don't install XQuartz for the moment"
+msgstr "現在不要安裝 XQuartz"
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "I've downloaded the file by myself"
+msgstr "我已經手動下載這個檔案"
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "Please download XQuartz for me"
+msgstr "請 為我下載XQuartz"
+
+#: bash/startup_after_server:47
+#, sh-format
+msgid "Downloading XQuartz"
+msgstr "正在下載 XQuartz..."
+
+#: bash/startup_after_server:52
+#, sh-format
+msgid "Where is"
+msgstr ""
+
+#: bash/startup_after_server:59
+#, sh-format
+msgid "Installing XQuartz..."
+msgstr "正在安裝 XQuartz..."
+
+#: bash/startup_after_server:68
+#, sh-format
+msgid "XQuartz has been installed."
+msgstr "XQuartz 已經安裝。"
+
+#: bash/startup_after_server:76
+#, sh-format
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
+msgstr ""
+
+#: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
+#: lib/com.playonlinux.wine.lib:866
+#, sh-format
+msgid "$APPLICATION_TITLE Uninstaller"
+msgstr "$APPLICATION_TITLE 移除程式"
+
+#: bash/uninstall:39
+#, sh-format
+msgid "Please select a program to uninstall"
+msgstr "請選擇要移除的程式"
+
+#: bash/uninstall:50
+#, sh-format
+msgid "Click Next to continue."
+msgstr "點擊下一步以繼續"
+
+#: bash/uninstall:50
+#, sh-format
+msgid "This wizard will help you to uninstall: "
+msgstr "這個精靈將會幫助你移除： "
+
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
+#, sh-format
+msgid "Uninstalling..."
+msgstr "正在移除..."
+
+#: bash/uninstall:68
+#, sh-format
+msgid " has been uninstalled successfully."
+msgstr " 已經成功移除。"
+
+#: bash/uninstall:75
+#, sh-format
+msgid "Cannot find the shortcut"
+msgstr "找不到捷徑"
+
+#: bash/update_git:25
+#, sh-format
+msgid "$APPLICATION_TITLE auto-updater"
+msgstr "$APPLICATION_TITLE 自動更新程式"
+
+#: bash/update_git:27
+#, sh-format
+msgid "Updating $APPLICATION_TITLE from GIT..."
+msgstr "從 GIT 更新 $APPLICATION_TITLE ..."
+
+#: bash/update_git:31
+#, sh-format
+msgid "Do you want to update and restart $APPLICATION_TITLE?"
+msgstr "你是否要更新並重新啟動 $APPLICATION_TITLE?"
+
+#: bash/update_git:37
+#, sh-format
+msgid "Already up-to-date."
+msgstr ""
+
+#: lib/debug.lib:128
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered an error. If the program does not work "
+"correctly, it might be the cause of the problem.\\nVisit www.$POL_DNS to get "
+"further information"
+msgstr ""
+"$APPLICATION_TITLE 遇到一個錯誤。如果程式不能正常運作, 可能源於此問題。\\n訪問 www.$POL_DNS 以得到進一步的資訊"
+
+#: lib/debug.lib:142
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered an error. If the program you are "
+"installing does not work correctly, it might be the cause of the problem.\\"
+"nVisit www.$POL_DNS to get further information"
+msgstr ""
+"$APPLICATION_TITLE 遇到一個錯誤。 如果您安裝的程式不能正常運作，可能源於此問題。\\n訪問 www.$POL_DNS "
+"以得到進一步的資訊"
+
+#: lib/debug.lib:155
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered a fatal error. $APPLICATION_TITLE will "
+"stop the installation process.\\nVisit www.$POL_DNS to get further "
+"information"
+msgstr ""
+"$APPLICATION_TITLE 遇到一個致命的錯誤。 $APPLICATION_TITLE 會停止安裝程序。\\n訪問 www.$POL_DNS "
+"以得到進一步的資訊"
+
+#: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
+#, sh-format
+msgid "Please wait while the virtual drive is being created..."
+msgstr "請等待虛擬硬碟建立 ..."
+
+#: lib/deprecated.lib:431
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is simulating a Windows reboot"
+msgstr "$APPLICATION_TITLE 正在模擬 Windows 重開機，請稍候"
+
+#: lib/deprecated.lib:563
+#, sh-format
+msgid "Setting Program Files var"
+msgstr ""
+
+#: lib/playonlinux.lib:261 lib/playonlinux.lib:267 lib/playonlinux.lib:273
+#: lib/playonlinux.lib:279 lib/playonlinux.lib:285 lib/playonlinux.lib:291
+#, sh-format
+msgid "This function is disabled in the PlayOnlinux environment."
+msgstr ""
+
+#: lib/playonlinux.lib:354
+#, sh-format
+msgid ""
+"Warning !!\\n\\nThe signature of the script you are trying to run is NOT "
+"valid\\n\\nPlayOnLinux has not approved this script and will not be "
+"responsible from it.\\nPlease ensure you know what you are doing !"
+msgstr ""
+
+#: lib/playonlinux.lib:355 lib/playonlinux.lib:378
+#, sh-format
+msgid "Here the source code of the script. Check it carefully"
+msgstr "這是腳本的原始碼。請仔細檢查"
+
+#: lib/playonlinux.lib:377
+#, sh-format
+msgid ""
+"Warning !!\\n\\nThe signature of the script you are trying to run is NOT "
+"valid\\n\\n$APPLICATION_TITLE has not approved this script and will not be "
+"responsible from it.\\nPlease ensure you know what you are doing!"
+msgstr ""
+
+#: lib/playonlinux.lib:378
+#, sh-format
+msgid "External library"
+msgstr "外部庫"
+
+#: lib/playonlinux.lib:641
+#, sh-format
+msgid "Making shortcut..."
+msgstr "正在製作捷徑..."
+
+#: lib/playonlinux.lib:768
+#, sh-format
+msgid "Do you want to delete the virtual drive:"
+msgstr "你要刪除這個虛擬磁碟嗎："
+
+#: lib/playonlinux.lib:877
+#, sh-format
+msgid ""
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+
+#: lib/playonlinux.lib:878
+#, sh-format
+msgid ""
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+
+#: lib/playonlinux.lib:879
+#, sh-format
+msgid ""
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+
+#: lib/playonlinux.lib:880
+#, sh-format
+msgid ""
+"The following file is located on a noexec mounted filesystem.\\nIt might "
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
+msgstr ""
+
+#: lib/playonlinux.lib:909
+#, sh-format
+msgid ""
+"Your Linux kernel may not be configured to run Win16 programs under Wine\\"
+"nSee $EXPLANATION_URL"
+msgstr ""
+
+#: lib/playonlinux.lib:912
+#, sh-format
+msgid ""
+"Your kernel may be incompatible with running Win16 programs under Wine\\nSee "
+"$EXPLANATION_URL"
+msgstr ""
+
+#: lib/plugins.lib:63
+#, sh-format
+msgid "Checking plugin: "
+msgstr "正在檢查外掛： "
+
+#: lib/plugins.lib:85
+#, sh-format
+msgid "New: "
+msgstr "新增： "
+
+#: lib/plugins.lib:85
+#, sh-format
+msgid "Updating plugin. Previous: "
+msgstr ""
+
+#: lib/plugins.lib:99
+#, sh-format
+msgid "Installing plugin: "
+msgstr "正在安裝外掛： "
+
+#: lib/com.playonlinux.framework.lib:356
+#, sh-format
+msgid ""
+"Binary not found: $BINARY\\nHave you installed the program to the default "
+"location?"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:427
+#, sh-format
+msgid "Function override detected, disabling bug reporting"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:526 lib/com.playonlinux.framework.lib:589
+#, sh-format
+msgid "No enough space to download:\\n$URL ($neededSpace KB)"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:528 lib/com.playonlinux.framework.lib:811
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is downloading:"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:595
+#, sh-format
+msgid "An error happened during download."
+msgstr "下載時發生錯誤。"
+
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:595
+#: lib/com.playonlinux.framework.lib:611
+#, sh-format
+msgid "Do you want to retry?"
+msgstr "您想要重試嗎？"
+
+#: lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:611
+#, sh-format
+msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:716
+#, sh-format
+msgid ""
+"7z not installed, please check that you have 7zip installed and try again"
+msgstr "沒有安裝 7z，請確認你已經安裝 7zip 並再試一次"
+
+#: lib/com.playonlinux.framework.lib:723
+#, sh-format
+msgid "Failed to locate ${dest} from ${archive}"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:727
+#, sh-format
+msgid "Extracting ${filename} from ${archivename}"
+msgstr "從 ${archivename} 解壓縮 ${filename}"
+
+#: lib/com.playonlinux.framework.lib:742
+#, sh-format
+msgid "Extracted file size does not match!"
+msgstr "解壓縮出的檔案大小不匹配！"
+
+#: lib/com.playonlinux.framework.lib:773
+#, sh-format
+msgid "Copying ${filename}"
+msgstr "複製 ${filename}"
+
+#: lib/com.playonlinux.framework.lib:786
+#, sh-format
+msgid "File size does not match!"
+msgstr "文件大小不匹配"
+
+#: lib/com.playonlinux.framework.lib:937
+#, sh-format
+msgid ""
+"Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
+"n$APPLICATION_TITLE $NEEDED is required."
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:952
+#, sh-format
+msgid ""
+"Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
+"$NEEDED is recommended to continue."
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:983
+#, sh-format
+msgid "$AUTHOR profile"
+msgstr ""
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid " on your computer."
+msgstr " 在你的電腦。"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid " will be installed in: "
+msgstr " 將被安裝在： "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "Click Next to start"
+msgstr "點擊下一步以開始"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This installation program is provided by: "
+msgstr "這個安裝程式的提供者是： "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This program was created by: "
+msgstr "該程式作者為： "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This wizard will help you install "
+msgstr "這個精靈將幫助你安裝 "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "Welcome to $APPLICATION_TITLE Installation Wizard."
+msgstr "歡迎使用 $APPLICATION_TITLE 安裝精靈。"
+
+#: lib/setupwindow.lib:328
+#, sh-format
+msgid "Where is mounted your CD-ROM?"
+msgstr "你的 CD-ROM 掛載到了哪裡?"
+
+#: lib/setupwindow.lib:329 python/install.py:222
+#, sh-format
+msgid "Other"
+msgstr "其他"
+
+#: lib/setupwindow.lib:330 python/install.py:290 python/install.py:294
+#, sh-format
+msgid "Refresh"
+msgstr "重新整理"
+
+#: lib/setupwindow.lib:388
+#, sh-format
+msgid "Reading your device"
+msgstr ""
+
+#: lib/setupwindow.lib:403
+#, sh-format
+msgid "Error: Unable to find the CD-ROM!"
+msgstr "錯誤：找不到 CD-ROM！"
+
+#: lib/setupwindow.lib:417
+#, sh-format
+msgid ""
+"$TITLE needs to read the PC part of a hybrid CD-Rom.\\n\\nBy default, MacOS "
+"only gives you access to the Mac part of the cd-rom, which may not be "
+"compatible with recent versions of Mac OS.\\n\\nDo you want PlayOnMac to "
+"attempt to read the PC-Part of your CD?"
+msgstr ""
+
+#: lib/setupwindow.lib:469
+#, sh-format
+msgid ""
+"Don't forget to go to PlayOnMac tools menu -> Read a PC CD-Rom before "
+"running your game"
+msgstr ""
+
+#: lib/setupwindow.lib:483
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is copying files:"
+msgstr ""
+
+#: lib/setupwindow.lib:568 lib/setupwindow.lib:721
+#, sh-format
+msgid "Scanning the virtual drive ..."
+msgstr "正在掃描虛擬磁碟..."
+
+#: lib/setupwindow.lib:582
+#, sh-format
+msgid "How much memory does your graphics board have?"
+msgstr "你的顯卡記憶體多大?"
+
+#: lib/setupwindow.lib:591
+#, sh-format
+msgid "Video card does not have enough memory"
+msgstr "顯示卡記憶體不足"
+
+#: lib/setupwindow.lib:592
+#, sh-format
+msgid ""
+"Your video card does not have enough memory!\\nIt might prevent the game "
+"from working"
+msgstr "顯示卡記憶體不足！\\n它可能會導致遊戲無法運作"
+
+#: lib/setupwindow.lib:607
+#, sh-format
+msgid "Use Steam Store version"
+msgstr ""
+
+#: lib/setupwindow.lib:608
+#, sh-format
+msgid "Use Steam Store demo version"
+msgstr ""
+
+#: lib/setupwindow.lib:609
+#, sh-format
+msgid "Use Desura Store version"
+msgstr ""
+
+#: lib/setupwindow.lib:610
+#, sh-format
+msgid "Use Desura Store demo version"
+msgstr ""
+
+#: lib/setupwindow.lib:611
+#, sh-format
+msgid "Use Origin Store version"
+msgstr ""
+
+#: lib/setupwindow.lib:612
+#, sh-format
+msgid "Use Origin Store demo version"
+msgstr ""
+
+#: lib/setupwindow.lib:614
+#, sh-format
+msgid "Use a setup file in my computer"
+msgstr "使用電腦中的安裝檔"
+
+#: lib/setupwindow.lib:615
+#, sh-format
+msgid "Use CD-ROM(s)"
+msgstr "使用 CD-ROM"
+
+#: lib/setupwindow.lib:616
+#, sh-format
+msgid "Use DVD-ROM(s)"
+msgstr "使用 DVD-ROM"
+
+#: lib/setupwindow.lib:617
+#, sh-format
+msgid "Download the program"
+msgstr "下載程式"
+
+#: lib/setupwindow.lib:682
+#, sh-format
+msgid "Please choose an installation method"
+msgstr "請選擇一個安裝方法"
+
+#: lib/setupwindow.lib:713
+#, sh-format
+msgid "I don't want to make another shortcut"
+msgstr "我不要再建立其他捷徑"
+
+#: lib/setupwindow.lib:714 python/guiv3.py:170
+#, sh-format
+msgid "Browse"
+msgstr "瀏覽"
+
+#: lib/setupwindow.lib:763
+#, sh-format
+msgid "A shortcut by that name already exists, overwrite?"
+msgstr ""
+
+#: lib/website.lib:29
+#, sh-format
+msgid "Connect to your $APPLICATION_TITLE account"
+msgstr "連接到你的 $APPLICATION_TITLE 帳號"
+
+#: lib/website.lib:127
+#, sh-format
+msgid "Connecting..."
+msgstr "連線中..."
+
+#: lib/website.lib:132
+#, sh-format
+msgid ""
+"Failed to connect !\\nPlease ensure that your login and your password are "
+"valid."
+msgstr "連接失敗！\\n請確保您的登錄名稱和密碼是有效的."
+
+#: lib/com.playonlinux.wine.lib:388
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
+msgstr "$APPLICATION_TITLE 正在掃描您的硬體，請稍候"
+
+#: lib/com.playonlinux.wine.lib:394
+#, sh-format
+msgid "Select the main videocard to report:"
+msgstr "選擇要報告的主要顯示卡："
+
+#: lib/com.playonlinux.wine.lib:540
+#, sh-format
+msgid ""
+"Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:578
+#, sh-format
+msgid ""
+"Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
+"message"
+msgstr "Wine 似乎已經當機\\n\\n如果你的程式正在運行， 忽略此訊息"
+
+#: lib/com.playonlinux.wine.lib:623
+#, sh-format
+msgid ""
+"This is an installer for an update or an addon;\\nPlease install "
+"$TITLE_REQUIRED first"
+msgstr "此為一個更新或是插件的安裝檔;\\n請先行安裝 $TITLE_REQUIRED"
+
+#: lib/com.playonlinux.wine.lib:682
+#, sh-format
+msgid "Unable to find version: "
+msgstr "不能找到下列版本： "
+
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
+#, sh-format
+msgid "Downloading Wine: "
+msgstr "下載 Wine： "
+
+#: lib/com.playonlinux.wine.lib:698
+#, sh-format
+msgid "The download seems to have failed."
+msgstr "下載似乎失敗了。"
+
+#: lib/com.playonlinux.wine.lib:700
+#, sh-format
+msgid "Extracting Wine..."
+msgstr "解壓縮 Wine 中..."
+
+#: lib/com.playonlinux.wine.lib:897
+#, sh-format
+msgid "Overwrite (usually works, no guarantee)"
+msgstr "覆蓋(通常奏效, 但不保證)"
+
+#: lib/com.playonlinux.wine.lib:898
+#, sh-format
+msgid "Erase (virtual drive content will be lost)"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:899
+#, sh-format
+msgid "Abort installation"
+msgstr "中止安裝"
+
+#: lib/com.playonlinux.wine.lib:912
+#, sh-format
+msgid "The target virtual drive $PREFNAME already exists:"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:928
+#, sh-format
+msgid "User abort"
+msgstr "使用者中止"
+
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
+#, sh-format
+msgid "Please wait while $SOFTNAME is installed..."
+msgstr "正在安裝 $SOFTNAME ，請稍候..."
+
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
+#, sh-format
+msgid ""
+"Be careful! This will kill install process. If it is not finished, you will "
+"have to reinstall $SOFTNAME"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
+#, sh-format
+msgid "Install is done"
+msgstr "安裝完成"
+
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
+#, sh-format
+msgid "Press next only when the installation process is finished"
+msgstr "只有在安裝程式完成時才按\"下一步\""
+
+#: lib/com.playonlinux.wine.lib:1138
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
+msgstr "請等待， $APPLICATION_TITLE 正在模擬重新啟動"
+
+#: python/configure.py:117
+msgid ""
+"Warning:\n"
+"\n"
+"This tool is for advanced users.\n"
+"To uninstall cleanly a program with {0}, you must delete the virtual drive "
+"associated"
+msgstr ""
+
+#: python/configure.py:198 python/configure.py:713
+msgid "General"
+msgstr "一般"
+
+#: python/configure.py:201
+msgid "Make a new shortcut from this virtual drive"
+msgstr "從這個虛擬磁碟建立新的捷徑"
+
+#: python/configure.py:202
+msgid "Name"
+msgstr "名稱"
+
+#: python/configure.py:203
+msgid "Wine version"
+msgstr "Wine 版本"
+
+#: python/configure.py:204
+msgid "Debug flags"
+msgstr ""
+
+#: python/configure.py:206
+msgid "Virtual drive"
+msgstr "虛擬磁碟"
+
+#: python/configure.py:208
+msgid "Arguments"
+msgstr "參數"
+
+#: python/configure.py:212
+msgid "Run configuration wizard"
+msgstr "執行配置精靈"
+
+#: python/configure.py:249
+msgid "Windows reboot"
+msgstr "Windows 重開機"
+
+#: python/configure.py:257
+msgid "Repair virtual drive"
+msgstr "修復虛擬磁碟"
+
+#: python/configure.py:266
+msgid "Command prompt"
+msgstr "命令提示字元"
+
+#: python/configure.py:273
+msgid "Task manager"
+msgstr "工作管理員"
+
+#: python/configure.py:281
+msgid "Kill processes"
+msgstr "刪除程序"
+
+#: python/configure.py:288
+msgid "Wine uninstaller"
+msgstr "Wine 解除安裝程式"
+
+#: python/configure.py:313
+msgid ""
+"Be careful! Installing one of these components can break your virtual drive."
+msgstr "小心！安裝這些組件中的一個可能打破你的虛擬硬碟。"
+
+#: python/configure.py:335 python/install.py:289 python/install.py:293
+#: python/mainwindow.py:243 python/mainwindow.py:383
+msgid "Install"
+msgstr "安裝"
+
+#: python/configure.py:398
+msgid "Open program's directory"
+msgstr "開啟程式的資料夾"
+
+#: python/configure.py:421
+msgid "Open virtual drive's directory"
+msgstr "開啟虛擬磁碟的資料夾"
+
+#: python/configure.py:565
+msgid "GLSL Support"
+msgstr "GLSL 支援"
+
+#: python/configure.py:566
+msgid "Direct Draw Renderer"
+msgstr ""
+
+#: python/configure.py:567
+msgid "Video memory size"
+msgstr "顯示記憶體大小"
+
+#: python/configure.py:568
+msgid "Offscreen rendering mode"
+msgstr "螢幕上不可見區域的描繪模式"
+
+#: python/configure.py:569
+msgid "Render target mode lock"
+msgstr ""
+
+#: python/configure.py:570
+msgid "Multisampling"
+msgstr "多重採樣"
+
+#: python/configure.py:571
+msgid "Strict Draw Ordering"
+msgstr ""
+
+#: python/configure.py:581
+msgid "Mouse warp override"
+msgstr ""
+
+#: python/configure.py:583
+msgid "Open a shell"
+msgstr "開啟 shell"
+
+#: python/configure.py:584
+msgid "Run a .exe file in this virtual drive"
+msgstr "執行在這個虛擬磁碟中的 .exe 檔"
+
+#: python/configure.py:585
+msgid "Command to exec before running the program"
+msgstr "執行程式前要執行的命令"
+
+#: python/configure.py:595
+msgid ""
+"Warning:\n"
+"\n"
+"Any program still running in this virtual drive will be terminated before "
+"Wine version is changed.\n"
+"Are you sure you want to continue?"
+msgstr ""
+
+#: python/configure.py:606
+msgid ""
+"Be careful!\n"
+"If you change "
+msgstr ""
+"小心!\n"
+"如果你更改 "
+
+#: python/configure.py:666 python/mainwindow.py:972 python/mainwindow.py:974
+msgid "{0} configuration"
+msgstr "{0} 設定"
+
+#: python/configure.py:674
+msgid "Please select a program or a virtual drive to configure"
+msgstr "請先選擇要配置的程式或虛擬磁碟"
+
+#: python/configure.py:693 python/configure.py:696 python/options.py:280
+msgid "New"
+msgstr "新增"
+
+#: python/configure.py:694 python/configure.py:697 python/mainwindow.py:244
+#: python/mainwindow.py:384 python/mainwindow.py:603 python/options.py:207
+msgid "Remove"
+msgstr "移除"
+
+#: python/configure.py:715
+msgid "Install components"
+msgstr "安裝套件"
+
+#: python/configure.py:716 python/mainwindow.py:364
+msgid "Display"
+msgstr "顯示"
+
+#: python/configure.py:717
+msgid "Miscellaneous"
+msgstr "雜項"
+
+#: python/configure.py:745
+msgid "This virtual drive is protected"
+msgstr "該虛擬辭碟被保護"
+
+#: python/configure.py:747
+msgid "Are you sure you want to delete {0} virtual drive ?"
+msgstr ""
+
+#: python/configure.py:754
+msgid "Are you sure you want to delete {0} ?"
+msgstr "你確定你要刪除 {0} 嗎？"
+
+#: python/debug.py:40 python/mainwindow.py:281 python/mainwindow.py:947
+#: python/mainwindow.py:1037 python/wrapper.py:76
+msgid "{0} debugger"
+msgstr "{0} 除錯器"
+
+#: python/debug.py:51
+msgid "Please select a debug file"
+msgstr ""
+
+#: python/debug.py:80
+msgid "Locate this logfile"
+msgstr ""
+
+#: python/debug.py:103
+msgid "The file is named : {0}"
+msgstr "檔案命名為: {0}"
+
+#: python/debug.py:201 python/debug.py:264
+msgid "Virtual drives"
+msgstr "虛擬磁碟"
+
+#: python/debug.py:229
+msgid "Report a problem about {0}"
+msgstr "回報關於 {0} 的問題"
+
+#: python/debug.py:263
+msgid "Install com.playonlinux.framework"
+msgstr "安裝腳本"
+
+#: python/gui_server.py:54 python/gui_server.py:55
+msgid "Error: Unable to reserve a valid port"
+msgstr ""
+
+#: python/gui_server.py:165
+msgid "WARNING. Please use POL_SetupWindow_Init first"
+msgstr "警告：請先使用 POL_SetupWindow_Init"
+
+#: python/guiv3.py:117
+msgid "{0} Wizard"
+msgstr "{0} 精靈"
+
+#: python/guiv3.py:141 python/guiv3.py:144 python/install.py:288
+#: python/install.py:292 python/options.py:376
+msgid "Cancel"
+msgstr "取消"
+
+#: python/guiv3.py:142 python/guiv3.py:145
+msgid "Next"
+msgstr "下一步"
+
+#: python/guiv3.py:164 python/guiv3.py:167
+msgid "No"
+msgstr "否"
+
+#: python/guiv3.py:165 python/guiv3.py:168
+msgid "Yes"
+msgstr "是"
+
+#: python/guiv3.py:178
+msgid "I Agree"
+msgstr "我同意"
+
+#: python/guiv3.py:179
+msgid "Don't remind me anymore"
+msgstr ""
+
+#: python/guiv3.py:180
+msgid "Show virtual drives"
+msgstr "顯示虛擬磁碟"
+
+#: python/guiv3.py:201
+msgid "Login: "
+msgstr "登入： "
+
+#: python/guiv3.py:202
+msgid "Password: "
+msgstr "密碼： "
+
+#: python/guiv3.py:205
+msgid "Register"
+msgstr "註冊"
+
+#: python/guiv3.py:312
+msgid "MB downloaded"
+msgstr ""
+
+#: python/guiv3.py:312
+msgid "of"
+msgstr ""
+
+#: python/guiv3.py:803 python/mainwindow.py:1158 python/mainwindow.py:1188
+#: python/mainwindow.py:1202 python/mainwindow.py:1211
+#: python/mainwindow.py:1223 python/mainwindow.py:1235 python/wrapper.py:129
+msgid "Error"
+msgstr "錯誤"
+
+#: python/guiv3.py:803
+msgid "You cannot close this window"
+msgstr "你不能關閉這個視窗"
+
+#: python/install.py:115 python/install.py:117
+msgid "No description"
+msgstr "沒有描述"
+
+#: python/install.py:214
+msgid "Accessories"
+msgstr "附屬應用程式"
+
+#: python/install.py:215
+msgid "Development"
+msgstr "開發"
+
+#: python/install.py:216
+msgid "Education"
+msgstr "教育"
+
+#: python/install.py:217
+msgid "Games"
+msgstr "遊戲"
+
+#: python/install.py:218
+msgid "Graphics"
+msgstr "圖像"
+
+#: python/install.py:219 python/mainwindow.py:287 python/options.py:384
+msgid "Internet"
+msgstr "網際網路"
+
+#: python/install.py:220
+msgid "Multimedia"
+msgstr "多媒體"
+
+#: python/install.py:221
+msgid "Office"
+msgstr "辦公"
+
+#: python/install.py:223
+msgid "Patches"
+msgstr ""
+
+#: python/install.py:256
+msgid "Include:"
+msgstr "包含："
+
+#: python/install.py:262
+msgid "Testing"
+msgstr "測試中"
+
+#: python/install.py:267
+msgid "No-cd needed"
+msgstr "不需光碟"
+
+#: python/install.py:274
+msgid "Commercial"
+msgstr "商業"
+
+#: python/install.py:308
+msgid "Install a non-listed program"
+msgstr "安裝不在清單中的程式"
+
+#: python/install.py:458
+msgid ""
+"This program is currently in testing.\n"
+"\n"
+"It might not work as expected. Your feedback, positive or negative, is "
+"specially important to improve this installer."
+msgstr ""
+
+#: python/install.py:460
+msgid ""
+"This program contains a protection against copy (DRM) incompatible with "
+"emulation.\n"
+"The only workaround is to use a \"no-cd\" patch, but since those can also be "
+"used for piracy purposes we won't give any support on this matter."
+msgstr ""
+
+#: python/install.py:577
+msgid "Attention!"
+msgstr ""
+
+#: python/install.py:577
+msgid ""
+"By enabling this option, you can install programs that employ digital rights "
+"management (DRM) copy protection that are not supported by {0} and might "
+"need to be bypassed.\n"
+"\n"
+"This feature should not be construed as implicit or implied condoning of "
+"piracy and as such, we will not offer any support for issues resulting from "
+"using this option."
+msgstr ""
+
+#: python/install.py:580
+msgid ""
+"By enabling this, you will have access to installers for programs that "
+"contain protections against copy (DRM) incompatible with emulation.\n"
+"The only workaround is to use \"no-cd\" patches, but since those can also be "
+"used for piracy purposes we won't give any support on this matter."
+msgstr ""
+
+#: python/lib/playonlinux.py:27
+msgid "There is nothing installed to run .{0} files."
+msgstr "安裝後找不到可以執行的檔案。{0} 個檔案。"
+
+#: python/lib/playonlinux.py:454
+msgid "{0} error"
+msgstr "{0} 錯誤"
+
+#: python/mainwindow.py:75
+msgid "{0} website is unavailable. Please check your connection"
+msgstr "{0} 網站不可用。請檢查網路連接"
+
+#: python/mainwindow.py:77
+msgid "Refreshing {0}"
+msgstr "重新整理 {0} 中"
+
+#: python/mainwindow.py:92 python/mainwindow.py:94
+msgid "An updated version of {0} is available"
+msgstr ""
+
+#: python/mainwindow.py:242 python/mainwindow.py:379 python/mainwindow.py:774
+msgid "Run"
+msgstr "執行"
+
+#: python/mainwindow.py:246
+msgid "Donate"
+msgstr "贊助"
+
+#: python/mainwindow.py:247
+msgid "Exit"
+msgstr "結束"
+
+#: python/mainwindow.py:251
+msgid "Small icons"
+msgstr "小圖示"
+
+#: python/mainwindow.py:252
+msgid "Medium icons"
+msgstr "中圖示"
+
+#: python/mainwindow.py:253
+msgid "Large icons"
+msgstr "大圖示"
+
+#: python/mainwindow.py:254
+msgid "Very large icons"
+msgstr "超大圖示"
+
+#: python/mainwindow.py:266
+msgid "Manage Wine versions"
+msgstr "管理 Wine 版本"
+
+#: python/mainwindow.py:271
+msgid "Read a PC CD-Rom"
+msgstr "讀取光碟"
+
+#: python/mainwindow.py:276
+msgid "{0} console"
+msgstr "{0} 主控台"
+
+#: python/mainwindow.py:278
+msgid "Close all {0} software"
+msgstr "關閉全部的 {0} 軟體"
+
+#: python/mainwindow.py:288 python/options.py:388
+msgid "File associations"
+msgstr "檔案關聯"
+
+#: python/mainwindow.py:289 python/mainwindow.py:337
+msgid "Plugin manager"
+msgstr "外掛管理員"
+
+#: python/mainwindow.py:293
+msgid "Supported software"
+msgstr ""
+
+#: python/mainwindow.py:294
+msgid "News"
+msgstr ""
+
+#: python/mainwindow.py:295
+msgid "Documentation"
+msgstr ""
+
+#: python/mainwindow.py:296
+msgid "Forums"
+msgstr ""
+
+#: python/mainwindow.py:297
+msgid "Bugs"
+msgstr ""
+
+#: python/mainwindow.py:299
+msgid "Twitter"
+msgstr ""
+
+#: python/mainwindow.py:300
+msgid "Google+"
+msgstr ""
+
+#: python/mainwindow.py:301
+msgid "Facebook"
+msgstr ""
+
+#: python/mainwindow.py:305
+msgid "About {0}"
+msgstr "關於 {0}"
+
+#: python/mainwindow.py:363
+msgid "File"
+msgstr "檔案"
+
+#: python/mainwindow.py:365
+msgid "Tools"
+msgstr "工具"
+
+#: python/mainwindow.py:366 python/mainwindow.py:760
+msgid "Settings"
+msgstr "設定"
+
+#: python/mainwindow.py:367 python/options.py:387
+msgid "Plugins"
+msgstr "外掛"
+
+#: python/mainwindow.py:368
+msgid "Support"
+msgstr ""
+
+#: python/mainwindow.py:380 python/mainwindow.py:776
+msgid "Close"
+msgstr "關閉"
+
+#: python/mainwindow.py:386 python/mainwindow.py:787 python/options.py:208
+msgid "Configure"
+msgstr "配置"
+
+#: python/mainwindow.py:399 python/mainwindow.py:402
+msgid "Search"
+msgstr "搜尋"
+
+#: python/mainwindow.py:591
+msgid "Open the application's directory"
+msgstr "開啟應用程式的資料夾"
+
+#: python/mainwindow.py:595 python/mainwindow.py:795
+msgid "Read the manual"
+msgstr "閱讀說明"
+
+#: python/mainwindow.py:599
+msgid "Set the icon"
+msgstr "設定圖示"
+
+#: python/mainwindow.py:607
+msgid "Close this application"
+msgstr "關閉這個應用程式"
+
+#: python/mainwindow.py:618
+msgid "KillApp"
+msgstr ""
+
+#: python/mainwindow.py:625
+msgid "No manual found for {0}"
+msgstr "未找到 {0} 的說明文件"
+
+#: python/mainwindow.py:758
+msgid "Install a program"
+msgstr "安裝程式"
+
+#: python/mainwindow.py:765
+msgid "Update GIT"
+msgstr "更新 GIT"
+
+#: python/mainwindow.py:768
+msgid "Update instructions"
+msgstr "更新說明"
+
+#: python/mainwindow.py:778
+msgid "Debug"
+msgstr "除錯"
+
+#: python/mainwindow.py:784
+msgid "Send a feedback"
+msgstr ""
+
+#: python/mainwindow.py:789
+msgid "Create a shortcut"
+msgstr "建立捷徑"
+
+#: python/mainwindow.py:791
+msgid "Open the directory"
+msgstr "開啟目錄"
+
+#: python/mainwindow.py:798
+msgid "Uninstall"
+msgstr "移除"
+
+#: python/mainwindow.py:920 python/mainwindow.py:991 python/mainwindow.py:998
+#: python/mainwindow.py:1043
+msgid "Please select a program."
+msgstr "請選擇一個程式。"
+
+#: python/mainwindow.py:928 python/mainwindow.py:930 python/mainwindow.py:932
+msgid "{0} settings"
+msgstr "{0} 設定"
+
+#: python/mainwindow.py:1005
+msgid "{0} install menu"
+msgstr "{0} 安裝選單"
+
+#: python/mainwindow.py:1014
+msgid "{0} com.playonlinux.wine versions manager"
+msgstr "{0} Wine 版本管理員"
+
+#: python/mainwindow.py:1045
+msgid "The virtual drive associated with {0} ({1}) does no longer exists."
+msgstr "與 {0} ({1}) 關聯的虛擬硬碟不存在。"
+
+#: python/mainwindow.py:1089
+msgid "Are you sure you want to close all {0} windows?"
+msgstr ""
+
+#: python/mainwindow.py:1111
+msgid "Run your Windows programs on "
+msgstr "運行 Windows 程式於 "
+
+#: python/mainwindow.py:1112
+msgid ""
+"PlayOnLinux and PlayOnMac team\n"
+"Under GPL licence version 3"
+msgstr ""
+
+#: python/mainwindow.py:1113
+msgid "Developer and Website: "
+msgstr "開發人員和網站： "
+
+#: python/mainwindow.py:1114
+msgid "Scriptors: "
+msgstr "腳本作者： "
+
+#: python/mainwindow.py:1115
+msgid "Packager: "
+msgstr ""
+
+#: python/mainwindow.py:1116
+msgid "Icons:"
+msgstr "圖示："
+
+#: python/mainwindow.py:1117
+msgid "The following people contributed to this program: "
+msgstr ""
+
+#: python/mainwindow.py:1118
+msgid "Translations:"
+msgstr "翻譯："
+
+#: python/mainwindow.py:1119
+msgid "Read TRANSLATORS file"
+msgstr ""
+
+#: python/mainwindow.py:1158
+msgid "{0} is not able to start PlayOnLinux Setup Window server."
+msgstr "{0} 無法啟動 PlayOnLinux Setup Window 伺服器。"
+
+#: python/mainwindow.py:1179
+msgid "{0} cannot find {1}"
+msgstr "{0} 找不到 {1}"
+
+#: python/mainwindow.py:1181
+msgid " (from {2})"
+msgstr " (從 {2})"
+
+#: python/mainwindow.py:1184
+msgid "You need to install it to continue"
+msgstr "你需要安裝它才能繼續"
+
+#: python/mainwindow.py:1186
+msgid "You should install it to use {0}"
+msgstr "你需要安裝它才能使用 {0}"
+
+#: python/mainwindow.py:1202
+msgid "{0} is not supposed to be run as root. Sorry"
+msgstr "對不起。 {0} 不能以管理員身份執行。"
+
+#: python/mainwindow.py:1211
+msgid ""
+"{0} is unable to find 32bits OpenGL libraries.\n"
+"\n"
+"You might encounter problem with your games"
+msgstr ""
+"{0} 找不到 32bits OpenGL函式庫。\n"
+"\n"
+"你也許會在你的遊戲中遭遇問題"
+
+#: python/mainwindow.py:1223
+msgid ""
+"{0} is unable to find 64bits OpenGL libraries.\n"
+"\n"
+"You might encounter problem with your games"
+msgstr ""
+"{0} 找不到 64bits OpenGL函式庫。\n"
+"\n"
+"你也許會在你的遊戲中遭遇問題"
+
+#: python/mainwindow.py:1235
+msgid ""
+"Your filesystem might prevent {0} from running correctly.\n"
+"\n"
+"Please open {0} in a terminal to get more details"
+msgstr ""
+"您的檔案系統可能會阻止 {0}正常運行。\n"
+"\n"
+"請在終端中打開 {0} 以獲得更多細節"
+
+#: python/mainwindow.py:1239
+msgid ""
+"Do you want to help {0} to make a compatibility database?\n"
+"\n"
+"If you click yes, the following things will be sent to us anonymously the "
+"first time you run a Windows program:\n"
+"\n"
+"- You graphic card model\n"
+"- Your OS version\n"
+"- If graphic drivers are installed or not.\n"
+"\n"
+"\n"
+"These information will be very precious for us to help people."
+msgstr ""
+
+#: python/mainwindow.py:1296
+msgid "Are you sure you want to  want to install {0} package?"
+msgstr ""
+
+#: python/mainwindow.py:1303 python/mainwindow.py:1305
+#: python/mainwindow.py:1307
+msgid ""
+"You are trying to open a script design for {0}! It might not work as expected"
+msgstr "你正試圖運行一個為 {0} 設計的腳本! 它可能無法正常運行"
+
+#: python/options.py:116
+msgid "Proxy configuration"
+msgstr "代理伺服器設定"
+
+#: python/options.py:129
+msgid "Set a proxy"
+msgstr "設定代理伺服器"
+
+#: python/options.py:132
+msgid "Proxy address"
+msgstr "代理伺服器地址"
+
+#: python/options.py:135
+msgid "Proxy port"
+msgstr "代理伺服器連接埠"
+
+#: python/options.py:138
+msgid "Proxy login"
+msgstr "代理伺服器登入帳號"
+
+#: python/options.py:141
+msgid "Proxy password"
+msgstr "代理伺服器的密碼"
+
+#: python/options.py:188
+msgid "Installed plugins"
+msgstr "已安裝的外掛"
+
+#: python/options.py:206
+msgid "Add"
+msgstr "新增"
+
+#: python/options.py:209 python/options.py:337
+msgid "Enable"
+msgstr "啟用"
+
+#: python/options.py:210
+msgid "Choose a plugin"
+msgstr "選擇一個外掛"
+
+#: python/options.py:263
+msgid "What is the extension?"
+msgstr "要關聯的副檔名是？"
+
+#: python/options.py:275
+msgid "Assigned program"
+msgstr "指定的程式"
+
+#: python/options.py:277
+msgid "Delete"
+msgstr "删除"
+
+#: python/options.py:305
+msgid "Are you sure you want to install: "
+msgstr "你確定你要安裝： "
+
+#: python/options.py:313
+msgid "Are you sure you want to delete: "
+msgstr "你確定你要刪除： "
+
+#: python/options.py:334
+msgid "Disable"
+msgstr "停用"
+
+#: python/options.py:375
+msgid "Apply"
+msgstr "套用"
+
+#: python/options.py:412
+msgid "You must restart {0} for the changes to take effect."
+msgstr "你必須重新啟動 {0} 以使變更生效。"
+
+#: python/wine_versions.py:196
+msgid "Installed Wine versions: "
+msgstr "已安裝的 Wine 版本： "
+
+#: python/wine_versions.py:197
+msgid "Available Wine versions: "
+msgstr "可取得的 Wine 版本： "
+
+#: python/wine_versions.py:208
+msgid "Wine versions"
+msgstr "Wine 版本"
+
+#: python/wine_versions.py:330
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
+msgstr "你確定你要刪除 Wine {0} 嗎？"
+
+#: python/wine_versions.py:332
+msgid "This version is CURRENTLY IN USE"
+msgstr ""
+
+#: python/wrapper.py:129
+msgid "{0} is not able to start POL_SetupWindow_server."
+msgstr "{0} 無法啟動 POL_SetupWindow_server."

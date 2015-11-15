@@ -1,0 +1,2297 @@
+# Romanian translation for playonlinux
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the playonlinux package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: playonlinux\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-04-13 19:00+0200\n"
+"PO-Revision-Date: 2014-04-20 08:15+0000\n"
+"Last-Translator: Meriuță Cornel <meriutacornel@neacornel.eu>\n"
+"Language-Team: Romanian <ro@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-04-14 05:09+0000\n"
+"X-Generator: Launchpad (build 17423)\n"
+
+#: Capture plugin:2, Detour plugin:4
+msgid "Which application do you want to apply the modification to?"
+msgstr "Cărei aplicaţii doriţi să-i aplicaţi modificarea?"
+
+#: Capture plugin:3
+msgid ""
+"This plugin wil allow you to capture you applications under PlayOnLinux"
+msgstr "Acest modul vă permite captura aplicaţiilor din PlayOnLinux"
+
+#: Capture plugin:4
+msgid "Capture menu (OpenGL)"
+msgstr "Meniu captură (OpenGL)"
+
+#: Capture plugin:5
+msgid "Capture menu (not OpenGL)"
+msgstr "Meniu captură (fără OpenGL)"
+
+#: Capture plugin:6
+msgid "Begin the capture of an application"
+msgstr "Se începe captura unei aplicații"
+
+#: Capture plugin:7
+msgid "Play a captured file"
+msgstr "Se redă un fișier capturat"
+
+#: Capture plugin:8
+msgid "Convert a captured file to video"
+msgstr "Se convertește un fișier capturat la video"
+
+#: Capture plugin:9
+#, sh-format
+msgid ""
+"Press Next then click on the window\\nyou want to capture.\\nCapture will "
+"start automatically after 5 seconds.\\nOnly video will be captured."
+msgstr ""
+"Apăsaţi Înainte apoi apăsați pe fereastra\\ncare doriţi să o capturați.\\"
+"nCaptura va porni automat după 5 secunde.\\nDoar video va fi capturat."
+
+#: Capture plugin:10
+msgid "Capture will begin..."
+msgstr "Captura va începe..."
+
+#: Capture plugin:11
+msgid "Press <SHIFT>+F8 to start or stop capture"
+msgstr "Apăsaţi <Shift> + F8 pentru a porni sau opri captura"
+
+#: Capture plugin:12
+msgid "Press <SHIFT>+F8 to stop capture"
+msgstr "Apăsaţi <Shift> + F8 pentru a opri captura"
+
+#: Capture plugin:13
+msgid "Capture in progress..."
+msgstr "Captură în curs..."
+
+#: Capture plugin:14
+msgid "Choose an action to perform"
+msgstr "Alegeți o acțiune de executat"
+
+#: Capture plugin:15
+msgid "Please choose a PID capture file to play"
+msgstr "Alegeți de redat o captură fișier PID"
+
+#: Capture plugin:16
+msgid "Please choose an OGV capture file to play"
+msgstr "Alegeți redarea unui fişier de captură OGV"
+
+#: Capture plugin:17
+msgid "Please choose a capture file to convert"
+msgstr "Alegeți un fișier capturat pentru conversie"
+
+#: Capture plugin:18
+msgid "You must choose a capture to read"
+msgstr "Trebuie să alegeţi o captură pentru citire"
+
+#: Capture plugin:19
+msgid "You must choose a capture to convert"
+msgstr "Trebuie să alegeţi o captură pentru conversie"
+
+#: Capture plugin:20
+msgid "Please wait while the PlayOnLinux logo is created..."
+msgstr "Așteptați până este creat logoul PlayOnLinux"
+
+#: Capture plugin:21
+msgid "Add the PlayOnLinux logo to your video?"
+msgstr "Se adaugă logoul PlayOnLinux la fișierul video?"
+
+#: Capture plugin:22
+msgid ""
+"Warning: For correct video encoding,\\nresolution MUST be a multiple of 16"
+msgstr ""
+"Atenţie: Pentru o codare video corectă,\\nrezoluția TREBUIE să fie un "
+"multiplu de 16"
+
+#: Capture plugin:23
+msgid ""
+"Ubuntu users must add the MEDIBUNTU repository\\nfor this conversion format "
+"to work properly."
+msgstr ""
+"Utilizatorii Ubuntu trebuie să adauge depozitele MEDIBUNTU\\npentru ca acest "
+"format de conversie să funcţioneze corect."
+
+#: Capture plugin:24
+msgid "Choose the video format for conversion"
+msgstr "Alegeţi formatul video pentru conversie"
+
+#: Capture plugin:25
+msgid ""
+"Define your encoding options for pass 1 \\n (leave defaults if you do not "
+"know what to do)"
+msgstr ""
+"Definiți opţiunile de codare pentru pasul 1 \\n (lăsați-le implicite dacă nu "
+"știți ce să faceți)"
+
+#: Capture plugin:26
+msgid ""
+"Define your encoding options for pass 2 \\n (leave defaults if you do not "
+"know what to do)"
+msgstr ""
+"Definiți opţiunile de codare pentru pasul 2 \\n (lăsați-le implicite dacă nu "
+"știți ce să faceți)"
+
+#: Capture plugin:27
+msgid ""
+"Define your encoding options \\n (leave defaults if you do not know what to "
+"do)"
+msgstr ""
+"Definiți opţiunile de codare \\n (lăsați-le implicite dacă nu știți ce să "
+"faceți)"
+
+#: Capture plugin:28
+msgid "Please wait while your video is being encoded..."
+msgstr "Așteptați până când video va fi codat..."
+
+#: Capture plugin:29
+msgid "Conversion done"
+msgstr "Conversie realizată"
+
+#: Advanced Wine Configuration Plugin:4
+msgid "Choose an option to modify"
+msgstr "Selectați o opțiune pentru modificare"
+
+#: Advanced Wine Configuration Plugin:5
+msgid "All"
+msgstr "Toate"
+
+#: Advanced Wine Configuration Plugin:6
+msgid "You must choose a game to modify"
+msgstr "Trebuie să selectați un joc de modificat"
+
+#: Advanced Wine Configuration Plugin:7
+msgid ""
+"Welcome in Advanced Wine Configuration, an optimization’s system for Wine "
+"created by GNU_Raziel. If you does not know what to choose, LEAVE DEFAULTS"
+msgstr ""
+"Bun venit în meniul configurărilor avansate Wine, un  sistem optimizat "
+"pentru Wine creat de GNU_Raziel. Dacă nu ştiți ce să alegeți, lăsați "
+"setările implicite."
+
+#: Advanced Wine Configuration Plugin:8
+msgid "Choose a game"
+msgstr "Alegeți un joc"
+
+#: Advanced Wine Configuration Plugin:9
+msgid "You did not select a game"
+msgstr "Nu ați selectat un joc"
+
+#: Advanced Wine Configuration Plugin:10
+msgid "Choose DirectDraw Renderer Mode?"
+msgstr "Alegeți modul de randare DirectDraw?"
+
+#: Advanced Wine Configuration Plugin:11
+msgid "Activate GLSL Support?"
+msgstr "Activați suportul GLSL?"
+
+#: Advanced Wine Configuration Plugin:13
+msgid "Choose Offscreen Rendering Mode?"
+msgstr "Alegeți modul de randare Offscreen?"
+
+#: Advanced Wine Configuration Plugin:14
+msgid "Choose Render Target Lock Mode?"
+msgstr "Alegeți modul de randare Target Lock?"
+
+#: Advanced Wine Configuration Plugin:15
+msgid "Activate Multisampling support?"
+msgstr "Activați suportul Multisampling?"
+
+#: Advanced Wine Configuration Plugin:16
+msgid "Activate the mouse warp override?"
+msgstr "Activați depășirea devierii mausului?"
+
+#: Advanced Wine Configuration Plugin:17
+msgid "Optimisation done"
+msgstr "Optimizare efectuată"
+
+#: Detour plugin:3
+msgid ""
+"Welcome in Detour, a plugin witch enable you to create post-install shorcuts."
+msgstr ""
+"Bun venit în Detour, un modul care vă permite crearea scurtăturilor după "
+"instalare."
+
+#: Detour plugin:5
+msgid "Choose an application"
+msgstr "Alegeți o aplicație"
+
+#: Detour plugin:6
+msgid "Operation done"
+msgstr "Operaţiune efectuată"
+
+#: bash/bug_report:32
+#, sh-format
+msgid "Report a bug"
+msgstr "Raportaţi o eroare"
+
+#: bash/bug_report:37
+#, sh-format
+msgid ""
+"Please give the more details as you can, otherwise, it will be very "
+"difficult to help you"
+msgstr ""
+"Vă rugăm să ne oferiți cât de multe detalii puteți, altfel, va fi foarte "
+"greu să vă ajutăm"
+
+#: bash/bug_report:37
+#, sh-format
+msgid ""
+"This wizard will help you to report a bug about an officially supported "
+"program."
+msgstr ""
+"Acest vrăjitor vă va ajuta să raportați o eroare despre un program suportat "
+"oficial."
+
+#: bash/bug_report:41
+#, sh-format
+msgid ""
+"Your $APPLICATION_TITLE version is not up to date.\\nYou must update "
+"$APPLICATION_TITLE before sending a bug report.\\nThank you"
+msgstr ""
+"Versiunea dumneavoastră de $APPLICATION_TITLE nu este actualizată.\\nTrebuie "
+"să actualizați $APPLICATION_TITLE înainte să trimiteți un raport de eroare.\\"
+"nVă mulțumim"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "I have a problem with a software"
+msgstr "Am o problemă cu un soft"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "My problem concerns $APPLICATION_TITLE itself"
+msgstr "Poate că problema se referă la $APPLICATION_TITLE însuși"
+
+#: bash/bug_report:47
+#, sh-format
+msgid "What kind of problem do you have?"
+msgstr "Ce fel de problemă aveți?"
+
+#: bash/bug_report:51
+#, sh-format
+msgid "Don't join any log file"
+msgstr "Nu alătura nici un fișier de jurnal"
+
+#: bash/bug_report:54 bash/manual_install:27 bash/manual_install:100
+#: bash/manual_install:106 bash/manual_install:191
+#, sh-format
+msgid "Manual installation"
+msgstr "Instalare manuală"
+
+#: bash/bug_report:55 bash/run_exe:24
+#, sh-format
+msgid "Automatic installation"
+msgstr "Instalare automată"
+
+#: bash/bug_report:66
+#, sh-format
+msgid "Choose the log file corresponding to your software."
+msgstr "Alegeți fișierul de jurnal corespunzător softului."
+
+#: bash/bug_report:73
+#, sh-format
+msgid "Please explain your problem clearly (english only):"
+msgstr "Explicați problema clar (numai în englază)"
+
+#: bash/bug_report:77
+#, sh-format
+msgid "Sorry, we need a detailed description."
+msgstr "Ne pare rău, avem nevoie de o descriere detaliată."
+
+#: bash/bug_report:101
+#, sh-format
+msgid "Thank you !\\n\\nYour report has been sent."
+msgstr ""
+
+#: bash/create_prefix:26
+#, sh-format
+msgid "Virtual drive creator"
+msgstr "Creator disc virtual"
+
+#: bash/create_prefix:29
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE virtual drive creator.\\n\\nThis tool will "
+"help you to make a new virtual drive"
+msgstr ""
+"Bine ați venit la $APPLICATION_TITLE creatorul de disc virtual.\\n\\nAceastă "
+"unealtă vă va ajuta să faceți un nou disc virtual"
+
+#: bash/create_prefix:31 bash/manual_install:169
+#, sh-format
+msgid "What kind of virtual drive do you want to create"
+msgstr "Ce tip de disc virtual doriți să creați"
+
+#: bash/create_prefix:55
+#, sh-format
+msgid ""
+"(If this list is empty, please install a com.playonlinux.wine version with com.playonlinux.wine version "
+"manager)"
+msgstr ""
+
+#: bash/create_prefix:55 bash/manual_install:156
+#, sh-format
+msgid "Which version of Wine would you like to use?"
+msgstr "Ce versiune de Wine v-ar place să folosiți?"
+
+#: bash/create_prefix:63
+#, sh-format
+msgid "Choose the name of the virtual drive"
+msgstr "Alegeți numele driverului virtual"
+
+#: bash/expert/Executer:22 bash/expert/Executer:27 bash/expert/Executer:29
+#: python/mainwindow.py:275
+#, sh-format
+msgid "Run a local script"
+msgstr "Rulează un script local"
+
+#: bash/expert/Executer:27
+#, sh-format
+msgid ""
+"This wizard will help you to run an unofficial $APPLICATION_TITLE Script."
+msgstr ""
+"Acest vrăjitor vă ajută să rulați un neoficial $APPLICATION_TITLE script."
+
+#: bash/expert/Executer:29
+#, sh-format
+msgid "Choose a valid $APPLICATION_TITLE script to run."
+msgstr "Alegeți un script valabil $APPLICATION_TITLE de rulat."
+
+#: bash/expert/Executer:38
+#, sh-format
+msgid "Error!"
+msgstr "Eroare!"
+
+#: bash/expert/Executer:38
+#, sh-format
+msgid "File not found!"
+msgstr "Fișierul nu a fost găsit!"
+
+#: bash/install:27 bash/install:29 python/install.py:458 python/install.py:460
+#: python/install.py:580
+#, sh-format
+msgid "Please read this"
+msgstr "Citiți asta"
+
+#: bash/install_wver:27
+#, sh-format
+msgid "This wizard will help you to install Wine: "
+msgstr "Acest vrăjitor vă ajută la instalarea Wine: "
+
+#: bash/install_wver:27
+#, sh-format
+msgid "on the $APPLICATION_TITLE environment."
+msgstr "în mediul $APPLICATION_TITLE"
+
+#: bash/installpolpackages:29 bash/polconfigurator:23 bash/winebash:27
+#, sh-format
+msgid "$APPLICATION_TITLE Application Configurator"
+msgstr "$APPLICATION_TITLE configuratorul aplicației"
+
+#: bash/installpolpackages:29 bash/killall:29 bash/read_pc_cd:39
+#: bash/read_pc_cd:73 bash/read_pc_cd:103 bash/winebash:27
+#: lib/setupwindow.lib:439 lib/com.playonlinux.wine.lib:1014 lib/com.playonlinux.wine.lib:1092
+#: lib/com.playonlinux.wine.lib:1122
+#, sh-format
+msgid "Please wait..."
+msgstr "Așteptați..."
+
+#: bash/killall:26
+#, sh-format
+msgid ""
+"Are you sure you want to shutdown all active $APPLICATION_TITLE applications?"
+msgstr ""
+"Sunteți sigur că doriți să închideți toate aplicațiile active "
+"$APPLICATION_TITLE?"
+
+#: bash/make_shortcut:25
+#, sh-format
+msgid "$APPLICATION_TITLE shortcut creator"
+msgstr ""
+
+#: bash/make_shortcut:30
+#, sh-format
+msgid "Please choose a software to package"
+msgstr "Alegeți un soft de împachetat"
+
+#: bash/make_shortcut:35
+#, sh-format
+msgid "Creating shortcut..."
+msgstr "Se crează scurtătura..."
+
+#: bash/make_shortcut:37
+#, sh-format
+msgid "The shortcut has been placed on your desktop"
+msgstr "Scurtătura a fost plasată pe birou"
+
+#: bash/make_shortcut:57
+#, sh-format
+msgid "Copying virtual drive"
+msgstr "Se copiază unitatea virtuală"
+
+#: bash/manual_install:52
+#, sh-format
+msgid "Autorun"
+msgstr "Autorun"
+
+#: bash/manual_install:52
+#, sh-format
+msgid "No setup location found in autorun.inf"
+msgstr "Nu s-a găsit locul configurării în autorun.inf"
+
+#: bash/manual_install:100
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE manual installation wizard.\\n\\nThis script "
+"will allow you to install any program on $APPLICATION_TITLE and use it with "
+"all the tools\\n\\nWarning: We are unable to guarantee that your application "
+"will work perfectly."
+msgstr ""
+
+#: bash/manual_install:102
+#, sh-format
+msgid "Install a program in a new virtual drive"
+msgstr "Se instalează un program într-o nouă unitate virtuală"
+
+#: bash/manual_install:103
+#, sh-format
+msgid "Edit or update an existing application"
+msgstr "Editați sau actualizați o aplicație existentă"
+
+#: bash/manual_install:106
+#, sh-format
+msgid "What would you like to do?"
+msgstr "Ce doriţi să faceţi?"
+
+#: bash/manual_install:117
+#, sh-format
+msgid ""
+"Please type a name for your application's virtual drive.\\nThis name "
+"shouldn't contain spaces."
+msgstr ""
+"Tastați un nume pentru unitatea virtuală a aplicației.\\nAcest nume nu "
+"trebuie să conțină spații."
+
+#: bash/manual_install:126
+#, sh-format
+msgid "Please choose a program"
+msgstr "Alegeți un program"
+
+#: bash/manual_install:138
+#, sh-format
+msgid "Use another version of Wine"
+msgstr "Folosiți o altă versiune de Wine"
+
+#: bash/manual_install:139 bash/manual_install:191 bash/polconfigurator:102
+#: python/configure.py:232 python/mainwindow.py:583 python/mainwindow.py:615
+#, sh-format
+msgid "Configure Wine"
+msgstr "Configurare Wine"
+
+#: bash/manual_install:140
+#, sh-format
+msgid "Install some libraries"
+msgstr "Se instalează câteva librări"
+
+#: bash/manual_install:143
+#, sh-format
+msgid "If you don't know, unselect all"
+msgstr "Dacă nu știți,deselectați tot"
+
+#: bash/manual_install:143
+#, sh-format
+msgid "What would you like to do before installation?"
+msgstr "Ce v-ar place să faceți înaintea instalării?"
+
+#: bash/manual_install:203 lib/com.playonlinux.framework.lib:468
+#, sh-format
+msgid "Please make your choice"
+msgstr "Faceți alegerea"
+
+#: bash/manual_install:232
+#, sh-format
+msgid "Looking for runnable CD-ROMs"
+msgstr "Caut CD-ROM-uri rulabile"
+
+#: bash/manual_install:255
+#, sh-format
+msgid "Select another file"
+msgstr "Selectați alt fișier"
+
+#: bash/manual_install:263
+#, sh-format
+msgid "Please choose a way to install your program"
+msgstr "Alegeți o cale să vă instalați programul"
+
+#: bash/manual_install:272
+#, sh-format
+msgid "Please select the install file to run."
+msgstr "Selectați fișierul de instalare pentru rulat."
+
+#: bash/manual_install:284
+#, sh-format
+msgid "You must choose a file!"
+msgstr "Trebuie să alegeți un fișier!"
+
+#: bash/manual_install:290
+#, sh-format
+msgid "$APPLICATION_TITLE is installing your application..."
+msgstr "$APPLICATION_TITLE vă instalează aplicația..."
+
+#: bash/playonlinux-pkg:27
+#, sh-format
+msgid "Usage: "
+msgstr "Folosit: "
+
+#: bash/playonlinux-pkg:29
+#, sh-format
+msgid "\tChoose a file"
+msgstr "\tAlege un fișier"
+
+#: bash/playonlinux-pkg:31
+#, sh-format
+msgid "\tExtract the package"
+msgstr "\tExtrage pachetul"
+
+#: bash/playonlinux-pkg:33
+#, sh-format
+msgid "\tInstall the package"
+msgstr "\tInstalează pachetul"
+
+#: bash/playonlinux-pkg:35
+#, sh-format
+msgid "\tShow this message"
+msgstr "\tArată acest mesaj"
+
+#: bash/playonlinux-pkg:38
+#, sh-format
+msgid "$APPLICATION_TITLE package manager: "
+msgstr "Managerul de pachet $APPLICATION_TITLE: "
+
+#: bash/playonlinux-pkg:55
+#, sh-format
+msgid "Choose a package to install"
+msgstr "Alegeți un pachet pentru instalat"
+
+#: bash/playonlinux-pkg:55
+#, sh-format
+msgid "PlayOnLinux package manager"
+msgstr "Managerul de pachete PlayOnLinux"
+
+#: bash/playonlinux-pkg:69
+#, sh-format
+msgid "Unable to find the file: "
+msgstr "Incapabil de găsit fișierul: "
+
+#: bash/playonlinux-pkg:75 bash/playonlinux-pkg:96 bash/playonlinux-pkg:107
+#: bash/playonlinux-pkg:112
+#, sh-format
+msgid " isn't a valid PlayOnLinux package!"
+msgstr " nu este un pachet valabil PlayOnLinux!"
+
+#: bash/playonlinux-pkg:75 bash/playonlinux-pkg:90 bash/playonlinux-pkg:96
+#: bash/playonlinux-pkg:107 bash/playonlinux-pkg:112
+#, sh-format
+msgid "This file: "
+msgstr "Acest fișier: "
+
+#: bash/playonlinux-pkg:90
+#, sh-format
+msgid " does not exist!"
+msgstr " nu există!"
+
+#: bash/playonlinux-pkg:103
+#, sh-format
+msgid "Extracting: "
+msgstr "Se extrage: "
+
+#: bash/playonlinux-pkg:115
+#, sh-format
+msgid "Running..."
+msgstr "În desfășurare..."
+
+#: bash/playonlinux-pkg:119
+#, sh-format
+msgid "Cleaning..."
+msgstr "Se șterge..."
+
+#: bash/polconfigurator:34
+#, sh-format
+msgid "Killing programs in the virtual drive..."
+msgstr "Se omoară programele din discul virtual"
+
+#: bash/polconfigurator:86
+#, sh-format
+msgid "Icon selection"
+msgstr "Selectarea iconiței"
+
+#: bash/polconfigurator:86
+#, sh-format
+msgid "Please select an icon file"
+msgstr "Selectați un fișier iconiță"
+
+#: bash/polconfigurator:93
+#, sh-format
+msgid "Bad file extension"
+msgstr "Extensie fișier greșită"
+
+#: bash/polconfigurator:93
+#, sh-format
+msgid "is not an icon extension"
+msgstr "nu este extensia unei iconițe"
+
+#: bash/polconfigurator:103 python/configure.py:240 python/mainwindow.py:587
+#: python/mainwindow.py:628
+#, sh-format
+msgid "Registry Editor"
+msgstr "Eroare de Registry"
+
+#: bash/polconfigurator:104
+#, sh-format
+msgid "Kill all prefix processes"
+msgstr "Se omoară toate prefixele proceselor"
+
+#: bash/polconfigurator:105
+#, sh-format
+msgid "Update wineprefix"
+msgstr "Se actualizează prefixul com.playonlinux.wine"
+
+#: bash/polconfigurator:106
+#, sh-format
+msgid "Simulate Windows reboot"
+msgstr "Se simulează repornirea Windows-ului"
+
+#: bash/polconfigurator:107
+#, sh-format
+msgid "Use Advanced Wine Configuration plugin"
+msgstr "Folosiți modulul de configurare avansată Wine"
+
+#: bash/polconfigurator:108
+#, sh-format
+msgid "Use PlayOnLinux's configurator for"
+msgstr "Utilizați configuratorul PlayOnLinux pentru"
+
+#: bash/polconfigurator:110
+#, sh-format
+msgid "Change the icon"
+msgstr "Schimbați iconița"
+
+#: bash/polconfigurator:111
+#, sh-format
+msgid "Use WineTricks"
+msgstr "Folosiți WineTricks"
+
+#: bash/polconfigurator:130
+#, sh-format
+msgid "Please choose an action to perform"
+msgstr "Alegeți o acțiune de efectuat"
+
+#: bash/read_pc_cd:25
+#, sh-format
+msgid "PC CD-ROM reader"
+msgstr "Lector PC CD-ROM"
+
+#: bash/read_pc_cd:33
+#, sh-format
+msgid ""
+"This tool will help your Mac to read the PC part of a CD-ROM.\\n\\nUse this "
+"tool ONLY if you CD-ROM is a hybride CD-ROM (Compatible with Windows and "
+"MacOS), and if you are not able to see the Windows part"
+msgstr ""
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "Eject a PC CD-ROM"
+msgstr "Scoate un PC CD-ROM"
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "Read a PC CD-ROM"
+msgstr "Citește un PC CD-ROM"
+
+#: bash/read_pc_cd:34
+#, sh-format
+msgid "What do you want to do?"
+msgstr "Ce doriți să fac?"
+
+#: bash/read_pc_cd:38
+#, sh-format
+msgid ""
+"Please insert your CD-ROM, and press next only when Finder has found the Mac "
+"OS part of your CD-ROM"
+msgstr ""
+
+#: bash/read_pc_cd:51
+#, sh-format
+msgid "Please choose a CD-ROM"
+msgstr "Alegeți un CD-ROM"
+
+#: bash/read_pc_cd:97
+#, sh-format
+msgid "Please choose a CD-ROM to eject"
+msgstr "Alegeți un CD-ROM pentru a-l scoate"
+
+#: bash/run_app:85
+#, sh-format
+msgid "Please choose a software to run"
+msgstr "Alegeți un soft de rulat"
+
+#: bash/run_app:115
+#, sh-format
+msgid "$APPLICATION_TITLE debugger is starting..."
+msgstr "debugger-ul $APPLICATION_TITLE este pornit..."
+
+#: bash/run_app:118
+#, sh-format
+msgid "$PACKAGE crashed.\\nClick on debug link to get more details."
+msgstr ""
+"$PACKAGE a crăpat.\\nApăsați pe legătura de depanare pentru a obține mai "
+"multe detalii."
+
+#: bash/run_app:120
+#, sh-format
+msgid "$PACKAGE crashed."
+msgstr "$PACKAGE a crăpat."
+
+#: bash/run_exe:33
+#, sh-format
+msgid "Waiting XQuartz to be installed"
+msgstr ""
+
+#: bash/run_exe:70
+#, sh-format
+msgid "$APPLICATION_TITLE is analysing your application"
+msgstr "$APPLICATION_TITLE vă analizează aplicația"
+
+#: bash/run_exe:81
+#, sh-format
+msgid "Do you want $APPLICATION_TITLE to install it automatically for you?"
+msgstr "Doriți ca $APPLICATION_TITLE să vă fie instalat automat?"
+
+#: bash/run_exe:81
+#, sh-format
+msgid "We have detected that the program you want to install is :"
+msgstr "S-a detectat că programul pe care doriți să-l instalați este:"
+
+#: bash/run_exe:97
+#, sh-format
+msgid ""
+"Welcome to $APPLICATION_TITLE assistant.\\nIt will help you to install $file "
+"on your computer.\\n\\nBe careful! This program is not officially supported "
+"by $APPLICATION_TITLE.\\nTherefore, it might not work as expected"
+msgstr ""
+"Bine ați venit la asistentul $APPLICATION_TITLE.\\nvă va ajuta să instalați "
+"$file pe computer.\\n\\nFiți atent!Acest program nu este suportat oficial de "
+"$APPLICATION_TITLE.\\nașadar, s-ar putea să nu lucreze cum vă așteptați"
+
+#: bash/run_exe:98
+#, sh-format
+msgid "What is the name of you program?"
+msgstr "Care vă este numele programului?"
+
+#: bash/run_exe:111
+#, sh-format
+msgid "Installation finished."
+msgstr "Instalarea s-a terminat."
+
+#: bash/startup_after_server:38
+#, sh-format
+msgid "PlayOnMac needs to install XQuartz to work properly."
+msgstr ""
+
+#: bash/startup_after_server:39
+#, sh-format
+msgid "PlayOnMac will help you to simplify this step"
+msgstr ""
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "Don't install XQuartz for the moment"
+msgstr "Pentru moment nu instalați XQuartz"
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "I've downloaded the file by myself"
+msgstr "Am descărcat fișierele însumi"
+
+#: bash/startup_after_server:42
+#, sh-format
+msgid "Please download XQuartz for me"
+msgstr "Descărcați XQuartz pentru mine"
+
+#: bash/startup_after_server:47
+#, sh-format
+msgid "Downloading XQuartz"
+msgstr "Se descarcă XQuartz"
+
+#: bash/startup_after_server:52
+#, sh-format
+msgid "Where is"
+msgstr "Unde este"
+
+#: bash/startup_after_server:59
+#, sh-format
+msgid "Installing XQuartz..."
+msgstr "Se instalează XQuartz..."
+
+#: bash/startup_after_server:68
+#, sh-format
+msgid "XQuartz has been installed."
+msgstr "XQuartz a fost instalat."
+
+#: bash/startup_after_server:76
+#, sh-format
+msgid "Unable to install XQuartz! You must install it to use com.playonlinux.wine properly."
+msgstr ""
+
+#: bash/uninstall:31 bash/uninstall:65 bash/uninstall:68 bash/uninstall:75
+#: lib/com.playonlinux.wine.lib:866
+#, sh-format
+msgid "$APPLICATION_TITLE Uninstaller"
+msgstr "Dezinstalatorul $APPLICATION_TITLE"
+
+#: bash/uninstall:39
+#, sh-format
+msgid "Please select a program to uninstall"
+msgstr "Selectați un program pentru dezinstalat"
+
+#: bash/uninstall:50
+#, sh-format
+msgid "Click Next to continue."
+msgstr "Apăsați Următorul ca să continuați."
+
+#: bash/uninstall:50
+#, sh-format
+msgid "This wizard will help you to uninstall: "
+msgstr "Acest vrăjitor vă va ajuta să dezinstalați: "
+
+#: bash/uninstall:65 lib/com.playonlinux.wine.lib:866
+#, sh-format
+msgid "Uninstalling..."
+msgstr "Se dezinstalează..."
+
+#: bash/uninstall:68
+#, sh-format
+msgid " has been uninstalled successfully."
+msgstr " a fost dezinstalat cu succes."
+
+#: bash/uninstall:75
+#, sh-format
+msgid "Cannot find the shortcut"
+msgstr "Scurtătura nu poate fi găsită"
+
+#: bash/update_git:25
+#, sh-format
+msgid "$APPLICATION_TITLE auto-updater"
+msgstr "Autto actualizare $APPLICATION_TITLE"
+
+#: bash/update_git:27
+#, sh-format
+msgid "Updating $APPLICATION_TITLE from GIT..."
+msgstr "Actualizare $APPLICATION_TITLE de la GIT..."
+
+#: bash/update_git:31
+#, sh-format
+msgid "Do you want to update and restart $APPLICATION_TITLE?"
+msgstr "Doriți să actualizați și să reporniți $APPLICATION_TITLE?"
+
+#: bash/update_git:37
+#, sh-format
+msgid "Already up-to-date."
+msgstr "Este deja actualizat."
+
+#: lib/debug.lib:128
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered an error. If the program does not work "
+"correctly, it might be the cause of the problem.\\nVisit www.$POL_DNS to get "
+"further information"
+msgstr ""
+"$APPLICATION_TITLE a întâmpinat o eroare. Dacă programul nu lucrează corect, "
+"ar putea fi cauza problemei.\\nVizitați www.$POL_DNS pentru a obține "
+"informații viitoare"
+
+#: lib/debug.lib:142
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered an error. If the program you are "
+"installing does not work correctly, it might be the cause of the problem.\\"
+"nVisit www.$POL_DNS to get further information"
+msgstr ""
+
+#: lib/debug.lib:155
+#, sh-format
+msgid ""
+"$APPLICATION_TITLE has encountered a fatal error. $APPLICATION_TITLE will "
+"stop the installation process.\\nVisit www.$POL_DNS to get further "
+"information"
+msgstr ""
+"$APPLICATION_TITLE a întâmpinat o eroare fatală. $APPLICATION_TITLE va opri "
+"procesul de instalare.\\nVizitați www.$POL_DNS pentru a obține informații "
+"viitoare"
+
+#: lib/deprecated.lib:87 lib/deprecated.lib:100 lib/deprecated.lib:121
+#: lib/com.playonlinux.wine.lib:891 lib/com.playonlinux.wine.lib:972
+#, sh-format
+msgid "Please wait while the virtual drive is being created..."
+msgstr "Așteptați până când driverul virtual va fi creat..."
+
+#: lib/deprecated.lib:431
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is simulating a Windows reboot"
+msgstr ""
+"Așteptați în timp ce $APPLICATION_TITLE simulează o repornire a Windows-ului"
+
+#: lib/deprecated.lib:563
+#, sh-format
+msgid "Setting Program Files var"
+msgstr "Se setează Program Files var"
+
+#: lib/playonlinux.lib:261 lib/playonlinux.lib:267 lib/playonlinux.lib:273
+#: lib/playonlinux.lib:279 lib/playonlinux.lib:285 lib/playonlinux.lib:291
+#, sh-format
+msgid "This function is disabled in the PlayOnlinux environment."
+msgstr "Această funcție este dezactivată în mediul PlayOnLinux."
+
+#: lib/playonlinux.lib:354
+#, sh-format
+msgid ""
+"Warning !!\\n\\nThe signature of the script you are trying to run is NOT "
+"valid\\n\\nPlayOnLinux has not approved this script and will not be "
+"responsible from it.\\nPlease ensure you know what you are doing !"
+msgstr ""
+"Atenție!!\\n\\nSemnnătura scriptului care încercați sî-l rulațiNU este "
+"valabilă\\n\\nPlayOnLinux nu a aprobat acest script și nu va fi responsabil "
+"pentru el.\\nAsigurațivă că știți ce faceți!"
+
+#: lib/playonlinux.lib:355 lib/playonlinux.lib:378
+#, sh-format
+msgid "Here the source code of the script. Check it carefully"
+msgstr "Iată codul sursă al scriptului.Verificați-l cu atenție"
+
+#: lib/playonlinux.lib:377
+#, sh-format
+msgid ""
+"Warning !!\\n\\nThe signature of the script you are trying to run is NOT "
+"valid\\n\\n$APPLICATION_TITLE has not approved this script and will not be "
+"responsible from it.\\nPlease ensure you know what you are doing!"
+msgstr ""
+"Atenție!!\\n\\nSemnătura scriptului care încercați să-l rulați nu este "
+"valabilă\\n\\n$APPLICATION_TITLE nu a aprobat acest script și nu va fi "
+"responsabil pentru el.\\nAsigurațivă că știți ce faceți!"
+
+#: lib/playonlinux.lib:378
+#, sh-format
+msgid "External library"
+msgstr "Librărie externă"
+
+#: lib/playonlinux.lib:641
+#, sh-format
+msgid "Making shortcut..."
+msgstr "Se crează scurtătura..."
+
+#: lib/playonlinux.lib:768
+#, sh-format
+msgid "Do you want to delete the virtual drive:"
+msgstr "Doriți ștergerea driver-ului virtual:"
+
+#: lib/playonlinux.lib:877
+#, sh-format
+msgid ""
+"The following file is located on a FAT32 filesystem.\\nIt might prevent com.playonlinux.wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+"Fișierul următor este situat pe un sistem de fișiere FAT32.\\nPoate "
+"împiedica Wine să lucreze\\n\\n$FilePath"
+
+#: lib/playonlinux.lib:878
+#, sh-format
+msgid ""
+"The following file is located on a NTFS filesystem.\\nIt might prevent com.playonlinux.wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+"Fișierul următor este situat pe un sistem de fișiere NTFS.\\nPoate împiedica "
+"Wine să lucreze\\n\\n$FilePath"
+
+#: lib/playonlinux.lib:879
+#, sh-format
+msgid ""
+"The following file is located on a fuse filesystem.\\nIt might prevent com.playonlinux.wine "
+"from working\\n\\n$FilePath"
+msgstr ""
+
+#: lib/playonlinux.lib:880
+#, sh-format
+msgid ""
+"The following file is located on a noexec mounted filesystem.\\nIt might "
+"prevent com.playonlinux.wine from working\\n\\n$FilePath"
+msgstr ""
+
+#: lib/playonlinux.lib:909
+#, sh-format
+msgid ""
+"Your Linux kernel may not be configured to run Win16 programs under Wine\\"
+"nSee $EXPLANATION_URL"
+msgstr ""
+
+#: lib/playonlinux.lib:912
+#, sh-format
+msgid ""
+"Your kernel may be incompatible with running Win16 programs under Wine\\nSee "
+"$EXPLANATION_URL"
+msgstr ""
+
+#: lib/plugins.lib:63
+#, sh-format
+msgid "Checking plugin: "
+msgstr "Se verifică modulul: "
+
+#: lib/plugins.lib:85
+#, sh-format
+msgid "New: "
+msgstr "Nou: "
+
+#: lib/plugins.lib:85
+#, sh-format
+msgid "Updating plugin. Previous: "
+msgstr "Se actualizează modulul.Precedent: "
+
+#: lib/plugins.lib:99
+#, sh-format
+msgid "Installing plugin: "
+msgstr "Se instalează modulul: "
+
+#: lib/com.playonlinux.framework.lib:356
+#, sh-format
+msgid ""
+"Binary not found: $BINARY\\nHave you installed the program to the default "
+"location?"
+msgstr ""
+"Nu s-au găsit fișierele binare: $BINARY\\nAți instalat programul la locația "
+"implicită?"
+
+#: lib/com.playonlinux.framework.lib:427
+#, sh-format
+msgid "Function override detected, disabling bug reporting"
+msgstr ""
+
+#: lib/com.playonlinux.framework.lib:526 lib/com.playonlinux.framework.lib:589
+#, sh-format
+msgid "No enough space to download:\\n$URL ($neededSpace KB)"
+msgstr "Nu este spațiu suficient pentru a descărca:\\n$URL ($neededSpace KB)"
+
+#: lib/com.playonlinux.framework.lib:528 lib/com.playonlinux.framework.lib:811
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is downloading:"
+msgstr "Așteptați până când $APPLICATION_TITLE este descărcat:"
+
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:595
+#, sh-format
+msgid "An error happened during download."
+msgstr "A intervenit o eroare în timpul descărcării."
+
+#: lib/com.playonlinux.framework.lib:530 lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:595
+#: lib/com.playonlinux.framework.lib:611
+#, sh-format
+msgid "Do you want to retry?"
+msgstr "Doriți să reîncercați?"
+
+#: lib/com.playonlinux.framework.lib:548 lib/com.playonlinux.framework.lib:611
+#, sh-format
+msgid "Error ! Files mismatch\\n\\nLocal : $LOCAL_MD5\\nServer : $SERVER_MD5"
+msgstr ""
+"Eroare ! Fișierele nu se potrivesc\\n\\nLocal: $LOCAL_MD5\\nServer : "
+"$SERVER_MD5"
+
+#: lib/com.playonlinux.framework.lib:716
+#, sh-format
+msgid ""
+"7z not installed, please check that you have 7zip installed and try again"
+msgstr ""
+"7z nu este instalat,verificați dacă aveți 7zip instalat și încercați din nou"
+
+#: lib/com.playonlinux.framework.lib:723
+#, sh-format
+msgid "Failed to locate ${dest} from ${archive}"
+msgstr "Eșuare la localizarea ${dest} din ${archive}"
+
+#: lib/com.playonlinux.framework.lib:727
+#, sh-format
+msgid "Extracting ${filename} from ${archivename}"
+msgstr "Se extrage ${filename} din ${archivename}"
+
+#: lib/com.playonlinux.framework.lib:742
+#, sh-format
+msgid "Extracted file size does not match!"
+msgstr "Dimensiunea fișierului extras nu se potrivește!"
+
+#: lib/com.playonlinux.framework.lib:773
+#, sh-format
+msgid "Copying ${filename}"
+msgstr "Se copiază ${filename}"
+
+#: lib/com.playonlinux.framework.lib:786
+#, sh-format
+msgid "File size does not match!"
+msgstr "Mărimea fișierului nu se potrivește!"
+
+#: lib/com.playonlinux.framework.lib:937
+#, sh-format
+msgid ""
+"Sorry, $APPLICATION_TITLE $VERSION is too old to continue.\\"
+"n$APPLICATION_TITLE $NEEDED is required."
+msgstr ""
+"Regret,$APPLICATION_TITLE $VERSION este foarte vechi să continui.\\"
+"n$APPLICATION_TITLE $NEEDED este necesar."
+
+#: lib/com.playonlinux.framework.lib:952
+#, sh-format
+msgid ""
+"Warning: You are running $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE "
+"$NEEDED is recommended to continue."
+msgstr ""
+"Atenție: Rulați $APPLICATION_TITLE $VERSION.\\n$APPLICATION_TITLE $NEEDED "
+"este recomandat să continui."
+
+#: lib/com.playonlinux.framework.lib:983
+#, sh-format
+msgid "$AUTHOR profile"
+msgstr "Profil $AUTHOR"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid " on your computer."
+msgstr " pe computerul dumneavoastră."
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid " will be installed in: "
+msgstr " se va instala în: "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "Click Next to start"
+msgstr "Apăsați Următorul pentru pornire"
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This installation program is provided by: "
+msgstr "Acest program de instalare este furnizat de: "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This program was created by: "
+msgstr "Acest program a fost creat de: "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "This wizard will help you install "
+msgstr "Acest vrăjitor vă va ajuta să instalați "
+
+#: lib/setupwindow.lib:95
+#, sh-format
+msgid "Welcome to $APPLICATION_TITLE Installation Wizard."
+msgstr "Bine ați venit la vrăjitorul instalării $APPLICATION_TITLE."
+
+#: lib/setupwindow.lib:328
+#, sh-format
+msgid "Where is mounted your CD-ROM?"
+msgstr "Unde vă este montat CD-ROM-ul?"
+
+#: lib/setupwindow.lib:329 python/install.py:222
+#, sh-format
+msgid "Other"
+msgstr "Altele"
+
+#: lib/setupwindow.lib:330 python/install.py:290 python/install.py:294
+#, sh-format
+msgid "Refresh"
+msgstr "Reîncărcare"
+
+#: lib/setupwindow.lib:388
+#, sh-format
+msgid "Reading your device"
+msgstr "Se citește dispozitivul"
+
+#: lib/setupwindow.lib:403
+#, sh-format
+msgid "Error: Unable to find the CD-ROM!"
+msgstr "Eroare: Incapabil să găsesc CD-ROM-ul!"
+
+#: lib/setupwindow.lib:417
+#, sh-format
+msgid ""
+"$TITLE needs to read the PC part of a hybrid CD-Rom.\\n\\nBy default, MacOS "
+"only gives you access to the Mac part of the cd-rom, which may not be "
+"compatible with recent versions of Mac OS.\\n\\nDo you want PlayOnMac to "
+"attempt to read the PC-Part of your CD?"
+msgstr ""
+
+#: lib/setupwindow.lib:469
+#, sh-format
+msgid ""
+"Don't forget to go to PlayOnMac tools menu -> Read a PC CD-Rom before "
+"running your game"
+msgstr ""
+"Nu uitați să mergeți la meniul de unelte PlayOnMac -> Citește un PC CD-Rom "
+"înainte să rulați jocul"
+
+#: lib/setupwindow.lib:483
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is copying files:"
+msgstr "Așteptați până ce $APPLICATION_TITLE copiază fișierele:"
+
+#: lib/setupwindow.lib:568 lib/setupwindow.lib:721
+#, sh-format
+msgid "Scanning the virtual drive ..."
+msgstr "Se scanează driverul virtual..."
+
+#: lib/setupwindow.lib:582
+#, sh-format
+msgid "How much memory does your graphics board have?"
+msgstr "Câtă memorie vă are placa grafică?"
+
+#: lib/setupwindow.lib:591
+#, sh-format
+msgid "Video card does not have enough memory"
+msgstr "Placa video nu are memorie suficientă"
+
+#: lib/setupwindow.lib:592
+#, sh-format
+msgid ""
+"Your video card does not have enough memory!\\nIt might prevent the game "
+"from working"
+msgstr ""
+"Placa video nu are memorie suficientă!\\npoate împiedica jocul să lucreze"
+
+#: lib/setupwindow.lib:607
+#, sh-format
+msgid "Use Steam Store version"
+msgstr "Folosiți versiunea Steam Store"
+
+#: lib/setupwindow.lib:608
+#, sh-format
+msgid "Use Steam Store demo version"
+msgstr "Folosiți versiunea demo a Steam Store"
+
+#: lib/setupwindow.lib:609
+#, sh-format
+msgid "Use Desura Store version"
+msgstr "Folosiți versiunea Desura Store"
+
+#: lib/setupwindow.lib:610
+#, sh-format
+msgid "Use Desura Store demo version"
+msgstr "Folosiți versiunea demo Desura Store"
+
+#: lib/setupwindow.lib:611
+#, sh-format
+msgid "Use Origin Store version"
+msgstr "Folosiți versiunea Origin Store"
+
+#: lib/setupwindow.lib:612
+#, sh-format
+msgid "Use Origin Store demo version"
+msgstr "Folosiți versiunea demo a Origin Store"
+
+#: lib/setupwindow.lib:614
+#, sh-format
+msgid "Use a setup file in my computer"
+msgstr "Folosiți un fișier de configurare în my computer"
+
+#: lib/setupwindow.lib:615
+#, sh-format
+msgid "Use CD-ROM(s)"
+msgstr "Folosiți CD-ROM-ul(urile)"
+
+#: lib/setupwindow.lib:616
+#, sh-format
+msgid "Use DVD-ROM(s)"
+msgstr "Folosiți DVD-ROM-ul(urile)"
+
+#: lib/setupwindow.lib:617
+#, sh-format
+msgid "Download the program"
+msgstr "Descărcați programul"
+
+#: lib/setupwindow.lib:682
+#, sh-format
+msgid "Please choose an installation method"
+msgstr "Alegeți o metodă de instalare"
+
+#: lib/setupwindow.lib:713
+#, sh-format
+msgid "I don't want to make another shortcut"
+msgstr "Nu doresc să fac o altă scurtătură"
+
+#: lib/setupwindow.lib:714 python/guiv3.py:170
+#, sh-format
+msgid "Browse"
+msgstr "Navighează"
+
+#: lib/setupwindow.lib:763
+#, sh-format
+msgid "A shortcut by that name already exists, overwrite?"
+msgstr ""
+
+#: lib/website.lib:29
+#, sh-format
+msgid "Connect to your $APPLICATION_TITLE account"
+msgstr "Conectați-vă la $APPLICATION_TITLE cont"
+
+#: lib/website.lib:127
+#, sh-format
+msgid "Connecting..."
+msgstr "Se conectează..."
+
+#: lib/website.lib:132
+#, sh-format
+msgid ""
+"Failed to connect !\\nPlease ensure that your login and your password are "
+"valid."
+msgstr ""
+"Eșuare la conectare!\\nAsigurați-vă că numele de logare și parola sunt "
+"valide."
+
+#: lib/com.playonlinux.wine.lib:388
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is scanning your hardware"
+msgstr "Așteptați în timp ce $APPLICATION_TITLE scanează hardware-ul"
+
+#: lib/com.playonlinux.wine.lib:394
+#, sh-format
+msgid "Select the main videocard to report:"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:540
+#, sh-format
+msgid ""
+"Starting 64-bit process $EXEFILE is not supported in 32-bit virtual drives"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:578
+#, sh-format
+msgid ""
+"Wine seems to have crashed\\n\\nIf your program is running, just ignore this "
+"message"
+msgstr ""
+"Wine pare a fi prăbușit\\n\\nDacă programul vă rulează,ignorați acest mesaj"
+
+#: lib/com.playonlinux.wine.lib:623
+#, sh-format
+msgid ""
+"This is an installer for an update or an addon;\\nPlease install "
+"$TITLE_REQUIRED first"
+msgstr ""
+
+#: lib/com.playonlinux.wine.lib:682
+#, sh-format
+msgid "Unable to find version: "
+msgstr "Incapabil să aflu versiunea: "
+
+#: lib/com.playonlinux.wine.lib:688 lib/com.playonlinux.wine.lib:689
+#, sh-format
+msgid "Downloading Wine: "
+msgstr "Se descarcă Wine: "
+
+#: lib/com.playonlinux.wine.lib:698
+#, sh-format
+msgid "The download seems to have failed."
+msgstr "Descărcarea se pare că a eșuat."
+
+#: lib/com.playonlinux.wine.lib:700
+#, sh-format
+msgid "Extracting Wine..."
+msgstr "Se extrage Wine..."
+
+#: lib/com.playonlinux.wine.lib:897
+#, sh-format
+msgid "Overwrite (usually works, no guarantee)"
+msgstr "Suprascrie (lucrează de obicei, fără garanție)"
+
+#: lib/com.playonlinux.wine.lib:898
+#, sh-format
+msgid "Erase (virtual drive content will be lost)"
+msgstr "Șterge (se va pierde conținutul discului virtual)"
+
+#: lib/com.playonlinux.wine.lib:899
+#, sh-format
+msgid "Abort installation"
+msgstr "Abandonează instalarea"
+
+#: lib/com.playonlinux.wine.lib:912
+#, sh-format
+msgid "The target virtual drive $PREFNAME already exists:"
+msgstr "Ținta discul virtual $PREFNAME există deja:"
+
+#: lib/com.playonlinux.wine.lib:928
+#, sh-format
+msgid "User abort"
+msgstr "Abandonat de utilizator"
+
+#: lib/com.playonlinux.wine.lib:1092 lib/com.playonlinux.wine.lib:1122
+#, sh-format
+msgid "Please wait while $SOFTNAME is installed..."
+msgstr "Așteptați până când $SOFTNAME este instalat..."
+
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
+#, sh-format
+msgid ""
+"Be careful! This will kill install process. If it is not finished, you will "
+"have to reinstall $SOFTNAME"
+msgstr ""
+"Fiți atent! Acesta va omorâ  procesul instalării.Dacă nu este finalizat, va "
+"trebui să reinstalați $SOFTNAME"
+
+#: lib/com.playonlinux.wine.lib:1096 lib/com.playonlinux.wine.lib:1125
+#, sh-format
+msgid "Install is done"
+msgstr "Instalarea este terminată"
+
+#: lib/com.playonlinux.wine.lib:1129 lib/com.playonlinux.wine.lib:1130
+#, sh-format
+msgid "Press next only when the installation process is finished"
+msgstr "Apăsați următorul numai după ce s-a terminat procesul instalării"
+
+#: lib/com.playonlinux.wine.lib:1138
+#, sh-format
+msgid "Please wait while $APPLICATION_TITLE is simulating a reboot"
+msgstr "Așteptați până ce $APPLICATION_TITLE simulează o repornire"
+
+#: python/configure.py:117
+msgid ""
+"Warning:\n"
+"\n"
+"This tool is for advanced users.\n"
+"To uninstall cleanly a program with {0}, you must delete the virtual drive "
+"associated"
+msgstr ""
+"Atenție:\n"
+"\n"
+"Această unealtă este pentru utilizatorii avansați.\n"
+"Pentru a dezinstala complet un program cu {0}, va trebui să ștergeți discul "
+"virtual asociat"
+
+#: python/configure.py:198 python/configure.py:713
+msgid "General"
+msgstr "General"
+
+#: python/configure.py:201
+msgid "Make a new shortcut from this virtual drive"
+msgstr "Faceți o nouă scurtătură acestui driver virtual"
+
+#: python/configure.py:202
+msgid "Name"
+msgstr "Nume"
+
+#: python/configure.py:203
+msgid "Wine version"
+msgstr "Versiune Wine"
+
+#: python/configure.py:204
+msgid "Debug flags"
+msgstr ""
+
+#: python/configure.py:206
+msgid "Virtual drive"
+msgstr "Driver virtual"
+
+#: python/configure.py:208
+msgid "Arguments"
+msgstr "Argumente"
+
+#: python/configure.py:212
+msgid "Run configuration wizard"
+msgstr "Rulează vrăjitorul de configurare"
+
+#: python/configure.py:249
+msgid "Windows reboot"
+msgstr "Repornește Windows-ul"
+
+#: python/configure.py:257
+msgid "Repair virtual drive"
+msgstr "Repară discul virtual"
+
+#: python/configure.py:266
+msgid "Command prompt"
+msgstr "Command prompt"
+
+#: python/configure.py:273
+msgid "Task manager"
+msgstr "Task manager"
+
+#: python/configure.py:281
+msgid "Kill processes"
+msgstr "Omoară procesele"
+
+#: python/configure.py:288
+msgid "Wine uninstaller"
+msgstr "Dezinstalatorul Wine"
+
+#: python/configure.py:313
+msgid ""
+"Be careful! Installing one of these components can break your virtual drive."
+msgstr ""
+"Fiși atent! Instalând una dintre aceste componente poate distruge discul "
+"virtual."
+
+#: python/configure.py:335 python/install.py:289 python/install.py:293
+#: python/mainwindow.py:243 python/mainwindow.py:383
+msgid "Install"
+msgstr "Instalează"
+
+#: python/configure.py:398
+msgid "Open program's directory"
+msgstr "Deschide directorul programului"
+
+#: python/configure.py:421
+msgid "Open virtual drive's directory"
+msgstr "Deschide directorul driverului virtual"
+
+#: python/configure.py:565
+msgid "GLSL Support"
+msgstr "Suport GLSL"
+
+#: python/configure.py:566
+msgid "Direct Draw Renderer"
+msgstr "Randare Direct Draw"
+
+#: python/configure.py:567
+msgid "Video memory size"
+msgstr "Mărimea memoriei video"
+
+#: python/configure.py:568
+msgid "Offscreen rendering mode"
+msgstr "Mod de randare offscreen"
+
+#: python/configure.py:569
+msgid "Render target mode lock"
+msgstr "Blocare randare mod țintă"
+
+#: python/configure.py:570
+msgid "Multisampling"
+msgstr "Multisampling"
+
+#: python/configure.py:571
+msgid "Strict Draw Ordering"
+msgstr "Strict Draw Ordering"
+
+#: python/configure.py:581
+msgid "Mouse warp override"
+msgstr "Suprascrie devierea mouse-lui"
+
+#: python/configure.py:583
+msgid "Open a shell"
+msgstr "Deschide un shell"
+
+#: python/configure.py:584
+msgid "Run a .exe file in this virtual drive"
+msgstr "Rulați un fișier .exe în acest driver virtual"
+
+#: python/configure.py:585
+msgid "Command to exec before running the program"
+msgstr ""
+
+#: python/configure.py:595
+msgid ""
+"Warning:\n"
+"\n"
+"Any program still running in this virtual drive will be terminated before "
+"Wine version is changed.\n"
+"Are you sure you want to continue?"
+msgstr ""
+
+#: python/configure.py:606
+msgid ""
+"Be careful!\n"
+"If you change "
+msgstr ""
+"Fiți atent!\n"
+"Dacă schimbați "
+
+#: python/configure.py:666 python/mainwindow.py:972 python/mainwindow.py:974
+msgid "{0} configuration"
+msgstr "{0} configurare"
+
+#: python/configure.py:674
+msgid "Please select a program or a virtual drive to configure"
+msgstr "Selectați un program sau un disc virtual de configurat"
+
+#: python/configure.py:693 python/configure.py:696 python/options.py:280
+msgid "New"
+msgstr "Nou"
+
+#: python/configure.py:694 python/configure.py:697 python/mainwindow.py:244
+#: python/mainwindow.py:384 python/mainwindow.py:603 python/options.py:207
+msgid "Remove"
+msgstr "Eliminaţi"
+
+#: python/configure.py:715
+msgid "Install components"
+msgstr "Instalare componente"
+
+#: python/configure.py:716 python/mainwindow.py:364
+msgid "Display"
+msgstr "Afișează"
+
+#: python/configure.py:717
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+#: python/configure.py:745
+msgid "This virtual drive is protected"
+msgstr "Acest driver virtual este protejat"
+
+#: python/configure.py:747
+msgid "Are you sure you want to delete {0} virtual drive ?"
+msgstr "Sigur doriți să ștergeți driverul virtual (0) ?"
+
+#: python/configure.py:754
+msgid "Are you sure you want to delete {0} ?"
+msgstr "Sigur doriți să ștergeți (0)?"
+
+#: python/debug.py:40 python/mainwindow.py:281 python/mainwindow.py:947
+#: python/mainwindow.py:1037 python/wrapper.py:76
+msgid "{0} debugger"
+msgstr ""
+
+#: python/debug.py:51
+msgid "Please select a debug file"
+msgstr "Selectați un fișier de depanare"
+
+#: python/debug.py:80
+msgid "Locate this logfile"
+msgstr "Găsiți acest fișier jurnal"
+
+#: python/debug.py:103
+msgid "The file is named : {0}"
+msgstr "Acest fișier este denumit: {0}"
+
+#: python/debug.py:201 python/debug.py:264
+msgid "Virtual drives"
+msgstr "Discuri virtuale"
+
+#: python/debug.py:229
+msgid "Report a problem about {0}"
+msgstr "Raportați o problemă despre {0}"
+
+#: python/debug.py:263
+msgid "Install com.playonlinux.framework"
+msgstr "Instalare scripturi"
+
+#: python/gui_server.py:54 python/gui_server.py:55
+msgid "Error: Unable to reserve a valid port"
+msgstr "Eroare: Nu se poate rezerva un port valid"
+
+#: python/gui_server.py:165
+msgid "WARNING. Please use POL_SetupWindow_Init first"
+msgstr "ATENȚIE. Utilizați întâi POL_SetupWindow_Init"
+
+#: python/guiv3.py:117
+msgid "{0} Wizard"
+msgstr "{0} Vrăjitor"
+
+#: python/guiv3.py:141 python/guiv3.py:144 python/install.py:288
+#: python/install.py:292 python/options.py:376
+msgid "Cancel"
+msgstr "Anulează"
+
+#: python/guiv3.py:142 python/guiv3.py:145
+msgid "Next"
+msgstr "Următoarea"
+
+#: python/guiv3.py:164 python/guiv3.py:167
+msgid "No"
+msgstr "Nu"
+
+#: python/guiv3.py:165 python/guiv3.py:168
+msgid "Yes"
+msgstr "Da"
+
+#: python/guiv3.py:178
+msgid "I Agree"
+msgstr "Sunt de acord"
+
+#: python/guiv3.py:179
+msgid "Don't remind me anymore"
+msgstr ""
+
+#: python/guiv3.py:180
+msgid "Show virtual drives"
+msgstr "Arată driverii virtuali"
+
+#: python/guiv3.py:201
+msgid "Login: "
+msgstr "Autentificare: "
+
+#: python/guiv3.py:202
+msgid "Password: "
+msgstr "Parolă: "
+
+#: python/guiv3.py:205
+msgid "Register"
+msgstr "Înregistrare"
+
+#: python/guiv3.py:312
+msgid "MB downloaded"
+msgstr "MB descărcați"
+
+#: python/guiv3.py:312
+msgid "of"
+msgstr "din"
+
+#: python/guiv3.py:803 python/mainwindow.py:1158 python/mainwindow.py:1188
+#: python/mainwindow.py:1202 python/mainwindow.py:1211
+#: python/mainwindow.py:1223 python/mainwindow.py:1235 python/wrapper.py:129
+msgid "Error"
+msgstr "Eroare"
+
+#: python/guiv3.py:803
+msgid "You cannot close this window"
+msgstr "Nu puteți închide această fereastră"
+
+#: python/install.py:115 python/install.py:117
+msgid "No description"
+msgstr "Fără descriere"
+
+#: python/install.py:214
+msgid "Accessories"
+msgstr "Accesorii"
+
+#: python/install.py:215
+msgid "Development"
+msgstr "Dezvoltare"
+
+#: python/install.py:216
+msgid "Education"
+msgstr "Educaţie"
+
+#: python/install.py:217
+msgid "Games"
+msgstr "Jocuri"
+
+#: python/install.py:218
+msgid "Graphics"
+msgstr "Grafică"
+
+#: python/install.py:219 python/mainwindow.py:287 python/options.py:384
+msgid "Internet"
+msgstr "Internet"
+
+#: python/install.py:220
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: python/install.py:221
+msgid "Office"
+msgstr "Birou"
+
+#: python/install.py:223
+msgid "Patches"
+msgstr "Petice"
+
+#: python/install.py:256
+msgid "Include:"
+msgstr ""
+
+#: python/install.py:262
+msgid "Testing"
+msgstr "Testare"
+
+#: python/install.py:267
+msgid "No-cd needed"
+msgstr "Nu este nevoie de cd"
+
+#: python/install.py:274
+msgid "Commercial"
+msgstr "Comercial"
+
+#: python/install.py:308
+msgid "Install a non-listed program"
+msgstr "Instalează un program ne-listat"
+
+#: python/install.py:458
+msgid ""
+"This program is currently in testing.\n"
+"\n"
+"It might not work as expected. Your feedback, positive or negative, is "
+"specially important to improve this installer."
+msgstr ""
+"Acest program este actualmente în testări.\n"
+"\n"
+"Este posibil să nu lucreze după așteptări. Sugestiile dumneavoastră, "
+"pozitive sau negative, sunt de o importanță specială pentru a îmbunătăți "
+"acest instaler."
+
+#: python/install.py:460
+msgid ""
+"This program contains a protection against copy (DRM) incompatible with "
+"emulation.\n"
+"The only workaround is to use a \"no-cd\" patch, but since those can also be "
+"used for piracy purposes we won't give any support on this matter."
+msgstr ""
+
+#: python/install.py:577
+msgid "Attention!"
+msgstr ""
+
+#: python/install.py:577
+msgid ""
+"By enabling this option, you can install programs that employ digital rights "
+"management (DRM) copy protection that are not supported by {0} and might "
+"need to be bypassed.\n"
+"\n"
+"This feature should not be construed as implicit or implied condoning of "
+"piracy and as such, we will not offer any support for issues resulting from "
+"using this option."
+msgstr ""
+
+#: python/install.py:580
+msgid ""
+"By enabling this, you will have access to installers for programs that "
+"contain protections against copy (DRM) incompatible with emulation.\n"
+"The only workaround is to use \"no-cd\" patches, but since those can also be "
+"used for piracy purposes we won't give any support on this matter."
+msgstr ""
+
+#: python/lib/playonlinux.py:27
+msgid "There is nothing installed to run .{0} files."
+msgstr "Nu este nimic instalat de rulat. {0} fișiere."
+
+#: python/lib/playonlinux.py:454
+msgid "{0} error"
+msgstr "{0} eroare"
+
+#: python/mainwindow.py:75
+msgid "{0} website is unavailable. Please check your connection"
+msgstr ""
+
+#: python/mainwindow.py:77
+msgid "Refreshing {0}"
+msgstr "Se reâmprospătează {0}"
+
+#: python/mainwindow.py:92 python/mainwindow.py:94
+msgid "An updated version of {0} is available"
+msgstr "O versiune actualizată {0} este disponibilă"
+
+#: python/mainwindow.py:242 python/mainwindow.py:379 python/mainwindow.py:774
+msgid "Run"
+msgstr "Rulează"
+
+#: python/mainwindow.py:246
+msgid "Donate"
+msgstr "Donație"
+
+#: python/mainwindow.py:247
+msgid "Exit"
+msgstr "Ieşire"
+
+#: python/mainwindow.py:251
+msgid "Small icons"
+msgstr "Iconițe mici"
+
+#: python/mainwindow.py:252
+msgid "Medium icons"
+msgstr "Iconițe medi"
+
+#: python/mainwindow.py:253
+msgid "Large icons"
+msgstr "Iconițe mari"
+
+#: python/mainwindow.py:254
+msgid "Very large icons"
+msgstr "Iconițe foarte mari"
+
+#: python/mainwindow.py:266
+msgid "Manage Wine versions"
+msgstr "Administrează versiunile de Wine"
+
+#: python/mainwindow.py:271
+msgid "Read a PC CD-Rom"
+msgstr "Citește un PC CD-Rom"
+
+#: python/mainwindow.py:276
+msgid "{0} console"
+msgstr "{0} terminal"
+
+#: python/mainwindow.py:278
+msgid "Close all {0} software"
+msgstr "Închide-ti tot {0} software-ul"
+
+#: python/mainwindow.py:288 python/options.py:388
+msgid "File associations"
+msgstr "Fișiere asociate"
+
+#: python/mainwindow.py:289 python/mainwindow.py:337
+msgid "Plugin manager"
+msgstr "Administrator de module"
+
+#: python/mainwindow.py:293
+msgid "Supported software"
+msgstr ""
+
+#: python/mainwindow.py:294
+msgid "News"
+msgstr ""
+
+#: python/mainwindow.py:295
+msgid "Documentation"
+msgstr ""
+
+#: python/mainwindow.py:296
+msgid "Forums"
+msgstr ""
+
+#: python/mainwindow.py:297
+msgid "Bugs"
+msgstr ""
+
+#: python/mainwindow.py:299
+msgid "Twitter"
+msgstr ""
+
+#: python/mainwindow.py:300
+msgid "Google+"
+msgstr ""
+
+#: python/mainwindow.py:301
+msgid "Facebook"
+msgstr ""
+
+#: python/mainwindow.py:305
+msgid "About {0}"
+msgstr "Despre {0}"
+
+#: python/mainwindow.py:363
+msgid "File"
+msgstr "Fișier"
+
+#: python/mainwindow.py:365
+msgid "Tools"
+msgstr "Instrumente"
+
+#: python/mainwindow.py:366 python/mainwindow.py:760
+msgid "Settings"
+msgstr "Setări"
+
+#: python/mainwindow.py:367 python/options.py:387
+msgid "Plugins"
+msgstr "Module"
+
+#: python/mainwindow.py:368
+msgid "Support"
+msgstr ""
+
+#: python/mainwindow.py:380 python/mainwindow.py:776
+msgid "Close"
+msgstr "Închide"
+
+#: python/mainwindow.py:386 python/mainwindow.py:787 python/options.py:208
+msgid "Configure"
+msgstr "Configurează"
+
+#: python/mainwindow.py:399 python/mainwindow.py:402
+msgid "Search"
+msgstr "Cauta"
+
+#: python/mainwindow.py:591
+msgid "Open the application's directory"
+msgstr "Deschide directorul aplicației"
+
+#: python/mainwindow.py:595 python/mainwindow.py:795
+msgid "Read the manual"
+msgstr "Citiți manualul"
+
+#: python/mainwindow.py:599
+msgid "Set the icon"
+msgstr "Setează iconița"
+
+#: python/mainwindow.py:607
+msgid "Close this application"
+msgstr "Închide această aplicație"
+
+#: python/mainwindow.py:618
+msgid "KillApp"
+msgstr "KillApp"
+
+#: python/mainwindow.py:625
+msgid "No manual found for {0}"
+msgstr "Nu s-a găsit manualul pentru {0}"
+
+#: python/mainwindow.py:758
+msgid "Install a program"
+msgstr "Instalează un program"
+
+#: python/mainwindow.py:765
+msgid "Update GIT"
+msgstr "Actualizare GIT"
+
+#: python/mainwindow.py:768
+msgid "Update instructions"
+msgstr ""
+
+#: python/mainwindow.py:778
+msgid "Debug"
+msgstr "Depanează"
+
+#: python/mainwindow.py:784
+msgid "Send a feedback"
+msgstr ""
+
+#: python/mainwindow.py:789
+msgid "Create a shortcut"
+msgstr "Crează o scurtătură"
+
+#: python/mainwindow.py:791
+msgid "Open the directory"
+msgstr "Deschide directorul"
+
+#: python/mainwindow.py:798
+msgid "Uninstall"
+msgstr "Dezinstalare"
+
+#: python/mainwindow.py:920 python/mainwindow.py:991 python/mainwindow.py:998
+#: python/mainwindow.py:1043
+msgid "Please select a program."
+msgstr "Selectați un program."
+
+#: python/mainwindow.py:928 python/mainwindow.py:930 python/mainwindow.py:932
+msgid "{0} settings"
+msgstr "{0} setări"
+
+#: python/mainwindow.py:1005
+msgid "{0} install menu"
+msgstr "{0} meniu de instalare"
+
+#: python/mainwindow.py:1014
+msgid "{0} com.playonlinux.wine versions manager"
+msgstr "{0} administrator versiuni com.playonlinux.wine"
+
+#: python/mainwindow.py:1045
+msgid "The virtual drive associated with {0} ({1}) does no longer exists."
+msgstr "Discul virtual asociat cu {0} ({1}) nu mai există."
+
+#: python/mainwindow.py:1089
+msgid "Are you sure you want to close all {0} windows?"
+msgstr ""
+
+#: python/mainwindow.py:1111
+msgid "Run your Windows programs on "
+msgstr "Rulați-vă programul Windows pe "
+
+#: python/mainwindow.py:1112
+msgid ""
+"PlayOnLinux and PlayOnMac team\n"
+"Under GPL licence version 3"
+msgstr ""
+"Echipa PlayOnLinux și PlayOnMac\n"
+"Sub licență GPL versiune 3"
+
+#: python/mainwindow.py:1113
+msgid "Developer and Website: "
+msgstr "Dezvoltator și sait web: "
+
+#: python/mainwindow.py:1114
+msgid "Scriptors: "
+msgstr "Scripterti: "
+
+#: python/mainwindow.py:1115
+msgid "Packager: "
+msgstr "Packageri: "
+
+#: python/mainwindow.py:1116
+msgid "Icons:"
+msgstr "Iconițe:"
+
+#: python/mainwindow.py:1117
+msgid "The following people contributed to this program: "
+msgstr "Următoarele persoane au contribuit la acest program: "
+
+#: python/mainwindow.py:1118
+msgid "Translations:"
+msgstr "Traduceri:"
+
+#: python/mainwindow.py:1119
+msgid "Read TRANSLATORS file"
+msgstr "Citește fișierul TRADUCĂTORILOR"
+
+#: python/mainwindow.py:1158
+msgid "{0} is not able to start PlayOnLinux Setup Window server."
+msgstr ""
+
+#: python/mainwindow.py:1179
+msgid "{0} cannot find {1}"
+msgstr "{0} nu poate găsi {1}"
+
+#: python/mainwindow.py:1181
+msgid " (from {2})"
+msgstr ""
+
+#: python/mainwindow.py:1184
+msgid "You need to install it to continue"
+msgstr "Trebuie să îl instalați pentru a continua"
+
+#: python/mainwindow.py:1186
+msgid "You should install it to use {0}"
+msgstr "Trebuie să îl instalați pentru a folosi {0}"
+
+#: python/mainwindow.py:1202
+msgid "{0} is not supposed to be run as root. Sorry"
+msgstr "{0} nu se pare că rulați ca root. Regret"
+
+#: python/mainwindow.py:1211
+msgid ""
+"{0} is unable to find 32bits OpenGL libraries.\n"
+"\n"
+"You might encounter problem with your games"
+msgstr ""
+"(0) este incapabil să găsească librăriile OpenGL la 32biți\n"
+"\n"
+"Puteți întâmpina o problemă cu jocul"
+
+#: python/mainwindow.py:1223
+msgid ""
+"{0} is unable to find 64bits OpenGL libraries.\n"
+"\n"
+"You might encounter problem with your games"
+msgstr ""
+"(0) este incapabil să găsească librăriile OpenGL la 64biți.\n"
+"\n"
+"Puteți întâmpina o problemă cu jocul"
+
+#: python/mainwindow.py:1235
+msgid ""
+"Your filesystem might prevent {0} from running correctly.\n"
+"\n"
+"Please open {0} in a terminal to get more details"
+msgstr ""
+
+#: python/mainwindow.py:1239
+msgid ""
+"Do you want to help {0} to make a compatibility database?\n"
+"\n"
+"If you click yes, the following things will be sent to us anonymously the "
+"first time you run a Windows program:\n"
+"\n"
+"- You graphic card model\n"
+"- Your OS version\n"
+"- If graphic drivers are installed or not.\n"
+"\n"
+"\n"
+"These information will be very precious for us to help people."
+msgstr ""
+
+#: python/mainwindow.py:1296
+msgid "Are you sure you want to  want to install {0} package?"
+msgstr "Sunteți sigur că doriți să instalați (0) pachetul?"
+
+#: python/mainwindow.py:1303 python/mainwindow.py:1305
+#: python/mainwindow.py:1307
+msgid ""
+"You are trying to open a script design for {0}! It might not work as expected"
+msgstr ""
+"Încercați să deschideți un script construit pentru (0)! Nu va lucra după "
+"așteptări"
+
+#: python/options.py:116
+msgid "Proxy configuration"
+msgstr "Configurare proxy"
+
+#: python/options.py:129
+msgid "Set a proxy"
+msgstr "Setează un proxy"
+
+#: python/options.py:132
+msgid "Proxy address"
+msgstr "Adresa proxy"
+
+#: python/options.py:135
+msgid "Proxy port"
+msgstr "Port proxy"
+
+#: python/options.py:138
+msgid "Proxy login"
+msgstr "Logare proxy"
+
+#: python/options.py:141
+msgid "Proxy password"
+msgstr "Parolă proxy"
+
+#: python/options.py:188
+msgid "Installed plugins"
+msgstr "Module instalate"
+
+#: python/options.py:206
+msgid "Add"
+msgstr "Adaugă"
+
+#: python/options.py:209 python/options.py:337
+msgid "Enable"
+msgstr "Activează"
+
+#: python/options.py:210
+msgid "Choose a plugin"
+msgstr "Alegeți un modul"
+
+#: python/options.py:263
+msgid "What is the extension?"
+msgstr "Care este extensia?"
+
+#: python/options.py:275
+msgid "Assigned program"
+msgstr "Program atribuit"
+
+#: python/options.py:277
+msgid "Delete"
+msgstr "Șterge"
+
+#: python/options.py:305
+msgid "Are you sure you want to install: "
+msgstr "Sunteți sigur că doriți instalarea: "
+
+#: python/options.py:313
+msgid "Are you sure you want to delete: "
+msgstr "Sunteți sigur că doriți ștergerea: "
+
+#: python/options.py:334
+msgid "Disable"
+msgstr "Dezactivat"
+
+#: python/options.py:375
+msgid "Apply"
+msgstr "Aplică"
+
+#: python/options.py:412
+msgid "You must restart {0} for the changes to take effect."
+msgstr "Trebuie să reporniți {0} pentru ca modificările să aibe efect."
+
+#: python/wine_versions.py:196
+msgid "Installed Wine versions: "
+msgstr "Versiunile instalate de Wine: "
+
+#: python/wine_versions.py:197
+msgid "Available Wine versions: "
+msgstr "Versiuni disponibile de Wine: "
+
+#: python/wine_versions.py:208
+msgid "Wine versions"
+msgstr "Versiuni Wine"
+
+#: python/wine_versions.py:330
+msgid "Are you sure you want to delete com.playonlinux.wine {0}?"
+msgstr "Sigur doriți ștergerea com.playonlinux.wine (0)?"
+
+#: python/wine_versions.py:332
+msgid "This version is CURRENTLY IN USE"
+msgstr ""
+
+#: python/wrapper.py:129
+msgid "{0} is not able to start POL_SetupWindow_server."
+msgstr "{0} nu poate să pornească POL_SetupWindow_server."

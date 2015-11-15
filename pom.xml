@@ -32,6 +32,7 @@
         <module>phoenicis-qt</module>
         <module>phoenicis-javafx</module>
         <module>phoenicis-app</module>
+        <module>phoenicis-injection</module>
     </modules>
 
     <properties>
