@@ -59,7 +59,7 @@ public class AnyScriptFactoryImplementation implements AnyScriptFactory {
     public Script createInstance(String scriptContent) {
         for(ScriptFactory<?> scriptFactory: scriptFactories) {
             if(scriptFactory.validate(scriptContent)) {
-                return scriptFactory.createInstance(scriptContent);
+                return scriptFactory.withExecutor(executorService).createInstance(scriptContent);
             }
         }
         throw new IllegalArgumentException("Unknown script type");
