@@ -33,10 +33,7 @@ import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.DefaultJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
-import com.playonlinux.core.scripts.InstallerSource;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
-import com.playonlinux.core.scripts.ScriptFactory;
-import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
+import com.playonlinux.core.scripts.*;
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.WineVersionSource;
@@ -172,8 +169,11 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      * @return the script
      */
     @Bean
-    public ScriptFactory scriptFactory() {
-        return new ScriptFactoryDefaultImplementation().withExecutor(defaultExecutor());
+    public AnyScriptFactory scriptFactory() {
+        return new AnyScriptFactoryImplementation()
+                .withExecutor(defaultExecutor())
+                .withScriptFactory(new ScriptRecentFactory())
+                .withScriptFactory(new ScriptLegacyFactory());
     }
 
     /**

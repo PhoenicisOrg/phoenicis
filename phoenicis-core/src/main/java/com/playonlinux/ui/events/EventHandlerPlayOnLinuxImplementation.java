@@ -33,6 +33,7 @@ import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
+import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -57,14 +58,14 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    private static ScriptFactory scriptFactory;
+    private static AnyScriptFactory scriptFactory;
 
     private final WineContainerEventHandler wineContainerEventHandler = new WineContainerEventHandler();
     private final LibraryEventHandler libraryEventHandler = new LibraryEventHandler();
 
     @Override
     public void runLocalScript(File scriptToRun) throws PlayOnLinuxException {
-        Script playonlinuxScript = scriptFactory.createInstance(scriptToRun);
+        Script playonlinuxScript = scriptFactory.createInstanceFromFile(scriptToRun);
         playOnLinuxBackgroundServicesManager.register(playonlinuxScript);
     }
 
