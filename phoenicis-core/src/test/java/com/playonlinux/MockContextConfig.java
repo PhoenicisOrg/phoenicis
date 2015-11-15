@@ -33,7 +33,7 @@ import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.DefaultJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
-import com.playonlinux.core.scripts.ScriptFactoryDefaultImplementation;
+import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -74,7 +74,7 @@ public class MockContextConfig extends AbstractConfiguration {
 
     @Bean
     protected ScriptFactory scriptFactory() {
-        return new ScriptFactoryDefaultImplementation();
+        return new AnyScriptFactoryImplementation();
     }
 
     @Override
