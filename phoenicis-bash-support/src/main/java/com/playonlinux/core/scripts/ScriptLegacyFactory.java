@@ -18,40 +18,31 @@
 
 package com.playonlinux.core.scripts;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 
-import org.apache.commons.io.FileUtils;
-
-
-public class ScriptFactoryDefaultImplementation implements ScriptFactory {
-    ExecutorService executorService;
+public class ScriptLegacyFactory implements ScriptFactory<ScriptLegacy> {
+    private ExecutorService executorService;
 
     @Override
-    public Script createInstance(File scriptFile) throws ScriptFailureException {
-        try {
-            return createInstance(FileUtils.readFileToString(scriptFile));
-        } catch (IOException e) {
-            throw new ScriptFailureException(e);
-        }
+    public boolean validate(String scriptContent) {
+        final String firstLine = scriptContent.split("\n")[0];
+
+        return firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash");
+    }
+
+    @Override
+    public Class<ScriptLegacy> getType() {
+        return ScriptLegacy.class;
     }
 
     @Override
     public Script createInstance(String scriptContent) {
-        switch(Script.detectScriptType(scriptContent)) {
-            case LEGACY:
-                return new ScriptLegacy(scriptContent, executorService);
-            case RECENT:
-            default:
-                return new ScriptRecent(scriptContent, executorService);
-        }
+        return new ScriptLegacy(scriptContent, executorService);
     }
 
     @Override
-    public ScriptFactoryDefaultImplementation withExecutor(ExecutorService executorService) {
+    public ScriptLegacyFactory withExecutor(ExecutorService executorService) {
         this.executorService = executorService;
         return this;
     }
-
 }

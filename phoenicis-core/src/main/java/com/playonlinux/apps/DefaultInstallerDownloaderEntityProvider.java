@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.playonlinux.core.scripts.AnyScriptFactory;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
@@ -48,7 +49,7 @@ public class DefaultInstallerDownloaderEntityProvider
     public static final double PERCENTAGE = 100.;
 
     @Inject
-    static ScriptFactory scriptFactory;
+    static AnyScriptFactory scriptFactory;
 
     @Inject
     static ServiceManager serviceManager;
@@ -134,7 +135,7 @@ public class DefaultInstallerDownloaderEntityProvider
 
     private void terminateDownload() {
         try {
-            final Script script = scriptFactory.createInstance(localFile);
+            final Script script = scriptFactory.createInstanceFromFile(localFile);
             final String scriptContent = script.extractContent();
 
             this.signatureChecker

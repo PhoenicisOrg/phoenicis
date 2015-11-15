@@ -34,7 +34,8 @@ import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
 
 @Scan
-public abstract class Script implements Service {
+public abstract class
+Script implements Service {
     @Inject
     static ServiceManager serviceManager;
 

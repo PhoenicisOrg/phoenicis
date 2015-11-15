@@ -33,6 +33,7 @@
         <module>phoenicis-javafx</module>
         <module>phoenicis-app</module>
         <module>phoenicis-injection</module>
+        <module>phoenicis-bash-support</module>
     </modules>
 
     <properties>
