@@ -55,11 +55,11 @@ public class WineInstallation {
         return null;
     }
 
-    private File fetchWineExecutablePath() {
+    private File fetchWine() {
         return fetchExecutable(binaryPath, "wine");
     }
 
-    private File fetchWineServerExecutablePath() {
+    private File fetchWineServer() {
         return fetchExecutable(binaryPath, "wineserver");
     }
 
@@ -89,7 +89,7 @@ public class WineInstallation {
         winePrefixEnvironment.put(WINEDLLOVERRIDES_ENV, DISABLE_WINEMENUBUILDER);
 
         final List<String> command = new ArrayList<>();
-        command.add(this.fetchWineExecutablePath().getAbsolutePath());
+        command.add(this.fetchWine().getAbsolutePath());
         command.add(executableToRun);
         if (arguments != null) {
             command.addAll(arguments);
@@ -139,7 +139,7 @@ public class WineInstallation {
         environment.put(WINEPREFIX_ENV, winePrefix.getAbsolutePath());
 
         final List<String> command = new ArrayList<>();
-        command.add(this.fetchWineServerExecutablePath().getAbsolutePath());
+        command.add(this.fetchWineServer().getAbsolutePath());
         command.add(parameter);
 
         new WineProcessBuilder().withCommand(command).withEnvironment(environment).build();
