@@ -178,21 +178,7 @@
                 <version>2.6</version>
             </plugin>
 
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.playonlinux.app.PlayOnLinuxApp</mainClass>
-                            <packageName>com.playonlinux.app</packageName>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
+            
 
 
             <plugin>
