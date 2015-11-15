@@ -56,19 +56,19 @@ public class WineInstallation {
     }
 
     private File fetchWineExecutablePath() {
-        File wine = new File(binaryPath, "wine");
-        if (wine.exists() && !wine.canExecute()) {
-            wine.setExecutable(true);
-        }
-        return wine;
+        return fetchExecutable(binaryPath, "wine");
     }
 
     private File fetchWineServerExecutablePath() {
-        File wineServer = new File(binaryPath, "wineserver");
-        if (wineServer.exists() && !wineServer.canExecute()) {
-            wineServer.setExecutable(true);
+        return fetchExecutable(binaryPath, "wineserver");
+    }
+
+    private File fetchExecutable(File path, String name) {
+        File executable = new File(path, name);
+        if (executable.exists() && !executable.canExecute()) {
+            executable.setExecutable(true);
         }
-        return wineServer;
+        return executable;
     }
 
     // FIXME: Maybe it would be great to createPrefix a class to handle
