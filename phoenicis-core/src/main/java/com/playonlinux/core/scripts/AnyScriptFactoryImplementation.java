@@ -47,6 +47,12 @@ public class AnyScriptFactoryImplementation implements AnyScriptFactory {
 
     @Override
     public boolean validate(String scriptContent) {
+        for(ScriptFactory<?> scriptFactory: scriptFactories) {
+            if(scriptFactory.validate(scriptContent)) {
+                return true;
+            }
+        }
+
         return false;
     }
 

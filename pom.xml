@@ -34,6 +34,8 @@
         <module>phoenicis-app</module>
         <module>phoenicis-injection</module>
         <module>phoenicis-bash-support</module>
+        <module>phoenicis-wine</module>
+        <module>phoenicis-javafx-wine</module>
     </modules>
 
     <properties>

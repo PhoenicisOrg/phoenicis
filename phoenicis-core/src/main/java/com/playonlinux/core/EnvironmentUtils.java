@@ -16,26 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.containers;
+package com.playonlinux.core;
 
-import java.io.File;
+import java.util.Map;
 
-import com.playonlinux.containers.entities.ContainerEntity;
+public class EnvironmentUtils {
+    public static void mergeEnvironmentVariables(Map<String, String> environmentSource,
+                                                 Map<String, String> environmentDestination, String environmentVariable) {
+        if(environmentSource == null) {
+            return;
+        }
 
-public abstract class AbstractContainer<E extends ContainerEntity> {
-    protected final File containerPath;
-
-    public AbstractContainer(File containerPath) {
-        this.containerPath = containerPath;
+        if(environmentSource.containsKey(environmentVariable)) {
+            environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable) + ":"
+                    + environmentSource.get(environmentVariable));
+        }
     }
-
-    public File getContainerPath() {
-        return containerPath;
-    }
-
-    public String getName() {
-        return containerPath.getName();
-    }
-
-    public abstract E createEntity();
 }

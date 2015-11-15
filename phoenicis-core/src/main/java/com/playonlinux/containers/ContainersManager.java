@@ -36,5 +36,5 @@ public interface ContainersManager extends Observable<ContainersManager>,
      * Get the list of containers
      * @return The list of containers
      */
-    List<AbstractContainer> getContainers();
+    List<Container> getContainers();
 }

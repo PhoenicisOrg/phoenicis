@@ -25,6 +25,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.containers.AnyContainerFactory;
+import com.playonlinux.containers.WinePrefixContainerFactory;
 import com.playonlinux.core.injection.AbstractConfiguration;
 import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.lang.LanguageBundle;
@@ -42,6 +44,8 @@ import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
 import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
+import com.playonlinux.ui.impl.javafx.mainwindow.containers.AnyContainerConfigurationViewFactory;
+import com.playonlinux.ui.impl.javafx.mainwindow.containers.WinePrefixContainerConfigurationViewFactory;
 import com.playonlinux.ui.impl.qt.ControllerQtImplementation;
 
 /**
@@ -176,6 +180,12 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
                 .withScriptFactory(new ScriptLegacyFactory());
     }
 
+    @Bean
+    public AnyContainerFactory anyContainerFactory() {
+        return new AnyContainerFactory()
+                .withContainerFactory(new WinePrefixContainerFactory());
+    }
+
     /**
      * PlayOnLinux default executor service
      *
@@ -195,10 +205,21 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
         return new ObjectMapper();
     }
 
+
+    /**** JavaFX part ***/
+    /* FIXME: Improve the dependency injection system to separate configurations */
+    @Bean
+    public AnyContainerConfigurationViewFactory anyContainerConfigurationViewFactory() {
+        return new AnyContainerConfigurationViewFactory()
+                .withContainerConfigurationViewFactory(new WinePrefixContainerConfigurationViewFactory());
+    }
+
+
     @Override
     protected String definePackage() {
         return "com.playonlinux";
     }
+
 
     /**
      * Set the CLI interface

@@ -27,7 +27,8 @@ import java.util.WeakHashMap;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.containers.entities.WinePrefixContainerEntity;
+import com.playonlinux.core.injection.Inject;
+import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
@@ -39,7 +40,11 @@ import com.playonlinux.ui.impl.javafx.mainwindow.MessagePanel;
 
 import javafx.scene.control.TextField;
 
+@Scan
 public class ViewContainers extends MainWindowView implements Observer<Observable, ContainersWindowEntity> {
+    @Inject
+    static AnyContainerConfigurationViewFactory anyContainerConfigurationViewFactory;
+
     private final EventHandlerContainers eventHandlerContainers;
     private final LeftButtonGroup containersView;
 
@@ -104,9 +109,8 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
     private ContainerConfigurationView<?> createContainerConfigurationView(ContainerEntity containerEntity) {
-        /* Not perfect. Needs more abstraction  */
-        if(containerEntity instanceof WinePrefixContainerEntity) {
-            return new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, eventHandlerContainers);
+        if(anyContainerConfigurationViewFactory.validate(containerEntity)) {
+            return anyContainerConfigurationViewFactory.createInstance(containerEntity);
         } else {
             return new GenericContainerConfigurationView(containerEntity);
         }

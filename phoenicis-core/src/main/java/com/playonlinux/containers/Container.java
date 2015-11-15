@@ -16,22 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.containers;
+package com.playonlinux.containers;
+
+import java.io.File;
 
 import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
-import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.events.EventHandler;
 
-@Scan
-public class EventHandlerContainers {
-    @Inject
-    static EventHandler mainEventHandler;
+public abstract class Container<E extends ContainerEntity> {
+    protected final File containerPath;
 
-    EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers() {
-        return mainEventHandler.getContainers();
+    public Container(File containerPath) {
+        this.containerPath = containerPath;
     }
 
+    public File getContainerPath() {
+        return containerPath;
+    }
+
+    public String getName() {
+        return containerPath.getName();
+    }
+
+    public abstract E createEntity();
 }

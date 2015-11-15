@@ -18,7 +18,7 @@
 
 package com.playonlinux.framework;
 
-import static com.playonlinux.wine.WineProcessBuilder.mergeEnvironmentVariables;
+import static com.playonlinux.core.EnvironmentUtils.mergeEnvironmentVariables;
 
 import java.util.Map;
 

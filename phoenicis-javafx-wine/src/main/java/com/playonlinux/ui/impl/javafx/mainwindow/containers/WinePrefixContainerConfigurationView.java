@@ -18,7 +18,6 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,21 +55,24 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+
 public class WinePrefixContainerConfigurationView extends ContainerConfigurationView<WinePrefixContainerEntity> {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
 
-    private final EventHandlerContainers eventHandlerContainers;
 
     private final List<Node> lockableElements = new ArrayList<>();
+    private final WinePrefixEventHandler winePrefixEventHandler;
 
-    public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity, EventHandlerContainers eventHandlerContainers) {
+    public WinePrefixContainerConfigurationView(WinePrefixContainerEntity containerEntity,
+                                                WinePrefixEventHandler winePrefixEventHandler) {
         super(containerEntity);
         this.getTabs().add(drawDisplayTab(containerEntity));
         this.getTabs().add(drawInputTab(containerEntity));
         this.getTabs().add(drawToolsTab(containerEntity));
-        this.eventHandlerContainers = eventHandlerContainers;
+        this.winePrefixEventHandler = winePrefixEventHandler;
     }
 
 
@@ -257,7 +259,7 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         toolsContentPane.getStyleClass().add("grid");
 
         toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
-                e -> eventHandlerContainers.getDomainEventHander().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), arg -> {
+                e -> winePrefixEventHandler.wineContainerActions().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), arg -> {
                     unlockAll();
                     return null;
                 })), 0, 0);

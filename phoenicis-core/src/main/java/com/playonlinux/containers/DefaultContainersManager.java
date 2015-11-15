@@ -46,11 +46,14 @@ public class DefaultContainersManager
     @Inject
     static ServiceManager playOnLinuxBackgroundServicesManager;
 
+    @Inject
+    static AnyContainerFactory anyContainerFactory;
+
     private ObservableDirectoryFiles containersDirectoryObservable;
-    private final List<AbstractContainer<?>> containers = new ArrayList<>();
+    private final List<Container<?>> containers = new ArrayList<>();
 
     @Override
-    public List<AbstractContainer> getContainers() {
+    public List<Container> getContainers() {
         return new ArrayList<>(containers);
     }
 
@@ -64,10 +67,7 @@ public class DefaultContainersManager
                 containerType = "WinePrefix";
             }
 
-            /* TODO: Improve abstraction here */
-            if("WinePrefix".equals(containerType)) {
-                containers.add(new WinePrefixContainer(file));
-            }
+            containers.add(anyContainerFactory.createInstance(containerType, file));
         }
 
         notifyObservers(this);
