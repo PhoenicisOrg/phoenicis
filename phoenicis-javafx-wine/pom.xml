@@ -27,7 +27,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>phoenicis-app</artifactId>
+    <artifactId>phoenicis-javafx-wine</artifactId>
 
     <dependencies>
         <dependency>
@@ -35,36 +35,15 @@
             <artifactId>phoenicis-core</artifactId>
             <version>${version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-qt</artifactId>
-            <version>${version}</version>
-        </dependency>
-
         <dependency>
             <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-javafx</artifactId>
             <version>${version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-javafx-wine</artifactId>
-            <version>${version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-bash-support</artifactId>
-            <version>${version}</version>
-        </dependency>
-
         <dependency>
             <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-wine</artifactId>
             <version>${version}</version>
         </dependency>
-
     </dependencies>
 </project>

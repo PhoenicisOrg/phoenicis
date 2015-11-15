@@ -28,14 +28,12 @@ import com.playonlinux.apps.AppsManager;
 import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.containers.ContainersEntitiesProvider;
-import com.playonlinux.containers.WineContainerEventHandler;
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.Script;
-import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.WineVersionEntitiesProvider;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
@@ -60,7 +58,6 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Inject
     private static AnyScriptFactory scriptFactory;
 
-    private final WineContainerEventHandler wineContainerEventHandler = new WineContainerEventHandler();
     private final LibraryEventHandler libraryEventHandler = new LibraryEventHandler();
 
     @Override
@@ -97,11 +94,6 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Override
     public void refreshAvailableInstallers() throws PlayOnLinuxException {
         getAppsManager().refresh();
-    }
-
-    @Override
-    public WineContainerEventHandler getWineContainerEventHandler() {
-        return wineContainerEventHandler;
     }
 
     @Override

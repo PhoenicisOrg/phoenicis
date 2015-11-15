@@ -39,7 +39,8 @@ public final class ContainersEntitiesProvider
                    EntitiesProvider<ContainerEntity, ContainersWindowEntity> {
 
     @Inject
-    private static ServiceManager serviceManager;
+    static ServiceManager serviceManager;
+
     private Filter<ContainerEntity> lastFilter;
 
     private ContainersManager containersManager;
@@ -55,7 +56,7 @@ public final class ContainersEntitiesProvider
     public void update(ContainersManager observable, ContainersManager argument) {
         final List<ContainerEntity> containerEntities = new ArrayList<>();
         this.containersManager = argument;
-        for(AbstractContainer container : containersManager.getContainers()) {
+        for(Container container : containersManager.getContainers()) {
             final ContainerEntity containerEntity = container.createEntity();
             if(lastFilter == null || lastFilter.apply(containerEntity)) {
                 containerEntities.add(containerEntity);

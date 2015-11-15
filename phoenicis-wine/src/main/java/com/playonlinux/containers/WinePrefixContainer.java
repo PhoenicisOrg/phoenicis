@@ -23,7 +23,7 @@ import java.io.File;
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 import com.playonlinux.wine.WinePrefix;
 
-public class WinePrefixContainer extends AbstractContainer<WinePrefixContainerEntity> {
+public class WinePrefixContainer extends Container<WinePrefixContainerEntity> {
     private final WinePrefix underlyingWinePrefix;
 
     public WinePrefixContainer(File containerPath) {

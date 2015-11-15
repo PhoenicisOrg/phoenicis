@@ -27,44 +27,27 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>phoenicis-app</artifactId>
+    <artifactId>phoenicis-win32</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-core</artifactId>
-            <version>${version}</version>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-qt</artifactId>
-            <version>${version}</version>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
         </dependency>
 
         <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-javafx</artifactId>
-            <version>${version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-javafx-wine</artifactId>
-            <version>${version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-bash-support</artifactId>
-            <version>${version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-wine</artifactId>
-            <version>${version}</version>
-        </dependency>
-
     </dependencies>
+
 </project>

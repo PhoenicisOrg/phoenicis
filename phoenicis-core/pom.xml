@@ -36,6 +36,13 @@
             <version>${version}</version>
         </dependency>
 
+        <!-- Fixme -->
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-win32</artifactId>
+            <version>${version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>

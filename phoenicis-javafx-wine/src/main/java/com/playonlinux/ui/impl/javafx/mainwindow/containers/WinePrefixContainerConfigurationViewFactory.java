@@ -19,19 +19,17 @@
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
 import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
-import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.containers.entities.WinePrefixContainerEntity;
 
-@Scan
-public class EventHandlerContainers {
-    @Inject
-    static EventHandler mainEventHandler;
-
-    EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers() {
-        return mainEventHandler.getContainers();
+public class WinePrefixContainerConfigurationViewFactory implements ContainerConfigurationViewFactory<WinePrefixContainerEntity> {
+    @Override
+    public WinePrefixContainerConfigurationView createInstance(ContainerEntity containerEntity) {
+        validate(containerEntity);
+        return new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, new WinePrefixEventHandler());
     }
 
+    @Override
+    public boolean validate(ContainerEntity containerEntity) {
+        return containerEntity instanceof WinePrefixContainerEntity;
+    }
 }

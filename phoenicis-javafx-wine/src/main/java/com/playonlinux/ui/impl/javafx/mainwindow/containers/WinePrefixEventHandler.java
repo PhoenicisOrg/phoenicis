@@ -18,20 +18,10 @@
 
 package com.playonlinux.ui.impl.javafx.mainwindow.containers;
 
-import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
-import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.containers.WineContainerActions;
 
-@Scan
-public class EventHandlerContainers {
-    @Inject
-    static EventHandler mainEventHandler;
-
-    EntitiesProvider<ContainerEntity, ContainersWindowEntity> getContainers() {
-        return mainEventHandler.getContainers();
+public class WinePrefixEventHandler {
+    public WineContainerActions wineContainerActions() {
+        return new WineContainerActions();
     }
-
 }

@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -137,9 +138,9 @@ public class PEReaderTest {
 
     @Test
     public void testSectionHeaderNames() {
-        assertEquals(".text\u0000\u0000\u0000", new String(peFile.sectionHeaders[0].name));
-        assertEquals(".reloc\u0000\u0000", new String(peFile.sectionHeaders[1].name));
-        assertEquals(".rsrc\u0000\u0000\u0000", new String(peFile.sectionHeaders[2].name));
+        Assert.assertEquals(".text\u0000\u0000\u0000", new String(peFile.sectionHeaders[0].name));
+        Assert.assertEquals(".reloc\u0000\u0000", new String(peFile.sectionHeaders[1].name));
+        Assert.assertEquals(".rsrc\u0000\u0000\u0000", new String(peFile.sectionHeaders[2].name));
     }
 
     @Test

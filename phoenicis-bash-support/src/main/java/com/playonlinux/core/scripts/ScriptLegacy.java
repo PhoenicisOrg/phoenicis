@@ -50,7 +50,7 @@ public class ScriptLegacy extends Script {
         Script playonlinuxBashInterpreter;
         File bashScriptFile;
         try {
-            playonlinuxBashInterpreter = scriptFactory.createInstanceFromFile(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+            playonlinuxBashInterpreter = scriptFactory.createInstanceFromFile(new File("phoenicis-bash-support/src/main/python/PlayOnLinuxBashInterpreter.py"));
 
             bashScriptFile = File.createTempFile("script", "sh");
             bashScriptFile.deleteOnExit();

@@ -23,23 +23,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static com.playonlinux.core.EnvironmentUtils.mergeEnvironmentVariables;
+
 public class WineProcessBuilder {
     private Map<String, String> applicationEnvironment;
     private List<String> command;
     private File workingDirectory;
     private Map<String, String> environment;
-
-    public static void mergeEnvironmentVariables(Map<String, String> environmentSource,
-                                                  Map<String, String> environmentDestination, String environmentVariable) {
-        if(environmentSource == null) {
-            return;
-        }
-
-        if(environmentSource.containsKey(environmentVariable)) {
-            environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable) + ":"
-                    + environmentSource.get(environmentVariable));
-        }
-    }
 
     public WineProcessBuilder withCommand(List<String> command) {
         this.command = command;

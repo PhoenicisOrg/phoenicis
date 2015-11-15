@@ -32,8 +32,8 @@ import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.wine.WineConstants;
 
 @Scan
-public class WineContainerEventHandler {
-    private static final Logger LOGGER = Logger.getLogger(WineContainerEventHandler.class);
+public class WineContainerActions {
+    private static final Logger LOGGER = Logger.getLogger(WineContainerActions.class);
     @Inject
     static ExecutorService executorService;
 
