@@ -76,10 +76,10 @@ public class LegacyWrapperTest {
 
         final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        final ScriptFactory scriptFactory = new ScriptFactoryDefaultImplementation()
+        final AnyScriptFactory scriptFactory = new AnyScriptFactoryImplementation()
                 .withExecutor(executorService);
 
-        final Script testScriptWrapper = scriptFactory.createInstance(scriptFile);
+        final Script testScriptWrapper = scriptFactory.createInstanceFromFile(scriptFile);
 
         testScriptWrapper.init();
 

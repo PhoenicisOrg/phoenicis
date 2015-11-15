@@ -37,7 +37,7 @@ public class ScriptLegacy extends Script {
     private static final String END_PGP_KEY_BLOCK_LINE = "-----END PGP SIGNATURE-----";
     
     @Inject
-    static ScriptFactory scriptFactory;
+    static AnyScriptFactory scriptFactory;
 
 
     protected ScriptLegacy(String script, ExecutorService executorService) {
@@ -50,7 +50,7 @@ public class ScriptLegacy extends Script {
         Script playonlinuxBashInterpreter;
         File bashScriptFile;
         try {
-            playonlinuxBashInterpreter = scriptFactory.createInstance(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
+            playonlinuxBashInterpreter = scriptFactory.createInstanceFromFile(new File("src/main/python/PlayOnLinuxBashInterpreter.py"));
 
             bashScriptFile = File.createTempFile("script", "sh");
             bashScriptFile.deleteOnExit();

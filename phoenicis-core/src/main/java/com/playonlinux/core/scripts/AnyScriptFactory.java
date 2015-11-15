@@ -18,22 +18,8 @@
 
 package com.playonlinux.core.scripts;
 
-import java.util.concurrent.ExecutorService;
+import java.io.File;
 
-/**
- * {@link Script} factory
- */
-public interface ScriptFactory<T> {
-    boolean validate(String scriptContent);
-
-    Class<T> getType();
-
-    Script createInstance(String scriptContent);
-
-    /**
-     * Override the default executor
-     * @param executorService The new executor
-     * @return the same factory
-     */
-    ScriptFactory withExecutor(ExecutorService executorService);
+public interface AnyScriptFactory extends ScriptFactory<Script> {
+    Script createInstanceFromFile(File scriptFile) throws ScriptFailureException;
 }

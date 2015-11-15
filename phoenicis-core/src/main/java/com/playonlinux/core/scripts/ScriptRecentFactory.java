@@ -20,20 +20,29 @@ package com.playonlinux.core.scripts;
 
 import java.util.concurrent.ExecutorService;
 
-/**
- * {@link Script} factory
- */
-public interface ScriptFactory<T> {
-    boolean validate(String scriptContent);
+public class ScriptRecentFactory implements ScriptFactory<ScriptRecent> {
+    private ExecutorService executorService;
 
-    Class<T> getType();
+    @Override
+    public boolean validate(String scriptContent) {
+        final String firstLine = scriptContent.split("\n")[0];
 
-    Script createInstance(String scriptContent);
+        return firstLine.contains("from com.playonlinux.framework");
+    }
 
-    /**
-     * Override the default executor
-     * @param executorService The new executor
-     * @return the same factory
-     */
-    ScriptFactory withExecutor(ExecutorService executorService);
+    @Override
+    public Class getType() {
+        return ScriptRecent.class;
+    }
+
+    @Override
+    public Script createInstance(String scriptContent) {
+        return new ScriptRecent(scriptContent, executorService);
+    }
+
+    @Override
+    public ScriptFactory withExecutor(ExecutorService executorService) {
+        this.executorService = executorService;
+        return this;
+    }
 }
