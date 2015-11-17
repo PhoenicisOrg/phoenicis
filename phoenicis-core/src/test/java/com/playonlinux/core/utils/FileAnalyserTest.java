@@ -30,6 +30,30 @@ import com.playonlinux.app.PlayOnLinuxException;
 
 
 public class FileAnalyserTest {
+    private static final String CLRF_STRICT = "#!/bin/bash\r\n" +
+            "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\r\n" +
+            "source \"$PLAYONLINUX/lib/sources\"\r\n" +
+            "\r\n" +
+            "TITLE=\"Legacy script\"\r\n" +
+            "\r\n" +
+            "POL_SetupWindow_Init\n" +
+            "POL_SetupWindow_message \"Test\"\r\n" +
+            "POL_SetupWindow_Close\r\n" +
+            "\n\n" +
+            "exit ";
+
+    private static final String LF_STRICT = "#!/bin/bash\n" +
+            "[ \"$PLAYONLINUX\" = \"\" ] && exit 0\n" +
+            "source \"$PLAYONLINUX/lib/sources\"\n" +
+            "\n" +
+            "TITLE=\"Legacy script\"\n" +
+            "\n" +
+            "POL_SetupWindow_Init\n" +
+            "POL_SetupWindow_message \"Test\"\n" +
+            "POL_SetupWindow_Close\n" +
+            "\n" +
+            "exit ";
+
     final URL archiveUrl = FileAnalyserTest.class.getResource("./archive");
     final URL scriptUrl = FileAnalyserTest.class.getResource("../scripts");
 
@@ -60,12 +84,12 @@ public class FileAnalyserTest {
 
     @Test
     public void testLineSeparatorCRLF() throws IOException {
-        assertEquals("\r\n", FileAnalyser.identifyLineDelimiter(new File(scriptUrl.getPath(), "legacyScriptExampleCRLF.sh")));
+        assertEquals("\r\n", FileAnalyser.identifyLineDelimiter(CLRF_STRICT));
     }
 
     @Test
     public void testLineSeparatorLF() throws IOException {
-        assertEquals("\n", FileAnalyser.identifyLineDelimiter(new File(scriptUrl.getPath(), "legacyScriptExample.sh")));
+        assertEquals("\n", FileAnalyser.identifyLineDelimiter(LF_STRICT));
     }
 
 }
