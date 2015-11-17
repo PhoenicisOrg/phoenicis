@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Wine mockup 
+
+
+printHelpMessage() {
+    echo "Usage: wine PROGRAM [ARGUMENTS...]   Run the specified program"
+    echo "       wine --help                   Display this help and exit"
+    echo "       wine --version                Output version information and exit"
+}
+
+if [ "$1" == "--help" ]; then
+	printHelpMessage
+fi
+
+if [ "$1" == "--version" ]; then 
+	echo "wine-1.7.26"
+fi
+ 
