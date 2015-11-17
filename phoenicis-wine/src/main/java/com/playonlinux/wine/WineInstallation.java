@@ -18,15 +18,15 @@
 
 package com.playonlinux.wine;
 
+import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.WineDistribution;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.playonlinux.core.version.Version;
-import com.playonlinux.engines.wine.WineDistribution;
 
 public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";
@@ -51,6 +51,13 @@ public class WineInstallation {
     }
 
 
+    private File fetchExecutable(File path, String name) {
+        File executable = new File(path, name);
+        if (executable.exists() && !executable.canExecute()) {
+            executable.setExecutable(true);
+        }
+        return executable;
+    }
 
     // TODO
     public String fetchVersion() {
@@ -58,11 +65,11 @@ public class WineInstallation {
     }
 
     private File fetchWineExecutablePath() {
-        return new File(binaryPath, "wine");
+        return fetchExecutable(binaryPath, "wine");
     }
 
     private File fetchWineServerExecutablePath() {
-        return new File(binaryPath, "wineserver");
+        return fetchExecutable(binaryPath, "wineserver");
     }
 
     // FIXME: Maybe it would be great to createPrefix a class to handle environment issues
