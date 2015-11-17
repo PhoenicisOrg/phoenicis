@@ -49,11 +49,12 @@ public class WineTest {
         File bar = new File(programFiles, "bar.exe");
         assertTrue(bar.createNewFile());
 
-        WinePrefix winePrefix = new WinePrefix(temporaryWinePrefix);
-        Collection<File> executables = winePrefix.findAllExecutables();
+        try (WinePrefix winePrefix = new WinePrefix(temporaryWinePrefix)) {
+            Collection<File> executables = winePrefix.findAllExecutables();
 
-        assertTrue(executables.contains(bar));
-        assertTrue(executables.contains(foo));
-        assertFalse(executables.contains(iexplore));
+            assertTrue(executables.contains(bar));
+            assertTrue(executables.contains(foo));
+            assertFalse(executables.contains(iexplore));
+        }
     }
 }

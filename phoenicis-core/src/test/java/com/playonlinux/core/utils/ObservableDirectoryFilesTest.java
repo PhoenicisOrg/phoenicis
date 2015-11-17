@@ -63,23 +63,27 @@ public class ObservableDirectoryFilesTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxException, IOException {
+    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown()
+            throws PlayOnLinuxException, IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
         temporaryFile.deleteOnExit();
         expectedEx.expect(IllegalStateException.class);
-        expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
+        expectedEx
+                .expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-        new ObservableDirectoryFiles(temporaryFile);
+        try (ObservableDirectoryFiles temporaryDir = new ObservableDirectoryFiles(temporaryFile)) {
+            // Nothing to do
+        }
     }
 
     @Test
-    public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified() throws PlayOnLinuxException,
-            InterruptedException {
+    public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified()
+            throws PlayOnLinuxException, InterruptedException {
         File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
         reset(serviceManager);
 
-        try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
+        try (ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
             observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
             Observer mockObserver = mock(Observer.class);
@@ -99,13 +103,13 @@ public class ObservableDirectoryFilesTest {
     }
 
     @Test
-    public void testObservableDirectory_createANewFile_ObservableIsNotified() throws PlayOnLinuxException,
-            InterruptedException, IOException {
+    public void testObservableDirectory_createANewFile_ObservableIsNotified()
+            throws PlayOnLinuxException, InterruptedException, IOException {
         File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
         reset(serviceManager);
 
-        try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
+        try (ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
             observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
             Observer observer = mock(Observer.class);

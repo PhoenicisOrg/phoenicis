@@ -66,11 +66,9 @@ public class Files implements SetupWizardComponent {
     }
 
     private void defineProgressStep(File sourceFile) throws CancelException {
-        if(this.progressControl == null) {
+        if (this.progressControl == null) {
             this.progressControl = this.setupWizard.progressBar(
-                    translate("Please wait while ${application.name} is copying:") + "\n" +
-                            sourceFile.getName()
-            );
+                    translate("Please wait while ${application.name} is copying:") + "\n" + sourceFile.getName());
         }
     }
 
@@ -78,30 +76,29 @@ public class Files implements SetupWizardComponent {
         int fileSize = (int) sourceFile.length();
         float totalDataRead = 0.0F;
 
-        final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
-        final BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile), BLOCK_SIZE);
+        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+                BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile),
+                        BLOCK_SIZE)) {
+            byte[] data = new byte[BLOCK_SIZE];
+            int i;
+            while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
+                totalDataRead += i;
+                outputStream.write(data, 0, i);
+                if (progressControl != null) {
+                    int percentCopied = (int) (totalDataRead * 100 / fileSize);
+                    progressControl.setProgressPercentage(percentCopied);
+                }
 
-        byte[] data = new byte[BLOCK_SIZE];
-        int i;
-        while((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0)
-        {
-            totalDataRead += (float) i;
-            outputStream.write(data, 0, i);
-            if(progressControl != null) {
-                int percentCopied = (int) (totalDataRead * (float) 100 / (float) fileSize);
-                progressControl.setProgressPercentage((double) percentCopied);
+                if (Thread.interrupted()) {
+                    throw new CancelException("The copy process was interrupted");
+                }
             }
-
-            if(Thread.interrupted()) {
-                throw new CancelException("The copy process was interrupted");
-            }
+            inputStream.close();
+            outputStream.close();
         }
-        inputStream.close();
-        outputStream.close();
     }
 
-    public Files copy(String sourceFilePath, String destinationFilePath)
-            throws CancelException{
+    public Files copy(String sourceFilePath, String destinationFilePath) throws CancelException {
         File sourceFile = new File(sourceFilePath);
         File destinationFile = new File(destinationFilePath);
 
@@ -119,7 +116,8 @@ public class Files implements SetupWizardComponent {
         try {
             java.nio.file.Files.createDirectories(new File(directoryToCreate).toPath());
         } catch (IOException e) {
-            throw new ScriptFailureException(String.format("Unable to createPrefix the directory %s", directoryToCreate), e);
+            throw new ScriptFailureException(
+                    String.format("Unable to createPrefix the directory %s", directoryToCreate), e);
         }
 
         return this;

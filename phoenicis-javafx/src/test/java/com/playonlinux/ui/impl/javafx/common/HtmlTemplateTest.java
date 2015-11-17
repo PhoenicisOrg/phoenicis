@@ -37,39 +37,25 @@ public class HtmlTemplateTest {
     public void setUp() throws IOException {
         testTemplate = File.createTempFile("test", "html");
         testTemplate.deleteOnExit();
-        OutputStream outputStream = new FileOutputStream(testTemplate);
 
-        outputStream.write(
-                ("<html>" +
-                        "<head>" +
-                        "<title>{{title}}</title>" +
-                        "</head>" +
-                        "<body>" +
-                        "Content: {{content}}" +
-                        "</bod>" +
-                        "</html>").getBytes()
-        );
+        try (OutputStream outputStream = new FileOutputStream(testTemplate)) {
+            outputStream.write(("<html>" + "<head>" + "<title>{{title}}</title>" + "</head>" + "<body>"
+                    + "Content: {{content}}" + "</bod>" + "</html>").getBytes());
 
-        outputStream.flush();
+            outputStream.flush();
+        }
     }
 
     @Test
     public void testRender_replaceTwoValues_valuesAreReplaced() throws Exception {
         HtmlTemplate htmlTemplate = new HtmlTemplate(new FileInputStream(testTemplate));
 
-        String expected = "<html>" +
-                "<head>" +
-                "<title>Title</title>" +
-                "</head>" +
-                "<body>" +
-                "Content: Content" +
-                "</bod>" +
-                "</html>";
+        String expected = "<html>" + "<head>" + "<title>Title</title>" + "</head>" + "<body>" + "Content: Content"
+                + "</bod>" + "</html>";
         assertEquals(expected, htmlTemplate.render(new Object() {
             String title = "Title";
             String content = "Content";
         }));
     }
-
 
 }
