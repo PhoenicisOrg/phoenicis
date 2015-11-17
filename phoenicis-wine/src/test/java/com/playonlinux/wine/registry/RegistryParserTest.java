@@ -30,64 +30,64 @@ public class RegistryParserTest {
 
     @Test
     public void testRegistryParser_parseSimpleFile_testKeyTree() throws IOException, RegistryException {
-	File temporaryFile = File.createTempFile("registry", "test");
-	temporaryFile.deleteOnExit();
+        File temporaryFile = File.createTempFile("registry", "test");
+        temporaryFile.deleteOnExit();
 
-	try (FileOutputStream outputStream = new FileOutputStream(temporaryFile)) {
-	    byte[] bytes = ("[A\\\\B\\\\C] 1430602912\n" + "\"C\"=\"1\"\n" + "\"D\"=\"2\"\n" + "\"E\"=\"3\"")
-		    .getBytes();
+        try (FileOutputStream outputStream = new FileOutputStream(temporaryFile)) {
+            byte[] bytes = ("[A\\\\B\\\\C] 1430602912\n" + "\"C\"=\"1\"\n" + "\"D\"=\"2\"\n" + "\"E\"=\"3\"")
+                    .getBytes();
 
-	    outputStream.write(bytes);
-	    outputStream.flush();
-	}
+            outputStream.write(bytes);
+            outputStream.flush();
+        }
 
-	RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
-	RegistryKey node = registryParser.parseFile();
+        RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
+        RegistryKey node = registryParser.parseFile();
 
-	RegistryKey levelOneNode = (RegistryKey) node.getChild(0);
-	RegistryKey levelTwoNode = (RegistryKey) levelOneNode.getChild(0);
-	RegistryKey levelThreeNode = (RegistryKey) levelTwoNode.getChild(0);
+        RegistryKey levelOneNode = (RegistryKey) node.getChild(0);
+        RegistryKey levelTwoNode = (RegistryKey) levelOneNode.getChild(0);
+        RegistryKey levelThreeNode = (RegistryKey) levelTwoNode.getChild(0);
 
-	assertEquals("Temporary", node.getName());
-	assertEquals("A", levelOneNode.getName());
-	assertEquals(1, node.getChildren().size());
+        assertEquals("Temporary", node.getName());
+        assertEquals("A", levelOneNode.getName());
+        assertEquals(1, node.getChildren().size());
 
-	assertEquals("B", levelTwoNode.getName());
-	assertEquals(1, levelOneNode.getChildren().size());
+        assertEquals("B", levelTwoNode.getName());
+        assertEquals(1, levelOneNode.getChildren().size());
 
-	assertEquals("C", levelThreeNode.getName());
-	assertEquals(1, levelTwoNode.getChildren().size());
+        assertEquals("C", levelThreeNode.getName());
+        assertEquals(1, levelTwoNode.getChildren().size());
     }
 
     @Test
     public void testParse_realRegFile_testObjectPopulated() throws RegistryException {
-	File registryFile = new File(this.getClass().getResource("user.reg").getFile());
+        File registryFile = new File(this.getClass().getResource("user.reg").getFile());
 
-	RegistryParser registryParser = new RegistryParser(registryFile, "User");
-	RegistryKey parsedFile = registryParser.parseFile();
+        RegistryParser registryParser = new RegistryParser(registryFile, "User");
+        RegistryKey parsedFile = registryParser.parseFile();
 
-	assertEquals(1541, parsedFile.toString().split("\n").length);
+        assertEquals(1541, parsedFile.toString().split("\n").length);
     }
 
     @Test
     public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException, RegistryException {
-	File temporaryFile = File.createTempFile("registry", "test");
-	RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
-	temporaryFile.deleteOnExit();
+        File temporaryFile = File.createTempFile("registry", "test");
+        RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
+        temporaryFile.deleteOnExit();
 
-	try (FileOutputStream outputStream = new FileOutputStream(temporaryFile)) {
-	    byte[] bytes = ("[Software\\\\Wine\\\\DllOverrides] 1431283548\n" + "\"*d3dx9_24\"=\"native, builtin\\0\"\n"
-		    + "\"*d3dx9_25\"=\"native, builtin\\0\"\n" + "\"*d3dx9_26\"=\"native, builtin\\0\"").getBytes();
+        try (FileOutputStream outputStream = new FileOutputStream(temporaryFile)) {
+            byte[] bytes = ("[Software\\\\Wine\\\\DllOverrides] 1431283548\n" + "\"*d3dx9_24\"=\"native, builtin\\0\"\n"
+                    + "\"*d3dx9_25\"=\"native, builtin\\0\"\n" + "\"*d3dx9_26\"=\"native, builtin\\0\"").getBytes();
 
-	    outputStream.write(bytes);
-	    outputStream.flush();
-	}
+            outputStream.write(bytes);
+            outputStream.flush();
+        }
 
-	RegistryValue<StringValueType> registryValue = (RegistryValue<StringValueType>) registryParser.parseFile()
-		.getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
+        RegistryValue<StringValueType> registryValue = (RegistryValue<StringValueType>) registryParser.parseFile()
+                .getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
 
-	assertEquals("*d3dx9_24", registryValue.getName());
-	assertEquals("native, builtin", registryValue.getText());
+        assertEquals("*d3dx9_24", registryValue.getName());
+        assertEquals("native, builtin", registryValue.getText());
     }
 
 }
