@@ -32,28 +32,29 @@ public class WineTest {
 
     @Test
     public void testFindAllExecutables() throws Exception {
-        File temporaryWinePrefix = Files.createTempDir();
-        File driveC = new File(temporaryWinePrefix, "drive_c");
-        File programFiles = new File(driveC, "Program Files");
-        // TODO: Check the symbolic link test case
-        File internetExplorer = new File(programFiles, "Internet Explorer");
+	File temporaryWinePrefix = Files.createTempDir();
+	File driveC = new File(temporaryWinePrefix, "drive_c");
+	File programFiles = new File(driveC, "Program Files");
+	// TODO: Check the symbolic link test case
+	File internetExplorer = new File(programFiles, "Internet Explorer");
 
-        internetExplorer.mkdirs();
+	internetExplorer.mkdirs();
 
-        File iexplore = new File(internetExplorer, "iexplore.exe");
-        assertTrue(iexplore.createNewFile());
+	File iexplore = new File(internetExplorer, "iexplore.exe");
+	assertTrue(iexplore.createNewFile());
 
-        File foo = new File(programFiles, "foo.exe");
-        assertTrue(foo.createNewFile());
+	File foo = new File(programFiles, "foo.exe");
+	assertTrue(foo.createNewFile());
 
-        File bar = new File(programFiles, "bar.exe");
-        assertTrue(bar.createNewFile());
+	File bar = new File(programFiles, "bar.exe");
+	assertTrue(bar.createNewFile());
 
-        WinePrefix winePrefix = new WinePrefix(temporaryWinePrefix);
-        Collection<File> executables = winePrefix.findAllExecutables();
+	try (WinePrefix winePrefix = new WinePrefix(temporaryWinePrefix)) {
+	    Collection<File> executables = winePrefix.findAllExecutables();
 
-        assertTrue(executables.contains(bar));
-        assertTrue(executables.contains(foo));
-        assertFalse(executables.contains(iexplore));
+	    assertTrue(executables.contains(bar));
+	    assertTrue(executables.contains(foo));
+	    assertFalse(executables.contains(iexplore));
+	}
     }
 }

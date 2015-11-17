@@ -52,91 +52,89 @@ public class Files implements SetupWizardComponent {
     }
 
     public Files(ProgressControl progressControl) {
-        this.progressControl = progressControl;
+	this.progressControl = progressControl;
     }
 
     private Files(SetupWizard setupWizard) {
-        this.setupWizard = setupWizard;
+	this.setupWizard = setupWizard;
     }
 
     public static Files wizard(SetupWizard setupWizard) {
-        final SetupWizardComponent filesInstance = new Files(setupWizard);
-        setupWizard.registerComponent(filesInstance);
-        return new Files(setupWizard);
+	final SetupWizardComponent filesInstance = new Files(setupWizard);
+	setupWizard.registerComponent(filesInstance);
+	return new Files(setupWizard);
     }
 
     private void defineProgressStep(File sourceFile) throws CancelException {
-        if(this.progressControl == null) {
-            this.progressControl = this.setupWizard.progressBar(
-                    translate("Please wait while ${application.name} is copying:") + "\n" +
-                            sourceFile.getName()
-            );
-        }
+	if (this.progressControl == null) {
+	    this.progressControl = this.setupWizard.progressBar(
+		    translate("Please wait while ${application.name} is copying:") + "\n" + sourceFile.getName());
+	}
     }
 
     private void copyFile(File sourceFile, File destinationFile) throws IOException, CancelException {
-        int fileSize = (int) sourceFile.length();
-        float totalDataRead = 0.0F;
+	int fileSize = (int) sourceFile.length();
+	float totalDataRead = 0.0F;
 
-        final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
-        final BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile), BLOCK_SIZE);
+	try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile),
+			BLOCK_SIZE)) {
+	    byte[] data = new byte[BLOCK_SIZE];
+	    int i;
+	    while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
+		totalDataRead += i;
+		outputStream.write(data, 0, i);
+		if (progressControl != null) {
+		    int percentCopied = (int) (totalDataRead * 100 / fileSize);
+		    progressControl.setProgressPercentage(percentCopied);
+		}
 
-        byte[] data = new byte[BLOCK_SIZE];
-        int i;
-        while((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0)
-        {
-            totalDataRead += (float) i;
-            outputStream.write(data, 0, i);
-            if(progressControl != null) {
-                int percentCopied = (int) (totalDataRead * (float) 100 / (float) fileSize);
-                progressControl.setProgressPercentage((double) percentCopied);
-            }
-
-            if(Thread.interrupted()) {
-                throw new CancelException("The copy process was interrupted");
-            }
-        }
-        inputStream.close();
-        outputStream.close();
+		if (Thread.interrupted()) {
+		    throw new CancelException("The copy process was interrupted");
+		}
+	    }
+	    inputStream.close();
+	    outputStream.close();
+	}
     }
 
-    public Files copy(String sourceFilePath, String destinationFilePath)
-            throws CancelException{
-        File sourceFile = new File(sourceFilePath);
-        File destinationFile = new File(destinationFilePath);
+    public Files copy(String sourceFilePath, String destinationFilePath) throws CancelException {
+	File sourceFile = new File(sourceFilePath);
+	File destinationFile = new File(destinationFilePath);
 
-        this.defineProgressStep(sourceFile);
+	this.defineProgressStep(sourceFile);
 
-        try {
-            this.copyFile(sourceFile, destinationFile);
-        } catch (IOException e) {
-            throw new ScriptFailureException(e);
-        }
-        return this;
+	try {
+	    this.copyFile(sourceFile, destinationFile);
+	} catch (IOException e) {
+	    throw new ScriptFailureException(e);
+	}
+	return this;
     }
 
     public Files mkdir(String directoryToCreate) throws ScriptFailureException {
-        try {
-            java.nio.file.Files.createDirectories(new File(directoryToCreate).toPath());
-        } catch (IOException e) {
-            throw new ScriptFailureException(String.format("Unable to createPrefix the directory %s", directoryToCreate), e);
-        }
+	try {
+	    java.nio.file.Files.createDirectories(new File(directoryToCreate).toPath());
+	} catch (IOException e) {
+	    throw new ScriptFailureException(
+		    String.format("Unable to createPrefix the directory %s", directoryToCreate), e);
+	}
 
-        return this;
+	return this;
     }
 
     public Files remove(String pathToDelete) throws ScriptFailureException {
-        try {
-            com.playonlinux.core.utils.Files.remove(new File(pathToDelete));
-        } catch (IOException e) {
-            throw new ScriptFailureException("Unable to deletePrefix the file", e);
-        }
+	try {
+	    com.playonlinux.core.utils.Files.remove(new File(pathToDelete));
+	} catch (IOException e) {
+	    throw new ScriptFailureException("Unable to deletePrefix the file", e);
+	}
 
-        return this;
+	return this;
     }
 
     @Override
     public void close() {
-        // Nothing to do for the moment
+	// Nothing to do for the moment
     }
 }

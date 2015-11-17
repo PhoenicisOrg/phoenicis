@@ -55,78 +55,82 @@ public class ObservableDirectoryFilesTest {
 
     @BeforeClass
     public static void setUpClass() throws InjectionException {
-        testConfigFile.setStrictLoadingPolicy(false);
-        testConfigFile.load();
+	testConfigFile.setStrictLoadingPolicy(false);
+	testConfigFile.load();
     }
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws PlayOnLinuxException, IOException {
-        File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
-        temporaryFile.deleteOnExit();
-        expectedEx.expect(IllegalStateException.class);
-        expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
+    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown()
+	    throws PlayOnLinuxException, IOException {
+	File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
+	temporaryFile.deleteOnExit();
+	expectedEx.expect(IllegalStateException.class);
+	expectedEx
+		.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-        new ObservableDirectoryFiles(temporaryFile);
+	try (ObservableDirectoryFiles temporaryDir = new ObservableDirectoryFiles(temporaryFile)) {
+	    // Nothing to do
+	}
     }
 
     @Test
-    public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified() throws PlayOnLinuxException,
-            InterruptedException {
-        File temporaryDirectory = com.google.common.io.Files.createTempDir();
+    public void testObservableDirectory_dontChangeAnything_ObservableIsNotNotified()
+	    throws PlayOnLinuxException, InterruptedException {
+	File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
-        reset(serviceManager);
+	reset(serviceManager);
 
-        try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
-            observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
+	try (ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
+	    observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
-            Observer mockObserver = mock(Observer.class);
+	    Observer mockObserver = mock(Observer.class);
 
-            observableDirectoryFiles.addObserver(mockObserver);
+	    observableDirectoryFiles.addObserver(mockObserver);
 
-            observableDirectoryFiles.init();
+	    observableDirectoryFiles.init();
 
-            Thread.sleep(2 * CHECK_INTERVAL);
+	    Thread.sleep(2 * CHECK_INTERVAL);
 
-            temporaryDirectory.delete();
+	    temporaryDirectory.delete();
 
-            verify(mockObserver, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
-        }
+	    verify(mockObserver, times(1)).update(any(ObservableDirectoryFiles.class), anyObject());
+	}
 
-        verify(serviceManager).unregister(any(Service.class));
+	verify(serviceManager).unregister(any(Service.class));
     }
 
     @Test
-    public void testObservableDirectory_createANewFile_ObservableIsNotified() throws PlayOnLinuxException,
-            InterruptedException, IOException {
-        File temporaryDirectory = com.google.common.io.Files.createTempDir();
+    public void testObservableDirectory_createANewFile_ObservableIsNotified()
+	    throws PlayOnLinuxException, InterruptedException, IOException {
+	File temporaryDirectory = com.google.common.io.Files.createTempDir();
 
-        reset(serviceManager);
+	reset(serviceManager);
 
-        try(ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
-            observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
+	try (ObservableDirectoryFiles observableDirectoryFiles = new ObservableDirectoryFiles(temporaryDirectory)) {
+	    observableDirectoryFiles.setCheckInterval(CHECK_INTERVAL);
 
-            Observer observer = mock(Observer.class);
-            observableDirectoryFiles.addObserver(observer);
-            observableDirectoryFiles.init();
-            File createdFile = new File(temporaryDirectory, "file.txt");
-            Thread.sleep(2 * CHECK_INTERVAL);
-            createdFile.createNewFile();
-            Thread.sleep(10 * CHECK_INTERVAL);
+	    Observer observer = mock(Observer.class);
+	    observableDirectoryFiles.addObserver(observer);
+	    observableDirectoryFiles.init();
+	    File createdFile = new File(temporaryDirectory, "file.txt");
+	    Thread.sleep(2 * CHECK_INTERVAL);
+	    createdFile.createNewFile();
+	    Thread.sleep(10 * CHECK_INTERVAL);
 
-            temporaryDirectory.delete();
+	    temporaryDirectory.delete();
 
-            verify(observer, times(2)).update(any(ObservableDirectoryFiles.class), anyObject());
-        }
+	    verify(observer, times(2)).update(any(ObservableDirectoryFiles.class), anyObject());
+	}
 
-        verify(serviceManager).unregister(any(Service.class));
+	verify(serviceManager).unregister(any(Service.class));
     }
 
     @AfterClass
     public static void tearDownClass() throws InjectionException {
-        testConfigFile.setStrictLoadingPolicy(false);
-        testConfigFile.close();
+	testConfigFile.setStrictLoadingPolicy(false);
+	testConfigFile.close();
     }
 }
