@@ -16,17 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.qt.mainwindow;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
+import com.playonlinux.qt.common.ResourceHelper;
+import com.playonlinux.qt.mainwindow.menubar.MenuBar;
+import com.playonlinux.qt.mainwindow.shortcuts.ShortcutList;
+import com.playonlinux.qt.mainwindow.sidebar.ActionMenu;
+import com.playonlinux.qt.mainwindow.sidebar.ActionSideBar;
+import com.playonlinux.qt.mainwindow.toolbar.ToolBar;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
-import com.playonlinux.ui.impl.qt.common.ResourceHelper;
-import com.playonlinux.ui.impl.qt.mainwindow.menubar.MenuBar;
-import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
-import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenu;
-import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionSideBar;
-import com.playonlinux.ui.impl.qt.mainwindow.toolbar.ToolBar;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QCloseEvent;

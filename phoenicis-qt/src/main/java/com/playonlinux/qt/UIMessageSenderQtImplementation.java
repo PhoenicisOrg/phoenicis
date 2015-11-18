@@ -16,39 +16,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.common;
+package com.playonlinux.qt;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.log4j.Logger;
-
-import com.trolltech.qt.core.QIODevice;
+import com.playonlinux.core.messages.Message;
+import com.playonlinux.core.messages.SynchronousMessage;
+import com.playonlinux.core.scripts.CancelException;
+import com.playonlinux.ui.api.UIMessageSender;
+import com.trolltech.qt.gui.QApplication;
 
 /**
- * An implementation of QIODevice for Java InMemoryStreams.
+ * Implementation of the UIMessageSender for the Qt-GUI of POL.
  */
-public class QMemoryStream extends QIODevice {
-    private static final Logger LOGGER = Logger.getLogger(QMemoryStream.class);
-    private InputStream innerStream;
+public class UIMessageSenderQtImplementation<R> implements UIMessageSender<R> {
 
-    public QMemoryStream(InputStream innerStream) {
-        this.innerStream = innerStream;
+    @Override
+    public R synchronousSendAndGetResult(SynchronousMessage<R> message) throws CancelException {
+        synchronousSend(message);
+        return message.getResponse();
     }
 
     @Override
-    public int readData(byte[] bytes) {
-        try {
-            return innerStream.read(bytes);
-        } catch (IOException e) {
-            //FIXME
-            LOGGER.debug(e);
-            return -1;
-        }
+    public void synchronousSend(Message message) {
+        QApplication.invokeAndWait(message);
     }
 
     @Override
-    public int writeData(byte[] bytes) {
-        return -1; //we don't need write-support at the moment.
+    public void asynchronousSend(Message message) {
+        QApplication.invokeLater(message);
     }
 }

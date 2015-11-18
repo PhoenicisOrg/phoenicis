@@ -47,11 +47,11 @@ import com.playonlinux.injection.Bean;
 import com.playonlinux.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.javafx.containers.WinePrefixContainerConfigurationViewFactory;
 import com.playonlinux.javafx.mainwindow.containers.AnyContainerConfigurationViewFactory;
+import com.playonlinux.qt.ControllerQtImplementation;
 import com.playonlinux.scripts.*;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
-import com.playonlinux.ui.impl.qt.ControllerQtImplementation;
 
 /**
  * PlayOnLinux beans configuration file

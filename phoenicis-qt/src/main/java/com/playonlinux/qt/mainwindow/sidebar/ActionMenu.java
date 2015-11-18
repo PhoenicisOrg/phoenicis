@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow.sidebar;
+package com.playonlinux.qt.mainwindow.sidebar;
 
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QIcon;

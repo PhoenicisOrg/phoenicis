@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.qt.mainwindow;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
-import com.playonlinux.ui.impl.qt.common.ResourceHelper;
-import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenu;
-import com.playonlinux.ui.impl.qt.mainwindow.sidebar.ActionMenuItem;
+import com.playonlinux.qt.common.ResourceHelper;
+import com.playonlinux.qt.mainwindow.sidebar.ActionMenu;
+import com.playonlinux.qt.mainwindow.sidebar.ActionMenuItem;
 
 /**
  * The static Menu always displayed in the ActionSideBar of the MainWindow.

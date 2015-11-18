@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.common;
+package com.playonlinux.qt.common;
 
 import java.io.IOException;
 import java.io.InputStream;

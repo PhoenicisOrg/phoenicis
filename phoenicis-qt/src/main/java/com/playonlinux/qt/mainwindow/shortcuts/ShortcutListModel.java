@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow.shortcuts;
+package com.playonlinux.qt.mainwindow.shortcuts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,8 @@ import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.qt.mainwindow.MainWindowEventHandler;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.impl.qt.mainwindow.MainWindowEventHandler;
 import com.trolltech.qt.core.QAbstractListModel;
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.QSize;

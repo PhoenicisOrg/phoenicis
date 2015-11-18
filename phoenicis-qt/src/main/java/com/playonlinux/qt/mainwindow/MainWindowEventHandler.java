@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.qt.mainwindow;
+package com.playonlinux.qt.mainwindow;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
@@ -29,10 +29,10 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.qt.mainwindow.shortcuts.ShortcutList;
 import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.api.UIEventHandler;
 import com.playonlinux.ui.events.EventHandler;
-import com.playonlinux.ui.impl.qt.mainwindow.shortcuts.ShortcutList;
 import com.trolltech.qt.core.QDir;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QApplication;
