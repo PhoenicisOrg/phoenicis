@@ -16,9 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
+package com.playonlinux.scripts;
 
 import java.util.concurrent.ExecutorService;
+
+import com.playonlinux.core.scripts.Script;
+import com.playonlinux.core.scripts.ScriptFactory;
 
 public class ScriptLegacyFactory implements ScriptFactory<ScriptLegacy> {
     private ExecutorService executorService;

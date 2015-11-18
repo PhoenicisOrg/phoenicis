@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
+package com.playonlinux.scripts;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +29,9 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
+import com.playonlinux.core.scripts.AnyScriptFactory;
+import com.playonlinux.core.scripts.Script;
+import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.utils.FileAnalyser;
 import com.playonlinux.injection.Inject;
 
