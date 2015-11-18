@@ -56,7 +56,7 @@
 
         <dependency>
             <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-bash-support</artifactId>
+            <artifactId>phoenicis-scripts</artifactId>
             <version>${version}</version>
         </dependency>
 
