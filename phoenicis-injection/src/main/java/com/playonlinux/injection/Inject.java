@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.injection;
+package com.playonlinux.injection;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -29,8 +29,6 @@ import com.playonlinux.apps.entities.InstallerDownloaderEntity;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.scripts.Script;
@@ -40,6 +38,8 @@ import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
 import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class DefaultInstallerDownloaderEntityProvider

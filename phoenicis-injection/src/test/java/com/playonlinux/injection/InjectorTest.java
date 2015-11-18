@@ -16,13 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.injection;
+package com.playonlinux.injection;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
 import org.junit.Test;
+
+import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.Bean;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.InjectionException;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class InjectorTest extends AbstractConfiguration {

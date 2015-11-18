@@ -16,18 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.injection;
+package com.playonlinux.injection;
 
-public class InjectionException extends Exception {
-    private final String error;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    public InjectionException(String error, Throwable e) {
-        this.error = error;
-        this.initCause(e);
-    }
-
-    @Override
-    public String toString() {
-        return this.error;
-    }
+/**
+ * This annotation should be used in {@link AbstractConfiguration} files. It defines a component that can be
+ * injected later with the {@link Inject} annotation
+ */
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Bean {
 }

@@ -20,10 +20,10 @@ package com.playonlinux.core.python;
 
 import java.util.concurrent.ExecutorService;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 
 @Scan

@@ -30,8 +30,6 @@ import org.apache.log4j.Logger;
 
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.WinePrefixLogger;
 import com.playonlinux.core.utils.Architecture;
@@ -39,6 +37,8 @@ import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.wine.configurations.DefaultWinePrefixDisplayConfiguration;
 import com.playonlinux.wine.configurations.DefaultWinePrefixInputConfiguration;
 import com.playonlinux.wine.configurations.RegistryWinePrefixDisplayConfiguration;

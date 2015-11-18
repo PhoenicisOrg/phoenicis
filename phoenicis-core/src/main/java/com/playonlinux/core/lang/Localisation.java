@@ -19,9 +19,9 @@
 package com.playonlinux.core.lang;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.utils.ReplacableProperties;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public final class Localisation {

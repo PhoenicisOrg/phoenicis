@@ -24,10 +24,10 @@ import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.framework.SetupWizard;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;

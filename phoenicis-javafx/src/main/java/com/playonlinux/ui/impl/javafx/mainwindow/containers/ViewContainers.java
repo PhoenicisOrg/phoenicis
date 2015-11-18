@@ -27,10 +27,10 @@ import java.util.WeakHashMap;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButton;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftButtonGroup;
 import com.playonlinux.ui.impl.javafx.mainwindow.LeftSpacer;

@@ -33,8 +33,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.playonlinux.MockContextConfig;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.InjectionException;
+import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.InjectionException;
 
 
 public class LegacyWrapperTest {

@@ -24,8 +24,6 @@ import static java.lang.String.format;
 import java.io.File;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.scripts.ScriptFailureException;
@@ -35,6 +33,8 @@ import com.playonlinux.engines.wine.EngineInstallException;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
 @Scan

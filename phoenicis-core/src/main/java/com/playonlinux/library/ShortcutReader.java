@@ -21,8 +21,8 @@ package com.playonlinux.library;
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.library.shortcuts.Shortcut;
 
 @Scan

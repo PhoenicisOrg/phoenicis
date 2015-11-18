@@ -29,8 +29,6 @@ import java.util.Collection;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -48,6 +46,8 @@ import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.engines.wine.packages.GeckoWinePackage;
 import com.playonlinux.engines.wine.packages.MonoWinePackage;
 import com.playonlinux.engines.wine.packages.WinePackageProvider;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
 @Scan

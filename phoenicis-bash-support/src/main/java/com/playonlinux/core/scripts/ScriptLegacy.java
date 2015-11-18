@@ -29,8 +29,8 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.lang.StringUtils;
 import org.python.util.PythonInterpreter;
 
-import com.playonlinux.core.injection.Inject;
 import com.playonlinux.core.utils.FileAnalyser;
+import com.playonlinux.injection.Inject;
 
 public class ScriptLegacy extends Script {
     private static final String BEGIN_PGP_KEY_BLOCK_LINE = "-----BEGIN PGP SIGNATURE-----";
