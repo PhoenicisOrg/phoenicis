@@ -25,8 +25,9 @@ import java.util.EnumSet;
 import java.util.List;
 
 import com.playonlinux.containers.entities.WinePrefixContainerEntity;
-import com.playonlinux.ui.impl.javafx.common.ColumnConstraintsWithPercentage;
-import com.playonlinux.ui.impl.javafx.common.TextWithStyle;
+import com.playonlinux.javafx.common.ColumnConstraintsWithPercentage;
+import com.playonlinux.javafx.common.TextWithStyle;
+import com.playonlinux.javafx.mainwindow.containers.ContainerConfigurationView;
 import com.playonlinux.wine.parameters.AlwaysOffscreen;
 import com.playonlinux.wine.parameters.DirectDrawRenderer;
 import com.playonlinux.wine.parameters.GLSL;

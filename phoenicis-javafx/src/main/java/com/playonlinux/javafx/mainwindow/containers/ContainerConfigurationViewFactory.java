@@ -16,21 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.containers;
+package com.playonlinux.javafx.mainwindow.containers;
 
 import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.containers.entities.WinePrefixContainerEntity;
-import com.playonlinux.javafx.mainwindow.containers.ContainerConfigurationViewFactory;
 
-public class WinePrefixContainerConfigurationViewFactory implements ContainerConfigurationViewFactory<WinePrefixContainerEntity> {
-    @Override
-    public WinePrefixContainerConfigurationView createInstance(ContainerEntity containerEntity) {
-        validate(containerEntity);
-        return new WinePrefixContainerConfigurationView((WinePrefixContainerEntity) containerEntity, new WinePrefixEventHandler());
-    }
+public interface ContainerConfigurationViewFactory<T extends ContainerEntity> {
 
-    @Override
-    public boolean validate(ContainerEntity containerEntity) {
-        return containerEntity instanceof WinePrefixContainerEntity;
-    }
+    ContainerConfigurationView<? extends T> createInstance(ContainerEntity containerEntity);
+
+    boolean validate(ContainerEntity containerEntity);
 }
