@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.impl.javafx.mainwindow.containers;
+package com.playonlinux.javafx.containers;
 
 import com.playonlinux.containers.WineContainerActions;
 
