@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.bash.*;
 import com.playonlinux.containers.AnyContainerFactory;
 import com.playonlinux.containers.WinePrefixContainerFactory;
 import com.playonlinux.core.lang.LanguageBundle;
@@ -48,7 +49,6 @@ import com.playonlinux.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.javafx.containers.WinePrefixContainerConfigurationViewFactory;
 import com.playonlinux.javafx.mainwindow.containers.AnyContainerConfigurationViewFactory;
 import com.playonlinux.qt.ControllerQtImplementation;
-import com.playonlinux.scripts.*;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;

@@ -16,16 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.scripts;
+package com.playonlinux.bash;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import com.playonlinux.bash.ScriptLegacyFactory;
 import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFailureException;
-import com.playonlinux.scripts.ScriptLegacyFactory;
 
 import java.io.File;
 import java.io.IOException;
