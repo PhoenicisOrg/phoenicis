@@ -27,11 +27,11 @@ import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public abstract class

@@ -36,8 +36,6 @@ import org.apache.log4j.Logger;
 import org.python.modules.Setup;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
@@ -49,6 +47,8 @@ import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.framework.wizard.CompleteWizard;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;

@@ -26,8 +26,6 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.gpg.SignatureChecker;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
@@ -35,6 +33,8 @@ import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.core.webservice.HTTPDownloader;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultAppsManager> implements AppsManager {

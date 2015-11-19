@@ -39,8 +39,6 @@ import org.apache.log4j.Logger;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDirectorySize;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
@@ -58,6 +56,8 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
 import com.playonlinux.wine.registry.AbstractRegistryNode;

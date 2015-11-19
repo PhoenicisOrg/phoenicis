@@ -31,11 +31,11 @@ import org.python.core.PyType;
 import org.python.util.PythonInterpreter;
 import org.reflections.ReflectionUtils;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.ScriptFailureException;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {

@@ -31,8 +31,8 @@ import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Sets;
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public final class Files {

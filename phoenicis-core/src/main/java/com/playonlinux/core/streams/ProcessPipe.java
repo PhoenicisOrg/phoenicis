@@ -27,10 +27,10 @@ import java.util.concurrent.Future;
 import org.apache.commons.lang.mutable.MutableBoolean;
 import org.apache.log4j.Logger;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 /**
  * This component redirects {@link Process} descriptors into Java

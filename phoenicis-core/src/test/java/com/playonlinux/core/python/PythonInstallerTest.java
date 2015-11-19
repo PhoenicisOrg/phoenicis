@@ -34,9 +34,9 @@ import org.python.util.PythonInterpreter;
 
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.InjectionException;
 import com.playonlinux.framework.templates.ScriptTemplate;
+import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.InjectionException;
 
 public class PythonInstallerTest {
     private DefaultJythonInterpreterFactory defaultJythonInterpreterFactory;

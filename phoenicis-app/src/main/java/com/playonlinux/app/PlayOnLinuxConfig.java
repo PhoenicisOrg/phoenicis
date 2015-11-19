@@ -25,28 +25,33 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.bash.*;
 import com.playonlinux.containers.AnyContainerFactory;
 import com.playonlinux.containers.WinePrefixContainerFactory;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.lang.LanguageBundle;
 import com.playonlinux.core.lang.LanguageBundleSelector;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.DefaultJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
-import com.playonlinux.core.scripts.*;
+import com.playonlinux.core.scripts.AnyScriptFactory;
+import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
+import com.playonlinux.core.scripts.InstallerSource;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
+import com.playonlinux.core.scripts.ScriptRecentFactory;
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.WineVersionSource;
 import com.playonlinux.engines.wine.WineversionsSourceWebserviceDefaultImplementation;
+import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.Bean;
+import com.playonlinux.javafx.ControllerJavaFXImplementation;
+import com.playonlinux.javafx.containers.WinePrefixContainerConfigurationViewFactory;
+import com.playonlinux.javafx.mainwindow.containers.AnyContainerConfigurationViewFactory;
+import com.playonlinux.qt.ControllerQtImplementation;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.events.EventHandler;
 import com.playonlinux.ui.events.EventHandlerPlayOnLinuxImplementation;
-import com.playonlinux.ui.impl.javafx.ControllerJavaFXImplementation;
-import com.playonlinux.ui.impl.javafx.mainwindow.containers.AnyContainerConfigurationViewFactory;
-import com.playonlinux.ui.impl.javafx.mainwindow.containers.WinePrefixContainerConfigurationViewFactory;
-import com.playonlinux.ui.impl.qt.ControllerQtImplementation;
 
 /**
  * PlayOnLinux beans configuration file

@@ -24,9 +24,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.engines.wine.dto.WineVersionDTO;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class GeckoWinePackage implements WinePackage {

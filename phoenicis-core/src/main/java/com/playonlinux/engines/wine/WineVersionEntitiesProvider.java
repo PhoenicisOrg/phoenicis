@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.playonlinux.core.filter.Filter;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -34,6 +32,8 @@ import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan

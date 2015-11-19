@@ -22,8 +22,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class WinePrefixLogger extends FileLogger {

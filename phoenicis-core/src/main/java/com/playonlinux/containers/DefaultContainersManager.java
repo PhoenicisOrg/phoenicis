@@ -28,12 +28,12 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class DefaultContainersManager

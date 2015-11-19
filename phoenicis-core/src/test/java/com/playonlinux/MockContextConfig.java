@@ -27,8 +27,6 @@ import java.io.IOException;
 import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.Bean;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.DefaultJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
@@ -37,6 +35,8 @@ import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.Bean;
 
 public class MockContextConfig extends AbstractConfiguration {
     @Bean

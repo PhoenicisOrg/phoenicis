@@ -36,14 +36,14 @@ import org.junit.rules.ExpectedException;
 
 import com.playonlinux.MockContextConfig;
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.injection.AbstractConfiguration;
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.InjectionException;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.injection.AbstractConfiguration;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.InjectionException;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class ObservableDirectoryFilesTest {

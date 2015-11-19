@@ -24,11 +24,11 @@ import java.util.function.Function;
 
 import org.apache.log4j.Logger;
 
-import com.playonlinux.core.injection.Inject;
-import com.playonlinux.core.injection.Scan;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.Wine;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 import com.playonlinux.wine.WineConstants;
 
 @Scan
