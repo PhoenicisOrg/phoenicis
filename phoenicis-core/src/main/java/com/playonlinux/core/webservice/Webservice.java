@@ -31,10 +31,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.entities.ProgressStateEntity;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.services.manager.Service;
 
 public abstract class Webservice<T extends DTO> extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>>
-        implements Service {
+        implements Service, InstallerSource<T> {
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
 
     private final URL url;
@@ -47,6 +48,7 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
         this.url = url;
     }
 
+    @Override
     public synchronized void populate() {
         try {
             updateSemaphore.acquire();
