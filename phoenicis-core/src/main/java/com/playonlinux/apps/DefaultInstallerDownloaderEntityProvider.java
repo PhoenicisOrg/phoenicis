@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.playonlinux.core.scripts.AnyScriptFactory;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
@@ -31,8 +30,8 @@ import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.Script;
-import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -42,10 +41,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
 @Scan
-public class DefaultInstallerDownloaderEntityProvider
-        extends ObservableDefaultImplementation<InstallerDownloaderEntity>
-        implements InstallerDownloaderEntityProvider,
-                   Observer<HTTPDownloader, ProgressStateEntity> {
+public class DefaultInstallerDownloaderEntityProvider extends ObservableDefaultImplementation<InstallerDownloaderEntity>
+        implements InstallerDownloaderEntityProvider, Observer<HTTPDownloader, ProgressStateEntity> {
     public static final double PERCENTAGE = 100.;
 
     @Inject
@@ -80,7 +77,7 @@ public class DefaultInstallerDownloaderEntityProvider
         downloadManager.submit(httpDownloader, bytes -> {
             success(bytes);
             return null;
-        }, e -> {
+        } , e -> {
             failure(e);
             return null;
         });
@@ -119,16 +116,12 @@ public class DefaultInstallerDownloaderEntityProvider
     }
 
     public enum State {
-        READY,
-        PROGRESSING,
-        SUCCESS,
-        FAILED,
-        SIGNATURE_ERROR
+        READY, PROGRESSING, SUCCESS, FAILED, SIGNATURE_ERROR
     }
 
     @Override
     public void update(HTTPDownloader observable, ProgressStateEntity argument) {
-        if(argument.getState() == ProgressStateEntity.State.PROGRESSING) {
+        if (argument.getState() == ProgressStateEntity.State.PROGRESSING) {
             changeState(State.PROGRESSING, argument.getPercent());
         }
     }
@@ -138,9 +131,7 @@ public class DefaultInstallerDownloaderEntityProvider
             final Script script = scriptFactory.createInstanceFromFile(localFile);
             final String scriptContent = script.extractContent();
 
-            this.signatureChecker
-                    .withSignature(script.extractSignature())
-                    .withData(scriptContent)
+            this.signatureChecker.withSignature(script.extractSignature()).withData(scriptContent)
                     .withPublicKey(SignatureChecker.getPublicKey());
 
             if (!signatureChecker.check()) {
@@ -164,6 +155,5 @@ public class DefaultInstallerDownloaderEntityProvider
     private void startScript(Script script) throws ServiceInitializationException {
         serviceManager.register(script);
     }
-
 
 }
