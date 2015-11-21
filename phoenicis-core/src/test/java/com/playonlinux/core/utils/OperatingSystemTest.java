@@ -25,7 +25,6 @@ import org.junit.Test;
 
 import com.playonlinux.app.PlayOnLinuxException;
 
-
 public class OperatingSystemTest {
     @Test
     public void testFromString_generateFromStrings_EnumIsCorrect() throws PlayOnLinuxException {
@@ -41,7 +40,7 @@ public class OperatingSystemTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFromString_generateFromUnknownString_ExceptionIsThrown() {
-        OperatingSystem linux = OperatingSystem.fromString("Invalid operating system");
+        OperatingSystem.fromString("Invalid operating system");
     }
 
     @Test
@@ -55,9 +54,8 @@ public class OperatingSystemTest {
     public void testFetchCurrentOperationSystem_noErrorsAreThrown() throws PlayOnLinuxException {
         OperatingSystem currentOperatingSystem = OperatingSystem.fetchCurrentOperationSystem();
 
-        assertTrue(currentOperatingSystem == OperatingSystem.LINUX ||
-                currentOperatingSystem == OperatingSystem.MACOSX ||
-                currentOperatingSystem == OperatingSystem.FREEBSD);
+        assertTrue(currentOperatingSystem == OperatingSystem.LINUX || currentOperatingSystem == OperatingSystem.MACOSX
+                || currentOperatingSystem == OperatingSystem.FREEBSD);
     }
 
     @Test
