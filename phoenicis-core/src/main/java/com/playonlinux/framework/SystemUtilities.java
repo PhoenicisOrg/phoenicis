@@ -23,7 +23,6 @@ import java.io.File;
 import com.playonlinux.core.scripts.ScriptClass;
 
 @ScriptClass
-@SuppressWarnings("unused")
 public final class SystemUtilities {
     static final long KILOBYTE = 1024L;
 
