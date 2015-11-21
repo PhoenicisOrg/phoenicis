@@ -21,17 +21,22 @@ package com.playonlinux.library;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class LibraryException extends PlayOnLinuxException {
+    private static final long serialVersionUID = 1L;
+
     private static final String DEFAULT_MESSAGE = "Library module has encoutered an exception";
 
     public LibraryException() {
         super(DEFAULT_MESSAGE);
     }
+
     public LibraryException(String message) {
         super(message);
     }
+
     public LibraryException(String message, Throwable parent) {
         super(message, parent);
     }
+
     public LibraryException(Throwable parent) {
         super(DEFAULT_MESSAGE, parent);
     }

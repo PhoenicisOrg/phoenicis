@@ -21,6 +21,8 @@ package com.playonlinux.engines.wine;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class EngineInstallException extends PlayOnLinuxException {
+    private static final long serialVersionUID = 1L;
+
     public EngineInstallException(String message, Throwable parent) {
         super(message, parent);
     }

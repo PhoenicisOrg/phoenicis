@@ -21,6 +21,8 @@ package com.playonlinux.app;
 import org.apache.commons.lang.ArrayUtils;
 
 public class PlayOnLinuxRuntimeException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
     private final String message;
     private final Throwable parent;
 

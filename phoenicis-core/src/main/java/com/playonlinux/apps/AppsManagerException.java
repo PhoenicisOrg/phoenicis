@@ -21,6 +21,8 @@ package com.playonlinux.apps;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class AppsManagerException extends PlayOnLinuxException {
+    private static final long serialVersionUID = 1L;
+
     public AppsManagerException(String message) {
         super(message);
     }
