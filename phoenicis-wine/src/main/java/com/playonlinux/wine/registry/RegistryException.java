@@ -21,7 +21,7 @@ package com.playonlinux.wine.registry;
 import com.playonlinux.wine.WineException;
 
 public class RegistryException extends WineException {
-    private static final long serialVersionUID = 7491488280445319400L;
+    private static final long serialVersionUID = 1L;
 
     public RegistryException(String s, Exception e) {
         super(s, e);

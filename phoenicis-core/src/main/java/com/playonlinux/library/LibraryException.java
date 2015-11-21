@@ -21,7 +21,7 @@ package com.playonlinux.library;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class LibraryException extends PlayOnLinuxException {
-    private static final long serialVersionUID = 1513367974395699915L;
+    private static final long serialVersionUID = 1L;
 
     private static final String DEFAULT_MESSAGE = "Library module has encoutered an exception";
 

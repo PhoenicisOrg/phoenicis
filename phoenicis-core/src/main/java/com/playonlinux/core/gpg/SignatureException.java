@@ -21,7 +21,7 @@ package com.playonlinux.core.gpg;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class SignatureException extends PlayOnLinuxException {
-    private static final long serialVersionUID = -5608743800288966995L;
+    private static final long serialVersionUID = 1L;
 
     public SignatureException(String s, Exception e) {
         super(s, e);

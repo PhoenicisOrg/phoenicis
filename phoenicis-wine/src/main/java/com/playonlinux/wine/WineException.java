@@ -21,7 +21,7 @@ package com.playonlinux.wine;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class WineException extends PlayOnLinuxException {
-    private static final long serialVersionUID = 5013188487737905821L;
+    private static final long serialVersionUID = 1L;
 
     private static final String DEFAULT_MESSAGE = "Wine has encountered a fatal error";
 

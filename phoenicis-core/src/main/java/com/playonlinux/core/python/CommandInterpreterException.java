@@ -21,7 +21,7 @@ package com.playonlinux.core.python;
 import com.playonlinux.app.PlayOnLinuxException;
 
 public class CommandInterpreterException extends PlayOnLinuxException {
-    private static final long serialVersionUID = -8241416946137284058L;
+    private static final long serialVersionUID = 1L;
 
     public CommandInterpreterException(String message, Exception e) {
         super(message, e);
