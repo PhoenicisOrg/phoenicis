@@ -37,7 +37,6 @@ import com.playonlinux.ui.api.ProgressControl;
  */
 
 @ScriptClass
-@SuppressWarnings("unused")
 public class Files implements SetupWizardComponent {
     private SetupWizard setupWizard;
     private ProgressControl progressControl;
