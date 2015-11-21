@@ -83,8 +83,12 @@ public class RegistryParserTest {
             outputStream.flush();
         }
 
-        RegistryValue<StringValueType> registryValue = (RegistryValue<StringValueType>) registryParser.parseFile()
-                .getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
+        AbstractRegistryNode registryNode = registryParser.parseFile().getChild("Software", "Wine", "DllOverrides",
+                "*d3dx9_24");
+        RegistryValue<?> registryValue = null;
+        if (registryNode instanceof RegistryValue) {
+            registryValue = (RegistryValue<?>) registryNode;
+        }
 
         assertEquals("*d3dx9_24", registryValue.getName());
         assertEquals("native, builtin", registryValue.getText());
