@@ -66,8 +66,6 @@ public final class MiniatureListWidget extends ScrollPane {
     }
 
     private static class Element extends VBox {
-        private final String elementName;
-
         Element(String elementName) {
             this(elementName, new StaticMiniature());
         }
@@ -76,8 +74,6 @@ public final class MiniatureListWidget extends ScrollPane {
             this.getStyleClass().add("miniatureListElement");
 
             this.setAlignment(Pos.CENTER);
-            this.elementName = appsItem;
-
 
             Text label = new Text(appsItem);
             label.setWrappingWidth(150);
@@ -86,10 +82,6 @@ public final class MiniatureListWidget extends ScrollPane {
             this.getChildren().add(miniature);
             this.getChildren().add(label);
 
-        }
-
-        String getName() {
-            return elementName;
         }
     }
 
