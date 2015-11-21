@@ -22,7 +22,6 @@ import com.playonlinux.wine.parameters.MouseWarpOverride;
 import com.playonlinux.wine.registry.AbstractRegistryNode;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryValue;
-import com.playonlinux.wine.registry.StringValueType;
 
 public class RegistryWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
     private final RegistryKey userRegsitry;
@@ -33,9 +32,10 @@ public class RegistryWinePrefixInputConfiguration implements WinePrefixInputConf
 
     @Override
     public MouseWarpOverride getMouseWarpOverride() {
-        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "DirectInput", "MouseWarpOverride");
-        if(registryChild instanceof RegistryValue) {
-            switch (((RegistryValue<StringValueType>) registryChild).getText()) {
+        final AbstractRegistryNode registryChild = this.userRegsitry.getChild("Software", "Wine", "DirectInput",
+                "MouseWarpOverride");
+        if (registryChild instanceof RegistryValue) {
+            switch (((RegistryValue<?>) registryChild).getText()) {
                 case "enable":
                     return MouseWarpOverride.ENABLED;
                 case "disable":
