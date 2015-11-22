@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.bash.ScriptLegacyFactory;
 import com.playonlinux.containers.AnyContainerFactory;
 import com.playonlinux.containers.WinePrefixContainerFactory;
@@ -36,6 +37,7 @@ import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
+import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.scripts.ScriptRecentFactory;
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
@@ -87,7 +89,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
      *             if the URL in the config file is malformed
      */
     @Bean
-    public InstallerSourceWebserviceDefaultImplementation installerSource() throws MalformedURLException {
+    public InstallerSource<CategoryDTO> installerSource() throws MalformedURLException {
         return new InstallerSourceWebserviceDefaultImplementation(
                 new URL(playOnLinuxContext.getProperty("webservice.apps.url")));
     }
@@ -203,7 +205,7 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
 
     /**
      * Jackson ObjectMapper
-     *
+     * 
      * @return the object mapper
      */
     @Bean
