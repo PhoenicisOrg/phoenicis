@@ -30,7 +30,7 @@ import com.playonlinux.core.webservice.Webservice;
  * into DTOs
  */
 public class InstallerSourceWebserviceDefaultImplementation extends Webservice<CategoryDTO> implements InstallerSource {
-
+    // TODO clean hierarchy
     public InstallerSourceWebserviceDefaultImplementation(URL url) {
         super(url);
     }
