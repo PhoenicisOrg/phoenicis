@@ -56,9 +56,9 @@ public class RegistryKeyTest {
 
     @Test
     public void testRegistryKey_testGetChildWithMultipleArguments() throws Exception {
-        assertEquals("Content 1", ((RegistryValue) a1.getChild("B2", "C1", "V1")).getText());
-        assertEquals("Content 2", ((RegistryValue) a1.getChild("B2", "C2", "V2")).getText());
-        assertEquals("Content 3", ((RegistryValue) a1.getChild("B2", "C2", "V3")).getText());
+        assertEquals("Content 1", ((RegistryValue<?>) a1.getChild("B2", "C1", "V1")).getText());
+        assertEquals("Content 2", ((RegistryValue<?>) a1.getChild("B2", "C2", "V2")).getText());
+        assertEquals("Content 3", ((RegistryValue<?>) a1.getChild("B2", "C2", "V3")).getText());
 
         assertEquals("C1", a1.getChild("B2", "C1").getName());
     }
