@@ -31,7 +31,7 @@ public class ScriptRecentFactory implements ScriptFactory<ScriptRecent> {
     }
 
     @Override
-    public Class getType() {
+    public Class<ScriptRecent> getType() {
         return ScriptRecent.class;
     }
 
@@ -41,7 +41,7 @@ public class ScriptRecentFactory implements ScriptFactory<ScriptRecent> {
     }
 
     @Override
-    public ScriptFactory withExecutor(ExecutorService executorService) {
+    public ScriptFactory<ScriptRecent> withExecutor(ExecutorService executorService) {
         this.executorService = executorService;
         return this;
     }

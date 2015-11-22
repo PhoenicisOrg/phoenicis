@@ -25,12 +25,8 @@ import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 
 /**
- * Represents an available installer source
- * And {@link InstallerSource} must be observed by an {@link com.playonlinux.core.observer.Observer}
+ * Represents an available installer source And {@link InstallerSource} must be
+ * observed by an {@link com.playonlinux.core.observer.Observer}
  */
 public interface InstallerSource extends Observable<DownloadEnvelope<Collection<CategoryDTO>>> {
-    /**
-     * Populate the source, and update observers
-     */
-    void populate();
 }

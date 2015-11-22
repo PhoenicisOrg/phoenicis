@@ -18,8 +18,7 @@
 
 package com.playonlinux.wine.registry;
 
-public class RegistryValue<T extends AbstractValueType>
-        extends AbstractRegistryNode {
+public class RegistryValue<T extends AbstractValueType> extends AbstractRegistryNode {
 
     private final T content;
 
@@ -28,24 +27,24 @@ public class RegistryValue<T extends AbstractValueType>
         this.content = content;
     }
 
-    public static RegistryValue fromString(String name, String inputString) {
-        RegistryValue parsedValue;
-        if(inputString.startsWith("\"") && inputString.endsWith("\"")) {
+    public static RegistryValue<AbstractValueType> fromString(String name, String inputString) {
+        RegistryValue<AbstractValueType> parsedValue;
+        if (inputString.startsWith("\"") && inputString.endsWith("\"")) {
             String valueContentString = inputString.substring(1, inputString.length() - 1);
             valueContentString = valueContentString.replaceAll("\\\\\\\"", "\"");
             valueContentString = valueContentString.replaceAll("\\\\\\\\", "\\\\");
-            if(valueContentString.endsWith("\\0")) {
+            if (valueContentString.endsWith("\\0")) {
                 valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
             }
             parsedValue = new RegistryValue<>(name, new StringValueType(valueContentString));
-        } else if(inputString.contains(":")) {
+        } else if (inputString.contains(":")) {
             int colPosition = inputString.indexOf(':');
             final String valueTypeString = inputString.substring(0, colPosition);
             String valueContentString = inputString.substring(colPosition + 1, inputString.length());
-            if(valueContentString.endsWith("\\0")) {
+            if (valueContentString.endsWith("\\0")) {
                 valueContentString = valueContentString.substring(0, valueContentString.length() - 2);
             }
-            switch(valueTypeString) {
+            switch (valueTypeString) {
                 case "str(7)": // Multi String
                     parsedValue = new RegistryValue<>(name, new MultiStringValueType(valueContentString));
                     break;
@@ -59,7 +58,7 @@ public class RegistryValue<T extends AbstractValueType>
                 case "hex": // Binary
                     String[] binariesString = valueContentString.split(",");
                     byte[] binaries = new byte[binariesString.length];
-                    for(int i = 0; i < binariesString.length; i++) {
+                    for (int i = 0; i < binariesString.length; i++) {
                         binaries[i] = (byte) (Integer.valueOf(binariesString[i], 16) - 128);
                     }
                     parsedValue = new RegistryValue<>(name, new BinaryValueType(binaries));
@@ -68,15 +67,12 @@ public class RegistryValue<T extends AbstractValueType>
                     throw new IllegalArgumentException(String.format("Unknown value type: %s", valueTypeString));
             }
 
-
-
         } else {
             throw new IllegalArgumentException(String.format("Unable to format registry line: %s", inputString));
         }
 
         return parsedValue;
     }
-
 
     public String getText() {
         return content.getText();

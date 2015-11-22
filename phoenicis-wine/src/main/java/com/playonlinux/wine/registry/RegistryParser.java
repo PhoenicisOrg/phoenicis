@@ -27,8 +27,8 @@ import java.text.ParseException;
 import org.apache.commons.lang.StringUtils;
 
 /***
- * Registry parser class
- * If someone wants to improve this code, feel free to do it!
+ * Registry parser class If someone wants to improve this code, feel free to do
+ * it!
  */
 public class RegistryParser {
     private static final char QUOTE = '"';
@@ -37,25 +37,22 @@ public class RegistryParser {
     private final String rootName;
 
     enum ParseState {
-        INITIAL,
-        READING_NAME,
-        SEPARATOR,
-        READING_VALUE
+        INITIAL, READING_NAME, SEPARATOR, READING_VALUE
     }
+
     public RegistryParser(File registryFile, String rootName) {
         this.registryFile = registryFile;
         this.rootName = rootName;
     }
 
     public RegistryKey parseFile() throws RegistryException {
-        try(BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile))) {
+        try (BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile))) {
             final RegistryKey root = new RegistryKey(rootName);
             RegistryKey lastNode = null;
             int lineNumber = 1;
-            for(String currentLine = bufferReader.readLine(); currentLine != null; currentLine = bufferReader.readLine()) {
-                if (currentLine.startsWith(";")
-                        || currentLine.startsWith("#")
-                        || StringUtils.isBlank(currentLine)
+            for (String currentLine = bufferReader.readLine(); currentLine != null; currentLine = bufferReader
+                    .readLine()) {
+                if (currentLine.startsWith(";") || currentLine.startsWith("#") || StringUtils.isBlank(currentLine)
                         || currentLine.startsWith("@")) {
                     lineNumber++;
                     continue;
@@ -82,7 +79,7 @@ public class RegistryParser {
     }
 
     private void parseValueLine(RegistryKey lastNode, String currentLine, int lineNumber) throws ParseException {
-        if(!currentLine.startsWith("\"")) {
+        if (!currentLine.startsWith("\"")) {
             throw new ParseException(String.format(PARSE_ERROR_MESSAGE, lineNumber), 0);
         }
 
@@ -92,24 +89,24 @@ public class RegistryParser {
         ParseState parseState = ParseState.INITIAL;
         Boolean ignoreNextQuote = false;
 
-        for(int i = 0; i < currentLine.length(); i++) {
+        for (int i = 0; i < currentLine.length(); i++) {
             char currentChar = currentLine.charAt(i);
 
-            if(parseState == ParseState.INITIAL) {
-                if(currentChar == QUOTE) {
+            if (parseState == ParseState.INITIAL) {
+                if (currentChar == QUOTE) {
                     parseState = ParseState.READING_NAME;
                 }
-            } else if(parseState == ParseState.READING_NAME) {
-                if(currentChar == '"' && !ignoreNextQuote) {
+            } else if (parseState == ParseState.READING_NAME) {
+                if (currentChar == '"' && !ignoreNextQuote) {
                     parseState = ParseState.SEPARATOR;
-                } else if(currentChar == '\\' && !ignoreNextQuote) {
+                } else if (currentChar == '\\' && !ignoreNextQuote) {
                     ignoreNextQuote = true;
                 } else {
                     nameBuilder.append(currentChar);
                     ignoreNextQuote = false;
                 }
-            } else if(parseState == ParseState.SEPARATOR) {
-                if(currentChar != '=') {
+            } else if (parseState == ParseState.SEPARATOR) {
+                if (currentChar != '=') {
                     throw new ParseException(String.format(PARSE_ERROR_MESSAGE, lineNumber), 0);
                 } else {
                     parseState = ParseState.READING_VALUE;
@@ -121,9 +118,9 @@ public class RegistryParser {
 
         final String name = nameBuilder.toString();
         try {
-            RegistryValue value = RegistryValue.fromString(name, valueBuilder.toString());
+            RegistryValue<AbstractValueType> value = RegistryValue.fromString(name, valueBuilder.toString());
             lastNode.addChild(value);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new ParseException(String.format("Error on line %s: %s", lineNumber, e), 0);
         }
     }
@@ -132,9 +129,9 @@ public class RegistryParser {
         final String extractedLine = extractDirectoryLine(currentLine);
         final String[] splitLine = extractedLine.split("\\\\\\\\");
         RegistryKey currentKey = root;
-        for(String registryKeyName: splitLine) {
+        for (String registryKeyName : splitLine) {
             RegistryKey childrenSearched = (RegistryKey) currentKey.getChild(registryKeyName);
-            if(childrenSearched != null) {
+            if (childrenSearched != null) {
                 currentKey = childrenSearched;
             } else {
                 RegistryKey newChild = new RegistryKey(registryKeyName);

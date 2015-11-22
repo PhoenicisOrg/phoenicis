@@ -32,8 +32,10 @@ public interface ScriptFactory<T> {
 
     /**
      * Override the default executor
-     * @param executorService The new executor
+     * 
+     * @param executorService
+     *            The new executor
      * @return the same factory
      */
-    ScriptFactory withExecutor(ExecutorService executorService);
+    ScriptFactory<T> withExecutor(ExecutorService executorService);
 }
