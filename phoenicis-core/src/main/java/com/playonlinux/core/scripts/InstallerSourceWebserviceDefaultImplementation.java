@@ -29,7 +29,7 @@ import com.playonlinux.core.webservice.Webservice;
  * This class download scripts from a playonlinux web service and converts it
  * into DTOs
  */
-public class InstallerSourceWebserviceDefaultImplementation extends Webservice<CategoryDTO> {
+public class InstallerSourceWebserviceDefaultImplementation extends Webservice<CategoryDTO> implements InstallerSource {
 
     public InstallerSourceWebserviceDefaultImplementation(URL url) {
         super(url);

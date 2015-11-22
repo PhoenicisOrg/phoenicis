@@ -20,6 +20,7 @@ package com.playonlinux.core.scripts;
 
 import java.util.Collection;
 
+import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 
@@ -27,9 +28,5 @@ import com.playonlinux.core.webservice.DownloadEnvelope;
  * Represents an available installer source And {@link InstallerSource} must be
  * observed by an {@link com.playonlinux.core.observer.Observer}
  */
-public interface InstallerSource<T> extends Observable<DownloadEnvelope<Collection<T>>> {
-    /**
-     * Populate the source, and update observers
-     */
-    void populate();
+public interface InstallerSource extends Observable<DownloadEnvelope<Collection<CategoryDTO>>> {
 }
