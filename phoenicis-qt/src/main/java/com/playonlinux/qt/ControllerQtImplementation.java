@@ -19,6 +19,7 @@
 package com.playonlinux.qt;
 
 import com.playonlinux.qt.mainwindow.MainWindow;
+import com.playonlinux.qt.setupwindow.SetupWindowContainer;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
@@ -28,28 +29,30 @@ import com.trolltech.qt.gui.QApplication;
  * Controller and entrypoint for POL's Qt-Gui implementation.
  */
 public class ControllerQtImplementation implements Controller {
+
     private static final String[] ARGS = new String[0];
+
+    SetupWindowContainer setupWindowContainer;
 
     @Override
     public void startApplication() {
         QApplication.initialize(ARGS);
 
         MainWindow w = new MainWindow();
+        setupWindowContainer = new SetupWindowContainer();
 
         QApplication.execStatic();
         QApplication.shutdown();
     }
 
-    //FIXME
     @Override
     public SetupWindow createSetupWindowGUIInstance(String title) {
-        return null;
+        return setupWindowContainer.addSetupWindow(title);
     }
 
     @Override
     public <T> UIMessageSender<T> createUIMessageSender() {
         return new UIMessageSenderQtImplementation<>();
     }
-
 
 }

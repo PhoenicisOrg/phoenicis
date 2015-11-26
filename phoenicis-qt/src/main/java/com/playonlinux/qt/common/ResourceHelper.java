@@ -18,15 +18,14 @@
 
 package com.playonlinux.qt.common;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QPixmap;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QPixmap;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 
 /**
  * Small helper class for easing the use of images and icons.
@@ -36,17 +35,37 @@ public final class ResourceHelper {
     private static final Logger LOGGER = Logger.getLogger(ResourceHelper.class);
 
     /**
-     * Load the resource of the given class with the given path as an image.
+     * Load the resource of the given class with the given path as a pixmap.
+     *
+     * @param c            Class who's resources should be searched for the given resourcePath.
+     * @param resourcePath Relative path to the resource starting from the classes package.
+     * @return QIcon, created from the loaded resource.
+     */
+    public static QPixmap getPixmap(Class<?> c, String resourcePath) {
+        //get classPath to class's resources
+        String classPath = c.getPackage().getName().replace('.', '/');
+        return new QPixmap("classpath:" + classPath + "/" + resourcePath);
+    }
+
+    /**
+     * Load a shared resource as image.
+     *
+     * @param resourcePath Relative path to the shared resource folder.
+     * @return QIcon, created from the loaded resource.
+     */
+    public static QPixmap getPixmap(String resourcePath) {
+        return getPixmap(ResourceHelper.class, resourcePath);
+    }
+
+    /**
+     * Load the resource of the given class with the given path as an icon.
      *
      * @param c            Class who's resources should be searched for the given resourcePath.
      * @param resourcePath Relative path to the resource starting from the classes package.
      * @return QIcon, created from the loaded resource.
      */
     public static QIcon getIcon(Class<?> c, String resourcePath) {
-        //get classPath to class's resources
-        String classPath = c.getPackage().getName().replace('.', '/');
-
-        return new QIcon(new QPixmap("classpath:" + classPath + "/" + resourcePath));
+        return new QIcon(getPixmap(c, resourcePath));
     }
 
     /**
