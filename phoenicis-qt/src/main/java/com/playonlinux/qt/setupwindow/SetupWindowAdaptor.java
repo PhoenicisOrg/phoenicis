@@ -79,7 +79,7 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public void showMenuStep(CancelerSynchronousMessage message, String textToShow, List<String> menuItems) {
-        //TODO
+        setupWindow.setStep(new MenuStep(message, textToShow, menuItems));
     }
 
     @Override
