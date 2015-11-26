@@ -93,7 +93,7 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public void showPresentationStep(CancelerSynchronousMessage message, String textToShow) {
-        //TODO
+        setupWindow.setStep(new PresentationStep(message, textToShow));
     }
 
     @Override
