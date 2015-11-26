@@ -64,7 +64,7 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public void showSimpleMessageStep(CancelerSynchronousMessage message, String textToShow) {
-        //TODO
+        setupWindow.setStep(new MessageStep(message, textToShow));
     }
 
     @Override
