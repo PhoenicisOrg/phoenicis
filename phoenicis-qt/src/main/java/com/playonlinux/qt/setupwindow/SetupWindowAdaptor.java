@@ -103,7 +103,7 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public void showBrowseStep(CancelerSynchronousMessage message, String textToShow, File browseDirectory, List<String> extensions) {
-        //TODO
+        setupWindow.setStep(new BrowseStep(message, textToShow, browseDirectory, extensions));
     }
 
     @Override
