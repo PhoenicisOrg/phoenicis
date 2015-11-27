@@ -87,22 +87,24 @@ public class SetupWindowQtImplementation extends QWidget {
         windowLayout.addWidget(buttonBox);
     }
 
-    private void setupUi(AbstractStep.StepLayout stepLayout) {
+    private void setupUi(AbstractStep step) {
         resetUi();
 
         content = new QWidget();
         content.setProperty("class", "Content");
         content.setContentsMargins(10, 10, 10, 10);
 
-        if (stepLayout == AbstractStep.StepLayout.LEFT_IMAGE) {
+        if (step.getLayout() == AbstractStep.StepLayout.LEFT_IMAGE) {
             leftImage = new QLabel();
             leftImage.setProperty("class", "LeftImage");
+            step.setupLeftImage(leftImage);
 
             containerLayout.addWidget(leftImage, 0, 0, 1, 1);
             containerLayout.addWidget(content, 0, 1, 1, 1);
-        } else if (stepLayout == AbstractStep.StepLayout.TOP_BAR) {
+        } else if (step.getLayout() == AbstractStep.StepLayout.TOP_BAR) {
             topBar = new QWidget();
             topBar.setProperty("class", "TopBar");
+            step.setupTopBar(topBar);
 
             containerLayout.addWidget(topBar, 0, 0, 1, 1);
             containerLayout.addWidget(content, 1, 0, 1, 1);
@@ -133,7 +135,7 @@ public class SetupWindowQtImplementation extends QWidget {
         }
 
         step.setup(this);
-        setupUi(step.getLayout());
+        setupUi(step);
 
         if (step.getLayout() == AbstractStep.StepLayout.LEFT_IMAGE) {
             step.setupLeftImage(leftImage);
