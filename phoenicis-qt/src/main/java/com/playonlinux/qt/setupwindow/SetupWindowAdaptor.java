@@ -89,7 +89,9 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public ProgressControl showProgressBar(InterrupterSynchronousMessage message, String textToShow) {
-        return null;
+        ProgressBarStep progressBarStep = new ProgressBarStep(message, textToShow);
+        setupWindow.setStep(progressBarStep);
+        return progressBarStep;
     }
 
     @Override
