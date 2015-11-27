@@ -19,7 +19,6 @@
 package com.playonlinux.qt.setupwindow;
 
 import com.playonlinux.core.messages.CancelerMessage;
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QVBoxLayout;

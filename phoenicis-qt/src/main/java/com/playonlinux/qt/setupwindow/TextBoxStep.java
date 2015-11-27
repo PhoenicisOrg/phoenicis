@@ -18,6 +18,7 @@
 
 package com.playonlinux.qt.setupwindow;
 
+import com.playonlinux.core.messages.CancelerMessage;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.trolltech.qt.gui.*;
 
@@ -33,7 +34,7 @@ public class TextBoxStep extends AbstractDefaultInstallStep {
     private final String text;
     private final String defaultValue;
 
-    public TextBoxStep(CancelerSynchronousMessage message, String text, String defaultValue) {
+    public TextBoxStep(CancelerMessage message, String text, String defaultValue) {
         super(message);
         this.text = text;
         this.defaultValue = defaultValue;

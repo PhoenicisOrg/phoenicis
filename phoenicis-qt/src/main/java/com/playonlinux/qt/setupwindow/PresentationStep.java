@@ -18,15 +18,12 @@
 
 package com.playonlinux.qt.setupwindow;
 
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
+import com.playonlinux.core.messages.CancelerMessage;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QFont;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Presentation step displayed within a SetupWindow
@@ -35,7 +32,7 @@ public class PresentationStep extends AbstractDefaultPresentationStep {
 
     private final String text;
 
-    public PresentationStep(CancelerSynchronousMessage message, String text) {
+    public PresentationStep(CancelerMessage message, String text) {
         super(message);
         this.text = text;
     }

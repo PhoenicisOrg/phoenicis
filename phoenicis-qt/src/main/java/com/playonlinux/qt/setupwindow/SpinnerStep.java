@@ -21,7 +21,6 @@ package com.playonlinux.qt.setupwindow;
 import com.playonlinux.core.messages.CancelerMessage;
 import com.playonlinux.qt.common.AnimationHelper;
 import com.playonlinux.qt.common.ResourceHelper;
-import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.*;
 
 /**
@@ -42,13 +41,13 @@ public class SpinnerStep extends MessageStep {
         QWidget indicatorContainer = new QWidget();
         indicatorContainer.setLayout(new QHBoxLayout());
         QLabel indicatorLabel = new QLabel();
-        indicatorContainer.layout().addItem(new QSpacerItem(1,1, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Ignored));
+        indicatorContainer.layout().addItem(new QSpacerItem(1, 1, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Ignored));
         indicatorContainer.layout().addWidget(indicatorLabel);
-        indicatorContainer.layout().addItem(new QSpacerItem(1,1, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Ignored));
+        indicatorContainer.layout().addItem(new QSpacerItem(1, 1, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Ignored));
 
-        contentPanel.layout().addItem(new QSpacerItem(1,1, QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Expanding));
+        contentPanel.layout().addItem(new QSpacerItem(1, 1, QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Expanding));
         contentPanel.layout().addWidget(indicatorContainer);
-        contentPanel.layout().addItem(new QSpacerItem(1,1, QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Expanding));
+        contentPanel.layout().addItem(new QSpacerItem(1, 1, QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Expanding));
 
         loadIndicator = new AnimationHelper(indicatorLabel, 85);
         for (int i = 0; i <= 12; ++i) {

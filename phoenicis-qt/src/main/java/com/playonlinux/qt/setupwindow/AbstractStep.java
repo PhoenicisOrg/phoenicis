@@ -23,7 +23,6 @@ import com.playonlinux.qt.common.ResourceHelper;
 import com.trolltech.qt.gui.*;
 import org.apache.commons.lang.StringUtils;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,14 +69,14 @@ public abstract class AbstractStep {
     public abstract StepLayout getLayout();
 
     /* RESOURCES */
-    public final void setLeftImage(URL leftImage){
+    public final void setLeftImage(URL leftImage) {
         QApplication.invokeLater(() -> {
             QPixmap pixmap = ResourceHelper.getPixmap(leftImage);
             updateLeftImage(pixmap);
         });
     }
 
-    protected void updateLeftImage(QPixmap pixmap){
+    protected void updateLeftImage(QPixmap pixmap) {
         leftImageLabel.setPixmap(pixmap);
     }
 
@@ -89,7 +88,8 @@ public abstract class AbstractStep {
 
     /* TEARDOWN */
 
-    public void tearDown(){}
+    public void tearDown() {
+    }
 
     /* RENDERING */
 

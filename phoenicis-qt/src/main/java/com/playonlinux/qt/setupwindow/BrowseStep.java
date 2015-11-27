@@ -18,6 +18,7 @@
 
 package com.playonlinux.qt.setupwindow;
 
+import com.playonlinux.core.messages.CancelerMessage;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.trolltech.qt.gui.*;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +38,7 @@ public class BrowseStep extends MessageStep {
 
     private String selectedFile = null;
 
-    public BrowseStep(CancelerSynchronousMessage message, String text, File browseDirectory, List<String> extensionFilters) {
+    public BrowseStep(CancelerMessage message, String text, File browseDirectory, List<String> extensionFilters) {
         super(message, text);
         this.browseDirectory = browseDirectory;
         this.extensionFilters = extensionFilters;

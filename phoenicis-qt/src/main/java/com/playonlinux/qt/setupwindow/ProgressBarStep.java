@@ -19,11 +19,8 @@
 package com.playonlinux.qt.setupwindow;
 
 import com.playonlinux.core.messages.CancelerMessage;
-import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.playonlinux.ui.api.ProgressControl;
 import com.trolltech.qt.gui.*;
-
-import java.util.List;
 
 /**
  * ProgressBar step displayed within a SetupWindow
@@ -65,7 +62,7 @@ public class ProgressBarStep extends MessageStep implements ProgressControl {
 
     @Override
     public void setProgressPercentage(double value) {
-        QApplication.invokeLater(() -> progressBar.setValue((int)(value * 100)));
+        QApplication.invokeLater(() -> progressBar.setValue((int) (value * 100)));
     }
 
     @Override
