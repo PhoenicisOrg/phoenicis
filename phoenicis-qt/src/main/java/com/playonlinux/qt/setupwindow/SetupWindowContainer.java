@@ -40,9 +40,11 @@ public class SetupWindowContainer extends QDialog {
     public SetupWindowContainer() {
         setupUi();
         setupWindowContainer.tabCloseRequested.connect(this, "setupWindow_close(int)");
+        setupWindowContainer.currentChanged.connect(this, "setupWindow_tabChange(int)");
     }
 
     private void setupUi() {
+        setWindowTitle("PlayOnLinux");
         setStyleSheet(ResourceHelper.getStyleSheet(getClass(), "style.css"));
 
         mainLayout = new QVBoxLayout(this);
@@ -80,9 +82,20 @@ public class SetupWindowContainer extends QDialog {
     /* EVENT HANDLERS */
 
     private void setupWindow_close(int index) {
+        getSetupWindowById(index).getAdaptor().close();
+    }
+
+    private void setupWindow_tabChange(int index) {
+        setWindowTitle("PlayOnLinux - " + getSetupWindowById(index).getTitle());
+    }
+
+
+    /* HELPERS */
+
+    private SetupWindowQtImplementation getSetupWindowById(int id) {
         SetupWindowQtImplementation setupWindow;
-        setupWindow = (SetupWindowQtImplementation) setupWindowContainer.widget(index);
-        setupWindow.getAdaptor().close();
+        setupWindow = (SetupWindowQtImplementation) setupWindowContainer.widget(id);
+        return setupWindow;
     }
 
 }
