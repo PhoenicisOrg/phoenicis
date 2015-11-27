@@ -18,6 +18,7 @@
 
 package com.playonlinux.qt.setupwindow;
 
+import com.playonlinux.core.messages.CancelerMessage;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QLabel;
@@ -33,7 +34,7 @@ public class MessageStep extends AbstractDefaultInstallStep {
 
     protected QLabel messageLabel;
 
-    public MessageStep(CancelerSynchronousMessage message, String text) {
+    public MessageStep(CancelerMessage message, String text) {
         super(message);
         this.text = text;
     }

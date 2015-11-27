@@ -84,6 +84,7 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public void showSpinnerStep(InterrupterAsynchroneousMessage message, String textToShow) {
+        setupWindow.setStep(new SpinnerStep(message, textToShow));
     }
 
     @Override
