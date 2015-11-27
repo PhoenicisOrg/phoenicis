@@ -1,0 +1,22 @@
+.SetupWindow .TopBar {
+    min-height: 60px;
+    max-height: 60px;
+    background: url('classpath:com/playonlinux/qt/setupwindow/topBar.png') center right/100% no-repeat, #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.SetupWindow .LeftImage {
+    min-height: 356px;
+    max-height: 356px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.SetupWindow .AbstractDefaultPresentationStep {
+    background: #fff;
+}
+
+.SetupWindow .MenuStep QListWidget {
+    min-height: 240px;
+    max-height: 240px;
+}
