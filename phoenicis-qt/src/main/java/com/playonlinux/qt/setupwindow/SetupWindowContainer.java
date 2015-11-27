@@ -20,12 +20,12 @@ package com.playonlinux.qt.setupwindow;
 
 import com.playonlinux.qt.common.ResourceHelper;
 import com.playonlinux.ui.api.SetupWindow;
-import com.trolltech.qt.gui.QDialog;
-import com.trolltech.qt.gui.QTabWidget;
-import com.trolltech.qt.gui.QVBoxLayout;
+import com.trolltech.qt.gui.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.playonlinux.core.lang.Localisation.translate;
 
 /**
  * Qt SetupWindow implementation. This window will contain all running Setups attached into tabs.
@@ -86,7 +86,34 @@ public class SetupWindowContainer extends QDialog {
     }
 
     private void setupWindow_tabChange(int index) {
-        setWindowTitle("PlayOnLinux - " + getSetupWindowById(index).getTitle());
+        SetupWindowQtImplementation setupWindow = getSetupWindowById(index);
+        if (setupWindow != null) {
+            setWindowTitle("PlayOnLinux - " + setupWindow.getTitle());
+        } else {
+            setWindowTitle("PlayOnLinux");
+        }
+    }
+
+    @Override
+    protected void closeEvent(QCloseEvent e) {
+        if (setupWindows.size() > 0) {
+            QMessageBox confirmDialog = new QMessageBox();
+            confirmDialog.setWindowTitle(translate("${application.name}"));
+            confirmDialog.setText(translate("Are you sure you want to abort all running Installations?"));
+            confirmDialog.setIcon(QMessageBox.Icon.Warning);
+            confirmDialog.addButton(QMessageBox.StandardButton.Ok);
+            confirmDialog.addButton(QMessageBox.StandardButton.Cancel);
+            confirmDialog.setEscapeButton(QMessageBox.StandardButton.Cancel);
+            confirmDialog.setDefaultButton(QMessageBox.StandardButton.Cancel);
+            confirmDialog.exec();
+            if (confirmDialog.clickedButton() == confirmDialog.escapeButton()) {
+                e.setAccepted(false);
+            } else {
+                for (SetupWindow setupWindow : setupWindows.keySet()) {
+                    setupWindow.close();
+                }
+            }
+        }
     }
 
 
