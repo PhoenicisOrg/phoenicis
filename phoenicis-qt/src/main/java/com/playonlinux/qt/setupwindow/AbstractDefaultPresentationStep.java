@@ -41,12 +41,13 @@ public abstract class AbstractDefaultPresentationStep extends AbstractDefaultSte
 
     @Override
     public void setupLeftImage(QLabel leftImage) {
+        super.setupLeftImage(leftImage);
         switch (OperatingSystem.fetchCurrentOperationSystem()) {
             case LINUX:
-                leftImage.setPixmap(ResourceHelper.getPixmap(getClass(), "playonlinux.png"));
+                updateLeftImage(ResourceHelper.getPixmap(getClass(), "playonlinux.png"));
                 break;
             case MACOSX:
-                leftImage.setPixmap(ResourceHelper.getPixmap(getClass(), "playonmac.png"));
+                updateLeftImage(ResourceHelper.getPixmap(getClass(), "playonmac.png"));
                 break;
         }
     }

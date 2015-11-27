@@ -25,6 +25,9 @@ import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Presentation step displayed within a SetupWindow
  */

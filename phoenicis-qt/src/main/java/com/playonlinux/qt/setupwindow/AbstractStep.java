@@ -71,8 +71,10 @@ public abstract class AbstractStep {
 
     /* RESOURCES */
     public final void setLeftImage(URL leftImage){
-        QPixmap pixmap = ResourceHelper.getPixmap(leftImage);
-        updateLeftImage(pixmap);
+        QApplication.invokeLater(() -> {
+            QPixmap pixmap = ResourceHelper.getPixmap(leftImage);
+            updateLeftImage(pixmap);
+        });
     }
 
     protected void updateLeftImage(QPixmap pixmap){
