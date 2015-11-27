@@ -106,6 +106,8 @@ public class SetupWindowQtImplementation extends QWidget {
 
             containerLayout.addWidget(topBar, 0, 0, 1, 1);
             containerLayout.addWidget(content, 1, 0, 1, 1);
+        }else {
+            containerLayout.addWidget(content, 0, 0, 1, 1);
         }
     }
 
@@ -126,6 +128,10 @@ public class SetupWindowQtImplementation extends QWidget {
     }
 
     protected void setStep(AbstractStep step) {
+        if(this.currentStep != null){
+            this.currentStep.tearDown();
+        }
+
         step.setup(this);
         setupUi(step.getLayout());
 

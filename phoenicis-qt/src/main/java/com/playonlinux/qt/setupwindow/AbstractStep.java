@@ -40,7 +40,8 @@ public abstract class AbstractStep {
 
     public enum StepLayout {
         LEFT_IMAGE,
-        TOP_BAR
+        TOP_BAR,
+        NONE
     }
 
     public enum ButtonType {
@@ -65,9 +66,13 @@ public abstract class AbstractStep {
 
     /* SETUP */
 
-    protected final void setup(SetupWindowQtImplementation setupWindow) {
+    public final void setup(SetupWindowQtImplementation setupWindow) {
         this.setupWindow = setupWindow;
     }
+
+    /* TEARDOWN */
+
+    public void tearDown(){}
 
     /* RENDERING */
 
