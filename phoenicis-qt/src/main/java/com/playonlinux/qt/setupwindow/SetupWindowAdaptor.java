@@ -54,12 +54,12 @@ public class SetupWindowAdaptor implements SetupWindow {
 
     @Override
     public void setLeftImage(File leftImage) throws IOException {
-        //TODO
+        setupWindow.getStep().setLeftImage(new URL(leftImage.toString()));
     }
 
     @Override
     public void setLeftImage(URL leftImage) throws IOException {
-        //TODO
+        setupWindow.getStep().setLeftImage(leftImage);
     }
 
     @Override

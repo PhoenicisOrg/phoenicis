@@ -19,9 +19,12 @@
 package com.playonlinux.qt.setupwindow;
 
 import com.playonlinux.core.messages.CancelerMessage;
+import com.playonlinux.qt.common.ResourceHelper;
 import com.trolltech.qt.gui.*;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,9 @@ import static com.playonlinux.core.lang.Localisation.translate;
 public abstract class AbstractStep {
 
     protected SetupWindowQtImplementation setupWindow;
+    protected QWidget topBar;
+    protected QLabel leftImageLabel;
+
     private QDialogButtonBox buttonBox;
     private CancelerMessage message;
 
@@ -63,6 +69,15 @@ public abstract class AbstractStep {
 
     public abstract StepLayout getLayout();
 
+    /* RESOURCES */
+    public final void setLeftImage(URL leftImage){
+        QPixmap pixmap = ResourceHelper.getPixmap(leftImage);
+        updateLeftImage(pixmap);
+    }
+
+    protected void updateLeftImage(QPixmap pixmap){
+        leftImageLabel.setPixmap(pixmap);
+    }
 
     /* SETUP */
 
@@ -76,10 +91,12 @@ public abstract class AbstractStep {
 
     /* RENDERING */
 
-    public void setupTopBar(QWidget topBarPanel) {
+    public void setupTopBar(QWidget topBar) {
+        this.topBar = topBar;
     }
 
-    public void setupLeftImage(QLabel leftImagePanel) {
+    public void setupLeftImage(QLabel leftImageLabel) {
+        this.leftImageLabel = leftImageLabel;
     }
 
     public void setupContent(QWidget contentPanel) {

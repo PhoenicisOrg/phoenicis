@@ -22,13 +22,17 @@ import com.trolltech.qt.core.QBuffer;
 import com.trolltech.qt.core.QByteArray;
 import com.trolltech.qt.core.QIODevice;
 import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QImage;
+import com.trolltech.qt.gui.QImageReader;
 import com.trolltech.qt.gui.QPixmap;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URL;
 
 /**
  * Small helper class for easing the use of images and icons.
@@ -59,6 +63,24 @@ public final class ResourceHelper {
     public static QPixmap getPixmap(String resourcePath) {
         return getPixmap(ResourceHelper.class, resourcePath);
     }
+
+    /**
+     * Load a pixmap from the given URL.
+     * @param source URL to load the pixmap from
+     * @return loaded Pixmap
+     */
+    public static QPixmap getPixmap(URL source){
+        try {
+            QBuffer sourceDev = getDeviceFromStream(source.openStream());
+            QPixmap pixmap = new QPixmap();
+            pixmap.loadFromData(sourceDev.data());
+            return pixmap;
+        } catch (IOException e) {
+            LOGGER.error(e);
+            return new QPixmap();
+        }
+    }
+
 
     /**
      * Load the resource of the given class with the given path as an icon.
@@ -93,21 +115,29 @@ public final class ResourceHelper {
     }
 
     /**
-     * Generate a QIODevice for the resource with the given name of the given class
-     * @param c
-     * @param resourcePath
-     * @return
+     * Generate a QIODevice from the given InputStream
+     * @param stream Stream to turn into a QIODevice
+     * @return A QBuffer filled with the date from the given InputStream
      */
-    public static QBuffer getDeviceFromResource(Class<?> c, String resourcePath){
-        InputStream resource = c.getResourceAsStream(resourcePath);
+    public static QBuffer getDeviceFromStream(InputStream stream){
         byte[] resourceData;
         try {
-            resourceData = IOUtils.toByteArray(resource);
+            resourceData = IOUtils.toByteArray(stream);
         } catch (IOException e) {
             LOGGER.error(e);
             return null;
         }
         return new QBuffer(new QByteArray(resourceData));
+    }
+
+    /**
+     * Generate a QIODevice for the resource with the given name of the given class
+     * @param c Class that should be used for locating the resource
+     * @param resourcePath relative path of the resource
+     * @return A QBuffer filled with the data from the resource
+     */
+    public static QBuffer getDeviceFromResource(Class<?> c, String resourcePath){
+        return getDeviceFromStream(c.getResourceAsStream(resourcePath));
     }
 
 }
