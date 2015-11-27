@@ -18,6 +18,9 @@
 
 package com.playonlinux.qt.common;
 
+import com.trolltech.qt.core.QBuffer;
+import com.trolltech.qt.core.QByteArray;
+import com.trolltech.qt.core.QIODevice;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QPixmap;
 import org.apache.commons.io.IOUtils;
@@ -87,6 +90,24 @@ public final class ResourceHelper {
             LOGGER.error(e);
         }
         return styleWriter.toString();
+    }
+
+    /**
+     * Generate a QIODevice for the resource with the given name of the given class
+     * @param c
+     * @param resourcePath
+     * @return
+     */
+    public static QBuffer getDeviceFromResource(Class<?> c, String resourcePath){
+        InputStream resource = c.getResourceAsStream(resourcePath);
+        byte[] resourceData;
+        try {
+            resourceData = IOUtils.toByteArray(resource);
+        } catch (IOException e) {
+            LOGGER.error(e);
+            return null;
+        }
+        return new QBuffer(new QByteArray(resourceData));
     }
 
 }
