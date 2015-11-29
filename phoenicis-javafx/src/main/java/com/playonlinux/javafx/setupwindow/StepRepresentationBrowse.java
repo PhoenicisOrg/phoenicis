@@ -54,11 +54,15 @@ public class StepRepresentationBrowse extends StepRepresentationMessage {
             }
             fileChooser.setInitialDirectory(browseDirectory);
 
-            selectedFile = fileChooser.showOpenDialog(this.getParentWindow());
+            File dialogResult = fileChooser.showOpenDialog(this.getParentWindow());
+            if(dialogResult != null){
+                selectedFile = dialogResult;
+                setNextButtonEnabled(true);
+            }
         });
 
-
         this.addToStep(browseButton);
+        this.setNextButtonEnabled(false);
     }
 
     @Override
