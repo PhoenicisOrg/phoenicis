@@ -113,8 +113,9 @@ public class MainWindowEventHandler implements UIEventHandler {
         QFileDialog fileDialog = new QFileDialog(mainWindow);
         fileDialog.setDirectory(lastLocalScriptDir);
         fileDialog.setFileMode(QFileDialog.FileMode.ExistingFile);
-        fileDialog.setViewMode(QFileDialog.ViewMode.List);
         fileDialog.setAcceptMode(QFileDialog.AcceptMode.AcceptOpen);
+        fileDialog.setNameFilter("POL Scriptfiles (*.py *.sh)");
+        fileDialog.setNameFilterDetailsVisible(true);
         if (fileDialog.exec() == QDialog.DialogCode.Accepted.value()) {
             File scriptFile = new File(fileDialog.selectedFiles().get(0));
 
