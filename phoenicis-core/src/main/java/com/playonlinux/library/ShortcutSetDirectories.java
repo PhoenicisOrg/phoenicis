@@ -18,72 +18,62 @@
 
 package com.playonlinux.library;
 
-import java.io.Closeable;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.filesystem.DirectoryWatcherFiles;
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>> implements AutoCloseable {
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
-import com.playonlinux.core.observer.Observer;
-
-class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>>
-        implements Observer<ObservableDirectoryFiles, File[]>, Closeable {
-    
-    private final ObservableDirectoryFiles iconDirectory;
-    private final ObservableDirectoryFiles shortcutDirectory;
+    private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
+    private final DirectoryWatcherFiles iconDirectory;
+    private final DirectoryWatcherFiles shortcutDirectory;
     private final URL defaultIcon;
     private final List<ShortcutFiles> shortcutFiles;
 
-    private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
-
-    public ShortcutSetDirectories(ObservableDirectoryFiles shortcutDirectory, ObservableDirectoryFiles iconDirectory,
+    public ShortcutSetDirectories(DirectoryWatcherFiles shortcutDirectory, DirectoryWatcherFiles iconDirectory,
                                   URL defaultIcon) {
         this.shortcutFiles = new ArrayList<>();
         this.iconDirectory = iconDirectory;
         this.defaultIcon = defaultIcon;
         this.shortcutDirectory = shortcutDirectory;
 
-        shortcutDirectory.addObserver(this);
-        iconDirectory.addObserver(this);
+        this.shortcutDirectory.setOnChange(this::update);
     }
 
     public synchronized List<ShortcutFiles> getShortcutFiles() {
         return shortcutFiles;
     }
 
-    @Override
-    public void update(ObservableDirectoryFiles observableDirectoryFiles, File[] argument) {
-        if(observableDirectoryFiles == shortcutDirectory) {
-            getShortcutFiles().clear();
-            for (File shortcutFile : argument) {
-                try {
-                    URL iconURL;
-                    File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
-                    if (!iconFile.exists()) {
-                        iconURL = defaultIcon;
-                    } else {
-                        iconURL = new URL("file://"+iconFile.getAbsolutePath());
-                    }
-
-                    this.getShortcutFiles().add(new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile));
-                } catch (IOException e) {
-                    LOGGER.warn(e);
+    public void update(File[] files) {
+        getShortcutFiles().clear();
+        for (File shortcutFile : files) {
+            try {
+                URL iconURL;
+                File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
+                if (!iconFile.exists()) {
+                    iconURL = defaultIcon;
+                } else {
+                    iconURL = new URL("file://" + iconFile.getAbsolutePath());
                 }
+
+                this.getShortcutFiles().add(new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile));
+            } catch (IOException e) {
+                LOGGER.warn(e);
             }
         }
         this.notifyObservers(getShortcutFiles());
     }
 
-
     @Override
     public void close() {
-        shortcutDirectory.deleteObserver(this);
-        iconDirectory.deleteObserver(this);
+        shortcutDirectory.close();
+        iconDirectory.close();
         this.deleteObservers();
     }
 }

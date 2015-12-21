@@ -18,22 +18,22 @@
 
 package com.playonlinux.containers;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.filesystem.DirectoryWatcherFiles;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+import org.apache.commons.lang.StringUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 @Scan
 public class DefaultContainersManager
@@ -44,12 +44,12 @@ public class DefaultContainersManager
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static ServiceManager playOnLinuxBackgroundServicesManager;
+    static ExecutorService executorService;
 
     @Inject
     static AnyContainerFactory anyContainerFactory;
 
-    private ObservableDirectoryFiles containersDirectoryObservable;
+    private DirectoryWatcherFiles containersDirectoryObservable;
     private final List<Container<?>> containers = new ArrayList<>();
 
     @Override
@@ -57,10 +57,9 @@ public class DefaultContainersManager
         return new ArrayList<>(containers);
     }
 
-    @Override
-    public void update(ObservableDirectoryFiles observable, File[] argument) {
+    public void update(File[] files) {
         containers.clear();
-        for(File file: argument) {
+        for(File file: files) {
             final ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
             String containerType = containerConfigFile.readValue("containerType");
             if(StringUtils.isBlank(containerType)) {
@@ -73,23 +72,17 @@ public class DefaultContainersManager
         notifyObservers(this);
     }
 
+
     @Override
     public void shutdown() {
-        containersDirectoryObservable.deleteObserver(this);
+        // Nothing to shutdown
     }
 
     @Override
     public void init() throws ServiceInitializationException {
         final File containersDirectory = playOnLinuxContext.makeContainersPath();
-        try {
-            containersDirectoryObservable = new ObservableDirectoryFiles(containersDirectory);
-        } catch (PlayOnLinuxException e) {
-            throw new ServiceInitializationException(e);
-        }
-
-        playOnLinuxBackgroundServicesManager.register(containersDirectoryObservable);
-
-        containersDirectoryObservable.addObserver(this);
+        containersDirectoryObservable = new DirectoryWatcherFiles(executorService, containersDirectory);
+        containersDirectoryObservable.setOnChange(this::update);
     }
 
 

@@ -18,26 +18,26 @@
 
 package com.playonlinux.library;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
+import com.playonlinux.filesystem.DirectoryWatcherFiles;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 @Scan
 public final class LibraryEntitiesProvider
@@ -49,7 +49,7 @@ public final class LibraryEntitiesProvider
     static PlayOnLinuxContext playOnLinuxContext;
 
     @Inject
-    static ServiceManager playOnLinuxBackgroundServicesManager;
+    static ExecutorService executorService;
 
     private ShortcutSetDirectories shortcutSetDirectories;
 
@@ -95,17 +95,11 @@ public final class LibraryEntitiesProvider
         final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         final URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
 
-        ObservableDirectoryFiles shortcutDirectoryObservable;
-        ObservableDirectoryFiles iconDirectoryObservable;
-        try {
-            shortcutDirectoryObservable = new ObservableDirectoryFiles(shortcutDirectory);
-            iconDirectoryObservable = new ObservableDirectoryFiles(iconDirectory);
-        } catch (PlayOnLinuxException e) {
-            throw new ServiceInitializationException(e);
-        }
+        DirectoryWatcherFiles shortcutDirectoryObservable;
+        DirectoryWatcherFiles iconDirectoryObservable;
 
-        playOnLinuxBackgroundServicesManager.register(shortcutDirectoryObservable);
-        playOnLinuxBackgroundServicesManager.register(iconDirectoryObservable);
+        shortcutDirectoryObservable = new DirectoryWatcherFiles(executorService, shortcutDirectory);
+        iconDirectoryObservable = new DirectoryWatcherFiles(executorService, iconDirectory);
 
         shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable, defaultIcon);
 

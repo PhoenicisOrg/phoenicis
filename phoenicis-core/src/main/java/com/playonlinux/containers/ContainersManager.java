@@ -18,19 +18,15 @@
 
 package com.playonlinux.containers;
 
-import java.io.File;
-import java.util.List;
-
 import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.ObservableDirectoryFiles;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
+
+import java.util.List;
 
 /**
  * Manage PlayOnLinux containers
  */
 public interface ContainersManager extends Observable<ContainersManager>,
-                                           Observer<ObservableDirectoryFiles, File[]>,
                                            Service {
     /**
      * Get the list of containers
