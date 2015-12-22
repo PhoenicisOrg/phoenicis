@@ -40,13 +40,10 @@ public class AnyContainerFactory implements ContainerFactory<ContainerEntity> {
 
     @Override
     public boolean validate(String containerType) {
-        for(ContainerFactory<?> containerFactory: containerFactories) {
-            if(containerFactory.validate(containerType)) {
-                return true;
-            }
-        }
-
-        return false;
+    	return containerFactories.stream()
+    		.filter(cf -> cf.validate(containerType))
+    		.findFirst()
+    		.isPresent();
     }
 
     public AnyContainerFactory withContainerFactory(ContainerFactory<? extends ContainerEntity> containerFactory) {
