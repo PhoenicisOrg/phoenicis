@@ -29,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.function.Consumer;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressEntity;
 
 public class HTTPDownloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
@@ -37,7 +37,7 @@ public class HTTPDownloader {
     private static final int BLOCK_SIZE = 1024;
     private final URL url;
     private float percentage;
-    private Consumer<ProgressStateEntity> onChange;
+    private Consumer<ProgressEntity> onChange;
     
     public enum State {
         READY, PROGRESSING, SUCCESS, FAILED
@@ -80,8 +80,8 @@ public class HTTPDownloader {
     }
 
     private void changeState(State state) {
-        ProgressStateEntity currentState = new ProgressStateEntity.Builder().withPercent(this.percentage)
-                .withState(ProgressStateEntity.State.valueOf(state.name())).build();
+        ProgressEntity currentState = new ProgressEntity.Builder().withPercent(this.percentage)
+                .withState(ProgressEntity.State.valueOf(state.name())).build();
         onChange.accept(currentState);
     }
 
@@ -120,7 +120,7 @@ public class HTTPDownloader {
         return outputStream.toByteArray();
     }
 
-    public void setOnChange(Consumer<ProgressStateEntity> onChange) {
+    public void setOnChange(Consumer<ProgressEntity> onChange) {
         this.onChange = onChange;
     }
 }

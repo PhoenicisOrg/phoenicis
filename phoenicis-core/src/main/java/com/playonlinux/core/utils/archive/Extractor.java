@@ -25,13 +25,13 @@ import java.util.function.Consumer;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.utils.FileAnalyser;
 
 public class Extractor {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
-    private Consumer<ProgressStateEntity> onChange;
+    private Consumer<ProgressEntity> onChange;
     
     /**
      * Uncompress a .tar file
@@ -61,14 +61,14 @@ public class Extractor {
     }
 
 
-    private Void changeState(ProgressStateEntity progressStateEntity) {
+    private Void changeState(ProgressEntity progressStateEntity) {
         //TODO Check if using an other functional interface is possible
         onChange.accept(progressStateEntity);
         return null;
     }
 
 
-    public void setOnChange(Consumer<ProgressStateEntity> onChange) {
+    public void setOnChange(Consumer<ProgressEntity> onChange) {
         this.onChange = onChange;
     }
 }

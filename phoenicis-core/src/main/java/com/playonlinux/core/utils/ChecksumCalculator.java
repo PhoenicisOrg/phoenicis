@@ -31,13 +31,13 @@ import java.util.function.Consumer;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressEntity;
 
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
     private static final String WAIT_MESSAGE = translate("Please wait while we are verifying the file...");
 
-    private Consumer<ProgressStateEntity> onChange;
+    private Consumer<ProgressEntity> onChange;
     
     public String calculate(File fileToCheck, String algorithm) throws IOException {
         final long fileSize = FileUtils.sizeOf(fileToCheck);
@@ -73,14 +73,14 @@ public class ChecksumCalculator {
     }
 
     private void changeState(double percentage) {
-        onChange.accept(new ProgressStateEntity.Builder()
+        onChange.accept(new ProgressEntity.Builder()
                 .withPercent(percentage)
                 .withProgressText(WAIT_MESSAGE)
                 .build()
         );
     }
 
-    public void setOnChange(Consumer<ProgressStateEntity> onChange) {
+    public void setOnChange(Consumer<ProgressEntity> onChange) {
         this.onChange = onChange;
     }
 }

@@ -25,7 +25,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
@@ -123,8 +123,8 @@ public class DefaultInstallerDownloaderEntityProvider
         SIGNATURE_ERROR
     }
 
-    public void update(ProgressStateEntity argument) {
-        if(argument.getState() == ProgressStateEntity.State.PROGRESSING) {
+    public void update(ProgressEntity argument) {
+        if(argument.getState() == ProgressEntity.State.PROGRESSING) {
             changeState(State.PROGRESSING, argument.getPercent());
         }
     }
