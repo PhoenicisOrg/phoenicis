@@ -18,8 +18,8 @@
 
 package com.playonlinux.containers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
@@ -54,16 +54,12 @@ public final class ContainersEntitiesProvider
 
     @Override
     public void update(ContainersManager observable, ContainersManager argument) {
-        final List<ContainerEntity> containerEntities = new ArrayList<>();
-        this.containersManager = argument;
-        for(Container container : containersManager.getContainers()) {
-            final ContainerEntity containerEntity = container.createEntity();
-            if(lastFilter == null || lastFilter.apply(containerEntity)) {
-                containerEntities.add(containerEntity);
-            }
-        }
-        final ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
+        List<ContainerEntity> containerEntities = argument.getContainers().stream()
+        		.map(c -> c.createEntity())
+        		.filter(e -> lastFilter == null || lastFilter.apply(e))
+        		.collect(Collectors.toList());
 
+        ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
         this.notifyObservers(containersWindowEntity);
     }
 
@@ -74,7 +70,7 @@ public final class ContainersEntitiesProvider
 
     @Override
     public void init() throws ServiceInitializationException {
-        final ContainersManager containersManagerService = serviceManager.getService(ContainersManager.class);
+        ContainersManager containersManagerService = serviceManager.getService(ContainersManager.class);
         containersManagerService.addObserver(this);
     }
 }
