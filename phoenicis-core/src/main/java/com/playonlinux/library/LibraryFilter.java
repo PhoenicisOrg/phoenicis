@@ -17,16 +17,17 @@
  */
 package com.playonlinux.library;
 
+import java.util.function.Predicate;
+
 import org.apache.commons.lang.StringUtils;
 
-import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 
 /**
  * Filter for installed applications in the MainWindow
  */
-public class LibraryFilter extends ObservableDefaultImplementation implements Filter<InstalledApplicationEntity> {
+public class LibraryFilter extends ObservableDefaultImplementation implements Predicate<InstalledApplicationEntity> {
 
     private final String name;
 
@@ -35,7 +36,7 @@ public class LibraryFilter extends ObservableDefaultImplementation implements Fi
     }
 
     @Override
-    public boolean apply(InstalledApplicationEntity item) {
+    public boolean test(InstalledApplicationEntity item) {
         // We want to return the whole list for EMPTY search string. Otherwise compare strings.
         return !StringUtils.isNotBlank(name) || item.getName().toLowerCase().contains(name);
     }

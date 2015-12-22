@@ -21,6 +21,7 @@ package com.playonlinux.apps;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.playonlinux.apps.dto.ApplicationDTO;
@@ -31,7 +32,6 @@ import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -54,16 +54,16 @@ public final class AppsEntitiesProvider
     private final List<AppEntity> filteredAppsItemsDTOs = new ArrayList<>();
     private final List<AppsCategoryEntity> categoriesDTO = new ArrayList<>();
 
-    private Filter<AppEntity> lastFilter;
+    private Predicate<AppEntity> lastFilter;
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     @Override
-    public void applyFilter(Filter<AppEntity> filter) {
+    public void applyFilter(Predicate<AppEntity> filter) {
         this.lastFilter = filter;
 
         filteredAppsItemsDTOs.clear();
         if(filter != null){
-            filteredAppsItemsDTOs.addAll(appsItemDTOs.stream().filter(filter::apply).collect(Collectors.toList()));
+            filteredAppsItemsDTOs.addAll(appsItemDTOs.stream().filter(filter).collect(Collectors.toList()));
         }
 
         this.notifyObservers(new AppsWindowEntity.Builder()

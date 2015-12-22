@@ -18,6 +18,7 @@
 
 package com.playonlinux.core.filter;
 
+import java.util.function.Predicate;
 
 /**
  * Represents a filterable object
@@ -30,6 +31,6 @@ public interface Filterable<T> {
      * Apply a filter
      * @param filter to apply
      */
-    void applyFilter(Filter<T> filter);
+    void applyFilter(Predicate<T> filter);
 
 }

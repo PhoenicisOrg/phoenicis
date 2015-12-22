@@ -19,16 +19,17 @@
 
 package com.playonlinux.apps;
 
+import java.util.function.Predicate;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.playonlinux.apps.entities.AppEntity;
-import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 /**
  * Filter implementation for CenterItems
  */
-public class AppsFilter extends ObservableDefaultImplementation implements Filter<AppEntity> {
+public class AppsFilter extends ObservableDefaultImplementation implements Predicate<AppEntity> {
     private final String title;
     private final String category;
     private final boolean showTesting;
@@ -49,7 +50,7 @@ public class AppsFilter extends ObservableDefaultImplementation implements Filte
     }
 
     @Override
-    public boolean apply(AppEntity item) {
+    public boolean test(AppEntity item) {
         if (StringUtils.isBlank(title) && category == null) {
             return false;
         }

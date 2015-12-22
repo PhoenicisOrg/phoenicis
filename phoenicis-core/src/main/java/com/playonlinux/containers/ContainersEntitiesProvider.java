@@ -19,11 +19,11 @@
 package com.playonlinux.containers;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -41,13 +41,13 @@ public final class ContainersEntitiesProvider
     @Inject
     static ServiceManager serviceManager;
 
-    private Filter<ContainerEntity> lastFilter;
+    private Predicate<ContainerEntity> lastFilter;
 
     private ContainersManager containersManager;
 
 
     @Override
-    public void applyFilter(Filter<ContainerEntity> filter) {
+    public void applyFilter(Predicate<ContainerEntity> filter) {
         this.lastFilter = filter;
         update(containersManager, containersManager);
     }
@@ -56,7 +56,7 @@ public final class ContainersEntitiesProvider
     public void update(ContainersManager observable, ContainersManager argument) {
         List<ContainerEntity> containerEntities = argument.getContainers().stream()
         		.map(c -> c.createEntity())
-        		.filter(e -> lastFilter == null || lastFilter.apply(e))
+        		.filter(e -> lastFilter == null || lastFilter.test(e))
         		.collect(Collectors.toList());
 
         ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
