@@ -36,7 +36,6 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
 
     private static final int BLOCK_SIZE = 1024;
     private final URL url;
-    private State state;
     private float percentage;
 
     public enum State {
@@ -45,8 +44,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
 
     public HTTPDownloader(URL url) {
         this.url = url;
-        this.state = State.READY;
-        this.changeState();
+        changeState(State.READY);
     }
 
     private HttpURLConnection openConnection(URL remoteFile) throws IOException {
@@ -67,26 +65,22 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
                 bufferedOutputStream.write(data, 0, i);
 
                 this.percentage = totalDataRead * 100 / fileSize;
-                this.state = State.PROGRESSING;
-                this.changeState();
+                changeState(State.PROGRESSING);
 
                 if (Thread.currentThread().isInterrupted()) {
                     throw new InterruptedException("The download has been aborted");
                 }
             }
         } catch (IOException | InterruptedException e) {
-            this.state = State.FAILED;
-            this.changeState();
+            changeState(State.FAILED);
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
-        this.state = State.SUCCESS;
-        this.changeState();
-
+        changeState(State.SUCCESS);
     }
 
-    private void changeState() {
+    private void changeState(State state) {
         ProgressStateEntity currentState = new ProgressStateEntity.Builder().withPercent(this.percentage)
-                .withState(ProgressStateEntity.State.valueOf(this.state.name())).build();
+                .withState(ProgressStateEntity.State.valueOf(state.name())).build();
         this.notifyObservers(currentState);
     }
 
