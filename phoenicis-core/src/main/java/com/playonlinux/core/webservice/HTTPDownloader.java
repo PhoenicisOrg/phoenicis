@@ -127,6 +127,6 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
 	} catch (IOException e) {
 	    throw new DownloadException("Download failed", e);
 	}
-	return outputStream.toByteArray();
+        return outputStream.toByteArray();
     }
 }
