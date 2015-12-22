@@ -27,17 +27,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.function.Consumer;
 
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
-public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStateEntity> {
+public class HTTPDownloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
 
     private static final int BLOCK_SIZE = 1024;
     private final URL url;
     private float percentage;
-
+    private Consumer<ProgressStateEntity> onChange;
+    
     public enum State {
         READY, PROGRESSING, SUCCESS, FAILED
     }
@@ -81,7 +82,7 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
     private void changeState(State state) {
         ProgressStateEntity currentState = new ProgressStateEntity.Builder().withPercent(this.percentage)
                 .withState(ProgressStateEntity.State.valueOf(state.name())).build();
-        this.notifyObservers(currentState);
+        onChange.accept(currentState);
     }
 
     public void get(File localFile) throws DownloadException {
@@ -117,5 +118,9 @@ public class HTTPDownloader extends ObservableDefaultImplementation<ProgressStat
             throw new DownloadException("Download failed", e);
         }
         return outputStream.toByteArray();
+    }
+
+    public void setOnChange(Consumer<ProgressStateEntity> onChange) {
+        this.onChange = onChange;
     }
 }

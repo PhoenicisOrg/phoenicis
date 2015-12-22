@@ -128,17 +128,15 @@ public class DefaultWineVersionsManager
 
         final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);
 
-        httpDownloader.addObserver(progressControl);
+        httpDownloader.setOnChange(progressControl);
         try {
             final File temporaryFile = File.createTempFile("wineVersion", "tar");
             temporaryFile.deleteOnExit();
             httpDownloader.get(temporaryFile);
-            httpDownloader.deleteObservers();
 
             final ChecksumCalculator checksumCalculator = new ChecksumCalculator();
-            checksumCalculator.addObserver(progressControl);
+            checksumCalculator.setOnChange(progressControl);
             final String clientSum = checksumCalculator.calculate(temporaryFile, "sha1");
-            checksumCalculator.deleteObservers();
             if(!clientSum.equals(serverSum)) {
                 throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch." +
                         System.lineSeparator() + System.lineSeparator() +
@@ -171,14 +169,12 @@ public class DefaultWineVersionsManager
     public void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws EngineInstallException {
         final File extractPath = getExtractPath(wineDistribution, version);
         final Extractor extractor = new Extractor();
-        extractor.addObserver(progressControl);
+        extractor.setOnChange(progressControl);
 
         try {
             extractor.uncompress(localFile, extractPath);
         } catch (ArchiveException e) {
            throw new EngineInstallException("Unable to extract archive", e);
-        } finally {
-            extractor.deleteObservers();
         }
     }
 

@@ -26,17 +26,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.function.Consumer;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 
 import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
-public class ChecksumCalculator extends ObservableDefaultImplementation<ProgressStateEntity> {
+public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
     private static final String WAIT_MESSAGE = translate("Please wait while we are verifying the file...");
 
+    private Consumer<ProgressStateEntity> onChange;
+    
     public String calculate(File fileToCheck, String algorithm) throws IOException {
         final long fileSize = FileUtils.sizeOf(fileToCheck);
         try(final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
@@ -48,7 +50,6 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
             }
 
             byte[] digest = getDigest(inputStream, messageDigest, fileSize);
-            this.deleteObservers();
             return Hex.encodeHexString(digest);
         }
     }
@@ -72,11 +73,14 @@ public class ChecksumCalculator extends ObservableDefaultImplementation<Progress
     }
 
     private void changeState(double percentage) {
-        this.notifyObservers(new ProgressStateEntity.Builder()
+        onChange.accept(new ProgressStateEntity.Builder()
                 .withPercent(percentage)
                 .withProgressText(WAIT_MESSAGE)
                 .build()
         );
     }
 
+    public void setOnChange(Consumer<ProgressStateEntity> onChange) {
+        this.onChange = onChange;
+    }
 }
