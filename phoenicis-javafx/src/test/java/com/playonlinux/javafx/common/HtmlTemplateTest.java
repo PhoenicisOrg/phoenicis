@@ -29,8 +29,6 @@ import java.io.OutputStream;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.javafx.common.HtmlTemplate;
-
 public class HtmlTemplateTest {
 
     private File testTemplate;
@@ -55,7 +53,9 @@ public class HtmlTemplateTest {
         String expected = "<html>" + "<head>" + "<title>Title</title>" + "</head>" + "<body>" + "Content: Content"
                 + "</bod>" + "</html>";
         assertEquals(expected, htmlTemplate.render(new Object() {
+            @SuppressWarnings("unused")
             String title = "Title";
+            @SuppressWarnings("unused")
             String content = "Content";
         }));
     }
