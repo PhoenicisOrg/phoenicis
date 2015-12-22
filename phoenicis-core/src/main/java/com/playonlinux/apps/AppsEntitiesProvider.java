@@ -61,10 +61,8 @@ public final class AppsEntitiesProvider
     public void applyFilter(Filter<AppEntity> filter) {
         this.lastFilter = filter;
 
-        if(filter == null) {
-            filteredAppsItemsDTOs.clear();
-        } else {
-            filteredAppsItemsDTOs.clear();
+        filteredAppsItemsDTOs.clear();
+        if(filter != null){
             filteredAppsItemsDTOs.addAll(appsItemDTOs.stream().filter(filter::apply).collect(Collectors.toList()));
         }
 
