@@ -30,6 +30,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.entities.ProgressEntity;
+import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.Service;
 
@@ -41,7 +42,7 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
     private final Semaphore updateSemaphore = new Semaphore(1);
 
     private List<T> items;
-    private ProgressEntity.State state = ProgressEntity.State.READY;
+    private ProgressState state = ProgressState.READY;
 
     public Webservice(URL url) {
         this.url = url;
@@ -50,7 +51,7 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
     public synchronized void populate() {
         try {
             updateSemaphore.acquire();
-            this.state = ProgressEntity.State.PROGRESSING;
+            this.state = ProgressState.PROGRESSING;
             this.update();
 
             try {
@@ -58,13 +59,13 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
                 final HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
                 final String result = httpDownloader.get();
                 items = mapper.readValue(result, this.defineTypeReference());
-                this.state = ProgressEntity.State.SUCCESS;
+                this.state = ProgressState.SUCCESS;
             } catch (DownloadException e) {
                 LOGGER.warn(String.format("Error while downloading %s", url), e);
-                this.state = ProgressEntity.State.FAILED;
+                this.state = ProgressState.FAILED;
             } catch (IOException e) {
                 LOGGER.warn(String.format("IO error while downloading %s", url), e);
-                this.state = ProgressEntity.State.FAILED;
+                this.state = ProgressState.FAILED;
             } finally {
                 this.update();
             }

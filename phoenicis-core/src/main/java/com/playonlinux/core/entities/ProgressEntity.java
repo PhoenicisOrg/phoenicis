@@ -25,7 +25,7 @@ import com.playonlinux.core.dto.DTO;
  * The UI will be able to represent this progress state (progressbar, etc...)
  */
 public class ProgressEntity implements DTO {
-    private final State state;
+    private final ProgressState state;
     private final double percent;
 
     private final String progressText;
@@ -36,7 +36,7 @@ public class ProgressEntity implements DTO {
         this.progressText = builder.progressText;
     }
 
-    public State getState() {
+    public ProgressState getState() {
         return state;
     }
 
@@ -48,20 +48,13 @@ public class ProgressEntity implements DTO {
         return progressText;
     }
 
-    public enum State {
-        READY,
-        PROGRESSING,
-        SUCCESS,
-        FAILED
-    }
-
     @Override
     public String toString() {
         return this.state.name();
     }
 
     public static class Builder {
-        private State state;
+        private ProgressState state;
         private double percent;
         private String progressText;
 
@@ -75,7 +68,7 @@ public class ProgressEntity implements DTO {
 
         }
 
-        public Builder withState(State state) {
+        public Builder withState(ProgressState state) {
             this.state = state;
             return this;
         }

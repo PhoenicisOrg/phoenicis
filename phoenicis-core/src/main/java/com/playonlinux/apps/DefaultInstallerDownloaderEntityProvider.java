@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
 import com.playonlinux.core.entities.ProgressEntity;
+import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
@@ -124,7 +125,7 @@ public class DefaultInstallerDownloaderEntityProvider
     }
 
     public void update(ProgressEntity argument) {
-        if(argument.getState() == ProgressEntity.State.PROGRESSING) {
+        if(argument.getState() == ProgressState.PROGRESSING) {
             changeState(State.PROGRESSING, argument.getPercent());
         }
     }

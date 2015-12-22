@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.entities.ProgressEntity;
+import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -99,11 +99,11 @@ public class DefaultWineVersionsManager
     }
 
     public boolean isUpdating() {
-        return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressEntity.State.PROGRESSING;
+        return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressState.PROGRESSING;
     }
 
     public boolean hasFailed() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressEntity.State.FAILED;
+        return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
 
     private synchronized void refreshWebservice() throws ServiceInitializationException {

@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.function.Consumer;
 
 import com.playonlinux.core.entities.ProgressEntity;
+import com.playonlinux.core.entities.ProgressState;
 
 public class HTTPDownloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
@@ -38,14 +39,10 @@ public class HTTPDownloader {
     private final URL url;
     private float percentage;
     private Consumer<ProgressEntity> onChange;
-    
-    public enum State {
-        READY, PROGRESSING, SUCCESS, FAILED
-    }
 
     public HTTPDownloader(URL url) {
         this.url = url;
-        changeState(State.READY);
+        changeState(ProgressState.READY);
     }
 
     private HttpURLConnection openConnection(URL remoteFile) throws IOException {
@@ -66,22 +63,22 @@ public class HTTPDownloader {
                 bufferedOutputStream.write(data, 0, i);
 
                 this.percentage = totalDataRead * 100 / fileSize;
-                changeState(State.PROGRESSING);
+                changeState(ProgressState.PROGRESSING);
 
                 if (Thread.currentThread().isInterrupted()) {
                     throw new InterruptedException("The download has been aborted");
                 }
             }
         } catch (IOException | InterruptedException e) {
-            changeState(State.FAILED);
+            changeState(ProgressState.FAILED);
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
-        changeState(State.SUCCESS);
+        changeState(ProgressState.SUCCESS);
     }
 
-    private void changeState(State state) {
+    private void changeState(ProgressState state) {
         ProgressEntity currentState = new ProgressEntity.Builder().withPercent(this.percentage)
-                .withState(ProgressEntity.State.valueOf(state.name())).build();
+                .withState(state).build();
         onChange.accept(currentState);
     }
 
