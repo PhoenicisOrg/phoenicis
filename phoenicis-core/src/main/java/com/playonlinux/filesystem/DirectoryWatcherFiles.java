@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.BiPredicate;
 
-public class DirectoryWatcherFiles extends DirectoryWatcher<File[]> {
+public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
     public DirectoryWatcherFiles(ExecutorService executorService, File observedDirectory) {
         super(executorService, observedDirectory);
     }
@@ -35,7 +35,7 @@ public class DirectoryWatcherFiles extends DirectoryWatcher<File[]> {
     }
 
     @Override
-    protected File[] defineWatchedObject() {
+    protected List<File> defineWatchedObject() {
         File[] files = observedDirectory.listFiles();
         List<File> filesFiltered = new LinkedList<>();
         assert files != null;
@@ -45,12 +45,12 @@ public class DirectoryWatcherFiles extends DirectoryWatcher<File[]> {
             }
         }
 
-        return filesFiltered.toArray(new File[filesFiltered.size()]);
+        return filesFiltered;
     }
 
     @Override
-    protected BiPredicate<File[], File[]> defineComparisonFunction() {
-        return Arrays::equals;
+    protected BiPredicate<List<File>, List<File>> defineComparisonFunction() {
+        return List::equals;
     }
 
 }

@@ -18,21 +18,23 @@
 
 package com.playonlinux.filesystem;
 
-import com.google.common.io.Files;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import com.google.common.io.Files;
 
 
 public class DirectoryWatcherFilesTest {
@@ -63,13 +65,13 @@ public class DirectoryWatcherFilesTest {
 
 
         try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryDirectory, CHECK_INTERVAL)) {
-            final Consumer<File[]> mockConsumer = mock(Consumer.class);
+            Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
             Thread.sleep(2 * CHECK_INTERVAL);
 
             temporaryDirectory.delete();
 
-            verify(mockConsumer, times(1)).accept(any(File[].class));
+            verify(mockConsumer, times(1)).accept(any(List.class));
         }
     }
 
@@ -79,7 +81,7 @@ public class DirectoryWatcherFilesTest {
 
 
         try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryDirectory, CHECK_INTERVAL)) {
-            final Consumer<File[]> mockConsumer = mock(Consumer.class);
+            final Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
 
             File createdFile = new File(temporaryDirectory, "file.txt");
@@ -89,7 +91,7 @@ public class DirectoryWatcherFilesTest {
 
             temporaryDirectory.delete();
 
-            verify(mockConsumer, times(2)).accept(any(File[].class));
+            verify(mockConsumer, times(2)).accept(any(List.class));
         }
     }
 }
