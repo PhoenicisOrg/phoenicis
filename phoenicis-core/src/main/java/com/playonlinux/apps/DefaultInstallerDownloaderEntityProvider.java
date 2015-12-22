@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.playonlinux.core.scripts.AnyScriptFactory;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
@@ -31,8 +30,8 @@ import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.Script;
-import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
