@@ -62,8 +62,9 @@ public class Extractor {
 
 
     private Void changeState(ProgressEntity progressStateEntity) {
-        //TODO Check if using an other functional interface is possible
-        onChange.accept(progressStateEntity);
+        if(onChange != null){
+            onChange.accept(progressStateEntity);
+        }
         return null;
     }
 

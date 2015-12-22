@@ -77,9 +77,11 @@ public class HTTPDownloader {
     }
 
     private void changeState(ProgressState state) {
-        ProgressEntity currentState = new ProgressEntity.Builder().withPercent(this.percentage)
-                .withState(state).build();
-        onChange.accept(currentState);
+        if(onChange != null){
+            ProgressEntity currentState = new ProgressEntity.Builder().withPercent(this.percentage)
+                    .withState(state).build();
+            onChange.accept(currentState);   
+        }
     }
 
     public void get(File localFile) throws DownloadException {
