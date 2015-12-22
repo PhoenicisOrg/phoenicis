@@ -65,7 +65,7 @@ public class DirectoryWatcherFilesTest {
 
 
         try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryDirectory, CHECK_INTERVAL)) {
-            Consumer<List<File>> mockConsumer = mock(Consumer.class);
+        	final Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
             Thread.sleep(2 * CHECK_INTERVAL);
 

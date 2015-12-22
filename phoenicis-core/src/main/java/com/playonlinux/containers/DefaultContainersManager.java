@@ -61,7 +61,7 @@ public class DefaultContainersManager
         containers.clear();
         
         for(File file: files) {
-            ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
+            final ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
             String containerType = containerConfigFile.readValue("containerType");
             if(StringUtils.isBlank(containerType)) {
                 containerType = "WinePrefix";
@@ -81,7 +81,7 @@ public class DefaultContainersManager
 
     @Override
     public void init() throws ServiceInitializationException {
-        File containersDirectory = playOnLinuxContext.makeContainersPath();
+        final File containersDirectory = playOnLinuxContext.makeContainersPath();
         containersDirectoryObservable = new DirectoryWatcherFiles(executorService, containersDirectory);
         containersDirectoryObservable.setOnChange(this::update);
     }
