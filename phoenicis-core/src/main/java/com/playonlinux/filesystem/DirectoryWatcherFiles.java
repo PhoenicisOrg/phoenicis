@@ -20,12 +20,12 @@ package com.playonlinux.filesystem;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
-public class DirectoryWatcherFiles extends DirectoryWatcher<File[]> {
+public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
     public DirectoryWatcherFiles(ExecutorService executorService, File observedDirectory) {
         super(executorService, observedDirectory);
     }
@@ -35,22 +35,20 @@ public class DirectoryWatcherFiles extends DirectoryWatcher<File[]> {
     }
 
     @Override
-    protected File[] defineWatchedObject() {
+    protected List<File> defineWatchedObject() {
         File[] files = observedDirectory.listFiles();
-        List<File> filesFiltered = new LinkedList<>();
         assert files != null;
-        for(File file: files) {
-            if (!file.getName().startsWith(".")) {
-                filesFiltered.add(file);
-            }
-        }
+        
+        List<File> filesFiltered = Arrays.stream(files)
+        		.filter(f -> !f.getName().startsWith("."))
+        		.collect(Collectors.toList());
 
-        return filesFiltered.toArray(new File[filesFiltered.size()]);
+        return filesFiltered;
     }
 
     @Override
-    protected BiPredicate<File[], File[]> defineComparisonFunction() {
-        return Arrays::equals;
+    protected BiPredicate<List<File>, List<File>> defineComparisonFunction() {
+        return List::equals;
     }
 
 }

@@ -21,9 +21,9 @@ package com.playonlinux.engines.wine;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.playonlinux.core.filter.Filter;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -49,7 +49,7 @@ public final class WineVersionEntitiesProvider
     private final Collection<WineVersionDistributionItemEntity> wineVersionDistributionItemEntities = new ArrayList<>();
     private final List<WineVersionDistributionItemEntity> filteredWineVersionDistributionItemEntities = new ArrayList<>();
 
-    private Filter<WineVersionDistributionItemEntity> lastFilter;
+    private Predicate<WineVersionDistributionItemEntity> lastFilter;
 
     @Override
     public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
@@ -77,7 +77,7 @@ public final class WineVersionEntitiesProvider
     }
 
     @Override
-    public void applyFilter(Filter<WineVersionDistributionItemEntity> filter) {
+    public void applyFilter(Predicate<WineVersionDistributionItemEntity> filter) {
         this.lastFilter = filter;
 
         filteredWineVersionDistributionItemEntities.clear();
@@ -85,7 +85,7 @@ public final class WineVersionEntitiesProvider
         if(filter == null) {
             filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities);
         } else {
-            filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities.stream().filter(filter::apply).collect(Collectors.toList()));
+            filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities.stream().filter(filter).collect(Collectors.toList()));
         }
     }
 

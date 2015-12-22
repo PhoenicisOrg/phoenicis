@@ -18,10 +18,11 @@
 
 package com.playonlinux.containers;
 
+import java.util.List;
+
+import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.services.manager.Service;
-
-import java.util.List;
 
 /**
  * Manage PlayOnLinux containers
@@ -32,5 +33,5 @@ public interface ContainersManager extends Observable<ContainersManager>,
      * Get the list of containers
      * @return The list of containers
      */
-    List<Container> getContainers();
+    List<Container<? extends ContainerEntity>> getContainers();
 }

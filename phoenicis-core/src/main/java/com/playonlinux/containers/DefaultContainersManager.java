@@ -18,22 +18,22 @@
 
 package com.playonlinux.containers;
 
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.config.CompatibleConfigFileFormat;
-import com.playonlinux.core.config.ConfigFile;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
-import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.filesystem.DirectoryWatcherFiles;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.containers.entities.ContainerEntity;
+import com.playonlinux.core.config.CompatibleConfigFileFormat;
+import com.playonlinux.core.config.ConfigFile;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.filesystem.DirectoryWatcherFiles;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
 
 @Scan
 public class DefaultContainersManager
@@ -50,15 +50,16 @@ public class DefaultContainersManager
     static AnyContainerFactory anyContainerFactory;
 
     private DirectoryWatcherFiles containersDirectoryObservable;
-    private final List<Container<?>> containers = new ArrayList<>();
+    private final List<Container<? extends ContainerEntity>> containers = new ArrayList<>();
 
     @Override
-    public List<Container> getContainers() {
+    public List<Container<? extends ContainerEntity>> getContainers() {
         return new ArrayList<>(containers);
     }
 
-    public void update(File[] files) {
+    public void update(List<File> files) {
         containers.clear();
+        
         for(File file: files) {
             final ConfigFile containerConfigFile = new CompatibleConfigFileFormat(new File(file, "playonlinux.cfg"));
             String containerType = containerConfigFile.readValue("containerType");
@@ -84,6 +85,4 @@ public class DefaultContainersManager
         containersDirectoryObservable = new DirectoryWatcherFiles(executorService, containersDirectory);
         containersDirectoryObservable.setOnChange(this::update);
     }
-
-
 }

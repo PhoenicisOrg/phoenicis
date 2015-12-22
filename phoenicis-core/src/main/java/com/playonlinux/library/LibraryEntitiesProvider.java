@@ -18,26 +18,25 @@
 
 package com.playonlinux.library;
 
-import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.filter.Filter;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
-import com.playonlinux.core.services.manager.ServiceManager;
-import com.playonlinux.filesystem.DirectoryWatcherFiles;
-import com.playonlinux.injection.Inject;
-import com.playonlinux.injection.Scan;
-import com.playonlinux.library.entities.InstalledApplicationEntity;
-import com.playonlinux.library.entities.LibraryWindowEntity;
-import com.playonlinux.ui.api.EntitiesProvider;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.core.observer.Observer;
+import com.playonlinux.core.services.manager.ServiceInitializationException;
+import com.playonlinux.filesystem.DirectoryWatcherFiles;
+import com.playonlinux.injection.Inject;
+import com.playonlinux.injection.Scan;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
+import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
 public final class LibraryEntitiesProvider
@@ -56,7 +55,7 @@ public final class LibraryEntitiesProvider
     private final Collection<InstalledApplicationEntity> installedApplications = new ArrayList<>();
     private final List<InstalledApplicationEntity> installedApplicationsFiltered = new ArrayList<>();
 
-    private Filter<InstalledApplicationEntity> lastFilter;
+    private Predicate<InstalledApplicationEntity> lastFilter;
 
     @Override
     public void update(ShortcutSetDirectories observable, List<ShortcutFiles> argument) {
@@ -70,12 +69,12 @@ public final class LibraryEntitiesProvider
     }
 
     @Override
-    public void applyFilter(Filter<InstalledApplicationEntity> filter) {
+    public void applyFilter(Predicate<InstalledApplicationEntity> filter) {
         lastFilter = filter;
 
         installedApplicationsFiltered.clear();
         if(filter != null) {
-            installedApplicationsFiltered.addAll(installedApplications.stream().filter(filter::apply).collect(Collectors.toList()));
+            installedApplicationsFiltered.addAll(installedApplications.stream().filter(filter).collect(Collectors.toList()));
         } else {
             installedApplicationsFiltered.addAll(installedApplications);
         }

@@ -50,7 +50,7 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
         return shortcutFiles;
     }
 
-    public void update(File[] files) {
+    public void update(List<File> files) {
         getShortcutFiles().clear();
         for (File shortcutFile : files) {
             try {
