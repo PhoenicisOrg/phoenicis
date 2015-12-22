@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.lang.StringUtils;
 
 import com.playonlinux.app.PlayOnLinuxContext;
+import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
@@ -49,10 +50,10 @@ public class DefaultContainersManager
     static AnyContainerFactory anyContainerFactory;
 
     private DirectoryWatcherFiles containersDirectoryObservable;
-    private final List<Container<?>> containers = new ArrayList<>();
+    private final List<Container<? extends ContainerEntity>> containers = new ArrayList<>();
 
     @Override
-    public List<Container> getContainers() {
+    public List<Container<? extends ContainerEntity>> getContainers() {
         return new ArrayList<>(containers);
     }
 
