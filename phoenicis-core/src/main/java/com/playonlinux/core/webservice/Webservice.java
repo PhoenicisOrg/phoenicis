@@ -76,7 +76,7 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
 
     private synchronized void update(ProgressState state) {
         DownloadEnvelope<Collection<T>> envelopeDTO = new DownloadEnvelope<>();
-        ProgressEntity progressStateEntity = new ProgressEntity(state);
+        ProgressEntity progressStateEntity = new ProgressEntity.Builder().withState(state).build();
 
         envelopeDTO.setDownloadState(progressStateEntity);
         envelopeDTO.setEnvelopeContent(items);

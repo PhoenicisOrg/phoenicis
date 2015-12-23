@@ -43,7 +43,7 @@ public class HTTPDownloader {
     public HTTPDownloader(URL url) {
         this.url = url;
     }
-    
+
     public void get(File localFile) throws DownloadException {
         try {
             get(new FileOutputStream(localFile));
@@ -107,8 +107,12 @@ public class HTTPDownloader {
     }
 
     private void changeState(ProgressState state, float percentage) {
-        if (onChange != null) {
-            onChange.accept(new ProgressEntity(state, percentage));
+        if(onChange != null){
+            ProgressEntity currentState = new ProgressEntity.Builder()
+                    .withPercent(percentage)
+                    .withState(state)
+                    .build();
+            onChange.accept(currentState);   
         }
     }
 

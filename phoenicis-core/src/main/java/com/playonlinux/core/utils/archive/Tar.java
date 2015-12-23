@@ -132,9 +132,12 @@ public class Tar  {
                 }
                 uncompressedFiles.add(outputFile);
 
-                final double percent = (double) countingInputStream.getCount() / (double) finalSize * (double) 100;
-                final String progressText = "Extracting " + outputFile.getName();
-                stateCallback.apply(new ProgressEntity(percent, progressText));
+                stateCallback.apply(new ProgressEntity.Builder()
+                                .withPercent((double) countingInputStream.getCount() / (double) finalSize * (double) 100)
+                                .withProgressText("Extracting " + outputFile.getName())
+                                .build()
+                );
+
             }
         } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
             throw new ArchiveException("Unable to extract the file", e);

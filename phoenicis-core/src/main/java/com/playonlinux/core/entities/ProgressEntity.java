@@ -27,24 +27,13 @@ import com.playonlinux.core.dto.DTO;
 public class ProgressEntity implements DTO {
     private final ProgressState state;
     private final double percent;
+
     private final String progressText;
 
-    public ProgressEntity(ProgressState state){
-        this(state, 0, null);
-    }
-    
-    public ProgressEntity(ProgressState state, double percent){
-        this(state, percent, null);
-    }
-    
-    public ProgressEntity(double percent, String progressText){
-        this(null, percent, progressText);
-    }
-    
-    public ProgressEntity(ProgressState state, double percent, String progressText) {
-        this.state = state;
-        this.percent = percent;
-        this.progressText = progressText;
+    public ProgressEntity(Builder builder) {
+        this.state = builder.state;
+        this.percent = builder.percent;
+        this.progressText = builder.progressText;
     }
 
     public ProgressState getState() {
@@ -62,5 +51,40 @@ public class ProgressEntity implements DTO {
     @Override
     public String toString() {
         return this.state.name();
+    }
+
+    public static class Builder {
+        private ProgressState state;
+        private double percent;
+        private String progressText;
+
+        public Builder(ProgressEntity other) {
+            state = other.state;
+            percent = other.percent;
+            progressText = other.progressText;
+        }
+
+        public Builder() {
+
+        }
+
+        public Builder withState(ProgressState state) {
+            this.state = state;
+            return this;
+        }
+
+        public Builder withPercent(double percent) {
+            this.percent = percent;
+            return this;
+        }
+
+        public Builder withProgressText(String progressText) {
+            this.progressText = progressText;
+            return this;
+        }
+
+        public ProgressEntity build() {
+            return new ProgressEntity(this);
+        }
     }
 }
