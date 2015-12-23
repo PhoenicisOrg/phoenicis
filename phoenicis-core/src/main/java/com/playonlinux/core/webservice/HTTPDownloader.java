@@ -51,10 +51,10 @@ public class HTTPDownloader {
 
     private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
             throws DownloadException {
-        long fileSize = connection.getContentLength();
-
         try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
+            long fileSize = connection.getContentLength();
+            
             byte[] data = new byte[BLOCK_SIZE];
             int i;
             long totalDataRead = 0L;
@@ -91,15 +91,12 @@ public class HTTPDownloader {
     }
 
     public void get(OutputStream outputStream) throws DownloadException {
-        HttpURLConnection connection;
         try {
-            connection = openConnection(url);
+            HttpURLConnection connection = openConnection(url);
+            saveConnectionToStream(connection, outputStream);
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
-
-        this.saveConnectionToStream(connection, outputStream);
-
     }
 
     public String get() throws DownloadException {
@@ -107,14 +104,14 @@ public class HTTPDownloader {
     }
 
     public byte[] getBytes() throws DownloadException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        get(outputStream);
         try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            get(outputStream);
             outputStream.flush();
+            return outputStream.toByteArray();
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
-        return outputStream.toByteArray();
     }
 
     public void setOnChange(Consumer<ProgressEntity> onChange) {
