@@ -42,7 +42,6 @@ import org.apache.log4j.Logger;
 
 import com.google.common.io.CountingInputStream;
 import com.playonlinux.core.entities.ProgressEntity;
-import com.playonlinux.core.entities.ProgressState;
 
 
 /**
@@ -135,7 +134,7 @@ public class Tar  {
 
                 final double percent = (double) countingInputStream.getCount() / (double) finalSize * (double) 100;
                 final String progressText = "Extracting " + outputFile.getName();
-                stateCallback.apply(new ProgressEntity(ProgressState.PROGRESSING, percent, progressText));
+                stateCallback.apply(new ProgressEntity(percent, progressText));
             }
         } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
             throw new ArchiveException("Unable to extract the file", e);

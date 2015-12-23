@@ -32,7 +32,6 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 
 import com.playonlinux.core.entities.ProgressEntity;
-import com.playonlinux.core.entities.ProgressState;
 
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
@@ -75,7 +74,7 @@ public class ChecksumCalculator {
 
     private void changeState(double percentage) {
         if(onChange != null){
-            onChange.accept(new ProgressEntity(ProgressState.PROGRESSING, percentage, WAIT_MESSAGE));
+            onChange.accept(new ProgressEntity(percentage, WAIT_MESSAGE));
         }
     }
 
