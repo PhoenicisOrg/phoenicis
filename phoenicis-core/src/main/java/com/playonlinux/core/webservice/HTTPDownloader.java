@@ -36,52 +36,12 @@ public class HTTPDownloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
 
     private static final int BLOCK_SIZE = 1024;
+    
     private final URL url;
-    private float percentage;
     private Consumer<ProgressEntity> onChange;
 
     public HTTPDownloader(URL url) {
         this.url = url;
-        changeState(ProgressState.READY);
-    }
-
-    private HttpURLConnection openConnection(URL remoteFile) throws IOException {
-        return (HttpURLConnection) remoteFile.openConnection();
-    }
-
-    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
-            throws DownloadException {
-        int fileSize = connection.getContentLength();
-
-        try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
-            byte[] data = new byte[BLOCK_SIZE];
-            int i;
-            float totalDataRead = 0.0F;
-            while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
-                totalDataRead += i;
-                bufferedOutputStream.write(data, 0, i);
-
-                this.percentage = totalDataRead * 100 / fileSize;
-                changeState(ProgressState.PROGRESSING);
-
-                if (Thread.currentThread().isInterrupted()) {
-                    throw new InterruptedException("The download has been aborted");
-                }
-            }
-        } catch (IOException | InterruptedException e) {
-            changeState(ProgressState.FAILED);
-            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
-        }
-        changeState(ProgressState.SUCCESS);
-    }
-
-    private void changeState(ProgressState state) {
-        if(onChange != null){
-            ProgressEntity currentState = new ProgressEntity.Builder().withPercent(this.percentage)
-                    .withState(state).build();
-            onChange.accept(currentState);   
-        }
     }
 
     public void get(File localFile) throws DownloadException {
@@ -91,32 +51,69 @@ public class HTTPDownloader {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
     }
-
-    public void get(OutputStream outputStream) throws DownloadException {
-        HttpURLConnection connection;
-        try {
-            connection = openConnection(url);
-        } catch (IOException e) {
-            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
-        }
-
-        this.saveConnectionToStream(connection, outputStream);
-
-    }
-
+    
     public String get() throws DownloadException {
-        return new String(getBytes());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        get(outputStream);
+        return outputStream.toString();
     }
 
     public byte[] getBytes() throws DownloadException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         get(outputStream);
-        try {
-            outputStream.flush();
-        } catch (IOException e) {
-            throw new DownloadException("Download failed", e);
-        }
         return outputStream.toByteArray();
+    }
+    
+    private void get(OutputStream outputStream) throws DownloadException {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            saveConnectionToStream(connection, outputStream);
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+        }
+    }
+
+    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
+            throws DownloadException {
+        float percentage = 0F;
+        changeState(ProgressState.READY, percentage);
+
+        try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
+            long fileSize = connection.getContentLengthLong();
+
+            byte[] data = new byte[BLOCK_SIZE];
+            int i;
+            long totalDataRead = 0L;
+            while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
+                totalDataRead += i;
+                bufferedOutputStream.write(data, 0, i);
+
+                percentage = totalDataRead * 100 / fileSize;
+                changeState(ProgressState.PROGRESSING, percentage);
+
+                if (Thread.currentThread().isInterrupted()) {
+                    throw new InterruptedException("The download has been aborted");
+                }
+            }
+
+            outputStream.flush();
+        } catch (IOException | InterruptedException e) {
+            changeState(ProgressState.FAILED, percentage);
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+        }
+        
+        changeState(ProgressState.SUCCESS, percentage);
+    }
+
+    private void changeState(ProgressState state, float percentage) {
+        if(onChange != null){
+            ProgressEntity currentState = new ProgressEntity.Builder()
+                    .withPercent(percentage)
+                    .withState(state)
+                    .build();
+            onChange.accept(currentState);   
+        }
     }
 
     public void setOnChange(Consumer<ProgressEntity> onChange) {
