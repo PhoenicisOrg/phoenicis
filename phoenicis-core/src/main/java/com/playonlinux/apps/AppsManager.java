@@ -59,7 +59,9 @@ public class AppsManager implements Service {
 
     public void update(DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {
         this.downloadEnvelope = downloadEnvelope;
-        this.onChange.run();
+        if(onChange != null){
+            onChange.run();
+        }
     }
 
     public void refresh() throws ServiceInitializationException {
