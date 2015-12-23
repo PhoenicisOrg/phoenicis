@@ -42,7 +42,6 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
     private final Semaphore updateSemaphore = new Semaphore(1);
 
     private List<T> items;
-    private ProgressState state = ProgressState.READY;
 
     public Webservice(URL url) {
         this.url = url;
@@ -51,23 +50,20 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
     public synchronized void populate() {
         try {
             updateSemaphore.acquire();
-            this.state = ProgressState.PROGRESSING;
-            this.update();
+            update(ProgressState.PROGRESSING);
 
             try {
                 final ObjectMapper mapper = new ObjectMapper();
                 final HTTPDownloader httpDownloader = new HTTPDownloader(this.url);
                 final String result = httpDownloader.get();
                 items = mapper.readValue(result, this.defineTypeReference());
-                this.state = ProgressState.SUCCESS;
+                update(ProgressState.SUCCESS);
             } catch (DownloadException e) {
                 LOGGER.warn(String.format("Error while downloading %s", url), e);
-                this.state = ProgressState.FAILED;
+                update(ProgressState.FAILED);
             } catch (IOException e) {
                 LOGGER.warn(String.format("IO error while downloading %s", url), e);
-                this.state = ProgressState.FAILED;
-            } finally {
-                this.update();
+                update(ProgressState.FAILED);
             }
         } catch (InterruptedException e) {
             LOGGER.info(String.format("The download was interrupted: %s", url), e);
@@ -78,7 +74,7 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
 
     protected abstract TypeReference<List<T>> defineTypeReference();
 
-    private synchronized void update() {
+    private synchronized void update(ProgressState state) {
         DownloadEnvelope<Collection<T>> envelopeDTO = new DownloadEnvelope<>();
         ProgressEntity progressStateEntity = new ProgressEntity(state);
 
