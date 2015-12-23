@@ -18,17 +18,18 @@
 
 package com.playonlinux.library;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.filesystem.DirectoryWatcherFiles;
-import org.apache.log4j.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-class ShortcutSetDirectories extends ObservableDefaultImplementation<List<ShortcutFiles>> implements AutoCloseable {
+import org.apache.log4j.Logger;
+
+import com.playonlinux.filesystem.DirectoryWatcherFiles;
+
+class ShortcutSetDirectories implements AutoCloseable {
 
     private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
     private final DirectoryWatcherFiles iconDirectory;
@@ -36,6 +37,8 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
     private final URL defaultIcon;
     private final List<ShortcutFiles> shortcutFiles;
 
+    private Consumer<List<ShortcutFiles>> onChange;
+    
     public ShortcutSetDirectories(DirectoryWatcherFiles shortcutDirectory, DirectoryWatcherFiles iconDirectory,
                                   URL defaultIcon) {
         this.shortcutFiles = new ArrayList<>();
@@ -67,13 +70,19 @@ class ShortcutSetDirectories extends ObservableDefaultImplementation<List<Shortc
                 LOGGER.warn(e);
             }
         }
-        this.notifyObservers(getShortcutFiles());
+        
+        if(onChange != null){
+            onChange.accept(getShortcutFiles());
+        }
     }
 
     @Override
     public void close() {
         shortcutDirectory.close();
         iconDirectory.close();
-        this.deleteObservers();
+    }
+
+    public void setOnChange(Consumer<List<ShortcutFiles>> onChange) {
+        this.onChange = onChange;
     }
 }

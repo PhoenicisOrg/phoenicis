@@ -29,7 +29,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.filesystem.DirectoryWatcherFiles;
 import com.playonlinux.injection.Inject;
@@ -39,8 +38,8 @@ import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class LibraryEntitiesProvider implements Observer<ShortcutSetDirectories, List<ShortcutFiles>>,
-        EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
+public final class LibraryEntitiesProvider
+        implements EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -55,9 +54,8 @@ public final class LibraryEntitiesProvider implements Observer<ShortcutSetDirect
 
     private Predicate<InstalledApplicationEntity> lastFilter;
     private Consumer<LibraryWindowEntity> onChange;
-    
-    @Override
-    public void update(ShortcutSetDirectories observable, List<ShortcutFiles> argument) {
+
+    public void update(List<ShortcutFiles> argument) {
         installedApplications.clear();
         installedApplications
                 .addAll(argument
@@ -80,7 +78,7 @@ public final class LibraryEntitiesProvider implements Observer<ShortcutSetDirect
             installedApplicationsFiltered.addAll(installedApplications);
         }
 
-        if(onChange != null){
+        if (onChange != null) {
             onChange.accept(new LibraryWindowEntity(installedApplicationsFiltered));
         }
     }
@@ -105,7 +103,7 @@ public final class LibraryEntitiesProvider implements Observer<ShortcutSetDirect
         shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
                 defaultIcon);
 
-        shortcutSetDirectories.addObserver(this);
+        shortcutSetDirectories.setOnChange(this::update);
     }
 
     public void setOnChange(Consumer<LibraryWindowEntity> onChange) {
