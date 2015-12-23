@@ -22,7 +22,6 @@ import java.io.File;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
@@ -82,9 +81,8 @@ public interface EventHandler {
      * Get a entity provider to download a script
      * @param scriptUrl The script URL as a string
      * @return the entity provider
-     * @throws AppsManagerException if the URL is malformed
      */
-    InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
+    InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl);
 
     /**
      * Events to be run when the application is started

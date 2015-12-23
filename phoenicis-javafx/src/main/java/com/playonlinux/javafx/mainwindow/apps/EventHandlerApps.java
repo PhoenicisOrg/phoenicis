@@ -19,7 +19,6 @@
 package com.playonlinux.javafx.mainwindow.apps;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
@@ -52,7 +51,7 @@ final class EventHandlerApps implements UIEventHandler {
         mainEventHandler.refreshAvailableInstallers();
     }
 
-    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptId) throws AppsManagerException {
+    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptId) {
         return mainEventHandler.getInstallerDownloaderEntityProvider(scriptId);
     }
 
