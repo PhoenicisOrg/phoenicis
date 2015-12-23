@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.DefaultAppsManager;
 import com.playonlinux.core.services.manager.ServiceImplementationDefinition;
 import com.playonlinux.core.services.manager.ServiceManagerConfiguration;
 
@@ -35,7 +34,7 @@ public class AppsManagerServicesContext implements ServiceManagerConfiguration {
     @Override
     public synchronized Iterator<ServiceImplementationDefinition> iterator() {
         return Arrays.asList(
-                new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
+                new ServiceImplementationDefinition(AppsManager.class, AppsManager.class),
                 new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class)
         ).iterator();
     }

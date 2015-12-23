@@ -31,7 +31,7 @@ public class ErrorMessage {
     private static final Logger LOGGER = Logger.getLogger(ErrorMessage.class);
     private final Alert alert;
 
-    public ErrorMessage(String message, PlayOnLinuxException exception) {
+    public ErrorMessage(String message, Exception exception) {
         LOGGER.error(ExceptionUtils.getStackTrace(exception));
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(translate(message));
