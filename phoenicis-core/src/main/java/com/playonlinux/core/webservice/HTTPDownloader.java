@@ -53,7 +53,9 @@ public class HTTPDownloader {
     }
     
     public String get() throws DownloadException {
-        return new String(getBytes());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        get(outputStream);
+        return outputStream.toString();
     }
 
     public byte[] getBytes() throws DownloadException {
