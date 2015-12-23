@@ -65,8 +65,10 @@ public final class WineVersionEntitiesProvider
         }
 
         applyFilter(lastFilter);
-        onChange.accept(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities, argument.isUpdating(),
-                argument.hasFailed()));
+        if (onChange != null) {
+            onChange.accept(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities,
+                    argument.isUpdating(), argument.hasFailed()));
+        }
     }
 
     @Override
@@ -85,7 +87,7 @@ public final class WineVersionEntitiesProvider
 
     @Override
     public void shutdown() {
-        //Nothing to do
+        // Nothing to do
     }
 
     @Override
