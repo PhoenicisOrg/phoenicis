@@ -51,7 +51,7 @@ public class HTTPDownloader {
 
         try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
-            long fileSize = connection.getContentLength();
+            long fileSize = connection.getContentLengthLong();
 
             byte[] data = new byte[BLOCK_SIZE];
             int i;
