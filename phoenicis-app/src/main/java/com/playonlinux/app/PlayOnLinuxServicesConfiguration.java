@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.DefaultAppsManager;
 import com.playonlinux.containers.ContainersEntitiesProvider;
 import com.playonlinux.containers.ContainersManager;
 import com.playonlinux.containers.DefaultContainersManager;
@@ -44,7 +43,7 @@ class PlayOnLinuxServicesConfiguration implements ServiceManagerConfiguration {
     public Iterator<ServiceImplementationDefinition> iterator() {
         return Arrays.asList(
                 new ServiceImplementationDefinition(DownloadManager.class, DownloadManager.class),
-                new ServiceImplementationDefinition(AppsManager.class, DefaultAppsManager.class),
+                new ServiceImplementationDefinition(AppsManager.class, AppsManager.class),
                 new ServiceImplementationDefinition(AppsEntitiesProvider.class, AppsEntitiesProvider.class),
                 new ServiceImplementationDefinition(WineVersionManager.class, DefaultWineVersionsManager.class),
                 new ServiceImplementationDefinition(WineVersionEntitiesProvider.class, WineVersionEntitiesProvider.class),

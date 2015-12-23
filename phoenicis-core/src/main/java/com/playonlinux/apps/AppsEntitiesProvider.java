@@ -26,7 +26,6 @@ import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
@@ -43,8 +42,7 @@ import java.util.stream.Collectors;
 @Scan
 public final class AppsEntitiesProvider
         extends ObservableDefaultImplementation<AppsWindowEntity>
-        implements Observer<DefaultAppsManager, DefaultAppsManager>,
-                   EntitiesProvider<AppEntity, AppsWindowEntity> {
+        implements EntitiesProvider<AppEntity, AppsWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -91,24 +89,15 @@ public final class AppsEntitiesProvider
     @Override
     public void init() throws ServiceInitializationException {
         final AppsManager appsManager = serviceManager.getService(AppsManager.class);
-        appsManager.addObserver(this);
+        appsManager.setOnChange(() -> this.update(appsManager));
     }
 
-    @Override
-    public void update(DefaultAppsManager observable, DefaultAppsManager argument) {
+    public void update(AppsManager appsManager) {
 
-        this.downloadEnvelope = argument.getDownloadEnvelope();
+        this.downloadEnvelope = appsManager.getDownloadEnvelope();
         this.categoriesDTO.clear();
 
         if(downloadEnvelope.getEnvelopeContent() != null) {
-            //
-//
-//
-//
-// FIXME
-//
-//
-//
             downloadEnvelope.getEnvelopeContent().stream().filter(categoryDTO -> categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS).forEach(categoryDTO -> {
                 categoriesDTO.add(new AppsCategoryEntity(categoryDTO.getName()));
                 for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
