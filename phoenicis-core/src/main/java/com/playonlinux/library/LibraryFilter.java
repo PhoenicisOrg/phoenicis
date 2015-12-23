@@ -27,8 +27,7 @@ import com.playonlinux.library.entities.InstalledApplicationEntity;
 /**
  * Filter for installed applications in the MainWindow
  */
-public class LibraryFilter extends ObservableDefaultImplementation implements Predicate<InstalledApplicationEntity> {
-
+public class LibraryFilter implements Predicate<InstalledApplicationEntity> {
     private final String name;
 
     public LibraryFilter(String name) {
