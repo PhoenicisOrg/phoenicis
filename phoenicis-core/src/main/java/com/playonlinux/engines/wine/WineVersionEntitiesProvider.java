@@ -38,8 +38,7 @@ import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
 public final class WineVersionEntitiesProvider
-        implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,
-        EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
+        implements EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -50,9 +49,7 @@ public final class WineVersionEntitiesProvider
     private Predicate<WineVersionDistributionItemEntity> lastFilter;
     private Consumer<WineVersionsWindowEntity> onChange;
 
-    @Override
-    public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
-        assert argument == observable;
+    public void update(WineVersionManager argument) {
         for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(
                 argument.getWineVersionDistributionDTOs())) {
             final List<WineVersionItemEntity> availablePackages = new ArrayList<>();
@@ -71,7 +68,6 @@ public final class WineVersionEntitiesProvider
         applyFilter(lastFilter);
         onChange.accept(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities, argument.isUpdating(),
                 argument.hasFailed()));
-
     }
 
     @Override
@@ -98,7 +94,7 @@ public final class WineVersionEntitiesProvider
         final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager
                 .getService(DefaultWineVersionsManager.class);
 
-        defaultWineVersionsManager.addObserver(this);
+        defaultWineVersionsManager.setOnChange(this::update);
     }
 
     public void setOnChange(Consumer<WineVersionsWindowEntity> onChange) {

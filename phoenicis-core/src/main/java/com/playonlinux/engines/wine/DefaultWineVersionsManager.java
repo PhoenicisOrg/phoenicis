@@ -18,9 +18,18 @@
 
 package com.playonlinux.engines.wine;
 
+import static java.lang.String.format;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.function.Consumer;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.entities.ProgressState;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.utils.ChecksumCalculator;
@@ -40,19 +49,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static java.lang.String.format;
-
 @Scan
-public class DefaultWineVersionsManager
-        extends ObservableDefaultImplementation<WineVersionManager>
-        implements WineVersionManager {
+public class DefaultWineVersionsManager implements WineVersionManager {
 
     @Inject
     static ServiceManager playOnLinuxBackgroundServicesManager;
@@ -65,7 +63,8 @@ public class DefaultWineVersionsManager
 
     private WineversionsSourceWebserviceDefaultImplementation wineversionsSourceWebserviceImplementation;
     private URL webserviceUrl;
-
+    private Consumer<WineVersionManager> onChange;
+    
     public synchronized void update(DownloadEnvelope argument) {
         /*
          * Because of some limitations of Java's Generics we need to do this way.
@@ -76,13 +75,12 @@ public class DefaultWineVersionsManager
         if (downloadEnvelope.getEnvelopeContent() != null) {
             this.wineVersionDistributionDTOs = downloadEnvelope.getEnvelopeContent();
         }
-        notifyObservers(this);
-
+        onChange.accept(this);
     }
 
     @Override
     public void shutdown() {
-        deleteObservers();
+        //Nothing to do
     }
 
     @Override
@@ -206,6 +204,10 @@ public class DefaultWineVersionsManager
         } catch (MalformedURLException e) {
             throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
         }
+    }
+
+    public void setOnChange(Consumer<WineVersionManager> onChange) {
+        this.onChange = onChange;
     }
 
 }
