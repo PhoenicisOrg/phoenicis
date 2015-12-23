@@ -41,9 +41,8 @@ public interface AppsManager extends Observable<DefaultAppsManager>, Service {
      *
      * @param scriptUrl The url of the script to be downloaded as a string
      * @return The entity provider
-     * @throws AppsManagerException if the URL was malformed
      */
-    InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl) throws AppsManagerException;
+    InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl);
 
     /**
      * Returns an UI EntityProvider that will be observed while downloading a script

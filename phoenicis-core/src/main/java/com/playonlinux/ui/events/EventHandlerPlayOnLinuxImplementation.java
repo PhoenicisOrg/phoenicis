@@ -25,7 +25,6 @@ import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsEntitiesProvider;
 import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.AppsManagerException;
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.containers.ContainersEntitiesProvider;
 import com.playonlinux.containers.entities.ContainerEntity;
@@ -102,7 +101,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     }
 
     @Override
-    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) throws AppsManagerException {
+    public InstallerDownloaderEntityProvider getInstallerDownloaderEntityProvider(String scriptUrl) {
         return getAppsManager().getDownloaderEntityProvider(scriptUrl);
     }
 

@@ -18,16 +18,11 @@
 
 package com.playonlinux.apps;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
-
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -35,6 +30,10 @@ import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collection;
 
 @Scan
 public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultAppsManager> implements AppsManager {
@@ -72,11 +71,11 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
     }
 
     @Override
-    public InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl) throws AppsManagerException {
+    public InstallerDownloaderEntityProvider getDownloaderEntityProvider(String scriptUrl) {
         try {
             return getDownloaderEntityProvider(new URL(scriptUrl));
         } catch (MalformedURLException e) {
-            throw new AppsManagerException("The URL was bad formed", e);
+            throw new IllegalArgumentException("The URL was bad formed", e);
         }
     }
 
