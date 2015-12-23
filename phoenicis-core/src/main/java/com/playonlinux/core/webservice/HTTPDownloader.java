@@ -43,6 +43,33 @@ public class HTTPDownloader {
     public HTTPDownloader(URL url) {
         this.url = url;
     }
+    
+    public void get(File localFile) throws DownloadException {
+        try {
+            get(new FileOutputStream(localFile));
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+        }
+    }
+    
+    public String get() throws DownloadException {
+        return new String(getBytes());
+    }
+
+    public byte[] getBytes() throws DownloadException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        get(outputStream);
+        return outputStream.toByteArray();
+    }
+    
+    private void get(OutputStream outputStream) throws DownloadException {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            saveConnectionToStream(connection, outputStream);
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
+        }
+    }
 
     private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
             throws DownloadException {
@@ -81,33 +108,6 @@ public class HTTPDownloader {
         if (onChange != null) {
             onChange.accept(new ProgressEntity(state, percentage));
         }
-    }
-
-    public void get(File localFile) throws DownloadException {
-        try {
-            get(new FileOutputStream(localFile));
-        } catch (IOException e) {
-            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
-        }
-    }
-
-    private void get(OutputStream outputStream) throws DownloadException {
-        try {
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            saveConnectionToStream(connection, outputStream);
-        } catch (IOException e) {
-            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
-        }
-    }
-
-    public String get() throws DownloadException {
-        return new String(getBytes());
-    }
-
-    public byte[] getBytes() throws DownloadException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        get(outputStream);
-        return outputStream.toByteArray();
     }
 
     public void setOnChange(Consumer<ProgressEntity> onChange) {
