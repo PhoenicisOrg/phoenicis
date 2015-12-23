@@ -27,6 +27,6 @@ import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 /**
  * Represents a source of wine version
  */
-public interface WineVersionSource extends Observable<DownloadEnvelope<Collection<WineVersionDistributionWebDTO>>> {
+public interface WineVersionSource {
 
 }

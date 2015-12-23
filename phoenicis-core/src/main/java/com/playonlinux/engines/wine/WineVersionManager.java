@@ -29,8 +29,7 @@ import com.playonlinux.ui.api.ProgressControl;
 /**
  * PlayOnLinux Wine Version Manager
  */
-public interface WineVersionManager extends Observer<Observable, Object>,
-                                            Observable<WineVersionManager>,
+public interface WineVersionManager extends Observable<WineVersionManager>,
                                             Service {
     /**
      * Install a Wine Version

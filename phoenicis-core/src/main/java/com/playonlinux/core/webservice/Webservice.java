@@ -18,30 +18,29 @@
 
 package com.playonlinux.core.webservice;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.Semaphore;
-
-import org.apache.log4j.Logger;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.entities.ProgressState;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.Service;
+import org.apache.log4j.Logger;
 
-public abstract class Webservice<T extends DTO> extends ObservableDefaultImplementation<DownloadEnvelope<Collection<T>>>
-        implements Service {
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.function.Consumer;
+
+public abstract class Webservice<T extends DTO> implements Service {
     private static final Logger LOGGER = Logger.getLogger(Webservice.class);
 
     private final URL url;
     private final Semaphore updateSemaphore = new Semaphore(1);
 
     private List<T> items;
+    private Consumer<DownloadEnvelope<Collection<T>>> onDownloadUpdate;
 
     public Webservice(URL url) {
         this.url = url;
@@ -75,18 +74,20 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
     protected abstract TypeReference<List<T>> defineTypeReference();
 
     private synchronized void update(ProgressState state) {
-        DownloadEnvelope<Collection<T>> envelopeDTO = new DownloadEnvelope<>();
+        DownloadEnvelope<Collection<T>> downloadEnvelope = new DownloadEnvelope<>();
         ProgressEntity progressStateEntity = new ProgressEntity.Builder().withState(state).build();
 
-        envelopeDTO.setDownloadState(progressStateEntity);
-        envelopeDTO.setEnvelopeContent(items);
+        downloadEnvelope.setDownloadState(progressStateEntity);
+        downloadEnvelope.setEnvelopeContent(items);
 
-        this.notifyObservers(envelopeDTO);
+        if(this.onDownloadUpdate != null) {
+            this.onDownloadUpdate.accept(downloadEnvelope);
+        }
     }
 
     @Override
     public void shutdown() {
-        this.deleteObservers();
+        // Nothing to do
     }
 
     @Override
@@ -97,5 +98,9 @@ public abstract class Webservice<T extends DTO> extends ObservableDefaultImpleme
                 populate();
             }
         }.start();
+    }
+
+    public void setOnDownloadUpdate(Consumer<DownloadEnvelope<Collection<T>>> onDownloadUpdate) {
+        this.onDownloadUpdate = onDownloadUpdate;
     }
 }

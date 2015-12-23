@@ -18,14 +18,9 @@
 
 package com.playonlinux.core.webservice;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
+import com.playonlinux.apps.dto.ApplicationDTO;
+import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -33,11 +28,17 @@ import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 
-import com.playonlinux.apps.dto.    ApplicationDTO;
-import com.playonlinux.apps.dto.CategoryDTO;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Consumer;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
 
 
 public class InstallerSourceWebserviceImplementationTest {
@@ -45,13 +46,18 @@ public class InstallerSourceWebserviceImplementationTest {
     private static URL mockServerURL;
     private static ClientAndServer mockServer;
     private static int MOCKSERVER_PORT = 3343;
+    private List<CategoryDTO> mockConsumerGotValue;
     private InstallerSourceWebserviceDefaultImplementation remoteAvailableInstallers;
-    private MockObserver observer;
 
     @BeforeClass
     public static void setUp() throws MalformedURLException {
         mockServer = new ClientAndServer(MOCKSERVER_PORT);
-        mockServerURL = new URL("http://localhost:"+MOCKSERVER_PORT+"/categories");
+        mockServerURL = new URL("http://localhost:" + MOCKSERVER_PORT + "/categories");
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        mockServer.stop();
     }
 
     @Before
@@ -115,27 +121,28 @@ public class InstallerSourceWebserviceImplementationTest {
                                 "]\n")
         );
 
-
         remoteAvailableInstallers = new InstallerSourceWebserviceDefaultImplementation(mockServerURL);
-        observer = new MockObserver();
-        remoteAvailableInstallers.addObserver(observer);
-    }
+        remoteAvailableInstallers.setOnDownloadUpdate(envelope -> {
+            if(envelope.getEnvelopeContent() != null) {
+                mockConsumerGotValue = new ArrayList<>(envelope.getEnvelopeContent());
+            }
+        });
+}
 
     @Test
     public void testScriptFetcher_MockWebServer_CategoryDTOIsPopulated() {
         remoteAvailableInstallers.populate();
 
-        assertEquals("Accessories", observer.getDTO().get(0).getName());
-        assertEquals(2, observer.getDTO().get(0).getId());
-        assertEquals(CategoryDTO.CategoryType.INSTALLERS, observer.getDTO().get(0).getType());
+        assertEquals("Accessories", mockConsumerGotValue.get(0).getName());
+        assertEquals(2, mockConsumerGotValue.get(0).getId());
+        assertEquals(CategoryDTO.CategoryType.INSTALLERS, mockConsumerGotValue.get(0).getType());
     }
-
 
     @Test
     public void testScriptFetcher_MockWebServer_ApplicationsDTOIsPopulated() {
         remoteAvailableInstallers.populate();
 
-        List<ApplicationDTO> applications = observer.getDTO().get(0).getApplications();
+        List<ApplicationDTO> applications = mockConsumerGotValue.get(0).getApplications();
 
         assertEquals("", applications.get(0).getDescription());
         assertEquals(373, applications.get(0).getId());
@@ -150,24 +157,5 @@ public class InstallerSourceWebserviceImplementationTest {
         assertEquals("http://files.playonlinux.com/resources/icones_install/Amazon Kindle", applications.get(1).getIconUrl());
         assertEquals(0, applications.get(1).getMiniaturesUrls().size());
         assertEquals("Amazon Kindle", applications.get(1).getName());
-    }
-
-
-    private class MockObserver implements Observer {
-        public List<CategoryDTO> categoryDto;
-
-        @Override
-        public void update(Observable o, Object arg) {
-            this.categoryDto = (List<CategoryDTO>) ((DownloadEnvelope) arg).getEnvelopeContent();
-        }
-
-        public List<CategoryDTO> getDTO() {
-            return categoryDto;
-        }
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        mockServer.stop();
     }
 }
