@@ -56,8 +56,7 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
         return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
 
-    @Override
-    public void update(InstallerSource installerSource, DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {
+    public void update(DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {
         this.downloadEnvelope = downloadEnvelope;
         this.notifyObservers(this);
     }
@@ -65,11 +64,10 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
     @Override
     public void refresh() throws ServiceInitializationException {
         if (installerSourceWebserviceImplementation != null) {
-            installerSourceWebserviceImplementation.deleteObserver(this);
             serviceManager.unregister(installerSourceWebserviceImplementation);
         }
         installerSourceWebserviceImplementation = new InstallerSourceWebserviceDefaultImplementation(webserviceUrl);
-        installerSourceWebserviceImplementation.addObserver(this);
+        installerSourceWebserviceImplementation.setOnDownloadUpdate(this::update);
         serviceManager.register(installerSourceWebserviceImplementation);
     }
 

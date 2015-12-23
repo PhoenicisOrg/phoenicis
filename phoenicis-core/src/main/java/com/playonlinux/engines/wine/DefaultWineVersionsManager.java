@@ -18,18 +18,8 @@
 
 package com.playonlinux.engines.wine;
 
-import static java.lang.String.format;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.entities.ProgressState;
-import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -50,6 +40,15 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static java.lang.String.format;
+
 @Scan
 public class DefaultWineVersionsManager
         extends ObservableDefaultImplementation<WineVersionManager>
@@ -67,20 +66,18 @@ public class DefaultWineVersionsManager
     private WineversionsSourceWebserviceDefaultImplementation wineversionsSourceWebserviceImplementation;
     private URL webserviceUrl;
 
-    @Override
-    public synchronized void update(Observable observable, Object argument) {
+    public synchronized void update(DownloadEnvelope argument) {
         /*
          * Because of some limitations of Java's Generics we need to do this way.
          */
         // TODO: Observe the local directory
-        if(argument instanceof DownloadEnvelope && observable instanceof WineVersionSource) {
-            this.downloadEnvelope = (DownloadEnvelope<Collection<WineVersionDistributionWebDTO>>) argument;
+        this.downloadEnvelope = argument;
 
-            if(downloadEnvelope.getEnvelopeContent() != null) {
-                this.wineVersionDistributionDTOs = downloadEnvelope.getEnvelopeContent();
-            }
-            notifyObservers(this);
+        if (downloadEnvelope.getEnvelopeContent() != null) {
+            this.wineVersionDistributionDTOs = downloadEnvelope.getEnvelopeContent();
         }
+        notifyObservers(this);
+
     }
 
     @Override
@@ -107,12 +104,12 @@ public class DefaultWineVersionsManager
     }
 
     private synchronized void refreshWebservice() throws ServiceInitializationException {
-        if(wineversionsSourceWebserviceImplementation != null) {
-            wineversionsSourceWebserviceImplementation.deleteObserver(this);
+        if (wineversionsSourceWebserviceImplementation != null) {
+
             playOnLinuxBackgroundServicesManager.unregister(wineversionsSourceWebserviceImplementation);
         }
         wineversionsSourceWebserviceImplementation = new WineversionsSourceWebserviceDefaultImplementation(webserviceUrl);
-        wineversionsSourceWebserviceImplementation.addObserver(this);
+        wineversionsSourceWebserviceImplementation.setOnDownloadUpdate(this::update);
         playOnLinuxBackgroundServicesManager.register(wineversionsSourceWebserviceImplementation);
     }
 
@@ -137,7 +134,7 @@ public class DefaultWineVersionsManager
             final ChecksumCalculator checksumCalculator = new ChecksumCalculator();
             checksumCalculator.setOnChange(progressControl);
             final String clientSum = checksumCalculator.calculate(temporaryFile, "sha1");
-            if(!clientSum.equals(serverSum)) {
+            if (!clientSum.equals(serverSum)) {
                 throw new EngineInstallException(String.format("Error while downloading the file. Hash mismatch." +
                         System.lineSeparator() + System.lineSeparator() +
                         "Client hash:%s" + System.lineSeparator() +
@@ -174,7 +171,7 @@ public class DefaultWineVersionsManager
         try {
             extractor.uncompress(localFile, extractPath);
         } catch (ArchiveException e) {
-           throw new EngineInstallException("Unable to extract archive", e);
+            throw new EngineInstallException("Unable to extract archive", e);
         }
     }
 
@@ -206,7 +203,7 @@ public class DefaultWineVersionsManager
     private synchronized URL makePackageUrl(WineVersionDTO wineVersionDTO) throws EngineInstallException {
         try {
             return new URL(wineVersionDTO.getUrl());
-        } catch(MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
         }
     }

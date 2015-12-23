@@ -18,32 +18,27 @@
 
 package com.playonlinux.apps;
 
-import java.net.URL;
-import java.util.Collection;
-
-import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
-import com.playonlinux.core.scripts.InstallerSource;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
-import com.playonlinux.core.webservice.DownloadEnvelope;
+
+import java.net.URL;
 
 /**
  * Available application manager
  */
-public interface AppsManager extends Observer<InstallerSource, DownloadEnvelope<Collection<CategoryDTO>>>,
-                                     Observable<DefaultAppsManager>,
-                                     Service {
+public interface AppsManager extends Observable<DefaultAppsManager>, Service {
 
     /**
      * Refresh the list of available application from the web service
+     *
      * @throws ServiceInitializationException
      */
     void refresh() throws ServiceInitializationException;
 
     /**
      * Returns an UI EntityProvider that will be observed while downloading a script
+     *
      * @param scriptUrl The url of the script to be downloaded as a string
      * @return The entity provider
      * @throws AppsManagerException if the URL was malformed
@@ -52,6 +47,7 @@ public interface AppsManager extends Observer<InstallerSource, DownloadEnvelope<
 
     /**
      * Returns an UI EntityProvider that will be observed while downloading a script
+     *
      * @param scriptUrl The url of the script to be downloaded as a {@link URL} object
      * @return The entity provider
      */
