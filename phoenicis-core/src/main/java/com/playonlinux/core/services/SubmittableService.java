@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.services;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import com.playonlinux.core.services.manager.Service;
 
@@ -36,5 +36,5 @@ public interface SubmittableService<T, U>
      * @param callback The callback if the the action is successful
      * @param error The callback if any error occur
      */
-    void submit(T task, U callback, Function<Exception, Void> error);
+    void submit(T task, U callback, Consumer<Exception> error);
 }

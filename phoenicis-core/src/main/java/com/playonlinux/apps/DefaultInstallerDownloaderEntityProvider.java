@@ -77,10 +77,8 @@ public class DefaultInstallerDownloaderEntityProvider
 
         downloadManager.submit(httpDownloader, bytes -> {
             success(bytes);
-            return null;
         }, e -> {
             failure(e);
-            return null;
         });
 
     }
