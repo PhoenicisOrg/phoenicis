@@ -112,7 +112,7 @@ public class HTTPDownloader {
         try {
             outputStream.flush();
         } catch (IOException e) {
-            throw new DownloadException("Download failed", e);
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
         return outputStream.toByteArray();
     }
