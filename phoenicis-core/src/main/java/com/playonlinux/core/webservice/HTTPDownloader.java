@@ -51,18 +51,18 @@ public class HTTPDownloader {
 
     private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
             throws DownloadException {
-        int fileSize = connection.getContentLength();
+        long fileSize = connection.getContentLength();
 
         try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
             byte[] data = new byte[BLOCK_SIZE];
             int i;
-            float totalDataRead = 0.0F;
+            long totalDataRead = 0L;
             while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {
                 totalDataRead += i;
                 bufferedOutputStream.write(data, 0, i);
 
-                this.percentage = totalDataRead * 100 / fileSize;
+                percentage = totalDataRead * 100 / fileSize;
                 changeState(ProgressState.PROGRESSING);
 
                 if (Thread.currentThread().isInterrupted()) {
