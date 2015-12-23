@@ -37,6 +37,7 @@
         <module>phoenicis-wine</module>
         <module>phoenicis-javafx-wine</module>
         <module>phoenicis-win32</module>
+        <module>phoenicis-dist</module>
     </modules>
 
     <properties>
