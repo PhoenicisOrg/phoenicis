@@ -92,7 +92,6 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
                                 command.requestFocus();
                                 consolePane.setVvalue(consolePane.getVmax());
                             });
-                            return null;
                 })) {
                     nextSymbol = NOT_INSIDE_BLOCK;
                 } else {

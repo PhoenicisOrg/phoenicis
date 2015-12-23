@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class DownloadManagerTest {
     @Test
     public void testSubmit() throws DownloadException, ExecutionException, InterruptedException {
         HTTPDownloader httpDownloaderMock = mock(HTTPDownloader.class);
-        Function<Exception, Void> callBackError = mock(Function.class);
+        Consumer<Exception> callBackError = mock(Consumer.class);
         Semaphore lock = new Semaphore(0);
 
         when(httpDownloaderMock.getBytes()).thenReturn("Download result".getBytes());
@@ -45,7 +45,6 @@ public class DownloadManagerTest {
 
         downloadManager.submit(httpDownloaderMock, parameter -> {
             lock.release();
-            return null;
         }, callBackError);
 
 

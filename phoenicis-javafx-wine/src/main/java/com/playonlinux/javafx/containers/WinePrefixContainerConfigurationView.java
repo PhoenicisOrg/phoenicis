@@ -262,7 +262,6 @@ public class WinePrefixContainerConfigurationView extends ContainerConfiguration
         toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
                 e -> winePrefixEventHandler.wineContainerActions().runWinecfg(this.getMiniWizard(), containerEntity.getWinePrefixDirectory(), arg -> {
                     unlockAll();
-                    return null;
                 })), 0, 0);
 
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
