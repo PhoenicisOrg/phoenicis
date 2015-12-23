@@ -18,12 +18,12 @@
 
 package com.playonlinux.core.webservice;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressEntity;
 
 public class DownloadEnvelope<C> {
 
     C envelopeContent;
-    ProgressStateEntity downloadState;
+    ProgressEntity downloadState;
 
     public C getEnvelopeContent() {
         return envelopeContent;
@@ -33,11 +33,11 @@ public class DownloadEnvelope<C> {
         this.envelopeContent = envelopeContent;
     }
 
-    public ProgressStateEntity getDownloadState() {
+    public ProgressEntity getDownloadState() {
         return downloadState;
     }
 
-    public void setDownloadState(ProgressStateEntity downloadState) {
+    public void setDownloadState(ProgressEntity downloadState) {
         this.downloadState = downloadState;
     }
 }

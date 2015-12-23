@@ -29,6 +29,7 @@ import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.engines.wine.EngineInstallException;
+import com.playonlinux.ui.api.ProgressControl;
 
 public class WinePackageProvider<T extends WinePackage> {
     private final T winePackage;
@@ -37,7 +38,7 @@ public class WinePackageProvider<T extends WinePackage> {
         this.winePackage = winePackage;
     }
 
-    public void installPackageForWineVersion(File extractPath, Observer progressControl) throws EngineInstallException {
+    public void installPackageForWineVersion(File extractPath, ProgressControl progressControl) throws EngineInstallException {
         final File destinationFile = new File(winePackage.getPackageDestination(), winePackage.getPackageFileName());
 
         if(!destinationFile.exists()) {
@@ -58,7 +59,7 @@ public class WinePackageProvider<T extends WinePackage> {
         }
     }
 
-    private void installPackageInLocalCache(Observer progressControl) throws EngineInstallException {
+    private void installPackageInLocalCache(ProgressControl progressControl) throws EngineInstallException {
         try {
             final URL packageUrl = winePackage.getPackageUrl();
             final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);
@@ -66,14 +67,12 @@ public class WinePackageProvider<T extends WinePackage> {
             final File destinationFile = new File(destinationDirectory, winePackage.getPackageFileName());
             final String packageChecksum = winePackage.getPackageChecksum();
 
-            httpDownloader.addObserver(progressControl);
+            httpDownloader.setOnChange(progressControl);
             httpDownloader.get(destinationFile);
-            httpDownloader.deleteObservers();
 
             final ChecksumCalculator checksumCalculator = new ChecksumCalculator();
-            checksumCalculator.addObserver(progressControl);
+            checksumCalculator.setOnChange(progressControl);
             final String clientSum = checksumCalculator.calculate(destinationFile, "md5");
-            checksumCalculator.deleteObservers();
 
             if(!clientSum.equals(packageChecksum)) {
                 destinationFile.delete();

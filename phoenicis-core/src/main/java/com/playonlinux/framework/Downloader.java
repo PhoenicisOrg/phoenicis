@@ -77,15 +77,13 @@ public class Downloader implements SetupWizardComponent {
 
         final HTTPDownloader downloader = new HTTPDownloader(remoteFile);
         try {
-            downloader.addObserver(progressControl);
+            downloader.setOnChange(progressControl);
             downloader.get(localFile);
         } catch (DownloadException e) {
             throw new ScriptFailureException(
                     String.format("Unable to download the file (Remote: %s, Local: %s)", remoteFile, localFile), e);
-        } finally {
-            downloader.deleteObserver(progressControl);
         }
-
+        
         downloadedFile = localFile;
         return this;
     }
@@ -124,7 +122,7 @@ public class Downloader implements SetupWizardComponent {
             ChecksumCalculator checksumCalculator = new ChecksumCalculator();
 
             if (progressControl != null) {
-                checksumCalculator.addObserver(progressControl);
+                checksumCalculator.setOnChange(progressControl);
             }
             calculatedChecksum = checksumCalculator.calculate(this.findDownloadedFile(), MD5_CHECKSUM);
         } catch (IOException e) {

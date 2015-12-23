@@ -25,11 +25,11 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressEntity;
+import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFailureException;
@@ -43,8 +43,7 @@ import com.playonlinux.injection.Scan;
 @Scan
 public class DefaultInstallerDownloaderEntityProvider
         extends ObservableDefaultImplementation<InstallerDownloaderEntity>
-        implements InstallerDownloaderEntityProvider,
-                   Observer<HTTPDownloader, ProgressStateEntity> {
+        implements InstallerDownloaderEntityProvider {
     public static final double PERCENTAGE = 100.;
 
     @Inject
@@ -74,7 +73,7 @@ public class DefaultInstallerDownloaderEntityProvider
 
     @Override
     public void getScript() {
-        httpDownloader.addObserver(this);
+        httpDownloader.setOnChange(this::update);
 
         downloadManager.submit(httpDownloader, bytes -> {
             success(bytes);
@@ -125,9 +124,8 @@ public class DefaultInstallerDownloaderEntityProvider
         SIGNATURE_ERROR
     }
 
-    @Override
-    public void update(HTTPDownloader observable, ProgressStateEntity argument) {
-        if(argument.getState() == ProgressStateEntity.State.PROGRESSING) {
+    public void update(ProgressEntity argument) {
+        if(argument.getState() == ProgressState.PROGRESSING) {
             changeState(State.PROGRESSING, argument.getPercent());
         }
     }

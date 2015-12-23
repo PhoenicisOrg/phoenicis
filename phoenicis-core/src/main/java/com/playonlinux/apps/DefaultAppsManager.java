@@ -24,7 +24,7 @@ import java.util.Collection;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.scripts.InstallerSource;
@@ -49,11 +49,11 @@ public class DefaultAppsManager extends ObservableDefaultImplementation<DefaultA
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     public boolean isUpdating() {
-        return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
+        return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressState.PROGRESSING;
     }
 
     public boolean hasFailed() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.FAILED;
+        return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
 
     @Override

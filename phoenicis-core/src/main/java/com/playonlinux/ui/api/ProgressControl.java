@@ -18,14 +18,15 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.core.entities.ProgressStateEntity;
+import java.util.function.Consumer;
+
+import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 
 /**
  * Represents a progress control
  */
-public interface ProgressControl extends Observer<Observable, ProgressStateEntity> {
+public interface ProgressControl extends Consumer<ProgressEntity> {
     /**
      * Set the percentage of the progress bar
      * @param value The value to set
@@ -39,7 +40,7 @@ public interface ProgressControl extends Observer<Observable, ProgressStateEntit
     void setText(String text);
 
     @Override
-    default void update(Observable observable, ProgressStateEntity argument) {
+    default void accept(ProgressEntity argument) {
         setProgressPercentage(argument.getPercent());
         setText(argument.getProgressText());
     }

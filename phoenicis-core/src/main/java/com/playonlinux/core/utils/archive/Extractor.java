@@ -20,17 +20,19 @@ package com.playonlinux.core.utils.archive;
 
 import java.io.File;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.entities.ProgressStateEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
+import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.utils.FileAnalyser;
 
-public class Extractor  extends ObservableDefaultImplementation<ProgressStateEntity> {
+public class Extractor {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
+    private Consumer<ProgressEntity> onChange;
+    
     /**
      * Uncompress a .tar file
      * @param inputFile input file
@@ -59,8 +61,15 @@ public class Extractor  extends ObservableDefaultImplementation<ProgressStateEnt
     }
 
 
-    private Void changeState(ProgressStateEntity progressStateEntity) {
-        this.notifyObservers(progressStateEntity);
+    private Void changeState(ProgressEntity progressStateEntity) {
+        if(onChange != null){
+            onChange.accept(progressStateEntity);
+        }
         return null;
+    }
+
+
+    public void setOnChange(Consumer<ProgressEntity> onChange) {
+        this.onChange = onChange;
     }
 }

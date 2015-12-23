@@ -31,7 +31,7 @@ import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.entities.ScriptEntity;
-import com.playonlinux.core.entities.ProgressStateEntity;
+import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
@@ -76,11 +76,11 @@ public final class AppsEntitiesProvider
 
 
     private boolean isUpdating() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.PROGRESSING;
+        return downloadEnvelope.getDownloadState().getState() == ProgressState.PROGRESSING;
     }
 
     private boolean hasFailed() {
-        return downloadEnvelope.getDownloadState().getState() == ProgressStateEntity.State.FAILED;
+        return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
 
 
