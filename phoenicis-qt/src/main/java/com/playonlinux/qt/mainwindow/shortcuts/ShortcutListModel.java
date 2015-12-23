@@ -21,8 +21,6 @@ package com.playonlinux.qt.mainwindow.shortcuts;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.qt.mainwindow.MainWindowEventHandler;
