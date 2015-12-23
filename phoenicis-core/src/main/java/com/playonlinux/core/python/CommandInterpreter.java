@@ -18,7 +18,7 @@
 
 package com.playonlinux.core.python;
 
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 /**
  * This is a command interpreter
@@ -31,7 +31,7 @@ public interface CommandInterpreter extends AutoCloseable {
      * @return true if the command is directly interpreted (complete). False if the command is incomplete
      * (if statements, ...)
      */
-    boolean sendLine(String command, Function<String, Void> callback);
+    boolean sendLine(String command, Consumer<String> callback);
 
     @Override
     void close();
