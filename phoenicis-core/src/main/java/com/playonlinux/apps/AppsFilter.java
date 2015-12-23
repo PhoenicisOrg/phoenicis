@@ -24,7 +24,6 @@ import java.util.function.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import com.playonlinux.apps.entities.AppEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 /**
  * Filter implementation for CenterItems

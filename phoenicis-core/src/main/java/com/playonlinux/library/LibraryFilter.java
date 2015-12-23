@@ -21,7 +21,6 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 
 /**
