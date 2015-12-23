@@ -91,7 +91,7 @@ public class HTTPDownloader {
         }
     }
 
-    public void get(OutputStream outputStream) throws DownloadException {
+    private void get(OutputStream outputStream) throws DownloadException {
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             saveConnectionToStream(connection, outputStream);
