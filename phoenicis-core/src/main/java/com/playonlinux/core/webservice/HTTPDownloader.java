@@ -44,10 +44,6 @@ public class HTTPDownloader {
         this.url = url;
     }
 
-    private HttpURLConnection openConnection(URL remoteFile) throws IOException {
-        return (HttpURLConnection) remoteFile.openConnection();
-    }
-
     private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
             throws DownloadException {
         float percentage = 0F;
@@ -97,7 +93,7 @@ public class HTTPDownloader {
 
     public void get(OutputStream outputStream) throws DownloadException {
         try {
-            HttpURLConnection connection = openConnection(url);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             saveConnectionToStream(connection, outputStream);
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
