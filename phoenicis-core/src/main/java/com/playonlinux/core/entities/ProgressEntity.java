@@ -37,10 +37,6 @@ public class ProgressEntity implements DTO {
         this(state, percent, null);
     }
     
-    public ProgressEntity(double percent, String progressText){
-        this(null, percent, progressText);
-    }
-    
     public ProgressEntity(ProgressState state, double percent, String progressText) {
         this.state = state;
         this.percent = percent;
