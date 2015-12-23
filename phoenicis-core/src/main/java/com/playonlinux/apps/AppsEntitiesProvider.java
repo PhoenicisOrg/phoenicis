@@ -18,6 +18,13 @@
 
 package com.playonlinux.apps;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.apps.entities.AppEntity;
@@ -25,7 +32,6 @@ import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.core.entities.ProgressState;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
@@ -33,16 +39,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 @Scan
-public final class AppsEntitiesProvider
-        extends ObservableDefaultImplementation<AppsWindowEntity>
-        implements EntitiesProvider<AppEntity, AppsWindowEntity> {
+public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, AppsWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -53,24 +51,23 @@ public final class AppsEntitiesProvider
 
     private Predicate<AppEntity> lastFilter;
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
+    private Consumer<AppsWindowEntity> onChange;
 
     @Override
     public void applyFilter(Predicate<AppEntity> filter) {
         this.lastFilter = filter;
 
         filteredAppsItemsDTOs.clear();
-        if(filter != null){
+        if (filter != null) {
             filteredAppsItemsDTOs.addAll(appsItemDTOs.stream().filter(filter).collect(Collectors.toList()));
         }
 
-        this.notifyObservers(new AppsWindowEntity.Builder()
-                .withAppsCategory(categoriesDTO)
-                .withAppsItem(filteredAppsItemsDTOs)
-                .withDownloadFailed(hasFailed())
-                .withDownloading(isUpdating())
-                .build());
+        if (onChange != null) {
+            onChange.accept(
+                    new AppsWindowEntity.Builder().withAppsCategory(categoriesDTO).withAppsItem(filteredAppsItemsDTOs)
+                            .withDownloadFailed(hasFailed()).withDownloading(isUpdating()).build());
+        }
     }
-
 
     private boolean isUpdating() {
         return downloadEnvelope.getDownloadState().getState() == ProgressState.PROGRESSING;
@@ -80,10 +77,9 @@ public final class AppsEntitiesProvider
         return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
 
-
     @Override
     public void shutdown() {
-        deleteObservers();
+        //Nothing to do
     }
 
     @Override
@@ -97,32 +93,36 @@ public final class AppsEntitiesProvider
         this.downloadEnvelope = appsManager.getDownloadEnvelope();
         this.categoriesDTO.clear();
 
-        if(downloadEnvelope.getEnvelopeContent() != null) {
-            downloadEnvelope.getEnvelopeContent().stream().filter(categoryDTO -> categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS).forEach(categoryDTO -> {
-                categoriesDTO.add(new AppsCategoryEntity(categoryDTO.getName()));
-                for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
-                    final List<ScriptEntity> scripts = applicationDTO.getScripts().stream().map(script -> new ScriptEntity.Builder()
-                            .withName(script.getName())
-                            .withId(script.getId())
-                            .withUrl(script.getUrl())
-                            .build()).collect(Collectors.toList());
+        if (downloadEnvelope.getEnvelopeContent() != null) {
+            downloadEnvelope.getEnvelopeContent().stream()
+                    .filter(categoryDTO -> categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS)
+                    .forEach(categoryDTO -> {
+                        categoriesDTO.add(new AppsCategoryEntity(categoryDTO.getName()));
+                        for (ApplicationDTO applicationDTO : new ArrayList<>(categoryDTO.getApplications())) {
+                            final List<ScriptEntity> scripts = applicationDTO.getScripts().stream()
+                                    .map(script -> new ScriptEntity.Builder().withName(script.getName())
+                                            .withId(script.getId()).withUrl(script.getUrl()).build())
+                                    .collect(Collectors.toList());
 
-                    final AppEntity appsItemDTO = new AppEntity.Builder() //
-                            .withName(applicationDTO.getName()) //
-                            .withCategoryName(categoryDTO.getName()) //
-                            .withDescription(applicationDTO.getDescription()) //
-                            .withRequiresNoCd(false) // FIXME
-                            .withTesting(false) //
-                            .withCommercial(false) //
-                            .withMiniaturesUrlsString(applicationDTO.getMiniaturesUrls()) //
-                            .withScripts(scripts)
-                            .build();
+                            final AppEntity appsItemDTO = new AppEntity.Builder() //
+                                    .withName(applicationDTO.getName()) //
+                                    .withCategoryName(categoryDTO.getName()) //
+                                    .withDescription(applicationDTO.getDescription()) //
+                                    .withRequiresNoCd(false) // FIXME
+                                    .withTesting(false) //
+                                    .withCommercial(false) //
+                                    .withMiniaturesUrlsString(applicationDTO.getMiniaturesUrls()) //
+                                    .withScripts(scripts).build();
 
-                    appsItemDTOs.add(appsItemDTO);
-                }
-            });
+                            appsItemDTOs.add(appsItemDTO);
+                        }
+                    });
         }
 
         applyFilter(lastFilter);
+    }
+
+    public void setOnChange(Consumer<AppsWindowEntity> onChange) {
+        this.onChange = onChange;
     }
 }

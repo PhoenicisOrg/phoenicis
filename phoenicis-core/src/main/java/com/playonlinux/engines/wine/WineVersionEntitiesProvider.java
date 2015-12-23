@@ -21,10 +21,10 @@ package com.playonlinux.engines.wine;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -38,10 +38,8 @@ import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
 public final class WineVersionEntitiesProvider
-        extends ObservableDefaultImplementation<WineVersionsWindowEntity>
         implements Observer<DefaultWineVersionsManager, DefaultWineVersionsManager>,
-                   EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
-
+        EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -50,29 +48,29 @@ public final class WineVersionEntitiesProvider
     private final List<WineVersionDistributionItemEntity> filteredWineVersionDistributionItemEntities = new ArrayList<>();
 
     private Predicate<WineVersionDistributionItemEntity> lastFilter;
+    private Consumer<WineVersionsWindowEntity> onChange;
 
     @Override
     public void update(DefaultWineVersionsManager observable, DefaultWineVersionsManager argument) {
         assert argument == observable;
-        for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(argument.getWineVersionDistributionDTOs())) {
+        for (WineVersionDistributionWebDTO wineVersionDistributionDTO : new ArrayList<>(
+                argument.getWineVersionDistributionDTOs())) {
             final List<WineVersionItemEntity> availablePackages = new ArrayList<>();
             final List<WineVersionItemEntity> installedPackages = new ArrayList<>();
 
-            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream().map(wineVersionDTO -> new WineVersionItemEntity(wineVersionDTO.getVersion())).collect(Collectors.toList()));
+            availablePackages.addAll(wineVersionDistributionDTO.getPackages().stream()
+                    .map(wineVersionDTO -> new WineVersionItemEntity(wineVersionDTO.getVersion()))
+                    .collect(Collectors.toList()));
 
-            wineVersionDistributionItemEntities.add(new WineVersionDistributionItemEntity.Builder()
-                            .withName(wineVersionDistributionDTO.getName())
-                            .withAvailablePackages(availablePackages)
-                            .withInstalledPackages(installedPackages)
-                            .withDescription(wineVersionDistributionDTO.getDescription())
-                            .build()
-            );
+            wineVersionDistributionItemEntities
+                    .add(new WineVersionDistributionItemEntity.Builder().withName(wineVersionDistributionDTO.getName())
+                            .withAvailablePackages(availablePackages).withInstalledPackages(installedPackages)
+                            .withDescription(wineVersionDistributionDTO.getDescription()).build());
         }
 
-
         applyFilter(lastFilter);
-        this.notifyObservers(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities,
-                argument.isUpdating(), argument.hasFailed()));
+        onChange.accept(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities, argument.isUpdating(),
+                argument.hasFailed()));
 
     }
 
@@ -82,24 +80,28 @@ public final class WineVersionEntitiesProvider
 
         filteredWineVersionDistributionItemEntities.clear();
 
-        if(filter == null) {
+        if (filter == null) {
             filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities);
         } else {
-            filteredWineVersionDistributionItemEntities.addAll(wineVersionDistributionItemEntities.stream().filter(filter).collect(Collectors.toList()));
+            filteredWineVersionDistributionItemEntities
+                    .addAll(wineVersionDistributionItemEntities.stream().filter(filter).collect(Collectors.toList()));
         }
     }
 
-
-
     @Override
     public void shutdown() {
-        deleteObservers();
+        //Nothing to do
     }
 
     @Override
     public void init() throws ServiceInitializationException {
-        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager.getService(DefaultWineVersionsManager.class);
+        final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager
+                .getService(DefaultWineVersionsManager.class);
 
         defaultWineVersionsManager.addObserver(this);
+    }
+
+    public void setOnChange(Consumer<WineVersionsWindowEntity> onChange) {
+        this.onChange = onChange;
     }
 }

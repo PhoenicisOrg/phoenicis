@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.filesystem.DirectoryWatcherFiles;
@@ -39,10 +39,8 @@ import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class LibraryEntitiesProvider
-        extends ObservableDefaultImplementation<LibraryWindowEntity>
-        implements Observer<ShortcutSetDirectories, List<ShortcutFiles>>,
-                   EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
+public final class LibraryEntitiesProvider implements Observer<ShortcutSetDirectories, List<ShortcutFiles>>,
+        EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
@@ -56,14 +54,16 @@ public final class LibraryEntitiesProvider
     private final List<InstalledApplicationEntity> installedApplicationsFiltered = new ArrayList<>();
 
     private Predicate<InstalledApplicationEntity> lastFilter;
-
+    private Consumer<LibraryWindowEntity> onChange;
+    
     @Override
     public void update(ShortcutSetDirectories observable, List<ShortcutFiles> argument) {
         installedApplications.clear();
-        installedApplications.addAll(argument.stream().map(shortcut -> new InstalledApplicationEntity.Builder()
-                .withName(shortcut.getShortcutName())
-                .withIcon(shortcut.getIconPath())
-                .build()).collect(Collectors.toList()));
+        installedApplications
+                .addAll(argument
+                        .stream().map(shortcut -> new InstalledApplicationEntity.Builder()
+                                .withName(shortcut.getShortcutName()).withIcon(shortcut.getIconPath()).build())
+                .collect(Collectors.toList()));
 
         applyFilter(lastFilter);
     }
@@ -73,19 +73,21 @@ public final class LibraryEntitiesProvider
         lastFilter = filter;
 
         installedApplicationsFiltered.clear();
-        if(filter != null) {
-            installedApplicationsFiltered.addAll(installedApplications.stream().filter(filter).collect(Collectors.toList()));
+        if (filter != null) {
+            installedApplicationsFiltered
+                    .addAll(installedApplications.stream().filter(filter).collect(Collectors.toList()));
         } else {
             installedApplicationsFiltered.addAll(installedApplications);
         }
 
-        this.notifyObservers(new LibraryWindowEntity(installedApplicationsFiltered));
+        if(onChange != null){
+            onChange.accept(new LibraryWindowEntity(installedApplicationsFiltered));
+        }
     }
 
     @Override
     public void shutdown() {
         shortcutSetDirectories.close();
-        deleteObservers();
     }
 
     @Override
@@ -100,12 +102,14 @@ public final class LibraryEntitiesProvider
         shortcutDirectoryObservable = new DirectoryWatcherFiles(executorService, shortcutDirectory);
         iconDirectoryObservable = new DirectoryWatcherFiles(executorService, iconDirectory);
 
-        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable, defaultIcon);
+        shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
+                defaultIcon);
 
         shortcutSetDirectories.addObserver(this);
     }
 
-
-
+    public void setOnChange(Consumer<LibraryWindowEntity> onChange) {
+        this.onChange = onChange;
+    }
 
 }

@@ -41,7 +41,7 @@ import com.playonlinux.javafx.mainwindow.MessagePanel;
 import javafx.scene.control.TextField;
 
 @Scan
-public class ViewContainers extends MainWindowView implements Observer<Observable, ContainersWindowEntity> {
+public class ViewContainers extends MainWindowView {
     @Inject
     static AnyContainerConfigurationViewFactory anyContainerConfigurationViewFactory;
 
@@ -60,7 +60,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
         this.containersView = new LeftButtonGroup(translate("Containers"));
 
         this.drawSideBar();
-        eventHandlerContainers.getContainers().addObserver(this);
+        eventHandlerContainers.getContainers().setOnChange(this::update);
 
         initSelectContainerPane();
         showRightView(selectContainerPanel);
@@ -85,8 +85,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
         this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
-    @Override
-    public void update(Observable observable, ContainersWindowEntity argument) {
+    public void update(ContainersWindowEntity argument) {
         final List<LeftButton> leftButtonList = new ArrayList<>();
 
         for(ContainerEntity containerEntity: argument.getContainerEntities()) {

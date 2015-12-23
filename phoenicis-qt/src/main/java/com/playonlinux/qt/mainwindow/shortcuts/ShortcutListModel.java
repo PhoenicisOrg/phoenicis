@@ -38,7 +38,7 @@ import com.trolltech.qt.gui.QPixmap;
 /**
  * Model for the ShortcutList, automatically keeping track of changes.
  */
-public class ShortcutListModel extends QAbstractListModel implements Observer<Observable, LibraryWindowEntity> {
+public class ShortcutListModel extends QAbstractListModel {
 
     private List<InstalledApplicationEntity> libraryItems = new ArrayList<>();
     private final EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> libraryItemProvider;
@@ -49,7 +49,7 @@ public class ShortcutListModel extends QAbstractListModel implements Observer<Ob
         this.maxIconSize = maxIconSize.value();
 
         libraryItemProvider = eventHandler.getShortcuts();
-        libraryItemProvider.addObserver(this);
+        libraryItemProvider.setOnChange(this::update);
     }
 
 
@@ -76,8 +76,7 @@ public class ShortcutListModel extends QAbstractListModel implements Observer<Ob
 
 
     //Register for changes and notify the view.
-    @Override
-    public void update(Observable observable, LibraryWindowEntity shortcuts) {
+    public void update(LibraryWindowEntity shortcuts) {
         QApplication.invokeLater(() -> {
             layoutAboutToBeChanged.emit();
             libraryItems = new ArrayList<>(shortcuts.getInstalledApplicationEntity());
