@@ -36,13 +36,12 @@ public class HTTPDownloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
 
     private static final int BLOCK_SIZE = 1024;
+    
     private final URL url;
-    private float percentage;
     private Consumer<ProgressEntity> onChange;
 
     public HTTPDownloader(URL url) {
         this.url = url;
-        changeState(ProgressState.READY);
     }
 
     private HttpURLConnection openConnection(URL remoteFile) throws IOException {
@@ -51,6 +50,9 @@ public class HTTPDownloader {
 
     private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
             throws DownloadException {
+        float percentage = 0F;
+        changeState(ProgressState.READY, percentage);
+
         try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
             long fileSize = connection.getContentLength();
@@ -63,7 +65,7 @@ public class HTTPDownloader {
                 bufferedOutputStream.write(data, 0, i);
 
                 percentage = totalDataRead * 100 / fileSize;
-                changeState(ProgressState.PROGRESSING);
+                changeState(ProgressState.PROGRESSING, percentage);
 
                 if (Thread.currentThread().isInterrupted()) {
                     throw new InterruptedException("The download has been aborted");
@@ -72,13 +74,14 @@ public class HTTPDownloader {
 
             outputStream.flush();
         } catch (IOException | InterruptedException e) {
-            changeState(ProgressState.FAILED);
+            changeState(ProgressState.FAILED, percentage);
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
-        changeState(ProgressState.SUCCESS);
+        
+        changeState(ProgressState.SUCCESS, percentage);
     }
 
-    private void changeState(ProgressState state) {
+    private void changeState(ProgressState state, float percentage) {
         if (onChange != null) {
             onChange.accept(new ProgressEntity(state, percentage));
         }
