@@ -74,11 +74,7 @@ public class ChecksumCalculator {
 
     private void changeState(double percentage) {
         if(onChange != null){
-            onChange.accept(new ProgressEntity.Builder()
-                    .withPercent(percentage)
-                    .withProgressText(WAIT_MESSAGE)
-                    .build()
-            );
+            onChange.accept(new ProgressEntity(percentage, WAIT_MESSAGE));
         }
     }
 

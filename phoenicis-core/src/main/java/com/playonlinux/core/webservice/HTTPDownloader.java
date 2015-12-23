@@ -78,9 +78,7 @@ public class HTTPDownloader {
 
     private void changeState(ProgressState state) {
         if(onChange != null){
-            ProgressEntity currentState = new ProgressEntity.Builder().withPercent(this.percentage)
-                    .withState(state).build();
-            onChange.accept(currentState);   
+            onChange.accept(new ProgressEntity(state, percentage));   
         }
     }
 
