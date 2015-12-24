@@ -18,20 +18,18 @@
 
 package com.playonlinux.bash;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-import com.playonlinux.bash.ScriptLegacyFactory;
 import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFailureException;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-
-import static org.junit.Assert.*;
 
 public class ScriptLegacyTest {
 
@@ -81,7 +79,7 @@ public class ScriptLegacyTest {
     }
 
     @Test
-    public void testExtractSignature_bashScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
+    public void testExtractSignature_bashScriptWithSignature_extracted() throws ScriptFailureException {
         Script legacyScriptWithSignature = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignature = "-----BEGIN PGP SIGNATURE-----\n" +
@@ -93,7 +91,7 @@ public class ScriptLegacyTest {
     }
 
     @Test
-    public void testExtractContent_bashScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
+    public void testExtractContent_bashScriptWithSignature_extracted() throws ScriptFailureException {
         Script legacyScriptWithSignature = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignature.sh").getPath()));
         String expectedSignature = "#!/bin/bash\n" +
@@ -112,7 +110,7 @@ public class ScriptLegacyTest {
 
 
     @Test
-    public void testExtractSignature_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, ScriptFailureException {
+    public void testExtractSignature_bashScriptWithSignatureCRLF_extracted() throws ScriptFailureException {
         Script legacyScriptWithSignature = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignatureCRLF.sh").getPath()));
         String expectedSignature = "-----BEGIN PGP SIGNATURE-----\r\n" +
@@ -124,7 +122,7 @@ public class ScriptLegacyTest {
     }
 
     @Test
-    public void testExtractContent_bashScriptWithSignatureCRLF_extracted() throws IOException, ParseException, ScriptFailureException {
+    public void testExtractContent_bashScriptWithSignatureCRLF_extracted() throws ScriptFailureException {
         Script legacyScriptWithSignature = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("legacyScriptExampleWithSignatureCRLF.sh").getPath()));
         String expectedSignature = "#!/bin/bash\r\n" +
@@ -143,7 +141,7 @@ public class ScriptLegacyTest {
 
 
     @Test(expected = ScriptFailureException.class)
-    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws IOException, ScriptFailureException {
+    public void testExtractSignature_bashScriptWithNoSignature_exceptionThrown() throws ScriptFailureException {
         Script legacyScriptWithoutSignature = factory.createInstanceFromFile(
                 new File(this.getClass().getResource("legacyScriptExample.sh").getPath()));
         legacyScriptWithoutSignature.extractSignature();
@@ -151,7 +149,7 @@ public class ScriptLegacyTest {
 
 
     @Test
-    public void testExtractScript_withRealScript_extracted() throws IOException, ScriptFailureException {
+    public void testExtractScript_withRealScript_extracted() throws ScriptFailureException {
         Script legacyScriptWithSignature = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("realScript.sh").getPath()));
         String expectedScript = "#!/bin/bash\n" +

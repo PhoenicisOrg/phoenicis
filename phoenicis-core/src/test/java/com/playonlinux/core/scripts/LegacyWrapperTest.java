@@ -91,7 +91,7 @@ public class LegacyWrapperTest {
     }
 
     @After
-    public void tearDown() throws InjectionException {
+    public void tearDown() {
         testConfigFile.close();
     }
 

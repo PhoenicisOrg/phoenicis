@@ -128,7 +128,7 @@ public class PythonInstallerTest {
     }
 
     @AfterClass
-    public static void tearDownClass() throws InjectionException {
+    public static void tearDownClass() {
         testConfigFile.close();
     }
 }

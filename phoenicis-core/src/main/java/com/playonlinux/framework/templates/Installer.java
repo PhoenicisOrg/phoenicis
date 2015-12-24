@@ -49,7 +49,7 @@ public abstract class Installer implements ScriptTemplate {
     }
 
     /* Methods that can be called */
-    protected SetupWizard setupWizard() throws ScriptFailureException {
+    protected SetupWizard setupWizard() {
         createSetupWizard();
         initalizeSetupWizard();
         return setupWizard;

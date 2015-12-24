@@ -24,7 +24,6 @@ import java.util.Map;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.scripts.ScriptClass;
-import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.injection.Inject;
@@ -40,11 +39,11 @@ public final class Environment {
         // This is a static class, it should never be instantiated
     }
 
-    public static OperatingSystem getOperatinSystem() throws ScriptFailureException {
+    public static OperatingSystem getOperatinSystem() {
         return OperatingSystem.fetchCurrentOperationSystem();
     }
 
-    public static Architecture getArchitecture() throws ScriptFailureException {
+    public static Architecture getArchitecture() {
         return Architecture.fetchCurrentArchitecture();
     }
 
@@ -68,15 +67,15 @@ public final class Environment {
         return playOnLinuxContext.makeShortcutsPath().getAbsolutePath();
     }
 
-    public static String getPath() throws ScriptFailureException {
+    public static String getPath() {
         return getEnvironmentVar("PATH");
     }
 
-    public static String getLibraryPath() throws ScriptFailureException {
+    public static String getLibraryPath() {
         return getEnvironmentVar("LD_LIBRARY_PATH");
     }
 
-    public static String getDyldLibraryPath() throws ScriptFailureException {
+    public static String getDyldLibraryPath() {
         return getEnvironmentVar("DYLD_LIBRARY_PATH");
     }
 

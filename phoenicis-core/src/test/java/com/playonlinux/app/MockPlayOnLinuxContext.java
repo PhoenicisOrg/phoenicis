@@ -24,7 +24,7 @@ import com.playonlinux.core.utils.ReplacableProperties;
 
 public class MockPlayOnLinuxContext extends PlayOnLinuxContext {
 
-    public MockPlayOnLinuxContext() throws PlayOnLinuxException, IOException {
+    public MockPlayOnLinuxContext() {
         super();
     }
 

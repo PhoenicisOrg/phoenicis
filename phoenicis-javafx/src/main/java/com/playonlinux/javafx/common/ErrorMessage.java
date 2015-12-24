@@ -23,8 +23,6 @@ import static com.playonlinux.core.lang.Localisation.translate;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
-import com.playonlinux.app.PlayOnLinuxException;
-
 import javafx.scene.control.Alert;
 
 public class ErrorMessage {
