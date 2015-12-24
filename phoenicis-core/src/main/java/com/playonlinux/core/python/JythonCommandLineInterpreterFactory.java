@@ -38,7 +38,7 @@ public class JythonCommandLineInterpreterFactory implements CommandLineInterpret
     }
 
     @Override
-    public JythonCommandInterpreter createInstance() throws CommandInterpreterException {
+    public JythonCommandInterpreter createInstance() {
         JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);
         try {
             serviceManager.register(interpreter);

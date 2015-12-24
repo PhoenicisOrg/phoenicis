@@ -30,5 +30,5 @@ public interface CommandLineInterpreterFactory {
      * @return a {@link CommandInterpreter}
      * @throws CommandInterpreterException if the service manager fails to create an interpreter
      */
-    CommandInterpreter createInstance() throws CommandInterpreterException;
+    CommandInterpreter createInstance();
 }

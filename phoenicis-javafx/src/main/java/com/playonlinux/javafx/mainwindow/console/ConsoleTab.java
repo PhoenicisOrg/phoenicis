@@ -25,7 +25,6 @@ import static com.playonlinux.core.lang.Localisation.translate;
 import org.apache.commons.lang.StringUtils;
 
 import com.playonlinux.core.python.CommandInterpreter;
-import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.PlayOnLinuxWindow;
 import com.playonlinux.ui.common.CommandHistory;
@@ -50,7 +49,7 @@ public class ConsoleTab extends Tab implements PlayOnLinuxWindow {
 
     private String nextSymbol = NOT_INSIDE_BLOCK;
 
-    public ConsoleTab(CommandLineInterpreterFactory commandLineInterpreterFactory) throws CommandInterpreterException {
+    public ConsoleTab(CommandLineInterpreterFactory commandLineInterpreterFactory) {
         final VBox content = new VBox();
 
         commandInterpreter = commandLineInterpreterFactory.createInstance();
