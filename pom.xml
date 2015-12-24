@@ -38,6 +38,8 @@
         <module>phoenicis-javafx-wine</module>
         <module>phoenicis-win32</module>
         <module>phoenicis-dist</module>
+        <module>phoenicis-apps</module>
+        <module>phoenicis-ui</module>
     </modules>
 
     <properties>

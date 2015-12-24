@@ -34,8 +34,8 @@ import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.UIEventHandler;
+import com.playonlinux.ui.EventHandler;
 
 @Scan
 class EventHandlerLibrary implements UIEventHandler {
