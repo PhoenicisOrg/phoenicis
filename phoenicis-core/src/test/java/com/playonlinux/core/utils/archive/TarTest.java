@@ -36,22 +36,22 @@ public class TarTest {
     final URL inputUrl = TarTest.class.getResource(".");
 
     @Test
-    public void testUncompressTarFile() throws IOException, ArchiveException {
+    public void testUncompressTarFile() throws IOException {
         testUncompress("test1.tar");
     }
 
     @Test
-    public void testUncompressTarGzFile() throws IOException, ArchiveException {
+    public void testUncompressTarGzFile() throws IOException {
         testUncompress("test2.tar.gz");
     }
 
     @Test
-    public void testUncompressTarBz2File() throws IOException, ArchiveException {
+    public void testUncompressTarBz2File() throws IOException {
         testUncompress("test3.tar.bz2");
     }
 
     @Test
-    public void testUncompress_withSymbolicLinks() throws IOException, ArchiveException {
+    public void testUncompress_withSymbolicLinks() throws IOException {
         final File inputFile = new File(inputUrl.getPath(), "tarLink.tar.gz");
         final File temporaryDirectory = Files.createTempDir();
 
@@ -71,7 +71,7 @@ public class TarTest {
         assertTrue(java.nio.file.Files.isSymbolicLink(Paths.get(file2.getPath())));
     }
 
-    private void testUncompress(String fileName) throws IOException, ArchiveException {
+    private void testUncompress(String fileName) throws IOException {
         final File inputFile = new File(inputUrl.getPath(), fileName);
         final File temporaryDirectory = Files.createTempDir();
 
@@ -96,7 +96,7 @@ public class TarTest {
     }
 
     @Test
-    public void testGunzip() throws IOException, ArchiveException {
+    public void testGunzip() throws IOException {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
 
@@ -106,7 +106,7 @@ public class TarTest {
     }
 
     @Test
-    public void testBunzip2() throws IOException, ArchiveException {
+    public void testBunzip2() throws IOException {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
 
@@ -116,7 +116,7 @@ public class TarTest {
     }
 
     @Test(expected = ArchiveException.class)
-    public void testBunzip2_extractGzip() throws IOException, ArchiveException {
+    public void testBunzip2_extractGzip() throws IOException {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();
@@ -124,7 +124,7 @@ public class TarTest {
     }
 
     @Test(expected = ArchiveException.class)
-    public void tesGunzip_extractBzip2() throws IOException, ArchiveException {
+    public void tesGunzip_extractBzip2() throws IOException {
         final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();

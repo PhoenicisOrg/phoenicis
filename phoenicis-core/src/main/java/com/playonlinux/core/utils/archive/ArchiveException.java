@@ -18,9 +18,7 @@
 
 package com.playonlinux.core.utils.archive;
 
-import com.playonlinux.app.PlayOnLinuxException;
-
-public class ArchiveException extends PlayOnLinuxException {
+public class ArchiveException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public ArchiveException(String message, Throwable e) {

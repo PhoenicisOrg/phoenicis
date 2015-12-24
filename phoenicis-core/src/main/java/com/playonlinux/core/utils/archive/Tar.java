@@ -50,8 +50,7 @@ public class Tar {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
     private static final String TAR_ERROR_MESSAGE = "Unable to open input stream";
 
-    List<File> uncompressTarBz2File(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback)
-            throws ArchiveException {
+    List<File> uncompressTarBz2File(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
         try (CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile));
                 InputStream inputStream = new BZip2CompressorInputStream(countingInputStream)) {
             final long finalSize = FileUtils.sizeOf(inputFile);
@@ -61,8 +60,7 @@ public class Tar {
         }
     }
 
-    List<File> uncompressTarGzFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback)
-            throws ArchiveException {
+    List<File> uncompressTarGzFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
         try (CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile));
                 InputStream inputStream = new GZIPInputStream(countingInputStream)) {
             final long finalSize = FileUtils.sizeOf(inputFile);
@@ -72,8 +70,7 @@ public class Tar {
         }
     }
 
-    List<File> uncompressTarXzFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback)
-            throws ArchiveException {
+    List<File> uncompressTarXzFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
         try (CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile));
                 InputStream inputStream = new XZCompressorInputStream(countingInputStream)) {
             final long finalSize = FileUtils.sizeOf(inputFile);
@@ -83,8 +80,7 @@ public class Tar {
         }
     }
 
-    List<File> uncompressTarFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback)
-            throws ArchiveException {
+    List<File> uncompressTarFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
         try (CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile))) {
             final long finalSize = FileUtils.sizeOf(inputFile);
             return uncompress(countingInputStream, countingInputStream, outputDir, finalSize, stateCallback);
@@ -105,7 +101,7 @@ public class Tar {
      *             if the process fails
      */
     private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
-            final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) throws ArchiveException {
+            final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
         final List<File> uncompressedFiles = new LinkedList<>();
         try (ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("tar",
                 inputStream)) {
@@ -147,11 +143,10 @@ public class Tar {
                                 .withProgressText("Extracting " + outputFile.getName()).build());
 
             }
+            return uncompressedFiles;
         } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
             throw new ArchiveException("Unable to extract the file", e);
         }
-
-        return uncompressedFiles;
     }
 
     /**
@@ -165,7 +160,7 @@ public class Tar {
      * @throws ArchiveException
      *             if any error occurs
      */
-    public File gunzip(final File inputFile, final File outputFile) throws ArchiveException {
+    public File gunzip(final File inputFile, final File outputFile) {
         LOGGER.info(
                 String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
 
@@ -173,10 +168,10 @@ public class Tar {
 
                 FileOutputStream out = new FileOutputStream(outputFile)) {
             IOUtils.copy(in, out);
+            return outputFile;
         } catch (IOException e) {
             throw new ArchiveException("Unable to gunzip file", e);
         }
-        return outputFile;
     }
 
     /**
@@ -190,17 +185,16 @@ public class Tar {
      * @throws ArchiveException
      *             if any error occurs
      */
-    public File bunzip2(final File inputFile, final File outputFile) throws ArchiveException {
+    public File bunzip2(final File inputFile, final File outputFile) {
         LOGGER.info(
                 String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
-
         try (BZip2CompressorInputStream in = new BZip2CompressorInputStream(new FileInputStream(inputFile));
                 FileOutputStream out = new FileOutputStream(outputFile)) {
             IOUtils.copy(in, out);
+            return outputFile;
         } catch (IOException e) {
             throw new ArchiveException("Unable to gunzip file", e);
         }
-        return outputFile;
     }
 
 }
