@@ -75,7 +75,10 @@ public class DefaultWineVersionsManager implements WineVersionManager {
         if (downloadEnvelope.getEnvelopeContent() != null) {
             this.wineVersionDistributionDTOs = downloadEnvelope.getEnvelopeContent();
         }
-        onChange.accept(this);
+
+        if(onChange != null) {
+            onChange.accept(this);
+        }
     }
 
     @Override
