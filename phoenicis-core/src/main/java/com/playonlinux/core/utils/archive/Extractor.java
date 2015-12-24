@@ -32,16 +32,20 @@ public class Extractor {
     private static final Logger LOGGER = Logger.getLogger(Tar.class);
 
     private Consumer<ProgressEntity> onChange;
-    
+
     /**
      * Uncompress a .tar file
-     * @param inputFile input file
-     * @param outputDir output directory
+     * 
+     * @param inputFile
+     *            input file
+     * @param outputDir
+     *            output directory
      * @return list of uncompressed files
      * @throws ArchiveException
      */
     public List<File> uncompress(final File inputFile, final File outputDir) throws ArchiveException {
-        LOGGER.info(String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        LOGGER.info(
+                String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         try {
             switch (FileAnalyser.getMimetype(inputFile)) {
@@ -60,14 +64,11 @@ public class Extractor {
         }
     }
 
-
-    private Void changeState(ProgressEntity progressStateEntity) {
-        if(onChange != null){
+    private void changeState(ProgressEntity progressStateEntity) {
+        if (onChange != null) {
             onChange.accept(progressStateEntity);
         }
-        return null;
     }
-
 
     public void setOnChange(Consumer<ProgressEntity> onChange) {
         this.onChange = onChange;

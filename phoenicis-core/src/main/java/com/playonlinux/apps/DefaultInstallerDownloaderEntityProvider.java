@@ -77,12 +77,9 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
 
         downloadManager.submit(httpDownloader, bytes -> {
             success(bytes);
-            return null;
-        } , e -> {
+        }, e -> {
             failure(e);
-            return null;
         });
-
     }
 
     private void success(byte[] bytes) {

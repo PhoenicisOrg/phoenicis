@@ -20,7 +20,7 @@ package com.playonlinux.containers;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
@@ -37,7 +37,7 @@ public class WineContainerActions {
     @Inject
     static ExecutorService executorService;
 
-    public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Function<Void, Void> callBack) {
+    public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Consumer<Void> callBack) {
         executorService.submit(() -> {
                     LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
                     containerSetupWizard.init();
@@ -48,7 +48,7 @@ public class WineContainerActions {
                     } catch (CancelException e) {
                         LOGGER.info(e);
                     }
-                    callBack.apply(null);
+                    callBack.accept(null);
                     containerSetupWizard.close();
                 }
         );

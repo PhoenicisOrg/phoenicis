@@ -23,7 +23,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
@@ -32,8 +32,7 @@ import com.playonlinux.core.services.SubmittableService;
 /*
  Represents a download manager
  */
-public class DownloadManager implements
-                             SubmittableService<HTTPDownloader, Function<byte[], Void>> {
+public class DownloadManager implements SubmittableService<HTTPDownloader, Consumer<byte[]>> {
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
@@ -44,18 +43,12 @@ public class DownloadManager implements
     }
 
     public DownloadManager(int poolSize, int queueSize) {
-        final BlockingQueue<Runnable> queue
-                = new ArrayBlockingQueue<>(queueSize);
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(queueSize);
 
-        threadPoolExecutor = new ThreadPoolExecutor(
-                poolSize,
-                poolSize,
-                Long.MAX_VALUE,
-                TimeUnit.DAYS,
-                queue
-        );
+        threadPoolExecutor = new ThreadPoolExecutor(poolSize, poolSize, Long.MAX_VALUE, TimeUnit.DAYS, queue);
 
     }
+
     @Override
     public void shutdown() {
         threadPoolExecutor.shutdownNow();
@@ -67,22 +60,20 @@ public class DownloadManager implements
     }
 
     @Override
-    public void submit(HTTPDownloader task, Function<byte[], Void> callback,
-                       Function<Exception, Void> error) {
+    public void submit(HTTPDownloader task, Consumer<byte[]> callback, Consumer<Exception> error) {
 
         threadPoolExecutor.submit(() -> {
             try {
                 byte[] downloadResult = task.getBytes();
-                callback.apply(downloadResult);
+                callback.accept(downloadResult);
             } catch (DownloadException e) {
                 LOGGER.error(e);
-                error.apply(e);
+                error.accept(e);
             }
         });
     }
 
-    public void submit(URL url, Function<byte[], Void> callback,
-                       Function<Exception, Void> error) {
+    public void submit(URL url, Consumer<byte[]> callback, Consumer<Exception> error) {
         HTTPDownloader task = new HTTPDownloader(url);
         submit(task, callback, error);
     }

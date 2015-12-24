@@ -58,11 +58,9 @@ public class RemoteImage extends VBox {
         downloadManager.submit(imageUrl,
                 bytes -> {
                     handleDownloadSuccess(bytes);
-                    return null;
                 },
                 e -> {
                     handleError();
-                    return null;
                 }
         );
     }

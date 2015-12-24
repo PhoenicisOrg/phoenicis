@@ -21,7 +21,7 @@ package com.playonlinux.core.python;
 import java.io.StringWriter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 import org.python.core.PyException;
@@ -56,7 +56,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
     }
 
     @Override
-    public boolean sendLine(String command, Function<String, Void> callback) {
+    public boolean sendLine(String command, Consumer<String> callback) {
         if(interactiveInterpreter == null) {
             try {
                 interactiveInterpreter = jythonJythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
@@ -71,7 +71,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
         if(command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
             commandBuffer.append("\n");
-            callback.apply("");
+            callback.accept("");
             return false;
         } else {
             String completeCommand = commandBuffer.toString();
@@ -80,10 +80,10 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                 returnBuffer.getBuffer().setLength(0);
                 try {
                     interactiveInterpreter.exec(completeCommand);
-                    callback.apply(returnBuffer.toString());
+                    callback.accept(returnBuffer.toString());
                 } catch (PyException e) {
                     LOGGER.debug(e);
-                    callback.apply(e.toString());
+                    callback.accept(e.toString());
                 }
             });
             return true;
