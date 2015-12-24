@@ -23,7 +23,7 @@ import com.playonlinux.containers.entities.ContainersWindowEntity;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.EventHandler;
 
 @Scan
 public class EventHandlerContainers {

@@ -16,34 +16,44 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.ui;
+package com.playonlinux.apps.dto;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.apps.entities.ScriptEntity;
+import com.playonlinux.apps.dto.ApplicationDTO;
 
-public class AppItemScriptDTOTest {
+public class ApplicationDTOTest {
 
-    private ScriptEntity scriptEntity;
+    private ApplicationDTO applicationDTO;
 
     @Before
     public void setUp() {
-        this.scriptEntity = new ScriptEntity.Builder()
+        this.applicationDTO = new ApplicationDTO.Builder()
                 .withName("Name")
                 .withId(13)
+                .withDescription("a description")
+                .withIconUrl("a icon url")
                 .build();
     }
-    
     @Test
-    public void testAppsItemScriptDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", scriptEntity.getName());
+    public void testApplicationDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", applicationDTO.getName());
+    }
+    @Test
+    public void testApplicationDTO_CreateDTO_idIsPopulated() {
+        assertEquals(13, applicationDTO.getId());
     }
 
     @Test
-    public void testAppsItemScriptDTO_CreateDTO_idIsPopulated() {
-        assertEquals(13, scriptEntity.getId());
+    public void testApplicationDTO_CreateDTO_descriptionIsPopulated() {
+        assertEquals("a description", applicationDTO.getDescription());
+    }
+
+    @Test
+    public void testApplicationDTO_CreateDTO_iconURLIsPopulated() {
+        assertEquals("a icon url", applicationDTO.getIconUrl());
     }
 }

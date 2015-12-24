@@ -41,6 +41,12 @@
             <artifactId>phoenicis-core</artifactId>
             <version>${version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-ui</artifactId>
+            <version>${version}</version>
+        </dependency>
     </dependencies>
 
     <build>

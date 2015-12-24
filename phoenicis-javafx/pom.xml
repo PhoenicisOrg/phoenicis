@@ -37,6 +37,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-ui</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.spullara.mustache.java</groupId>
             <artifactId>compiler</artifactId>
             <version>0.9.0</version>

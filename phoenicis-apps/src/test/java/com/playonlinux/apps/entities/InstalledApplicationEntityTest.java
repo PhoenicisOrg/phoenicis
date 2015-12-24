@@ -16,31 +16,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.ui;
+package com.playonlinux.apps.entities;
 
 import static org.junit.Assert.assertEquals;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.apps.entities.AppsCategoryEntity;
+import com.playonlinux.library.entities.InstalledApplicationEntity;
 
-public class AppsCategoryEntityTest {
+public class InstalledApplicationEntityTest {
 
-    private AppsCategoryEntity appsCategoryEntity;
+    private InstalledApplicationEntity installedApplicationEntity;
 
     @Before
-    public void setUp() {
-        this.appsCategoryEntity = new AppsCategoryEntity("Name");
+    public void setUp() throws MalformedURLException {
+        this.installedApplicationEntity = new InstalledApplicationEntity.Builder()
+                .withName("Name")
+                .withIcon(new URL("file://"+new File("/tmp/icon").getAbsolutePath()))
+                .build();
     }
-    
     @Test
-    public void testCenterCategoryDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", appsCategoryEntity.getName());
+    public void testShortcutDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", installedApplicationEntity.getName());
     }
 
     @Test
-    public void testCenterCategoryDTO_CreateDTO_iconIsPopulated() {
-        assertEquals("apps/applications-name.png", appsCategoryEntity.getIconName());
+    public void testShortcutDTO_CreateDTO_iconIsPopulated() {
+        assertEquals("file:/tmp/icon", installedApplicationEntity.getIcon().toString());
     }
 }
