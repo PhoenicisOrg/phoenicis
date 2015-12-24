@@ -36,7 +36,7 @@ public class WinePackageProvider<T extends WinePackage> {
         this.winePackage = winePackage;
     }
 
-    public void installPackageForWineVersion(File extractPath, ProgressControl progressControl) throws EngineInstallException {
+    public void installPackageForWineVersion(File extractPath, ProgressControl progressControl) {
         final File destinationFile = new File(winePackage.getPackageDestination(), winePackage.getPackageFileName());
 
         if(!destinationFile.exists()) {
@@ -46,7 +46,7 @@ public class WinePackageProvider<T extends WinePackage> {
         installPackageInWineVersionDirectory(extractPath);
     }
 
-    private void installPackageInWineVersionDirectory(File extractPath) throws EngineInstallException {
+    private void installPackageInWineVersionDirectory(File extractPath) {
         final File localArchive = winePackage.getPackageDestination();
         final File linkDestination = new File(extractPath, String.format("share/wine/%s", winePackage.getPackageTypeName()));
 
@@ -57,7 +57,7 @@ public class WinePackageProvider<T extends WinePackage> {
         }
     }
 
-    private void installPackageInLocalCache(ProgressControl progressControl) throws EngineInstallException {
+    private void installPackageInLocalCache(ProgressControl progressControl) {
         try {
             final URL packageUrl = winePackage.getPackageUrl();
             final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);

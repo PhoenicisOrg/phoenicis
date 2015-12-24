@@ -61,7 +61,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     private WineversionsSourceWebserviceDefaultImplementation wineversionsSourceWebserviceImplementation;
     private URL webserviceUrl;
     private Consumer<WineVersionManager> onChange;
-    
+
     public synchronized void update(DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> argument) {
         /*
          * Because of some limitations of Java's Generics we need to do this
@@ -74,14 +74,14 @@ public class DefaultWineVersionsManager implements WineVersionManager {
             this.wineVersionDistributionDTOs = downloadEnvelope.getEnvelopeContent();
         }
 
-        if(onChange != null) {
+        if (onChange != null) {
             onChange.accept(this);
         }
     }
 
     @Override
     public void shutdown() {
-        //Nothing to do
+        // Nothing to do
     }
 
     @Override
@@ -118,8 +118,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     }
 
     @Override
-    public void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl)
-            throws EngineInstallException {
+    public void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) {
         final WineVersionDTO wineVersionDTO = getWineVersionFromDistributionAndVersion(wineDistribution, version);
         final URL packageUrl = this.makePackageUrl(wineVersionDTO);
         final String serverSum = wineVersionDTO.getSha1sum();
@@ -154,8 +153,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     }
 
     @Override
-    public void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl)
-            throws EngineInstallException {
+    public void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) {
         try {
             Files.remove(getExtractPath(wineDistribution, version));
         } catch (IOException e) {
@@ -166,7 +164,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
 
     @Override
     public void install(WineDistribution wineDistribution, Version version, File localFile,
-            ProgressControl progressControl) throws EngineInstallException {
+            ProgressControl progressControl) {
         final File extractPath = getExtractPath(wineDistribution, version);
         final Extractor extractor = new Extractor();
         extractor.setOnChange(progressControl);
@@ -180,7 +178,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     }
 
     private synchronized WineVersionDTO getWineVersionFromDistributionAndVersion(WineDistribution wineDistribution,
-            Version version) throws EngineInstallException {
+            Version version) {
         final String coordinateName = wineDistribution.asNameWithCurrentOperatingSystem();
 
         for (WineVersionDistributionWebDTO wineVersionDistributionWebDTO : wineVersionDistributionDTOs) {
@@ -198,7 +196,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
                         wineDistribution.toString(), version.toString(), coordinateName));
     }
 
-    private synchronized URL makePackageUrl(WineVersionDTO wineVersionDTO) throws EngineInstallException {
+    private synchronized URL makePackageUrl(WineVersionDTO wineVersionDTO) {
         try {
             return new URL(wineVersionDTO.getUrl());
         } catch (MalformedURLException e) {

@@ -42,8 +42,7 @@ public interface WineVersionManager extends Service {
      * @throws EngineInstallException
      *             if any error occurs
      */
-    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl)
-            throws EngineInstallException;
+    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl);
 
     /**
      * Install a Wine Version
@@ -59,8 +58,7 @@ public interface WineVersionManager extends Service {
      * @throws EngineInstallException
      *             if any error occurs
      */
-    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl)
-            throws EngineInstallException;
+    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl);
 
     /**
      * Uninstall a wine version
@@ -74,12 +72,11 @@ public interface WineVersionManager extends Service {
      * @throws EngineInstallException
      *             if any error occurs
      */
-    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl)
-            throws EngineInstallException;
-    
+    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl);
+
     Collection<WineVersionDistributionWebDTO> getWineVersionDistributionDTOs();
-    
+
     boolean isUpdating();
-    
+
     boolean hasFailed();
 }
