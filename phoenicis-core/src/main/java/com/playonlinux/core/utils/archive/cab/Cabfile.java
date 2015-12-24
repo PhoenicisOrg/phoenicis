@@ -30,7 +30,7 @@ public class Cabfile {
     private final InputStream archiveStream;
     private long readBytes = 0;
 
-    public Cabfile(File archiveFile) throws CabException {
+    public Cabfile(File archiveFile) {
         try {
             this.archiveStream = new FileInputStream(archiveFile);
         } catch (FileNotFoundException e) {
@@ -38,7 +38,7 @@ public class Cabfile {
         }
     }
 
-    private int findCabOffset() throws CabException {
+    private int findCabOffset() {
         try {
             int i = 0;
             int successBytes = 0;
@@ -76,7 +76,7 @@ public class Cabfile {
         }
     }
 
-    private CFHeader getHeader() throws CabException {
+    private CFHeader getHeader() {
         CFHeader cfHeader = new CFHeader(readBytes);
         cfHeader.populate(archiveStream);
         readBytes += (long) cfHeader.getStructureSize();
@@ -84,21 +84,21 @@ public class Cabfile {
         return cfHeader;
     }
 
-    public CFFolder getFolder() throws CabException {
+    public CFFolder getFolder() {
         CFFolder cfFolder = new CFFolder(readBytes);
         cfFolder.populate(archiveStream);
         readBytes += (long) cfFolder.getStructureSize();
         return cfFolder;
     }
 
-    public CFFile getFile() throws CabException {
+    public CFFile getFile() {
         CFFile cfFile = new CFFile(readBytes);
         cfFile.populate(archiveStream);
         readBytes += (long) cfFile.getStructureSize();
         return cfFile;
     }
 
-    public CFData getData(CompressionType compressionType) throws CabException {
+    public CFData getData(CompressionType compressionType) {
         CFData cfData = new CFData(readBytes, compressionType);
         cfData.populate(archiveStream);
         readBytes += (long) cfData.getStructureSize();
@@ -114,7 +114,7 @@ public class Cabfile {
         this.skipBytes(offset - readBytes);
     }
 
-    public static void main(String[] args) throws CabException, IOException {
+    public static void main(String[] args) throws IOException {
         File tahoma32 = new File("/Users/tinou/Downloads/arial32.exe");
         Cabfile cabfile = new Cabfile(tahoma32);
         int offset = cabfile.findCabOffset();

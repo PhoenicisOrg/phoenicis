@@ -37,7 +37,7 @@ public class CFData extends AbstractCabStructure {
     }
 
     @Override
-    public void populate(InputStream inputStream) throws CabException {
+    public void populate(InputStream inputStream) {
         try {
             structureSize += inputStream.read(csum);
             structureSize += inputStream.read(cbData);

@@ -37,7 +37,7 @@ public class CFFolder extends AbstractCabStructure {
 
 
     @Override
-    public void populate(InputStream inputStream) throws CabException {
+    public void populate(InputStream inputStream) {
         try {
             structureSize += inputStream.read(coffCabStart);
             structureSize += inputStream.read(cCFData);
@@ -58,7 +58,7 @@ public class CFFolder extends AbstractCabStructure {
         return decodeLittleEndian(cCFData);
     }
 
-    public CompressionType getCompressType() throws CabException {
+    public CompressionType getCompressType() {
         Long compressType = decodeLittleEndian(typeCompress) & 0x000F;
         if(compressType == 0) {
             return CompressionType.NONE;

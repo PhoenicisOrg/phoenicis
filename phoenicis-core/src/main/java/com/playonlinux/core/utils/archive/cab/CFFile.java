@@ -35,7 +35,7 @@ public class CFFile extends AbstractCabStructure {
     }
 
     @Override
-    public void populate(InputStream inputStream) throws CabException {
+    public void populate(InputStream inputStream) {
         try {
             structureSize += inputStream.read(cbFile);
             structureSize += inputStream.read(uoffFolderStart);
