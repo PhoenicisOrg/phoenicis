@@ -23,7 +23,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
@@ -32,7 +31,7 @@ import org.junit.Test;
 public class DownloadManagerTest {
 
     @Test
-    public void testSubmit() throws DownloadException, ExecutionException, InterruptedException {
+    public void testSubmit() throws DownloadException, InterruptedException {
         HTTPDownloader httpDownloaderMock = mock(HTTPDownloader.class);
         Consumer<Exception> callBackError = mock(Consumer.class);
         Semaphore lock = new Semaphore(0);
