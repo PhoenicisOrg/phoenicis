@@ -80,7 +80,7 @@ public class ViewContainers extends MainWindowView {
     }
 
     private void applyFilter(String searchText) {
-        this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
+        this.eventHandlerContainers.getContainers().filter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
     public void update(ContainersWindowEntity argument) {

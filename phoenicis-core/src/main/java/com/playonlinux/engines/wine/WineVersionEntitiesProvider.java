@@ -64,7 +64,7 @@ public final class WineVersionEntitiesProvider
                             .withDescription(wineVersionDistributionDTO.getDescription()).build());
         }
 
-        applyFilter(lastFilter);
+        filter(lastFilter);
         if (onChange != null) {
             onChange.accept(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities,
                     argument.isUpdating(), argument.hasFailed()));
@@ -72,7 +72,7 @@ public final class WineVersionEntitiesProvider
     }
 
     @Override
-    public void applyFilter(Predicate<WineVersionDistributionItemEntity> filter) {
+    public void filter(Predicate<WineVersionDistributionItemEntity> filter) {
         this.lastFilter = filter;
 
         filteredWineVersionDistributionItemEntities.clear();

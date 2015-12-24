@@ -63,11 +63,11 @@ public final class LibraryEntitiesProvider
                                 .withName(shortcut.getShortcutName()).withIcon(shortcut.getIconPath()).build())
                 .collect(Collectors.toList()));
 
-        applyFilter(lastFilter);
+        filter(lastFilter);
     }
 
     @Override
-    public void applyFilter(Predicate<InstalledApplicationEntity> filter) {
+    public void filter(Predicate<InstalledApplicationEntity> filter) {
         lastFilter = filter;
 
         installedApplicationsFiltered.clear();

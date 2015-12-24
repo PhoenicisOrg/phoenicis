@@ -178,7 +178,7 @@ public class ViewApps extends MainWindowView {
     }
 
     private void applyFilter(String categoryName) {
-        windowDTOEntitiesProvider.applyFilter(new AppsFilter(categoryName, searchBar.getText(),
+        windowDTOEntitiesProvider.filter(new AppsFilter(categoryName, searchBar.getText(),
                 testingCheck.isSelected(), noCdNeededCheck.isSelected(), commercialCheck.isSelected()));
 
     }

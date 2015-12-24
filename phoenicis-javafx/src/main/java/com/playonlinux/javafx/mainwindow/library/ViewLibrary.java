@@ -105,7 +105,7 @@ public class ViewLibrary extends MainWindowView {
     }
 
     private void applyFilter(String searchText) {
-        libraryItems.applyFilter(new LibraryFilter(searchText));
+        libraryItems.filter(new LibraryFilter(searchText));
     }
 
     public void setUpEvents() {

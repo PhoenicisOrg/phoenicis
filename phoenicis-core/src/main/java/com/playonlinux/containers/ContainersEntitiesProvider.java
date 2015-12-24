@@ -43,7 +43,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
     private Consumer<ContainersWindowEntity> onChange;
 
     @Override
-    public void applyFilter(Predicate<ContainerEntity> filter) {
+    public void filter(Predicate<ContainerEntity> filter) {
         this.lastFilter = filter;
         update(containersManager);
     }

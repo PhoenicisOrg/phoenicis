@@ -54,7 +54,7 @@ public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, A
     private Consumer<AppsWindowEntity> onChange;
 
     @Override
-    public void applyFilter(Predicate<AppEntity> filter) {
+    public void filter(Predicate<AppEntity> filter) {
         this.lastFilter = filter;
 
         filteredAppsItemsDTOs.clear();
@@ -119,7 +119,7 @@ public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, A
                     });
         }
 
-        applyFilter(lastFilter);
+        filter(lastFilter);
     }
 
     public void setOnChange(Consumer<AppsWindowEntity> onChange) {
