@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.utils.ChecksumCalculator;
 import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;

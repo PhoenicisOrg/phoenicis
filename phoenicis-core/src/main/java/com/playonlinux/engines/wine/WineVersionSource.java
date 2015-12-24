@@ -18,12 +18,6 @@
 
 package com.playonlinux.engines.wine;
 
-import java.util.Collection;
-
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.webservice.DownloadEnvelope;
-import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
-
 /**
  * Represents a source of wine version
  */

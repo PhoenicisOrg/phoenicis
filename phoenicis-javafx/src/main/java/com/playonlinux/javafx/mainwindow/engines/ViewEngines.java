@@ -18,8 +18,6 @@
 
 package com.playonlinux.javafx.mainwindow.engines;
 
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionItemEntity;
 import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
@@ -40,7 +38,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
-public class ViewEngines extends MainWindowView implements Observer<Observable, WineVersionsWindowEntity> {
+public class ViewEngines extends MainWindowView {
     private final EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> entitiesProvider;
     private TabPane wineDistributions;
     private FailurePanel failurePanel;
@@ -100,11 +98,10 @@ public class ViewEngines extends MainWindowView implements Observer<Observable, 
     }
 
     public void setUpEvents() {
-        entitiesProvider.addObserver(this);
+        entitiesProvider.setOnChange(this::update);
     }
 
-    @Override
-    public void update(Observable observable, WineVersionsWindowEntity argument) {
+    public void update(WineVersionsWindowEntity argument) {
         Platform.runLater(() -> {
             if (argument.isDownloading()) {
                 this.showWait();
