@@ -75,7 +75,7 @@ public class SignatureChecker {
         return this;
     }
 
-    public Boolean check() throws SignatureException {
+    public Boolean check() {
         final PGPPublicKey pgpSigningKey = readPublicKey(new ByteArrayInputStream(publicKey.getBytes()));
 
         final ArmoredInputStream armoredInputStream;
@@ -121,7 +121,7 @@ public class SignatureChecker {
     }
 
 
-    private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) throws SignatureException {
+    private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) {
         try(InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream)) {
             final PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
             PGPPublicKey key = null;

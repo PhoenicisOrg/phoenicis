@@ -25,7 +25,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.playonlinux.core.gpg.SignatureChecker;
-import com.playonlinux.core.gpg.SignatureException;
 
 public class SignatureCheckerTest {
     private static final String SCRIPT = "#!/bin/bash\n" +
@@ -103,7 +102,7 @@ public class SignatureCheckerTest {
             "-----END PGP PUBLIC KEY BLOCK-----\n";
 
     @Test
-    public void testSignatureChecker_withValidSignature_returnTrue() throws SignatureException {
+    public void testSignatureChecker_withValidSignature_returnTrue() {
         SignatureChecker signatureChecker = new SignatureChecker()
                 .withSignature(SIGNATURE)
                 .withData(SCRIPT)
@@ -113,7 +112,7 @@ public class SignatureCheckerTest {
     }
 
     @Test
-    public void testSignatureChecker_withInvalidValidSignature_returnFalse() throws SignatureException {
+    public void testSignatureChecker_withInvalidValidSignature_returnFalse() {
         SignatureChecker signatureChecker = new SignatureChecker()
                 .withSignature(SIGNATURE)
                 .withData(SCRIPT.replace("a","b"))
