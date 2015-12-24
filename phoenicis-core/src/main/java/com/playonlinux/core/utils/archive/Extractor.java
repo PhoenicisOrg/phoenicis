@@ -43,7 +43,7 @@ public class Extractor {
      * @return list of uncompressed files
      * @throws ArchiveException
      */
-    public List<File> uncompress(final File inputFile, final File outputDir) throws ArchiveException {
+    public List<File> uncompress(final File inputFile, final File outputDir) {
         LOGGER.info(
                 String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
@@ -58,7 +58,6 @@ public class Extractor {
                 default:
                     return new Tar().uncompressTarFile(inputFile, outputDir, this::changeState);
             }
-
         } catch (PlayOnLinuxException e) {
             throw new ArchiveException("Unrecognized file format", e);
         }
