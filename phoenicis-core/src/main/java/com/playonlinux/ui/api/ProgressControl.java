@@ -21,7 +21,6 @@ package com.playonlinux.ui.api;
 import java.util.function.Consumer;
 
 import com.playonlinux.core.entities.ProgressEntity;
-import com.playonlinux.core.observer.Observable;
 
 /**
  * Represents a progress control

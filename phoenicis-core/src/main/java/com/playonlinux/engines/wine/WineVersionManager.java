@@ -19,46 +19,67 @@
 package com.playonlinux.engines.wine;
 
 import java.io.File;
+import java.util.Collection;
 
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.ui.api.ProgressControl;
 
 /**
  * PlayOnLinux Wine Version Manager
  */
-public interface WineVersionManager extends Observable<WineVersionManager>,
-                                            Service {
+public interface WineVersionManager extends Service {
     /**
      * Install a Wine Version
      *
-     * @param wineDistribution {@link WineDistribution} to install
-     * @param version {@link Version} to install
-     * @param progressControl {@link ProgressControl} to show the progress of the process
-     * @throws EngineInstallException if any error occurs
+     * @param wineDistribution
+     *            {@link WineDistribution} to install
+     * @param version
+     *            {@link Version} to install
+     * @param progressControl
+     *            {@link ProgressControl} to show the progress of the process
+     * @throws EngineInstallException
+     *             if any error occurs
      */
-    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
+    void install(WineDistribution wineDistribution, Version version, ProgressControl progressControl)
+            throws EngineInstallException;
 
     /**
      * Install a Wine Version
      *
-     * @param wineDistribution {@link WineDistribution} to install
-     * @param version {@link Version} to install
-     * @param localFile The local file containing the version to install
-     * @param progressControl {@link ProgressControl} to show the progress of the process
-     * @throws EngineInstallException if any error occurs
+     * @param wineDistribution
+     *            {@link WineDistribution} to install
+     * @param version
+     *            {@link Version} to install
+     * @param localFile
+     *            The local file containing the version to install
+     * @param progressControl
+     *            {@link ProgressControl} to show the progress of the process
+     * @throws EngineInstallException
+     *             if any error occurs
      */
-    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl) throws EngineInstallException;
+    void install(WineDistribution wineDistribution, Version version, File localFile, ProgressControl progressControl)
+            throws EngineInstallException;
 
     /**
      * Uninstall a wine version
      *
-     * @param wineDistribution {@link WineDistribution} to uninstall
-     * @param version {@link Version} to uninstall
-     * @param progressControl {@link ProgressControl} to show the progress of the process
-     * @throws EngineInstallException if any error occurs
+     * @param wineDistribution
+     *            {@link WineDistribution} to uninstall
+     * @param version
+     *            {@link Version} to uninstall
+     * @param progressControl
+     *            {@link ProgressControl} to show the progress of the process
+     * @throws EngineInstallException
+     *             if any error occurs
      */
-    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl) throws EngineInstallException;
+    void uninstall(WineDistribution wineDistribution, Version version, ProgressControl progressControl)
+            throws EngineInstallException;
+    
+    Collection<WineVersionDistributionWebDTO> getWineVersionDistributionDTOs();
+    
+    boolean isUpdating();
+    
+    boolean hasFailed();
 }

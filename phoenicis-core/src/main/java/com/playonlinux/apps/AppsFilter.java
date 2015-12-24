@@ -24,12 +24,11 @@ import java.util.function.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import com.playonlinux.apps.entities.AppEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 
 /**
  * Filter implementation for CenterItems
  */
-public class AppsFilter extends ObservableDefaultImplementation implements Predicate<AppEntity> {
+public class AppsFilter implements Predicate<AppEntity> {
     private final String title;
     private final String category;
     private final boolean showTesting;
