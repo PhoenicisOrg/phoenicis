@@ -20,7 +20,7 @@ package com.playonlinux.core.utils.archive.cab;
 
 import com.playonlinux.app.PlayOnLinuxException;
 
-public class CabException extends PlayOnLinuxException {
+public class CabException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public CabException(String message) {

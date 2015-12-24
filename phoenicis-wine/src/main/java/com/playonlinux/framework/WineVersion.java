@@ -26,10 +26,8 @@ import java.io.File;
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
-import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.version.Version;
-import com.playonlinux.engines.wine.EngineInstallException;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.framework.wizard.WineWizard;
@@ -98,12 +96,7 @@ public class WineVersion {
         if (setupWizard != null) {
             ProgressControl progressControl = setupWizard.progressBar(
                     format(translate("Please wait while ${application.name} is installing wine %s"), version));
-
-            try {
-                wineVersionManager.install(wineDistribution, version, progressControl);
-            } catch (EngineInstallException e) {
-                throw new ScriptFailureException(e);
-            }
+            wineVersionManager.install(wineDistribution, version, progressControl);
         }
     }
 

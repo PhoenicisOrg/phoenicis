@@ -20,7 +20,6 @@ package com.playonlinux.core.python;
 
 import java.util.concurrent.ExecutorService;
 
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -38,13 +37,9 @@ public class JythonCommandLineInterpreterFactory implements CommandLineInterpret
     }
 
     @Override
-    public JythonCommandInterpreter createInstance() throws CommandInterpreterException {
+    public JythonCommandInterpreter createInstance() {
         JythonCommandInterpreter interpreter = new JythonCommandInterpreter(executorService);
-        try {
-            serviceManager.register(interpreter);
-        } catch (ServiceInitializationException e) {
-            throw new CommandInterpreterException("Unable to load Python Interpreter", e);
-        }
+        serviceManager.register(interpreter);
         return interpreter;
     }
 }

@@ -18,13 +18,27 @@
 
 package com.playonlinux.framework;
 
+import static com.playonlinux.core.lang.Localisation.translate;
+import static java.lang.String.format;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.input.NullInputStream;
+import org.apache.commons.io.output.NullOutputStream;
+import org.apache.log4j.Logger;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.core.services.manager.ServiceException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.streams.ProcessPipe;
 import com.playonlinux.core.streams.TeeOutputStream;
@@ -41,20 +55,6 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
 import com.playonlinux.wine.registry.*;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.input.NullInputStream;
-import org.apache.commons.io.output.NullOutputStream;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-
-import static com.playonlinux.core.lang.Localisation.translate;
-import static java.lang.String.format;
 
 @Scan
 @ScriptClass
@@ -289,7 +289,7 @@ public class Wine implements SetupWizardComponent {
                 backgroundServicesManager.register(processPipe);
             }
             return process;
-        } catch (ServiceException | WineException e) {
+        } catch (WineException e) {
             throw new ScriptFailureException("Error while running wine:", e);
         }
     }

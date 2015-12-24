@@ -30,7 +30,7 @@ public interface JythonInterpreterFactory {
      * Creates an instance of a {@link PythonInterpreter} and keeps its reference
      * @return The instance
      */
-    PythonInterpreter createInstance() throws PythonException;
+    PythonInterpreter createInstance();
 
     /**
      * Creates an instance of a class extending {@link PythonInterpreter} and keeps its reference

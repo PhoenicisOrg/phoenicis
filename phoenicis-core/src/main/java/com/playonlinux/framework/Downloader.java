@@ -29,7 +29,6 @@ import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.core.scripts.ScriptClass;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.core.utils.ChecksumCalculator;
-import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.ui.api.ProgressControl;
@@ -76,14 +75,9 @@ public class Downloader implements SetupWizardComponent {
         this.defineProgressStep(remoteFile);
 
         final HTTPDownloader downloader = new HTTPDownloader(remoteFile);
-        try {
-            downloader.setOnChange(progressControl);
-            downloader.get(localFile);
-        } catch (DownloadException e) {
-            throw new ScriptFailureException(
-                    String.format("Unable to download the file (Remote: %s, Local: %s)", remoteFile, localFile), e);
-        }
-        
+        downloader.setOnChange(progressControl);
+        downloader.get(localFile);
+
         downloadedFile = localFile;
         return this;
     }

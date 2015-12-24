@@ -25,7 +25,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
 import com.playonlinux.engines.wine.entities.WineVersionDistributionItemEntity;
@@ -91,7 +90,7 @@ public final class WineVersionEntitiesProvider
     }
 
     @Override
-    public void init() throws ServiceInitializationException {
+    public void init() {
         final DefaultWineVersionsManager defaultWineVersionsManager = serviceManager
                 .getService(DefaultWineVersionsManager.class);
 

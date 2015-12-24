@@ -25,7 +25,6 @@ import java.net.URL;
 import java.nio.file.Files;
 
 import com.playonlinux.core.utils.ChecksumCalculator;
-import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.engines.wine.EngineInstallException;
 import com.playonlinux.ui.api.ProgressControl;
@@ -37,7 +36,7 @@ public class WinePackageProvider<T extends WinePackage> {
         this.winePackage = winePackage;
     }
 
-    public void installPackageForWineVersion(File extractPath, ProgressControl progressControl) throws EngineInstallException {
+    public void installPackageForWineVersion(File extractPath, ProgressControl progressControl) {
         final File destinationFile = new File(winePackage.getPackageDestination(), winePackage.getPackageFileName());
 
         if(!destinationFile.exists()) {
@@ -47,7 +46,7 @@ public class WinePackageProvider<T extends WinePackage> {
         installPackageInWineVersionDirectory(extractPath);
     }
 
-    private void installPackageInWineVersionDirectory(File extractPath) throws EngineInstallException {
+    private void installPackageInWineVersionDirectory(File extractPath) {
         final File localArchive = winePackage.getPackageDestination();
         final File linkDestination = new File(extractPath, String.format("share/wine/%s", winePackage.getPackageTypeName()));
 
@@ -58,7 +57,7 @@ public class WinePackageProvider<T extends WinePackage> {
         }
     }
 
-    private void installPackageInLocalCache(ProgressControl progressControl) throws EngineInstallException {
+    private void installPackageInLocalCache(ProgressControl progressControl) {
         try {
             final URL packageUrl = winePackage.getPackageUrl();
             final HTTPDownloader httpDownloader = new HTTPDownloader(packageUrl);
@@ -83,8 +82,6 @@ public class WinePackageProvider<T extends WinePackage> {
 
         } catch (MalformedURLException e) {
             throw new EngineInstallException("Package URL was malformed. Please report the problem", e);
-        } catch (DownloadException e) {
-            throw new EngineInstallException("Failed to download gecko", e);
         } catch (IOException e) {
             throw new EngineInstallException("Unable to calculate downloaded file checksum. Something went wrong", e);
         }

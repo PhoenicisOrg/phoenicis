@@ -27,14 +27,14 @@ public interface ServiceManager {
      * @param service The background service to register
      * @return the name of the background service
      */
-    String register(Service service) throws ServiceInitializationException;
+    String register(Service service);
 
     /**
      * Register a background service with a custom name
      * @param backgroundServiceName The name of the Background service
      * @param service The background service to register
      */
-    void register(String backgroundServiceName, Service service) throws ServiceInitializationException;
+    void register(String backgroundServiceName, Service service);
 
     /**
      * Shutdown all the background services
@@ -74,5 +74,5 @@ public interface ServiceManager {
     /**
      * Initialize the background service manager
      */
-    void init(ServiceManagerConfiguration serviceManagerConfiguration) throws ServiceInitializationException;
+    void init(ServiceManagerConfiguration serviceManagerConfiguration);
 }

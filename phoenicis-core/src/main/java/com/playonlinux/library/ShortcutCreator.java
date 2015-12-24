@@ -31,7 +31,7 @@ public class ShortcutCreator {
     @Inject
     static ObjectMapper objectMapper;
 
-    public void createShortcut(File shortcutFile, Shortcut shortcut) throws LibraryException {
+    public void createShortcut(File shortcutFile, Shortcut shortcut) {
         try {
             objectMapper.writeValue(shortcutFile, shortcut);
         } catch (IOException e) {

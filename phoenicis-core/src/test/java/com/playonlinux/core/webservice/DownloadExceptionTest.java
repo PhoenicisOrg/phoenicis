@@ -30,7 +30,7 @@ public class DownloadExceptionTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testDownloadException_stringConstructor() throws DownloadException {
+    public void testDownloadException_stringConstructor() {
         expectedEx.expect(DownloadException.class);
         expectedEx.expectMessage("Exception message");
 
@@ -38,7 +38,7 @@ public class DownloadExceptionTest {
     }
 
     @Test
-    public void testDownloadException_stringThrowableConstructor() throws DownloadException {
+    public void testDownloadException_stringThrowableConstructor() {
         final Throwable mockException = mock(Throwable.class);
 
         expectedEx.expect(DownloadException.class);

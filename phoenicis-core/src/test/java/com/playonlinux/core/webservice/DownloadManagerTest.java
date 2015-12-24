@@ -31,7 +31,7 @@ import org.junit.Test;
 public class DownloadManagerTest {
 
     @Test
-    public void testSubmit() throws DownloadException, InterruptedException {
+    public void testSubmit() throws InterruptedException {
         HTTPDownloader httpDownloaderMock = mock(HTTPDownloader.class);
         Consumer<Exception> callBackError = mock(Consumer.class);
         Semaphore lock = new Semaphore(0);

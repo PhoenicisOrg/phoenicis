@@ -30,12 +30,12 @@ public class DefaultJythonInterpreterFactory implements JythonInterpreterFactory
     private int numberOfInstances = 0;
 
     @Override
-    public synchronized PythonInterpreter createInstance() throws PythonException {
+    public synchronized PythonInterpreter createInstance() {
         return createInstance(PythonInterpreter.class);
     }
 
     @Override
-    public synchronized <T extends PythonInterpreter> T createInstance(Class<T> clazz) throws PythonException {
+    public synchronized <T extends PythonInterpreter> T createInstance(Class<T> clazz) {
         File pythonPath = new File("src/main/python"); // TODO: Pass this in the properties
         System.setProperty("python.path", pythonPath.getAbsolutePath());
         numberOfInstances++;

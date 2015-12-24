@@ -27,7 +27,6 @@ import org.junit.Test;
 
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
 import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 
 
 public class PlayOnLinuxServicesManagerTest {
@@ -39,14 +38,14 @@ public class PlayOnLinuxServicesManagerTest {
     }
 
     @Test
-    public void testRegister() throws ServiceInitializationException {
+    public void testRegister() {
         Service mockService = mock(Service.class);
         playOnLinuxServicesManagerUnderTest.register(mockService);
         verify(mockService).init();
     }
 
     @Test
-    public void testUnregister() throws ServiceInitializationException {
+    public void testUnregister() {
         Service mockService = mock(Service.class);
         playOnLinuxServicesManagerUnderTest.register(mockService);
         playOnLinuxServicesManagerUnderTest.unregister(mockService);
@@ -54,7 +53,7 @@ public class PlayOnLinuxServicesManagerTest {
     }
 
     @Test
-    public void testShutdown() throws ServiceInitializationException {
+    public void testShutdown() {
         Service mockService = mock(Service.class);
         Service mockService2 = mock(Service.class);
 
@@ -68,7 +67,7 @@ public class PlayOnLinuxServicesManagerTest {
     }
 
     @Test
-    public void testGet() throws ServiceInitializationException {
+    public void testGet() {
         ServiceTestImplementation mockBackgroundService = mock(ServiceTestImplementation.class);
         ServiceTestImplementation mockBackgroundService2 = mock(ServiceTestImplementation.class);
 

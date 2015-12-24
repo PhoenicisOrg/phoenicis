@@ -18,9 +18,7 @@
 
 package com.playonlinux.core.python;
 
-import com.playonlinux.app.PlayOnLinuxException;
-
-public class CommandInterpreterException extends PlayOnLinuxException {
+public class CommandInterpreterException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public CommandInterpreterException(String message, Exception e) {

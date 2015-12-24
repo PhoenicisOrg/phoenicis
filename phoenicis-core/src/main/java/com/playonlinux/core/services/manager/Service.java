@@ -33,5 +33,5 @@ public interface Service {
      * Initialize the service
      * @throws ServiceInitializationException If any error occurs during the initialization of the service
      */
-    void init() throws ServiceInitializationException;
+    void init();
 }

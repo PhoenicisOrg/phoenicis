@@ -29,7 +29,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.filesystem.DirectoryWatcherFiles;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -89,7 +88,7 @@ public final class LibraryEntitiesProvider
     }
 
     @Override
-    public void init() throws ServiceInitializationException {
+    public void init() {
         final File shortcutDirectory = playOnLinuxContext.makeShortcutsPath();
         final File iconDirectory = playOnLinuxContext.makeShortcutsIconsPath();
         final URL defaultIcon = playOnLinuxContext.makeDefaultIconURL();
