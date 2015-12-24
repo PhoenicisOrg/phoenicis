@@ -37,7 +37,6 @@ import com.playonlinux.core.utils.Files;
 import com.playonlinux.core.utils.archive.Extractor;
 import com.playonlinux.core.version.Version;
 import com.playonlinux.core.webservice.DownloadEnvelope;
-import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.engines.wine.dto.WineVersionDTO;
 import com.playonlinux.engines.wine.dto.WineVersionDistributionWebDTO;
@@ -149,7 +148,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
             new WinePackageProvider<>(new MonoWinePackage(wineVersionDTO))
                     .installPackageForWineVersion(getExtractPath(wineDistribution, version), progressControl);
 
-        } catch (IOException | DownloadException e) {
+        } catch (IOException e) {
             throw new EngineInstallException(format("An error occurred while trying to download %s", packageUrl), e);
         }
     }

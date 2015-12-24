@@ -25,7 +25,6 @@ import java.net.URL;
 import java.nio.file.Files;
 
 import com.playonlinux.core.utils.ChecksumCalculator;
-import com.playonlinux.core.webservice.DownloadException;
 import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.engines.wine.EngineInstallException;
 import com.playonlinux.ui.api.ProgressControl;
@@ -83,8 +82,6 @@ public class WinePackageProvider<T extends WinePackage> {
 
         } catch (MalformedURLException e) {
             throw new EngineInstallException("Package URL was malformed. Please report the problem", e);
-        } catch (DownloadException e) {
-            throw new EngineInstallException("Failed to download gecko", e);
         } catch (IOException e) {
             throw new EngineInstallException("Unable to calculate downloaded file checksum. Something went wrong", e);
         }

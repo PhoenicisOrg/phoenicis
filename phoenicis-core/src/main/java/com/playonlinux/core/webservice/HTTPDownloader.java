@@ -44,7 +44,7 @@ public class HTTPDownloader {
         this.url = url;
     }
 
-    public void get(File localFile) throws DownloadException {
+    public void get(File localFile) {
         try {
             get(new FileOutputStream(localFile));
         } catch (IOException e) {
@@ -52,19 +52,19 @@ public class HTTPDownloader {
         }
     }
     
-    public String get() throws DownloadException {
+    public String get() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         get(outputStream);
         return outputStream.toString();
     }
 
-    public byte[] getBytes() throws DownloadException {
+    public byte[] getBytes() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         get(outputStream);
         return outputStream.toByteArray();
     }
     
-    private void get(OutputStream outputStream) throws DownloadException {
+    private void get(OutputStream outputStream) {
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             saveConnectionToStream(connection, outputStream);
@@ -73,8 +73,7 @@ public class HTTPDownloader {
         }
     }
 
-    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream)
-            throws DownloadException {
+    private void saveConnectionToStream(HttpURLConnection connection, OutputStream outputStream) {
         float percentage = 0F;
         changeState(ProgressState.READY, percentage);
 
