@@ -19,19 +19,20 @@
 package com.playonlinux.containers;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.playonlinux.containers.entities.ContainerEntity;
-import com.playonlinux.core.observer.Observable;
 import com.playonlinux.core.services.manager.Service;
 
 /**
  * Manage PlayOnLinux containers
  */
-public interface ContainersManager extends Observable<ContainersManager>,
-                                           Service {
+public interface ContainersManager extends Service {
     /**
      * Get the list of containers
      * @return The list of containers
      */
     List<Container<? extends ContainerEntity>> getContainers();
+    
+    void setOnChange(Consumer<ContainersManager> onChange);
 }

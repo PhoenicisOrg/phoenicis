@@ -19,13 +19,12 @@
 package com.playonlinux.containers;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
@@ -33,10 +32,7 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 
 @Scan
-public final class ContainersEntitiesProvider
-        extends ObservableDefaultImplementation<ContainersWindowEntity>
-        implements Observer<ContainersManager, ContainersManager>,
-                   EntitiesProvider<ContainerEntity, ContainersWindowEntity> {
+public final class ContainersEntitiesProvider implements EntitiesProvider<ContainerEntity, ContainersWindowEntity> {
 
     @Inject
     static ServiceManager serviceManager;
@@ -44,33 +40,34 @@ public final class ContainersEntitiesProvider
     private Predicate<ContainerEntity> lastFilter;
 
     private ContainersManager containersManager;
-
+    private Consumer<ContainersWindowEntity> onChange;
 
     @Override
-    public void applyFilter(Predicate<ContainerEntity> filter) {
+    public void filter(Predicate<ContainerEntity> filter) {
         this.lastFilter = filter;
-        update(containersManager, containersManager);
+        update(containersManager);
     }
 
-    @Override
-    public void update(ContainersManager observable, ContainersManager argument) {
-        List<ContainerEntity> containerEntities = argument.getContainers().stream()
-        		.map(c -> c.createEntity())
-        		.filter(e -> lastFilter == null || lastFilter.test(e))
-        		.collect(Collectors.toList());
+    public void update(ContainersManager argument) {
+        List<ContainerEntity> containerEntities = argument.getContainers().stream().map(c -> c.createEntity())
+                .filter(e -> lastFilter == null || lastFilter.test(e)).collect(Collectors.toList());
 
         ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
-        this.notifyObservers(containersWindowEntity);
+        onChange.accept(containersWindowEntity);
     }
 
     @Override
     public void shutdown() {
-        deleteObservers();
+        //Nothing to do
     }
 
     @Override
     public void init() throws ServiceInitializationException {
         ContainersManager containersManagerService = serviceManager.getService(ContainersManager.class);
-        containersManagerService.addObserver(this);
+        containersManagerService.setOnChange(this::update);
+    }
+
+    public void setOnChange(Consumer<ContainersWindowEntity> onChange) {
+        this.onChange = onChange;
     }
 }

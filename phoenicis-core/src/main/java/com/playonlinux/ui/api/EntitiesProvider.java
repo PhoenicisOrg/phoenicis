@@ -18,8 +18,9 @@
 
 package com.playonlinux.ui.api;
 
-import com.playonlinux.core.filter.Filterable;
-import com.playonlinux.core.observer.Observable;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 import com.playonlinux.core.services.manager.Service;
 
 /**
@@ -27,6 +28,12 @@ import com.playonlinux.core.services.manager.Service;
  * @param <F> The type of the object that is going to be filtered
  * @param <O> The type of entity that is going to be observed
  */
-public interface EntitiesProvider<F, O> extends Filterable<F>, Observable<O>, Service {
-
+public interface EntitiesProvider<F, O> extends Service {
+    /**
+     * Apply a filter
+     * @param filter to apply
+     */
+    void filter(Predicate<F> filter);
+    
+    void setOnChange(Consumer<O> onChange);
 }

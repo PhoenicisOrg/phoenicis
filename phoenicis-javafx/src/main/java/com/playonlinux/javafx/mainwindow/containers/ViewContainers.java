@@ -27,8 +27,6 @@ import java.util.WeakHashMap;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.javafx.mainwindow.LeftButton;
@@ -41,7 +39,7 @@ import com.playonlinux.javafx.mainwindow.MessagePanel;
 import javafx.scene.control.TextField;
 
 @Scan
-public class ViewContainers extends MainWindowView implements Observer<Observable, ContainersWindowEntity> {
+public class ViewContainers extends MainWindowView {
     @Inject
     static AnyContainerConfigurationViewFactory anyContainerConfigurationViewFactory;
 
@@ -60,7 +58,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
         this.containersView = new LeftButtonGroup(translate("Containers"));
 
         this.drawSideBar();
-        eventHandlerContainers.getContainers().addObserver(this);
+        eventHandlerContainers.getContainers().setOnChange(this::update);
 
         initSelectContainerPane();
         showRightView(selectContainerPanel);
@@ -82,11 +80,10 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
     private void applyFilter(String searchText) {
-        this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
+        this.eventHandlerContainers.getContainers().filter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
-    @Override
-    public void update(Observable observable, ContainersWindowEntity argument) {
+    public void update(ContainersWindowEntity argument) {
         final List<LeftButton> leftButtonList = new ArrayList<>();
 
         for(ContainerEntity containerEntity: argument.getContainerEntities()) {

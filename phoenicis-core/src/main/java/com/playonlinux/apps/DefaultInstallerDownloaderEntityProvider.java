@@ -21,6 +21,7 @@ package com.playonlinux.apps;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,6 @@ import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.gpg.SignatureChecker;
 import com.playonlinux.core.gpg.SignatureException;
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.core.scripts.AnyScriptFactory;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFailureException;
@@ -41,9 +41,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
 @Scan
-public class DefaultInstallerDownloaderEntityProvider
-        extends ObservableDefaultImplementation<InstallerDownloaderEntity>
-        implements InstallerDownloaderEntityProvider {
+public class DefaultInstallerDownloaderEntityProvider implements InstallerDownloaderEntityProvider {
     public static final double PERCENTAGE = 100.;
 
     @Inject
@@ -58,6 +56,8 @@ public class DefaultInstallerDownloaderEntityProvider
     private final HTTPDownloader httpDownloader;
     private final File localFile;
     private final SignatureChecker signatureChecker;
+    //TODO Couldn't find any class using it, double check
+    private Consumer<InstallerDownloaderEntity> onChange;
 
     DefaultInstallerDownloaderEntityProvider(HTTPDownloader httpDownloader, SignatureChecker signatureChecker) {
         this.httpDownloader = httpDownloader;
@@ -80,7 +80,6 @@ public class DefaultInstallerDownloaderEntityProvider
         }, e -> {
             failure(e);
         });
-
     }
 
     private void success(byte[] bytes) {
@@ -107,23 +106,21 @@ public class DefaultInstallerDownloaderEntityProvider
     }
 
     private void changeState(State state, double percentage, String scriptContent) {
-        boolean finished = state == State.SUCCESS || state == State.FAILED;
-        boolean failed = state == State.FAILED;
-        boolean signatureError = state == State.SIGNATURE_ERROR;
+        if (onChange != null) {
+            final boolean finished = state == State.SUCCESS || state == State.FAILED;
+            final boolean failed = state == State.FAILED;
+            final boolean signatureError = state == State.SIGNATURE_ERROR;
 
-        notifyObservers(new InstallerDownloaderEntity(finished, failed, signatureError, percentage, scriptContent));
+            onChange.accept(new InstallerDownloaderEntity(finished, failed, signatureError, percentage, scriptContent));
+        }
     }
 
     public enum State {
-        READY,
-        PROGRESSING,
-        SUCCESS,
-        FAILED,
-        SIGNATURE_ERROR
+        READY, PROGRESSING, SUCCESS, FAILED, SIGNATURE_ERROR
     }
 
     public void update(ProgressEntity argument) {
-        if(argument.getState() == ProgressState.PROGRESSING) {
+        if (argument.getState() == ProgressState.PROGRESSING) {
             changeState(State.PROGRESSING, argument.getPercent());
         }
     }
@@ -133,9 +130,7 @@ public class DefaultInstallerDownloaderEntityProvider
             final Script script = scriptFactory.createInstanceFromFile(localFile);
             final String scriptContent = script.extractContent();
 
-            this.signatureChecker
-                    .withSignature(script.extractSignature())
-                    .withData(scriptContent)
+            this.signatureChecker.withSignature(script.extractSignature()).withData(scriptContent)
                     .withPublicKey(SignatureChecker.getPublicKey());
 
             if (!signatureChecker.check()) {
@@ -160,5 +155,8 @@ public class DefaultInstallerDownloaderEntityProvider
         serviceManager.register(script);
     }
 
+    public void setOnChange(Consumer<InstallerDownloaderEntity> onChange) {
+        this.onChange = onChange;
+    }
 
 }

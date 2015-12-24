@@ -30,8 +30,6 @@ import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.javafx.common.widget.MiniatureListWidget;
 import com.playonlinux.javafx.mainwindow.FailurePanel;
 import com.playonlinux.javafx.mainwindow.LeftBarTitle;
@@ -50,7 +48,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
-public class ViewApps extends MainWindowView implements Observer<Observable, AppsWindowEntity> {
+public class ViewApps extends MainWindowView {
     private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
 
     private FailurePanel failurePanel;
@@ -129,7 +127,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
     }
 
     public void setUpEvents() {
-        windowDTOEntitiesProvider.addObserver(this);
+        windowDTOEntitiesProvider.setOnChange(this::update);
         failurePanel.getRetryButton().setOnMouseClicked(event -> {
             try {
                 this.eventHandlerApps.updateAvailableInstallers();
@@ -139,9 +137,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
         });
     }
 
-    @Override
-    public void update(Observable o, AppsWindowEntity appsWindowEntity) {
-
+    public void update(AppsWindowEntity appsWindowEntity) {
         Platform.runLater(() -> {
             availableInstallerListWidget.clear();
 
@@ -182,7 +178,7 @@ public class ViewApps extends MainWindowView implements Observer<Observable, App
     }
 
     private void applyFilter(String categoryName) {
-        windowDTOEntitiesProvider.applyFilter(new AppsFilter(categoryName, searchBar.getText(),
+        windowDTOEntitiesProvider.filter(new AppsFilter(categoryName, searchBar.getText(),
                 testingCheck.isSelected(), noCdNeededCheck.isSelected(), commercialCheck.isSelected()));
 
     }

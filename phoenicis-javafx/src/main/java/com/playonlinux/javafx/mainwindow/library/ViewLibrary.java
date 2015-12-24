@@ -26,8 +26,6 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.app.PlayOnLinuxException;
-import com.playonlinux.core.observer.Observable;
-import com.playonlinux.core.observer.Observer;
 import com.playonlinux.core.python.CommandInterpreterException;
 import com.playonlinux.javafx.mainwindow.LeftBarTitle;
 import com.playonlinux.javafx.mainwindow.LeftButton;
@@ -48,7 +46,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
-public class ViewLibrary extends MainWindowView implements Observer<Observable, LibraryWindowEntity> {
+public class ViewLibrary extends MainWindowView {
 
     private final CommandLineInterpreterFactory jythonInterpreterFactory;
     private LeftButton runScript;
@@ -107,11 +105,11 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
     }
 
     private void applyFilter(String searchText) {
-        libraryItems.applyFilter(new LibraryFilter(searchText));
+        libraryItems.filter(new LibraryFilter(searchText));
     }
 
     public void setUpEvents() {
-        libraryItems.addObserver(this);
+        libraryItems.setOnChange(this::update);
 
         runScript.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -157,9 +155,7 @@ public class ViewLibrary extends MainWindowView implements Observer<Observable, 
         return eventHandlerLibrary;
     }
 
-    @Override
-    public void update(Observable observable, LibraryWindowEntity argument) {
+    public void update(LibraryWindowEntity argument) {
         Platform.runLater(() -> applicationListWidget.setItems(argument.getInstalledApplicationEntity()));
     }
-
 }

@@ -21,14 +21,12 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.playonlinux.core.observer.ObservableDefaultImplementation;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 
 /**
  * Filter for installed applications in the MainWindow
  */
-public class LibraryFilter extends ObservableDefaultImplementation implements Predicate<InstalledApplicationEntity> {
-
+public class LibraryFilter implements Predicate<InstalledApplicationEntity> {
     private final String name;
 
     public LibraryFilter(String name) {
