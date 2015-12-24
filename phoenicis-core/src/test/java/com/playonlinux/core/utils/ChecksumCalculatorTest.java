@@ -23,14 +23,13 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import org.junit.Test;
 
 public class ChecksumCalculatorTest {
 
     @Test
-    public void testChecksumCalculate_generateAFile_CheckMD5() throws IOException, NoSuchAlgorithmException {
+    public void testChecksumCalculate_generateAFile_CheckMD5() throws IOException {
         File temporaryFile = File.createTempFile("testHash", "txt");
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(temporaryFile)) {
@@ -41,7 +40,7 @@ public class ChecksumCalculatorTest {
     }
 
     @Test
-    public void testChecksumCalculate_generateAFile_CheckSHA1() throws IOException, NoSuchAlgorithmException {
+    public void testChecksumCalculate_generateAFile_CheckSHA1() throws IOException {
         File temporaryFile = File.createTempFile("testHash", "txt");
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(temporaryFile)) {

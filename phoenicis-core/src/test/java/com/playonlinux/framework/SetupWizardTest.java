@@ -22,7 +22,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -30,7 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.lang.FallbackLanguageBundle;
 import com.playonlinux.core.lang.LanguageBundle;
 import com.playonlinux.injection.AbstractConfiguration;
@@ -57,7 +55,7 @@ public class SetupWizardTest {
         }
 
         @Bean
-        protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
+        protected PlayOnLinuxContext playOnLinuxContext() {
             return new PlayOnLinuxContext();
         }
 
@@ -116,7 +114,7 @@ public class SetupWizardTest {
 
 
     @After
-    public void tearDown() throws InjectionException {
+    public void tearDown() {
         testContextConfig.close();
     }
 }

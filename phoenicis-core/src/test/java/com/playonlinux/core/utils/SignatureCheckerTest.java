@@ -22,15 +22,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
-import java.security.NoSuchProviderException;
-import java.security.SignatureException;
-
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.openpgp.PGPException;
 import org.junit.Test;
 
 import com.playonlinux.core.gpg.SignatureChecker;
+import com.playonlinux.core.gpg.SignatureException;
 
 public class SignatureCheckerTest {
     private static final String SCRIPT = "#!/bin/bash\n" +
@@ -108,8 +103,7 @@ public class SignatureCheckerTest {
             "-----END PGP PUBLIC KEY BLOCK-----\n";
 
     @Test
-    public void testSignatureChecker_withValidSignature_returnTrue() throws IOException,
-            CMSException, PGPException, NoSuchProviderException, SignatureException, com.playonlinux.core.gpg.SignatureException {
+    public void testSignatureChecker_withValidSignature_returnTrue() throws SignatureException {
         SignatureChecker signatureChecker = new SignatureChecker()
                 .withSignature(SIGNATURE)
                 .withData(SCRIPT)
@@ -119,8 +113,7 @@ public class SignatureCheckerTest {
     }
 
     @Test
-    public void testSignatureChecker_withInvalidValidSignature_returnFalse() throws IOException, CMSException,
-            PGPException, NoSuchProviderException, SignatureException, com.playonlinux.core.gpg.SignatureException {
+    public void testSignatureChecker_withInvalidValidSignature_returnFalse() throws SignatureException {
         SignatureChecker signatureChecker = new SignatureChecker()
                 .withSignature(SIGNATURE)
                 .withData(SCRIPT.replace("a","b"))

@@ -63,7 +63,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     private URL webserviceUrl;
     private Consumer<WineVersionManager> onChange;
     
-    public synchronized void update(DownloadEnvelope argument) {
+    public synchronized void update(DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> argument) {
         /*
          * Because of some limitations of Java's Generics we need to do this
          * way.

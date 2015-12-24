@@ -72,7 +72,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
         mainInstance.invoke(MAIN_METHOD_NAME);
     }
 
-    public String extractLogContext() throws ScriptFailureException {
+    public String extractLogContext() {
         return (String) extractAttribute(DEFINE_LOGCONTEXT_NAME);
     }
 

@@ -18,14 +18,13 @@
 
 package com.playonlinux.core.scripts;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 
-import static org.junit.Assert.assertEquals;
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
 public class ScriptRecentTest {
 
@@ -51,7 +50,7 @@ public class ScriptRecentTest {
 
 
     @Test
-    public void testExtractSignature_pythonScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
+    public void testExtractSignature_pythonScriptWithSignature_extracted() throws ScriptFailureException {
         Script script = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("scriptExampleWithSignature.py").getPath()));
         String expectedSignture = "-----BEGIN PGP SIGNATURE-----\n" +
@@ -64,7 +63,7 @@ public class ScriptRecentTest {
 
 
     @Test
-    public void testExtractContent_pythonScriptWithSignature_extracted() throws IOException, ParseException, ScriptFailureException {
+    public void testExtractContent_pythonScriptWithSignature_extracted() throws ScriptFailureException {
         final Script script = factory.createInstanceFromFile(new File(this.getClass()
                 .getResource("scriptExampleWithSignature.py").getPath()));
 
@@ -95,14 +94,14 @@ public class ScriptRecentTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws IOException, ScriptFailureException {
+    public void testExtractSignature_pythonScriptWithNoSignature_exceptionThrown() throws ScriptFailureException {
         Script script = factory.createInstanceFromFile(
                 new File(this.getClass().getResource("scriptExample.py").getPath()));
         script.extractSignature();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testExtractSignature_emptyScript_exceptionThrown() throws IOException, ScriptFailureException {
+    public void testExtractSignature_emptyScript_exceptionThrown() throws ScriptFailureException {
         Script script = factory.createInstanceFromFile(
                 new File(this.getClass().getResource("emptyScript").getPath()));
         script.extractSignature();

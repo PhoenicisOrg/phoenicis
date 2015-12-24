@@ -21,7 +21,6 @@ package com.playonlinux.core.utils;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
 import org.junit.Test;
@@ -83,12 +82,12 @@ public class FileAnalyserTest {
     }
 
     @Test
-    public void testLineSeparatorCRLF() throws IOException {
+    public void testLineSeparatorCRLF() {
         assertEquals("\r\n", FileAnalyser.identifyLineDelimiter(CLRF_STRICT));
     }
 
     @Test
-    public void testLineSeparatorLF() throws IOException {
+    public void testLineSeparatorLF() {
         assertEquals("\n", FileAnalyser.identifyLineDelimiter(LF_STRICT));
     }
 

@@ -22,11 +22,8 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
-import java.io.IOException;
-
 import com.playonlinux.app.MockPlayOnLinuxContext;
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.python.DefaultJythonInterpreterFactory;
 import com.playonlinux.core.python.JythonInterpreterFactory;
@@ -41,7 +38,7 @@ import com.playonlinux.injection.Bean;
 
 public class MockContextConfig extends AbstractConfiguration {
     @Bean
-    protected PlayOnLinuxContext playOnLinuxContext() throws PlayOnLinuxException, IOException {
+    protected PlayOnLinuxContext playOnLinuxContext() {
         return new MockPlayOnLinuxContext();
     }
 
