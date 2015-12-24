@@ -19,11 +19,10 @@
 
 package com.playonlinux.apps;
 
-import java.util.function.Predicate;
-
+import com.playonlinux.apps.entities.AppEntity;
 import org.apache.commons.lang.StringUtils;
 
-import com.playonlinux.apps.entities.AppEntity;
+import java.util.function.Predicate;
 
 /**
  * Filter implementation for CenterItems
