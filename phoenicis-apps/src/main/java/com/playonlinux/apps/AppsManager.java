@@ -63,7 +63,7 @@ public class AppsManager implements Service {
         }
     }
 
-    public void refresh() throws ServiceInitializationException {
+    public void refresh() {
         if (installerSourceWebserviceImplementation != null) {
             serviceManager.unregister(installerSourceWebserviceImplementation);
         }
@@ -88,7 +88,7 @@ public class AppsManager implements Service {
         // Nothing to shutdown
     }
 
-    public void init() throws ServiceInitializationException {
+    public void init() {
         try {
             webserviceUrl = playOnLinuxContext.makeInstallersWebserviceUrl();
         } catch (MalformedURLException e) {

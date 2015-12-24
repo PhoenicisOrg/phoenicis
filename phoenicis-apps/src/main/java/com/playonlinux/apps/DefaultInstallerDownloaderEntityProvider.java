@@ -151,7 +151,7 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
 
     }
 
-    private void startScript(Script script) throws ServiceInitializationException {
+    private void startScript(Script script) {
         serviceManager.register(script);
     }
 

@@ -31,7 +31,6 @@ import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
 import com.playonlinux.core.scripts.Script;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.services.manager.Service;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.AbstractConfiguration;
 import com.playonlinux.injection.Bean;
@@ -43,7 +42,7 @@ public class MockContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected ServiceManager mockBackgroundServiceManager() throws ServiceInitializationException {
+    protected ServiceManager mockBackgroundServiceManager() {
         final ServiceManager serviceManager = mock(ServiceManager.class);
         doAnswer(invocationOnMock -> {
             Object[] args = invocationOnMock.getArguments();

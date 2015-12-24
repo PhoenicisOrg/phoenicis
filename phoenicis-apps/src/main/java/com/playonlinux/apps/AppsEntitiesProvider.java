@@ -32,7 +32,6 @@ import com.playonlinux.apps.entities.AppsCategoryEntity;
 import com.playonlinux.apps.entities.AppsWindowEntity;
 import com.playonlinux.apps.entities.ScriptEntity;
 import com.playonlinux.core.entities.ProgressState;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadEnvelope;
 import com.playonlinux.injection.Inject;
@@ -83,7 +82,7 @@ public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, A
     }
 
     @Override
-    public void init() throws ServiceInitializationException {
+    public void init() {
         final AppsManager appsManager = serviceManager.getService(AppsManager.class);
         appsManager.setOnChange(() -> this.update(appsManager));
     }

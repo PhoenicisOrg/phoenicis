@@ -39,7 +39,6 @@ import com.playonlinux.core.python.JythonInterpreterFactory;
 import com.playonlinux.core.scripts.ScriptFactory;
 import com.playonlinux.core.scripts.AnyScriptFactoryImplementation;
 import com.playonlinux.core.services.manager.PlayOnLinuxServicesManager;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.mock.MockIntegrationUI;
 import com.playonlinux.ui.api.Controller;
@@ -74,7 +73,7 @@ public class IntegrationContextConfig extends AbstractConfiguration {
     }
 
     @Bean
-    protected ServiceManager serviceManager() throws ServiceInitializationException {
+    protected ServiceManager serviceManager() {
         return new PlayOnLinuxServicesManager();
     }
 

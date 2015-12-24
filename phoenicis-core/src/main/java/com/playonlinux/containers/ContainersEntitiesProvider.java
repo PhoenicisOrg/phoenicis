@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 import com.playonlinux.containers.entities.ContainersWindowEntity;
-import com.playonlinux.core.services.manager.ServiceInitializationException;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -62,7 +61,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
     }
 
     @Override
-    public void init() throws ServiceInitializationException {
+    public void init() {
         ContainersManager containersManagerService = serviceManager.getService(ContainersManager.class);
         containersManagerService.setOnChange(this::update);
     }

@@ -35,14 +35,14 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
     }
 
     @Override
-    public String register(Service service) throws ServiceInitializationException {
+    public String register(Service service) {
         final String backgroundName = String.valueOf(service.hashCode());
         register(backgroundName, service);
         return backgroundName;
     }
 
     @Override
-    public void register(String backgroundServiceName, Service service) throws ServiceInitializationException {
+    public void register(String backgroundServiceName, Service service) {
         backgroundServices.put(backgroundServiceName, service);
         service.init();
     }
@@ -90,7 +90,7 @@ public class PlayOnLinuxServicesManager implements ServiceManager {
     }
 
     @Override
-    public void init(ServiceManagerConfiguration serviceManagerConfiguration) throws ServiceInitializationException {
+    public void init(ServiceManagerConfiguration serviceManagerConfiguration) {
         for(ServiceImplementationDefinition serviceImplementationDefinition: serviceManagerConfiguration) {
             try {
                 LOGGER.info(String.format("Registering component service: %s -> %s",

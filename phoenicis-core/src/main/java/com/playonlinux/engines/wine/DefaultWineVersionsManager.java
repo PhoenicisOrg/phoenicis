@@ -85,7 +85,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     }
 
     @Override
-    public void init() throws ServiceInitializationException {
+    public void init() {
         try {
             webserviceUrl = playOnLinuxContext.makeWineVersionWebserviceUrl();
         } catch (MalformedURLException e) {
@@ -102,7 +102,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
         return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
 
-    private synchronized void refreshWebservice() throws ServiceInitializationException {
+    private synchronized void refreshWebservice() {
         if (wineversionsSourceWebserviceImplementation != null) {
 
             playOnLinuxBackgroundServicesManager.unregister(wineversionsSourceWebserviceImplementation);
