@@ -16,33 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.web;
+package com.playonlinux.apps;
 
-import static org.junit.Assert.assertEquals;
+import java.net.URL;
+import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.core.webservice.Webservice;
 
-import com.playonlinux.apps.dto.ScriptDTO;
-
-public class ScriptDTOTest {
-
-    private ScriptDTO scriptDTO;
-
-    @Before
-    public void setUp() {
-        this.scriptDTO = new ScriptDTO.Builder()
-                .withScriptName("Name")
-                .withId(13)
-                .build();
-    }
-    @Test
-    public void testScriptDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", scriptDTO.getScriptName());
+/**
+ * This class download scripts from a playonlinux web service and converts it
+ * into DTOs
+ */
+public class InstallerSourceWebserviceDefaultImplementation extends Webservice<CategoryDTO> implements InstallerSource {
+    // TODO clean hierarchy
+    public InstallerSourceWebserviceDefaultImplementation(URL url) {
+        super(url);
     }
 
-    @Test
-    public void testScriptDTO_CreateDTO_iconIsPopulated() {
-        assertEquals(13, scriptDTO.getId());
+    @Override
+    protected TypeReference<List<CategoryDTO>> defineTypeReference() {
+        return new TypeReference<List<CategoryDTO>>() {
+
+        };
     }
 }

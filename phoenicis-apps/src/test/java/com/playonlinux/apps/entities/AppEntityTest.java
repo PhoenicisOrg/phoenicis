@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.dto.ui;
+package com.playonlinux.apps.entities;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +25,7 @@ import org.junit.Test;
 
 import com.playonlinux.apps.entities.AppEntity;
 
-public class AppsItemDTOTest {
+public class AppEntityTest {
 
     private AppEntity appsItemDTO;
 

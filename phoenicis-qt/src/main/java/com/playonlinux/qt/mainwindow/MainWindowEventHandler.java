@@ -22,6 +22,7 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.io.File;
 
+import com.playonlinux.ui.UIEventHandler;
 import org.apache.log4j.Logger;
 
 import com.playonlinux.app.PlayOnLinuxException;
@@ -31,8 +32,7 @@ import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.qt.mainwindow.shortcuts.ShortcutList;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.EventHandler;
 import com.trolltech.qt.core.QDir;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QApplication;

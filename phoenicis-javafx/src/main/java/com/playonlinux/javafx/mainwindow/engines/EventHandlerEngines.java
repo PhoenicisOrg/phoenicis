@@ -23,8 +23,8 @@ import com.playonlinux.engines.wine.entities.WineVersionsWindowEntity;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.api.UIEventHandler;
-import com.playonlinux.ui.events.EventHandler;
+import com.playonlinux.ui.UIEventHandler;
+import com.playonlinux.ui.EventHandler;
 
 @Scan
 class EventHandlerEngines implements UIEventHandler {

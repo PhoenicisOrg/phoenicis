@@ -16,29 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
-
-import java.net.URL;
-import java.util.List;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.playonlinux.apps.dto.CategoryDTO;
-import com.playonlinux.core.webservice.Webservice;
+package com.playonlinux.ui;
 
 /**
- * This class download scripts from a playonlinux web service and converts it
- * into DTOs
+ * Component that handle events trigered by the UI
  */
-public class InstallerSourceWebserviceDefaultImplementation extends Webservice<CategoryDTO> implements InstallerSource {
-    // TODO clean hierarchy
-    public InstallerSourceWebserviceDefaultImplementation(URL url) {
-        super(url);
-    }
-
-    @Override
-    protected TypeReference<List<CategoryDTO>> defineTypeReference() {
-        return new TypeReference<List<CategoryDTO>>() {
-
-        };
-    }
+public interface UIEventHandler {
+    /**
+     * Get the main PlayOnLinux event handler
+     * @return The main event handler
+     */
+    EventHandler getMainEventHandler();
 }

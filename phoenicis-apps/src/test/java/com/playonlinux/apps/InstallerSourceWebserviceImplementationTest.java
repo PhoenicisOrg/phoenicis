@@ -16,24 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.webservice;
+package com.playonlinux.apps;
 
 import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
-import com.playonlinux.core.scripts.InstallerSourceWebserviceDefaultImplementation;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
+import org.mockserver.model.HttpRequest;
+import org.mockserver.model.HttpResponse;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -63,11 +62,11 @@ public class InstallerSourceWebserviceImplementationTest {
     @Before
     public void prepareMockServer() {
         mockServer.when(
-                request()
+                HttpRequest.request()
                         .withMethod("GET")
                         .withPath("/categories")
         ).respond(
-                response()
+                HttpResponse.response()
                         .withStatusCode(200)
                         .withHeaders(
                                 new Header("Content-Type", "application/config")

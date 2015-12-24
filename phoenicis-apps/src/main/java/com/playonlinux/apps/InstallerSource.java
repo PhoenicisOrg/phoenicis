@@ -16,17 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.ui.api;
-
-import com.playonlinux.ui.events.EventHandler;
+package com.playonlinux.apps;
 
 /**
- * Component that handle events trigered by the UI
+ * Represents an available installer source And {@link InstallerSource} must be
+ * observed by an {@link com.playonlinux.core.observer.Observer}
  */
-public interface UIEventHandler {
-    /**
-     * Get the main PlayOnLinux event handler
-     * @return The main event handler
-     */
-    EventHandler getMainEventHandler();
+public interface InstallerSource {
 }

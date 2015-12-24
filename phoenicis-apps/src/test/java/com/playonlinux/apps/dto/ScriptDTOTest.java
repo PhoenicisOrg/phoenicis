@@ -16,11 +16,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.core.scripts;
+package com.playonlinux.apps.dto;
 
-/**
- * Represents an available installer source And {@link InstallerSource} must be
- * observed by an {@link com.playonlinux.core.observer.Observer}
- */
-public interface InstallerSource {
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.playonlinux.apps.dto.ScriptDTO;
+
+public class ScriptDTOTest {
+
+    private ScriptDTO scriptDTO;
+
+    @Before
+    public void setUp() {
+        this.scriptDTO = new ScriptDTO.Builder()
+                .withScriptName("Name")
+                .withId(13)
+                .build();
+    }
+    @Test
+    public void testScriptDTO_CreateDTO_nameIsPopulated() {
+        assertEquals("Name", scriptDTO.getScriptName());
+    }
+
+    @Test
+    public void testScriptDTO_CreateDTO_iconIsPopulated() {
+        assertEquals(13, scriptDTO.getId());
+    }
 }
