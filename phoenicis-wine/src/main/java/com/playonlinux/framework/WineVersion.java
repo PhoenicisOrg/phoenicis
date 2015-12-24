@@ -72,17 +72,17 @@ public class WineVersion {
         this.wineVersionManager = serviceManager.getService(WineVersionManager.class);
     }
 
-    public com.playonlinux.wine.WineInstallation getInstallation() throws ScriptFailureException {
+    public com.playonlinux.wine.WineInstallation getInstallation() {
         return new com.playonlinux.wine.WineInstallation.Builder().withPath(getInstallationPath())
                 .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
                 .withDistribution(wineDistribution).withVersion(version).build();
     }
 
-    private File getInstallationPath() throws ScriptFailureException {
+    private File getInstallationPath() {
         return playOnLinuxContext.makeWinePath(version, wineDistribution);
     }
 
-    public boolean isInstalled() throws ScriptFailureException {
+    public boolean isInstalled() {
         return getInstallation().exists();
     }
 

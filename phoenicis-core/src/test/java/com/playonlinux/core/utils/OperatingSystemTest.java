@@ -23,12 +23,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.playonlinux.app.PlayOnLinuxException;
-
 
 public class OperatingSystemTest {
     @Test
-    public void testFromString_generateFromStrings_EnumIsCorrect() throws PlayOnLinuxException {
+    public void testFromString_generateFromStrings_EnumIsCorrect() {
         OperatingSystem linux = OperatingSystem.fromString("Linux");
         assertEquals(OperatingSystem.LINUX, linux);
 
@@ -45,14 +43,14 @@ public class OperatingSystemTest {
     }
 
     @Test
-    public void testFetchShortName_fetchShortNames_namesAreCorrect() throws PlayOnLinuxException {
+    public void testFetchShortName_fetchShortNames_namesAreCorrect() {
         assertEquals("LINUX", OperatingSystem.LINUX.name());
         assertEquals("MACOSX", OperatingSystem.MACOSX.name());
         assertEquals("FREEBSD", OperatingSystem.FREEBSD.name());
     }
 
     @Test
-    public void testFetchCurrentOperationSystem_noErrorsAreThrown() throws PlayOnLinuxException {
+    public void testFetchCurrentOperationSystem_noErrorsAreThrown() {
         OperatingSystem currentOperatingSystem = OperatingSystem.fetchCurrentOperationSystem();
 
         assertTrue(currentOperatingSystem == OperatingSystem.LINUX ||
@@ -61,7 +59,7 @@ public class OperatingSystemTest {
     }
 
     @Test
-    public void testToString_fetchStrings_stringssAreCorrect() throws PlayOnLinuxException {
+    public void testToString_fetchStrings_stringssAreCorrect() {
         assertEquals("Linux", OperatingSystem.LINUX.toString());
         assertEquals("Mac OS X", OperatingSystem.MACOSX.toString());
         assertEquals("FreeBSD", OperatingSystem.FREEBSD.toString());

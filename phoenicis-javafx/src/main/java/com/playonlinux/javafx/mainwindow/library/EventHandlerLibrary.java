@@ -19,7 +19,6 @@
 package com.playonlinux.javafx.mainwindow.library;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 import org.apache.log4j.Logger;
 
@@ -31,11 +30,11 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.javafx.common.ErrorMessage;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
+import com.playonlinux.ui.EventHandler;
+import com.playonlinux.ui.UIEventHandler;
 import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.EntitiesProvider;
-import com.playonlinux.ui.UIEventHandler;
-import com.playonlinux.ui.EventHandler;
 
 @Scan
 class EventHandlerLibrary implements UIEventHandler {
@@ -63,7 +62,7 @@ class EventHandlerLibrary implements UIEventHandler {
         return mainEventHandler;
     }
 
-    public void onApplicationStarted() throws MalformedURLException {
+    public void onApplicationStarted() {
         mainEventHandler.onApplicationStarted();
     }
 
