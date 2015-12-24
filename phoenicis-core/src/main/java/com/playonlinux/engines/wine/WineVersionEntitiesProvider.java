@@ -70,14 +70,14 @@ public final class WineVersionEntitiesProvider
         }
 
 
-        applyFilter(lastFilter);
+        filter(lastFilter);
         this.notifyObservers(new WineVersionsWindowEntity(filteredWineVersionDistributionItemEntities,
                 argument.isUpdating(), argument.hasFailed()));
 
     }
 
     @Override
-    public void applyFilter(Predicate<WineVersionDistributionItemEntity> filter) {
+    public void filter(Predicate<WineVersionDistributionItemEntity> filter) {
         this.lastFilter = filter;
 
         filteredWineVersionDistributionItemEntities.clear();

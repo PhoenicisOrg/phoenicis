@@ -82,7 +82,7 @@ public class ViewContainers extends MainWindowView implements Observer<Observabl
     }
 
     private void applyFilter(String searchText) {
-        this.eventHandlerContainers.getContainers().applyFilter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
+        this.eventHandlerContainers.getContainers().filter(item -> item.getName().toLowerCase().contains(searchText.toLowerCase()));
     }
 
     @Override

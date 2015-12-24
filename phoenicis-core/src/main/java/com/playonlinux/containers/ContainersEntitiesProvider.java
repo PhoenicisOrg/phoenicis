@@ -47,7 +47,7 @@ public final class ContainersEntitiesProvider
 
 
     @Override
-    public void applyFilter(Predicate<ContainerEntity> filter) {
+    public void filter(Predicate<ContainerEntity> filter) {
         this.lastFilter = filter;
         update(containersManager, containersManager);
     }

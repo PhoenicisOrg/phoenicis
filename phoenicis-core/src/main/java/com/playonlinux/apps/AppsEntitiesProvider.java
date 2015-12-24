@@ -55,7 +55,7 @@ public final class AppsEntitiesProvider
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     @Override
-    public void applyFilter(Predicate<AppEntity> filter) {
+    public void filter(Predicate<AppEntity> filter) {
         this.lastFilter = filter;
 
         filteredAppsItemsDTOs.clear();
@@ -123,6 +123,6 @@ public final class AppsEntitiesProvider
             });
         }
 
-        applyFilter(lastFilter);
+        filter(lastFilter);
     }
 }

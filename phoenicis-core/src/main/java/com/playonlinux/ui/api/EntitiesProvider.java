@@ -33,5 +33,5 @@ public interface EntitiesProvider<F, O> extends Observable<O>, Service {
      * Apply a filter
      * @param filter to apply
      */
-    void applyFilter(Predicate<F> filter);
+    void filter(Predicate<F> filter);
 }
