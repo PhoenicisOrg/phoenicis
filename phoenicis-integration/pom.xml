@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-core</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -48,5 +48,4 @@
             <version>${mockito.version}</version>
         </dependency>
     </dependencies>
-
 </project>
