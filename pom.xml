@@ -1,66 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2015 PÂRIS Quentin
-  ~
-  ~ This program is free software; you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation; either version 2 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License along
-  ~ with this program; if not, write to the Free Software Foundation, Inc.,
-  ~ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-  -->
+<!-- ~ Copyright (C) 2015 PÂRIS Quentin ~ ~ This program is free software; 
+	you can redistribute it and/or modify ~ it under the terms of the GNU General 
+	Public License as published by ~ the Free Software Foundation; either version 
+	2 of the License, or ~ (at your option) any later version. ~ ~ This program 
+	is distributed in the hope that it will be useful, ~ but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the ~ GNU General Public License for more details. ~ ~ You should 
+	have received a copy of the GNU General Public License along ~ with this 
+	program; if not, write to the Free Software Foundation, Inc., ~ 51 Franklin 
+	Street, Fifth Floor, Boston, MA 02110-1301 USA. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.playonlinux</groupId>
-    <artifactId>playonlinux</artifactId>
-    <packaging>pom</packaging>
-    <version>5.0-SNAPSHOT</version>
-    <modules>
-        <module>phoenicis-core</module>
-        <module>phoenicis-integration</module>
-        <module>phoenicis-qt</module>
-        <module>phoenicis-javafx</module>
-        <module>phoenicis-app</module>
-        <module>phoenicis-injection</module>
-        <module>phoenicis-bash</module>
-        <module>phoenicis-wine</module>
-        <module>phoenicis-javafx-wine</module>
-        <module>phoenicis-win32</module>
-        <module>phoenicis-dist</module>
-        <module>phoenicis-apps</module>
-        <module>phoenicis-ui</module>
-    </modules>
+	<groupId>com.playonlinux</groupId>
+	<artifactId>playonlinux</artifactId>
+	<packaging>pom</packaging>
+	<version>5.0-SNAPSHOT</version>
+	<modules>
+		<module>phoenicis-core</module>
+		<module>phoenicis-integration</module>
+		<module>phoenicis-qt</module>
+		<module>phoenicis-javafx</module>
+		<module>phoenicis-app</module>
+		<module>phoenicis-injection</module>
+		<module>phoenicis-bash</module>
+		<module>phoenicis-wine</module>
+		<module>phoenicis-javafx-wine</module>
+		<module>phoenicis-win32</module>
+		<module>phoenicis-dist</module>
+		<module>phoenicis-apps</module>
+		<module>phoenicis-ui</module>
+	</modules>
 
-    <properties>
-        <org.bouncycastle.version>1.46</org.bouncycastle.version>
-        <sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
-        <junit.version>4.12</junit.version>
-        <mockito.version>1.10.19</mockito.version>
-    </properties>
+	<properties>
+		<org.bouncycastle.version>1.46</org.bouncycastle.version>
+		<sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
+		<junit.version>4.12</junit.version>
+		<mockito.version>1.10.19</mockito.version>
+	</properties>
 
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jacoco</groupId>
+										<artifactId>jacoco-maven-plugin</artifactId>
+										<versionRange>[0.5,)
+										</versionRange>
+										<goals>
+											<goal>prepare-agent</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<!-- m2e doesn't know what to do with jacoco, let's ignore it or 
+											annoying error markers appear see http://wiki.eclipse.org/M2E_plugin_execution_not_covered -->
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.6.201602180812</version>
+
+				<configuration>
+					<excludes>
+						<exclude>**/com/playonlinux/javafx/**</exclude>
+						<exclude>**/com/playonlinux/app/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
