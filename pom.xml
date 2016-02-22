@@ -35,6 +35,7 @@
 	</modules>
 
 	<properties>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.bouncycastle.version>1.46</org.bouncycastle.version>
 		<sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<junit.version>4.12</junit.version>

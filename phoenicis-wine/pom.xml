@@ -33,14 +33,14 @@
         <dependency>
             <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-injection</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-core</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
