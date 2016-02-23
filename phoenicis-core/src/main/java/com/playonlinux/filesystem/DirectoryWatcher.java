@@ -25,6 +25,8 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +41,7 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
 
     public DirectoryWatcher(ExecutorService executorService, File observedDirectory) {
         try {
-            validate(observedDirectory);
+            validate(observedDirectory.toPath());
             this.observedDirectory = observedDirectory;
             this.watcher = FileSystems.getDefault().newWatchService();
 
@@ -50,8 +52,8 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
         }
     }
 
-    private static void validate(File observedDirectory) {
-        if (observedDirectory.exists() && !observedDirectory.isDirectory()) {
+    private static void validate(Path observedDirectory) {
+        if (!Files.isDirectory(observedDirectory)) {
             throw new IllegalStateException(
                     String.format("The file %s is not a valid directory", observedDirectory.toString()));
         }
