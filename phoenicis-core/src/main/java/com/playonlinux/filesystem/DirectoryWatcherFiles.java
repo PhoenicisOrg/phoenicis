@@ -38,12 +38,8 @@ public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
     protected List<File> defineWatchedObject() {
         File[] files = observedDirectory.listFiles();
         assert files != null;
-        
-        List<File> filesFiltered = Arrays.stream(files)
-        		.filter(f -> !f.getName().startsWith("."))
-        		.collect(Collectors.toList());
 
-        return filesFiltered;
+        return Arrays.stream(files).filter(f -> !f.getName().startsWith(".")).collect(Collectors.toList());
     }
 
     @Override
