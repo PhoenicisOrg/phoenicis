@@ -21,15 +21,18 @@ package com.playonlinux.core;
 import java.util.Map;
 
 public class EnvironmentUtils {
+    private EnvironmentUtils() {
+    }
+
     public static void mergeEnvironmentVariables(Map<String, String> environmentSource,
-                                                 Map<String, String> environmentDestination, String environmentVariable) {
-        if(environmentSource == null) {
+            Map<String, String> environmentDestination, String environmentVariable) {
+        if (environmentSource == null) {
             return;
         }
 
-        if(environmentSource.containsKey(environmentVariable)) {
-            environmentDestination.put(environmentVariable, environmentDestination.get(environmentVariable) + ":"
-                    + environmentSource.get(environmentVariable));
+        if (environmentSource.containsKey(environmentVariable)) {
+            environmentDestination.put(environmentVariable,
+                    environmentDestination.get(environmentVariable) + ":" + environmentSource.get(environmentVariable));
         }
     }
 }
