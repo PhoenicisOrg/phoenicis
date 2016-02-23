@@ -96,8 +96,8 @@ public final class LibraryEntitiesProvider
         DirectoryWatcherFiles shortcutDirectoryObservable;
         DirectoryWatcherFiles iconDirectoryObservable;
 
-        shortcutDirectoryObservable = new DirectoryWatcherFiles(executorService, shortcutDirectory);
-        iconDirectoryObservable = new DirectoryWatcherFiles(executorService, iconDirectory);
+        shortcutDirectoryObservable = new DirectoryWatcherFiles(executorService, shortcutDirectory.toPath());
+        iconDirectoryObservable = new DirectoryWatcherFiles(executorService, iconDirectory.toPath());
 
         shortcutSetDirectories = new ShortcutSetDirectories(shortcutDirectoryObservable, iconDirectoryObservable,
                 defaultIcon);
@@ -105,6 +105,7 @@ public final class LibraryEntitiesProvider
         shortcutSetDirectories.setOnChange(this::update);
     }
 
+    @Override
     public void setOnChange(Consumer<LibraryWindowEntity> onChange) {
         this.onChange = onChange;
     }

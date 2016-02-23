@@ -81,7 +81,7 @@ public class DefaultContainersManager implements ContainersManager {
     @Override
     public void init() {
         final File containersDirectory = playOnLinuxContext.makeContainersPath();
-        containersDirectoryObservable = new DirectoryWatcherFiles(executorService, containersDirectory);
+        containersDirectoryObservable = new DirectoryWatcherFiles(executorService, containersDirectory.toPath());
         containersDirectoryObservable.setOnChange(this::update);
     }
 

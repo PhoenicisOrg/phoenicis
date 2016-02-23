@@ -18,58 +18,90 @@
 
 package com.playonlinux.filesystem;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.concurrent.ExecutorService;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public abstract class DirectoryWatcher<T> implements AutoCloseable {
-    protected final File observedDirectory;
-    private static final int DEFAULT_CHECK_INTERVAL = 1000;
-    private final WatcherTask<T> watcherTask;
+    protected final Path observedDirectory;
+    private final WatchService watcher;
+    private Consumer<T> changeConsumer;
 
-    public DirectoryWatcher(ExecutorService executorService, File observedDirectory) {
-        this(executorService, observedDirectory, DEFAULT_CHECK_INTERVAL);
+    public DirectoryWatcher(ExecutorService executorService, Path observedDirectory) {
+        try {
+            validate(observedDirectory);
+            this.observedDirectory = observedDirectory;
+            this.watcher = FileSystems.getDefault().newWatchService();
+
+            observedDirectory.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+            executorService.submit(this::run);
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Unable to create watcher for %s", observedDirectory.toString()));
+        }
     }
 
-    public DirectoryWatcher(ExecutorService executorService, File observedDirectory, int checkInterval) {
-        this.observedDirectory = observedDirectory;
-        validate();
-        watcherTask = new WatcherTask<>(this::defineWatchedObject, this.defineComparisonFunction(), observedDirectory, checkInterval);
-        executorService.submit(watcherTask);
-    }
-
-    protected void validate() {
-        if (observedDirectory.exists() && !observedDirectory.isDirectory()) {
-            throw new IllegalStateException(String.format("The file %s is not a valid directory",
-                    observedDirectory.toString()));
+    private static void validate(Path observedDirectory) {
+        if (!Files.isDirectory(observedDirectory)) {
+            throw new IllegalStateException(
+                    String.format("The file %s is not a valid directory", observedDirectory.toString()));
         }
     }
 
     protected abstract T defineWatchedObject();
 
-    protected abstract BiPredicate<T, T> defineComparisonFunction();
+    public void run() {
+        try {
+            WatchKey key = watcher.take();
+            key.pollEvents();
+            notifyConsumer();
 
-    public File getObservedDirectory() {
-        return observedDirectory;
+            while (key.reset()) {
+                key = watcher.take();
+                key.pollEvents();
+                notifyConsumer();
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(String.format("Watcher Interupted for %s", observedDirectory.toString()));
+        }
     }
 
-    public void setOnChange(Consumer<T> consumer) {
-        this.watcherTask.setOnChange(consumer);
+    private void notifyConsumer() {
+        if (changeConsumer != null) {
+            changeConsumer.accept(defineWatchedObject());
+        }
     }
 
     @Override
     public void close() {
-        watcherTask.stop();
+        try {
+            watcher.close();
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Unable to close watcher for %s", observedDirectory.toString()));
+        }
+    }
+
+    public Path getObservedDirectory() {
+        return observedDirectory;
+    }
+
+    public void setOnChange(Consumer<T> changeConsumer) {
+        this.changeConsumer = changeConsumer;
+        notifyConsumer();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append(observedDirectory.getName())
-                .toString();
+        return new ToStringBuilder(this).append(observedDirectory.getFileName()).toString();
     }
-
 }
