@@ -48,7 +48,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
     }
 
     public void update(ContainersManager argument) {
-        List<ContainerEntity> containerEntities = argument.getContainers().stream().map(c -> c.createEntity())
+        List<ContainerEntity> containerEntities = argument.getContainers().stream().map(Container::createEntity)
                 .filter(e -> lastFilter == null || lastFilter.test(e)).collect(Collectors.toList());
 
         ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
