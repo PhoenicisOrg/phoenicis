@@ -18,12 +18,10 @@
 
 package com.playonlinux.filesystem;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.function.BiPredicate;
+
+import org.apache.commons.io.FileUtils;
 
 public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
 
@@ -38,10 +36,5 @@ public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
     @Override
     protected Long defineWatchedObject() {
         return FileUtils.sizeOfDirectory(observedDirectory);
-    }
-
-    @Override
-    protected BiPredicate<Long, Long> defineComparisonFunction() {
-        return Objects::equals;
     }
 }

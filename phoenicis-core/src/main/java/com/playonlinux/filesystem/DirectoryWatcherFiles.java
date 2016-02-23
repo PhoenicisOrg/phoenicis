@@ -22,7 +22,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
@@ -41,10 +40,4 @@ public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
 
         return Arrays.stream(files).filter(f -> !f.getName().startsWith(".")).collect(Collectors.toList());
     }
-
-    @Override
-    protected BiPredicate<List<File>, List<File>> defineComparisonFunction() {
-        return List::equals;
-    }
-
 }

@@ -18,12 +18,11 @@
 
 package com.playonlinux.filesystem;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 import java.io.File;
 import java.util.concurrent.ExecutorService;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public abstract class DirectoryWatcher<T> implements AutoCloseable {
     protected final File observedDirectory;
@@ -37,20 +36,18 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
     public DirectoryWatcher(ExecutorService executorService, File observedDirectory, int checkInterval) {
         this.observedDirectory = observedDirectory;
         validate();
-        watcherTask = new WatcherTask<>(this::defineWatchedObject, this.defineComparisonFunction(), observedDirectory, checkInterval);
+        watcherTask = new WatcherTask<>(this::defineWatchedObject, observedDirectory, checkInterval);
         executorService.submit(watcherTask);
     }
 
     protected void validate() {
         if (observedDirectory.exists() && !observedDirectory.isDirectory()) {
-            throw new IllegalStateException(String.format("The file %s is not a valid directory",
-                    observedDirectory.toString()));
+            throw new IllegalStateException(
+                    String.format("The file %s is not a valid directory", observedDirectory.toString()));
         }
     }
 
     protected abstract T defineWatchedObject();
-
-    protected abstract BiPredicate<T, T> defineComparisonFunction();
 
     public File getObservedDirectory() {
         return observedDirectory;
@@ -67,9 +64,7 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append(observedDirectory.getName())
-                .toString();
+        return new ToStringBuilder(this).append(observedDirectory.getName()).toString();
     }
 
 }

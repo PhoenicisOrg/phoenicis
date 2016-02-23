@@ -18,36 +18,28 @@
 
 package com.playonlinux.filesystem;
 
-import org.apache.log4j.Logger;
-
 import java.io.File;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import org.apache.log4j.Logger;
 
 public class WatcherTask<T> implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(WatcherTask.class);
 
     private final File observedDirectory;
     private final Supplier<T> watchedContentToCheck;
-    private final BiPredicate<T, T> predicate;
     private Consumer<T> changeConsumer;
     private final int checkInterval;
     private T lastDirectoryContent;
 
     private volatile Boolean running = true;
 
-    public WatcherTask(Supplier<T> watchedContentToCheck,
-                       BiPredicate<T, T> predicate,
-                       File observedDirectory,
-                       int checkInterval) {
+    public WatcherTask(Supplier<T> watchedContentToCheck, File observedDirectory, int checkInterval) {
         this.observedDirectory = observedDirectory;
         this.watchedContentToCheck = watchedContentToCheck;
-        this.predicate = predicate;
         this.checkInterval = checkInterval;
     }
-
-
 
     public synchronized void stop() {
         this.running = false;
@@ -59,7 +51,7 @@ public class WatcherTask<T> implements Runnable {
             if (observedDirectory.exists()) {
                 T directoryContent = watchedContentToCheck.get();
 
-                if (!predicate.test(directoryContent, lastDirectoryContent)) {
+                if (directoryContent.equals(lastDirectoryContent)) {
                     synchronized (observedDirectory) {
                         if (changeConsumer != null) {
                             changeConsumer.accept(directoryContent);
@@ -70,7 +62,7 @@ public class WatcherTask<T> implements Runnable {
                 }
 
                 try {
-                    Thread.sleep((long) checkInterval);
+                    Thread.sleep(checkInterval);
                 } catch (InterruptedException e) {
                     LOGGER.debug(e);
                     this.stop();
