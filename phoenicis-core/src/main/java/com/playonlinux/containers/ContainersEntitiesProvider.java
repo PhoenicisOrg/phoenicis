@@ -57,7 +57,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
 
     @Override
     public void shutdown() {
-        //Nothing to do
+        // Nothing to do
     }
 
     @Override
@@ -66,6 +66,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
         containersManagerService.setOnChange(this::update);
     }
 
+    @Override
     public void setOnChange(Consumer<ContainersWindowEntity> onChange) {
         this.onChange = onChange;
     }
