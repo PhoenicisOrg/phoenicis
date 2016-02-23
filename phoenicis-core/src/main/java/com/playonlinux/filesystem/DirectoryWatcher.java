@@ -18,7 +18,15 @@
 
 package com.playonlinux.filesystem;
 
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -26,21 +34,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public abstract class DirectoryWatcher<T> implements AutoCloseable {
     protected final File observedDirectory;
-    private static final int DEFAULT_CHECK_INTERVAL = 1000;
-    private final WatcherTask<T> watcherTask;
+    private final WatchService watcher;
+    private Consumer<T> changeConsumer;
 
     public DirectoryWatcher(ExecutorService executorService, File observedDirectory) {
-        this(executorService, observedDirectory, DEFAULT_CHECK_INTERVAL);
+        try {
+            validate(observedDirectory);
+            this.observedDirectory = observedDirectory;
+            this.watcher = FileSystems.getDefault().newWatchService();
+
+            observedDirectory.toPath().register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+            executorService.submit(this::run);
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Unable to create watcher for %s", observedDirectory.toString()));
+        }
     }
 
-    public DirectoryWatcher(ExecutorService executorService, File observedDirectory, int checkInterval) {
-        this.observedDirectory = observedDirectory;
-        validate();
-        watcherTask = new WatcherTask<>(this::defineWatchedObject, observedDirectory, checkInterval);
-        executorService.submit(watcherTask);
-    }
-
-    protected void validate() {
+    private static void validate(File observedDirectory) {
         if (observedDirectory.exists() && !observedDirectory.isDirectory()) {
             throw new IllegalStateException(
                     String.format("The file %s is not a valid directory", observedDirectory.toString()));
@@ -49,22 +59,50 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
 
     protected abstract T defineWatchedObject();
 
-    public File getObservedDirectory() {
-        return observedDirectory;
+    public void run() {
+        try {
+            WatchKey key = watcher.take();
+            key.pollEvents();
+            notifyConsumer();
+
+            while (key.reset()) {
+                key = watcher.take();
+                key.pollEvents();
+                notifyConsumer();
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(String.format("Watcher Interupted for %s", observedDirectory.toString()));
+        }
     }
 
-    public void setOnChange(Consumer<T> consumer) {
-        this.watcherTask.setOnChange(consumer);
+    private void notifyConsumer() {
+        System.err.println("notify");
+        if (changeConsumer != null) {
+            System.err.println("with consumer");
+            changeConsumer.accept(defineWatchedObject());
+        }
     }
 
     @Override
     public void close() {
-        watcherTask.stop();
+        try {
+            watcher.close();
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Unable to close watcher for %s", observedDirectory.toString()));
+        }
+    }
+
+    public File getObservedDirectory() {
+        return observedDirectory;
+    }
+
+    public void setOnChange(Consumer<T> changeConsumer) {
+        this.changeConsumer = changeConsumer;
+        notifyConsumer();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).append(observedDirectory.getName()).toString();
     }
-
 }

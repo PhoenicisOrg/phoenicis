@@ -24,13 +24,8 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.io.FileUtils;
 
 public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
-
     public DirectoryWatcherSize(ExecutorService executorService, File observedDirectory) {
         super(executorService, observedDirectory);
-    }
-
-    public DirectoryWatcherSize(ExecutorService executorService, File observedDirectory, int checkInterval) {
-        super(executorService, observedDirectory, checkInterval);
     }
 
     @Override

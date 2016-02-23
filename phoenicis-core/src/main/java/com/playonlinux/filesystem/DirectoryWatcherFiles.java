@@ -29,10 +29,6 @@ public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
         super(executorService, observedDirectory);
     }
 
-    public DirectoryWatcherFiles(ExecutorService executorService, File observedDirectory, int checkInterval) {
-        super(executorService, observedDirectory, checkInterval);
-    }
-
     @Override
     protected List<File> defineWatchedObject() {
         File[] files = observedDirectory.listFiles();
