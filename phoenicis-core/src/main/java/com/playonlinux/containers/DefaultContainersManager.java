@@ -85,6 +85,7 @@ public class DefaultContainersManager implements ContainersManager {
         containersDirectoryObservable.setOnChange(this::update);
     }
 
+    @Override
     public void setOnChange(Consumer<ContainersManager> onChange) {
         this.onChange = onChange;
     }
