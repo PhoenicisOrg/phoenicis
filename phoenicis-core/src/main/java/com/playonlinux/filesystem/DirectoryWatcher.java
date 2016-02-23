@@ -76,9 +76,7 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
     }
 
     private void notifyConsumer() {
-        System.err.println("notify");
         if (changeConsumer != null) {
-            System.err.println("with consumer");
             changeConsumer.accept(defineWatchedObject());
         }
     }
