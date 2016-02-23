@@ -217,7 +217,7 @@ public class Wine implements SetupWizardComponent {
                 .progressBar(format(translate("Please wait while the virtual drive is being created..."), prefixName));
 
         try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
-                prefix.getWinePrefixDirectory())) {
+                prefix.getWinePrefixDirectory().toPath())) {
 
             observableDirectorySize
                     .setOnChange(newSize -> progressControl.setProgressPercentage(newSize * 100 / NEWPREFIXSIZE));
@@ -652,7 +652,7 @@ public class Wine implements SetupWizardComponent {
         final long startSize = FileUtils.sizeOfDirectory(directory);
 
         try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
-                prefix.getWinePrefixDirectory())) {
+                prefix.getWinePrefixDirectory().toPath())) {
 
             observableDirectorySize.setOnChange(newSize -> {
                 final double percentage = 100. * (newSize - startSize) / (endSize - startSize);
@@ -682,7 +682,7 @@ public class Wine implements SetupWizardComponent {
             final long endSize = 0L;
 
             try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
-                    prefix.getWinePrefixDirectory())) {
+                    prefix.getWinePrefixDirectory().toPath())) {
 
                 observableDirectorySize.setOnChange(newSize -> {
                     final double percentage = 100. * (newSize - startSize) / (endSize - startSize);

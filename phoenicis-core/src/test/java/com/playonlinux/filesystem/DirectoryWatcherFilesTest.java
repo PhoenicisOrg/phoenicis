@@ -52,7 +52,8 @@ public class DirectoryWatcherFilesTest {
         expectedEx
                 .expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-        DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryFile);
+        DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
+                temporaryFile.toPath());
         directoryWatcherFiles.close();
     }
 
@@ -61,7 +62,7 @@ public class DirectoryWatcherFilesTest {
         final File temporaryDirectory = Files.createTempDir();
 
         try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
-                temporaryDirectory)) {
+                temporaryDirectory.toPath())) {
             final Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
             Thread.sleep(2 * CHECK_INTERVAL);
@@ -78,7 +79,7 @@ public class DirectoryWatcherFilesTest {
         final File temporaryDirectory = Files.createTempDir();
 
         try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
-                temporaryDirectory)) {
+                temporaryDirectory.toPath())) {
             final Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
 

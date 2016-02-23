@@ -19,14 +19,15 @@
 package com.playonlinux.filesystem;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
-    public DirectoryWatcherFiles(ExecutorService executorService, File observedDirectory) {
-        super(executorService, observedDirectory.toPath());
+    public DirectoryWatcherFiles(ExecutorService executorService, Path observedDirectory) {
+        super(executorService, observedDirectory);
     }
 
     @Override

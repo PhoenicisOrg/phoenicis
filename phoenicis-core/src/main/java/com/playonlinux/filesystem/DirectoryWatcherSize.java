@@ -18,14 +18,14 @@
 
 package com.playonlinux.filesystem;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 
 public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
-    public DirectoryWatcherSize(ExecutorService executorService, File observedDirectory) {
-        super(executorService, observedDirectory.toPath());
+    public DirectoryWatcherSize(ExecutorService executorService, Path observedDirectory) {
+        super(executorService, observedDirectory);
     }
 
     @Override
