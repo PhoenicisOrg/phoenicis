@@ -38,9 +38,9 @@ class ShortcutSetDirectories implements AutoCloseable {
     private final List<ShortcutFiles> shortcutFiles;
 
     private Consumer<List<ShortcutFiles>> onChange;
-    
+
     public ShortcutSetDirectories(DirectoryWatcherFiles shortcutDirectory, DirectoryWatcherFiles iconDirectory,
-                                  URL defaultIcon) {
+            URL defaultIcon) {
         this.shortcutFiles = new ArrayList<>();
         this.iconDirectory = iconDirectory;
         this.defaultIcon = defaultIcon;
@@ -58,7 +58,7 @@ class ShortcutSetDirectories implements AutoCloseable {
         for (File shortcutFile : files) {
             try {
                 URL iconURL;
-                File iconFile = new File(iconDirectory.getObservedDirectory(), shortcutFile.getName());
+                File iconFile = new File(iconDirectory.getObservedDirectory().toFile(), shortcutFile.getName());
                 if (!iconFile.exists()) {
                     iconURL = defaultIcon;
                 } else {
@@ -70,8 +70,8 @@ class ShortcutSetDirectories implements AutoCloseable {
                 LOGGER.warn(e);
             }
         }
-        
-        if(onChange != null){
+
+        if (onChange != null) {
             onChange.accept(getShortcutFiles());
         }
     }
