@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 
 public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
     public DirectoryWatcherFiles(ExecutorService executorService, File observedDirectory) {
-        super(executorService, observedDirectory);
+        super(executorService, observedDirectory.toPath());
     }
 
     @Override
     protected List<File> defineWatchedObject() {
-        File[] files = observedDirectory.listFiles();
+        File[] files = observedDirectory.toFile().listFiles();
         assert files != null;
 
         return Arrays.stream(files).filter(f -> !f.getName().startsWith(".")).collect(Collectors.toList());

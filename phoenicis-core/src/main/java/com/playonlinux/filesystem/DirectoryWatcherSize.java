@@ -19,17 +19,21 @@
 package com.playonlinux.filesystem;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.concurrent.ExecutorService;
-
-import org.apache.commons.io.FileUtils;
 
 public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
     public DirectoryWatcherSize(ExecutorService executorService, File observedDirectory) {
-        super(executorService, observedDirectory);
+        super(executorService, observedDirectory.toPath());
     }
 
     @Override
     protected Long defineWatchedObject() {
-        return FileUtils.sizeOfDirectory(observedDirectory);
+        try {
+            return Files.size(observedDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot retrieve directory size", e);
+        }
     }
 }

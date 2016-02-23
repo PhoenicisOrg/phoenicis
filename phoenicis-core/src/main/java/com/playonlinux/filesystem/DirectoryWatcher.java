@@ -22,7 +22,6 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -35,17 +34,17 @@ import java.util.function.Consumer;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public abstract class DirectoryWatcher<T> implements AutoCloseable {
-    protected final File observedDirectory;
+    protected final Path observedDirectory;
     private final WatchService watcher;
     private Consumer<T> changeConsumer;
 
-    public DirectoryWatcher(ExecutorService executorService, File observedDirectory) {
+    public DirectoryWatcher(ExecutorService executorService, Path observedDirectory) {
         try {
-            validate(observedDirectory.toPath());
+            validate(observedDirectory);
             this.observedDirectory = observedDirectory;
             this.watcher = FileSystems.getDefault().newWatchService();
 
-            observedDirectory.toPath().register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+            observedDirectory.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
             executorService.submit(this::run);
         } catch (IOException e) {
             throw new RuntimeException(String.format("Unable to create watcher for %s", observedDirectory.toString()));
@@ -92,7 +91,7 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
         }
     }
 
-    public File getObservedDirectory() {
+    public Path getObservedDirectory() {
         return observedDirectory;
     }
 
@@ -103,6 +102,6 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append(observedDirectory.getName()).toString();
+        return new ToStringBuilder(this).append(observedDirectory.getFileName()).toString();
     }
 }
