@@ -36,6 +36,7 @@ import org.junit.rules.ExpectedException;
 
 import com.google.common.io.Files;
 
+@SuppressWarnings("unchecked")
 public class DirectoryWatcherFilesTest {
     private static final int CHECK_INTERVAL = 100;
     private ExecutorService mockExecutorService = Executors.newSingleThreadExecutor();
