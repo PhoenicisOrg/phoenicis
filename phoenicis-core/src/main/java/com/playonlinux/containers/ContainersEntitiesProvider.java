@@ -48,7 +48,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
     }
 
     public void update(ContainersManager argument) {
-        List<ContainerEntity> containerEntities = argument.getContainers().stream().map(c -> c.createEntity())
+        List<ContainerEntity> containerEntities = argument.getContainers().stream().map(Container::createEntity)
                 .filter(e -> lastFilter == null || lastFilter.test(e)).collect(Collectors.toList());
 
         ContainersWindowEntity containersWindowEntity = new ContainersWindowEntity(containerEntities);
@@ -57,7 +57,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
 
     @Override
     public void shutdown() {
-        //Nothing to do
+        // Nothing to do
     }
 
     @Override
@@ -66,6 +66,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
         containersManagerService.setOnChange(this::update);
     }
 
+    @Override
     public void setOnChange(Consumer<ContainersWindowEntity> onChange) {
         this.onChange = onChange;
     }

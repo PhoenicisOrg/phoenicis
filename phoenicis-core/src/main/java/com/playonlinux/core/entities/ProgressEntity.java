@@ -21,8 +21,8 @@ package com.playonlinux.core.entities;
 import com.playonlinux.core.dto.DTO;
 
 /**
- * Represent a progress state that will be sent to the UI.
- * The UI will be able to represent this progress state (progressbar, etc...)
+ * Represent a progress state that will be sent to the UI. The UI will be able
+ * to represent this progress state (progressbar, etc...)
  */
 public class ProgressEntity implements DTO {
     private final ProgressState state;
@@ -58,14 +58,14 @@ public class ProgressEntity implements DTO {
         private double percent;
         private String progressText;
 
+        public Builder() {
+            // Empty Constructor
+        }
+
         public Builder(ProgressEntity other) {
             state = other.state;
             percent = other.percent;
             progressText = other.progressText;
-        }
-
-        public Builder() {
-
         }
 
         public Builder withState(ProgressState state) {
