@@ -18,30 +18,22 @@
 
 package com.playonlinux.filesystem;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.util.Objects;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
-import java.util.function.BiPredicate;
 
 public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
-
-    public DirectoryWatcherSize(ExecutorService executorService, File observedDirectory) {
+    public DirectoryWatcherSize(ExecutorService executorService, Path observedDirectory) {
         super(executorService, observedDirectory);
-    }
-
-    public DirectoryWatcherSize(ExecutorService executorService, File observedDirectory, int checkInterval) {
-        super(executorService, observedDirectory, checkInterval);
     }
 
     @Override
     protected Long defineWatchedObject() {
-        return FileUtils.sizeOfDirectory(observedDirectory);
-    }
-
-    @Override
-    protected BiPredicate<Long, Long> defineComparisonFunction() {
-        return Objects::equals;
+        try {
+            return Files.size(observedDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot retrieve directory size", e);
+        }
     }
 }

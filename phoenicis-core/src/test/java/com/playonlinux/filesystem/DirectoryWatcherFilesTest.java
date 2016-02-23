@@ -36,7 +36,7 @@ import org.junit.rules.ExpectedException;
 
 import com.google.common.io.Files;
 
-
+@SuppressWarnings("unchecked")
 public class DirectoryWatcherFilesTest {
     private static final int CHECK_INTERVAL = 100;
     private ExecutorService mockExecutorService = Executors.newSingleThreadExecutor();
@@ -45,27 +45,25 @@ public class DirectoryWatcherFilesTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown()
-            throws IOException {
+    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
         temporaryFile.deleteOnExit();
         expectedEx.expect(IllegalStateException.class);
-        expectedEx.expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
+        expectedEx
+                .expectMessage(String.format("The file %s is not a valid directory", temporaryFile.getAbsolutePath()));
 
-
-        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryFile, CHECK_INTERVAL)) {
-            // Nothing to do because we are expecting an error here
-        }
+        DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
+                temporaryFile.toPath());
+        directoryWatcherFiles.close();
     }
-
 
     @Test
     public void testObservableDirectory_dontChangeAnything_ObservableOnlyNotifiedOnce() throws InterruptedException {
         final File temporaryDirectory = Files.createTempDir();
 
-
-        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryDirectory, CHECK_INTERVAL)) {
-        	final Consumer<List<File>> mockConsumer = mock(Consumer.class);
+        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
+                temporaryDirectory.toPath())) {
+            final Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
             Thread.sleep(2 * CHECK_INTERVAL);
 
@@ -76,11 +74,12 @@ public class DirectoryWatcherFilesTest {
     }
 
     @Test
-    public void testObservableDirectory_createANewFile_ObservableIsNotifiedTwice() throws InterruptedException, IOException {
+    public void testObservableDirectory_createANewFile_ObservableIsNotifiedTwice()
+            throws InterruptedException, IOException {
         final File temporaryDirectory = Files.createTempDir();
 
-
-        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService, temporaryDirectory, CHECK_INTERVAL)) {
+        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
+                temporaryDirectory.toPath())) {
             final Consumer<List<File>> mockConsumer = mock(Consumer.class);
             directoryWatcherFiles.setOnChange(mockConsumer);
 
