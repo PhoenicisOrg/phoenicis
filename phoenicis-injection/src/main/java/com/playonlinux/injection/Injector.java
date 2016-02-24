@@ -28,12 +28,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Injector {
     private final String packageName;
-    private static final Logger LOGGER = Logger.getLogger(Injector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Injector.class);
 
     public Injector(String packageName) {
         this.packageName = packageName;
@@ -106,7 +107,7 @@ public class Injector {
     private void injectOneBean(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans, Field field, Class<?> componentClass) throws InjectionException {
         if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
             LOGGER.debug("Loaded beans:");
-            LOGGER.debug(beans);
+            LOGGER.debug(beans.toString());
             throw new InjectionException(String.format("Unable to inject %s on class %s. Check your config file",
                     field.getType().toString(), componentClass.getName()), null);
         } else if(beans.containsKey(field.getType())){
@@ -117,7 +118,7 @@ public class Injector {
                 String injectErrorString = String.format("Unable to inject %s on class %s. Error while injecting.",
                         field.getType().toString(), componentClass.getName());
 
-                LOGGER.fatal(injectErrorString, e);
+                LOGGER.error(injectErrorString, e);
                 throw new InjectionException(injectErrorString, e);
             }
         }
