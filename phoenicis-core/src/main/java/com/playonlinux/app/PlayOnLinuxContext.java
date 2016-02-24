@@ -27,10 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-
 import com.playonlinux.core.utils.OperatingSystem;
 import com.playonlinux.core.utils.ReplacableProperties;
 import com.playonlinux.core.version.Version;
@@ -58,18 +54,6 @@ public class PlayOnLinuxContext {
             case LINUX:
             default:
                 return "playonlinux.properties";
-        }
-    }
-
-    /**
-     * Init logging framework
-     */
-    public void initLogger() {
-        try {
-            PropertyConfigurator.configure(PlayOnLinuxContext.class.getClassLoader().getResourceAsStream(getPropertyFileName()));
-            Logger.getRootLogger().setLevel(Level.INFO);
-        } catch (PlayOnLinuxException e) {
-            throw new PlayOnLinuxRuntimeException("Cannot initialize logger", e);
         }
     }
 
