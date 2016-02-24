@@ -57,7 +57,7 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
     private final HTTPDownloader httpDownloader;
     private final File localFile;
     private final SignatureChecker signatureChecker;
-    //TODO Couldn't find any class using it, double check
+    // TODO Couldn't find any class using it, double check
     private Consumer<InstallerDownloaderEntity> onChange;
 
     DefaultInstallerDownloaderEntityProvider(HTTPDownloader httpDownloader, SignatureChecker signatureChecker) {
@@ -75,12 +75,7 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
     @Override
     public void getScript() {
         httpDownloader.setOnChange(this::update);
-
-        downloadManager.submit(httpDownloader, bytes -> {
-            success(bytes);
-        }, e -> {
-            failure(e);
-        });
+        downloadManager.submit(httpDownloader, this::success, this::failure);
     }
 
     private void success(byte[] bytes) {

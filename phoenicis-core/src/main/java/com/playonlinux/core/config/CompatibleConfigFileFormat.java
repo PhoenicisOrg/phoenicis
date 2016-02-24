@@ -22,8 +22,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +35,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Represents a PlayOnLinux config file.
- * The class is able to read POLv4 format, but it will store everything in v5 format (json)
+ * Represents a PlayOnLinux config file. The class is able to read POLv4 format,
+ * but it will store everything in v5 format (json)
  */
 public class CompatibleConfigFileFormat implements ConfigFile {
     private final Logger LOGGER  = LoggerFactory.getLogger(CompatibleConfigFileFormat.class);
@@ -70,33 +72,34 @@ public class CompatibleConfigFileFormat implements ConfigFile {
     }
 
     private Map<String, String> getMap() {
-        final Map<String, String> results = new HashMap<>();
         try {
+            final Map<String, String> results = new HashMap<>();
             final Map<?, ?> tmpResults = mapper.readValue(configFile, Map.class);
-            for(Object key: tmpResults.keySet()) {
-                if(key instanceof String && tmpResults.get(key) instanceof String) {
-                    results.put((String) key, (String) tmpResults.get(key));
+            for (Entry<?, ?> entry : tmpResults.entrySet()) {
+                if (entry.getKey() instanceof String && entry.getValue() instanceof String) {
+                    results.put((String) entry.getKey(), (String) entry.getValue());
                 }
             }
+            return results;
         } catch (JsonParseException | JsonMappingException e) {
             LOGGER.debug("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file", e);
             return getLegacyMap();
         } catch (IOException e) {
             LOGGER.debug("Error while reading the file. Will assume that the config file is EMPTY", e);
+            return Collections.emptyMap();
         }
-        return results;
     }
 
     private Map<String, String> getLegacyMap() {
         final Map<String, String> result = new HashMap<>();
-        try(final BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile))) {
-            for(String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
+        try (final BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile))) {
+            for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
                 final String[] splitLine = line.split("=");
 
                 final String newKey = splitLine[0];
                 final StringBuilder newValueBuilder = new StringBuilder();
-                for(int i = 1; i < splitLine.length; i++) {
-                    if(i != 1) {
+                for (int i = 1; i < splitLine.length; i++) {
+                    if (i != 1) {
                         newValueBuilder.append('=');
                     }
                     newValueBuilder.append(splitLine[i]);
@@ -117,6 +120,5 @@ public class CompatibleConfigFileFormat implements ConfigFile {
         values.remove(key);
         mapper.writeValue(configFile, values);
     }
-
 
 }
