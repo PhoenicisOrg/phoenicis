@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 public class Injector {
     private final String packageName;
-    private static final Logger LOGGER = LoggerFactory.getLogger(Injector.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(Injector.class);
 
     public Injector(String packageName) {
         this.packageName = packageName;
