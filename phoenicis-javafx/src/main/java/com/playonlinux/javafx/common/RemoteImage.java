@@ -40,7 +40,7 @@ import javafx.scene.layout.VBox;
  * In general, we should avoid adding such mechanism in the UI implementation
  */
 public class RemoteImage extends VBox {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RemoteImage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(RemoteImage.class);
 
     private final URL imageUrl;
 

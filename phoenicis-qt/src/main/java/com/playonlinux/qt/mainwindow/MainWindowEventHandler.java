@@ -50,7 +50,7 @@ public class MainWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainWindowEventHandler.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(MainWindowEventHandler.class);
 
     private final MainWindow mainWindow;
 

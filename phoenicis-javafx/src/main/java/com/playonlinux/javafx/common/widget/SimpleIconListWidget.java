@@ -43,7 +43,7 @@ public class SimpleIconListWidget
     private final Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleIconListWidget.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(SimpleIconListWidget.class);
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem<>();

@@ -36,7 +36,6 @@ import com.trolltech.qt.gui.QPixmap;
  * Small helper class for easing the use of images and icons.
  */
 public final class ResourceHelper {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceHelper.class);
 
     /**

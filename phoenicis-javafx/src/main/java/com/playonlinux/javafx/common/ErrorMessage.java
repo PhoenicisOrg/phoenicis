@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import javafx.scene.control.Alert;
 
 public class ErrorMessage {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
     private final Alert alert;
 
     public ErrorMessage(String message, Exception exception) {
