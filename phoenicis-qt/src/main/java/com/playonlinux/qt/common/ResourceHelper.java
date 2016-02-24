@@ -18,28 +18,26 @@
 
 package com.playonlinux.qt.common;
 
-import com.trolltech.qt.core.QBuffer;
-import com.trolltech.qt.core.QByteArray;
-import com.trolltech.qt.core.QIODevice;
-import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QImage;
-import com.trolltech.qt.gui.QImageReader;
-import com.trolltech.qt.gui.QPixmap;
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import sun.rmi.runtime.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URL;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.trolltech.qt.core.QBuffer;
+import com.trolltech.qt.core.QByteArray;
+import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QPixmap;
 
 /**
  * Small helper class for easing the use of images and icons.
  */
 public final class ResourceHelper {
 
-    private static final Logger LOGGER = Logger.getLogger(ResourceHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceHelper.class);
 
     /**
      * Load the resource of the given class with the given path as a pixmap.
@@ -76,7 +74,7 @@ public final class ResourceHelper {
             pixmap.loadFromData(sourceDev.data());
             return pixmap;
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to load pixmap", e);
             return new QPixmap();
         }
     }
@@ -109,7 +107,7 @@ public final class ResourceHelper {
         try {
             IOUtils.copy(styleStream, styleWriter, "UTF-8");
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to get stylesheet", e);
         }
         return styleWriter.toString();
     }
@@ -124,7 +122,7 @@ public final class ResourceHelper {
         try {
             resourceData = IOUtils.toByteArray(stream);
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to get device", e);
             return null;
         }
         return new QBuffer(new QByteArray(resourceData));

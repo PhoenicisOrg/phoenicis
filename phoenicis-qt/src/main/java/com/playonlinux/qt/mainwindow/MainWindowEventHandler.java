@@ -22,8 +22,8 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.io.File;
 
-import com.playonlinux.ui.UIEventHandler;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
@@ -31,8 +31,9 @@ import com.playonlinux.injection.Scan;
 import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.qt.mainwindow.shortcuts.ShortcutList;
-import com.playonlinux.ui.api.EntitiesProvider;
 import com.playonlinux.ui.EventHandler;
+import com.playonlinux.ui.UIEventHandler;
+import com.playonlinux.ui.api.EntitiesProvider;
 import com.trolltech.qt.core.QDir;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QApplication;
@@ -49,7 +50,7 @@ public class MainWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
 
-    private static final Logger LOGGER = Logger.getLogger(MainWindowEventHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainWindowEventHandler.class);
 
     private final MainWindow mainWindow;
 
@@ -125,7 +126,7 @@ public class MainWindowEventHandler implements UIEventHandler {
             try {
                 mainEventHandler.runLocalScript(scriptFile);
             } catch (PlayOnLinuxException e) {
-                LOGGER.error(e);
+                LOGGER.error("Failed to run local script", e);
                 //TODO: DISPLAY ERROR
             }
         }
