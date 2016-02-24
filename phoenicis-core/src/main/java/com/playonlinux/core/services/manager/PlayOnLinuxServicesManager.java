@@ -23,10 +23,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PlayOnLinuxServicesManager implements ServiceManager {
-    private static final Logger LOGGER = Logger.getLogger(ServiceManager.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ServiceManager.class);
 
     private final Map<String, Service> backgroundServices;
 

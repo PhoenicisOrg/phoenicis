@@ -25,7 +25,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -36,7 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * The class is able to read POLv4 format, but it will store everything in v5 format (json)
  */
 public class CompatibleConfigFileFormat implements ConfigFile {
-    private static final Logger LOGGER  = Logger.getLogger(CompatibleConfigFileFormat.class);
+    private final Logger LOGGER  = LoggerFactory.getLogger(CompatibleConfigFileFormat.class);
     private final File configFile;
     private final ObjectMapper mapper;
 

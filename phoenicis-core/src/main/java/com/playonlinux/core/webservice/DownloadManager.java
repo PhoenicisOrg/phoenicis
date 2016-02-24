@@ -25,7 +25,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.services.SubmittableService;
 
@@ -36,7 +37,7 @@ public class DownloadManager implements SubmittableService<HTTPDownloader, Consu
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
-    private static final Logger LOGGER = Logger.getLogger(DownloadManager.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DownloadManager.class);
 
     public DownloadManager() {
         this(DEFAULT_POOL_SIZE, DEFAULT_QUEUE_SIZE);
@@ -67,7 +68,7 @@ public class DownloadManager implements SubmittableService<HTTPDownloader, Consu
                 byte[] downloadResult = task.getBytes();
                 callback.accept(downloadResult);
             } catch (DownloadException e) {
-                LOGGER.error(e);
+                LOGGER.error("Failed to submit download", e);
                 error.accept(e);
             }
         });

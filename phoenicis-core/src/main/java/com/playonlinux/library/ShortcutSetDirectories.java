@@ -25,13 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.filesystem.DirectoryWatcherFiles;
 
 class ShortcutSetDirectories implements AutoCloseable {
-
-    private static final Logger LOGGER = Logger.getLogger(ShortcutSetDirectories.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ShortcutSetDirectories.class);
     private final DirectoryWatcherFiles iconDirectory;
     private final DirectoryWatcherFiles shortcutDirectory;
     private final URL defaultIcon;
@@ -67,7 +67,7 @@ class ShortcutSetDirectories implements AutoCloseable {
 
                 this.getShortcutFiles().add(new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile));
             } catch (IOException e) {
-                LOGGER.warn(e);
+                LOGGER.warn("Failed tu update shortcut files", e);
             }
         }
 
