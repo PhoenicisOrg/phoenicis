@@ -36,7 +36,8 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.output.NullOutputStream;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
@@ -68,7 +69,6 @@ import com.playonlinux.wine.registry.StringValueType;
 @Scan
 @ScriptClass
 public class Wine implements SetupWizardComponent {
-    private static final Logger LOGGER = Logger.getLogger(Wine.class);
     private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
     private static final long NEWPREFIXSIZE = 320_000_000L;
     private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
@@ -76,6 +76,8 @@ public class Wine implements SetupWizardComponent {
     private static final String ERASE = "Erase (virtual drive content will be lost)";
     private static final String ABORT = "Abort installation";
 
+    private final Logger LOGGER = LoggerFactory.getLogger(Wine.class);
+    
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -322,7 +324,7 @@ public class Wine implements SetupWizardComponent {
                 try {
                     this.log(FileUtils.readFileToString(regFile));
                 } catch (IOException e) {
-                    LOGGER.warn(e);
+                    LOGGER.warn("Failed to log reg file", e);
                 }
                 this.log("-----------");
             } else {

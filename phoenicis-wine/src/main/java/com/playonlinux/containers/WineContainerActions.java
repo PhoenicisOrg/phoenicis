@@ -22,7 +22,8 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.Wine;
@@ -33,7 +34,7 @@ import com.playonlinux.wine.WineConstants;
 
 @Scan
 public class WineContainerActions {
-    private static final Logger LOGGER = Logger.getLogger(WineContainerActions.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(WineContainerActions.class);
     @Inject
     static ExecutorService executorService;
 
@@ -46,7 +47,7 @@ public class WineContainerActions {
                                 .selectPrefix(winePrefixDirectory.getName())
                                 .runForeground(WineConstants.WINECFG);
                     } catch (CancelException e) {
-                        LOGGER.info(e);
+                        LOGGER.info("Failed to run wine cfg", e);
                     }
                     callBack.accept(null);
                     containerSetupWizard.close();
