@@ -23,7 +23,8 @@ import static com.playonlinux.core.lang.Localisation.translate;
 import java.io.File;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.python.CommandInterpreterException;
@@ -51,7 +52,7 @@ public class ViewLibrary extends MainWindowView {
     private final CommandLineInterpreterFactory jythonInterpreterFactory;
     private LeftButton runScript;
     private LeftButton runConsole;
-    private static final Logger LOGGER = Logger.getLogger(ViewLibrary.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
     private ApplicationListWidget applicationListWidget;
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;

@@ -18,6 +18,16 @@
 
 package com.playonlinux.javafx.mainwindow.apps;
 
+import java.io.IOException;
+import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+
 import com.playonlinux.apps.InstallerDownloaderEntityProvider;
 import com.playonlinux.apps.entities.AppEntity;
 import com.playonlinux.javafx.common.ErrorMessage;
@@ -25,22 +35,15 @@ import com.playonlinux.javafx.common.HtmlTemplate;
 import com.playonlinux.javafx.common.RemoteImage;
 import com.playonlinux.javafx.mainwindow.MainWindow;
 import com.sun.webkit.dom.HTMLAnchorElementImpl;
+
 import javafx.concurrent.Worker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-
-import java.io.IOException;
-import java.net.URL;
 
 final class AppPanel extends VBox {
-    private static final Logger LOGGER = Logger.getLogger(AppPanel.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
 
     public AppPanel(MainWindow parent, EventHandlerApps eventHandlerApps, AppEntity appsItemDTO) {
         super();
@@ -70,7 +73,7 @@ final class AppPanel extends VBox {
 
                             installerDownloaderEntityProvider.getScript();
                         } catch (IllegalArgumentException e) {
-                            LOGGER.error(e);
+                            LOGGER.error("Failed to get script", e);
                             new ErrorMessage("Error while trying to download the installer", e).show();
                         }
                     }
