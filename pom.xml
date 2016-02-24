@@ -32,6 +32,7 @@
 		<module>phoenicis-dist</module>
 		<module>phoenicis-apps</module>
 		<module>phoenicis-ui</module>
+		<module>phoenicis-i18n</module>
 	</modules>
 
 	<properties>

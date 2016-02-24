@@ -18,13 +18,11 @@
 
 package com.playonlinux.wine.parameters;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.i18n.Messages;
 
 public enum MouseWarpOverride {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled")),
-    FORCE(translate("Force"));
+    DEFAULT(Messages.getString("Default")), DISABLED(Messages.getString("Disabled")), ENABLED( //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString("Enabled")), FORCE(Messages.getString("Force")); //$NON-NLS-1$ //$NON-NLS-2$
 
     private final String translatedName;
 
