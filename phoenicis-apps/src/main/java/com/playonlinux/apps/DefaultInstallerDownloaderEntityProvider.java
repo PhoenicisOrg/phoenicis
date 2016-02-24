@@ -23,7 +23,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.apps.entities.InstallerDownloaderEntity;
 import com.playonlinux.core.entities.ProgressEntity;
@@ -52,7 +53,7 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
 
     private final DownloadManager downloadManager = serviceManager.getService(DownloadManager.class);
 
-    private static final Logger LOGGER = Logger.getLogger(DefaultInstallerDownloaderEntityProvider.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DefaultInstallerDownloaderEntityProvider.class);
     private final HTTPDownloader httpDownloader;
     private final File localFile;
     private final SignatureChecker signatureChecker;
@@ -87,13 +88,13 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
             fileOutputStream.write(bytes);
             terminateDownload();
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to write entity", e);
             failure(e);
         }
     }
 
     private void failure(Exception e) {
-        LOGGER.warn(e);
+        LOGGER.warn("Failure", e);
         this.changeState(State.FAILED);
     }
 
@@ -140,12 +141,12 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
                 startScript(script);
             }
         } catch (SignatureException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to validate signature", e);
             changeState(State.SIGNATURE_ERROR, 100.);
         } catch (ServiceInitializationException e) {
-            LOGGER.info(e);
+            LOGGER.info("Failed to initialize service", e);
         } catch (ScriptFailureException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to execute script", e);
             changeState(State.FAILED);
         }
 
