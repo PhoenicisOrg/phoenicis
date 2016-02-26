@@ -90,6 +90,7 @@ public class Wine implements SetupWizardComponent {
 	private static final String LOG_CHOICE_ERASE = "User choice: ERASE"; //$NON-NLS-1$
 	private static final String LOG_CHOICE_OVERWRITE = "User choice: OVERWRITE"; //$NON-NLS-1$
 	private static final String LOG_PREFIX_EXIST = "Prefix already exists"; //$NON-NLS-1$
+	private static final String LOG_WINE_KILL_FAILED = "Unable to kill wine processes"; //$NON-NLS-1$
 	private static final String LOG_WINE_WAIT_FAILED = "Unable to wait for wine processes"; //$NON-NLS-1$
 
 	private static final String DEFAULT_ARCHITECTURE = Architecture.I386.name();
@@ -308,7 +309,7 @@ public class Wine implements SetupWizardComponent {
 		try {
 			wineVersion.getInstallation().killAllProcess(this.prefix);
 		} catch (IOException logged) {
-			LOGGER.warn("Unable to kill wine processes", logged);
+			LOGGER.warn(LOG_WINE_KILL_FAILED, logged);
 		}
 
 		return this;
