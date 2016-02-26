@@ -18,6 +18,9 @@
 
 package com.playonlinux.wine.parameters;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum OffscreenRenderingMode {
     DEFAULT("Default"),
     FBO("FBO"),
@@ -25,10 +28,6 @@ public enum OffscreenRenderingMode {
     PBUFFER("PBuffer");
 
     private final String translatedName;
-
-    OffscreenRenderingMode(String translatedName) {
-        this.translatedName = translatedName;
-    }
 
     @Override
     public String toString() {

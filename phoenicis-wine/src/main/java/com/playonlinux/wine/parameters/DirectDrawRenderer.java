@@ -20,16 +20,15 @@ package com.playonlinux.wine.parameters;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum  DirectDrawRenderer {
     DEFAULT(translate("Default")),
     GDI("GDI"),
     OPENGL("OpenGL");
 
     private final String translatedName;
-
-    DirectDrawRenderer(String translatedName) {
-        this.translatedName = translatedName;
-    }
 
     @Override
     public String toString() {

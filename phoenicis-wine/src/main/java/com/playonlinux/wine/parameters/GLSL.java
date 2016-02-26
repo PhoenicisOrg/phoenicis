@@ -20,16 +20,15 @@ package com.playonlinux.wine.parameters;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum GLSL {
     DEFAULT(translate("Default")),
     DISABLED(translate("Disabled")),
     ENABLED(translate("Enabled"));
 
     private final String translatedName;
-
-    GLSL(String translatedName) {
-        this.translatedName = translatedName;
-    }
 
     @Override
     public String toString() {

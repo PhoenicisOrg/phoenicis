@@ -18,16 +18,13 @@
 
 package com.playonlinux.javafx.common;
 
-public enum Themes {
+import lombok.RequiredArgsConstructor;
 
-    DEFAULT("Default theme"),
-    DARK("Dark theme");
+@RequiredArgsConstructor
+public enum Themes {
+    DEFAULT("Default theme"), DARK("Dark theme");
 
     private final String name;
-
-    Themes(String s) {
-        name = s;
-    }
 
     public boolean equalsName(String otherName) {
         return otherName != null && name.equals(otherName);
