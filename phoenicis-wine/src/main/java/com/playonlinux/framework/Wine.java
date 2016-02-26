@@ -18,7 +18,6 @@
 
 package com.playonlinux.framework;
 
-import static com.playonlinux.core.lang.Localisation.translate;
 import static java.lang.String.format;
 
 import java.io.File;
@@ -70,12 +69,17 @@ import com.playonlinux.wine.registry.StringValueType;
 @ScriptClass
 public class Wine implements SetupWizardComponent {
 	private static final Logger LOGGER = Logger.getLogger(Wine.class);
-
+	
 	private static final String EXCEPTION_PREFIX_INCOMPATIBLE_ARCH = "A 32bit wineprefix cannot execute 64bits executables!";
 	private static final String EXCEPTION_PREFIX_NOT_INITIALIZED = "The prefix must be initialized before running wine";
 	private static final String EXCEPTION_PREFIX_NOT_SELECTED = "Prefix must be selected!";
 	private static final String EXCEPTION_SCRIPT_ABORTED = "The script was aborted";
 	private static final String EXCEPTION_WINE_ERROR = "Error while running wine:";
+
+	private static final String I18N_PROGRAM_INSTALLING = "Please wait while the program is being installed...";
+	private static final String I18N_VIRTUAL_DRIVE_EXIST = "The target virtual drive %s already exists:";
+	private static final String I18N_VIRTUAL_DRIVE_CREATION = "Please wait while the virtual drive is being created...";
+	private static final String I18N_VIRTUAL_DRIVE_DELETION = "Please wait while the virtual drive is being deleted...";
 	
 	private static final String LOG_LOGGING_WINEPREFIX_FAILED = "Unable to log to the wineprefix";
 	private static final String LOG_MANUALLY_MODIFIED_REGISTRY = "User manually modified the registry";
@@ -86,17 +90,23 @@ public class Wine implements SetupWizardComponent {
 	private static final String LOG_CHOICE_ERASE = "User choice: ERASE";
 	private static final String LOG_CHOICE_OVERWRITE = "User choice: OVERWRITE";
 	private static final String LOG_PREFIX_EXIST = "Prefix already exists";
+	private static final String LOG_WINE_WAIT_FAILED = "Unable to wait for wine processes";
 
 	private static final String DEFAULT_ARCHITECTURE = Architecture.I386.name();
 	private static final String DEFAULT_DISTRIBUTION = "staging";
 	private static final String OVERWRITE = "Overwrite (usually works, no guarantee)";
 	private static final String ERASE = "Erase (virtual drive content will be lost)";
 	private static final String ABORT = "Abort installation";
-	
+
 	private static final String REGEDIT = "regedit";
 	private static final String POL = "pol";
 	private static final String REGISTRY = "registry";
-
+	private static final String STAR = "*";
+	private static final String DLLOVERRIDES = "DllOverrides";
+	private static final String WINE = "Wine";
+	private static final String SOFTWARE = "Software";
+	private static final String HKEY_CURRENT_USER = "HKEY_CURRENT_USER";
+	
 	private static final long NEWPREFIXSIZE = 320_000_000L;
 
 	@Inject
@@ -236,8 +246,7 @@ public class Wine implements SetupWizardComponent {
 			wineVersion.install();
 		}
 
-		final ProgressControl progressControl = this.setupWizard
-				.progressBar(format(translate("Please wait while the virtual drive is being created..."), prefixName));
+		final ProgressControl progressControl = this.setupWizard.progressBar(I18N_VIRTUAL_DRIVE_CREATION);
 
 		try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
 				prefix.getWinePrefixDirectory().toPath())) {
@@ -267,8 +276,8 @@ public class Wine implements SetupWizardComponent {
 		try {
 			log(LOG_PREFIX_EXIST);
 
-			//TODO use a more adapted data structure (like enums)
-			switch (setupWizard.menu(translate(format("The target virtual drive %s already exists:", prefixName)),
+			// TODO use a more adapted data structure (like enums)
+			switch (setupWizard.menu(format(I18N_VIRTUAL_DRIVE_EXIST, prefixName),
 					Arrays.asList(OVERWRITE, ERASE, ABORT))) {
 			case OVERWRITE:
 				log(LOG_CHOICE_OVERWRITE);
@@ -650,7 +659,7 @@ public class Wine implements SetupWizardComponent {
 		try {
 			wineVersion.getInstallation().waitAllProcesses(this.prefix);
 		} catch (IOException logged) {
-			LOGGER.warn("Unable to wait for wine processes", logged);
+			LOGGER.warn(LOG_WINE_WAIT_FAILED, logged);
 		}
 
 		return this;
@@ -670,8 +679,7 @@ public class Wine implements SetupWizardComponent {
 	 *             if the users cancels or if there is any error
 	 */
 	public Wine waitAllWatchDirectory(File directory, long endSize) throws CancelException {
-		ProgressControl progressControl = this.setupWizard
-				.progressBar(format(translate("Please wait while the program is being installed..."), prefixName));
+		ProgressControl progressControl = this.setupWizard.progressBar(I18N_PROGRAM_INSTALLING);
 
 		final long startSize = FileUtils.sizeOfDirectory(directory);
 
@@ -700,8 +708,7 @@ public class Wine implements SetupWizardComponent {
 	 */
 	public Wine deletePrefix() throws CancelException {
 		if (prefix.getWinePrefixDirectory().exists()) {
-			ProgressControl progressControl = this.setupWizard.progressBar(
-					format(translate("Please wait while the virtual drive is being deleted..."), prefixName));
+			ProgressControl progressControl = this.setupWizard.progressBar(I18N_VIRTUAL_DRIVE_DELETION);
 			final long startSize = prefix.getSize();
 			final long endSize = 0L;
 
@@ -733,17 +740,17 @@ public class Wine implements SetupWizardComponent {
 	 */
 	public Wine overrideDlls(Map<String, String> dllsToOverride) throws ScriptFailureException {
 		validateWineInstallationInitialized();
-		final RegistryKey hkeyCurrentUser = new RegistryKey("HKEY_CURRENT_USER");
-		final RegistryKey software = new RegistryKey("Software");
-		final RegistryKey wine = new RegistryKey("Wine");
-		final RegistryKey dllOverrides = new RegistryKey("DllOverrides");
+		final RegistryKey hkeyCurrentUser = new RegistryKey(HKEY_CURRENT_USER);
+		final RegistryKey software = new RegistryKey(SOFTWARE);
+		final RegistryKey wine = new RegistryKey(WINE);
+		final RegistryKey dllOverrides = new RegistryKey(DLLOVERRIDES);
 
 		hkeyCurrentUser.addChild(software);
 		software.addChild(wine);
 		wine.addChild(dllOverrides);
 
 		for (String dll : dllsToOverride.keySet()) {
-			final RegistryValue<StringValueType> dllNode = new RegistryValue<>("*" + dll,
+			final RegistryValue<StringValueType> dllNode = new RegistryValue<>(STAR + dll,
 					new StringValueType(dllsToOverride.get(dll)));
 			dllOverrides.addChild(dllNode);
 		}
