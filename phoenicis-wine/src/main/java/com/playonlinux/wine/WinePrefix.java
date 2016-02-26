@@ -26,11 +26,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
-import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.WinePrefixLogger;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.Files;
@@ -56,7 +56,7 @@ public class WinePrefix implements AutoCloseable {
     private static final Version DEFAULT_VERSION = new Version("1.7.49"); // FIXME
 
     @Inject
-    static LoggerFactory loggerFactory;
+    static com.playonlinux.core.log.LoggerFactory loggerFactory;
 
     private static final String ARCHITECTURE = "architecture";
     private static final String CONTAINER_TYPE = "containerType";
@@ -76,7 +76,7 @@ public class WinePrefix implements AutoCloseable {
 
     private final File winePrefixDirectory;
     private PrintWriter printWriterLogger = null;
-    private static final Logger LOGGER = Logger.getLogger(WinePrefix.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(WinePrefix.class);
     private WinePrefixLogger logOutputStream = null;
 
     public WinePrefix(File winePrefixDirectory) {
@@ -272,7 +272,7 @@ public class WinePrefix implements AutoCloseable {
 	try {
 	    return new RegistryWinePrefixDisplayConfiguration(fetchUserRegistry());
 	} catch (WineException e) {
-	    LOGGER.debug(e);
+	    LOGGER.debug("Failed to get display configuration", e);
 	    return new DefaultWinePrefixDisplayConfiguration();
 	}
     }
@@ -281,7 +281,7 @@ public class WinePrefix implements AutoCloseable {
 	try {
 	    return new RegistryWinePrefixInputConfiguration(fetchUserRegistry());
 	} catch (WineException e) {
-	    LOGGER.debug(e);
+	    LOGGER.debug("Failed to get input configuration", e);
 	    return new DefaultWinePrefixInputConfiguration();
 	}
     }

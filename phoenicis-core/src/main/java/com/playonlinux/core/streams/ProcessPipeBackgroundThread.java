@@ -24,11 +24,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.lang.mutable.MutableBoolean;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProcessPipeBackgroundThread implements Runnable {
     public static final int BLOCK_SIZE = 128;
-    private static final Logger LOGGER = Logger.getLogger(ProcessPipeBackgroundThread.class);
+    
+    private final Logger LOGGER = LoggerFactory.getLogger(ProcessPipeBackgroundThread.class);
+    
     private final Process process;
     private final MutableBoolean running;
     private final InputStream redirectInputStream;
@@ -87,7 +90,7 @@ public class ProcessPipeBackgroundThread implements Runnable {
                     }
 
                 } catch (IOException e) {
-                    LOGGER.debug(e);
+                    LOGGER.debug("Failed to process pipe", e);
                     running.setValue(false);
                 }
             }

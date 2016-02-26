@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.python.core.PyException;
 import org.python.core.PyMethod;
 import org.python.core.PyNone;
@@ -30,8 +29,9 @@ import org.python.core.PyObject;
 import org.python.core.PyType;
 import org.python.util.PythonInterpreter;
 import org.reflections.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.injection.Inject;
@@ -40,14 +40,15 @@ import com.playonlinux.injection.Scan;
 @Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     @Inject
-    static LoggerFactory loggerFactory;
+    static com.playonlinux.core.log.LoggerFactory loggerFactory;
 
     private static final String MAIN_METHOD_NAME = "main";
     private static final String DEFINE_LOGCONTEXT_NAME = "title";
-    private static final java.lang.String ROLLBACK_METHOD_NAME = "rollback";
-    private static final java.lang.String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
+    private static final String ROLLBACK_METHOD_NAME = "rollback";
+    private static final String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
+    
+    private final Logger LOGGER = LoggerFactory.getLogger(PythonInstaller.class);
     private PyObject mainInstance;
-    private static final Logger LOGGER = Logger.getLogger(PythonInstaller.class);
 
     public PythonInstaller(PythonInterpreter pythonInterpreter, Class<T> type) {
         super(pythonInterpreter, type);

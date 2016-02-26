@@ -38,7 +38,8 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.io.CountingInputStream;
 import com.playonlinux.core.entities.ProgressEntity;
@@ -47,9 +48,10 @@ import com.playonlinux.core.entities.ProgressEntity;
  * Tar extraction utilities
  */
 public class Tar {
-    private static final Logger LOGGER = Logger.getLogger(Tar.class);
     private static final String TAR_ERROR_MESSAGE = "Unable to open input stream";
 
+    private final Logger LOGGER = LoggerFactory.getLogger(Tar.class);
+    
     List<File> uncompressTarBz2File(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
         try (CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile));
                 InputStream inputStream = new BZip2CompressorInputStream(countingInputStream)) {

@@ -23,7 +23,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.entities.Entity;
 
@@ -91,7 +92,7 @@ public class AppEntity implements Entity {
         private boolean requiresNoCd;
         private String description;
         private List<URL> miniaturesUrls = new ArrayList<>();
-        private static final Logger LOGGER = Logger.getLogger(AppEntity.class);
+        private final Logger LOGGER = LoggerFactory.getLogger(AppEntity.class);
         private List<ScriptEntity> scripts;
 
         public Builder withName(String name) {

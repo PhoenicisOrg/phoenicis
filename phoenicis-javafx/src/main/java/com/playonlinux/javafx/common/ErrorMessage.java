@@ -21,12 +21,13 @@ package com.playonlinux.javafx.common;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.scene.control.Alert;
 
 public class ErrorMessage {
-    private static final Logger LOGGER = Logger.getLogger(ErrorMessage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
     private final Alert alert;
 
     public ErrorMessage(String message, Exception exception) {

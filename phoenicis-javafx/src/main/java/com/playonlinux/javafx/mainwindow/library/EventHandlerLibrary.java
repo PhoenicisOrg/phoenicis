@@ -20,7 +20,8 @@ package com.playonlinux.javafx.mainwindow.library;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
@@ -47,7 +48,7 @@ class EventHandlerLibrary implements UIEventHandler {
     @Inject
     static JythonCommandLineInterpreterFactory jythonInterpreterFactory;
 
-    private static final Logger LOGGER = Logger.getLogger(EventHandlerLibrary.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(EventHandlerLibrary.class);
 
     public EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getInstalledApplications() {
         return mainEventHandler.getInstalledApplications();
@@ -76,7 +77,7 @@ class EventHandlerLibrary implements UIEventHandler {
                     applicationName
             );
         } catch (PlayOnLinuxException e) {
-            LOGGER.error(e);
+            LOGGER.error("Failed to run application", e);
             new ErrorMessage("Error while trying to run the application", e).show();
         } finally {
             setupWizard.close();
