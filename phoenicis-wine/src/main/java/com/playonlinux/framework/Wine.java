@@ -82,18 +82,6 @@ public class Wine implements SetupWizardComponent {
     private static final String I18N_VIRTUAL_DRIVE_CREATION = Messages.getString("Wine.DriveCreation"); //$NON-NLS-1$
     private static final String I18N_VIRTUAL_DRIVE_DELETION = Messages.getString("Wine.DriveDeletion"); //$NON-NLS-1$
 
-    private static final String LOG_LOGGING_WINEPREFIX_FAILED = "Unable to log to the wineprefix"; //$NON-NLS-1$
-    private static final String LOG_MANUALLY_MODIFIED_REGISTRY = "User manually modified the registry"; //$NON-NLS-1$
-    private static final String LOG_NOT_A_FILE = " does not seem to be a file. Not logging"; //$NON-NLS-1$
-    private static final String LOG_LINE_SEPARATOR = "-----------"; //$NON-NLS-1$
-    private static final String LOG_CONTENT_OF = "Content of "; //$NON-NLS-1$
-    private static final String LOG_CHOICE_ABORT = "User choice: ABORT"; //$NON-NLS-1$
-    private static final String LOG_CHOICE_ERASE = "User choice: ERASE"; //$NON-NLS-1$
-    private static final String LOG_CHOICE_OVERWRITE = "User choice: OVERWRITE"; //$NON-NLS-1$
-    private static final String LOG_PREFIX_EXIST = "Prefix already exists"; //$NON-NLS-1$
-    private static final String LOG_WINE_KILL_FAILED = "Unable to kill wine processes"; //$NON-NLS-1$
-    private static final String LOG_WINE_WAIT_FAILED = "Unable to wait for wine processes"; //$NON-NLS-1$
-
     private static final String DEFAULT_ARCHITECTURE = Architecture.I386.name();
     private static final String DEFAULT_DISTRIBUTION = "staging"; //$NON-NLS-1$
     private static final String OVERWRITE = "Overwrite (usually works, no guarantee)"; //$NON-NLS-1$
@@ -131,13 +119,13 @@ public class Wine implements SetupWizardComponent {
     private InputStream inputStream = new NullInputStream(0);
 
     private Wine(WineWizard setupWizard) {
-        this.setupWizard = setupWizard;
+	this.setupWizard = setupWizard;
     }
 
     public static Wine wizard(WineWizard setupWizard) {
-        final SetupWizardComponent wineInstance = new Wine(setupWizard);
-        setupWizard.registerComponent(wineInstance);
-        return new Wine(setupWizard);
+	final SetupWizardComponent wineInstance = new Wine(setupWizard);
+	setupWizard.registerComponent(wineInstance);
+	return new Wine(setupWizard);
     }
 
     /**
@@ -148,8 +136,8 @@ public class Wine implements SetupWizardComponent {
      * @return the same object
      */
     public Wine withInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-        return this;
+	this.inputStream = inputStream;
+	return this;
     }
 
     /**
@@ -160,8 +148,8 @@ public class Wine implements SetupWizardComponent {
      * @return the same object
      */
     public Wine withOutputStream(OutputStream outputStream) {
-        this.outputStream = outputStream;
-        return this;
+	this.outputStream = outputStream;
+	return this;
     }
 
     /**
@@ -172,8 +160,8 @@ public class Wine implements SetupWizardComponent {
      * @return the same object
      */
     public Wine withErrorStream(OutputStream errorStream) {
-        this.errorStream = errorStream;
-        return this;
+	this.errorStream = errorStream;
+	return this;
     }
 
     /**
@@ -185,21 +173,21 @@ public class Wine implements SetupWizardComponent {
      * @return the same object
      */
     public Wine selectPrefix(String prefixName) throws CancelException {
-        this.prefixName = prefixName;
-        this.prefix = new WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
+	this.prefixName = prefixName;
+	this.prefix = new WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
 
-        if (prefix.initialized()) {
-            wineVersion = new WineVersion(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
-            if (!wineVersion.isInstalled()) {
-                wineVersion.install();
-            }
-        }
+	if (prefix.initialized()) {
+	    wineVersion = new WineVersion(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
+	    if (!wineVersion.isInstalled()) {
+		wineVersion.install();
+	    }
+	}
 
-        return this;
+	return this;
     }
 
     public Wine createPrefix(String version) throws CancelException {
-        return this.createPrefix(version, DEFAULT_DISTRIBUTION);
+	return this.createPrefix(version, DEFAULT_DISTRIBUTION);
     }
 
     /**
@@ -214,7 +202,7 @@ public class Wine implements SetupWizardComponent {
      *             operation
      */
     public Wine createPrefix(String version, String distribution) throws CancelException {
-        return this.createPrefix(version, distribution, DEFAULT_ARCHITECTURE);
+	return this.createPrefix(version, distribution, DEFAULT_ARCHITECTURE);
     }
 
     /**
@@ -231,71 +219,71 @@ public class Wine implements SetupWizardComponent {
      *             operation
      */
     public Wine createPrefix(String version, String distribution, String architecture) throws CancelException {
-        if (prefix == null) {
-            throw new ScriptFailureException(EXCEPTION_PREFIX_NOT_SELECTED);
-        }
+	if (prefix == null) {
+	    throw new ScriptFailureException(EXCEPTION_PREFIX_NOT_SELECTED);
+	}
 
-        if (prefix.exists() && userWantsToOverWritePrefix()) {
-            return this;
-        }
+	if (prefix.exists() && userWantsToOverWritePrefix()) {
+	    return this;
+	}
 
-        wineVersion = new WineVersion(new Version(version),
-                new WineDistribution(OperatingSystem.fetchCurrentOperationSystem(), Architecture.valueOf(architecture),
-                        distribution),
-                setupWizard);
+	wineVersion = new WineVersion(new Version(version),
+		new WineDistribution(OperatingSystem.fetchCurrentOperationSystem(), Architecture.valueOf(architecture),
+			distribution),
+		setupWizard);
 
-        if (!wineVersion.isInstalled()) {
-            wineVersion.install();
-        }
+	if (!wineVersion.isInstalled()) {
+	    wineVersion.install();
+	}
 
-        final ProgressControl progressControl = this.setupWizard.progressBar(I18N_VIRTUAL_DRIVE_CREATION);
+	final ProgressControl progressControl = this.setupWizard.progressBar(I18N_VIRTUAL_DRIVE_CREATION);
 
-        try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
-                prefix.getWinePrefixDirectory().toPath())) {
+	try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
+		prefix.getWinePrefixDirectory().toPath())) {
 
-            observableDirectorySize
-                    .setOnChange(newSize -> progressControl.setProgressPercentage(newSize * 100 / NEWPREFIXSIZE));
-            Process process = wineVersion.getInstallation().createPrefix(this.prefix);
-            waitWineProcess(process);
-        } catch (WineException e) {
-            throw new ScriptFailureException(e);
-        }
+	    observableDirectorySize
+		    .setOnChange(newSize -> progressControl.setProgressPercentage(newSize * 100 / NEWPREFIXSIZE));
+	    Process process = wineVersion.getInstallation().createPrefix(this.prefix);
+	    waitWineProcess(process);
+	} catch (WineException e) {
+	    throw new ScriptFailureException(e);
+	}
 
-        return this;
+	return this;
     }
 
     private void waitWineProcess(Process process) throws CancelException {
-        try {
-            process.waitFor();
-        } catch (InterruptedException e) {
-            process.destroy();
-            killall();
-            throw new CancelException(e);
-        }
+	try {
+	    process.waitFor();
+	} catch (InterruptedException e) {
+	    process.destroy();
+	    killall();
+	    throw new CancelException(e);
+	}
     }
 
     private boolean userWantsToOverWritePrefix() throws CancelException {
-        try {
-            log(LOG_PREFIX_EXIST);
+	try {
+	    log("Prefix already exists"); //$NON-NLS-1$
 
-            // TODO use a more adapted data structure (like enums)
-            switch (setupWizard.menu(format(I18N_VIRTUAL_DRIVE_EXIST, prefixName),
-                    Arrays.asList(OVERWRITE, ERASE, ABORT))) {
-                case OVERWRITE:
-                    log(LOG_CHOICE_OVERWRITE);
-                    return true;
-                case ERASE:
-                    log(LOG_CHOICE_ERASE);
-                    prefix.delete();
-                    return false;
-                case ABORT:
-                default:
-                    log(LOG_CHOICE_ABORT);
-                    throw new CancelException(EXCEPTION_SCRIPT_ABORTED);
-            }
-        } catch (IOException e) {
-            throw new ScriptFailureException(e);
-        }
+	    // TODO use a more adapted data structure (like enums)
+	    switch (setupWizard.menu(format(I18N_VIRTUAL_DRIVE_EXIST, prefixName),
+		    Arrays.asList(OVERWRITE, ERASE, ABORT))) {
+	    case OVERWRITE:
+		log("User choice: OVERWRITE"); //$NON-NLS-1$
+		return true;
+	    case ERASE:
+		log("User choice: ERASE"); //$NON-NLS-1$
+		prefix.delete();
+		return false;
+	    case ABORT:
+	    default:
+		log("User choice: ABORT"); //$NON-NLS-1$
+		throw new CancelException(EXCEPTION_SCRIPT_ABORTED);
+	    }
+	} catch (IOException e) {
+	    throw new ScriptFailureException(e);
+	}
     }
 
     /**
@@ -306,14 +294,14 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine killall() throws ScriptFailureException {
-        validateWineInstallationInitialized();
-        try {
-            wineVersion.getInstallation().killAllProcess(this.prefix);
-        } catch (IOException logged) {
-            LOGGER.warn(LOG_WINE_KILL_FAILED, logged);
-        }
+	validateWineInstallationInitialized();
+	try {
+	    wineVersion.getInstallation().killAllProcess(this.prefix);
+	} catch (IOException logged) {
+	    LOGGER.warn("Unable to kill wine processes", logged); //$NON-NLS-1$
+	}
 
-        return this;
+	return this;
     }
 
     /**
@@ -324,81 +312,81 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     private Process runAndGetProcess(File workingDirectory, String executableToRun, List<String> arguments,
-            Map<String, String> environment) throws ScriptFailureException {
-        validateWineInstallationInitialized();
-        validateArchitecture(workingDirectory, executableToRun);
+	    Map<String, String> environment) throws ScriptFailureException {
+	validateWineInstallationInitialized();
+	validateArchitecture(workingDirectory, executableToRun);
 
-        if (REGEDIT.equalsIgnoreCase(executableToRun)) {
-            logRegFile(workingDirectory, arguments);
-        }
+	if (REGEDIT.equalsIgnoreCase(executableToRun)) {
+	    logRegFile(workingDirectory, arguments);
+	}
 
-        try {
-            final Process process = wineVersion.getInstallation().run(prefix, workingDirectory, executableToRun,
-                    environment, arguments);
+	try {
+	    final Process process = wineVersion.getInstallation().run(prefix, workingDirectory, executableToRun,
+		    environment, arguments);
 
-            if (this.setupWizard.getLogContext() != null) {
-                final Service processPipe = new ProcessPipe(process,
-                        new TeeOutputStream(this.setupWizard.getLogContext(), outputStream),
-                        new TeeOutputStream(this.setupWizard.getLogContext(), errorStream), inputStream);
-                backgroundServicesManager.register(processPipe);
-            }
-            return process;
-        } catch (WineException e) {
-            throw new ScriptFailureException(EXCEPTION_WINE_ERROR, e);
-        }
+	    if (this.setupWizard.getLogContext() != null) {
+		final Service processPipe = new ProcessPipe(process,
+			new TeeOutputStream(this.setupWizard.getLogContext(), outputStream),
+			new TeeOutputStream(this.setupWizard.getLogContext(), errorStream), inputStream);
+		backgroundServicesManager.register(processPipe);
+	    }
+	    return process;
+	} catch (WineException e) {
+	    throw new ScriptFailureException(EXCEPTION_WINE_ERROR, e);
+	}
     }
 
     private void logRegFile(File workingDirectory, List<String> pathToRegFile) throws ScriptFailureException {
-        if (!pathToRegFile.isEmpty()) {
-            final File regFile = findFile(workingDirectory, pathToRegFile.get(0));
-            if (regFile.exists() && regFile.isFile()) {
-                log(LOG_CONTENT_OF + regFile);
-                log(LOG_LINE_SEPARATOR);
-                try {
-                    log(FileUtils.readFileToString(regFile));
-                } catch (IOException e) {
-                    LOGGER.warn(e);
-                }
-                log(LOG_LINE_SEPARATOR);
-            } else {
-                log(regFile + LOG_NOT_A_FILE);
-            }
-        } else {
-            log(LOG_MANUALLY_MODIFIED_REGISTRY);
-        }
+	if (!pathToRegFile.isEmpty()) {
+	    final File regFile = findFile(workingDirectory, pathToRegFile.get(0));
+	    if (regFile.exists() && regFile.isFile()) {
+		log("Content of " + regFile); //$NON-NLS-1$
+		log("-----------"); //$NON-NLS-1$
+		try {
+		    log(FileUtils.readFileToString(regFile));
+		} catch (IOException e) {
+		    LOGGER.warn(e);
+		}
+		log("-----------"); //$NON-NLS-1$
+	    } else {
+		log(regFile + " does not seem to be a file. Not logging"); //$NON-NLS-1$
+	    }
+	} else {
+	    log("User manually modified the registry"); //$NON-NLS-1$
+	}
     }
 
     private void log(String message) throws ScriptFailureException {
-        setupWizard.log(message);
+	setupWizard.log(message);
 
-        if (prefix != null) {
-            try {
-                prefix.log(message);
-            } catch (IOException e) {
-                setupWizard.log(LOG_LOGGING_WINEPREFIX_FAILED, e);
-            }
-        }
+	if (prefix != null) {
+	    try {
+		prefix.log(message);
+	    } catch (IOException e) {
+		setupWizard.log("Unable to log to the wineprefix", e); //$NON-NLS-1$
+	    }
+	}
     }
 
     private void validateArchitecture(File workingDirectory, String executableToRun) {
-        try {
-            if (wineVersion.getWineDistribution().getArchitecture() == Architecture.I386) {
-                final File executedFile = findFile(workingDirectory, executableToRun);
-                if (executedFile.exists() && ExeAnalyser.is64Bits(executedFile)) {
-                    throw new IllegalStateException(EXCEPTION_PREFIX_INCOMPATIBLE_ARCH);
-                }
-            }
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+	try {
+	    if (wineVersion.getWineDistribution().getArchitecture() == Architecture.I386) {
+		final File executedFile = findFile(workingDirectory, executableToRun);
+		if (executedFile.exists() && ExeAnalyser.is64Bits(executedFile)) {
+		    throw new IllegalStateException(EXCEPTION_PREFIX_INCOMPATIBLE_ARCH);
+		}
+	    }
+	} catch (IOException e) {
+	    throw new IllegalStateException(e);
+	}
     }
 
     private File findFile(File workingDirectory, String executableToRun) {
-        if (new File(workingDirectory, executableToRun).exists()) {
-            return new File(workingDirectory, executableToRun);
-        } else {
-            return new File(executableToRun);
-        }
+	if (new File(workingDirectory, executableToRun).exists()) {
+	    return new File(workingDirectory, executableToRun);
+	} else {
+	    return new File(executableToRun);
+	}
     }
 
     /**
@@ -409,10 +397,10 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(File workingDirectory, String executableToRun, List<String> arguments,
-            Map<String, String> environment) throws ScriptFailureException {
+	    Map<String, String> environment) throws ScriptFailureException {
 
-        runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
-        return this;
+	runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
+	return this;
     }
 
     /**
@@ -423,10 +411,10 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(File executableToRun, List<String> arguments, Map<String, String> environment)
-            throws ScriptFailureException {
-        File workingDirectory = executableToRun.getParentFile();
-        runBackground(workingDirectory, executableToRun.getAbsolutePath(), arguments, environment);
-        return this;
+	    throws ScriptFailureException {
+	File workingDirectory = executableToRun.getParentFile();
+	runBackground(workingDirectory, executableToRun.getAbsolutePath(), arguments, environment);
+	return this;
     }
 
     /**
@@ -437,9 +425,9 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(String executableToRun, List<String> arguments, Map<String, String> environment)
-            throws ScriptFailureException {
-        runBackground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
-        return this;
+	    throws ScriptFailureException {
+	runBackground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
+	return this;
     }
 
     /**
@@ -450,8 +438,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(String executableToRun, List<String> arguments) throws ScriptFailureException {
-        runBackground(new File(executableToRun), arguments, null);
-        return this;
+	runBackground(new File(executableToRun), arguments, null);
+	return this;
     }
 
     /**
@@ -462,8 +450,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(File executableToRun, List<String> arguments) throws ScriptFailureException {
-        runBackground(executableToRun, arguments, null);
-        return this;
+	runBackground(executableToRun, arguments, null);
+	return this;
     }
 
     /**
@@ -475,8 +463,8 @@ public class Wine implements SetupWizardComponent {
      * @throws ScriptFailureException
      */
     public Wine runBackground(File executableToRun) throws ScriptFailureException {
-        runBackground(executableToRun, (List<String>) null, null);
-        return this;
+	runBackground(executableToRun, (List<String>) null, null);
+	return this;
     }
 
     /**
@@ -488,8 +476,8 @@ public class Wine implements SetupWizardComponent {
      * @throws ScriptFailureException
      */
     public Wine runBackground(String executableToRun) throws ScriptFailureException {
-        runBackground(executableToRun, null, null);
-        return this;
+	runBackground(executableToRun, null, null);
+	return this;
     }
 
     /**
@@ -500,9 +488,9 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(File workingDirectory, String executableToRun, List<String> arguments)
-            throws ScriptFailureException {
-        runBackground(workingDirectory, executableToRun, arguments, null);
-        return this;
+	    throws ScriptFailureException {
+	runBackground(workingDirectory, executableToRun, arguments, null);
+	return this;
     }
 
     /**
@@ -513,8 +501,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runBackground(File workingDirectory, String executableToRun) throws ScriptFailureException {
-        runBackground(workingDirectory, executableToRun, null, null);
-        return this;
+	runBackground(workingDirectory, executableToRun, null, null);
+	return this;
     }
 
     /**
@@ -525,14 +513,14 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(File workingDirectory, String executableToRun, List<String> arguments,
-            Map<String, String> environment) throws CancelException {
-        Process process = runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
-        try {
-            lastReturnCode = process.waitFor();
-        } catch (InterruptedException e) {
-            throw new CancelException(e);
-        }
-        return this;
+	    Map<String, String> environment) throws CancelException {
+	Process process = runAndGetProcess(workingDirectory, executableToRun, arguments, environment);
+	try {
+	    lastReturnCode = process.waitFor();
+	} catch (InterruptedException e) {
+	    throw new CancelException(e);
+	}
+	return this;
     }
 
     /**
@@ -543,8 +531,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(String workingDirectory, String executableToRun, List<String> arguments,
-            Map<String, String> environment) throws CancelException {
-        return runForeground(new File(workingDirectory), executableToRun, arguments, environment);
+	    Map<String, String> environment) throws CancelException {
+	return runForeground(new File(workingDirectory), executableToRun, arguments, environment);
     }
 
     /**
@@ -555,10 +543,10 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(File executableToRun, List<String> arguments, Map<String, String> environment)
-            throws CancelException {
-        File workingDirectory = executableToRun.getParentFile();
-        runForeground(workingDirectory, executableToRun.getAbsolutePath(), arguments, environment);
-        return this;
+	    throws CancelException {
+	File workingDirectory = executableToRun.getParentFile();
+	runForeground(workingDirectory, executableToRun.getAbsolutePath(), arguments, environment);
+	return this;
     }
 
     /**
@@ -569,9 +557,9 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(String executableToRun, List<String> arguments, Map<String, String> environment)
-            throws CancelException {
-        runForeground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
-        return this;
+	    throws CancelException {
+	runForeground(this.prefix.getWinePrefixDirectory(), executableToRun, arguments, environment);
+	return this;
     }
 
     /**
@@ -582,8 +570,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(String executableToRun, List<String> arguments) throws CancelException {
-        runForeground(new File(executableToRun), arguments, null);
-        return this;
+	runForeground(new File(executableToRun), arguments, null);
+	return this;
     }
 
     /**
@@ -594,8 +582,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(File executableToRun, List<String> arguments) throws CancelException {
-        runForeground(executableToRun, arguments, null);
-        return this;
+	runForeground(executableToRun, arguments, null);
+	return this;
     }
 
     /**
@@ -607,8 +595,8 @@ public class Wine implements SetupWizardComponent {
      * @throws ScriptFailureException
      */
     public Wine runForeground(File executableToRun) throws CancelException {
-        runForeground(executableToRun, (List<String>) null, null);
-        return this;
+	runForeground(executableToRun, (List<String>) null, null);
+	return this;
     }
 
     /**
@@ -620,8 +608,8 @@ public class Wine implements SetupWizardComponent {
      * @throws ScriptFailureException
      */
     public Wine runForeground(String executableToRun) throws CancelException {
-        runForeground(executableToRun, null, null);
-        return this;
+	runForeground(executableToRun, null, null);
+	return this;
     }
 
     /**
@@ -632,9 +620,9 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(File workingDirectory, String executableToRun, List<String> arguments)
-            throws CancelException {
-        runForeground(workingDirectory, executableToRun, arguments, null);
-        return this;
+	    throws CancelException {
+	runForeground(workingDirectory, executableToRun, arguments, null);
+	return this;
     }
 
     /**
@@ -645,8 +633,8 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine runForeground(File workingDirectory, String executableToRun) throws CancelException {
-        runForeground(workingDirectory, executableToRun, null, null);
-        return this;
+	runForeground(workingDirectory, executableToRun, null, null);
+	return this;
     }
 
     /**
@@ -657,14 +645,14 @@ public class Wine implements SetupWizardComponent {
      *             if the wine prefix is not initialized
      */
     public Wine waitExit() throws ScriptFailureException {
-        validateWineInstallationInitialized();
-        try {
-            wineVersion.getInstallation().waitAllProcesses(this.prefix);
-        } catch (IOException logged) {
-            LOGGER.warn(LOG_WINE_WAIT_FAILED, logged);
-        }
+	validateWineInstallationInitialized();
+	try {
+	    wineVersion.getInstallation().waitAllProcesses(this.prefix);
+	} catch (IOException logged) {
+	    LOGGER.warn("Unable to wait for wine processes", logged); //$NON-NLS-1$
+	}
 
-        return this;
+	return this;
     }
 
     /**
@@ -681,24 +669,24 @@ public class Wine implements SetupWizardComponent {
      *             if the users cancels or if there is any error
      */
     public Wine waitAllWatchDirectory(File directory, long endSize) throws CancelException {
-        ProgressControl progressControl = this.setupWizard.progressBar(I18N_PROGRAM_INSTALLING);
+	ProgressControl progressControl = this.setupWizard.progressBar(I18N_PROGRAM_INSTALLING);
 
-        final long startSize = FileUtils.sizeOfDirectory(directory);
+	final long startSize = FileUtils.sizeOfDirectory(directory);
 
-        try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
-                prefix.getWinePrefixDirectory().toPath())) {
+	try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
+		prefix.getWinePrefixDirectory().toPath())) {
 
-            observableDirectorySize.setOnChange(newSize -> {
-                final double percentage = 100. * (newSize - startSize) / (endSize - startSize);
-                progressControl.setProgressPercentage(percentage);
-            });
+	    observableDirectorySize.setOnChange(newSize -> {
+		final double percentage = 100. * (newSize - startSize) / (endSize - startSize);
+		progressControl.setProgressPercentage(percentage);
+	    });
 
-            waitExit();
-        } catch (IllegalStateException e) {
-            throw new ScriptFailureException(e);
-        }
+	    waitExit();
+	} catch (IllegalStateException e) {
+	    throw new ScriptFailureException(e);
+	}
 
-        return this;
+	return this;
     }
 
     /**
@@ -709,27 +697,27 @@ public class Wine implements SetupWizardComponent {
      *             if the users cancels or if there is any error
      */
     public Wine deletePrefix() throws CancelException {
-        if (prefix.getWinePrefixDirectory().exists()) {
-            ProgressControl progressControl = this.setupWizard.progressBar(I18N_VIRTUAL_DRIVE_DELETION);
-            final long startSize = prefix.getSize();
-            final long endSize = 0L;
+	if (prefix.getWinePrefixDirectory().exists()) {
+	    ProgressControl progressControl = this.setupWizard.progressBar(I18N_VIRTUAL_DRIVE_DELETION);
+	    final long startSize = prefix.getSize();
+	    final long endSize = 0L;
 
-            try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
-                    prefix.getWinePrefixDirectory().toPath())) {
+	    try (DirectoryWatcherSize observableDirectorySize = new DirectoryWatcherSize(executorService,
+		    prefix.getWinePrefixDirectory().toPath())) {
 
-                observableDirectorySize.setOnChange(newSize -> {
-                    final double percentage = 100. * (newSize - startSize) / (endSize - startSize);
-                    progressControl.setProgressPercentage(percentage);
-                });
+		observableDirectorySize.setOnChange(newSize -> {
+		    final double percentage = 100. * (newSize - startSize) / (endSize - startSize);
+		    progressControl.setProgressPercentage(percentage);
+		});
 
-                prefix.delete();
-            } catch (IOException | IllegalStateException e) {
-                throw new ScriptFailureException(e);
+		prefix.delete();
+	    } catch (IOException | IllegalStateException e) {
+		throw new ScriptFailureException(e);
 
-            }
-        }
+	    }
+	}
 
-        return this;
+	return this;
     }
 
     /**
@@ -741,66 +729,66 @@ public class Wine implements SetupWizardComponent {
      * @return the same object
      */
     public Wine overrideDlls(Map<String, String> dllsToOverride) throws ScriptFailureException {
-        validateWineInstallationInitialized();
-        final RegistryKey hkeyCurrentUser = new RegistryKey(HKEY_CURRENT_USER);
-        final RegistryKey software = new RegistryKey(SOFTWARE);
-        final RegistryKey wine = new RegistryKey(WINE);
-        final RegistryKey dllOverrides = new RegistryKey(DLLOVERRIDES);
+	validateWineInstallationInitialized();
+	final RegistryKey hkeyCurrentUser = new RegistryKey(HKEY_CURRENT_USER);
+	final RegistryKey software = new RegistryKey(SOFTWARE);
+	final RegistryKey wine = new RegistryKey(WINE);
+	final RegistryKey dllOverrides = new RegistryKey(DLLOVERRIDES);
 
-        hkeyCurrentUser.addChild(software);
-        software.addChild(wine);
-        wine.addChild(dllOverrides);
+	hkeyCurrentUser.addChild(software);
+	software.addChild(wine);
+	wine.addChild(dllOverrides);
 
-        for (String dll : dllsToOverride.keySet()) {
-            final RegistryValue<StringValueType> dllNode = new RegistryValue<>(STAR + dll,
-                    new StringValueType(dllsToOverride.get(dll)));
-            dllOverrides.addChild(dllNode);
-        }
+	for (String dll : dllsToOverride.keySet()) {
+	    final RegistryValue<StringValueType> dllNode = new RegistryValue<>(STAR + dll,
+		    new StringValueType(dllsToOverride.get(dll)));
+	    dllOverrides.addChild(dllNode);
+	}
 
-        writeToRegistry(hkeyCurrentUser);
+	writeToRegistry(hkeyCurrentUser);
 
-        return this;
+	return this;
     }
 
     private void validateWineInstallationInitialized() throws ScriptFailureException {
-        if (wineVersion == null) {
-            throw new ScriptFailureException(EXCEPTION_PREFIX_NOT_INITIALIZED);
-        }
+	if (wineVersion == null) {
+	    throw new ScriptFailureException(EXCEPTION_PREFIX_NOT_INITIALIZED);
+	}
     }
 
     private void writeToRegistry(AbstractRegistryNode node) throws ScriptFailureException {
-        final RegistryWriter registryWriter = new RegistryWriter();
-        final File temporaryRegFile;
-        try {
-            temporaryRegFile = File.createTempFile(REGISTRY, POL);
-            temporaryRegFile.deleteOnExit();
-            com.google.common.io.Files.write(registryWriter.generateRegFileContent(node).getBytes(), temporaryRegFile);
-        } catch (IOException e) {
-            throw new ScriptFailureException(e);
-        }
+	final RegistryWriter registryWriter = new RegistryWriter();
+	final File temporaryRegFile;
+	try {
+	    temporaryRegFile = File.createTempFile(REGISTRY, POL);
+	    temporaryRegFile.deleteOnExit();
+	    com.google.common.io.Files.write(registryWriter.generateRegFileContent(node).getBytes(), temporaryRegFile);
+	} catch (IOException e) {
+	    throw new ScriptFailureException(e);
+	}
 
-        final List<String> arguments = new ArrayList<>();
-        arguments.add(temporaryRegFile.getAbsolutePath());
+	final List<String> arguments = new ArrayList<>();
+	arguments.add(temporaryRegFile.getAbsolutePath());
 
-        this.runAndGetProcess(prefix.getDriveCPath(), REGEDIT, arguments, new HashMap<>());
+	this.runAndGetProcess(prefix.getDriveCPath(), REGEDIT, arguments, new HashMap<>());
     }
 
     public ConfigFile config() {
-        return prefix.getPrefixConfigFile();
+	return prefix.getPrefixConfigFile();
     }
 
     public int getLastReturnCode() {
-        return lastReturnCode;
+	return lastReturnCode;
     }
 
     @Override
     public void close() {
-        if (prefix != null) {
-            prefix.close();
-        }
+	if (prefix != null) {
+	    prefix.close();
+	}
     }
 
     public Collection<File> findExecutables() {
-        return prefix.findAllExecutables();
+	return prefix.findAllExecutables();
     }
 }
