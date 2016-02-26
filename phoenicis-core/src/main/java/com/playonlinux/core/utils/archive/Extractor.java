@@ -22,21 +22,19 @@ import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.utils.FileAnalyser;
 
-public class Extractor {
-    private final Logger LOGGER = LoggerFactory.getLogger(Tar.class);
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+public class Extractor {
     private Consumer<ProgressEntity> onChange;
 
     /**
      * Uncompress a .tar file
-     * 
+     *
      * @param inputFile
      *            input file
      * @param outputDir
@@ -45,7 +43,7 @@ public class Extractor {
      * @throws ArchiveException
      */
     public List<File> uncompress(final File inputFile, final File outputDir) {
-        LOGGER.info(
+        log.info(
                 String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         try {

@@ -23,11 +23,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.core.entities.Entity;
 import com.playonlinux.core.entities.NameableEntity;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Represents an application {@link Entity}
@@ -86,6 +85,7 @@ public class AppEntity implements Entity, NameableEntity {
         return miniaturesUrls;
     }
 
+            @ Slf4j
     public static class Builder {
         private String name;
         private String categoryName;
@@ -94,7 +94,6 @@ public class AppEntity implements Entity, NameableEntity {
         private boolean requiresNoCd;
         private String description;
         private List<URL> miniaturesUrls = new ArrayList<>();
-        private final Logger LOGGER = LoggerFactory.getLogger(AppEntity.class);
         private List<ScriptEntity> scripts;
 
         public Builder withName(String name) {
@@ -127,14 +126,13 @@ public class AppEntity implements Entity, NameableEntity {
             return this;
         }
 
-
         public Builder withMiniaturesUrlsString(Iterable<String> miniaturesUrlsAsString) {
             List<URL> newMiniaturesUrls = new ArrayList<>();
-            for(String url: miniaturesUrlsAsString) {
+            for (String url : miniaturesUrlsAsString) {
                 try {
                     newMiniaturesUrls.add(new URL(url));
                 } catch (MalformedURLException e) {
-                    LOGGER.warn(String.format("%s was malformed. Ignored", url), e);
+                    log.warn(String.format("%s was malformed. Ignored", url), e);
                 }
             }
             return withMiniaturesUrls(newMiniaturesUrls);
@@ -156,7 +154,7 @@ public class AppEntity implements Entity, NameableEntity {
         }
 
         private void validate() {
-            if(categoryName == null) {
+            if (categoryName == null) {
                 throw new IllegalArgumentException("You must give a category name");
             }
         }

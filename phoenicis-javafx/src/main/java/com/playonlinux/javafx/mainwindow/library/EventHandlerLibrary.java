@@ -20,9 +20,6 @@ package com.playonlinux.javafx.mainwindow.library;
 
 import java.io.File;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.python.JythonCommandLineInterpreterFactory;
 import com.playonlinux.framework.SetupWizard;
@@ -37,6 +34,9 @@ import com.playonlinux.ui.api.CommandLineInterpreterFactory;
 import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.api.EntitiesProvider;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
 class EventHandlerLibrary implements UIEventHandler {
     @Inject
@@ -47,8 +47,6 @@ class EventHandlerLibrary implements UIEventHandler {
 
     @Inject
     static JythonCommandLineInterpreterFactory jythonInterpreterFactory;
-
-    private final Logger LOGGER = LoggerFactory.getLogger(EventHandlerLibrary.class);
 
     public EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> getInstalledApplications() {
         return mainEventHandler.getInstalledApplications();
@@ -72,12 +70,9 @@ class EventHandlerLibrary implements UIEventHandler {
 
         try {
             setupWizard.init();
-            mainEventHandler.getLibraryEventHandler().runApplication(
-                    setupWizard,
-                    applicationName
-            );
+            mainEventHandler.getLibraryEventHandler().runApplication(setupWizard, applicationName);
         } catch (PlayOnLinuxException e) {
-            LOGGER.error("Failed to run application", e);
+            log.error("Failed to run application", e);
             new ErrorMessage("Error while trying to run the application", e).show();
         } finally {
             setupWizard.close();
@@ -85,7 +80,7 @@ class EventHandlerLibrary implements UIEventHandler {
     }
 
     public void configureApplication(String applicationName) {
-        System.out.println("Configure "+applicationName);
+        System.out.println("Configure " + applicationName);
     }
 
     public CommandLineInterpreterFactory getJythonInterpreterFactory() {

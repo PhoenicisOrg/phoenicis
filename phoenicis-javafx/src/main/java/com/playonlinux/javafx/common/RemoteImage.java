@@ -23,9 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
 
@@ -34,14 +31,15 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * This class has been created to facilitate the integration of remote images inside PlayOnLinux app
- * In general, we should avoid adding such mechanism in the UI implementation
+ * This class has been created to facilitate the integration of remote images
+ * inside PlayOnLinux app In general, we should avoid adding such mechanism in
+ * the UI implementation
  */
+@Slf4j
 public class RemoteImage extends VBox {
-    private final Logger LOGGER = LoggerFactory.getLogger(RemoteImage.class);
-
     private final URL imageUrl;
 
     private final DownloadManager downloadManager;
@@ -53,16 +51,12 @@ public class RemoteImage extends VBox {
         this.downloadManager = serviceManager.getService(DownloadManager.class);
     }
 
-
     public void download() {
-        downloadManager.submit(imageUrl,
-                bytes -> {
-                    handleDownloadSuccess(bytes);
-                },
-                e -> {
-                    handleError();
-                }
-        );
+        downloadManager.submit(imageUrl, bytes -> {
+            handleDownloadSuccess(bytes);
+        } , e -> {
+            handleError();
+        });
     }
 
     private void handleError() {
@@ -70,7 +64,7 @@ public class RemoteImage extends VBox {
     }
 
     public void handleDownloadSuccess(byte[] content) {
-        try(InputStream inputStream = new ByteArrayInputStream(content)) {
+        try (InputStream inputStream = new ByteArrayInputStream(content)) {
             Image downloadedImage = new Image(inputStream);
             ImageView downloadedImageView = new ImageView(downloadedImage);
             Platform.runLater(() -> {
@@ -79,9 +73,7 @@ public class RemoteImage extends VBox {
                 double fitWidth;
                 double fitHeight;
 
-
-                if (downloadedImage.getWidth() / downloadedImage.getHeight()
-                        > this.getWidth() / this.getHeight()) {
+                if (downloadedImage.getWidth() / downloadedImage.getHeight() > this.getWidth() / this.getHeight()) {
                     fitWidth = this.getCalculationWidth();
                     fitHeight = downloadedImage.getHeight() * (this.getCalculationWidth() / downloadedImage.getWidth());
                 } else {
@@ -95,16 +87,16 @@ public class RemoteImage extends VBox {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    LOGGER.warn("Failed to close stream", e);
+                    log.warn("Failed to close stream", e);
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn("Failed to get image", e);
+            log.warn("Failed to get image", e);
         }
     }
 
     public double getCalculationWidth() {
-        if(this.getMaxWidth() == -1) {
+        if (this.getMaxWidth() == -1) {
             return this.getWidth();
         } else {
             return this.getMaxWidth();
@@ -112,7 +104,7 @@ public class RemoteImage extends VBox {
     }
 
     public double getCalculationHeight() {
-        if(this.getMaxHeight() == -1) {
+        if (this.getMaxHeight() == -1) {
             return this.getHeight();
         } else {
             return this.getMaxHeight();

@@ -22,9 +22,6 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.Wine;
 import com.playonlinux.framework.wizard.WineWizard;
@@ -32,27 +29,27 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.wine.WineConstants;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
 public class WineContainerActions {
-    private final Logger LOGGER = LoggerFactory.getLogger(WineContainerActions.class);
     @Inject
     static ExecutorService executorService;
 
     public void runWinecfg(WineWizard containerSetupWizard, File winePrefixDirectory, Consumer<Void> callBack) {
         executorService.submit(() -> {
-                    LOGGER.info("Will run winecfg in " + winePrefixDirectory.getPath());
-                    containerSetupWizard.init();
-                    try {
-                        Wine.wizard(containerSetupWizard)
-                                .selectPrefix(winePrefixDirectory.getName())
-                                .runForeground(WineConstants.WINECFG);
-                    } catch (CancelException e) {
-                        LOGGER.info("Failed to run wine cfg", e);
-                    }
-                    callBack.accept(null);
-                    containerSetupWizard.close();
-                }
-        );
+            log.info("Will run winecfg in " + winePrefixDirectory.getPath());
+            containerSetupWizard.init();
+            try {
+                Wine.wizard(containerSetupWizard).selectPrefix(winePrefixDirectory.getName())
+                        .runForeground(WineConstants.WINECFG);
+            } catch (CancelException e) {
+                log.info("Failed to run wine cfg", e);
+            }
+            callBack.accept(null);
+            containerSetupWizard.close();
+        });
 
     }
 }

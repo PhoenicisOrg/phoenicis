@@ -32,9 +32,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.python.modules.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.log.ScriptLogger;
@@ -54,10 +51,11 @@ import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.ui.api.SetupWindow;
 import com.playonlinux.ui.api.UIMessageSender;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
 public class SetupWizard implements CompleteWizard {
-    private final Logger LOGGER = LoggerFactory.getLogger(Setup.class);
-
     @Inject
     static Controller controller;
 
@@ -78,7 +76,8 @@ public class SetupWizard implements CompleteWizard {
     /**
      * Create the setupWindow
      *
-     * @param title title of the setupWindow
+     * @param title
+     *            title of the setupWindow
      */
     public SetupWizard(String title) {
         this.title = title;
@@ -92,110 +91,120 @@ public class SetupWizard implements CompleteWizard {
     public void init() {
         this.messageSender = controller.createUIMessageSender();
 
-        messageSender.synchronousSend(
-                new SynchronousMessage() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow = controller.createSetupWindowGUIInstance(translate(title));
-                    }
-                }
-        );
+        messageSender.synchronousSend(new SynchronousMessage() {
+            @Override
+            public void execute(Message message) {
+                setupWindow = controller.createSetupWindowGUIInstance(translate(title));
+            }
+        });
     }
 
     /**
      * Set the left image
-     * @param leftImage URL of the left image
+     * 
+     * @param leftImage
+     *            URL of the left image
      */
     @Override
     public void setLeftImage(String leftImage) throws IOException {
         setupWindow.setLeftImage(new File(leftImage));
     }
 
-   /**
-    * Set the top image
-    * @param topImage URL of the top image
-    */
-   @Override
-   public void setTopImage(String topImage) throws IOException {
-       setupWindow.setTopImage(new File(topImage));
-   }
+    /**
+     * Set the top image
+     * 
+     * @param topImage
+     *            URL of the top image
+     */
+    @Override
+    public void setTopImage(String topImage) throws IOException {
+        setupWindow.setTopImage(new File(topImage));
+    }
 
     /**
      * Closes the setupWindow
      */
     @Override
     public void close() {
-        messageSender.synchronousSend(
-                new SynchronousMessage() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.close();
-                    }
-                }
-        );
+        messageSender.synchronousSend(new SynchronousMessage() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.close();
+            }
+        });
 
         closeComponents();
     }
 
-
     /**
      * Shows a simple showSimpleMessageStep
-     * @param textToShow the text to showRightView
+     * 
+     * @param textToShow
+     *            the text to showRightView
      * @throws CancelException
      */
     @Override
     public void message(String textToShow) throws CancelException {
-        messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage<String>() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showSimpleMessageStep((CancelerSynchronousMessage) message, textToShow);
-                    }
-                }
-        );
+        messageSender.synchronousSendAndGetResult(new CancelerSynchronousMessage<String>() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showSimpleMessageStep((CancelerSynchronousMessage) message, textToShow);
+            }
+        });
     }
 
     /**
      * Show a default script presentation
-     * @param programName the name of the program
-     * @param programEditor the editor of the program
-     * @param editorURL the editor website URL
-     * @param scriptorName the scriptor name
-     * @param prefixName the name of the prefix for that program
+     * 
+     * @param programName
+     *            the name of the program
+     * @param programEditor
+     *            the editor of the program
+     * @param editorURL
+     *            the editor website URL
+     * @param scriptorName
+     *            the scriptor name
+     * @param prefixName
+     *            the name of the prefix for that program
      * @throws CancelException
      */
     @Override
-    public void presentation(String programName, String programEditor, String editorURL, String scriptorName, String prefixName) throws CancelException {
-        final String textToShow = String.format(translate("This wizard will help you install %1$s on your computer.\n\n"
-                + "This program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s"
-                + "\n\n%1$s will be installed in: ${application.user.wineprefix}%5$s\n\n"
-                + "${application.name} is not responsible for anything that might happen as a result of using"
-                + " these scripts.\n\nClick Next to start")
-                , programName, programEditor, editorURL, scriptorName, prefixName);
+    public void presentation(String programName, String programEditor, String editorURL, String scriptorName,
+            String prefixName) throws CancelException {
+        final String textToShow = String.format(
+                translate("This wizard will help you install %1$s on your computer.\n\n"
+                        + "This program was created by: %2$s\n%3$s\n\nThis installation program is provided by: %4$s"
+                        + "\n\n%1$s will be installed in: ${application.user.wineprefix}%5$s\n\n"
+                        + "${application.name} is not responsible for anything that might happen as a result of using"
+                        + " these scripts.\n\nClick Next to start"),
+                programName, programEditor, editorURL, scriptorName, prefixName);
         presentation(textToShow);
     }
 
     /**
      * Show a free script presentation
-     * @param textToShow the free presentation text to showRightView
+     * 
+     * @param textToShow
+     *            the free presentation text to showRightView
      * @throws CancelException
      */
     @Override
     public void presentation(String textToShow) throws CancelException {
-        messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage<String>() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showPresentationStep((CancelerSynchronousMessage) message, textToShow);
-                    }
-                }
-        );
+        messageSender.synchronousSendAndGetResult(new CancelerSynchronousMessage<String>() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showPresentationStep((CancelerSynchronousMessage) message, textToShow);
+            }
+        });
     }
 
     /**
      * Show the content of a licence file
-     * @param textToShow a message above the licence
-     * @param licenceFile the licence file to display (with 'from java.io import File')
+     * 
+     * @param textToShow
+     *            a message above the licence
+     * @param licenceFile
+     *            the licence file to display (with 'from java.io import File')
      * @throws CancelException
      */
     @Override
@@ -213,8 +222,11 @@ public class SetupWizard implements CompleteWizard {
 
     /**
      * Show the content of a licence file
-     * @param textToShow a message above the licence
-     * @param licenceFilePath the path of the licence file to display
+     * 
+     * @param textToShow
+     *            a message above the licence
+     * @param licenceFilePath
+     *            the path of the licence file to display
      * @throws ScriptFailureException
      * @throws CancelException
      */
@@ -225,25 +237,28 @@ public class SetupWizard implements CompleteWizard {
 
     /**
      * Show a custom licence message
-     * @param textToShow a message above the licence
-     * @param licenceText the licence text to showRightView
+     * 
+     * @param textToShow
+     *            a message above the licence
+     * @param licenceText
+     *            the licence text to showRightView
      * @throws CancelException
      */
     @Override
     public String licence(String textToShow, String licenceText) throws CancelException {
-        return messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage<String>() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showLicenceStep((CancelerSynchronousMessage) message, textToShow, licenceText);
-                    }
-                }
-        );
+        return messageSender.synchronousSendAndGetResult(new CancelerSynchronousMessage<String>() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showLicenceStep((CancelerSynchronousMessage) message, textToShow, licenceText);
+            }
+        });
     }
-    
+
     /**
      * Ask the user to enter a value
-     * @param textToShow a text that will be shown
+     * 
+     * @param textToShow
+     *            a text that will be shown
      * @return the value the user entered
      * @throws CancelException
      */
@@ -254,45 +269,49 @@ public class SetupWizard implements CompleteWizard {
 
     /**
      * Asks the user to enter a value
-     * @param textToShow a text that will be shown
-     * @param defaultValue a default value
+     * 
+     * @param textToShow
+     *            a text that will be shown
+     * @param defaultValue
+     *            a default value
      * @return the value the user entered
      * @throws CancelException
      */
     @Override
     public String textbox(String textToShow, String defaultValue) throws CancelException {
-        return messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage<String>() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showTextBoxStep((CancelerSynchronousMessage) message, textToShow, defaultValue);
-                    }
-                }
-        );
+        return messageSender.synchronousSendAndGetResult(new CancelerSynchronousMessage<String>() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showTextBoxStep((CancelerSynchronousMessage) message, textToShow, defaultValue);
+            }
+        });
     }
 
     /**
      * Displays a showMenuStep so that the user can make a choice
-     * @param textToShow a text that will be shown
-     * @param menuItems a list containing the elements of the showMenuStep
+     * 
+     * @param textToShow
+     *            a text that will be shown
+     * @param menuItems
+     *            a list containing the elements of the showMenuStep
      * @return the value the user entered (as string)
      * @throws CancelException
      */
     @Override
     public String menu(String textToShow, List<String> menuItems) throws CancelException {
-        return messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage<String>() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showMenuStep((CancelerSynchronousMessage) message, textToShow, menuItems);
-                    }
-                }
-        );
+        return messageSender.synchronousSendAndGetResult(new CancelerSynchronousMessage<String>() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showMenuStep((CancelerSynchronousMessage) message, textToShow, menuItems);
+            }
+        });
     }
 
     /**
      * Asks the user to choose a file a file
-     * @param textToShow text to show
+     * 
+     * @param textToShow
+     *            text to show
      * @return The path of the file
      * @throws CancelException
      */
@@ -303,60 +322,61 @@ public class SetupWizard implements CompleteWizard {
 
     /**
      * Ask the user to choose a file
-     * @param textToShow text to show
-     * @param directory default directory to browse in
-     * @param allowedExtensions A list containing allowed extensions. All extensions will be allowed if this parameter
-     *                          is set to null
+     * 
+     * @param textToShow
+     *            text to show
+     * @param directory
+     *            default directory to browse in
+     * @param allowedExtensions
+     *            A list containing allowed extensions. All extensions will be
+     *            allowed if this parameter is set to null
      * @return The path of the file
      * @throws CancelException
      */
     @Override
     public String browse(String textToShow, String directory, List<String> allowedExtensions) throws CancelException {
-        return messageSender.synchronousSendAndGetResult(
-                new CancelerSynchronousMessage<String>() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showBrowseStep((CancelerSynchronousMessage) message, textToShow,
-                                new File(directory), allowedExtensions);
-                    }
-                }
-        );
+        return messageSender.synchronousSendAndGetResult(new CancelerSynchronousMessage<String>() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showBrowseStep((CancelerSynchronousMessage) message, textToShow, new File(directory),
+                        allowedExtensions);
+            }
+        });
     }
 
-
     /**
-     * Displays a showSimpleMessageStep to the user with a waiting symbol, and releases the script just afterward
-     * @param textToShow a text that will be shown
+     * Displays a showSimpleMessageStep to the user with a waiting symbol, and
+     * releases the script just afterward
+     * 
+     * @param textToShow
+     *            a text that will be shown
      */
     @Override
     public void wait(String textToShow) {
-        messageSender.asynchronousSend(
-                new InterrupterAsynchroneousMessage() {
-                    @Override
-                    public void execute(Message message) {
-                        setupWindow.showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
-                    }
-                }
-        );
+        messageSender.asynchronousSend(new InterrupterAsynchroneousMessage() {
+            @Override
+            public void execute(Message message) {
+                setupWindow.showSpinnerStep((InterrupterAsynchroneousMessage) message, textToShow);
+            }
+        });
     }
 
     @Override
     public ProgressControl progressBar(String textToShow) throws CancelException {
         UIMessageSender<ProgressControl> progressStepUIMessageSender = controller.createUIMessageSender();
-        return progressStepUIMessageSender.synchronousSendAndGetResult(
-                new InterrupterSynchronousMessage<ProgressControl>() {
+        return progressStepUIMessageSender
+                .synchronousSendAndGetResult(new InterrupterSynchronousMessage<ProgressControl>() {
                     @Override
                     public void execute(Message message) {
-                        this.setResponse(setupWindow.showProgressBar((InterrupterSynchronousMessage) message,
-                                textToShow));
+                        this.setResponse(
+                                setupWindow.showProgressBar((InterrupterSynchronousMessage) message, textToShow));
                     }
-                }
-        );
+                });
     }
 
     @Override
     public ScriptLogger getLogContext() throws ScriptFailureException {
-        if(logContext != null) {
+        if (logContext != null) {
             return logContext;
         } else {
             try {
@@ -374,21 +394,22 @@ public class SetupWizard implements CompleteWizard {
 
     @Override
     public void log(String message, Throwable e) throws ScriptFailureException {
-        if(title != null) {
+        if (title != null) {
             OutputStream outputstream = getLogContext();
             PrintWriter printWriter = new PrintWriter(outputstream);
             printWriter.println(String.format("[%s] %s", Thread.currentThread().getName(), message));
-            if(e != null) {
-                printWriter.println(String.format("[%s] %s", Thread.currentThread().getName(), ExceptionUtils.getFullStackTrace(e)));
+            if (e != null) {
+                printWriter.println(String.format("[%s] %s", Thread.currentThread().getName(),
+                        ExceptionUtils.getFullStackTrace(e)));
             }
             printWriter.flush();
         } else {
-            LOGGER.warn("Unable to get the log context");
+            log.warn("Unable to get the log context");
         }
 
-        LOGGER.info(message);
-        if(e != null) {
-            LOGGER.info(ExceptionUtils.getFullStackTrace(e));
+        log.info(message);
+        if (e != null) {
+            log.info(ExceptionUtils.getFullStackTrace(e));
         }
 
     }
@@ -404,13 +425,12 @@ public class SetupWizard implements CompleteWizard {
     }
 
     private void closeComponents() {
-        for(WeakReference<SetupWizardComponent> setupWizardComponentWeakReference: components) {
+        for (WeakReference<SetupWizardComponent> setupWizardComponentWeakReference : components) {
             SetupWizardComponent componentToClose = setupWizardComponentWeakReference.get();
-            if(componentToClose != null) {
+            if (componentToClose != null) {
                 componentToClose.close();
             }
         }
     }
-
 
 }

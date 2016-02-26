@@ -29,14 +29,15 @@ import org.python.core.PyObject;
 import org.python.core.PyType;
 import org.python.util.PythonInterpreter;
 import org.reflections.ReflectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.scripts.ScriptFailureException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
 public class PythonInstaller<T> extends AbstractPythonModule<T> {
     @Inject
@@ -46,8 +47,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     private static final String DEFINE_LOGCONTEXT_NAME = "title";
     private static final String ROLLBACK_METHOD_NAME = "rollback";
     private static final String DEFAULT_ROLLBACK_METHOD_NAME = "_defaultRollback";
-    
-    private final Logger LOGGER = LoggerFactory.getLogger(PythonInstaller.class);
+
     private PyObject mainInstance;
 
     public PythonInstaller(PythonInterpreter pythonInterpreter, Class<T> type) {
@@ -59,7 +59,7 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     private PyObject getMainInstance() {
-        if(mainInstance == null) {
+        if (mainInstance == null) {
             mainInstance = this.getMainClass().__call__();
         }
         return mainInstance;
@@ -78,12 +78,12 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     private void injectAllPythonAttributes() throws ScriptFailureException {
-        Class <?> parentClass = ((PyType) ((PyType) getMainClass().getBase()).getBase()).getProxyType();
+        Class<?> parentClass = ((PyType) ((PyType) getMainClass().getBase()).getBase()).getProxyType();
 
         final Set<Field> fields = ReflectionUtils.getAllFields(parentClass,
                 ReflectionUtils.withAnnotation(PythonAttribute.class));
 
-        for(Field field: fields) {
+        for (Field field : fields) {
             field.setAccessible(true);
             try {
                 field.set(getMainInstance().__tojava__(type), this.extractAttribute(field.getName()));
@@ -94,11 +94,11 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
     }
 
     public void exec() throws ScriptFailureException {
-        if(this.hasMain()) {
+        if (this.hasMain()) {
             String logContext = this.extractLogContext();
             ScriptLogger scriptLogger = null;
 
-            if(logContext != null) {
+            if (logContext != null) {
                 try {
                     scriptLogger = loggerFactory.getScriptLogger(logContext);
                     pythonInterpreter.setOut(scriptLogger);
@@ -111,8 +111,8 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
 
             try {
                 this.runMain(getMainInstance());
-            } catch(Exception e) {
-                LOGGER.error("The script encountered an error. Rolling back");
+            } catch (Exception e) {
+                log.error("The script encountered an error. Rolling back");
                 try {
                     getMainInstance().invoke(ROLLBACK_METHOD_NAME);
                 } catch (Exception rollbackException) {
@@ -122,25 +122,23 @@ public class PythonInstaller<T> extends AbstractPythonModule<T> {
                 }
                 throw e;
             } finally {
-                if(scriptLogger != null) {
+                if (scriptLogger != null) {
                     try {
                         loggerFactory.close(scriptLogger);
                     } catch (IOException e) {
-                        LOGGER.warn("Unable to flush script log stream", e);
+                        log.warn("Unable to flush script log stream", e);
                     }
                 }
             }
         }
     }
 
-
-
     public Object extractAttribute(String attributeToExtract) {
         PyObject pyLogAttribute;
         try {
             pyLogAttribute = getMainInstance().__getattr__(attributeToExtract);
         } catch (PyException e) {
-            LOGGER.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
+            log.info(String.format("The attribute %s was not found. Returning null", attributeToExtract), e);
             return null;
         }
         if (pyLogAttribute instanceof PyMethod) {

@@ -21,8 +21,6 @@ package com.playonlinux.javafx.mainwindow.apps;
 import java.io.IOException;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.EventListener;
@@ -41,10 +39,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 final class AppPanel extends VBox {
-    private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
-
     public AppPanel(MainWindow parent, EventHandlerApps eventHandlerApps, AppEntity appsItemDTO) {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
@@ -52,13 +50,11 @@ final class AppPanel extends VBox {
         final WebView descriptionWidget = new WebView();
 
         try {
-            descriptionWidget.getEngine().loadContent(
-                    new HtmlTemplate(this.getClass()
-                            .getResourceAsStream("descriptionTemplate.html")
-                    ).render(appsItemDTO)
-            );
+            descriptionWidget.getEngine()
+                    .loadContent(new HtmlTemplate(this.getClass().getResourceAsStream("descriptionTemplate.html"))
+                            .render(appsItemDTO));
         } catch (IOException e) {
-            LOGGER.error("Unable to load the description", e);
+            log.error("Unable to load the description", e);
         }
 
         descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
@@ -68,12 +64,12 @@ final class AppPanel extends VBox {
                         final String link = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
 
                         try {
-                            InstallerDownloaderEntityProvider installerDownloaderEntityProvider =
-                                    eventHandlerApps.getInstallerDownloaderEntityProvider(link);
+                            InstallerDownloaderEntityProvider installerDownloaderEntityProvider = eventHandlerApps
+                                    .getInstallerDownloaderEntityProvider(link);
 
                             installerDownloaderEntityProvider.getScript();
                         } catch (IllegalArgumentException e) {
-                            LOGGER.error("Failed to get script", e);
+                            log.error("Failed to get script", e);
                             new ErrorMessage("Error while trying to download the installer", e).show();
                         }
                     }
@@ -87,7 +83,6 @@ final class AppPanel extends VBox {
                 }
             }
         });
-
 
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");

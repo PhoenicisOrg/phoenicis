@@ -23,8 +23,6 @@ import static com.playonlinux.core.lang.Localisation.translate;
 import java.io.File;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.python.CommandInterpreterException;
@@ -46,13 +44,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ViewLibrary extends MainWindowView {
 
     private final CommandLineInterpreterFactory jythonInterpreterFactory;
     private LeftButton runScript;
     private LeftButton runConsole;
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
     private ApplicationListWidget applicationListWidget;
     private final EventHandlerLibrary eventHandlerLibrary;
     private TextField searchBar;
@@ -125,7 +124,7 @@ public class ViewLibrary extends MainWindowView {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(translate("Error while trying to run the script."));
                 alert.setContentText("The file was not found");
-                LOGGER.warn("Error while trying to run the script", e);
+                log.warn("Error while trying to run the script", e);
             }
         });
 
@@ -139,7 +138,7 @@ public class ViewLibrary extends MainWindowView {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(translate("Error while trying to run the console."));
             alert.setContentText("The error was: " + ExceptionUtils.getFullStackTrace(e));
-            LOGGER.warn("Error while trying to run the console", e);
+            log.warn("Error while trying to run the console", e);
         }
     }
 

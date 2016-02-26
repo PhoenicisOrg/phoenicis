@@ -25,8 +25,6 @@ import java.util.function.Consumer;
 
 import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.services.manager.Service;
@@ -34,10 +32,11 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, Service {
-    private final Logger LOGGER = LoggerFactory.getLogger(JythonCommandInterpreter.class);
-
     @Inject
     static JythonInterpreterFactory jythonJythonInterpreterFactory;
 
@@ -58,19 +57,19 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
     @Override
     public boolean sendLine(String command, Consumer<String> callback) {
-        if(interactiveInterpreter == null) {
+        if (interactiveInterpreter == null) {
             try {
                 interactiveInterpreter = jythonJythonInterpreterFactory.createInstance(InteractiveInterpreter.class);
                 interactiveInterpreter.setOut(returnBuffer);
                 interactiveInterpreter.setErr(returnBuffer);
             } catch (PlayOnLinuxException e) {
-                LOGGER.error("Failed to instanciate Jython interpreter", e);
+                log.error("Failed to instanciate Jython interpreter", e);
             }
         }
 
         commandBuffer.append(command);
 
-        if(command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
+        if (command.startsWith("\t") || command.startsWith(" ") || command.trim().endsWith(":")) {
             commandBuffer.append("\n");
             callback.accept("");
             return false;
@@ -83,7 +82,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                     interactiveInterpreter.exec(completeCommand);
                     callback.accept(returnBuffer.toString());
                 } catch (PyException e) {
-                    LOGGER.debug("Failed to execute Jython command", e);
+                    log.debug("Failed to execute Jython command", e);
                     callback.accept(e.toString());
                 }
             });
@@ -94,10 +93,10 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
 
     @Override
     public void shutdown() {
-        if(this.interactiveInterpreter != null) {
+        if (this.interactiveInterpreter != null) {
             jythonJythonInterpreterFactory.close(this.interactiveInterpreter);
         }
-        if(currentTask != null) {
+        if (currentTask != null) {
             currentTask.cancel(true);
         }
     }

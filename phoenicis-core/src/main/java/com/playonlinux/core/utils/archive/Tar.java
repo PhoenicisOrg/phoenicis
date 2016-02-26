@@ -38,20 +38,19 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.io.CountingInputStream;
 import com.playonlinux.core.entities.ProgressEntity;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Tar extraction utilities
  */
+@Slf4j
 public class Tar {
     private static final String TAR_ERROR_MESSAGE = "Unable to open input stream";
 
-    private final Logger LOGGER = LoggerFactory.getLogger(Tar.class);
-    
     List<File> uncompressTarBz2File(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
         try (CountingInputStream countingInputStream = new CountingInputStream(new FileInputStream(inputFile));
                 InputStream inputStream = new BZip2CompressorInputStream(countingInputStream)) {
@@ -111,16 +110,15 @@ public class Tar {
             while ((entry = (TarArchiveEntry) debInputStream.getNextEntry()) != null) {
                 final File outputFile = new File(outputDir, entry.getName());
                 if (entry.isDirectory()) {
-                    LOGGER.info(
-                            String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
+                    log.info(String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
 
                     if (!outputFile.exists()) {
-                        LOGGER.info(String.format("Attempting to createPrefix output directory %s.",
+                        log.info(String.format("Attempting to createPrefix output directory %s.",
                                 outputFile.getAbsolutePath()));
                         Files.createDirectories(outputFile.toPath());
                     }
                 } else {
-                    LOGGER.info(String.format("Creating output file %s (%s).", outputFile.getAbsolutePath(),
+                    log.info(String.format("Creating output file %s (%s).", outputFile.getAbsolutePath(),
                             entry.getMode()));
 
                     if (entry.isSymbolicLink()) {
@@ -138,11 +136,9 @@ public class Tar {
                 }
                 uncompressedFiles.add(outputFile);
 
-                stateCallback
-                        .accept(new ProgressEntity.Builder()
-                                .withPercent(
-                                        (double) countingInputStream.getCount() / (double) finalSize * (double) 100)
-                                .withProgressText("Extracting " + outputFile.getName()).build());
+                stateCallback.accept(new ProgressEntity.Builder()
+                        .withPercent((double) countingInputStream.getCount() / (double) finalSize * 100)
+                        .withProgressText("Extracting " + outputFile.getName()).build());
 
             }
             return uncompressedFiles;
@@ -153,7 +149,7 @@ public class Tar {
 
     /**
      * Gunzip a file
-     * 
+     *
      * @param inputFile
      *            source file
      * @param outputFile
@@ -163,8 +159,7 @@ public class Tar {
      *             if any error occurs
      */
     public File gunzip(final File inputFile, final File outputFile) {
-        LOGGER.info(
-                String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
+        log.info(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
 
         try (GZIPInputStream in = new GZIPInputStream(new FileInputStream(inputFile));
 
@@ -178,7 +173,7 @@ public class Tar {
 
     /**
      * Bunzip2 a file
-     * 
+     *
      * @param inputFile
      *            source file
      * @param outputFile
@@ -188,8 +183,7 @@ public class Tar {
      *             if any error occurs
      */
     public File bunzip2(final File inputFile, final File outputFile) {
-        LOGGER.info(
-                String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
+        log.info(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputFile.getAbsolutePath()));
         try (BZip2CompressorInputStream in = new BZip2CompressorInputStream(new FileInputStream(inputFile));
                 FileOutputStream out = new FileOutputStream(outputFile)) {
             IOUtils.copy(in, out);

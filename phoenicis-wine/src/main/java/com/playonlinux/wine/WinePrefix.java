@@ -26,8 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.config.CompatibleConfigFileFormat;
 import com.playonlinux.core.config.ConfigFile;
@@ -48,9 +46,12 @@ import com.playonlinux.wine.configurations.WinePrefixInputConfiguration;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Represents a wineprefix
  */
+@Slf4j
 @Scan
 public class WinePrefix implements AutoCloseable {
     private static final Version DEFAULT_VERSION = new Version("1.7.49"); // FIXME
@@ -76,16 +77,15 @@ public class WinePrefix implements AutoCloseable {
 
     private final File winePrefixDirectory;
     private PrintWriter printWriterLogger = null;
-    private final Logger LOGGER = LoggerFactory.getLogger(WinePrefix.class);
     private WinePrefixLogger logOutputStream = null;
 
     public WinePrefix(File winePrefixDirectory) {
-	this.winePrefixDirectory = winePrefixDirectory;
+        this.winePrefixDirectory = winePrefixDirectory;
     }
 
     private RegistryKey parseRegistryFile(String filename, String nodeName) throws WineException {
-	RegistryParser registryParser = new RegistryParser(new File(winePrefixDirectory, filename), nodeName);
-	return registryParser.parseFile();
+        RegistryParser registryParser = new RegistryParser(new File(winePrefixDirectory, filename), nodeName);
+        return registryParser.parseFile();
     }
 
     /**
@@ -96,193 +96,193 @@ public class WinePrefix implements AutoCloseable {
      *             if any error happen while parsing the registry
      */
     public RegistryKey fetchSystemRegistry() throws WineException {
-	return parseRegistryFile(SYSTEM_REGISTRY_FILENAME, SYSTEM_REGISTRY_NODENAME);
+        return parseRegistryFile(SYSTEM_REGISTRY_FILENAME, SYSTEM_REGISTRY_NODENAME);
     }
 
     public RegistryKey fetchUserRegistry() throws WineException {
-	return parseRegistryFile(USER_REGISTRY_FILENAME, USER_REGISTRY_NODENAME);
+        return parseRegistryFile(USER_REGISTRY_FILENAME, USER_REGISTRY_NODENAME);
     }
 
     public File getDriveCPath() {
-	return new File(winePrefixDirectory, DRIVE_C);
+        return new File(winePrefixDirectory, DRIVE_C);
     }
 
     public String getAbsolutePath() {
-	return this.winePrefixDirectory.getAbsolutePath();
+        return this.winePrefixDirectory.getAbsolutePath();
     }
 
     public File getWinePrefixDirectory() {
-	return this.winePrefixDirectory;
+        return this.winePrefixDirectory;
     }
 
     public long getSize() {
-	try {
-	    return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
-	} catch (IllegalArgumentException e) {
-	    LOGGER.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
-	    return getSize();
-	}
+        try {
+            return FileUtils.sizeOfDirectory(this.winePrefixDirectory);
+        } catch (IllegalArgumentException e) {
+            log.info("IllegalArgumentException was thrown while trying to read the directory size. Retrying...", e);
+            return getSize();
+        }
     }
 
     private Collection<File> findAllFilesByExtension(String extension) {
-	return findAllFilesByExtension(extension, this.getDriveCPath());
+        return findAllFilesByExtension(extension, this.getDriveCPath());
     }
 
     private Collection<File> findAllFilesByExtension(String extension, File searchPath) {
-	final Collection<File> candidates = new ArrayList<>();
-	final File[] filesInSearchPath = searchPath.listFiles();
+        final Collection<File> candidates = new ArrayList<>();
+        final File[] filesInSearchPath = searchPath.listFiles();
 
-	for (File candidate : filesInSearchPath) {
-	    if (candidate.isDirectory() && !java.nio.file.Files.isSymbolicLink(candidate.toPath())) {
-		candidates.addAll(findAllFilesByExtension(extension, candidate));
-	    } else if (candidate.getName().toLowerCase().endsWith(extension.toLowerCase())
-		    && !checkSearchExcludedFiles(candidate.getName())) {
-		candidates.add(candidate);
-	    }
-	}
-	return candidates;
+        for (File candidate : filesInSearchPath) {
+            if (candidate.isDirectory() && !java.nio.file.Files.isSymbolicLink(candidate.toPath())) {
+                candidates.addAll(findAllFilesByExtension(extension, candidate));
+            } else if (candidate.getName().toLowerCase().endsWith(extension.toLowerCase())
+                    && !checkSearchExcludedFiles(candidate.getName())) {
+                candidates.add(candidate);
+            }
+        }
+        return candidates;
     }
 
     private boolean checkSearchExcludedFiles(String candidateName) {
-	return Arrays.binarySearch(SEARCH_EXCLUDED_EXECUTABLE, candidateName) == 0;
+        return Arrays.binarySearch(SEARCH_EXCLUDED_EXECUTABLE, candidateName) == 0;
     }
 
     public Collection<File> findAllExecutables() {
-	return findAllFilesByExtension(EXECUTABLE_EXTENSION);
+        return findAllFilesByExtension(EXECUTABLE_EXTENSION);
     }
 
     public void delete() throws IOException {
-	Files.remove(this.getWinePrefixDirectory());
+        Files.remove(this.getWinePrefixDirectory());
     }
 
     public boolean initialized() {
-	return new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE).exists();
+        return new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE).exists();
     }
 
     public boolean exists() {
-	return getWinePrefixDirectory().exists();
+        return getWinePrefixDirectory().exists();
     }
 
     public void createConfigFile(WineDistribution wineDistribution, Version version) throws WineException {
-	this.createPrefixDirectory();
-	final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        this.createPrefixDirectory();
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
 
-	if (initialized()) {
-	    throw new WineException("Prefix already exists: " + getWinePrefixDirectory());
-	}
+        if (initialized()) {
+            throw new WineException("Prefix already exists: " + getWinePrefixDirectory());
+        }
 
-	try {
-	    prefixConfigFile.writeValue(CONTAINER_TYPE, "WinePrefixContainer");
-	    prefixConfigFile.writeValue(DISTRIBUTION_CODE, wineDistribution.getDistributionCode());
-	    prefixConfigFile.writeValue(OPERATING_SYSTEM, wineDistribution.getOperatingSystem().name());
-	    prefixConfigFile.writeValue(ARCHITECTURE, wineDistribution.getArchitecture().name());
-	    prefixConfigFile.writeValue(VERSION_LC, version.toString());
-	} catch (IOException e) {
-	    throw new WineException("Error while writing data on config file", e);
-	}
+        try {
+            prefixConfigFile.writeValue(CONTAINER_TYPE, "WinePrefixContainer");
+            prefixConfigFile.writeValue(DISTRIBUTION_CODE, wineDistribution.getDistributionCode());
+            prefixConfigFile.writeValue(OPERATING_SYSTEM, wineDistribution.getOperatingSystem().name());
+            prefixConfigFile.writeValue(ARCHITECTURE, wineDistribution.getArchitecture().name());
+            prefixConfigFile.writeValue(VERSION_LC, version.toString());
+        } catch (IOException e) {
+            throw new WineException("Error while writing data on config file", e);
+        }
 
     }
 
     private void createPrefixDirectory() throws WineException {
-	if (!this.winePrefixDirectory.exists() && !this.winePrefixDirectory.mkdirs()) {
-	    throw new WineException("Cannot createPrefix prefix: " + getWinePrefixDirectory());
-	}
+        if (!this.winePrefixDirectory.exists() && !this.winePrefixDirectory.mkdirs()) {
+            throw new WineException("Cannot createPrefix prefix: " + getWinePrefixDirectory());
+        }
     }
 
     public Version fetchVersion() {
-	final ConfigFile prefixConfigFile = getPrefixConfigFile();
-	if (prefixConfigFile.contains(VERSION_LC)) {
-	    return new Version(prefixConfigFile.readValue(VERSION_LC));
-	} else if (prefixConfigFile.contains(VERSION_UC)) {
-	    return new Version(prefixConfigFile.readValue(VERSION_UC));
-	}
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if (prefixConfigFile.contains(VERSION_LC)) {
+            return new Version(prefixConfigFile.readValue(VERSION_LC));
+        } else if (prefixConfigFile.contains(VERSION_UC)) {
+            return new Version(prefixConfigFile.readValue(VERSION_UC));
+        }
 
-	// FIXME: Handle this case with a default version
-	return DEFAULT_VERSION;
+        // FIXME: Handle this case with a default version
+        return DEFAULT_VERSION;
     }
 
     public boolean isAutomaticallyUpdated() {
-	return getPrefixConfigFile().contains(VERSION_LC) || getPrefixConfigFile().contains(VERSION_UC);
+        return getPrefixConfigFile().contains(VERSION_LC) || getPrefixConfigFile().contains(VERSION_UC);
     }
 
     public OperatingSystem fetchOperatingSystem() {
-	final ConfigFile prefixConfigFile = getPrefixConfigFile();
-	if (prefixConfigFile.contains("operatinSystem")) {
-	    return OperatingSystem.valueOf(prefixConfigFile.readValue(OPERATING_SYSTEM));
-	}
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if (prefixConfigFile.contains("operatinSystem")) {
+            return OperatingSystem.valueOf(prefixConfigFile.readValue(OPERATING_SYSTEM));
+        }
 
-	return OperatingSystem.fetchCurrentOperationSystem();
+        return OperatingSystem.fetchCurrentOperationSystem();
     }
 
     public Architecture fetchArchitecture() {
-	final ConfigFile prefixConfigFile = getPrefixConfigFile();
-	if (prefixConfigFile.contains(ARCHITECTURE)) {
-	    return Architecture.valueOf(prefixConfigFile.readValue(ARCHITECTURE));
-	} else if (prefixConfigFile.contains("ARCH")) {
-	    return Architecture.fromWinePackageName(prefixConfigFile.readValue("ARCH"));
-	}
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        if (prefixConfigFile.contains(ARCHITECTURE)) {
+            return Architecture.valueOf(prefixConfigFile.readValue(ARCHITECTURE));
+        } else if (prefixConfigFile.contains("ARCH")) {
+            return Architecture.fromWinePackageName(prefixConfigFile.readValue("ARCH"));
+        }
 
-	// FIXME : Fix the config file
-	return Architecture.I386;
+        // FIXME : Fix the config file
+        return Architecture.I386;
     }
 
     public WineDistribution fetchDistribution() {
-	final ConfigFile prefixConfigFile = getPrefixConfigFile();
-	final String distribution;
-	if (prefixConfigFile.contains(DISTRIBUTION_CODE)) {
-	    distribution = prefixConfigFile.readValue(DISTRIBUTION_CODE);
-	} else {
-	    distribution = "upstream";
-	}
+        final ConfigFile prefixConfigFile = getPrefixConfigFile();
+        final String distribution;
+        if (prefixConfigFile.contains(DISTRIBUTION_CODE)) {
+            distribution = prefixConfigFile.readValue(DISTRIBUTION_CODE);
+        } else {
+            distribution = "upstream";
+        }
 
-	return new WineDistribution(fetchOperatingSystem(), fetchArchitecture(), distribution);
+        return new WineDistribution(fetchOperatingSystem(), fetchArchitecture(), distribution);
     }
 
     public ConfigFile getPrefixConfigFile() {
-	return new CompatibleConfigFileFormat(new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE));
+        return new CompatibleConfigFileFormat(new File(getWinePrefixDirectory(), PLAYONLINUX_WINEPREFIX_CONFIGFILE));
     }
 
     public void log(String message) throws IOException {
-	if (printWriterLogger == null) {
-	    logOutputStream = loggerFactory.getWinePrefixLogger(this.fetchName());
-	    printWriterLogger = new PrintWriter(logOutputStream);
-	    printWriterLogger.println(message);
-	    printWriterLogger.flush();
-	}
+        if (printWriterLogger == null) {
+            logOutputStream = loggerFactory.getWinePrefixLogger(this.fetchName());
+            printWriterLogger = new PrintWriter(logOutputStream);
+            printWriterLogger.println(message);
+            printWriterLogger.flush();
+        }
     }
 
     private String fetchName() {
-	return this.getWinePrefixDirectory().getName();
+        return this.getWinePrefixDirectory().getName();
     }
 
     @Override
     public void close() {
-	if (printWriterLogger != null) {
-	    printWriterLogger.flush();
-	    printWriterLogger.close();
-	    try {
-		loggerFactory.close(logOutputStream);
-	    } catch (IOException e) {
-		LOGGER.warn("The log stream could not be closed", e);
-	    }
-	}
+        if (printWriterLogger != null) {
+            printWriterLogger.flush();
+            printWriterLogger.close();
+            try {
+                loggerFactory.close(logOutputStream);
+            } catch (IOException e) {
+                log.warn("The log stream could not be closed", e);
+            }
+        }
     }
 
     public WinePrefixDisplayConfiguration getDisplayConfiguration() {
-	try {
-	    return new RegistryWinePrefixDisplayConfiguration(fetchUserRegistry());
-	} catch (WineException e) {
-	    LOGGER.debug("Failed to get display configuration", e);
-	    return new DefaultWinePrefixDisplayConfiguration();
-	}
+        try {
+            return new RegistryWinePrefixDisplayConfiguration(fetchUserRegistry());
+        } catch (WineException e) {
+            log.debug("Failed to get display configuration", e);
+            return new DefaultWinePrefixDisplayConfiguration();
+        }
     }
 
     public WinePrefixInputConfiguration getInputConfiguration() {
-	try {
-	    return new RegistryWinePrefixInputConfiguration(fetchUserRegistry());
-	} catch (WineException e) {
-	    LOGGER.debug("Failed to get input configuration", e);
-	    return new DefaultWinePrefixInputConfiguration();
-	}
+        try {
+            return new RegistryWinePrefixInputConfiguration(fetchUserRegistry());
+        } catch (WineException e) {
+            log.debug("Failed to get input configuration", e);
+            return new DefaultWinePrefixInputConfiguration();
+        }
     }
 }

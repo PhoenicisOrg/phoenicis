@@ -22,9 +22,6 @@ import static com.playonlinux.core.lang.Localisation.translate;
 
 import java.io.File;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
@@ -42,15 +39,16 @@ import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QFileDialog;
 import com.trolltech.qt.gui.QMessageBox;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * EventHandler implementation that connects all MainWindow components
  */
+@Slf4j
 @Scan
 public class MainWindowEventHandler implements UIEventHandler {
     @Inject
     static EventHandler mainEventHandler;
-
-    private final Logger LOGGER = LoggerFactory.getLogger(MainWindowEventHandler.class);
 
     private final MainWindow mainWindow;
 
@@ -60,13 +58,10 @@ public class MainWindowEventHandler implements UIEventHandler {
         this.mainWindow = mainWindow;
     }
 
-
     @Override
     public EventHandler getMainEventHandler() {
         return mainEventHandler;
     }
-
-
 
     /* GENERAL */
 
@@ -74,14 +69,15 @@ public class MainWindowEventHandler implements UIEventHandler {
      * Initialize the EventHandler
      */
     public void init() {
-        //TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
+        // TODO: RESTORE UI-SETTINGS LIKE WINDOW-SIZE, DISPLAY SIZE, ...
         mainWindow.getShortcutMenu().setVisible(false);
     }
 
     /**
      * Request the application to exit
      *
-     * @return False when the user aborted the application exiting, True otherwise.
+     * @return False when the user aborted the application exiting, True
+     *         otherwise.
      */
     public boolean exit() {
         QMessageBox confirmDialog = new QMessageBox();
@@ -101,7 +97,6 @@ public class MainWindowEventHandler implements UIEventHandler {
         return true;
     }
 
-
     /* GENERAL */
     public void openLink(String url) {
         QDesktopServices.openUrl(new QUrl(url));
@@ -120,19 +115,17 @@ public class MainWindowEventHandler implements UIEventHandler {
         if (fileDialog.exec() == QDialog.DialogCode.Accepted.value()) {
             File scriptFile = new File(fileDialog.selectedFiles().get(0));
 
-            //save folder to restore next time
+            // save folder to restore next time
             lastLocalScriptDir = scriptFile.getParent();
 
             try {
                 mainEventHandler.runLocalScript(scriptFile);
             } catch (PlayOnLinuxException e) {
-                LOGGER.error("Failed to run local script", e);
-                //TODO: DISPLAY ERROR
+                log.error("Failed to run local script", e);
+                // TODO: DISPLAY ERROR
             }
         }
     }
-
-
 
     /* SHORTCUTS */
 
@@ -148,7 +141,8 @@ public class MainWindowEventHandler implements UIEventHandler {
     /**
      * Set the iconSize within the ShortcutList
      *
-     * @param viewSize Size of the icons displayed within the ShortcutList
+     * @param viewSize
+     *            Size of the icons displayed within the ShortcutList
      */
     public void setDisplaySize(ShortcutList.IconSize viewSize) {
         mainWindow.getShortcutList().setIconSize(viewSize.value());
