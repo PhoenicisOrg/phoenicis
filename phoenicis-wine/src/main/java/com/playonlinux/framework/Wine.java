@@ -70,9 +70,10 @@ import com.playonlinux.wine.registry.StringValueType;
 @ScriptClass
 public class Wine implements SetupWizardComponent {
     private static final Logger LOGGER = Logger.getLogger(Wine.class);
-    private static final Architecture DEFAULT_ARCHITECTURE = Architecture.I386;
     private static final long NEWPREFIXSIZE = 320_000_000L;
-    private static final String DEFAULT_DISTRIBUTION_NAME = "staging";
+    
+    private static final String DEFAULT_ARCHITECTURE = Architecture.I386.name();
+    private static final String DEFAULT_DISTRIBUTION = "staging";
     private static final String OVERWRITE = "Overwrite (usually works, no guarantee)";
     private static final String ERASE = "Erase (virtual drive content will be lost)";
     private static final String ABORT = "Abort installation";
@@ -165,7 +166,7 @@ public class Wine implements SetupWizardComponent {
     }
 
     public Wine createPrefix(String version) throws CancelException {
-        return this.createPrefix(version, DEFAULT_DISTRIBUTION_NAME);
+        return this.createPrefix(version, DEFAULT_DISTRIBUTION);
     }
 
     /**
@@ -180,7 +181,7 @@ public class Wine implements SetupWizardComponent {
      *             operation
      */
     public Wine createPrefix(String version, String distribution) throws CancelException {
-        return this.createPrefix(version, distribution, DEFAULT_ARCHITECTURE.name());
+        return this.createPrefix(version, distribution, DEFAULT_ARCHITECTURE);
     }
 
     /**
