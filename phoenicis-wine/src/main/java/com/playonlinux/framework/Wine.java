@@ -59,6 +59,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 import com.playonlinux.wine.WineException;
+import com.playonlinux.wine.WinePrefix;
 import com.playonlinux.wine.registry.AbstractRegistryNode;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryValue;
@@ -86,7 +87,7 @@ public class Wine implements SetupWizardComponent {
     static ExecutorService executorService;
     private final WineWizard setupWizard;
 
-    private com.playonlinux.wine.WinePrefix prefix;
+    private WinePrefix prefix;
     private String prefixName;
     private WineVersion wineVersion;
     private int lastReturnCode = -1;
@@ -151,7 +152,7 @@ public class Wine implements SetupWizardComponent {
      */
     public Wine selectPrefix(String prefixName) throws CancelException {
         this.prefixName = prefixName;
-        this.prefix = new com.playonlinux.wine.WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
+        this.prefix = new WinePrefix(playOnLinuxContext.makePrefixPathFromName(prefixName));
 
         if (prefix.initialized()) {
             wineVersion = new WineVersion(prefix.fetchVersion(), prefix.fetchDistribution(), setupWizard);
