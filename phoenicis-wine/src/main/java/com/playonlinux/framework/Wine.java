@@ -71,12 +71,6 @@ import com.playonlinux.wine.registry.StringValueType;
 public class Wine implements SetupWizardComponent {
     private static final Logger LOGGER = Logger.getLogger(Wine.class);
 
-    private static final String EXCEPTION_PREFIX_INCOMPATIBLE_ARCH = "A 32bit wineprefix cannot execute 64bits executables!"; //$NON-NLS-1$
-    private static final String EXCEPTION_PREFIX_NOT_INITIALIZED = "The prefix must be initialized before running wine"; //$NON-NLS-1$
-    private static final String EXCEPTION_PREFIX_NOT_SELECTED = "Prefix must be selected!"; //$NON-NLS-1$
-    private static final String EXCEPTION_SCRIPT_ABORTED = "The script was aborted"; //$NON-NLS-1$
-    private static final String EXCEPTION_WINE_ERROR = "Error while running wine:"; //$NON-NLS-1$
-
     private static final String I18N_PROGRAM_INSTALLING = Messages.getString("Wine.ProgramInstall"); //$NON-NLS-1$
     private static final String I18N_VIRTUAL_DRIVE_EXIST = Messages.getString("Wine.DriveExist"); //$NON-NLS-1$
     private static final String I18N_VIRTUAL_DRIVE_CREATION = Messages.getString("Wine.DriveCreation"); //$NON-NLS-1$
@@ -220,7 +214,7 @@ public class Wine implements SetupWizardComponent {
      */
     public Wine createPrefix(String version, String distribution, String architecture) throws CancelException {
 	if (prefix == null) {
-	    throw new ScriptFailureException(EXCEPTION_PREFIX_NOT_SELECTED);
+	    throw new ScriptFailureException("Prefix must be selected!"); //$NON-NLS-1$
 	}
 
 	if (prefix.exists() && userWantsToOverWritePrefix()) {
@@ -279,7 +273,7 @@ public class Wine implements SetupWizardComponent {
 	    case ABORT:
 	    default:
 		log("User choice: ABORT"); //$NON-NLS-1$
-		throw new CancelException(EXCEPTION_SCRIPT_ABORTED);
+		throw new CancelException("The script was aborted"); //$NON-NLS-1$
 	    }
 	} catch (IOException e) {
 	    throw new ScriptFailureException(e);
@@ -332,7 +326,7 @@ public class Wine implements SetupWizardComponent {
 	    }
 	    return process;
 	} catch (WineException e) {
-	    throw new ScriptFailureException(EXCEPTION_WINE_ERROR, e);
+	    throw new ScriptFailureException("Error while running wine:", e); //$NON-NLS-1$
 	}
     }
 
@@ -373,7 +367,7 @@ public class Wine implements SetupWizardComponent {
 	    if (wineVersion.getWineDistribution().getArchitecture() == Architecture.I386) {
 		final File executedFile = findFile(workingDirectory, executableToRun);
 		if (executedFile.exists() && ExeAnalyser.is64Bits(executedFile)) {
-		    throw new IllegalStateException(EXCEPTION_PREFIX_INCOMPATIBLE_ARCH);
+		    throw new IllegalStateException("A 32bit wineprefix cannot execute 64bits executables!"); //$NON-NLS-1$
 		}
 	    }
 	} catch (IOException e) {
@@ -752,7 +746,7 @@ public class Wine implements SetupWizardComponent {
 
     private void validateWineInstallationInitialized() throws ScriptFailureException {
 	if (wineVersion == null) {
-	    throw new ScriptFailureException(EXCEPTION_PREFIX_NOT_INITIALIZED);
+	    throw new ScriptFailureException("The prefix must be initialized before running wine"); //$NON-NLS-1$
 	}
     }
 
