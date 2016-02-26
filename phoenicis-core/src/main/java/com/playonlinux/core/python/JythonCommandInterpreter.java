@@ -23,9 +23,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
-import org.apache.log4j.Logger;
 import org.python.core.PyException;
 import org.python.util.InteractiveInterpreter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.services.manager.Service;
@@ -35,7 +36,7 @@ import com.playonlinux.injection.Scan;
 
 @Scan
 public class JythonCommandInterpreter implements CommandInterpreter, Service {
-    private static final Logger LOGGER = Logger.getLogger(JythonCommandInterpreter.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(JythonCommandInterpreter.class);
 
     @Inject
     static JythonInterpreterFactory jythonJythonInterpreterFactory;
@@ -63,7 +64,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                 interactiveInterpreter.setOut(returnBuffer);
                 interactiveInterpreter.setErr(returnBuffer);
             } catch (PlayOnLinuxException e) {
-                LOGGER.error(e);
+                LOGGER.error("Failed to instanciate Jython interpreter", e);
             }
         }
 
@@ -82,7 +83,7 @@ public class JythonCommandInterpreter implements CommandInterpreter, Service {
                     interactiveInterpreter.exec(completeCommand);
                     callback.accept(returnBuffer.toString());
                 } catch (PyException e) {
-                    LOGGER.debug(e);
+                    LOGGER.debug("Failed to execute Jython command", e);
                     callback.accept(e.toString());
                 }
             });

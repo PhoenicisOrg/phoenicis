@@ -27,7 +27,8 @@ import java.nio.file.Paths;
 import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 
@@ -38,7 +39,7 @@ import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
 public final class FileAnalyser {
-    private static final Logger LOGGER = Logger.getLogger(FileAnalyser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileAnalyser.class);
 
     private FileAnalyser() {
         // Utility class
@@ -67,7 +68,7 @@ public final class FileAnalyser {
         try {
             return getMatch(inputFile).getMimeType();
         } catch (MagicMatchNotFoundException e) {
-            LOGGER.debug(e);
+            LOGGER.debug("Failed to get Mime Type", e);
             final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
             return mimeTypesMap.getContentType(inputFile);
         }

@@ -55,7 +55,6 @@ public class PlayOnLinuxApp {
             }
 
             playOnLinuxConfig.load();
-            playOnLinuxContext.initLogger();
             serviceManager.init(new PlayOnLinuxServicesConfiguration());
 
             controller.startApplication();

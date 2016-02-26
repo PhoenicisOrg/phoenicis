@@ -25,7 +25,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang.mutable.MutableBoolean;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
@@ -41,9 +42,10 @@ import com.playonlinux.injection.Scan;
  */
 @Scan
 public class ProcessPipe implements Service {
-    private static final Logger LOGGER = Logger.getLogger(ProcessPipe.class);
     private static final String LOG_ERROR_CLOSING_STREAMS = "Error occured while trying to close streams";
 
+    private final Logger LOGGER = LoggerFactory.getLogger(ProcessPipe.class);
+    
     @Inject
     static ServiceManager serviceManager;
 

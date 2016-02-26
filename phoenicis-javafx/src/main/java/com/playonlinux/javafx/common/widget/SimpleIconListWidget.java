@@ -24,7 +24,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;
@@ -42,7 +43,7 @@ public class SimpleIconListWidget
     private final Image defaultIcon =
             new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
-    private static final Logger LOGGER = Logger.getLogger(SimpleIconListWidget.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(SimpleIconListWidget.class);
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem<>();

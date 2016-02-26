@@ -21,15 +21,17 @@ package com.playonlinux.core.utils.archive.cab;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CFFolder extends AbstractCabStructure {
+    private final Logger LOGGER = LoggerFactory.getLogger(AbstractCabStructure.class);
+
     byte[] coffCabStart = new byte[4];
     byte[] cCFData = new byte[2];
     byte[] typeCompress = new byte[2];
 
     byte[] abReserve = new byte[256];
-    private static final Logger LOGGER = Logger.getLogger(AbstractCabStructure.class);
 
     CFFolder(long offset) {
         super(offset);
@@ -80,7 +82,7 @@ public class CFFolder extends AbstractCabStructure {
         try {
             compressType = getCompressType().name();
         } catch (CabException e) {
-            LOGGER.warn(e);
+            LOGGER.warn("Failed to find compress type", e);
             compressType = "Unknown";
         }
 
