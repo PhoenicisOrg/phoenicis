@@ -23,7 +23,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.core.webservice.DownloadManager;
@@ -39,8 +40,7 @@ import javafx.scene.layout.VBox;
  * In general, we should avoid adding such mechanism in the UI implementation
  */
 public class RemoteImage extends VBox {
-
-    private static final Logger LOGGER = Logger.getLogger(RemoteImage.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(RemoteImage.class);
 
     private final URL imageUrl;
 
@@ -95,11 +95,11 @@ public class RemoteImage extends VBox {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    LOGGER.warn(e);
+                    LOGGER.warn("Failed to close stream", e);
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn(e);
+            LOGGER.warn("Failed to get image", e);
         }
     }
 

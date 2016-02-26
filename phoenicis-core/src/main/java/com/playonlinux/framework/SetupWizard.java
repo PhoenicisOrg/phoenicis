@@ -32,11 +32,11 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.apache.log4j.Logger;
 import org.python.modules.Setup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxContext;
-import com.playonlinux.core.log.LoggerFactory;
 import com.playonlinux.core.log.ScriptLogger;
 import com.playonlinux.core.messages.CancelerSynchronousMessage;
 import com.playonlinux.core.messages.InterrupterAsynchroneousMessage;
@@ -56,13 +56,13 @@ import com.playonlinux.ui.api.UIMessageSender;
 
 @Scan
 public class SetupWizard implements CompleteWizard {
-    private static final Logger LOGGER = Logger.getLogger(Setup.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(Setup.class);
 
     @Inject
     static Controller controller;
 
     @Inject
-    static LoggerFactory loggerFactory;
+    static com.playonlinux.core.log.LoggerFactory loggerFactory;
 
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;

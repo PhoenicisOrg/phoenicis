@@ -18,14 +18,6 @@
 
 package com.playonlinux.core.webservice;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.playonlinux.core.dto.DTO;
-import com.playonlinux.core.entities.ProgressEntity;
-import com.playonlinux.core.entities.ProgressState;
-import com.playonlinux.core.services.manager.Service;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
@@ -33,8 +25,18 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.core.dto.DTO;
+import com.playonlinux.core.entities.ProgressEntity;
+import com.playonlinux.core.entities.ProgressState;
+import com.playonlinux.core.services.manager.Service;
+
 public abstract class Webservice<T extends DTO> implements Service {
-    private static final Logger LOGGER = Logger.getLogger(Webservice.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(Webservice.class);
 
     private final URL url;
     private final Semaphore updateSemaphore = new Semaphore(1);

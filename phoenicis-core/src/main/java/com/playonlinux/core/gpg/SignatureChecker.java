@@ -30,7 +30,6 @@ import java.security.Security;
 import java.util.Iterator;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.log4j.Logger;
 import org.bouncycastle.bcpg.ArmoredInputStream;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPException;
@@ -40,15 +39,18 @@ import org.bouncycastle.openpgp.PGPPublicKeyRing;
 import org.bouncycastle.openpgp.PGPPublicKeyRingCollection;
 import org.bouncycastle.openpgp.PGPSignature;
 import org.bouncycastle.openpgp.PGPSignatureList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Verifies the signature of a script
  */
 public class SignatureChecker {
+    private final Logger LOGGER = LoggerFactory.getLogger(SignatureChecker.class);
+
     private String publicKey;
     private String signedData;
     private String signature;
-    private static final Logger LOGGER = Logger.getLogger(SignatureChecker.class);
 
     /**
      * Define the signature

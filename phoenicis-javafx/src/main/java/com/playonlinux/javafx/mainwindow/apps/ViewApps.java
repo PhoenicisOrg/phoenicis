@@ -23,7 +23,8 @@ import static com.playonlinux.core.lang.Localisation.translate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsFilter;
@@ -49,7 +50,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 public class ViewApps extends MainWindowView {
-    private static final Logger LOGGER = Logger.getLogger(ViewApps.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
 
     private FailurePanel failurePanel;
     private HBox waitPanel;
@@ -132,7 +133,7 @@ public class ViewApps extends MainWindowView {
             try {
                 this.eventHandlerApps.updateAvailableInstallers();
             } catch (PlayOnLinuxException e) {
-                LOGGER.warn(e);
+                LOGGER.warn("Failed to update available installers", e);
             }
         });
     }
