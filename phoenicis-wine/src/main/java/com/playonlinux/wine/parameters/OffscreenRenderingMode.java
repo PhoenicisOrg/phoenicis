@@ -21,12 +21,12 @@ package com.playonlinux.wine.parameters;
 import com.playonlinux.i18n.Messages;
 
 public enum OffscreenRenderingMode {
-	DEFAULT, FBO, BACKBUFFER, PBUFFER;
+    DEFAULT, FBO, BACKBUFFER, PBUFFER;
 
-	private final String name = Messages.getString(name());
+    private final String name = Messages.getString(name());
 
-	@Override
-	public String toString() {
-		return name;
-	}
+    @Override
+    public String toString() {
+        return name;
+    }
 }

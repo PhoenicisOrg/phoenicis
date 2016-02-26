@@ -22,7 +22,7 @@ import com.playonlinux.i18n.Messages;
 
 public enum GLSL {
     DEFAULT, DISABLED, ENABLED;
-	
+
     private final String name = Messages.getString(name());
 
     @Override
