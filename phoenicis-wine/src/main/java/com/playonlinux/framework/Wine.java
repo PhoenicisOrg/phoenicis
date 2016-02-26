@@ -54,6 +54,7 @@ import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.filesystem.DirectoryWatcherSize;
 import com.playonlinux.framework.wizard.SetupWizardComponent;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.i18n.Messages;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
@@ -76,10 +77,10 @@ public class Wine implements SetupWizardComponent {
 	private static final String EXCEPTION_SCRIPT_ABORTED = "The script was aborted"; //$NON-NLS-1$
 	private static final String EXCEPTION_WINE_ERROR = "Error while running wine:"; //$NON-NLS-1$
 
-	private static final String I18N_PROGRAM_INSTALLING = "Please wait while the program is being installed...";
-	private static final String I18N_VIRTUAL_DRIVE_EXIST = "The target virtual drive %s already exists:";
-	private static final String I18N_VIRTUAL_DRIVE_CREATION = "Please wait while the virtual drive is being created...";
-	private static final String I18N_VIRTUAL_DRIVE_DELETION = "Please wait while the virtual drive is being deleted...";
+	private static final String I18N_PROGRAM_INSTALLING = Messages.getString("Wine.ProgramInstall"); //$NON-NLS-1$
+	private static final String I18N_VIRTUAL_DRIVE_EXIST = Messages.getString("Wine.DriveExist"); //$NON-NLS-1$
+	private static final String I18N_VIRTUAL_DRIVE_CREATION = Messages.getString("Wine.DriveCreation"); //$NON-NLS-1$
+	private static final String I18N_VIRTUAL_DRIVE_DELETION = Messages.getString("Wine.DriveDeletion"); //$NON-NLS-1$
 	
 	private static final String LOG_LOGGING_WINEPREFIX_FAILED = "Unable to log to the wineprefix"; //$NON-NLS-1$
 	private static final String LOG_MANUALLY_MODIFIED_REGISTRY = "User manually modified the registry"; //$NON-NLS-1$
