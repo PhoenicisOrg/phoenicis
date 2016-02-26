@@ -7,6 +7,6 @@ import org.junit.Test;
 public class MessagesTest {
     @Test
     public void getStringTest() {
-        assertEquals("test", Messages.getString("test"));
+        assertEquals("Default", Messages.getString("DEFAULT"));
     }
 }
