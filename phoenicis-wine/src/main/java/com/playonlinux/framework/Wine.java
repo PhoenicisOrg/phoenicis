@@ -70,42 +70,42 @@ import com.playonlinux.wine.registry.StringValueType;
 public class Wine implements SetupWizardComponent {
 	private static final Logger LOGGER = Logger.getLogger(Wine.class);
 	
-	private static final String EXCEPTION_PREFIX_INCOMPATIBLE_ARCH = "A 32bit wineprefix cannot execute 64bits executables!";
-	private static final String EXCEPTION_PREFIX_NOT_INITIALIZED = "The prefix must be initialized before running wine";
-	private static final String EXCEPTION_PREFIX_NOT_SELECTED = "Prefix must be selected!";
-	private static final String EXCEPTION_SCRIPT_ABORTED = "The script was aborted";
-	private static final String EXCEPTION_WINE_ERROR = "Error while running wine:";
+	private static final String EXCEPTION_PREFIX_INCOMPATIBLE_ARCH = "A 32bit wineprefix cannot execute 64bits executables!"; //$NON-NLS-1$
+	private static final String EXCEPTION_PREFIX_NOT_INITIALIZED = "The prefix must be initialized before running wine"; //$NON-NLS-1$
+	private static final String EXCEPTION_PREFIX_NOT_SELECTED = "Prefix must be selected!"; //$NON-NLS-1$
+	private static final String EXCEPTION_SCRIPT_ABORTED = "The script was aborted"; //$NON-NLS-1$
+	private static final String EXCEPTION_WINE_ERROR = "Error while running wine:"; //$NON-NLS-1$
 
 	private static final String I18N_PROGRAM_INSTALLING = "Please wait while the program is being installed...";
 	private static final String I18N_VIRTUAL_DRIVE_EXIST = "The target virtual drive %s already exists:";
 	private static final String I18N_VIRTUAL_DRIVE_CREATION = "Please wait while the virtual drive is being created...";
 	private static final String I18N_VIRTUAL_DRIVE_DELETION = "Please wait while the virtual drive is being deleted...";
 	
-	private static final String LOG_LOGGING_WINEPREFIX_FAILED = "Unable to log to the wineprefix";
-	private static final String LOG_MANUALLY_MODIFIED_REGISTRY = "User manually modified the registry";
-	private static final String LOG_NOT_A_FILE = " does not seem to be a file. Not logging";
-	private static final String LOG_LINE_SEPARATOR = "-----------";
-	private static final String LOG_CONTENT_OF = "Content of ";
-	private static final String LOG_CHOICE_ABORT = "User choice: ABORT";
-	private static final String LOG_CHOICE_ERASE = "User choice: ERASE";
-	private static final String LOG_CHOICE_OVERWRITE = "User choice: OVERWRITE";
-	private static final String LOG_PREFIX_EXIST = "Prefix already exists";
-	private static final String LOG_WINE_WAIT_FAILED = "Unable to wait for wine processes";
+	private static final String LOG_LOGGING_WINEPREFIX_FAILED = "Unable to log to the wineprefix"; //$NON-NLS-1$
+	private static final String LOG_MANUALLY_MODIFIED_REGISTRY = "User manually modified the registry"; //$NON-NLS-1$
+	private static final String LOG_NOT_A_FILE = " does not seem to be a file. Not logging"; //$NON-NLS-1$
+	private static final String LOG_LINE_SEPARATOR = "-----------"; //$NON-NLS-1$
+	private static final String LOG_CONTENT_OF = "Content of "; //$NON-NLS-1$
+	private static final String LOG_CHOICE_ABORT = "User choice: ABORT"; //$NON-NLS-1$
+	private static final String LOG_CHOICE_ERASE = "User choice: ERASE"; //$NON-NLS-1$
+	private static final String LOG_CHOICE_OVERWRITE = "User choice: OVERWRITE"; //$NON-NLS-1$
+	private static final String LOG_PREFIX_EXIST = "Prefix already exists"; //$NON-NLS-1$
+	private static final String LOG_WINE_WAIT_FAILED = "Unable to wait for wine processes"; //$NON-NLS-1$
 
 	private static final String DEFAULT_ARCHITECTURE = Architecture.I386.name();
-	private static final String DEFAULT_DISTRIBUTION = "staging";
-	private static final String OVERWRITE = "Overwrite (usually works, no guarantee)";
-	private static final String ERASE = "Erase (virtual drive content will be lost)";
-	private static final String ABORT = "Abort installation";
+	private static final String DEFAULT_DISTRIBUTION = "staging"; //$NON-NLS-1$
+	private static final String OVERWRITE = "Overwrite (usually works, no guarantee)"; //$NON-NLS-1$
+	private static final String ERASE = "Erase (virtual drive content will be lost)"; //$NON-NLS-1$
+	private static final String ABORT = "Abort installation"; //$NON-NLS-1$
 
-	private static final String REGEDIT = "regedit";
-	private static final String POL = "pol";
-	private static final String REGISTRY = "registry";
-	private static final String STAR = "*";
-	private static final String DLLOVERRIDES = "DllOverrides";
-	private static final String WINE = "Wine";
-	private static final String SOFTWARE = "Software";
-	private static final String HKEY_CURRENT_USER = "HKEY_CURRENT_USER";
+	private static final String REGEDIT = "regedit"; //$NON-NLS-1$
+	private static final String POL = "pol"; //$NON-NLS-1$
+	private static final String REGISTRY = "registry"; //$NON-NLS-1$
+	private static final String STAR = "*"; //$NON-NLS-1$
+	private static final String DLLOVERRIDES = "DllOverrides"; //$NON-NLS-1$
+	private static final String WINE = "Wine"; //$NON-NLS-1$
+	private static final String SOFTWARE = "Software"; //$NON-NLS-1$
+	private static final String HKEY_CURRENT_USER = "HKEY_CURRENT_USER"; //$NON-NLS-1$
 	
 	private static final long NEWPREFIXSIZE = 320_000_000L;
 
