@@ -37,7 +37,7 @@ public class VideoMemorySize {
 
     @Override
     public String toString() {
-        if (isDefault) {
+        if(isDefault) {
             return "Default";
         } else {
             return Integer.toString(videoSize);
@@ -45,11 +45,23 @@ public class VideoMemorySize {
     }
 
     public static VideoMemorySize[] possibleValues() {
-        return new VideoMemorySize[] { new VideoMemorySize(true, 0), new VideoMemorySize(false, 32),
-                new VideoMemorySize(false, 64), new VideoMemorySize(false, 128), new VideoMemorySize(false, 256),
-                new VideoMemorySize(false, 384), new VideoMemorySize(false, 512), new VideoMemorySize(false, 768),
-                new VideoMemorySize(false, 1024), new VideoMemorySize(false, 2048), new VideoMemorySize(false, 3072),
-                new VideoMemorySize(false, 4096), new VideoMemorySize(false, 5120), new VideoMemorySize(false, 6144),
-                new VideoMemorySize(false, 7168), new VideoMemorySize(false, 8192) };
+        return new VideoMemorySize[]{
+                new VideoMemorySize(true, 0),
+                new VideoMemorySize(false, 32),
+                new VideoMemorySize(false, 64),
+                new VideoMemorySize(false, 128),
+                new VideoMemorySize(false, 256),
+                new VideoMemorySize(false, 384),
+                new VideoMemorySize(false, 512),
+                new VideoMemorySize(false, 768),
+                new VideoMemorySize(false, 1024),
+                new VideoMemorySize(false, 2048),
+                new VideoMemorySize(false, 3072),
+                new VideoMemorySize(false, 4096),
+                new VideoMemorySize(false, 5120),
+                new VideoMemorySize(false, 6144),
+                new VideoMemorySize(false, 7168),
+                new VideoMemorySize(false, 8192)
+        };
     }
 }
