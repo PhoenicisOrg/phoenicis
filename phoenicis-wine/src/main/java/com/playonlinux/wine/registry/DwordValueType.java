@@ -18,12 +18,11 @@
 
 package com.playonlinux.wine.registry;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class DwordValueType extends AbstractValueType {
     private final long value;
-
-    public DwordValueType(long value) {
-        this.value = value;
-    }
 
     @Override
     String getText() {
@@ -32,6 +31,6 @@ public class DwordValueType extends AbstractValueType {
 
     @Override
     public String toRegString() {
-        return "dword:"+getText();
+        return "dword:" + getText();
     }
 }

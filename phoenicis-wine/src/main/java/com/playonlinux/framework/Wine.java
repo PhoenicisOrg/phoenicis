@@ -64,6 +64,7 @@ import com.playonlinux.wine.registry.RegistryValue;
 import com.playonlinux.wine.registry.RegistryWriter;
 import com.playonlinux.wine.registry.StringValueType;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -90,6 +91,7 @@ public class Wine implements SetupWizardComponent {
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
     private WineVersion wineVersion;
+    @Getter
     private int lastReturnCode = -1;
 
     private OutputStream outputStream = new NullOutputStream();
@@ -755,10 +757,6 @@ public class Wine implements SetupWizardComponent {
 
     public ConfigFile config() {
         return prefix.getPrefixConfigFile();
-    }
-
-    public int getLastReturnCode() {
-        return lastReturnCode;
     }
 
     @Override

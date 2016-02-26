@@ -34,6 +34,7 @@ import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.Getter;
 import lombok.Setter;
 
 @Scan
@@ -49,6 +50,7 @@ public class AppsManager implements Service {
 
     private InstallerSourceWebserviceDefaultImplementation installerSourceWebserviceImplementation;
     private URL webserviceUrl;
+    @Getter
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
 
     public boolean isUpdating() {
@@ -100,9 +102,5 @@ public class AppsManager implements Service {
             throw new ServiceInitializationException(e);
         }
         this.refresh();
-    }
-
-    public DownloadEnvelope<Collection<CategoryDTO>> getDownloadEnvelope() {
-        return downloadEnvelope;
     }
 }

@@ -21,12 +21,17 @@ package com.playonlinux.core.version;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import lombok.Getter;
+
 /**
  * Represents a version
  */
 public class Version {
+    @Getter
     private final int bigNumber;
+    @Getter
     private final int intermediateNumber;
+    @Getter
     private final int lowNumber;
     private final String customName;
 
@@ -54,18 +59,6 @@ public class Version {
         } else {
             lowNumber = Integer.valueOf(splitVersion[2]);
         }
-    }
-
-    public int getBigNumber() {
-        return bigNumber;
-    }
-
-    public int getIntermediateNumber() {
-        return intermediateNumber;
-    }
-
-    public int getLowNumber() {
-        return lowNumber;
     }
 
     @Override

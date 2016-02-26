@@ -8,16 +8,17 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.playonlinux.core.utils.Architecture;
 import com.playonlinux.core.utils.OperatingSystem;
 
-public class WineDistribution {
-    private final OperatingSystem operatingSystem;
-    private final Architecture architecture;
-    private final String distributionCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    public WineDistribution(OperatingSystem operatingSystem, Architecture architecture, String distributionCode) {
-        this.operatingSystem = operatingSystem;
-        this.architecture = architecture;
-        this.distributionCode = distributionCode;
-    }
+@RequiredArgsConstructor
+public class WineDistribution {
+    @Getter
+    private final OperatingSystem operatingSystem;
+    @Getter
+    private final Architecture architecture;
+    @Getter
+    private final String distributionCode;
 
     /**
      * Construct from a short code string with the current operating system.
@@ -28,18 +29,6 @@ public class WineDistribution {
                 Architecture.fromWinePackageName(shortCodeName.split("-")[1]),
                 shortCodeName.split("-")[0]
         );
-    }
-
-    public Architecture getArchitecture() {
-        return architecture;
-    }
-
-    public String getDistributionCode() {
-        return distributionCode;
-    }
-
-    public OperatingSystem getOperatingSystem() {
-        return operatingSystem;
     }
 
     public String asNameWithCurrentOperatingSystem() {
@@ -57,6 +46,4 @@ public class WineDistribution {
                 .append(distributionCode)
                 .toString();
     }
-
-
 }

@@ -21,26 +21,25 @@ package com.playonlinux.win32;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import lombok.Getter;
+
 /**
  * Represents a WIN32 ULONG
  * A 32-bit unsigned integer. The range is 0 through 4294967295 decimal.
  */
 public class ULong {
-    private final int ulongContent;
+    @Getter
+    private final int content;
 
-    public ULong(int ulongContent) {
-        this.ulongContent = ulongContent;
+    public ULong(int content) {
+        this.content = content;
     }
 
     public ULong(byte[] bytes, int offset) {
-        ulongContent = ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
-    }
-
-    public int get() {
-        return ulongContent;
+        content = ByteBuffer.wrap(bytes, offset, 4).order(ByteOrder.LITTLE_ENDIAN).getInt();
     }
 
     public long getUnsignedValue() {
-        return ulongContent & 0xFFFFFFFFL;
+        return content & 0xFFFFFFFFL;
     }
 }

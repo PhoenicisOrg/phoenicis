@@ -28,15 +28,15 @@ import com.playonlinux.engines.wine.dto.WineVersionDTO;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Scan
 public class GeckoWinePackage implements WinePackage {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
+    
     private final WineVersionDTO wineVersionDTO;
-
-    public GeckoWinePackage(WineVersionDTO wineVersionDTO) {
-        this.wineVersionDTO = wineVersionDTO;
-    }
 
     @Override
     public File getPackageDestination() {

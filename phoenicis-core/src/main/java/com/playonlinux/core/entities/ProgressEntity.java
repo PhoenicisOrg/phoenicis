@@ -20,10 +20,13 @@ package com.playonlinux.core.entities;
 
 import com.playonlinux.core.dto.DTO;
 
+import lombok.Data;
+
 /**
  * Represent a progress state that will be sent to the UI. The UI will be able
  * to represent this progress state (progressbar, etc...)
  */
+@Data
 public class ProgressEntity implements DTO {
     private final ProgressState state;
     private final double percent;
@@ -36,21 +39,9 @@ public class ProgressEntity implements DTO {
         this.progressText = builder.progressText;
     }
 
-    public ProgressState getState() {
-        return state;
-    }
-
-    public double getPercent() {
-        return percent;
-    }
-
-    public String getProgressText() {
-        return progressText;
-    }
-
     @Override
     public String toString() {
-        return this.state.name();
+        return state.name();
     }
 
     public static class Builder {

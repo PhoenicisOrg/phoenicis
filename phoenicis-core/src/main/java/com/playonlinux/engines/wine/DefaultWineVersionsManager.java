@@ -47,6 +47,7 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
+import lombok.Getter;
 import lombok.Setter;
 
 @Scan
@@ -57,6 +58,7 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    @Getter
     private Collection<WineVersionDistributionWebDTO> wineVersionDistributionDTOs = new ArrayList<>();
     private DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> downloadEnvelope;
 
@@ -116,11 +118,6 @@ public class DefaultWineVersionsManager implements WineVersionManager {
                 webserviceUrl);
         wineversionsSourceWebserviceImplementation.setOnDownloadUpdate(this::update);
         playOnLinuxBackgroundServicesManager.register(wineversionsSourceWebserviceImplementation);
-    }
-
-    @Override
-    public Collection<WineVersionDistributionWebDTO> getWineVersionDistributionDTOs() {
-        return wineVersionDistributionDTOs;
     }
 
     @Override

@@ -18,13 +18,16 @@
 
 package com.playonlinux.core.services.manager;
 
+import lombok.Getter;
+
 /**
  * Represents the definition of the implementation of a given service.
  * This class holds the interface name of the services and the chosen implementation
  */
 public class ServiceImplementationDefinition {
+    @Getter
     private final Class<? extends Service> interfaces;
-
+    @Getter
     private final Class<? extends Service> implementation;
 
     public ServiceImplementationDefinition(
@@ -38,22 +41,5 @@ public class ServiceImplementationDefinition {
         }
         this.interfaces = interfaces;
         this.implementation = implementation;
-    }
-
-
-    /**
-     * Getter
-     * @return The interface that needs to be implemented
-     */
-    public Class<? extends Service> getImplementation() {
-        return implementation;
-    }
-
-    /**
-     * Getter
-     * @return The actual implementation of the interface
-     */
-    public Class<? extends Service> getInterfaces() {
-        return interfaces;
     }
 }

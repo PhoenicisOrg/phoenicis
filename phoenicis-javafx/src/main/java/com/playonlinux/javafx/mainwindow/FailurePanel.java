@@ -27,8 +27,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import lombok.Getter;
 
 public class FailurePanel extends VBox {
+    @Getter
     private final Button retryButton;
 
     public FailurePanel() {
@@ -48,9 +50,5 @@ public class FailurePanel extends VBox {
         retryButton = new Button(translate("Retry"), retryImage);
 
         this.getChildren().addAll(failureNotificationLbl, retryButton);
-    }
-
-    public Button getRetryButton() {
-        return retryButton;
     }
 }

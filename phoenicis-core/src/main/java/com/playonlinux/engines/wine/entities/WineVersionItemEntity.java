@@ -20,14 +20,9 @@ package com.playonlinux.engines.wine.entities;
 
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
+@Data
 public class WineVersionItemEntity implements Entity {
     private final String version;
-
-    public WineVersionItemEntity(String version) {
-        this.version = version;
-    }
-
-    public String getVersion() {
-        return version;
-    }
 }

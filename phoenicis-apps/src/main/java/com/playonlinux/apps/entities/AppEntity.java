@@ -26,11 +26,13 @@ import java.util.List;
 import com.playonlinux.core.entities.Entity;
 import com.playonlinux.core.entities.NameableEntity;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Represents an application {@link Entity}
  */
+@Data
 public class AppEntity implements Entity, NameableEntity {
     private final String name;
     private final String categoryName;
@@ -52,40 +54,7 @@ public class AppEntity implements Entity, NameableEntity {
         this.scripts = builder.scripts;
     }
 
-    public List<ScriptEntity> getScripts() {
-        return scripts;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public boolean isCommercial() {
-        return isCommercial;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public boolean isTesting() {
-        return isTesting;
-    }
-
-    public boolean isRequiresNoCd() {
-        return requiresNoCd;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<URL> getMiniaturesUrls() {
-        return miniaturesUrls;
-    }
-
-            @ Slf4j
+    @Slf4j
     public static class Builder {
         private String name;
         private String categoryName;

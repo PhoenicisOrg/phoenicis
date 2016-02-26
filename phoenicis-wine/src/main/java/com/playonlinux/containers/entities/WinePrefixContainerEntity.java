@@ -30,6 +30,9 @@ import com.playonlinux.wine.parameters.RenderTargetModeLock;
 import com.playonlinux.wine.parameters.StrictDrawOrdering;
 import com.playonlinux.wine.parameters.VideoMemorySize;
 
+import lombok.Data;
+
+@Data
 public class WinePrefixContainerEntity extends ContainerEntity {
     private final String wineVersion;
     private final String wineDistribution;
@@ -62,65 +65,6 @@ public class WinePrefixContainerEntity extends ContainerEntity {
         this.alwaysOffscreen = builder.alwaysOffscreen;
         this.mouseWarpOverride = builder.mouseWarpOverride;
         this.winePrefixDirectory = builder.winePrefixDirectory;
-    }
-
-    /* General */
-    public String getWineArchitecture() {
-        return wineArchitecture;
-    }
-
-    public String getWineDistribution() {
-        return wineDistribution;
-    }
-
-    public String getWineVersion() {
-        return wineVersion;
-    }
-
-    /* Graphics */
-    public GLSL getGlslValue() {
-        return glslValue;
-    }
-
-    public DirectDrawRenderer getDirectDrawRenderer() {
-        return directDrawRenderer;
-    }
-
-    public VideoMemorySize getVideoMemorySize() {
-        return videoMemorySize;
-    }
-
-    public OffscreenRenderingMode getOffscreenRenderingMode() {
-        return offscreenRenderingMode;
-    }
-
-    public RenderTargetModeLock getRenderTargetModeLock() {
-        return renderTargetModeLock;
-    }
-
-    public StrictDrawOrdering getStrictDrawOrdering() {
-        return strictDrawOrdering;
-    }
-
-    public Multisampling getMultisampling() {
-        return multisampling;
-    }
-
-    public AlwaysOffscreen getAlwaysOffscreen() {
-        return alwaysOffscreen;
-    }
-
-    /* Input */
-    public MouseWarpOverride getMouseWarpOverride() {
-        return mouseWarpOverride;
-    }
-
-    public File getWinePrefixDirectory() {
-        return winePrefixDirectory;
-    }
-
-    public boolean isAutomaticallyUpdated() {
-        return isAutomaticallyUpdated;
     }
 
     public static class Builder {

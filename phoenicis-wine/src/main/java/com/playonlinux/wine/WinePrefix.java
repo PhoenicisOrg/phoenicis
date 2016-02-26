@@ -46,12 +46,15 @@ import com.playonlinux.wine.configurations.WinePrefixInputConfiguration;
 import com.playonlinux.wine.registry.RegistryKey;
 import com.playonlinux.wine.registry.RegistryParser;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Represents a wineprefix
  */
 @Slf4j
+@RequiredArgsConstructor
 @Scan
 public class WinePrefix implements AutoCloseable {
     private static final Version DEFAULT_VERSION = new Version("1.7.49"); // FIXME
@@ -75,13 +78,10 @@ public class WinePrefix implements AutoCloseable {
 
     private static final String[] SEARCH_EXCLUDED_EXECUTABLE = new String[] { "iexplore.exe", "notepad.exe" };
 
+    @Getter
     private final File winePrefixDirectory;
     private PrintWriter printWriterLogger = null;
     private WinePrefixLogger logOutputStream = null;
-
-    public WinePrefix(File winePrefixDirectory) {
-        this.winePrefixDirectory = winePrefixDirectory;
-    }
 
     private RegistryKey parseRegistryFile(String filename, String nodeName) throws WineException {
         RegistryParser registryParser = new RegistryParser(new File(winePrefixDirectory, filename), nodeName);
@@ -108,11 +108,7 @@ public class WinePrefix implements AutoCloseable {
     }
 
     public String getAbsolutePath() {
-        return this.winePrefixDirectory.getAbsolutePath();
-    }
-
-    public File getWinePrefixDirectory() {
-        return this.winePrefixDirectory;
+        return winePrefixDirectory.getAbsolutePath();
     }
 
     public long getSize() {

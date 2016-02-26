@@ -22,6 +22,9 @@ import java.util.List;
 
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
+@Data
 public class WineVersionDistributionItemEntity implements Entity {
     private final String description;
     private final List<WineVersionItemEntity> availablePackages;
@@ -33,22 +36,6 @@ public class WineVersionDistributionItemEntity implements Entity {
         this.description = builder.description;
         this.availablePackages = builder.availablePackages;
         this.installedPackages = builder.installedPackages;
-    }
-
-    public List<WineVersionItemEntity> getAvailablePackages() {
-        return availablePackages;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<WineVersionItemEntity> getInstalledPackages() {
-        return installedPackages;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public static class Builder {

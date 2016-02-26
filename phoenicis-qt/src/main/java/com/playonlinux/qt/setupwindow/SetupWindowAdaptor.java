@@ -116,7 +116,7 @@ public class SetupWindowAdaptor implements SetupWindow {
             msg.sendCancelSignal();
         }
         setupWindow.close();
-        setupWindow.getContainer().removeSetupWindow(this);
+        setupWindow.getWindowContainer().removeSetupWindow(this);
     }
 
 }

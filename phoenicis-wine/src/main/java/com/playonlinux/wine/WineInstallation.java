@@ -18,15 +18,17 @@
 
 package com.playonlinux.wine;
 
-import com.playonlinux.core.version.Version;
-import com.playonlinux.engines.wine.WineDistribution;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.playonlinux.core.version.Version;
+import com.playonlinux.engines.wine.WineDistribution;
+
+import lombok.Getter;
 
 public class WineInstallation {
     private static final String WINEPREFIXCREATE_COMMAND = "wineboot";
@@ -39,7 +41,9 @@ public class WineInstallation {
     private final File binaryPath;
     private final File libraryPath;
     private final Map<String, String> applicationEnvironment;
+    @Getter
     private final WineDistribution distribution;
+    @Getter
     private final Version version;
 
     private WineInstallation(WineInstallation.Builder builder) {
@@ -154,14 +158,6 @@ public class WineInstallation {
 
     public boolean exists() {
         return this.binaryPath.exists() && this.libraryPath.exists();
-    }
-
-    public WineDistribution getDistribution() {
-        return distribution;
-    }
-
-    public Version getVersion() {
-        return version;
     }
 
     public static class Builder {

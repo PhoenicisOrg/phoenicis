@@ -32,6 +32,7 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -47,6 +48,7 @@ public abstract class Script implements Service {
 
     private Future runningScript;
 
+    @Getter
     private final String scriptContent;
 
     protected Script(String scriptContent, ExecutorService executor) {
@@ -66,10 +68,6 @@ public abstract class Script implements Service {
     @Override
     public void shutdown() {
         runningScript.cancel(true);
-    }
-
-    public String getScriptContent() {
-        return scriptContent;
     }
 
     public enum Type {

@@ -23,9 +23,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
 /**
  * Entity that represents a script.
  */
+@Data
 public class ScriptEntity implements Entity, Nameable {
     private final int id;
     private final String name;
@@ -37,25 +40,10 @@ public class ScriptEntity implements Entity, Nameable {
         url = builder.url;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
     @Override
     public String toString() {
-        return new ToStringBuilder(this.getClass().getName())
-                .append(this.id)
-                .append(this.url)
-                .append(this.name).toString();
-    }
-
-    public String getUrl() {
-        return this.url;
+        return new ToStringBuilder(this.getClass().getName()).append(this.id).append(this.url).append(this.name)
+                .toString();
     }
 
     public static class Builder {
@@ -64,7 +52,8 @@ public class ScriptEntity implements Entity, Nameable {
         private String url;
 
         public Builder() {
-            // We need a public builder to be able to createPrefix a ScriptDTO from scratch
+            // We need a public builder to be able to createPrefix a ScriptDTO
+            // from scratch
         }
 
         public Builder(ScriptEntity scriptEntity) {

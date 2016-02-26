@@ -27,6 +27,7 @@ import java.util.function.Consumer;
 
 import com.playonlinux.filesystem.DirectoryWatcherFiles;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +36,7 @@ class ShortcutSetDirectories implements AutoCloseable {
     private final DirectoryWatcherFiles iconDirectory;
     private final DirectoryWatcherFiles shortcutDirectory;
     private final URL defaultIcon;
+    @Getter
     private final List<ShortcutFiles> shortcutFiles;
 
     @Setter
@@ -48,10 +50,6 @@ class ShortcutSetDirectories implements AutoCloseable {
         this.shortcutDirectory = shortcutDirectory;
 
         this.shortcutDirectory.setOnChange(this::update);
-    }
-
-    public synchronized List<ShortcutFiles> getShortcutFiles() {
-        return shortcutFiles;
     }
 
     public void update(List<File> files) {

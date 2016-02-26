@@ -22,9 +22,12 @@ import java.util.List;
 
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
 /**
  * Represents the main entity to the available application feature
  */
+@Data
 public class AppsWindowEntity implements Entity {
     private final List<AppEntity> appsItemDTOs;
     private final List<AppsCategoryEntity> categoryDTOs;
@@ -36,22 +39,6 @@ public class AppsWindowEntity implements Entity {
         categoryDTOs = builder.appsCategories;
         downloadFailed = builder.downloadFailed;
         downloading = builder.downloading;
-    }
-
-    public List<AppEntity> getAppsItemDTOs() {
-        return appsItemDTOs;
-    }
-
-    public List<AppsCategoryEntity> getCategoryDTOs() {
-        return categoryDTOs;
-    }
-
-    public boolean isDownloadFailed() {
-        return downloadFailed;
-    }
-
-    public boolean isDownloading() {
-        return downloading;
     }
 
     public static class Builder {

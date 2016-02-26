@@ -33,7 +33,10 @@ import java.util.function.Consumer;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import lombok.Getter;
+
 public abstract class DirectoryWatcher<T> implements AutoCloseable {
+    @Getter
     protected final Path observedDirectory;
     private final WatchService watcher;
     private Consumer<T> changeConsumer;
@@ -89,10 +92,6 @@ public abstract class DirectoryWatcher<T> implements AutoCloseable {
         } catch (IOException e) {
             throw new RuntimeException(String.format("Unable to close watcher for %s", observedDirectory.toString()));
         }
-    }
-
-    public Path getObservedDirectory() {
-        return observedDirectory;
     }
 
     public void setOnChange(Consumer<T> changeConsumer) {

@@ -35,6 +35,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
+import lombok.Getter;
+
 @Scan
 @ScriptClass
 public class WineVersion {
@@ -44,7 +46,9 @@ public class WineVersion {
     @Inject
     static ServiceManager serviceManager;
 
+    @Getter
     private final Version version;
+    @Getter
     private final WineDistribution wineDistribution;
     private final WineVersionManager wineVersionManager;
     private final WineWizard setupWizard;
@@ -82,14 +86,6 @@ public class WineVersion {
 
     public boolean isInstalled() {
         return getInstallation().exists();
-    }
-
-    public WineDistribution getWineDistribution() {
-        return wineDistribution;
-    }
-
-    public Version getVersion() {
-        return version;
     }
 
     public void install() throws CancelException {

@@ -18,47 +18,16 @@
 
 package com.playonlinux.apps.entities;
 
+import lombok.Data;
+
 /**
  * Entity that represents the state of a script that is being downloaded
  */
+@Data
 public class InstallerDownloaderEntity {
     private final boolean finished;
     private final boolean failed;
     private final boolean signatureError;
     private final double percentage;
     private final String scriptContent;
-
-    public InstallerDownloaderEntity(boolean finished,
-                                     boolean failed,
-                                     boolean signatureError,
-                                     double percentage,
-                                     String scriptContent) {
-        this.finished = finished;
-        this.failed = failed;
-        this.signatureError = signatureError;
-        this.percentage = percentage;
-        this.scriptContent = scriptContent;
-    }
-
-    public boolean isFailed() {
-        return failed;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public double getPercentage() {
-        return percentage;
-    }
-
-    public String getScriptContent() {
-        return scriptContent;
-    }
-
-    public boolean isSignatureError() {
-        return signatureError;
-    }
-
-
 }

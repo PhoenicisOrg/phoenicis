@@ -22,16 +22,11 @@ import java.io.File;
 
 import com.playonlinux.containers.entities.ContainerEntity;
 
+import lombok.Data;
+
+@Data
 public abstract class Container<E extends ContainerEntity> {
     protected final File containerPath;
-
-    public Container(File containerPath) {
-        this.containerPath = containerPath;
-    }
-
-    public File getContainerPath() {
-        return containerPath;
-    }
 
     public String getName() {
         return containerPath.getName();

@@ -26,9 +26,12 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
 
+import lombok.Data;
+
 /**
  * Represents an application
  */
+@Data
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 public class ApplicationDTO implements DTO, Nameable {
     private final int id;
@@ -45,31 +48,6 @@ public class ApplicationDTO implements DTO, Nameable {
         iconUrl = builder.iconUrl;
         miniaturesUrls = builder.miniaturesUrls;
         scripts = builder.scripts;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public List<String> getMiniaturesUrls() {
-        return miniaturesUrls;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<ScriptDTO> getScripts() {
-        return scripts;
     }
 
     public static class AlphabeticalOrderComparator implements Comparator<ApplicationDTO> {

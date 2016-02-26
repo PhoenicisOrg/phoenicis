@@ -25,28 +25,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 
+import lombok.Getter;
+
 /**
- * Represents a Windows shortcut (typically visible to Java only as a '.lnk' file).
+ * Represents a Windows shortcut (typically visible to Java only as a '.lnk'
+ * file).
  *
- * Retrieved 2011-09-23 from http://stackoverflow.com/questions/309495/windows-shortcut-lnk-parser-in-java/672775#672775
- * Originally called LnkParser
+ * Retrieved 2011-09-23 from
+ * http://stackoverflow.com/questions/309495/windows-shortcut-lnk-parser-in-java
+ * /672775#672775 Originally called LnkParser
  *
- * Written by: (the stack overflow users, obviously!)
- *   Apache Commons VFS dependency removed by crysxd (why were we using that!?) https://github.com/crysxd
- *   Headerified, refactored and commented by Code Bling http://stackoverflow.com/users/675721/code-bling
- *   Network file support added by Stefan Cordes http://stackoverflow.com/users/81330/stefan-cordes
- *   Adapted by Sam Brightman http://stackoverflow.com/users/2492/sam-brightman
- *   Based on information in 'The Windows Shortcut File Format' by Jesse Hager &lt;jessehager@iname.com&gt;
- *   And somewhat based on code from the book 'Swing Hacks: Tips and Tools for Killer GUIs'
- *     by Joshua Marinacci and Chris Adamson
- *     ISBN: 0-596-00907-0
- *     http://www.oreilly.com/catalog/swinghks/
+ * Written by: (the stack overflow users, obviously!) Apache Commons VFS
+ * dependency removed by crysxd (why were we using that!?)
+ * https://github.com/crysxd Headerified, refactored and commented by Code Bling
+ * http://stackoverflow.com/users/675721/code-bling Network file support added
+ * by Stefan Cordes http://stackoverflow.com/users/81330/stefan-cordes Adapted
+ * by Sam Brightman http://stackoverflow.com/users/2492/sam-brightman Based on
+ * information in 'The Windows Shortcut File Format' by Jesse Hager
+ * &lt;jessehager@iname.com&gt; And somewhat based on code from the book 'Swing
+ * Hacks: Tips and Tools for Killer GUIs' by Joshua Marinacci and Chris Adamson
+ * ISBN: 0-596-00907-0 http://www.oreilly.com/catalog/swinghks/
  */
-public class WindowsShortcut
-{
-    private boolean isDirectory;
-    private boolean isLocal;
-    private String readFile;
+public class WindowsShortcut {
+    @Getter
+    private boolean directory;
+    @Getter
+    private boolean local;
+    @Getter
+    private String fileName;
 
     public WindowsShortcut(File file) throws IOException, ParseException {
         try (InputStream in = new FileInputStream(file)) {
@@ -55,55 +61,36 @@ public class WindowsShortcut
     }
 
     /**
-     * Provides a quick test to see if this could be a valid link !
-     * If you try to instantiate a new WindowShortcut and the link is not valid,
-     * Exceptions may be thrown and Exceptions are extremely slow to generate,
-     * therefore any code needing to loop through several files should first check this.
+     * Provides a quick test to see if this could be a valid link ! If you try
+     * to instantiate a new WindowShortcut and the link is not valid, Exceptions
+     * may be thrown and Exceptions are extremely slow to generate, therefore
+     * any code needing to loop through several files should first check this.
      *
-     * @param file the potential link
+     * @param file
+     *            the potential link
      * @return true if may be a link, false otherwise
-     * @throws IOException if an IOException is thrown while reading from the file
+     * @throws IOException
+     *             if an IOException is thrown while reading from the file
      */
     public static boolean isPotentialValidLink(File file) throws IOException {
         boolean isPotentiallyValid;
         try (InputStream fis = new FileInputStream(file)) {
             final int minimumLength = 0x64;
-            isPotentiallyValid = file.isFile()
-                    && file.getName().toLowerCase().endsWith(".lnk")
-                    && fis.available() >= minimumLength
-                    && isMagicPresent(getBytes(fis, 32));
+            isPotentiallyValid = file.isFile() && file.getName().toLowerCase().endsWith(".lnk")
+                    && fis.available() >= minimumLength && isMagicPresent(getBytes(fis, 32));
         }
         return isPotentiallyValid;
     }
 
     /**
-     * @return the name of the filesystem object pointed to by this shortcut
-     */
-    public String getRealFilename() {
-        return readFile;
-    }
-
-    /**
-     * Tests if the shortcut points to a local resource.
-     * @return true if the 'local' bit is set in this shortcut, false otherwise
-     */
-    public boolean isLocal() {
-        return isLocal;
-    }
-
-    /**
-     * Tests if the shortcut points to a directory.
-     * @return true if the 'directory' bit is set in this shortcut, false otherwise
-     */
-    public boolean isDirectory() {
-        return isDirectory;
-    }
-
-    /**
      * Gets all the bytes from an InputStream
-     * @param in the InputStream from which to read bytes
+     * 
+     * @param in
+     *            the InputStream from which to read bytes
      * @return array of all the bytes contained in 'in'
-     * @throws IOException if an IOException is encountered while reading the data from the InputStream
+     * @throws IOException
+     *             if an IOException is encountered while reading the data from
+     *             the InputStream
      */
     private static byte[] getBytes(InputStream in) throws IOException {
         return getBytes(in, null);
@@ -111,10 +98,15 @@ public class WindowsShortcut
 
     /**
      * Gets up to max bytes from an InputStream
-     * @param in the InputStream from which to read bytes
-     * @param max maximum number of bytes to read
+     * 
+     * @param in
+     *            the InputStream from which to read bytes
+     * @param max
+     *            maximum number of bytes to read
      * @return array of all the bytes contained in 'in'
-     * @throws IOException if an IOException is encountered while reading the data from the InputStream
+     * @throws IOException
+     *             if an IOException is encountered while reading the data from
+     *             the InputStream
      */
     private static byte[] getBytes(InputStream in, Integer max) throws IOException {
         // read the entire file into a byte buffer
@@ -141,7 +133,9 @@ public class WindowsShortcut
 
     /**
      * Gobbles up link data by parsing it and storing info in member fields
-     * @param link all the bytes from the .lnk file
+     * 
+     * @param link
+     *            all the bytes from the .lnk file
      */
     private void parseLink(byte[] link) throws ParseException {
         try {
@@ -154,11 +148,11 @@ public class WindowsShortcut
             // get the file attributes byte
             final int fileAttsOffset = 0x18;
             byte fileAtts = link[fileAttsOffset];
-            byte isDirMask = (byte)0x10;
-            isDirectory = (fileAtts & isDirMask) > 0;
+            byte isDirMask = (byte) 0x10;
+            directory = (fileAtts & isDirMask) > 0;
 
             // if the shell settings are present, skip them
-            final byte hasShellMask = (byte)0x01;
+            final byte hasShellMask = (byte) 0x01;
             int shellLen = 0;
             if ((flags & hasShellMask) > 0) {
                 // the plus 2 accounts for the length marker itself
@@ -171,28 +165,28 @@ public class WindowsShortcut
 
             final int fileLocationInfoFlagOffsetOffset = 0x08;
             int fileLocationInfoFlag = link[fileStart + fileLocationInfoFlagOffsetOffset];
-            isLocal = (fileLocationInfoFlag & 2) == 0;
+            local = (fileLocationInfoFlag & 2) == 0;
             // get the local volume and local system values
-            //final int localVolumeTableOffsetOffset = 0x0C;
+            // final int localVolumeTableOffsetOffset = 0x0C;
             final int finalnameOffsetOffset = 0x18;
             int finalnameOffset = link[fileStart + finalnameOffsetOffset] + fileStart;
             String finalname = getNullDelimitedString(link, finalnameOffset);
-            if (isLocal) {
+            if (local) {
                 final int basenameOffsetOffset = 0x10;
                 int basenameOffset = link[fileStart + basenameOffsetOffset] + fileStart;
                 String basename = getNullDelimitedString(link, basenameOffset);
-                readFile = basename + finalname;
+                fileName = basename + finalname;
             } else {
                 final int networkVolumeTableOffsetOffset = 0x14;
                 int networkVolumeTableOffset = link[fileStart + networkVolumeTableOffsetOffset] + fileStart;
                 int shareNameOffsetOffset = 0x08;
-                int shareNameOffset = link[networkVolumeTableOffset + shareNameOffsetOffset]
-                        + networkVolumeTableOffset;
+                int shareNameOffset = link[networkVolumeTableOffset + shareNameOffsetOffset] + networkVolumeTableOffset;
                 String shareName = getNullDelimitedString(link, shareNameOffset);
-                readFile = shareName + "\\" + finalname;
+                fileName = shareName + "\\" + finalname;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            ParseException exception = new ParseException("Could not be parsed, probably not a valid WindowsShortcut", 0);
+            ParseException exception = new ParseException("Could not be parsed, probably not a valid WindowsShortcut",
+                    0);
             exception.initCause(e);
             throw exception;
         }
