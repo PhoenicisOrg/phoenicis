@@ -21,14 +21,9 @@ package com.playonlinux.wine.parameters;
 import com.playonlinux.i18n.Messages;
 
 public enum Multisampling {
-    DEFAULT(Messages.getString("Default")), DISABLED(Messages.getString("Disabled")), ENABLED( //$NON-NLS-1$ //$NON-NLS-2$
-            Messages.getString("Enabled")); //$NON-NLS-1$
+    DEFAULT, DISABLED, ENABLED;
 
-    private final String translatedName;
-
-    Multisampling(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    private final String translatedName = Messages.getString(name());
 
     @Override
     public String toString() {

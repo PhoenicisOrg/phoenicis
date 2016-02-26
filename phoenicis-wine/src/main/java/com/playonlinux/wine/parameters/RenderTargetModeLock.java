@@ -21,19 +21,12 @@ package com.playonlinux.wine.parameters;
 import com.playonlinux.i18n.Messages;
 
 public enum RenderTargetModeLock {
-    DEFAULT(Messages.getString("Default")), //$NON-NLS-1$
-    DISABLED(Messages.getString("Disabled")), //$NON-NLS-1$
-    READDRAW("readdraw"), //$NON-NLS-1$
-    READTEX("readtext"); //$NON-NLS-1$
+	DEFAULT, DISABLED, READDRAW, READTEX;
 
-    private final String translatedName;
+	private final String name = Messages.getString(name());
 
-    RenderTargetModeLock(String translatedName) {
-        this.translatedName = translatedName;
-    }
-
-    @Override
-    public String toString() {
-        return translatedName;
-    }
+	@Override
+	public String toString() {
+		return name;
+	}
 }

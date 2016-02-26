@@ -21,17 +21,12 @@ package com.playonlinux.wine.parameters;
 import com.playonlinux.i18n.Messages;
 
 public enum GLSL {
-    DEFAULT(Messages.getString("Default")), DISABLED(Messages.getString("Disabled")), ENABLED( //$NON-NLS-1$ //$NON-NLS-2$
-            Messages.getString("Enabled")); //$NON-NLS-1$
-
-    private final String translatedName;
-
-    GLSL(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    DEFAULT, DISABLED, ENABLED;
+	
+    private final String name = Messages.getString(name());
 
     @Override
     public String toString() {
-        return translatedName;
+        return name;
     }
 }

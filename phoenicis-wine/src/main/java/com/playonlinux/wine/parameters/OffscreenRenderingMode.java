@@ -18,20 +18,15 @@
 
 package com.playonlinux.wine.parameters;
 
+import com.playonlinux.i18n.Messages;
+
 public enum OffscreenRenderingMode {
-    DEFAULT("Default"),
-    FBO("FBO"),
-    BACKBUFFER("Backbuffer"),
-    PBUFFER("PBuffer");
+	DEFAULT, FBO, BACKBUFFER, PBUFFER;
 
-    private final String translatedName;
+	private final String name = Messages.getString(name());
 
-    OffscreenRenderingMode(String translatedName) {
-        this.translatedName = translatedName;
-    }
-
-    @Override
-    public String toString() {
-        return translatedName;
-    }
+	@Override
+	public String toString() {
+		return name;
+	}
 }
