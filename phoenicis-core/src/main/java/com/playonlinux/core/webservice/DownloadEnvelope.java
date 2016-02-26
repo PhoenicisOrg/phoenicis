@@ -20,24 +20,10 @@ package com.playonlinux.core.webservice;
 
 import com.playonlinux.core.entities.ProgressEntity;
 
-public class DownloadEnvelope<C> {
+import lombok.Data;
 
+@Data
+public class DownloadEnvelope<C> {
     C envelopeContent;
     ProgressEntity downloadState;
-
-    public C getEnvelopeContent() {
-        return envelopeContent;
-    }
-
-    public void setEnvelopeContent(C envelopeContent) {
-        this.envelopeContent = envelopeContent;
-    }
-
-    public ProgressEntity getDownloadState() {
-        return downloadState;
-    }
-
-    public void setDownloadState(ProgressEntity downloadState) {
-        this.downloadState = downloadState;
-    }
 }

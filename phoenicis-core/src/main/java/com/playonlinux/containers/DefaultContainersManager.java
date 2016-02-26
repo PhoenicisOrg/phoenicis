@@ -34,6 +34,8 @@ import com.playonlinux.filesystem.DirectoryWatcherFiles;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.Setter;
+
 @Scan
 public class DefaultContainersManager implements ContainersManager {
 
@@ -48,6 +50,7 @@ public class DefaultContainersManager implements ContainersManager {
 
     private DirectoryWatcherFiles containersDirectoryObservable;
     private final List<Container<? extends ContainerEntity>> containers = new ArrayList<>();
+    @Setter
     private Consumer<ContainersManager> onChange;
 
     @Override
@@ -83,10 +86,5 @@ public class DefaultContainersManager implements ContainersManager {
         final File containersDirectory = playOnLinuxContext.makeContainersPath();
         containersDirectoryObservable = new DirectoryWatcherFiles(executorService, containersDirectory.toPath());
         containersDirectoryObservable.setOnChange(this::update);
-    }
-
-    @Override
-    public void setOnChange(Consumer<ContainersManager> onChange) {
-        this.onChange = onChange;
     }
 }

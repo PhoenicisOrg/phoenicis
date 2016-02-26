@@ -18,6 +18,10 @@
 
 package com.playonlinux.apps;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collection;
+
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.core.entities.ProgressState;
@@ -30,9 +34,7 @@ import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
+import lombok.Setter;
 
 @Scan
 public class AppsManager implements Service {
@@ -42,6 +44,7 @@ public class AppsManager implements Service {
     @Inject
     static ServiceManager serviceManager;
 
+    @Setter
     private Runnable onChange;
 
     private InstallerSourceWebserviceDefaultImplementation installerSourceWebserviceImplementation;
@@ -58,7 +61,7 @@ public class AppsManager implements Service {
 
     public void update(DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope) {
         this.downloadEnvelope = downloadEnvelope;
-        if(onChange != null){
+        if (onChange != null) {
             onChange.run();
         }
     }
@@ -84,10 +87,12 @@ public class AppsManager implements Service {
         return new DefaultInstallerDownloaderEntityProvider(new HTTPDownloader(scriptUrl), new SignatureChecker());
     }
 
+    @Override
     public void shutdown() {
         // Nothing to shutdown
     }
 
+    @Override
     public void init() {
         try {
             webserviceUrl = playOnLinuxContext.makeInstallersWebserviceUrl();
@@ -99,9 +104,5 @@ public class AppsManager implements Service {
 
     public DownloadEnvelope<Collection<CategoryDTO>> getDownloadEnvelope() {
         return downloadEnvelope;
-    }
-
-    public void setOnChange(Runnable onChange) {
-        this.onChange = onChange;
     }
 }

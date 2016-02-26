@@ -26,10 +26,12 @@ import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.utils.FileAnalyser;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Extractor {
+    @Setter
     private Consumer<ProgressEntity> onChange;
 
     /**
@@ -66,9 +68,5 @@ public class Extractor {
         if (onChange != null) {
             onChange.accept(progressStateEntity);
         }
-    }
-
-    public void setOnChange(Consumer<ProgressEntity> onChange) {
-        this.onChange = onChange;
     }
 }

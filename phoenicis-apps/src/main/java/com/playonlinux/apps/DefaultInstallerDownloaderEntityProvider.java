@@ -38,6 +38,7 @@ import com.playonlinux.core.webservice.HTTPDownloader;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -57,6 +58,7 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
     private final File localFile;
     private final SignatureChecker signatureChecker;
     // TODO Couldn't find any class using it, double check
+    @Setter
     private Consumer<InstallerDownloaderEntity> onChange;
 
     DefaultInstallerDownloaderEntityProvider(HTTPDownloader httpDownloader, SignatureChecker signatureChecker) {
@@ -149,9 +151,4 @@ public class DefaultInstallerDownloaderEntityProvider implements InstallerDownlo
     private void startScript(Script script) {
         serviceManager.register(script);
     }
-
-    public void setOnChange(Consumer<InstallerDownloaderEntity> onChange) {
-        this.onChange = onChange;
-    }
-
 }

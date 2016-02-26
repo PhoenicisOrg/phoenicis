@@ -49,22 +49,26 @@ import com.playonlinux.javafx.ControllerJavaFXImplementation;
 import com.playonlinux.javafx.containers.WinePrefixContainerConfigurationViewFactory;
 import com.playonlinux.javafx.mainwindow.containers.AnyContainerConfigurationViewFactory;
 import com.playonlinux.qt.ControllerQtImplementation;
-import com.playonlinux.ui.api.Controller;
 import com.playonlinux.ui.EventHandler;
 import com.playonlinux.ui.EventHandlerPlayOnLinuxImplementation;
+import com.playonlinux.ui.api.Controller;
+
+import lombok.Setter;
 
 /**
  * PlayOnLinux beans configuration file
  */
-@SuppressWarnings("unused")
 public class PlayOnLinuxConfig extends AbstractConfiguration {
-
-    private boolean useCliInterface = false;
     private final PlayOnLinuxContext playOnLinuxContext = new PlayOnLinuxContext();
     private final ServiceManager playOnLinuxServiceManager = new PlayOnLinuxServicesManager();
-    private boolean useGTKInterface;
-    private boolean useQtInterface;
     private final ExecutorService executor = Executors.newCachedThreadPool();
+
+    @Setter
+    private boolean useCliInterface = false;
+    @Setter
+    private boolean useGTKInterface;
+    @Setter
+    private boolean useQtInterface;
 
     /**
      * This bean represents the UI controller
@@ -225,36 +229,6 @@ public class PlayOnLinuxConfig extends AbstractConfiguration {
     @Override
     protected String definePackage() {
         return "com.playonlinux";
-    }
-
-    /**
-     * Set the CLI interface
-     *
-     * @param enabled
-     *            Determine if this interface should be used or not
-     */
-    public void setUseCLIInterface(boolean enabled) {
-        this.useCliInterface = enabled;
-    }
-
-    /**
-     * Use the GTK interface
-     *
-     * @param useGTKInterface
-     *            Determine is the interface should be used or not
-     */
-    public void setUseGTKInterface(boolean useGTKInterface) {
-        this.useGTKInterface = useGTKInterface;
-    }
-
-    /**
-     * Use the Qt interface
-     *
-     * @param useQtInterface
-     *            Determine is the interface should be used or not
-     */
-    public void setUseQtInterface(boolean useQtInterface) {
-        this.useQtInterface = useQtInterface;
     }
 
     @Override

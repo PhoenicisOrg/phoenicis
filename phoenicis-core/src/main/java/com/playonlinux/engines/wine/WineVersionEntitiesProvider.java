@@ -34,6 +34,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 
+import lombok.Setter;
+
 @Scan
 public final class WineVersionEntitiesProvider
         implements EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> {
@@ -45,6 +47,7 @@ public final class WineVersionEntitiesProvider
     private final List<WineVersionDistributionItemEntity> filteredWineVersionDistributionItemEntities = new ArrayList<>();
 
     private Predicate<WineVersionDistributionItemEntity> lastFilter;
+    @Setter
     private Consumer<WineVersionsWindowEntity> onChange;
 
     public void update(WineVersionManager argument) {
@@ -95,9 +98,5 @@ public final class WineVersionEntitiesProvider
                 .getService(DefaultWineVersionsManager.class);
 
         defaultWineVersionsManager.setOnChange(this::update);
-    }
-
-    public void setOnChange(Consumer<WineVersionsWindowEntity> onChange) {
-        this.onChange = onChange;
     }
 }

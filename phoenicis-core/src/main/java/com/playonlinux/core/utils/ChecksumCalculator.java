@@ -33,15 +33,18 @@ import org.apache.commons.io.FileUtils;
 
 import com.playonlinux.core.entities.ProgressEntity;
 
+import lombok.Setter;
+
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
     private static final String WAIT_MESSAGE = translate("Please wait while we are verifying the file...");
 
+    @Setter
     private Consumer<ProgressEntity> onChange;
-    
+
     public String calculate(File fileToCheck, String algorithm) throws IOException {
         final long fileSize = FileUtils.sizeOf(fileToCheck);
-        try(final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
+        try (final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
             MessageDigest messageDigest;
             try {
                 messageDigest = MessageDigest.getInstance(algorithm);
@@ -64,8 +67,8 @@ public class ChecksumCalculator {
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
             readBytes += numBytes;
-            if(sizeInBytes != 0L) {
-                double percentage = (double) readBytes / (double) sizeInBytes * (double) 100;
+            if (sizeInBytes != 0L) {
+                double percentage = (double) readBytes / (double) sizeInBytes * 100;
                 changeState(percentage);
             }
         }
@@ -73,16 +76,9 @@ public class ChecksumCalculator {
     }
 
     private void changeState(double percentage) {
-        if(onChange != null){
-            onChange.accept(new ProgressEntity.Builder()
-                    .withPercent(percentage)
-                    .withProgressText(WAIT_MESSAGE)
-                    .build()
-            );
+        if (onChange != null) {
+            onChange.accept(
+                    new ProgressEntity.Builder().withPercent(percentage).withProgressText(WAIT_MESSAGE).build());
         }
-    }
-
-    public void setOnChange(Consumer<ProgressEntity> onChange) {
-        this.onChange = onChange;
     }
 }

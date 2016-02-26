@@ -30,6 +30,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 
+import lombok.Setter;
+
 @Scan
 public final class ContainersEntitiesProvider implements EntitiesProvider<ContainerEntity, ContainersWindowEntity> {
 
@@ -39,6 +41,7 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
     private Predicate<ContainerEntity> lastFilter;
 
     private ContainersManager containersManager;
+    @Setter
     private Consumer<ContainersWindowEntity> onChange;
 
     @Override
@@ -64,10 +67,5 @@ public final class ContainersEntitiesProvider implements EntitiesProvider<Contai
     public void init() {
         ContainersManager containersManagerService = serviceManager.getService(ContainersManager.class);
         containersManagerService.setOnChange(this::update);
-    }
-
-    @Override
-    public void setOnChange(Consumer<ContainersWindowEntity> onChange) {
-        this.onChange = onChange;
     }
 }

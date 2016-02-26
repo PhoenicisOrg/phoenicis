@@ -36,6 +36,8 @@ import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
+import lombok.Setter;
+
 @Scan
 public final class LibraryEntitiesProvider
         implements EntitiesProvider<InstalledApplicationEntity, LibraryWindowEntity> {
@@ -52,6 +54,7 @@ public final class LibraryEntitiesProvider
     private final List<InstalledApplicationEntity> installedApplicationsFiltered = new ArrayList<>();
 
     private Predicate<InstalledApplicationEntity> lastFilter;
+    @Setter
     private Consumer<LibraryWindowEntity> onChange;
 
     public void update(List<ShortcutFiles> argument) {
@@ -104,10 +107,4 @@ public final class LibraryEntitiesProvider
 
         shortcutSetDirectories.setOnChange(this::update);
     }
-
-    @Override
-    public void setOnChange(Consumer<LibraryWindowEntity> onChange) {
-        this.onChange = onChange;
-    }
-
 }

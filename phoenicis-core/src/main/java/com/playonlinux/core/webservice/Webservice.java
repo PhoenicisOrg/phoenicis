@@ -32,6 +32,7 @@ import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.services.manager.Service;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,6 +41,7 @@ public abstract class Webservice<T extends DTO> implements Service {
     private final Semaphore updateSemaphore = new Semaphore(1);
 
     private List<T> items;
+    @Setter
     private Consumer<DownloadEnvelope<Collection<T>>> onDownloadUpdate;
 
     public Webservice(URL url) {
@@ -98,9 +100,5 @@ public abstract class Webservice<T extends DTO> implements Service {
                 populate();
             }
         }.start();
-    }
-
-    public void setOnDownloadUpdate(Consumer<DownloadEnvelope<Collection<T>>> onDownloadUpdate) {
-        this.onDownloadUpdate = onDownloadUpdate;
     }
 }
