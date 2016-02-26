@@ -18,7 +18,6 @@
 
 package com.playonlinux.framework;
 
-import static com.playonlinux.core.lang.Localisation.translate;
 import static java.lang.String.format;
 
 import java.io.File;
@@ -31,6 +30,7 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.i18n.Messages;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
@@ -38,66 +38,67 @@ import com.playonlinux.ui.api.ProgressControl;
 @Scan
 @ScriptClass
 public class WineVersion {
-    @Inject
-    static PlayOnLinuxContext playOnLinuxContext;
+	private static final String I18N_WINE_INSTALL = Messages.getString("Wine.Install"); //$NON-NLS-1$
 
-    @Inject
-    static ServiceManager serviceManager;
+	@Inject
+	static PlayOnLinuxContext playOnLinuxContext;
 
-    private final Version version;
-    private final WineDistribution wineDistribution;
-    private final WineVersionManager wineVersionManager;
-    private final WineWizard setupWizard;
+	@Inject
+	static ServiceManager serviceManager;
 
-    /**
-     * Python constructor
-     * 
-     * @param version
-     *            Version as string
-     * @param wineDistribution
-     *            Distribution as String
-     * @param setupWizard
-     *            Setup wizard to use
-     */
-    public WineVersion(String version, String wineDistribution, WineWizard setupWizard) {
-        this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
-    }
+	private final Version version;
+	private final WineDistribution wineDistribution;
+	private final WineVersionManager wineVersionManager;
+	private final WineWizard setupWizard;
 
-    public WineVersion(Version version, WineDistribution wineDistribution, WineWizard setupWizard) {
-        this.version = version;
-        this.wineDistribution = wineDistribution;
-        this.setupWizard = setupWizard;
-        this.wineVersionManager = serviceManager.getService(WineVersionManager.class);
-    }
+	/**
+	 * Python constructor
+	 * 
+	 * @param version
+	 *            Version as string
+	 * @param wineDistribution
+	 *            Distribution as String
+	 * @param setupWizard
+	 *            Setup wizard to use
+	 */
+	public WineVersion(String version, String wineDistribution, WineWizard setupWizard) {
+		this(new Version(version), new WineDistribution(wineDistribution), setupWizard);
+	}
 
-    public com.playonlinux.wine.WineInstallation getInstallation() {
-        return new com.playonlinux.wine.WineInstallation.Builder().withPath(getInstallationPath())
-                .withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
-                .withDistribution(wineDistribution).withVersion(version).build();
-    }
+	public WineVersion(Version version, WineDistribution wineDistribution, WineWizard setupWizard) {
+		this.version = version;
+		this.wineDistribution = wineDistribution;
+		this.setupWizard = setupWizard;
+		this.wineVersionManager = serviceManager.getService(WineVersionManager.class);
+	}
 
-    private File getInstallationPath() {
-        return playOnLinuxContext.makeWinePath(version, wineDistribution);
-    }
+	public com.playonlinux.wine.WineInstallation getInstallation() {
+		return new com.playonlinux.wine.WineInstallation.Builder().withPath(getInstallationPath())
+				.withApplicationEnvironment(playOnLinuxContext.getSystemEnvironment())
+				.withDistribution(wineDistribution).withVersion(version).build();
+	}
 
-    public boolean isInstalled() {
-        return getInstallation().exists();
-    }
+	private File getInstallationPath() {
+		return playOnLinuxContext.makeWinePath(version, wineDistribution);
+	}
 
-    public WineDistribution getWineDistribution() {
-        return wineDistribution;
-    }
+	public boolean isInstalled() {
+		return getInstallation().exists();
+	}
 
-    public Version getVersion() {
-        return version;
-    }
+	public WineDistribution getWineDistribution() {
+		return wineDistribution;
+	}
 
-    public void install() throws CancelException {
-        if (setupWizard != null) {
-            ProgressControl progressControl = setupWizard.progressBar(
-                    format(translate("Please wait while ${application.name} is installing wine %s"), version));
-            wineVersionManager.install(wineDistribution, version, progressControl);
-        }
-    }
+	public Version getVersion() {
+		return version;
+	}
+
+	public void install() throws CancelException {
+		if (setupWizard != null) {
+			ProgressControl progressControl = setupWizard.progressBar(format(I18N_WINE_INSTALL, version));
+			wineVersionManager.install(wineDistribution, version, progressControl);
+		}
+	}
 
 }
