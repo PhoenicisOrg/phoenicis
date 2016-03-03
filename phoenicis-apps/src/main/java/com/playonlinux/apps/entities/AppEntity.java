@@ -27,12 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.entities.Entity;
-import com.playonlinux.core.entities.NameableEntity;
 
 /**
  * Represents an application {@link Entity}
  */
-public class AppEntity implements Entity, NameableEntity {
+public class AppEntity implements Entity {
     private final String name;
     private final String categoryName;
     private final boolean isCommercial;
@@ -57,7 +56,6 @@ public class AppEntity implements Entity, NameableEntity {
         return scripts;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -127,10 +125,9 @@ public class AppEntity implements Entity, NameableEntity {
             return this;
         }
 
-
         public Builder withMiniaturesUrlsString(Iterable<String> miniaturesUrlsAsString) {
             List<URL> newMiniaturesUrls = new ArrayList<>();
-            for(String url: miniaturesUrlsAsString) {
+            for (String url : miniaturesUrlsAsString) {
                 try {
                     newMiniaturesUrls.add(new URL(url));
                 } catch (MalformedURLException e) {
@@ -156,7 +153,7 @@ public class AppEntity implements Entity, NameableEntity {
         }
 
         private void validate() {
-            if(categoryName == null) {
+            if (categoryName == null) {
                 throw new IllegalArgumentException("You must give a category name");
             }
         }

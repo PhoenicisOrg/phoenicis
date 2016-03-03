@@ -18,19 +18,17 @@
 
 package com.playonlinux.apps.dto;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
 
 /**
  * Represents an application
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
-public class ApplicationDTO implements DTO, Nameable {
+public class ApplicationDTO implements DTO {
     private final int id;
     private final String name;
     private final String description;
@@ -59,7 +57,6 @@ public class ApplicationDTO implements DTO, Nameable {
         return id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -72,13 +69,6 @@ public class ApplicationDTO implements DTO, Nameable {
         return scripts;
     }
 
-    public static class AlphabeticalOrderComparator implements Comparator<ApplicationDTO> {
-        @Override
-        public int compare(ApplicationDTO script1, ApplicationDTO script2) {
-            return script1.getName().compareTo(script2.getName());
-        }
-    }
-
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String name;
@@ -89,7 +79,8 @@ public class ApplicationDTO implements DTO, Nameable {
         private int id;
 
         public Builder() {
-            // We need a public builder to be able to createPrefix a ScriptDTO from scratch
+            // We need a public builder to be able to createPrefix a ScriptDTO
+            // from scratch
         }
 
         public Builder(ApplicationDTO applicationDTO) {
@@ -135,6 +126,5 @@ public class ApplicationDTO implements DTO, Nameable {
             return new ApplicationDTO(this);
         }
     }
-
 
 }
