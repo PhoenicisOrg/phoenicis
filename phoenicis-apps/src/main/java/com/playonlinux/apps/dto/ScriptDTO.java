@@ -23,7 +23,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.utils.OperatingSystem;
 
@@ -32,7 +31,7 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
-public class ScriptDTO implements DTO, Nameable {
+public class ScriptDTO implements DTO {
     private final int id;
     private final String name;
     private final List<OperatingSystem> compatibleOperatingSystems;

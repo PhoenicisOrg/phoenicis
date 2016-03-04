@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.playonlinux.core.entities.Entity;
-import com.playonlinux.core.entities.NameableEntity;
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  * Represents an application {@link Entity}
  */
 @Data
-public class AppEntity implements Entity, NameableEntity {
+public class AppEntity implements Entity {
     private final String name;
     private final String categoryName;
     private final boolean isCommercial;

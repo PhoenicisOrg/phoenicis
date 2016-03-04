@@ -20,7 +20,6 @@ package com.playonlinux.apps.entities;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.entities.Entity;
 
 import lombok.Data;
@@ -29,7 +28,7 @@ import lombok.Data;
  * Entity that represents a script.
  */
 @Data
-public class ScriptEntity implements Entity, Nameable {
+public class ScriptEntity implements Entity {
     private final int id;
     private final String name;
     private final String url;

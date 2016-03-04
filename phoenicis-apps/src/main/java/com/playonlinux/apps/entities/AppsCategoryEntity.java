@@ -18,14 +18,14 @@
 
 package com.playonlinux.apps.entities;
 
-import com.playonlinux.core.comparator.Nameable;
 import com.playonlinux.core.entities.Entity;
 
 import lombok.Data;
 
 @Data
-public class AppsCategoryEntity implements Entity, Nameable {
+public class AppsCategoryEntity implements Entity {
     private final String name;
+
 
     public String getIconName() {
         return "apps/applications-" + name.toLowerCase() + ".png";
