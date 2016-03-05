@@ -24,6 +24,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
 
+import lombok.Data;
+
+@Data
 @JsonDeserialize(builder = WineVersionDTO.Builder.class)
 public class WineVersionDTO implements DTO {
     private final String version;
@@ -46,42 +49,6 @@ public class WineVersionDTO implements DTO {
         monoMd5 = builder.monoMd5;
         monoFile = builder.monoFile;
         geckoFile = builder.geckoFile;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getSha1sum() {
-        return sha1sum;
-    }
-
-    public String getGeckoMd5() {
-        return geckoMd5;
-    }
-
-    public String getGeckoUrl() {
-        return geckoUrl;
-    }
-
-    public String getMonoMd5() {
-        return monoMd5;
-    }
-
-    public String getMonoUrl() {
-        return monoUrl;
-    }
-
-    public String getMonoFile() {
-        return monoFile;
-    }
-
-    public String getGeckoFile() {
-        return geckoFile;
     }
 
     @Override

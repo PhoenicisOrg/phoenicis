@@ -23,8 +23,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import lombok.Getter;
 
 public class LeftButton extends HBox {
+    @Getter
     private final String name;
 
     public LeftButton(String iconName, String name) {
@@ -39,9 +41,5 @@ public class LeftButton extends HBox {
         Text label = new Text(name);
         label.getStyleClass().add("label");
         this.getChildren().addAll(iconView, label);
-    }
-
-    public String getName() {
-        return name;
     }
 }

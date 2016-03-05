@@ -18,25 +18,18 @@
 
 package com.playonlinux.wine.registry;
 
+import lombok.Data;
+import lombok.Setter;
+
+@Data
 public abstract class AbstractRegistryNode {
     final String name;
 
+    @Setter
     RegistryKey parent;
 
-    AbstractRegistryNode(String name) {
-        this.name = name;
-    }
-    
     @Override
     public abstract String toString();
 
     public abstract String toRegString();
-
-    void setParent(RegistryKey parent) {
-        this.parent = parent;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

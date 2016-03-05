@@ -24,9 +24,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
 
+import lombok.Data;
+
 /**
  * Represents an application
  */
+@Data
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 public class ApplicationDTO implements DTO {
     private final int id;
@@ -43,30 +46,6 @@ public class ApplicationDTO implements DTO {
         iconUrl = builder.iconUrl;
         miniaturesUrls = builder.miniaturesUrls;
         scripts = builder.scripts;
-    }
-
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    public List<String> getMiniaturesUrls() {
-        return miniaturesUrls;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<ScriptDTO> getScripts() {
-        return scripts;
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

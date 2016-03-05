@@ -20,16 +20,12 @@ package com.playonlinux.apps.entities;
 
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
+@Data
 public class AppsCategoryEntity implements Entity {
     private final String name;
 
-    public AppsCategoryEntity(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public String getIconName() {
         return "apps/applications-" + name.toLowerCase() + ".png";

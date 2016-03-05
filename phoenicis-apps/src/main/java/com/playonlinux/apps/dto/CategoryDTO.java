@@ -24,9 +24,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
 
+import lombok.Data;
+
 /**
  * Represents a category of application
  */
+@Data
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
 public class CategoryDTO implements DTO {
     private final int id;
@@ -44,22 +47,6 @@ public class CategoryDTO implements DTO {
     public enum CategoryType {
         INSTALLERS,
         FUNCTIONS
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public CategoryType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<ApplicationDTO> getApplications() {
-        return applications;
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

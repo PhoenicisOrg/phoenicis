@@ -36,8 +36,6 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.output.NullOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxContext;
 import com.playonlinux.core.config.ConfigFile;
@@ -66,6 +64,10 @@ import com.playonlinux.wine.registry.RegistryValue;
 import com.playonlinux.wine.registry.RegistryWriter;
 import com.playonlinux.wine.registry.StringValueType;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
 @ScriptClass
 public class Wine implements SetupWizardComponent {
@@ -76,8 +78,6 @@ public class Wine implements SetupWizardComponent {
     private static final String ERASE = "Erase (virtual drive content will be lost)";
     private static final String ABORT = "Abort installation";
 
-    private final Logger LOGGER = LoggerFactory.getLogger(Wine.class);
-    
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -91,6 +91,7 @@ public class Wine implements SetupWizardComponent {
     private com.playonlinux.wine.WinePrefix prefix;
     private String prefixName;
     private WineVersion wineVersion;
+    @Getter
     private int lastReturnCode = -1;
 
     private OutputStream outputStream = new NullOutputStream();
@@ -277,7 +278,7 @@ public class Wine implements SetupWizardComponent {
         try {
             wineVersion.getInstallation().killAllProcess(this.prefix);
         } catch (IOException logged) {
-            LOGGER.warn("Unable to kill wine processes", logged);
+            log.warn("Unable to kill wine processes", logged);
         }
 
         return this;
@@ -324,7 +325,7 @@ public class Wine implements SetupWizardComponent {
                 try {
                     this.log(FileUtils.readFileToString(regFile));
                 } catch (IOException e) {
-                    LOGGER.warn("Failed to log reg file", e);
+                    log.warn("Failed to log reg file", e);
                 }
                 this.log("-----------");
             } else {
@@ -628,7 +629,7 @@ public class Wine implements SetupWizardComponent {
         try {
             wineVersion.getInstallation().waitAllProcesses(this.prefix);
         } catch (IOException logged) {
-            LOGGER.warn("Unable to wait for wine processes", logged);
+            log.warn("Unable to wait for wine processes", logged);
         }
 
         return this;
@@ -756,10 +757,6 @@ public class Wine implements SetupWizardComponent {
 
     public ConfigFile config() {
         return prefix.getPrefixConfigFile();
-    }
-
-    public int getLastReturnCode() {
-        return lastReturnCode;
     }
 
     @Override

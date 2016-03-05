@@ -23,14 +23,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.core.entities.Entity;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Represents an application {@link Entity}
  */
+@Data
 public class AppEntity implements Entity {
     private final String name;
     private final String categoryName;
@@ -52,38 +52,7 @@ public class AppEntity implements Entity {
         this.scripts = builder.scripts;
     }
 
-    public List<ScriptEntity> getScripts() {
-        return scripts;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isCommercial() {
-        return isCommercial;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public boolean isTesting() {
-        return isTesting;
-    }
-
-    public boolean isRequiresNoCd() {
-        return requiresNoCd;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<URL> getMiniaturesUrls() {
-        return miniaturesUrls;
-    }
-
+    @Slf4j
     public static class Builder {
         private String name;
         private String categoryName;
@@ -92,7 +61,6 @@ public class AppEntity implements Entity {
         private boolean requiresNoCd;
         private String description;
         private List<URL> miniaturesUrls = new ArrayList<>();
-        private final Logger LOGGER = LoggerFactory.getLogger(AppEntity.class);
         private List<ScriptEntity> scripts;
 
         public Builder withName(String name) {
@@ -131,7 +99,7 @@ public class AppEntity implements Entity {
                 try {
                     newMiniaturesUrls.add(new URL(url));
                 } catch (MalformedURLException e) {
-                    LOGGER.warn(String.format("%s was malformed. Ignored", url), e);
+                    log.warn(String.format("%s was malformed. Ignored", url), e);
                 }
             }
             return withMiniaturesUrls(newMiniaturesUrls);

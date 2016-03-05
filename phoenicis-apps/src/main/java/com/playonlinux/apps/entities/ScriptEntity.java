@@ -22,9 +22,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
 /**
  * Entity that represents a script.
  */
+@Data
 public class ScriptEntity implements Entity {
     private final int id;
     private final String name;
@@ -36,22 +39,10 @@ public class ScriptEntity implements Entity {
         url = builder.url;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this.getClass().getName()).append(this.id).append(this.url).append(this.name)
                 .toString();
-    }
-
-    public String getUrl() {
-        return this.url;
     }
 
     public static class Builder {

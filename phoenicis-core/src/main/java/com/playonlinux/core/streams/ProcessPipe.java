@@ -25,13 +25,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import org.apache.commons.lang.mutable.MutableBoolean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.core.services.manager.Service;
 import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This component redirects {@link Process} descriptors into Java
@@ -40,12 +40,11 @@ import com.playonlinux.injection.Scan;
  * This component is run in a separate thread. The thread automatically dies
  * when the process exits
  */
+@Slf4j
 @Scan
 public class ProcessPipe implements Service {
     private static final String LOG_ERROR_CLOSING_STREAMS = "Error occured while trying to close streams";
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ProcessPipe.class);
-    
     @Inject
     static ServiceManager serviceManager;
 
@@ -72,45 +71,45 @@ public class ProcessPipe implements Service {
      *            the InputStream where stdin will take data from
      */
     public ProcessPipe(Process process, OutputStream outputStream, OutputStream errorStream, InputStream inputStream) {
-	this.process = process;
-	this.redirectOutputStream = outputStream;
-	this.redirectErrorStream = errorStream;
-	this.redirectInputStream = inputStream;
+        this.process = process;
+        this.redirectOutputStream = outputStream;
+        this.redirectErrorStream = errorStream;
+        this.redirectInputStream = inputStream;
     }
 
     @Override
     public void shutdown() {
-	if (task != null) {
-	    task.cancel(true);
-	}
+        if (task != null) {
+            task.cancel(true);
+        }
 
-	this.running.setValue(false);
-	try {
-	    this.redirectOutputStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
-	}
+        this.running.setValue(false);
+        try {
+            this.redirectOutputStream.close();
+        } catch (IOException e) {
+            log.error(LOG_ERROR_CLOSING_STREAMS, e);
+        }
 
-	try {
-	    this.redirectInputStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
-	}
+        try {
+            this.redirectInputStream.close();
+        } catch (IOException e) {
+            log.error(LOG_ERROR_CLOSING_STREAMS, e);
+        }
 
-	try {
-	    this.redirectErrorStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(LOG_ERROR_CLOSING_STREAMS, e);
-	}
+        try {
+            this.redirectErrorStream.close();
+        } catch (IOException e) {
+            log.error(LOG_ERROR_CLOSING_STREAMS, e);
+        }
     }
 
     @Override
     public void init() {
-	this.task = executorService.submit(new ProcessPipeBackgroundThread(this, running, process, redirectInputStream,
-		redirectErrorStream, redirectOutputStream));
+        this.task = executorService.submit(new ProcessPipeBackgroundThread(this, running, process, redirectInputStream,
+                redirectErrorStream, redirectOutputStream));
     }
 
     void stop() {
-	serviceManager.unregister(this);
+        serviceManager.unregister(this);
     }
 }

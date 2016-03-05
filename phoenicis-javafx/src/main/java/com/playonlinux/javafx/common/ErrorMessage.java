@@ -21,17 +21,16 @@ package com.playonlinux.javafx.common;
 import static com.playonlinux.core.lang.Localisation.translate;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javafx.scene.control.Alert;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ErrorMessage {
-    private final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
     private final Alert alert;
 
     public ErrorMessage(String message, Exception exception) {
-        LOGGER.error(ExceptionUtils.getStackTrace(exception));
+        log.error(ExceptionUtils.getStackTrace(exception));
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(translate(message));
         alert.setContentText(String.format("The error was: %s", ExceptionUtils.getStackTrace(exception)));

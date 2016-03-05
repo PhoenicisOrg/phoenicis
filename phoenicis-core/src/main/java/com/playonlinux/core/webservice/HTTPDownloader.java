@@ -32,12 +32,15 @@ import java.util.function.Consumer;
 import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.entities.ProgressState;
 
+import lombok.Setter;
+
 public class HTTPDownloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
 
     private static final int BLOCK_SIZE = 1024;
-    
+
     private final URL url;
+    @Setter
     private Consumer<ProgressEntity> onChange;
 
     public HTTPDownloader(URL url) {
@@ -51,7 +54,7 @@ public class HTTPDownloader {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
     }
-    
+
     public String get() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         get(outputStream);
@@ -63,7 +66,7 @@ public class HTTPDownloader {
         get(outputStream);
         return outputStream.toByteArray();
     }
-    
+
     private void get(OutputStream outputStream) {
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -101,21 +104,14 @@ public class HTTPDownloader {
             changeState(ProgressState.FAILED, percentage);
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, this.url), e);
         }
-        
+
         changeState(ProgressState.SUCCESS, percentage);
     }
 
     private void changeState(ProgressState state, float percentage) {
-        if(onChange != null){
-            ProgressEntity currentState = new ProgressEntity.Builder()
-                    .withPercent(percentage)
-                    .withState(state)
-                    .build();
-            onChange.accept(currentState);   
+        if (onChange != null) {
+            ProgressEntity currentState = new ProgressEntity.Builder().withPercent(percentage).withState(state).build();
+            onChange.accept(currentState);
         }
-    }
-
-    public void setOnChange(Consumer<ProgressEntity> onChange) {
-        this.onChange = onChange;
     }
 }

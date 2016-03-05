@@ -20,6 +20,9 @@ package com.playonlinux.wine.parameters;
 
 import static com.playonlinux.core.lang.Localisation.translate;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public enum MouseWarpOverride {
     DEFAULT(translate("Default")),
     DISABLED(translate("Disabled")),
@@ -27,10 +30,6 @@ public enum MouseWarpOverride {
     FORCE(translate("Force"));
 
     private final String translatedName;
-
-    MouseWarpOverride(String translatedName) {
-        this.translatedName = translatedName;
-    }
 
     @Override
     public String toString() {

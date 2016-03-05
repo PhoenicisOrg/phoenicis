@@ -23,23 +23,21 @@ import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.gui.QItemSelection;
 import com.trolltech.qt.gui.QListView;
 
+import lombok.RequiredArgsConstructor;
+
 
 /**
  * List of installed Shortcuts displayed in the MainWindow.
  */
 public class ShortcutList extends QListView {
-
+    @RequiredArgsConstructor
     public enum IconSize {
         SMALL(new QSize(16, 16)),
         MEDIUM(new QSize(24, 24)),
         LARGE(new QSize(32, 32)),
         VERY_LARGE(new QSize(48, 48));
 
-        private QSize size;
-
-        IconSize(QSize size) {
-            this.size = size;
-        }
+        private final QSize size;
 
         public QSize value() {
             return size;

@@ -21,14 +21,14 @@ package com.playonlinux.core.utils.archive.cab;
 import java.io.IOException;
 import java.io.InputStream;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 abstract class AbstractCabStructure {
     protected final long offset;
+    @Getter
     protected int structureSize;
-
-    AbstractCabStructure(long offset) {
-        this.offset = offset;
-    }
-
 
     public abstract void populate(InputStream inputStream);
 
@@ -62,9 +62,5 @@ abstract class AbstractCabStructure {
             return (long) ((bytes[1] & 0xFF) << 8 | bytes[0] & 0xFF);
         }
 
-    }
-
-    public int getStructureSize() {
-        return structureSize;
     }
 }

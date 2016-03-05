@@ -20,14 +20,9 @@ package com.playonlinux.library.entities;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class LibraryWindowEntity {
     private final List<InstalledApplicationEntity> installedApplicationEntity;
-
-    public LibraryWindowEntity(List<InstalledApplicationEntity> installedApplicationEntity) {
-        this.installedApplicationEntity = installedApplicationEntity;
-    }
-
-    public List<InstalledApplicationEntity> getInstalledApplicationEntity() {
-        return installedApplicationEntity;
-    }
 }

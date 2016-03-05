@@ -18,22 +18,12 @@
 
 package com.playonlinux.wine.parameters;
 
+import lombok.Data;
+
+@Data
 public class VideoMemorySize {
     private final boolean isDefault;
     private final int videoSize;
-
-    public VideoMemorySize(boolean isDefault, int videoSize) {
-        this.isDefault = isDefault;
-        this.videoSize = videoSize;
-    }
-
-    public int getVideoSize() {
-        return videoSize;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
 
     @Override
     public String toString() {

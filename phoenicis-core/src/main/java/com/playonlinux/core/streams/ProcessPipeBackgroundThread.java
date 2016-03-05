@@ -18,20 +18,18 @@
 
 package com.playonlinux.core.streams;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.lang.mutable.MutableBoolean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ProcessPipeBackgroundThread implements Runnable {
     public static final int BLOCK_SIZE = 128;
-    
-    private final Logger LOGGER = LoggerFactory.getLogger(ProcessPipeBackgroundThread.class);
-    
+
     private final Process process;
     private final MutableBoolean running;
     private final InputStream redirectInputStream;
@@ -39,12 +37,8 @@ public class ProcessPipeBackgroundThread implements Runnable {
     private final OutputStream redirectErrorStream;
     private final ProcessPipe caller;
 
-    public ProcessPipeBackgroundThread(ProcessPipe caller,
-                                       MutableBoolean running,
-                                       Process process,
-                                       InputStream redirectInputStream,
-                                       OutputStream redirectErrorStream,
-                                       OutputStream redirectOutputStream) {
+    public ProcessPipeBackgroundThread(ProcessPipe caller, MutableBoolean running, Process process,
+            InputStream redirectInputStream, OutputStream redirectErrorStream, OutputStream redirectOutputStream) {
         this.caller = caller;
         this.running = running;
         this.process = process;
@@ -55,47 +49,47 @@ public class ProcessPipeBackgroundThread implements Runnable {
 
     @Override
     public void run() {
-            final InputStream inputStream = process.getInputStream();
-            final InputStream errorStream = process.getErrorStream();
-            final OutputStream outputStream = process.getOutputStream();
+        final InputStream inputStream = process.getInputStream();
+        final InputStream errorStream = process.getErrorStream();
+        final OutputStream outputStream = process.getOutputStream();
 
-            byte[] blocksStderr = new byte[BLOCK_SIZE];
-            byte[] blocksStdout = new byte[BLOCK_SIZE];
-            byte[] blocksStdin = new byte[BLOCK_SIZE];
+        byte[] blocksStderr = new byte[BLOCK_SIZE];
+        byte[] blocksStdout = new byte[BLOCK_SIZE];
+        byte[] blocksStdin = new byte[BLOCK_SIZE];
 
-            while (running.isTrue()) {
-                try {
-                    boolean readStderr = errorStream.read(blocksStderr) != -1;
-                    boolean readStdout = inputStream.read(blocksStdout) != -1;
-                    boolean readStdin = redirectInputStream.read(blocksStdin) != -1;
+        while (running.isTrue()) {
+            try {
+                boolean readStderr = errorStream.read(blocksStderr) != -1;
+                boolean readStdout = inputStream.read(blocksStdout) != -1;
+                boolean readStdin = redirectInputStream.read(blocksStdin) != -1;
 
-                    if (process.isAlive() && readStdin) {
-                        outputStream.write(blocksStdin);
-                        outputStream.flush();
-                    }
-
-                    if (readStderr) {
-                        redirectErrorStream.write(blocksStderr);
-                        redirectErrorStream.flush();
-                    }
-
-                    if (readStdout) {
-                        redirectOutputStream.write(blocksStdout);
-                        redirectOutputStream.flush();
-                    }
-
-                    if (!process.isAlive() && !readStderr && !readStdout) {
-                        running.setValue(false);
-                        break;
-                    }
-
-                } catch (IOException e) {
-                    LOGGER.debug("Failed to process pipe", e);
-                    running.setValue(false);
+                if (process.isAlive() && readStdin) {
+                    outputStream.write(blocksStdin);
+                    outputStream.flush();
                 }
-            }
 
-            this.caller.stop();
+                if (readStderr) {
+                    redirectErrorStream.write(blocksStderr);
+                    redirectErrorStream.flush();
+                }
+
+                if (readStdout) {
+                    redirectOutputStream.write(blocksStdout);
+                    redirectOutputStream.flush();
+                }
+
+                if (!process.isAlive() && !readStderr && !readStdout) {
+                    running.setValue(false);
+                    break;
+                }
+
+            } catch (IOException e) {
+                log.debug("Failed to process pipe", e);
+                running.setValue(false);
+            }
         }
+
+        this.caller.stop();
+    }
 
 }

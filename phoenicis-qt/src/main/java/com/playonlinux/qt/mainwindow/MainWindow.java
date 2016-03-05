@@ -34,26 +34,33 @@ import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QWidget;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+
 /**
  * MainWindow of PlayOnLinux's Qt-Gui implementation.
  */
 public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
-
+    @Getter
     private final MainWindowEventHandler eventHandler;
 
+    @Getter(AccessLevel.PROTECTED)
     private MenuBar menuBar;
+    @Getter(AccessLevel.PROTECTED)
     private ToolBar toolBar;
-
-    private ActionSideBar actionSideBar;
+    
+    @Getter(AccessLevel.PROTECTED)
+    private ActionSideBar sideBar;
     private ActionMenu polMenu;
+    
+    @Getter(AccessLevel.PROTECTED)
     private ShortcutSidebarMenu shortcutMenu;
-
+    @Getter(AccessLevel.PROTECTED)
+    private ShortcutList shortcutList;
+    
     private QWidget centralwidget;
     private QHBoxLayout mainLayout;
-
-    private ShortcutList shortcutList;
-
-
+    
     public MainWindow() {
         eventHandler = new MainWindowEventHandler(this);
 
@@ -74,12 +81,12 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
         toolBar = new ToolBar(this);
         addToolBar(Qt.ToolBarArea.TopToolBarArea, toolBar);
 
-        actionSideBar = new ActionSideBar(this);
-        addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, actionSideBar);
+        sideBar = new ActionSideBar(this);
+        addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, sideBar);
         polMenu = new StaticSidebarMenu(this);
         shortcutMenu = new ShortcutSidebarMenu(this);
-        actionSideBar.addMenu(polMenu);
-        actionSideBar.addMenu(shortcutMenu);
+        sideBar.addMenu(polMenu);
+        sideBar.addMenu(shortcutMenu);
 
         centralwidget = new QWidget(this);
         setCentralWidget(centralwidget);
@@ -95,37 +102,6 @@ public class MainWindow extends QMainWindow implements PlayOnLinuxWindow {
     private void retranslateUi() {
         setWindowTitle(translate("PlayOnLinux"));
     }
-
-
-    public MainWindowEventHandler getEventHandler() {
-        return eventHandler;
-    }
-
-
-    /* COMPONENT GETTERS */
-    //grant access to ui components for the MainWindowEventHandler within the mainwindow namespace only
-    protected MenuBar getMenuBar() {
-        return menuBar;
-    }
-
-    protected ToolBar getToolBar() {
-        return toolBar;
-    }
-
-    protected ActionSideBar getSideBar() {
-        return actionSideBar;
-    }
-
-    protected ShortcutSidebarMenu getShortcutMenu() {
-        return shortcutMenu;
-    }
-
-    protected ShortcutList getShortcutList() {
-        return shortcutList;
-    }
-
-
-
 
     /* EVENTS */
 

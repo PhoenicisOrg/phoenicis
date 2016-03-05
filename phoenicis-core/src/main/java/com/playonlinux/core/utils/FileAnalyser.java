@@ -27,20 +27,18 @@ import java.nio.file.Paths;
 import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
+@Slf4j
 public final class FileAnalyser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileAnalyser.class);
-
     private FileAnalyser() {
         // Utility class
     }
@@ -68,30 +66,33 @@ public final class FileAnalyser {
         try {
             return getMatch(inputFile).getMimeType();
         } catch (MagicMatchNotFoundException e) {
-            LOGGER.debug("Failed to get Mime Type", e);
+            log.debug("Failed to get Mime Type", e);
             final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
             return mimeTypesMap.getContentType(inputFile);
         }
     }
 
-
     /**
      * Identify which line delimiter is used in a file
-     * @param fileContent string to analyse
-     * @return the line separator as a string. Null if the file has no line separator
+     * 
+     * @param fileContent
+     *            string to analyse
+     * @return the line separator as a string. Null if the file has no line
+     *         separator
      */
     public static String identifyLineDelimiter(String fileContent) {
-        if (fileContent.matches("(?s).*(\\r\\n).*")) {     //Windows //$NON-NLS-1$
+        if (fileContent.matches("(?s).*(\\r\\n).*")) { // Windows //$NON-NLS-1$
             return "\r\n"; //$NON-NLS-1$
-        } else if (fileContent.matches("(?s).*(\\n).*")) { //Unix/Linux //$NON-NLS-1$
+        } else if (fileContent.matches("(?s).*(\\n).*")) { // Unix/Linux //$NON-NLS-1$
             return "\n"; //$NON-NLS-1$
-        } else if (fileContent.matches("(?s).*(\\r).*")) { //Legacy mac os 9. Newer OS X use \n //$NON-NLS-1$
+        } else if (fileContent.matches("(?s).*(\\r).*")) { // Legacy //$NON-NLS-1$
+                                                           // mac os 9. Newer OS
+                                                           // X use \n
             return "\r"; //$NON-NLS-1$
         } else {
-            return "\n";  //fallback onto '\n' if nothing matches. //$NON-NLS-1$
+            return "\n"; // fallback onto '\n' if nothing matches. //$NON-NLS-1$
         }
     }
-
 
     public static String identifyLineDelimiter(File fileToAnalyse) throws IOException {
         final String fileContent = FileUtils.readFileToString(fileToAnalyse);

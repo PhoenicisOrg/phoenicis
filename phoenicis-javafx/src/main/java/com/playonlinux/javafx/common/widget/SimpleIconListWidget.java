@@ -24,9 +24,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
@@ -36,14 +33,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import lombok.extern.slf4j.Slf4j;
 
-public class SimpleIconListWidget
-        extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
+@Slf4j
+public class SimpleIconListWidget extends TreeView<SimpleIconListWidget.SimpleIconListItem> {
     private final TreeItem<SimpleIconListItem> rootItem;
-    private final Image defaultIcon =
-            new Image(SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
-
-    private final Logger LOGGER = LoggerFactory.getLogger(SimpleIconListWidget.class);
+    private final Image defaultIcon = new Image(
+            SimpleIconListWidget.class.getResource("playonlinux32.png").toExternalForm());
 
     public SimpleIconListWidget() {
         rootItem = new TreeItem<>();
@@ -66,17 +62,16 @@ public class SimpleIconListWidget
         rootItem.getChildren().add(treeItem);
     }
 
-
     public void addItem(String itemName, File iconPath) {
         try {
-            addItem(itemName, new URL("file://"+iconPath.getAbsolutePath()));
+            addItem(itemName, new URL("file://" + iconPath.getAbsolutePath()));
         } catch (MalformedURLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             String errorTitle = String.format(translate("Error while trying to load the icon %s."),
                     iconPath.getAbsolutePath());
             alert.setTitle(errorTitle);
             alert.setContentText(String.format("The error was: %s", e));
-            LOGGER.warn(errorTitle, e);
+            log.warn(errorTitle, e);
         }
     }
 
@@ -86,15 +81,13 @@ public class SimpleIconListWidget
     }
 
     public void addChangeListener(SimpleIconChangeListener simpleIconChangeListener) {
-        getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        simpleIconChangeListener.changed(newValue.getValue().getValue()
-                        );
-                    } else {
-                        simpleIconChangeListener.changed(null);
-                    }
-                });
+        getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                simpleIconChangeListener.changed(newValue.getValue().getValue());
+            } else {
+                simpleIconChangeListener.changed(null);
+            }
+        });
     }
 
     public void clear() {
@@ -105,7 +98,6 @@ public class SimpleIconListWidget
         TreeItem<SimpleIconListItem> item = this.getSelectionModel().getSelectedItem();
         return item.getValue().getValue();
     }
-
 
     protected class SimpleIconListItem extends GridPane {
         private final String itemName;
@@ -138,4 +130,3 @@ public class SimpleIconListWidget
         void changed(String newValue);
     }
 }
-

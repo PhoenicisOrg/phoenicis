@@ -21,29 +21,14 @@ package com.playonlinux.library;
 import java.io.File;
 import java.net.URL;
 
+import lombok.Data;
+
 /**
  * Contains the files required to represent a shortcut
  */
+@Data
 class ShortcutFiles {
     private final String shortcutName;
     private final URL iconPath;
     private final File shortcutFile;
-
-    public ShortcutFiles(String shortcutName, URL iconPath, File shortcutFile) {
-        this.shortcutName = shortcutName;
-        this.iconPath = iconPath;
-        this.shortcutFile = shortcutFile;
-    }
-    
-    public String getShortcutName() {
-        return shortcutName;
-    }
-
-    public URL getIconPath() {
-        return iconPath;
-    }
-
-    public File getShortcutFile() {
-        return shortcutFile;
-    }
 }

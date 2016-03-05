@@ -18,12 +18,11 @@
 
 package com.playonlinux.wine.registry;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class ExpandableValueType extends AbstractValueType {
     private final String content;
-
-    public ExpandableValueType(String content) {
-        this.content = content;
-    }
 
     @Override
     String getText() {

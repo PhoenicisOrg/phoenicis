@@ -18,21 +18,25 @@
 
 package com.playonlinux.core.utils;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Represents a supported Operating System
  */
+@RequiredArgsConstructor
 public enum OperatingSystem {
     MACOSX("Mac OS X", "Mac", "darwin"), LINUX("Linux", "Linux", "linux"), FREEBSD("FreeBSD", "FreeBSD", "freebsd");
 
+    // PlayOnLinux v4 compatible short name
+    @Getter
     private final String fullName;
+    // PlayOnLinux v4 compatible short name
+    @Getter
     private final String legacyName;
+    // The name used for the wine packages
+    @Getter
     private final String winePackage;
-
-    OperatingSystem(String fullName, String legacyName, String winePackage) {
-	this.fullName = fullName;
-	this.legacyName = legacyName;
-	this.winePackage = winePackage;
-    }
 
     /**
      * Creates a Operating System from the name
@@ -42,13 +46,13 @@ public enum OperatingSystem {
      * @return The operating system
      */
     public static OperatingSystem fromString(String fullName) {
-	for (OperatingSystem system : OperatingSystem.values()) {
-	    if (system.getFullName().equals(fullName)) {
-		return system;
-	    }
-	}
+        for (OperatingSystem system : OperatingSystem.values()) {
+            if (system.getFullName().equals(fullName)) {
+                return system;
+            }
+        }
 
-	throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
+        throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
     }
 
     /**
@@ -57,35 +61,11 @@ public enum OperatingSystem {
      * @return The current operating system
      */
     public static OperatingSystem fetchCurrentOperationSystem() {
-	return OperatingSystem.fromString(System.getProperty("os.name"));
-    }
-
-    /**
-     *
-     * @return PlayOnLinux v4 compatible short name
-     */
-    public String getFullName() {
-	return fullName;
-    }
-
-    /**
-     *
-     * @return PlayOnLinux v4 compatible short name
-     */
-    public String getLegacyName() {
-	return legacyName;
-    }
-
-    /**
-     *
-     * @return The name used for the wine packages
-     */
-    public String getWinePackage() {
-	return winePackage;
+        return OperatingSystem.fromString(System.getProperty("os.name"));
     }
 
     @Override
     public String toString() {
-	return this.fullName;
+        return this.fullName;
     }
 }

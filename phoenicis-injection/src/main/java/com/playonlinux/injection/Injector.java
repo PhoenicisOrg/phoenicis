@@ -29,12 +29,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.reflections.Reflections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Injector {
     private final String packageName;
-    private final Logger LOGGER = LoggerFactory.getLogger(Injector.class);
 
     public Injector(String packageName) {
         this.packageName = packageName;
@@ -55,8 +55,8 @@ public class Injector {
 
     public <T extends Annotation> List<Field> getAnnotatedFields(Class<?> annotatedClass, Class<T> annotation) {
         List<Field> fields = new ArrayList<>();
-        for(Field field: annotatedClass.getDeclaredFields()) {
-            if(isAnnotatedWith(field, annotation)) {
+        for (Field field : annotatedClass.getDeclaredFields()) {
+            if (isAnnotatedWith(field, annotation)) {
                 fields.add(field);
             }
         }
@@ -65,8 +65,8 @@ public class Injector {
 
     public <T extends Annotation> List<Method> getAnnotatedMethods(Class<?> annotatedClass, Class<T> annotation) {
         List<Method> methods = new ArrayList<>();
-        for(Method method: annotatedClass.getDeclaredMethods()) {
-            if(isAnnotatedWith(method, annotation)) {
+        for (Method method : annotatedClass.getDeclaredMethods()) {
+            if (isAnnotatedWith(method, annotation)) {
                 methods.add(method);
             }
         }
@@ -78,7 +78,7 @@ public class Injector {
 
         Map<Class<?>, Object> beans = new HashMap<>();
 
-        for(Method method: methods) {
+        for (Method method : methods) {
             method.setAccessible(true);
             try {
                 beans.put(method.getReturnType(), method.invoke(configFile));
@@ -92,25 +92,26 @@ public class Injector {
     }
 
     public void injectAllBeans(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans) throws InjectionException {
-        LOGGER.debug("Loading dependencies...");
+        log.debug("Loading dependencies...");
         Set<Class<?>> componentClasses = this.getComponentClasses();
 
-        for(Class<?> componentClass: componentClasses) {
+        for (Class<?> componentClass : componentClasses) {
             List<Field> fields = this.getAnnotatedFields(componentClass, Inject.class);
-            for(Field field: fields){
+            for (Field field : fields) {
                 injectOneBean(strictLoadingPolicy, beans, field, componentClass);
             }
         }
 
     }
 
-    private void injectOneBean(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans, Field field, Class<?> componentClass) throws InjectionException {
-        if(strictLoadingPolicy && !beans.containsKey(field.getType())) {
-            LOGGER.debug("Loaded beans:");
-            LOGGER.debug(beans.toString());
+    private void injectOneBean(Boolean strictLoadingPolicy, Map<Class<?>, Object> beans, Field field,
+            Class<?> componentClass) throws InjectionException {
+        if (strictLoadingPolicy && !beans.containsKey(field.getType())) {
+            log.debug("Loaded beans:");
+            log.debug(beans.toString());
             throw new InjectionException(String.format("Unable to inject %s on class %s. Check your config file",
                     field.getType().toString(), componentClass.getName()), null);
-        } else if(beans.containsKey(field.getType())){
+        } else if (beans.containsKey(field.getType())) {
             try {
                 field.setAccessible(true);
                 field.set(null, beans.get(field.getType()));
@@ -118,7 +119,7 @@ public class Injector {
                 String injectErrorString = String.format("Unable to inject %s on class %s. Error while injecting.",
                         field.getType().toString(), componentClass.getName());
 
-                LOGGER.error(injectErrorString, e);
+                log.error(injectErrorString, e);
                 throw new InjectionException(injectErrorString, e);
             }
         }
@@ -127,14 +128,14 @@ public class Injector {
     public void cleanUpAllBeans() {
         Set<Class<?>> componentClasses = this.getComponentClasses();
 
-        for(Class<?> componentClass: componentClasses) {
+        for (Class<?> componentClass : componentClasses) {
             List<Field> fields = this.getAnnotatedFields(componentClass, Inject.class);
-            for(Field field: fields) {
+            for (Field field : fields) {
                 field.setAccessible(true);
                 try {
                     field.set(null, null);
                 } catch (IllegalAccessException e) {
-                    LOGGER.warn(String.format("Unable to clean %s on class %s. Error while injecting.",
+                    log.warn(String.format("Unable to clean %s on class %s. Error while injecting.",
                             field.getType().toString(), componentClass.getName()), e);
                 }
             }

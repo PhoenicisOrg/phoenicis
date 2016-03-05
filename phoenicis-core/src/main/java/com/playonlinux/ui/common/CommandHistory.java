@@ -21,6 +21,8 @@ package com.playonlinux.ui.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+
 /**
  * Small helper intended for keeping track of commands that have been entered into the console window.
  */
@@ -53,27 +55,12 @@ public class CommandHistory {
         return Item.EMPTY;
     }
 
-
+    @Data
     public static final class Item {
-
         public static final Item EMPTY = new Item("", 0);
 
         private final String command;
         private final int cursorPosition;
-
-        public Item(String command, int cursorPosition) {
-            this.command = command;
-            this.cursorPosition = cursorPosition;
-        }
-
-        public String getCommand() {
-            return command;
-        }
-
-        public int getCursorPosition() {
-            return cursorPosition;
-        }
-
     }
 
 }

@@ -39,15 +39,14 @@ import org.bouncycastle.openpgp.PGPPublicKeyRing;
 import org.bouncycastle.openpgp.PGPPublicKeyRingCollection;
 import org.bouncycastle.openpgp.PGPSignature;
 import org.bouncycastle.openpgp.PGPSignatureList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Verifies the signature of a script
  */
+@Slf4j
 public class SignatureChecker {
-    private final Logger LOGGER = LoggerFactory.getLogger(SignatureChecker.class);
-
     private String publicKey;
     private String signedData;
     private String signature;
@@ -116,7 +115,7 @@ public class SignatureChecker {
         try {
             pgpSignature.initVerify(pgpSigningKey, "BC");
         } catch(NoSuchProviderException e) {
-            LOGGER.debug("No security provider found. Adding bouncy castle. This message can be ignored", e);
+            log.debug("No security provider found. Adding bouncy castle. This message can be ignored", e);
             Security.addProvider(new BouncyCastleProvider());
             pgpSignature.initVerify(pgpSigningKey, "BC");
         }

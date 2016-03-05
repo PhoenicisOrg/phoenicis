@@ -23,22 +23,18 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.apps.dto.ScriptDTO;
-
 public class ScriptDTOTest {
 
     private ScriptDTO scriptDTO;
 
     @Before
     public void setUp() {
-        this.scriptDTO = new ScriptDTO.Builder()
-                .withScriptName("Name")
-                .withId(13)
-                .build();
+        this.scriptDTO = new ScriptDTO.Builder().withScriptName("Name").withId(13).build();
     }
+
     @Test
     public void testScriptDTO_CreateDTO_nameIsPopulated() {
-        assertEquals("Name", scriptDTO.getScriptName());
+        assertEquals("Name", scriptDTO.getName());
     }
 
     @Test

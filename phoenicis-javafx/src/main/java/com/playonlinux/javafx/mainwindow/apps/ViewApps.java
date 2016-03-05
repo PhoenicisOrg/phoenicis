@@ -23,9 +23,6 @@ import static com.playonlinux.core.lang.Localisation.translate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.apps.AppsFilter;
 import com.playonlinux.apps.entities.AppEntity;
@@ -48,10 +45,10 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ViewApps extends MainWindowView {
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
-
     private FailurePanel failurePanel;
     private HBox waitPanel;
 
@@ -133,7 +130,7 @@ public class ViewApps extends MainWindowView {
             try {
                 this.eventHandlerApps.updateAvailableInstallers();
             } catch (PlayOnLinuxException e) {
-                LOGGER.warn("Failed to update available installers", e);
+                log.warn("Failed to update available installers", e);
             }
         });
     }
@@ -179,8 +176,8 @@ public class ViewApps extends MainWindowView {
     }
 
     private void applyFilter(String categoryName) {
-        windowDTOEntitiesProvider.filter(new AppsFilter(categoryName, searchBar.getText(),
-                testingCheck.isSelected(), noCdNeededCheck.isSelected(), commercialCheck.isSelected()));
+        windowDTOEntitiesProvider.filter(new AppsFilter(categoryName, searchBar.getText(), testingCheck.isSelected(),
+                noCdNeededCheck.isSelected(), commercialCheck.isSelected()));
 
     }
 

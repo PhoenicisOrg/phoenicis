@@ -25,18 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.filesystem.DirectoryWatcherFiles;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 class ShortcutSetDirectories implements AutoCloseable {
-    private final Logger LOGGER = LoggerFactory.getLogger(ShortcutSetDirectories.class);
     private final DirectoryWatcherFiles iconDirectory;
     private final DirectoryWatcherFiles shortcutDirectory;
     private final URL defaultIcon;
+    @Getter
     private final List<ShortcutFiles> shortcutFiles;
 
+    @Setter
     private Consumer<List<ShortcutFiles>> onChange;
 
     public ShortcutSetDirectories(DirectoryWatcherFiles shortcutDirectory, DirectoryWatcherFiles iconDirectory,
@@ -47,10 +50,6 @@ class ShortcutSetDirectories implements AutoCloseable {
         this.shortcutDirectory = shortcutDirectory;
 
         this.shortcutDirectory.setOnChange(this::update);
-    }
-
-    public synchronized List<ShortcutFiles> getShortcutFiles() {
-        return shortcutFiles;
     }
 
     public void update(List<File> files) {
@@ -67,7 +66,7 @@ class ShortcutSetDirectories implements AutoCloseable {
 
                 this.getShortcutFiles().add(new ShortcutFiles(shortcutFile.getName(), iconURL, shortcutFile));
             } catch (IOException e) {
-                LOGGER.warn("Failed tu update shortcut files", e);
+                log.warn("Failed tu update shortcut files", e);
             }
         }
 
@@ -80,9 +79,5 @@ class ShortcutSetDirectories implements AutoCloseable {
     public void close() {
         shortcutDirectory.close();
         iconDirectory.close();
-    }
-
-    public void setOnChange(Consumer<List<ShortcutFiles>> onChange) {
-        this.onChange = onChange;
     }
 }

@@ -26,37 +26,27 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.playonlinux.core.dto.DTO;
 
+import lombok.Getter;
+
 public class WineVersionDistributionWebDTO implements DTO {
+    @Getter
     private final String name;
+    @Getter
     private final String description;
+    @Getter
     private final List<WineVersionDTO> packages;
 
     @JsonCreator
     public WineVersionDistributionWebDTO(@JsonProperty("name") String name,
-                                         @JsonProperty("description") String description,
-                                         @JsonProperty("packages") List<WineVersionDTO> packages) {
+            @JsonProperty("description") String description, @JsonProperty("packages") List<WineVersionDTO> packages) {
         this.name = name;
         this.description = description;
         this.packages = packages;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<WineVersionDTO> getPackages() {
-        return packages;
-    }
-
     @Override
     public String toString() {
-        return new ToStringBuilder(WineVersionDistributionWebDTO.class)
-                .append("name", name)
-                .append("description", description)
-                .append("packages", packages).toString();
+        return new ToStringBuilder(WineVersionDistributionWebDTO.class).append("name", name)
+                .append("description", description).append("packages", packages).toString();
     }
 }

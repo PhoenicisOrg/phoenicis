@@ -18,7 +18,15 @@
 
 package com.playonlinux.qt.setupwindow;
 
-import com.trolltech.qt.gui.*;
+import com.trolltech.qt.gui.QDialogButtonBox;
+import com.trolltech.qt.gui.QGridLayout;
+import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QLayoutItemInterface;
+import com.trolltech.qt.gui.QVBoxLayout;
+import com.trolltech.qt.gui.QWidget;
+
+import lombok.AccessLevel;
+import lombok.Getter;
 
 /**
  * Qt-Implementation for Setupwindows
@@ -35,13 +43,16 @@ public class SetupWindowQtImplementation extends QWidget {
     private QWidget topBar;
     private QWidget content;
 
+    @Getter(AccessLevel.PROTECTED)
     private final SetupWindowContainer windowContainer;
-    private AbstractStep currentStep = null;
+    @Getter(AccessLevel.PROTECTED)
+    private AbstractStep step = null;
     private SetupWindowAdaptor adaptor = null;
 
+    @Getter(AccessLevel.PROTECTED)
     private String title;
-
-
+    
+    
     public SetupWindowQtImplementation(SetupWindowContainer container, String title) {
         this.windowContainer = container;
         this.title = title;
@@ -111,25 +122,9 @@ public class SetupWindowQtImplementation extends QWidget {
         }
     }
 
-
-
-    /* GETTERS & SETTERS */
-
-    protected AbstractStep getStep() {
-        return currentStep;
-    }
-
-    protected String getTitle() {
-        return title;
-    }
-
-    protected SetupWindowContainer getContainer() {
-        return this.windowContainer;
-    }
-
     protected void setStep(AbstractStep step) {
-        if (this.currentStep != null) {
-            this.currentStep.tearDown();
+        if (this.step != null) {
+            this.step.tearDown();
         }
 
         step.setup(this);
@@ -144,7 +139,7 @@ public class SetupWindowQtImplementation extends QWidget {
         step.setupButtons(buttonBox);
         step.setupContent(content);
 
-        this.currentStep = step;
+        this.step = step;
     }
 
     protected SetupWindowAdaptor getAdaptor() {

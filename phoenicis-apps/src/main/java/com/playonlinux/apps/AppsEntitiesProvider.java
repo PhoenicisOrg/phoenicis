@@ -38,6 +38,8 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.EntitiesProvider;
 
+import lombok.Setter;
+
 @Scan
 public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, AppsWindowEntity> {
 
@@ -50,6 +52,8 @@ public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, A
 
     private Predicate<AppEntity> lastFilter;
     private DownloadEnvelope<Collection<CategoryDTO>> downloadEnvelope;
+    
+    @Setter
     private Consumer<AppsWindowEntity> onChange;
 
     @Override
@@ -119,9 +123,5 @@ public final class AppsEntitiesProvider implements EntitiesProvider<AppEntity, A
         }
 
         filter(lastFilter);
-    }
-
-    public void setOnChange(Consumer<AppsWindowEntity> onChange) {
-        this.onChange = onChange;
     }
 }

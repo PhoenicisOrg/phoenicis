@@ -18,12 +18,11 @@
 
 package com.playonlinux.wine.registry;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class MultiStringValueType extends AbstractValueType {
     private final String content;
-
-    public MultiStringValueType(String content) {
-        this.content = content;
-    }
 
     @Override
     String getText() {

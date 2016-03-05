@@ -25,19 +25,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.playonlinux.core.services.SubmittableService;
+
+import lombok.extern.slf4j.Slf4j;
 
 /*
  Represents a download manager
  */
+@Slf4j
 public class DownloadManager implements SubmittableService<HTTPDownloader, Consumer<byte[]>> {
     private static final int DEFAULT_POOL_SIZE = 4;
     private static final int DEFAULT_QUEUE_SIZE = 2000;
     private final ThreadPoolExecutor threadPoolExecutor;
-    private final Logger LOGGER = LoggerFactory.getLogger(DownloadManager.class);
 
     public DownloadManager() {
         this(DEFAULT_POOL_SIZE, DEFAULT_QUEUE_SIZE);
@@ -68,7 +67,7 @@ public class DownloadManager implements SubmittableService<HTTPDownloader, Consu
                 byte[] downloadResult = task.getBytes();
                 callback.accept(downloadResult);
             } catch (DownloadException e) {
-                LOGGER.error("Failed to submit download", e);
+                log.error("Failed to submit download", e);
                 error.accept(e);
             }
         });

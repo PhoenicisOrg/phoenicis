@@ -37,42 +37,42 @@ public class PEReaderTest {
 
     @Test
     public void testMagicNumber() {
-        assertEquals(0x5A4D, peFile.imageDOSHeader.eMagic.get());
+        assertEquals(0x5A4D, peFile.imageDOSHeader.eMagic.getWord());
     }
 
     @Test
     public void testPeHeaderSignature() {
-        assertEquals(0x4550, peFile.imageNTHeaders.signature.get());
+        assertEquals(0x4550, peFile.imageNTHeaders.signature.getContent());
     }
 
     @Test
     public void testMachine() {
-        assertEquals(0x14C, peFile.imageNTHeaders.fileHeader.machine.get());
+        assertEquals(0x14C, peFile.imageNTHeaders.fileHeader.machine.getWord());
     }
 
     @Test
     public void testNumberOfSections() {
-        assertEquals(3, peFile.imageNTHeaders.fileHeader.numberOfSections.get());
+        assertEquals(3, peFile.imageNTHeaders.fileHeader.numberOfSections.getWord());
     }
 
     @Test
     public void testNumberOfSymbols() {
-        assertEquals(0, peFile.imageNTHeaders.fileHeader.numberOfSymbols.get());
+        assertEquals(0, peFile.imageNTHeaders.fileHeader.numberOfSymbols.getContent());
     }
 
     @Test
     public void testSizeOfOptionalHeader() {
-        assertEquals(224, peFile.imageNTHeaders.fileHeader.sizeOfOptionalHeader.get());
+        assertEquals(224, peFile.imageNTHeaders.fileHeader.sizeOfOptionalHeader.getWord());
     }
 
     @Test
     public void testCharacteristics() {
-        assertEquals(0x102, peFile.imageNTHeaders.fileHeader.characteristics.get());
+        assertEquals(0x102, peFile.imageNTHeaders.fileHeader.characteristics.getWord());
     }
 
     @Test
     public void testOptionalHeaderMagic() {
-        assertEquals(0x10B, peFile.imageNTHeaders.optionalHeader.magic.get());
+        assertEquals(0x10B, peFile.imageNTHeaders.optionalHeader.magic.getWord());
     }
 
     @Test
@@ -83,22 +83,22 @@ public class PEReaderTest {
 
     @Test
     public void testOptionalHeaderSizeOfCode() {
-        assertEquals(8, peFile.imageNTHeaders.optionalHeader.sizeOfCode.get());
+        assertEquals(8, peFile.imageNTHeaders.optionalHeader.sizeOfCode.getContent());
     }
 
     @Test
     public void testOptionalHeaderSizeOfInitializedData() {
-        assertEquals(0, peFile.imageNTHeaders.optionalHeader.sizeOfInitializedData.get());
+        assertEquals(0, peFile.imageNTHeaders.optionalHeader.sizeOfInitializedData.getContent());
     }
 
     @Test
     public void testOptionalHeaderSizeOfUninitializedData() {
-        assertEquals(0, peFile.imageNTHeaders.optionalHeader.sizeOfUninitializedData.get());
+        assertEquals(0, peFile.imageNTHeaders.optionalHeader.sizeOfUninitializedData.getContent());
     }
 
     @Test
     public void testOptionalHeaderBaseOfCode() {
-        assertEquals(0x1000, peFile.imageNTHeaders.optionalHeader.baseOfCode.get());
+        assertEquals(0x1000, peFile.imageNTHeaders.optionalHeader.baseOfCode.getContent());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class PEReaderTest {
 
     @Test
     public void testOptionalHeaderBaseOfData() {
-        assertEquals(0, peFile.imageNTHeaders.optionalHeader.baseOfData.get());
+        assertEquals(0, peFile.imageNTHeaders.optionalHeader.baseOfData.getContent());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class PEReaderTest {
 
     @Test
     public void testOptionalHeaderDllCharacteristics() {
-        assertEquals(0x100, peFile.imageNTHeaders.optionalHeader.dllCharacteristics.get());
+        assertEquals(0x100, peFile.imageNTHeaders.optionalHeader.dllCharacteristics.getWord());
     }
 
     @Test
@@ -145,22 +145,22 @@ public class PEReaderTest {
 
     @Test
     public void testRsrcSizeOfRawData() {
-        assertEquals(0xB8038, peFile.sectionHeaders[2].sizeOfRawData.get());
+        assertEquals(0xB8038, peFile.sectionHeaders[2].sizeOfRawData.getContent());
     }
 
     @Test
     public void testRsrcVirtualAddress() {
-        assertEquals(0x00003000, peFile.sectionHeaders[2].virtualAddress.get());
+        assertEquals(0x00003000, peFile.sectionHeaders[2].virtualAddress.getContent());
     }
 
     @Test
     public void testVirtuaSize() {
-        assertEquals(0x000B9000, peFile.sectionHeaders[2].physicalAddressOrVirtualSize.get());
+        assertEquals(0x000B9000, peFile.sectionHeaders[2].physicalAddressOrVirtualSize.getContent());
     }
 
     @Test
     public void testCharacteristic() {
-        assertEquals(0x40000040, peFile.sectionHeaders[2].characteristics.get());
+        assertEquals(0x40000040, peFile.sectionHeaders[2].characteristics.getContent());
     }
 
     @Test

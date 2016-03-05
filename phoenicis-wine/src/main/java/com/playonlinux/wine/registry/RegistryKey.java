@@ -21,7 +21,10 @@ package com.playonlinux.wine.registry;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 public class RegistryKey extends AbstractRegistryNode {
+    @Getter
     private final List<AbstractRegistryNode> children;
 
     public RegistryKey(String name) {
@@ -57,11 +60,6 @@ public class RegistryKey extends AbstractRegistryNode {
     public void addChild(AbstractRegistryNode newChildren) {
         children.add(newChildren);
         newChildren.setParent(this);
-    }
-
-
-    public List<AbstractRegistryNode> getChildren() {
-        return children;
     }
 
     public AbstractRegistryNode getChild(int i) {

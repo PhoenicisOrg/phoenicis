@@ -26,11 +26,14 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.playonlinux.core.dto.DTO;
 import com.playonlinux.core.utils.OperatingSystem;
 
+import lombok.Data;
+
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO implements DTO {
     private final int id;
-    private final String scriptName;
+    private final String name;
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
@@ -39,44 +42,12 @@ public class ScriptDTO implements DTO {
 
     private ScriptDTO(Builder builder) {
         this.id = builder.id;
-        this.scriptName = builder.scriptName;
+        this.name = builder.scriptName;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
         this.requiresNoCD = builder.requiresNoCD;
         this.url = builder.url;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getScriptName() {
-        return scriptName;
-    }
-
-    public String getName() {
-        return scriptName;
-    }
-
-    public List<OperatingSystem> getCompatibleOperatingSystems() {
-        return compatibleOperatingSystems;
-    }
-
-    public Boolean isFree() {
-        return free;
-    }
-
-    public Boolean isRequiresNoCD() {
-        return requiresNoCD;
-    }
-
-    public List<OperatingSystem> getTestingOperatingSystems() {
-        return testingOperatingSystems;
-    }
-
-    public String getUrl() {
-        return url;
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

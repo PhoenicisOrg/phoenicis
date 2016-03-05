@@ -24,8 +24,10 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 public class JavaFXApplication extends Application {
+    @Getter
     private static MainWindow mainWindow;
 
     @Override
@@ -53,10 +55,6 @@ public class JavaFXApplication extends Application {
         }
         */
 
-    }
-
-    public static MainWindow getMainWindow() {
-        return mainWindow;
     }
 
     private void loadFonts() {

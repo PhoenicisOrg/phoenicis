@@ -47,6 +47,9 @@ import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Scan
 public class DefaultWineVersionsManager implements WineVersionManager {
     @Inject
@@ -55,11 +58,13 @@ public class DefaultWineVersionsManager implements WineVersionManager {
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
+    @Getter
     private Collection<WineVersionDistributionWebDTO> wineVersionDistributionDTOs = new ArrayList<>();
     private DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> downloadEnvelope;
 
     private WineversionsSourceWebserviceDefaultImplementation wineversionsSourceWebserviceImplementation;
     private URL webserviceUrl;
+    @Setter
     private Consumer<WineVersionManager> onChange;
 
     public synchronized void update(DownloadEnvelope<Collection<WineVersionDistributionWebDTO>> argument) {
@@ -94,10 +99,12 @@ public class DefaultWineVersionsManager implements WineVersionManager {
         this.refreshWebservice();
     }
 
+    @Override
     public boolean isUpdating() {
         return downloadEnvelope == null || downloadEnvelope.getDownloadState().getState() == ProgressState.PROGRESSING;
     }
 
+    @Override
     public boolean hasFailed() {
         return downloadEnvelope.getDownloadState().getState() == ProgressState.FAILED;
     }
@@ -111,10 +118,6 @@ public class DefaultWineVersionsManager implements WineVersionManager {
                 webserviceUrl);
         wineversionsSourceWebserviceImplementation.setOnDownloadUpdate(this::update);
         playOnLinuxBackgroundServicesManager.register(wineversionsSourceWebserviceImplementation);
-    }
-
-    public Collection<WineVersionDistributionWebDTO> getWineVersionDistributionDTOs() {
-        return wineVersionDistributionDTOs;
     }
 
     @Override
@@ -203,9 +206,4 @@ public class DefaultWineVersionsManager implements WineVersionManager {
             throw new EngineInstallException("Malformed URL in PlayOnLinux webservice. Please report the error", e);
         }
     }
-
-    public void setOnChange(Consumer<WineVersionManager> onChange) {
-        this.onChange = onChange;
-    }
-
 }

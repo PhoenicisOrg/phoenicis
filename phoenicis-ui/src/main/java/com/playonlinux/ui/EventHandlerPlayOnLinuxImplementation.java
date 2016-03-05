@@ -43,6 +43,8 @@ import com.playonlinux.library.entities.InstalledApplicationEntity;
 import com.playonlinux.library.entities.LibraryWindowEntity;
 import com.playonlinux.ui.api.EntitiesProvider;
 
+import lombok.Getter;
+
 @Scan
 public final class EventHandlerPlayOnLinuxImplementation implements EventHandler {
     @Inject
@@ -57,6 +59,7 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Inject
     private static AnyScriptFactory scriptFactory;
 
+    @Getter
     private final LibraryEventHandler libraryEventHandler = new LibraryEventHandler();
 
     @Override
@@ -93,11 +96,6 @@ public final class EventHandlerPlayOnLinuxImplementation implements EventHandler
     @Override
     public void refreshAvailableInstallers() throws PlayOnLinuxException {
         getAppsManager().refresh();
-    }
-
-    @Override
-    public LibraryEventHandler getLibraryEventHandler() {
-        return libraryEventHandler;
     }
 
     @Override

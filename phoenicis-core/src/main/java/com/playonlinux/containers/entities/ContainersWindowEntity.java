@@ -20,14 +20,9 @@ package com.playonlinux.containers.entities;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class ContainersWindowEntity {
     private final List<ContainerEntity> containerEntities;
-
-    public ContainersWindowEntity(List<ContainerEntity> containerEntities) {
-        this.containerEntities = containerEntities;
-    }
-
-    public List<ContainerEntity> getContainerEntities() {
-        return containerEntities;
-    }
 }

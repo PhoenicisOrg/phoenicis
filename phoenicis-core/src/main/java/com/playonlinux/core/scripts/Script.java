@@ -24,8 +24,6 @@ import java.util.concurrent.Future;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.playonlinux.app.PlayOnLinuxException;
 import com.playonlinux.core.python.JythonInterpreterFactory;
@@ -34,20 +32,23 @@ import com.playonlinux.core.services.manager.ServiceManager;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Scan
-public abstract class
-Script implements Service {
+public abstract class Script implements Service {
     @Inject
     static ServiceManager serviceManager;
 
     @Inject
     static JythonInterpreterFactory jythonJythonInterpreterFactory;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(Script.class);
     private final ExecutorService executor;
-    
+
     private Future runningScript;
 
+    @Getter
     private final String scriptContent;
 
     protected Script(String scriptContent, ExecutorService executor) {
@@ -57,26 +58,20 @@ Script implements Service {
 
     public static Script.Type detectScriptType(String script) {
         final String firstLine = script.split("\n")[0];
-        if(firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash")) {
+        if (firstLine.contains("#!/bin/bash") || firstLine.contains("#!/usr/bin/env playonlinux-bash")) {
             return Script.Type.LEGACY;
         } else {
             return Script.Type.RECENT;
         }
     }
 
-
     @Override
     public void shutdown() {
         runningScript.cancel(true);
     }
 
-    public String getScriptContent() {
-        return scriptContent;
-    }
-
     public enum Type {
-        RECENT,
-        LEGACY
+        RECENT, LEGACY
     }
 
     @Override
@@ -84,8 +79,8 @@ Script implements Service {
         runningScript = executor.submit(() -> {
             try {
                 createScriptInstance();
-            } catch(PlayOnLinuxException e) {
-                LOGGER.error("Cannot createPrefix interpreter", e);
+            } catch (PlayOnLinuxException e) {
+                log.error("Cannot createPrefix interpreter", e);
             }
         });
     }
@@ -96,16 +91,16 @@ Script implements Service {
             executeScript(pythonInterpreter);
         } catch (PyException e) {
             if (e.getCause() instanceof ScriptFailureException) {
-                LOGGER.error("The script encountered an error");
+                log.error("The script encountered an error");
             }
             if (e.getCause() instanceof CancelException) {
-                LOGGER.info("The script has been canceled");
+                log.info("The script has been canceled");
             }
-            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            log.error(ExceptionUtils.getStackTrace(e));
         } catch (ScriptFailureException e) {
-            LOGGER.error("The script encountered an error", e);
+            log.error("The script encountered an error", e);
         } finally {
-            LOGGER.info("Cleaning up");
+            log.info("Cleaning up");
             pythonInterpreter.cleanup();
             jythonJythonInterpreterFactory.close(pythonInterpreter);
             serviceManager.unregister(Script.this);

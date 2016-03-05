@@ -27,19 +27,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Represents a PlayOnLinux config file. The class is able to read POLv4 format,
  * but it will store everything in v5 format (json)
  */
+@Slf4j
 public class CompatibleConfigFileFormat implements ConfigFile {
-    private final Logger LOGGER  = LoggerFactory.getLogger(CompatibleConfigFileFormat.class);
     private final File configFile;
     private final ObjectMapper mapper;
 
@@ -82,10 +81,10 @@ public class CompatibleConfigFileFormat implements ConfigFile {
             }
             return results;
         } catch (JsonParseException | JsonMappingException e) {
-            LOGGER.debug("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file", e);
+            log.debug("The file does not seems to be a JSON format. Trying legacy PlayOnLinux config file", e);
             return getLegacyMap();
         } catch (IOException e) {
-            LOGGER.debug("Error while reading the file. Will assume that the config file is EMPTY", e);
+            log.debug("Error while reading the file. Will assume that the config file is EMPTY", e);
             return Collections.emptyMap();
         }
     }
@@ -108,7 +107,7 @@ public class CompatibleConfigFileFormat implements ConfigFile {
                 result.put(newKey, newValue);
             }
         } catch (IOException e) {
-            LOGGER.warn("IOException while reading the config file. Assuming default value", e);
+            log.warn("IOException while reading the config file. Assuming default value", e);
         }
 
         return result;

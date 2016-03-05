@@ -27,6 +27,9 @@ import com.playonlinux.core.scripts.CancelException;
 import com.playonlinux.framework.wizard.WineWizard;
 import com.playonlinux.library.runners.WineShortcutRunner;
 
+import lombok.Data;
+
+@Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonDeserialize(builder = WineShortcut.Builder.class)
 public class WineShortcut implements Shortcut {
@@ -43,27 +46,7 @@ public class WineShortcut implements Shortcut {
         this.executableName = builder.executableName;
         this.arguments = builder.arguments;
     }
-
-    public String getWineDebug() {
-        return wineDebug;
-    }
-
-    public String getWinePrefix() {
-        return winePrefix;
-    }
-
-    public String getWorkingDirectory() {
-        return workingDirectory;
-    }
-
-    public String getExecutableName() {
-        return executableName;
-    }
-
-    public List<String> getArguments() {
-        return arguments;
-    }
-
+    
     @Override
     public void execute(WineWizard wineWizard) throws CancelException {
         new WineShortcutRunner(this).run(wineWizard);

@@ -25,9 +25,6 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.core.dto.DTO;
@@ -35,13 +32,16 @@ import com.playonlinux.core.entities.ProgressEntity;
 import com.playonlinux.core.entities.ProgressState;
 import com.playonlinux.core.services.manager.Service;
 
-public abstract class Webservice<T extends DTO> implements Service {
-    private final Logger LOGGER = LoggerFactory.getLogger(Webservice.class);
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+public abstract class Webservice<T extends DTO> implements Service {
     private final URL url;
     private final Semaphore updateSemaphore = new Semaphore(1);
 
     private List<T> items;
+    @Setter
     private Consumer<DownloadEnvelope<Collection<T>>> onDownloadUpdate;
 
     public Webservice(URL url) {
@@ -60,14 +60,14 @@ public abstract class Webservice<T extends DTO> implements Service {
                 items = mapper.readValue(result, this.defineTypeReference());
                 update(ProgressState.SUCCESS);
             } catch (DownloadException e) {
-                LOGGER.warn(String.format("Error while downloading %s", url), e);
+                log.warn(String.format("Error while downloading %s", url), e);
                 update(ProgressState.FAILED);
             } catch (IOException e) {
-                LOGGER.warn(String.format("IO error while downloading %s", url), e);
+                log.warn(String.format("IO error while downloading %s", url), e);
                 update(ProgressState.FAILED);
             }
         } catch (InterruptedException e) {
-            LOGGER.info(String.format("The download was interrupted: %s", url), e);
+            log.info(String.format("The download was interrupted: %s", url), e);
         } finally {
             updateSemaphore.release();
         }
@@ -82,7 +82,7 @@ public abstract class Webservice<T extends DTO> implements Service {
         downloadEnvelope.setDownloadState(progressStateEntity);
         downloadEnvelope.setEnvelopeContent(items);
 
-        if(this.onDownloadUpdate != null) {
+        if (this.onDownloadUpdate != null) {
             this.onDownloadUpdate.accept(downloadEnvelope);
         }
     }
@@ -100,9 +100,5 @@ public abstract class Webservice<T extends DTO> implements Service {
                 populate();
             }
         }.start();
-    }
-
-    public void setOnDownloadUpdate(Consumer<DownloadEnvelope<Collection<T>>> onDownloadUpdate) {
-        this.onDownloadUpdate = onDownloadUpdate;
     }
 }

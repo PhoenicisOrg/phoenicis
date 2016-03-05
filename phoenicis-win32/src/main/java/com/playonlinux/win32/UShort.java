@@ -21,11 +21,14 @@ package com.playonlinux.win32;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import lombok.Getter;
+
 /**
  * Represents a WIN32 WORD
  * A 16-bit unsigned integer. The range is 0 through 65535 decimal.
  */
 public class UShort {
+    @Getter
     private final short word;
 
     public UShort(short word) {
@@ -38,10 +41,6 @@ public class UShort {
 
     public UShort(byte[] bytes, int offset) {
         word = ByteBuffer.wrap(bytes, offset, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
-    }
-
-    public short get() {
-        return word;
     }
 
     public int getUnsignedValue() {

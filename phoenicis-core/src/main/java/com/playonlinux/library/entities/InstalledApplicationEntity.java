@@ -22,6 +22,9 @@ import java.net.URL;
 
 import com.playonlinux.core.entities.Entity;
 
+import lombok.Data;
+
+@Data
 public class InstalledApplicationEntity implements Entity {
     private final URL icon;
     private final String name;
@@ -29,14 +32,6 @@ public class InstalledApplicationEntity implements Entity {
     public InstalledApplicationEntity(Builder builder) {
         this.name = builder.name;
         this.icon = builder.icon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public URL getIcon() {
-        return icon;
     }
 
     public static class Builder {
