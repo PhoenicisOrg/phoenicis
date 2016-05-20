@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 public class PlayOnLinuxScene extends Scene {
     private static final String DEFAULT_THEME = PlayOnLinuxScene.class.getResource("defaultTheme.css").toExternalForm();
     private static final String DARK_THEME = PlayOnLinuxScene.class.getResource("darkTheme.css").toExternalForm();
+    private static final String HIDPI_THEME = PlayOnLinuxScene.class.getResource("hidpiTheme.css").toExternalForm();
 
     public PlayOnLinuxScene(Parent parent, int width, int height) {
         super(parent, width, height);
@@ -42,6 +43,9 @@ public class PlayOnLinuxScene extends Scene {
             }
             case DARK: {
                 return DARK_THEME;
+            }
+            case HIDPI: {
+                return HIDPI_THEME;
             }
             default: {
                 return DEFAULT_THEME;
