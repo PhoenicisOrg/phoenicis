@@ -58,6 +58,11 @@ public class ViewSettings extends MainWindowView {
                 this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getTheme(Themes.DARK));
                 break;
             }
+            case HIDPI: {
+                this.getScene().getStylesheets().clear();
+                this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getTheme(Themes.HIDPI));
+                break;
+            }
             default: {
                 this.getScene().getStylesheets().clear();
                 this.getScene().getStylesheets().add(parent.getPlayOnLinuxScene().getTheme(Themes.DEFAULT));
