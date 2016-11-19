@@ -18,21 +18,15 @@
 
 package com.playonlinux.wine.parameters;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.i18n.Messages;
 
 public enum AlwaysOffscreen {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled"));
+    DEFAULT, DISABLED, ENABLED;
 
-    private final String translatedName;
-
-    AlwaysOffscreen(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    private final String name = Messages.getString(name());
 
     @Override
     public String toString() {
-        return translatedName;
+        return name;
     }
 }

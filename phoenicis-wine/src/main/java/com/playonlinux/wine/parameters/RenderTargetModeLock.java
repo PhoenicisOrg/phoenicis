@@ -18,22 +18,15 @@
 
 package com.playonlinux.wine.parameters;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.i18n.Messages;
 
 public enum RenderTargetModeLock {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    READDRAW("readdraw"),
-    READTEX("readtext");
+    DEFAULT, DISABLED, READDRAW, READTEX;
 
-    private final String translatedName;
-
-    RenderTargetModeLock(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    private final String name = Messages.getString(name());
 
     @Override
     public String toString() {
-        return translatedName;
+        return name;
     }
 }

@@ -18,18 +18,12 @@
 
 package com.playonlinux.wine.parameters;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.i18n.Messages;
 
 public enum Multisampling {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled"));
+    DEFAULT, DISABLED, ENABLED;
 
-    private final String translatedName;
-
-    Multisampling(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    private final String translatedName = Messages.getString(name());
 
     @Override
     public String toString() {

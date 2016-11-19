@@ -18,22 +18,15 @@
 
 package com.playonlinux.wine.parameters;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.i18n.Messages;
 
 public enum MouseWarpOverride {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled")),
-    FORCE(translate("Force"));
+    DEFAULT, DISABLED, ENABLED, FORCE;
 
-    private final String translatedName;
-
-    MouseWarpOverride(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    private final String name = Messages.getString(name());
 
     @Override
     public String toString() {
-        return translatedName;
+        return name;
     }
 }

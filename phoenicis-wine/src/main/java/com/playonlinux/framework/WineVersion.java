@@ -18,7 +18,6 @@
 
 package com.playonlinux.framework;
 
-import static com.playonlinux.core.lang.Localisation.translate;
 import static java.lang.String.format;
 
 import java.io.File;
@@ -31,6 +30,7 @@ import com.playonlinux.core.version.Version;
 import com.playonlinux.engines.wine.WineDistribution;
 import com.playonlinux.engines.wine.WineVersionManager;
 import com.playonlinux.framework.wizard.WineWizard;
+import com.playonlinux.i18n.Messages;
 import com.playonlinux.injection.Inject;
 import com.playonlinux.injection.Scan;
 import com.playonlinux.ui.api.ProgressControl;
@@ -38,6 +38,8 @@ import com.playonlinux.ui.api.ProgressControl;
 @Scan
 @ScriptClass
 public class WineVersion {
+    private static final String I18N_WINE_INSTALL = Messages.getString("Wine.Install"); //$NON-NLS-1$
+
     @Inject
     static PlayOnLinuxContext playOnLinuxContext;
 
@@ -94,8 +96,7 @@ public class WineVersion {
 
     public void install() throws CancelException {
         if (setupWizard != null) {
-            ProgressControl progressControl = setupWizard.progressBar(
-                    format(translate("Please wait while ${application.name} is installing wine %s"), version));
+            ProgressControl progressControl = setupWizard.progressBar(format(I18N_WINE_INSTALL, version));
             wineVersionManager.install(wineDistribution, version, progressControl);
         }
     }

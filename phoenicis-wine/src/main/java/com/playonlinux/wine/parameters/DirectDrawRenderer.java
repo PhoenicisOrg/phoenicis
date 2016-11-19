@@ -18,21 +18,15 @@
 
 package com.playonlinux.wine.parameters;
 
-import static com.playonlinux.core.lang.Localisation.translate;
+import com.playonlinux.i18n.Messages;
 
-public enum  DirectDrawRenderer {
-    DEFAULT(translate("Default")),
-    GDI("GDI"),
-    OPENGL("OpenGL");
+public enum DirectDrawRenderer {
+    DEFAULT, GDI, OPENGL;
 
-    private final String translatedName;
-
-    DirectDrawRenderer(String translatedName) {
-        this.translatedName = translatedName;
-    }
+    private final String name = Messages.getString(name());
 
     @Override
     public String toString() {
-        return translatedName;
+        return name;
     }
 }
