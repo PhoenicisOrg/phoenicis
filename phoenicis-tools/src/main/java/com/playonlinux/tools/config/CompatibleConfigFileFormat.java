@@ -42,9 +42,9 @@ public class CompatibleConfigFileFormat implements ConfigFile {
     private final File configFile;
     private final ObjectMapper mapper;
 
-    public CompatibleConfigFileFormat(File configFile) {
+    public CompatibleConfigFileFormat(ObjectMapper objectMapper, File configFile) {
         this.configFile = configFile;
-        this.mapper = new ObjectMapper();
+        this.mapper = objectMapper;
     }
 
     @Override

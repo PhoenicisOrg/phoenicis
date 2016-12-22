@@ -18,6 +18,7 @@
 
 package com.playonlinux.tools.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,42 +58,42 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testReadValue_legacyFile() {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpLegacy);
         assertEquals("x86", compatibleConfigFileFormat.readValue("ARCH"));
         assertEquals("1.7.33", compatibleConfigFileFormat.readValue("VERSION"));
     }
 
     @Test
     public void testReadValue_legacyFileContainsEquals() {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpLegacy);
         assertEquals("test=test", compatibleConfigFileFormat.readValue("TEST"));
     }
 
 
     @Test
     public void testReadValue_legacyFile_Unexisting() {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpLegacy);
         assertEquals("", compatibleConfigFileFormat.readValue("unexisting"));
         assertEquals("default", compatibleConfigFileFormat.readValue("unexisting", "default"));
     }
 
     @Test
     public void testReadValue_jsonFile() {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpNew);
         assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
         assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
     }
 
     @Test
     public void testReadValue_jsonFile_Unexisting() {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpNew);
         assertEquals("", compatibleConfigFileFormat.readValue("unexisting"));
         assertEquals("default", compatibleConfigFileFormat.readValue("unexisting", "default"));
     }
 
     @Test
     public void testDeleteValue_Legacy() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpLegacy);
         assertEquals("test=test", compatibleConfigFileFormat.readValue("TEST"));
         compatibleConfigFileFormat.deleteValue("TEST");
         assertEquals("", compatibleConfigFileFormat.readValue("TEST"));
@@ -102,7 +103,7 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testDeleteValue_jsonFile() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpNew);
         assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
         assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
         assertEquals("staging", compatibleConfigFileFormat.readValue("distributionCode"));
@@ -115,7 +116,7 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testWriteNewValue_Legacy() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpLegacy);
         assertEquals("", compatibleConfigFileFormat.readValue("TEST2"));
         compatibleConfigFileFormat.writeValue("TEST2", "Content");
         assertEquals("Content", compatibleConfigFileFormat.readValue("TEST2"));
@@ -125,7 +126,7 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testWriteNewValue_jsonFile() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpNew);
         assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
         assertEquals("1.7.35", compatibleConfigFileFormat.readValue("version"));
         compatibleConfigFileFormat.writeValue("TEST3", "Content3");
@@ -137,7 +138,7 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testWriteExistingValue_Legacy() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpLegacy);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpLegacy);
         assertEquals("x86", compatibleConfigFileFormat.readValue("ARCH"));
         compatibleConfigFileFormat.writeValue("ARCH", "amd64");
         assertEquals("amd64", compatibleConfigFileFormat.readValue("ARCH"));
@@ -145,7 +146,7 @@ public class CompatibleConfigFileFormatTest {
 
     @Test
     public void testWriteExistingValue_jsonFile() throws IOException {
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(tmpNew);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), tmpNew);
         assertEquals("I386", compatibleConfigFileFormat.readValue("architecture"));
         compatibleConfigFileFormat.writeValue("architecture", "AMD64");
         assertEquals("AMD64", compatibleConfigFileFormat.readValue("architecture"));
@@ -155,7 +156,7 @@ public class CompatibleConfigFileFormatTest {
     public void testWriteNewValue_unexistingFile() throws IOException {
         final File temporaryFile = File.createTempFile("test", "json");
         temporaryFile.deleteOnExit();
-        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(temporaryFile);
+        final CompatibleConfigFileFormat compatibleConfigFileFormat = new CompatibleConfigFileFormat(new ObjectMapper(), temporaryFile);
         assertEquals("", compatibleConfigFileFormat.readValue("TEST3"));
         compatibleConfigFileFormat.writeValue("TEST3", "Content3");
         assertEquals("Content3", compatibleConfigFileFormat.readValue("TEST3"));

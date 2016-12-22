@@ -1,8 +1,10 @@
 package com.playonlinux.tools;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.tools.archive.Extractor;
 import com.playonlinux.tools.archive.Tar;
 import com.playonlinux.tools.checksum.ChecksumCalculator;
+import com.playonlinux.tools.config.CompatibleConfigFileFormatFactory;
 import com.playonlinux.tools.files.FileAnalyser;
 import com.playonlinux.tools.files.FileUtilities;
 import com.playonlinux.tools.http.Downloader;
@@ -13,6 +15,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ToolsConfiguration {
+    @Bean
+    public CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory() {
+        return new CompatibleConfigFileFormatFactory(new ObjectMapper());
+    }
+
     @Bean
     public FileAnalyser fileAnalyser() {
         return new FileAnalyser();
