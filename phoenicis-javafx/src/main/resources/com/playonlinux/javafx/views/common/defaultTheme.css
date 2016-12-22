@@ -161,6 +161,9 @@
 .miniatureListElement:hover {
     -fx-background-color: #EFEFEF;
 }
+.miniatureListElement.selected {
+    -fx-background-color: #EAEAEA;
+}
 
 .downloadImageWaiting {
     -fx-padding: 1em;

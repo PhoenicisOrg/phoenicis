@@ -48,7 +48,12 @@ public class ControllerConfiguration {
 
     @Bean
     public LibraryController libraryController() {
-        return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(), libraryConfiguration.libraryManager());
+        return new LibraryController(
+                viewsConfiguration.viewLibrary(),
+                consoleController(),
+                libraryConfiguration.libraryManager(),
+                libraryConfiguration.shortcutRunner()
+        );
     }
 
     @Bean

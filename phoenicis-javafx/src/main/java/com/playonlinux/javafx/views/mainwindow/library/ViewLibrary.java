@@ -23,6 +23,7 @@ import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftButtonGroup;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -32,7 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
@@ -46,6 +49,10 @@ public class ViewLibrary extends MainWindowView {
     private TextField searchBar;
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {};
+    private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {};
+    private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {};
+
+    private Consumer<ShortcutDTO> onShortcutRun = shortcut -> {};
 
     public ViewLibrary(String applicationName) {
         super();
@@ -57,6 +64,49 @@ public class ViewLibrary extends MainWindowView {
         this.drawContent();
 
         showRightView(libraryTabs);
+    }
+
+    public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {
+        this.onShortcutSelected = onShortcutSelected;
+    }
+
+    public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
+        this.onShortcutDoubleClicked = onShortcutDoubleClicked;
+    }
+
+    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
+        this.onShortcutRun = onShortcutRun;
+    }
+
+    public void populate(List<ShortcutDTO> shortcutDTOs) {
+        applicationListWidget.clear();
+        for (ShortcutDTO shortcutDTO : shortcutDTOs) {
+            final MiniatureListWidget.Element selectedItem
+                    = applicationListWidget.addItem(shortcutDTO.getName(), shortcutDTO.getMiniature());
+
+            selectedItem.setOnMouseClicked(event -> {
+                applicationListWidget.unSelecteAll();
+                applicationListWidget.select(selectedItem);
+                onShortcutSelected.accept(shortcutDTO);
+
+                clearSideBar();
+                drawSideBarWithShortcut(shortcutDTO);
+
+                if(event.getClickCount() == 2) {
+                    onShortcutDoubleClicked.accept(shortcutDTO);
+                }
+
+                event.consume();
+            });
+        }
+
+        applicationListWidget.setOnMouseClicked(event -> {
+            clearSideBar();
+            drawSideBarWithoutShortcut();
+            applicationListWidget.unSelecteAll();
+            onShortcutSelected.accept(null);
+            event.consume();
+        });
     }
 
     private void drawContent() {
@@ -73,15 +123,13 @@ public class ViewLibrary extends MainWindowView {
         installedApplication.setContent(applicationListWidget);
     }
 
-    public void populate(List<ShortcutDTO> shortcutDTOs) {
-        applicationListWidget.clear();
-        for (ShortcutDTO shortcutDTO : shortcutDTOs) {
-            applicationListWidget.addItem(shortcutDTO.getName(), shortcutDTO.getMiniature());
-        }
-    }
-
     @Override
     protected void drawSideBar() {
+        drawSideBarWithoutShortcut();
+        super.drawSideBar();
+    }
+
+    private void drawSideBarWithShortcut(ShortcutDTO shortcut) {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
@@ -90,10 +138,29 @@ public class ViewLibrary extends MainWindowView {
         this.runConsole = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/console.png",
                 translate(applicationName + " console"));
 
-        LeftSpacer spacer = new LeftSpacer();
-        addToSideBar(searchBar, spacer, new LeftBarTitle("Advanced tools"), runScript, runConsole);
+        addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
+    }
 
-        super.drawSideBar();
+    private LeftButtonGroup shortcutGroup(ShortcutDTO shortcut) {
+        final LeftButtonGroup shortcutGroup = new LeftButtonGroup(shortcut.getName());
+        final LeftButton runButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/play.png", translate("Run"));
+        runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
+        shortcutGroup.setButtons(Arrays.asList(
+                runButton
+        ));
+        return shortcutGroup;
+    }
+
+    private void drawSideBarWithoutShortcut() {
+        searchBar = new TextField();
+        searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
+
+        this.runScript = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/script.png",
+                translate("Run a script"));
+        this.runConsole = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/console.png",
+                translate(applicationName + " console"));
+
+        addToSideBar(searchBar, new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
 
     private void applyFilter(String searchText) {

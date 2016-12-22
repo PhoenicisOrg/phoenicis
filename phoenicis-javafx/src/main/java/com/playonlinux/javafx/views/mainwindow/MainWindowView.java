@@ -36,6 +36,10 @@ public class MainWindowView extends HBox {
         this.getChildren().add(leftContent);
     }
 
+    protected void clearSideBar() {
+        leftContent.getChildren().clear();
+    }
+
     protected void addToSideBar(Node... nodes) {
         leftContent.getChildren().addAll(nodes);
     }

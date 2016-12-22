@@ -30,9 +30,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class MiniatureListWidget extends ScrollPane {
     private final Pane content;
+    private Element selectedItem;
 
     private MiniatureListWidget(Pane content) {
         super(content);
@@ -57,22 +60,42 @@ public final class MiniatureListWidget extends ScrollPane {
         content.getChildren().clear();
     }
 
-    public Node addItem(String appsItem) {
+    public Element addItem(String appsItem) {
         final Element element = new Element(appsItem);
         content.getChildren().add(element);
         return element;
     }
 
-    public Node addItem(String appsItem, Node miniature) {
+    public Element addItem(String appsItem, Node miniature) {
         final Element element = new Element(appsItem, miniature);
         content.getChildren().add(element);
         return element;
     }
 
-    public Node addItem(String appName, byte[] miniature) {
+    public Element addItem(String appName, byte[] miniature) {
         final Element element = new Element(appName, new StaticMiniature(new Image(new ByteArrayInputStream(miniature))));
         content.getChildren().add(element);
         return element;
+    }
+
+    public List<Element> getItems() {
+        return content.getChildren().stream().filter(node -> node instanceof Element)
+                .map(node -> (Element) node)
+                .collect(Collectors.toList());
+    }
+
+    public void unSelecteAll() {
+        getItems().forEach(element -> element.getStyleClass().remove("selected"));
+        this.selectedItem = null;
+    }
+
+    public void select(Element selectedItem) {
+        selectedItem.getStyleClass().add("selected");
+        this.selectedItem = selectedItem;
+    }
+
+    public Element getSelectedItem() {
+        return selectedItem;
     }
 
     public static class Element extends VBox {
