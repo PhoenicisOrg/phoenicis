@@ -23,7 +23,7 @@ public class ConsoleController {
             consoleTab.appendTextToConsole("> " + command + "\n", "#000000");
             consoleTab.disableCommand();
             interactiveScriptSession.eval(command, result -> {
-                consoleTab.appendTextToConsole(result + "\n");
+                consoleTab.appendTextToConsole(result.toString() + "\n");
                 consoleTab.enableCommand();
             }, error -> {
                 consoleTab.appendTextToConsole(ExceptionUtils.getFullStackTrace(error), "#CC0000");

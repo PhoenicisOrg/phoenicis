@@ -10,13 +10,17 @@ public class AppsController {
     private final AppsManager localAppsManager;
     private final ScriptInterpreter scriptInterpreter;
 
+    private Runnable onAppLoaded = () -> {};
+
     public AppsController(ViewApps view,
                           AppsManager localAppsManager,
                           ScriptInterpreter scriptInterpreter) {
         this.view = view;
         this.localAppsManager = localAppsManager;
         this.scriptInterpreter = scriptInterpreter;
+    }
 
+    public void loadApps() {
         this.view.showAvailableApps();
         this.view.populate(localAppsManager.fetchInstallableApplications());
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
@@ -24,6 +28,12 @@ public class AppsController {
                 scriptDTO.getScript(),
                 Throwable::printStackTrace // FIXME
         ));
+
+        onAppLoaded.run();
+    }
+
+    public void setOnAppLoaded(Runnable onAppLoaded) {
+        this.onAppLoaded = onAppLoaded;
     }
 
     public ViewApps getView() {

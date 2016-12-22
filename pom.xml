@@ -28,6 +28,7 @@
         <module>phoenicis-tools</module>
         <module>phoenicis-entities</module>
         <module>phoenicis-library</module>
+        <module>phoenicis-viewEngines</module>
     </modules>
 
 	<properties>

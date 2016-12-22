@@ -2,7 +2,9 @@ package com.playonlinux.javafx.controller;
 
 import com.phoenicis.library.LibraryConfiguration;
 import com.playonlinux.apps.AppsConfiguration;
+import com.playonlinux.engines.EnginesConfiguration;
 import com.playonlinux.javafx.controller.apps.AppsController;
+import com.playonlinux.javafx.controller.engines.EnginesController;
 import com.playonlinux.javafx.controller.library.LibraryController;
 import com.playonlinux.javafx.controller.library.console.ConsoleController;
 import com.playonlinux.javafx.views.ViewsConfiguration;
@@ -25,15 +27,23 @@ public class ControllerConfiguration {
     @Autowired
     private LibraryConfiguration libraryConfiguration;
 
+    @Autowired
+    private EnginesConfiguration enginesConfiguration;
+
     @Bean
     public MainController mainController() {
         return new MainController(
                 libraryController(),
                 appsController(),
-                viewsConfiguration.viewEngines(),
+                enginesController(),
                 viewsConfiguration.viewContainers(),
                 viewsConfiguration.viewSettings(),
                 viewsConfiguration.mainWindowHeader());
+    }
+
+    @Bean
+    public EnginesController enginesController() {
+        return new EnginesController(viewsConfiguration.viewEngines(), enginesConfiguration.wineVersionsFetcher());
     }
 
     @Bean

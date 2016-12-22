@@ -31,13 +31,13 @@ class NashornEngine {
         }
     }
 
-    String evalAndReturn(String line, Consumer<Exception> errorCallback) {
+    Object evalAndReturn(String line, Consumer<Exception> errorCallback) {
         try {
             final Object evaluation = this.scriptEngine.eval(line);
             if(evaluation == null) {
                 return null;
             }
-            return evaluation.toString();
+            return evaluation;
         } catch (Exception e) {
             handleError(errorCallback, e);
             return "";

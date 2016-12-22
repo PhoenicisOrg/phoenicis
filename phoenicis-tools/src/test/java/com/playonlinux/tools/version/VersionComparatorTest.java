@@ -73,6 +73,74 @@ public class VersionComparatorTest {
     }
 
     @Test
+    public void testCompare_WithManyPatches() {
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2.1-dev-patch2"),
+                        new Version("4.2.1")
+                )
+        );
+
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2.1"),
+                        new Version("4.2.1-dev-patch2")
+                )
+        );
+    }
+
+    @Test
+    public void testCompare_invalidVersion() {
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("1.4.rc6-xliveless-no_xinput2"),
+                        new Version("1.4")
+                )
+        );
+
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("1.4"),
+                        new Version("1.4.rc6-xliveless-no_xinput2")
+                )
+        );
+    }
+
+    @Test
+    public void testCompare_WithPatches() {
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2.1-dev"),
+                        new Version("4.2.1")
+                )
+        );
+
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2.1"),
+                        new Version("4.2.1-dev")
+                )
+        );
+    }
+
+    @Test
+    public void testCompare_WithPatchesOnlyTwo() {
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2-dev"),
+                        new Version("4.2")
+                )
+        );
+
+        assertEquals(0,
+                versionComparator.compare(
+                        new Version("4.2"),
+                        new Version("4.2-rc6")
+                )
+        );
+    }
+
+    @Test
     public void testCompare_LowerVersion() {
         assertEquals(-1,
                 versionComparator.compare(

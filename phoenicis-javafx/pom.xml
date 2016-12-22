@@ -83,6 +83,11 @@
             <artifactId>phoenicis-library</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-viewEngines</artifactId>
+            <version>5.0-SNAPSHOT</version>
+        </dependency>
 
 
     </dependencies>

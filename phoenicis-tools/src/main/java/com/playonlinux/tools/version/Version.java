@@ -41,18 +41,26 @@ public class Version {
         }
 
         final String[] splitVersion = versionAsString.split("\\.");
-        bigNumber = Integer.valueOf(splitVersion[0]);
+        bigNumber = readInteger(splitVersion[0]);
 
         if(splitVersion.length <= 1) {
             intermediateNumber = 0;
         } else {
-            intermediateNumber = Integer.valueOf(splitVersion[1]);
+            intermediateNumber = readInteger(splitVersion[1]);
         }
 
         if(splitVersion.length <= 2) {
             lowNumber = 0;
         } else {
-            lowNumber = Integer.valueOf(splitVersion[2]);
+            lowNumber = readInteger(splitVersion[2]);
+        }
+    }
+
+    private int readInteger(String number) {
+        try {
+            return Integer.valueOf(number);
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 

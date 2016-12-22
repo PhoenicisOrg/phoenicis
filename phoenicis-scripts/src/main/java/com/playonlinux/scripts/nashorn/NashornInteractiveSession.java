@@ -13,7 +13,7 @@ public class NashornInteractiveSession implements InteractiveScriptSession {
 
     @Override
     public void eval(String evaluation,
-                     Consumer<String> responseCallback,
+                     Consumer<Object> responseCallback,
                      Consumer<Exception> errorCallback) {
         responseCallback.accept(
                 nashornEngine.evalAndReturn(evaluation, errorCallback)

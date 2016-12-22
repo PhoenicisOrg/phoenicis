@@ -18,19 +18,27 @@
 
 package com.playonlinux.javafx.views.mainwindow.engines;
 
+import com.playonlinux.engines.dto.WineVersionDTO;
+import com.playonlinux.engines.dto.WineVersionDistributionDTO;
+import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
+import com.playonlinux.javafx.views.common.widget.StaticMiniature;
 import com.playonlinux.javafx.views.mainwindow.FailurePanel;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.WaitPanel;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
+import com.playonlinux.tools.version.VersionComparator;
+import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
+
 public class ViewEngines extends MainWindowView {
-    //private final EntitiesProvider<WineVersionDistributionItemEntity, WineVersionsWindowEntity> entitiesProvider;
-    private TabPane wineDistributions;
+    private TabPane wineDistributionsTabPane;
     private FailurePanel failurePanel;
     private HBox waitPanel;
 
@@ -56,8 +64,8 @@ public class ViewEngines extends MainWindowView {
     }
 
     private void initWineVersions() {
-        wineDistributions = new TabPane();
-        wineDistributions.getStyleClass().add("rightPane");
+        wineDistributionsTabPane = new TabPane();
+        wineDistributionsTabPane.getStyleClass().add("rightPane");
     }
 
     private void showWait() {
@@ -68,8 +76,8 @@ public class ViewEngines extends MainWindowView {
         showRightView(failurePanel);
     }
 
-    private void showWineVersions() {
-        showRightView(wineDistributions);
+    public void showWineVersions() {
+        showRightView(wineDistributionsTabPane);
     }
 
     @Override
@@ -91,4 +99,22 @@ public class ViewEngines extends MainWindowView {
     }
 
 
+    public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs) {
+        for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
+            wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO));
+        }
+    }
+
+    private Tab createWineDistributionTab(WineVersionDistributionDTO wineVersionDistributionDTO) {
+        final MiniatureListWidget tabContent = MiniatureListWidget.create();
+        List<WineVersionDTO> packages = wineVersionDistributionDTO.getPackages();
+        packages.sort(WineVersionDistributionDTO.Comparator().reversed());
+
+        for (WineVersionDTO wineVersionDTO :
+                packages) {
+            tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+        }
+
+        return new Tab(wineVersionDistributionDTO.getDescription(), tabContent);
+    }
 }
