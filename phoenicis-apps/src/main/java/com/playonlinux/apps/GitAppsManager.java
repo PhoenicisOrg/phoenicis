@@ -38,4 +38,6 @@ public class GitAppsManager implements AppsManager {
             return Collections.emptyList();
         }
     }
+
+
 }

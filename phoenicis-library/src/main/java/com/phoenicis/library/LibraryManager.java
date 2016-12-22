@@ -54,7 +54,7 @@ public class LibraryManager {
 
         try {
             final byte[] icon = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(iconFile) : getClass().getResourceAsStream("playonlinux.png"));
-            final byte[] miniature = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(miniatureFile) : getClass().getResourceAsStream("defaultMiniature.png"));
+            final byte[] miniature = IOUtils.toByteArray(miniatureFile.exists() ? new FileInputStream(miniatureFile) : getClass().getResourceAsStream("defaultMiniature.png"));
             final String description = descriptionFile.exists() ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
             return new ShortcutDTO.Builder()
                     .withName(baseName)

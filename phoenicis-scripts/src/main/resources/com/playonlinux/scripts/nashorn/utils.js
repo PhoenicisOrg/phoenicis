@@ -8,3 +8,7 @@ if (!String.prototype.format) {
         });
     };
 }
+
+function isArray(obj){
+    return !!obj && Array === obj.constructor;
+}

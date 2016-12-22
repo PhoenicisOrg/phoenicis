@@ -51,18 +51,19 @@ public class LocalAppsManager implements AppsManager {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
         final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
 
-        if(categoryDirectories == null) {
+        if (categoryDirectories == null) {
             return Collections.emptyList();
         }
 
         return fetchCategories(categoryDirectories);
     }
 
+
     private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
         final List<CategoryDTO> results = new ArrayList<>();
 
         for (File categoryDirectory : categoryDirectories) {
-            if(categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
+            if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
                 final File categoryFile = new File(categoryDirectory, "category.json");
 
                 final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(unSerializeCategory(categoryFile))
@@ -70,10 +71,10 @@ public class LocalAppsManager implements AppsManager {
                         .withApplications(fetchApplications(categoryDirectory));
 
                 final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
-                if(categoryIconFile.exists()) {
+                if (categoryIconFile.exists()) {
                     try {
                         categoryDTOBuilder.withIcon(IOUtils.toByteArray(new FileInputStream(categoryIconFile)));
-                    } catch(IOException e) {
+                    } catch (IOException e) {
                         LOGGER.warn("No icon found for the category " + categoryDirectory.getName(), e);
                     }
                 }
@@ -87,24 +88,24 @@ public class LocalAppsManager implements AppsManager {
 
     private List<ApplicationDTO> fetchApplications(File categoryDirectory) {
         final File[] applicationDirectories = categoryDirectory.listFiles();
-        if(applicationDirectories == null) {
+        if (applicationDirectories == null) {
             return Collections.emptyList();
         }
 
         final List<ApplicationDTO> results = new ArrayList<>();
 
         for (File applicationDirectory : applicationDirectories) {
-            if(applicationDirectory.isDirectory()) {
+            if (applicationDirectory.isDirectory()) {
                 final ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(
                         unSerializeApplication(new File(applicationDirectory, "application.json")));
 
-                if(StringUtils.isBlank(applicationDTOBuilder.getName())) {
+                if (StringUtils.isBlank(applicationDTOBuilder.getName())) {
                     applicationDTOBuilder.withName(applicationDirectory.getName());
                 }
 
                 final File miniaturesDirectory = new File(applicationDirectory, "miniatures");
 
-                if(miniaturesDirectory.exists() && miniaturesDirectory.isDirectory()) {
+                if (miniaturesDirectory.exists() && miniaturesDirectory.isDirectory()) {
                     try {
                         applicationDTOBuilder.withMiniatures(fetchMiniatures(miniaturesDirectory));
                     } catch (IOException e) {
@@ -124,10 +125,10 @@ public class LocalAppsManager implements AppsManager {
         final List<byte[]> miniatures = new ArrayList<>();
         final File[] miniatureFiles = miniaturesDirectory.listFiles();
 
-        if(miniatureFiles != null) {
+        if (miniatureFiles != null) {
             for (File miniatureFile : miniatureFiles) {
-                if(!miniatureFile.isDirectory() && !miniatureFile.getName().startsWith(".")) {
-                    if("main.png".equals(miniatureFile.getName())) {
+                if (!miniatureFile.isDirectory() && !miniatureFile.getName().startsWith(".")) {
+                    if ("main.png".equals(miniatureFile.getName())) {
                         miniatures.add(0, IOUtils.toByteArray(new FileInputStream(miniatureFile)));
                     } else {
                         miniatures.add(IOUtils.toByteArray(new FileInputStream(miniatureFile)));
@@ -140,24 +141,24 @@ public class LocalAppsManager implements AppsManager {
 
     private List<ScriptDTO> fetchScripts(File applicationDirectory) {
         final File[] scriptDirectories = applicationDirectory.listFiles();
-        if(scriptDirectories == null) {
+        if (scriptDirectories == null) {
             return Collections.emptyList();
         }
 
         final List<ScriptDTO> results = new ArrayList<>();
 
         for (File scriptDirectory : scriptDirectories) {
-            if(scriptDirectory.isDirectory() && !"miniatures".equals(scriptDirectory.getName()))  {
+            if (scriptDirectory.isDirectory() && !"miniatures".equals(scriptDirectory.getName())) {
                 final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                         unSerializeScript(new File(scriptDirectory, "script.json")));
 
-                if(StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
+                if (StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
 
                 final File scriptFile = new File(scriptDirectory, "script.js");
 
-                if(scriptFile.exists()) {
+                if (scriptFile.exists()) {
                     try {
                         scriptDTOBuilder.withScript(
                                 new String(IOUtils.toByteArray(new FileInputStream(scriptFile)))
