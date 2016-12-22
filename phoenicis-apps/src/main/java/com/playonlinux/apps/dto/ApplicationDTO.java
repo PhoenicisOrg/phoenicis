@@ -18,43 +18,37 @@
 
 package com.playonlinux.apps.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.playonlinux.core.dto.DTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents an application
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
-public class ApplicationDTO implements DTO {
-    private final int id;
+public class ApplicationDTO {
     private final String name;
     private final String description;
-    private final String iconUrl;
-    private final List<String> miniaturesUrls;
+    private final byte[] icon;
+    private final List<byte[]> miniatures;
     private final List<ScriptDTO> scripts;
 
     private ApplicationDTO(Builder builder) {
-        id = builder.id;
         name = builder.name;
         description = builder.description;
-        iconUrl = builder.iconUrl;
-        miniaturesUrls = builder.miniaturesUrls;
+        icon = builder.icon;
+        miniatures = builder.miniatures;
         scripts = builder.scripts;
     }
 
-    public String getIconUrl() {
-        return iconUrl;
+    public byte[] getIconUrl() {
+        return icon;
     }
 
-    public List<String> getMiniaturesUrls() {
-        return miniaturesUrls;
-    }
-
-    public int getId() {
-        return id;
+    public List<byte[]> getMiniatures() {
+        return miniatures;
     }
 
     public String getName() {
@@ -73,28 +67,18 @@ public class ApplicationDTO implements DTO {
     public static class Builder {
         private String name;
         private String description;
-        private String iconUrl;
-        private List<String> miniaturesUrls;
-        private List<ScriptDTO> scripts;
-        private int id;
+        private byte[] icon;
+        private List<byte[]> miniatures = new ArrayList<>();
+        private List<ScriptDTO> scripts = new ArrayList<>();
 
-        public Builder() {
-            // We need a public builder to be able to createPrefix a ScriptDTO
-            // from scratch
-        }
+        public Builder() { }
 
         public Builder(ApplicationDTO applicationDTO) {
             this.name = applicationDTO.name;
             this.description = applicationDTO.description;
-            this.iconUrl = applicationDTO.iconUrl;
-            this.miniaturesUrls = applicationDTO.miniaturesUrls;
+            this.icon = applicationDTO.icon;
+            this.miniatures = applicationDTO.miniatures;
             this.scripts = applicationDTO.scripts;
-            this.id = applicationDTO.id;
-        }
-
-        public Builder withId(int id) {
-            this.id = id;
-            return this;
         }
 
         public Builder withName(String name) {
@@ -107,13 +91,13 @@ public class ApplicationDTO implements DTO {
             return this;
         }
 
-        public Builder withIconUrl(String iconUrl) {
-            this.iconUrl = iconUrl;
+        public Builder withIconUrl(byte[] icon) {
+            this.icon = icon;
             return this;
         }
 
-        public Builder withMiniaturesUrls(List<String> miniaturesUrls) {
-            this.miniaturesUrls = miniaturesUrls;
+        public Builder withMiniatures(List<byte[]> miniatures) {
+            this.miniatures = miniatures;
             return this;
         }
 
@@ -124,6 +108,11 @@ public class ApplicationDTO implements DTO {
 
         public ApplicationDTO build() {
             return new ApplicationDTO(this);
+        }
+
+
+        public String getName() {
+            return name;
         }
     }
 

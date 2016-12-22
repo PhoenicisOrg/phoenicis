@@ -18,36 +18,35 @@
 
 package com.playonlinux.apps.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.playonlinux.core.dto.DTO;
+
+import java.util.List;
 
 /**
  * Represents a category of application
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
-public class CategoryDTO implements DTO {
-    private final int id;
+public class CategoryDTO {
     private final CategoryType type;
     private final String name;
     private final List<ApplicationDTO> applications;
+    private final byte[] icon;
 
     private CategoryDTO(Builder builder) {
-        this.id = builder.id;
         this.type = builder.type;
         this.name = builder.name;
         this.applications = builder.applications;
+        this.icon = builder.icon;
+    }
+
+    public byte[] getIcon() {
+        return icon;
     }
 
     public enum CategoryType {
         INSTALLERS,
         FUNCTIONS
-    }
-
-    public int getId() {
-        return id;
     }
 
     public CategoryType getType() {
@@ -64,15 +63,21 @@ public class CategoryDTO implements DTO {
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private int id;
         private CategoryType type;
         private String name;
         private List<ApplicationDTO> applications;
+        private byte[] icon;
 
-        public Builder withId(int id) {
-            this.id = id;
-            return this;
+        public Builder() {
+
         }
+        public Builder(CategoryDTO categoryDTO) {
+            this.withName(categoryDTO.getName())
+                    .withApplications(categoryDTO.getApplications())
+                    .withIcon(categoryDTO.getIcon())
+                    .withType(categoryDTO.getType());
+        }
+
 
         public Builder withType(CategoryType type) {
             this.type = type;
@@ -89,8 +94,15 @@ public class CategoryDTO implements DTO {
             return this;
         }
 
+        public Builder withIcon(byte[] icon) {
+            this.icon = icon;
+            return this;
+        }
+
         public CategoryDTO build() {
             return new CategoryDTO(this);
         }
+
+
     }
 }

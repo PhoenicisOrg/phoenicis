@@ -18,37 +18,30 @@
 
 package com.playonlinux.apps.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.playonlinux.core.dto.DTO;
-import com.playonlinux.core.utils.OperatingSystem;
+import com.phoenicis.entities.OperatingSystem;
+
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
-public class ScriptDTO implements DTO {
-    private final int id;
+public class ScriptDTO {
     private final String scriptName;
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
     private final Boolean requiresNoCD;
-    private final String url;
+    private final String script;
 
     private ScriptDTO(Builder builder) {
-        this.id = builder.id;
         this.scriptName = builder.scriptName;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
         this.requiresNoCD = builder.requiresNoCD;
-        this.url = builder.url;
-    }
-
-    public int getId() {
-        return id;
+        this.script = builder.script;
     }
 
     public String getScriptName() {
@@ -75,23 +68,31 @@ public class ScriptDTO implements DTO {
         return testingOperatingSystems;
     }
 
-    public String getUrl() {
-        return url;
+    public String getScript() {
+        return script;
     }
+
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private int id;
         private String scriptName;
         private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
         private Boolean requiresNoCD;
-        private String url;
+        private String script;
 
-        public Builder withId(int id) {
-            this.id = id;
-            return this;
+        public Builder() {
+
+        }
+
+        public Builder(ScriptDTO scriptDTO) {
+            this.withScriptName(scriptDTO.getName())
+                    .withScript(scriptDTO.getScript())
+                    .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
+                    .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems())
+                    .withFree(scriptDTO.isFree())
+                    .withRequiresNoCD(scriptDTO.requiresNoCD);
         }
 
         public Builder withScriptName(String name) {
@@ -99,8 +100,8 @@ public class ScriptDTO implements DTO {
             return this;
         }
 
-        public Builder withUrl(String url) {
-            this.url = url;
+        public Builder withScript(String script) {
+            this.script = script;
             return this;
         }
 
@@ -126,6 +127,10 @@ public class ScriptDTO implements DTO {
 
         public ScriptDTO build() {
             return new ScriptDTO(this);
+        }
+
+        public String getScriptName() {
+            return scriptName;
         }
     }
 }

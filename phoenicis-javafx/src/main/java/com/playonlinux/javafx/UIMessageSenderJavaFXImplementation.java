@@ -18,31 +18,32 @@
 
 package com.playonlinux.javafx;
 
-import java.util.concurrent.CountDownLatch;
-
-import com.playonlinux.core.messages.Message;
-import com.playonlinux.core.messages.SynchronousMessage;
-import com.playonlinux.core.scripts.CancelException;
-import com.playonlinux.ui.api.UIMessageSender;
-
+import com.playonlinux.scripts.ui.UIMessageSender;
 import javafx.application.Platform;
+import org.apache.commons.lang.mutable.MutableObject;
 
-public class UIMessageSenderJavaFXImplementation<R> implements UIMessageSender<R> {
-    public static void runAndWait(Runnable action) {
-        if (action == null)
-            throw new NullPointerException("action");
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.SynchronousQueue;
+import java.util.function.Supplier;
+
+public class UIMessageSenderJavaFXImplementation implements UIMessageSender {
+    @Override
+    public <R> R run(Supplier<R> function) {
 
         // runBackground synchronously on JavaFX thread
         if (Platform.isFxApplicationThread()) {
-            action.run();
-            return;
+            return function.get();
         }
 
         // queue on JavaFX thread and wait for completion
         final CountDownLatch doneLatch = new CountDownLatch(1);
+        final MutableObject result = new MutableObject();
         Platform.runLater(() -> {
             try {
-                action.run();
+                result.setValue(function.get());
             } finally {
                 doneLatch.countDown();
             }
@@ -53,21 +54,7 @@ public class UIMessageSenderJavaFXImplementation<R> implements UIMessageSender<R
         } catch (InterruptedException e) {
             // ignore exception
         }
-    }
 
-    @Override
-    public R synchronousSendAndGetResult(SynchronousMessage<R> message) throws CancelException {
-        UIMessageSenderJavaFXImplementation.runAndWait(message);
-        return message.getResponse();
-    }
-
-    @Override
-    public void synchronousSend(Message message){
-        UIMessageSenderJavaFXImplementation.runAndWait(message);
-    }
-
-    @Override
-    public void asynchronousSend(Message message) {
-        Platform.runLater(message);
+        return (R) result.getValue();
     }
 }

@@ -37,7 +37,19 @@
 
         <dependency>
             <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-ui</artifactId>
+            <artifactId>phoenicis-configuration</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-apps</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-scripts</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -54,10 +66,25 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 </project>

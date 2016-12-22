@@ -1,0 +1,27 @@
+package com.playonlinux.javafx;
+
+
+import com.playonlinux.apps.AppsConfiguration;
+import com.playonlinux.configuration.PlayOnLinuxGlobalConfiguration;
+import com.playonlinux.javafx.controller.ControllerConfiguration;
+import com.playonlinux.javafx.views.ViewsConfiguration;
+import com.playonlinux.javafx.views.setupwindow.JavaFXSetupWindowUIConfiguration;
+import com.playonlinux.scripts.ScriptsConfiguration;
+import com.playonlinux.tools.ToolsConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
+@Configuration
+@Import({
+        PlayOnLinuxGlobalConfiguration.class,
+        ControllerConfiguration.class,
+        ScriptsConfiguration.class,
+        ViewsConfiguration.class,
+        AppsConfiguration.class,
+        JavaFXSetupWindowUIConfiguration.class,
+        ToolsConfiguration.class
+})
+public class AppConfiguration {
+
+
+}

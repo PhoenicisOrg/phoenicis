@@ -18,51 +18,37 @@
 
 package com.playonlinux.javafx;
 
-import com.playonlinux.javafx.mainwindow.MainWindow;
-
+import com.playonlinux.javafx.controller.MainController;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class JavaFXApplication extends Application {
-    private static MainWindow mainWindow;
+
+    public static void main(String[] args) {
+        Application.launch(JavaFXApplication.class);
+    }
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("common/playonlinux.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/playonlinux.png")));
         primaryStage.setTitle("PlayOnLinux");
         loadFonts();
+        ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
 
-        mainWindow = new MainWindow();
-
-        mainWindow.setUpWindow();
-        mainWindow.setUpEvents();
-        mainWindow.show();
-
-        /*
-        try {
-            if (OperatingSystem.fetchCurrentOperationSystem() == OperatingSystem.MACOSX){
-                com.apple.eawt.Application a = com.apple.eawt.Application.getApplication();
-
-                a.setOpenFileHandler(openFilesEvent -> System.out.println(openFilesEvent.getFiles()));
-
-            }
-        } catch (PlayOnLinuxException e) {
-            e.printStackTrace();
-        }
-        */
-
-    }
-
-    public static MainWindow getMainWindow() {
-        return mainWindow;
+        final MainController mainController = applicationContext.getBean(MainController.class);
+        mainController.show();
+        mainController.setOnClose(applicationContext::close);
     }
 
     private void loadFonts() {
-        Font.loadFont(getClass().getResource("common/mavenpro/MavenPro-Medium.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("common/roboto/Roboto-Medium.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("views/common/mavenpro/MavenPro-Medium.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Medium.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
     }
+
 
 }

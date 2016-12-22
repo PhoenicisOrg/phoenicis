@@ -1,0 +1,268 @@
+/*
+ * Copyright (C) 2015 PÂRIS Quentin
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+#header {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-background-color:#FFFFFF;
+}
+#logoText {
+    -fx-font-family: "Maven Pro";
+    -fx-font-size: 1.8em;
+    -fx-translate-x: 1.2em;
+    -fx-translate-y: -0.1em;
+    -fx-fill: white;
+}
+
+.thin {
+    /* -fx-font-family: Roboto Thin; */
+    -fx-font-weight: 100;
+}
+
+.smallProgressIndicator .percentage {
+    -fx-padding: -10px;
+}
+
+#headerPane {
+    -fx-background-color: linear-gradient(#428bca, #116395);
+    -fx-pref-width: 100%;
+    -fx-pref-height: 3em;
+    -fx-padding: 0.5em;
+
+}
+
+.menuEntry {
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 1.4em;
+    -fx-translate-y: 0.4em;
+    -fx-fill: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+.menuEntry:hover {
+    -fx-fill: black;
+}
+
+.mainWindowScene {
+    -fx-min-height: 35.2em;
+    -fx-fit-to-height: true;
+}
+
+.leftPane {
+    -fx-background-color: #F0F0F0;
+    -fx-min-height: 40em;
+    -fx-pref-width: 15em;
+    -fx-padding: 1em;
+    -fx-spacing: 0.4em;
+}
+
+.leftPaneInside {
+    -fx-spacing: 0.4em;
+}
+
+#menuPane {
+    -fx-spacing: 4em;
+}
+
+.rightPane {
+    -fx-max-height: 40em;
+    -fx-pref-width: 55em;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-focus-traversable: false;
+    -fx-background-color: transparent;
+
+}
+.rightPane > .viewport {
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0;
+}
+
+.text-field {
+    -fx-background-radius: 1em;
+}
+
+.leftBarTitle {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 1.1em;
+    -fx-alignment: baseline-left;
+    -fx-translate-y: -0.1em;
+}
+
+.title {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 1.4em;
+    -fx-alignment: baseline-left;
+    -fx-translate-y: -0.1em;
+    -fx-fill: #428bca;
+}
+
+.leftButton {
+    -fx-cursor: hand;
+}
+.leftButton .label {
+    -fx-font-family: "Roboto Light";
+    -fx-translate-y: 0.4em;
+    -fx-translate-x: 0.5em;
+}
+.leftButton:hover {
+    -fx-background-color: #D3D3D3;
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+}
+
+.leftSpacer {
+    -fx-pref-height: 0.8em;
+}
+
+.miniatureText {
+    -fx-font-size: 0.75em;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+.miniatureImage {
+    -fx-border-radius: 0.4em;
+    -fx-background-radius: 0.4em;
+}
+.rightPane .miniatureList {
+    -fx-pref-width: 53.5em;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-padding: 0.5em;
+}
+.miniatureListElement {
+    -fx-pref-width: 12em;
+    -fx-pref-height: 9em;
+    -fx-font-family: "Roboto Light";
+    -fx-alignment: top-center;
+    -fx-spacing: 0.3em;
+    -fx-padding: 0.5em;
+    -fx-cursor: hand;
+    -fx-background-radius: 0.8em;
+}
+.miniatureListElement:hover {
+    -fx-background-color: #EFEFEF;
+}
+
+.downloadImageWaiting {
+    -fx-padding: 1em;
+    -fx-pref-width: 150;
+    -fx-max-height: 100;
+    -fx-pref-height: 95;
+    -fx-alignment: center;
+}
+
+.appPresentation {
+    -fx-background-color: #FFFFFF;
+}
+.appPresentation > * {
+    -fx-padding: 0.5em;
+    -fx-spacing: 0.5em;
+}
+
+.appPanelMiniaturesPane {
+    -fx-background-color: #FAFAFA;
+    -fx-padding: 0.5em;
+}
+
+.appPanelMiniaturesPaneWrapper {
+    -fx-padding: 0px;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-focus-traversable: false;
+    -fx-background-color: transparent;
+    -fx-pref-height: 360;
+}
+
+.appPanelMiniaturesPaneWrapper > .viewport {
+    -fx-background-color: #FAFAFA;
+    -fx-border-width: 0;
+}
+
+.commandText {
+    -fx-fill:#999999;
+}
+.resultText {
+    -fx-fill:#000000;
+}
+
+.consolePane {
+    -fx-background-color: #FFFFFF;
+    -fx-pref-width:60em;
+    -fx-pref-height:20em;
+}
+.console, .console .viewport {
+    -fx-background-color: #FFFFFF;
+}
+.console {
+    -fx-pref-width:60em;
+    -fx-pref-height:40em;
+    -fx-padding: 1em;
+    -fx-font-family: "Lucida Console";
+}
+.consoleCommandType {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+/*
+ * Setup Window stuffs
+ */ 
+
+#header {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-background-color:#FFFFFF;
+}
+
+#footer {
+    -fx-border-color: #CCCCCC;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+}
+
+#panelForTopheader {
+    -fx-padding: 30px;
+    -fx-background-color: #F4F4F4;
+    -fx-border-color: #CCCCCC;
+}
+
+.containerConfigurationPane {
+    -fx-padding: 10px;
+}
+.containerConfigurationPane > .grid {
+    -fx-padding : 10px;
+}
+
+.captionTitle {
+    -fx-font-weight: bold;
+}
+
+.wineToolButton {
+    -fx-pref-width: 96px;
+    -fx-pref-height: 96px;
+    -fx-content-display: graphic-only;
+}
+.wineToolCaption {
+    -fx-font-size: 0.85em;
+    -fx-pref-width: 96px;
+}
