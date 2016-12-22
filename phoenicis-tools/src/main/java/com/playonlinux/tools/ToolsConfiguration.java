@@ -6,7 +6,9 @@ import com.playonlinux.tools.archive.Tar;
 import com.playonlinux.tools.checksum.ChecksumCalculator;
 import com.playonlinux.tools.config.CompatibleConfigFileFormatFactory;
 import com.playonlinux.tools.files.FileAnalyser;
+import com.playonlinux.tools.files.FileCopier;
 import com.playonlinux.tools.files.FileUtilities;
+import com.playonlinux.tools.files.FreeSpaceFetcher;
 import com.playonlinux.tools.http.Downloader;
 import com.playonlinux.tools.system.ArchitectureFetcher;
 import com.playonlinux.tools.system.OperatingSystemFetcher;
@@ -38,6 +40,16 @@ public class ToolsConfiguration {
     @Bean
     public Extractor extractor() {
         return new Extractor(fileAnalyser(), tar());
+    }
+
+    @Bean
+    public FileCopier fileCopier() {
+        return new FileCopier();
+    }
+
+    @Bean
+    public FreeSpaceFetcher freeSpaceFetcher() {
+        return new FreeSpaceFetcher();
     }
 
     @Bean

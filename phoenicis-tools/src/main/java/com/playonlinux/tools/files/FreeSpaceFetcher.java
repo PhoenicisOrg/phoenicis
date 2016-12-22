@@ -16,23 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.playonlinux.scripts.framework;
+package com.playonlinux.tools.files;
 
 
 import java.io.File;
 
-public final class SystemUtilities {
-    static final long KILOBYTE = 1024L;
+public final class FreeSpaceFetcher {
+    private static final long KILOBYTE = 1024L;
 
-    private SystemUtilities() {
-        // Utility class
-    }
-
-    public static long getFreeSpace(File directory) {
+    public long getFreeSpace(File directory) {
         return directory.getUsableSpace() / KILOBYTE;
     }
 
-    public static long getFreeSpace(String directory) {
+    public long getFreeSpace(String directory) {
         return getFreeSpace(new File(directory));
     }
 }
