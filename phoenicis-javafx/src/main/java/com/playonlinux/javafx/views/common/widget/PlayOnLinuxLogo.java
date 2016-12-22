@@ -26,7 +26,7 @@ import javafx.scene.text.Text;
 public class PlayOnLinuxLogo extends HBox {
     public PlayOnLinuxLogo(String applicationName) {
         super();
-        Image logoImage = new Image(this.getClass().getResourceAsStream("/playonlinux.png"));
+        Image logoImage = new Image(this.getClass().getResourceAsStream("/com/playonlinux/javafx/views/common/playonlinux.png"));
         ImageView logoView = new ImageView(logoImage);
         logoView.setFitWidth(28);
         logoView.setFitHeight(28);
