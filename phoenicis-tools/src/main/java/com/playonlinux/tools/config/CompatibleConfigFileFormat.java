@@ -85,7 +85,7 @@ public class CompatibleConfigFileFormat implements ConfigFile {
             return getLegacyMap();
         } catch (IOException e) {
             LOGGER.debug("Error while reading the file. Will assume that the config file is EMPTY", e);
-            return Collections.emptyMap();
+            return new HashMap<>();
         }
     }
 
