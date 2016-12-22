@@ -11,27 +11,37 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class WineVersionsFetcher {
+public class WineVersionsManager {
     private final ScriptInterpreter scriptInterpreter;
     private final ObjectMapper objectMapper;
 
-    public WineVersionsFetcher(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
+    public WineVersionsManager(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
         this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }
 
-    public List<WineVersionDistributionDTO> fetchAvailableWineVersions() {
+    public void fetchAvailableWineVersions(Consumer<List<WineVersionDistributionDTO>> callback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-        final List<WineVersionDistributionDTO> wineVersions = new ArrayList<>();
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);", output -> {}, this::throwError);
-        interactiveScriptSession.eval("new Wine().getAvailableVersions()", output -> wineVersions.addAll(unSerialize(output)), this::throwError);
-        return wineVersions;
+
+
+        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+                ignored -> interactiveScriptSession.eval(
+                        "new Wine().getAvailableVersions()",
+                        output -> callback.accept(unSerialize(output)),
+                        this::throwError
+                ),
+                this::throwError
+        );
+
     }
 
-    private Collection<? extends WineVersionDistributionDTO> unSerialize(Object json) {
+
+    private List<WineVersionDistributionDTO> unSerialize(Object json) {
         try {
-            return objectMapper.readValue(json.toString(), new TypeReference<List<WineVersionDistributionDTO>>() {});
+            return objectMapper.readValue(json.toString(), new TypeReference<List<WineVersionDistributionDTO>>() {
+            });
         } catch (IOException e) {
             return Collections.emptyList();
         }

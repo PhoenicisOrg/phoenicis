@@ -49,7 +49,7 @@ public class ScriptsConfiguration {
     }
 
     @Bean
-    public ScriptInterpreter nashornInterprpeter() {
+    ScriptInterpreter nashornInterprpeter() {
         return new NashornScriptInterpreter(scriptEngineFactory());
     }
 }

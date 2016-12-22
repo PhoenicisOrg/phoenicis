@@ -12,7 +12,7 @@ public class EnginesConfiguration {
     private ScriptsConfiguration scriptsConfiguration;
 
     @Bean
-    public WineVersionsFetcher wineVersionsFetcher() {
-        return new WineVersionsFetcher(scriptsConfiguration.nashornInterprpeter(), new ObjectMapper());
+    public WineVersionsManager wineVersionsFetcher() {
+        return new WineVersionsManager(scriptsConfiguration.scriptInterpreter(), new ObjectMapper());
     }
 }
