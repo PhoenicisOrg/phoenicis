@@ -31,12 +31,6 @@
     <dependencies>
         <dependency>
             <groupId>com.playonlinux</groupId>
-            <artifactId>phoenicis-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-configuration</artifactId>
             <version>${project.version}</version>
         </dependency>
