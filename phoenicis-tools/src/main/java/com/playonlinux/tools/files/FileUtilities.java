@@ -36,6 +36,7 @@ public class FileUtilities {
     private String userRoot;
 
     public void mkdir(File directoryToCreate) {
+        assertInDirectory(directoryToCreate);
         if(!isInSubDirectory(new File(userRoot), directoryToCreate)) {
             throw new IllegalArgumentException(format("The file (%s) must be in a the PlayOnLinux root directory (%s)",
                     directoryToCreate, userRoot));
@@ -49,15 +50,18 @@ public class FileUtilities {
      * @param fileToDelete fileOrDirectoryToDelete
      */
     public void remove(File fileToDelete) throws IOException {
-        if(!isInSubDirectory(new File(userRoot), fileToDelete)) {
-            throw new IllegalArgumentException(format("The file (%s) must be in a the PlayOnLinux root directory (%s)",
-                    fileToDelete, userRoot));
-        }
+        assertInDirectory(fileToDelete);
 
         FileUtils.deleteDirectory(fileToDelete);
     }
 
-    public boolean isInSubDirectory(File directory, File fileIside) {
+    public String getFileContent(File file) throws IOException {
+        assertInDirectory(file);
+
+        return FileUtils.readFileToString(file, "UTF-8");
+    }
+
+    private boolean isInSubDirectory(File directory, File fileIside) {
         return fileIside != null && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
     }
 
@@ -108,5 +112,12 @@ public class FileUtilities {
         return intToPosixFilePermission(
                 modeInt
         );
+    }
+
+    private void assertInDirectory(File file) {
+        if(!isInSubDirectory(new File(userRoot), file)) {
+            throw new IllegalArgumentException(format("The file (%s) must be in a the PlayOnLinux root directory (%s)",
+                    file, userRoot));
+        }
     }
 }
