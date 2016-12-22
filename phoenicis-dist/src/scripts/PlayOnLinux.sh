@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 POL_HOME=$(dirname $0)
 CLASSPATH=${CLASSPATH}:$POL_HOME/lib/*
 
@@ -5,4 +6,4 @@ CLASSPATH=${CLASSPATH}:$POL_HOME/lib/*
 # This is non-destructive and does not force users to set the default java env to Java 8
 export PATH=/usr/lib/jvm/java-8-openjdk/jre/bin/:$PATH
 
-java -classpath "$CLASSPATH" com.playonlinux.app.PlayOnLinuxApp "$@"
+java -classpath "$CLASSPATH" com.playonlinux.javafx.JavaFXApplication "$@"
