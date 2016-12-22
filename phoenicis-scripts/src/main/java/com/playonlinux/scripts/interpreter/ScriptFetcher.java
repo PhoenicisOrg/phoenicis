@@ -1,15 +1,15 @@
 package com.playonlinux.scripts.interpreter;
 
-import com.playonlinux.apps.AppsManager;
+import com.playonlinux.apps.ApplicationsSource;
 import com.playonlinux.apps.dto.ScriptDTO;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ScriptFetcher {
-    private final AppsManager appsManager;
+    private final ApplicationsSource appsManager;
 
-    public ScriptFetcher(AppsManager appsManager) {
+    public ScriptFetcher(ApplicationsSource appsManager) {
         this.appsManager = appsManager;
     }
 

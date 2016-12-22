@@ -10,12 +10,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GitAppsManager implements AppsManager {
+public class GitApplicationsManager implements ApplicationsSource {
     private List<CategoryDTO> cache;
     private final String gitRepositoryURL;
-    private final LocalAppsManager.Factory localAppsManagerFactory;
+    private final LocalApplicationsSource.Factory localAppsManagerFactory;
 
-    public GitAppsManager(String gitRepositoryURL, LocalAppsManager.Factory localAppsManagerFactory) {
+    public GitApplicationsManager(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
         this.localAppsManagerFactory = localAppsManagerFactory;
     }
@@ -38,11 +38,6 @@ public class GitAppsManager implements AppsManager {
         } catch (IOException | InterruptedException e) {
             return Collections.emptyList();
         }
-    }
-
-    @Override
-    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        callback.accept(fetchInstallableApplications());
     }
 
 

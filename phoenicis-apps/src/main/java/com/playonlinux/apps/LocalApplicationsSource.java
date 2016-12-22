@@ -35,14 +35,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class LocalAppsManager implements AppsManager {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LocalAppsManager.class);
+public class LocalApplicationsSource implements ApplicationsSource {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LocalApplicationsSource.class);
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
     private final String repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    public LocalAppsManager(String repositoryDirectory, ObjectMapper objectMapper) {
+    public LocalApplicationsSource(String repositoryDirectory, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
     }
@@ -58,12 +58,6 @@ public class LocalAppsManager implements AppsManager {
 
         return fetchCategories(categoryDirectories);
     }
-
-    @Override
-    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        callback.accept(fetchInstallableApplications());
-    }
-
 
     private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
         final List<CategoryDTO> results = new ArrayList<>();
@@ -215,8 +209,8 @@ public class LocalAppsManager implements AppsManager {
             this.objectMapper = objectMapper;
         }
 
-        public LocalAppsManager createInstance(String path) {
-            return new LocalAppsManager(path, objectMapper);
+        public LocalApplicationsSource createInstance(String path) {
+            return new LocalApplicationsSource(path, objectMapper);
         }
     }
 }

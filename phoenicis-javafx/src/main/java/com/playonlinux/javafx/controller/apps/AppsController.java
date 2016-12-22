@@ -1,19 +1,18 @@
 package com.playonlinux.javafx.controller.apps;
 
-import com.playonlinux.apps.AppsManager;
-import com.playonlinux.apps.LocalAppsManager;
+import com.playonlinux.apps.ApplicationsSource;
 import com.playonlinux.javafx.views.mainwindow.apps.ViewApps;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 
 public class AppsController {
     private final ViewApps view;
-    private final AppsManager localAppsManager;
+    private final ApplicationsSource localAppsManager;
     private final ScriptInterpreter scriptInterpreter;
 
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
-                          AppsManager localAppsManager,
+                          ApplicationsSource localAppsManager,
                           ScriptInterpreter scriptInterpreter) {
         this.view = view;
         this.localAppsManager = localAppsManager;

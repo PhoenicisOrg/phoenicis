@@ -14,13 +14,13 @@ public class AppsConfiguration {
     private String repositoryDirectory;
 
     @Bean
-    public AppsManager appsManager() {
-        return new GitAppsManager(repositoryDirectory, new LocalAppsManager.Factory(new ObjectMapper()));
+    public ApplicationsSource appsManager() {
+        return new GitApplicationsManager(repositoryDirectory, new LocalApplicationsSource.Factory(new ObjectMapper()));
     }
 
     @Bean
-    public AppsManager backgroundAppsManager() {
-        return new BackgroundAppsManager(appsManager(), executorService());
+    public ApplicationsSource backgroundAppsManager() {
+        return new BackgroundApplicationsSource(appsManager(), executorService());
     }
 
     @Bean

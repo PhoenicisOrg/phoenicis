@@ -7,10 +7,12 @@ import com.playonlinux.apps.dto.ScriptDTO;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface AppsManager {
+public interface ApplicationsSource {
     List<CategoryDTO> fetchInstallableApplications();
 
-    void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback);
+    default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
+        callback.accept(fetchInstallableApplications());
+    }
 
     default ScriptDTO getScript(List<String> path) {
         final ApplicationDTO applicationDTO = getApplication(path);
