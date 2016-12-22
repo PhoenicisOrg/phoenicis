@@ -95,8 +95,8 @@ public class ShortcutDTO {
             return this;
         }
 
-        public Builder withScript(String scriptDTO) {
-            this.script = scriptDTO;
+        public Builder withScript(String script) {
+            this.script = script;
             return this;
         }
 
