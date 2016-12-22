@@ -1,6 +1,7 @@
 package com.playonlinux.javafx;
 
 
+import com.phoenicis.library.LibraryConfiguration;
 import com.playonlinux.apps.AppsConfiguration;
 import com.playonlinux.configuration.PlayOnLinuxGlobalConfiguration;
 import com.playonlinux.javafx.controller.ControllerConfiguration;
@@ -18,10 +19,11 @@ import org.springframework.context.annotation.Import;
         ScriptsConfiguration.class,
         ViewsConfiguration.class,
         AppsConfiguration.class,
+        LibraryConfiguration.class,
         JavaFXSetupWindowUIConfiguration.class,
         ToolsConfiguration.class
 })
-public class AppConfiguration {
+class AppConfiguration {
 
 
 }

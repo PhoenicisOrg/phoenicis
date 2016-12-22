@@ -1,5 +1,6 @@
 package com.playonlinux.javafx.controller;
 
+import com.phoenicis.library.LibraryConfiguration;
 import com.playonlinux.apps.AppsConfiguration;
 import com.playonlinux.javafx.controller.apps.AppsController;
 import com.playonlinux.javafx.controller.library.LibraryController;
@@ -21,6 +22,9 @@ public class ControllerConfiguration {
     @Autowired
     private AppsConfiguration appsConfiguration;
 
+    @Autowired
+    private LibraryConfiguration libraryConfiguration;
+
     @Bean
     public MainController mainController() {
         return new MainController(
@@ -34,7 +38,7 @@ public class ControllerConfiguration {
 
     @Bean
     public LibraryController libraryController() {
-        return new LibraryController(viewsConfiguration.viewLibrary(), consoleController());
+        return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(), libraryConfiguration.libraryManager());
     }
 
     @Bean

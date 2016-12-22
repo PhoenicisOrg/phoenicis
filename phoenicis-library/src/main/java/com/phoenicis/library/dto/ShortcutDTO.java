@@ -37,7 +37,7 @@ public class ShortcutDTO {
         script = builder.script;
     }
 
-    public byte[] getIconUrl() {
+    public byte[] getIcon() {
         return icon;
     }
 

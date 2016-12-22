@@ -18,6 +18,8 @@
 
 package com.playonlinux.javafx.views.mainwindow.library;
 
+import com.phoenicis.library.dto.ShortcutDTO;
+import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
@@ -30,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.List;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
@@ -39,7 +42,7 @@ public class ViewLibrary extends MainWindowView {
     private final String applicationName;
     private LeftButton runScript;
     private LeftButton runConsole;
-    private ApplicationListWidget applicationListWidget;
+    private MiniatureListWidget applicationListWidget;
     private TextField searchBar;
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {};
@@ -65,10 +68,16 @@ public class ViewLibrary extends MainWindowView {
         installedApplication.setText(translate("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
-        applicationListWidget = new ApplicationListWidget();
-        applicationListWidget.getStyleClass().add("rightPane");
+        applicationListWidget = MiniatureListWidget.create();
 
         installedApplication.setContent(applicationListWidget);
+    }
+
+    public void populate(List<ShortcutDTO> shortcutDTOs) {
+        applicationListWidget.clear();
+        for (ShortcutDTO shortcutDTO : shortcutDTOs) {
+            applicationListWidget.addItem(shortcutDTO.getName(), shortcutDTO.getMiniature());
+        }
     }
 
     @Override
@@ -123,4 +132,6 @@ public class ViewLibrary extends MainWindowView {
     public void setOnOpenConsole(Runnable onOpenConsole) {
         runConsole.setOnMouseClicked(event -> onOpenConsole.run());
     }
+
+
 }

@@ -78,6 +78,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-library</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 
     </dependencies>

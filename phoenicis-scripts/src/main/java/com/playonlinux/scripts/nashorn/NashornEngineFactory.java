@@ -1,5 +1,6 @@
 package com.playonlinux.scripts.nashorn;
 
+import com.playonlinux.scripts.interpreter.ScriptException;
 import com.playonlinux.scripts.interpreter.ScriptFetcher;
 import com.playonlinux.scripts.wizard.SetupWizard;
 import com.playonlinux.scripts.wizard.SetupWizardFactory;
@@ -9,12 +10,14 @@ import org.springframework.context.ApplicationContext;
 
 import javax.script.ScriptEngineManager;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class NashornEngineFactory {
     private final SetupWizardFactory setupWizardFactory;
     private final ScriptFetcher scriptFetcher;
+
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -23,7 +26,7 @@ public class NashornEngineFactory {
         this.scriptFetcher = scriptFetcher;
     }
 
-    public NashornEngine createEngine() {
+    NashornEngine createEngine() {
         final NashornEngine nashornEngine = new NashornEngine(
                 new ScriptEngineManager().getEngineByName("nashorn")
         );
@@ -40,7 +43,14 @@ public class NashornEngineFactory {
             return setupWizard;
         }, this::throwException);
 
-        nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> nashornEngine.eval(scriptFetcher.getScript(args.to(String[].class)), this::throwException), this::throwException);
+        nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {
+            final String[] arguments = args.to(String[].class);
+            final String script = scriptFetcher.getScript(arguments);
+            if(script == null) {
+                throwException(new ScriptException(Arrays.asList(arguments).toString() + " is not found"));
+            }
+            nashornEngine.eval(script, this::throwException);
+        }, this::throwException);
 
         return nashornEngine;
     }

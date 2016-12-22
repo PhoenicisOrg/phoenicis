@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class GitAppsManager implements AppsManager {
+    private List<CategoryDTO> cache;
     private final String gitRepositoryURL;
     private final LocalAppsManager.Factory localAppsManagerFactory;
 
@@ -20,6 +21,9 @@ public class GitAppsManager implements AppsManager {
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
+        if(cache != null) {
+            return cache;
+        }
         // FIXME : Use a background thread
         try {
             final File gitTmp = Files.createTempDirectory("git").toFile();
@@ -28,7 +32,8 @@ public class GitAppsManager implements AppsManager {
                 .start()
                 .waitFor();
 
-            return localAppsManagerFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
+            cache = localAppsManagerFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
+            return cache;
         } catch (IOException | InterruptedException e) {
             return Collections.emptyList();
         }
