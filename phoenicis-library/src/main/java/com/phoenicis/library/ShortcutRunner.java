@@ -16,22 +16,19 @@ public class ShortcutRunner {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
-                ignored -> {
-                    interactiveScriptSession.eval(
-                            "new ShortcutReader()",
-                            output -> {
-                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                                shortcutReader.callMember("of", shortcutDTO.getScript());
-                                shortcutReader.callMember("run");
-                            },
-                            this::throwError
-                    );
-                },
+                ignored -> interactiveScriptSession.eval(
+                        "new ShortcutReader()",
+                        output -> {
+                            final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                            shortcutReader.callMember("of", shortcutDTO.getScript());
+                            shortcutReader.callMember("run");
+                        },
+                        this::throwError
+                ),
                 this::throwError
         );
 
-        System.out.println("I will run");
-        System.out.println(shortcutDTO.getScript());
+
     }
 
     private void throwError(Exception e) {
