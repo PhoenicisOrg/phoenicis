@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class LocalAppsManager implements AppsManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalAppsManager.class);
@@ -56,6 +57,11 @@ public class LocalAppsManager implements AppsManager {
         }
 
         return fetchCategories(categoryDirectories);
+    }
+
+    @Override
+    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
+        callback.accept(fetchInstallableApplications());
     }
 
 

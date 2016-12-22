@@ -21,8 +21,19 @@ public class AppsController {
     }
 
     public void loadApps() {
-        this.view.showAvailableApps();
-        this.view.populate(localAppsManager.fetchInstallableApplications());
+        this.view.showWait();
+        localAppsManager.fetchInstallableApplications(
+                this.view::populate,
+                e -> this.view.showFailure()
+        );
+
+        this.view.setOnRetryButtonClicked(event -> {
+            this.view.showWait();
+            localAppsManager.fetchInstallableApplications(
+                    this.view::populate,
+                    e -> this.view.showFailure()
+            );
+        });
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),

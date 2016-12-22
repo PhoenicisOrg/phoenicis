@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class GitAppsManager implements AppsManager {
     private List<CategoryDTO> cache;
@@ -37,6 +38,11 @@ public class GitAppsManager implements AppsManager {
         } catch (IOException | InterruptedException e) {
             return Collections.emptyList();
         }
+    }
+
+    @Override
+    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
+        callback.accept(fetchInstallableApplications());
     }
 
 

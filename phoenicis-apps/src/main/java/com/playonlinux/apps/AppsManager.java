@@ -5,9 +5,12 @@ import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public interface AppsManager {
     List<CategoryDTO> fetchInstallableApplications();
+
+    void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback);
 
     default ScriptDTO getScript(List<String> path) {
         final ApplicationDTO applicationDTO = getApplication(path);

@@ -26,9 +26,11 @@ import com.playonlinux.javafx.views.mainwindow.FailurePanel;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.WaitPanel;
 import com.playonlinux.javafx.views.mainwindow.ui.*;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,6 +106,7 @@ public class ViewApps extends MainWindowView {
         }
 
         categoryView.setButtons(leftButtonList);
+        showAvailableApps();
     }
 
     public void populateApps(List<ApplicationDTO> applications) {
@@ -122,6 +125,9 @@ public class ViewApps extends MainWindowView {
         }
     }
 
+    public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
+        failurePanel.getRetryButton().setOnMouseClicked(event);
+    }
 
     private void initFailure() {
         failurePanel = new FailurePanel();
