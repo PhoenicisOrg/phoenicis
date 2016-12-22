@@ -27,6 +27,7 @@
 		<module>phoenicis-scripts</module>
         <module>phoenicis-tools</module>
         <module>phoenicis-entities</module>
+        <module>phoenicis-library</module>
     </modules>
 
 	<properties>
