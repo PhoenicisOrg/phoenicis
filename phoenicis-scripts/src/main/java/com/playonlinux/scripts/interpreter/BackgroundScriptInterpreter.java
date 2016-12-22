@@ -19,8 +19,9 @@ public class BackgroundScriptInterpreter implements ScriptInterpreter {
 
     @Override
     public InteractiveScriptSession createInteractiveSession() {
+        final InteractiveScriptSession interactiveScriptSession = delegated.createInteractiveSession();
+
         return (evaluation, responseCallback, errorCallback) -> {
-            final InteractiveScriptSession interactiveScriptSession = delegated.createInteractiveSession();
             executorService.execute(() -> interactiveScriptSession.eval(evaluation, responseCallback, errorCallback));
         };
     }
