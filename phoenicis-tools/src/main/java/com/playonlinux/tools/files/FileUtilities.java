@@ -31,17 +31,9 @@ import java.util.Set;
 
 import static java.lang.String.format;
 
-public class FileUtilities {
-    @Value("${application.user.root}")
-    private String userRoot;
-
+public class FileUtilities extends FilesManipulator {
     public void mkdir(File directoryToCreate) {
         assertInDirectory(directoryToCreate);
-        if(!isInSubDirectory(new File(userRoot), directoryToCreate)) {
-            throw new IllegalArgumentException(format("The file (%s) must be in a the PlayOnLinux root directory (%s)",
-                    directoryToCreate, userRoot));
-        }
-
         directoryToCreate.mkdirs();
     }
 
@@ -61,9 +53,7 @@ public class FileUtilities {
         return FileUtils.readFileToString(file, "UTF-8");
     }
 
-    private boolean isInSubDirectory(File directory, File fileIside) {
-        return fileIside != null && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
-    }
+
 
     private Set<PosixFilePermission> singleIntToFilePermission(Integer mode, String groupType) {
         Set<PosixFilePermission> permissions = new HashSet<>(9);
@@ -112,12 +102,5 @@ public class FileUtilities {
         return intToPosixFilePermission(
                 modeInt
         );
-    }
-
-    private void assertInDirectory(File file) {
-        if(!isInSubDirectory(new File(userRoot), file)) {
-            throw new IllegalArgumentException(format("The file (%s) must be in a the PlayOnLinux root directory (%s)",
-                    file, userRoot));
-        }
     }
 }
