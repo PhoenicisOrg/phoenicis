@@ -47,7 +47,11 @@ public class FileUtilities extends FilesManipulator {
     public void remove(File fileToDelete) throws IOException {
         assertInDirectory(fileToDelete);
 
-        FileUtils.deleteDirectory(fileToDelete);
+        if(fileToDelete.isDirectory()) {
+            FileUtils.deleteDirectory(fileToDelete);
+        } else {
+            fileToDelete.delete();
+        }
     }
 
     public String getFileContent(File file) throws IOException {
