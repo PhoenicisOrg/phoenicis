@@ -32,6 +32,9 @@ import java.util.Set;
 import static java.lang.String.format;
 
 public class FileUtilities extends FilesManipulator {
+    @Value("${application.user.tmp}")
+    private String tmpDirectory;
+
     public void mkdir(File directoryToCreate) {
         assertInDirectory(directoryToCreate);
         directoryToCreate.mkdirs();
@@ -53,6 +56,17 @@ public class FileUtilities extends FilesManipulator {
         return FileUtils.readFileToString(file, "UTF-8");
     }
 
+    public void writeToFile(File file, String content) throws IOException {
+        assertInDirectory(file);
+
+        FileUtils.writeStringToFile(file, content, "UTF-8");
+    }
+
+    public File createTmpFile(String extension) throws IOException {
+        final File file = File.createTempFile("playonlinux", "." + extension, new File(tmpDirectory));
+        file.deleteOnExit();
+        return file;
+    }
 
 
     private Set<PosixFilePermission> singleIntToFilePermission(Integer mode, String groupType) {
