@@ -63,7 +63,9 @@ public class FileUtilities extends FilesManipulator {
     }
 
     public File createTmpFile(String extension) throws IOException {
-        final File file = File.createTempFile("playonlinux", "." + extension, new File(tmpDirectory));
+        final File tmpDirectoryFile = new File(tmpDirectory);
+        tmpDirectoryFile.mkdirs();
+        final File file = File.createTempFile("playonlinux", "." + extension, tmpDirectoryFile);
         file.deleteOnExit();
         return file;
     }
