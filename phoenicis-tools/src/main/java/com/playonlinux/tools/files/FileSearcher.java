@@ -31,7 +31,7 @@ public class FileSearcher extends FilesManipulator {
 
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                    if (name.equals(file.getFileName().toString())) {
+                    if (name.equalsIgnoreCase(file.getFileName().toString())) {
                         results.add(file.toFile());
                     }
                     return FileVisitResult.CONTINUE;

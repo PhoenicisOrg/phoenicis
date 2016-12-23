@@ -21,11 +21,13 @@ package com.playonlinux.apps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.apps.dto.ResourceDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -114,6 +116,7 @@ public class LocalApplicationsSource implements ApplicationsSource {
                 }
 
                 applicationDTOBuilder.withScripts(fetchScripts(applicationDirectory));
+                applicationDTOBuilder.withResources(fetchResources(applicationDirectory));
                 results.add(applicationDTOBuilder.build());
             }
         }
@@ -139,6 +142,28 @@ public class LocalApplicationsSource implements ApplicationsSource {
         return miniatures;
     }
 
+    private List<ResourceDTO> fetchResources(File applicationDirectory) {
+
+        final File[] resources = new File(applicationDirectory, "resources").listFiles();
+        if (resources == null) {
+            return Collections.emptyList();
+        }
+
+        final List<ResourceDTO> results = new ArrayList<>();
+
+        for (File resourceFile : resources) {
+            if(!resourceFile.isDirectory() && !resourceFile.getName().startsWith(".")) {
+                try {
+                    results.add(new ResourceDTO(resourceFile.getName(), IOUtils.toByteArray(new FileInputStream(resourceFile))));
+                } catch (IOException ignored) {
+
+                }
+            }
+        }
+
+        return results;
+    }
+
     private List<ScriptDTO> fetchScripts(File applicationDirectory) {
         final File[] scriptDirectories = applicationDirectory.listFiles();
         if (scriptDirectories == null) {
@@ -148,7 +173,9 @@ public class LocalApplicationsSource implements ApplicationsSource {
         final List<ScriptDTO> results = new ArrayList<>();
 
         for (File scriptDirectory : scriptDirectories) {
-            if (scriptDirectory.isDirectory() && !"miniatures".equals(scriptDirectory.getName())) {
+            if (scriptDirectory.isDirectory()
+                    && !"miniatures".equals(scriptDirectory.getName())
+                    && !"resources".equals(scriptDirectory.getName())) {
                 final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                         unSerializeScript(new File(scriptDirectory, "script.json")));
 

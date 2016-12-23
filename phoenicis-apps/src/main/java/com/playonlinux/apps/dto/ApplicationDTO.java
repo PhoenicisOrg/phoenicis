@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,6 +35,7 @@ public class ApplicationDTO {
     private final byte[] icon;
     private final List<byte[]> miniatures;
     private final List<ScriptDTO> scripts;
+    private final List<ResourceDTO> resources;
 
     private ApplicationDTO(Builder builder) {
         name = builder.name;
@@ -41,9 +43,14 @@ public class ApplicationDTO {
         icon = builder.icon;
         miniatures = builder.miniatures;
         scripts = builder.scripts;
+        resources = builder.resources;
     }
 
-    public byte[] getIconUrl() {
+    public List<ResourceDTO> getResources() {
+        return resources;
+    }
+
+    public byte[] getIcon() {
         return icon;
     }
 
@@ -70,8 +77,10 @@ public class ApplicationDTO {
         private byte[] icon;
         private List<byte[]> miniatures = new ArrayList<>();
         private List<ScriptDTO> scripts = new ArrayList<>();
+        private List<ResourceDTO> resources;
 
-        public Builder() { }
+        public Builder() {
+        }
 
         public Builder(ApplicationDTO applicationDTO) {
             this.name = applicationDTO.name;
@@ -79,6 +88,7 @@ public class ApplicationDTO {
             this.icon = applicationDTO.icon;
             this.miniatures = applicationDTO.miniatures;
             this.scripts = applicationDTO.scripts;
+            this.resources = applicationDTO.resources;
         }
 
         public Builder withName(String name) {
@@ -91,7 +101,12 @@ public class ApplicationDTO {
             return this;
         }
 
-        public Builder withIconUrl(byte[] icon) {
+        public Builder withResources(List<ResourceDTO> resources) {
+            this.resources = Collections.unmodifiableList(resources);
+            return this;
+        }
+
+        public Builder withIcon(byte[] icon) {
             this.icon = icon;
             return this;
         }
