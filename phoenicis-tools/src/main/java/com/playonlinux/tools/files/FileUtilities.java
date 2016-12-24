@@ -40,9 +40,26 @@ public class FileUtilities extends FilesManipulator {
     }
 
     public void createSymbolicLink(File destination, File target) throws IOException {
+        assertInDirectory(destination);
+        assertInDirectory(target);
+
         Files.createSymbolicLink(destination.toPath(), target.toPath());
     }
 
+    public void copy(File source, File target) throws IOException {
+        assertInDirectory(source);
+        assertInDirectory(target);
+
+        if(source.isDirectory()) {
+            FileUtils.copyDirectory(source, target);
+        } else {
+            if(target.isDirectory()) {
+                FileUtils.copyFile(source, new File(target, source.getName()));
+            } else {
+                FileUtils.copyFile(source, target);
+            }
+        }
+    }
     /**
      * Delete a file only if it is inside PlayOnLinux root
      * @param fileToDelete fileOrDirectoryToDelete
