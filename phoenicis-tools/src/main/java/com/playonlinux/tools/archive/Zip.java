@@ -62,7 +62,7 @@ public class Zip {
                     }
                 } else {
                     LOGGER.info(String.format("Creating output file %s.", outputFile.getAbsolutePath()));
-
+                    outputFile.getParentFile().mkdirs();
                     try (final OutputStream outputFileStream = new FileOutputStream(outputFile)) {
                         IOUtils.copy(debInputStream, outputFileStream);
                     }

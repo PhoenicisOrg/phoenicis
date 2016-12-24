@@ -206,7 +206,7 @@ public class LocalApplicationsSource implements ApplicationsSource {
         try {
             return objectMapper.readValue(jsonFile, CategoryDTO.class);
         } catch (IOException e) {
-            LOGGER.warn("JSON file not found", e);
+            LOGGER.debug("JSON file not found", e);
             return new CategoryDTO.Builder().build();
         }
     }
@@ -215,7 +215,7 @@ public class LocalApplicationsSource implements ApplicationsSource {
         try {
             return objectMapper.readValue(jsonFile, ScriptDTO.class);
         } catch (IOException e) {
-            LOGGER.warn("JSON file not found", e);
+            LOGGER.debug("JSON file not found");
             return new ScriptDTO.Builder().build();
         }
     }
@@ -224,7 +224,7 @@ public class LocalApplicationsSource implements ApplicationsSource {
         try {
             return objectMapper.readValue(jsonFile, ApplicationDTO.class);
         } catch (IOException e) {
-            LOGGER.warn("JSON file not found", e);
+            LOGGER.debug("JSON file not found", e);
             return new ApplicationDTO.Builder().build();
         }
     }
