@@ -32,7 +32,8 @@ public class PEReaderTest {
 
     @Before
     public void setUp() throws IOException {
-        peFile = PEReader.parseExecutable(this.getClass().getResourceAsStream("winecfg.exe"));
+        PEReader peReader = new PEReader();
+        peFile = peReader.parseExecutable(this.getClass().getResourceAsStream("winecfg.exe"));
     }
 
     @Test

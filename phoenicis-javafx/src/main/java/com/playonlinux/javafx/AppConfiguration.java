@@ -10,6 +10,7 @@ import com.playonlinux.javafx.views.ViewsConfiguration;
 import com.playonlinux.javafx.views.setupwindow.JavaFXSetupWindowUIConfiguration;
 import com.playonlinux.scripts.ScriptsConfiguration;
 import com.playonlinux.tools.ToolsConfiguration;
+import com.playonlinux.win32.Win32Configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.Import;
         EnginesConfiguration.class,
         LibraryConfiguration.class,
         JavaFXSetupWindowUIConfiguration.class,
+        Win32Configuration.class,
         ToolsConfiguration.class
 })
 class AppConfiguration {

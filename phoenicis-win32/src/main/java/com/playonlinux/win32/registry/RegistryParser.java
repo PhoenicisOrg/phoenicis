@@ -33,19 +33,12 @@ import org.apache.commons.lang.StringUtils;
 public class RegistryParser {
     private static final char QUOTE = '"';
     private static final String PARSE_ERROR_MESSAGE = "Invalid registry file. Error found line %s";
-    private final File registryFile;
-    private final String rootName;
 
     enum ParseState {
         INITIAL, READING_NAME, SEPARATOR, READING_VALUE
     }
 
-    public RegistryParser(File registryFile, String rootName) {
-        this.registryFile = registryFile;
-        this.rootName = rootName;
-    }
-
-    public RegistryKey parseFile() {
+    public RegistryKey parseFile(File registryFile, String rootName) {
         try (BufferedReader bufferReader = new BufferedReader(new FileReader(registryFile))) {
             final RegistryKey root = new RegistryKey(rootName);
             RegistryKey lastNode = null;

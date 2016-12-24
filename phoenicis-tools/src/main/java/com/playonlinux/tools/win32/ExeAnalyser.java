@@ -28,8 +28,11 @@ import java.io.InputStream;
 
 
 public class ExeAnalyser {
+    private final PEReader peReader;
 
-
+    public ExeAnalyser(PEReader peReader) {
+        this.peReader = peReader;
+    }
 
     /**
      * Checks if the file is a 64bits executable
@@ -52,7 +55,7 @@ public class ExeAnalyser {
 
     private boolean isArchitecture(File file, PEFile.Architecture architecture) throws IOException {
         try (InputStream inputStream = new FileInputStream(file)) {
-            final PEFile peFile = PEReader.parseExecutable(inputStream);
+            final PEFile peFile = peReader.parseExecutable(inputStream);
             return peFile.getArchitecture() == architecture;
         }
     }

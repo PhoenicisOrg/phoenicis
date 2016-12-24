@@ -41,8 +41,8 @@ public class RegistryParserTest {
             outputStream.flush();
         }
 
-        RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
-        RegistryKey node = registryParser.parseFile();
+        RegistryParser registryParser = new RegistryParser();
+        RegistryKey node = registryParser.parseFile(temporaryFile, "Temporary");
 
         RegistryKey levelOneNode = (RegistryKey) node.getChild(0);
         RegistryKey levelTwoNode = (RegistryKey) levelOneNode.getChild(0);
@@ -63,8 +63,8 @@ public class RegistryParserTest {
     public void testParse_realRegFile_testObjectPopulated() {
         File registryFile = new File(this.getClass().getResource("user.reg").getFile());
 
-        RegistryParser registryParser = new RegistryParser(registryFile, "User");
-        RegistryKey parsedFile = registryParser.parseFile();
+        RegistryParser registryParser = new RegistryParser();
+        RegistryKey parsedFile = registryParser.parseFile(registryFile, "User");
 
         assertEquals(1541, parsedFile.toString().split("\n").length);
     }
@@ -72,7 +72,7 @@ public class RegistryParserTest {
     @Test
     public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException {
         File temporaryFile = File.createTempFile("registry", "test");
-        RegistryParser registryParser = new RegistryParser(temporaryFile, "Temporary");
+        RegistryParser registryParser = new RegistryParser();
         temporaryFile.deleteOnExit();
 
         try (FileOutputStream outputStream = new FileOutputStream(temporaryFile)) {
@@ -83,7 +83,7 @@ public class RegistryParserTest {
             outputStream.flush();
         }
 
-        AbstractRegistryNode registryNode = registryParser.parseFile().getChild("Software", "Wine", "DllOverrides",
+        AbstractRegistryNode registryNode = registryParser.parseFile(temporaryFile, "Temporary").getChild("Software", "Wine", "DllOverrides",
                 "*d3dx9_24");
         RegistryValue<?> registryValue = null;
         if (registryNode instanceof RegistryValue) {
