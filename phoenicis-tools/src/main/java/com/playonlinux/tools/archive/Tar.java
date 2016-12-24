@@ -90,65 +90,7 @@ public class Tar {
         }
     }
 
-    /**
-     * Uncompress a tar
-     *
-     * @param countingInputStream
-     *            to count the number of byte extracted
-     * @param outputDir
-     *            The directory where files should be extracted
-     * @return A list of extracted files
-     * @throws ArchiveException
-     *             if the process fails
-     */
-    private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
-            final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
-        final List<File> uncompressedFiles = new LinkedList<>();
-        try (ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("tar",
-                inputStream)) {
-            TarArchiveEntry entry;
-            while ((entry = (TarArchiveEntry) debInputStream.getNextEntry()) != null) {
-                final File outputFile = new File(outputDir, entry.getName());
-                if (entry.isDirectory()) {
-                    LOGGER.info(
-                            String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
 
-                    if (!outputFile.exists()) {
-                        LOGGER.info(String.format("Attempting to createPrefix output directory %s.",
-                                outputFile.getAbsolutePath()));
-                        Files.createDirectories(outputFile.toPath());
-                    }
-                } else {
-                    LOGGER.info(String.format("Creating output file %s (%s).", outputFile.getAbsolutePath(),
-                            entry.getMode()));
-
-                    if (entry.isSymbolicLink()) {
-                        Files.createSymbolicLink(Paths.get(outputFile.getAbsolutePath()),
-                                Paths.get(entry.getLinkName()));
-                    } else {
-                        try (final OutputStream outputFileStream = new FileOutputStream(outputFile)) {
-                            IOUtils.copy(debInputStream, outputFileStream);
-
-                            Files.setPosixFilePermissions(Paths.get(outputFile.getPath()),
-                                    fileUtilities.octToPosixFilePermission(entry.getMode()));
-                        }
-                    }
-
-                }
-                uncompressedFiles.add(outputFile);
-
-                stateCallback
-                        .accept(new ProgressEntity.Builder()
-                                .withPercent(
-                                        (double) countingInputStream.getCount() / (double) finalSize * (double) 100)
-                                .withProgressText("Extracting " + outputFile.getName()).build());
-
-            }
-            return uncompressedFiles;
-        } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
-            throw new ArchiveException("Unable to extract the file", e);
-        }
-    }
 
     /**
      * Gunzip a file
@@ -195,6 +137,67 @@ public class Tar {
             return outputFile;
         } catch (IOException e) {
             throw new ArchiveException("Unable to gunzip file", e);
+        }
+    }
+
+
+    /**
+     * Uncompress a tar
+     *
+     * @param countingInputStream
+     *            to count the number of byte extracted
+     * @param outputDir
+     *            The directory where files should be extracted
+     * @return A list of extracted files
+     * @throws ArchiveException
+     *             if the process fails
+     */
+    private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
+                                  final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
+        final List<File> uncompressedFiles = new LinkedList<>();
+        try (ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("tar",
+                inputStream)) {
+            TarArchiveEntry entry;
+            while ((entry = (TarArchiveEntry) debInputStream.getNextEntry()) != null) {
+                final File outputFile = new File(outputDir, entry.getName());
+                if (entry.isDirectory()) {
+                    LOGGER.info(
+                            String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
+
+                    if (!outputFile.exists()) {
+                        LOGGER.info(String.format("Attempting to createPrefix output directory %s.",
+                                outputFile.getAbsolutePath()));
+                        Files.createDirectories(outputFile.toPath());
+                    }
+                } else {
+                    LOGGER.info(String.format("Creating output file %s (%s).", outputFile.getAbsolutePath(),
+                            entry.getMode()));
+
+                    if (entry.isSymbolicLink()) {
+                        Files.createSymbolicLink(Paths.get(outputFile.getAbsolutePath()),
+                                Paths.get(entry.getLinkName()));
+                    } else {
+                        try (final OutputStream outputFileStream = new FileOutputStream(outputFile)) {
+                            IOUtils.copy(debInputStream, outputFileStream);
+
+                            Files.setPosixFilePermissions(Paths.get(outputFile.getPath()),
+                                    fileUtilities.octToPosixFilePermission(entry.getMode()));
+                        }
+                    }
+
+                }
+                uncompressedFiles.add(outputFile);
+
+                stateCallback
+                        .accept(new ProgressEntity.Builder()
+                                .withPercent(
+                                        (double) countingInputStream.getCount() / (double) finalSize * (double) 100)
+                                .withProgressText("Extracting " + outputFile.getName()).build());
+
+            }
+            return uncompressedFiles;
+        } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
+            throw new ArchiveException("Unable to extract the file", e);
         }
     }
 

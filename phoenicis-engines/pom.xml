@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>phoenicis-viewEngines</artifactId>
+    <artifactId>phoenicis-engines</artifactId>
 
     <dependencies>
         <dependency>

@@ -31,10 +31,12 @@ public class Extractor {
     private final Logger LOGGER = LoggerFactory.getLogger(Tar.class);
     private final FileAnalyser fileAnalyser;
     private final Tar tar;
+    private final Zip zip;
 
-    public Extractor(FileAnalyser fileAnalyser, Tar tar) {
+    public Extractor(FileAnalyser fileAnalyser, Tar tar, Zip zip) {
         this.fileAnalyser = fileAnalyser;
         this.tar = tar;
+        this.zip = zip;
     }
 
     public List<File> uncompress(String inputFile, String outputDir, Consumer<ProgressEntity> onChange) {
@@ -52,6 +54,8 @@ public class Extractor {
         LOGGER.info(
                 String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
+
+
         switch (fileAnalyser.getMimetype(inputFile)) {
             case "application/x-bzip2":
                 return tar.uncompressTarBz2File(inputFile, outputDir, onChange);
@@ -59,6 +63,8 @@ public class Extractor {
                 return tar.uncompressTarGzFile(inputFile, outputDir, onChange);
             case "application/x-xz":
                 return tar.uncompressTarXzFile(inputFile, outputDir, onChange);
+            case "application/zip":
+                return zip.uncompressZipFile(inputFile, outputDir, onChange);
             default:
                 return tar.uncompressTarFile(inputFile, outputDir, onChange);
         }

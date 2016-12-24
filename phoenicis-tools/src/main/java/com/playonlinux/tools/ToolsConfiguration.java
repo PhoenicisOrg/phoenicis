@@ -3,6 +3,7 @@ package com.playonlinux.tools;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.tools.archive.Extractor;
 import com.playonlinux.tools.archive.Tar;
+import com.playonlinux.tools.archive.Zip;
 import com.playonlinux.tools.checksum.ChecksumCalculator;
 import com.playonlinux.tools.config.CompatibleConfigFileFormatFactory;
 import com.playonlinux.tools.files.*;
@@ -41,13 +42,18 @@ public class ToolsConfiguration {
     }
 
     @Bean
-    public Tar tar() {
+    Tar tar() {
         return new Tar(fileUtilities());
     }
 
     @Bean
+    Zip zip() {
+        return new Zip();
+    }
+
+    @Bean
     public Extractor extractor() {
-        return new Extractor(fileAnalyser(), tar());
+        return new Extractor(fileAnalyser(), tar(), zip());
     }
 
     @Bean

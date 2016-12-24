@@ -15,10 +15,12 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
-public class TarTest {
-    final URL inputUrl = TarTest.class.getResource(".");
+public class ExtractorTest {
+    final URL inputUrl = ExtractorTest.class.getResource(".");
     private Tar tar = new Tar(new FileUtilities());
-    private Extractor extractor = new Extractor(new FileAnalyser(), tar);
+    private Zip zip = new Zip();
+
+    private Extractor extractor = new Extractor(new FileAnalyser(), tar, zip);
 
     @Test
     public void testUncompressTarFile() throws IOException {
@@ -33,6 +35,11 @@ public class TarTest {
     @Test
     public void testUncompressTarBz2File() throws IOException {
         testUncompress("test3.tar.bz2");
+    }
+
+    @Test
+    public void testUncompressZipFile() throws IOException {
+        testUncompress("test4.zip");
     }
 
     @Test
@@ -77,7 +84,8 @@ public class TarTest {
         assertEquals("file2content", new String(FileUtils.readFileToByteArray(file2)));
         assertEquals("file0content", new String(FileUtils.readFileToByteArray(file0)));
 
-        assertEquals(5, extractedFiles.size());
+        System.out.println(extractedFiles);;
+        assertEquals(4, extractedFiles.size());
     }
 
     @Test
