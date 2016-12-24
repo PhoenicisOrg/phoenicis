@@ -60,6 +60,10 @@ public class ViewLibrary extends MainWindowView {
         this.getStyleClass().add("mainWindowScene");
 
         this.applicationName = applicationName;
+        this.runScript = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/script.png",
+                translate("Run a script"));
+        this.runConsole = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/console.png",
+                translate(applicationName + " console"));
 
         this.drawSideBar();
         this.drawContent();
@@ -134,11 +138,6 @@ public class ViewLibrary extends MainWindowView {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
-        this.runScript = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/script.png",
-                translate("Run a script"));
-        this.runConsole = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/console.png",
-                translate(applicationName + " console"));
-
         addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
 
@@ -159,11 +158,6 @@ public class ViewLibrary extends MainWindowView {
     private void drawSideBarWithoutShortcut() {
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
-
-        this.runScript = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/script.png",
-                translate("Run a script"));
-        this.runConsole = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/console.png",
-                translate(applicationName + " console"));
 
         addToSideBar(searchBar, new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }

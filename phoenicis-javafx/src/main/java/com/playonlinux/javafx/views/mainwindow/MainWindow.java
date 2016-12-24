@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainWindow extends Stage {
-
     private final MainWindowHeader headerPane;
     private final ViewLibrary library;
     private final ViewApps apps;
@@ -54,7 +53,6 @@ public class MainWindow extends Stage {
         this.show();
 
         this.setUpEvents();
-
     }
 
     public ViewLibrary getLibrary() {
@@ -62,7 +60,7 @@ public class MainWindow extends Stage {
         return library;
     }
 
-    public void setUpEvents() {
+    private void setUpEvents() {
         this.headerPane.setLibraryEvent(evt -> goTo(library));
         this.headerPane.setAppsEvent(evt -> goTo(apps));
         this.headerPane.setEnginesEvent(evt -> goTo(engines));
@@ -72,7 +70,7 @@ public class MainWindow extends Stage {
         engines.setUpEvents();
     }
 
-    public void goTo(Node view) {
+    private void goTo(Node view) {
         rootPane.getChildren().clear();
         rootPane.getChildren().addAll(headerPane, view);
     }
