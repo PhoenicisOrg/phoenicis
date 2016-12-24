@@ -2,6 +2,7 @@ package com.playonlinux.tools.http;
 
 import com.phoenicis.entities.ProgressEntity;
 import com.phoenicis.entities.ProgressState;
+import com.playonlinux.tools.files.FileSizeUtilities;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -11,8 +12,13 @@ import java.util.function.Consumer;
 
 public class Downloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
-
     private static final int BLOCK_SIZE = 1024;
+
+    private final FileSizeUtilities fileSizeUtilities;
+
+    public Downloader(FileSizeUtilities fileSizeUtilities) {
+        this.fileSizeUtilities = fileSizeUtilities;
+    }
 
     public void get(String url,
                     String localFile,
@@ -71,7 +77,7 @@ public class Downloader {
                                         OutputStream outputStream,
                                         Consumer<ProgressEntity> onChange) {
         float percentage = 0F;
-        changeState(ProgressState.READY, percentage, onChange);
+        changeState(ProgressState.READY, percentage, "", onChange);
 
         try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
@@ -85,7 +91,15 @@ public class Downloader {
                 bufferedOutputStream.write(data, 0, i);
 
                 percentage = totalDataRead * 100 / fileSize;
-                changeState(ProgressState.PROGRESSING, percentage, onChange);
+
+                changeState(
+                        ProgressState.PROGRESSING, percentage,
+                        String.format("%s / %s downloaded",
+                                fileSizeUtilities.humanReadableByteCount(totalDataRead, false),
+                                fileSizeUtilities.humanReadableByteCount(fileSize, false)
+                        ),
+                        onChange
+                );
 
                 if (Thread.currentThread().isInterrupted()) {
                     throw new InterruptedException("The download has been aborted");
@@ -94,18 +108,22 @@ public class Downloader {
 
             outputStream.flush();
         } catch (IOException | InterruptedException e) {
-            changeState(ProgressState.FAILED, percentage, onChange);
+            changeState(ProgressState.FAILED, percentage, "", onChange);
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
         }
 
-        changeState(ProgressState.SUCCESS, percentage, onChange);
+        changeState(ProgressState.SUCCESS, percentage, "", onChange);
     }
 
-    private void changeState(ProgressState state, float percentage, Consumer<ProgressEntity> onChange) {
+    private void changeState(ProgressState state,
+                             float percentage,
+                             String progressText,
+                             Consumer<ProgressEntity> onChange) {
         if(onChange != null){
             ProgressEntity currentState = new ProgressEntity.Builder()
                     .withPercent(percentage)
                     .withState(state)
+                    .withProgressText(progressText)
                     .build();
             onChange.accept(currentState);
         }

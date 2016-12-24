@@ -1,5 +1,6 @@
 package com.playonlinux.tools.http;
 
+import com.playonlinux.tools.files.FileSizeUtilities;
 import org.apache.commons.io.IOUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -52,7 +53,7 @@ public class DownloaderTest {
 
         File temporaryFile = File.createTempFile("test", "txt");
         temporaryFile.deleteOnExit();
-        new Downloader().get(mockServerURL, temporaryFile, e -> {});
+        new Downloader(new FileSizeUtilities()).get(mockServerURL, temporaryFile, e -> {});
 
         String fileContent = IOUtils.toString(new FileReader(temporaryFile));
 
@@ -74,7 +75,7 @@ public class DownloaderTest {
                         .withBody("Content file to download 2")
         );
 
-        String result = new Downloader().get(mockServerURLFile2, e -> {});
+        String result = new Downloader(new FileSizeUtilities()).get(mockServerURLFile2, e -> {});
 
         assertEquals("Content file to download 2", result);
     }

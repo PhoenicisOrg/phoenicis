@@ -37,6 +37,11 @@ public class ToolsConfiguration {
     }
 
     @Bean
+    public FileSizeUtilities fileSizeUtilities() {
+        return new FileSizeUtilities();
+    }
+
+    @Bean
     public FileSearcher fileSearcher() {
         return new FileSearcher();
     }
@@ -68,7 +73,7 @@ public class ToolsConfiguration {
 
     @Bean
     public Downloader downloader() {
-        return new Downloader();
+        return new Downloader(fileSizeUtilities());
     }
 
     @Bean
