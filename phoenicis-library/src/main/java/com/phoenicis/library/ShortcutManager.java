@@ -14,8 +14,8 @@ public class ShortcutManager {
     private final String shortcutDirectory;
     private final LibraryManager libraryManager;
 
-    public ShortcutManager(String shortcutDirectory,
-                           LibraryManager libraryManager) {
+    ShortcutManager(String shortcutDirectory,
+                    LibraryManager libraryManager) {
         this.shortcutDirectory = shortcutDirectory;
         this.libraryManager = libraryManager;
     }
@@ -50,6 +50,34 @@ public class ShortcutManager {
         } finally {
             libraryManager.refresh();
         }
+    }
 
+    public void deleteShortcut(ShortcutDTO shortcutDTO) {
+        final String baseName = shortcutDTO.getName();
+        final File shortcutDirectory = new File(this.shortcutDirectory);
+
+        final File scriptFile = new File(shortcutDirectory, baseName + ".shortcut");
+        final File iconFile = new File(shortcutDirectory, baseName + ".icon");
+        final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
+        final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
+
+
+        if(scriptFile.exists()) {
+            scriptFile.delete();
+        }
+
+        if(iconFile.exists()) {
+            iconFile.delete();
+        }
+
+        if(miniatureFile.delete()) {
+            miniatureFile.delete();
+        }
+
+        if(descriptionFile.exists()) {
+            descriptionFile.delete();
+        }
+
+        libraryManager.refresh();
     }
 }

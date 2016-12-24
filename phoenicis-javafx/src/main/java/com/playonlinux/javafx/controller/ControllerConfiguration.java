@@ -52,7 +52,8 @@ public class ControllerConfiguration {
                 viewsConfiguration.viewLibrary(),
                 consoleController(),
                 libraryConfiguration.libraryManager(),
-                libraryConfiguration.shortcutRunner()
+                libraryConfiguration.shortcutRunner(),
+                libraryConfiguration.shortcutManager()
         );
     }
 

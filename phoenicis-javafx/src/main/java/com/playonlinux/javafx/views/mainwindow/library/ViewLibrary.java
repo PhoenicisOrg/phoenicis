@@ -53,6 +53,7 @@ public class ViewLibrary extends MainWindowView {
     private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {};
 
     private Consumer<ShortcutDTO> onShortcutRun = shortcut -> {};
+    private Consumer<ShortcutDTO> onShortcutUninstall = shortcutDTO -> {};
 
     public ViewLibrary(String applicationName) {
         super();
@@ -144,9 +145,13 @@ public class ViewLibrary extends MainWindowView {
     private LeftButtonGroup shortcutGroup(ShortcutDTO shortcut) {
         final LeftButtonGroup shortcutGroup = new LeftButtonGroup(shortcut.getName());
         final LeftButton runButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/play.png", translate("Run"));
+        final LeftButton uninstallButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/remove.png", translate("Uninstall"));
+
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
+        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcut));
         shortcutGroup.setButtons(Arrays.asList(
-                runButton
+                runButton,
+                uninstallButton
         ));
         return shortcutGroup;
     }
@@ -200,5 +205,7 @@ public class ViewLibrary extends MainWindowView {
         runConsole.setOnMouseClicked(event -> onOpenConsole.run());
     }
 
-
+    public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
+        this.onShortcutUninstall = onShortcutUninstall;
+    }
 }
