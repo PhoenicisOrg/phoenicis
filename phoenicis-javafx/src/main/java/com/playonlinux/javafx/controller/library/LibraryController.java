@@ -8,6 +8,8 @@ import com.playonlinux.javafx.views.common.ConfirmMessage;
 import com.playonlinux.javafx.views.mainwindow.library.ViewLibrary;
 import javafx.application.Platform;
 
+import java.util.Collections;
+
 public class LibraryController {
     private final ViewLibrary viewLibrary;
     private final ConsoleController consoleController;
@@ -34,7 +36,7 @@ public class LibraryController {
             });
         });
 
-        this.viewLibrary.setOnShortcutRun(shortcutRunner::run);
+        this.viewLibrary.setOnShortcutRun(shortcutDTO -> shortcutRunner.run(shortcutDTO, Collections.emptyList()));
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
             new ConfirmMessage("Uninstall " + shortcutDTO.getName(), "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
                     .ask(() -> shortcutManager.deleteShortcut(shortcutDTO));

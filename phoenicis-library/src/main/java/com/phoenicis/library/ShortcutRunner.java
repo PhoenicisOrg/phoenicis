@@ -5,6 +5,8 @@ import com.playonlinux.scripts.interpreter.InteractiveScriptSession;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
+import java.util.List;
+
 public class ShortcutRunner {
     private final ScriptInterpreter scriptInterpreter;
 
@@ -12,7 +14,7 @@ public class ShortcutRunner {
         this.scriptInterpreter = scriptInterpreter;
     }
 
-    public void run(ShortcutDTO shortcutDTO) {
+    public void run(ShortcutDTO shortcutDTO, List<String> arguments) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
@@ -21,7 +23,7 @@ public class ShortcutRunner {
                         output -> {
                             final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
                             shortcutReader.callMember("of", shortcutDTO.getScript());
-                            shortcutReader.callMember("run");
+                            shortcutReader.callMember("run", arguments);
                         },
                         this::throwError
                 ),
