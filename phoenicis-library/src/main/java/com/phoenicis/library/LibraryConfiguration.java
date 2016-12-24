@@ -20,8 +20,8 @@ public class LibraryConfiguration {
     }
 
     @Bean
-    public ShortcutCreator shortcutCreator() {
-        return new ShortcutCreator(shortcutDirectory, libraryManager());
+    public ShortcutManager shortcutManager() {
+        return new ShortcutManager(shortcutDirectory, libraryManager());
     }
 
     @Bean

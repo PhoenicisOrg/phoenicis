@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
-public class ShortcutCreator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutCreator.class);
+public class ShortcutManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutManager.class);
     private static final String ENCODING = "UTF-8";
     private final String shortcutDirectory;
     private final LibraryManager libraryManager;
 
-    public ShortcutCreator(String shortcutDirectory,
+    public ShortcutManager(String shortcutDirectory,
                            LibraryManager libraryManager) {
         this.shortcutDirectory = shortcutDirectory;
         this.libraryManager = libraryManager;
