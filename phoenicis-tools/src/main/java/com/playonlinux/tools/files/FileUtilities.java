@@ -24,12 +24,11 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import static java.lang.String.format;
 
 public class FileUtilities extends FilesManipulator {
     @Value("${application.user.tmp}")
@@ -38,6 +37,10 @@ public class FileUtilities extends FilesManipulator {
     public void mkdir(File directoryToCreate) {
         assertInDirectory(directoryToCreate);
         directoryToCreate.mkdirs();
+    }
+
+    public void createSymbolicLink(File destination, File target) throws IOException {
+        Files.createSymbolicLink(destination.toPath(), target.toPath());
     }
 
     /**
