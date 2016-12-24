@@ -18,13 +18,14 @@
 
 package com.playonlinux.javafx.views.common;
 
-import static com.playonlinux.configuration.localisation.Localisation.translate;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javafx.scene.control.Alert;
 
 public class ErrorMessage {
     private final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
@@ -33,8 +34,31 @@ public class ErrorMessage {
     public ErrorMessage(String message, Exception exception) {
         LOGGER.error(ExceptionUtils.getStackTrace(exception));
         alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(translate(message));
-        alert.setContentText(String.format("The error was: %s", ExceptionUtils.getStackTrace(exception)));
+        alert.setTitle("Error");
+        alert.setHeaderText(message);
+        alert.setContentText(exception.getMessage());
+
+        final String exceptionText = ExceptionUtils.getFullStackTrace(exception);
+
+        Label label = new Label("The exception stacktrace was:");
+
+        TextArea textArea = new TextArea(exceptionText);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+        alert.getDialogPane().setExpandableContent(expContent);
+
+        alert.showAndWait();
     }
 
     public void show() {

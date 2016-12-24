@@ -1,8 +1,10 @@
 package com.playonlinux.javafx.controller.apps;
 
 import com.playonlinux.apps.ApplicationsSource;
+import com.playonlinux.javafx.views.common.ErrorMessage;
 import com.playonlinux.javafx.views.mainwindow.apps.ViewApps;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
+import javafx.application.Platform;
 
 public class AppsController {
     private final ViewApps view;
@@ -36,7 +38,7 @@ public class AppsController {
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
-                Throwable::printStackTrace // FIXME
+                e -> Platform.runLater(() -> new ErrorMessage("The script ended unexpectedly", e))
         ));
 
         onAppLoaded.run();
