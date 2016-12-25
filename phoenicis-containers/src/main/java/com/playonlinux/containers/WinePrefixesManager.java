@@ -3,6 +3,8 @@ package com.playonlinux.containers;
 import com.phoenicis.entities.Architecture;
 import com.playonlinux.containers.dto.ContainerDTO;
 import com.playonlinux.containers.dto.WinePrefixDTO;
+import com.playonlinux.tools.config.CompatibleConfigFileFormatFactory;
+import com.playonlinux.tools.config.ConfigFile;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
@@ -14,6 +16,12 @@ import java.util.function.Consumer;
 public class WinePrefixesManager implements ContainersManager {
     @Value("${application.user.wineprefix}")
     private String winePrefixPath;
+
+    private final CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory;
+
+    public WinePrefixesManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory) {
+        this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
+    }
 
     @Override
     public void fetchContainers(Consumer<List<ContainerDTO>> callback, Consumer<Exception> errorCallback) {
@@ -28,12 +36,16 @@ public class WinePrefixesManager implements ContainersManager {
         } else {
             final List<ContainerDTO> containers = new ArrayList<>();
             for (File winePrefix : winePrefixes) {
+                final ConfigFile configFile = compatibleConfigFileFormatFactory.open(new File(winePrefix, "playonlinux.cfg"));
+
                 containers.add(
                         new WinePrefixDTO(
                                 winePrefix.getName(),
                                 winePrefix.getAbsolutePath(),
                                 ContainerDTO.ContainerType.WINEPREFIX,
-                                detectWinePrefixArchitecture(winePrefix)
+                                detectWinePrefixArchitecture(winePrefix),
+                                configFile.readValue("wineDistribution", ""),
+                                configFile.readValue("wineVersion", "")
                         ));
             }
             callback.accept(containers);
