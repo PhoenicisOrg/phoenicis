@@ -33,7 +33,7 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
             remainingTasks.incrementAndGet();
             semaphore.acquire();
         } catch (InterruptedException e) {
-            this.shutdownNow();
+            throw new IllegalStateException(e);
         }
         super.execute(runnable);
     }
