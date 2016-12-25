@@ -52,9 +52,16 @@
             <artifactId>phoenicis-library</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.playonlinux</groupId>
             <artifactId>phoenicis-engines</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-containers</artifactId>
             <version>${project.version}</version>
         </dependency>
 

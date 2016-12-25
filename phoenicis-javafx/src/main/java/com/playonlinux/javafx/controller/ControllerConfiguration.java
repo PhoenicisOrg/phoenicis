@@ -2,8 +2,10 @@ package com.playonlinux.javafx.controller;
 
 import com.phoenicis.library.LibraryConfiguration;
 import com.playonlinux.apps.AppsConfiguration;
+import com.playonlinux.containers.ContainersConfiguration;
 import com.playonlinux.engines.EnginesConfiguration;
 import com.playonlinux.javafx.controller.apps.AppsController;
+import com.playonlinux.javafx.controller.containers.ContainersController;
 import com.playonlinux.javafx.controller.engines.EnginesController;
 import com.playonlinux.javafx.controller.library.LibraryController;
 import com.playonlinux.javafx.controller.library.console.ConsoleController;
@@ -30,15 +32,23 @@ public class ControllerConfiguration {
     @Autowired
     private EnginesConfiguration enginesConfiguration;
 
+    @Autowired
+    private ContainersConfiguration containersConfiguration;
+
     @Bean
     public MainController mainController() {
         return new MainController(
                 libraryController(),
                 appsController(),
                 enginesController(),
-                viewsConfiguration.viewContainers(),
+                containersController(),
                 viewsConfiguration.viewSettings(),
                 viewsConfiguration.mainWindowHeader());
+    }
+
+    @Bean
+    public ContainersController containersController() {
+        return new ContainersController(viewsConfiguration.viewContainers(), containersConfiguration.containersManager());
     }
 
     @Bean

@@ -19,6 +19,7 @@
 package com.playonlinux.javafx.controller;
 
 import com.playonlinux.javafx.controller.apps.AppsController;
+import com.playonlinux.javafx.controller.containers.ContainersController;
 import com.playonlinux.javafx.controller.engines.EnginesController;
 import com.playonlinux.javafx.controller.library.LibraryController;
 import com.playonlinux.javafx.views.mainwindow.MainWindow;
@@ -47,7 +48,7 @@ public class MainController {
     public MainController(LibraryController libraryController,
                           AppsController appsController,
                           EnginesController enginesController,
-                          ViewContainers viewContainers,
+                          ContainersController containersController,
                           ViewSettings viewSettings,
                           MainWindowHeader mainWindowHeader) {
         super();
@@ -57,7 +58,7 @@ public class MainController {
                 libraryController.getView(),
                 appsController.getView(),
                 enginesController.getView(),
-                viewContainers,
+                containersController.getView(),
                 viewSettings,
                 mainWindowHeader
         );

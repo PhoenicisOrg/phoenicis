@@ -31,6 +31,7 @@
         <module>phoenicis-engines</module>
         <module>phoenicis-cli</module>
         <module>phoenicis-multithreading</module>
+        <module>phoenicis-containers</module>
     </modules>
 
 	<properties>
