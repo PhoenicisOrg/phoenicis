@@ -1,6 +1,5 @@
 package com.playonlinux.scripts.wizard;
 
-import com.playonlinux.scripts.ui.SetupWindowFactory;
 import com.playonlinux.scripts.ui.SetupWindowUIConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,7 @@ public class WizardConfiguration {
     SetupWindowUIConfiguration setupWindowUIConfiguration;
 
     @Bean
-    public SetupWizardFactory setupWindowFactory() {
+    public SetupWizardFactory setupWizardFactory() {
         return new SetupWizardFactory(setupWindowUIConfiguration.uiMessageSender(), setupWindowUIConfiguration.setupWindowFactory());
     }
 }

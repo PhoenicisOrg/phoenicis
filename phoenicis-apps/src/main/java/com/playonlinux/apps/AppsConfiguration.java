@@ -1,6 +1,8 @@
 package com.playonlinux.apps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.playonlinux.multithreading.MultithreadingConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,9 @@ public class AppsConfiguration {
     @Value("${scripts.git.url}")
     private String repositoryDirectory;
 
+    @Autowired
+    private MultithreadingConfiguration multithreadingConfiguration;
+
     @Bean
     public ApplicationsSource appsManager() {
         return new GitApplicationsManager(repositoryDirectory, new LocalApplicationsSource.Factory(new ObjectMapper()));
@@ -20,11 +25,7 @@ public class AppsConfiguration {
 
     @Bean
     public ApplicationsSource backgroundAppsManager() {
-        return new BackgroundApplicationsSource(appsManager(), executorService());
+        return new BackgroundApplicationsSource(appsManager(), multithreadingConfiguration.appsExecutorService());
     }
 
-    @Bean
-    ExecutorService executorService() {
-        return Executors.newCachedThreadPool();
-    }
 }

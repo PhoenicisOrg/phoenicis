@@ -5,6 +5,7 @@ import com.phoenicis.library.ShortcutManager;
 import com.phoenicis.library.ShortcutRunner;
 import com.playonlinux.javafx.controller.library.console.ConsoleController;
 import com.playonlinux.javafx.views.common.ConfirmMessage;
+import com.playonlinux.javafx.views.common.ErrorMessage;
 import com.playonlinux.javafx.views.mainwindow.library.ViewLibrary;
 import javafx.application.Platform;
 
@@ -36,7 +37,7 @@ public class LibraryController {
             });
         });
 
-        this.viewLibrary.setOnShortcutRun(shortcutDTO -> shortcutRunner.run(shortcutDTO, Collections.emptyList()));
+        this.viewLibrary.setOnShortcutRun(shortcutDTO -> shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage("Error", e)));
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
             new ConfirmMessage("Uninstall " + shortcutDTO.getName(), "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
                     .ask(() -> shortcutManager.deleteShortcut(shortcutDTO));

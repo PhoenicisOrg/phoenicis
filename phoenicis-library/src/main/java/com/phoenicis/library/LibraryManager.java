@@ -42,6 +42,17 @@ public class LibraryManager {
         return shortcuts;
     }
 
+    public ShortcutDTO fetchShortcutsFromName(String name) {
+        for (ShortcutDTO shortcutDTO : fetchShortcuts()) {
+            if(name.equals(shortcutDTO.getName())) {
+                return shortcutDTO;
+            }
+        }
+
+        return null;
+    }
+
+
     public void setOnUpdate(Runnable onUpdate) {
         this.onUpdate = onUpdate;
     }

@@ -19,6 +19,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-multithreading</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -74,6 +80,7 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.7.0</version>
         </dependency>
+
 
     </dependencies>
 </project>

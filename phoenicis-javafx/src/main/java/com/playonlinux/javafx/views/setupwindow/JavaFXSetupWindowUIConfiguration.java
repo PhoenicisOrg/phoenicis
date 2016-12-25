@@ -7,7 +7,10 @@ import com.playonlinux.scripts.ui.SetupWindowUIConfiguration;
 import com.playonlinux.scripts.ui.UIMessageSender;
 import com.playonlinux.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfiguration {
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
@@ -16,6 +19,7 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
     private ToolsConfiguration toolsConfiguration;
 
     @Override
+    @Bean
     public SetupWindowFactory setupWindowFactory() {
         return title -> {
             final SetupWindowJavaFXImplementation setupWindow = new SetupWindowJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher());
@@ -26,6 +30,7 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
     }
 
     @Override
+    @Bean
     public UIMessageSender uiMessageSender() {
         return new UIMessageSenderJavaFXImplementation();
     }

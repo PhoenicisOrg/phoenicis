@@ -1,6 +1,7 @@
 package com.playonlinux.scripts;
 
 import com.playonlinux.apps.AppsConfiguration;
+import com.playonlinux.multithreading.MultithreadingConfiguration;
 import com.playonlinux.scripts.interpreter.BackgroundScriptInterpreter;
 import com.playonlinux.scripts.interpreter.ScriptFetcher;
 import com.playonlinux.scripts.nashorn.NashornEngineFactory;
@@ -28,9 +29,12 @@ public class ScriptsConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private MultithreadingConfiguration multithreadingConfiguration;
+
     @Bean
     public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(wizardConfiguration.setupWindowFactory(), scriptFetcher());
+        return new NashornEngineFactory(wizardConfiguration.setupWizardFactory(), scriptFetcher());
     }
 
     @Bean
@@ -40,12 +44,7 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptInterpreter scriptInterpreter() {
-        return new BackgroundScriptInterpreter(nashornInterprpeter(), executorService());
-    }
-
-    @Bean
-    public ExecutorService executorService() {
-        return Executors.newCachedThreadPool();
+        return new BackgroundScriptInterpreter(nashornInterprpeter(), multithreadingConfiguration.scriptExecutorService());
     }
 
     @Bean

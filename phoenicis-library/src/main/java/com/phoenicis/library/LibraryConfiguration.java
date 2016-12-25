@@ -26,6 +26,6 @@ public class LibraryConfiguration {
 
     @Bean
     public ShortcutRunner shortcutRunner() {
-        return new ShortcutRunner(scriptsConfiguration.scriptInterpreter());
+        return new ShortcutRunner(scriptsConfiguration.scriptInterpreter(), libraryManager());
     }
 }
