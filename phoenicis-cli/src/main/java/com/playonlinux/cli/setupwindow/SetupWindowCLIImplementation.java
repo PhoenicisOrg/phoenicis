@@ -86,13 +86,13 @@ class SetupWindowCLIImplementation implements SetupWindow {
             @Override
             public void setProgressPercentage(double value) {
                 percentage = min(100, max(0, value));
-                printIfVerbose("["+percentage+"] " + textToShow + " : " +text);
+                printIfVerbose("[" + String.format("%.2f", percentage) + "] " + textToShow + " : " + text);
             }
 
             @Override
             public void setText(String text) {
                 this.text = text;
-                printIfVerbose("["+percentage+"] " + textToShow + " : " +text);
+                printIfVerbose("[" + String.format("%.2f", percentage) + "] " + textToShow + " : " + text);
             }
         });
     }
