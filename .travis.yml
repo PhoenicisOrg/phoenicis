@@ -1,0 +1,5 @@
+language: java
+script: "mvn --debug clean compile test"
+jdk:
+  - oraclejdk8
+  - openjdk8
