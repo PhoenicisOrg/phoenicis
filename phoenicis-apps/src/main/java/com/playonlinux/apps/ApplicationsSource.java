@@ -28,6 +28,10 @@ public interface ApplicationsSource {
         return null;
     }
 
+    default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
+        callback.accept(getScript(path));
+    }
+
     default ApplicationDTO getApplication(List<String> path) {
         for (CategoryDTO categoryDTO : fetchInstallableApplications()) {
             if (path.get(0).equals(categoryDTO.getName())) {

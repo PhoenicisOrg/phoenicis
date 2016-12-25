@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class SetupWizardFactory {
     @Value("${application.user.root}")
-    private String homePath;
+    private String applicationUserRoot;
+
+    @Value("${application.name}")
+    private String applicationName;
+
 
     private final UIMessageSender uiMessageSender;
     private final SetupWindowFactory setupWindowFactory;
@@ -17,7 +21,7 @@ public class SetupWizardFactory {
     }
 
     public SetupWizard create(String title) {
-        final SetupWizard setupWizard = new SetupWizard(title, uiMessageSender, setupWindowFactory, homePath);
+        final SetupWizard setupWizard = new SetupWizard(title, uiMessageSender, setupWindowFactory, applicationUserRoot, applicationName);
         setupWizard.init();
         return setupWizard;
     }

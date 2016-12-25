@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 class SetupWindowCLIImplementation implements SetupWindow {
     private final String title;
     private final boolean interactive;
@@ -68,17 +71,35 @@ class SetupWindowCLIImplementation implements SetupWindow {
 
     @Override
     public void showSpinnerStep(Message<Void> message, String textToShow) {
-        throw new UnsupportedOperationException("FIXME");
+        printIfVerbose(textToShow);
+        message.send(null);
     }
 
     @Override
     public void showProgressBar(Message<ProgressControl> message, String textToShow) {
-        throw new UnsupportedOperationException("FIXME");
+        printIfVerbose(textToShow);
+
+        message.send(new ProgressControl() {
+            private double percentage = 0;
+            private String text = "";
+
+            @Override
+            public void setProgressPercentage(double value) {
+                percentage = min(100, max(0, value));
+                printIfVerbose("["+percentage+"] " + textToShow + " : " +text);
+            }
+
+            @Override
+            public void setText(String text) {
+                this.text = text;
+                printIfVerbose("["+percentage+"] " + textToShow + " : " +text);
+            }
+        });
     }
 
     @Override
     public void showPresentationStep(Message<Void> doneCallback, String textToShow) {
-        throw new UnsupportedOperationException("FIXME");
+        showSimpleMessageStep(doneCallback, textToShow);
     }
 
     @Override
@@ -97,7 +118,7 @@ class SetupWindowCLIImplementation implements SetupWindow {
     }
 
     private void printIfVerbose(String textToShow) {
-        if(verbose) {
+        if (verbose) {
             System.out.println(textToShow);
         }
     }
@@ -111,7 +132,7 @@ class SetupWindowCLIImplementation implements SetupWindow {
     }
 
     private void pauseIfInteractive() {
-        if(interactive) {
+        if (interactive) {
             pause();
         }
     }

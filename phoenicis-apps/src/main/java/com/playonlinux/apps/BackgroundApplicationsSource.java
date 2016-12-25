@@ -1,6 +1,7 @@
 package com.playonlinux.apps;
 
 import com.playonlinux.apps.dto.CategoryDTO;
+import com.playonlinux.apps.dto.ScriptDTO;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -24,5 +25,10 @@ public class BackgroundApplicationsSource implements ApplicationsSource {
     @Override
     public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedAppManager.fetchInstallableApplications(callback, errorCallback));
+    }
+
+    @Override
+    public void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
+        executorService.submit(() -> delegatedAppManager.getScript(path, callback, errorCallback));
     }
 }

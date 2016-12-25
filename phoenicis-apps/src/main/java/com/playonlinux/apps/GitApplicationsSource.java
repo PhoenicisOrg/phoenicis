@@ -10,12 +10,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GitApplicationsManager implements ApplicationsSource {
+public class GitApplicationsSource implements ApplicationsSource {
     private List<CategoryDTO> cache;
     private final String gitRepositoryURL;
     private final LocalApplicationsSource.Factory localAppsManagerFactory;
 
-    public GitApplicationsManager(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
+    public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
         this.localAppsManagerFactory = localAppsManagerFactory;
     }

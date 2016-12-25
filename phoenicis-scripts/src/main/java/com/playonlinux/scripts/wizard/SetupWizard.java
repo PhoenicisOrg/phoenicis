@@ -24,7 +24,6 @@ import com.playonlinux.scripts.ui.SetupWindow;
 import com.playonlinux.scripts.ui.SetupWindowFactory;
 import com.playonlinux.scripts.ui.UIMessageSender;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,14 +38,12 @@ public class SetupWizard implements CompleteWizard {
     private final String title;
     private final UIMessageSender messageSender;
     private final SetupWindowFactory setupWindowFactory;
-    private final String userHomePath;
+
     private SetupWindow setupWindow;
 
-    @Value("${application.user.root}")
-    private String applicationUserRoot;
+    private final String applicationUserRoot;
 
-    @Value("${application.name}")
-    private String applicationName;
+    private final String applicationName;
 
     /**
      * Create the setupWindow
@@ -56,11 +53,13 @@ public class SetupWizard implements CompleteWizard {
     public SetupWizard(String title,
                        UIMessageSender messageSender,
                        SetupWindowFactory setupWindowFactory,
-                       String userHomePath) {
+                       String applicationUserRoot,
+                       String applicationName) {
         this.title = title;
         this.messageSender = messageSender;
         this.setupWindowFactory = setupWindowFactory;
-        this.userHomePath = userHomePath;
+        this.applicationUserRoot = applicationUserRoot;
+        this.applicationName = applicationName;
     }
 
     /**
@@ -227,7 +226,7 @@ public class SetupWizard implements CompleteWizard {
      */
     @Override
     public String browse(String textToShow) {
-        return browse(textToShow, userHomePath, null);
+        return browse(textToShow, applicationUserRoot, null);
     }
 
     /**

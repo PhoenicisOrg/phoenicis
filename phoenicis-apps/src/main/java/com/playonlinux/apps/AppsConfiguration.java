@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 @Configuration
 public class AppsConfiguration {
     @Value("${scripts.git.url}")
@@ -20,7 +17,7 @@ public class AppsConfiguration {
 
     @Bean
     public ApplicationsSource appsManager() {
-        return new GitApplicationsManager(repositoryDirectory, new LocalApplicationsSource.Factory(new ObjectMapper()));
+        return new GitApplicationsSource(repositoryDirectory, new LocalApplicationsSource.Factory(new ObjectMapper()));
     }
 
     @Bean
