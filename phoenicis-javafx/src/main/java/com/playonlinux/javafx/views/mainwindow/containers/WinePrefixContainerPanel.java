@@ -42,7 +42,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         informationContentPane.add(new Text(container.getVersion()), 1, 2);
 
         informationContentPane.add(new TextWithStyle(translate("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
-        informationContentPane.add(new Text(container.getPrefixArchitecture().toString()), 1, 3);
+        informationContentPane.add(new Text(container.getArchitecture()), 1, 3);
 
         informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         informationContentPane.add(new Text(container.getDistribution()), 1, 4);

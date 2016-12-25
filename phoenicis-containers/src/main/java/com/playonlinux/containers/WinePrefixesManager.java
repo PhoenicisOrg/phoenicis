@@ -43,7 +43,7 @@ public class WinePrefixesManager implements ContainersManager {
                                 winePrefix.getName(),
                                 winePrefix.getAbsolutePath(),
                                 ContainerDTO.ContainerType.WINEPREFIX,
-                                detectWinePrefixArchitecture(winePrefix),
+                                configFile.readValue("wineArchitecture", ""),
                                 configFile.readValue("wineDistribution", ""),
                                 configFile.readValue("wineVersion", "")
                         ));
@@ -52,7 +52,4 @@ public class WinePrefixesManager implements ContainersManager {
         }
     }
 
-    private Architecture detectWinePrefixArchitecture(File winePrefix) {
-        return Architecture.I386; // FIXME
-    }
 }
