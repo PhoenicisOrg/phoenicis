@@ -20,7 +20,6 @@ package com.playonlinux.cli;
 
 import com.github.jankroken.commandline.CommandLineParser;
 import com.github.jankroken.commandline.OptionStyle;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.lang.reflect.InvocationTargetException;
 

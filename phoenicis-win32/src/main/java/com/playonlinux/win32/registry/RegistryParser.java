@@ -45,6 +45,11 @@ public class RegistryParser {
             int lineNumber = 1;
             for (String currentLine = bufferReader.readLine(); currentLine != null; currentLine = bufferReader
                     .readLine()) {
+
+                while (currentLine.trim().endsWith("\\")) {
+                    currentLine = StringUtils.substring(currentLine.trim(), 0, -1) + bufferReader.readLine().trim();
+                }
+
                 if (currentLine.startsWith(";") || currentLine.startsWith("#") || StringUtils.isBlank(currentLine)
                         || currentLine.startsWith("@")) {
                     lineNumber++;

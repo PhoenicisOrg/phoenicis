@@ -66,7 +66,7 @@ public class RegistryParserTest {
         RegistryParser registryParser = new RegistryParser();
         RegistryKey parsedFile = registryParser.parseFile(registryFile, "User");
 
-        assertEquals(1541, parsedFile.toString().split("\n").length);
+        assertEquals(1542, parsedFile.toString().split("\n").length);
     }
 
     @Test
@@ -83,8 +83,8 @@ public class RegistryParserTest {
             outputStream.flush();
         }
 
-        AbstractRegistryNode registryNode = registryParser.parseFile(temporaryFile, "Temporary").getChild("Software", "Wine", "DllOverrides",
-                "*d3dx9_24");
+        AbstractRegistryNode registryNode = registryParser.parseFile(temporaryFile, "Temporary")
+                .getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
         RegistryValue<?> registryValue = null;
         if (registryNode instanceof RegistryValue) {
             registryValue = (RegistryValue<?>) registryNode;

@@ -56,6 +56,9 @@ public class RegistryValue<T extends AbstractValueType> extends AbstractRegistry
                     parsedValue = new RegistryValue<>(name, new DwordValueType(dwordValue));
                     break;
                 case "hex": // Binary
+                case "hex(6)": // FIXME
+                case "hex(2)":
+                case "hex(7)":
                     String[] binariesString = valueContentString.split(",");
                     byte[] binaries = new byte[binariesString.length];
                     for (int i = 0; i < binariesString.length; i++) {

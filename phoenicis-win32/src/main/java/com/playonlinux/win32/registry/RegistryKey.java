@@ -19,6 +19,7 @@
 package com.playonlinux.win32.registry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RegistryKey extends AbstractRegistryNode {
@@ -77,7 +78,7 @@ public class RegistryKey extends AbstractRegistryNode {
         return null;
     }
 
-    public AbstractRegistryNode getChild(String... childrenNames) {
+    public AbstractRegistryNode getChild(List<String> childrenNames) {
         RegistryKey currentLevel = this;
         for(String child: childrenNames) {
             AbstractRegistryNode nextLevel = currentLevel.getChild(child);
@@ -88,6 +89,10 @@ public class RegistryKey extends AbstractRegistryNode {
             }
         }
         return currentLevel;
+    }
+
+    public AbstractRegistryNode getChild(String... childrenNames) {
+        return getChild(Arrays.asList(childrenNames));
     }
 
     public void addChildren(AbstractRegistryNode... nodes) {
