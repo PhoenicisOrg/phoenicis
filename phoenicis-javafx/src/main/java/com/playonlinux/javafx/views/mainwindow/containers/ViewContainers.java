@@ -18,11 +18,16 @@
 
 package com.playonlinux.javafx.views.mainwindow.containers;
 
+import com.playonlinux.containers.dto.ContainerDTO;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.MessagePanel;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButtonGroup;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
 import javafx.scene.control.TextField;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
@@ -38,7 +43,6 @@ public class ViewContainers extends MainWindowView {
         this.containersView = new LeftButtonGroup(translate("Containers"));
 
         this.drawSideBar();
-        //eventHandlerContainers.getContainers().setOnChange(this::update);
 
         initSelectContainerPane();
         showRightView(selectContainerPanel);
@@ -46,6 +50,22 @@ public class ViewContainers extends MainWindowView {
 
     private void initSelectContainerPane() {
         this.selectContainerPanel = new MessagePanel(translate("Please select a container to configure"));
+    }
+
+    public void populate(List<ContainerDTO> containers) {
+        final List<LeftButton> leftButtonList = new ArrayList<>();
+
+        for(ContainerDTO container: containers) {
+            final LeftButton containerSelector = new LeftButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
+            leftButtonList.add(containerSelector);
+            containerSelector.setOnMouseClicked(event -> this.selectContainer(container));
+        }
+
+        containersView.setButtons(leftButtonList);
+    }
+
+    private void selectContainer(ContainerDTO containerSelector) {
+
     }
 
     @Override

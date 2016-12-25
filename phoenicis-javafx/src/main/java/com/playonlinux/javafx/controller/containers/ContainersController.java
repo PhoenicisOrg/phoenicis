@@ -15,4 +15,8 @@ public class ContainersController {
     public ViewContainers getView() {
         return viewContainers;
     }
+
+    public void loadContainers() {
+        containersManager.fetchContainers(viewContainers::populate, Throwable::printStackTrace);
+    }
 }

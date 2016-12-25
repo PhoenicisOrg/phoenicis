@@ -63,7 +63,10 @@ public class MainController {
                 mainWindowHeader
         );
 
-        appsController.setOnAppLoaded(enginesController::loadEngines);
+        appsController.setOnAppLoaded(() -> {
+                enginesController.loadEngines();
+                containersController.loadContainers();
+        });
         appsController.loadApps();
     }
 
