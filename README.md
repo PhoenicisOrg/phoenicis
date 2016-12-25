@@ -1,6 +1,9 @@
 # PlayOnLinux and PlayOnMac 5
 This is the PlayOnLinux and PlayOnMac 5 repository. 
 
+## Scripts
+* Please make your pull request on this repository: https://github.com/PlayOnLinux/scripts to add scripts
+
 ## Build instructions
 ### Prerequisites
 * maven
@@ -10,10 +13,6 @@ This is the PlayOnLinux and PlayOnMac 5 repository.
 #### Ubuntu 14.10+
 * sudo apt-get update
 * sudo apt-get install maven openjdk-8-jdk openjfx
-
-
-### Add java-gnome / QTJambi to maven repository
-Run the maven goal clean alone at least one to install these jars in your Maven Repository. Otherwise, your build will fail
 
 * mvn clean 
 
