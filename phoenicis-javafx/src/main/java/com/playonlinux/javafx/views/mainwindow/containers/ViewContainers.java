@@ -28,6 +28,7 @@ import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
@@ -36,6 +37,7 @@ public class ViewContainers extends MainWindowView {
 
     private TextField searchBar;
     private MessagePanel selectContainerPanel;
+    private Consumer<ContainerDTO> onSelectContainer = container -> {};
 
     public ViewContainers() {
         super();
@@ -48,6 +50,10 @@ public class ViewContainers extends MainWindowView {
         showRightView(selectContainerPanel);
     }
 
+    public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
+        this.onSelectContainer = onSelectContainer;
+    }
+
     private void initSelectContainerPane() {
         this.selectContainerPanel = new MessagePanel(translate("Please select a container to configure"));
     }
@@ -55,17 +61,17 @@ public class ViewContainers extends MainWindowView {
     public void populate(List<ContainerDTO> containers) {
         final List<LeftButton> leftButtonList = new ArrayList<>();
 
-        for(ContainerDTO container: containers) {
-            final LeftButton containerSelector = new LeftButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
-            leftButtonList.add(containerSelector);
-            containerSelector.setOnMouseClicked(event -> this.selectContainer(container));
+        for (ContainerDTO container : containers) {
+            final LeftButton containerButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
+            leftButtonList.add(containerButton);
+            containerButton.setOnMouseClicked(event -> this.selectContainer(container));
         }
 
         containersView.setButtons(leftButtonList);
     }
 
-    private void selectContainer(ContainerDTO containerSelector) {
-
+    private void selectContainer(ContainerDTO container) {
+        this.onSelectContainer.accept(container);
     }
 
     @Override
@@ -81,7 +87,6 @@ public class ViewContainers extends MainWindowView {
     private void applyFilter(String searchText) {
 
     }
-
 
 
 }

@@ -44,7 +44,7 @@ public class MainWindowView extends HBox {
         leftContent.getChildren().addAll(nodes);
     }
 
-    protected void showRightView(Node nodeToShow) {
+    public void showRightView(Node nodeToShow) {
         if(visiblePane != null) {
             this.getChildren().remove(visiblePane);
         }

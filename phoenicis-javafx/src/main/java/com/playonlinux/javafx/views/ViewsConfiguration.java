@@ -1,9 +1,12 @@
 package com.playonlinux.javafx.views;
 
+import com.playonlinux.containers.dto.WinePrefixDTO;
 import com.playonlinux.javafx.views.common.widget.PlayOnLinuxLogo;
 import com.playonlinux.javafx.views.mainwindow.apps.ViewApps;
 import com.playonlinux.javafx.views.mainwindow.console.ConsoleTabFactory;
+import com.playonlinux.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import com.playonlinux.javafx.views.mainwindow.containers.ViewContainers;
+import com.playonlinux.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
 import com.playonlinux.javafx.views.mainwindow.engines.ViewEngines;
 import com.playonlinux.javafx.views.mainwindow.library.ViewLibrary;
 import com.playonlinux.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
@@ -62,5 +65,10 @@ public class ViewsConfiguration {
     @Bean
     public ConsoleTabFactory consoleTabFactory() {
         return viewsConfigurationLibrary.consoleTabFactory();
+    }
+
+    @Bean
+    public ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixDTO> wineContainerPanelFactory() {
+        return new ContainerPanelFactory<>(WinePrefixContainerPanel.class, WinePrefixDTO.class);
     }
 }

@@ -31,6 +31,7 @@ public class WinePrefixesManager implements ContainersManager {
                 containers.add(
                         new WinePrefixDTO(
                                 winePrefix.getName(),
+                                winePrefix.getAbsolutePath(),
                                 ContainerDTO.ContainerType.WINEPREFIX,
                                 detectWinePrefixArchitecture(winePrefix)
                         ));

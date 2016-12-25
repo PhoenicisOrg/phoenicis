@@ -48,7 +48,11 @@ public class ControllerConfiguration {
 
     @Bean
     public ContainersController containersController() {
-        return new ContainersController(viewsConfiguration.viewContainers(), containersConfiguration.containersManager());
+        return new ContainersController(
+                viewsConfiguration.viewContainers(),
+                containersConfiguration.containersManager(),
+                viewsConfiguration.wineContainerPanelFactory()
+        );
     }
 
     @Bean
