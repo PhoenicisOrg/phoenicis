@@ -119,7 +119,7 @@ public class RegistryParser {
             RegistryValue<AbstractValueType> value = RegistryValue.fromString(name, valueBuilder.toString());
             lastNode.addChild(value);
         } catch (IllegalArgumentException e) {
-            throw new ParseException(String.format("Error on line %s: %s", lineNumber, e), 0);
+            throw new ParseException(String.format("Error on line %s (%s-: %s", lineNumber, currentLine, e), 0);
         }
     }
 

@@ -67,7 +67,8 @@ public class RegistryValue<T extends AbstractValueType> extends AbstractRegistry
                     parsedValue = new RegistryValue<>(name, new BinaryValueType(binaries));
                     break;
                 default:
-                    throw new IllegalArgumentException(String.format("Unknown value type: %s", valueTypeString));
+                    parsedValue = new RegistryValue<>(name, new StringValueType("")); // FIXME
+                    break;
             }
 
         } else {
