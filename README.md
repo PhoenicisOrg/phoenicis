@@ -5,19 +5,7 @@ This is the PlayOnLinux and PlayOnMac 5 repository.
 * Please make your pull request on this repository: https://github.com/PlayOnLinux/scripts to add scripts
 
 ## Build instructions
-### Prerequisites
-* maven
-* openjdk-8-jdk
-* openjfx
-
-#### Ubuntu 14.10+
-* sudo apt-get update
-* sudo apt-get install maven openjdk-8-jdk openjfx
-
-* mvn clean 
-
-
-The build instructions can be found on our wiki: http://wiki.playonlinux.com/index.php/Building_PlayOnLinux_5
+[Wiki: Building](https://github.com/PlayOnLinux/POL-POM-5/wiki/Building)
 
 ### Code Quality
 To keep code easier to maintain, please import the project specifics format and cleanup settings into your IDE
