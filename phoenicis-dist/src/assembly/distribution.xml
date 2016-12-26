@@ -22,7 +22,7 @@
 
 			<!-- Now, select which projects to include in this module-set. -->
 			<includes>
-				<include>com.playonlinux:phoenicis-app</include>
+				<include>com.playonlinux:phoenicis-javafx</include>
 			</includes>
 			<binaries>
 				<outputDirectory>lib</outputDirectory>
