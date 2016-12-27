@@ -6,7 +6,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("classpath:${os.name}.properties")
+@PropertySource({
+        "classpath:${os.name}.properties",
+        "file:${application.user.settings}"
+})
 public class PlayOnLinuxGlobalConfiguration {
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
