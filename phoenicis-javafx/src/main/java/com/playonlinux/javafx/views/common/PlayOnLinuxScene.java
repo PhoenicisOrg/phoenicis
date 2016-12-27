@@ -36,6 +36,11 @@ public class PlayOnLinuxScene extends Scene {
         this.getStylesheets().add(DEFAULT_THEME);
     }
 
+    public PlayOnLinuxScene(Parent parent, String theme) {
+        super(parent);
+        this.getStylesheets().add(PlayOnLinuxScene.class.getResource(theme).toExternalForm());
+    }
+
     public String getTheme(Themes theme) {
         switch(theme) {
             case DEFAULT: {

@@ -25,6 +25,7 @@ public class MainWindow extends Stage {
 
 
     public MainWindow(String applicationName,
+                      String theme,
                       ViewLibrary library,
                       ViewApps apps,
                       ViewEngines engines,
@@ -43,7 +44,7 @@ public class MainWindow extends Stage {
         this.settings = settings;
 
         rootPane = new VBox();
-        scene = new PlayOnLinuxScene(rootPane);
+        scene = new PlayOnLinuxScene(rootPane, theme);
 
         getLibrary();
 
