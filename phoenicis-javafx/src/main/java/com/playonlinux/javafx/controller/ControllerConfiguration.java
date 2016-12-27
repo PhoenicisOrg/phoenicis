@@ -12,6 +12,7 @@ import com.playonlinux.javafx.controller.library.console.ConsoleController;
 import com.playonlinux.javafx.views.ViewsConfiguration;
 import com.playonlinux.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,8 +37,9 @@ public class ControllerConfiguration {
     private ContainersConfiguration containersConfiguration;
 
     @Bean
-    public MainController mainController() {
+    public MainController mainController(@Value("${application.theme:defaultTheme.css}") String theme) {
         return new MainController(
+                theme,
                 libraryController(),
                 appsController(),
                 enginesController(),

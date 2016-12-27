@@ -42,12 +42,11 @@ public class MainController {
 
     @Value("${application.name}")
     private String applicationName;
-    @Value("${application.theme:defaultTheme.css}")
-    private String theme;
 
     private Object onClose;
 
-    public MainController(LibraryController libraryController,
+    public MainController(String theme,
+                          LibraryController libraryController,
                           AppsController appsController,
                           EnginesController enginesController,
                           ContainersController containersController,
@@ -57,7 +56,7 @@ public class MainController {
 
         this.mainWindow = new MainWindow(
                 applicationName,
-                "defaultTheme.css",
+                theme,
                 libraryController.getView(),
                 appsController.getView(),
                 enginesController.getView(),
