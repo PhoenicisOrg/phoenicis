@@ -7,6 +7,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @PropertySource("classpath:${os.name}.properties")
+@PropertySource(value="file:${application.user.settings}", ignoreResourceNotFound = true)
 public class PlayOnLinuxGlobalConfiguration {
     @Bean
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
