@@ -12,11 +12,16 @@ import com.playonlinux.javafx.controller.library.console.ConsoleController;
 import com.playonlinux.javafx.views.ViewsConfiguration;
 import com.playonlinux.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ControllerConfiguration {
+
+    @Value("${application.theme:defaultTheme.css}")
+    private String theme;
+
     @Autowired
     private ViewsConfiguration viewsConfiguration;
 
@@ -38,6 +43,7 @@ public class ControllerConfiguration {
     @Bean
     public MainController mainController() {
         return new MainController(
+                theme,
                 libraryController(),
                 appsController(),
                 enginesController(),

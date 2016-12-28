@@ -45,7 +45,8 @@ public class MainController {
 
     private Object onClose;
 
-    public MainController(LibraryController libraryController,
+    public MainController(String theme,
+                          LibraryController libraryController,
                           AppsController appsController,
                           EnginesController enginesController,
                           ContainersController containersController,
@@ -55,6 +56,7 @@ public class MainController {
 
         this.mainWindow = new MainWindow(
                 applicationName,
+                theme,
                 libraryController.getView(),
                 appsController.getView(),
                 enginesController.getView(),
