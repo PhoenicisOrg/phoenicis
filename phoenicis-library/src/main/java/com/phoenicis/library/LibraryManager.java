@@ -1,6 +1,7 @@
 package com.phoenicis.library;
 
 import com.phoenicis.library.dto.ShortcutDTO;
+import com.playonlinux.multithreading.functional.NullRunnable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -13,21 +14,21 @@ import java.util.List;
 
 public class LibraryManager {
     private final String shortcutDirectory;
-    private Runnable onUpdate = () -> {};
+    private Runnable onUpdate = new NullRunnable();
 
     public LibraryManager(String shortcutDirectory) {
         this.shortcutDirectory = shortcutDirectory;
     }
 
     public List<ShortcutDTO> fetchShortcuts() {
-        final File shortcutDirectory = new File(this.shortcutDirectory);
+        final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
-        if(!shortcutDirectory.exists()) {
-            shortcutDirectory.mkdirs();
+        if(!shortcutDirectoryFile.exists()) {
+            shortcutDirectoryFile.mkdirs();
             return Collections.emptyList();
         }
 
-        final File[] directoryContent = shortcutDirectory.listFiles();
+        final File[] directoryContent = shortcutDirectoryFile.listFiles();
         if(directoryContent == null) {
             return Collections.emptyList();
         }
@@ -35,7 +36,7 @@ public class LibraryManager {
         final List<ShortcutDTO> shortcuts = new ArrayList<>();
         for (File file : directoryContent) {
             if("shortcut".equals(FilenameUtils.getExtension(file.getName()))) {
-                shortcuts.add(fetchShortcutDTO(shortcutDirectory, file));
+                shortcuts.add(fetchShortcutDTO(shortcutDirectoryFile, file));
             }
         }
 

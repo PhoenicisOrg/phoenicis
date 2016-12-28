@@ -62,8 +62,8 @@ public class WineVersionDistributionDTO {
                 .append("packages", packages).toString();
     }
 
-    public static Comparator<? super WineVersionDTO> Comparator() {
-        return (Comparator<WineVersionDTO>) (o1, o2) -> new VersionComparator().compare(
+    public static Comparator<WineVersionDTO> comparator() {
+        return (o1, o2) -> new VersionComparator().compare(
                 new Version(o1.getVersion()), new Version(o2.getVersion())
         );
     }

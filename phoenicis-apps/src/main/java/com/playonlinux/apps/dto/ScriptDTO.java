@@ -83,7 +83,7 @@ public class ScriptDTO {
         private String script;
 
         public Builder() {
-
+            // Default constructor
         }
 
         public Builder(ScriptDTO scriptDTO) {

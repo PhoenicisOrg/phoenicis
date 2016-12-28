@@ -1,5 +1,8 @@
 package com.playonlinux.tools.files;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
@@ -9,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class FileSearcher extends FilesManipulator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileSearcher.class);
+
     public List<File> search(String directory, String name) {
         return search(new File(directory), name);
     }
@@ -43,6 +48,7 @@ public class FileSearcher extends FilesManipulator {
                 }
             });
         } catch (IOException e) {
+            LOGGER.warn("Cannot search into directory: " + directory, e);
             return Collections.emptyList();
         }
 

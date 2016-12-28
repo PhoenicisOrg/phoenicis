@@ -65,7 +65,9 @@ public class ShortcutDTO {
         private byte[] miniature;
         private String script;
 
-        public Builder() { }
+        public Builder() {
+            // Default constructor
+        }
 
         public Builder(ShortcutDTO shortcutDTO) {
             this.name = shortcutDTO.name;

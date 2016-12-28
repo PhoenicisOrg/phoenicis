@@ -135,7 +135,8 @@ public class SimpleIconListWidget
         }
     }
 
-    public interface SimpleIconChangeListener {
+    @FunctionalInterface
+    interface SimpleIconChangeListener {
         void changed(String newValue);
     }
 }

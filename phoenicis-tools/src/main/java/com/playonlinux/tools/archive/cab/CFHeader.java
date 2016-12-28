@@ -96,7 +96,7 @@ public class CFHeader extends AbstractCabStructure {
         return (cFolders[0] & 0xFF) + (cFolders[1] & 0xFF) * 16;
     }
 
-
+    @Override
     public String toString() {
         return String.format(
                 "Offset: %s\n" +

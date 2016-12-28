@@ -22,16 +22,16 @@ public class ShortcutManager {
 
     public void createShortcut(ShortcutDTO shortcutDTO) {
         final String baseName = shortcutDTO.getName();
-        final File shortcutDirectory = new File(this.shortcutDirectory);
+        final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
-        final File scriptFile = new File(shortcutDirectory, baseName + ".shortcut");
-        final File iconFile = new File(shortcutDirectory, baseName + ".icon");
-        final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
-        final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
+        final File scriptFile = new File(shortcutDirectoryFile, baseName + ".shortcut");
+        final File iconFile = new File(shortcutDirectoryFile, baseName + ".icon");
+        final File miniatureFile = new File(shortcutDirectoryFile, baseName + ".miniature");
+        final File descriptionFile = new File(shortcutDirectoryFile, baseName + ".description");
 
 
-        if(!shortcutDirectory.exists()) {
-            shortcutDirectory.mkdirs();
+        if(!shortcutDirectoryFile.exists()) {
+            shortcutDirectoryFile.mkdirs();
         }
 
         try {

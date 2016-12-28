@@ -71,8 +71,9 @@ public class CategoryDTO {
         private byte[] icon;
 
         public Builder() {
-
+            // Default constructor
         }
+
         public Builder(CategoryDTO categoryDTO) {
             this.withName(categoryDTO.getName())
                     .withApplications(categoryDTO.getApplications())

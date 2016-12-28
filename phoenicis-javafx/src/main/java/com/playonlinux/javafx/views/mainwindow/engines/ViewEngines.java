@@ -28,8 +28,6 @@ import com.playonlinux.javafx.views.mainwindow.WaitPanel;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
-import com.playonlinux.tools.version.VersionComparator;
-import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -110,7 +108,7 @@ public class ViewEngines extends MainWindowView {
     private Tab createWineDistributionTab(WineVersionDistributionDTO wineVersionDistributionDTO) {
         final MiniatureListWidget tabContent = MiniatureListWidget.create();
         List<WineVersionDTO> packages = wineVersionDistributionDTO.getPackages();
-        packages.sort(WineVersionDistributionDTO.Comparator().reversed());
+        packages.sort(WineVersionDistributionDTO.comparator().reversed());
 
         for (WineVersionDTO wineVersionDTO :
                 packages) {
