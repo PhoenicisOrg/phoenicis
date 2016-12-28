@@ -53,7 +53,7 @@ public class ControllerConfiguration {
                 enginesController(),
                 containersController(),
                 viewsConfiguration.viewSettings(),
-                viewsConfiguration.mainWindowHeader());
+                viewsConfiguration.playOnLinuxLogo());
     }
 
     @Bean

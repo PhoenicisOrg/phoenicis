@@ -55,6 +55,7 @@
 .leftPane {
     -fx-background-color: #F0F0F0;
     -fx-min-height: 40em;
+    -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
     -fx-spacing: 0.4em;
@@ -65,7 +66,6 @@
 }
 
 .rightPane {
-    -fx-max-height: 40em;
     -fx-pref-width: 55em;
     -fx-border-width: 0;
     -fx-border-style: none;
@@ -82,8 +82,11 @@
     -fx-background-radius: 1em;
 }
 
-#menuPane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
+
+#menuPane > .tab-header-area .tab-header-background {
+    -fx-background-color: linear-gradient(#428bca, #116395);
+    -fx-min-height: 2.5em;
+    -fx-max-height: 2.5em;
 }
 
 #menuPane
@@ -91,21 +94,31 @@
     -fx-tab-min-width:90px;
     -fx-padding: -10 0 0 0;
     -fx-spacing: 0;
+
 }
 
-#menuPane .tab
+#menuPane > .tab-header-area .tab
 {
     -fx-background-color: transparent;
     -fx-background-opacity: 0;
+    -fx-pref-height: 3.5em;
+
 }
 
-#menuPane .tab-label {
+#menuPane > .tab-header-area .tab:disabled
+{
+    -fx-opacity : 1;
+}
+
+#menuPane > .tab-header-area .tab-label {
     -fx-alignment: CENTER;
     -fx-padding: 0 0 -5 0;
     -fx-text-font-family: "Roboto Light";
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.2em;
+    -fx-cursor: hand;
 }
+
 
 .leftBarTitle {
     -fx-font-family: "Roboto Regular";
