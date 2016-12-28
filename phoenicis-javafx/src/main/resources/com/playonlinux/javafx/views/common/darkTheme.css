@@ -70,7 +70,8 @@
 }
 
 #menuPane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
+    -fx-background-color: linear-gradient(#485563, #29323c);
+    -fx-pref-height: 3em;
 }
 
 #menuPane
@@ -84,6 +85,11 @@
 {
     -fx-background-color: transparent;
     -fx-background-opacity: 0;
+}
+
+#menuPane .tab:disabled
+{
+    -fx-opacity : 1;
 }
 
 #menuPane .tab-label {

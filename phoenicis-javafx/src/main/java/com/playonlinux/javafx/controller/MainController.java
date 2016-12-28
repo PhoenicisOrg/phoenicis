@@ -22,16 +22,12 @@ import com.playonlinux.javafx.controller.apps.AppsController;
 import com.playonlinux.javafx.controller.containers.ContainersController;
 import com.playonlinux.javafx.controller.engines.EnginesController;
 import com.playonlinux.javafx.controller.library.LibraryController;
+import com.playonlinux.javafx.views.common.widget.PlayOnLinuxLogo;
 import com.playonlinux.javafx.views.mainwindow.MainWindow;
-import com.playonlinux.javafx.views.mainwindow.MainWindowHeader;
-import com.playonlinux.javafx.views.mainwindow.containers.ViewContainers;
-import com.playonlinux.javafx.views.mainwindow.engines.ViewEngines;
-import com.playonlinux.javafx.views.mainwindow.library.ViewLibrary;
 import com.playonlinux.javafx.views.mainwindow.settings.ViewSettings;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Optional;
 
@@ -51,7 +47,7 @@ public class MainController {
                           EnginesController enginesController,
                           ContainersController containersController,
                           ViewSettings viewSettings,
-                          MainWindowHeader mainWindowHeader) {
+                          PlayOnLinuxLogo playOnLinuxLogo) {
         super();
 
         this.applicationName = applicationName;
@@ -64,7 +60,7 @@ public class MainController {
                 enginesController.getView(),
                 containersController.getView(),
                 viewSettings,
-                mainWindowHeader
+                playOnLinuxLogo
         );
 
         appsController.setOnAppLoaded(() -> {
