@@ -11,7 +11,11 @@ public interface ApplicationsSource {
     List<CategoryDTO> fetchInstallableApplications();
 
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        callback.accept(fetchInstallableApplications());
+        try {
+            callback.accept(fetchInstallableApplications());
+        } catch(Exception e) {
+            errorCallback.accept(e);
+        }
     }
 
     default ScriptDTO getScript(List<String> path) {

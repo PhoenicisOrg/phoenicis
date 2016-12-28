@@ -58,6 +58,7 @@ public class LocalApplicationsSource implements ApplicationsSource {
             return Collections.emptyList();
         }
 
+        LOGGER.info("Reading directory : " + repositoryDirectory);
         return fetchCategories(categoryDirectories);
     }
 
