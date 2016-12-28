@@ -66,6 +66,8 @@ public class ViewEngines extends MainWindowView {
     private void initWineVersions() {
         wineDistributionsTabPane = new TabPane();
         wineDistributionsTabPane.getStyleClass().add("rightPane");
+
+        wineDistributionsTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
     private void showWait() {
