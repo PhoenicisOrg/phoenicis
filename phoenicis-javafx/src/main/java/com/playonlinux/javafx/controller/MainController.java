@@ -79,6 +79,7 @@ public class MainController {
     public void setOnClose(Runnable onClose) {
         this.mainWindow.setOnCloseRequest(event ->{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(this.mainWindow);
             alert.setTitle(applicationName);
             alert.setHeaderText(translate("Are you sure you want to close all " + applicationName + " windows?"));
             Optional<ButtonType> result = alert.showAndWait();
