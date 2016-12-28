@@ -56,6 +56,8 @@ public class ViewContainers extends MainWindowView {
 
     private void initSelectContainerPane() {
         this.selectContainerPanel = new MessagePanel(translate("Please select a container to configure"));
+
+        selectContainerPanel.prefWidthProperty().bind(this.widthProperty());
     }
 
     public void populate(List<ContainerDTO> containers) {

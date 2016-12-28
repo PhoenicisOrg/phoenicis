@@ -52,7 +52,6 @@
 }
 
 .rightPane {
-    -fx-max-height: 40em;
     -fx-pref-width: 55em;
     -fx-border-width: 0;
     -fx-border-style: none;
@@ -70,7 +69,8 @@
 }
 
 #menuPane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
+    -fx-background-color: linear-gradient(#485563, #29323c);
+    -fx-pref-height: 3em;
 }
 
 #menuPane
@@ -84,6 +84,11 @@
 {
     -fx-background-color: transparent;
     -fx-background-opacity: 0;
+}
+
+#menuPane .tab:disabled
+{
+    -fx-opacity : 1;
 }
 
 #menuPane .tab-label {
@@ -125,6 +130,7 @@
 .leftPane {
     -fx-background-color: #3c3f41;
     -fx-min-height: 40em;
+    -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
     -fx-spacing: 0.4em;

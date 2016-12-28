@@ -11,7 +11,6 @@ import com.playonlinux.javafx.views.mainwindow.engines.ViewEngines;
 import com.playonlinux.javafx.views.mainwindow.library.ViewLibrary;
 import com.playonlinux.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import com.playonlinux.javafx.views.mainwindow.settings.ViewSettings;
-import com.playonlinux.javafx.views.mainwindow.MainWindowHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -48,13 +47,8 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    PlayOnLinuxLogo playOnLinuxLogo() {
+    public PlayOnLinuxLogo playOnLinuxLogo() {
         return new PlayOnLinuxLogo(applicationName);
-    }
-
-    @Bean
-    public MainWindowHeader mainWindowHeader() {
-        return new MainWindowHeader(playOnLinuxLogo());
     }
 
     @Bean
