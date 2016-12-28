@@ -40,12 +40,12 @@ import static com.playonlinux.configuration.localisation.Localisation.translate;
 public class MainController {
     private final MainWindow mainWindow;
 
-    @Value("${application.name}")
     private String applicationName;
 
     private Object onClose;
 
     public MainController(String theme,
+                          String applicationName,
                           LibraryController libraryController,
                           AppsController appsController,
                           EnginesController enginesController,
@@ -53,6 +53,8 @@ public class MainController {
                           ViewSettings viewSettings,
                           MainWindowHeader mainWindowHeader) {
         super();
+
+        this.applicationName = applicationName;
 
         this.mainWindow = new MainWindow(
                 applicationName,
