@@ -18,12 +18,11 @@
 
 package com.playonlinux.javafx.views.setupwindow;
 
-import java.util.List;
-
-
 import com.playonlinux.scripts.ui.Message;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
+
+import java.util.List;
 
 
 public class StepRepresentationMenu extends StepRepresentationMessage {

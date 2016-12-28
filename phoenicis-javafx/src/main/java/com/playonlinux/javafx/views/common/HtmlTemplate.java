@@ -18,18 +18,12 @@
 
 package com.playonlinux.javafx.views.common;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HtmlTemplate {
     private final InputStream inputStream;

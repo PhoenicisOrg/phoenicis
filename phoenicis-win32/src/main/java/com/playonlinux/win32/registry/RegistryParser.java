@@ -18,13 +18,13 @@
 
 package com.playonlinux.win32.registry;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-
-import org.apache.commons.lang.StringUtils;
 
 /***
  * Registry parser class If someone wants to improve this code, feel free to do

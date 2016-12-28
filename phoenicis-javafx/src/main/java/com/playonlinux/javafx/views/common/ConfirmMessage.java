@@ -20,13 +20,10 @@ package com.playonlinux.javafx.views.common;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-
-import static com.playonlinux.configuration.localisation.Localisation.translate;
 
 public class ConfirmMessage {
     private final Logger LOGGER = LoggerFactory.getLogger(ConfirmMessage.class);

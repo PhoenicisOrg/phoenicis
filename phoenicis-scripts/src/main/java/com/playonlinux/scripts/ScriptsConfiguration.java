@@ -4,8 +4,8 @@ import com.playonlinux.apps.AppsConfiguration;
 import com.playonlinux.multithreading.MultithreadingConfiguration;
 import com.playonlinux.scripts.interpreter.BackgroundScriptInterpreter;
 import com.playonlinux.scripts.interpreter.ScriptFetcher;
-import com.playonlinux.scripts.nashorn.NashornEngineFactory;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
+import com.playonlinux.scripts.nashorn.NashornEngineFactory;
 import com.playonlinux.scripts.nashorn.NashornScriptInterpreter;
 import com.playonlinux.scripts.wizard.WizardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Configuration
 @Import(WizardConfiguration.class)

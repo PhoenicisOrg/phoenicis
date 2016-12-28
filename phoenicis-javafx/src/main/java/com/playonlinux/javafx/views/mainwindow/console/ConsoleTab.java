@@ -20,7 +20,6 @@
 package com.playonlinux.javafx.views.mainwindow.console;
 
 
-import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;

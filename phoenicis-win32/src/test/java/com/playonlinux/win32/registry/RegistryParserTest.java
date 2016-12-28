@@ -18,13 +18,13 @@
 
 package com.playonlinux.win32.registry;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class RegistryParserTest {
 
