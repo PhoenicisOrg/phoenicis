@@ -22,11 +22,7 @@ import com.playonlinux.scripts.ui.UIMessageSender;
 import javafx.application.Platform;
 import org.apache.commons.lang.mutable.MutableObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.SynchronousQueue;
 import java.util.function.Supplier;
 
 public class UIMessageSenderJavaFXImplementation implements UIMessageSender {

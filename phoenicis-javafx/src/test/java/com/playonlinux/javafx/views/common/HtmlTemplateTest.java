@@ -18,18 +18,12 @@
 
 package com.playonlinux.javafx.views.common;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import com.playonlinux.javafx.views.common.HtmlTemplate;
+import java.io.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class HtmlTemplateTest {
 

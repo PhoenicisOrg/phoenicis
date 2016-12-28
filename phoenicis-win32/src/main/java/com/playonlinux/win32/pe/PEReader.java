@@ -18,12 +18,11 @@
 
 package com.playonlinux.win32.pe;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import com.playonlinux.win32.pe.rsrc.RsrcSection;
 import org.apache.commons.io.input.CountingInputStream;
 
-import com.playonlinux.win32.pe.rsrc.RsrcSection;
+import java.io.IOException;
+import java.io.InputStream;
 
 public final class PEReader {
     public PEFile parseExecutable(InputStream inputStream) throws IOException {

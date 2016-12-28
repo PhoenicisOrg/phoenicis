@@ -80,6 +80,7 @@ public class ApplicationDTO {
         private List<ResourceDTO> resources;
 
         public Builder() {
+            // Default constructor
         }
 
         public Builder(ApplicationDTO applicationDTO) {

@@ -69,10 +69,11 @@ public class MainWindow extends Stage {
 
         scene = new PlayOnLinuxScene(rootPane, theme);
 
+        this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("/com/playonlinux/javafx/views/common/playonlinux.png")));
+
         this.setResizable(true);
         this.setScene(scene);
         this.setTitle(applicationName);
-        this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("/com/playonlinux/javafx/views/common/playonlinux.png")));
         this.show();
 
         this.setUpEvents();

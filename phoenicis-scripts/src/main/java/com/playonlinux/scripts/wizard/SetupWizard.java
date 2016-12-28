@@ -151,11 +151,11 @@ public class SetupWizard implements CompleteWizard {
     @Override
     public Void licenceFile(String textToShow, File licenceFile) {
         try {
-            final FileInputStream content = new FileInputStream(licenceFile);
-            final StringWriter writer = new StringWriter();
-            IOUtils.copy(content, writer, "UTF-8");
-            content.close();
-            return licence(textToShow, writer.toString());
+            try(final FileInputStream content = new FileInputStream(licenceFile)) {
+                final StringWriter writer = new StringWriter();
+                IOUtils.copy(content, writer, "UTF-8");
+                return licence(textToShow, writer.toString());
+            }
         } catch (IOException e) {
             throw new ScriptException("Cannot acces the licence file", e);
         }

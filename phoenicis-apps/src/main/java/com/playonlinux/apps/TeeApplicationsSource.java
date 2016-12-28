@@ -3,7 +3,6 @@ package com.playonlinux.apps;
 import com.playonlinux.apps.dto.CategoryDTO;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class TeeApplicationsSource implements ApplicationsSource {
     private final ApplicationsSource leftApplicationSource;

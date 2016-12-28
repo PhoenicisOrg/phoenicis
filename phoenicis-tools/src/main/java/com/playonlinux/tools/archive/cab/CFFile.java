@@ -63,6 +63,7 @@ public class CFFile extends AbstractCabStructure {
         return decodeLittleEndian(iFolder);
     }
 
+    @Override
     public String toString() {
         return String.format(
                 "Offset: %s\n" +

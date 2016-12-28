@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.zip.ZipInputStream;
 
 public class Zip {
     private static final String ZIP_ERROR_MESSAGE = "Unable to open input stream";

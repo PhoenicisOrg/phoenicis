@@ -77,6 +77,7 @@ public class CFFolder extends AbstractCabStructure {
         throw new CabException("Unsupported compression type");
     }
 
+    @Override
     public String toString() {
         String compressType;
         try {

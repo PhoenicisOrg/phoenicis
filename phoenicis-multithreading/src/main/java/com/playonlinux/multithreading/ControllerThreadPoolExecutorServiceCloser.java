@@ -2,7 +2,6 @@ package com.playonlinux.multithreading;
 
 
 import javax.annotation.PreDestroy;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 class ControllerThreadPoolExecutorServiceCloser implements AutoCloseable {

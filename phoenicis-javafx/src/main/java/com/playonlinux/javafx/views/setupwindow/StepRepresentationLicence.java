@@ -19,7 +19,6 @@
 package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
-
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 

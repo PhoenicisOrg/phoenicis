@@ -74,8 +74,8 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
             case MACOSX:
                 this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
                 break;
-            default:
             case LINUX:
+            default:
                 this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
                 break;
         }

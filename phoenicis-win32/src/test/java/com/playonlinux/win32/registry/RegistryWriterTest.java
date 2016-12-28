@@ -18,9 +18,9 @@
 
 package com.playonlinux.win32.registry;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class RegistryWriterTest {
 

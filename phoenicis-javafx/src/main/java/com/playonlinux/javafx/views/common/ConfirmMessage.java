@@ -20,19 +20,17 @@ package com.playonlinux.javafx.views.common;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-
-import static com.playonlinux.configuration.localisation.Localisation.translate;
 
 public class ConfirmMessage {
     private final Logger LOGGER = LoggerFactory.getLogger(ConfirmMessage.class);
     private final Alert alert;
 
     public ConfirmMessage(String title, String message) {
+        LOGGER.info("Ask for confirmation", message);
         alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(title);
@@ -46,8 +44,10 @@ public class ConfirmMessage {
     public void ask(Runnable yesCallback, Runnable noCallback) {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
+            LOGGER.info("User response: yes");
             yesCallback.run();
         } else {
+            LOGGER.info("User response: no");
             noCallback.run();
         }
     }

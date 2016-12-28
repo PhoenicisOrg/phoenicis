@@ -19,13 +19,6 @@
 package com.playonlinux.javafx.views.common.widget;
 
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javafx.scene.CacheHint;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
@@ -35,6 +28,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
@@ -135,7 +134,8 @@ public class SimpleIconListWidget
         }
     }
 
-    public interface SimpleIconChangeListener {
+    @FunctionalInterface
+    interface SimpleIconChangeListener {
         void changed(String newValue);
     }
 }

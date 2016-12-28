@@ -5,15 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.engines.dto.WineVersionDistributionDTO;
 import com.playonlinux.scripts.interpreter.InteractiveScriptSession;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class WineVersionsManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WineVersionsManager.class);
     private final ScriptInterpreter scriptInterpreter;
     private final ObjectMapper objectMapper;
 
@@ -41,8 +42,10 @@ public class WineVersionsManager {
     private List<WineVersionDistributionDTO> unSerialize(Object json) {
         try {
             return objectMapper.readValue(json.toString(), new TypeReference<List<WineVersionDistributionDTO>>() {
+                // Default
             });
         } catch (IOException e) {
+            LOGGER.debug("Unable to serialize wine version json");
             return Collections.emptyList();
         }
     }

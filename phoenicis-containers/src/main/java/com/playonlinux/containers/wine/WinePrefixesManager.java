@@ -7,7 +7,6 @@ import com.playonlinux.containers.wine.configurations.WinePrefixDisplayConfigura
 import com.playonlinux.containers.wine.configurations.WinePrefixInputConfiguration;
 import com.playonlinux.tools.config.CompatibleConfigFileFormatFactory;
 import com.playonlinux.tools.config.ConfigFile;
-import com.playonlinux.win32.registry.RegistryParser;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;

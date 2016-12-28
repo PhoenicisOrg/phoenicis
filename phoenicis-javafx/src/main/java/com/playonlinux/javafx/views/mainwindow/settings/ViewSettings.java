@@ -19,10 +19,9 @@
 package com.playonlinux.javafx.views.mainwindow.settings;
 
 import com.playonlinux.javafx.views.common.Themes;
+import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
-import com.playonlinux.javafx.views.mainwindow.MainWindowView;
-
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 

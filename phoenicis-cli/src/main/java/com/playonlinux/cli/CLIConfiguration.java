@@ -8,10 +8,8 @@ import com.playonlinux.configuration.PlayOnLinuxGlobalConfiguration;
 import com.playonlinux.engines.EnginesConfiguration;
 import com.playonlinux.multithreading.MultithreadingConfiguration;
 import com.playonlinux.scripts.ScriptsConfiguration;
-import com.playonlinux.scripts.ui.SetupWindowUIConfiguration;
 import com.playonlinux.tools.ToolsConfiguration;
 import com.playonlinux.win32.Win32Configuration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
