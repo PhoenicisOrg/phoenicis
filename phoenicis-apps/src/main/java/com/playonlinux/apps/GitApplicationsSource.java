@@ -8,12 +8,11 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class GitApplicationsSource implements ApplicationsSource {
-    private List<CategoryDTO> cache;
     private final String gitRepositoryURL;
     private final LocalApplicationsSource.Factory localAppsManagerFactory;
+    private List<CategoryDTO> cache;
 
     public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
@@ -21,17 +20,18 @@ public class GitApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        if(cache != null) {
+    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+        if (cache != null) {
             return cache;
         }
-        // FIXME : Use a background thread
+
         try {
             final File gitTmp = Files.createTempDirectory("git").toFile();
             gitTmp.deleteOnExit();
             new ProcessBuilder(Arrays.asList("git", "clone", gitRepositoryURL, gitTmp.getAbsolutePath()))
-                .start()
-                .waitFor();
+                    .inheritIO()
+                    .start()
+                    .waitFor();
 
             cache = localAppsManagerFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
             return cache;

@@ -26,6 +26,7 @@ import com.playonlinux.javafx.views.mainwindow.FailurePanel;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.WaitPanel;
 import com.playonlinux.javafx.views.mainwindow.ui.*;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -97,17 +98,19 @@ public class ViewApps extends MainWindowView {
      * @param categories CategoryDTO
      */
     public void populate(List<CategoryDTO> categories) {
-        final List<LeftButton> leftButtonList = new ArrayList<>();
-        for (CategoryDTO category : categories) {
-            if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                final LeftButton categoryButton = new LeftButton(category.getIcon(), category.getName());
-                categoryButton.setOnMouseClicked(event -> selectCategory(category));
-                leftButtonList.add(categoryButton);
+        Platform.runLater(() -> {
+            final List<LeftButton> leftButtonList = new ArrayList<>();
+            for (CategoryDTO category : categories) {
+                if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                    final LeftButton categoryButton = new LeftButton(category.getIcon(), category.getName());
+                    categoryButton.setOnMouseClicked(event -> selectCategory(category));
+                    leftButtonList.add(categoryButton);
+                }
             }
-        }
 
-        categoryView.setButtons(leftButtonList);
-        showAvailableApps();
+            categoryView.setButtons(leftButtonList);
+            showAvailableApps();
+        });
     }
 
     public void populateApps(List<ApplicationDTO> applications) {
