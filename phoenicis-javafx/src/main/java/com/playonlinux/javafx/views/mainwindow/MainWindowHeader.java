@@ -20,8 +20,11 @@ package com.playonlinux.javafx.views.mainwindow;
 
 import com.playonlinux.javafx.views.common.widget.PlayOnLinuxLogo;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -29,12 +32,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 public class MainWindowHeader extends GridPane {
-    private static final String MENU_ENTRY_CSS_CLASS = "menuEntry";
-    private final Text myApps;
-    private final Text appCenter;
-    private final Text engines;
-    private final Text settings;
-    private final Text containers;
+    private final Tab myApps;
+    private final Tab appCenter;
+    private final Tab engines;
+    private final Tab settings;
+    private final Tab containers;
 
     public MainWindowHeader(PlayOnLinuxLogo playOnLinuxLogo) {
         super();
@@ -53,46 +55,42 @@ public class MainWindowHeader extends GridPane {
 
         this.add(playOnLinuxLogo, 0, 0);
 
-        HBox menuPane = new HBox();
+        TabPane menuPane = new TabPane();
         menuPane.setId("menuPane");
+        menuPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         this.add(menuPane, 1, 0);
 
-        myApps = new Text("Library");
-        myApps.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
+        myApps = new Tab("Library");
 
-        appCenter = new Text("Apps");
-        appCenter.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
+        appCenter = new Tab("Apps");
 
-        containers = new Text("Containers");
-        containers.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
+        containers = new Tab("Containers");
 
-        engines = new Text("Engines");
-        engines.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
+        engines = new Tab("Engines");
 
-        settings = new Text("Settings");
-        settings.getStyleClass().add(MENU_ENTRY_CSS_CLASS);
+        settings = new Tab("Settings");
 
-        menuPane.getChildren().addAll(myApps, appCenter, containers, engines, settings);
+        menuPane.getTabs().addAll(myApps, appCenter, containers, engines, settings);
     }
 
-    private void setLinkEvents(Node node, EventHandler<MouseEvent> eventHandler) {
-        node.setOnMouseClicked(eventHandler);
+    private void setLinkEvents(Tab tab, EventHandler<Event> eventHandler) {
+        tab.setOnSelectionChanged(eventHandler);
     }
 
-    public void setLibraryEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setLibraryEvent(EventHandler<Event> eventHandler) {
         setLinkEvents(myApps, eventHandler);
     }
 
-    public void setAppsEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setAppsEvent(EventHandler<Event> eventHandler) {
         setLinkEvents(appCenter, eventHandler);
     }
-    public void setEnginesEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setEnginesEvent(EventHandler<Event> eventHandler) {
         setLinkEvents(engines, eventHandler);
     }
-    public void setContainersEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setContainersEvent(EventHandler<Event> eventHandler) {
         setLinkEvents(containers, eventHandler);
     }
-    public void setSettingsEvent(EventHandler<MouseEvent> eventHandler) {
+    public void setSettingsEvent(EventHandler<Event> eventHandler) {
         setLinkEvents(settings, eventHandler);
     }
 

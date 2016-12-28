@@ -47,18 +47,6 @@
 
 }
 
-.menuEntry {
-    -fx-font-family: "Roboto Light";
-    -fx-font-size: 1.4em;
-    -fx-translate-y: 0.4em;
-    -fx-fill: #FFFFFF;
-    -fx-cursor: hand;
-}
-
-.menuEntry:hover {
-    -fx-fill: black;
-}
-
 .mainWindowScene {
     -fx-min-height: 35.2em;
     -fx-fit-to-height: true;
@@ -74,10 +62,6 @@
 
 .leftPaneInside {
     -fx-spacing: 0.4em;
-}
-
-#menuPane {
-    -fx-spacing: 4em;
 }
 
 .rightPane {
@@ -96,6 +80,31 @@
 
 .text-field {
     -fx-background-radius: 1em;
+}
+
+#menuPane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+#menuPane
+{
+    -fx-tab-min-width:90px;
+    -fx-padding: -10 0 0 0;
+    -fx-spacing: 0;
+}
+
+#menuPane .tab
+{
+    -fx-background-color: transparent;
+    -fx-background-opacity: 0;
+}
+
+#menuPane .tab-label {
+    -fx-alignment: CENTER;
+    -fx-padding: 0 0 -5 0;
+    -fx-text-font-family: "Roboto Light";
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 1.2em;
 }
 
 .leftBarTitle {
