@@ -18,6 +18,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ControllerConfiguration {
+
+    @Value("${application.theme:defaultTheme.css}")
+    private String theme;
+
     @Autowired
     private ViewsConfiguration viewsConfiguration;
 
@@ -37,7 +41,7 @@ public class ControllerConfiguration {
     private ContainersConfiguration containersConfiguration;
 
     @Bean
-    public MainController mainController(@Value("${application.theme:defaultTheme.css}") String theme) {
+    public MainController mainController() {
         return new MainController(
                 theme,
                 libraryController(),
