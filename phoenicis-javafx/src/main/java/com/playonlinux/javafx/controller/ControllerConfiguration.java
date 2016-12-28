@@ -19,6 +19,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ControllerConfiguration {
 
+    @Value("${application.name}")
+    private String applicationName;
+
     @Value("${application.theme:defaultTheme.css}")
     private String theme;
 
@@ -44,6 +47,7 @@ public class ControllerConfiguration {
     public MainController mainController() {
         return new MainController(
                 theme,
+                applicationName,
                 libraryController(),
                 appsController(),
                 enginesController(),
