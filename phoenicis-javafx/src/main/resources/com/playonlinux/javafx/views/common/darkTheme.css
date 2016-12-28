@@ -52,7 +52,6 @@
 }
 
 .rightPane {
-    -fx-max-height: 40em;
     -fx-pref-width: 55em;
     -fx-border-width: 0;
     -fx-border-style: none;
@@ -131,6 +130,7 @@
 .leftPane {
     -fx-background-color: #3c3f41;
     -fx-min-height: 40em;
+    -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
     -fx-spacing: 0.4em;
