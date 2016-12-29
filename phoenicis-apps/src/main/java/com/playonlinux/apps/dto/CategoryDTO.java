@@ -44,6 +44,8 @@ public class CategoryDTO {
         return icon;
     }
 
+
+
     public enum CategoryType {
         INSTALLERS,
         FUNCTIONS

@@ -1,14 +1,13 @@
 package com.playonlinux.apps;
 
+import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
-import javafx.application.Application;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
 
 
 public class TeeApplicationsSourceTest {
@@ -68,6 +67,50 @@ public class TeeApplicationsSourceTest {
     }
 
 
+    @Test
+    public void testFetchInstallableApplications_categoriesAndAppsCollapse_numberOfResultIsCorrect() {
+        final ApplicationsSource leftSource = () -> Arrays.asList(
+                new CategoryDTO.Builder()
+                        .withName("Category 1")
+                        .build(),
+                new CategoryDTO.Builder()
+                        .withName("Category 2")
+                        .withApplications(
+                                Arrays.asList(
+                                        new ApplicationDTO.Builder()
+                                                .withName("Application 1")
+                                                .build(),
+                                        new ApplicationDTO.Builder()
+                                                .withName("Application 2")
+                                                .build()
+                                ))
+                        .build()
+        );
+
+        final ApplicationsSource rightSource = () -> Arrays.asList(
+                new CategoryDTO.Builder()
+                        .withName("Category 2")
+                        .withApplications(
+                                Arrays.asList(
+                                        new ApplicationDTO.Builder()
+                                                .withName("Application 1")
+                                                .build(),
+                                        new ApplicationDTO.Builder()
+                                                .withName("Application 3")
+                                                .build()
+                                ))
+                        .build(),
+                new CategoryDTO.Builder()
+                        .withName("Category 4")
+                        .build(),
+                new CategoryDTO.Builder()
+                        .withName("Category 5")
+                        .build()
+        );
+
+        final ApplicationsSource teeSource = new TeeApplicationsSource(leftSource, rightSource);
+        assertEquals(3, teeSource.getCategory(Collections.singletonList("Category 2")).getApplications().size());
+    }
 
 
 }

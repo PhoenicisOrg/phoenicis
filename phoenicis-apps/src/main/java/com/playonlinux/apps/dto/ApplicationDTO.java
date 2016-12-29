@@ -82,7 +82,7 @@ public class ApplicationDTO {
         private byte[] icon;
         private List<byte[]> miniatures = new ArrayList<>();
         private List<ScriptDTO> scripts = new ArrayList<>();
-        private List<ResourceDTO> resources;
+        private List<ResourceDTO> resources = new ArrayList<>();
 
         public Builder() {
             // Default constructor
