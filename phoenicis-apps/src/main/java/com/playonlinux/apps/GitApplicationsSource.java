@@ -5,14 +5,12 @@ import com.playonlinux.apps.dto.CategoryDTO;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GitApplicationsSource implements ApplicationsSource {
     private final String gitRepositoryURL;
     private final LocalApplicationsSource.Factory localAppsManagerFactory;
-    private List<CategoryDTO> cache;
+    private SortedMap<String, CategoryDTO> cache;
 
     public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
@@ -20,7 +18,7 @@ public class GitApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+    public synchronized SortedMap<String, CategoryDTO> fetchInstallableApplications() {
         if (cache != null) {
             return cache;
         }
@@ -36,7 +34,7 @@ public class GitApplicationsSource implements ApplicationsSource {
             cache = localAppsManagerFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
             return cache;
         } catch (IOException | InterruptedException e) {
-            return Collections.emptyList();
+            return Collections.emptySortedMap();
         }
     }
 

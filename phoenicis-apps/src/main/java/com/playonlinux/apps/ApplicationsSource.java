@@ -4,15 +4,15 @@ import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 public interface ApplicationsSource {
-    List<CategoryDTO> fetchInstallableApplications();
+    SortedMap<String, CategoryDTO> fetchInstallableApplications();
 
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         try {
-            callback.accept(fetchInstallableApplications());
+            callback.accept(new ArrayList<CategoryDTO>(fetchInstallableApplications().values()));
         } catch(Exception e) {
             errorCallback.accept(e);
         }
@@ -37,16 +37,8 @@ public interface ApplicationsSource {
     }
 
     default ApplicationDTO getApplication(List<String> path) {
-        for (CategoryDTO categoryDTO : fetchInstallableApplications()) {
-            if (path.get(0).equals(categoryDTO.getName())) {
-                for (ApplicationDTO applicationDTO : categoryDTO.getApplications()) {
-                    if (path.get(1).equals(applicationDTO.getName())) {
-                        return applicationDTO;
-                    }
-                }
-            }
-        }
-
-        return null;
+        CategoryDTO categoryDTO = fetchInstallableApplications().get(path.get(0));
+        ApplicationDTO applicationDTO = categoryDTO.getApplications().get(path.get(1));
+        return applicationDTO;
     }
 }

@@ -4,6 +4,7 @@ import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 
 import java.util.List;
+import java.util.SortedMap;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -18,7 +19,7 @@ public class BackgroundApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public SortedMap<String, CategoryDTO> fetchInstallableApplications() {
         throw new UnsupportedOperationException("The background apps manager is asynchroneous");
     }
 
