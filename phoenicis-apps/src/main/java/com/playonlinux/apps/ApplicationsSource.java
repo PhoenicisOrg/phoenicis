@@ -8,11 +8,11 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public interface ApplicationsSource {
-    SortedMap<String, CategoryDTO> fetchInstallableApplications();
+    List<CategoryDTO> fetchInstallableApplications();
 
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         try {
-            callback.accept(new ArrayList<CategoryDTO>(fetchInstallableApplications().values()));
+            callback.accept(Collections.unmodifiableList(fetchInstallableApplications()));
         } catch(Exception e) {
             errorCallback.accept(e);
         }
@@ -36,9 +36,17 @@ public interface ApplicationsSource {
         callback.accept(getScript(path));
     }
 
+    default CategoryDTO getCategory(List<String> path) {
+        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().stream().filter(category -> path.get(0).equals(category.getName())).findFirst();
+        return categoryDTO.isPresent() ? categoryDTO.get() : null;
+    }
     default ApplicationDTO getApplication(List<String> path) {
-        CategoryDTO categoryDTO = fetchInstallableApplications().get(path.get(0));
-        ApplicationDTO applicationDTO = categoryDTO.getApplications().get(path.get(1));
-        return applicationDTO;
+        final CategoryDTO categoryDTO = getCategory(path);
+        if(categoryDTO == null) {
+            return null;
+        }
+
+        final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream().filter(application -> path.get(1).equals(application.getName())).findFirst();
+        return applicationDTO.isPresent() ? applicationDTO.get() : null;
     }
 }

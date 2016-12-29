@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -68,6 +69,10 @@ public class ApplicationDTO {
 
     public List<ScriptDTO> getScripts() {
         return scripts;
+    }
+
+    public static Comparator<ApplicationDTO> nameComparator() {
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

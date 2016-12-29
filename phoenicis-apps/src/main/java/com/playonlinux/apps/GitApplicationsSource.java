@@ -10,7 +10,7 @@ import java.util.*;
 public class GitApplicationsSource implements ApplicationsSource {
     private final String gitRepositoryURL;
     private final LocalApplicationsSource.Factory localAppsManagerFactory;
-    private SortedMap<String, CategoryDTO> cache;
+    private List<CategoryDTO> cache;
 
     public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
@@ -18,7 +18,7 @@ public class GitApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public synchronized SortedMap<String, CategoryDTO> fetchInstallableApplications() {
+    public synchronized List<CategoryDTO> fetchInstallableApplications() {
         if (cache != null) {
             return cache;
         }
@@ -34,7 +34,7 @@ public class GitApplicationsSource implements ApplicationsSource {
             cache = localAppsManagerFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
             return cache;
         } catch (IOException | InterruptedException e) {
-            return Collections.emptySortedMap();
+            return Collections.emptyList();
         }
     }
 

@@ -38,8 +38,7 @@ public class AppsController {
                     e -> this.view.showFailure()
             );
         });
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(
-                new ArrayList<>(categoryDTO.getApplications().values())));
+        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> new ErrorMessage("The script ended unexpectedly", e))
