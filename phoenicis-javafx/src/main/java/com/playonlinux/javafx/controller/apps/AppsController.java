@@ -1,10 +1,13 @@
 package com.playonlinux.javafx.controller.apps;
 
 import com.playonlinux.apps.ApplicationsSource;
+import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.javafx.views.common.ErrorMessage;
 import com.playonlinux.javafx.views.mainwindow.apps.ViewApps;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import javafx.application.Platform;
+
+import java.util.ArrayList;
 
 public class AppsController {
     private final ViewApps view;
@@ -35,7 +38,8 @@ public class AppsController {
                     e -> this.view.showFailure()
             );
         });
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
+        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(
+                new ArrayList<ApplicationDTO>(categoryDTO.getApplications().values())));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> new ErrorMessage("The script ended unexpectedly", e))

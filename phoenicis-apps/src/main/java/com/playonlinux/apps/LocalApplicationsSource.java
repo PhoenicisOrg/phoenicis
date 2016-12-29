@@ -31,9 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class LocalApplicationsSource implements ApplicationsSource {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalApplicationsSource.class);
@@ -48,20 +46,20 @@ public class LocalApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public TreeMap<String, CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
         final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
 
         if (categoryDirectories == null) {
-            return Collections.emptyList();
+            return new TreeMap<>();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);
         return fetchCategories(categoryDirectories);
     }
 
-    private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
-        final List<CategoryDTO> results = new ArrayList<>();
+    private TreeMap<String, CategoryDTO> fetchCategories(File[] categoryDirectories) {
+        final TreeMap<String, CategoryDTO> results = new TreeMap<>();
 
         for (File categoryDirectory : categoryDirectories) {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
@@ -80,20 +78,21 @@ public class LocalApplicationsSource implements ApplicationsSource {
                     }
                 }
 
-                results.add(categoryDTOBuilder.build());
+                CategoryDTO category = categoryDTOBuilder.build();
+                results.put(category.getName(), category);
             }
         }
 
         return results;
     }
 
-    private List<ApplicationDTO> fetchApplications(File categoryDirectory) {
+    private TreeMap<String, ApplicationDTO> fetchApplications(File categoryDirectory) {
         final File[] applicationDirectories = categoryDirectory.listFiles();
         if (applicationDirectories == null) {
-            return Collections.emptyList();
+            return new TreeMap<>();
         }
 
-        final List<ApplicationDTO> results = new ArrayList<>();
+        final TreeMap<String, ApplicationDTO> results = new TreeMap<>();
 
         for (File applicationDirectory : applicationDirectories) {
             if (applicationDirectory.isDirectory()) {
@@ -116,7 +115,9 @@ public class LocalApplicationsSource implements ApplicationsSource {
 
                 applicationDTOBuilder.withScripts(fetchScripts(applicationDirectory));
                 applicationDTOBuilder.withResources(fetchResources(applicationDirectory));
-                results.add(applicationDTOBuilder.build());
+
+                ApplicationDTO app = applicationDTOBuilder.build();
+                results.put(app.getName(), app);
             }
         }
 
