@@ -21,9 +21,7 @@ package com.playonlinux.apps.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Represents a category of application
@@ -32,22 +30,21 @@ import java.util.TreeMap;
 public class CategoryDTO {
     private final CategoryType type;
     private final String name;
-    private final SortedMap<String, ApplicationDTO> applications;
+    private final List<ApplicationDTO> applications;
     private final byte[] icon;
 
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
         this.name = builder.name;
-        this.applications = new TreeMap<>();
-        if (builder.applications != null) {
-            this.applications.putAll(builder.applications);
-        }
+        this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
     }
 
     public byte[] getIcon() {
         return icon;
     }
+
+
 
     public enum CategoryType {
         INSTALLERS,
@@ -62,15 +59,19 @@ public class CategoryDTO {
         return name;
     }
 
-    public SortedMap<String, ApplicationDTO> getApplications() {
+    public List<ApplicationDTO> getApplications() {
         return applications;
+    }
+
+    public static Comparator<CategoryDTO> nameComparator() {
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private CategoryType type;
         private String name;
-        private Map<String, ApplicationDTO> applications;
+        private List<ApplicationDTO> applications = new ArrayList<>();
         private byte[] icon;
 
         public Builder() {
@@ -95,7 +96,7 @@ public class CategoryDTO {
             return this;
         }
 
-        public Builder withApplications(Map<String, ApplicationDTO> applications) {
+        public Builder withApplications(List<ApplicationDTO> applications) {
             this.applications = applications;
             return this;
         }

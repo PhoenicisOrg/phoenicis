@@ -46,20 +46,20 @@ public class LocalApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public SortedMap<String, CategoryDTO> fetchInstallableApplications() {
+    public List<CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
         final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
 
         if (categoryDirectories == null) {
-            return Collections.emptySortedMap();
+            return Collections.emptyList();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);
         return fetchCategories(categoryDirectories);
     }
 
-    private SortedMap<String, CategoryDTO> fetchCategories(File[] categoryDirectories) {
-        final SortedMap<String, CategoryDTO> results = new TreeMap<>();
+    private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
+        final List<CategoryDTO> results = new ArrayList<>();
 
         for (File categoryDirectory : categoryDirectories) {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
@@ -79,20 +79,20 @@ public class LocalApplicationsSource implements ApplicationsSource {
                 }
 
                 CategoryDTO category = categoryDTOBuilder.build();
-                results.put(category.getName(), category);
+                results.add(category);
             }
         }
 
         return results;
     }
 
-    private SortedMap<String, ApplicationDTO> fetchApplications(File categoryDirectory) {
+    private List<ApplicationDTO> fetchApplications(File categoryDirectory) {
         final File[] applicationDirectories = categoryDirectory.listFiles();
         if (applicationDirectories == null) {
-            return Collections.emptySortedMap();
+            return Collections.emptyList();
         }
 
-        final SortedMap<String, ApplicationDTO> results = new TreeMap<>();
+        final List<ApplicationDTO> results = new ArrayList<>();
 
         for (File applicationDirectory : applicationDirectories) {
             if (applicationDirectory.isDirectory()) {
@@ -117,7 +117,7 @@ public class LocalApplicationsSource implements ApplicationsSource {
                 applicationDTOBuilder.withResources(fetchResources(applicationDirectory));
 
                 ApplicationDTO app = applicationDTOBuilder.build();
-                results.put(app.getName(), app);
+                results.add(app);
             }
         }
 
