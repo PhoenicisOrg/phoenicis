@@ -16,13 +16,13 @@ public class AppsConfiguration {
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Bean
-    public ApplicationsSource appsManager() {
+    public ApplicationsSource appsSource() {
         return new GitApplicationsSource(repositoryDirectory, new LocalApplicationsSource.Factory(new ObjectMapper()));
     }
 
     @Bean
-    public ApplicationsSource backgroundAppsManager() {
-        return new BackgroundApplicationsSource(appsManager(), multithreadingConfiguration.appsExecutorService());
+    public ApplicationsSource backgroundAppsSource() {
+        return new BackgroundApplicationsSource(appsSource(), multithreadingConfiguration.appsExecutorService());
     }
 
 }

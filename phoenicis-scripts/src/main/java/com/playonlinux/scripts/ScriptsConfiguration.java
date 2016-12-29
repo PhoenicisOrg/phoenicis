@@ -36,7 +36,7 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptFetcher scriptFetcher() {
-        return new ScriptFetcher(appsConfiguration.appsManager());
+        return new ScriptFetcher(appsConfiguration.appsSource());
     }
 
     @Bean

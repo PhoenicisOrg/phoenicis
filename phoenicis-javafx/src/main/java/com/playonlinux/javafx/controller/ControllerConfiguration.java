@@ -85,7 +85,7 @@ public class ControllerConfiguration {
     public AppsController appsController() {
         return new AppsController(
                 viewsConfiguration.viewApps(),
-                appsConfiguration.backgroundAppsManager(),
+                appsConfiguration.backgroundAppsSource(),
                 scriptsConfiguration.scriptInterpreter()
         );
     }
