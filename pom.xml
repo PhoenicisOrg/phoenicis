@@ -44,6 +44,24 @@
 		<spring.version>4.2.5.RELEASE</spring.version>
 	</properties>
 
+
+	<dependencyManagement>
+		<dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+	</dependencyManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
