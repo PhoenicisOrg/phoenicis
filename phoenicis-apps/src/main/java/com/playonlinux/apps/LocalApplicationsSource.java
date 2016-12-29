@@ -46,20 +46,20 @@ public class LocalApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public TreeMap<String, CategoryDTO> fetchInstallableApplications() {
+    public SortedMap<String, CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
         final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
 
         if (categoryDirectories == null) {
-            return new TreeMap<>();
+            return Collections.emptySortedMap();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);
         return fetchCategories(categoryDirectories);
     }
 
-    private TreeMap<String, CategoryDTO> fetchCategories(File[] categoryDirectories) {
-        final TreeMap<String, CategoryDTO> results = new TreeMap<>();
+    private SortedMap<String, CategoryDTO> fetchCategories(File[] categoryDirectories) {
+        final SortedMap<String, CategoryDTO> results = new TreeMap<>();
 
         for (File categoryDirectory : categoryDirectories) {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
@@ -86,13 +86,13 @@ public class LocalApplicationsSource implements ApplicationsSource {
         return results;
     }
 
-    private TreeMap<String, ApplicationDTO> fetchApplications(File categoryDirectory) {
+    private SortedMap<String, ApplicationDTO> fetchApplications(File categoryDirectory) {
         final File[] applicationDirectories = categoryDirectory.listFiles();
         if (applicationDirectories == null) {
-            return new TreeMap<>();
+            return Collections.emptySortedMap();
         }
 
-        final TreeMap<String, ApplicationDTO> results = new TreeMap<>();
+        final SortedMap<String, ApplicationDTO> results = new TreeMap<>();
 
         for (File applicationDirectory : applicationDirectories) {
             if (applicationDirectory.isDirectory()) {

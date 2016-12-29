@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public interface ApplicationsSource {
-    TreeMap<String, CategoryDTO> fetchInstallableApplications();
+    SortedMap<String, CategoryDTO> fetchInstallableApplications();
 
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         try {

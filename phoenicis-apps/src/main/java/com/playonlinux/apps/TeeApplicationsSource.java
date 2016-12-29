@@ -2,7 +2,7 @@ package com.playonlinux.apps;
 
 import com.playonlinux.apps.dto.CategoryDTO;
 
-import java.util.HashMap;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class TeeApplicationsSource implements ApplicationsSource {
@@ -22,11 +22,11 @@ public class TeeApplicationsSource implements ApplicationsSource {
     }
 
     @Override
-    public TreeMap<String, CategoryDTO> fetchInstallableApplications() {
-        TreeMap<String, CategoryDTO> leftApps = leftApplicationSource.fetchInstallableApplications();
-        TreeMap<String, CategoryDTO> rightApps = rightApplicationSource.fetchInstallableApplications();
+    public SortedMap<String, CategoryDTO> fetchInstallableApplications() {
+        SortedMap<String, CategoryDTO> leftApps = leftApplicationSource.fetchInstallableApplications();
+        SortedMap<String, CategoryDTO> rightApps = rightApplicationSource.fetchInstallableApplications();
 
-        TreeMap<String, CategoryDTO> mergedApps = new TreeMap<>(rightApps);
+        SortedMap<String, CategoryDTO> mergedApps = new TreeMap<>(rightApps);
 
         for (String categoryName : leftApps.keySet()) {
             CategoryDTO category = leftApps.get(categoryName);

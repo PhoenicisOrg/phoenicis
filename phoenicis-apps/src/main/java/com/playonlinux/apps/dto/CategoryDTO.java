@@ -21,7 +21,7 @@ package com.playonlinux.apps.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.util.TreeMap;
+import java.util.SortedMap;
 
 /**
  * Represents a category of application
@@ -30,7 +30,7 @@ import java.util.TreeMap;
 public class CategoryDTO {
     private final CategoryType type;
     private final String name;
-    private final TreeMap<String, ApplicationDTO> applications;
+    private final SortedMap<String, ApplicationDTO> applications;
     private final byte[] icon;
 
     private CategoryDTO(Builder builder) {
@@ -57,7 +57,7 @@ public class CategoryDTO {
         return name;
     }
 
-    public TreeMap<String, ApplicationDTO> getApplications() {
+    public SortedMap<String, ApplicationDTO> getApplications() {
         return applications;
     }
 
@@ -65,7 +65,7 @@ public class CategoryDTO {
     public static class Builder {
         private CategoryType type;
         private String name;
-        private TreeMap<String, ApplicationDTO> applications;
+        private SortedMap<String, ApplicationDTO> applications;
         private byte[] icon;
 
         public Builder() {
@@ -90,7 +90,7 @@ public class CategoryDTO {
             return this;
         }
 
-        public Builder withApplications(TreeMap<String, ApplicationDTO> applications) {
+        public Builder withApplications(SortedMap<String, ApplicationDTO> applications) {
             this.applications = applications;
             return this;
         }
