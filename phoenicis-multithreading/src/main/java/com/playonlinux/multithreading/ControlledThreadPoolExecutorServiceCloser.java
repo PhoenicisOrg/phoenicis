@@ -4,10 +4,10 @@ package com.playonlinux.multithreading;
 import javax.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
-class ControllerThreadPoolExecutorServiceCloser implements AutoCloseable {
+class ControlledThreadPoolExecutorServiceCloser implements AutoCloseable {
     private final ControlledThreadPoolExecutorService[] executorServices;
 
-    ControllerThreadPoolExecutorServiceCloser(ControlledThreadPoolExecutorService... executorServices) {
+    ControlledThreadPoolExecutorServiceCloser(ControlledThreadPoolExecutorService... executorServices) {
         this.executorServices = executorServices;
     }
 
