@@ -9,12 +9,12 @@ import java.util.*;
 
 public class GitApplicationsSource implements ApplicationsSource {
     private final String gitRepositoryURL;
-    private final LocalApplicationsSource.Factory localAppsManagerFactory;
+    private final LocalApplicationsSource.Factory localAppsSourceFactory;
     private List<CategoryDTO> cache;
 
-    public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsManagerFactory) {
+    public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsSourceFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
-        this.localAppsManagerFactory = localAppsManagerFactory;
+        this.localAppsSourceFactory = localAppsSourceFactory;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class GitApplicationsSource implements ApplicationsSource {
                     .start()
                     .waitFor();
 
-            cache = localAppsManagerFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
+            cache = localAppsSourceFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
             return cache;
         } catch (IOException | InterruptedException e) {
             return Collections.emptyList();
