@@ -7,14 +7,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ScriptFetcher {
-    private final ApplicationsSource appsManager;
+    private final ApplicationsSource appsSource;
 
-    public ScriptFetcher(ApplicationsSource appsManager) {
-        this.appsManager = appsManager;
+    public ScriptFetcher(ApplicationsSource appsSource) {
+        this.appsSource = appsSource;
     }
 
     public String getScript(List<String> path) {
-        final ScriptDTO script = appsManager.getScript(path);
+        final ScriptDTO script = appsSource.getScript(path);
 
         if (script == null) {
             throw new ScriptException("Script not found: " + path);
