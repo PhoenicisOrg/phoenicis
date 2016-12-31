@@ -29,6 +29,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import org.apache.commons.lang.StringUtils;
+import org.fedorahosted.tennera.jgettext.catalog.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +44,6 @@ import static com.playonlinux.configuration.localisation.Localisation.translate;
 public class ViewLibrary extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
 
-    private final String applicationName;
     private LeftButton runScript;
     private LeftButton runConsole;
     private MiniatureListWidget applicationListWidget;
@@ -55,11 +56,14 @@ public class ViewLibrary extends MainWindowView {
     private Consumer<ShortcutDTO> onShortcutRun = shortcut -> {};
     private Consumer<ShortcutDTO> onShortcutUninstall = shortcutDTO -> {};
 
+    private String lastSearch = "";
+
+    private Consumer<String> onSearch = keyword -> {};
+
     public ViewLibrary(String applicationName) {
         super();
         this.getStyleClass().add("mainWindowScene");
 
-        this.applicationName = applicationName;
         this.runScript = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/script.png",
                 translate("Run a script"));
         this.runConsole = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/console.png",
@@ -77,6 +81,10 @@ public class ViewLibrary extends MainWindowView {
 
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
         this.onShortcutDoubleClicked = onShortcutDoubleClicked;
+    }
+
+    public void setOnSearch(Consumer<String> onSearch) {
+        this.onSearch = onSearch;
     }
 
     public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
@@ -165,12 +173,13 @@ public class ViewLibrary extends MainWindowView {
     }
 
     private void applyFilter(String searchText) {
-        //libraryItems.filter(new LibraryFilter(searchText));
+        if (!lastSearch.equals(searchText)) {
+            this.onSearch.accept(searchText);
+            lastSearch = searchText;
+        }
     }
 
     public void setUpEvents() {
-        //libraryItems.setOnChange(this::update);
-
         runScript.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open a script");
