@@ -29,7 +29,7 @@ public interface CompleteWizard extends Wizard, ProgressWizard, ChoiceWizard, Lo
 
     Void message(String textToShow);
 
-    Void presentation(String programName, String programEditor, String editorURL, String scriptorName);
+    Void presentation(String programName, String programEditor, String applicationHomepage, String scriptorName);
 
     Void presentation(String textToShow);
 
