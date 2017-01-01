@@ -10,26 +10,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConfigurableApplicationSource implements ApplicationsSource {
+class ConfigurableApplicationSource implements ApplicationsSource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableApplicationSource.class);
 
-    private final String sourceUrl;
     private final LocalApplicationsSource.Factory localApplicationsSourceFactory;
+    private final ApplicationsSource applicationsSource;
 
-    public ConfigurableApplicationSource(String sourceUrl, LocalApplicationsSource.Factory localApplicationsSourceFactory) {
-        this.sourceUrl = sourceUrl;
+    ConfigurableApplicationSource(String sourceUrl, LocalApplicationsSource.Factory localApplicationsSourceFactory) {
         this.localApplicationsSourceFactory = localApplicationsSourceFactory;
+        final String[] urls = sourceUrl.split(";");
+        applicationsSource = new MultipleApplicationSource(Arrays.stream(urls).map(this::toApplicationSource).collect(Collectors.toList()));
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final String[] urls = sourceUrl.split(";");
-        final ApplicationsSource applicationsSource =
-                new MultipleApplicationSource(Arrays.stream(urls).map(this::toApplicationSource).collect(Collectors.toList()));
         return applicationsSource.fetchInstallableApplications();
     }
 
     private ApplicationsSource toApplicationSource(String applicationSourceUrl) {
+        LOGGER.warn("Registering: " + applicationSourceUrl);
         try {
             final URI url = new URI(applicationSourceUrl);
             final String scheme = url.getScheme().split("\\+")[0];
