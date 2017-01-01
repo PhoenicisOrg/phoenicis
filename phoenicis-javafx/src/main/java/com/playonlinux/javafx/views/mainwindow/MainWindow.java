@@ -21,7 +21,7 @@ public class MainWindow extends Stage {
     private final ViewSettings settings;
     private final PlayOnLinuxScene scene;
 
-    private TabPane rootPane;
+    private TabPane tabPane;
 
 
     public MainWindow(String applicationName,
@@ -40,10 +40,10 @@ public class MainWindow extends Stage {
         this.containers = containers;
         this.settings = settings;
 
-        rootPane = new TabPane();
-        rootPane.setTabMinHeight(50);
-        rootPane.setId("menuPane");
-        rootPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabPane = new TabPane();
+        tabPane.setTabMinHeight(50);
+        tabPane.setId("menuPane");
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab logoTab = new Tab();
         playOnLinuxLogo.setMinWidth(200);
@@ -65,9 +65,9 @@ public class MainWindow extends Stage {
         Tab settingsTab = new Tab("Settings");
         settingsTab.setContent(settings);
 
-        rootPane.getTabs().addAll(logoTab, libraryTab, appsTab, containersTab, enginesTab, settingsTab);
+        tabPane.getTabs().addAll(logoTab, libraryTab, appsTab, containersTab, enginesTab, settingsTab);
 
-        scene = new PlayOnLinuxScene(rootPane, theme);
+        scene = new PlayOnLinuxScene(tabPane, theme);
 
         this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("/com/playonlinux/javafx/views/common/playonlinux.png")));
 
@@ -82,5 +82,9 @@ public class MainWindow extends Stage {
     private void setUpEvents() {
         library.setUpEvents();
         engines.setUpEvents();
+    }
+
+    public void showLibrary() {
+        tabPane.getSelectionModel().select(1);
     }
 }
