@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Value;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -78,6 +80,16 @@ public class FileUtilities extends FilesManipulator {
         assertInDirectory(file);
 
         return FileUtils.readFileToString(file, "UTF-8");
+    }
+
+    public long getSize(File file) throws IOException {
+        assertInDirectory(file);
+
+        Path folder = Paths.get(file.getAbsolutePath());
+        return Files.walk(folder)
+                .filter(p -> p.toFile().isFile())
+                .mapToLong(p -> p.toFile().length())
+                .sum();
     }
 
     public void writeToFile(File file, String content) throws IOException {
