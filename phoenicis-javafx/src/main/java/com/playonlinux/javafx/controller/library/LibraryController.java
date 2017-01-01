@@ -55,6 +55,10 @@ public class LibraryController {
         });
     }
 
+    public void setOnTabOpened(Runnable onTabOpened) {
+        this.viewLibrary.setOnTabOpened(onTabOpened);
+    }
+
     private void updateLibrary() {
         final List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
         final List<ShortcutDTO> shortcutsCorrespondingToKeywords =

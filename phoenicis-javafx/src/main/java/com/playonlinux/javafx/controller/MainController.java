@@ -63,10 +63,15 @@ public class MainController {
                 playOnLinuxLogo
         );
 
+        libraryController.setOnTabOpened(() -> {
+            mainWindow.showLibrary();
+        });
+
         appsController.setOnAppLoaded(() -> {
                 enginesController.loadEngines();
                 containersController.loadContainers();
         });
+
         appsController.loadApps();
     }
 
