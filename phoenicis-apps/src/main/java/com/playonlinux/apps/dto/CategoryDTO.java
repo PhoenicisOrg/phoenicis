@@ -20,8 +20,12 @@ package com.playonlinux.apps.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Represents a category of application
@@ -111,5 +115,12 @@ public class CategoryDTO {
         }
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append(name)
+                .append(type)
+                .toString();
+    }
 
 }
