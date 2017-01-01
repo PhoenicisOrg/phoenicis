@@ -43,6 +43,8 @@ public class LibraryController {
         });
 
         this.viewLibrary.setOnShortcutRun(shortcutDTO -> shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage("Error", e)));
+        this.viewLibrary.setOnShortcutStop(shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage("Error", e)));
+
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
             new ConfirmMessage("Uninstall " + shortcutDTO.getName(), "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
                     .ask(() -> shortcutManager.deleteShortcut(shortcutDTO));

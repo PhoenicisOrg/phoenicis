@@ -29,8 +29,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-import org.apache.commons.lang.StringUtils;
-import org.fedorahosted.tennera.jgettext.catalog.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +53,8 @@ public class ViewLibrary extends MainWindowView {
 
     private Consumer<ShortcutDTO> onShortcutRun = shortcut -> {};
     private Consumer<ShortcutDTO> onShortcutUninstall = shortcutDTO -> {};
+
+    private Consumer<ShortcutDTO> onShortcutStop = shortcutDTO -> {};
 
     private String lastSearch = "";
 
@@ -81,6 +81,10 @@ public class ViewLibrary extends MainWindowView {
 
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
         this.onShortcutDoubleClicked = onShortcutDoubleClicked;
+    }
+
+    public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
+        this.onShortcutStop = onShortcutStop;
     }
 
     public void setOnSearch(Consumer<String> onSearch) {
@@ -154,12 +158,16 @@ public class ViewLibrary extends MainWindowView {
     private LeftButtonGroup shortcutGroup(ShortcutDTO shortcut) {
         final LeftButtonGroup shortcutGroup = new LeftButtonGroup(shortcut.getName());
         final LeftButton runButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/play.png", translate("Run"));
+        final LeftButton stopButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/stop.png", translate("Close"));
         final LeftButton uninstallButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/remove.png", translate("Uninstall"));
 
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
         uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcut));
+        stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcut));
+
         shortcutGroup.setButtons(Arrays.asList(
                 runButton,
+                stopButton,
                 uninstallButton
         ));
         return shortcutGroup;
