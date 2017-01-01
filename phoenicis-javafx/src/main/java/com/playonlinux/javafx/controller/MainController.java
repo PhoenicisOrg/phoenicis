@@ -38,8 +38,6 @@ public class MainController {
 
     private String applicationName;
 
-    private Object onClose;
-
     public MainController(String theme,
                           String applicationName,
                           LibraryController libraryController,
@@ -63,9 +61,7 @@ public class MainController {
                 playOnLinuxLogo
         );
 
-        libraryController.setOnTabOpened(() -> {
-            mainWindow.showLibrary();
-        });
+        libraryController.setOnTabOpened(mainWindow::showLibrary);
 
         appsController.setOnAppLoaded(() -> {
                 enginesController.loadEngines();
