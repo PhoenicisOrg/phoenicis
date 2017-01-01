@@ -83,6 +83,8 @@ public class FileUtilities extends FilesManipulator {
     }
 
     public long getSize(File file) throws IOException {
+        assertInDirectory(file);
+
         Path folder = Paths.get(file.getAbsolutePath());
         return Files.walk(folder)
                 .filter(p -> p.toFile().isFile())
