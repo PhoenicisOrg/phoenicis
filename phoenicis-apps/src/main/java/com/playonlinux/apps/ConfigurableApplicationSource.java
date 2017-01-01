@@ -28,7 +28,7 @@ class ConfigurableApplicationSource implements ApplicationsSource {
     }
 
     private ApplicationsSource toApplicationSource(String applicationSourceUrl) {
-        LOGGER.warn("Registering: " + applicationSourceUrl);
+        LOGGER.info("Registering: " + applicationSourceUrl);
         try {
             final URI url = new URI(applicationSourceUrl);
             final String scheme = url.getScheme().split("\\+")[0];

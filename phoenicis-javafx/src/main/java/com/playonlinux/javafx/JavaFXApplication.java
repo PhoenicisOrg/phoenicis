@@ -19,6 +19,7 @@
 package com.playonlinux.javafx;
 
 import com.playonlinux.javafx.controller.MainController;
+import com.playonlinux.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
@@ -41,7 +42,10 @@ public class JavaFXApplication extends Application {
 
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();
-        mainController.setOnClose(applicationContext::close);
+        mainController.setOnClose(() -> {
+            applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
+            applicationContext.close();
+        });
     }
 
     private void loadFonts() {

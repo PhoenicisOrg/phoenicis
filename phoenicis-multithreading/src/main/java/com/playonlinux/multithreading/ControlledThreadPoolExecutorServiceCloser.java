@@ -4,19 +4,26 @@ package com.playonlinux.multithreading;
 import javax.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
-class ControlledThreadPoolExecutorServiceCloser implements AutoCloseable {
+public class ControlledThreadPoolExecutorServiceCloser implements AutoCloseable {
     private final ControlledThreadPoolExecutorService[] executorServices;
+    private boolean closeImmediately = false;
 
     ControlledThreadPoolExecutorServiceCloser(ControlledThreadPoolExecutorService... executorServices) {
         this.executorServices = executorServices;
     }
 
+    public void setCloseImmediately(boolean closeImmediately) {
+        this.closeImmediately = closeImmediately;
+    }
+
     @PreDestroy
     @Override
     public void close() throws InterruptedException {
-        for(ControlledThreadPoolExecutorService executorService: executorServices) {
+        for (ControlledThreadPoolExecutorService executorService : executorServices) {
             executorService.sendShutdownSignal();
-            executorService.awaitTermination(1, TimeUnit.HOURS);
+            if(!closeImmediately) {
+                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            }
             executorService.shutdownNow();
         }
     }
