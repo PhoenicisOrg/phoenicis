@@ -70,7 +70,7 @@ public class FileUtilities extends FilesManipulator {
         if(fileToDelete.isDirectory()) {
             FileUtils.deleteDirectory(fileToDelete);
         } else {
-            fileToDelete.delete();
+            Files.deleteIfExists(fileToDelete.toPath());
         }
     }
 

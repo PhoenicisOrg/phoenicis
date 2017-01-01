@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
-public class GitApplicationsSource implements ApplicationsSource {
+class GitApplicationsSource implements ApplicationsSource {
     private final String gitRepositoryURL;
     private final LocalApplicationsSource.Factory localAppsSourceFactory;
     private List<CategoryDTO> cache;
 
-    public GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsSourceFactory) {
+    GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsSourceFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
         this.localAppsSourceFactory = localAppsSourceFactory;
     }

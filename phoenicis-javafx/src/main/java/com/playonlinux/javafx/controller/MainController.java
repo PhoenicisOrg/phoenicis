@@ -75,7 +75,7 @@ public class MainController {
     }
 
     public void setOnClose(Runnable onClose) {
-        this.mainWindow.setOnCloseRequest(event ->{
+        this.mainWindow.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(this.mainWindow);
             alert.setTitle(applicationName);
@@ -83,10 +83,10 @@ public class MainController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Platform.exit();
+                onClose.run();
             } else {
                 event.consume();
             }
-            onClose.run();
         });
     }
 }

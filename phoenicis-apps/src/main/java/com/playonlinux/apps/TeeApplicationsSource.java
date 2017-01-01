@@ -8,7 +8,7 @@ import com.playonlinux.apps.dto.ScriptDTO;
 import java.util.*;
 import java.util.function.Function;
 
-public class TeeApplicationsSource implements ApplicationsSource {
+class TeeApplicationsSource implements ApplicationsSource {
     private final ApplicationsSource leftApplicationSource;
     private final ApplicationsSource rightApplicationSource;
 
@@ -18,8 +18,8 @@ public class TeeApplicationsSource implements ApplicationsSource {
      * @param leftApplicationSource
      * @param rightApplicationSource
      */
-    public TeeApplicationsSource(ApplicationsSource leftApplicationSource,
-                                 ApplicationsSource rightApplicationSource) {
+    TeeApplicationsSource(ApplicationsSource leftApplicationSource,
+                          ApplicationsSource rightApplicationSource) {
         this.leftApplicationSource = leftApplicationSource;
         this.rightApplicationSource = rightApplicationSource;
     }

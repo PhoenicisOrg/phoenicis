@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-public class BackgroundApplicationsSource implements ApplicationsSource {
+class BackgroundApplicationsSource implements ApplicationsSource {
     private final ApplicationsSource delegatedAppManager;
     private final ExecutorService executorService;
 
-    public BackgroundApplicationsSource(ApplicationsSource delegatedAppManager,
-                                        ExecutorService executorService) {
+    BackgroundApplicationsSource(ApplicationsSource delegatedAppManager,
+                                 ExecutorService executorService) {
         this.delegatedAppManager = delegatedAppManager;
         this.executorService = executorService;
     }

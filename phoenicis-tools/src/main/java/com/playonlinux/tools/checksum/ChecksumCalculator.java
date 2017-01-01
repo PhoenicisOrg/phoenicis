@@ -67,7 +67,7 @@ public class ChecksumCalculator {
             messageDigest.update(bytes, 0, numBytes);
             readBytes += numBytes;
             if(sizeInBytes != 0L) {
-                double percentage = (double) readBytes / (double) sizeInBytes * (double) 100;
+                double percentage = (double) readBytes * 100. / (double) sizeInBytes;
                 changeState(percentage, onChange);
             }
         }

@@ -90,7 +90,7 @@ public class Downloader {
                 totalDataRead += i;
                 bufferedOutputStream.write(data, 0, i);
 
-                percentage = totalDataRead * 100 / fileSize;
+                percentage = ((float) totalDataRead * 100) / ((float) fileSize);
 
                 changeState(
                         ProgressState.PROGRESSING, percentage,

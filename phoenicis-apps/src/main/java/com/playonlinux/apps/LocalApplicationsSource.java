@@ -33,14 +33,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
-public class LocalApplicationsSource implements ApplicationsSource {
+class LocalApplicationsSource implements ApplicationsSource {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalApplicationsSource.class);
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
     private final String repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    public LocalApplicationsSource(String repositoryDirectory, ObjectMapper objectMapper) {
+    private LocalApplicationsSource(String repositoryDirectory, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
     }
