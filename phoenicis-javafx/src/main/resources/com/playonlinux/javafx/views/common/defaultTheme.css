@@ -91,10 +91,10 @@
 }
 
 #menuPane {
-    -fx-tab-min-width: 90px;
+    -fx-tab-min-width: 7em;
     -fx-padding: -10 0 0 0;
     -fx-spacing: 0;
-
+    -fx-pref-height: 43.3em;
 }
 
 #menuPane > .tab-header-area .tab {
