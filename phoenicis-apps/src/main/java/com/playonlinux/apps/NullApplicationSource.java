@@ -5,7 +5,7 @@ import com.playonlinux.apps.dto.CategoryDTO;
 import java.util.Collections;
 import java.util.List;
 
-public class NullApplicationSource implements ApplicationsSource {
+class NullApplicationSource implements ApplicationsSource {
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         return Collections.emptyList();

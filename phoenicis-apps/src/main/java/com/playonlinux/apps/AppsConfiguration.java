@@ -9,22 +9,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppsConfiguration {
-    @Value("${scripts.git.url}")
-    private String gitRepositoryDirectory;
-
-    @Value("${application.user.repository}")
-    private String localRepositoryDirectory;
+    @Value("${application.repository.configuration}")
+    private String repositoryConfiguration;
 
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Bean
     public ApplicationsSource appsSource() {
-        GitApplicationsSource gitAppsSource = new GitApplicationsSource(gitRepositoryDirectory,
-                new LocalApplicationsSource.Factory(new ObjectMapper()));
-        LocalApplicationsSource localAppsSource = (new LocalApplicationsSource.Factory(new ObjectMapper())).
-                createInstance(localRepositoryDirectory);
-        return new TeeApplicationsSource(gitAppsSource, localAppsSource);
+        return new ConfigurableApplicationSource(repositoryConfiguration, new LocalApplicationsSource.Factory(new ObjectMapper()));
     }
 
     @Bean
