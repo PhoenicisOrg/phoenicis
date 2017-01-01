@@ -27,12 +27,12 @@ import java.util.function.Consumer;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-public abstract class DirectoryWatcher<T> implements AutoCloseable {
+abstract class DirectoryWatcher<T> implements AutoCloseable {
     protected final Path observedDirectory;
     private final WatchService watcher;
     private Consumer<T> changeConsumer;
 
-    public DirectoryWatcher(ExecutorService executorService, Path observedDirectory) {
+    DirectoryWatcher(ExecutorService executorService, Path observedDirectory) {
         try {
             validate(observedDirectory);
             this.observedDirectory = observedDirectory;

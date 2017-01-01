@@ -2,6 +2,7 @@ package com.playonlinux.apps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playonlinux.multithreading.MultithreadingConfiguration;
+import com.playonlinux.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,9 +16,17 @@ public class AppsConfiguration {
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
+    @Autowired
+    private ToolsConfiguration toolsConfiguration;
+
     @Bean
     public ApplicationsSource appsSource() {
-        return new ConfigurableApplicationSource(repositoryConfiguration, new LocalApplicationsSource.Factory(new ObjectMapper()));
+        return new FilterApplicationSource(
+                new ConfigurableApplicationSource(
+                    repositoryConfiguration,
+                    new LocalApplicationsSource.Factory(new ObjectMapper())
+                ), toolsConfiguration.operatingSystemFetcher()
+        );
     }
 
     @Bean
