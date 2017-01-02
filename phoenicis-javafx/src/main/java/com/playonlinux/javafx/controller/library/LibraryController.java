@@ -47,7 +47,8 @@ public class LibraryController {
             this.updateLibrary();
         });
 
-        this.viewLibrary.setOnShortcutRun(shortcutDTO -> shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage("Error", e)));
+        this.viewLibrary.setOnShortcutRun(this::runShortcut);
+        this.viewLibrary.setOnShortcutDoubleClicked(this::runShortcut);
         this.viewLibrary.setOnShortcutStop(shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage("Error", e)));
 
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
@@ -62,6 +63,10 @@ public class LibraryController {
         this.viewLibrary.setOnScriptRun(file -> {
             scriptInterpreter.runScript(file, e -> new ErrorMessage("Error while running script", e));
         });
+    }
+
+    private void runShortcut(ShortcutDTO shortcutDTO) {
+        shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage("Error", e));
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
