@@ -25,7 +25,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -37,22 +37,34 @@ public class ConsoleTab extends Tab {
     private final CommandHistory commandHistory = new CommandHistory();
     private final TextField command = new TextField();
     private final TextFlow console = new TextFlow();
+    private final ScrollPane consolePane;
+    private boolean forceScroll = false;
     private Consumer<String> onSendCommand = text -> {};
 
     public ConsoleTab() {
-        final VBox content = new VBox();
+        final BorderPane content = new BorderPane();
 
         this.setText(translate("Console"));
         this.setContent(content);
 
         command.getStyleClass().add("consoleCommandType");
-        final ScrollPane consolePane = new ScrollPane(console);
+        consolePane = new ScrollPane(console);
+
+        content.widthProperty().addListener((observable, oldValue, newValue)
+                -> console.setPrefWidth(content.getWidth() * 0.94));
+
         content.getStyleClass().add("rightPane");
 
         consolePane.getStyleClass().add("console");
-        consolePane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        content.getChildren().addAll(consolePane, command);
+        consolePane.vvalueProperty().addListener((ov, oldValue, newValue) -> {
+            if(forceScroll && (double) newValue != 1.0) {
+                consolePane.vvalueProperty().setValue(1.0);
+            }
+        });
 
+
+        content.setCenter(consolePane);
+        content.setBottom(command);
         command.requestFocus();
 
         command.setOnKeyPressed(event -> {
@@ -62,6 +74,8 @@ public class ConsoleTab extends Tab {
                 clearCommand();
             }
         });
+
+        consolePane.setOnMouseMoved(event -> forceScroll = false);
 
         command.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.UP) {
@@ -104,10 +118,16 @@ public class ConsoleTab extends Tab {
     }
 
     public void appendTextToConsole(String text, String color) {
-        Text commandText = new Text(text);
+        final Text commandText = new Text(text);
+        commandText.setWrappingWidth(console.getWidth());
+        commandText.getStyleClass().add("consoleText");
         commandText.setStyle("-fx-fill: " + color);
+
         Platform.runLater(() -> {
+            forceScroll = true;
             console.getChildren().add(commandText);
+            console.layout();
+            consolePane.vvalueProperty().setValue(1.0);
         });
     }
 
