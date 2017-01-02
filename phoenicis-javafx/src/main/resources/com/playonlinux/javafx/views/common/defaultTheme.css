@@ -303,3 +303,19 @@
     -fx-font-size: 0.85em;
     -fx-pref-width: 96px;
 }
+
+.dragAndDropBox {
+    -fx-background-color: #F6F6F6;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-style: dashed;
+    -fx-border-color: #CCC;
+    -fx-border-width: 0.5em;
+}
+
+.boldLabel {
+    -fx-font-family: "Roboto Bold";
+}
+.normalLabel {
+    -fx-font-family: "Roboto Light";
+}
