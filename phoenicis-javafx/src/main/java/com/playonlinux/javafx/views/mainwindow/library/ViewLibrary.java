@@ -55,6 +55,7 @@ public class ViewLibrary extends MainWindowView {
     private Consumer<ShortcutDTO> onShortcutUninstall = shortcutDTO -> {};
 
     private Consumer<ShortcutDTO> onShortcutStop = shortcutDTO -> {};
+    private Consumer<File> onScriptRun = script -> {};
 
     private String lastSearch = "";
 
@@ -189,12 +190,12 @@ public class ViewLibrary extends MainWindowView {
 
     public void setUpEvents() {
         runScript.setOnMouseClicked(event -> {
-            FileChooser fileChooser = new FileChooser();
+            final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open a script");
-            File scriptToRun = fileChooser.showOpenDialog(null);
+            final File scriptToRun = fileChooser.showOpenDialog(null);
 
             if (scriptToRun != null) {
-
+                onScriptRun.accept(scriptToRun);
             }
         });
 
@@ -220,5 +221,9 @@ public class ViewLibrary extends MainWindowView {
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
         this.onShortcutUninstall = onShortcutUninstall;
+    }
+
+    public void setOnScriptRun(Consumer<File> onScriptRun) {
+        this.onScriptRun = onScriptRun;
     }
 }

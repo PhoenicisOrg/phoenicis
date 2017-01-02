@@ -77,7 +77,8 @@ public class ControllerConfiguration {
                 consoleController(),
                 libraryConfiguration.libraryManager(),
                 libraryConfiguration.shortcutRunner(),
-                libraryConfiguration.shortcutManager()
+                libraryConfiguration.shortcutManager(),
+                scriptsConfiguration.scriptInterpreter()
         );
     }
 

@@ -10,6 +10,7 @@ import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,6 +35,17 @@ public class CLIController implements AutoCloseable {
 
         final ShortcutRunner shortcutRunner = applicationContext.getBean(ShortcutRunner.class);
         shortcutRunner.run(shortcutName, arguments, e -> { throw new IllegalStateException(e); });
+    }
+
+    @Option
+    @LongSwitch("script")
+    @ShortSwitch("s")
+    @AllAvailableArguments
+    public void runScript(List<String> arguments) {
+        final String scriptPath = arguments.get(0);
+        final File scriptFile = new File(scriptPath);
+        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("scriptInterpreter", ScriptInterpreter.class);
+        scriptInterpreter.runScript(scriptFile, e -> { throw new IllegalStateException(e); });
     }
 
     @Option
