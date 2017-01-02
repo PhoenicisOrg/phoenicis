@@ -65,7 +65,6 @@ public class ConsoleTab extends Tab {
 
         content.setCenter(consolePane);
         content.setBottom(command);
-        command.requestFocus();
 
         command.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -88,6 +87,9 @@ public class ConsoleTab extends Tab {
                 command.positionCaret(historyItem.getCursorPosition());
             }
         });
+
+        Platform.runLater(command::requestFocus);
+        command.setPromptText("> ");
     }
 
     public void setOnSendCommand(Consumer<String> onSendCommand) {

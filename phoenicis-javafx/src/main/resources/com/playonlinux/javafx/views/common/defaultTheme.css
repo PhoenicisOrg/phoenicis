@@ -243,11 +243,6 @@
 }
 
 
-.consoleCommandType {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-}
-
 /*
  * Setup Window stuffs
  */
@@ -319,4 +314,12 @@
 .consoleText {
     -fx-wrap-text: true;
     -fx-font-size: 0.85em;
+}
+
+.consoleCommandType {
+    -fx-border-radius: 0;
+    -fx-background-color: #FFF;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }
