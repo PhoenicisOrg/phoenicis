@@ -29,7 +29,7 @@ public class ShortcutRunner {
                     "new ShortcutReader()",
                     output -> {
                         final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                        shortcutReader.callMember("of", shortcutDTO.getScript());
+                        shortcutReader.callMember("of", shortcutDTO);
                         shortcutReader.callMember("run", arguments);
                     },
                     errorCallback),
@@ -45,7 +45,7 @@ public class ShortcutRunner {
                         "new ShortcutReader()",
                         output -> {
                             final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                            shortcutReader.callMember("of", shortcutDTO.getScript());
+                            shortcutReader.callMember("of", shortcutDTO);
                             shortcutReader.callMember("stop");
                         },
                         errorCallback),
