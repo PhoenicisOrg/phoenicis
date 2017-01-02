@@ -233,22 +233,11 @@
     -fx-fill: #000000;
 }
 
-.consolePane {
-    -fx-background-color: #FFFFFF;
-    -fx-pref-width: 60em;
-    -fx-pref-height: 20em;
-}
 
 .console, .console .viewport {
     -fx-background-color: #FFFFFF;
 }
 
-.console {
-    -fx-pref-width: 60em;
-    -fx-pref-height: 40em;
-    -fx-padding: 1em;
-    -fx-font-family: "Lucida Console";
-}
 
 .consoleCommandType {
     -fx-border-radius: 0;
@@ -299,4 +288,31 @@
 .wineToolCaption {
     -fx-font-size: 0.85em;
     -fx-pref-width: 96px;
+}
+
+.dragAndDropBox {
+    -fx-background-color: #F6F6F6;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-style: dashed;
+    -fx-border-color: #CCC;
+    -fx-border-width: 0.5em;
+}
+
+.boldLabel {
+    -fx-font-family: "Roboto Bold";
+}
+.normalLabel {
+    -fx-font-family: "Roboto Light";
+}
+
+.console {
+    -fx-pref-width: 60em;
+    -fx-padding: 0.5em;
+    -fx-font-family: "Lucida Console";
+}
+
+.consoleText {
+    -fx-wrap-text: true;
+    -fx-font-size: 0.85em;
 }
