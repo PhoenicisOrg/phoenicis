@@ -1,23 +1,29 @@
 package com.phoenicis.library;
 
 import com.phoenicis.library.dto.ShortcutDTO;
+import com.playonlinux.scripts.interpreter.InteractiveScriptSession;
+import com.playonlinux.scripts.interpreter.ScriptInterpreter;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class ShortcutManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutManager.class);
     private static final String ENCODING = "UTF-8";
     private final String shortcutDirectory;
     private final LibraryManager libraryManager;
+    private final ScriptInterpreter scriptInterpreter;
 
     ShortcutManager(String shortcutDirectory,
-                    LibraryManager libraryManager) {
+                    LibraryManager libraryManager, ScriptInterpreter scriptInterpreter) {
         this.shortcutDirectory = shortcutDirectory;
         this.libraryManager = libraryManager;
+        this.scriptInterpreter = scriptInterpreter;
     }
 
     public void createShortcut(ShortcutDTO shortcutDTO) {
@@ -50,6 +56,22 @@ public class ShortcutManager {
         } finally {
             libraryManager.refresh();
         }
+    }
+
+    public void uninstallFromShortcut(ShortcutDTO shortcutDTO, Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
+                ignored -> interactiveScriptSession.eval(
+                        "new ShortcutReader()",
+                        output -> {
+                            final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                            shortcutReader.callMember("of", shortcutDTO);
+                            shortcutReader.callMember("uninstall");
+                        },
+                        errorCallback),
+                errorCallback
+        );
     }
 
     public void deleteShortcut(ShortcutDTO shortcutDTO) {

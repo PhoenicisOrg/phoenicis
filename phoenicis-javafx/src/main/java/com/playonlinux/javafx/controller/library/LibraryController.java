@@ -47,7 +47,7 @@ public class LibraryController {
 
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
             new ConfirmMessage("Uninstall " + shortcutDTO.getName(), "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
-                    .ask(() -> shortcutManager.deleteShortcut(shortcutDTO));
+                    .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO, e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e)));
         });
 
         this.viewLibrary.setOnOpenConsole(() -> {

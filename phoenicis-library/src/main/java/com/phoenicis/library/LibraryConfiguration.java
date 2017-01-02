@@ -21,7 +21,7 @@ public class LibraryConfiguration {
 
     @Bean
     public ShortcutManager shortcutManager() {
-        return new ShortcutManager(shortcutDirectory, libraryManager());
+        return new ShortcutManager(shortcutDirectory, libraryManager(), scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean

@@ -10,4 +10,7 @@ public interface SetupWindowUIConfiguration {
 
     @Bean
     UIMessageSender uiMessageSender();
+
+    @Bean
+    UIQuestionFactory uiQuestionFactory();
 }
