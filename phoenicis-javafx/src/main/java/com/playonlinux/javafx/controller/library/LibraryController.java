@@ -8,6 +8,7 @@ import com.playonlinux.javafx.controller.library.console.ConsoleController;
 import com.playonlinux.javafx.views.common.ConfirmMessage;
 import com.playonlinux.javafx.views.common.ErrorMessage;
 import com.playonlinux.javafx.views.mainwindow.library.ViewLibrary;
+import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import javafx.application.Platform;
 
 import java.util.Collections;
@@ -20,19 +21,23 @@ public class LibraryController {
     private final LibraryManager libraryManager;
     private final ShortcutRunner shortcutRunner;
     private final ShortcutManager shortcutManager;
+    private final ScriptInterpreter scriptInterpreter;
+
     private String keywords = "";
 
     public LibraryController(ViewLibrary viewLibrary,
                              ConsoleController consoleController,
                              LibraryManager libraryManager,
                              ShortcutRunner shortcutRunner,
-                             ShortcutManager shortcutManager) {
+                             ShortcutManager shortcutManager,
+                             ScriptInterpreter scriptInterpreter) {
         this.consoleController = consoleController;
 
         this.viewLibrary = viewLibrary;
         this.libraryManager = libraryManager;
         this.shortcutRunner = shortcutRunner;
         this.shortcutManager = shortcutManager;
+        this.scriptInterpreter = scriptInterpreter;
         this.viewLibrary.populate(libraryManager.fetchShortcuts());
 
         libraryManager.setOnUpdate(this::updateLibrary);
@@ -53,6 +58,10 @@ public class LibraryController {
         this.viewLibrary.setOnOpenConsole(() -> {
             viewLibrary.createNewTab(consoleController.createConsole());
         });
+
+        this.viewLibrary.setOnScriptRun(file -> {
+            scriptInterpreter.runScript(file, e -> new ErrorMessage("Error while running script", e));
+        });
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
@@ -71,9 +80,7 @@ public class LibraryController {
                         ).collect(Collectors.toList());
 
 
-        Platform.runLater(() -> {
-            this.viewLibrary.populate(shortcutsCorrespondingToKeywords);
-        });
+        Platform.runLater(() -> this.viewLibrary.populate(shortcutsCorrespondingToKeywords));
     }
 
     public ViewLibrary getView() {
