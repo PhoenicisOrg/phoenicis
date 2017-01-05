@@ -163,7 +163,7 @@ public class ViewLibrary extends MainWindowView {
         final LeftButton uninstallButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/remove.png", translate("Uninstall"));
 
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
-        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcut));
+        uninstallButton.setOnMouseClicked(event -> {onShortcutUninstall.accept(shortcut); drawSideBarWithoutShortcut();});
         stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcut));
 
         shortcutGroup.setButtons(Arrays.asList(
@@ -175,6 +175,8 @@ public class ViewLibrary extends MainWindowView {
     }
 
     private void drawSideBarWithoutShortcut() {
+        clearSideBar();
+
         searchBar = new TextField();
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
