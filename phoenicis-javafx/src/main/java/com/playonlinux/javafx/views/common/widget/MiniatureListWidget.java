@@ -23,6 +23,7 @@ import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -130,6 +131,9 @@ public final class MiniatureListWidget extends ScrollPane {
 
             this.getChildren().add(miniature);
             this.getChildren().add(label);
+
+            final Tooltip tooltip = new Tooltip(appsItem);
+            Tooltip.install(miniature, tooltip);
 
         }
 
