@@ -22,6 +22,7 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -125,8 +126,7 @@ public final class MiniatureListWidget extends ScrollPane {
             });
 
 
-            final Text label = new Text(appsItem);
-            label.setWrappingWidth(150);
+            final Label label = new Label(appsItem);
             label.getStyleClass().add("miniatureText");
 
             this.getChildren().add(miniature);
