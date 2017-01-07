@@ -55,6 +55,7 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setStyle("-fx-background: #ffffff; -fx-border-color: #ffffff;");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(flow);
