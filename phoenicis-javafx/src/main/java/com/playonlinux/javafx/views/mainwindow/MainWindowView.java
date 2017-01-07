@@ -21,6 +21,7 @@ package com.playonlinux.javafx.views.mainwindow;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSideBar;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class MainWindowView extends HBox {
     private final LeftSideBar leftContent;
@@ -50,5 +51,6 @@ public class MainWindowView extends HBox {
         }
         this.visiblePane = nodeToShow;
         this.getChildren().add(visiblePane);
+        HBox.setHgrow(this.visiblePane, Priority.ALWAYS);
     }
 }
