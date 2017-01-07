@@ -51,6 +51,8 @@ public final class MiniatureListWidget extends ScrollPane {
         this.setCache(true);
         this.setCacheHint(CacheHint.QUALITY);
 
+        this.content.prefWidthProperty().bind(this.widthProperty());
+
     }
 
     public static MiniatureListWidget create() {
