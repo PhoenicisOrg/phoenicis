@@ -80,7 +80,7 @@ abstract class AbstractStepRepresentation {
 
         Text text = new Text(this.parent.getLeftImageText());
         text.setFill(Color.WHITE);
-        text.setFont(Font.font("Roboto Light", 50));
+        text.setFont(Font.font("Maven Pro", 50));
         text.setRotate(-90);
         pane.setPadding(new Insets(-50));
         pane.getChildren().add(text);
