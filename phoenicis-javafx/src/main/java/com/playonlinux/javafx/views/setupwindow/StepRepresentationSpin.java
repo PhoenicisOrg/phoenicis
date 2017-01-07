@@ -20,6 +20,9 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
     public StepRepresentationSpin(SetupWindowJavaFXImplementation parent, Message<?> messageWaitingForResponse,
@@ -32,11 +35,16 @@ public class StepRepresentationSpin extends StepRepresentationMessage {
     protected void drawStepContent() {
         super.drawStepContent();
 
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setLayoutX(330);
-        progressIndicator.setLayoutY(100);
+        Region spacerAbove = new Region();
+        VBox.setVgrow(spacerAbove, Priority.ALWAYS);
+        this.addToContentPane(spacerAbove);
 
-        this.addToContentPanel(progressIndicator);
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        this.addToContentPane(progressIndicator);
+
+        Region spacerBelow = new Region();
+        VBox.setVgrow(spacerBelow, Priority.ALWAYS);
+        this.addToContentPane(spacerBelow);
     }
 
     @Override

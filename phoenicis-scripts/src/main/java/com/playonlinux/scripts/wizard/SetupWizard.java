@@ -71,13 +71,13 @@ public class SetupWizard implements CompleteWizard {
     }
 
     /**
-     * Set the left image
+     * Set the left image text
      *
-     * @param leftImage URL of the left image
+     * @param leftImageText text for the left image
      */
     @Override
-    public void setLeftImage(String leftImage) throws IOException {
-        setupWindow.setLeftImage(new File(leftImage));
+    public void setLeftImageText(String leftImageText) {
+        setupWindow.setLeftImageText(leftImageText);
     }
 
     /**

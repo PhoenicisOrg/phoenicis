@@ -23,26 +23,31 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
-    private Pane contentPanel;
+    private Pane contentPane;
 
     AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent,
                                          Message<?> messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
+
+        this.contentPane = new VBox();
+        this.contentPane.setId("panelForTopheader");
+        this.contentPane.setPrefSize(722, 382);
+        this.contentPane.setLayoutX(-1);
+        this.contentPane.setLayoutY(63);
+        getParent().getRoot().setCenter(this.contentPane);
     }
 
-    public Pane getContentPanel() {
-        return contentPanel;
+    public Pane getContentPane() {
+        return contentPane;
     }
 
-    public void addToContentPanel(Node contentToAdd) {
-        this.contentPanel.getChildren().add(contentToAdd);
+    public void addToContentPane(Node contentToAdd) {
+        this.contentPane.getChildren().add(contentToAdd);
+        getParent().getRoot().setCenter(this.contentPane);
     }
     /**
      * Draw the header at the top of the window
@@ -60,17 +65,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         topImage.setLayoutX(626);
 
         header.getChildren().add(topImage);
-        this.addToStep(header);
-    }
-
-    private void drawPanelForTopHeader() {
-        Pane panel = new Pane();
-        panel.setId("panelForTopheader");
-        panel.setPrefSize(722, 382);
-        panel.setLayoutX(-1);
-        panel.setLayoutY(63);
-        this.addToStep(panel);
-        this.contentPanel = panel;
+        getParent().getRoot().setTop(header);
     }
 
     private Image createTopImage() {
@@ -80,7 +75,6 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
     public void installStep() {
         this.clearAllOnParent();
         this.drawHeader();
-        this.drawPanelForTopHeader();
         this.drawFooter();
 
         this.setStepEvents();

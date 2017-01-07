@@ -20,16 +20,13 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     private final String textToShow;
@@ -39,40 +36,33 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         this.textToShow = textToShow;
     }
 
-    private Image createLeftImage() {
-        return new Image(this.getParentLeftImage().toExternalForm());
-    }
-
     @Override
     protected void drawStepContent() {
         final String title = this.getParentWizardTitle();
 
-        final ImageView leftImage = new ImageView(this.createLeftImage());
-        leftImage.setLayoutX(0);
-        leftImage.setLayoutY(0);
-        leftImage.setFitHeight(444);
-        leftImage.setFitWidth(187);
-
-        Pane contentPane = new Pane();
-        contentPane.setPrefSize(533, 444);
-        contentPane.setLayoutX(188);
-        contentPane.setLayoutY(0);
+        VBox contentPane = new VBox();
+        contentPane.setPadding(new Insets(10));
         contentPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Text titleWidget = new Text(title);
-        titleWidget.setLayoutX(10);
-        titleWidget.setLayoutY(30);
+        TextFlow flow = new TextFlow();
+
+        Text titleWidget = new Text(title + "\n\n");
         titleWidget.setFont(Font.font(null, FontWeight.BOLD, 16));
 
         Text textWidget = new Text(textToShow);
-        textWidget.setLayoutX(10);
-        textWidget.setLayoutY(80);
-        textWidget.setWrappingWidth(350);
-        textWidget.prefWidth(350);
 
-        contentPane.getChildren().addAll(titleWidget, textWidget);
-        this.addToStep(leftImage);
-        this.addToStep(contentPane);
+        flow.getChildren().addAll(titleWidget, textWidget);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setStyle("-fx-background: #ffffff; -fx-border-color: #ffffff;");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setContent(flow);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        contentPane.getChildren().addAll(scrollPane);
+        getParent().getRoot().setCenter(contentPane);
     }
 
     @Override

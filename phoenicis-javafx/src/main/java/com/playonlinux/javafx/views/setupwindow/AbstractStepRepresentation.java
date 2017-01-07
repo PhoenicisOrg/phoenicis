@@ -20,10 +20,17 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 
@@ -50,14 +57,6 @@ abstract class AbstractStepRepresentation {
         return this.parent.getTopImage();
     }
 
-    protected URL getParentLeftImage() {
-        return this.parent.getLeftImage();
-    }
-
-    protected void addToStep(Node widgetToAdd) {
-        this.parent.addNode(widgetToAdd);
-    }
-
     public String getParentWizardTitle() {
         return this.parent.getWizardTitle();
     }
@@ -70,25 +69,43 @@ abstract class AbstractStepRepresentation {
         return messageWaitingForResponse;
     }
 
-    protected void drawFooter() {
-        Pane footer = new Pane();
-        footer.setPrefSize(722, 45);
-        footer.setLayoutX(-1);
-        footer.setLayoutY(444);
-        footer.setId("footer");
-        this.addToStep(footer);
+    protected void drawLeftImage() {
+        AnchorPane pane = new AnchorPane();
+        pane.setPrefWidth(187);
+        Stop[] stops = new Stop[] { new Stop(0, Color.web("#3c79b2")), new Stop(1, Color.web("#2d5d8b"))};
+        RadialGradient gradient = new RadialGradient(0,0,0.5,0.5,1,true, CycleMethod.NO_CYCLE, stops);
 
-        nextButton = new Button("Next");
-        nextButton.setLayoutY(9);
-        nextButton.setLayoutX(635);
-        nextButton.setPrefSize(70, 28);
+        Background background = new Background(new BackgroundFill(gradient,null,null));
+        pane.setBackground(background);
+
+        Text text = new Text(this.parent.getLeftImageText());
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font("Maven Pro", 50));
+        text.setRotate(-90);
+        pane.setPadding(new Insets(-50));
+        pane.getChildren().add(text);
+        AnchorPane.setBottomAnchor(text, 160.0);
+        AnchorPane.setRightAnchor(text, -40.0);
+
+        getParent().getRoot().setLeft(pane);
+    }
+
+    protected void drawFooter() {
+        HBox footer = new HBox();
+        footer.setAlignment(Pos.CENTER_RIGHT);
+        footer.setPadding(new Insets(8));
+        footer.setSpacing(10);
+        footer.setPrefHeight(45);
+        footer.setId("footer");
+        getParent().getRoot().setBottom(footer);
 
         Button cancelButton = new Button("Cancel");
-        cancelButton.setLayoutY(9);
-        cancelButton.setLayoutX(555);
         cancelButton.setPrefSize(70, 28);
 
-        footer.getChildren().addAll(nextButton, cancelButton);
+        nextButton = new Button("Next");
+        nextButton.setPrefSize(70, 28);
+
+        footer.getChildren().addAll(cancelButton, nextButton);
 
         cancelButton.setOnMouseClicked(event -> {
             cancelButton.setDisable(true);
@@ -120,10 +137,10 @@ abstract class AbstractStepRepresentation {
 
     public void installStep() {
         this.parent.clearAll();
+        this.drawLeftImage();
         this.drawFooter();
         this.setStepEvents();
         this.drawStepContent();
-
     }
 
 
