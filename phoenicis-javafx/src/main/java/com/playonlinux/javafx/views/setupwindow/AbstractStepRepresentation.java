@@ -99,13 +99,13 @@ abstract class AbstractStepRepresentation {
         footer.setId("footer");
         getParent().getRoot().setBottom(footer);
 
-        nextButton = new Button("Next");
-        nextButton.setPrefSize(70, 28);
-
         Button cancelButton = new Button("Cancel");
         cancelButton.setPrefSize(70, 28);
 
-        footer.getChildren().addAll(nextButton, cancelButton);
+        nextButton = new Button("Next");
+        nextButton.setPrefSize(70, 28);
+
+        footer.getChildren().addAll(cancelButton, nextButton);
 
         cancelButton.setOnMouseClicked(event -> {
             cancelButton.setDisable(true);
