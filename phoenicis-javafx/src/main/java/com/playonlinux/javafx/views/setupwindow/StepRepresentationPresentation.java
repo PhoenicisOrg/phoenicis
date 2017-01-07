@@ -20,8 +20,6 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -50,14 +48,15 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         contentPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Text titleWidget = new Text(title);
+        titleWidget.wrappingWidthProperty().bind(contentPane.widthProperty());
         titleWidget.setLayoutX(10);
         titleWidget.setLayoutY(30);
         titleWidget.setFont(Font.font(null, FontWeight.BOLD, 16));
 
         Text textWidget = new Text(textToShow);
+        textWidget.wrappingWidthProperty().bind(contentPane.widthProperty());
         textWidget.setLayoutX(10);
         textWidget.setLayoutY(80);
-        textWidget.setWrappingWidth(350);
         textWidget.prefWidth(350);
 
         contentPane.getChildren().addAll(titleWidget, textWidget);
