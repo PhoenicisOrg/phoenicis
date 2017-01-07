@@ -81,8 +81,6 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
             event.consume();
         });
 
-        dragTarget.setLayoutX(30);
-        dragTarget.setLayoutY(20);
         dragTarget.setPrefSize(660, 308);
         dragTarget.getStyleClass().addAll("dragAndDropBox");
 
@@ -99,6 +97,8 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
             }
         });
 
+        dragTarget.prefHeightProperty().bind(getContentPane().heightProperty());
+        dragTarget.prefWidthProperty().bind(getContentPane().widthProperty());
 
         return dragTarget;
     }

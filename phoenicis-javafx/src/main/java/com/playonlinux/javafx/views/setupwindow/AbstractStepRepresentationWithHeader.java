@@ -44,6 +44,10 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         getParent().getRoot().setCenter(this.contentPane);
     }
 
+    public Pane getContentPane() {
+        return contentPane;
+    }
+
     public void addToContentPane(Node contentToAdd) {
         this.contentPane.getChildren().add(contentToAdd);
         getParent().getRoot().setCenter(this.contentPane);
