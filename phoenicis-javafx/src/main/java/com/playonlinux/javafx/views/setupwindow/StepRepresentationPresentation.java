@@ -20,14 +20,12 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     private final String textToShow;
@@ -41,25 +39,19 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
     protected void drawStepContent() {
         final String title = this.getParentWizardTitle();
 
-        Pane contentPane = new Pane();
-        contentPane.setPrefSize(533, 444);
-        contentPane.setLayoutX(188);
-        contentPane.setLayoutY(0);
+        VBox contentPane = new VBox();
+        contentPane.setPadding(new Insets(10));
         contentPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Text titleWidget = new Text(title);
-        titleWidget.wrappingWidthProperty().bind(contentPane.widthProperty());
-        titleWidget.setLayoutX(10);
-        titleWidget.setLayoutY(30);
+        TextFlow flow = new TextFlow();
+
+        Text titleWidget = new Text(title + "\n\n");
         titleWidget.setFont(Font.font(null, FontWeight.BOLD, 16));
 
         Text textWidget = new Text(textToShow);
-        textWidget.wrappingWidthProperty().bind(contentPane.widthProperty());
-        textWidget.setLayoutX(10);
-        textWidget.setLayoutY(80);
-        textWidget.prefWidth(350);
 
-        contentPane.getChildren().addAll(titleWidget, textWidget);
+        flow.getChildren().addAll(titleWidget, textWidget);
+        contentPane.getChildren().addAll(flow);
         getParent().getRoot().setCenter(contentPane);
     }
 
