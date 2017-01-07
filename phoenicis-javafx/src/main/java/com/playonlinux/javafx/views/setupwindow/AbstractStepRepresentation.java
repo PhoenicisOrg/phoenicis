@@ -20,11 +20,14 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -88,21 +91,18 @@ abstract class AbstractStepRepresentation {
     }
 
     protected void drawFooter() {
-        Pane footer = new Pane();
-        footer.setPrefSize(722, 45);
-        footer.setLayoutX(-1);
-        footer.setLayoutY(444);
+        HBox footer = new HBox();
+        footer.setAlignment(Pos.CENTER_RIGHT);
+        footer.setPadding(new Insets(8));
+        footer.setSpacing(10);
+        footer.setPrefHeight(45);
         footer.setId("footer");
         getParent().getRoot().setBottom(footer);
 
         nextButton = new Button("Next");
-        nextButton.setLayoutY(9);
-        nextButton.setLayoutX(635);
         nextButton.setPrefSize(70, 28);
 
         Button cancelButton = new Button("Cancel");
-        cancelButton.setLayoutY(9);
-        cancelButton.setLayoutX(555);
         cancelButton.setPrefSize(70, 28);
 
         footer.getChildren().addAll(nextButton, cancelButton);
