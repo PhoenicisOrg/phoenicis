@@ -5,6 +5,9 @@ import com.playonlinux.scripts.ui.UIMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 
 public class SetupWizardFactory {
+    @Value("${user.home}")
+    private String userHome;
+
     @Value("${application.user.root}")
     private String applicationUserRoot;
 
@@ -21,7 +24,7 @@ public class SetupWizardFactory {
     }
 
     public SetupWizard create(String title) {
-        final SetupWizard setupWizard = new SetupWizard(title, uiMessageSender, setupWindowFactory, applicationUserRoot, applicationName);
+        final SetupWizard setupWizard = new SetupWizard(title, uiMessageSender, setupWindowFactory, userHome, applicationUserRoot, applicationName);
         setupWizard.init();
         return setupWizard;
     }
