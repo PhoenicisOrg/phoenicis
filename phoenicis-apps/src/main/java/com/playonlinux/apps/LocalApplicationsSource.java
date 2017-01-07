@@ -83,6 +83,7 @@ class LocalApplicationsSource implements ApplicationsSource {
             }
         }
 
+        Collections.sort(results, Comparator.comparing(CategoryDTO::getName));
         return results;
     }
 
@@ -121,6 +122,7 @@ class LocalApplicationsSource implements ApplicationsSource {
             }
         }
 
+        Collections.sort(results, Comparator.comparing(ApplicationDTO::getName));
         return results;
     }
 

@@ -18,17 +18,17 @@
 
 package com.playonlinux.javafx.views.common.widget;
 
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -51,6 +51,8 @@ public final class MiniatureListWidget extends ScrollPane {
         this.setCache(true);
         this.setCacheHint(CacheHint.QUALITY);
 
+        this.content.prefWidthProperty().bind(this.widthProperty());
+        this.setHbarPolicy(ScrollBarPolicy.NEVER);
     }
 
     public static MiniatureListWidget create() {
@@ -124,12 +126,14 @@ public final class MiniatureListWidget extends ScrollPane {
             });
 
 
-            final Text label = new Text(appsItem);
-            label.setWrappingWidth(150);
+            final Label label = new Label(appsItem);
             label.getStyleClass().add("miniatureText");
 
             this.getChildren().add(miniature);
             this.getChildren().add(label);
+
+            final Tooltip tooltip = new Tooltip(appsItem);
+            Tooltip.install(miniature, tooltip);
 
         }
 

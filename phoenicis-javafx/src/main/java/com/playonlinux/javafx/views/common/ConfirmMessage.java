@@ -20,6 +20,8 @@ package com.playonlinux.javafx.views.common;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ public class ConfirmMessage {
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.setContentText(message);
+        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
     }
 
     public void ask(Runnable yesCallback) {
