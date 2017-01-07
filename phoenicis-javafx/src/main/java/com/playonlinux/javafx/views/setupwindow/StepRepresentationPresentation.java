@@ -20,6 +20,7 @@ package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
 import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -51,7 +52,15 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         Text textWidget = new Text(textToShow);
 
         flow.getChildren().addAll(titleWidget, textWidget);
-        contentPane.getChildren().addAll(flow);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setContent(flow);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        contentPane.getChildren().addAll(scrollPane);
         getParent().getRoot().setCenter(contentPane);
     }
 
