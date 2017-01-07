@@ -41,6 +41,8 @@ public class SetupWizard implements CompleteWizard {
 
     private SetupWindow setupWindow;
 
+    private final String userHome;
+
     private final String applicationUserRoot;
 
     private final String applicationName;
@@ -49,15 +51,17 @@ public class SetupWizard implements CompleteWizard {
      * Create the setupWindow
      *
      * @param title title of the setupWindow
+     * @param userHome
      */
     public SetupWizard(String title,
                        UIMessageSender messageSender,
                        SetupWindowFactory setupWindowFactory,
-                       String applicationUserRoot,
+                       String userHome, String applicationUserRoot,
                        String applicationName) {
         this.title = title;
         this.messageSender = messageSender;
         this.setupWindowFactory = setupWindowFactory;
+        this.userHome = userHome;
         this.applicationUserRoot = applicationUserRoot;
         this.applicationName = applicationName;
     }
@@ -228,7 +232,7 @@ public class SetupWizard implements CompleteWizard {
      */
     @Override
     public String browse(String textToShow) {
-        return browse(textToShow, applicationUserRoot, null);
+        return browse(textToShow, this.userHome, null);
     }
 
     /**
