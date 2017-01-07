@@ -97,9 +97,6 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
             }
         });
 
-        dragTarget.prefHeightProperty().bind(getContentPane().heightProperty());
-        dragTarget.prefWidthProperty().bind(getContentPane().widthProperty());
-
         return dragTarget;
     }
 

@@ -32,11 +32,6 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
     @Override
     protected void drawStepContent() {
         Text textWidget = new Text(textToShow);
-        textWidget.setLayoutX(10);
-        textWidget.setLayoutY(20);
-        textWidget.setWrappingWidth(700);
-        textWidget.prefWidth(700);
-
         this.addToContentPane(textWidget);
     }
 

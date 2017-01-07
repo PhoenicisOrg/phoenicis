@@ -23,10 +23,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
@@ -36,7 +33,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
                                          Message<?> messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
 
-        this.contentPane = new Pane();
+        this.contentPane = new VBox();
         this.contentPane.setId("panelForTopheader");
         this.contentPane.setPrefSize(722, 382);
         this.contentPane.setLayoutX(-1);

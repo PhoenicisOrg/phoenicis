@@ -297,7 +297,6 @@
     -fx-border-style: dashed;
     -fx-border-color: #CCC;
     -fx-border-width: 0.5em;
-    -fx-border-insets: 20px;
 }
 
 .boldLabel {
