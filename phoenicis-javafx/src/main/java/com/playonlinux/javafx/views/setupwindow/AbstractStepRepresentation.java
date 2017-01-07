@@ -22,13 +22,15 @@ import com.playonlinux.scripts.ui.Message;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 
@@ -55,14 +57,6 @@ abstract class AbstractStepRepresentation {
         return this.parent.getTopImage();
     }
 
-    protected URL getParentLeftImage() {
-        return this.parent.getLeftImage();
-    }
-
-    protected void addToStep(Node widgetToAdd) {
-        this.parent.addNode(widgetToAdd);
-    }
-
     public String getParentWizardTitle() {
         return this.parent.getWizardTitle();
     }
@@ -75,19 +69,25 @@ abstract class AbstractStepRepresentation {
         return messageWaitingForResponse;
     }
 
-
-    private Image createLeftImage() {
-        return new Image(this.getParentLeftImage().toExternalForm());
-    }
-
     protected void drawLeftImage() {
-        final ImageView leftImage = new ImageView(this.createLeftImage());
-        leftImage.setLayoutX(0);
-        leftImage.setLayoutY(0);
-        leftImage.setFitHeight(444);
-        leftImage.setFitWidth(187);
+        AnchorPane pane = new AnchorPane();
+        pane.setPrefWidth(187);
+        Stop[] stops = new Stop[] { new Stop(0, Color.web("#3c79b2")), new Stop(1, Color.web("#2d5d8b"))};
+        RadialGradient gradient = new RadialGradient(0,0,0.5,0.5,1,true, CycleMethod.NO_CYCLE, stops);
 
-        getParent().getRoot().setLeft(leftImage);
+        Background background = new Background(new BackgroundFill(gradient,null,null));
+        pane.setBackground(background);
+
+        Text text = new Text(this.parent.getLeftImageText());
+        text.setFill(Color.WHITE);
+        text.setFont(Font.font("Roboto Light", 50));
+        text.setRotate(-90);
+        pane.setPadding(new Insets(-50));
+        pane.getChildren().add(text);
+        AnchorPane.setBottomAnchor(text, 160.0);
+        AnchorPane.setRightAnchor(text, -40.0);
+
+        getParent().getRoot().setLeft(pane);
     }
 
     protected void drawFooter() {

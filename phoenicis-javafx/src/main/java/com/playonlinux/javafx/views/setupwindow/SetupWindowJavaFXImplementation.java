@@ -25,7 +25,6 @@ import com.playonlinux.tools.system.OperatingSystemFetcher;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     private final String wizardTitle;
 
     private URL topImage;
-    private URL leftImage;
+    private String leftImageText;
     private Runnable onShouldClose = () -> {};
     private final OperatingSystemFetcher operatingSystemFetcher;
 
@@ -73,11 +72,11 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
         this.topImage = this.getClass().getResource("defaultTopImage.png");
         switch ( operatingSystemFetcher.fetchCurrentOperationSystem() ) {
             case MACOSX:
-                this.leftImage = this.getClass().getResource("defaultLeftPlayOnMac.jpg");
+                this.leftImageText = "playonmac";
                 break;
             case LINUX:
             default:
-                this.leftImage = this.getClass().getResource("defaultLeftPlayOnLinux.jpg");
+                this.leftImageText = "playonlinux";
                 break;
         }
     }
@@ -156,22 +155,17 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     }
 
     @Override
-    public void setLeftImage(File leftImage) throws MalformedURLException {
-        this.leftImage = new URL(leftImage.getAbsolutePath());
-    }
-
-    @Override
     public void setTopImage(URL topImage) throws IOException {
         this.topImage = topImage;
     }
 
     @Override
-    public void setLeftImage(URL leftImage) throws IOException {
-        this.leftImage = leftImage;
+    public void setLeftImageText(String leftImageText) {
+        this.leftImageText = leftImageText;
     }
 
-    public URL getLeftImage() {
-        return leftImage;
+    public String getLeftImageText() {
+        return leftImageText;
     }
 
     public URL getTopImage() {

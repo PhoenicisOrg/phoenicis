@@ -32,17 +32,12 @@ class SetupWindowCLIImplementation implements SetupWindow {
     }
 
     @Override
-    public void setLeftImage(File leftImage) throws IOException {
+    public void setLeftImageText(String leftImageText) {
         // Do nothing
     }
 
     @Override
     public void setTopImage(URL topImage) throws IOException {
-        // Do nothing
-    }
-
-    @Override
-    public void setLeftImage(URL leftImage) throws IOException {
         // Do nothing
     }
 

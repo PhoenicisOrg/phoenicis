@@ -36,11 +36,10 @@ public interface SetupWindow {
     void setTopImage(File topImage) throws IOException;
 
     /**
-     * Set the left image
-     * @param leftImage The left image to set
-     * @throws IOException If the left image cannot be loaded
+     * Set the left image text
+     * @param leftImageText The left image text to set
      */
-    void setLeftImage(File leftImage) throws IOException;
+    void setLeftImageText(String leftImageText);
 
     /**
      * Set the top image
@@ -48,13 +47,6 @@ public interface SetupWindow {
      * @throws IOException If the top image cannot be loaded
      */
     void setTopImage(URL topImage) throws IOException;
-
-    /**
-     * Set the left image
-     * @param leftImage The left image to set
-     * @throws IOException If the left image cannot be loaded
-     */
-    void setLeftImage(URL leftImage) throws IOException;
 
     /**
      * Show a simple message and block until a response is given
