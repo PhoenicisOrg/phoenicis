@@ -24,6 +24,7 @@ import com.playonlinux.scripts.ui.SetupWindow;
 import com.playonlinux.tools.system.OperatingSystemFetcher;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
@@ -35,7 +36,7 @@ import java.util.List;
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
 public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow {
-    private final Pane root;
+    private final BorderPane root;
     private final String wizardTitle;
 
     private URL topImage;
@@ -46,7 +47,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     public SetupWindowJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher) {
         super();
         this.operatingSystemFetcher = operatingSystemFetcher;
-        this.root = new Pane();
+        this.root = new BorderPane();
 
         this.wizardTitle = title;
 
@@ -60,7 +61,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
         return wizardTitle;
     }
 
-    public Pane getRoot() {
+    public BorderPane getRoot() {
         return this.root;
     }
 

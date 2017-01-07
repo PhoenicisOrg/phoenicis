@@ -22,6 +22,8 @@ import com.playonlinux.scripts.ui.Message;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -70,13 +72,28 @@ abstract class AbstractStepRepresentation {
         return messageWaitingForResponse;
     }
 
+
+    private Image createLeftImage() {
+        return new Image(this.getParentLeftImage().toExternalForm());
+    }
+
+    protected void drawLeftImage() {
+        final ImageView leftImage = new ImageView(this.createLeftImage());
+        leftImage.setLayoutX(0);
+        leftImage.setLayoutY(0);
+        leftImage.setFitHeight(444);
+        leftImage.setFitWidth(187);
+
+        getParent().getRoot().setLeft(leftImage);
+    }
+
     protected void drawFooter() {
         Pane footer = new Pane();
         footer.setPrefSize(722, 45);
         footer.setLayoutX(-1);
         footer.setLayoutY(444);
         footer.setId("footer");
-        this.addToStep(footer);
+        getParent().getRoot().setBottom(footer);
 
         nextButton = new Button("Next");
         nextButton.setLayoutY(9);
@@ -120,10 +137,10 @@ abstract class AbstractStepRepresentation {
 
     public void installStep() {
         this.parent.clearAll();
+        this.drawLeftImage();
         this.drawFooter();
         this.setStepEvents();
         this.drawStepContent();
-
     }
 
 

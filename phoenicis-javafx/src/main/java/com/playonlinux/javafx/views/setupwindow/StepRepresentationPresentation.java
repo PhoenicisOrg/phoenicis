@@ -39,19 +39,9 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         this.textToShow = textToShow;
     }
 
-    private Image createLeftImage() {
-        return new Image(this.getParentLeftImage().toExternalForm());
-    }
-
     @Override
     protected void drawStepContent() {
         final String title = this.getParentWizardTitle();
-
-        final ImageView leftImage = new ImageView(this.createLeftImage());
-        leftImage.setLayoutX(0);
-        leftImage.setLayoutY(0);
-        leftImage.setFitHeight(444);
-        leftImage.setFitWidth(187);
 
         Pane contentPane = new Pane();
         contentPane.setPrefSize(533, 444);
@@ -71,8 +61,7 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         textWidget.prefWidth(350);
 
         contentPane.getChildren().addAll(titleWidget, textWidget);
-        this.addToStep(leftImage);
-        this.addToStep(contentPane);
+        getParent().getRoot().setCenter(contentPane);
     }
 
     @Override
