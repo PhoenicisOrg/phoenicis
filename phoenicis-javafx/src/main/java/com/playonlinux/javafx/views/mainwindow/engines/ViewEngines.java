@@ -115,6 +115,7 @@ public class ViewEngines extends MainWindowView {
                 packages) {
             tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
         }
+        tabContent.prefWidthProperty().bind(this.widthProperty());
 
         return new Tab(wineVersionDistributionDTO.getDescription(), tabContent);
     }
