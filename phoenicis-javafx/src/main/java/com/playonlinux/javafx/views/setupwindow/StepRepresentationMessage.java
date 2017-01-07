@@ -37,7 +37,7 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
         textWidget.setWrappingWidth(700);
         textWidget.prefWidth(700);
 
-        this.addToContentPanel(textWidget);
+        this.addToContentPane(textWidget);
     }
 
     @Override

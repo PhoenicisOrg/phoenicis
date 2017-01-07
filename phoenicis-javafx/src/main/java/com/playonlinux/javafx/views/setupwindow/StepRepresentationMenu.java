@@ -48,7 +48,7 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
         listViewWidget.setLayoutY(40);
         listViewWidget.setPrefSize(700, 328);
 
-        this.addToContentPanel(listViewWidget);
+        this.addToContentPane(listViewWidget);
     }
 
     @Override

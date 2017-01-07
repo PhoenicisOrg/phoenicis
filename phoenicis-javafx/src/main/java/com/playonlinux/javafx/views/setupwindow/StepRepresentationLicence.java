@@ -58,7 +58,7 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
         confirmWidget.setLayoutY(418);
         setNextButtonEnabled(false);
 
-        this.addToStep(licenceWidget);
-        this.addToStep(confirmWidget);
+        this.addToContentPane(licenceWidget);
+        this.addToContentPane(confirmWidget);
     }
 }

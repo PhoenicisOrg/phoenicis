@@ -45,7 +45,7 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
         textField.setLayoutX(10);
         textField.setLayoutY(40);
 
-        this.addToContentPanel(textField);
+        this.addToContentPane(textField);
     }
 
     @Override

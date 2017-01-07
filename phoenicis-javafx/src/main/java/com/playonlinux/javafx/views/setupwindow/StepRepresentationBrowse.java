@@ -49,7 +49,7 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
 
     @Override
     public void drawStepContent() {
-        this.addToContentPanel(dragPane());
+        this.addToContentPane(dragPane());
         this.setNextButtonEnabled(false);
     }
 
