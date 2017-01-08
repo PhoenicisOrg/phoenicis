@@ -13,6 +13,9 @@ public class AppsConfiguration {
     @Value("${application.repository.configuration}")
     private String repositoryConfiguration;
 
+    @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
+    private boolean enforceUncompatibleOperatingSystems;
+
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
@@ -25,8 +28,8 @@ public class AppsConfiguration {
                 new ConfigurableApplicationSource(
                     repositoryConfiguration,
                     new LocalApplicationsSource.Factory(new ObjectMapper())
-                ), toolsConfiguration.operatingSystemFetcher()
-        );
+                ), toolsConfiguration.operatingSystemFetcher(),
+                enforceUncompatibleOperatingSystems);
     }
 
     @Bean

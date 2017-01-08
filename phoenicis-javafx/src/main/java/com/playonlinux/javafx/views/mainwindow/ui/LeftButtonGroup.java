@@ -49,7 +49,7 @@ public final class LeftButtonGroup extends VBox {
         this.clear();
         this.leftButtons = buttons;
         for(LeftButton leftButton: buttons) {
-            this.getChildren().addAll(leftButton);
+            this.getChildren().add(leftButton);
         }
     }
 
