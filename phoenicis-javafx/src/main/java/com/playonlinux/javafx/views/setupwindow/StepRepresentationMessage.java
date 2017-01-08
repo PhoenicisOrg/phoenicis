@@ -45,6 +45,8 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
         scrollPane.setContent(new TextFlow(textWidget));
 
         this.addToContentPane(scrollPane);
+
+	VBox.setVgrow(scrollPane, Priority.ALWAYS);
     }
 
     @Override
