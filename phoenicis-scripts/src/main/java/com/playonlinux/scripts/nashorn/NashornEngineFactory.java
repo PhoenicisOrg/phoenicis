@@ -11,6 +11,9 @@ import org.springframework.context.ApplicationContext;
 import javax.script.ScriptEngineManager;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -27,6 +30,8 @@ public class NashornEngineFactory {
     }
 
     NashornEngine createEngine() {
+        final Set<List<String>> includedScripts = new HashSet<>();
+
         final NashornEngine nashornEngine = new NashornEngine(
                 new ScriptEngineManager().getEngineByName("nashorn")
         );
@@ -49,7 +54,10 @@ public class NashornEngineFactory {
             if(script == null) {
                 throwException(new ScriptException(Arrays.asList(arguments).toString() + " is not found"));
             }
-            nashornEngine.eval(script, this::throwException);
+
+            if(includedScripts.add(Arrays.asList(arguments))) {
+                nashornEngine.eval("//# sourceURL=" + Arrays.asList(arguments).toString() + "\n" + script, this::throwException);
+            }
         }, this::throwException);
 
         return nashornEngine;
