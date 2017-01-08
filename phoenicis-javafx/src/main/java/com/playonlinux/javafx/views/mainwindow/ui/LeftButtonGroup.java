@@ -19,6 +19,7 @@
 package com.playonlinux.javafx.views.mainwindow.ui;
 
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextFlow;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public final class LeftButtonGroup extends VBox {
 
     private void clear() {
         this.getChildren().clear();
-        this.getChildren().add(new LeftBarTitle(name));
+        this.getChildren().add(new TextFlow(new LeftBarTitle(name)));
     }
 
     public void setButtons(List<LeftButton> buttons) {
