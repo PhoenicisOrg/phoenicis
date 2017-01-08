@@ -259,6 +259,11 @@
     -fx-background-color: #F4F4F4;
 }
 
+#stepScrollPane {
+    -fx-background: #F4F4F4;
+    -fx-border-color: #F4F4F4;
+}
+
 .containerConfigurationPane {
     -fx-padding: 10px;
 }
