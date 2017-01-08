@@ -16,12 +16,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#header {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 1px;
-    -fx-background-color: #FFFFFF;
-}
 
 #logoText {
     -fx-font-family: "Maven Pro";
@@ -250,20 +244,19 @@
 #header {
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
-    -fx-border-width: 1px;
+    -fx-border-width: 0 0 1px 0;
     -fx-background-color: #FFFFFF;
 }
 
 #footer {
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
-    -fx-border-width: 1px;
+    -fx-border-width: 1px 0 0 0;
 }
 
 #panelForTopheader {
     -fx-padding: 30px;
     -fx-background-color: #F4F4F4;
-    -fx-border-color: #CCCCCC;
 }
 
 .containerConfigurationPane {
@@ -275,7 +268,7 @@
 }
 
 .captionTitle {
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
 }
 
 .wineToolButton {
