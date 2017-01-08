@@ -19,7 +19,12 @@
 package com.playonlinux.javafx.views.setupwindow;
 
 import com.playonlinux.scripts.ui.Message;
+import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
     private final String textToShow;
@@ -32,7 +37,15 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
     @Override
     protected void drawStepContent() {
         Text textWidget = new Text(textToShow);
-        this.addToContentPane(textWidget);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setStyle("-fx-background: #F4F4F4; -fx-border-color: #F4F4F4;");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setContent(new TextFlow(textWidget));
+
+        this.addToContentPane(scrollPane);
     }
 
     @Override

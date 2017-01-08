@@ -35,9 +35,6 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
 
         this.contentPane = new VBox();
         this.contentPane.setId("panelForTopheader");
-        this.contentPane.setPrefSize(722, 382);
-        this.contentPane.setLayoutX(-1);
-        this.contentPane.setLayoutY(63);
         getParent().getRoot().setCenter(this.contentPane);
     }
 
