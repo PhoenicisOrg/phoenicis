@@ -1,7 +1,9 @@
 package com.playonlinux.containers;
 
+import com.playonlinux.containers.wine.WineContainerController;
 import com.playonlinux.containers.wine.WinePrefixesManager;
 import com.playonlinux.containers.wine.configurations.*;
+import com.playonlinux.scripts.ScriptsConfiguration;
 import com.playonlinux.tools.ToolsConfiguration;
 import com.playonlinux.win32.Win32Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class ContainersConfiguration {
     @Autowired
     private Win32Configuration win32Configuration;
 
+    @Autowired
+    private ScriptsConfiguration scriptsConfiguration;
+
     @Bean
     public ContainersManager containersManager() {
         return new WinePrefixesManager(
@@ -23,6 +28,11 @@ public class ContainersConfiguration {
                 winePrefixDisplayConfiguration(),
                 winePrefixInputConfiguration()
         );
+    }
+
+    @Bean
+    public WineContainerController wineContainerController() {
+        return new WineContainerController(scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean
