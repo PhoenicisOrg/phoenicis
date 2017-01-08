@@ -5,9 +5,9 @@ import com.phoenicis.entities.ProgressState;
 import com.playonlinux.tools.files.FileSizeUtilities;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.function.Consumer;
 
 public class Downloader {
@@ -65,7 +65,7 @@ public class Downloader {
 
     private void get(URL url, OutputStream outputStream, Consumer<ProgressEntity> onChange) {
         try {
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            URLConnection connection = url.openConnection();
             saveConnectionToStream(url, connection, outputStream, onChange);
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
@@ -73,7 +73,7 @@ public class Downloader {
     }
 
     private void saveConnectionToStream(URL url,
-                                        HttpURLConnection connection,
+                                        URLConnection connection,
                                         OutputStream outputStream,
                                         Consumer<ProgressEntity> onChange) {
         float percentage = 0F;
