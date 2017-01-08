@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
@@ -34,6 +35,22 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
     private final List<Node> lockableElements = new ArrayList<>();
+    private Consumer<WinePrefixDTO> onWineCfg = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onRegedit = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onWineboot = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onWinebootRepair = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onWineConsole = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onTaskMgr = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onKillProcess = (winePrefix) -> {
+    };
+    private Consumer<WinePrefixDTO> onUninstaller = (winePrefix) -> {
+    };
 
     public WinePrefixContainerPanel(WinePrefixDTO containerEntity) {
         super(containerEntity);
@@ -135,13 +152,13 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
-        final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox  = new ComboBox<>();
+        final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
         strictDrawOrderingComboBox.setValue(winePrefixDTO.getStrictDrawOrdering());
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
-        final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox  = new ComboBox<>();
+        final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
         alwaysOffscreenComboBox.setValue(winePrefixDTO.getAlwaysOffscreen());
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
@@ -224,29 +241,35 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         toolsContentPane.getStyleClass().add("grid");
 
         toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
-                e -> {}), 0, 0);
-
+                e -> this.onWineCfg.accept(containerEntity)), 0, 0);
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png", null), 1, 0);
+        toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png",
+                e -> this.onRegedit.accept(containerEntity)), 1, 0);
         toolsContentPane.add(wineToolCaption(translate("Registry Editor")), 1, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Windows reboot"), "rebootPrefix.png", null), 2, 0);
+        toolsContentPane.add(wineToolButton(translate("Windows reboot"), "rebootPrefix.png",
+                e -> this.onWineboot.accept(containerEntity)), 2, 0);
         toolsContentPane.add(wineToolCaption(translate("Windows reboot")), 2, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Repair virtual drive"), "repair.png", null), 3, 0);
+        toolsContentPane.add(wineToolButton(translate("Repair virtual drive"), "repair.png",
+                e -> this.onWinebootRepair.accept(containerEntity)), 3, 0);
         toolsContentPane.add(wineToolCaption(translate("Repair virtual drive")), 3, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Command prompt"), "cmd.png", null), 0, 3);
+        toolsContentPane.add(wineToolButton(translate("Command prompt"), "cmd.png",
+                e -> this.onWineConsole.accept(containerEntity)), 0, 3);
         toolsContentPane.add(wineToolCaption(translate("Command prompt")), 0, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Task manager"), "taskmgr.png", null), 1, 3);
+        toolsContentPane.add(wineToolButton(translate("Task manager"), "taskmgr.png",
+                e -> this.onTaskMgr.accept(containerEntity)), 1, 3);
         toolsContentPane.add(wineToolCaption(translate("Task manager")), 1, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Kill processes"), "killProcesses.png", null), 2, 3);
+        toolsContentPane.add(wineToolButton(translate("Kill processes"), "killProcesses.png",
+                e -> this.onKillProcess.accept(containerEntity), false), 2, 3);
         toolsContentPane.add(wineToolCaption(translate("Kill processes")), 2, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstaller.png", null), 3, 3);
+        toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstaller.png",
+                e -> this.onUninstaller.accept(containerEntity)), 3, 3);
         toolsContentPane.add(wineToolCaption(translate("Wine uninstaller")), 3, 4);
 
         toolsPane.getChildren().addAll(toolsContentPane);
@@ -281,6 +304,10 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     }
 
     private Button wineToolButton(String caption, String imageName, EventHandler<? super MouseEvent> eventHandler) {
+        return wineToolButton(caption, imageName, eventHandler, true);
+    }
+
+    private Button wineToolButton(String caption, String imageName, EventHandler<? super MouseEvent> eventHandler, boolean lockable) {
         final Button button = new Button(caption,
                 new ImageView(
                         new Image(this.getClass().getResourceAsStream(imageName), 48., 48., true, true)
@@ -291,20 +318,23 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
             lockAll();
             eventHandler.handle(event);
         });
-        lockableElements.add(button);
+
+        if (lockable) {
+            lockableElements.add(button);
+        }
         GridPane.setHalignment(button, HPos.CENTER);
 
         return button;
     }
 
-    private void unlockAll() {
-        for(Node element: lockableElements) {
+    public void unlockAll() {
+        for (Node element : lockableElements) {
             element.setDisable(false);
         }
     }
 
     private void lockAll() {
-        for(Node element: lockableElements) {
+        for (Node element : lockableElements) {
             element.setDisable(true);
         }
     }
@@ -313,11 +343,43 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         videoMemorySizeComboBox.setItems(new ImmutableObservableList<>(VideoMemorySize.possibleValues()));
     }
 
-    private <T extends Enum> void addItems(ComboBox<T> comboBox , Class<T> clazz) {
+    private <T extends Enum> void addItems(ComboBox<T> comboBox, Class<T> clazz) {
         final List<T> possibleValues = new ArrayList<>(EnumSet.allOf(clazz));
 
         final ObservableList<T> possibleValuesObservable = new ObservableListWrapper<>(possibleValues);
         comboBox.setItems(possibleValuesObservable);
+    }
+
+    public void setOnWineCfg(Consumer<WinePrefixDTO> onWineCfg) {
+        this.onWineCfg = onWineCfg;
+    }
+
+    public void setOnRegedit(Consumer<WinePrefixDTO> onRegedit) {
+        this.onRegedit = onRegedit;
+    }
+
+    public void setOnWineboot(Consumer<WinePrefixDTO> onWineboot) {
+        this.onWineboot = onWineboot;
+    }
+
+    public void setOnWinebootRepair(Consumer<WinePrefixDTO> onWinebootRepair) {
+        this.onWinebootRepair = onWinebootRepair;
+    }
+
+    public void setOnWineConsole(Consumer<WinePrefixDTO> onWineconsole) {
+        this.onWineConsole = onWineconsole;
+    }
+
+    public void setOnTaskMgr(Consumer<WinePrefixDTO> onTaskMgr) {
+        this.onTaskMgr = onTaskMgr;
+    }
+
+    public void setOnUninstaller(Consumer<WinePrefixDTO> onUninstaller) {
+        this.onUninstaller = onUninstaller;
+    }
+
+    public void setOnKillProcess(Consumer<WinePrefixDTO> onKillProcess) {
+        this.onKillProcess = onKillProcess;
     }
 
 }
