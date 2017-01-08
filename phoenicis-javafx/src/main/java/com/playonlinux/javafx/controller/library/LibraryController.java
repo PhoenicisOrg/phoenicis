@@ -61,7 +61,7 @@ public class LibraryController {
         });
 
         this.viewLibrary.setOnScriptRun(file -> {
-            scriptInterpreter.runScript(file, e -> new ErrorMessage("Error while running script", e));
+            scriptInterpreter.runScript(file, e -> Platform.runLater(() -> new ErrorMessage("Error while running script", e)));
         });
     }
 
