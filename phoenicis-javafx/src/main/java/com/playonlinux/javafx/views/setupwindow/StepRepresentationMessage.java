@@ -39,8 +39,7 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
         Text textWidget = new Text(textToShow);
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        scrollPane.setStyle("-fx-background: #F4F4F4; -fx-border-color: #F4F4F4;");
+        scrollPane.setId("stepScrollPane");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(new TextFlow(textWidget));
