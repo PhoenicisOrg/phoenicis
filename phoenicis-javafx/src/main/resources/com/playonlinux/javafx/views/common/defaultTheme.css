@@ -126,6 +126,7 @@
 }
 
 .leftButton {
+    -fx-background-color:transparent;
     -fx-cursor: hand;
 }
 

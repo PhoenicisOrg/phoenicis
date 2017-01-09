@@ -19,15 +19,16 @@
 package com.playonlinux.javafx.views.mainwindow.ui;
 
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-public class LeftButton extends HBox {
+public class LeftButton extends Button {
     private final String name;
 
     public LeftButton(byte[] icon, String name) {
@@ -39,20 +40,19 @@ public class LeftButton extends HBox {
     }
 
     private LeftButton(InputStream icon, String name) {
-        super();
+        super(name);
         this.name = name;
         this.getStyleClass().add("leftButton");
+        this.setPrefWidth(Double.MAX_VALUE);
+        this.setAlignment(Pos.CENTER_LEFT);
+        this.setPadding(new Insets(2));
 
         if(icon != null) {
             final ImageView iconView = new ImageView(new Image(icon));
             iconView.setFitWidth(24);
             iconView.setFitHeight(24);
-            this.getChildren().add(iconView);
+            this.setGraphic(iconView);
         }
-
-        Text label = new Text(name);
-        label.getStyleClass().add("label");
-        this.getChildren().add(label);
     }
 
     public String getName() {
