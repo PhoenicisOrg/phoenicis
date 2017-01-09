@@ -20,23 +20,10 @@ package com.playonlinux.javafx.views.mainwindow.ui;
 
 
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 
 public class LeftSideBar extends VBox {
     public LeftSideBar() {
         super();
         this.getStyleClass().add("leftPane");
-
-
-        this.widthProperty().addListener((observable, oldValue, newValue) -> {
-            final Rectangle clip = new Rectangle(this.getWidth(), this.getHeight());
-            this.setClip(clip);
-        });
-
-        this.heightProperty().addListener((observable, oldValue, newValue) -> {
-            final Rectangle clip = new Rectangle(this.getWidth(), this.getHeight());
-            this.setClip(clip);
-        });
-
     }
 }
