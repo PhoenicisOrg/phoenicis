@@ -13,6 +13,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -72,32 +73,32 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         informationContentPane.getStyleClass().add("grid");
 
         informationContentPane.add(new TextWithStyle(translate("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
-        informationContentPane.add(new Text(container.getName()), 1, 0);
+        Label name = new Label(container.getName());
+        name.setWrapText(true);
+        informationContentPane.add(name, 1, 0);
 
         informationContentPane.add(new TextWithStyle(translate("Path:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
-        informationContentPane.add(new Text(container.getPath()), 1, 1);
+        Label path = new Label(container.getPath());
+        path.setWrapText(true);
+        informationContentPane.add(path, 1, 1);
 
         informationContentPane.add(new TextWithStyle(translate("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
-        informationContentPane.add(new Text(container.getVersion()), 1, 2);
+        Label version = new Label(container.getVersion());
+        version.setWrapText(true);
+        informationContentPane.add(version, 1, 2);
 
         informationContentPane.add(new TextWithStyle(translate("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
-        informationContentPane.add(new Text(container.getArchitecture()), 1, 3);
+        Label architecture = new Label(container.getArchitecture());
+        architecture.setWrapText(true);
+        informationContentPane.add(architecture, 1, 3);
 
         informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
-        informationContentPane.add(new Text(container.getDistribution()), 1, 4);
+        Label distribution = new Label(container.getDistribution());
+        distribution.setWrapText(true);
+        informationContentPane.add(distribution, 1, 4);
 
-        informationContentPane.getRowConstraints().addAll(
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.),
-                new RowConstraints(20.)
-        );
-
-        informationContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(20),
-                new ColumnConstraintsWithPercentage(80)
-        );
+        informationContentPane.setHgap(20);
+        informationContentPane.setVgap(10);
 
         informationPane.getChildren().addAll(informationContentPane);
         informationTab.setContent(informationPane);
