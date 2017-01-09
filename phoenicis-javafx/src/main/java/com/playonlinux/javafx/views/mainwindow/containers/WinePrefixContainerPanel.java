@@ -17,9 +17,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -118,47 +116,55 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         displayContentPane.getStyleClass().add("grid");
 
         final ComboBox<GLSL> glslComboBox = new ComboBox<>();
+        glslComboBox.setMaxWidth(Double.MAX_VALUE);
         glslComboBox.setValue(winePrefixDTO.getGlslValue());
         addItems(glslComboBox, GLSL.class);
         displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
 
         final ComboBox<DirectDrawRenderer> directDrawRendererComboBox = new ComboBox<>();
+        directDrawRendererComboBox.setMaxWidth(Double.MAX_VALUE);
         directDrawRendererComboBox.setValue(winePrefixDTO.getDirectDrawRenderer());
         addItems(directDrawRendererComboBox, DirectDrawRenderer.class);
         displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         displayContentPane.add(directDrawRendererComboBox, 1, 1);
 
         final ComboBox<VideoMemorySize> videoMemorySizeComboBox = new ComboBox<>();
+        videoMemorySizeComboBox.setMaxWidth(Double.MAX_VALUE);
         videoMemorySizeComboBox.setValue(winePrefixDTO.getVideoMemorySize());
         addItemsVideoMemorySize(videoMemorySizeComboBox);
         displayContentPane.add(new TextWithStyle(translate("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         displayContentPane.add(videoMemorySizeComboBox, 1, 2);
 
         final ComboBox<OffscreenRenderingMode> offscreenRenderingModeComboBox = new ComboBox<>();
+        offscreenRenderingModeComboBox.setMaxWidth(Double.MAX_VALUE);
         offscreenRenderingModeComboBox.setValue(winePrefixDTO.getOffscreenRenderingMode());
         addItems(offscreenRenderingModeComboBox, OffscreenRenderingMode.class);
         displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         displayContentPane.add(offscreenRenderingModeComboBox, 1, 3);
 
         final ComboBox<RenderTargetModeLock> renderTargetModeLockComboBox = new ComboBox<>();
+        renderTargetModeLockComboBox.setMaxWidth(Double.MAX_VALUE);
         renderTargetModeLockComboBox.setValue(winePrefixDTO.getRenderTargetModeLock());
         displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         displayContentPane.add(renderTargetModeLockComboBox, 1, 4);
 
         final ComboBox<Multisampling> multisamplingComboBox = new ComboBox<>();
+        multisamplingComboBox.setMaxWidth(Double.MAX_VALUE);
         multisamplingComboBox.setValue(winePrefixDTO.getMultisampling());
         addItems(multisamplingComboBox, Multisampling.class);
         displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
         final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
+        strictDrawOrderingComboBox.setMaxWidth(Double.MAX_VALUE);
         strictDrawOrderingComboBox.setValue(winePrefixDTO.getStrictDrawOrdering());
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
         final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
+        alwaysOffscreenComboBox.setMaxWidth(Double.MAX_VALUE);
         alwaysOffscreenComboBox.setValue(winePrefixDTO.getAlwaysOffscreen());
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
@@ -176,10 +182,11 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
                 new RowConstraints(50.)
         );
 
-        displayContentPane.getColumnConstraints().addAll(
-                new ColumnConstraintsWithPercentage(30),
-                new ColumnConstraintsWithPercentage(70)
-        );
+        displayContentPane.setHgap(20);
+
+        Region spacer = new Region();
+        GridPane.setHgrow(spacer, Priority.ALWAYS);
+        displayContentPane.add(spacer, 2, 0);
 
         displayPane.getChildren().addAll(displayContentPane);
         displayTab.setContent(displayPane);
