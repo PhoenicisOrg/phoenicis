@@ -60,7 +60,7 @@ public class ControllerConfiguration {
     public ContainersController containersController() {
         return new ContainersController(
                 viewsConfiguration.viewContainers(),
-                containersConfiguration.containersManager(),
+                containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.wineContainerPanelFactory(),
                 containersConfiguration.wineContainerController()
         );

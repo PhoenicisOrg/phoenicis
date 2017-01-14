@@ -23,7 +23,9 @@ public class ContainersController {
         this.wineContainerPanelFactory = wineContainerPanelFactory;
         this.wineContainerController = wineContainerController;
 
-        viewContainers.setOnSelectionChanged(event -> loadContainers());
+        viewContainers.setOnSelectionChanged(event -> {
+            loadContainers();
+        });
 
         viewContainers.setOnSelectContainer(containerDTO -> {
             final WinePrefixContainerPanel panel = wineContainerPanelFactory.createContainerPanel((WinePrefixDTO) containerDTO);
