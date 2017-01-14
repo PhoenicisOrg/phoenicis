@@ -24,6 +24,7 @@ import com.playonlinux.javafx.views.mainwindow.MessagePanel;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButtonGroup;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
@@ -59,15 +60,19 @@ public class ViewContainers extends MainWindowView {
     }
 
     public void populate(List<ContainerDTO> containers) {
-        final List<LeftButton> leftButtonList = new ArrayList<>();
+        Platform.runLater(() -> {
+            final List<LeftButton> leftButtonList = new ArrayList<>();
 
-        for (ContainerDTO container : containers) {
-            final LeftButton containerButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
-            leftButtonList.add(containerButton);
-            containerButton.setOnMouseClicked(event -> this.selectContainer(container));
-        }
+            for (ContainerDTO container : containers) {
+                final LeftButton containerButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
+                leftButtonList.add(containerButton);
+                containerButton.setOnMouseClicked(event -> this.selectContainer(container));
+            }
 
-        containersView.setButtons(leftButtonList);
+            initSelectContainerPane();
+            showRightView(selectContainerPanel);
+            containersView.setButtons(leftButtonList);
+        });
     }
 
     private void selectContainer(ContainerDTO container) {

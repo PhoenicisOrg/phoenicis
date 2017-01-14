@@ -23,7 +23,9 @@ public class ContainersController {
         this.wineContainerPanelFactory = wineContainerPanelFactory;
         this.wineContainerController = wineContainerController;
 
-        viewContainers.setOnSelectionChanged(event -> loadContainers());
+        viewContainers.setOnSelectionChanged(event -> {
+            loadContainers();
+        });
 
         viewContainers.setOnSelectContainer(containerDTO -> {
             final WinePrefixContainerPanel panel = wineContainerPanelFactory.createContainerPanel((WinePrefixDTO) containerDTO);
@@ -81,10 +83,6 @@ public class ContainersController {
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-
-
-
-
             viewContainers.showRightView(panel);
         });
     }
@@ -94,6 +92,7 @@ public class ContainersController {
     }
 
     public void loadContainers() {
-        containersManager.fetchContainers(viewContainers::populate, Throwable::printStackTrace);
+        this.viewContainers.showWait();
+        containersManager.fetchContainers(viewContainers::populate, e -> this.viewContainers.showFailure());
     }
 }
