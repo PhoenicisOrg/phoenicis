@@ -26,6 +26,8 @@ import javafx.scene.layout.Priority;
 
 public class MainWindowView extends Tab {
     private final HBox hBox;
+    private HBox waitPanel;
+    private FailurePanel failurePanel;
     private final LeftSideBar leftContent;
 
     private Node visiblePane;
@@ -37,6 +39,9 @@ public class MainWindowView extends Tab {
         hBox.getStyleClass().add("mainWindowScene");
         leftContent = new LeftSideBar();
         setContent(hBox);
+
+        waitPanel = new WaitPanel();
+        failurePanel = new FailurePanel();
     }
 
     protected void drawSideBar() {
@@ -58,5 +63,17 @@ public class MainWindowView extends Tab {
         visiblePane = nodeToShow;
         hBox.getChildren().add(visiblePane);
         HBox.setHgrow(visiblePane, Priority.ALWAYS);
+    }
+
+    public void showWait() {
+        showRightView(waitPanel);
+    }
+
+    public void showFailure() {
+        showRightView(failurePanel);
+    }
+
+    public FailurePanel getFailurePanel() {
+        return failurePanel;
     }
 }

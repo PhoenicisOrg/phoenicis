@@ -69,6 +69,8 @@ public class ViewContainers extends MainWindowView {
                 containerButton.setOnMouseClicked(event -> this.selectContainer(container));
             }
 
+            initSelectContainerPane();
+            showRightView(selectContainerPanel);
             containersView.setButtons(leftButtonList);
         });
     }

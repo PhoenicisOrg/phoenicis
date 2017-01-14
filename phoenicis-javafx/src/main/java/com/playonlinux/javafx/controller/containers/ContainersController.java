@@ -83,10 +83,6 @@ public class ContainersController {
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-
-
-
-
             viewContainers.showRightView(panel);
         });
     }
@@ -96,6 +92,7 @@ public class ContainersController {
     }
 
     public void loadContainers() {
-        containersManager.fetchContainers(viewContainers::populate, Throwable::printStackTrace);
+        this.viewContainers.showWait();
+        containersManager.fetchContainers(viewContainers::populate, e -> this.viewContainers.showFailure());
     }
 }
