@@ -62,7 +62,7 @@ public class ViewLibrary extends MainWindowView {
     private Consumer<String> onSearch = keyword -> {};
 
     public ViewLibrary(String applicationName) {
-        super();
+        super("Library");
         this.getStyleClass().add("mainWindowScene");
 
         this.runScript = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/script.png",

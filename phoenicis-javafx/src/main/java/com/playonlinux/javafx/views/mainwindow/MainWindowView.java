@@ -30,7 +30,9 @@ public class MainWindowView extends Tab {
 
     private Node visiblePane;
 
-    public MainWindowView() {
+    public MainWindowView(String text) {
+        super(text);
+
         hBox = new HBox();
         hBox.getStyleClass().add("mainWindowScene");
         leftContent = new LeftSideBar();

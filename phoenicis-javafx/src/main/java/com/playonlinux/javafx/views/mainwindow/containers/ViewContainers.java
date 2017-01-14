@@ -40,7 +40,7 @@ public class ViewContainers extends MainWindowView {
     private Consumer<ContainerDTO> onSelectContainer = container -> {};
 
     public ViewContainers() {
-        super();
+        super("Containers");
 
         this.containersView = new LeftButtonGroup(translate("Containers"));
 

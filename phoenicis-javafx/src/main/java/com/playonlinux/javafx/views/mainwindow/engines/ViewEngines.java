@@ -41,7 +41,7 @@ public class ViewEngines extends MainWindowView {
     private HBox waitPanel;
 
     public ViewEngines() {
-        super();
+        super("Engines");
 
         //   entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
 

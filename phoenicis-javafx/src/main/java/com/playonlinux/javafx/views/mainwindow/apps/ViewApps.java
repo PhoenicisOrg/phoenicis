@@ -53,6 +53,8 @@ public class ViewApps extends MainWindowView {
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
 
     public ViewApps() {
+        super("Apps");
+
         availableApps = MiniatureListWidget.create();
 
         this.initWait();

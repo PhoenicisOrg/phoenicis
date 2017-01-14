@@ -50,16 +50,6 @@ public class MainWindow extends Stage {
         logoTab.setGraphic(playOnLinuxLogo);
         logoTab.setDisable(true);
 
-        library.setText("Library");
-
-        apps.setText("Apps");
-
-        containers.setText("Containers");
-
-        engines.setText("Engines");
-
-        settings.setText("Settings");
-
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
 
         scene = new PlayOnLinuxScene(tabPane, theme);
