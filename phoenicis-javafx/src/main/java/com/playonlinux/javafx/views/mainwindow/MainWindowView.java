@@ -20,21 +20,27 @@ package com.playonlinux.javafx.views.mainwindow;
 
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSideBar;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-public class MainWindowView extends HBox {
+public class MainWindowView extends Tab {
+    private final HBox hBox;
     private final LeftSideBar leftContent;
 
     private Node visiblePane;
 
-    public MainWindowView() {
-        this.getStyleClass().add("mainWindowScene");
+    public MainWindowView(String text) {
+        super(text);
+
+        hBox = new HBox();
+        hBox.getStyleClass().add("mainWindowScene");
         leftContent = new LeftSideBar();
+        setContent(hBox);
     }
 
     protected void drawSideBar() {
-        this.getChildren().add(leftContent);
+        hBox.getChildren().add(leftContent);
     }
 
     protected void clearSideBar() {
@@ -47,10 +53,10 @@ public class MainWindowView extends HBox {
 
     public void showRightView(Node nodeToShow) {
         if(visiblePane != null) {
-            this.getChildren().remove(visiblePane);
+            hBox.getChildren().remove(visiblePane);
         }
-        this.visiblePane = nodeToShow;
-        this.getChildren().add(visiblePane);
-        HBox.setHgrow(this.visiblePane, Priority.ALWAYS);
+        visiblePane = nodeToShow;
+        hBox.getChildren().add(visiblePane);
+        HBox.setHgrow(visiblePane, Priority.ALWAYS);
     }
 }

@@ -29,6 +29,8 @@ public class ViewSettings extends MainWindowView {
     private ComboBox<Themes> themes;
 
     public ViewSettings() {
+        super("Settings");
+
         this.drawSideBar();
     }
 

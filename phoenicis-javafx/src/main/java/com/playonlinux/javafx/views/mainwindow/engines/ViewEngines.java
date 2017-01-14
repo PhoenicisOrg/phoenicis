@@ -41,7 +41,7 @@ public class ViewEngines extends MainWindowView {
     private HBox waitPanel;
 
     public ViewEngines() {
-        super();
+        super("Engines");
 
         //   entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
 
@@ -66,7 +66,6 @@ public class ViewEngines extends MainWindowView {
         wineDistributionsTabPane.getStyleClass().add("rightPane");
 
         wineDistributionsTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        wineDistributionsTabPane.prefWidthProperty().bind(this.widthProperty());
     }
 
     private void showWait() {
@@ -115,7 +114,6 @@ public class ViewEngines extends MainWindowView {
                 packages) {
             tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
         }
-        tabContent.prefWidthProperty().bind(this.widthProperty());
 
         return new Tab(wineVersionDistributionDTO.getDescription(), tabContent);
     }
