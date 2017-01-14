@@ -17,7 +17,7 @@ public class MultithreadingConfiguration {
 
     @Bean
     public ControlledThreadPoolExecutorService containersExecutorService() {
-        return new ControlledThreadPoolExecutorService("Containers", 1, 1);
+        return new ControlledThreadPoolExecutorService("Containers", 1, 5);
     }
 
     @Bean
