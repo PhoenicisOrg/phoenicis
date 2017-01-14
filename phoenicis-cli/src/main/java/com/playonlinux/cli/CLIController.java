@@ -6,6 +6,7 @@ import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
 import com.phoenicis.library.ShortcutRunner;
 import com.playonlinux.apps.ApplicationsSource;
+import com.playonlinux.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -64,6 +65,7 @@ public class CLIController implements AutoCloseable {
 
     @Override
     public void close() throws InterruptedException {
+        applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).close();
         applicationContext.close();
     }
 }
