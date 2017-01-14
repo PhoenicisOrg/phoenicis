@@ -32,7 +32,8 @@
         <module>phoenicis-cli</module>
         <module>phoenicis-multithreading</module>
         <module>phoenicis-containers</module>
-    </modules>
+		<module>phoenicis-tests</module>
+	</modules>
 
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
