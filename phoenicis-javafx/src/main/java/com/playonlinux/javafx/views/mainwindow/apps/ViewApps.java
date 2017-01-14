@@ -54,7 +54,6 @@ public class ViewApps extends MainWindowView {
 
     public ViewApps() {
         availableApps = MiniatureListWidget.create();
-        availableApps.prefWidthProperty().bind(this.widthProperty());
 
         this.initWait();
         this.initFailure();

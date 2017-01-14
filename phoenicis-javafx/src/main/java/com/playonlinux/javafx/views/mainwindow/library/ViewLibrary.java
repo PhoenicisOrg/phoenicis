@@ -131,8 +131,6 @@ public class ViewLibrary extends MainWindowView {
         libraryTabs = new TabPane();
         libraryTabs.getStyleClass().add("rightPane");
 
-        libraryTabs.prefWidthProperty().bind(this.widthProperty());
-
         final Tab installedApplication = new Tab();
         installedApplication.setClosable(false);
         installedApplication.setText(translate("My applications"));
