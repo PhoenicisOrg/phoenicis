@@ -24,7 +24,9 @@ public class ContainersController {
         this.wineContainerController = wineContainerController;
 
         viewContainers.setOnSelectionChanged(event -> {
-            loadContainers();
+            if (viewContainers.isSelected()) {
+                loadContainers();
+            }
         });
 
         viewContainers.setOnSelectContainer(containerDTO -> {
