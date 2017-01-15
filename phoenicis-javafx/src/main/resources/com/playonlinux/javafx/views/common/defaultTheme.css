@@ -78,7 +78,7 @@
 .leftPaneScrollbar .scroll-bar:vertical .thumb {
     -fx-background-color:derive(black,90%);
     -fx-background-insets: 0, 0, 0;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 1em;
     -fx-pref-width: 4px;
     -fx-max-width: 4px;
 }

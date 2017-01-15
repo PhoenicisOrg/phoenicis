@@ -151,7 +151,7 @@
 .leftPaneScrollbar .scroll-bar:vertical .track {
     -fx-background-color: #3c3f41;
     -fx-border-width: 0;
-    -fx-background-radius: 0em;
+    -fx-background-radius: 1em;
     -fx-pref-width: 5px;
     -fx-max-width: 5px;
 }
