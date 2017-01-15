@@ -37,7 +37,7 @@ public class Version {
         if(splitCompleteVersion.length > 1) {
             customName = splitCompleteVersion[1];
         } else {
-            customName = null;
+            customName = "";
         }
 
         final String[] splitVersion = versionAsString.split("\\.");
@@ -76,6 +76,8 @@ public class Version {
         return lowNumber;
     }
 
+    public String getCustomName() { return customName; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,6 +94,7 @@ public class Version {
                 .append(bigNumber, version.bigNumber)
                 .append(intermediateNumber, version.intermediateNumber)
                 .append(lowNumber, version.lowNumber)
+                .append(customName, version.customName)
                 .isEquals();
     }
 
@@ -106,7 +109,7 @@ public class Version {
 
     @Override
     public String toString() {
-        if(customName == null) {
+        if(customName == "") {
             if (lowNumber == 0) {
                 return String.format("%s.%s", bigNumber, intermediateNumber);
             }

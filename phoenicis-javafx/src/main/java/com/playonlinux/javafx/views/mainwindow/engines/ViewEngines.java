@@ -30,8 +30,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ViewEngines extends MainWindowView {
@@ -92,7 +90,7 @@ public class ViewEngines extends MainWindowView {
     private Tab createWineDistributionTab(WineVersionDistributionDTO wineVersionDistributionDTO) {
         final MiniatureListWidget tabContent = MiniatureListWidget.create();
         List<WineVersionDTO> packages = wineVersionDistributionDTO.getPackages();
-        Collections.sort(packages, Comparator.comparing(WineVersionDTO::getVersion).reversed());
+        packages.sort(WineVersionDistributionDTO.comparator().reversed());
 
         for (WineVersionDTO wineVersionDTO :
                 packages) {
