@@ -21,6 +21,8 @@ package com.phoenicis.library.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import java.util.Comparator;
+
 @JsonDeserialize(builder = ShortcutDTO.Builder.class)
 public class ShortcutDTO {
     private final String name;
@@ -55,6 +57,10 @@ public class ShortcutDTO {
 
     public String getScript() {
         return script;
+    }
+
+    public static Comparator<ShortcutDTO> nameComparator() {
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
