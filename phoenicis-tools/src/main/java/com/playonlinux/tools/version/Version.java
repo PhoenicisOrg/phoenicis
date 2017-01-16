@@ -18,6 +18,7 @@
 
 package com.playonlinux.tools.version;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -35,7 +36,7 @@ public class Version {
         final String versionAsString = splitCompleteVersion[0];
 
         if(splitCompleteVersion.length > 1) {
-            customName = splitCompleteVersion[1];
+            customName = splitCompleteVersion[1].trim();
         } else {
             customName = "";
         }
@@ -109,7 +110,7 @@ public class Version {
 
     @Override
     public String toString() {
-        if(customName == "") {
+        if(StringUtils.isBlank(customName)) {
             if (lowNumber == 0) {
                 return String.format("%s.%s", bigNumber, intermediateNumber);
             }
