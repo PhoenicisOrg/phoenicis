@@ -45,8 +45,6 @@ import static com.playonlinux.configuration.localisation.Localisation.translate;
 public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
     private final MiniatureListWidget availableApps;
-    private FailurePanel failurePanel;
-    private HBox waitPanel;
     private TextField searchBar;
     private LeftButtonGroup categoryView;
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
@@ -56,9 +54,6 @@ public class ViewApps extends MainWindowView {
         super("Apps");
 
         availableApps = MiniatureListWidget.create();
-
-        this.initWait();
-        this.initFailure();
 
         this.drawSideBar();
         this.showWait();
@@ -77,20 +72,6 @@ public class ViewApps extends MainWindowView {
      */
     public void showAvailableApps() {
         showRightView(availableApps);
-    }
-
-    /**
-     * Show wait panel
-     */
-    public void showWait() {
-        showRightView(waitPanel);
-    }
-
-    /**
-     * Show failure panel
-     */
-    public void showFailure() {
-        showRightView(failurePanel);
     }
 
     /**
@@ -131,16 +112,7 @@ public class ViewApps extends MainWindowView {
     }
 
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
-        failurePanel.getRetryButton().setOnMouseClicked(event);
-    }
-
-    private void initFailure() {
-        failurePanel = new FailurePanel();
-        failurePanel.getRetryButton().setOnMouseClicked(event -> {});
-    }
-
-    private void initWait() {
-        waitPanel = new WaitPanel();
+        getFailurePanel().getRetryButton().setOnMouseClicked(event);
     }
 
     @Override

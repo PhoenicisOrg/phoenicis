@@ -37,15 +37,12 @@ import java.util.List;
 
 public class ViewEngines extends MainWindowView {
     private TabPane wineDistributionsTabPane;
-    private FailurePanel failurePanel;
-    private HBox waitPanel;
 
     public ViewEngines() {
         super("Engines");
 
         //   entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
 
-        this.initWait();
         this.initFailure();
         this.initWineVersions();
 
@@ -54,11 +51,7 @@ public class ViewEngines extends MainWindowView {
     }
 
     private void initFailure() {
-        failurePanel = new FailurePanel();
-    }
 
-    private void initWait() {
-        waitPanel = new WaitPanel();
     }
 
     private void initWineVersions() {
@@ -66,14 +59,6 @@ public class ViewEngines extends MainWindowView {
         wineDistributionsTabPane.getStyleClass().add("rightPane");
 
         wineDistributionsTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-    }
-
-    private void showWait() {
-        showRightView(waitPanel);
-    }
-
-    private void showFailure() {
-        showRightView(failurePanel);
     }
 
     public void showWineVersions() {

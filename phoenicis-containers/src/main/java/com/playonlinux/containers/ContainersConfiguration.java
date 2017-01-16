@@ -3,6 +3,7 @@ package com.playonlinux.containers;
 import com.playonlinux.containers.wine.WineContainerController;
 import com.playonlinux.containers.wine.WinePrefixesManager;
 import com.playonlinux.containers.wine.configurations.*;
+import com.playonlinux.multithreading.MultithreadingConfiguration;
 import com.playonlinux.scripts.ScriptsConfiguration;
 import com.playonlinux.tools.ToolsConfiguration;
 import com.playonlinux.win32.Win32Configuration;
@@ -12,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ContainersConfiguration {
+    @Autowired
+    private MultithreadingConfiguration multithreadingConfiguration;
+
     @Autowired
     private ToolsConfiguration toolsConfiguration;
 
@@ -28,6 +32,11 @@ public class ContainersConfiguration {
                 winePrefixDisplayConfiguration(),
                 winePrefixInputConfiguration()
         );
+    }
+
+    @Bean
+    public ContainersManager backgroundContainersManager() {
+        return new BackgroundContainersManager(containersManager(), multithreadingConfiguration.containersExecutorService());
     }
 
     @Bean
