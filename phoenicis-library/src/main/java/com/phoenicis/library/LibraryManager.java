@@ -40,6 +40,8 @@ public class LibraryManager {
             }
         }
 
+        shortcuts.sort(ShortcutDTO.nameComparator());
+
         return shortcuts;
     }
 
