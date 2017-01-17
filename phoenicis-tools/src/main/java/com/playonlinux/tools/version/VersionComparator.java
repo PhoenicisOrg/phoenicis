@@ -39,7 +39,7 @@ public class VersionComparator implements Comparator<Version> {
                 if(version1.getLowNumber() > version2.getLowNumber()) {
                     return 1;
                 } else if (version1.getLowNumber() == version2.getLowNumber()) {
-                    return 0;
+                    return version1.getCustomName().compareTo(version2.getCustomName());
                 } else {
                     return -1;
                 }

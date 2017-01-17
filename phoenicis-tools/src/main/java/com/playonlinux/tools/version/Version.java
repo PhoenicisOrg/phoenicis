@@ -18,6 +18,7 @@
 
 package com.playonlinux.tools.version;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -35,9 +36,9 @@ public class Version {
         final String versionAsString = splitCompleteVersion[0];
 
         if(splitCompleteVersion.length > 1) {
-            customName = splitCompleteVersion[1];
+            customName = splitCompleteVersion[1].trim();
         } else {
-            customName = null;
+            customName = "";
         }
 
         final String[] splitVersion = versionAsString.split("\\.");
@@ -76,6 +77,8 @@ public class Version {
         return lowNumber;
     }
 
+    public String getCustomName() { return customName; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,6 +95,7 @@ public class Version {
                 .append(bigNumber, version.bigNumber)
                 .append(intermediateNumber, version.intermediateNumber)
                 .append(lowNumber, version.lowNumber)
+                .append(customName, version.customName)
                 .isEquals();
     }
 
@@ -106,7 +110,7 @@ public class Version {
 
     @Override
     public String toString() {
-        if(customName == null) {
+        if(StringUtils.isBlank(customName)) {
             if (lowNumber == 0) {
                 return String.format("%s.%s", bigNumber, intermediateNumber);
             }

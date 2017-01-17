@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class VersionComparatorTest {
     VersionComparator versionComparator;
@@ -43,131 +44,131 @@ public class VersionComparatorTest {
 
     @Test
     public void testCompare_HigherVersion() {
-        assertEquals(1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.2"),
                         new Version("4.2.1")
-                )
+                ) > 0
         );
 
-        assertEquals(1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.3.1"),
                         new Version("4.2.1")
-                )
+                ) > 0
         );
 
-        assertEquals(1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("5.2.1"),
                         new Version("4.2.1")
-                )
+                ) > 0
         );
 
-        assertEquals(1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.2"),
                         new Version("4.1.3")
-                )
+                ) > 0
         );
     }
 
     @Test
     public void testCompare_WithManyPatches() {
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1-dev-patch2"),
                         new Version("4.2.1")
-                )
+                ) > 0
         );
 
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("4.2.1-dev-patch2")
-                )
+                ) < 0
         );
     }
 
     @Test
     public void testCompare_invalidVersion() {
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("1.4.rc6-xliveless-no_xinput2"),
                         new Version("1.4")
-                )
+                ) > 0
         );
 
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("1.4"),
                         new Version("1.4.rc6-xliveless-no_xinput2")
-                )
+                ) < 0
         );
     }
 
     @Test
     public void testCompare_WithPatches() {
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1-dev"),
                         new Version("4.2.1")
-                )
+                ) > 0
         );
 
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("4.2.1-dev")
-                )
+                ) < 0
         );
     }
 
     @Test
     public void testCompare_WithPatchesOnlyTwo() {
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2-dev"),
                         new Version("4.2")
-                )
+                ) > 0
         );
 
-        assertEquals(0,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2"),
                         new Version("4.2-rc6")
-                )
+                ) < 0
         );
     }
 
     @Test
     public void testCompare_LowerVersion() {
-        assertEquals(-1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("4.2.2")
-                )
+                ) < 0
         );
 
-        assertEquals(-1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("4.3.1")
-                )
+                ) < 0
         );
 
-        assertEquals(-1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.2.1"),
                         new Version("5.2.1")
-                )
+                ) < 0
         );
 
-        assertEquals(-1,
+        assertTrue(
                 versionComparator.compare(
                         new Version("4.1.3"),
                         new Version("4.2.2")
-                )
+                ) < 0
         );
     }
 

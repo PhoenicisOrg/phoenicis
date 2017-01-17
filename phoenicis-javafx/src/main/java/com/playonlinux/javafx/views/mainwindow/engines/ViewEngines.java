@@ -22,16 +22,13 @@ import com.playonlinux.engines.dto.WineVersionDTO;
 import com.playonlinux.engines.dto.WineVersionDistributionDTO;
 import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
 import com.playonlinux.javafx.views.common.widget.StaticMiniature;
-import com.playonlinux.javafx.views.mainwindow.FailurePanel;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
-import com.playonlinux.javafx.views.mainwindow.WaitPanel;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 
 import java.util.List;
 
