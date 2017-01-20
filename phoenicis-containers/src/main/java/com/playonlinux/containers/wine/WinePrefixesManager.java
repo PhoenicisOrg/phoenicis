@@ -65,6 +65,9 @@ public class WinePrefixesManager implements ContainersManager {
                             .build()
                 );
             }
+
+            containers.sort(ContainerDTO.nameComparator());
+
             callback.accept(containers);
         }
     }

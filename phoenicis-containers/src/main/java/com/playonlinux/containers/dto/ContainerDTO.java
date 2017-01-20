@@ -1,5 +1,7 @@
 package com.playonlinux.containers.dto;
 
+import java.util.Comparator;
+
 public class ContainerDTO {
     private final String name;
     private final String path;
@@ -21,6 +23,10 @@ public class ContainerDTO {
 
     public String getPath() {
         return path;
+    }
+
+    public static Comparator<ContainerDTO> nameComparator() {
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     public enum ContainerType {
