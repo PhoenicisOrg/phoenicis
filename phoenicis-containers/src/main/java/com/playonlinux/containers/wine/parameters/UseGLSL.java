@@ -22,7 +22,7 @@ import com.playonlinux.win32.registry.*;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
-public enum GLSL implements RegistryParameter {
+public enum UseGLSL implements RegistryParameter {
     DEFAULT(translate("Default"), ""),
     DISABLED(translate("Disabled"), "disabled"),
     ENABLED(translate("Enabled"), "enabled");
@@ -30,7 +30,7 @@ public enum GLSL implements RegistryParameter {
     private final String translatedName;
     private final String registryValue;
 
-    GLSL(String translatedName, String registryValue) {
+    UseGLSL(String translatedName, String registryValue) {
         this.translatedName = translatedName;
         this.registryValue = registryValue;
     }

@@ -24,8 +24,8 @@ import java.io.File;
 
 public class DefaultWinePrefixDisplayConfiguration implements WinePrefixDisplayConfiguration {
     @Override
-    public GLSL getGLSL(File registryFile) {
-        return GLSL.DEFAULT;
+    public UseGLSL getGLSL(File registryFile) {
+        return UseGLSL.DEFAULT;
     }
 
     @Override

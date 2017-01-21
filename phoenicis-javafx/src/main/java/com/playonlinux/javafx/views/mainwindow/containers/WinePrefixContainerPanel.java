@@ -113,11 +113,11 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final GridPane displayContentPane = new GridPane();
         displayContentPane.getStyleClass().add("grid");
 
-        final ComboBox<GLSL> glslComboBox = new ComboBox<>();
+        final ComboBox<UseGLSL> glslComboBox = new ComboBox<>();
         glslComboBox.setMaxWidth(Double.MAX_VALUE);
-        glslComboBox.setValue(winePrefixDTO.getGlslValue());
+        glslComboBox.setValue(winePrefixDTO.getUseGlslValue());
         glslComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
-        addItems(glslComboBox, GLSL.class);
+        addItems(glslComboBox, UseGLSL.class);
         displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
 

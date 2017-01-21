@@ -58,7 +58,7 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
     }
 
     @Override
-    public GLSL getGLSL(File registryFile) {
+    public UseGLSL getGLSL(File registryFile) {
         if(!registryFile.exists()) {
             return defaultConfiguration.getGLSL(registryFile);
         }
@@ -67,11 +67,11 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case ENABLED:
-                    return GLSL.ENABLED;
+                    return UseGLSL.ENABLED;
                 case DISABLED:
-                    return GLSL.DISABLED;
+                    return UseGLSL.DISABLED;
                 default:
-                    return GLSL.DEFAULT;
+                    return UseGLSL.DEFAULT;
             }
         }
 
