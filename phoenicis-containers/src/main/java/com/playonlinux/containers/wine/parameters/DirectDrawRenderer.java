@@ -18,21 +18,44 @@
 
 package com.playonlinux.containers.wine.parameters;
 
+import com.playonlinux.win32.registry.*;
+
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
-public enum  DirectDrawRenderer {
-    DEFAULT(translate("Default")),
-    GDI("GDI"),
-    OPENGL("OpenGL");
+public enum DirectDrawRenderer implements RegistryParameter {
+    DEFAULT(translate("Default"), ""),
+    GDI("GDI", "gdi"),
+    OPENGL("OpenGL", "opengl");
 
     private final String translatedName;
+    private final String registryValue;
 
-    DirectDrawRenderer(String translatedName) {
+    DirectDrawRenderer(String translatedName, String registryValue) {
         this.translatedName = translatedName;
+        this.registryValue = registryValue;
     }
 
     @Override
     public String toString() {
         return translatedName;
+    }
+
+    @Override
+    public AbstractRegistryNode toRegistryPatch() {
+        final RegistryKey registryNode
+                = new RegistryKey("HKEY_CURRENT_USER")
+                .addDeepChildren("Software", "Wine", "Direct3D");
+
+        switch (this) {
+            case DEFAULT:
+                registryNode.addChild(new RegistryValue<>("DirectDrawRenderer", new RemoveValueType()));
+                break;
+            case GDI:
+            case OPENGL:
+                registryNode.addChild(new RegistryValue<>("DirectDrawRenderer", new StringValueType(registryValue)));
+                break;
+        }
+
+        return registryNode;
     }
 }

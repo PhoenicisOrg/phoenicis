@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
@@ -43,6 +44,8 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     private Consumer<WinePrefixDTO> onKillProcess = winePrefix -> {};
     private Consumer<WinePrefixDTO> onUninstaller = winePrefix -> {};
     private Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix = winePrefix -> {};
+
+    private BiConsumer<WinePrefixDTO, RegistryParameter> onChangeSetting = (winePrefix, value) -> {};
 
     public WinePrefixContainerPanel(WinePrefixDTO containerEntity) {
         super(containerEntity);
@@ -113,6 +116,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<GLSL> glslComboBox = new ComboBox<>();
         glslComboBox.setMaxWidth(Double.MAX_VALUE);
         glslComboBox.setValue(winePrefixDTO.getGlslValue());
+        glslComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItems(glslComboBox, GLSL.class);
         displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
@@ -120,6 +124,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<DirectDrawRenderer> directDrawRendererComboBox = new ComboBox<>();
         directDrawRendererComboBox.setMaxWidth(Double.MAX_VALUE);
         directDrawRendererComboBox.setValue(winePrefixDTO.getDirectDrawRenderer());
+        directDrawRendererComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItems(directDrawRendererComboBox, DirectDrawRenderer.class);
         displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         displayContentPane.add(directDrawRendererComboBox, 1, 1);
@@ -127,6 +132,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<VideoMemorySize> videoMemorySizeComboBox = new ComboBox<>();
         videoMemorySizeComboBox.setMaxWidth(Double.MAX_VALUE);
         videoMemorySizeComboBox.setValue(winePrefixDTO.getVideoMemorySize());
+        videoMemorySizeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItemsVideoMemorySize(videoMemorySizeComboBox);
         displayContentPane.add(new TextWithStyle(translate("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         displayContentPane.add(videoMemorySizeComboBox, 1, 2);
@@ -134,6 +140,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<OffscreenRenderingMode> offscreenRenderingModeComboBox = new ComboBox<>();
         offscreenRenderingModeComboBox.setMaxWidth(Double.MAX_VALUE);
         offscreenRenderingModeComboBox.setValue(winePrefixDTO.getOffscreenRenderingMode());
+        offscreenRenderingModeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItems(offscreenRenderingModeComboBox, OffscreenRenderingMode.class);
         displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         displayContentPane.add(offscreenRenderingModeComboBox, 1, 3);
@@ -141,12 +148,15 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<RenderTargetModeLock> renderTargetModeLockComboBox = new ComboBox<>();
         renderTargetModeLockComboBox.setMaxWidth(Double.MAX_VALUE);
         renderTargetModeLockComboBox.setValue(winePrefixDTO.getRenderTargetModeLock());
+        renderTargetModeLockComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        addItems(renderTargetModeLockComboBox, RenderTargetModeLock.class);
         displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         displayContentPane.add(renderTargetModeLockComboBox, 1, 4);
 
         final ComboBox<Multisampling> multisamplingComboBox = new ComboBox<>();
         multisamplingComboBox.setMaxWidth(Double.MAX_VALUE);
         multisamplingComboBox.setValue(winePrefixDTO.getMultisampling());
+        multisamplingComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItems(multisamplingComboBox, Multisampling.class);
         displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
@@ -154,6 +164,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
         strictDrawOrderingComboBox.setMaxWidth(Double.MAX_VALUE);
         strictDrawOrderingComboBox.setValue(winePrefixDTO.getStrictDrawOrdering());
+        strictDrawOrderingComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
@@ -161,6 +172,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
         alwaysOffscreenComboBox.setMaxWidth(Double.MAX_VALUE);
         alwaysOffscreenComboBox.setValue(winePrefixDTO.getAlwaysOffscreen());
+        alwaysOffscreenComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
@@ -193,6 +205,11 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
                 alwaysOffscreenComboBox, videoMemorySizeComboBox));
 
         return displayTab;
+    }
+
+    private void changeSetting(WinePrefixDTO winePrefixDTO, RegistryParameter newValue) {
+        onChangeSetting.accept(winePrefixDTO, newValue);
+        lockAll();
     }
 
 
@@ -424,5 +441,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
 
     public void setOnOpenTerminalInWinePrefix(Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix) {
         this.onOpenTerminalInWinePrefix = onOpenTerminalInWinePrefix;
+    }
+
+    public void setOnChangeSetting(BiConsumer<WinePrefixDTO, RegistryParameter> onChangeSetting) {
+        this.onChangeSetting = onChangeSetting;
     }
 }

@@ -18,20 +18,44 @@
 
 package com.playonlinux.containers.wine.parameters;
 
-public enum OffscreenRenderingMode {
-    DEFAULT("Default"),
-    FBO("FBO"),
-    BACKBUFFER("Backbuffer"),
-    PBUFFER("PBuffer");
+import com.playonlinux.win32.registry.*;
+
+public enum OffscreenRenderingMode implements RegistryParameter {
+    DEFAULT("Default", ""),
+    FBO("FBO", "fbo"),
+    BACKBUFFER("Backbuffer", "backbuffer"),
+    PBUFFER("PBuffer", "pbuffer");
 
     private final String translatedName;
+    private final String registryValue;
 
-    OffscreenRenderingMode(String translatedName) {
+    OffscreenRenderingMode(String translatedName, String registryValue) {
         this.translatedName = translatedName;
+        this.registryValue = registryValue;
     }
 
     @Override
     public String toString() {
         return translatedName;
+    }
+
+    @Override
+    public AbstractRegistryNode toRegistryPatch() {
+        final RegistryKey registryNode
+                = new RegistryKey("HKEY_CURRENT_USER")
+                .addDeepChildren("Software", "Wine", "Direct3D");
+
+        switch (this) {
+            case DEFAULT:
+                registryNode.addChild(new RegistryValue<>("OffscreenRenderingMode", new RemoveValueType()));
+                break;
+            case FBO:
+            case BACKBUFFER:
+            case PBUFFER:
+                registryNode.addChild(new RegistryValue<>("OffscreenRenderingMode", new StringValueType(registryValue)));
+                break;
+        }
+
+        return registryNode;
     }
 }

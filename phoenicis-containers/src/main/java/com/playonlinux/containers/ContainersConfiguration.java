@@ -45,7 +45,13 @@ public class ContainersConfiguration {
 
     @Bean
     public WineContainerController wineContainerController() {
-        return new WineContainerController(scriptsConfiguration.scriptInterpreter(), toolsConfiguration.terminalOpener(), wineEnginesPath, toolsConfiguration.operatingSystemFetcher());
+        return new WineContainerController(
+                scriptsConfiguration.scriptInterpreter(),
+                toolsConfiguration.terminalOpener(),
+                wineEnginesPath,
+                toolsConfiguration.operatingSystemFetcher(),
+                win32Configuration.registryWriter()
+        );
     }
 
     @Bean

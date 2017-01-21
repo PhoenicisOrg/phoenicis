@@ -91,6 +91,16 @@ public class ContainersController {
                 panel.unlockAll();
             });
 
+            panel.setOnChangeSetting((winePrefixDTO, setting) -> {
+                wineContainerController.changeSetting(
+                        winePrefixDTO,
+                        setting,
+                        panel::unlockAll,
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())
+                );
+                panel.unlockAll();
+            });
+
             viewContainers.showRightView(panel);
         });
     }
