@@ -1,6 +1,7 @@
 package com.playonlinux.javafx.controller.containers;
 
 import com.playonlinux.containers.ContainersManager;
+import com.playonlinux.containers.dto.ContainerDTO;
 import com.playonlinux.containers.dto.WinePrefixDTO;
 import com.playonlinux.containers.wine.WineContainerController;
 import com.playonlinux.javafx.views.common.ErrorMessage;
@@ -29,7 +30,7 @@ public class ContainersController {
             }
         });
 
-        viewContainers.setOnSelectContainer(containerDTO -> {
+        viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
             final WinePrefixContainerPanel panel = wineContainerPanelFactory.createContainerPanel((WinePrefixDTO) containerDTO);
             panel.setOnWineCfg(winePrefixDTO -> wineContainerController.runInPrefix(
                     winePrefixDTO,
@@ -84,6 +85,11 @@ public class ContainersController {
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
+
+            panel.setOnOpenTerminalInWinePrefix(winePrefix -> {
+                wineContainerController.openTerminalInPrefix(winePrefix);
+                panel.unlockAll();
+            });
 
             viewContainers.showRightView(panel);
         });

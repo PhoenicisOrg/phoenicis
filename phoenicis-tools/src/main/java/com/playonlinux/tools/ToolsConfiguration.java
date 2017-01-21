@@ -10,16 +10,23 @@ import com.playonlinux.tools.files.*;
 import com.playonlinux.tools.http.Downloader;
 import com.playonlinux.tools.system.ArchitectureFetcher;
 import com.playonlinux.tools.system.OperatingSystemFetcher;
+import com.playonlinux.tools.system.SystemConfiguration;
+import com.playonlinux.tools.system.terminal.TerminalOpener;
 import com.playonlinux.tools.win32.ExeAnalyser;
 import com.playonlinux.win32.Win32Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
+@Import(SystemConfiguration.class)
 public class ToolsConfiguration {
     @Autowired
     private Win32Configuration win32Configuration;
+
+    @Autowired
+    private SystemConfiguration systemConfiguration;
 
     @Bean
     public CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory() {
@@ -83,7 +90,7 @@ public class ToolsConfiguration {
 
     @Bean
     public OperatingSystemFetcher operatingSystemFetcher() {
-        return new OperatingSystemFetcher();
+        return systemConfiguration.operatingSystemFetcher();
     }
 
     @Bean
@@ -94,5 +101,10 @@ public class ToolsConfiguration {
     @Bean
     public ExeAnalyser exeAnalyser() {
         return new ExeAnalyser(win32Configuration.peReader());
+    }
+
+    @Bean
+    public TerminalOpener terminalOpener() {
+        return systemConfiguration.terminalOpener();
     }
 }

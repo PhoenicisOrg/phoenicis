@@ -3,15 +3,28 @@ package com.playonlinux.containers.wine;
 import com.playonlinux.containers.dto.WinePrefixDTO;
 import com.playonlinux.scripts.interpreter.InteractiveScriptSession;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
+import com.playonlinux.tools.system.OperatingSystemFetcher;
+import com.playonlinux.tools.system.terminal.TerminalOpener;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class WineContainerController {
     private final ScriptInterpreter scriptInterpreter;
+    private final TerminalOpener terminalOpener;
+    private final String wineEnginesPath;
+    private final OperatingSystemFetcher operatingSystemFetcher;
 
-    public WineContainerController(ScriptInterpreter scriptInterpreter) {
+    public WineContainerController(ScriptInterpreter scriptInterpreter,
+                                   TerminalOpener terminalOpener,
+                                   String wineEnginesPath,
+                                   OperatingSystemFetcher operatingSystemFetcher) {
         this.scriptInterpreter = scriptInterpreter;
+        this.terminalOpener = terminalOpener;
+        this.wineEnginesPath = wineEnginesPath;
+        this.operatingSystemFetcher = operatingSystemFetcher;
     }
 
     public void repairPrefix(WinePrefixDTO winePrefix,
@@ -73,5 +86,24 @@ public class WineContainerController {
                         errorCallback),
                 errorCallback
         );
+    }
+
+    public void openTerminalInPrefix(WinePrefixDTO winePrefixDTO) {
+        final Map<String, String> environment = new HashMap<>();
+        environment.put("WINEPREFIX", winePrefixDTO.getPath());
+        environment.put("PATH", fetchWineVersionPath(winePrefixDTO) + "/bin/" + ":$PATH");
+        terminalOpener.openTerminal(winePrefixDTO.getPath(), environment);
+    }
+
+    private String fetchWineVersionPath(WinePrefixDTO winePrefixDTO) {
+        return wineEnginesPath +
+                "/" +
+                winePrefixDTO.getDistribution() +
+                "-" +
+                operatingSystemFetcher.fetchCurrentOperationSystem().getWinePackage() +
+                "-" +
+                winePrefixDTO.getArchitecture() +
+                "/" +
+                winePrefixDTO.getVersion();
     }
 }

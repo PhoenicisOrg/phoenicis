@@ -34,27 +34,21 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
     private final List<Node> lockableElements = new ArrayList<>();
-    private Consumer<WinePrefixDTO> onWineCfg = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onRegedit = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onWineboot = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onWinebootRepair = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onWineConsole = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onTaskMgr = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onKillProcess = (winePrefix) -> {
-    };
-    private Consumer<WinePrefixDTO> onUninstaller = (winePrefix) -> {
-    };
+    private Consumer<WinePrefixDTO> onWineCfg = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onRegedit = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onWineboot = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onWinebootRepair = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onWineConsole = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onTaskMgr = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onKillProcess = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onUninstaller = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix = winePrefix -> {};
 
     public WinePrefixContainerPanel(WinePrefixDTO containerEntity) {
         super(containerEntity);
         this.getTabs().add(drawDisplayTab(containerEntity));
         this.getTabs().add(drawInputTab(containerEntity));
+        this.getTabs().add(drawWineToolsTab(containerEntity));
         this.getTabs().add(drawToolsTab(containerEntity));
     }
 
@@ -202,7 +196,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     }
 
 
-    protected Tab drawInputTab(WinePrefixDTO containerEntity) {
+    private Tab drawInputTab(WinePrefixDTO containerEntity) {
         final Tab inputTab = new Tab(translate("Input"));
         final VBox inputPane = new VBox();
         final Text title = new TextWithStyle(translate("Input settings"), TITLE_CSS_CLASS);
@@ -237,8 +231,8 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     }
 
 
-    protected Tab drawToolsTab(WinePrefixDTO containerEntity) {
-        final Tab toolsTab = new Tab(translate("Tools"));
+    private Tab drawWineToolsTab(WinePrefixDTO containerEntity) {
+        final Tab toolsTab = new Tab(translate("Wine tools"));
         final VBox toolsPane = new VBox();
         final Text title = new TextWithStyle(translate("Wine tools"), TITLE_CSS_CLASS);
 
@@ -279,6 +273,44 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstaller.png",
                 e -> this.onUninstaller.accept(containerEntity)), 3, 3);
         toolsContentPane.add(wineToolCaption(translate("Wine uninstaller")), 3, 4);
+
+        toolsPane.getChildren().addAll(toolsContentPane);
+
+        toolsContentPane.getColumnConstraints().addAll(
+                new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25),
+                new ColumnConstraintsWithPercentage(25)
+        );
+
+        toolsContentPane.getRowConstraints().addAll(
+                new RowConstraints(96.),
+                new RowConstraints(25.),
+                new RowConstraints(30.),
+                new RowConstraints(96.),
+                new RowConstraints(25.)
+        );
+
+
+        toolsTab.setContent(toolsPane);
+        toolsTab.setClosable(false);
+        return toolsTab;
+    }
+
+    private Tab drawToolsTab(WinePrefixDTO containerEntity) {
+        final Tab toolsTab = new Tab(translate("Tools"));
+        final VBox toolsPane = new VBox();
+        final Text title = new TextWithStyle(translate("Tools"), TITLE_CSS_CLASS);
+
+        toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
+        toolsPane.getChildren().add(title);
+
+        final GridPane toolsContentPane = new GridPane();
+        toolsContentPane.getStyleClass().add("grid");
+
+        toolsContentPane.add(wineToolButton(translate("Open a terminal"), "cmd.png",
+                e -> this.onOpenTerminalInWinePrefix.accept(containerEntity)), 0, 0);
+        toolsContentPane.add(wineToolCaption(translate("Open a terminal")), 0, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 
@@ -390,4 +422,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         this.onKillProcess = onKillProcess;
     }
 
+    public void setOnOpenTerminalInWinePrefix(Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix) {
+        this.onOpenTerminalInWinePrefix = onOpenTerminalInWinePrefix;
+    }
 }
