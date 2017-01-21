@@ -8,6 +8,7 @@ import com.playonlinux.scripts.ScriptsConfiguration;
 import com.playonlinux.tools.ToolsConfiguration;
 import com.playonlinux.win32.Win32Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +26,9 @@ public class ContainersConfiguration {
     @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
+    @Value("${application.user.engines.wine}")
+    private String wineEnginesPath;
+
     @Bean
     public ContainersManager containersManager() {
         return new WinePrefixesManager(
@@ -41,7 +45,7 @@ public class ContainersConfiguration {
 
     @Bean
     public WineContainerController wineContainerController() {
-        return new WineContainerController(scriptsConfiguration.scriptInterpreter());
+        return new WineContainerController(scriptsConfiguration.scriptInterpreter(), toolsConfiguration.terminalOpener(), wineEnginesPath, toolsConfiguration.operatingSystemFetcher());
     }
 
     @Bean
