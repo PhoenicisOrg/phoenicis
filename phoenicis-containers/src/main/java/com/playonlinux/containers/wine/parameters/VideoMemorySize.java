@@ -18,30 +18,15 @@
 
 package com.playonlinux.containers.wine.parameters;
 
-public class VideoMemorySize {
+import com.playonlinux.win32.registry.*;
+
+public class VideoMemorySize implements RegistryParameter {
     private final boolean isDefault;
     private final int videoSize;
 
     public VideoMemorySize(boolean isDefault, int videoSize) {
         this.isDefault = isDefault;
         this.videoSize = videoSize;
-    }
-
-    public int getVideoSize() {
-        return videoSize;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    @Override
-    public String toString() {
-        if(isDefault) {
-            return "Default";
-        } else {
-            return Integer.toString(videoSize);
-        }
     }
 
     public static VideoMemorySize[] possibleValues() {
@@ -63,5 +48,37 @@ public class VideoMemorySize {
                 new VideoMemorySize(false, 7168),
                 new VideoMemorySize(false, 8192)
         };
+    }
+
+    public int getVideoSize() {
+        return videoSize;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    @Override
+    public String toString() {
+        if (isDefault) {
+            return "Default";
+        } else {
+            return Integer.toString(videoSize);
+        }
+    }
+
+    @Override
+    public AbstractRegistryNode toRegistryPatch() {
+        final RegistryKey registryNode
+                = new RegistryKey("HKEY_CURRENT_USER")
+                .addDeepChildren("Software", "Wine", "Direct3D");
+
+        if (isDefault) {
+            registryNode.addChild(new RegistryValue<>("VideoMemorySize", new RemoveValueType()));
+        } else {
+            registryNode.addChild(new RegistryValue<>("VideoMemorySize", new StringValueType(Integer.toString(videoSize))));
+        }
+
+        return registryNode;
     }
 }

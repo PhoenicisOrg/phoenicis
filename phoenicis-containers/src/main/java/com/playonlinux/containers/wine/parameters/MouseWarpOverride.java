@@ -18,22 +18,46 @@
 
 package com.playonlinux.containers.wine.parameters;
 
+import com.playonlinux.win32.registry.*;
+
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
-public enum MouseWarpOverride {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled")),
-    FORCE(translate("Force"));
+public enum MouseWarpOverride implements RegistryParameter {
+    DEFAULT(translate("Default"), ""),
+    DISABLED(translate("Disabled"), "disabled"),
+    ENABLED(translate("Enabled"), "enabled"),
+    FORCE(translate("Force"), "force");
 
     private final String translatedName;
+    private final String registryValue;
 
-    MouseWarpOverride(String translatedName) {
+    MouseWarpOverride(String translatedName, String registryValue) {
         this.translatedName = translatedName;
+        this.registryValue = registryValue;
     }
 
     @Override
     public String toString() {
         return translatedName;
+    }
+
+    @Override
+    public AbstractRegistryNode toRegistryPatch() {
+        final RegistryKey registryNode
+                = new RegistryKey("HKEY_CURRENT_USER")
+                .addDeepChildren("Software", "Wine", "DirectInput");
+
+        switch (this) {
+            case DEFAULT:
+                registryNode.addChild(new RegistryValue<>("MouseWarpOverride", new RemoveValueType()));
+                break;
+            case ENABLED:
+            case DISABLED:
+            case FORCE:
+                registryNode.addChild(new RegistryValue<>("MouseWarpOverride", new StringValueType(registryValue)));
+                break;
+        }
+
+        return registryNode;
     }
 }

@@ -18,21 +18,45 @@
 
 package com.playonlinux.containers.wine.parameters;
 
+import com.playonlinux.win32.registry.*;
+
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
-public enum AlwaysOffscreen {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    ENABLED(translate("Enabled"));
+public enum AlwaysOffscreen implements RegistryParameter {
+    DEFAULT(translate("Default"), ""),
+    DISABLED(translate("Disabled"), "disabled"),
+    ENABLED(translate("Enabled"), "enabled");
 
     private final String translatedName;
+    private final String registryValue;
 
-    AlwaysOffscreen(String translatedName) {
+    AlwaysOffscreen(String translatedName, String registryValue) {
         this.translatedName = translatedName;
+        this.registryValue = registryValue;
     }
+
 
     @Override
     public String toString() {
         return translatedName;
+    }
+
+    @Override
+    public AbstractRegistryNode toRegistryPatch() {
+        final RegistryKey registryNode
+                = new RegistryKey("HKEY_CURRENT_USER")
+                .addDeepChildren("Software", "Wine", "Direct3D");
+
+        switch (this) {
+            case DEFAULT:
+                registryNode.addChild(new RegistryValue<>("AlwaysOffscreen", new RemoveValueType()));
+                break;
+            case ENABLED:
+            case DISABLED:
+                registryNode.addChild(new RegistryValue<>("AlwaysOffscreen", new StringValueType(registryValue)));
+                break;
+        }
+
+        return registryNode;
     }
 }

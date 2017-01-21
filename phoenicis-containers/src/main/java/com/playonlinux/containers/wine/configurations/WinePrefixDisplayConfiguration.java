@@ -25,9 +25,9 @@ import java.io.File;
 public interface WinePrefixDisplayConfiguration {
     /**
      *
-     * @return The {@link GLSL} value
+     * @return The {@link UseGLSL} value
      */
-    GLSL getGLSL(File registryFile);
+    UseGLSL getGLSL(File registryFile);
 
     /**
      *

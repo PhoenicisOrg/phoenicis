@@ -18,22 +18,46 @@
 
 package com.playonlinux.containers.wine.parameters;
 
+import com.playonlinux.win32.registry.*;
+
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
-public enum RenderTargetModeLock {
-    DEFAULT(translate("Default")),
-    DISABLED(translate("Disabled")),
-    READDRAW("readdraw"),
-    READTEX("readtext");
+public enum RenderTargetModeLock implements RegistryParameter {
+    DEFAULT(translate("Default"), ""),
+    DISABLED(translate("Disabled"), "disabled"),
+    READDRAW("readdraw", "readdraw"),
+    READTEX("readtext", "readtext");
 
     private final String translatedName;
+    private final String registryValue;
 
-    RenderTargetModeLock(String translatedName) {
+    RenderTargetModeLock(String translatedName, String registryValue) {
         this.translatedName = translatedName;
+        this.registryValue = registryValue;
     }
 
     @Override
     public String toString() {
         return translatedName;
+    }
+
+    @Override
+    public AbstractRegistryNode toRegistryPatch() {
+        final RegistryKey registryNode
+                = new RegistryKey("HKEY_CURRENT_USER")
+                .addDeepChildren("Software", "Wine", "Direct3D");
+
+        switch (this) {
+            case DEFAULT:
+                registryNode.addChild(new RegistryValue<>("RenderTargetModeLock", new RemoveValueType()));
+                break;
+            case DISABLED:
+            case READDRAW:
+            case READTEX:
+                registryNode.addChild(new RegistryValue<>("RenderTargetModeLock", new StringValueType(registryValue)));
+                break;
+        }
+
+        return registryNode;
     }
 }

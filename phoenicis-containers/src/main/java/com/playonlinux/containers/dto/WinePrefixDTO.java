@@ -6,7 +6,7 @@ public class WinePrefixDTO extends ContainerDTO {
     private final String architecture;
     private final String distribution;
     private final String version;
-    private final GLSL glslValue;
+    private final UseGLSL useGlslValue;
     private final DirectDrawRenderer directDrawRenderer;
     private final VideoMemorySize videoMemorySize;
     private final OffscreenRenderingMode offscreenRenderingMode;
@@ -21,7 +21,7 @@ public class WinePrefixDTO extends ContainerDTO {
         this.architecture = builder.architecture;
         this.distribution = builder.distribution;
         this.version = builder.version;
-        this.glslValue = builder.glslValue;
+        this.useGlslValue = builder.useGlslValue;
         this.directDrawRenderer = builder.directDrawRenderer;
         this.videoMemorySize = builder.videoMemorySize;
         this.offscreenRenderingMode = builder.offscreenRenderingMode;
@@ -44,8 +44,8 @@ public class WinePrefixDTO extends ContainerDTO {
         return version;
     }
 
-    public GLSL getGlslValue() {
-        return glslValue;
+    public UseGLSL getUseGlslValue() {
+        return useGlslValue;
     }
 
     public DirectDrawRenderer getDirectDrawRenderer() {
@@ -86,7 +86,7 @@ public class WinePrefixDTO extends ContainerDTO {
         private String architecture;
         private String distribution;
         private String version;
-        private GLSL glslValue;
+        private UseGLSL useGlslValue;
         private DirectDrawRenderer directDrawRenderer;
         private VideoMemorySize videoMemorySize;
         private OffscreenRenderingMode offscreenRenderingMode;
@@ -121,8 +121,8 @@ public class WinePrefixDTO extends ContainerDTO {
             return this;
         }
 
-        public Builder withGlslValue(GLSL glslValue) {
-            this.glslValue = glslValue;
+        public Builder withGlslValue(UseGLSL useGlslValue) {
+            this.useGlslValue = useGlslValue;
             return this;
         }
 
