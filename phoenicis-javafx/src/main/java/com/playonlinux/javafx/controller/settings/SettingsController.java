@@ -12,6 +12,7 @@ public class SettingsController {
         this.view = view;
         this.settingsSaver = settingsSaver;
         this.view.setOnSave(settings -> settingsSaver.save(settings));
+        this.view.setSettings(this.settingsSaver.load());
     }
 
     public ViewSettings getView() {

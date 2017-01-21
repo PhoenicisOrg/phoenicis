@@ -81,6 +81,17 @@ public class ViewSettings extends MainWindowView {
         showRightView(informationPane);
     }
 
+    public void setSettings(Properties settings) {
+        if (settings.getProperty("application.theme").equals("darkTheme.css")) {
+            themes.setValue(Themes.DARK);
+        } else if (settings.getProperty("application.theme").equals("hidpiTheme.css")) {
+            themes.setValue(Themes.HIDPI);
+        } else {
+            themes.setValue(Themes.DEFAULT);
+        }
+        repository.setText(settings.getProperty("application.repository.configuration"));
+    }
+
     public void setOnSave(Consumer<Properties> onSave) {
         this.onSave = onSave;
     }

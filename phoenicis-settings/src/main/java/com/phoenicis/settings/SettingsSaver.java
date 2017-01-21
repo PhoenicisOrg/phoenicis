@@ -1,6 +1,7 @@
 package com.phoenicis.settings;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DefaultPropertiesPersister;
 
 import java.io.File;
@@ -9,6 +10,12 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 public class SettingsSaver {
+    @Value("${application.theme}")
+    private String theme;
+
+    @Value("${application.repository.configuration}")
+    private String repository;
+
     private String settingsFileName = "config.properties";
 
     public SettingsSaver(String settingsFileName) {
@@ -27,4 +34,10 @@ public class SettingsSaver {
         System.out.println("Save settings");
     }
 
+    public Properties load() {
+        Properties properties = new Properties();
+        properties.setProperty("application.theme", theme);
+        properties.setProperty("application.repository.configuration",repository);
+        return properties;
+    }
 }
