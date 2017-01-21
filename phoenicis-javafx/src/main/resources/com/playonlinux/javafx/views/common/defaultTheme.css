@@ -122,6 +122,12 @@
     -fx-max-height: 2.5em;
 }
 
+#menuPane > .tab-header-area .tab {
+    -fx-border-width: 4;
+    -fx-border-color: transparent;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
 #menuPane > .tab-header-area .tab:selected {
     -fx-border-width: 4;
     -fx-border-style: hidden hidden solid hidden;
