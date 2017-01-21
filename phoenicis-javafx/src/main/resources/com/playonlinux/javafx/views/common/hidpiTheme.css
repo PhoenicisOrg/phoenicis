@@ -75,8 +75,44 @@
     -fx-spacing: 0.8em;
 }
 
+#menuPane > .tab-header-area .tab-header-background {
+    -fx-background-color: linear-gradient(#428bca, #116395);
+    -fx-min-height: 2.5em;
+    -fx-max-height: 2.5em;
+}
+
+#menuPane > .tab-header-area .tab:selected {
+    -fx-border-width: 2;
+    -fx-border-style: hidden solid hidden solid;
+    -fx-border-color: white;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 #menuPane {
-    -fx-spacing: 8em;
+    -fx-tab-min-width: 7em;
+    -fx-padding: -10 0 0 0;
+    -fx-spacing: 0;
+    -fx-pref-height: 43.3em;
+}
+
+#menuPane > .tab-header-area .tab {
+    -fx-background-color: transparent;
+    -fx-background-opacity: 0;
+    -fx-pref-height: 3.5em;
+}
+
+#menuPane > .tab-header-area .tab:disabled {
+    -fx-opacity: 1;
+}
+
+#menuPane > .tab-header-area .tab-label {
+    -fx-alignment: CENTER;
+    -fx-padding: 0 0 -5 0;
+    -fx-text-font-family: "Roboto Light";
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 1.2em;
+    -fx-cursor: hand;
 }
 
 .rightPane {
