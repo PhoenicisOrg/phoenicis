@@ -122,6 +122,14 @@
     -fx-max-height: 2.5em;
 }
 
+#menuPane > .tab-header-area .tab:selected {
+    -fx-border-width: 4;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-color: #529bda;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 #menuPane {
     -fx-tab-min-width: 7em;
     -fx-padding: -10 0 0 0;
