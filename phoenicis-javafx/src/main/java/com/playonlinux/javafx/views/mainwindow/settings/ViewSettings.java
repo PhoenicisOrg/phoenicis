@@ -129,6 +129,8 @@ public class ViewSettings extends MainWindowView {
     public void setSettings(Settings settings) {
         if (settings.get(Setting.THEME).equals("darkTheme.css")) {
             themes.setValue(Themes.DARK);
+        } else if (settings.get(Setting.THEME).equals("breezeDarkTheme.css")) {
+            themes.setValue(Themes.BREEZE_DARK);
         } else if (settings.get(Setting.THEME).equals("hidpiTheme.css")) {
             themes.setValue(Themes.HIDPI);
         } else {
@@ -150,6 +152,10 @@ public class ViewSettings extends MainWindowView {
             }
             case DARK: {
                 theme = "darkTheme.css";
+                break;
+            }
+            case BREEZE_DARK: {
+                theme = "breezeDarkTheme.css";
                 break;
             }
             case HIDPI: {
