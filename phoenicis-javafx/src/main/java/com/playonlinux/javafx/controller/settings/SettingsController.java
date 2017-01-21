@@ -1,18 +1,18 @@
 package com.playonlinux.javafx.controller.settings;
 
-import com.phoenicis.settings.SettingsSaver;
+import com.phoenicis.settings.SettingsManager;
 import com.playonlinux.javafx.views.mainwindow.settings.ViewSettings;
 
 public class SettingsController {
     private final ViewSettings view;
-    private final SettingsSaver settingsSaver;
+    private final SettingsManager settingsManager;
 
     public SettingsController(ViewSettings view,
-                              SettingsSaver settingsSaver) {
+                              SettingsManager settingsManager) {
         this.view = view;
-        this.settingsSaver = settingsSaver;
-        this.view.setOnSave(settings -> settingsSaver.save(settings));
-        this.view.setSettings(this.settingsSaver.load());
+        this.settingsManager = settingsManager;
+        this.view.setOnSave(settings -> settingsManager.save(settings));
+        this.view.setSettings(this.settingsManager.load());
     }
 
     public ViewSettings getView() {

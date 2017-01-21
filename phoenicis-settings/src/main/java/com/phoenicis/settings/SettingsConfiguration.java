@@ -11,7 +11,7 @@ public class SettingsConfiguration {
     private String settingsFileName;
 
     @Bean
-    public SettingsSaver settingsSaver() {
-        return new SettingsSaver(settingsFileName);
+    public SettingsManager settingsManager() {
+        return new SettingsManager(settingsFileName);
     }
 }

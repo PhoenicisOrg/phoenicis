@@ -110,7 +110,7 @@ public class ControllerConfiguration {
     public SettingsController settingsController() {
         return new SettingsController(
                 viewsConfiguration.viewSettings(),
-                settingsConfiguration.settingsSaver()
+                settingsConfiguration.settingsManager()
         );
     }
 }

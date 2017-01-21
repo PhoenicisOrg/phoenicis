@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-public class SettingsSaver {
+public class SettingsManager {
     @Value("${application.theme}")
     private String theme;
 
@@ -18,7 +18,7 @@ public class SettingsSaver {
 
     private String settingsFileName = "config.properties";
 
-    public SettingsSaver(String settingsFileName) {
+    public SettingsManager(String settingsFileName) {
         this.settingsFileName = settingsFileName;
     }
 
