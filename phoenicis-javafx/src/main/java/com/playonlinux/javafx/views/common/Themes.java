@@ -22,6 +22,7 @@ public enum Themes {
 
     DEFAULT("Default theme"),
     DARK("Dark theme"),
+    BREEZE_DARK("Breeze Dark theme"),
     HIDPI("HiDPI theme");
 
     private final String name;
