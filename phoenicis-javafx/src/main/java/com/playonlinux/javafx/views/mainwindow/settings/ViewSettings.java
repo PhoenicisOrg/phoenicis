@@ -18,6 +18,8 @@
 
 package com.playonlinux.javafx.views.mainwindow.settings;
 
+import com.phoenicis.settings.Setting;
+import com.phoenicis.settings.Settings;
 import com.playonlinux.javafx.views.common.TextWithStyle;
 import com.playonlinux.javafx.views.common.Themes;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
@@ -29,7 +31,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.util.Properties;
 import java.util.function.Consumer;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
@@ -42,8 +43,8 @@ public class ViewSettings extends MainWindowView {
     private ComboBox<Themes> themes;
     private TextField repository;
     private final Button saveButton = new Button("Save");
-    private Consumer<Properties> onSave;
-    private Properties settings = new Properties();
+    private Consumer<Settings> onSave;
+    private Settings settings = new Settings();
 
     public ViewSettings() {
         super("Settings");
@@ -82,18 +83,18 @@ public class ViewSettings extends MainWindowView {
         showRightView(informationPane);
     }
 
-    public void setSettings(Properties settings) {
-        if (settings.getProperty("application.theme").equals("darkTheme.css")) {
+    public void setSettings(Settings settings) {
+        if (settings.get(Setting.THEME).equals("darkTheme.css")) {
             themes.setValue(Themes.DARK);
-        } else if (settings.getProperty("application.theme").equals("hidpiTheme.css")) {
+        } else if (settings.get(Setting.THEME).equals("hidpiTheme.css")) {
             themes.setValue(Themes.HIDPI);
         } else {
             themes.setValue(Themes.DEFAULT);
         }
-        repository.setText(settings.getProperty("application.repository.configuration"));
+        repository.setText(settings.get(Setting.REPOSITORY));
     }
 
-    public void setOnSave(Consumer<Properties> onSave) {
+    public void setOnSave(Consumer<Settings> onSave) {
         this.onSave = onSave;
     }
 
@@ -118,8 +119,8 @@ public class ViewSettings extends MainWindowView {
             }
 
         }
-        settings.setProperty("application.theme", theme);
-        settings.setProperty("application.repository.configuration",repository.getText());
+        settings.set(Setting.THEME, theme);
+        settings.set(Setting.REPOSITORY, repository.getText());
 
         onSave.accept(this.settings);
     }
