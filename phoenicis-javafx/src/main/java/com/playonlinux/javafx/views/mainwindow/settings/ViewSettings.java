@@ -66,7 +66,8 @@ public class ViewSettings extends MainWindowView {
         informationContentPane.add(themes, 1, 0);
 
         informationContentPane.add(new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
-        repository = new TextField("repository");
+        repository = new TextField();
+        repository.setPrefWidth(400);
         informationContentPane.add(repository, 1, 1);
 
         informationContentPane.setHgap(20);
