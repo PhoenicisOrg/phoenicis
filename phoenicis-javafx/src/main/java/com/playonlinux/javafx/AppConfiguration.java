@@ -2,6 +2,7 @@ package com.playonlinux.javafx;
 
 
 import com.phoenicis.library.LibraryConfiguration;
+import com.phoenicis.settings.SettingsConfiguration;
 import com.playonlinux.apps.AppsConfiguration;
 import com.playonlinux.configuration.PlayOnLinuxGlobalConfiguration;
 import com.playonlinux.containers.ContainersConfiguration;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Import;
         AppsConfiguration.class,
         EnginesConfiguration.class,
         LibraryConfiguration.class,
+        SettingsConfiguration.class,
         JavaFXSetupWindowUIConfiguration.class,
         MultithreadingConfiguration.class,
         Win32Configuration.class,

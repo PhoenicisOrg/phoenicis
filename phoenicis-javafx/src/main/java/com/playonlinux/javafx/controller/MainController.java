@@ -22,9 +22,9 @@ import com.playonlinux.javafx.controller.apps.AppsController;
 import com.playonlinux.javafx.controller.containers.ContainersController;
 import com.playonlinux.javafx.controller.engines.EnginesController;
 import com.playonlinux.javafx.controller.library.LibraryController;
+import com.playonlinux.javafx.controller.settings.SettingsController;
 import com.playonlinux.javafx.views.common.widget.PlayOnLinuxLogo;
 import com.playonlinux.javafx.views.mainwindow.MainWindow;
-import com.playonlinux.javafx.views.mainwindow.settings.ViewSettings;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -44,7 +44,7 @@ public class MainController {
                           AppsController appsController,
                           EnginesController enginesController,
                           ContainersController containersController,
-                          ViewSettings viewSettings,
+                          SettingsController settingsController,
                           PlayOnLinuxLogo playOnLinuxLogo) {
         super();
 
@@ -57,7 +57,7 @@ public class MainController {
                 appsController.getView(),
                 enginesController.getView(),
                 containersController.getView(),
-                viewSettings,
+                settingsController.getView(),
                 playOnLinuxLogo
         );
 

@@ -23,10 +23,17 @@ import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+
+import java.util.Properties;
+import java.util.function.Consumer;
 
 public class ViewSettings extends MainWindowView {
     private ComboBox<Themes> themes;
+    private final Button saveButton = new Button("Save");
+    private Consumer<Properties> onSave;
+    private Properties settings;
 
     public ViewSettings() {
         super("Settings");
@@ -40,8 +47,15 @@ public class ViewSettings extends MainWindowView {
         themes.getItems().setAll(Themes.values());
         themes.setOnAction(this::handleThemeChange);
 
+        saveButton.setOnMouseClicked(event -> onSave.accept(this.settings));
+
         LeftSpacer spacer = new LeftSpacer();
-        addToSideBar(new LeftBarTitle("Settings"), spacer, themes);
+        addToSideBar(new LeftBarTitle("Settings"), spacer, themes, saveButton);
+
+    }
+
+    public void setOnSave(Consumer<Properties> onSave) {
+        this.onSave = onSave;
     }
 
     private void handleThemeChange(ActionEvent evt) {
