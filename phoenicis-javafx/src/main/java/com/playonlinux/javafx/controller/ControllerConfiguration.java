@@ -1,6 +1,7 @@
 package com.playonlinux.javafx.controller;
 
 import com.phoenicis.library.LibraryConfiguration;
+import com.phoenicis.settings.SettingsConfiguration;
 import com.playonlinux.apps.AppsConfiguration;
 import com.playonlinux.containers.ContainersConfiguration;
 import com.playonlinux.engines.EnginesConfiguration;
@@ -9,6 +10,7 @@ import com.playonlinux.javafx.controller.containers.ContainersController;
 import com.playonlinux.javafx.controller.engines.EnginesController;
 import com.playonlinux.javafx.controller.library.LibraryController;
 import com.playonlinux.javafx.controller.library.console.ConsoleController;
+import com.playonlinux.javafx.controller.settings.SettingsController;
 import com.playonlinux.javafx.views.ViewsConfiguration;
 import com.playonlinux.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,9 @@ public class ControllerConfiguration {
     @Autowired
     private ContainersConfiguration containersConfiguration;
 
+    @Autowired
+    private SettingsConfiguration settingsConfiguration;
+
     @Bean
     public MainController mainController() {
         return new MainController(
@@ -52,7 +57,7 @@ public class ControllerConfiguration {
                 appsController(),
                 enginesController(),
                 containersController(),
-                viewsConfiguration.viewSettings(),
+                settingsController(),
                 viewsConfiguration.playOnLinuxLogo());
     }
 
@@ -98,6 +103,14 @@ public class ControllerConfiguration {
         return new ConsoleController(
                 viewsConfiguration.consoleTabFactory(),
                 scriptsConfiguration.scriptInterpreter()
+        );
+    }
+
+    @Bean
+    public SettingsController settingsController() {
+        return new SettingsController(
+                viewsConfiguration.viewSettings(),
+                settingsConfiguration.settingsManager()
         );
     }
 }

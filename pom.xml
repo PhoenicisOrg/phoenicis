@@ -27,7 +27,8 @@
 		<module>phoenicis-scripts</module>
         <module>phoenicis-tools</module>
         <module>phoenicis-entities</module>
-        <module>phoenicis-library</module>
+		<module>phoenicis-library</module>
+        <module>phoenicis-settings</module>
         <module>phoenicis-engines</module>
         <module>phoenicis-cli</module>
         <module>phoenicis-multithreading</module>
