@@ -15,12 +15,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#header {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 1px;
-    -fx-background-color:#FFFFFF;
-}
+
+
 #logoText {
     -fx-font-family: "Maven Pro";
     -fx-font-size: 3.6em;
@@ -42,20 +38,8 @@
     -fx-background-color: linear-gradient(#428bca, #116395);
     -fx-pref-width: 100%;
     -fx-pref-height: 6em;
-    -fx-padding: 1.0em;
+    -fx-padding: 1em;
 
-}
-
-.menuEntry {
-    -fx-font-family: "Roboto Light";
-    -fx-font-size: 2.8em;
-    -fx-translate-y: 0.8em;
-    -fx-fill: #FFFFFF;
-    -fx-cursor: hand;
-}
-
-.menuEntry:hover {
-    -fx-fill: black;
 }
 
 .mainWindowScene {
@@ -63,24 +47,58 @@
     -fx-fit-to-height: true;
 }
 
+.leftPaneScrollbar {
+    -fx-border-width: 0;
+    -fx-background-color:#F0F0F0;
+}
+
+.leftPaneScrollbar > .viewport {
+    -fx-background-color: #F0F0F0;
+}
+
+.leftPaneScrollbar .scroll-bar:vertical {
+    -fx-max-width: 10px;
+    -fx-pref-width: 10px;
+}
+
+.leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-font-size: 0;
+    -fx-opacity: 0;
+}
+
+.leftPaneScrollbar .scroll-bar:vertical .track {
+    -fx-background-color: #F0F0F0;
+    -fx-border-width: 0;
+    -fx-background-radius: 0em;
+    -fx-pref-width: 10px;
+    -fx-max-width: 10px;
+}
+
+.leftPaneScrollbar .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 2em;
+    -fx-pref-width: 8px;
+    -fx-max-width: 8px;
+}
+
+
+
 .leftPane {
     -fx-background-color: #F0F0F0;
-    -fx-min-height: 80em;
+    -fx-min-height: 20em;
+    -fx-min-width: 30em;
     -fx-pref-width: 30em;
-    -fx-padding: 2em;
     -fx-spacing: 0.8em;
+    -fx-padding: 2em;
 }
 
 .leftPaneInside {
     -fx-spacing: 0.8em;
 }
 
-#menuPane {
-    -fx-spacing: 8em;
-}
-
 .rightPane {
-    -fx-max-height: 80em;
     -fx-pref-width: 110em;
     -fx-border-width: 0;
     -fx-border-style: none;
@@ -88,13 +106,46 @@
     -fx-background-color: transparent;
 
 }
+
 .rightPane > .viewport {
     -fx-background-color: #FFFFFF;
     -fx-border-width: 0;
 }
 
 .text-field {
-    -fx-background-radius: 1em;
+    -fx-background-radius: 2em;
+}
+
+#menuPane > .tab-header-area .tab-header-background {
+    -fx-background-color: linear-gradient(#428bca, #116395);
+    -fx-min-height: 5em;
+    -fx-max-height: 5em;
+}
+
+#menuPane {
+    -fx-tab-min-width: 14em;
+    -fx-padding: -20 0 0 0;
+    -fx-spacing: 0;
+    -fx-pref-height: 86.6em;
+}
+
+#menuPane > .tab-header-area .tab {
+    -fx-background-color: transparent;
+    -fx-background-opacity: 0;
+    -fx-pref-height: 7em;
+}
+
+#menuPane > .tab-header-area .tab:disabled {
+    -fx-opacity: 1;
+}
+
+#menuPane > .tab-header-area .tab-label {
+    -fx-alignment: CENTER;
+    -fx-padding: 0 0 -10 0;
+    -fx-text-font-family: "Roboto Light";
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 2.4em;
+    -fx-cursor: hand;
 }
 
 .leftBarTitle {
@@ -120,34 +171,39 @@
 
 .leftButton:hover {
     -fx-background-color: #D3D3D3;
-    -fx-background-insets: 0,1,2;
-    -fx-background-radius: 3,2,1;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 3, 2, 1;
 }
 
 .leftSpacer {
-    -fx-pref-height: 0.8em;
+    -fx-pref-height: 1.6em;
 }
 
 .miniatureText {
-    -fx-font-size: 2.25em;
+    -fx-font-size: 1.80em;
     -fx-wrap-text: true;
     -fx-alignment: center;
     -fx-text-alignment: center;
 }
+
 .miniatureImage {
     -fx-border-radius: 0.8em;
     -fx-background-radius: 0.8em;
 }
+
 .rightPane .miniatureList {
     -fx-pref-width: 107em;
     -fx-background-color: #FFFFFF;
     -fx-border-width: 0;
     -fx-border-style: none;
-    -fx-padding: 1.0em;
+    -fx-padding: 1em;
 }
+
 .miniatureListElement {
     -fx-pref-width: 24em;
     -fx-pref-height: 18em;
+    -fx-max-height: 18em;
+    -fx-min-height: 18em;
     -fx-font-family: "Roboto Light";
     -fx-alignment: top-center;
     -fx-spacing: 0.6em;
@@ -155,8 +211,13 @@
     -fx-cursor: hand;
     -fx-background-radius: 1.6em;
 }
+
 .miniatureListElement:hover {
     -fx-background-color: #EFEFEF;
+}
+
+.miniatureListElement.selected {
+    -fx-background-color: #EAEAEA;
 }
 
 .downloadImageWaiting {
@@ -170,6 +231,7 @@
 .appPresentation {
     -fx-background-color: #FFFFFF;
 }
+
 .appPresentation > * {
     -fx-padding: 1.0em;
     -fx-spacing: 1.0em;
@@ -177,6 +239,7 @@
 
 .appPanelMiniaturesPane {
     -fx-background-color: #FAFAFA;
+    -fx-padding: 1.0em;
 }
 
 .appPanelMiniaturesPaneWrapper {
@@ -194,52 +257,40 @@
 }
 
 .commandText {
-    -fx-fill:#999999;
-}
-.resultText {
-    -fx-fill:#000000;
+    -fx-fill: #999999;
 }
 
-.consolePane {
-    -fx-background-color: #FFFFFF;
-    -fx-pref-width:120em;
-    -fx-pref-height:40em;
+.resultText {
+    -fx-fill: #000000;
 }
+
+
+
 .console, .console .viewport {
     -fx-background-color: #FFFFFF;
 }
-.console {
-    -fx-pref-width:120em;
-    -fx-pref-height:80em;
-    -fx-padding: 2em;
-    -fx-font-family: "Lucida Console";
-}
-.consoleCommandType {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-}
+
 
 /*
  * Setup Window stuffs
- */ 
+ */
 
 #header {
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
-    -fx-border-width: 2px;
-    -fx-background-color:#FFFFFF;
+    -fx-border-width: 0 0 2px 0;
+    -fx-background-color: #FFFFFF;
 }
 
 #footer {
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
-    -fx-border-width: 2px;
+    -fx-border-width: 2px 0 0 0;
 }
 
 #panelForTopheader {
     -fx-padding: 60px;
     -fx-background-color: #F4F4F4;
-    -fx-border-color: #CCCCCC;
 }
 
 #stepScrollPane {
@@ -250,12 +301,13 @@
 .containerConfigurationPane {
     -fx-padding: 20px;
 }
+
 .containerConfigurationPane > .grid {
-    -fx-padding : 20px;
+    -fx-padding: 20px;
 }
 
 .captionTitle {
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
 }
 
 .wineToolButton {
@@ -263,7 +315,43 @@
     -fx-pref-height: 192px;
     -fx-content-display: graphic-only;
 }
+
 .wineToolCaption {
-    -fx-font-size: 2.70em;
+    -fx-font-size: 1.7em;
     -fx-pref-width: 192px;
+}
+
+.dragAndDropBox {
+    -fx-background-color: #F6F6F6;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-style: dashed;
+    -fx-border-color: #CCC;
+    -fx-border-width: 1.0em;
+}
+
+.boldLabel {
+    -fx-font-family: "Roboto Bold";
+}
+.normalLabel {
+    -fx-font-family: "Roboto Light";
+}
+
+.console {
+    -fx-pref-width: 120em;
+    -fx-padding: 1.0em;
+    -fx-font-family: "Lucida Console";
+}
+
+.consoleText {
+    -fx-wrap-text: true;
+    -fx-font-size: 1.7em;
+}
+
+.consoleCommandType {
+    -fx-border-radius: 0;
+    -fx-background-color: #FFF;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }
