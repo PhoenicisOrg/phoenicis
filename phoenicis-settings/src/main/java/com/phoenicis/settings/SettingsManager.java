@@ -30,7 +30,6 @@ public class SettingsManager {
         } catch (Exception e ) {
             e.printStackTrace();
         }
-        System.out.println("Save settings");
     }
 
     public Settings load() {

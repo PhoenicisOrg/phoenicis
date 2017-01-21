@@ -23,14 +23,19 @@ import com.phoenicis.settings.Settings;
 import com.playonlinux.javafx.views.common.TextWithStyle;
 import com.playonlinux.javafx.views.common.Themes;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.geometry.VPos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static com.playonlinux.configuration.localisation.Localisation.translate;
@@ -41,7 +46,7 @@ public class ViewSettings extends MainWindowView {
     private static final String TITLE_CSS_CLASS = "title";
 
     private ComboBox<Themes> themes;
-    private TextField repository;
+    private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private final Button saveButton = new Button("Save");
     private Consumer<Settings> onSave;
     private Settings settings = new Settings();
@@ -66,10 +71,48 @@ public class ViewSettings extends MainWindowView {
         themes.setOnAction(this::handleThemeChange);
         informationContentPane.add(themes, 1, 0);
 
-        informationContentPane.add(new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
-        repository = new TextField();
-        repository.setPrefWidth(400);
-        informationContentPane.add(repository, 1, 1);
+        TextWithStyle repositoryText = new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS);
+        informationContentPane.add(repositoryText, 0, 1);
+        GridPane.setValignment(repositoryText, VPos.TOP);
+        VBox repositoryLayout = new VBox();
+        repositoryLayout.setSpacing(5);
+        ListView repositoryListView = new ListView(repositories);
+        repositoryListView.setPrefSize(400,100);
+        repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        repositoryListView.setEditable(true);
+        repositoryListView.setCellFactory(param -> new TextFieldListCell<>(new StringConverter<String>() {
+
+            @Override
+            public String toString(String object) {
+                return object;
+            }
+
+            @Override
+            public String fromString(String string) {
+                return string;
+            }
+        }));
+        HBox repositoryButtonLayout = new HBox();
+        repositoryButtonLayout.setSpacing(5);
+        Button addButton = new Button();
+        addButton.setText("Add");
+        addButton.setOnAction((ActionEvent event) -> {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Add repository");
+            dialog.setHeaderText("Add repository");
+            dialog.setContentText("Please add the new repository:");
+
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(repository -> repositories.add(repository));
+        });
+        Button removeButton = new Button();
+        removeButton.setText("Remove");
+        removeButton.setOnAction((ActionEvent event) -> {
+            repositories.removeAll(repositoryListView.getSelectionModel().getSelectedItems());
+        });
+        repositoryButtonLayout.getChildren().addAll(addButton,removeButton);
+        repositoryLayout.getChildren().addAll(repositoryListView,repositoryButtonLayout);
+        informationContentPane.add(repositoryLayout, 1, 1);
 
         informationContentPane.setHgap(20);
         informationContentPane.setVgap(10);
@@ -91,7 +134,7 @@ public class ViewSettings extends MainWindowView {
         } else {
             themes.setValue(Themes.DEFAULT);
         }
-        repository.setText(settings.get(Setting.REPOSITORY));
+        repositories.addAll(settings.get(Setting.REPOSITORY).split(";"));
     }
 
     public void setOnSave(Consumer<Settings> onSave) {
@@ -120,7 +163,14 @@ public class ViewSettings extends MainWindowView {
 
         }
         settings.set(Setting.THEME, theme);
-        settings.set(Setting.REPOSITORY, repository.getText());
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : repositories)
+        {
+            sb.append(s);
+            sb.append(";");
+        }
+        settings.set(Setting.REPOSITORY, sb.toString());
 
         onSave.accept(this.settings);
     }
