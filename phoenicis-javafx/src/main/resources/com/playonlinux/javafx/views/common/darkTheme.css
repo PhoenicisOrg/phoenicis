@@ -125,7 +125,7 @@
 
 .leftPaneScrollbar {
     -fx-border-width: 0;
-    -fx-background-color:3c3f41;
+    -fx-background-color: #3c3f41;
 }
 
 .leftPaneScrollbar > .viewport {
