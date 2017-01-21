@@ -49,11 +49,11 @@ public class MainWindowView extends Tab {
     }
 
     protected void clearSideBar() {
-        leftContent.getChildren().clear();
+        leftContent.getContentChildren().clear();
     }
 
     protected void addToSideBar(Node... nodes) {
-        leftContent.getChildren().addAll(nodes);
+        leftContent.getContentChildren().addAll(nodes);
     }
 
     public void showRightView(Node nodeToShow) {

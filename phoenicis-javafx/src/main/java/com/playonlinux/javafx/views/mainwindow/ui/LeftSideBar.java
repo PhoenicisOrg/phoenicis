@@ -19,11 +19,24 @@
 package com.playonlinux.javafx.views.mainwindow.ui;
 
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 
-public class LeftSideBar extends VBox {
+public class LeftSideBar extends ScrollPane {
+
     public LeftSideBar() {
-        super();
-        this.getStyleClass().add("leftPane");
+        super(new VBox());
+        this.setHbarPolicy(ScrollBarPolicy.NEVER);
+        this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+        this.setBorder(Border.EMPTY);
+        this.getStyleClass().add("leftPaneScrollbar");
+        this.getContent().getStyleClass().add("leftPane");
+    }
+
+    public ObservableList<Node> getContentChildren() {
+        return ((VBox) this.getContent()).getChildren();
     }
 }

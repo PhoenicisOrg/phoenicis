@@ -126,9 +126,47 @@
     -fx-pref-height: 0.8em;
 }
 
+
+
+.leftPaneScrollbar {
+    -fx-border-width: 0;
+    -fx-background-color:3c3f41;
+}
+
+.leftPaneScrollbar > .viewport {
+    -fx-background-color: #3c3f41;
+}
+
+.leftPaneScrollbar .scroll-bar:vertical {
+    -fx-max-width: 5px;
+    -fx-pref-width: 5px;
+}
+
+.leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-font-size: 0;
+    -fx-opacity: 0;
+}
+
+.leftPaneScrollbar .scroll-bar:vertical .track {
+    -fx-background-color: #3c3f41;
+    -fx-border-width: 0;
+    -fx-background-radius: 1em;
+    -fx-pref-width: 5px;
+    -fx-max-width: 5px;
+}
+
+.leftPaneScrollbar .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,70%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+    -fx-pref-width: 4px;
+    -fx-max-width: 4px;
+}
+
+
 .leftPane {
     -fx-background-color: #3c3f41;
-    -fx-min-height: 40em;
     -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
