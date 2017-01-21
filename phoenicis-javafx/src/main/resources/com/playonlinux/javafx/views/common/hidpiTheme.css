@@ -115,12 +115,9 @@
 .leftButton {
     -fx-background-color:transparent;
     -fx-cursor: hand;
+    -fx-txt-font-family: "Roboto Light";
 }
-.leftButton .label {
-    -fx-font-family: "Roboto Light";
-    -fx-translate-y: 0.8em;
-    -fx-translate-x: 1.0em;
-}
+
 .leftButton:hover {
     -fx-background-color: #D3D3D3;
     -fx-background-insets: 0,1,2;
