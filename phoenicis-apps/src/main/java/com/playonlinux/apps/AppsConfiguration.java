@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
 public class AppsConfiguration {
@@ -44,15 +45,23 @@ public class AppsConfiguration {
     public ApplicationsSource appsSource() {
         return new FilterApplicationsSource(
                 new ConfigurableApplicationSource(
-                    repositoryConfiguration,
-                    new LocalApplicationsSource.Factory(new ObjectMapper())
-                ), toolsConfiguration.operatingSystemFetcher(),
-                enforceUncompatibleOperatingSystems);
+                        repositoryConfiguration,
+                        new LocalApplicationsSource.Factory(objectMapper()),
+                        new ClasspathApplicationsSource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
+                ),
+                toolsConfiguration.operatingSystemFetcher(),
+                enforceUncompatibleOperatingSystems
+        );
     }
 
     @Bean
     public ApplicationsSource backgroundAppsSource() {
         return new BackgroundApplicationsSource(appsSource(), multithreadingConfiguration.appsExecutorService());
+    }
+
+    @Bean
+    ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
 }

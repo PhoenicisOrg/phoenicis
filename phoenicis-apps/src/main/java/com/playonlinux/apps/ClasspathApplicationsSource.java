@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClasspathApplicationsSource implements ApplicationsSource {
+class ClasspathApplicationsSource implements ApplicationsSource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathApplicationsSource.class);
     private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
@@ -151,4 +151,19 @@ public class ClasspathApplicationsSource implements ApplicationsSource {
                 .withScript(new String(IOUtils.toByteArray(scriptFile)))
                 .build();
     }
+
+    static class Factory {
+        private final ObjectMapper objectMapper;
+        private final ResourcePatternResolver resourceResolver;
+
+        Factory(ObjectMapper objectMapper, ResourcePatternResolver resourceResolver) {
+            this.objectMapper = objectMapper;
+            this.resourceResolver = resourceResolver;
+        }
+
+        public ClasspathApplicationsSource createInstance(String packagePath) {
+            return new ClasspathApplicationsSource(packagePath, resourceResolver, objectMapper);
+        }
+    }
+
 }
