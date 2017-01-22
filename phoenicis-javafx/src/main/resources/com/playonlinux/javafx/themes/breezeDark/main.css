@@ -196,6 +196,20 @@
     -fx-background-color: #3daee9;
 }
 
+.progress-bar > .track {
+    -fx-background-color: #31363b;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: #3daee9;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
 #logoText {
     -fx-font-family: "Maven Pro";
     -fx-font-size: 1.8em;
