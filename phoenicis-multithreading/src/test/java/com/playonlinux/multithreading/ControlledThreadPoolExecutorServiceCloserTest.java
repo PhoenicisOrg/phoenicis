@@ -1,27 +1,24 @@
 /*
- * Copyright (c) 2016. Ce code a été écrit dans le cadre d'un projet industriel en majeure Système
- * d'Informations à Supélec.
- * Auteurs:
- *    - Yoan THIEBAULT (yoanthiebault@gmail.com)
- *    - Quentin PÂRIS (contact@qparis.fr)
- *    - Antoine CROO
+ * Copyright (C) 2015-2017 PÂRIS Quentin
  *
- * Encadrant:
- *    - Marc-Antoine WEISSER
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- * PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
- * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 package com.playonlinux.multithreading;
 
 import org.junit.Test;
-
-import java.util.concurrent.ExecutorService;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
