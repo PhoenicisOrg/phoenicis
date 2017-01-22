@@ -21,7 +21,7 @@ package com.playonlinux.javafx.views.common;
 public enum Themes {
     DEFAULT("Default theme", "default"),
     DARK("Dark theme", "dark"),
-    BREEZE_DARK("Breeze Dark theme", "breeze"),
+    BREEZE_DARK("Breeze Dark theme", "breezeDark"),
     HIDPI("HiDPI theme", "hidpi");
 
     private final String name;
