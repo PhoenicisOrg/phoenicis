@@ -28,6 +28,7 @@ import com.sun.webkit.dom.HTMLAnchorElementImpl;
 import javafx.concurrent.Worker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -99,13 +100,18 @@ final class AppPanel extends VBox {
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
 
-        for (byte[] miniatureBytes : applicationDTO.getMiniatures()) {
-            MiniatureListWidget.Element imageView = new MiniatureListWidget.Element("", new StaticMiniature(new Image(new ByteArrayInputStream(miniatureBytes))));
-            miniaturesPane.getChildren().addAll(imageView);
-        }
-
         final ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
         miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
+
+        for (byte[] miniatureBytes : applicationDTO.getMiniatures()) {
+            Image image = new Image(new ByteArrayInputStream(miniatureBytes));
+            ImageView imageView = new ImageView(image);
+            imageView.fitHeightProperty().bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
+            imageView.setPreserveRatio(true);
+            imageView.setSmooth(true);
+            imageView.setCache(true);
+            miniaturesPane.getChildren().add(imageView);
+        }
 
         this.getChildren().add(descriptionWidget);
         this.getChildren().add(miniaturesPaneWrapper);
