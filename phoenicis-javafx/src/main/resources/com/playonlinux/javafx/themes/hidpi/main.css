@@ -148,6 +148,26 @@
     -fx-cursor: hand;
 }
 
+#presentationBackground {
+    -fx-background-color: white;
+    -fx-padding: 10;
+}
+
+#presentationScrollPane {
+    -fx-background: white;
+    -fx-border-color: white;
+}
+
+#presentationTextTitle {
+    -fx-font-weight: bold;
+    -fx-fill: black;
+    -fx-font-size: 16px;
+}
+
+#presentationText {
+    -fx-fill: black;
+}
+
 .leftBarTitle {
     -fx-font-family: "Roboto Regular";
     -fx-font-size: 2.2em;
