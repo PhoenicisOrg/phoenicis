@@ -41,21 +41,19 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         final String title = this.getParentWizardTitle();
 
         VBox contentPane = new VBox();
-        contentPane.setPadding(new Insets(10));
-        contentPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        contentPane.setId("presentationBackground");
 
         TextFlow flow = new TextFlow();
 
         Text titleWidget = new Text(title + "\n\n");
-        titleWidget.setFont(Font.font(null, FontWeight.BOLD, 16));
+        titleWidget.setId("presentationTextTitle");
 
         Text textWidget = new Text(textToShow);
+        textWidget.setId("presentationText");
 
         flow.getChildren().addAll(titleWidget, textWidget);
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        scrollPane.setStyle("-fx-background: #ffffff; -fx-border-color: #ffffff;");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(flow);

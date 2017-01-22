@@ -148,6 +148,20 @@
     -fx-cursor: hand;
 }
 
+#presentationBackground {
+    -fx-background: white;
+}
+
+#presentationTextTitle {
+    -fx-font-weight: bold;
+    -fx-fill: black;
+    -fx-font-size: 16px;
+}
+
+#presentationText {
+    -fx-fill: black;
+}
+
 .leftBarTitle {
     -fx-font-family: "Roboto Regular";
     -fx-font-size: 2.2em;

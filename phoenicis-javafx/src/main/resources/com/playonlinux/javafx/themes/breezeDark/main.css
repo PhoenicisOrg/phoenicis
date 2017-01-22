@@ -301,6 +301,20 @@
     -fx-cursor: hand;
 }
 
+#presentationBackground {
+    -fx-background: -fx-background;
+}
+
+#presentationTextTitle {
+    -fx-font-weight: bold;
+    -fx-fill: -fx-text-fill;
+    -fx-font-size: 16px;
+}
+
+#presentationText {
+    -fx-fill: -fx-text-fill;
+}
+
 /* LEFT PANE START */
 .leftBarTitle {
     -fx-font-family: "Roboto Regular";
@@ -502,9 +516,9 @@
 }
 
 #footer {
-    -fx-border-color: transparent;
-    -fx-border-style: hidden;
-    -fx-border-width: 0;
+    -fx-border-color: #bdc3c7;
+    -fx-border-style: solid hidden hidden hidden;
+    -fx-border-width: 2;
 }
 
 #panelForTopheader {
