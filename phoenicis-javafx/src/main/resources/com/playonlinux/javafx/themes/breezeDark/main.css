@@ -210,6 +210,10 @@
     -fx-padding: 0;
 }
 
+.tooltip {
+    -fx-background-radius: 0;
+}
+
 #logoText {
     -fx-font-family: "Maven Pro";
     -fx-font-size: 1.8em;
