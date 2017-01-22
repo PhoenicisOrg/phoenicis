@@ -110,7 +110,13 @@
 }
 
 #presentationBackground {
+    -fx-background-color: white;
+    -fx-padding: 10;
+}
+
+#presentationScrollPane {
     -fx-background: white;
+    -fx-border-color: white;
 }
 
 #presentationTextTitle {

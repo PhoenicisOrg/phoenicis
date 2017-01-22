@@ -54,6 +54,7 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         flow.getChildren().addAll(titleWidget, textWidget);
 
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setId("presentationScrollPane");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(flow);
