@@ -22,7 +22,9 @@ package com.phoenicis.entities;
  * Represents a supported Operating System
  */
 public enum OperatingSystem {
-    MACOSX("Mac OS X", "Mac", "darwin"), LINUX("Linux", "Linux", "linux"), FREEBSD("FreeBSD", "FreeBSD", "freebsd");
+    MACOSX("Mac OS X", "Mac", "darwin"),
+    LINUX("Linux", "Linux", "linux"),
+    FREEBSD("FreeBSD", "FreeBSD", "freebsd");
 
     private final String fullName;
     private final String legacyName;
