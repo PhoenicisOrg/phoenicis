@@ -40,4 +40,14 @@ public enum Themes {
     public String getShortName() {
         return shortName;
     }
+
+    public static Themes fromShortName(String shortName) {
+        for(Themes theme: Themes.values()) {
+            if(theme.shortName.equals(shortName)) {
+                return theme;
+            }
+        }
+
+        return DEFAULT;
+    }
 }
