@@ -464,6 +464,18 @@
     -fx-text-fill: -fx-text-base-color;
 }
 
+.consoleText.normal {
+    -fx-fill: -fx-text-base-color;
+}
+
+.consoleText.default {
+    -fx-fill: #bdc3c7;
+}
+
+.consoleText.error {
+    -fx-fill: #da4453;
+}
+
 /*
  * Setup Window stuffs
  */

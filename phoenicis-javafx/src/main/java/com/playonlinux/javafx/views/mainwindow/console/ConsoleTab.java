@@ -116,14 +116,13 @@ public class ConsoleTab extends Tab {
     }
 
     public void appendTextToConsole(String text) {
-        appendTextToConsole(text, "#999999");
+        appendTextToConsole(text, ConsoleTextType.DEFAULT);
     }
 
-    public void appendTextToConsole(String text, String color) {
+    public void appendTextToConsole(String text, ConsoleTextType textType) {
         final Text commandText = new Text(text);
         commandText.setWrappingWidth(console.getWidth());
-        commandText.getStyleClass().add("consoleText");
-        commandText.setStyle("-fx-fill: " + color);
+        commandText.getStyleClass().addAll("consoleText", textType.getCssName());
 
         Platform.runLater(() -> {
             forceScroll = true;
