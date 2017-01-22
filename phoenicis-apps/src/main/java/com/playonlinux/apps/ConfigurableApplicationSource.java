@@ -32,10 +32,12 @@ class ConfigurableApplicationSource implements ApplicationsSource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableApplicationSource.class);
 
     private final LocalApplicationsSource.Factory localApplicationsSourceFactory;
+    private final ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory;
     private final ApplicationsSource applicationsSource;
 
-    ConfigurableApplicationSource(String sourceUrl, LocalApplicationsSource.Factory localApplicationsSourceFactory) {
+    ConfigurableApplicationSource(String sourceUrl, LocalApplicationsSource.Factory localApplicationsSourceFactory, ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory) {
         this.localApplicationsSourceFactory = localApplicationsSourceFactory;
+        this.classPathApplicationsSourceFactory = classPathApplicationsSourceFactory;
         final String[] urls = sourceUrl.split(";");
         applicationsSource = new MultipleApplicationsSource(Arrays.stream(urls).map(this::toApplicationSource).collect(Collectors.toList()));
     }
@@ -56,6 +58,8 @@ class ConfigurableApplicationSource implements ApplicationsSource {
                     return new GitApplicationsSource(applicationSourceUrl.replace("git+",""), localApplicationsSourceFactory);
                 case "file":
                     return localApplicationsSourceFactory.createInstance(url.getRawPath());
+                case "classpath":
+                    return classPathApplicationsSourceFactory.createInstance(url.getPath());
                 default:
                     LOGGER.warn("Unsupported URL: " + applicationSourceUrl);
                     return new NullApplicationsSource();
