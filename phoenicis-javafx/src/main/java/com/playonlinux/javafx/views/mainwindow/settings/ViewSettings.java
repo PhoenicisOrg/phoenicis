@@ -44,10 +44,9 @@ public class ViewSettings extends MainWindowView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
-
-    private ComboBox<Themes> themes;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private final Button saveButton = new Button("Save");
+    private ComboBox<Themes> themes;
     private Consumer<Settings> onSave;
     private Settings settings = new Settings();
 
@@ -76,12 +75,11 @@ public class ViewSettings extends MainWindowView {
         GridPane.setValignment(repositoryText, VPos.TOP);
         VBox repositoryLayout = new VBox();
         repositoryLayout.setSpacing(5);
-        ListView repositoryListView = new ListView(repositories);
-        repositoryListView.setPrefSize(400,100);
+        ListView<String> repositoryListView = new ListView<>(repositories);
+        repositoryListView.setPrefSize(400, 100);
         repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         repositoryListView.setEditable(true);
         repositoryListView.setCellFactory(param -> new TextFieldListCell<>(new StringConverter<String>() {
-
             @Override
             public String toString(String object) {
                 return object;
@@ -103,15 +101,15 @@ public class ViewSettings extends MainWindowView {
             dialog.setContentText("Please add the new repository:");
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(repository -> repositories.add(repository));
+            result.ifPresent(repositories::add);
         });
         Button removeButton = new Button();
         removeButton.setText("Remove");
         removeButton.setOnAction((ActionEvent event) -> {
             repositories.removeAll(repositoryListView.getSelectionModel().getSelectedItems());
         });
-        repositoryButtonLayout.getChildren().addAll(addButton,removeButton);
-        repositoryLayout.getChildren().addAll(repositoryListView,repositoryButtonLayout);
+        repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
+        repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
         informationContentPane.add(repositoryLayout, 1, 1);
 
         informationContentPane.setHgap(20);
@@ -127,11 +125,11 @@ public class ViewSettings extends MainWindowView {
     }
 
     public void setSettings(Settings settings) {
-        if (settings.get(Setting.THEME).equals("darkTheme.css")) {
+        if (settings.get(Setting.THEME).equals("dark")) {
             themes.setValue(Themes.DARK);
-        } else if (settings.get(Setting.THEME).equals("breezeDarkTheme.css")) {
+        } else if (settings.get(Setting.THEME).equals("breeze")) {
             themes.setValue(Themes.BREEZE_DARK);
-        } else if (settings.get(Setting.THEME).equals("hidpiTheme.css")) {
+        } else if (settings.get(Setting.THEME).equals("hidpi")) {
             themes.setValue(Themes.HIDPI);
         } else {
             themes.setValue(Themes.DEFAULT);
@@ -143,40 +141,14 @@ public class ViewSettings extends MainWindowView {
         this.onSave = onSave;
     }
 
-    public void save() {
-        String theme;
-        switch (themes.getSelectionModel().getSelectedItem()) {
-            case DEFAULT: {
-                theme = "defaultTheme.css";
-                break;
-            }
-            case DARK: {
-                theme = "darkTheme.css";
-                break;
-            }
-            case BREEZE_DARK: {
-                theme = "breezeDarkTheme.css";
-                break;
-            }
-            case HIDPI: {
-                theme = "hidpiTheme.css";
-                break;
-            }
-            default: {
-                theme = "defaultTheme.css";
-                break;
-            }
+    private void save() {
+        settings.set(Setting.THEME, themes.getSelectionModel().getSelectedItem().getShortName());
 
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String repository : repositories) {
+            stringBuilder.append(repository).append(";");
         }
-        settings.set(Setting.THEME, theme);
-
-        StringBuilder sb = new StringBuilder();
-        for (String s : repositories)
-        {
-            sb.append(s);
-            sb.append(";");
-        }
-        settings.set(Setting.REPOSITORY, sb.toString());
+        settings.set(Setting.REPOSITORY, stringBuilder.toString());
 
         onSave.accept(this.settings);
     }

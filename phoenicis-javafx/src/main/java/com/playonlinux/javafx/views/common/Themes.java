@@ -19,24 +19,25 @@
 package com.playonlinux.javafx.views.common;
 
 public enum Themes {
-
-    DEFAULT("Default theme"),
-    DARK("Dark theme"),
-    BREEZE_DARK("Breeze Dark theme"),
-    HIDPI("HiDPI theme");
+    DEFAULT("Default theme", "default"),
+    DARK("Dark theme", "dark"),
+    BREEZE_DARK("Breeze Dark theme", "breeze"),
+    HIDPI("HiDPI theme", "hidpi");
 
     private final String name;
+    private final String shortName;
 
-    Themes(String s) {
-        name = s;
-    }
-
-    public boolean equalsName(String otherName) {
-        return otherName != null && name.equals(otherName);
+    Themes(String themeName, String themeShortName) {
+        name = themeName;
+        shortName = themeShortName;
     }
 
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public String getShortName() {
+        return shortName;
     }
 }
