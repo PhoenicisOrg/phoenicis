@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015-2017 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,10 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 class LocalApplicationsSource implements ApplicationsSource {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalApplicationsSource.class);

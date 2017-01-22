@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015-2017 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ package com.playonlinux.javafx.views.mainwindow.ui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

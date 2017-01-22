@@ -1,7 +1,5 @@
-package com.playonlinux.engines.dto;
-
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015-2017 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +16,7 @@ package com.playonlinux.engines.dto;
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+package com.playonlinux.engines.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;

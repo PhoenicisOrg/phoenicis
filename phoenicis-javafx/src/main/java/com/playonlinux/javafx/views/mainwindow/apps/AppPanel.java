@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PÂRIS Quentin
+ * Copyright (C) 2015-2017 PÂRIS Quentin
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,6 @@ import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 import com.playonlinux.javafx.views.common.ErrorMessage;
 import com.playonlinux.javafx.views.common.HtmlTemplate;
-import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
-import com.playonlinux.javafx.views.common.widget.StaticMiniature;
 import com.sun.webkit.dom.HTMLAnchorElementImpl;
 import javafx.concurrent.Worker;
 import javafx.scene.control.ScrollPane;
