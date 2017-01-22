@@ -436,7 +436,7 @@
     -fx-border-style: none;
     -fx-focus-traversable: false;
     -fx-background-color: transparent;
-    -fx-pref-height: 360;
+    -fx-pref-height: 380;
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
