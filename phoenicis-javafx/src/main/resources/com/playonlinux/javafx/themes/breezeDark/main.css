@@ -28,7 +28,6 @@
 
 .text {
     -fx-fill: -fx-text-fill;
-    -fx-font-size: 1em;
 }
 
 .button {
@@ -284,7 +283,6 @@
     -fx-alignment: CENTER;
     -fx-padding: 0 0 -5 0;
     -fx-text-font-family: "Roboto Light";
-    -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.2em;
     -fx-cursor: hand;
 }
@@ -362,10 +360,6 @@
 
 .leftPaneInside {
     -fx-spacing: 0.4em;
-}
-
-.leftPaneCheckBox .text {
-    -fx-fill: -fx-text-fill;
 }
 
 /* LEFT PANE END */
@@ -450,10 +444,6 @@
     -fx-border-width: 0;
 }
 
-.resultText {
-    -fx-fill: #bdc3c7;
-}
-
 .console, console .viewport {
     -fx-background-color: -fx-background;
 }
@@ -500,6 +490,11 @@
 #stepScrollPane {
     -fx-background: -fx-background;
     -fx-border-color: transparent;
+}
+
+#stepText {
+    -fx-fill: -fx-text-fill;
+    -fx-font-size: 1.1em;
 }
 
 .containerConfigurationPane {
