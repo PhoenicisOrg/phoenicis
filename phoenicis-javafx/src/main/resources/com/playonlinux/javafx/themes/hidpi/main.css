@@ -348,6 +348,18 @@
     -fx-font-size: 1.7em;
 }
 
+.consoleText.normal {
+    -fx-fill: #000000;
+}
+
+.consoleText.default {
+    -fx-fill: #999999;
+}
+
+.consoleText.error {
+    -fx-fill: #CC0000;
+}
+
 .consoleCommandType {
     -fx-border-radius: 0;
     -fx-background-color: #FFF;

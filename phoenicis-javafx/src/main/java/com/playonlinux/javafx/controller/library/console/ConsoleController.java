@@ -20,13 +20,13 @@ public class ConsoleController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         consoleTab.setOnSendCommand(command -> {
-            consoleTab.appendTextToConsole("> " + command + "\n", "#000000");
+            consoleTab.appendTextToConsole("> " + command + "\n", "normal");
             consoleTab.disableCommand();
             interactiveScriptSession.eval(command, result -> {
                 consoleTab.appendTextToConsole(result == null ? "null\n" : result.toString() + "\n");
                 consoleTab.enableCommand();
             }, error -> {
-                consoleTab.appendTextToConsole(ExceptionUtils.getFullStackTrace(error), "#CC0000");
+                consoleTab.appendTextToConsole(ExceptionUtils.getFullStackTrace(error), "error");
                 consoleTab.enableCommand();
             });
         });
