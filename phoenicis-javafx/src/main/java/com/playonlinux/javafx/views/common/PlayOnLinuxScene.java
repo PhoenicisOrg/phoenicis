@@ -38,8 +38,10 @@ public class PlayOnLinuxScene extends Scene {
         if(style != null) {
             this.getStylesheets().add(style.toExternalForm());
         } else {
-            theme = "default";
-            applyTheme();
+            final String message = String.format("Theme %s is not found!", theme);
+            final IllegalStateException exception = new IllegalStateException(message);
+            new ErrorMessage(message, exception);
+            throw exception;
         }
     }
 

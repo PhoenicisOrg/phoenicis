@@ -32,32 +32,34 @@ public class ErrorMessage {
     private final Alert alert;
 
     public ErrorMessage(String message, Exception exception) {
-        LOGGER.error(ExceptionUtils.getStackTrace(exception));
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(message);
-        alert.setContentText(exception.getMessage());
 
-        final String exceptionText = ExceptionUtils.getFullStackTrace(exception);
+        if (exception != null) {
+            LOGGER.error(ExceptionUtils.getStackTrace(exception));
 
-        Label label = new Label("The exception stacktrace was:");
+            alert.setContentText(exception.getMessage());
 
-        TextArea textArea = new TextArea(exceptionText);
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
+            final String exceptionText = ExceptionUtils.getFullStackTrace(exception);
 
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
+            Label label = new Label("The exception stacktrace was:");
 
-        GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
-        expContent.add(label, 0, 0);
-        expContent.add(textArea, 0, 1);
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
 
-        alert.getDialogPane().setExpandableContent(expContent);
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
 
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+            alert.getDialogPane().setExpandableContent(expContent);
+        }
         alert.showAndWait();
     }
 
