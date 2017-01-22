@@ -11,6 +11,10 @@ public enum ConsoleTextType {
         this.cssName = cssName;
     }
 
+    public String getCssName() {
+        return cssName;
+    }
+
     @Override
     public String toString() {
         return this.cssName;

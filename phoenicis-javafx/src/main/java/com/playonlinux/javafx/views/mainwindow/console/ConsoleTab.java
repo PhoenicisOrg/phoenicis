@@ -122,7 +122,7 @@ public class ConsoleTab extends Tab {
     public void appendTextToConsole(String text, ConsoleTextType textType) {
         final Text commandText = new Text(text);
         commandText.setWrappingWidth(console.getWidth());
-        commandText.getStyleClass().addAll("consoleText", textType.toString());
+        commandText.getStyleClass().addAll("consoleText", textType.getCssName());
 
         Platform.runLater(() -> {
             forceScroll = true;
