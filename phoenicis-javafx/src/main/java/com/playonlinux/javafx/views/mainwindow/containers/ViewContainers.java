@@ -21,11 +21,12 @@ package com.playonlinux.javafx.views.mainwindow.containers;
 import com.playonlinux.containers.dto.ContainerDTO;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.MessagePanel;
-import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
-import com.playonlinux.javafx.views.mainwindow.ui.LeftButtonGroup;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftGroup;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftToggleButton;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.function.Consumer;
 import static com.playonlinux.configuration.localisation.Localisation.translate;
 
 public class ViewContainers extends MainWindowView {
-    private final LeftButtonGroup containersView;
+    private final LeftGroup containersView;
 
     private TextField searchBar;
     private MessagePanel selectContainerPanel;
@@ -43,7 +44,7 @@ public class ViewContainers extends MainWindowView {
     public ViewContainers() {
         super("Containers");
 
-        this.containersView = new LeftButtonGroup(translate("Containers"));
+        this.containersView = new LeftGroup(translate("Containers"));
 
         this.drawSideBar();
 
@@ -61,17 +62,19 @@ public class ViewContainers extends MainWindowView {
 
     public void populate(List<ContainerDTO> containers) {
         Platform.runLater(() -> {
-            final List<LeftButton> leftButtonList = new ArrayList<>();
+            final List<LeftToggleButton> leftButtonList = new ArrayList<>();
+            ToggleGroup group = new ToggleGroup();
 
             for (ContainerDTO container : containers) {
-                final LeftButton containerButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
+                final LeftToggleButton containerButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/containers/container.png", container.getName());
+                containerButton.setToggleGroup(group);
                 leftButtonList.add(containerButton);
                 containerButton.setOnMouseClicked(event -> this.selectContainer(container));
             }
 
             initSelectContainerPane();
             showRightView(selectContainerPanel);
-            containersView.setButtons(leftButtonList);
+            containersView.setNodes(leftButtonList);
         });
     }
 

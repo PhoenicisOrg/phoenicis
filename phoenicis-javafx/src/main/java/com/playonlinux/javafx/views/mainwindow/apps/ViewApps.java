@@ -22,9 +22,7 @@ import com.playonlinux.apps.dto.ApplicationDTO;
 import com.playonlinux.apps.dto.CategoryDTO;
 import com.playonlinux.apps.dto.ScriptDTO;
 import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
-import com.playonlinux.javafx.views.mainwindow.FailurePanel;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
-import com.playonlinux.javafx.views.mainwindow.WaitPanel;
 import com.playonlinux.javafx.views.mainwindow.ui.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -32,7 +30,6 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +43,7 @@ public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
     private final MiniatureListWidget availableApps;
     private TextField searchBar;
-    private LeftButtonGroup categoryView;
+    private LeftGroup categoryView;
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
 
@@ -90,7 +87,7 @@ public class ViewApps extends MainWindowView {
                 }
             }
 
-            categoryView.setButtons(leftButtonList);
+            categoryView.setNodes(leftButtonList);
             showAvailableApps();
         });
     }
@@ -119,7 +116,7 @@ public class ViewApps extends MainWindowView {
     protected void drawSideBar() {
         searchBar = new TextField();
 
-        categoryView = new LeftButtonGroup(translate("Categories"));
+        categoryView = new LeftGroup(translate("Categories"));
 
         final CheckBox testingCheck = new LeftCheckBox(translate("Testing"));
         final CheckBox noCdNeededCheck = new LeftCheckBox(translate("No CD needed"));
