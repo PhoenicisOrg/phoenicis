@@ -31,8 +31,11 @@ public class PEFile {
     public final SectionHeader[] sectionHeaders;
     public final RsrcSection resourceSection;
 
-    public PEFile(ImageDOSHeader imageDOSHeader, byte[] realModeStubProgram, ImageNTHeaders imageNTHeaders,
-                  SectionHeader[] sectionHeaders, RsrcSection resourceSection) {
+    public PEFile(ImageDOSHeader imageDOSHeader,
+                  byte[] realModeStubProgram,
+                  ImageNTHeaders imageNTHeaders,
+                  SectionHeader[] sectionHeaders,
+                  RsrcSection resourceSection) {
         this.imageDOSHeader = imageDOSHeader;
         this.realModeStubProgram = realModeStubProgram;
         this.imageNTHeaders = imageNTHeaders;

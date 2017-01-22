@@ -28,7 +28,7 @@ public class ProgressEntity {
 
     private final String progressText;
 
-    public ProgressEntity(Builder builder) {
+    private ProgressEntity(Builder builder) {
         this.state = builder.state;
         this.percent = builder.percent;
         this.progressText = builder.progressText;
