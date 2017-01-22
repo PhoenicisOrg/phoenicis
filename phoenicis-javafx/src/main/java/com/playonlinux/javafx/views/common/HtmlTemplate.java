@@ -35,8 +35,8 @@ public class HtmlTemplate {
     }
 
     public String render(Object userScope) throws IOException {
-        Reader reader = new InputStreamReader(inputStream);
-        Mustache mustache = mf.compile(reader, null);
+        final Reader reader = new InputStreamReader(inputStream);
+        final Mustache mustache = mf.compile(reader, null);
         OutputStream stream = new ByteArrayOutputStream();
 
         Object[] scopes = new Object[2];

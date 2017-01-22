@@ -23,12 +23,15 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
+    @Value("${application.theme:default}")
+    private String themeName;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
     @Bean
     public ViewApps viewApps() {
-        return new ViewApps();
+        return new ViewApps(themeName);
     }
 
     @Bean

@@ -11,7 +11,7 @@ public class SettingsController {
                               SettingsManager settingsManager) {
         this.view = view;
         this.settingsManager = settingsManager;
-        this.view.setOnSave(settings -> settingsManager.save(settings));
+        this.view.setOnSave(settingsManager::save);
         this.view.setSettings(this.settingsManager.load());
     }
 

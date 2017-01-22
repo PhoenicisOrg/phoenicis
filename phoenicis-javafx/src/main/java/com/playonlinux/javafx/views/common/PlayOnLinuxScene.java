@@ -21,40 +21,31 @@ package com.playonlinux.javafx.views.common;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.net.URL;
+
 public class PlayOnLinuxScene extends Scene {
-    private static final String DEFAULT_THEME = PlayOnLinuxScene.class.getResource("defaultTheme.css").toExternalForm();
-    private static final String DARK_THEME = PlayOnLinuxScene.class.getResource("darkTheme.css").toExternalForm();
-    private static final String HIDPI_THEME = PlayOnLinuxScene.class.getResource("hidpiTheme.css").toExternalForm();
-
-    public PlayOnLinuxScene(Parent parent, int width, int height) {
-        super(parent, width, height);
-        this.getStylesheets().add(DEFAULT_THEME);
-    }
-
-    public PlayOnLinuxScene(Parent parent) {
-        super(parent);
-        this.getStylesheets().add(DEFAULT_THEME);
-    }
+    private String theme;
 
     public PlayOnLinuxScene(Parent parent, String theme) {
         super(parent);
-        this.getStylesheets().add(PlayOnLinuxScene.class.getResource(theme).toExternalForm());
+        this.theme = theme;
+        applyTheme();
     }
 
-    public String getTheme(Themes theme) {
-        switch(theme) {
-            case DEFAULT: {
-                return DEFAULT_THEME;
-            }
-            case DARK: {
-                return DARK_THEME;
-            }
-            case HIDPI: {
-                return HIDPI_THEME;
-            }
-            default: {
-                return DEFAULT_THEME;
-            }
+    private void applyTheme() {
+        final URL style = PlayOnLinuxScene.class.getResource(themePath());
+
+        if(style != null) {
+            this.getStylesheets().add(style.toExternalForm());
+        } else {
+            final String message = String.format("Theme %s is not found!", theme);
+            final IllegalStateException exception = new IllegalStateException(message);
+            new ErrorMessage(message, exception);
+            throw exception;
         }
+    }
+
+    private String themePath() {
+        return String.format("/com/playonlinux/javafx/themes/%s/main.css", theme);
     }
 }
