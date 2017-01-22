@@ -23,7 +23,7 @@ import com.playonlinux.javafx.views.common.widget.MiniatureListWidget;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftBarTitle;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftButton;
-import com.playonlinux.javafx.views.mainwindow.ui.LeftButtonGroup;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftGroup;
 import com.playonlinux.javafx.views.mainwindow.ui.LeftSpacer;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -154,8 +154,8 @@ public class ViewLibrary extends MainWindowView {
         addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
 
-    private LeftButtonGroup shortcutGroup(ShortcutDTO shortcut) {
-        final LeftButtonGroup shortcutGroup = new LeftButtonGroup(shortcut.getName());
+    private LeftGroup shortcutGroup(ShortcutDTO shortcut) {
+        final LeftGroup shortcutGroup = new LeftGroup(shortcut.getName());
         final LeftButton runButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/play.png", translate("Run"));
         final LeftButton stopButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/stop.png", translate("Close"));
         final LeftButton uninstallButton = new LeftButton("/com/playonlinux/javafx/views/mainwindow/library/remove.png", translate("Uninstall"));
@@ -164,7 +164,7 @@ public class ViewLibrary extends MainWindowView {
         uninstallButton.setOnMouseClicked(event -> {onShortcutUninstall.accept(shortcut); drawSideBarWithoutShortcut();});
         stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcut));
 
-        shortcutGroup.setButtons(Arrays.asList(
+        shortcutGroup.setNodes(Arrays.asList(
                 runButton,
                 stopButton,
                 uninstallButton

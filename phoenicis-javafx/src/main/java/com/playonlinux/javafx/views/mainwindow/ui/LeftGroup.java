@@ -18,17 +18,18 @@
 
 package com.playonlinux.javafx.views.mainwindow.ui;
 
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
 import java.util.List;
 
 
-public final class LeftButtonGroup extends VBox {
+public final class LeftGroup extends VBox {
     private String name;
-    private List<LeftButton> leftButtons;
+    private List<? extends Node> nodes;
 
-    public LeftButtonGroup(String name) {
+    public LeftGroup(String name) {
         this.name = name;
         this.getStyleClass().add("leftPaneInside");
         this.clear();
@@ -37,7 +38,7 @@ public final class LeftButtonGroup extends VBox {
     public void setName(String name) {
         this.name = name;
         clear();
-        setButtons(leftButtons);
+        setNodes(nodes);
     }
 
     private void clear() {
@@ -45,11 +46,11 @@ public final class LeftButtonGroup extends VBox {
         this.getChildren().add(new TextFlow(new LeftBarTitle(name)));
     }
 
-    public void setButtons(List<LeftButton> buttons) {
+    public void setNodes(List<? extends Node> nodes) {
         this.clear();
-        this.leftButtons = buttons;
-        for(LeftButton leftButton: buttons) {
-            this.getChildren().add(leftButton);
+        this.nodes = nodes;
+        for(Node node: nodes) {
+            this.getChildren().add(node);
         }
     }
 
