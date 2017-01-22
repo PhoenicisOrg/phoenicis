@@ -116,19 +116,22 @@ public class ConsoleTab extends Tab {
     }
 
     public void appendTextToConsole(String text) {
-        appendTextToConsole(text, ConsoleTextType.DEFAULT);
+        appendTextToConsole(text, ConsoleTextType.NORMAL);
     }
 
     public void appendTextToConsole(String text, ConsoleTextType textType) {
         final Text commandText = new Text(text);
         commandText.setWrappingWidth(console.getWidth());
         switch (textType) {
+            case NORMAL:
+                commandText.getStyleClass().addAll("consoleText", "normal");
+                break;
             case ERROR:
-                commandText.setId("consoleTextError");
+                commandText.getStyleClass().addAll("consoleText", "error");
                 break;
             case DEFAULT:
             default:
-                commandText.setId("consoleText");
+                commandText.getStyleClass().addAll("consoleText", "default");
         }
 
         Platform.runLater(() -> {

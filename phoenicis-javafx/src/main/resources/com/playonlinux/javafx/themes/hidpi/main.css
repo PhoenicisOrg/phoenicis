@@ -343,16 +343,16 @@
     -fx-font-family: "Lucida Console";
 }
 
-#consoleText {
-    -fx-fill: black;
-    -fx-wrap-text: true;
-    -fx-font-size: 1.7em;
+.consoleText.normal {
+    -fx-fill: #999999;
 }
 
-#consoleTextError {
+.consoleText.default {
+    -fx-fill: black;
+}
+
+.consoleText.error {
     -fx-fill: #cc0000;
-    -fx-wrap-text: true;
-    -fx-font-size: 1.7em;
 }
 
 .consoleCommandType {
