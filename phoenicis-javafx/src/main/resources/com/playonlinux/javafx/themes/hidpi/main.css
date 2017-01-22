@@ -169,7 +169,7 @@
     -fx-txt-font-family: "Roboto Light";
 }
 
-.leftButton:hover {
+.leftButton:hover, .leftButton:selected {
     -fx-background-color: #D3D3D3;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 3, 2, 1;
