@@ -359,7 +359,14 @@
     -fx-font-family: "Lucida Console";
 }
 
-.consoleText {
+#consoleText {
+    -fx-fill: black;
+    -fx-wrap-text: true;
+    -fx-font-size: 0.85em;
+}
+
+#consoleTextError {
+    -fx-fill: #cc0000;
     -fx-wrap-text: true;
     -fx-font-size: 0.85em;
 }

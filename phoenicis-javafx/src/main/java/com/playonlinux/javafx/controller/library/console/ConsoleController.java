@@ -2,6 +2,7 @@ package com.playonlinux.javafx.controller.library.console;
 
 import com.playonlinux.javafx.views.mainwindow.console.ConsoleTab;
 import com.playonlinux.javafx.views.mainwindow.console.ConsoleTabFactory;
+import com.playonlinux.javafx.views.mainwindow.console.ConsoleTextType;
 import com.playonlinux.scripts.interpreter.InteractiveScriptSession;
 import com.playonlinux.scripts.interpreter.ScriptInterpreter;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -20,13 +21,13 @@ public class ConsoleController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         consoleTab.setOnSendCommand(command -> {
-            consoleTab.appendTextToConsole("> " + command + "\n", "#000000");
+            consoleTab.appendTextToConsole("> " + command + "\n", ConsoleTextType.DEFAULT);
             consoleTab.disableCommand();
             interactiveScriptSession.eval(command, result -> {
                 consoleTab.appendTextToConsole(result == null ? "null\n" : result.toString() + "\n");
                 consoleTab.enableCommand();
             }, error -> {
-                consoleTab.appendTextToConsole(ExceptionUtils.getFullStackTrace(error), "#CC0000");
+                consoleTab.appendTextToConsole(ExceptionUtils.getFullStackTrace(error), ConsoleTextType.ERROR);
                 consoleTab.enableCommand();
             });
         });
