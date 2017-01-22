@@ -45,6 +45,7 @@ import java.util.function.Consumer;
 final class AppPanel extends VBox {
     private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
     private final ApplicationDTO applicationDTO;
+    private final String themeName;
 
     public void setOnScriptInstall(Consumer<ScriptDTO> onScriptInstall) {
         this.onScriptInstall = onScriptInstall;
@@ -52,9 +53,10 @@ final class AppPanel extends VBox {
 
     private Consumer<ScriptDTO> onScriptInstall = (script) -> {};
 
-    public AppPanel(ApplicationDTO applicationDTO) {
+    public AppPanel(ApplicationDTO applicationDTO, String themeName) {
         super();
         this.applicationDTO = applicationDTO;
+        this.themeName = themeName;
         this.getStyleClass().addAll("rightPane", "appPresentation");
 
         final WebView descriptionWidget = new WebView();
@@ -62,7 +64,7 @@ final class AppPanel extends VBox {
         try {
             descriptionWidget.getEngine().loadContent(
                     new HtmlTemplate(
-                            this.getClass().getResourceAsStream("descriptionTemplate.html")
+                            this.getClass().getResourceAsStream("/com/playonlinux/javafx/themes/"+themeName+"/descriptionTemplate.html")
                     ).render(applicationDTO)
             );
         } catch (IOException e) {

@@ -46,9 +46,11 @@ public class ViewApps extends MainWindowView {
     private LeftGroup categoryView;
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
+    private final String themeName;
 
-    public ViewApps() {
+    public ViewApps(String themeName) {
         super("Apps");
+        this.themeName = themeName;
 
         availableApps = MiniatureListWidget.create();
 
@@ -138,7 +140,7 @@ public class ViewApps extends MainWindowView {
     }
 
     private void showAppDetails(ApplicationDTO application) {
-        final AppPanel appPanel = new AppPanel(application);
+        final AppPanel appPanel = new AppPanel(application, themeName);
         appPanel.setOnScriptInstall(this::installScript);
         showRightView(appPanel);
     }
