@@ -58,7 +58,10 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                     categoryDTOs.add(category);
                 }
             }
+<<<<<<< f5a4425c4e2a13dcc5c60babf98538ba48c70dbf
             Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
+=======
+>>>>>>> ClasspathApplicationsSource
             return categoryDTOs;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
@@ -92,7 +95,10 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 }
             }
         }
+<<<<<<< f5a4425c4e2a13dcc5c60babf98538ba48c70dbf
         Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
+=======
+>>>>>>> ClasspathApplicationsSource
 
         return applicationDTOS;
     }
@@ -133,7 +139,10 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 scriptDTOs.add(script);
             }
         }
+<<<<<<< f5a4425c4e2a13dcc5c60babf98538ba48c70dbf
         Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getName));
+=======
+>>>>>>> ClasspathApplicationsSource
 
         return scriptDTOs;
     }
@@ -151,6 +160,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 .withScript(new String(IOUtils.toByteArray(scriptFile)))
                 .build();
     }
+<<<<<<< f5a4425c4e2a13dcc5c60babf98538ba48c70dbf
 
     static class Factory {
         private final ObjectMapper objectMapper;
@@ -166,4 +176,6 @@ class ClasspathApplicationsSource implements ApplicationsSource {
         }
     }
 
+=======
+>>>>>>> ClasspathApplicationsSource
 }
