@@ -363,3 +363,15 @@
     -fx-wrap-text: true;
     -fx-font-size: 0.85em;
 }
+
+.consoleText.normal {
+    -fx-fill: #000000;
+}
+
+.consoleText.default {
+    -fx-fill: #999999;
+}
+
+.consoleText.error {
+    -fx-fill: #CC0000;
+}
