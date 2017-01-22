@@ -34,6 +34,8 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
                                          String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);
+
+        progressText.setId("stepText");
     }
 
 

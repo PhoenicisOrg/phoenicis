@@ -20,9 +20,14 @@
     -fx-background: #232629;
     -fx-focus-color: #3daee9;
     -fx-faint-focus-color: #3daee9;
+    -fx-text-fill: #eff0f1;
     -fx-text-base-color: #eff0f1;
     -fx-text-inner-color: #eff0f1;
     -fx-border-radius: 0;
+}
+
+.text {
+    -fx-fill: -fx-text-fill;
 }
 
 .button {
@@ -278,7 +283,6 @@
     -fx-alignment: CENTER;
     -fx-padding: 0 0 -5 0;
     -fx-text-font-family: "Roboto Light";
-    -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.2em;
     -fx-cursor: hand;
 }
@@ -358,10 +362,6 @@
     -fx-spacing: 0.4em;
 }
 
-.leftPaneCheckBox .text {
-    -fx-fill: #eff0f1;
-}
-
 /* LEFT PANE END */
 
 .title {
@@ -436,16 +436,12 @@
     -fx-border-style: none;
     -fx-focus-traversable: false;
     -fx-background-color: transparent;
-    -fx-pref-height: 360;
+    -fx-pref-height: 380;
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
     -fx-background-color: -fx-background;
     -fx-border-width: 0;
-}
-
-.resultText {
-    -fx-fill: #bdc3c7;
 }
 
 .console, console .viewport {
@@ -473,27 +469,32 @@
  */
 
 #header {
-    -fx-border-color: #CCCCCC;
+    -fx-border-color: -fx-focus-color;
     -fx-border-style: solid;
     -fx-border-width: 0 0 1px 0;
-    -fx-background-color: #eff0f1;
+    -fx-background-color: -fx-background;
 }
 
 #footer {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 1px 0 0 0;
+    -fx-border-color: transparent;
+    -fx-border-style: hidden;
+    -fx-border-width: 0;
 }
 
 #panelForTopheader {
     -fx-padding: 30px;
-    -fx-background-color: #F4F4F4;
-    -fx-border-color: #CCCCCC;
+    -fx-background-color: -fx-background;
+    -fx-border-color: transparent;
 }
 
 #stepScrollPane {
-    -fx-background: #F4F4F4;
-    -fx-border-color: #F4F4F4;
+    -fx-background: -fx-background;
+    -fx-border-color: transparent;
+}
+
+#stepText {
+    -fx-fill: -fx-text-fill;
+    -fx-font-size: 1.1em;
 }
 
 .containerConfigurationPane {
