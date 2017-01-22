@@ -357,13 +357,12 @@
     -fx-font-family: "Lucida Console";
 }
 
-
 .consoleText.normal {
-    -fx-fill: #999999;
+    -fx-fill: black;
 }
 
 .consoleText.default {
-    -fx-fill: black;
+    -fx-fill: #999999;
 }
 
 .consoleText.error {

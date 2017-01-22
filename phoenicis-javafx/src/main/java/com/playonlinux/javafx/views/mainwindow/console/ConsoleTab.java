@@ -116,7 +116,7 @@ public class ConsoleTab extends Tab {
     }
 
     public void appendTextToConsole(String text) {
-        appendTextToConsole(text, ConsoleTextType.NORMAL);
+        appendTextToConsole(text, ConsoleTextType.DEFAULT);
     }
 
     public void appendTextToConsole(String text, ConsoleTextType textType) {

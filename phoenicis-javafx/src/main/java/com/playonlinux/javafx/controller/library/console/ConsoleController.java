@@ -21,7 +21,7 @@ public class ConsoleController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         consoleTab.setOnSendCommand(command -> {
-            consoleTab.appendTextToConsole("> " + command + "\n", ConsoleTextType.DEFAULT);
+            consoleTab.appendTextToConsole("> " + command + "\n", ConsoleTextType.NORMAL);
             consoleTab.disableCommand();
             interactiveScriptSession.eval(command, result -> {
                 consoleTab.appendTextToConsole(result == null ? "null\n" : result.toString() + "\n");
