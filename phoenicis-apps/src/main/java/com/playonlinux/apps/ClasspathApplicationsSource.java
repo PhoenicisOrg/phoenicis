@@ -92,6 +92,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 }
             }
         }
+        Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
 
         return applicationDTOS;
     }
