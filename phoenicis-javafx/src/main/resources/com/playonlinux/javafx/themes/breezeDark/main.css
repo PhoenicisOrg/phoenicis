@@ -16,6 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+/*******************************************************/
+/*********************** general ***********************/
+/*******************************************************/
 .root {
     -fx-background: #232629;
     -fx-focus-color: #3daee9;
@@ -214,6 +217,18 @@
     -fx-background-radius: 0;
 }
 
+
+/*******************************************************/
+/****************** main window scene ******************/
+/*******************************************************/
+.mainWindowScene {
+    -fx-min-height: 35.2em;
+    -fx-fit-to-height: true;
+}
+
+/*******************************************************/
+/************************ logo *************************/
+/*******************************************************/
 #logoText {
     -fx-font-family: "Maven Pro";
     -fx-font-size: 1.8em;
@@ -222,64 +237,10 @@
     -fx-fill: white;
 }
 
-.thin {
-    /* -fx-font-family: Roboto Thin; */
-    -fx-font-weight: 100;
-}
 
-.smallProgressIndicator .percentage {
-    -fx-padding: -10px;
-}
-
-#headerPane {
-    -fx-background-color: #31363b;
-    -fx-pref-width: 100%;
-    -fx-pref-height: 3em;
-    -fx-padding: 0.5em;
-}
-
-.mainWindowScene {
-    -fx-min-height: 35.2em;
-    -fx-fit-to-height: true;
-}
-
-.rightPane {
-    -fx-pref-width: 55em;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-focus-traversable: false;
-    -fx-background-color: transparent;
-}
-
-.rightPane > .viewport {
-    -fx-background-color: -fx-background;
-    -fx-border-width: 0;
-}
-
-*.header-panel {
-    -fx-background-color: #31363b;
-}
-
-#menuPane > .tab-header-area .tab-header-background {
-    -fx-background-color: #31363b;
-    -fx-pref-height: 3em;
-}
-
-#menuPane > .tab-header-area .tab {
-    -fx-border-width: 4;
-    -fx-border-color: transparent;
-    -fx-border-style: hidden hidden solid hidden;
-}
-
-
-#menuPane > .tab-header-area .tab:selected {
-    -fx-border-width: 4;
-    -fx-border-style: hidden hidden solid hidden;
-    -fx-border-color: #3daee9;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-}
-
+/*******************************************************/
+/************************ menu *************************/
+/*******************************************************/
 #menuPane {
     -fx-tab-min-width: 90px;
     -fx-padding: -10 0 0 0;
@@ -288,13 +249,12 @@
 }
 
 #menuPane > .tab-header-area .tab {
+    -fx-border-width: 4;
+    -fx-border-color: transparent;
+    -fx-border-style: hidden hidden solid hidden;
     -fx-background-color: transparent;
     -fx-background-opacity: 0;
     -fx-pref-height: 3.5em;
-}
-
-#menuPane > .tab-header-area .tab:disabled {
-    -fx-opacity: 1;
 }
 
 #menuPane > .tab-header-area .tab-label {
@@ -305,50 +265,32 @@
     -fx-cursor: hand;
 }
 
-#presentationBackground {
-    -fx-background-color: #232629;
-    -fx-padding: 10;
+#menuPane > .tab-header-area .tab-header-background {
+    -fx-background-color: #31363b;
+    -fx-pref-height: 3em;
 }
 
-#presentationScrollPane {
-    -fx-background: #232629;
-    -fx-border-color: #232629;
+#menuPane > .tab-header-area .tab:selected {
+    -fx-border-width: 4;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-color: #3daee9;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
-#presentationTextTitle {
-    -fx-font-weight: bold;
-    -fx-fill: -fx-text-fill;
-    -fx-font-size: 16px;
+#menuPane > .tab-header-area .tab:disabled {
+    -fx-opacity: 1;
 }
 
-#presentationText {
-    -fx-fill: -fx-text-fill;
-}
-
-/* LEFT PANE START */
-.leftBarTitle {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 1.2em;
-    -fx-alignment: baseline-left;
-    -fx-translate-y: -0.1em;
-    -fx-fill: #bdc3c7;
-}
-
-.leftButton {
-    -fx-background-color:transparent;
-    -fx-cursor: hand;
-    -fx-text-fill: #eff0f1;
-    -fx-txt-font-family: "Roboto Light";
-}
-
-.leftButton:hover, .leftButton:selected {
-    -fx-background-color: #3daee9;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0;
-}
-
-.leftSpacer {
-    -fx-pref-height: 0.8em;
+/*******************************************************/
+/************************* left ************************/
+/*******************************************************/
+.leftPane {
+    -fx-background-color: #31363b;
+    -fx-min-width: 15em;
+    -fx-pref-width: 15em;
+    -fx-padding: 1em;
+    -fx-spacing: 0.4em;
 }
 
 .leftPaneScrollbar {
@@ -387,73 +329,54 @@
     -fx-max-width: 4px;
 }
 
-
-.leftPane {
-    -fx-background-color: #31363b;
-    -fx-min-width: 15em;
-    -fx-pref-width: 15em;
-    -fx-padding: 1em;
-    -fx-spacing: 0.4em;
-}
-
 .leftPaneInside {
     -fx-spacing: 0.4em;
 }
 
-/* LEFT PANE END */
+.leftSpacer {
+    -fx-pref-height: 0.8em;
+}
 
-.title {
+.leftBarTitle {
     -fx-font-family: "Roboto Regular";
-    -fx-font-size: 1.4em;
+    -fx-font-size: 1.2em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-    -fx-fill: #3daee9;
+    -fx-fill: #bdc3c7;
 }
 
-.miniatureText {
-    -fx-font-size: 1em;
-    -fx-wrap-text: true;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
+.leftButton {
+    -fx-background-color:transparent;
+    -fx-cursor: hand;
     -fx-text-fill: #eff0f1;
+    -fx-txt-font-family: "Roboto Light";
 }
 
-.miniatureImage {
-    -fx-border-radius: 0;
+.leftButton:hover, .leftButton:selected {
+    -fx-background-color: #3daee9;
+    -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0;
 }
 
-.rightPane .miniatureList {
-    -fx-pref-width: 53.5em;
-    -fx-background-color: #232629;
+/*******************************************************/
+/************************ right ************************/
+/*******************************************************/
+.rightPane {
+    -fx-pref-width: 55em;
     -fx-border-width: 0;
     -fx-border-style: none;
-    -fx-padding: 0.5em;
+    -fx-focus-traversable: false;
+    -fx-background-color: transparent;
 }
 
-.miniatureListElement {
-    -fx-pref-width: 12em;
-    -fx-pref-height: 9em;
-    -fx-font-family: "Roboto Light";
-    -fx-alignment: top-center;
-    -fx-spacing: 0.3em;
-    -fx-padding: 0.5em;
-    -fx-cursor: hand;
-    -fx-background-radius: 0em;
+.rightPane > .viewport {
+    -fx-background-color: -fx-background;
+    -fx-border-width: 0;
 }
 
-.miniatureListElement:hover {
-    -fx-background-color: #3daee9;
-}
-
-.downloadImageWaiting {
-    -fx-padding: 1em;
-    -fx-pref-width: 150;
-    -fx-max-height: 100;
-    -fx-pref-height: 95;
-    -fx-alignment: center;
-}
-
+/*******************************************************/
+/************************* apps ************************/
+/*******************************************************/
 .appPresentation {
     -fx-background-color: -fx-background;
 }
@@ -482,6 +405,127 @@
     -fx-border-width: 0;
 }
 
+/*******************************************************/
+/********************** containers *********************/
+/*******************************************************/
+.containerConfigurationPane {
+    -fx-padding: 10px;
+}
+
+.containerConfigurationPane > .grid {
+    -fx-padding: 10px;
+}
+
+/*******************************************************/
+/********************** miniature **********************/
+/*******************************************************/
+.rightPane .miniatureList {
+    -fx-pref-width: 53.5em;
+    -fx-background-color: #232629;
+    -fx-border-width: 0;
+    -fx-border-style: none;
+    -fx-padding: 0.5em;
+}
+
+.miniatureListElement {
+    -fx-pref-width: 12em;
+    -fx-pref-height: 9em;
+    -fx-font-family: "Roboto Light";
+    -fx-alignment: top-center;
+    -fx-spacing: 0.3em;
+    -fx-padding: 0.5em;
+    -fx-cursor: hand;
+    -fx-background-radius: 0em;
+}
+
+.miniatureListElement:hover {
+    -fx-background-color: #3daee9;
+}
+
+.miniatureImage {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+.miniatureText {
+    -fx-font-size: 1em;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-text-fill: #eff0f1;
+}
+
+/*******************************************************/
+/***************** installation wizard *****************/
+/*******************************************************/
+#presentationBackground {
+    -fx-background-color: #232629;
+    -fx-padding: 10;
+}
+
+#presentationScrollPane {
+    -fx-background: #232629;
+    -fx-border-color: #232629;
+}
+
+#presentationTextTitle {
+    -fx-font-weight: bold;
+    -fx-fill: -fx-text-fill;
+    -fx-font-size: 16px;
+}
+
+#presentationText {
+    -fx-fill: -fx-text-fill;
+}
+
+/************************ step *************************/
+#panelForTopheader {
+    -fx-padding: 30px;
+    -fx-background-color: -fx-background;
+    -fx-border-color: transparent;
+}
+
+#header {
+    -fx-border-color: -fx-focus-color;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1px 0;
+    -fx-background-color: -fx-background;
+}
+
+#footer {
+    -fx-border-color: #bdc3c7;
+    -fx-border-style: solid hidden hidden hidden;
+    -fx-border-width: 2;
+}
+
+#stepScrollPane {
+    -fx-background: #232629;
+    -fx-border-color: #232629;
+}
+
+#stepText {
+    -fx-fill: -fx-text-fill;
+    -fx-font-size: 1.1em;
+}
+
+.dragAndDropBox {
+    -fx-background-color: #F6F6F6;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-style: dashed;
+    -fx-border-color: #CCC;
+    -fx-border-width: 0.5em;
+}
+
+/*******************************************************/
+/*********************** console ***********************/
+/*******************************************************/
+.console {
+    -fx-pref-width: 60em;
+    -fx-padding: 0.5em;
+    -fx-font-family: "Lucida Console";
+}
+
 .console, console .viewport {
     -fx-background-color: -fx-background;
 }
@@ -502,6 +546,11 @@
     -fx-text-fill: -fx-text-base-color;
 }
 
+.consoleText {
+    -fx-wrap-text: true;
+    -fx-font-size: 0.85em;
+}
+
 .consoleText.normal {
     -fx-fill: -fx-text-base-color;
 }
@@ -514,52 +563,9 @@
     -fx-fill: #da4453;
 }
 
-/*
- * Setup Window stuffs
- */
-
-#header {
-    -fx-border-color: -fx-focus-color;
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 1px 0;
-    -fx-background-color: -fx-background;
-}
-
-#footer {
-    -fx-border-color: #bdc3c7;
-    -fx-border-style: solid hidden hidden hidden;
-    -fx-border-width: 2;
-}
-
-#panelForTopheader {
-    -fx-padding: 30px;
-    -fx-background-color: -fx-background;
-    -fx-border-color: transparent;
-}
-
-#stepScrollPane {
-    -fx-background: -fx-background;
-    -fx-border-color: transparent;
-}
-
-#stepText {
-    -fx-fill: -fx-text-fill;
-    -fx-font-size: 1.1em;
-}
-
-.containerConfigurationPane {
-    -fx-padding: 10px;
-}
-
-.containerConfigurationPane > .grid {
-    -fx-padding: 10px;
-}
-
-.captionTitle {
-    -fx-font-weight: bold;
-    -fx-fill: #bdc3c7;
-}
-
+/*******************************************************/
+/********************** wine tools *********************/
+/*******************************************************/
 .wineToolButton {
     -fx-pref-width: 96px;
     -fx-pref-height: 96px;
@@ -572,29 +578,26 @@
     -fx-fill: -fx-text-base-color;
 }
 
-.dragAndDropBox {
-    -fx-background-color: #F6F6F6;
-    -fx-text-alignment: center;
-    -fx-alignment: center;
-    -fx-border-style: dashed;
-    -fx-border-color: #CCC;
-    -fx-border-width: 0.5em;
+/*******************************************************/
+/************************* misc ************************/
+/*******************************************************/
+.title {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 1.4em;
+    -fx-alignment: baseline-left;
+    -fx-translate-y: -0.1em;
+    -fx-fill: #3daee9;
+}
+
+.captionTitle {
+    -fx-font-weight: bold;
+    -fx-fill: #bdc3c7;
 }
 
 .boldLabel {
     -fx-font-family: "Roboto Bold";
 }
+
 .normalLabel {
     -fx-font-family: "Roboto Light";
-}
-
-.console {
-    -fx-pref-width: 60em;
-    -fx-padding: 0.5em;
-    -fx-font-family: "Lucida Console";
-}
-
-.consoleText {
-    -fx-wrap-text: true;
-    -fx-font-size: 0.85em;
 }
