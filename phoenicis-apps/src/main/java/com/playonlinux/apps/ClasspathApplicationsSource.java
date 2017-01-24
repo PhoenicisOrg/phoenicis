@@ -133,6 +133,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 scriptDTOs.add(script);
             }
         }
+        Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getName));
 
         return scriptDTOs;
     }
