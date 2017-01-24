@@ -30,10 +30,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class ClasspathApplicationsSource implements ApplicationsSource {
@@ -61,6 +58,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                     categoryDTOs.add(category);
                 }
             }
+            Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
             return categoryDTOs;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
