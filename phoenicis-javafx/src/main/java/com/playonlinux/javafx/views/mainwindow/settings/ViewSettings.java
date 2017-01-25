@@ -86,7 +86,7 @@ public class ViewSettings extends MainWindowView {
         leftButtonList.add(networkButton);
         networkButton.setOnMouseClicked(event -> showRightView(networkPanel));
 
-        final LeftGroup leftButtons = new LeftGroup("");
+        final LeftGroup leftButtons = new LeftGroup("Settings");
         leftButtons.setNodes(leftButtonList);
 
         addToSideBar(leftButtons);
