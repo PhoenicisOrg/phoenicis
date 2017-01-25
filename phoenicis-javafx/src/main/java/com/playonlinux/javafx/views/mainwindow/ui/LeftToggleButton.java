@@ -39,6 +39,10 @@ public class LeftToggleButton extends ToggleButton {
         this(LeftToggleButton.class.getResourceAsStream(iconName), name);
     }
 
+    public LeftToggleButton(String name) {
+        this("", name);
+    }
+
     private LeftToggleButton(InputStream icon, String name) {
         super(name);
         this.name = name;
