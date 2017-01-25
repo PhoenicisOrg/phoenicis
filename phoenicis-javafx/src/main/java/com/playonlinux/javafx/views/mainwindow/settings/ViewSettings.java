@@ -66,22 +66,22 @@ public class ViewSettings extends MainWindowView {
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
 
-        final LeftToggleButton uiButton = new LeftToggleButton("", "User Interface");
+        final LeftToggleButton uiButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/settings.png", "User Interface");
         uiButton.setToggleGroup(group);
         leftButtonList.add(uiButton);
         uiButton.setOnMouseClicked(event -> showRightView(uiPanel));
 
-        final LeftToggleButton repositoriesButton = new LeftToggleButton("", "Repositories");
+        final LeftToggleButton repositoriesButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/settings.png", "Repositories");
         repositoriesButton.setToggleGroup(group);
         leftButtonList.add(repositoriesButton);
         repositoriesButton.setOnMouseClicked(event -> showRightView(repositoriesPanel));
 
-        final LeftToggleButton fileAssociationsButton = new LeftToggleButton("", "File Associations");
+        final LeftToggleButton fileAssociationsButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/settings.png", "File Associations");
         fileAssociationsButton.setToggleGroup(group);
         leftButtonList.add(fileAssociationsButton);
         fileAssociationsButton.setOnMouseClicked(event -> showRightView(fileAssociationsPanel));
 
-        final LeftToggleButton networkButton = new LeftToggleButton("", "Network");
+        final LeftToggleButton networkButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/settings.png", "Network");
         networkButton.setToggleGroup(group);
         leftButtonList.add(networkButton);
         networkButton.setOnMouseClicked(event -> showRightView(networkPanel));
