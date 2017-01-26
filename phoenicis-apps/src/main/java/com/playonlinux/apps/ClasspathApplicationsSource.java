@@ -30,7 +30,10 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 class ClasspathApplicationsSource implements ApplicationsSource {
@@ -58,7 +61,10 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                     categoryDTOs.add(category);
                 }
             }
+<<<<<<< HEAD
             Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
+=======
+>>>>>>> origin/master
             return categoryDTOs;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
@@ -92,7 +98,10 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 }
             }
         }
+<<<<<<< HEAD
         Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
+=======
+>>>>>>> origin/master
 
         return applicationDTOS;
     }
@@ -133,7 +142,10 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 scriptDTOs.add(script);
             }
         }
+<<<<<<< HEAD
         Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getName));
+=======
+>>>>>>> origin/master
 
         return scriptDTOs;
     }
