@@ -58,6 +58,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                     categoryDTOs.add(category);
                 }
             }
+            Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
             return categoryDTOs;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
@@ -92,6 +93,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
             }
         }
 
+        Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
         return applicationDTOS;
     }
 
@@ -132,6 +134,8 @@ class ClasspathApplicationsSource implements ApplicationsSource {
             }
         }
 
+        Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getName));
+
         return scriptDTOs;
     }
 
@@ -148,4 +152,19 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 .withScript(new String(IOUtils.toByteArray(scriptFile)))
                 .build();
     }
+
+    static class Factory {
+        private final ObjectMapper objectMapper;
+        private final ResourcePatternResolver resourceResolver;
+
+        Factory(ObjectMapper objectMapper, ResourcePatternResolver resourceResolver) {
+            this.objectMapper = objectMapper;
+            this.resourceResolver = resourceResolver;
+        }
+
+        public ClasspathApplicationsSource createInstance(String packagePath) {
+            return new ClasspathApplicationsSource(packagePath, resourceResolver, objectMapper);
+        }
+    }
+
 }
