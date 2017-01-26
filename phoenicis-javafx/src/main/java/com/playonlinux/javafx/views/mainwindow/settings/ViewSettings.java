@@ -23,6 +23,9 @@ import com.phoenicis.settings.Settings;
 import com.playonlinux.javafx.views.common.TextWithStyle;
 import com.playonlinux.javafx.views.common.Themes;
 import com.playonlinux.javafx.views.mainwindow.MainWindowView;
+import com.playonlinux.javafx.views.mainwindow.MessagePanel;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftGroup;
+import com.playonlinux.javafx.views.mainwindow.ui.LeftToggleButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,6 +38,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -45,33 +50,95 @@ public class ViewSettings extends MainWindowView {
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
-    private final Button saveButton = new Button("Save");
     private ComboBox<Themes> themes;
     private Consumer<Settings> onSave;
     private Settings settings = new Settings();
+    private MessagePanel selectSettingsPanel;
+
+    private VBox uiPanel = new VBox();
+    private VBox repositoriesPanel = new VBox();
+    private VBox fileAssociationsPanel = new VBox();
+    private VBox networkPanel = new VBox();
 
     public ViewSettings() {
         super("Settings");
 
+        final List<LeftToggleButton> leftButtonList = new ArrayList<>();
+        ToggleGroup group = new ToggleGroup();
+
+        final LeftToggleButton uiButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/userInterface.png", "User Interface");
+        uiButton.setToggleGroup(group);
+        leftButtonList.add(uiButton);
+        uiButton.setOnMouseClicked(event -> showRightView(uiPanel));
+
+        final LeftToggleButton repositoriesButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/repository.png", "Repositories");
+        repositoriesButton.setToggleGroup(group);
+        leftButtonList.add(repositoriesButton);
+        repositoriesButton.setOnMouseClicked(event -> showRightView(repositoriesPanel));
+
+        final LeftToggleButton fileAssociationsButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/settings.png", "File Associations");
+        fileAssociationsButton.setToggleGroup(group);
+        leftButtonList.add(fileAssociationsButton);
+        fileAssociationsButton.setOnMouseClicked(event -> showRightView(fileAssociationsPanel));
+
+        final LeftToggleButton networkButton = new LeftToggleButton("/com/playonlinux/javafx/views/mainwindow/settings/network.png", "Network");
+        networkButton.setToggleGroup(group);
+        leftButtonList.add(networkButton);
+        networkButton.setOnMouseClicked(event -> showRightView(networkPanel));
+
+        final LeftGroup leftButtons = new LeftGroup("Settings");
+        leftButtons.setNodes(leftButtonList);
+
+        addToSideBar(leftButtons);
         super.drawSideBar();
 
-        final VBox informationPane = new VBox();
-        informationPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
+        initUiSettingsPane();
+        initRepositoriesSettingsPane();
+        initFileAssociationsPane();
+        initNetworkPane();
 
-        final Text title = new TextWithStyle(translate("Settings"), TITLE_CSS_CLASS);
-        informationPane.getChildren().add(title);
+        initSelectSettingsPane();
+        showRightView(this.selectSettingsPanel);
+    }
 
-        final GridPane informationContentPane = new GridPane();
-        informationContentPane.getStyleClass().add("grid");
+    private void initUiSettingsPane() {
+        uiPanel = new VBox();
+        uiPanel.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
 
-        informationContentPane.add(new TextWithStyle(translate("Theme:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        final Text title = new TextWithStyle(translate("User Interface Settings"), TITLE_CSS_CLASS);
+        uiPanel.getChildren().add(title);
+
+        final GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("grid");
+
+        gridPane.add(new TextWithStyle(translate("Theme:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         themes = new ComboBox<>();
         themes.getItems().setAll(Themes.values());
         themes.setOnAction(this::handleThemeChange);
-        informationContentPane.add(themes, 1, 0);
+        gridPane.add(themes, 1, 0);
+
+        gridPane.setHgap(20);
+        gridPane.setVgap(10);
+
+        uiPanel.getChildren().add(gridPane);
+
+        final Button saveButton = new Button("Save");
+        saveButton.setOnMouseClicked(event -> this.save());
+        uiPanel.getChildren().add(saveButton);
+    }
+
+    private void initRepositoriesSettingsPane() {
+        repositoriesPanel = new VBox();
+        repositoriesPanel.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
+
+        final Text title = new TextWithStyle(translate("Repositories Settings"), TITLE_CSS_CLASS);
+        repositoriesPanel.getChildren().add(title);
+
+        final GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("grid");
 
         TextWithStyle repositoryText = new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS);
-        informationContentPane.add(repositoryText, 0, 1);
+        gridPane.add(repositoryText, 0, 0);
         GridPane.setValignment(repositoryText, VPos.TOP);
         VBox repositoryLayout = new VBox();
         repositoryLayout.setSpacing(5);
@@ -110,18 +177,25 @@ public class ViewSettings extends MainWindowView {
         });
         repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
         repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
-        informationContentPane.add(repositoryLayout, 1, 1);
+        gridPane.add(repositoryLayout, 1, 0);
 
-        informationContentPane.setHgap(20);
-        informationContentPane.setVgap(10);
+        gridPane.setHgap(20);
+        gridPane.setVgap(10);
 
-        informationPane.getChildren().add(informationContentPane);
+        repositoriesPanel.getChildren().add(gridPane);
 
-
+        final Button saveButton = new Button("Save");
         saveButton.setOnMouseClicked(event -> this.save());
-        informationPane.getChildren().add(saveButton);
+        repositoriesPanel.getChildren().add(saveButton);
 
-        showRightView(informationPane);
+    }
+
+    private void initFileAssociationsPane() {
+
+    }
+
+    private void initNetworkPane() {
+
     }
 
     public void setSettings(Settings settings) {
@@ -133,6 +207,10 @@ public class ViewSettings extends MainWindowView {
 
     public void setOnSave(Consumer<Settings> onSave) {
         this.onSave = onSave;
+    }
+
+    private void initSelectSettingsPane() {
+        this.selectSettingsPanel = new MessagePanel(translate("Please select a settings category"));
     }
 
     private void save() {
