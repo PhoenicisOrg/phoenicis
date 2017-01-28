@@ -85,16 +85,22 @@
 .check-box .box {
     -fx-background-color: transparent;
     -fx-border-color: #bdc3c7;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
 }
 
 .check-box:hover .box {
     -fx-background-color: transparent;
     -fx-border-color: #df5e1e;
 }
+.check-box:selected .box {
+    -fx-background-color: linear-gradient(#d05420, #d77852);
+    -fx-border-color: #df5e1e;
+}
 
 .check-box:selected .mark {
-    -fx-color: #df5e1e;
-    -fx-background-color: #df5e1e;
+    -fx-color: white;
+    -fx-background-color: white;
 }
 
 .tab-header-area .tab-header-background {
