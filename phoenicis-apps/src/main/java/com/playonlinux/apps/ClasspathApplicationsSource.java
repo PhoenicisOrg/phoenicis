@@ -92,8 +92,8 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 }
             }
         }
-        Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
 
+        Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
         return applicationDTOS;
     }
 
@@ -133,6 +133,7 @@ class ClasspathApplicationsSource implements ApplicationsSource {
                 scriptDTOs.add(script);
             }
         }
+
         Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getName));
 
         return scriptDTOs;
