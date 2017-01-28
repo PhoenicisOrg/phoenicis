@@ -348,19 +348,19 @@
 }
 
 .leftSpacer {
-    -fx-pref-height: 0.8em;
+    -fx-pref-height: 0;
 }
 
 .leftBarTitle {
+    -fx-padding: 10 10 5 10;
     -fx-font-family: "Roboto Regular";
     -fx-font-size: 1.2em;
     -fx-alignment: baseline-left;
-    -fx-translate-x: 10;
     -fx-fill: #3c3b37;
 }
 
 .leftButton {
-    -fx-padding:0 10 0 10;
+    -fx-padding: 0 10 0 10;
     -fx-background-color:transparent;
     -fx-border-color:transparent;
     -fx-cursor: hand;

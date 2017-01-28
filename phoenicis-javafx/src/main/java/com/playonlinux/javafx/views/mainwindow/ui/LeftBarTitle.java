@@ -18,9 +18,9 @@
 
 package com.playonlinux.javafx.views.mainwindow.ui;
 
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 
-public class LeftBarTitle extends Text {
+public class LeftBarTitle extends Label {
     public LeftBarTitle(String defaultValue) {
         super(defaultValue);
         this.getStyleClass().add("leftBarTitle");
