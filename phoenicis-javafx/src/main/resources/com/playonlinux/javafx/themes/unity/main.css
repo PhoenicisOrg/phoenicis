@@ -361,11 +361,12 @@
     -fx-txt-font-family: "Roboto Light";
 }
 
-.leftButton:hover, .leftButton:selected {
-    -fx-background-color: linear-gradient(#d8d5d3, #c9c5c2);
+.leftButton:selected {
+    -fx-background-color: linear-gradient(#ea6e3c, #f68152);
     -fx-border-color: transparent;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0;
+    -fx-text-fill: white;
 }
 
 /*******************************************************/
