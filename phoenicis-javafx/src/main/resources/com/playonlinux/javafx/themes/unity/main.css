@@ -71,7 +71,7 @@
 .combo-box .list-cell {
     -fx-background: #e7e5e4;
     -fx-background-color: #e7e5e4;
-    -fx-background-radius: 4;
+    -fx-background-radius: 4 0 0 4;
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover {
