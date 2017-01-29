@@ -114,17 +114,16 @@ public class ViewSettings extends MainWindowView {
         gridPane.add(new TextWithStyle(translate("Theme:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         themes = new ComboBox<>();
         themes.getItems().setAll(Themes.values());
-        themes.setOnAction(this::handleThemeChange);
+        themes.setOnAction(event -> {
+            this.handleThemeChange(event);
+            this.save();}
+        );
         gridPane.add(themes, 1, 0);
 
         gridPane.setHgap(20);
         gridPane.setVgap(10);
 
         uiPanel.getChildren().add(gridPane);
-
-        final Button saveButton = new Button("Save");
-        saveButton.setOnMouseClicked(event -> this.save());
-        uiPanel.getChildren().add(saveButton);
     }
 
     private void initRepositoriesSettingsPane() {
@@ -169,11 +168,13 @@ public class ViewSettings extends MainWindowView {
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(repositories::add);
+            this.save();
         });
         Button removeButton = new Button();
         removeButton.setText("Remove");
         removeButton.setOnAction((ActionEvent event) -> {
             repositories.removeAll(repositoryListView.getSelectionModel().getSelectedItems());
+            this.save();
         });
         repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
         repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
@@ -183,11 +184,6 @@ public class ViewSettings extends MainWindowView {
         gridPane.setVgap(10);
 
         repositoriesPanel.getChildren().add(gridPane);
-
-        final Button saveButton = new Button("Save");
-        saveButton.setOnMouseClicked(event -> this.save());
-        repositoriesPanel.getChildren().add(saveButton);
-
     }
 
     private void initFileAssociationsPane() {
