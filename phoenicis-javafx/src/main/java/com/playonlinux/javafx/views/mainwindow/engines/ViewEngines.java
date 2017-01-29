@@ -67,6 +67,7 @@ public class ViewEngines extends MainWindowView {
         super.drawSideBar();
 
         final TextField searchBar = new TextField();
+        searchBar.getStyleClass().add("searchBar");
         searchBar.setOnKeyReleased(event -> {
         });
 

@@ -176,6 +176,7 @@ public class ViewLibrary extends MainWindowView {
         clearSideBar();
 
         searchBar = new TextField();
+        searchBar.getStyleClass().add("searchBar");
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
