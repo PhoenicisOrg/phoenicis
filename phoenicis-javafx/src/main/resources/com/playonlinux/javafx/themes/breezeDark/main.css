@@ -124,24 +124,13 @@
 .text-field {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #232629;
+    -fx-background-color: #31363b;
     -fx-border-color: transparent;
     -fx-text-fill: -fx-text-base-color;
     -fx-focus-color: #3daee9;
 }
 
-.text-field:focused {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: #232629;
-    -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
-}
-
 .text-field:hover {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: #232629;
     -fx-border-color: #3daee9;
     -fx-text-fill: -fx-text-base-color;
 }
@@ -356,6 +345,20 @@
     -fx-background-color: #3daee9;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0;
+}
+
+.searchBar {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #232629;
+    -fx-border-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-focus-color: #3daee9;
+}
+
+.searchBar:hover {
+    -fx-border-color: #3daee9;
+    -fx-text-fill: -fx-text-base-color;
 }
 
 /*******************************************************/

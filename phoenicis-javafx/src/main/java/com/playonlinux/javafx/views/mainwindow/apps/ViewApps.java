@@ -117,6 +117,7 @@ public class ViewApps extends MainWindowView {
     @Override
     protected void drawSideBar() {
         searchBar = new TextField();
+        searchBar.getStyleClass().add("searchBar");
 
         categoryView = new LeftGroup(translate("Categories"));
 
