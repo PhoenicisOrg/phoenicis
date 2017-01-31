@@ -42,7 +42,7 @@ public class ControllerConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.theme:defaultTheme.css}")
+    @Value("${application.theme:default}")
     private String theme;
 
     @Autowired

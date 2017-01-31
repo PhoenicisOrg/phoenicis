@@ -20,6 +20,7 @@ package com.playonlinux.javafx.views.common;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 
 import java.net.URL;
 
@@ -33,15 +34,21 @@ public class PlayOnLinuxScene extends Scene {
     }
 
     private void applyTheme() {
-        final URL style = PlayOnLinuxScene.class.getResource(themePath());
+        URL style = PlayOnLinuxScene.class.getResource(themePath());
 
         if(style != null) {
             this.getStylesheets().add(style.toExternalForm());
         } else {
-            final String message = String.format("Theme %s is not found!", theme);
-            final IllegalStateException exception = new IllegalStateException(message);
-            new ErrorMessage(message, exception);
-            throw exception;
+            final String failedTheme = theme;
+            theme = "default";
+            style = PlayOnLinuxScene.class.getResource(themePath());
+            this.getStylesheets().add(style.toExternalForm());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Theme not found");
+            alert.setHeaderText(String.format("Theme %s is not found!", failedTheme));
+            alert.setContentText("The default theme will be used.");
+            alert.showAndWait();
         }
     }
 
