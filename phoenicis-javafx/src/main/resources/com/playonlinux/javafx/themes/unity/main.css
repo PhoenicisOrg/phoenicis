@@ -145,22 +145,20 @@
 }
 
 .text-field {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: #f2f1f0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-background-color: #e7e5e4;
     -fx-border-color: transparent;
     -fx-text-fill: -fx-text-base-color;
     -fx-focus-color: #df5e1e;
 }
 
 .text-field:focused {
-    -fx-background-color: #f2f1f0;
-    -fx-border-color: transparent;
+    -fx-border-color: #df5e1e;
     -fx-text-fill: -fx-text-base-color;
 }
 
 .text-field:hover {
-    -fx-background-color: #f2f1f0;
     -fx-border-color: #df5e1e;
     -fx-text-fill: -fx-text-base-color;
 }
@@ -386,6 +384,25 @@
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0;
     -fx-text-fill: white;
+}
+
+.searchBar {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #f2f1f0;
+    -fx-border-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-focus-color: #df5e1e;
+}
+
+.searchBar:focused {
+    -fx-border-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+}
+
+.searchBar:hover {
+    -fx-border-color: #df5e1e;
+    -fx-text-fill: -fx-text-base-color;
 }
 
 /*******************************************************/
