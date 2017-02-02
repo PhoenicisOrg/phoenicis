@@ -40,7 +40,16 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
     protected void drawStepContent() {
         super.drawStepContent();
 
+        setNextButtonEnabled(false);
+
         textField = new TextField();
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.trim().equals("")) {
+                setNextButtonEnabled(false);
+            } else {
+                setNextButtonEnabled(true);
+            }
+        });
         textField.setText(defaultValue);
         textField.setLayoutX(10);
         textField.setLayoutY(40);
