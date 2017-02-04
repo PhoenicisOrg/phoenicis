@@ -20,15 +20,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.playonlinux</groupId>
-		<artifactId>playonlinux</artifactId>
+		<groupId>org.phoenicis</groupId>
+		<artifactId>phoenicis</artifactId>
 		<version>5.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>phoenicis-dist</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.playonlinux</groupId>
+            <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-javafx</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -84,7 +84,7 @@
                         <configuration>
                             <dataSet>
                                 <data>
-                                    <src>${basedir}/src/scripts/PlayOnLinux.sh</src>
+                                    <src>${basedir}/src/scripts/phoenicis.sh</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
