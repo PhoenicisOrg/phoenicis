@@ -32,6 +32,9 @@ public class LibraryConfiguration {
     @Value("${application.user.shortcuts}")
     private String shortcutDirectory;
 
+    @Value("${application.user.desktopShortcuts}")
+    private String desktopShortcutDirectory;
+
     @Bean
     public LibraryManager libraryManager() {
         return new LibraryManager(shortcutDirectory);
@@ -39,7 +42,7 @@ public class LibraryConfiguration {
 
     @Bean
     public ShortcutManager shortcutManager() {
-        return new ShortcutManager(shortcutDirectory, libraryManager(), scriptsConfiguration.scriptInterpreter());
+        return new ShortcutManager(shortcutDirectory, desktopShortcutDirectory, libraryManager(), scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean
