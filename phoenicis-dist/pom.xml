@@ -84,11 +84,11 @@
                         <configuration>
                             <dataSet>
                                 <data>
-                                    <src>${basedir}/src/scripts/PlayOnLinux.sh</src>
+                                    <src>${basedir}/src/scripts/Phoenicis-JavaFX.sh</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/share/phoenicis</prefix>
+                                        <prefix>/usr/local/bin</prefix>
                                     </mapper>
                                 </data>
                                 <data>
@@ -96,7 +96,7 @@
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/share/phoenicis/lib</prefix>
+                                        <prefix>/usr/local/lib/phoenicis</prefix>
                                     </mapper>
                                 </data>
                             </dataSet>
