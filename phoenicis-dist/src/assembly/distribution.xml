@@ -40,7 +40,7 @@
 
 			<!-- Now, select which projects to include in this module-set. -->
 			<includes>
-				<include>com.phoenicis:phoenicis-javafx</include>
+				<include>org.phoenicis:phoenicis-javafx</include>
 			</includes>
 			<binaries>
 				<outputDirectory>lib</outputDirectory>
