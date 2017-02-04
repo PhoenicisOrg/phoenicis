@@ -9,5 +9,5 @@ Description: This program is a front-end for wine.
               and several wine versions.
              Copyright 2011 PlayOnLinux team <contact@playonlinux.com>
 Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
-Homepage: https://www.playonlinux.com
+Homepage: www.phoenicis.org
 Depends: default-jre | java8-runtime, unzip, wget, xterm | x-terminal-emulator, imagemagick, cabextract, icoutils, p7zip-full, curl
