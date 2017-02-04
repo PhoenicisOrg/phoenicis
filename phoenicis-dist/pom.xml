@@ -94,6 +94,7 @@
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/usr/local/bin</prefix>
+                                        <filemode>775</filemode>
                                     </mapper>
                                 </data>
                                 <data>
@@ -102,6 +103,7 @@
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/usr/local/bin</prefix>
+                                        <filemode>775</filemode>
                                     </mapper>
                                 </data>
                                 <data>
