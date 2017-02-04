@@ -87,7 +87,7 @@
                             <goal>jdeb</goal>
                         </goals>
                         <configuration>
-                            <dataSet>
+                            <dataSet>/com/playonlinux/javafx/views/common/playonlinux.png
                                 <data>
                                     <src>${basedir}/src/scripts/Phoenicis-JavaFX.sh</src>
                                     <type>file</type>
@@ -95,6 +95,14 @@
                                         <type>perm</type>
                                         <prefix>/usr/local/bin</prefix>
                                         <filemode>775</filemode>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/src/scripts/phoenicis-javafx.desktop</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/applications</prefix>
                                     </mapper>
                                 </data>
                                 <data>
@@ -107,11 +115,28 @@
                                     </mapper>
                                 </data>
                                 <data>
+                                    <src>${basedir}/src/scripts/phoenicis-cli.desktop</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/applications</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
                                     <src>${project.build.directory}/lib</src>
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/usr/local/lib/phoenicis</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/../phoenicis-javafx/src/main/resources/com/playonlinux/javafx/views/common/playonlinux.png</src>
+                                    <type>file</type>
+                                    <dst>phoenicis.png</dst>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/pixmaps</prefix>
                                     </mapper>
                                 </data>
                             </dataSet>
