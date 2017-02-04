@@ -36,10 +36,12 @@ public class ShortcutManager {
     private final String shortcutDirectory;
     private final LibraryManager libraryManager;
     private final ScriptInterpreter scriptInterpreter;
+    private final String desktopShortcutDirectory;
 
-    ShortcutManager(String shortcutDirectory,
+    ShortcutManager(String shortcutDirectory, String desktopShortcutDirectory,
                     LibraryManager libraryManager, ScriptInterpreter scriptInterpreter) {
         this.shortcutDirectory = shortcutDirectory;
+        this.desktopShortcutDirectory = desktopShortcutDirectory;
         this.libraryManager = libraryManager;
         this.scriptInterpreter = scriptInterpreter;
     }
@@ -52,7 +54,6 @@ public class ShortcutManager {
         final File iconFile = new File(shortcutDirectoryFile, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectoryFile, baseName + ".miniature");
         final File descriptionFile = new File(shortcutDirectoryFile, baseName + ".description");
-
 
         if(!shortcutDirectoryFile.exists()) {
             shortcutDirectoryFile.mkdirs();
@@ -73,6 +74,22 @@ public class ShortcutManager {
             LOGGER.warn("Error while creating shortcut", e);
         } finally {
             libraryManager.refresh();
+        }
+
+        if (this.desktopShortcutDirectory != null) {
+            final File desktopShortcutDirectoryFile = new File(this.desktopShortcutDirectory);
+            final File desktopShortcutFile = new File(desktopShortcutDirectoryFile, baseName + ".desktop");
+            try {
+                final String content =
+                        "[Desktop Entry]\n" +
+                        "Name=" + shortcutDTO.getName() + "\n" +
+                        "Type=Application\n" +
+                        "Icon=" + miniatureFile.getAbsolutePath() + "\n" +
+                        "Exec=phoenicis-cli -run \"" + shortcutDTO.getName() + "\"";
+                FileUtils.writeStringToFile(desktopShortcutFile, content, ENCODING);
+            } catch(IOException e) {
+                LOGGER.warn("Error while creating .desktop", e);
+            }
         }
     }
 
