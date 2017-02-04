@@ -54,14 +54,14 @@ public enum OperatingSystem {
 
 
     /**
-     * @return PlayOnLinux v4 compatible short name
+     * @return Phoenicis v4 compatible short name
      */
     public String getFullName() {
         return fullName;
     }
 
     /**
-     * @return PlayOnLinux v4 compatible short name
+     * @return Phoenicis v4 compatible short name
      */
     public String getLegacyName() {
         return legacyName;

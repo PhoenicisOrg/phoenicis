@@ -19,8 +19,8 @@
 package com.phoenicis.library;
 
 import com.phoenicis.library.dto.ShortcutDTO;
-import com.playonlinux.scripts.interpreter.InteractiveScriptSession;
-import com.playonlinux.scripts.interpreter.ScriptInterpreter;
+import com.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import com.phoenicis.scripts.interpreter.ScriptInterpreter;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

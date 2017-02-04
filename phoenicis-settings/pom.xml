@@ -21,8 +21,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>playonlinux</artifactId>
-        <groupId>com.playonlinux</groupId>
+        <artifactId>phoenicis</artifactId>
+        <groupId>com.phoenicis</groupId>
         <version>5.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -30,7 +30,7 @@
     <artifactId>phoenicis-settings</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.playonlinux</groupId>
+            <groupId>com.phoenicis</groupId>
             <artifactId>phoenicis-scripts</artifactId>
             <version>${project.version}</version>
         </dependency>

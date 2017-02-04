@@ -19,7 +19,7 @@
 package com.phoenicis.library;
 
 import com.phoenicis.library.dto.ShortcutDTO;
-import com.playonlinux.multithreading.functional.NullRunnable;
+import com.phoenicis.multithreading.functional.NullRunnable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -85,7 +85,7 @@ public class LibraryManager {
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
 
         try {
-            final byte[] icon = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(iconFile) : getClass().getResourceAsStream("playonlinux.png"));
+            final byte[] icon = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(iconFile) : getClass().getResourceAsStream("phoenicis.png"));
             final byte[] miniature = IOUtils.toByteArray(miniatureFile.exists() ? new FileInputStream(miniatureFile) : getClass().getResourceAsStream("defaultMiniature.png"));
             final String description = descriptionFile.exists() ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
             return new ShortcutDTO.Builder()

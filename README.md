@@ -1,11 +1,11 @@
-# PlayOnLinux and PlayOnMac 5
-This is the PlayOnLinux and PlayOnMac 5 repository. 
+# Phoenicis and PlayOnMac 5
+This is the Phoenicis and PlayOnMac 5 repository.
 
 ## Scripts
-* Please make your pull request on this repository: https://github.com/PlayOnLinux/scripts to add scripts
+* Please make your pull request on this repository: https://github.com/Phoenicis/scripts to add scripts
 
 ## Build instructions
-[Wiki: Building](https://github.com/PlayOnLinux/POL-POM-5/wiki/Building)
+[Wiki: Building](https://github.com/Phoenicis/POL-POM-5/wiki/Building)
 
 ### Code Quality
 To keep code easier to maintain, please import the project specifics format and cleanup settings into your IDE
@@ -29,5 +29,5 @@ Window > Preferences > Java > Editor > Save Action
 * Check Format source code
 	
 ## Continous integration
-* [Jenkins](http://www.playonlinux.org:8080)
-* [SonarQube](http://www.playonlinux.org:9000)
+* [Jenkins](http://www.phoenicis.org:8080)
+* [SonarQube](http://www.phoenicis.org:9000)

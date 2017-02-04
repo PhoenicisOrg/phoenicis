@@ -21,8 +21,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.playonlinux</groupId>
-	<artifactId>playonlinux</artifactId>
+	<groupId>com.phoenicis</groupId>
+	<artifactId>phoenicis</artifactId>
 	<packaging>pom</packaging>
 	<version>5.0-SNAPSHOT</version>
 	<modules>
@@ -123,8 +123,8 @@
 
 				<configuration>
 					<excludes>
-						<exclude>**/com/playonlinux/javafx/**</exclude>
-						<exclude>**/com/playonlinux/app/**</exclude>
+						<exclude>**/com/phoenicis/javafx/**</exclude>
+						<exclude>**/com/phoenicis/app/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
