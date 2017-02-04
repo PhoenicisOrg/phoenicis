@@ -3,3 +3,5 @@ Name=Phoenicis (CLI)
 Type=Application
 Exec=Phoenicis-CLI.sh
 Icon=phoenicis
+Comment=Front-end for Wine
+Categories=Game;Wine;

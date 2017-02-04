@@ -3,3 +3,5 @@ Name=Phoenicis (JavaFX)
 Type=Application
 Exec=Phoenicis-JavaFX.sh
 Icon=phoenicis
+Comment=Graphical front-end for Wine
+Categories=Game;Wine;
