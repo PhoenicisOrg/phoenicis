@@ -89,7 +89,7 @@
                         <configuration>
                             <dataSet>/com/playonlinux/javafx/views/common/playonlinux.png
                                 <data>
-                                    <src>${basedir}/src/scripts/Phoenicis-JavaFX.sh</src>
+                                    <src>${basedir}/src/scripts/phoenicis-javafx</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -106,7 +106,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${basedir}/src/scripts/Phoenicis-CLI.sh</src>
+                                    <src>${basedir}/src/scripts/phoenicis-cli</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>

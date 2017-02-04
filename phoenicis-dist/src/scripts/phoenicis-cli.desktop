@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Phoenicis (CLI)
 Type=Application
-Exec=Phoenicis-CLI.sh
+Exec=phoenicis-cli
 Icon=phoenicis
 Comment=Front-end for Wine
 Categories=Game;Wine;

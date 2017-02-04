@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Phoenicis (JavaFX)
 Type=Application
-Exec=Phoenicis-JavaFX.sh
+Exec=phoenicis-javafx
 Icon=phoenicis
 Comment=Graphical front-end for Wine
 Categories=Game;Wine;
