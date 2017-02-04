@@ -32,6 +32,11 @@
             <artifactId>phoenicis-javafx</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-cli</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 	<build>
@@ -85,6 +90,14 @@
                             <dataSet>
                                 <data>
                                     <src>${basedir}/src/scripts/Phoenicis-JavaFX.sh</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/local/bin</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/src/scripts/Phoenicis-CLI.sh</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
