@@ -26,6 +26,14 @@
 	</parent>
 	<artifactId>phoenicis-dist</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.playonlinux</groupId>
+            <artifactId>phoenicis-javafx</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -49,6 +57,53 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>jdeb</artifactId>
+                <groupId>org.vafer</groupId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jdeb</goal>
+                        </goals>
+                        <configuration>
+                            <dataSet>
+                                <data>
+                                    <src>${basedir}/src/scripts/PlayOnLinux.sh</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/phoenicis</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${project.build.directory}/lib</src>
+                                    <type>directory</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/phoenicis/lib</prefix>
+                                    </mapper>
+                                </data>
+                            </dataSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
 	</build>
 </project>
