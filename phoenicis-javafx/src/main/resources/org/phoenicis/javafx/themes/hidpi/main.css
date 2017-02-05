@@ -376,6 +376,7 @@
 .boldLabel {
     -fx-font-family: "Roboto Bold";
 }
+
 .normalLabel {
     -fx-font-family: "Roboto Light";
 }
