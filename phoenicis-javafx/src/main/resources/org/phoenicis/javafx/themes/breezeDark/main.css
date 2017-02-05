@@ -445,6 +445,10 @@
     -fx-background-color: #3daee9;
 }
 
+.miniatureListElement.selected {
+    -fx-background-color: #3daee9;
+}
+
 .miniatureImage {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
