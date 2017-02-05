@@ -149,6 +149,7 @@ public class ViewLibrary extends MainWindowView {
 
     private void drawSideBarWithShortcut(ShortcutDTO shortcut) {
         searchBar = new TextField();
+        searchBar.getStyleClass().add("searchBar");
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
