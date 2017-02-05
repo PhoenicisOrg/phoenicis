@@ -32,6 +32,11 @@
             <artifactId>phoenicis-javafx</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.phoenicis</groupId>
+            <artifactId>phoenicis-cli</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 	<build>
@@ -84,11 +89,37 @@
                         <configuration>
                             <dataSet>
                                 <data>
-                                    <src>${basedir}/src/scripts/phoenicis.sh</src>
+                                    <src>${basedir}/src/scripts/phoenicis-javafx</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/share/phoenicis</prefix>
+                                        <prefix>/usr/local/bin</prefix>
+                                        <filemode>775</filemode>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/src/scripts/phoenicis-javafx.desktop</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/applications</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/src/scripts/phoenicis-cli</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/local/bin</prefix>
+                                        <filemode>775</filemode>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/src/scripts/phoenicis-cli.desktop</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/applications</prefix>
                                     </mapper>
                                 </data>
                                 <data>
@@ -96,7 +127,15 @@
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/share/phoenicis/lib</prefix>
+                                        <prefix>/usr/local/lib/phoenicis</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${basedir}/../phoenicis-javafx/src/main/resources/org/phoenicis/javafx/views/common/phoenicis.png</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/pixmaps</prefix>
                                     </mapper>
                                 </data>
                             </dataSet>

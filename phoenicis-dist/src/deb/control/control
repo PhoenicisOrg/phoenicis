@@ -1,8 +1,13 @@
-Package: Phoenicis
+Package: Phoenicis-PlayOnLinux
 Version: 5.0
-Section: games
-Priority: low
+Section: misc
+Priority: optional
 Architecture: all
-Description: Phoenicis is a piece of software which allows you to easily install and use numerous games and apps designed to run with Microsoft® Windows®.
-Maintainer: some@mail.com
-Depends: default-jre | java8-runtime
+Description: This program is a front-end for wine.
+              It permits you to install Windows Games and softwares
+              on Linux. It allows you to manage differents virtual hard drive,
+              and several wine versions.
+             Copyright 2011 PlayOnLinux team <contact@playonlinux.com>
+Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
+Homepage: www.phoenicis.org
+Depends: default-jre | java8-runtime, unzip, wget, xterm | x-terminal-emulator, imagemagick, cabextract, icoutils, p7zip-full, curl
