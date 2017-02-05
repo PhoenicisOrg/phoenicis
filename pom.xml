@@ -123,8 +123,8 @@
 
 				<configuration>
 					<excludes>
-						<exclude>**/com/phoenicis/javafx/**</exclude>
-						<exclude>**/com/phoenicis/app/**</exclude>
+						<exclude>**/org/phoenicis/javafx/**</exclude>
+						<exclude>**/org/phoenicis/app/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
