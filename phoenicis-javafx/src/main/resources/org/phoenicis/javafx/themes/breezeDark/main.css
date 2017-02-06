@@ -27,6 +27,7 @@
     -fx-text-base-color: #eff0f1;
     -fx-text-inner-color: #eff0f1;
     -fx-border-radius: 0;
+    -fx-background-radius: 0;
 }
 
 .text {
@@ -38,7 +39,9 @@
     -fx-border-color: transparent;
 }
 
-.button:hover {
+.button:hover, .button:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-border-color: #3daee9;
 }
 
@@ -84,21 +87,22 @@
     -fx-background-color: #3daee9;
 }
 
-.tab-header-area .tab-header-background {
+.tab-pane *.tab-header-area *.tab-header-background {
     -fx-background-color: #31363b;
 }
 
-.tab-header-area .tab:selected {
-    -fx-background-color: #3daee9;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-}
-
-.tab-header-area .tab {
+.tab {
     -fx-background-radius: 0;
     -fx-background-color: #232629;
     -fx-border-width: 0;
+    -fx-border-radius: 0;
     -fx-background-opacity: 0;
+}
+
+.tab:selected {
+    -fx-background-color: #3daee9;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 .list-view {
@@ -130,7 +134,10 @@
     -fx-focus-color: #3daee9;
 }
 
-.text-field:hover {
+.text-field:hover, .text-field:focused {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: #31363b;
     -fx-border-color: #3daee9;
     -fx-text-fill: -fx-text-base-color;
 }
@@ -341,7 +348,7 @@
     -fx-txt-font-family: "Roboto Light";
 }
 
-.leftButton:hover, .leftButton:selected {
+.leftButton:hover, .leftButton:selected, .leftButton:focused, .leftButton:selected:focused {
     -fx-background-color: #3daee9;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0;
@@ -356,7 +363,8 @@
     -fx-focus-color: #3daee9;
 }
 
-.searchBar:hover {
+.searchBar:hover, .searchBar:focused {
+    -fx-background-color: #232629;
     -fx-border-color: #3daee9;
     -fx-text-fill: -fx-text-base-color;
 }
