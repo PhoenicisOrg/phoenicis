@@ -162,6 +162,7 @@ public class ViewSettings extends MainWindowView {
         addButton.setText("Add");
         addButton.setOnAction((ActionEvent event) -> {
             TextInputDialog dialog = new TextInputDialog();
+            dialog.initOwner(getContent().getScene().getWindow());
             dialog.setTitle("Add repository");
             dialog.setHeaderText("Add repository");
             dialog.setContentText("Please add the new repository:");
