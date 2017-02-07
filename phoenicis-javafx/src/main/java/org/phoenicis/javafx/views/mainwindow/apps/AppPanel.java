@@ -66,6 +66,7 @@ final class AppPanel extends VBox {
         int row = 0;
         for (ScriptDTO script: applicationDTO.getScripts()) {
             Label scriptName = new Label(script.getName());
+            scriptName.getStyleClass().add("descriptionText");
             Button installButton = new Button("Install");
             installButton.setOnMouseClicked(evt -> {
                 try {
