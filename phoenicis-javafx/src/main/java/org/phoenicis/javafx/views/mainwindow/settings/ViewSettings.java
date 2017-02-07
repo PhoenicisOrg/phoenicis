@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -223,30 +224,10 @@ public class ViewSettings extends MainWindowView {
     }
 
     private void handleThemeChange(ActionEvent evt) {
-        /*
-        // TODO: Save selected theme in config
-        switch (themes.getSelectionModel().getSelectedItem()) {
-            case DEFAULT: {
-                this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(parent.getPhoenicisScene().getTheme(Themes.DEFAULT));
-                break;
-            }
-            case DARK: {
-                this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(parent.getPhoenicisScene().getTheme(Themes.DARK));
-                break;
-            }
-            case HIDPI: {
-                this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(parent.getPhoenicisScene().getTheme(Themes.HIDPI));
-                break;
-            }
-            default: {
-                this.getScene().getStylesheets().clear();
-                this.getScene().getStylesheets().add(parent.getPhoenicisScene().getTheme(Themes.DEFAULT));
-                break;
-            }
-
-        }*/
+        final String shortName = themes.getSelectionModel().getSelectedItem().getShortName();
+        final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
+        final URL style = this.getClass().getResource(url);
+        getContent().getScene().getStylesheets().clear();
+        getContent().getScene().getStylesheets().add(style.toExternalForm());
     }
 }
