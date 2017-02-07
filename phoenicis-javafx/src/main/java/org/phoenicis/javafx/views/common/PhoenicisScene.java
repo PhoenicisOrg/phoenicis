@@ -18,8 +18,6 @@
 
 package org.phoenicis.javafx.views.common;
 
-import com.sun.javafx.css.StyleManager;
-import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -38,8 +36,7 @@ public class PhoenicisScene extends Scene {
         final URL style = PhoenicisScene.class.getResource(themePath());
 
         if(style != null) {
-            Application.setUserAgentStylesheet(null);
-            StyleManager.getInstance().addUserAgentStylesheet(style.toExternalForm());
+            this.getStylesheets().add(style.toExternalForm());
         } else {
             final String message = String.format("Theme %s is not found!", theme);
             final IllegalStateException exception = new IllegalStateException(message);
