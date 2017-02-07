@@ -203,12 +203,24 @@
     -fx-border-style: none;
     -fx-focus-traversable: false;
     -fx-background-color: transparent;
-    -fx-pref-height: 380;
+    -fx-pref-height: 150;
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
     -fx-background-color: #FAFAFA;
     -fx-border-width: 0;
+}
+
+/********************** description ********************/
+.descriptionTitle {
+    -fx-font-family: "Roboto light";
+    -fx-fill: #428bca;
+    -fx-font-size: 16;
+}
+
+.descriptionText {
+    -fx-font-family: "Roboto light";
+    -fx-font-size: 14;
 }
 
 /*******************************************************/
