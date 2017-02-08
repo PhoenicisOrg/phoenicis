@@ -24,11 +24,29 @@ import javafx.scene.Scene;
 import java.net.URL;
 
 public class PhoenicisScene extends Scene {
-    private String theme;
+    private Themes theme;
 
     public PhoenicisScene(Parent parent, String theme) {
         super(parent);
-        this.theme = theme;
+
+        switch (theme) {
+            case "breezeDark":
+                this.theme = Themes.BREEZE_DARK;
+                break;
+            case "dark":
+                this.theme = Themes.DARK;
+                break;
+            case "hidpi":
+                this.theme = Themes.HIDPI;
+                break;
+            case "unity":
+                this.theme = Themes.UNITY;
+                break;
+            default:
+                this.theme = Themes.DEFAULT;
+                break;
+        }
+        ThemeManager.getInstance().setCurrentTheme(this.theme);
         applyTheme();
     }
 
@@ -46,6 +64,6 @@ public class PhoenicisScene extends Scene {
     }
 
     private String themePath() {
-        return String.format("/org/phoenicis/javafx/themes/%s/main.css", theme);
+        return String.format("/org/phoenicis/javafx/themes/%s/main.css", theme.getShortName());
     }
 }

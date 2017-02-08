@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.settings.Setting;
 import org.phoenicis.settings.Settings;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -224,7 +225,9 @@ public class ViewSettings extends MainWindowView {
     }
 
     private void handleThemeChange(ActionEvent evt) {
-        final String shortName = themes.getSelectionModel().getSelectedItem().getShortName();
+        final Themes theme = themes.getSelectionModel().getSelectedItem();
+        ThemeManager.getInstance().setCurrentTheme(theme);
+        final String shortName = theme.getShortName();
         final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
         final URL style = this.getClass().getResource(url);
         getContent().getScene().getStylesheets().clear();

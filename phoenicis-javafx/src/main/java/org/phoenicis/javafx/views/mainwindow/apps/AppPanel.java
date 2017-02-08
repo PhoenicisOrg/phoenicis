@@ -30,6 +30,7 @@ import org.phoenicis.javafx.views.common.ErrorMessage;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,7 @@ final class AppPanel extends VBox {
         WebView appDescription = new WebView();
         VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
-        final URL style = getClass().getResource("/org/phoenicis/javafx/themes/breezeDark/description.css");
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", ThemeManager.getInstance().getCurrentTheme().getShortName()));
         appDescription.getEngine().setUserStyleSheetLocation(style.toString());
         Text installers = new Text("Installers");
         installers.getStyleClass().add("descriptionTitle");
