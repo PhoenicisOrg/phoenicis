@@ -23,8 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
+import javafx.scene.web.WebView;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -54,12 +53,12 @@ final class AppPanel extends VBox {
         final VBox descriptionWidget = new VBox();
         Text appName = new Text(applicationDTO.getName() + "\n\n");
         appName.getStyleClass().add("descriptionTitle");
-        Text appDescription = new Text(applicationDTO.getDescription() + "\n\n\n");
+        WebView appDescription = new WebView();
+        VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getStyleClass().add("descriptionText");
-        appDescription.setTextAlignment(TextAlignment.JUSTIFY);
+        appDescription.getEngine().loadContent(applicationDTO.getDescription());
         Text installers = new Text("Installers");
         installers.getStyleClass().add("descriptionTitle");
-        TextFlow flow = new TextFlow(appName, appDescription, installers);
 
         GridPane grid = new GridPane();
         grid.setHgap(100);
@@ -80,10 +79,7 @@ final class AppPanel extends VBox {
             row++;
         }
 
-        descriptionWidget.getChildren().addAll(flow, grid);
-
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, Priority.ALWAYS);
+        descriptionWidget.getChildren().addAll(appName, appDescription, installers, grid);
 
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
@@ -101,6 +97,6 @@ final class AppPanel extends VBox {
             miniaturesPane.getChildren().add(imageView);
         }
 
-        getChildren().addAll(descriptionWidget, spacer, miniaturesPaneWrapper);
+        getChildren().addAll(descriptionWidget, miniaturesPaneWrapper);
     }
 }
