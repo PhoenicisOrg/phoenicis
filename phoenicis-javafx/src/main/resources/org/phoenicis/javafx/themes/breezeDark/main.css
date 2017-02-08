@@ -411,7 +411,7 @@
 /********************** description ********************/
 .descriptionTitle {
     -fx-font-family: "Roboto light";
-    -fx-fill: #3daee9;
+    -fx-text-fill: #3daee9;
     -fx-font-size: 16;
 }
 

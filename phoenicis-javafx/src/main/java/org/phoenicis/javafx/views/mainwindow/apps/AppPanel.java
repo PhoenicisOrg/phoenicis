@@ -53,14 +53,14 @@ final class AppPanel extends VBox {
         this.setPadding(new Insets(10));
 
         final VBox descriptionWidget = new VBox();
-        Text appName = new Text(applicationDTO.getName() + "\n\n");
+        Label appName = new Label(applicationDTO.getName());
         appName.getStyleClass().add("descriptionTitle");
         WebView appDescription = new WebView();
         VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
         final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", ThemeManager.getInstance().getCurrentTheme().getShortName()));
         appDescription.getEngine().setUserStyleSheetLocation(style.toString());
-        Text installers = new Text("Installers");
+        Label installers = new Label("Installers");
         installers.getStyleClass().add("descriptionTitle");
 
         GridPane grid = new GridPane();
