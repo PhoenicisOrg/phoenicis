@@ -18,33 +18,28 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
-import org.phoenicis.javafx.views.common.HtmlTemplate;
-import com.sun.webkit.dom.HTMLAnchorElementImpl;
-import javafx.concurrent.Worker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.net.URL;
 import java.util.function.Consumer;
 
 final class AppPanel extends VBox {
     private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
-    private final ApplicationDTO applicationDTO;
-    private final String themeName;
 
     public void setOnScriptInstall(Consumer<ScriptDTO> onScriptInstall) {
         this.onScriptInstall = onScriptInstall;
@@ -52,48 +47,42 @@ final class AppPanel extends VBox {
 
     private Consumer<ScriptDTO> onScriptInstall = (script) -> {};
 
-    public AppPanel(ApplicationDTO applicationDTO, String themeName) {
+    public AppPanel(ApplicationDTO applicationDTO) {
         super();
-        this.applicationDTO = applicationDTO;
-        this.themeName = themeName;
         this.getStyleClass().addAll("rightPane", "appPresentation");
+        this.setPadding(new Insets(10));
 
-        final WebView descriptionWidget = new WebView();
+        final VBox descriptionWidget = new VBox();
+        Label appName = new Label(applicationDTO.getName());
+        appName.getStyleClass().add("descriptionTitle");
+        WebView appDescription = new WebView();
+        VBox.setVgrow(appDescription, Priority.ALWAYS);
+        appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", ThemeManager.getInstance().getCurrentTheme().getShortName()));
+        appDescription.getEngine().setUserStyleSheetLocation(style.toString());
+        Label installers = new Label("Installers");
+        installers.getStyleClass().add("descriptionTitle");
 
-        try {
-            descriptionWidget.getEngine().loadContent(
-                    new HtmlTemplate(
-                            this.getClass().getResourceAsStream("/org/phoenicis/javafx/themes/"+themeName+"/descriptionTemplate.html")
-                    ).render(applicationDTO)
-            );
-        } catch (IOException e) {
-            LOGGER.error("Unable to load the description", e);
+        GridPane grid = new GridPane();
+        grid.setHgap(100);
+        int row = 0;
+        for (ScriptDTO script: applicationDTO.getScripts()) {
+            Label scriptName = new Label(script.getName());
+            scriptName.getStyleClass().add("descriptionText");
+            Button installButton = new Button("Install");
+            installButton.setOnMouseClicked(evt -> {
+                try {
+                    onScriptInstall.accept(script);
+                } catch (IllegalArgumentException e) {
+                    LOGGER.error("Failed to get script", e);
+                    new ErrorMessage("Error while trying to download the installer", e).show();
+                }
+            });
+            grid.addRow(row,scriptName, installButton);
+            row++;
         }
 
-        descriptionWidget.getEngine().getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED) {
-                EventListener listener = ev -> {
-                    if (ev.getTarget() instanceof HTMLAnchorElementImpl) {
-                        final String linkHrefAttribute = ((HTMLAnchorElementImpl) ev.getTarget()).getHref();
-
-                        try {
-                            onScriptInstall.accept(fetchScriptFromName(linkHrefAttribute));
-                        } catch (IllegalArgumentException e) {
-                            LOGGER.error("Failed to get script", e);
-                            new ErrorMessage("Error while trying to download the installer", e).show();
-                        }
-                    }
-                };
-
-                final Document doc = descriptionWidget.getEngine().getDocument();
-                final NodeList lista = doc.getElementsByTagName("a");
-
-                for (int i = 0; i < lista.getLength(); i++) {
-                    ((EventTarget) lista.item(i)).addEventListener("click", listener, false);
-                }
-            }
-        });
-
+        descriptionWidget.getChildren().addAll(appName, appDescription, installers, grid);
 
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
@@ -111,17 +100,6 @@ final class AppPanel extends VBox {
             miniaturesPane.getChildren().add(imageView);
         }
 
-        this.getChildren().add(descriptionWidget);
-        this.getChildren().add(miniaturesPaneWrapper);
-    }
-
-    private ScriptDTO fetchScriptFromName(String scriptName) {
-        for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-            if(scriptName.equals(scriptDTO.getName())) {
-                return scriptDTO;
-            }
-        }
-
-        return null;
+        getChildren().addAll(descriptionWidget, miniaturesPaneWrapper);
     }
 }
