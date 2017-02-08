@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.net.URL;
 import java.util.function.Consumer;
 
 final class AppPanel extends VBox {
@@ -55,8 +56,9 @@ final class AppPanel extends VBox {
         appName.getStyleClass().add("descriptionTitle");
         WebView appDescription = new WebView();
         VBox.setVgrow(appDescription, Priority.ALWAYS);
-        appDescription.getStyleClass().add("descriptionText");
-        appDescription.getEngine().loadContent(applicationDTO.getDescription());
+        appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
+        final URL style = getClass().getResource("/org/phoenicis/javafx/themes/breezeDark/description.css");
+        appDescription.getEngine().setUserStyleSheetLocation(style.toString());
         Text installers = new Text("Installers");
         installers.getStyleClass().add("descriptionTitle");
 

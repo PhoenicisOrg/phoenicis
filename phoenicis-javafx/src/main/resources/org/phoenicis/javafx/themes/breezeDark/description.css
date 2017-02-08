@@ -1,0 +1,11 @@
+body {
+    font-family: "Roboto light";
+    font-size: 14;
+    color: #eff0f1;
+    background-color: #232629;
+}
+
+b {
+    font-family: "Roboto";
+    font-weight: normal;
+}
