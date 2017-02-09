@@ -26,27 +26,10 @@ import java.net.URL;
 public class PhoenicisScene extends Scene {
     private Themes theme;
 
-    public PhoenicisScene(Parent parent, String theme) {
+    public PhoenicisScene(Parent parent) {
         super(parent);
 
-        switch (theme) {
-            case "breezeDark":
-                this.theme = Themes.BREEZE_DARK;
-                break;
-            case "dark":
-                this.theme = Themes.DARK;
-                break;
-            case "hidpi":
-                this.theme = Themes.HIDPI;
-                break;
-            case "unity":
-                this.theme = Themes.UNITY;
-                break;
-            default:
-                this.theme = Themes.DEFAULT;
-                break;
-        }
-        ThemeManager.getInstance().setCurrentTheme(this.theme);
+        this.theme = ThemeManager.getInstance().getCurrentTheme();
         applyTheme();
     }
 

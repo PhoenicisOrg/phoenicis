@@ -43,7 +43,6 @@ public class MainWindow extends Stage {
 
 
     public MainWindow(String applicationName,
-                      String theme,
                       ViewLibrary library,
                       ViewApps apps,
                       ViewEngines engines,
@@ -70,7 +69,7 @@ public class MainWindow extends Stage {
 
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
 
-        scene = new PhoenicisScene(tabPane, theme);
+        scene = new PhoenicisScene(tabPane);
 
         this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
