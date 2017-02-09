@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import org.phoenicis.javafx.views.common.ThemeManager;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
@@ -42,7 +43,8 @@ public class FailurePanel extends VBox {
                 "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
-        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream("refresh.png")));
+        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/", ThemeManager.getInstance().getCurrentTheme().getShortName());
+        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream(iconPath + "refresh.png")));
         retryImage.setFitWidth(16);
         retryImage.setFitHeight(16);
         retryButton = new Button(translate("Retry"), retryImage);

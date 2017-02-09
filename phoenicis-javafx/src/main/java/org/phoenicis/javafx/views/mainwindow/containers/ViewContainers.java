@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
@@ -65,8 +66,10 @@ public class ViewContainers extends MainWindowView {
             final List<LeftToggleButton> leftButtonList = new ArrayList<>();
             ToggleGroup group = new ToggleGroup();
 
+            final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/containers/", ThemeManager.getInstance().getCurrentTheme().getShortName());
+
             for (ContainerDTO container : containers) {
-                final LeftToggleButton containerButton = new LeftToggleButton("/org/phoenicis/javafx/views/mainwindow/containers/container.png", container.getName());
+                final LeftToggleButton containerButton = new LeftToggleButton(iconPath + "container.png", container.getName());
                 containerButton.setToggleGroup(group);
                 leftButtonList.add(containerButton);
                 containerButton.setOnMouseClicked(event -> this.selectContainer(container));

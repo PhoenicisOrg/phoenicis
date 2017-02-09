@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
@@ -64,10 +65,10 @@ public class ViewLibrary extends MainWindowView {
     public ViewLibrary(String applicationName) {
         super("Library");
         this.getStyleClass().add("mainWindowScene");
-
-        this.runScript = new LeftButton("/org/phoenicis/javafx/views/mainwindow/library/script.png",
+        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/library/", ThemeManager.getInstance().getCurrentTheme().getShortName());
+        this.runScript = new LeftButton(iconPath + "script.png",
                 translate("Run a script"));
-        this.runConsole = new LeftButton("/org/phoenicis/javafx/views/mainwindow/library/console.png",
+        this.runConsole = new LeftButton(iconPath + "console.png",
                 translate(applicationName + " console"));
 
         this.drawSideBar();
@@ -157,9 +158,10 @@ public class ViewLibrary extends MainWindowView {
 
     private LeftGroup shortcutGroup(ShortcutDTO shortcut) {
         final LeftGroup shortcutGroup = new LeftGroup(shortcut.getName());
-        final LeftButton runButton = new LeftButton("/org/phoenicis/javafx/views/mainwindow/library/play.png", translate("Run"));
-        final LeftButton stopButton = new LeftButton("/org/phoenicis/javafx/views/mainwindow/library/stop.png", translate("Close"));
-        final LeftButton uninstallButton = new LeftButton("/org/phoenicis/javafx/views/mainwindow/library/remove.png", translate("Uninstall"));
+        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/library/", ThemeManager.getInstance().getCurrentTheme().getShortName());
+        final LeftButton runButton = new LeftButton(iconPath + "play.png", translate("Run"));
+        final LeftButton stopButton = new LeftButton(iconPath + "stop.png", translate("Close"));
+        final LeftButton uninstallButton = new LeftButton(iconPath + "remove.png", translate("Uninstall"));
 
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
         uninstallButton.setOnMouseClicked(event -> {onShortcutUninstall.accept(shortcut); drawSideBarWithoutShortcut();});
