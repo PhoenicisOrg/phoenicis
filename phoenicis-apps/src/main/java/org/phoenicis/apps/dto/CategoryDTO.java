@@ -35,7 +35,7 @@ public class CategoryDTO {
     private final CategoryType type;
     private final String name;
     private final List<ApplicationDTO> applications;
-    private final byte[] icon;
+    private final String icon;
 
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
@@ -44,7 +44,7 @@ public class CategoryDTO {
         this.icon = builder.icon;
     }
 
-    public byte[] getIcon() {
+    public String getIcon() {
         return icon;
     }
 
@@ -76,7 +76,7 @@ public class CategoryDTO {
         private CategoryType type;
         private String name;
         private List<ApplicationDTO> applications = new ArrayList<>();
-        private byte[] icon;
+        private String icon;
 
         public Builder() {
             // Default constructor
@@ -105,8 +105,8 @@ public class CategoryDTO {
             return this;
         }
 
-        public Builder withIcon(byte[] icon) {
-            this.icon = icon;
+        public Builder withIcon(String iconPath) {
+            this.icon = iconPath;
             return this;
         }
 

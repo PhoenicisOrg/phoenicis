@@ -74,11 +74,7 @@ class LocalApplicationsSource implements ApplicationsSource {
 
                 final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
                 if (categoryIconFile.exists()) {
-                    try {
-                        categoryDTOBuilder.withIcon(IOUtils.toByteArray(new FileInputStream(categoryIconFile)));
-                    } catch (IOException e) {
-                        LOGGER.warn("No icon found for the category " + categoryDirectory.getName(), e);
-                    }
+                    categoryDTOBuilder.withIcon("file:///" + categoryIconFile.getAbsolutePath());
                 }
 
                 CategoryDTO category = categoryDTOBuilder.build();

@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.mainwindow.engines;
 
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.common.widget.StaticMiniature;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
@@ -71,7 +72,8 @@ public class ViewEngines extends MainWindowView {
         searchBar.setOnKeyReleased(event -> {
         });
 
-        LeftButton wine = new LeftButton("/org/phoenicis/javafx/views/mainwindow/engines/wine.png", "Wine");
+        LeftButton wine = new LeftButton("Wine");
+        wine.getStyleClass().add("wineButton");
 
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);

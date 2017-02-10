@@ -38,6 +38,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import org.phoenicis.javafx.views.common.ThemeManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -383,9 +384,11 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     }
 
     private Button wineToolButton(String caption, String imageName, EventHandler<? super MouseEvent> eventHandler, boolean lockable) {
+        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/containers/", ThemeManager.getInstance().getCurrentTheme().getShortName());
+
         final Button button = new Button(caption,
                 new ImageView(
-                        new Image(this.getClass().getResourceAsStream(imageName), 48., 48., true, true)
+                        new Image(this.getClass().getResourceAsStream(iconPath + imageName), 48., 48., true, true)
                 )
         );
         button.getStyleClass().addAll("wineToolButton");

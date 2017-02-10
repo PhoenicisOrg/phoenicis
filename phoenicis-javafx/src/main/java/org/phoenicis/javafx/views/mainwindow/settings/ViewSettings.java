@@ -68,22 +68,26 @@ public class ViewSettings extends MainWindowView {
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
 
-        final LeftToggleButton uiButton = new LeftToggleButton("/org/phoenicis/javafx/views/mainwindow/settings/userInterface.png", "User Interface");
+        final LeftToggleButton uiButton = new LeftToggleButton("User Interface");
+        uiButton.getStyleClass().add("userInterfaceButton");
         uiButton.setToggleGroup(group);
         leftButtonList.add(uiButton);
         uiButton.setOnMouseClicked(event -> showRightView(uiPanel));
 
-        final LeftToggleButton repositoriesButton = new LeftToggleButton("/org/phoenicis/javafx/views/mainwindow/settings/repository.png", "Repositories");
+        final LeftToggleButton repositoriesButton = new LeftToggleButton("Repositories");
+        repositoriesButton.getStyleClass().add("repositoriesButton");
         repositoriesButton.setToggleGroup(group);
         leftButtonList.add(repositoriesButton);
         repositoriesButton.setOnMouseClicked(event -> showRightView(repositoriesPanel));
 
-        final LeftToggleButton fileAssociationsButton = new LeftToggleButton("/org/phoenicis/javafx/views/mainwindow/settings/settings.png", "File Associations");
+        final LeftToggleButton fileAssociationsButton = new LeftToggleButton("File Associations");
+        fileAssociationsButton.getStyleClass().add("settingsButton");
         fileAssociationsButton.setToggleGroup(group);
         leftButtonList.add(fileAssociationsButton);
         fileAssociationsButton.setOnMouseClicked(event -> showRightView(fileAssociationsPanel));
 
-        final LeftToggleButton networkButton = new LeftToggleButton("/org/phoenicis/javafx/views/mainwindow/settings/network.png", "Network");
+        final LeftToggleButton networkButton = new LeftToggleButton("Network");
+        networkButton.getStyleClass().add("networkButton");
         networkButton.setToggleGroup(group);
         leftButtonList.add(networkButton);
         networkButton.setOnMouseClicked(event -> showRightView(networkPanel));

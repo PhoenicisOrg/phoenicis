@@ -22,37 +22,17 @@ package org.phoenicis.javafx.views.mainwindow.ui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 public class LeftButton extends Button {
     private final String name;
 
-    public LeftButton(byte[] icon, String name) {
-        this(icon == null ? null : new ByteArrayInputStream(icon), name);
-    }
-
-    public LeftButton(String iconName, String name) {
-        this(LeftButton.class.getResourceAsStream(iconName), name);
-    }
-
-    private LeftButton(InputStream icon, String name) {
+    public LeftButton(String name) {
         super(name);
         this.name = name;
         this.getStyleClass().add("leftButton");
         this.setPrefWidth(Double.MAX_VALUE);
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(2));
-
-        if(icon != null) {
-            final ImageView iconView = new ImageView(new Image(icon));
-            iconView.setFitWidth(24);
-            iconView.setFitHeight(24);
-            this.setGraphic(iconView);
-        }
     }
 
     public String getName() {

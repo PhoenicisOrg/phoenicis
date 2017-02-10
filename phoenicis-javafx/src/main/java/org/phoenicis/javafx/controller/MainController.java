@@ -38,8 +38,7 @@ public class MainController {
 
     private String applicationName;
 
-    public MainController(String theme,
-                          String applicationName,
+    public MainController(String applicationName,
                           LibraryController libraryController,
                           AppsController appsController,
                           EnginesController enginesController,
@@ -52,7 +51,6 @@ public class MainController {
 
         this.mainWindow = new MainWindow(
                 applicationName,
-                theme,
                 libraryController.getView(),
                 appsController.getView(),
                 enginesController.getView(),

@@ -81,7 +81,10 @@ public class ViewApps extends MainWindowView {
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    final LeftButton categoryButton = new LeftButton(category.getIcon(), category.getName());
+                    final LeftButton categoryButton = new LeftButton(category.getName());
+                    final String themeName = new String(category.getName().toLowerCase() + "Button");
+                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
+                    categoryButton.getStyleClass().add(themeName);
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }
