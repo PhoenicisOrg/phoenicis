@@ -626,39 +626,39 @@
 
 /************************ apps *************************/
 .customButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/custom.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/custom.png');
 }
 
 .developmentButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/development.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/development.png');
 }
 
 .gamesButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/games.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/games.png');
 }
 
 .graphicsButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/graphics.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/graphics.png');
 }
 
 .internetButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/internet.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/internet.png');
 }
 
 .multimediaButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/multimedia.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/multimedia.png');
 }
 
 .officeButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/office.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/office.png');
 }
 
 .otherButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/other.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/other.png');
 }
 
 .scienceButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/science.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/science.png');
 }
 
 /********************* containers **********************/
