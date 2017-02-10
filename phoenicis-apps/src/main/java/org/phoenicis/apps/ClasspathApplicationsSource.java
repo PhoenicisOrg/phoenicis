@@ -69,11 +69,9 @@ class ClasspathApplicationsSource implements ApplicationsSource {
     private CategoryDTO buildCategory(String categoryFileName) throws IOException {
         final String jsonCategoryFile = packagePath + "/" + categoryFileName + "/category.json";
         final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile), CategoryDTO.class);
-        final InputStream iconStream = getClass().getResourceAsStream(packagePath + "/" + categoryFileName + "/icon.png");
-        final byte[] iconFile = iconStream == null ? null : IOUtils.toByteArray(iconStream);
 
         return new CategoryDTO.Builder(categoryDTO)
-                .withIcon(iconFile)
+                .withIcon(packagePath + "/" + categoryFileName + "/icon.png")
                 .withApplications(buildApplications(categoryFileName))
                 .build();
     }

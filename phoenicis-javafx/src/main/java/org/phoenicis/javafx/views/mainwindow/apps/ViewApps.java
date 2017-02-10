@@ -104,14 +104,7 @@ public class ViewApps extends MainWindowView {
                         categoryButton.getStyleClass().add(themeName);
                     }
                     else {
-                        // TODO: only set background image so the CSS can be applied to adjust the size etc.
-                        Image image = new Image(new ByteArrayInputStream(category.getIcon()), 24, 24, true, true);
-                        final ImageView iconView = new ImageView(image);
-                        iconView.setFitWidth(24);
-                        iconView.setFitHeight(24);
-                        categoryButton.setGraphic(iconView);
-                        categoryButton.setPadding(new Insets(0));
-                        categoryButton.setStyle("-fx-label-padding: 0 0 0 0;");
+                        categoryButton.setStyle("-fx-background-image: url('file:///" + category.getIcon() + "');");
                     }
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
