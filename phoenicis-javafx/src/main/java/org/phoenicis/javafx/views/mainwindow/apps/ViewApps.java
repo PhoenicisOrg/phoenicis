@@ -18,10 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import com.google.common.collect.Sets;
-import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -37,10 +33,8 @@ import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -84,28 +78,13 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
-            Set<String> themedCategories = Sets.newHashSet(
-                    "custom",
-                    "development",
-                    "games",
-                    "graphics",
-                    "internet",
-                    "multimedia",
-                    "office",
-                    "other",
-                    "science"
-            );
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
-                    if (themedCategories.contains(category.getName().toLowerCase())) {
-                        final String themeName = new String(category.getName().toLowerCase() + "Button");
-                        categoryButton.getStyleClass().add(themeName);
-                    }
-                    else {
-                        categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-                    }
+                    final String themeName = new String(category.getName().toLowerCase() + "Button");
+                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
+                    categoryButton.getStyleClass().add(themeName);
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }
