@@ -72,9 +72,8 @@ public class ViewEngines extends MainWindowView {
         searchBar.setOnKeyReleased(event -> {
         });
 
-        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/engines/", ThemeManager.getInstance().getCurrentTheme().getShortName());
-
-        LeftButton wine = new LeftButton(iconPath + "wine.png", "Wine");
+        LeftButton wine = new LeftButton("Wine");
+        wine.getStyleClass().add("wineButton");
 
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);

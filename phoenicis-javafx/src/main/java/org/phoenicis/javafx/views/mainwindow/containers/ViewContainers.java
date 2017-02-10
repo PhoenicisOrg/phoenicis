@@ -66,10 +66,9 @@ public class ViewContainers extends MainWindowView {
             final List<LeftToggleButton> leftButtonList = new ArrayList<>();
             ToggleGroup group = new ToggleGroup();
 
-            final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/containers/", ThemeManager.getInstance().getCurrentTheme().getShortName());
-
             for (ContainerDTO container : containers) {
-                final LeftToggleButton containerButton = new LeftToggleButton(iconPath + "container.png", container.getName());
+                final LeftToggleButton containerButton = new LeftToggleButton(container.getName());
+                containerButton.getStyleClass().add("containerButton");
                 containerButton.setToggleGroup(group);
                 leftButtonList.add(containerButton);
                 containerButton.setOnMouseClicked(event -> this.selectContainer(container));

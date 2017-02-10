@@ -81,7 +81,7 @@ public class ViewApps extends MainWindowView {
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    final LeftButton categoryButton = new LeftButton(category.getIcon(), category.getName());
+                    final LeftButton categoryButton = new LeftButton(category.getName()); //TODO: category icon from theme
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }

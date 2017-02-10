@@ -65,11 +65,10 @@ public class ViewLibrary extends MainWindowView {
     public ViewLibrary(String applicationName) {
         super("Library");
         this.getStyleClass().add("mainWindowScene");
-        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/library/", ThemeManager.getInstance().getCurrentTheme().getShortName());
-        this.runScript = new LeftButton(iconPath + "script.png",
-                translate("Run a script"));
-        this.runConsole = new LeftButton(iconPath + "console.png",
-                translate(applicationName + " console"));
+        this.runScript = new LeftButton(translate("Run a script"));
+        this.runScript.getStyleClass().add("scriptButton");
+        this.runConsole = new LeftButton(translate(applicationName + " console"));
+        this.runConsole.getStyleClass().add("consoleButton");
 
         this.drawSideBar();
         this.drawContent();
@@ -158,10 +157,12 @@ public class ViewLibrary extends MainWindowView {
 
     private LeftGroup shortcutGroup(ShortcutDTO shortcut) {
         final LeftGroup shortcutGroup = new LeftGroup(shortcut.getName());
-        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/library/", ThemeManager.getInstance().getCurrentTheme().getShortName());
-        final LeftButton runButton = new LeftButton(iconPath + "play.png", translate("Run"));
-        final LeftButton stopButton = new LeftButton(iconPath + "stop.png", translate("Close"));
-        final LeftButton uninstallButton = new LeftButton(iconPath + "remove.png", translate("Uninstall"));
+        final LeftButton runButton = new LeftButton(translate("Run"));
+        runButton.getStyleClass().add("runButton");
+        final LeftButton stopButton = new LeftButton(translate("Close"));
+        stopButton.getStyleClass().add("stopButton");
+        final LeftButton uninstallButton = new LeftButton(translate("Uninstall"));
+        uninstallButton.getStyleClass().add("uninstallButton");
 
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
         uninstallButton.setOnMouseClicked(event -> {onShortcutUninstall.accept(shortcut); drawSideBarWithoutShortcut();});
