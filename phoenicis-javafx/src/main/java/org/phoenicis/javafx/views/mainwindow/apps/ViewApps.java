@@ -104,7 +104,7 @@ public class ViewApps extends MainWindowView {
                         categoryButton.getStyleClass().add(themeName);
                     }
                     else {
-                        categoryButton.setStyle("-fx-background-image: url('file:///" + category.getIcon() + "');");
+                        categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
                     }
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
