@@ -51,18 +51,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ThemeManager themeManager() {
-        switch (theme) {
-            case "breezeDark":
-                return new ThemeManager(Theme.BREEZE_DARK);
-            case "dark":
-                return new ThemeManager(Theme.DARK);
-            case "hidpi":
-                return new ThemeManager(Theme.HIDPI);
-            case "unity":
-                return new ThemeManager(Theme.UNITY);
-            default:
-                return new ThemeManager(Theme.DEFAULT);
-        }
+        return new ThemeManager(Theme.fromShortName(theme));
     }
 
     @Bean
