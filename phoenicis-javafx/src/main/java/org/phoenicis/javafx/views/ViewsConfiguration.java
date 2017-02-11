@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixDTO;
+import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;

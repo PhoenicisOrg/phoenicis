@@ -19,7 +19,7 @@
 package org.phoenicis.javafx;
 
 
-import org.phoenicis.javafx.views.ThemeConfiguration;
+import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.apps.AppsConfiguration;

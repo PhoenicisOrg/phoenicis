@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
-import org.phoenicis.javafx.views.ThemeConfiguration;
+import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
