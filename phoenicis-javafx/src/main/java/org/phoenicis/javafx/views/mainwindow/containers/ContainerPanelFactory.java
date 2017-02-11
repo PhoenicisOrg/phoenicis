@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.views.common.ThemeManager;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -31,9 +32,9 @@ public class ContainerPanelFactory<T extends AbstractContainerPanel<C>, C extend
         this.entityClazz = entityClazz;
     }
 
-    public T createContainerPanel(C containerDTO) {
+    public T createContainerPanel(C containerDTO, ThemeManager themeManager) {
         try {
-            return this.clazz.getConstructor(entityClazz).newInstance(containerDTO);
+            return this.clazz.getConstructor(entityClazz, ThemeManager.class).newInstance(containerDTO, themeManager);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new IllegalStateException(e);
         }

@@ -49,7 +49,7 @@ public class ContainersController {
         });
 
         viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
-            final WinePrefixContainerPanel panel = wineContainerPanelFactory.createContainerPanel((WinePrefixDTO) containerDTO);
+            final WinePrefixContainerPanel panel = wineContainerPanelFactory.createContainerPanel((WinePrefixDTO) containerDTO, viewContainers.getThemeManager());
             panel.setOnWineCfg(winePrefixDTO -> wineContainerController.runInPrefix(
                     winePrefixDTO,
                     "winecfg",
