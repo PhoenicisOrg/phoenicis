@@ -43,8 +43,8 @@ public class FailurePanel extends VBox {
                 "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
-        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/", themeManager.getCurrentTheme().getShortName());
-        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream(iconPath + "refresh.png")));
+        final String iconPath = themeManager.getResourceUrl("/icons/mainwindow/refresh.png");
+        ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream(iconPath)));
         retryImage.setFitWidth(16);
         retryImage.setFitHeight(16);
         retryButton = new Button(translate("Retry"), retryImage);
