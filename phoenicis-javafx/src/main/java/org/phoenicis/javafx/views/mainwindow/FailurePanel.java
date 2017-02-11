@@ -32,7 +32,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 public class FailurePanel extends VBox {
     private final Button retryButton;
 
-    public FailurePanel() {
+    public FailurePanel(ThemeManager themeManager) {
         this.getStyleClass().add("rightPane");
 
         this.setSpacing(10);
@@ -43,7 +43,7 @@ public class FailurePanel extends VBox {
                 "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
-        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/", ThemeManager.getInstance().getCurrentTheme().getShortName());
+        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/", themeManager.getCurrentTheme().getShortName());
         ImageView retryImage = new ImageView(new Image(getClass().getResourceAsStream(iconPath + "refresh.png")));
         retryImage.setFitWidth(16);
         retryImage.setFitHeight(16);

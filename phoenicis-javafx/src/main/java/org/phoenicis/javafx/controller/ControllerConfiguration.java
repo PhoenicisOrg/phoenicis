@@ -44,9 +44,6 @@ public class ControllerConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.theme:defaultTheme.css}")
-    private String theme;
-
     @Autowired
     private ViewsConfiguration viewsConfiguration;
 
@@ -70,25 +67,6 @@ public class ControllerConfiguration {
 
     @Bean
     public MainController mainController() {
-        // setup ThemeManager here until bean is implemented
-        switch (theme) {
-            case "breezeDark":
-                ThemeManager.getInstance().setCurrentTheme(Themes.BREEZE_DARK);
-                break;
-            case "dark":
-                ThemeManager.getInstance().setCurrentTheme(Themes.DARK);
-                break;
-            case "hidpi":
-                ThemeManager.getInstance().setCurrentTheme(Themes.HIDPI);
-                break;
-            case "unity":
-                ThemeManager.getInstance().setCurrentTheme(Themes.UNITY);
-                break;
-            default:
-                ThemeManager.getInstance().setCurrentTheme(Themes.DEFAULT);
-                break;
-        }
-
         return new MainController(
                 applicationName,
                 libraryController(),
@@ -96,6 +74,7 @@ public class ControllerConfiguration {
                 enginesController(),
                 containersController(),
                 settingsController(),
+                viewsConfiguration.themeManager(),
                 viewsConfiguration.phoenicisLogo());
     }
 

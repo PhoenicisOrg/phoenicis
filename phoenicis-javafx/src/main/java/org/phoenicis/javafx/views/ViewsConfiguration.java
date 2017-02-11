@@ -19,6 +19,8 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixDTO;
+import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.Themes;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
@@ -41,27 +43,46 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
+    @Value("${application.theme:defaultTheme.css}")
+    private String theme;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
     @Bean
+    public ThemeManager themeManager() {
+        switch (theme) {
+            case "breezeDark":
+                return new ThemeManager(Themes.BREEZE_DARK);
+            case "dark":
+                return new ThemeManager(Themes.DARK);
+            case "hidpi":
+                return new ThemeManager(Themes.HIDPI);
+            case "unity":
+                return new ThemeManager(Themes.UNITY);
+            default:
+                return new ThemeManager(Themes.DEFAULT);
+        }
+    }
+
+    @Bean
     public ViewApps viewApps() {
-        return new ViewApps();
+        return new ViewApps(themeManager());
     }
 
     @Bean
     public ViewEngines viewEngines() {
-        return new ViewEngines();
+        return new ViewEngines(themeManager());
     }
 
     @Bean
     public ViewContainers viewContainers() {
-        return new ViewContainers();
+        return new ViewContainers(themeManager());
     }
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings();
+        return new ViewSettings(themeManager());
     }
 
     @Bean

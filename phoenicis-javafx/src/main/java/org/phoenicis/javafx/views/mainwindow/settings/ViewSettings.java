@@ -62,8 +62,8 @@ public class ViewSettings extends MainWindowView {
     private VBox fileAssociationsPanel = new VBox();
     private VBox networkPanel = new VBox();
 
-    public ViewSettings() {
-        super("Settings");
+    public ViewSettings(ThemeManager themeManager) {
+        super("Settings", themeManager);
 
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
@@ -230,7 +230,7 @@ public class ViewSettings extends MainWindowView {
 
     private void handleThemeChange(ActionEvent evt) {
         final Themes theme = themes.getSelectionModel().getSelectedItem();
-        ThemeManager.getInstance().setCurrentTheme(theme);
+        themeManager.setCurrentTheme(theme);
         final String shortName = theme.getShortName();
         final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
         final URL style = this.getClass().getResource(url);

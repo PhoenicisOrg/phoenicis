@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow;
 
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -25,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 public class MainWindowView extends Tab {
+    protected final ThemeManager themeManager;
     private final HBox hBox;
     private HBox waitPanel;
     private FailurePanel failurePanel;
@@ -32,8 +34,10 @@ public class MainWindowView extends Tab {
 
     private Node visiblePane;
 
-    public MainWindowView(String text) {
+    public MainWindowView(String text, ThemeManager themeManager) {
         super(text);
+
+        this.themeManager = themeManager;
 
         hBox = new HBox();
         hBox.getStyleClass().add("mainWindowScene");
@@ -41,7 +45,7 @@ public class MainWindowView extends Tab {
         setContent(hBox);
 
         waitPanel = new WaitPanel();
-        failurePanel = new FailurePanel();
+        failurePanel = new FailurePanel(themeManager);
     }
 
     protected void drawSideBar() {

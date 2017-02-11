@@ -1,15 +1,14 @@
 package org.phoenicis.javafx.views.common;
 
 public class ThemeManager {
-    private static ThemeManager singleton = new ThemeManager();
     private Themes currentTheme;
 
-    public static ThemeManager getInstance( ) {
-        return singleton;
+    public ThemeManager() {
+        currentTheme = Themes.DEFAULT;
     }
 
-    private ThemeManager() {
-        currentTheme = Themes.DEFAULT;
+    public ThemeManager(Themes theme) {
+        currentTheme = theme;
     }
 
     public Themes getCurrentTheme() {

@@ -18,7 +18,9 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +30,12 @@ public class ViewsConfigurationLibrary {
     @Value("${application.name}")
     private String applicationName;
 
+    @Autowired
+    private ThemeManager themeManager;
+
     @Bean
     public ViewLibrary viewLibrary() {
-        return new ViewLibrary(applicationName);
+        return new ViewLibrary(applicationName, themeManager);
     }
 
     @Bean

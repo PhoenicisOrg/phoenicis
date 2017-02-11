@@ -47,7 +47,7 @@ final class AppPanel extends VBox {
 
     private Consumer<ScriptDTO> onScriptInstall = (script) -> {};
 
-    public AppPanel(ApplicationDTO applicationDTO) {
+    public AppPanel(ApplicationDTO applicationDTO, ThemeManager themeManager) {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
         this.setPadding(new Insets(10));
@@ -58,7 +58,7 @@ final class AppPanel extends VBox {
         WebView appDescription = new WebView();
         VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
-        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", ThemeManager.getInstance().getCurrentTheme().getShortName()));
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", themeManager.getCurrentTheme().getShortName()));
         appDescription.getEngine().setUserStyleSheetLocation(style.toString());
         Label installers = new Label("Installers");
         installers.getStyleClass().add("descriptionTitle");

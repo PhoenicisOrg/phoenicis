@@ -36,8 +36,8 @@ import java.util.List;
 public class ViewEngines extends MainWindowView {
     private TabPane wineDistributionsTabPane;
 
-    public ViewEngines() {
-        super("Engines");
+    public ViewEngines(ThemeManager themeManager) {
+        super("Engines", themeManager);
 
         //   entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
 

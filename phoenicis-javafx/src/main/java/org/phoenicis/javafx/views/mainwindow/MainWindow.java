@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.mainwindow;
 
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
@@ -48,6 +49,7 @@ public class MainWindow extends Stage {
                       ViewEngines engines,
                       ViewContainers containers,
                       ViewSettings settings,
+                      ThemeManager themeManager,
                       PhoenicisLogo phoenicisLogo) {
         super();
 
@@ -69,7 +71,7 @@ public class MainWindow extends Stage {
 
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
 
-        scene = new PhoenicisScene(tabPane);
+        scene = new PhoenicisScene(tabPane, themeManager);
 
         this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
