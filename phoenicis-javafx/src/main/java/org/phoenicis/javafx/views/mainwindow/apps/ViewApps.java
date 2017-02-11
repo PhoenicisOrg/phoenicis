@@ -81,25 +81,13 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
-            Set<String> themedCategories = Sets.newHashSet(
-                    "custom",
-                    "development",
-                    "games",
-                    "graphics",
-                    "internet",
-                    "multimedia",
-                    "office",
-                    "other",
-                    "science"
-            );
-
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
-                    if (themedCategories.contains(category.getName().toLowerCase())) {
-                        final String themeName = new String(category.getName().toLowerCase() + "Button");
-                        categoryButton.getStyleClass().add(themeName);
+                    final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
+                    if (themeManager.resourceExists(resource)) {
+                        categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
                     } else {
                         categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
                     }
