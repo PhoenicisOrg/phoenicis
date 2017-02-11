@@ -362,6 +362,9 @@
     -fx-pref-width: 192px;
     -fx-pref-height: 192px;
     -fx-content-display: graphic-only;
+    -fx-background-size: 96px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
 }
 
 .wineToolCaption {
@@ -436,6 +439,42 @@
 /********************* containers **********************/
 .containerButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/container.png');
+}
+
+.cmdButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/cmd.png');
+}
+
+.winecfgButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/winecfg.png');
+}
+
+.regeditButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/regedit.png');
+}
+
+.rebootPrefixButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/rebootPrefix.png');
+}
+
+.repairButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/repair.png');
+}
+
+.cmdButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/cmd.png');
+}
+
+.taskmgrButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/taskmgr.png');
+}
+
+.killProcessesButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/killProcesses.png');
+}
+
+.uninstallerButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/uninstaller.png');
 }
 
 /*********************** engines ***********************/

@@ -278,35 +278,35 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfg.png",
+        toolsContentPane.add(wineToolButton(translate("Configure Wine"), "winecfgButton",
                 e -> this.onWineCfg.accept(containerEntity)), 0, 0);
         toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png",
+        toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regeditButton",
                 e -> this.onRegedit.accept(containerEntity)), 1, 0);
         toolsContentPane.add(wineToolCaption(translate("Registry Editor")), 1, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Windows reboot"), "rebootPrefix.png",
+        toolsContentPane.add(wineToolButton(translate("Windows reboot"), "rebootPrefixButton",
                 e -> this.onWineboot.accept(containerEntity)), 2, 0);
         toolsContentPane.add(wineToolCaption(translate("Windows reboot")), 2, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Repair virtual drive"), "repair.png",
+        toolsContentPane.add(wineToolButton(translate("Repair virtual drive"), "repairButton",
                 e -> this.onWinebootRepair.accept(containerEntity)), 3, 0);
         toolsContentPane.add(wineToolCaption(translate("Repair virtual drive")), 3, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Command prompt"), "cmd.png",
+        toolsContentPane.add(wineToolButton(translate("Command prompt"), "cmdButton",
                 e -> this.onWineConsole.accept(containerEntity)), 0, 3);
         toolsContentPane.add(wineToolCaption(translate("Command prompt")), 0, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Task manager"), "taskmgr.png",
+        toolsContentPane.add(wineToolButton(translate("Task manager"), "taskmgrButton",
                 e -> this.onTaskMgr.accept(containerEntity)), 1, 3);
         toolsContentPane.add(wineToolCaption(translate("Task manager")), 1, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Kill processes"), "killProcesses.png",
+        toolsContentPane.add(wineToolButton(translate("Kill processes"), "killProcessesButton",
                 e -> this.onKillProcess.accept(containerEntity), false), 2, 3);
         toolsContentPane.add(wineToolCaption(translate("Kill processes")), 2, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstaller.png",
+        toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstallerButton",
                 e -> this.onUninstaller.accept(containerEntity)), 3, 3);
         toolsContentPane.add(wineToolCaption(translate("Wine uninstaller")), 3, 4);
 
@@ -344,7 +344,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        toolsContentPane.add(wineToolButton(translate("Open a terminal"), "cmd.png",
+        toolsContentPane.add(wineToolButton(translate("Open a terminal"), "cmdButton",
                 e -> this.onOpenTerminalInWinePrefix.accept(containerEntity)), 0, 0);
         toolsContentPane.add(wineToolCaption(translate("Open a terminal")), 0, 1);
 
@@ -379,19 +379,13 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         return text;
     }
 
-    private Button wineToolButton(String caption, String imageName, EventHandler<? super MouseEvent> eventHandler) {
-        return wineToolButton(caption, imageName, eventHandler, true);
+    private Button wineToolButton(String caption, String theme, EventHandler<? super MouseEvent> eventHandler) {
+        return wineToolButton(caption, theme, eventHandler, true);
     }
 
-    private Button wineToolButton(String caption, String imageName, EventHandler<? super MouseEvent> eventHandler, boolean lockable) {
-        final String iconPath = String.format("/org/phoenicis/javafx/themes/%s/icons/mainwindow/containers/", ThemeManager.getInstance().getCurrentTheme().getShortName());
-
-        final Button button = new Button(caption,
-                new ImageView(
-                        new Image(this.getClass().getResourceAsStream(iconPath + imageName), 48., 48., true, true)
-                )
-        );
-        button.getStyleClass().addAll("wineToolButton");
+    private Button wineToolButton(String caption, String theme, EventHandler<? super MouseEvent> eventHandler, boolean lockable) {
+        final Button button = new Button(caption);
+        button.getStyleClass().addAll("wineToolButton", theme);
         button.setOnMouseClicked(event -> {
             lockAll();
             eventHandler.handle(event);
