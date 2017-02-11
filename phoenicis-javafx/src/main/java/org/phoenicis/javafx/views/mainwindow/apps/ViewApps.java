@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
@@ -47,8 +48,8 @@ public class ViewApps extends MainWindowView {
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
 
-    public ViewApps() {
-        super("Apps");
+    public ViewApps(ThemeManager themeManager) {
+        super("Apps", themeManager);
 
         availableApps = MiniatureListWidget.create();
 
@@ -142,7 +143,7 @@ public class ViewApps extends MainWindowView {
     }
 
     private void showAppDetails(ApplicationDTO application) {
-        final AppPanel appPanel = new AppPanel(application);
+        final AppPanel appPanel = new AppPanel(application, themeManager);
         appPanel.setOnScriptInstall(this::installScript);
         showRightView(appPanel);
     }

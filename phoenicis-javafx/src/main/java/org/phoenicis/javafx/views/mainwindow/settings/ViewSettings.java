@@ -22,7 +22,7 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.settings.Setting;
 import org.phoenicis.settings.Settings;
 import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.javafx.views.common.Themes;
+import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
@@ -52,7 +52,7 @@ public class ViewSettings extends MainWindowView {
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
-    private ComboBox<Themes> themes;
+    private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
     private Settings settings = new Settings();
     private MessagePanel selectSettingsPanel;
@@ -62,8 +62,8 @@ public class ViewSettings extends MainWindowView {
     private VBox fileAssociationsPanel = new VBox();
     private VBox networkPanel = new VBox();
 
-    public ViewSettings() {
-        super("Settings");
+    public ViewSettings(ThemeManager themeManager) {
+        super("Settings", themeManager);
 
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
@@ -119,7 +119,7 @@ public class ViewSettings extends MainWindowView {
 
         gridPane.add(new TextWithStyle(translate("Theme:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         themes = new ComboBox<>();
-        themes.getItems().setAll(Themes.values());
+        themes.getItems().setAll(Theme.values());
         themes.setOnAction(event -> {
             this.handleThemeChange(event);
             this.save();}
@@ -202,7 +202,7 @@ public class ViewSettings extends MainWindowView {
     }
 
     public void setSettings(Settings settings) {
-        final Themes setTheme = Themes.fromShortName(settings.get(Setting.THEME));
+        final Theme setTheme = Theme.fromShortName(settings.get(Setting.THEME));
         themes.setValue(setTheme);
 
         repositories.addAll(settings.get(Setting.REPOSITORY).split(";"));
@@ -229,8 +229,8 @@ public class ViewSettings extends MainWindowView {
     }
 
     private void handleThemeChange(ActionEvent evt) {
-        final Themes theme = themes.getSelectionModel().getSelectedItem();
-        ThemeManager.getInstance().setCurrentTheme(theme);
+        final Theme theme = themes.getSelectionModel().getSelectedItem();
+        themeManager.setCurrentTheme(theme);
         final String shortName = theme.getShortName();
         final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
         final URL style = this.getClass().getResource(url);

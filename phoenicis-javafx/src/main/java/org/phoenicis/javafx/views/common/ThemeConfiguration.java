@@ -18,37 +18,19 @@
 
 package org.phoenicis.javafx.views.common;
 
-public enum Themes {
-    DEFAULT("Default theme", "default"),
-    DARK("Dark theme", "dark"),
-    BREEZE_DARK("Breeze Dark theme", "breezeDark"),
-    UNITY("Unity theme", "unity"),
-    HIDPI("HiDPI theme", "hidpi");
+import org.phoenicis.javafx.views.common.Theme;
+import org.phoenicis.javafx.views.common.ThemeManager;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-    private final String name;
-    private final String shortName;
+@Configuration
+public class ThemeConfiguration {
+    @Value("${application.theme:defaultTheme.css}")
+    private String theme;
 
-    Themes(String themeName, String themeShortName) {
-        name = themeName;
-        shortName = themeShortName;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public static Themes fromShortName(String shortName) {
-        for(Themes theme: Themes.values()) {
-            if(theme.shortName.equals(shortName)) {
-                return theme;
-            }
-        }
-
-        return DEFAULT;
+    @Bean
+    public ThemeManager themeManager() {
+        return new ThemeManager(Theme.fromShortName(theme));
     }
 }

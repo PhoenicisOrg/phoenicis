@@ -23,6 +23,7 @@ import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.MainWindow;
 import javafx.application.Platform;
@@ -44,6 +45,7 @@ public class MainController {
                           EnginesController enginesController,
                           ContainersController containersController,
                           SettingsController settingsController,
+                          ThemeManager themeManager,
                           PhoenicisLogo phoenicisLogo) {
         super();
 
@@ -56,6 +58,7 @@ public class MainController {
                 enginesController.getView(),
                 containersController.getView(),
                 settingsController.getView(),
+                themeManager,
                 phoenicisLogo
         );
 

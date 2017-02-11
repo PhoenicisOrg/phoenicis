@@ -62,8 +62,8 @@ public class ViewLibrary extends MainWindowView {
 
     private Consumer<String> onSearch = keyword -> {};
 
-    public ViewLibrary(String applicationName) {
-        super("Library");
+    public ViewLibrary(String applicationName, ThemeManager themeManager) {
+        super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
         this.runScript = new LeftButton(translate("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");

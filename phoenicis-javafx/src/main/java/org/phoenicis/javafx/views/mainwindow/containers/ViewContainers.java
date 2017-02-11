@@ -42,8 +42,8 @@ public class ViewContainers extends MainWindowView {
     private MessagePanel selectContainerPanel;
     private Consumer<ContainerDTO> onSelectContainer = container -> {};
 
-    public ViewContainers() {
-        super("Containers");
+    public ViewContainers(ThemeManager themeManager) {
+        super("Containers", themeManager);
 
         this.containersView = new LeftGroup(translate("Containers"));
 
