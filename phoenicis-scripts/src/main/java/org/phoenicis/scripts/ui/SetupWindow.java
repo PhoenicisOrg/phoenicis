@@ -67,8 +67,9 @@ public interface SetupWindow {
      * Show a menu step and block until a response is given
      * @param textToShow The text to show to the user
      * @param menuItems The items in the menu
+     * @param defaultValue The item which is selected by default
      */
-    void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems);
+    void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems, String defaultValue);
 
     /**
      * Show a wait message, and returns immediately

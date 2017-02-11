@@ -221,7 +221,20 @@ public class SetupWizard implements CompleteWizard {
      */
     @Override
     public String menu(String textToShow, List<String> menuItems) {
-        return messageSender.runAndWait(message -> setupWindow.showMenuStep(message, textToShow, menuItems));
+        return messageSender.runAndWait(message -> setupWindow.showMenuStep(message, textToShow, menuItems, ""));
+    }
+
+    /**
+     * Displays a showMenuStep so that the user can make a choice
+     *
+     * @param textToShow a text that will be shown
+     * @param menuItems  a list containing the elements of the showMenuStep
+     * @param defaultValue item which is selected by default
+     * @return the value the user entered (as string)
+     */
+    @Override
+    public String menu(String textToShow, List<String> menuItems, String defaultValue) {
+        return messageSender.runAndWait(message -> setupWindow.showMenuStep(message, textToShow, menuItems, defaultValue));
     }
 
     /**

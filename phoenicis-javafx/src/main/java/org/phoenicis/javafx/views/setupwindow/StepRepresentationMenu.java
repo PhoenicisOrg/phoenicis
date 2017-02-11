@@ -26,17 +26,18 @@ import java.util.List;
 
 
 public class StepRepresentationMenu extends StepRepresentationMessage {
+    private final String defaultValue;
     private final List<String> menuItems;
     private final ListView<String> listViewWidget;
     private final Message<String> messageWaitingForResponse;
 
-    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<String> messageWaitingForResponse, String textToShow, List<String> menuItems) {
+    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<String> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 
         this.menuItems = menuItems;
         this.listViewWidget = new ListView<>();
-
+        this.defaultValue = defaultValue;
     }
 
     @Override
@@ -44,6 +45,14 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
         super.drawStepContent();
 
         listViewWidget.setItems(FXCollections.observableArrayList(menuItems));
+        if (defaultValue != null) {
+            int idx = menuItems.indexOf(defaultValue);
+            if (idx != -1) {
+                listViewWidget.getSelectionModel().select(idx);
+                listViewWidget.getFocusModel().focus(idx);
+                listViewWidget.scrollTo(idx);
+            }
+        }
         this.addToContentPane(listViewWidget);
     }
 
