@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import com.google.common.collect.Sets;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -36,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -83,9 +85,12 @@ public class ViewApps extends MainWindowView {
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
-                    final String themeName = new String(category.getName().toLowerCase() + "Button");
-                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-                    categoryButton.getStyleClass().add(themeName);
+                    final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
+                    if (themeManager.resourceExists(resource)) {
+                        categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
+                    } else {
+                        categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
+                    }
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }
