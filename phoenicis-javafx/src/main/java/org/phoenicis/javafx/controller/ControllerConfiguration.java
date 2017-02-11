@@ -18,8 +18,6 @@
 
 package org.phoenicis.javafx.controller;
 
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.Themes;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.apps.AppsConfiguration;

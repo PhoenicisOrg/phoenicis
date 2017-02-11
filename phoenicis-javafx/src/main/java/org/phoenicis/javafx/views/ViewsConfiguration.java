@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.Themes;
+import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
@@ -53,15 +53,15 @@ public class ViewsConfiguration {
     public ThemeManager themeManager() {
         switch (theme) {
             case "breezeDark":
-                return new ThemeManager(Themes.BREEZE_DARK);
+                return new ThemeManager(Theme.BREEZE_DARK);
             case "dark":
-                return new ThemeManager(Themes.DARK);
+                return new ThemeManager(Theme.DARK);
             case "hidpi":
-                return new ThemeManager(Themes.HIDPI);
+                return new ThemeManager(Theme.HIDPI);
             case "unity":
-                return new ThemeManager(Themes.UNITY);
+                return new ThemeManager(Theme.UNITY);
             default:
-                return new ThemeManager(Themes.DEFAULT);
+                return new ThemeManager(Theme.DEFAULT);
         }
     }
 
