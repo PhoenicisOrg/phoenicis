@@ -78,7 +78,7 @@ class SetupWindowCLIImplementation implements SetupWindow {
     }
 
     @Override
-    public void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems) {
+    public void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
         throw new UnsupportedOperationException("FIXME");
     }
 

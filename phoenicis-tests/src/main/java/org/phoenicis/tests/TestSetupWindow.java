@@ -59,7 +59,7 @@ class TestSetupWindow implements SetupWindow {
     }
 
     @Override
-    public void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems) {
+    public void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
         doneCallback.send("");
     }
 
