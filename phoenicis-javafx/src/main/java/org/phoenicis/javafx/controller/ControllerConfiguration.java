@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.controller;
 
+import org.phoenicis.javafx.views.ThemeConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.apps.AppsConfiguration;
@@ -41,6 +42,9 @@ public class ControllerConfiguration {
 
     @Value("${application.name}")
     private String applicationName;
+
+    @Autowired
+    private ThemeConfiguration themeConfiguration;
 
     @Autowired
     private ViewsConfiguration viewsConfiguration;
@@ -72,7 +76,7 @@ public class ControllerConfiguration {
                 enginesController(),
                 containersController(),
                 settingsController(),
-                viewsConfiguration.themeManager(),
+                themeConfiguration.themeManager(),
                 viewsConfiguration.phoenicisLogo());
     }
 

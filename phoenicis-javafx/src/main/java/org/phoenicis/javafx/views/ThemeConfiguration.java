@@ -16,30 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.mainwindow.library;
+package org.phoenicis.javafx.views;
 
-import org.phoenicis.javafx.views.ThemeConfiguration;
-import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.phoenicis.javafx.views.common.Theme;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ViewsConfigurationLibrary {
-    @Value("${application.name}")
-    private String applicationName;
-
-    @Autowired
-    private ThemeConfiguration themeConfiguration;
+public class ThemeConfiguration {
+    @Value("${application.theme:defaultTheme.css}")
+    private String theme;
 
     @Bean
-    public ViewLibrary viewLibrary() {
-        return new ViewLibrary(applicationName, themeConfiguration.themeManager());
-    }
-
-    @Bean
-    public ConsoleTabFactory consoleTabFactory() {
-        return new ConsoleTabFactory();
+    public ThemeManager themeManager() {
+        return new ThemeManager(Theme.fromShortName(theme));
     }
 }

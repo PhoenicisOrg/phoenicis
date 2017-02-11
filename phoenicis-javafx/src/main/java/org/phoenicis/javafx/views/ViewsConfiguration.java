@@ -19,8 +19,6 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixDTO;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
@@ -43,35 +41,30 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.theme:defaultTheme.css}")
-    private String theme;
-
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
-    @Bean
-    public ThemeManager themeManager() {
-        return new ThemeManager(Theme.fromShortName(theme));
-    }
+    @Autowired
+    private ThemeConfiguration themeConfiguration;
 
     @Bean
     public ViewApps viewApps() {
-        return new ViewApps(themeManager());
+        return new ViewApps(themeConfiguration.themeManager());
     }
 
     @Bean
     public ViewEngines viewEngines() {
-        return new ViewEngines(themeManager());
+        return new ViewEngines(themeConfiguration.themeManager());
     }
 
     @Bean
     public ViewContainers viewContainers() {
-        return new ViewContainers(themeManager());
+        return new ViewContainers(themeConfiguration.themeManager());
     }
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeManager());
+        return new ViewSettings(themeConfiguration.themeManager());
     }
 
     @Bean

@@ -19,6 +19,7 @@
 package org.phoenicis.javafx;
 
 
+import org.phoenicis.javafx.views.ThemeConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.apps.AppsConfiguration;
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.Import;
         PhoenicisGlobalConfiguration.class,
         ControllerConfiguration.class,
         ScriptsConfiguration.class,
+        ThemeConfiguration.class,
         ViewsConfiguration.class,
         AppsConfiguration.class,
         EnginesConfiguration.class,
