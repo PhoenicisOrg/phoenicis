@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.setupwindow;
 
+import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ListView;
@@ -29,9 +30,9 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     private final String defaultValue;
     private final List<String> menuItems;
     private final ListView<String> listViewWidget;
-    private final Message<String> messageWaitingForResponse;
+    private final Message<MenuItem> messageWaitingForResponse;
 
-    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<String> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
+    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<MenuItem> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 
@@ -58,8 +59,10 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event ->
-                        messageWaitingForResponse.send(listViewWidget.getFocusModel().getFocusedItem())
+        this.setNextButtonAction(event -> {
+                    MenuItem menuItem = new MenuItem(listViewWidget.getSelectionModel().getSelectedItem(), listViewWidget.getSelectionModel().getSelectedIndex());
+                    messageWaitingForResponse.send(menuItem);
+                }
         );
     }
 

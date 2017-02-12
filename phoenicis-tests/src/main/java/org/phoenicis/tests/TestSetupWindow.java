@@ -18,6 +18,7 @@
 
 package org.phoenicis.tests;
 
+import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
 import org.phoenicis.scripts.ui.SetupWindow;
@@ -59,8 +60,8 @@ class TestSetupWindow implements SetupWindow {
     }
 
     @Override
-    public void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
-        doneCallback.send("");
+    public void showMenuStep(Message<MenuItem> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
+        doneCallback.send(null);
     }
 
     @Override

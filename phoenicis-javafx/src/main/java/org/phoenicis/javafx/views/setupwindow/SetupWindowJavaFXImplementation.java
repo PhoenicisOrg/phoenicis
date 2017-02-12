@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.setupwindow;
 
+import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
 import org.phoenicis.scripts.ui.SetupWindow;
@@ -104,7 +105,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     }
 
     @Override
-    public void showMenuStep(Message<String> message, String textToShow, List<String> menuItems, String defaultValue) {
+    public void showMenuStep(Message<MenuItem> message, String textToShow, List<String> menuItems, String defaultValue) {
         StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems, defaultValue);
         stepMenu.installStep();
     }
