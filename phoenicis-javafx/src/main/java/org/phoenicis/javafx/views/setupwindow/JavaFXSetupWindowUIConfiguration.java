@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.setupwindow;
 
 import org.phoenicis.javafx.UIMessageSenderJavaFXImplementation;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
+import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.scripts.ui.SetupWindowFactory;
 import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
@@ -39,11 +40,14 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
     @Autowired
     private ToolsConfiguration toolsConfiguration;
 
+    @Autowired
+    private ThemeConfiguration themeConfiguration;
+
     @Override
     @Bean
     public SetupWindowFactory setupWindowFactory() {
         return title -> {
-            final SetupWindowJavaFXImplementation setupWindow = new SetupWindowJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher());
+            final SetupWindowJavaFXImplementation setupWindow = new SetupWindowJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
             viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
             setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
             return setupWindow;

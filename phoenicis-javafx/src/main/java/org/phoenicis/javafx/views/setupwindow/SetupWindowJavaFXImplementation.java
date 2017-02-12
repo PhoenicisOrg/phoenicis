@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.setupwindow;
 
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
@@ -36,6 +37,7 @@ import java.util.List;
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow {
+    private final ThemeManager themeManager;
     private final BorderPane root;
     private final String wizardTitle;
 
@@ -44,8 +46,9 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     private Runnable onShouldClose = () -> {};
     private final OperatingSystemFetcher operatingSystemFetcher;
 
-    public SetupWindowJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher) {
+    public SetupWindowJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager) {
         super();
+        this.themeManager = themeManager;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.root = new BorderPane();
 
@@ -82,6 +85,9 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
         }
     }
 
+    public ThemeManager getThemeManager() {
+        return themeManager;
+    }
 
     public void addNode(Node widgetToAdd) {
         this.root.getChildren().add(widgetToAdd);
@@ -122,6 +128,13 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
         StepRepresentationProgressBar stepProgressBar = new StepRepresentationProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
         message.send(stepProgressBar);
+    }
+
+    @Override
+    public void showHtmlPresentationStep(Message<Void> message, String htmlToShow) {
+        StepRepresentationHtmlPresentation stepRepresentationHtmlPresentation =
+                new StepRepresentationHtmlPresentation(this, message, htmlToShow);
+        stepRepresentationHtmlPresentation.installStep();
     }
 
     @Override

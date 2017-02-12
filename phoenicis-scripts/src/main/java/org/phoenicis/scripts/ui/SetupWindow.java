@@ -90,6 +90,13 @@ public interface SetupWindow {
     void showPresentationStep(Message<Void> doneCallback, String textToShow);
 
     /**
+     * Shows a default script presentation step and blocks until a response is given
+     *
+     * @param htmlToShow The HTML to show to the user
+     */
+    void showHtmlPresentationStep(Message<Void> doneCallback, String htmlToShow);
+
+    /**
      * Shows a licence step and blocks until a response is given
      * @param textToShow The text to show to the user
      * @param licenceText The licence content

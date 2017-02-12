@@ -18,6 +18,7 @@
 
 package org.phoenicis.cli.setupwindow;
 
+import org.jsoup.Jsoup;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
@@ -109,6 +110,11 @@ class SetupWindowCLIImplementation implements SetupWindow {
                 printIfVerbose("[" + String.format("%.2f", percentage) + "] " + textToShow + " : " + text);
             }
         });
+    }
+
+    @Override
+    public void showHtmlPresentationStep(Message<Void> doneCallback, String htmlToShow) {
+        showSimpleMessageStep(doneCallback, Jsoup.parse(htmlToShow).text());
     }
 
     @Override
