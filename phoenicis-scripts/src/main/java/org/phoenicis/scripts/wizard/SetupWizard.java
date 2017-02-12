@@ -19,6 +19,7 @@
 package org.phoenicis.scripts.wizard;
 
 import org.phoenicis.scripts.interpreter.ScriptException;
+import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.ProgressControl;
 import org.phoenicis.scripts.ui.SetupWindow;
 import org.phoenicis.scripts.ui.SetupWindowFactory;
@@ -220,7 +221,7 @@ public class SetupWizard implements CompleteWizard {
      * @return the value the user entered (as string)
      */
     @Override
-    public int menu(String textToShow, List<String> menuItems) {
+    public MenuItem menu(String textToShow, List<String> menuItems) {
         return this.menu(textToShow, menuItems, "");
     }
 
@@ -233,7 +234,7 @@ public class SetupWizard implements CompleteWizard {
      * @return the value the user entered (as string)
      */
     @Override
-    public int menu(String textToShow, List<String> menuItems, String defaultValue) {
+    public MenuItem menu(String textToShow, List<String> menuItems, String defaultValue) {
         return messageSender.runAndWait(message -> setupWindow.showMenuStep(message, textToShow, menuItems, defaultValue));
     }
 

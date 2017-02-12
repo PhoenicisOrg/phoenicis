@@ -18,6 +18,7 @@
 
 package org.phoenicis.cli.setupwindow;
 
+import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
 import org.phoenicis.scripts.ui.SetupWindow;
@@ -78,7 +79,7 @@ class SetupWindowCLIImplementation implements SetupWindow {
     }
 
     @Override
-    public void showMenuStep(Message<Integer> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
+    public void showMenuStep(Message<MenuItem> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
         throw new UnsupportedOperationException("FIXME");
     }
 

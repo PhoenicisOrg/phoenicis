@@ -16,14 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.wizard;
+package org.phoenicis.scripts.ui;
 
-import org.phoenicis.scripts.ui.MenuItem;
+public class MenuItem {
+    private String text;
+    private int index;
 
-import java.util.List;
+    public MenuItem(String text, int index) {
+        this.text = text;
+        this.index = index;
+    }
 
-public interface ChoiceWizard {
-    MenuItem menu(String textToShow, List<String> menuItems);
+    public String text() {
+        return text;
+    }
 
-    MenuItem menu(String textToShow, List<String> menuItems, String defaultValue);
+    public int index() {
+        return index;
+    }
 }
