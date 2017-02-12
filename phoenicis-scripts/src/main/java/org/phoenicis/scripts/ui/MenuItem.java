@@ -19,8 +19,8 @@
 package org.phoenicis.scripts.ui;
 
 public class MenuItem {
-    private String text;
-    private int index;
+    private final String text;
+    private final int index;
 
     public MenuItem(String text, int index) {
         this.text = text;
