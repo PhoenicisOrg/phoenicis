@@ -18,6 +18,9 @@
 
 package org.phoenicis.javafx.views.setupwindow;
 
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.web.WebView;
 import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
@@ -25,12 +28,56 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+import java.net.URL;
+
+import static org.phoenicis.configuration.localisation.Localisation.translate;
+
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
-    private final String textToShow;
+    private final Node textToShow;
 
     public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, Message<?> message, String textToShow) {
         super(parent, message);
-        this.textToShow = textToShow;
+
+        Text textWidget = new Text(textToShow);
+        textWidget.setId("presentationText");
+
+        TextFlow flow = new TextFlow();
+        flow.getChildren().add(textWidget);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setId("presentationScrollPane");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setContent(flow);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        this.textToShow = scrollPane;
+    }
+
+    public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, Message<?> message,
+                                          String programName, String programEditor, String applicationHomepage,
+                                          String scriptorName, String applicationUserRoot, String applicationName) {
+        super(parent, message);
+
+        WebView appDescription = new WebView();
+        VBox.setVgrow(appDescription, Priority.ALWAYS);
+
+        final String textToShow = String.format(translate(
+                "<body>"
+                        + "This wizard will help you install \"%1$s\" on your computer.<br><br>"
+                        + "This program was created by: %2$s<br><br>"
+                        + "For more information about this program, visit:<br><a href=\"%3$s\">%3$s</a><br><br>"
+                        + "This installation program is provided by: %4$s<br><br>"
+                        + "<br><br>%1$s will be installed in: %5$s<br><br>"
+                        + "%6$s is not responsible for anything that might happen as a result of using"
+                        + " these scripts.<br><br>Click Next to start"
+                        + "</body>")
+                , programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
+
+        appDescription.getEngine().loadContent(textToShow);
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", parent.getThemeManager().getCurrentTheme().getShortName()));
+        appDescription.getEngine().setUserStyleSheetLocation(style.toString());
+        this.textToShow = appDescription;
     }
 
     @Override
@@ -40,24 +87,10 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         VBox contentPane = new VBox();
         contentPane.setId("presentationBackground");
 
-        TextFlow flow = new TextFlow();
-
-        Text titleWidget = new Text(title + "\n\n");
+        Label titleWidget = new Label(title + "\n\n");
         titleWidget.setId("presentationTextTitle");
 
-        Text textWidget = new Text(textToShow);
-        textWidget.setId("presentationText");
-
-        flow.getChildren().addAll(titleWidget, textWidget);
-
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setId("presentationScrollPane");
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setContent(flow);
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);
-
-        contentPane.getChildren().addAll(scrollPane);
+        contentPane.getChildren().addAll(textToShow);
         getParent().getRoot().setCenter(contentPane);
     }
 
