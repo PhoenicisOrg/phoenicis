@@ -18,6 +18,7 @@
 
 package org.phoenicis.cli.setupwindow;
 
+import org.jsoup.Jsoup;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
@@ -112,17 +113,8 @@ class SetupWindowCLIImplementation implements SetupWindow {
     }
 
     @Override
-    public void showPresentationStep(Message<Void> doneCallback, String programName, String programEditor, String applicationHomepage, String scriptorName, String applicationUserRoot, String applicationName) {
-        final String textToShow = String.format(
-                "This wizard will help you install \"%1$s\" on your computer.\n\n"
-                        + "This program was created by: %2$s\n\n"
-                        + "For more information about this program, visit:\n%3$s\n\n"
-                        + "This installation program is provided by: %4$s\n\n"
-                        + "\n\n%1$s will be installed in: %5$s\n\n"
-                        + "%6$s is not responsible for anything that might happen as a result of using"
-                        + " these scripts.\n\nClick Next to start</body>"
-                , programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
-        showSimpleMessageStep(doneCallback, textToShow);
+    public void showHtmlPresentationStep(Message<Void> doneCallback, String htmlToShow) {
+        showSimpleMessageStep(doneCallback, Jsoup.parse(htmlToShow).text());
     }
 
     @Override

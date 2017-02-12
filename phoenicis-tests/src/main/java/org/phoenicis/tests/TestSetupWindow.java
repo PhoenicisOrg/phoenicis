@@ -85,7 +85,7 @@ class TestSetupWindow implements SetupWindow {
     }
 
     @Override
-    public void showPresentationStep(Message<Void> doneCallback, String programName, String programEditor, String applicationHomepage, String scriptorName, String applicationUserRoot, String applicationName) {
+    public void showHtmlPresentationStep(Message<Void> doneCallback, String htmlToShow) {
         doneCallback.send(null);
     }
 

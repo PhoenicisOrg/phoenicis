@@ -19,19 +19,21 @@
 package org.phoenicis.javafx.views.setupwindow;
 
 import javafx.scene.control.Label;
-import org.phoenicis.scripts.ui.Message;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.web.WebView;
+import org.phoenicis.scripts.ui.Message;
 
-public class StepRepresentationPresentation extends AbstractStepRepresentation {
-    private final String textToShow;
+import java.net.URL;
 
-    public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, Message<?> message, String textToShow) {
+import static org.phoenicis.configuration.localisation.Localisation.translate;
+
+public class StepRepresentationHtmlPresentation extends AbstractStepRepresentation {
+    private final String htmlToShow;
+
+    public StepRepresentationHtmlPresentation(SetupWindowJavaFXImplementation parent, Message<?> message, String htmlToShow) {
         super(parent, message);
-        this.textToShow = textToShow;
+        this.htmlToShow = htmlToShow;
     }
 
     @Override
@@ -44,20 +46,15 @@ public class StepRepresentationPresentation extends AbstractStepRepresentation {
         Label titleWidget = new Label(title + "\n\n");
         titleWidget.setId("presentationTextTitle");
 
-        Text textWidget = new Text(textToShow);
-        textWidget.setId("presentationText");
+        WebView webView = new WebView();
+        VBox.setVgrow(webView, Priority.ALWAYS);
 
-        TextFlow flow = new TextFlow();
-        flow.getChildren().add(textWidget);
+        webView.getEngine().loadContent(htmlToShow);
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", getParent().getThemeManager().getCurrentTheme().getShortName()));
+        webView.getEngine().setUserStyleSheetLocation(style.toString());
 
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setId("presentationScrollPane");
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setContent(flow);
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+        contentPane.getChildren().addAll(webView);
 
-        contentPane.getChildren().add(scrollPane);
         getParent().getRoot().setCenter(contentPane);
     }
 

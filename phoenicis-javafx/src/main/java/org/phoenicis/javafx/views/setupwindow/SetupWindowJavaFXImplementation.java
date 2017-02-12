@@ -131,10 +131,10 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     }
 
     @Override
-    public void showPresentationStep(Message<Void> message, String programName, String programEditor, String applicationHomepage, String scriptorName, String applicationUserRoot, String applicationName) {
-        StepRepresentationPresentation stepRepresentationPresentation =
-                new StepRepresentationPresentation(this, message, programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
-        stepRepresentationPresentation.installStep();
+    public void showHtmlPresentationStep(Message<Void> message, String htmlToShow) {
+        StepRepresentationHtmlPresentation stepRepresentationHtmlPresentation =
+                new StepRepresentationHtmlPresentation(this, message, htmlToShow);
+        stepRepresentationHtmlPresentation.installStep();
     }
 
     @Override

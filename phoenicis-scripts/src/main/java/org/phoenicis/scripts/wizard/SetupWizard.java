@@ -127,8 +127,18 @@ public class SetupWizard implements CompleteWizard {
      */
     @Override
     public Void presentation(String programName, String programEditor, String applicationHomepage, String scriptorName) {
-        return messageSender.runAndWait(message -> setupWindow.showPresentationStep(
-                message, programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName)
+        final String htmlToShow = String.format(translate(
+                "<body>"
+                        + "This wizard will help you install \"%1$s\" on your computer.<br><br>"
+                        + "This program was created by: %2$s<br><br>"
+                        + "For more information about this program, visit:<br><a href=\"%3$s\">%3$s</a><br><br>"
+                        + "This installation program is provided by: %4$s<br><br>"
+                        + "<br><br>%1$s will be installed in: %5$s<br><br>"
+                        + "%6$s is not responsible for anything that might happen as a result of using"
+                        + " these scripts.<br><br>Click Next to start"
+                        + "</body>")
+                , programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
+        return messageSender.runAndWait(message -> setupWindow.showHtmlPresentationStep(message, htmlToShow)
         );
     }
 
