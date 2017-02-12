@@ -69,25 +69,29 @@ public class ViewSettings extends MainWindowView {
         ToggleGroup group = new ToggleGroup();
 
         final LeftToggleButton uiButton = new LeftToggleButton("User Interface");
-        uiButton.getStyleClass().add("userInterfaceButton");
+        final String uiButtonIcon = "icons/mainwindow/settings/userInterface.png";
+        uiButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(uiButtonIcon) + "');");
         uiButton.setToggleGroup(group);
         leftButtonList.add(uiButton);
         uiButton.setOnMouseClicked(event -> showRightView(uiPanel));
 
         final LeftToggleButton repositoriesButton = new LeftToggleButton("Repositories");
-        repositoriesButton.getStyleClass().add("repositoriesButton");
+        final String repositoriesButtonIcon = "icons/mainwindow/settings/repository.png";
+        repositoriesButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(repositoriesButtonIcon) + "');");
         repositoriesButton.setToggleGroup(group);
         leftButtonList.add(repositoriesButton);
         repositoriesButton.setOnMouseClicked(event -> showRightView(repositoriesPanel));
 
         final LeftToggleButton fileAssociationsButton = new LeftToggleButton("File Associations");
-        fileAssociationsButton.getStyleClass().add("settingsButton");
+        final String fileAssociationsButtonIcon = "icons/mainwindow/settings/settings.png";
+        fileAssociationsButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(fileAssociationsButtonIcon) + "');");
         fileAssociationsButton.setToggleGroup(group);
         leftButtonList.add(fileAssociationsButton);
         fileAssociationsButton.setOnMouseClicked(event -> showRightView(fileAssociationsPanel));
 
         final LeftToggleButton networkButton = new LeftToggleButton("Network");
-        networkButton.getStyleClass().add("networkButton");
+        final String networkButtonIcon = "icons/mainwindow/settings/network.png";
+        networkButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(networkButtonIcon) + "');");
         networkButton.setToggleGroup(group);
         leftButtonList.add(networkButton);
         networkButton.setOnMouseClicked(event -> showRightView(networkPanel));

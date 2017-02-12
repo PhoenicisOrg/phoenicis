@@ -21,13 +21,16 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
+import org.phoenicis.javafx.views.common.ThemeManager;
 
 import java.util.List;
 
 abstract class AbstractContainerPanel<T> extends VBox {
+    protected final ThemeManager themeManager;
     private final TabPane tabPane;
 
-    AbstractContainerPanel(T containerEntity) {
+    AbstractContainerPanel(T containerEntity, ThemeManager themeManager) {
+        this.themeManager = themeManager;
         this.tabPane = new TabPane();
 
         this.getChildren().add(tabPane);

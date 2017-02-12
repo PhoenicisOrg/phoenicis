@@ -80,4 +80,6 @@ public class MainWindowView extends Tab {
     public FailurePanel getFailurePanel() {
         return failurePanel;
     }
+
+    public ThemeManager getThemeManager() { return themeManager; }
 }
