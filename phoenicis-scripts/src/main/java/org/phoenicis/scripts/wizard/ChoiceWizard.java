@@ -22,4 +22,6 @@ import java.util.List;
 
 public interface ChoiceWizard {
     String menu(String textToShow, List<String> menuItems);
+
+    String menu(String textToShow, List<String> menuItems, String defaultValue);
 }

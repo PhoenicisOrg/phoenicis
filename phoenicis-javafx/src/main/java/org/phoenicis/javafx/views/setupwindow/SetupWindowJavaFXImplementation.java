@@ -104,8 +104,8 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     }
 
     @Override
-    public void showMenuStep(Message<String> message, String textToShow, List<String> menuItems) {
-        StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems);
+    public void showMenuStep(Message<String> message, String textToShow, List<String> menuItems, String defaultValue) {
+        StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems, defaultValue);
         stepMenu.installStep();
     }
 
