@@ -118,6 +118,16 @@ public class SetupWizard implements CompleteWizard {
     }
 
     /**
+     * Show a free script presentation
+     *
+     * @param htmlToShow the free presentation HTML to showRightView
+     */
+    @Override
+    public Void presentationHtml(String htmlToShow) {
+        return messageSender.runAndWait(message -> setupWindow.showPresentationStep(message, htmlToShow));
+    }
+
+    /**
      * Show a default script presentation
      *
      * @param programName   the name of the program
