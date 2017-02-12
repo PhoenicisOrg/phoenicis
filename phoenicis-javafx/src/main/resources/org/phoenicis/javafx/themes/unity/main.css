@@ -425,6 +425,13 @@
     -fx-border-width: 0;
 }
 
+.retryButton {
+    -fx-label-padding: 2 0 2 6;
+    -fx-background-size: 16px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left;
+}
+
 /*******************************************************/
 /************************* apps ************************/
 /*******************************************************/
