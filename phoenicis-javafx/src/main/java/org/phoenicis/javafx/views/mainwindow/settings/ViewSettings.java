@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
+import javafx.geometry.Insets;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.settings.Setting;
 import org.phoenicis.settings.Settings;
@@ -134,6 +135,10 @@ public class ViewSettings extends MainWindowView {
         gridPane.setVgap(10);
 
         uiPanel.getChildren().add(gridPane);
+
+        final Label restartHint = new Label(translate("If you change the theme, please restart to load the icons of the new theme."));
+        restartHint.setPadding(new Insets(10));
+        uiPanel.getChildren().add(restartHint);
     }
 
     private void initRepositoriesSettingsPane() {
