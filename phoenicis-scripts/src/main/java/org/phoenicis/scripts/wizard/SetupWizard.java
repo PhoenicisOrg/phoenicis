@@ -124,7 +124,7 @@ public class SetupWizard implements CompleteWizard {
      */
     @Override
     public Void presentationHtml(String htmlToShow) {
-        return messageSender.runAndWait(message -> setupWindow.showPresentationStep(message, htmlToShow));
+        return messageSender.runAndWait(message -> setupWindow.showHtmlPresentationStep(message, htmlToShow));
     }
 
     /**
