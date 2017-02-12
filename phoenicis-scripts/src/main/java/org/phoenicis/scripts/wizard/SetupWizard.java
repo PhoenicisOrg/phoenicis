@@ -220,8 +220,8 @@ public class SetupWizard implements CompleteWizard {
      * @return the value the user entered (as string)
      */
     @Override
-    public String menu(String textToShow, List<String> menuItems) {
-        return messageSender.runAndWait(message -> setupWindow.showMenuStep(message, textToShow, menuItems, ""));
+    public int menu(String textToShow, List<String> menuItems) {
+        return this.menu(textToShow, menuItems, "");
     }
 
     /**
@@ -233,7 +233,7 @@ public class SetupWizard implements CompleteWizard {
      * @return the value the user entered (as string)
      */
     @Override
-    public String menu(String textToShow, List<String> menuItems, String defaultValue) {
+    public int menu(String textToShow, List<String> menuItems, String defaultValue) {
         return messageSender.runAndWait(message -> setupWindow.showMenuStep(message, textToShow, menuItems, defaultValue));
     }
 

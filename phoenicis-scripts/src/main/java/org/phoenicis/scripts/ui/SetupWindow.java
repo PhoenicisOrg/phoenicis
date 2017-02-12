@@ -69,7 +69,7 @@ public interface SetupWindow {
      * @param menuItems The items in the menu
      * @param defaultValue The item which is selected by default
      */
-    void showMenuStep(Message<String> doneCallback, String textToShow, List<String> menuItems, String defaultValue);
+    void showMenuStep(Message<Integer> doneCallback, String textToShow, List<String> menuItems, String defaultValue);
 
     /**
      * Show a wait message, and returns immediately

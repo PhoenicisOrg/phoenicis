@@ -21,7 +21,7 @@ package org.phoenicis.scripts.wizard;
 import java.util.List;
 
 public interface ChoiceWizard {
-    String menu(String textToShow, List<String> menuItems);
+    int menu(String textToShow, List<String> menuItems);
 
-    String menu(String textToShow, List<String> menuItems, String defaultValue);
+    int menu(String textToShow, List<String> menuItems, String defaultValue);
 }

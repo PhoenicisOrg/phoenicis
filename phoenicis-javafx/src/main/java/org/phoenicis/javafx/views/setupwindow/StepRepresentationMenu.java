@@ -29,9 +29,9 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     private final String defaultValue;
     private final List<String> menuItems;
     private final ListView<String> listViewWidget;
-    private final Message<String> messageWaitingForResponse;
+    private final Message<Integer> messageWaitingForResponse;
 
-    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<String> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
+    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<Integer> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 
@@ -59,7 +59,7 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event ->
-                        messageWaitingForResponse.send(listViewWidget.getFocusModel().getFocusedItem())
+                        messageWaitingForResponse.send(listViewWidget.getSelectionModel().getSelectedIndex())
         );
     }
 
