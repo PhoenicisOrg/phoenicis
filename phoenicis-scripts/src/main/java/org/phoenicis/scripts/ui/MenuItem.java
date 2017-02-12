@@ -19,19 +19,11 @@
 package org.phoenicis.scripts.ui;
 
 public class MenuItem {
-    private final String text;
-    private final int index;
+    public final String text;
+    public final int index;
 
     public MenuItem(String text, int index) {
         this.text = text;
         this.index = index;
-    }
-
-    public String text() {
-        return text;
-    }
-
-    public int index() {
-        return index;
     }
 }
