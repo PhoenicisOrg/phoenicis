@@ -96,11 +96,7 @@ public class TeeApplicationsSource implements ApplicationsSource {
 
         final Set<ByteBuffer> mergeMiniaturesSet = new HashSet<>();
         leftApplication.getMiniatures().forEach(miniature -> mergeMiniaturesSet.add(ByteBuffer.wrap(miniature)));
-        rightApplication.getMiniatures().forEach(miniature -> {
-            if (!mergeMiniaturesSet.contains(miniature)) {
-                mergeMiniaturesSet.add(ByteBuffer.wrap(miniature));
-            }
-        });
+        rightApplication.getMiniatures().forEach(miniature -> mergeMiniaturesSet.add(ByteBuffer.wrap(miniature)));
 
         final List<byte[]> mergeMiniatures = new ArrayList();
         mergeMiniaturesSet.forEach(miniature -> mergeMiniatures.add(miniature.array()));
