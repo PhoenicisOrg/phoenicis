@@ -23,6 +23,7 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ResourceDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Function;
 
@@ -93,9 +94,12 @@ public class TeeApplicationsSource implements ApplicationsSource {
         final List<ScriptDTO> scripts = mergeListOfDtos(leftApplication.getScripts(), rightApplication.getScripts(), ScriptDTO::getName, ScriptDTO.nameComparator());
         final List<ResourceDTO> resources = mergeListOfDtos(leftApplication.getResources(), rightApplication.getResources(), ResourceDTO::getName, ResourceDTO.nameComparator());
 
-        final Set<byte[]> mergeMiniatures = new HashSet<>();
-        leftApplication.getMiniatures().forEach(mergeMiniatures::add);
-        rightApplication.getMiniatures().forEach(mergeMiniatures::add);
+        final Set<ByteBuffer> mergeMiniaturesSet = new HashSet<>();
+        leftApplication.getMiniatures().forEach(miniature -> mergeMiniaturesSet.add(ByteBuffer.wrap(miniature)));
+        rightApplication.getMiniatures().forEach(miniature -> mergeMiniaturesSet.add(ByteBuffer.wrap(miniature)));
+
+        final List<byte[]> mergeMiniatures = new ArrayList();
+        mergeMiniaturesSet.forEach(miniature -> mergeMiniatures.add(miniature.array()));
 
         return new ApplicationDTO.Builder()
                 .withName(leftApplication.getName())
@@ -103,7 +107,7 @@ public class TeeApplicationsSource implements ApplicationsSource {
                 .withScripts(scripts)
                 .withDescription(leftApplication.getDescription())
                 .withIcon(leftApplication.getIcon())
-                .withMiniatures(new ArrayList<>(mergeMiniatures))
+                .withMiniatures(mergeMiniatures)
                 .build();
     }
 
