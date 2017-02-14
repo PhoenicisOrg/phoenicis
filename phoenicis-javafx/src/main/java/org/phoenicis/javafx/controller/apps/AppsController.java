@@ -56,7 +56,12 @@ public class AppsController {
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
-                e -> Platform.runLater(() -> new ErrorMessage("The script ended unexpectedly", e))
+                e -> Platform.runLater(() -> {
+                    // no exception if installation is cancelled
+                    if (!(e.getCause() instanceof InterruptedException)) {
+                        new ErrorMessage("The script ended unexpectedly", e);
+                    }
+                })
         ));
 
         onAppLoaded.run();
