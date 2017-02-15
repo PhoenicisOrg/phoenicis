@@ -108,5 +108,11 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>de.codecentric.centerdevice</groupId>
+            <artifactId>javafxsvg</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
     </dependencies>
 </project>
