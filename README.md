@@ -2,7 +2,7 @@
 This is the Phoenicis and PlayOnMac 5 repository.
 
 ## Scripts
-* Please make your pull request on this repository: https://github.com/Phoenicis/scripts to add scripts
+* Please make your pull request on this repository: https://github.com/PlayOnLinux/Scripts to add scripts
 
 ## [Build instructions](https://github.com/PlayOnLinux/POL-POM-5/wiki/Build)
 
