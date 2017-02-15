@@ -66,10 +66,10 @@ public class ViewLibrary extends MainWindowView {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
         this.runScript = new LeftButton(translate("Run a script"));
-        final String scriptButtonIcon = "icons/mainwindow/library/script.png";
+        final String scriptButtonIcon = "icons/mainwindow/library/script.svg";
         this.runScript.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(scriptButtonIcon) + "');");
         this.runConsole = new LeftButton(translate(applicationName + " console"));
-        final String consoleButtonIcon = "icons/mainwindow/library/console.png";
+        final String consoleButtonIcon = "icons/mainwindow/library/console.svg";
         this.runConsole.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(consoleButtonIcon) + "');");
 
         this.drawSideBar();
@@ -160,13 +160,13 @@ public class ViewLibrary extends MainWindowView {
     private LeftGroup shortcutGroup(ShortcutDTO shortcut) {
         final LeftGroup shortcutGroup = new LeftGroup(shortcut.getName());
         final LeftButton runButton = new LeftButton(translate("Run"));
-        final String runButtonIcon = "icons/mainwindow/library/play.png";
+        final String runButtonIcon = "icons/mainwindow/library/play.svg";
         runButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(runButtonIcon) + "');");
         final LeftButton stopButton = new LeftButton(translate("Close"));
-        final String stopButtonIcon = "icons/mainwindow/library/stop.png";
+        final String stopButtonIcon = "icons/mainwindow/library/stop.svg";
         stopButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(stopButtonIcon) + "');");
         final LeftButton uninstallButton = new LeftButton(translate("Uninstall"));
-        final String uninstallButtonIcon = "icons/mainwindow/library/remove.png";
+        final String uninstallButtonIcon = "icons/mainwindow/library/remove.svg";
         uninstallButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(uninstallButtonIcon) + "');");
 
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));

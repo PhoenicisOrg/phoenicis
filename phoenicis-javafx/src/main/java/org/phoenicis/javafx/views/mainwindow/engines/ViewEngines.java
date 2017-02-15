@@ -73,7 +73,7 @@ public class ViewEngines extends MainWindowView {
         });
 
         LeftButton wine = new LeftButton("Wine");
-        final String wineButtonIcon = "icons/mainwindow/engines/wine.png";
+        final String wineButtonIcon = "icons/mainwindow/engines/wine.svg";
         wine.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(wineButtonIcon) + "');");
 
         LeftSpacer spacer = new LeftSpacer();

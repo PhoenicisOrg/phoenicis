@@ -85,7 +85,7 @@ public class ViewApps extends MainWindowView {
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
-                    final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
+                    final String resource = String.format("icons/mainwindow/apps/%s.svg", category.getName().toLowerCase());
                     if (themeManager.resourceExists(resource)) {
                         categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
                     } else {

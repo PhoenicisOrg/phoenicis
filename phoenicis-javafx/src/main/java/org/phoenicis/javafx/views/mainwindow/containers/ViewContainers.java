@@ -68,7 +68,7 @@ public class ViewContainers extends MainWindowView {
 
             for (ContainerDTO container : containers) {
                 final LeftToggleButton containerButton = new LeftToggleButton(container.getName());
-                final String containerButtonIcon = "icons/mainwindow/containers/container.png";
+                final String containerButtonIcon = "icons/mainwindow/containers/container.svg";
                 containerButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(containerButtonIcon) + "');");
                 containerButton.setToggleGroup(group);
                 leftButtonList.add(containerButton);
