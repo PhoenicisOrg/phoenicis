@@ -28,5 +28,5 @@ Window > Preferences > Java > Editor > Save Action
 * Check Format source code
 	
 ## Continous integration
-* [Jenkins](http://www.phoenicis.org:8080)
+* [Jenkins](http://www.playonlinux.org:8080)
 * [SonarQube](http://www.phoenicis.org:9000)
