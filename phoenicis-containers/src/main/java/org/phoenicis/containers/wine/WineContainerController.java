@@ -161,6 +161,7 @@ public class WineContainerController {
         try {
             fileUtilities.remove(new File(winePrefix.getPath()));
         } catch (IOException e) {
+            LOGGER.error("Cannot delete Wine prefix (" + winePrefix.getPath() + ")! Exception: " + e.toString());
             errorCallback.accept(e);
         }
 
