@@ -18,6 +18,7 @@
 
 package org.phoenicis.containers.wine;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.containers.dto.WinePrefixDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
 import org.phoenicis.library.LibraryManager;
@@ -29,7 +30,6 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.phoenicis.tools.system.terminal.TerminalOpener;
 import org.phoenicis.win32.registry.RegistryWriter;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,10 +164,9 @@ public class WineContainerController {
             errorCallback.accept(e);
         }
 
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
         List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
         for (ShortcutDTO shortcutDTO: shortcuts) {
+            final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
             interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
                     ignored -> interactiveScriptSession.eval(
                             "new ShortcutReader()",
