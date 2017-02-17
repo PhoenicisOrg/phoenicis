@@ -19,8 +19,13 @@
 package org.phoenicis.javafx.controller.engines;
 
 import org.phoenicis.engines.WineVersionsManager;
+import org.phoenicis.engines.dto.WineVersionDTO;
+import org.phoenicis.javafx.views.common.ConfirmMessage;
+import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import javafx.application.Platform;
+
+import java.util.function.Consumer;
 
 public class EnginesController {
     private final ViewEngines viewEngines;
@@ -37,6 +42,31 @@ public class EnginesController {
 
     public void loadEngines() {
         wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
+
+        this.viewEngines.setOnInstallEngine(wineVersionDTO -> {
+            new ConfirmMessage("Install " + wineVersionDTO.getVersion(), "Are you sure you want to install " + wineVersionDTO.getVersion() + "?")
+                    .ask(() -> {
+                        installEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                    });
+        });
+
+        this.viewEngines.setOnDeleteEngine(wineVersionDTO -> {
+            new ConfirmMessage("Delete " + wineVersionDTO.getVersion(), "Are you sure you want to delete " + wineVersionDTO.getVersion() + "?")
+            .ask(() -> {
+                deleteEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+            });
+        });
+
         this.viewEngines.showWineVersions();
+    }
+
+    private void installEngine(WineVersionDTO wineVersionDTO, Consumer<Exception> errorCallback) {
+        // TODO
+        System.out.println("install Engine");
+    }
+
+    private void deleteEngine(WineVersionDTO wineVersionDTO, Consumer<Exception> errorCallback) {
+        // TODO
+        System.out.println("delete Engine");
     }
 }
