@@ -22,6 +22,7 @@ import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixDTO;
 import org.phoenicis.containers.wine.WineContainerController;
+import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
@@ -117,6 +118,14 @@ public class ContainersController {
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())
                 );
                 panel.unlockAll();
+            });
+
+            panel.setOnDeletePrefix(winePrefixDTO -> {
+                new ConfirmMessage("Delete " + winePrefixDTO.getName() + " prefix", "Are you sure you want to delete the " + winePrefixDTO.getName() + " prefix ?")
+                        .ask(() -> {
+                            wineContainerController.deletePrefix(winePrefixDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                            loadContainers();
+                        });
             });
 
             viewContainers.showRightView(panel);

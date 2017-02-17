@@ -33,8 +33,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -63,6 +61,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     private Consumer<WinePrefixDTO> onKillProcess = winePrefix -> {};
     private Consumer<WinePrefixDTO> onUninstaller = winePrefix -> {};
     private Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix = winePrefix -> {};
+    private Consumer<WinePrefixDTO> onDeletePrefix = winePrefix -> {};
 
     private BiConsumer<WinePrefixDTO, RegistryParameter> onChangeSetting = (winePrefix, value) -> {};
 
@@ -72,6 +71,10 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         this.getTabs().add(drawInputTab(containerEntity));
         this.getTabs().add(drawWineToolsTab(containerEntity));
         this.getTabs().add(drawToolsTab(containerEntity));
+    }
+
+    public void setOnDeletePrefix(Consumer<WinePrefixDTO> onDeletePrefix) {
+        this.onDeletePrefix = onDeletePrefix;
     }
 
     @Override
@@ -114,10 +117,21 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         informationContentPane.setHgap(20);
         informationContentPane.setVgap(10);
 
-        informationPane.getChildren().addAll(informationContentPane);
+        Region spacer = new Region();
+        spacer.setPrefHeight(30);
+        VBox.setVgrow(spacer, Priority.NEVER);
+
+        Button deleteButton = new Button("Delete prefix");
+        deleteButton.setOnMouseClicked(event -> this.deletePrefix(container));
+
+        informationPane.getChildren().addAll(informationContentPane, spacer, deleteButton);
         informationTab.setContent(informationPane);
         informationTab.setClosable(false);
         return informationTab;
+    }
+
+    private void deletePrefix(WinePrefixDTO winePrefix) {
+        this.onDeletePrefix.accept(winePrefix);
     }
 
 

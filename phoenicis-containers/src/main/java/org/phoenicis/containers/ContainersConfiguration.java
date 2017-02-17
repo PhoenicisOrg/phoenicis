@@ -68,7 +68,8 @@ public class ContainersConfiguration {
                 toolsConfiguration.terminalOpener(),
                 wineEnginesPath,
                 toolsConfiguration.operatingSystemFetcher(),
-                win32Configuration.registryWriter()
+                win32Configuration.registryWriter(),
+                toolsConfiguration.fileUtilities()
         );
     }
 
