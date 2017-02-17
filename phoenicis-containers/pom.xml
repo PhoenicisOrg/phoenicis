@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-library</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
