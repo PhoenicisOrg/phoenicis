@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.scene.Node;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -32,9 +33,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ViewEngines extends MainWindowView {
     private TabPane wineDistributionsTabPane;
+    private Consumer<WineVersionDTO> setOnInstallEngine = (engine) -> {};
+    private Consumer<WineVersionDTO> setOnDeleteEngine = (engine) -> {};
 
     public ViewEngines(ThemeManager themeManager) {
         super("Engines", themeManager);
@@ -46,6 +50,13 @@ public class ViewEngines extends MainWindowView {
 
         this.drawSideBar();
         this.showWait();
+    }
+
+    public void setOnInstallEngine(Consumer<WineVersionDTO> onInstallEngine) {
+        this.setOnInstallEngine = onInstallEngine;
+    }
+    public void setOnDeleteEngine(Consumer<WineVersionDTO> onDeleteEngine) {
+        this.setOnDeleteEngine = onDeleteEngine;
     }
 
     private void initFailure() {
@@ -75,6 +86,7 @@ public class ViewEngines extends MainWindowView {
         LeftButton wine = new LeftButton("Wine");
         final String wineButtonIcon = "icons/mainwindow/engines/wine.png";
         wine.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(wineButtonIcon) + "');");
+        wine.setOnMouseClicked(event -> showWineVersions());
 
         LeftSpacer spacer = new LeftSpacer();
         addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);
@@ -98,9 +110,25 @@ public class ViewEngines extends MainWindowView {
 
         for (WineVersionDTO wineVersionDTO :
                 packages) {
-            tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+            final Node engineItem = tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+            engineItem.setOnMouseClicked(event -> this.showEngineDetails(wineVersionDTO));
         }
 
         return new Tab(wineVersionDistributionDTO.getDescription(), tabContent);
+    }
+
+    private void showEngineDetails(WineVersionDTO wineVersionDTO) {
+        final EnginePanel enginePanel = new EnginePanel(wineVersionDTO);
+        enginePanel.setOnEngineInstall(this::installEngine);
+        enginePanel.setOnEngineDelete(this::deleteEngine);
+        showRightView(enginePanel);
+    }
+
+    private void installEngine(WineVersionDTO wineVersionDTO) {
+        this.setOnInstallEngine.accept(wineVersionDTO);
+    }
+
+    private void deleteEngine(WineVersionDTO wineVersionDTO) {
+        this.setOnDeleteEngine.accept(wineVersionDTO);
     }
 }
