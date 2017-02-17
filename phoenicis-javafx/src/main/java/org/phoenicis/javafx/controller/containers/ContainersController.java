@@ -121,7 +121,7 @@ public class ContainersController {
             });
 
             panel.setOnDeletePrefix(winePrefixDTO -> {
-                new ConfirmMessage("Delete " + winePrefixDTO.getName() + " prefix", "Are you sure you want to delete the " + winePrefixDTO.getName() + " prefix ?")
+                new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container", "Are you sure you want to delete the " + winePrefixDTO.getName() + " container?")
                         .ask(() -> {
                             wineContainerController.deletePrefix(winePrefixDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
                             loadContainers();

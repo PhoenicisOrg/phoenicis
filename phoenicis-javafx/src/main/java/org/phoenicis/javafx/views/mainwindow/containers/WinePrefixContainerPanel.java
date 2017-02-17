@@ -121,7 +121,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         spacer.setPrefHeight(30);
         VBox.setVgrow(spacer, Priority.NEVER);
 
-        Button deleteButton = new Button("Delete prefix");
+        Button deleteButton = new Button("Delete container");
         deleteButton.setOnMouseClicked(event -> this.deletePrefix(container));
 
         informationPane.getChildren().addAll(informationContentPane, spacer, deleteButton);
