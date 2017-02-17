@@ -20,6 +20,9 @@ package org.phoenicis.containers.wine;
 
 import org.phoenicis.containers.dto.WinePrefixDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
+import org.phoenicis.library.LibraryManager;
+import org.phoenicis.library.ShortcutManager;
+import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.files.FileUtilities;
@@ -33,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -43,6 +47,8 @@ public class WineContainerController {
     private final String wineEnginesPath;
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final RegistryWriter registryWriter;
+    private final LibraryManager libraryManager;
+    private final ShortcutManager shortcutManager;
     private final FileUtilities fileUtilities;
 
     public WineContainerController(ScriptInterpreter scriptInterpreter,
@@ -50,12 +56,16 @@ public class WineContainerController {
                                    String wineEnginesPath,
                                    OperatingSystemFetcher operatingSystemFetcher,
                                    RegistryWriter registryWriter,
+                                   LibraryManager libraryManager,
+                                   ShortcutManager shortcutManager,
                                    FileUtilities fileUtilities) {
         this.scriptInterpreter = scriptInterpreter;
         this.terminalOpener = terminalOpener;
         this.wineEnginesPath = wineEnginesPath;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.registryWriter = registryWriter;
+        this.libraryManager = libraryManager;
+        this.shortcutManager = shortcutManager;
         this.fileUtilities = fileUtilities;
     }
 
@@ -152,6 +162,26 @@ public class WineContainerController {
             fileUtilities.remove(new File(winePrefix.getPath()));
         } catch (IOException e) {
             errorCallback.accept(e);
+        }
+
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
+        for (ShortcutDTO shortcutDTO: shortcuts) {
+            interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
+                    ignored -> interactiveScriptSession.eval(
+                            "new ShortcutReader()",
+                            output -> {
+                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                                shortcutReader.callMember("of", shortcutDTO);
+                                final String container = (String) shortcutReader.callMember("container");
+                                if (container.equals(winePrefix.getName())) {
+                                    shortcutManager.deleteShortcut(shortcutDTO);
+                                }
+                            },
+                            errorCallback),
+                    errorCallback
+            );
         }
     }
 
