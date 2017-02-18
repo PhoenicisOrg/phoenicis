@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.engines;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import org.phoenicis.engines.dto.EnginesFilter;
+import javafx.scene.effect.ColorAdjust;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -30,7 +31,11 @@ import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -120,14 +125,14 @@ public class ViewEngines extends MainWindowView {
     }
 
 
-    public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs) {
-        wineDistributionsTabPane.getTabs().clear();
-        for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
-            wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO));
+    public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs, String wineEnginesPath) {
+	wineDistributionsTabPane.getTabs().clear();        
+	for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
+            wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO, wineEnginesPath));
         }
     }
 
-    private Tab createWineDistributionTab(WineVersionDistributionDTO wineVersionDistributionDTO) {
+    private Tab createWineDistributionTab(WineVersionDistributionDTO wineVersionDistributionDTO, String wineEnginesPath) {
         final MiniatureListWidget tabContent = MiniatureListWidget.create();
         List<WineVersionDTO> packages = wineVersionDistributionDTO.getPackages();
         packages.sort(WineVersionDistributionDTO.comparator().reversed());
@@ -135,6 +140,13 @@ public class ViewEngines extends MainWindowView {
         for (WineVersionDTO wineVersionDTO :
                 packages) {
             final Node engineItem = tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+            // gray scale if not installed
+            File f = new File(wineEnginesPath + "/" + wineVersionDistributionDTO.getName() + "/" + wineVersionDTO.getVersion());
+            if(!f.exists()) {
+                ColorAdjust grayscale = new ColorAdjust();
+                grayscale.setSaturation(-1);
+                engineItem.setEffect(grayscale);
+            }
             engineItem.setOnMouseClicked(event -> this.showEngineDetails(wineVersionDTO));
         }
 

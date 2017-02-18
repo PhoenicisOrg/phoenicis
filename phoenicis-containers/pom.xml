@@ -64,5 +64,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.phoenicis</groupId>
+            <artifactId>phoenicis-library</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

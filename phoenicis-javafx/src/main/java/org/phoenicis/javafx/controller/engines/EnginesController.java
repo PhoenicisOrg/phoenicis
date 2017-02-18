@@ -66,7 +66,7 @@ public class EnginesController {
                         wineVersionDistributionDTO.getPackages().removeAll(filteredPackages);
                     }
                 }
-                this.viewEngines.populate(versions);
+                this.viewEngines.populate(versions, wineEnginesPath);
             }));
             this.viewEngines.showWineVersions();
         });
@@ -80,9 +80,9 @@ public class EnginesController {
 
         this.viewEngines.setOnDeleteEngine(wineVersionDTO -> {
             new ConfirmMessage("Delete " + wineVersionDTO.getVersion(), "Are you sure you want to delete " + wineVersionDTO.getVersion() + "?")
-                    .ask(() -> {
-                        deleteEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-                    });
+            .ask(() -> {
+                deleteEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+            });
         });
     }
 
@@ -91,7 +91,7 @@ public class EnginesController {
     }
 
     public void loadEngines() {
-        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
+        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
         this.viewEngines.showWineVersions();
     }
 
