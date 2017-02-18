@@ -18,18 +18,13 @@
 
 package org.phoenicis.javafx.controller.engines;
 
+import javafx.application.Platform;
 import org.phoenicis.engines.WineVersionsManager;
-import org.phoenicis.engines.dto.EnginesFilter;
 import org.phoenicis.engines.dto.WineVersionDTO;
-import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
-import javafx.application.Platform;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class EnginesController {
@@ -44,33 +39,7 @@ public class EnginesController {
 
         this.viewEngines.setOnApplyFilter(filter -> {
             wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> {
-                if (filter != EnginesFilter.ALL) {
-                    List<WineVersionDistributionDTO> filteredDistributions = new ArrayList<>();
-                    for (WineVersionDistributionDTO wineVersionDistributionDTO : versions) {
-                        List<WineVersionDTO> filteredPackages = new ArrayList<>();
-                        for (WineVersionDTO wineVersionDTO : wineVersionDistributionDTO.getPackages()) {
-                            switch (filter) {
-                                case INSTALLED:
-                                    if (!isInstalled(wineVersionDistributionDTO, wineVersionDTO)) {
-                                        filteredPackages.add(wineVersionDTO);
-                                    }
-                                        break;
-                                case NOT_INSTALLED:
-                                    if (isInstalled(wineVersionDistributionDTO, wineVersionDTO)) {
-                                        filteredPackages.add(wineVersionDTO);
-                                    }
-                                    break;
-                                case ALL:
-                                default:
-                            }
-                        }
-                        wineVersionDistributionDTO.getPackages().removeAll(filteredPackages);
-                        if (wineVersionDistributionDTO.getPackages().isEmpty()) {
-                            filteredDistributions.add(wineVersionDistributionDTO);
-                        }
-                    }
-                    versions.removeAll(filteredDistributions);
-                }
+                filter.apply(versions, wineEnginesPath);
                 this.viewEngines.populate(versions, wineEnginesPath);
             }));
             this.viewEngines.showWineVersions();
@@ -108,10 +77,5 @@ public class EnginesController {
     private void deleteEngine(WineVersionDTO wineVersionDTO, Consumer<Exception> errorCallback) {
         // TODO
         System.out.println("delete Engine");
-    }
-
-    private boolean isInstalled(WineVersionDistributionDTO wineVersionDistributionDTO, WineVersionDTO wineVersionDTO) {
-        File f = new File(wineEnginesPath + "/" + wineVersionDistributionDTO.getName() + "/" + wineVersionDTO.getVersion());
-        return f.exists();
     }
 }

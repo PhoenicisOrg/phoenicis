@@ -16,10 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.engines.dto;
+package org.phoenicis.engines;
 
 public enum EnginesFilter {
-    ALL,
     INSTALLED,
     NOT_INSTALLED
 }
