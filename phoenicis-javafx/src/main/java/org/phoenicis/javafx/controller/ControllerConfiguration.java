@@ -43,6 +43,9 @@ public class ControllerConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
+    @Value("${application.user.engines.wine}")
+    private String wineEnginesPath;
+
     @Autowired
     private ThemeConfiguration themeConfiguration;
 
@@ -93,7 +96,11 @@ public class ControllerConfiguration {
 
     @Bean
     public EnginesController enginesController() {
-        return new EnginesController(viewsConfiguration.viewEngines(), enginesConfiguration.wineVersionsFetcher());
+        return new EnginesController(
+                viewsConfiguration.viewEngines(),
+                enginesConfiguration.wineVersionsFetcher(),
+                wineEnginesPath
+        );
     }
 
     @Bean

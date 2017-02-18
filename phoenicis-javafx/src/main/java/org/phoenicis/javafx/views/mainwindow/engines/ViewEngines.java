@@ -19,6 +19,8 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.scene.Node;
+import javafx.scene.control.*;
+import org.phoenicis.engines.dto.EnginesFilter;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -28,15 +30,15 @@ import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 
 import java.util.List;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.translate;
+
 public class ViewEngines extends MainWindowView {
     private TabPane wineDistributionsTabPane;
+    private Consumer<EnginesFilter> onApplyFilter = (filter) -> {};
     private Consumer<WineVersionDTO> setOnInstallEngine = (engine) -> {};
     private Consumer<WineVersionDTO> setOnDeleteEngine = (engine) -> {};
 
@@ -52,6 +54,9 @@ public class ViewEngines extends MainWindowView {
         this.showWait();
     }
 
+    public void setOnApplyFilter(Consumer<EnginesFilter> onApplyFilter) {
+        this.onApplyFilter = onApplyFilter;
+    }
     public void setOnInstallEngine(Consumer<WineVersionDTO> onInstallEngine) {
         this.setOnInstallEngine = onInstallEngine;
     }
@@ -89,7 +94,25 @@ public class ViewEngines extends MainWindowView {
         wine.setOnMouseClicked(event -> showWineVersions());
 
         LeftSpacer spacer = new LeftSpacer();
-        addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);
+
+        final ToggleGroup group = new ToggleGroup();
+        final RadioButton allRadio = new RadioButton(translate("All"));
+        allRadio.setUserData(EnginesFilter.ALL);
+        allRadio.setToggleGroup(group);
+        allRadio.setSelected(true);
+        final RadioButton installedRadio = new RadioButton(translate("Installed"));
+        installedRadio.setUserData(EnginesFilter.INSTALLED);
+        installedRadio.setToggleGroup(group);
+        final RadioButton notInstalledRadio = new RadioButton(translate("Not installed"));
+        notInstalledRadio.setUserData(EnginesFilter.NOT_INSTALLED);
+        notInstalledRadio.setToggleGroup(group);
+        group.selectedToggleProperty().addListener((observableValue, oldToggle, newToggle) -> {
+            if (group.getSelectedToggle() != null) {
+                onApplyFilter.accept((EnginesFilter) group.getSelectedToggle().getUserData());
+            }
+        });
+
+        addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine, new LeftSpacer(), allRadio, installedRadio, notInstalledRadio);
     }
 
     public void setUpEvents() {
@@ -98,6 +121,7 @@ public class ViewEngines extends MainWindowView {
 
 
     public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs) {
+        wineDistributionsTabPane.getTabs().clear();
         for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
             wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO));
         }

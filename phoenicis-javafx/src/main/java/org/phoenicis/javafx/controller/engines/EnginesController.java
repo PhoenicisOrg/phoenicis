@@ -19,29 +19,57 @@
 package org.phoenicis.javafx.controller.engines;
 
 import org.phoenicis.engines.WineVersionsManager;
+import org.phoenicis.engines.dto.EnginesFilter;
 import org.phoenicis.engines.dto.WineVersionDTO;
+import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import javafx.application.Platform;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class EnginesController {
     private final ViewEngines viewEngines;
     private final WineVersionsManager wineVersionsManager;
+    private final String wineEnginesPath;
 
-    public EnginesController(ViewEngines viewEngines, WineVersionsManager wineVersionsManager) {
+    public EnginesController(ViewEngines viewEngines, WineVersionsManager wineVersionsManager, String wineEnginesPath) {
         this.viewEngines = viewEngines;
         this.wineVersionsManager = wineVersionsManager;
-    }
+        this.wineEnginesPath = wineEnginesPath;
 
-    public ViewEngines getView() {
-        return viewEngines;
-    }
-
-    public void loadEngines() {
-        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
+        this.viewEngines.setOnApplyFilter(filter -> {
+            wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> {
+                if (filter != EnginesFilter.ALL) {
+                    for (WineVersionDistributionDTO wineVersionDistributionDTO : versions) {
+                        List<WineVersionDTO> filteredPackages = new ArrayList<>();
+                        for (WineVersionDTO wineVersionDTO : wineVersionDistributionDTO.getPackages()) {
+                            switch (filter) {
+                                case INSTALLED:
+                                    if (!isInstalled(wineVersionDistributionDTO, wineVersionDTO)) {
+                                        filteredPackages.add(wineVersionDTO);
+                                    }
+                                        break;
+                                case NOT_INSTALLED:
+                                    if (isInstalled(wineVersionDistributionDTO, wineVersionDTO)) {
+                                        filteredPackages.add(wineVersionDTO);
+                                    }
+                                    break;
+                                case ALL:
+                                default:
+                            }
+                        }
+                        wineVersionDistributionDTO.getPackages().removeAll(filteredPackages);
+                    }
+                }
+                this.viewEngines.populate(versions);
+            }));
+            this.viewEngines.showWineVersions();
+        });
 
         this.viewEngines.setOnInstallEngine(wineVersionDTO -> {
             new ConfirmMessage("Install " + wineVersionDTO.getVersion(), "Are you sure you want to install " + wineVersionDTO.getVersion() + "?")
@@ -52,11 +80,18 @@ public class EnginesController {
 
         this.viewEngines.setOnDeleteEngine(wineVersionDTO -> {
             new ConfirmMessage("Delete " + wineVersionDTO.getVersion(), "Are you sure you want to delete " + wineVersionDTO.getVersion() + "?")
-            .ask(() -> {
-                deleteEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-            });
+                    .ask(() -> {
+                        deleteEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                    });
         });
+    }
 
+    public ViewEngines getView() {
+        return viewEngines;
+    }
+
+    public void loadEngines() {
+        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
         this.viewEngines.showWineVersions();
     }
 
@@ -68,5 +103,10 @@ public class EnginesController {
     private void deleteEngine(WineVersionDTO wineVersionDTO, Consumer<Exception> errorCallback) {
         // TODO
         System.out.println("delete Engine");
+    }
+
+    private boolean isInstalled(WineVersionDistributionDTO wineVersionDistributionDTO, WineVersionDTO wineVersionDTO) {
+        File f = new File(wineEnginesPath + "/" + wineVersionDistributionDTO.getName() + "/" + wineVersionDTO.getVersion());
+        return f.exists();
     }
 }
