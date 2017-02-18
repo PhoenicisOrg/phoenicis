@@ -21,6 +21,7 @@ package org.phoenicis.containers;
 import org.phoenicis.containers.wine.WineContainerController;
 import org.phoenicis.containers.wine.WinePrefixesManager;
 import org.phoenicis.containers.wine.configurations.*;
+import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
@@ -32,6 +33,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ContainersConfiguration {
+    @Autowired
+    private LibraryConfiguration libraryConfiguration;
+
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
@@ -68,7 +72,10 @@ public class ContainersConfiguration {
                 toolsConfiguration.terminalOpener(),
                 wineEnginesPath,
                 toolsConfiguration.operatingSystemFetcher(),
-                win32Configuration.registryWriter()
+                win32Configuration.registryWriter(),
+                libraryConfiguration.libraryManager(),
+                libraryConfiguration.shortcutManager(),
+                toolsConfiguration.fileUtilities()
         );
     }
 
