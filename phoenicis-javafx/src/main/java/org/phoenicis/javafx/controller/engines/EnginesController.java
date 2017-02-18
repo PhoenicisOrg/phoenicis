@@ -45,6 +45,7 @@ public class EnginesController {
         this.viewEngines.setOnApplyFilter(filter -> {
             wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> {
                 if (filter != EnginesFilter.ALL) {
+                    List<WineVersionDistributionDTO> filteredDistributions = new ArrayList<>();
                     for (WineVersionDistributionDTO wineVersionDistributionDTO : versions) {
                         List<WineVersionDTO> filteredPackages = new ArrayList<>();
                         for (WineVersionDTO wineVersionDTO : wineVersionDistributionDTO.getPackages()) {
@@ -64,7 +65,11 @@ public class EnginesController {
                             }
                         }
                         wineVersionDistributionDTO.getPackages().removeAll(filteredPackages);
+                        if (wineVersionDistributionDTO.getPackages().isEmpty()) {
+                            filteredDistributions.add(wineVersionDistributionDTO);
+                        }
                     }
+                    versions.removeAll(filteredDistributions);
                 }
                 this.viewEngines.populate(versions, wineEnginesPath);
             }));
