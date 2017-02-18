@@ -18,12 +18,12 @@
 
 package org.phoenicis.javafx.controller.engines;
 
+import javafx.application.Platform;
 import org.phoenicis.engines.WineVersionsManager;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
-import javafx.application.Platform;
 
 import java.util.function.Consumer;
 
@@ -36,14 +36,14 @@ public class EnginesController {
         this.viewEngines = viewEngines;
         this.wineVersionsManager = wineVersionsManager;
         this.wineEnginesPath = wineEnginesPath;
-    }
 
-    public ViewEngines getView() {
-        return viewEngines;
-    }
-
-    public void loadEngines() {
-        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
+        this.viewEngines.setOnApplyFilter(filter -> {
+            wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> {
+                filter.apply(versions, wineEnginesPath);
+                this.viewEngines.populate(versions, wineEnginesPath);
+            }));
+            this.viewEngines.showWineVersions();
+        });
 
         this.viewEngines.setOnInstallEngine(wineVersionDTO -> {
             new ConfirmMessage("Install " + wineVersionDTO.getVersion(), "Are you sure you want to install " + wineVersionDTO.getVersion() + "?")
@@ -58,7 +58,14 @@ public class EnginesController {
                 deleteEngine(wineVersionDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             });
         });
+    }
 
+    public ViewEngines getView() {
+        return viewEngines;
+    }
+
+    public void loadEngines() {
+        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
         this.viewEngines.showWineVersions();
     }
 

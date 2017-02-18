@@ -18,7 +18,13 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.*;
+import org.phoenicis.engines.CombinedEnginesFilter;
+import org.phoenicis.engines.EnginesFilter;
 import javafx.scene.effect.ColorAdjust;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
@@ -28,6 +34,7 @@ import org.phoenicis.javafx.views.common.widget.StaticMiniature;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftCheckBox;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -37,8 +44,26 @@ import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.translate;
+
 public class ViewEngines extends MainWindowView {
+    private class CheckBoxListener implements ChangeListener<Boolean> {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+            BooleanProperty selectedProperty = (BooleanProperty) observableValue;
+            CheckBox checkBox = (CheckBox) selectedProperty.getBean();
+            if (newValue) {
+                currentFilter.add((EnginesFilter) checkBox.getUserData());
+            } else {
+                currentFilter.remove((EnginesFilter) checkBox.getUserData());
+            }
+            onApplyFilter.accept(currentFilter);
+        }
+    }
+
     private TabPane wineDistributionsTabPane;
+    private final CombinedEnginesFilter currentFilter = new CombinedEnginesFilter();
+    private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
     private Consumer<WineVersionDTO> setOnInstallEngine = (engine) -> {};
     private Consumer<WineVersionDTO> setOnDeleteEngine = (engine) -> {};
 
@@ -46,6 +71,8 @@ public class ViewEngines extends MainWindowView {
         super("Engines", themeManager);
 
         //   entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
+        currentFilter.add(EnginesFilter.INSTALLED);
+        currentFilter.add(EnginesFilter.NOT_INSTALLED);
 
         this.initFailure();
         this.initWineVersions();
@@ -54,6 +81,9 @@ public class ViewEngines extends MainWindowView {
         this.showWait();
     }
 
+    public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
+        this.onApplyFilter = onApplyFilter;
+    }
     public void setOnInstallEngine(Consumer<WineVersionDTO> onInstallEngine) {
         this.setOnInstallEngine = onInstallEngine;
     }
@@ -91,7 +121,17 @@ public class ViewEngines extends MainWindowView {
         wine.setOnMouseClicked(event -> showWineVersions());
 
         LeftSpacer spacer = new LeftSpacer();
-        addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine);
+
+        final CheckBox installedCheck = new LeftCheckBox(translate("Installed"));
+        installedCheck.setUserData(EnginesFilter.INSTALLED);
+        installedCheck.setSelected(true);
+        installedCheck.selectedProperty().addListener(new CheckBoxListener());
+        final CheckBox notInstalledCheck = new LeftCheckBox(translate("Not installed"));
+        notInstalledCheck.setUserData(EnginesFilter.NOT_INSTALLED);
+        notInstalledCheck.setSelected(true);
+        notInstalledCheck.selectedProperty().addListener(new CheckBoxListener());
+
+        addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine, new LeftSpacer(), installedCheck, notInstalledCheck);
     }
 
     public void setUpEvents() {
@@ -100,7 +140,8 @@ public class ViewEngines extends MainWindowView {
 
 
     public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs, String wineEnginesPath) {
-        for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
+	wineDistributionsTabPane.getTabs().clear();        
+	for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
             wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO, wineEnginesPath));
         }
     }
