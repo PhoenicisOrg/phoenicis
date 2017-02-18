@@ -30,10 +30,12 @@ import java.util.function.Consumer;
 public class EnginesController {
     private final ViewEngines viewEngines;
     private final WineVersionsManager wineVersionsManager;
+    private final String wineEnginesPath;
 
-    public EnginesController(ViewEngines viewEngines, WineVersionsManager wineVersionsManager) {
+    public EnginesController(ViewEngines viewEngines, WineVersionsManager wineVersionsManager, String wineEnginesPath) {
         this.viewEngines = viewEngines;
         this.wineVersionsManager = wineVersionsManager;
+        this.wineEnginesPath = wineEnginesPath;
     }
 
     public ViewEngines getView() {
@@ -41,7 +43,7 @@ public class EnginesController {
     }
 
     public void loadEngines() {
-        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
+        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
 
         this.viewEngines.setOnInstallEngine(wineVersionDTO -> {
             new ConfirmMessage("Install " + wineVersionDTO.getVersion(), "Are you sure you want to install " + wineVersionDTO.getVersion() + "?")
