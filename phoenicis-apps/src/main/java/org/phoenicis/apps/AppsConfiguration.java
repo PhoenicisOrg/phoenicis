@@ -43,12 +43,13 @@ public class AppsConfiguration {
 
     @Bean
     public ApplicationsSource appsSource() {
+        ApplicationsSource applicationsSource = new ConfigurableApplicationSource(
+                repositoryConfiguration,
+                new LocalApplicationsSource.Factory(objectMapper()),
+                new ClasspathApplicationsSource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
+        );
         return new FilterApplicationsSource(
-                new ConfigurableApplicationSource(
-                        repositoryConfiguration,
-                        new LocalApplicationsSource.Factory(objectMapper()),
-                        new ClasspathApplicationsSource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
-                ),
+                new CachedApplicationsSource(applicationsSource),
                 toolsConfiguration.operatingSystemFetcher(),
                 enforceUncompatibleOperatingSystems
         );
