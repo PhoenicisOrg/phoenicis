@@ -20,8 +20,8 @@ package org.phoenicis.javafx.controller.containers;
 
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.dto.WinePrefixDTO;
-import org.phoenicis.containers.wine.WineContainerController;
+import org.phoenicis.containers.dto.WinePrefixContainerDTO;
+import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
@@ -32,16 +32,16 @@ import javafx.application.Platform;
 public class ContainersController {
     private final ViewContainers viewContainers;
     private final ContainersManager containersManager;
-    private final ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixDTO> wineContainerPanelFactory;
-    private final WineContainerController wineContainerController;
+    private final ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
+    private final WinePrefixContainerController winePrefixContainerController;
 
     public ContainersController(ViewContainers viewContainers,
                                 ContainersManager containersManager,
-                                ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixDTO> wineContainerPanelFactory, WineContainerController wineContainerController) {
+                                ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory, WinePrefixContainerController winePrefixContainerController) {
         this.viewContainers = viewContainers;
         this.containersManager = containersManager;
-        this.wineContainerPanelFactory = wineContainerPanelFactory;
-        this.wineContainerController = wineContainerController;
+        this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
+        this.winePrefixContainerController = winePrefixContainerController;
 
         viewContainers.setOnSelectionChanged(event -> {
             if (viewContainers.isSelected()) {
@@ -50,68 +50,68 @@ public class ContainersController {
         });
 
         viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
-            final WinePrefixContainerPanel panel = wineContainerPanelFactory.createContainerPanel((WinePrefixDTO) containerDTO, viewContainers.getThemeManager());
-            panel.setOnWineCfg(winePrefixDTO -> wineContainerController.runInPrefix(
+            final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel((WinePrefixContainerDTO) containerDTO, viewContainers.getThemeManager());
+            panel.setOnWineCfg(winePrefixDTO -> winePrefixContainerController.runInPrefix(
                     winePrefixDTO,
                     "winecfg",
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnRegedit(winePrefixDTO -> wineContainerController.runInPrefix(
+            panel.setOnRegedit(winePrefixDTO -> winePrefixContainerController.runInPrefix(
                     winePrefixDTO,
                     "regedit",
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnWineboot(winePrefixDTO -> wineContainerController.runInPrefix(
+            panel.setOnWineboot(winePrefixDTO -> winePrefixContainerController.runInPrefix(
                     winePrefixDTO,
                     "wineboot",
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnWinebootRepair(winePrefixDTO -> wineContainerController.repairPrefix(
+            panel.setOnWinebootRepair(winePrefixDTO -> winePrefixContainerController.repairPrefix(
                     winePrefixDTO,
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnWineConsole(winePrefixDTO -> wineContainerController.runInPrefix(
+            panel.setOnWineConsole(winePrefixDTO -> winePrefixContainerController.runInPrefix(
                     winePrefixDTO,
                     "wineconsole",
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnTaskMgr(winePrefixDTO -> wineContainerController.runInPrefix(
+            panel.setOnTaskMgr(winePrefixDTO -> winePrefixContainerController.runInPrefix(
                     winePrefixDTO,
                     "taskmgr",
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnUninstaller(winePrefixDTO -> wineContainerController.runInPrefix(
+            panel.setOnUninstaller(winePrefixDTO -> winePrefixContainerController.runInPrefix(
                     winePrefixDTO,
                     "uninstaller",
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
-            panel.setOnKillProcess(winePrefixDTO -> wineContainerController.killProcesses(
+            panel.setOnKillProcess(winePrefixDTO -> winePrefixContainerController.killProcesses(
                     winePrefixDTO,
                     panel::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
             );
 
             panel.setOnOpenTerminalInWinePrefix(winePrefix -> {
-                wineContainerController.openTerminalInPrefix(winePrefix);
+                winePrefixContainerController.openTerminalInPrefix(winePrefix);
                 panel.unlockAll();
             });
 
             panel.setOnChangeSetting((winePrefixDTO, setting) -> {
-                wineContainerController.changeSetting(
+                winePrefixContainerController.changeSetting(
                         winePrefixDTO,
                         setting,
                         panel::unlockAll,
@@ -123,7 +123,7 @@ public class ContainersController {
             panel.setOnDeletePrefix(winePrefixDTO -> {
                 new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container", "Are you sure you want to delete the " + winePrefixDTO.getName() + " container?")
                         .ask(() -> {
-                            wineContainerController.deletePrefix(winePrefixDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                            winePrefixContainerController.deletePrefix(winePrefixDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
                             loadContainers();
                         });
             });

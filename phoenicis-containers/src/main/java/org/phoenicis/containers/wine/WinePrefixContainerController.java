@@ -19,7 +19,7 @@
 package org.phoenicis.containers.wine;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.phoenicis.containers.dto.WinePrefixDTO;
+import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
@@ -40,8 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class WineContainerController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WineContainerController.class);
+public class WinePrefixContainerController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainerController.class);
     private final ScriptInterpreter scriptInterpreter;
     private final TerminalOpener terminalOpener;
     private final String wineEnginesPath;
@@ -51,14 +51,14 @@ public class WineContainerController {
     private final ShortcutManager shortcutManager;
     private final FileUtilities fileUtilities;
 
-    public WineContainerController(ScriptInterpreter scriptInterpreter,
-                                   TerminalOpener terminalOpener,
-                                   String wineEnginesPath,
-                                   OperatingSystemFetcher operatingSystemFetcher,
-                                   RegistryWriter registryWriter,
-                                   LibraryManager libraryManager,
-                                   ShortcutManager shortcutManager,
-                                   FileUtilities fileUtilities) {
+    public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
+                                         TerminalOpener terminalOpener,
+                                         String wineEnginesPath,
+                                         OperatingSystemFetcher operatingSystemFetcher,
+                                         RegistryWriter registryWriter,
+                                         LibraryManager libraryManager,
+                                         ShortcutManager shortcutManager,
+                                         FileUtilities fileUtilities) {
         this.scriptInterpreter = scriptInterpreter;
         this.terminalOpener = terminalOpener;
         this.wineEnginesPath = wineEnginesPath;
@@ -69,7 +69,7 @@ public class WineContainerController {
         this.fileUtilities = fileUtilities;
     }
 
-    public void repairPrefix(WinePrefixDTO winePrefix,
+    public void repairPrefix(WinePrefixContainerDTO winePrefix,
                              Runnable doneCallback,
                              Consumer<Exception> errorCallback) {
         // FIXME
@@ -90,7 +90,7 @@ public class WineContainerController {
         );
     }
 
-    public void killProcesses(WinePrefixDTO winePrefix,
+    public void killProcesses(WinePrefixContainerDTO winePrefix,
                               Runnable doneCallback,
                               Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
@@ -109,7 +109,7 @@ public class WineContainerController {
         );
     }
 
-    public void changeSetting(WinePrefixDTO winePrefix,
+    public void changeSetting(WinePrefixContainerDTO winePrefix,
                               RegistryParameter setting,
                               Runnable doneCallback,
                               Consumer<Exception> errorCallback) {
@@ -135,7 +135,7 @@ public class WineContainerController {
         );
     }
 
-    public void runInPrefix(WinePrefixDTO winePrefix,
+    public void runInPrefix(WinePrefixContainerDTO winePrefix,
                             String command,
                             Runnable doneCallback,
                             Consumer<Exception> errorCallback) {
@@ -156,7 +156,7 @@ public class WineContainerController {
         );
     }
 
-    public void deletePrefix(WinePrefixDTO winePrefix,
+    public void deletePrefix(WinePrefixContainerDTO winePrefix,
                             Consumer<Exception> errorCallback) {
         try {
             fileUtilities.remove(new File(winePrefix.getPath()));
@@ -185,22 +185,22 @@ public class WineContainerController {
         }
     }
 
-    public void openTerminalInPrefix(WinePrefixDTO winePrefixDTO) {
+    public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
         final Map<String, String> environment = new HashMap<>();
-        environment.put("WINEPREFIX", winePrefixDTO.getPath());
-        environment.put("PATH", fetchWineVersionPath(winePrefixDTO) + "/bin/" + ":$PATH");
-        terminalOpener.openTerminal(winePrefixDTO.getPath(), environment);
+        environment.put("WINEPREFIX", winePrefixContainerDTO.getPath());
+        environment.put("PATH", fetchWineVersionPath(winePrefixContainerDTO) + "/bin/" + ":$PATH");
+        terminalOpener.openTerminal(winePrefixContainerDTO.getPath(), environment);
     }
 
-    private String fetchWineVersionPath(WinePrefixDTO winePrefixDTO) {
+    private String fetchWineVersionPath(WinePrefixContainerDTO winePrefixContainerDTO) {
         return wineEnginesPath +
                 "/" +
-                winePrefixDTO.getDistribution() +
+                winePrefixContainerDTO.getDistribution() +
                 "-" +
                 operatingSystemFetcher.fetchCurrentOperationSystem().getWinePackage() +
                 "-" +
-                winePrefixDTO.getArchitecture() +
+                winePrefixContainerDTO.getArchitecture() +
                 "/" +
-                winePrefixDTO.getVersion();
+                winePrefixContainerDTO.getVersion();
     }
 }

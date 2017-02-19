@@ -88,8 +88,8 @@ public class ControllerConfiguration {
         return new ContainersController(
                 viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
-                viewsConfiguration.wineContainerPanelFactory(),
-                containersConfiguration.wineContainerController()
+                viewsConfiguration.winePrefixContainerPanelFactory(),
+                containersConfiguration.winePrefixContainerController()
         );
     }
 

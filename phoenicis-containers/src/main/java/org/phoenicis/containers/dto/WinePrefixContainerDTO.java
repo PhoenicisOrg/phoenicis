@@ -20,7 +20,7 @@ package org.phoenicis.containers.dto;
 
 import org.phoenicis.containers.wine.parameters.*;
 
-public class WinePrefixDTO extends ContainerDTO {
+public class WinePrefixContainerDTO extends ContainerDTO {
     private final String architecture;
     private final String distribution;
     private final String version;
@@ -34,7 +34,7 @@ public class WinePrefixDTO extends ContainerDTO {
     private final RenderTargetModeLock renderTargetModeLock;
     private final MouseWarpOverride mouseWarpOverride;
 
-    private WinePrefixDTO(Builder builder) {
+    private WinePrefixContainerDTO(Builder builder) {
         super(builder.name, builder.path, ContainerType.WINEPREFIX);
         this.architecture = builder.architecture;
         this.distribution = builder.distribution;
@@ -184,8 +184,8 @@ public class WinePrefixDTO extends ContainerDTO {
             return this;
         }
 
-        public WinePrefixDTO build() {
-            return new WinePrefixDTO(this);
+        public WinePrefixContainerDTO build() {
+            return new WinePrefixContainerDTO(this);
         }
     }
 }
