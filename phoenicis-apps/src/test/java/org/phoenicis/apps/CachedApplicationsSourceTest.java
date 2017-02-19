@@ -20,19 +20,33 @@ package org.phoenicis.apps;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.phoenicis.apps.dto.ApplicationDTO;
+import org.phoenicis.apps.dto.CategoryDTO;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class CachedApplicationsSourceTest {
 
     @Test
     public void testFetchInstallableApplications() throws Exception {
         ApplicationsSource applicationsSource = Mockito.mock(ApplicationsSource.class);
+        when(applicationsSource.fetchInstallableApplications()).thenReturn(Arrays.asList(
+                new CategoryDTO.Builder()
+                        .withName("Category 1")
+                        .build(),
+                new CategoryDTO.Builder()
+                        .withName("Category 2")
+                        .build()
+        ));
 
         final ApplicationsSource cachedSource = new CachedApplicationsSource(applicationsSource);
         cachedSource.fetchInstallableApplications();
+        assertEquals(2, cachedSource.fetchInstallableApplications().size());
         cachedSource.fetchInstallableApplications();
+        assertEquals(2, cachedSource.fetchInstallableApplications().size());
 
         verify(applicationsSource, times(1)).fetchInstallableApplications();
     }
