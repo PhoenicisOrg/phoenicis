@@ -22,9 +22,10 @@ import org.phoenicis.containers.wine.parameters.MouseWarpOverride;
 
 import java.io.File;
 
-public class DefaultWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
-    @Override
-    public MouseWarpOverride getMouseWarpOverride(File registryFile) {
-        return MouseWarpOverride.DEFAULT;
-    }
+public interface WinePrefixContainerInputConfiguration {
+    /**
+     *
+     * @return The {@link MouseWarpOverride} value
+     */
+    MouseWarpOverride getMouseWarpOverride(File registryFile);
 }

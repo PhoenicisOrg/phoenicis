@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.views;
 
-import org.phoenicis.containers.dto.WinePrefixDTO;
+import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -84,7 +84,7 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixDTO> wineContainerPanelFactory() {
-        return new ContainerPanelFactory<>(WinePrefixContainerPanel.class, WinePrefixDTO.class);
+    public ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory() {
+        return new ContainerPanelFactory<>(WinePrefixContainerPanel.class, WinePrefixContainerDTO.class);
     }
 }

@@ -25,7 +25,7 @@ import org.phoenicis.win32.registry.RegistryValue;
 
 import java.io.File;
 
-public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplayConfiguration {
+public class RegistryWinePrefixContainerDisplayConfiguration implements WinePrefixContainerDisplayConfiguration {
     private static final String READTEX = "readtex";
     private static final String READDRAW = "readdraw";
     private static final String PBUFFER = "pbuffer";
@@ -50,9 +50,9 @@ public class RegistryWinePrefixDisplayConfiguration implements WinePrefixDisplay
     private static final String HKEY_CURRENT_USER = "HKEY_CURRENT_USER";
 
     private final RegistryParser registryParser;
-    private final WinePrefixDisplayConfiguration defaultConfiguration;
+    private final WinePrefixContainerDisplayConfiguration defaultConfiguration;
 
-    public RegistryWinePrefixDisplayConfiguration(RegistryParser registryParser, WinePrefixDisplayConfiguration defaultConfiguration) {
+    public RegistryWinePrefixContainerDisplayConfiguration(RegistryParser registryParser, WinePrefixContainerDisplayConfiguration defaultConfiguration) {
         this.defaultConfiguration = defaultConfiguration;
         this.registryParser = registryParser;
     }

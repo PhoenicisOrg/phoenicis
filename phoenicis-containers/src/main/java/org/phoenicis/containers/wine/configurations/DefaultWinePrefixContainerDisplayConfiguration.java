@@ -22,7 +22,7 @@ import org.phoenicis.containers.wine.parameters.*;
 
 import java.io.File;
 
-public class DefaultWinePrefixDisplayConfiguration implements WinePrefixDisplayConfiguration {
+public class DefaultWinePrefixContainerDisplayConfiguration implements WinePrefixContainerDisplayConfiguration {
     @Override
     public UseGLSL getGLSL(File registryFile) {
         return UseGLSL.DEFAULT;

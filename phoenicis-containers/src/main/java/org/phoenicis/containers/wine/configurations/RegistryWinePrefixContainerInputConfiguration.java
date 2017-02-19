@@ -25,11 +25,11 @@ import org.phoenicis.win32.registry.RegistryValue;
 
 import java.io.File;
 
-public class RegistryWinePrefixInputConfiguration implements WinePrefixInputConfiguration {
+public class RegistryWinePrefixContainerInputConfiguration implements WinePrefixContainerInputConfiguration {
     private final RegistryParser registryParser;
-    private final WinePrefixInputConfiguration defaultConfiguration;
+    private final WinePrefixContainerInputConfiguration defaultConfiguration;
 
-    public RegistryWinePrefixInputConfiguration(RegistryParser registryParser, WinePrefixInputConfiguration defaultConfiguration) {
+    public RegistryWinePrefixContainerInputConfiguration(RegistryParser registryParser, WinePrefixContainerInputConfiguration defaultConfiguration) {
         this.registryParser = registryParser;
         this.defaultConfiguration = defaultConfiguration;
     }

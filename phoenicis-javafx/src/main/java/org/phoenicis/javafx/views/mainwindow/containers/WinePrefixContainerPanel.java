@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
-import org.phoenicis.containers.dto.WinePrefixDTO;
+import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.*;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -47,25 +47,25 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixDTO> {
+public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
     private final List<Node> lockableElements = new ArrayList<>();
-    private Consumer<WinePrefixDTO> onWineCfg = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onRegedit = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onWineboot = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onWinebootRepair = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onWineConsole = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onTaskMgr = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onKillProcess = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onUninstaller = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix = winePrefix -> {};
-    private Consumer<WinePrefixDTO> onDeletePrefix = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onWineCfg = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onRegedit = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onWineboot = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onWinebootRepair = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onWineConsole = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onTaskMgr = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onKillProcess = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onUninstaller = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onOpenTerminalInWinePrefix = winePrefix -> {};
+    private Consumer<WinePrefixContainerDTO> onDeletePrefix = winePrefix -> {};
 
-    private BiConsumer<WinePrefixDTO, RegistryParameter> onChangeSetting = (winePrefix, value) -> {};
+    private BiConsumer<WinePrefixContainerDTO, RegistryParameter> onChangeSetting = (winePrefix, value) -> {};
 
-    public WinePrefixContainerPanel(WinePrefixDTO containerEntity, ThemeManager themeManager) {
+    public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity, ThemeManager themeManager) {
         super(containerEntity, themeManager);
         this.getTabs().add(drawDisplayTab(containerEntity));
         this.getTabs().add(drawInputTab(containerEntity));
@@ -73,12 +73,12 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         this.getTabs().add(drawToolsTab(containerEntity));
     }
 
-    public void setOnDeletePrefix(Consumer<WinePrefixDTO> onDeletePrefix) {
+    public void setOnDeletePrefix(Consumer<WinePrefixContainerDTO> onDeletePrefix) {
         this.onDeletePrefix = onDeletePrefix;
     }
 
     @Override
-    Tab drawInformationTab(WinePrefixDTO container) {
+    Tab drawInformationTab(WinePrefixContainerDTO container) {
         final Tab informationTab = new Tab(translate("Information"));
         final VBox informationPane = new VBox();
         final Text title = new TextWithStyle(translate("Information"), TITLE_CSS_CLASS);
@@ -130,12 +130,12 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         return informationTab;
     }
 
-    private void deletePrefix(WinePrefixDTO winePrefix) {
+    private void deletePrefix(WinePrefixContainerDTO winePrefix) {
         this.onDeletePrefix.accept(winePrefix);
     }
 
 
-    private Tab drawDisplayTab(WinePrefixDTO winePrefixDTO) {
+    private Tab drawDisplayTab(WinePrefixContainerDTO winePrefixContainerDTO) {
         final Tab displayTab = new Tab(translate("Display"));
         final VBox displayPane = new VBox();
         final Text title = new TextWithStyle(translate("Display settings"), TITLE_CSS_CLASS);
@@ -148,64 +148,64 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
 
         final ComboBox<UseGLSL> glslComboBox = new ComboBox<>();
         glslComboBox.setMaxWidth(Double.MAX_VALUE);
-        glslComboBox.setValue(winePrefixDTO.getUseGlslValue());
-        glslComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        glslComboBox.setValue(winePrefixContainerDTO.getUseGlslValue());
+        glslComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(glslComboBox, UseGLSL.class);
         displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
 
         final ComboBox<DirectDrawRenderer> directDrawRendererComboBox = new ComboBox<>();
         directDrawRendererComboBox.setMaxWidth(Double.MAX_VALUE);
-        directDrawRendererComboBox.setValue(winePrefixDTO.getDirectDrawRenderer());
-        directDrawRendererComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        directDrawRendererComboBox.setValue(winePrefixContainerDTO.getDirectDrawRenderer());
+        directDrawRendererComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(directDrawRendererComboBox, DirectDrawRenderer.class);
         displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         displayContentPane.add(directDrawRendererComboBox, 1, 1);
 
         final ComboBox<VideoMemorySize> videoMemorySizeComboBox = new ComboBox<>();
         videoMemorySizeComboBox.setMaxWidth(Double.MAX_VALUE);
-        videoMemorySizeComboBox.setValue(winePrefixDTO.getVideoMemorySize());
-        videoMemorySizeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        videoMemorySizeComboBox.setValue(winePrefixContainerDTO.getVideoMemorySize());
+        videoMemorySizeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItemsVideoMemorySize(videoMemorySizeComboBox);
         displayContentPane.add(new TextWithStyle(translate("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         displayContentPane.add(videoMemorySizeComboBox, 1, 2);
 
         final ComboBox<OffscreenRenderingMode> offscreenRenderingModeComboBox = new ComboBox<>();
         offscreenRenderingModeComboBox.setMaxWidth(Double.MAX_VALUE);
-        offscreenRenderingModeComboBox.setValue(winePrefixDTO.getOffscreenRenderingMode());
-        offscreenRenderingModeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        offscreenRenderingModeComboBox.setValue(winePrefixContainerDTO.getOffscreenRenderingMode());
+        offscreenRenderingModeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(offscreenRenderingModeComboBox, OffscreenRenderingMode.class);
         displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         displayContentPane.add(offscreenRenderingModeComboBox, 1, 3);
 
         final ComboBox<RenderTargetModeLock> renderTargetModeLockComboBox = new ComboBox<>();
         renderTargetModeLockComboBox.setMaxWidth(Double.MAX_VALUE);
-        renderTargetModeLockComboBox.setValue(winePrefixDTO.getRenderTargetModeLock());
-        renderTargetModeLockComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        renderTargetModeLockComboBox.setValue(winePrefixContainerDTO.getRenderTargetModeLock());
+        renderTargetModeLockComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(renderTargetModeLockComboBox, RenderTargetModeLock.class);
         displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         displayContentPane.add(renderTargetModeLockComboBox, 1, 4);
 
         final ComboBox<Multisampling> multisamplingComboBox = new ComboBox<>();
         multisamplingComboBox.setMaxWidth(Double.MAX_VALUE);
-        multisamplingComboBox.setValue(winePrefixDTO.getMultisampling());
-        multisamplingComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        multisamplingComboBox.setValue(winePrefixContainerDTO.getMultisampling());
+        multisamplingComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(multisamplingComboBox, Multisampling.class);
         displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
         final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
         strictDrawOrderingComboBox.setMaxWidth(Double.MAX_VALUE);
-        strictDrawOrderingComboBox.setValue(winePrefixDTO.getStrictDrawOrdering());
-        strictDrawOrderingComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        strictDrawOrderingComboBox.setValue(winePrefixContainerDTO.getStrictDrawOrdering());
+        strictDrawOrderingComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
         displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
         final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
         alwaysOffscreenComboBox.setMaxWidth(Double.MAX_VALUE);
-        alwaysOffscreenComboBox.setValue(winePrefixDTO.getAlwaysOffscreen());
-        alwaysOffscreenComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixDTO, newValue));
+        alwaysOffscreenComboBox.setValue(winePrefixContainerDTO.getAlwaysOffscreen());
+        alwaysOffscreenComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
@@ -240,13 +240,13 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         return displayTab;
     }
 
-    private void changeSetting(WinePrefixDTO winePrefixDTO, RegistryParameter newValue) {
-        onChangeSetting.accept(winePrefixDTO, newValue);
+    private void changeSetting(WinePrefixContainerDTO winePrefixContainerDTO, RegistryParameter newValue) {
+        onChangeSetting.accept(winePrefixContainerDTO, newValue);
         lockAll();
     }
 
 
-    private Tab drawInputTab(WinePrefixDTO containerEntity) {
+    private Tab drawInputTab(WinePrefixContainerDTO containerEntity) {
         final Tab inputTab = new Tab(translate("Input"));
         final VBox inputPane = new VBox();
         final Text title = new TextWithStyle(translate("Input settings"), TITLE_CSS_CLASS);
@@ -281,7 +281,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
     }
 
 
-    private Tab drawWineToolsTab(WinePrefixDTO containerEntity) {
+    private Tab drawWineToolsTab(WinePrefixContainerDTO containerEntity) {
         final Tab toolsTab = new Tab(translate("Wine tools"));
         final VBox toolsPane = new VBox();
         final Text title = new TextWithStyle(translate("Wine tools"), TITLE_CSS_CLASS);
@@ -347,7 +347,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         return toolsTab;
     }
 
-    private Tab drawToolsTab(WinePrefixDTO containerEntity) {
+    private Tab drawToolsTab(WinePrefixContainerDTO containerEntity) {
         final Tab toolsTab = new Tab(translate("Tools"));
         final VBox toolsPane = new VBox();
         final Text title = new TextWithStyle(translate("Tools"), TITLE_CSS_CLASS);
@@ -438,43 +438,43 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixD
         comboBox.setItems(possibleValuesObservable);
     }
 
-    public void setOnWineCfg(Consumer<WinePrefixDTO> onWineCfg) {
+    public void setOnWineCfg(Consumer<WinePrefixContainerDTO> onWineCfg) {
         this.onWineCfg = onWineCfg;
     }
 
-    public void setOnRegedit(Consumer<WinePrefixDTO> onRegedit) {
+    public void setOnRegedit(Consumer<WinePrefixContainerDTO> onRegedit) {
         this.onRegedit = onRegedit;
     }
 
-    public void setOnWineboot(Consumer<WinePrefixDTO> onWineboot) {
+    public void setOnWineboot(Consumer<WinePrefixContainerDTO> onWineboot) {
         this.onWineboot = onWineboot;
     }
 
-    public void setOnWinebootRepair(Consumer<WinePrefixDTO> onWinebootRepair) {
+    public void setOnWinebootRepair(Consumer<WinePrefixContainerDTO> onWinebootRepair) {
         this.onWinebootRepair = onWinebootRepair;
     }
 
-    public void setOnWineConsole(Consumer<WinePrefixDTO> onWineconsole) {
+    public void setOnWineConsole(Consumer<WinePrefixContainerDTO> onWineconsole) {
         this.onWineConsole = onWineconsole;
     }
 
-    public void setOnTaskMgr(Consumer<WinePrefixDTO> onTaskMgr) {
+    public void setOnTaskMgr(Consumer<WinePrefixContainerDTO> onTaskMgr) {
         this.onTaskMgr = onTaskMgr;
     }
 
-    public void setOnUninstaller(Consumer<WinePrefixDTO> onUninstaller) {
+    public void setOnUninstaller(Consumer<WinePrefixContainerDTO> onUninstaller) {
         this.onUninstaller = onUninstaller;
     }
 
-    public void setOnKillProcess(Consumer<WinePrefixDTO> onKillProcess) {
+    public void setOnKillProcess(Consumer<WinePrefixContainerDTO> onKillProcess) {
         this.onKillProcess = onKillProcess;
     }
 
-    public void setOnOpenTerminalInWinePrefix(Consumer<WinePrefixDTO> onOpenTerminalInWinePrefix) {
+    public void setOnOpenTerminalInWinePrefix(Consumer<WinePrefixContainerDTO> onOpenTerminalInWinePrefix) {
         this.onOpenTerminalInWinePrefix = onOpenTerminalInWinePrefix;
     }
 
-    public void setOnChangeSetting(BiConsumer<WinePrefixDTO, RegistryParameter> onChangeSetting) {
+    public void setOnChangeSetting(BiConsumer<WinePrefixContainerDTO, RegistryParameter> onChangeSetting) {
         this.onChangeSetting = onChangeSetting;
     }
 }

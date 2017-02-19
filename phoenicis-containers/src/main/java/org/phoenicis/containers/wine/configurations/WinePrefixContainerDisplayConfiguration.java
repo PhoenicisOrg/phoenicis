@@ -22,7 +22,7 @@ import org.phoenicis.containers.wine.parameters.*;
 
 import java.io.File;
 
-public interface WinePrefixDisplayConfiguration {
+public interface WinePrefixContainerDisplayConfiguration {
     /**
      *
      * @return The {@link UseGLSL} value
