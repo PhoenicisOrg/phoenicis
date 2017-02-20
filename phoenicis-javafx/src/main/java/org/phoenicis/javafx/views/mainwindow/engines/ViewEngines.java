@@ -22,10 +22,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import org.phoenicis.engines.CombinedEnginesFilter;
 import org.phoenicis.engines.EnginesFilter;
-import javafx.scene.effect.ColorAdjust;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -36,9 +39,6 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftCheckBox;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 
 import java.io.File;
 import java.util.List;
@@ -140,8 +140,8 @@ public class ViewEngines extends MainWindowView {
 
 
     public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs, String wineEnginesPath) {
-	wineDistributionsTabPane.getTabs().clear();        
-	for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
+        wineDistributionsTabPane.getTabs().clear();
+        for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
             wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO, wineEnginesPath));
         }
     }
@@ -180,5 +180,9 @@ public class ViewEngines extends MainWindowView {
 
     private void deleteEngine(WineVersionDTO wineVersionDTO) {
         this.setOnDeleteEngine.accept(wineVersionDTO);
+    }
+
+    public void showWizard(Tab tab) {
+        showRightView(tab.getContent());
     }
 }

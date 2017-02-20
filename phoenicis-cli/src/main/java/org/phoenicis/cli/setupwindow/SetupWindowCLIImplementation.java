@@ -23,6 +23,7 @@ import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
 import org.phoenicis.scripts.ui.SetupWindow;
+import org.phoenicis.scripts.wizard.WizardType;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,11 +35,13 @@ import static java.lang.Math.min;
 
 class SetupWindowCLIImplementation implements SetupWindow {
     private final String title;
+    private final WizardType type;
     private final boolean interactive;
     private final boolean verbose;
 
-    SetupWindowCLIImplementation(String title, boolean interactive, boolean verbose) {
+    SetupWindowCLIImplementation(String title, WizardType type, boolean interactive, boolean verbose) {
         this.title = title;
+        this.type = type;
         this.interactive = interactive;
         this.verbose = verbose;
 

@@ -32,7 +32,7 @@ public class SetupWindowCLIConfiguration implements SetupWindowUIConfiguration {
     @Override
     @Bean
     public SetupWindowFactory setupWindowFactory() {
-        return (title) -> new SetupWindowCLIImplementation(title, true, true);
+        return (title, type) -> new SetupWindowCLIImplementation(title, type, true, true);
     }
 
     @Override

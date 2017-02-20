@@ -16,11 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.ui;
+package org.phoenicis.scripts.wizard;
 
-import org.phoenicis.scripts.wizard.WizardType;
-
-@FunctionalInterface
-public interface SetupWindowFactory {
-    SetupWindow createSetupWindow(String title, WizardType type);
+public enum WizardType {
+    APP,
+    ENGINE;
 }

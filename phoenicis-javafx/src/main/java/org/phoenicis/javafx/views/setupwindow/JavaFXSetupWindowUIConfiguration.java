@@ -18,7 +18,9 @@
 
 package org.phoenicis.javafx.views.setupwindow;
 
+import javafx.application.Platform;
 import org.phoenicis.javafx.UIMessageSenderJavaFXImplementation;
+import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
@@ -27,13 +29,15 @@ import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
 import org.phoenicis.scripts.ui.UIMessageSender;
 import org.phoenicis.scripts.ui.UIQuestionFactory;
 import org.phoenicis.tools.ToolsConfiguration;
-import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfiguration {
+    @Autowired
+    private ViewsConfiguration viewsConfiguration;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
@@ -46,10 +50,19 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
     @Override
     @Bean
     public SetupWindowFactory setupWindowFactory() {
-        return title -> {
+        return (title, type) -> {
             final SetupWindowJavaFXImplementation setupWindow = new SetupWindowJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
-            viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
-            setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
+            switch (type) {
+                case ENGINE:
+                    viewsConfiguration.viewEngines().showWizard(setupWindow);
+                    setupWindow.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
+                    break;
+                case APP:
+                default:
+                    viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
+                    setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
+                    break;
+            }
             return setupWindow;
         };
     }

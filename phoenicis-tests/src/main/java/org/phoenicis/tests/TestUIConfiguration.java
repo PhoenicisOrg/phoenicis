@@ -31,7 +31,7 @@ class TestUIConfiguration implements SetupWindowUIConfiguration {
     @Override
     @Bean
     public SetupWindowFactory setupWindowFactory() {
-        return title -> new TestSetupWindow();
+        return (title, type) -> new TestSetupWindow();
     }
 
     @Override

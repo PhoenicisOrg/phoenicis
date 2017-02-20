@@ -41,8 +41,8 @@ public class SetupWizardFactory {
         this.setupWindowFactory = setupWindowFactory;
     }
 
-    public SetupWizard create(String title) {
-        final SetupWizard setupWizard = new SetupWizard(title, uiMessageSender, setupWindowFactory, userHome, applicationUserRoot, applicationName);
+    public SetupWizard create(String title, WizardType type) {
+        final SetupWizard setupWizard = new SetupWizard(title, type, uiMessageSender, setupWindowFactory, userHome, applicationUserRoot, applicationName);
         setupWizard.init();
         return setupWizard;
     }

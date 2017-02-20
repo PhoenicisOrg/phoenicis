@@ -23,6 +23,7 @@ import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.wizard.SetupWizard;
 import org.phoenicis.scripts.wizard.SetupWizardFactory;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.scripts.wizard.WizardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -60,8 +61,14 @@ public class NashornEngineFactory {
         );
 
         nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title), this::throwException);
-        nashornEngine.put("SetupWizard", (Function<String, SetupWizard>) name -> {
-            final SetupWizard setupWizard = setupWizardFactory.create(name);
+        nashornEngine.put("SetupWizard", (Function<String, SetupWizard>) (name) -> {
+            final SetupWizard setupWizard = setupWizardFactory.create(name, WizardType.APP);
+            nashornEngine.addErrorHandler(e -> setupWizard.close());
+            return setupWizard;
+        }, this::throwException);
+
+        nashornEngine.put("EngineSetupWizard", (Function<String, SetupWizard>) (name) -> {
+            final SetupWizard setupWizard = setupWizardFactory.create(name, WizardType.ENGINE);
             nashornEngine.addErrorHandler(e -> setupWizard.close());
             return setupWizard;
         }, this::throwException);
