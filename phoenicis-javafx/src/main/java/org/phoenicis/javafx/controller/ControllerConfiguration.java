@@ -99,7 +99,8 @@ public class ControllerConfiguration {
         return new EnginesController(
                 viewsConfiguration.viewEngines(),
                 enginesConfiguration.wineVersionsFetcher(),
-                wineEnginesPath
+                wineEnginesPath,
+                scriptsConfiguration.scriptInterpreter()
         );
     }
 
