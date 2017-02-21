@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import org.phoenicis.engines.CombinedEnginesFilter;
 import org.phoenicis.engines.EnginesFilter;
+import org.phoenicis.engines.dto.WineEngineDTO;
 import org.phoenicis.engines.dto.WineVersionDTO;
 import org.phoenicis.engines.dto.WineVersionDistributionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -64,8 +65,8 @@ public class ViewEngines extends MainWindowView {
     private TabPane wineDistributionsTabPane;
     private final CombinedEnginesFilter currentFilter = new CombinedEnginesFilter();
     private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
-    private Consumer<WineVersionDTO> setOnInstallEngine = (engine) -> {};
-    private Consumer<WineVersionDTO> setOnDeleteEngine = (engine) -> {};
+    private Consumer<WineEngineDTO> setOnInstallEngine = (engine) -> {};
+    private Consumer<WineEngineDTO> setOnDeleteEngine = (engine) -> {};
 
     public ViewEngines(ThemeManager themeManager) {
         super("Engines", themeManager);
@@ -84,10 +85,10 @@ public class ViewEngines extends MainWindowView {
     public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
         this.onApplyFilter = onApplyFilter;
     }
-    public void setOnInstallEngine(Consumer<WineVersionDTO> onInstallEngine) {
+    public void setOnInstallEngine(Consumer<WineEngineDTO> onInstallEngine) {
         this.setOnInstallEngine = onInstallEngine;
     }
-    public void setOnDeleteEngine(Consumer<WineVersionDTO> onDeleteEngine) {
+    public void setOnDeleteEngine(Consumer<WineEngineDTO> onDeleteEngine) {
         this.setOnDeleteEngine = onDeleteEngine;
     }
 
@@ -140,8 +141,8 @@ public class ViewEngines extends MainWindowView {
 
 
     public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs, String wineEnginesPath) {
-        wineDistributionsTabPane.getTabs().clear();
-        for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
+	wineDistributionsTabPane.getTabs().clear();        
+	for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
             wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO, wineEnginesPath));
         }
     }
@@ -161,28 +162,34 @@ public class ViewEngines extends MainWindowView {
                 grayscale.setSaturation(-1);
                 engineItem.setEffect(grayscale);
             }
-            engineItem.setOnMouseClicked(event -> this.showEngineDetails(wineVersionDTO));
+            final String[] parts = wineVersionDistributionDTO.getName().split("-");
+            final String distribution = parts[0];
+            final String architecture = parts[2];
+            WineEngineDTO wineEngineDTO = new WineEngineDTO.Builder()
+                    .withArchitecture(architecture)
+                    .withDistribution(distribution)
+                    .withVersion(wineVersionDTO.getVersion())
+                    .withMonoFile(wineVersionDTO.getMonoFile())
+                    .withGeckoFile(wineVersionDTO.getGeckoFile())
+                    .build();
+            engineItem.setOnMouseClicked(event -> this.showEngineDetails(wineEngineDTO));
         }
 
         return new Tab(wineVersionDistributionDTO.getDescription(), tabContent);
     }
 
-    private void showEngineDetails(WineVersionDTO wineVersionDTO) {
-        final EnginePanel enginePanel = new EnginePanel(wineVersionDTO);
+    private void showEngineDetails(WineEngineDTO wineEngineDTO) {
+        final EnginePanel enginePanel = new EnginePanel(wineEngineDTO);
         enginePanel.setOnEngineInstall(this::installEngine);
         enginePanel.setOnEngineDelete(this::deleteEngine);
         showRightView(enginePanel);
     }
 
-    private void installEngine(WineVersionDTO wineVersionDTO) {
-        this.setOnInstallEngine.accept(wineVersionDTO);
+    private void installEngine(WineEngineDTO wineEngineDTO) {
+        this.setOnInstallEngine.accept(wineEngineDTO);
     }
 
-    private void deleteEngine(WineVersionDTO wineVersionDTO) {
-        this.setOnDeleteEngine.accept(wineVersionDTO);
-    }
-
-    public void showWizard(Tab tab) {
-        showRightView(tab.getContent());
+    private void deleteEngine(WineEngineDTO wineEngineDTO) {
+        this.setOnDeleteEngine.accept(wineEngineDTO);
     }
 }
