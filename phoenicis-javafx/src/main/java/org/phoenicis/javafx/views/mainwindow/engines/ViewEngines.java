@@ -141,7 +141,7 @@ public class ViewEngines extends MainWindowView {
 
 
     public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs, String wineEnginesPath) {
-	wineDistributionsTabPane.getTabs().clear();        
+	wineDistributionsTabPane.getTabs().clear();
 	for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
             wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO, wineEnginesPath));
         }
@@ -191,5 +191,9 @@ public class ViewEngines extends MainWindowView {
 
     private void deleteEngine(WineEngineDTO wineEngineDTO) {
         this.setOnDeleteEngine.accept(wineEngineDTO);
+    }
+
+    public void showWizard(Tab tab) {
+        showRightView(tab.getContent());
     }
 }

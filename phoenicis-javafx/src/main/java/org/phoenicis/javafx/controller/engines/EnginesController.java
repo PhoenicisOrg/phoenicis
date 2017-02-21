@@ -90,7 +90,7 @@ public class EnginesController {
                 errorCallback
         );*/
         // TODO
-        System.out.println("delete Engine");
+        System.out.println("install Engine");
     }
 
     private void deleteEngine(WineEngineDTO wineEngineDTO, Consumer<Exception> errorCallback) {
