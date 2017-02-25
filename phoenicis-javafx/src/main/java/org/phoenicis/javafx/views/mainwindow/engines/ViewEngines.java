@@ -27,6 +27,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.VBox;
 import org.phoenicis.engines.CombinedEnginesFilter;
 import org.phoenicis.engines.EnginesFilter;
 import org.phoenicis.engines.dto.WineEngineDTO;
@@ -193,7 +194,7 @@ public class ViewEngines extends MainWindowView {
         this.setOnDeleteEngine.accept(wineEngineDTO);
     }
 
-    public void showWizard(Tab tab) {
-        showRightView(tab.getContent());
+    public void showProgress(VBox progressUi) {
+        showRightView(progressUi);
     }
 }

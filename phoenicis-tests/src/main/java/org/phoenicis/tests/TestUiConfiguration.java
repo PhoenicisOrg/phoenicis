@@ -19,10 +19,7 @@
 package org.phoenicis.tests;
 
 import org.phoenicis.cli.setupwindow.CliMessageSender;
-import org.phoenicis.scripts.ui.SetupUiFactory;
-import org.phoenicis.scripts.ui.UiConfiguration;
-import org.phoenicis.scripts.ui.UiMessageSender;
-import org.phoenicis.scripts.ui.UiQuestionFactory;
+import org.phoenicis.scripts.ui.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -44,5 +41,10 @@ class TestUiConfiguration implements UiConfiguration {
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
         return (questionText, yesCallback, noCallback) -> yesCallback.run();
+    }
+
+    @Override
+    public ProgressUiFactory progressUiFactory() {
+        return title -> new TestProgressUi();
     }
 }

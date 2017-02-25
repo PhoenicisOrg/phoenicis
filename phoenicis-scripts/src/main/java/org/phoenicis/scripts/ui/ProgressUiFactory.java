@@ -18,20 +18,7 @@
 
 package org.phoenicis.scripts.ui;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public interface UiConfiguration {
-    @Bean
-    SetupUiFactory setupUiFactory();
-
-    @Bean
-    UiMessageSender uiMessageSender();
-
-    @Bean
-    UiQuestionFactory uiQuestionFactory();
-
-    @Bean
-    ProgressUiFactory progressUiFactory();
+@FunctionalInterface
+public interface ProgressUiFactory {
+    ProgressUi create(String title);
 }

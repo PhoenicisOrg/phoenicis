@@ -24,10 +24,7 @@ import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
-import org.phoenicis.scripts.ui.SetupUiFactory;
-import org.phoenicis.scripts.ui.UiConfiguration;
-import org.phoenicis.scripts.ui.UiMessageSender;
-import org.phoenicis.scripts.ui.UiQuestionFactory;
+import org.phoenicis.scripts.ui.*;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -52,8 +49,8 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     public SetupUiFactory setupUiFactory() {
         return title -> {
             final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
-            viewsConfiguration.viewEngines().showWizard(setupWindow);
-            setupWindow.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
+            viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
+            setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
             return setupWindow;
         };
     }
@@ -68,5 +65,16 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
         return (text, yesCallback, noCallback) -> Platform.runLater(() -> new ConfirmMessage("Question", text).ask(yesCallback, noCallback));
+    }
+
+    @Override
+    @Bean
+    public ProgressUiFactory progressUiFactory() {
+        return title -> {
+            final ProgressUiJavaFXImplementation progressUi = new ProgressUiJavaFXImplementation();
+            viewsConfiguration.viewEngines().showProgress(progressUi);
+            progressUi.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
+            return progressUi;
+        };
     }
 }

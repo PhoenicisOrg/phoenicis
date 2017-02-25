@@ -18,20 +18,20 @@
 
 package org.phoenicis.scripts.ui;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+/**
+ * Represents a progress UI.
+ * This interfaces needs to be implemented by the UI.
+ */
+public interface ProgressUi {
 
-@Configuration
-public interface UiConfiguration {
-    @Bean
-    SetupUiFactory setupUiFactory();
+    /**
+     * Show a progress bar and returns immediately
+     * @param textToShow The text to show to the user
+     */
+    void showProgressBar(Message<ProgressControl> message, String textToShow);
 
-    @Bean
-    UiMessageSender uiMessageSender();
-
-    @Bean
-    UiQuestionFactory uiQuestionFactory();
-
-    @Bean
-    ProgressUiFactory progressUiFactory();
+    /**
+     * Close the Setup UI
+     */
+    void close();
 }

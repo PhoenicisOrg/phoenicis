@@ -21,6 +21,8 @@ package org.phoenicis.scripts.nashorn;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
+import org.phoenicis.scripts.wizard.UiProgressWizardFactory;
+import org.phoenicis.scripts.wizard.UiProgressWizardImplementation;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +39,15 @@ import java.util.function.Function;
 
 public class NashornEngineFactory {
     private final UiSetupWizardFactory uiSetupWizardFactory;
+    private final UiProgressWizardFactory uiProgressWizardFactory;
     private final ScriptFetcher scriptFetcher;
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public NashornEngineFactory(UiSetupWizardFactory uiSetupWizardFactory, ScriptFetcher scriptFetcher) {
+    public NashornEngineFactory(UiSetupWizardFactory uiSetupWizardFactory, UiProgressWizardFactory uiProgressWizardFactory, ScriptFetcher scriptFetcher) {
         this.uiSetupWizardFactory = uiSetupWizardFactory;
+        this.uiProgressWizardFactory = uiProgressWizardFactory;
         this.scriptFetcher = scriptFetcher;
     }
 
@@ -66,10 +70,10 @@ public class NashornEngineFactory {
             return uiSetupWizardImplementation;
         }, this::throwException);
 
-        nashornEngine.put("EngineSetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
-            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
-            nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
-            return uiSetupWizardImplementation;
+        nashornEngine.put("EngineProgressUi", (Function<String, UiProgressWizardImplementation>) (name) -> {
+            final UiProgressWizardImplementation uiProgressWizardImplementation = uiProgressWizardFactory.create(name);
+            nashornEngine.addErrorHandler(e -> uiProgressWizardImplementation.close());
+            return uiProgressWizardImplementation;
         }, this::throwException);
 
         nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {

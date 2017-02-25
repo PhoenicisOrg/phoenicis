@@ -32,4 +32,9 @@ public class WizardConfiguration {
     public UiSetupWizardFactory setupWizardFactory() {
         return new UiSetupWizardFactory(uiConfiguration.uiMessageSender(), uiConfiguration.setupUiFactory());
     }
+
+    @Bean
+    public UiProgressWizardFactory progressWizardFactory() {
+        return new UiProgressWizardFactory(uiConfiguration.uiMessageSender(), uiConfiguration.progressUiFactory());
+    }
 }

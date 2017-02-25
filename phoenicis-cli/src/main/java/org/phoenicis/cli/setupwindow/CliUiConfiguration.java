@@ -18,10 +18,7 @@
 
 package org.phoenicis.cli.setupwindow;
 
-import org.phoenicis.scripts.ui.SetupUiFactory;
-import org.phoenicis.scripts.ui.UiConfiguration;
-import org.phoenicis.scripts.ui.UiMessageSender;
-import org.phoenicis.scripts.ui.UiQuestionFactory;
+import org.phoenicis.scripts.ui.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -64,5 +61,10 @@ public class CliUiConfiguration implements UiConfiguration {
                 }
             }
         };
+    }
+
+    @Override
+    public ProgressUiFactory progressUiFactory() {
+        return title -> new ProgressUiCliImplementation(title, true, true);
     }
 }

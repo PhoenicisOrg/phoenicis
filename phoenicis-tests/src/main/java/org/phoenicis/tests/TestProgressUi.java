@@ -16,22 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.ui;
+package org.phoenicis.tests;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.phoenicis.scripts.ui.Message;
+import org.phoenicis.scripts.ui.ProgressControl;
+import org.phoenicis.scripts.ui.ProgressUi;
 
-@Configuration
-public interface UiConfiguration {
-    @Bean
-    SetupUiFactory setupUiFactory();
+class TestProgressUi implements ProgressUi {
+    @Override
+    public void showProgressBar(Message<ProgressControl> message, String textToShow) {
+        message.send(new ProgressControl() {
+            @Override
+            public void setProgressPercentage(double value) {
 
-    @Bean
-    UiMessageSender uiMessageSender();
+            }
 
-    @Bean
-    UiQuestionFactory uiQuestionFactory();
+            @Override
+            public void setText(String text) {
 
-    @Bean
-    ProgressUiFactory progressUiFactory();
+            }
+        });
+    }
+
+    @Override
+    public void close() {
+
+    }
 }
