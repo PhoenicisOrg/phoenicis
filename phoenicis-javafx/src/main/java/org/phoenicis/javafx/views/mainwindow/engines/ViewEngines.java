@@ -64,6 +64,7 @@ public class ViewEngines extends MainWindowView {
     }
 
     private TabPane wineDistributionsTabPane;
+    private EnginePanel currentEnginePanel;
     private final CombinedEnginesFilter currentFilter = new CombinedEnginesFilter();
     private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
     private Consumer<WineEngineDTO> setOnInstallEngine = (engine) -> {};
@@ -180,10 +181,10 @@ public class ViewEngines extends MainWindowView {
     }
 
     private void showEngineDetails(WineEngineDTO wineEngineDTO) {
-        final EnginePanel enginePanel = new EnginePanel(wineEngineDTO);
-        enginePanel.setOnEngineInstall(this::installEngine);
-        enginePanel.setOnEngineDelete(this::deleteEngine);
-        showRightView(enginePanel);
+        currentEnginePanel = new EnginePanel(wineEngineDTO);
+        currentEnginePanel.setOnEngineInstall(this::installEngine);
+        currentEnginePanel.setOnEngineDelete(this::deleteEngine);
+        showRightView(currentEnginePanel);
     }
 
     private void installEngine(WineEngineDTO wineEngineDTO) {
@@ -195,6 +196,6 @@ public class ViewEngines extends MainWindowView {
     }
 
     public void showProgress(VBox progressUi) {
-        showRightView(progressUi);
+        currentEnginePanel.showProgress(progressUi);
     }
 }
