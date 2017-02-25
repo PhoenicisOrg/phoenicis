@@ -29,7 +29,7 @@ import javafx.scene.paint.Color;
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     private Pane contentPane;
 
-    AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent,
+    AbstractStepRepresentationWithHeader(SetupUiJavaFXImplementation parent,
                                          Message<?> messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
 

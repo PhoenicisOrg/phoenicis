@@ -18,14 +18,14 @@
 
 package org.phoenicis.javafx;
 
-import org.phoenicis.scripts.ui.UIMessageSender;
+import org.phoenicis.scripts.ui.UiMessageSender;
 import javafx.application.Platform;
 import org.apache.commons.lang.mutable.MutableObject;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;
 
-public class UIMessageSenderJavaFXImplementation implements UIMessageSender {
+public class UiMessageSenderJavaFXImplementation implements UiMessageSender {
     @Override
     public <R> R run(Supplier<R> function) {
 

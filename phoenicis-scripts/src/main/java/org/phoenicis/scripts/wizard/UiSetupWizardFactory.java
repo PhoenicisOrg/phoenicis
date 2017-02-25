@@ -18,11 +18,11 @@
 
 package org.phoenicis.scripts.wizard;
 
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.UIMessageSender;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.UiMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 
-public class SetupWizardFactory {
+public class UiSetupWizardFactory {
     @Value("${user.home}")
     private String userHome;
 
@@ -33,17 +33,17 @@ public class SetupWizardFactory {
     private String applicationName;
 
 
-    private final UIMessageSender uiMessageSender;
-    private final SetupWindowFactory setupWindowFactory;
+    private final UiMessageSender uiMessageSender;
+    private final SetupUiFactory setupUiFactory;
 
-    public SetupWizardFactory(UIMessageSender uiMessageSender, SetupWindowFactory setupWindowFactory) {
+    public UiSetupWizardFactory(UiMessageSender uiMessageSender, SetupUiFactory setupUiFactory) {
         this.uiMessageSender = uiMessageSender;
-        this.setupWindowFactory = setupWindowFactory;
+        this.setupUiFactory = setupUiFactory;
     }
 
-    public SetupWizard create(String title, WizardType type) {
-        final SetupWizard setupWizard = new SetupWizard(title, type, uiMessageSender, setupWindowFactory, userHome, applicationUserRoot, applicationName);
-        setupWizard.init();
-        return setupWizard;
+    public UiSetupWizardImplementation create(String title, WizardType type) {
+        final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title, type, uiMessageSender, setupUiFactory, userHome, applicationUserRoot, applicationName);
+        uiSetupWizardImplementation.init();
+        return uiSetupWizardImplementation;
     }
 }

@@ -18,32 +18,32 @@
 
 package org.phoenicis.cli.setupwindow;
 
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
-import org.phoenicis.scripts.ui.UIMessageSender;
-import org.phoenicis.scripts.ui.UIQuestionFactory;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.SetupUiConfiguration;
+import org.phoenicis.scripts.ui.UiMessageSender;
+import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Scanner;
 
 @Configuration
-public class SetupWindowCLIConfiguration implements SetupWindowUIConfiguration {
+public class SetupWindowCLIConfiguration implements SetupUiConfiguration {
     @Override
     @Bean
-    public SetupWindowFactory setupWindowFactory() {
-        return (title, type) -> new SetupWindowCLIImplementation(title, type, true, true);
+    public SetupUiFactory setupWindowFactory() {
+        return (title, type) -> new SetupUiCLIImplementation(title, type, true, true);
     }
 
     @Override
     @Bean
-    public UIMessageSender uiMessageSender() {
+    public UiMessageSender uiMessageSender() {
         return new CLIMessageSender();
     }
 
     @Override
     @Bean
-    public UIQuestionFactory uiQuestionFactory() {
+    public UiQuestionFactory uiQuestionFactory() {
         return (questionText, yesCallback, noCallback) -> {
             String answer = "";
 

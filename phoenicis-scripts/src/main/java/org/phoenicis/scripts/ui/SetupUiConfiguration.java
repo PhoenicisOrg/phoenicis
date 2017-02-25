@@ -18,9 +18,17 @@
 
 package org.phoenicis.scripts.ui;
 
-import org.phoenicis.scripts.wizard.WizardType;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@FunctionalInterface
-public interface SetupWindowFactory {
-    SetupWindow createSetupWindow(String title, WizardType type);
+@Configuration
+public interface SetupUiConfiguration {
+    @Bean
+    SetupUiFactory setupWindowFactory();
+
+    @Bean
+    UiMessageSender uiMessageSender();
+
+    @Bean
+    UiQuestionFactory uiQuestionFactory();
 }

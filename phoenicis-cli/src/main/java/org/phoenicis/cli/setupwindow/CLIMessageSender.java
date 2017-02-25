@@ -18,11 +18,11 @@
 
 package org.phoenicis.cli.setupwindow;
 
-import org.phoenicis.scripts.ui.UIMessageSender;
+import org.phoenicis.scripts.ui.UiMessageSender;
 
 import java.util.function.Supplier;
 
-public class CLIMessageSender implements UIMessageSender {
+public class CLIMessageSender implements UiMessageSender {
     @Override
     public <R> R run(Supplier<R> function) {
         return function.get();

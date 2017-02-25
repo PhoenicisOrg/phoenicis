@@ -25,7 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
-    public StepRepresentationSpin(SetupWindowJavaFXImplementation parent, Message<?> messageWaitingForResponse,
+    public StepRepresentationSpin(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse,
                                   String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
     }

@@ -28,7 +28,7 @@ import org.phoenicis.containers.ContainersConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.setupwindow.JavaFXSetupWindowUIConfiguration;
+import org.phoenicis.javafx.views.setupwindow.JavaFXSetupUiConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
@@ -47,7 +47,7 @@ import org.springframework.context.annotation.Import;
         EnginesConfiguration.class,
         LibraryConfiguration.class,
         SettingsConfiguration.class,
-        JavaFXSetupWindowUIConfiguration.class,
+        JavaFXSetupUiConfiguration.class,
         MultithreadingConfiguration.class,
         Win32Configuration.class,
         ToolsConfiguration.class,

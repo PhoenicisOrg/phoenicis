@@ -22,7 +22,7 @@ import org.jsoup.Jsoup;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupWindow;
+import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.wizard.WizardType;
 
 import java.io.File;
@@ -33,13 +33,13 @@ import java.util.List;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-class SetupWindowCLIImplementation implements SetupWindow {
+class SetupUiCLIImplementation implements SetupUi {
     private final String title;
     private final WizardType type;
     private final boolean interactive;
     private final boolean verbose;
 
-    SetupWindowCLIImplementation(String title, WizardType type, boolean interactive, boolean verbose) {
+    SetupUiCLIImplementation(String title, WizardType type, boolean interactive, boolean verbose) {
         this.title = title;
         this.type = type;
         this.interactive = interactive;

@@ -26,12 +26,10 @@ import org.phoenicis.scripts.ui.Message;
 
 import java.net.URL;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
 public class StepRepresentationHtmlPresentation extends AbstractStepRepresentation {
     private final String htmlToShow;
 
-    public StepRepresentationHtmlPresentation(SetupWindowJavaFXImplementation parent, Message<?> message, String htmlToShow) {
+    public StepRepresentationHtmlPresentation(SetupUiJavaFXImplementation parent, Message<?> message, String htmlToShow) {
         super(parent, message);
         this.htmlToShow = htmlToShow;
     }

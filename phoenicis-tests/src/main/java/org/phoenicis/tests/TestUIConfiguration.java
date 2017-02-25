@@ -19,30 +19,30 @@
 package org.phoenicis.tests;
 
 import org.phoenicis.cli.setupwindow.CLIMessageSender;
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
-import org.phoenicis.scripts.ui.UIMessageSender;
-import org.phoenicis.scripts.ui.UIQuestionFactory;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.SetupUiConfiguration;
+import org.phoenicis.scripts.ui.UiMessageSender;
+import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class TestUIConfiguration implements SetupWindowUIConfiguration {
+class TestUIConfiguration implements SetupUiConfiguration {
     @Override
     @Bean
-    public SetupWindowFactory setupWindowFactory() {
-        return (title, type) -> new TestSetupWindow();
+    public SetupUiFactory setupWindowFactory() {
+        return (title, type) -> new TestSetupUi();
     }
 
     @Override
     @Bean
-    public UIMessageSender uiMessageSender() {
+    public UiMessageSender uiMessageSender() {
         return new CLIMessageSender();
     }
 
     @Override
     @Bean
-    public UIQuestionFactory uiQuestionFactory() {
+    public UiQuestionFactory uiQuestionFactory() {
         return (questionText, yesCallback, noCallback) -> yesCallback.run();
     }
 }

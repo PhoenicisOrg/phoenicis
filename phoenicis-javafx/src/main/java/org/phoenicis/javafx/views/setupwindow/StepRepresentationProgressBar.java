@@ -30,7 +30,7 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     private final ProgressBar progressBar = new ProgressBar();
     private final Text progressText = new Text("");
 
-    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, Message<?> messageWaitingForResponse,
+    public StepRepresentationProgressBar(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse,
                                          String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);

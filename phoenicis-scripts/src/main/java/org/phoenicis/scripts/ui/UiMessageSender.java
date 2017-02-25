@@ -18,10 +18,21 @@
 
 package org.phoenicis.scripts.ui;
 
-public interface UIQuestionFactory {
-    void create(String questionText, Runnable yesCallback, Runnable noCallback);
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-    default void create(String questionText, Runnable yesCallback) {
-        create(questionText, yesCallback, () -> {});
+public interface UiMessageSender {
+    <R> R run(Supplier<R> function);
+
+    default <R> R runAndWait(Consumer<Message<R>> function) {
+        final Message<R> message = new Message<>();
+        run(() -> {
+            function.accept(message);
+            return null;
+        });
+        message.block();
+
+        return message.get();
     }
+
 }

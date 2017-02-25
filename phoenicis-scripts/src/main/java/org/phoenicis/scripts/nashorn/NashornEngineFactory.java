@@ -20,8 +20,8 @@ package org.phoenicis.scripts.nashorn;
 
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
-import org.phoenicis.scripts.wizard.SetupWizard;
-import org.phoenicis.scripts.wizard.SetupWizardFactory;
+import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
+import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.scripts.wizard.WizardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +37,14 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class NashornEngineFactory {
-    private final SetupWizardFactory setupWizardFactory;
+    private final UiSetupWizardFactory uiSetupWizardFactory;
     private final ScriptFetcher scriptFetcher;
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public NashornEngineFactory(SetupWizardFactory setupWizardFactory, ScriptFetcher scriptFetcher) {
-        this.setupWizardFactory = setupWizardFactory;
+    public NashornEngineFactory(UiSetupWizardFactory uiSetupWizardFactory, ScriptFetcher scriptFetcher) {
+        this.uiSetupWizardFactory = uiSetupWizardFactory;
         this.scriptFetcher = scriptFetcher;
     }
 
@@ -61,16 +61,16 @@ public class NashornEngineFactory {
         );
 
         nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title), this::throwException);
-        nashornEngine.put("SetupWizard", (Function<String, SetupWizard>) (name) -> {
-            final SetupWizard setupWizard = setupWizardFactory.create(name, WizardType.APP);
-            nashornEngine.addErrorHandler(e -> setupWizard.close());
-            return setupWizard;
+        nashornEngine.put("UiSetupWizardImplementation", (Function<String, UiSetupWizardImplementation>) (name) -> {
+            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name, WizardType.APP);
+            nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+            return uiSetupWizardImplementation;
         }, this::throwException);
 
-        nashornEngine.put("EngineSetupWizard", (Function<String, SetupWizard>) (name) -> {
-            final SetupWizard setupWizard = setupWizardFactory.create(name, WizardType.ENGINE);
-            nashornEngine.addErrorHandler(e -> setupWizard.close());
-            return setupWizard;
+        nashornEngine.put("EngineSetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
+            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name, WizardType.ENGINE);
+            nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+            return uiSetupWizardImplementation;
         }, this::throwException);
 
         nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {

@@ -29,7 +29,7 @@ import javafx.scene.text.TextFlow;
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     private final String textToShow;
 
-    public StepRepresentationPresentation(SetupWindowJavaFXImplementation parent, Message<?> message, String textToShow) {
+    public StepRepresentationPresentation(SetupUiJavaFXImplementation parent, Message<?> message, String textToShow) {
         super(parent, message);
         this.textToShow = textToShow;
     }

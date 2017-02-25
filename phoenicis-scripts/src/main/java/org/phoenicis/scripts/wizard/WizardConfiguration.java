@@ -18,7 +18,7 @@
 
 package org.phoenicis.scripts.wizard;
 
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
+import org.phoenicis.scripts.ui.SetupUiConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +26,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WizardConfiguration {
     @Autowired
-    SetupWindowUIConfiguration setupWindowUIConfiguration;
+    SetupUiConfiguration setupUiConfiguration;
 
     @Bean
-    public SetupWizardFactory setupWizardFactory() {
-        return new SetupWizardFactory(setupWindowUIConfiguration.uiMessageSender(), setupWindowUIConfiguration.setupWindowFactory());
+    public UiSetupWizardFactory setupWizardFactory() {
+        return new UiSetupWizardFactory(setupUiConfiguration.uiMessageSender(), setupUiConfiguration.setupWindowFactory());
     }
 }

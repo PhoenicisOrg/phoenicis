@@ -19,22 +19,22 @@
 package org.phoenicis.javafx.views.setupwindow;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.UIMessageSenderJavaFXImplementation;
+import org.phoenicis.javafx.UiMessageSenderJavaFXImplementation;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
-import org.phoenicis.scripts.ui.UIMessageSender;
-import org.phoenicis.scripts.ui.UIQuestionFactory;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.SetupUiConfiguration;
+import org.phoenicis.scripts.ui.UiMessageSender;
+import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfiguration {
+public class JavaFXSetupUiConfiguration implements SetupUiConfiguration {
     @Autowired
     private ViewsConfiguration viewsConfiguration;
 
@@ -49,9 +49,9 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
 
     @Override
     @Bean
-    public SetupWindowFactory setupWindowFactory() {
+    public SetupUiFactory setupWindowFactory() {
         return (title, type) -> {
-            final SetupWindowJavaFXImplementation setupWindow = new SetupWindowJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
+            final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
             switch (type) {
                 case ENGINE:
                     viewsConfiguration.viewEngines().showWizard(setupWindow);
@@ -69,13 +69,13 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
 
     @Override
     @Bean
-    public UIMessageSender uiMessageSender() {
-        return new UIMessageSenderJavaFXImplementation();
+    public UiMessageSender uiMessageSender() {
+        return new UiMessageSenderJavaFXImplementation();
     }
 
     @Override
     @Bean
-    public UIQuestionFactory uiQuestionFactory() {
+    public UiQuestionFactory uiQuestionFactory() {
         return (text, yesCallback, noCallback) -> Platform.runLater(() -> new ConfirmMessage("Question", text).ask(yesCallback, noCallback));
     }
 }
