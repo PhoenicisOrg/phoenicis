@@ -41,8 +41,8 @@ public class UiSetupWizardFactory {
         this.setupUiFactory = setupUiFactory;
     }
 
-    public UiSetupWizardImplementation create(String title, WizardType type) {
-        final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title, type, uiMessageSender, setupUiFactory, userHome, applicationUserRoot, applicationName);
+    public UiSetupWizardImplementation create(String title) {
+        final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title, uiMessageSender, setupUiFactory, userHome, applicationUserRoot, applicationName);
         uiSetupWizardImplementation.init();
         return uiSetupWizardImplementation;
     }

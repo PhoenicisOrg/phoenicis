@@ -34,7 +34,6 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
-    private final WizardType type;
     private final UiMessageSender messageSender;
     private final SetupUiFactory setupUiFactory;
 
@@ -53,13 +52,11 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * @param userHome
      */
     public UiSetupWizardImplementation(String title,
-                                       WizardType type,
                                        UiMessageSender messageSender,
                                        SetupUiFactory setupUiFactory,
                                        String userHome, String applicationUserRoot,
                                        String applicationName) {
         this.title = title;
-        this.type = type;
         this.messageSender = messageSender;
         this.setupUiFactory = setupUiFactory;
         this.userHome = userHome;
@@ -72,7 +69,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public void init() {
-        messageSender.run(() -> setupUi = setupUiFactory.createSetupWindow(title, type));
+        messageSender.run(() -> setupUi = setupUiFactory.createSetupWindow(title));
     }
 
     /**

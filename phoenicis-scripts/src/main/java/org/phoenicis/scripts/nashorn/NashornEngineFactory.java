@@ -18,12 +18,11 @@
 
 package org.phoenicis.scripts.nashorn;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
-import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.phoenicis.scripts.wizard.WizardType;
+import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -62,13 +61,13 @@ public class NashornEngineFactory {
 
         nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title), this::throwException);
         nashornEngine.put("UiSetupWizardImplementation", (Function<String, UiSetupWizardImplementation>) (name) -> {
-            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name, WizardType.APP);
+            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
             return uiSetupWizardImplementation;
         }, this::throwException);
 
         nashornEngine.put("EngineSetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
-            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name, WizardType.ENGINE);
+            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
             return uiSetupWizardImplementation;
         }, this::throwException);

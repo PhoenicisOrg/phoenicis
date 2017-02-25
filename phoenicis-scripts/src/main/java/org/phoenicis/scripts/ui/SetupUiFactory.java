@@ -18,9 +18,7 @@
 
 package org.phoenicis.scripts.ui;
 
-import org.phoenicis.scripts.wizard.WizardType;
-
 @FunctionalInterface
 public interface SetupUiFactory {
-    SetupUi createSetupWindow(String title, WizardType type);
+    SetupUi createSetupWindow(String title);
 }

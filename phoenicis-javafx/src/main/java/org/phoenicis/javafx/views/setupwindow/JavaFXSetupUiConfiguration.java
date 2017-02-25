@@ -50,19 +50,10 @@ public class JavaFXSetupUiConfiguration implements SetupUiConfiguration {
     @Override
     @Bean
     public SetupUiFactory setupWindowFactory() {
-        return (title, type) -> {
+        return title -> {
             final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
-            switch (type) {
-                case ENGINE:
-                    viewsConfiguration.viewEngines().showWizard(setupWindow);
-                    setupWindow.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
-                    break;
-                case APP:
-                default:
-                    viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
-                    setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
-                    break;
-            }
+            viewsConfiguration.viewEngines().showWizard(setupWindow);
+            setupWindow.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
             return setupWindow;
         };
     }
