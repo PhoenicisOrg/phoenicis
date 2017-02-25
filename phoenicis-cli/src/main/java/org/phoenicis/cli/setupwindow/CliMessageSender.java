@@ -22,7 +22,7 @@ import org.phoenicis.scripts.ui.UiMessageSender;
 
 import java.util.function.Supplier;
 
-public class CLIMessageSender implements UiMessageSender {
+public class CliMessageSender implements UiMessageSender {
     @Override
     public <R> R run(Supplier<R> function) {
         return function.get();

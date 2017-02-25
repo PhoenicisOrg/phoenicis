@@ -25,7 +25,7 @@ import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.scripts.ui.SetupUiFactory;
-import org.phoenicis.scripts.ui.SetupUiConfiguration;
+import org.phoenicis.scripts.ui.UiConfiguration;
 import org.phoenicis.scripts.ui.UiMessageSender;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.phoenicis.tools.ToolsConfiguration;
@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class JavaFXSetupUiConfiguration implements SetupUiConfiguration {
+public class JavaFxUiConfiguration implements UiConfiguration {
     @Autowired
     private ViewsConfiguration viewsConfiguration;
 
@@ -49,7 +49,7 @@ public class JavaFXSetupUiConfiguration implements SetupUiConfiguration {
 
     @Override
     @Bean
-    public SetupUiFactory setupWindowFactory() {
+    public SetupUiFactory setupUiFactory() {
         return title -> {
             final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
             viewsConfiguration.viewEngines().showWizard(setupWindow);

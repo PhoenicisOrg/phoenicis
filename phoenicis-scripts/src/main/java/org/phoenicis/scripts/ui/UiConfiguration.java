@@ -16,33 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.tests;
+package org.phoenicis.scripts.ui;
 
-import org.phoenicis.cli.setupwindow.CLIMessageSender;
-import org.phoenicis.scripts.ui.SetupUiFactory;
-import org.phoenicis.scripts.ui.SetupUiConfiguration;
-import org.phoenicis.scripts.ui.UiMessageSender;
-import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class TestUIConfiguration implements SetupUiConfiguration {
-    @Override
+public interface UiConfiguration {
     @Bean
-    public SetupUiFactory setupWindowFactory() {
-        return title -> new TestSetupUi();
-    }
+    SetupUiFactory setupUiFactory();
 
-    @Override
     @Bean
-    public UiMessageSender uiMessageSender() {
-        return new CLIMessageSender();
-    }
+    UiMessageSender uiMessageSender();
 
-    @Override
     @Bean
-    public UiQuestionFactory uiQuestionFactory() {
-        return (questionText, yesCallback, noCallback) -> yesCallback.run();
-    }
+    UiQuestionFactory uiQuestionFactory();
 }

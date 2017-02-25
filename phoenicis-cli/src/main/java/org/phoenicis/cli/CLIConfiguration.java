@@ -21,7 +21,7 @@ package org.phoenicis.cli;
 
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.apps.AppsConfiguration;
-import org.phoenicis.cli.setupwindow.SetupWindowCLIConfiguration;
+import org.phoenicis.cli.setupwindow.CliUiConfiguration;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
@@ -41,7 +41,7 @@ import org.springframework.context.annotation.Import;
         Win32Configuration.class,
         ToolsConfiguration.class,
         MultithreadingConfiguration.class,
-        SetupWindowCLIConfiguration.class
+        CliUiConfiguration.class
 })
 class CLIConfiguration {
 

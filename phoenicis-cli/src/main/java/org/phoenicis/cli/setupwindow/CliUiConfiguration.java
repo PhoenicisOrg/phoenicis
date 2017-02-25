@@ -19,7 +19,7 @@
 package org.phoenicis.cli.setupwindow;
 
 import org.phoenicis.scripts.ui.SetupUiFactory;
-import org.phoenicis.scripts.ui.SetupUiConfiguration;
+import org.phoenicis.scripts.ui.UiConfiguration;
 import org.phoenicis.scripts.ui.UiMessageSender;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.springframework.context.annotation.Bean;
@@ -28,17 +28,17 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Scanner;
 
 @Configuration
-public class SetupWindowCLIConfiguration implements SetupUiConfiguration {
+public class CliUiConfiguration implements UiConfiguration {
     @Override
     @Bean
-    public SetupUiFactory setupWindowFactory() {
-        return title -> new SetupUiCLIImplementation(title, true, true);
+    public SetupUiFactory setupUiFactory() {
+        return title -> new SetupUiCliImplementation(title, true, true);
     }
 
     @Override
     @Bean
     public UiMessageSender uiMessageSender() {
-        return new CLIMessageSender();
+        return new CliMessageSender();
     }
 
     @Override
