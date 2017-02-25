@@ -28,7 +28,7 @@ import org.phoenicis.containers.ContainersConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.setupwindow.JavaFxUiConfiguration;
+import org.phoenicis.javafx.views.scriptui.JavaFxUiConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;

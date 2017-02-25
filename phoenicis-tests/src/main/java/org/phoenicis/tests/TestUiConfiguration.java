@@ -18,7 +18,7 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.cli.setupwindow.CliMessageSender;
+import org.phoenicis.cli.scriptui.CliMessageSender;
 import org.phoenicis.scripts.ui.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -16,9 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
-import javafx.scene.control.Label;
 import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
@@ -26,44 +25,35 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class StepRepresentationPresentation extends AbstractStepRepresentation {
+public class StepRepresentationMessage extends AbstractStepRepresentationWithHeader {
     private final String textToShow;
 
-    public StepRepresentationPresentation(SetupUiJavaFXImplementation parent, Message<?> message, String textToShow) {
+    public StepRepresentationMessage(SetupUiJavaFXImplementation parent, Message<?> message, String textToShow) {
         super(parent, message);
         this.textToShow = textToShow;
     }
 
     @Override
     protected void drawStepContent() {
-        final String title = this.getParentWizardTitle();
-
-        VBox contentPane = new VBox();
-        contentPane.setId("presentationBackground");
-
-        Label titleWidget = new Label(title + "\n\n");
-        titleWidget.setId("presentationTextTitle");
-
         Text textWidget = new Text(textToShow);
-        textWidget.setId("presentationText");
-
-        TextFlow flow = new TextFlow();
-        flow.getChildren().add(textWidget);
+        textWidget.setId("stepText");
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setId("presentationScrollPane");
+        scrollPane.setId("stepScrollPane");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setFitToWidth(true);
-        scrollPane.setContent(flow);
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+        scrollPane.setContent(new TextFlow(textWidget));
 
-        contentPane.getChildren().add(scrollPane);
-        getParent().getRoot().setCenter(contentPane);
+        this.addToContentPane(scrollPane);
+
+	    VBox.setVgrow(scrollPane, Priority.ALWAYS);
     }
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event -> getMessageAwaitingForResponse().send(null));
+        this.setNextButtonAction(event ->
+            getMessageAwaitingForResponse().send(null)
+        );
     }
 
 }
