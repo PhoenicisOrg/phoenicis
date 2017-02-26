@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx;
 
+import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import javafx.application.Application;
@@ -30,6 +31,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class JavaFXApplication extends Application {
 
     public static void main(String[] args) {
+        SvgImageLoaderFactory.install();
         Application.launch(JavaFXApplication.class);
     }
 
