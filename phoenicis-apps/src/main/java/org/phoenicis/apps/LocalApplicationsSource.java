@@ -31,10 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 class LocalApplicationsSource implements ApplicationsSource {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalApplicationsSource.class);
@@ -51,7 +48,9 @@ class LocalApplicationsSource implements ApplicationsSource {
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
-        final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
+        final List<File> categoryDirectories = new ArrayList<>(Arrays.asList(repositoryDirectoryFile.listFiles()));
+        final File repositoryAppsDirectoryFile = new File(repositoryDirectory + "/Apps");
+        categoryDirectories.addAll(Arrays.asList(repositoryAppsDirectoryFile.listFiles()));
 
         if (categoryDirectories == null) {
             return Collections.emptyList();
@@ -61,7 +60,7 @@ class LocalApplicationsSource implements ApplicationsSource {
         return fetchCategories(categoryDirectories);
     }
 
-    private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
+    private List<CategoryDTO> fetchCategories(List<File> categoryDirectories) {
         final List<CategoryDTO> results = new ArrayList<>();
 
         for (File categoryDirectory : categoryDirectories) {
