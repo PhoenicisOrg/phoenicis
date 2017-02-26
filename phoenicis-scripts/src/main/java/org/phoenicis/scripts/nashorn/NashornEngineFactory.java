@@ -64,7 +64,7 @@ public class NashornEngineFactory {
         );
 
         nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title), this::throwException);
-        nashornEngine.put("UiSetupWizardImplementation", (Function<String, UiSetupWizardImplementation>) (name) -> {
+        nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
             final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
             return uiSetupWizardImplementation;
