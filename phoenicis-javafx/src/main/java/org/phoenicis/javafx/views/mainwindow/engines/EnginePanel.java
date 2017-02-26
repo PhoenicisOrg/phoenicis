@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -35,12 +36,16 @@ final class EnginePanel extends VBox {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
+    private final WineEngineDTO wineEngineDTO;
+    private Node progress;
 
     private Consumer<WineEngineDTO> onEngineInstall = (engine) -> {};
     private Consumer<WineEngineDTO> onEngineDelete = (engine) -> {};
 
     public EnginePanel(WineEngineDTO wineEngineDTO) {
         super();
+        
+        this.wineEngineDTO = wineEngineDTO;
 
         getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
 
@@ -93,7 +98,17 @@ final class EnginePanel extends VBox {
         buttonBox.setSpacing(10);
         buttonBox.getChildren().addAll(installButton, deleteButton);
 
-        getChildren().addAll(informationContentPane, spacer, buttonBox);
+        Region progressSpacer = new Region();
+        progressSpacer.setPrefHeight(30);
+        VBox.setVgrow(progressSpacer, Priority.NEVER);
+
+        getChildren().addAll(informationContentPane, spacer, buttonBox, progressSpacer);
+    }
+
+    public void showProgress(VBox progressUi) {
+        getChildren().remove(progress);
+        progress = progressUi;
+        getChildren().add(progress);
     }
 
     public void setOnEngineInstall(Consumer<WineEngineDTO> onEngineInstall) {
@@ -101,5 +116,9 @@ final class EnginePanel extends VBox {
     }
     public void setOnEngineDelete(Consumer<WineEngineDTO> onEngineDelete) {
         this.onEngineDelete = onEngineDelete;
+    }
+
+    public WineEngineDTO getWineEngineDTO() {
+        return wineEngineDTO;
     }
 }

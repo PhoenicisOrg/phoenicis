@@ -49,7 +49,7 @@ public class ScriptsConfiguration {
 
     @Bean
     public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(wizardConfiguration.setupWizardFactory(), scriptFetcher());
+        return new NashornEngineFactory(wizardConfiguration.setupWizardFactory(), wizardConfiguration.progressWizardFactory(), scriptFetcher());
     }
 
     @Bean

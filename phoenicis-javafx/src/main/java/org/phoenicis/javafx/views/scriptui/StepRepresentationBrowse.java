@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.scripts.ui.Message;
 import javafx.scene.Node;
@@ -38,7 +38,7 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
     private List<String> extensions;
     private File selectedFile;
 
-    public StepRepresentationBrowse(SetupWindowJavaFXImplementation parent, Message<String> message,
+    public StepRepresentationBrowse(SetupUiJavaFXImplementation parent, Message<String> message,
                                     String textToShow, File browseDirectory, List<String> extensions) {
         super(parent, message);
         this.browseDirectory = browseDirectory;

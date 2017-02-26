@@ -16,15 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.cli.setupwindow;
+package org.phoenicis.scripts.ui;
 
-import org.phoenicis.scripts.ui.UIMessageSender;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.function.Supplier;
+@Configuration
+public interface UiConfiguration {
+    @Bean
+    SetupUiFactory setupUiFactory();
 
-public class CLIMessageSender implements UIMessageSender {
-    @Override
-    public <R> R run(Supplier<R> function) {
-        return function.get();
-    }
+    @Bean
+    UiMessageSender uiMessageSender();
+
+    @Bean
+    UiQuestionFactory uiQuestionFactory();
+
+    @Bean
+    ProgressUiFactory progressUiFactory();
 }

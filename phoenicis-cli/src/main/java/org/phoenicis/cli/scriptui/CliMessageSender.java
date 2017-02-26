@@ -16,9 +16,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.ui;
+package org.phoenicis.cli.scriptui;
 
-@FunctionalInterface
-public interface SetupWindowFactory {
-    SetupWindow createSetupWindow(String title);
+import org.phoenicis.scripts.ui.UiMessageSender;
+
+import java.util.function.Supplier;
+
+public class CliMessageSender implements UiMessageSender {
+    @Override
+    public <R> R run(Supplier<R> function) {
+        return function.get();
+    }
 }

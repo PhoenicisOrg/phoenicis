@@ -21,7 +21,7 @@ package org.phoenicis.scripts.ui;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public interface UIMessageSender {
+public interface UiMessageSender {
     <R> R run(Supplier<R> function);
 
     default <R> R runAndWait(Consumer<Message<R>> function) {

@@ -18,11 +18,13 @@
 
 package org.phoenicis.scripts.nashorn;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
-import org.phoenicis.scripts.wizard.SetupWizard;
-import org.phoenicis.scripts.wizard.SetupWizardFactory;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.scripts.wizard.UiProgressWizardFactory;
+import org.phoenicis.scripts.wizard.UiProgressWizardImplementation;
+import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
+import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -36,14 +38,16 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class NashornEngineFactory {
-    private final SetupWizardFactory setupWizardFactory;
+    private final UiSetupWizardFactory uiSetupWizardFactory;
+    private final UiProgressWizardFactory uiProgressWizardFactory;
     private final ScriptFetcher scriptFetcher;
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public NashornEngineFactory(SetupWizardFactory setupWizardFactory, ScriptFetcher scriptFetcher) {
-        this.setupWizardFactory = setupWizardFactory;
+    public NashornEngineFactory(UiSetupWizardFactory uiSetupWizardFactory, UiProgressWizardFactory uiProgressWizardFactory, ScriptFetcher scriptFetcher) {
+        this.uiSetupWizardFactory = uiSetupWizardFactory;
+        this.uiProgressWizardFactory = uiProgressWizardFactory;
         this.scriptFetcher = scriptFetcher;
     }
 
@@ -60,10 +64,16 @@ public class NashornEngineFactory {
         );
 
         nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title), this::throwException);
-        nashornEngine.put("SetupWizard", (Function<String, SetupWizard>) name -> {
-            final SetupWizard setupWizard = setupWizardFactory.create(name);
-            nashornEngine.addErrorHandler(e -> setupWizard.close());
-            return setupWizard;
+        nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
+            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
+            nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+            return uiSetupWizardImplementation;
+        }, this::throwException);
+
+        nashornEngine.put("EngineProgressUi", (Function<String, UiProgressWizardImplementation>) (name) -> {
+            final UiProgressWizardImplementation uiProgressWizardImplementation = uiProgressWizardFactory.create(name);
+            nashornEngine.addErrorHandler(e -> uiProgressWizardImplementation.close());
+            return uiProgressWizardImplementation;
         }, this::throwException);
 
         nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {

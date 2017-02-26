@@ -18,32 +18,24 @@
 
 package org.phoenicis.scripts.wizard;
 
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.UIMessageSender;
+import org.phoenicis.scripts.ui.ProgressUiFactory;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.UiMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 
-public class SetupWizardFactory {
-    @Value("${user.home}")
-    private String userHome;
+public class UiProgressWizardFactory {
 
-    @Value("${application.user.root}")
-    private String applicationUserRoot;
+    private final UiMessageSender uiMessageSender;
+    private final ProgressUiFactory progressUiFactory;
 
-    @Value("${application.name}")
-    private String applicationName;
-
-
-    private final UIMessageSender uiMessageSender;
-    private final SetupWindowFactory setupWindowFactory;
-
-    public SetupWizardFactory(UIMessageSender uiMessageSender, SetupWindowFactory setupWindowFactory) {
+    public UiProgressWizardFactory(UiMessageSender uiMessageSender, ProgressUiFactory progressUiFactory) {
         this.uiMessageSender = uiMessageSender;
-        this.setupWindowFactory = setupWindowFactory;
+        this.progressUiFactory = progressUiFactory;
     }
 
-    public SetupWizard create(String title) {
-        final SetupWizard setupWizard = new SetupWizard(title, uiMessageSender, setupWindowFactory, userHome, applicationUserRoot, applicationName);
-        setupWizard.init();
-        return setupWizard;
+    public UiProgressWizardImplementation create(String title) {
+        final UiProgressWizardImplementation uiProgressWizardImplementation = new UiProgressWizardImplementation(title, uiMessageSender, progressUiFactory);
+        uiProgressWizardImplementation.init();
+        return uiProgressWizardImplementation;
     }
 }

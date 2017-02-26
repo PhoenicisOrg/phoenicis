@@ -18,31 +18,28 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.cli.setupwindow.CLIMessageSender;
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
-import org.phoenicis.scripts.ui.UIMessageSender;
-import org.phoenicis.scripts.ui.UIQuestionFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.phoenicis.scripts.ui.Message;
+import org.phoenicis.scripts.ui.ProgressControl;
+import org.phoenicis.scripts.ui.ProgressUi;
 
-@Configuration
-class TestUIConfiguration implements SetupWindowUIConfiguration {
+class TestProgressUi implements ProgressUi {
     @Override
-    @Bean
-    public SetupWindowFactory setupWindowFactory() {
-        return title -> new TestSetupWindow();
+    public void showProgressBar(Message<ProgressControl> message, String textToShow) {
+        message.send(new ProgressControl() {
+            @Override
+            public void setProgressPercentage(double value) {
+
+            }
+
+            @Override
+            public void setText(String text) {
+
+            }
+        });
     }
 
     @Override
-    @Bean
-    public UIMessageSender uiMessageSender() {
-        return new CLIMessageSender();
-    }
+    public void close() {
 
-    @Override
-    @Bean
-    public UIQuestionFactory uiQuestionFactory() {
-        return (questionText, yesCallback, noCallback) -> yesCallback.run();
     }
 }

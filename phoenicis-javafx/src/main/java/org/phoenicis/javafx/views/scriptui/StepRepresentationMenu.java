@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
@@ -32,7 +32,7 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     private final ListView<String> listViewWidget;
     private final Message<MenuItem> messageWaitingForResponse;
 
-    public StepRepresentationMenu(SetupWindowJavaFXImplementation parent, Message<MenuItem> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
+    public StepRepresentationMenu(SetupUiJavaFXImplementation parent, Message<MenuItem> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 

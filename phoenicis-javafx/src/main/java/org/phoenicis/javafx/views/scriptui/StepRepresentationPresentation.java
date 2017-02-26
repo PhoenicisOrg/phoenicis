@@ -16,24 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import javafx.scene.control.Label;
+import org.phoenicis.scripts.ui.Message;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
-import org.phoenicis.scripts.ui.Message;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
-import java.net.URL;
+public class StepRepresentationPresentation extends AbstractStepRepresentation {
+    private final String textToShow;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
-public class StepRepresentationHtmlPresentation extends AbstractStepRepresentation {
-    private final String htmlToShow;
-
-    public StepRepresentationHtmlPresentation(SetupWindowJavaFXImplementation parent, Message<?> message, String htmlToShow) {
+    public StepRepresentationPresentation(SetupUiJavaFXImplementation parent, Message<?> message, String textToShow) {
         super(parent, message);
-        this.htmlToShow = htmlToShow;
+        this.textToShow = textToShow;
     }
 
     @Override
@@ -46,15 +44,20 @@ public class StepRepresentationHtmlPresentation extends AbstractStepRepresentati
         Label titleWidget = new Label(title + "\n\n");
         titleWidget.setId("presentationTextTitle");
 
-        WebView webView = new WebView();
-        VBox.setVgrow(webView, Priority.ALWAYS);
+        Text textWidget = new Text(textToShow);
+        textWidget.setId("presentationText");
 
-        webView.getEngine().loadContent(htmlToShow);
-        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", getParent().getThemeManager().getCurrentTheme().getShortName()));
-        webView.getEngine().setUserStyleSheetLocation(style.toString());
+        TextFlow flow = new TextFlow();
+        flow.getChildren().add(textWidget);
 
-        contentPane.getChildren().addAll(webView);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setId("presentationScrollPane");
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setContent(flow);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
+        contentPane.getChildren().add(scrollPane);
         getParent().getRoot().setCenter(contentPane);
     }
 

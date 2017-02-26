@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Import;
         AppsConfiguration.class,
         ScriptsConfiguration.class,
         WizardConfiguration.class,
-        TestUIConfiguration.class,
+        TestUiConfiguration.class,
 })
 class PhoenicisTestsConfiguration {
     @Autowired

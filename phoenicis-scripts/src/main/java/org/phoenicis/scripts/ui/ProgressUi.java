@@ -18,10 +18,20 @@
 
 package org.phoenicis.scripts.ui;
 
-public interface UIQuestionFactory {
-    void create(String questionText, Runnable yesCallback, Runnable noCallback);
+/**
+ * Represents a progress UI.
+ * This interfaces needs to be implemented by the UI.
+ */
+public interface ProgressUi {
 
-    default void create(String questionText, Runnable yesCallback) {
-        create(questionText, yesCallback, () -> {});
-    }
+    /**
+     * Show a progress bar and returns immediately
+     * @param textToShow The text to show to the user
+     */
+    void showProgressBar(Message<ProgressControl> message, String textToShow);
+
+    /**
+     * Close the Setup UI
+     */
+    void close();
 }

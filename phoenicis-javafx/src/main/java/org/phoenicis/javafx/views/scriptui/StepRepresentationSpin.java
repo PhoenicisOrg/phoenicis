@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.ProgressIndicator;
@@ -25,7 +25,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
-    public StepRepresentationSpin(SetupWindowJavaFXImplementation parent, Message<?> messageWaitingForResponse,
+    public StepRepresentationSpin(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse,
                                   String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
     }

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.TextField;
@@ -26,7 +26,7 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final Message<String> messageWaitingForResponse;
     private TextField textField;
 
-    public StepRepresentationTextBox(SetupWindowJavaFXImplementation parent,
+    public StepRepresentationTextBox(SetupUiJavaFXImplementation parent,
                                      Message<String> messageWaitingForResponse,
                                      String textToShow,
                                      String defaultValue) {

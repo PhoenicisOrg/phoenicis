@@ -16,24 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.javafx.UIMessageSenderJavaFXImplementation;
+import javafx.application.Platform;
+import org.phoenicis.javafx.UiMessageSenderJavaFXImplementation;
+import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
-import org.phoenicis.scripts.ui.UIMessageSender;
-import org.phoenicis.scripts.ui.UIQuestionFactory;
+import org.phoenicis.scripts.ui.*;
 import org.phoenicis.tools.ToolsConfiguration;
-import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfiguration {
+public class JavaFxUiConfiguration implements UiConfiguration {
+    @Autowired
+    private ViewsConfiguration viewsConfiguration;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
@@ -45,9 +46,9 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
 
     @Override
     @Bean
-    public SetupWindowFactory setupWindowFactory() {
+    public SetupUiFactory setupUiFactory() {
         return title -> {
-            final SetupWindowJavaFXImplementation setupWindow = new SetupWindowJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
+            final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
             viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
             setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
             return setupWindow;
@@ -56,13 +57,24 @@ public class JavaFXSetupWindowUIConfiguration implements SetupWindowUIConfigurat
 
     @Override
     @Bean
-    public UIMessageSender uiMessageSender() {
-        return new UIMessageSenderJavaFXImplementation();
+    public UiMessageSender uiMessageSender() {
+        return new UiMessageSenderJavaFXImplementation();
     }
 
     @Override
     @Bean
-    public UIQuestionFactory uiQuestionFactory() {
+    public UiQuestionFactory uiQuestionFactory() {
         return (text, yesCallback, noCallback) -> Platform.runLater(() -> new ConfirmMessage("Question", text).ask(yesCallback, noCallback));
+    }
+
+    @Override
+    @Bean
+    public ProgressUiFactory progressUiFactory() {
+        return title -> {
+            final ProgressUiJavaFXImplementation progressUi = new ProgressUiJavaFXImplementation();
+            viewsConfiguration.viewEngines().showProgress(progressUi);
+            progressUi.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
+            return progressUi;
+        };
     }
 }

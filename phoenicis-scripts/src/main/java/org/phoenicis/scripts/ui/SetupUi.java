@@ -24,10 +24,10 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Represents a Setup Window.
+ * Represents a Setup UI.
  * This interfaces needs to be implemented by the UI.
  */
-public interface SetupWindow {
+public interface SetupUi {
     /**
      * Set the top image
      * @param topImage The top image to set
@@ -112,7 +112,7 @@ public interface SetupWindow {
     void showBrowseStep(Message<String> doneCallback, String textToShow, File browseDirectory, List<String> extensions);
 
     /**
-     * Close the SetupWindow
+     * Close the Setup UI
      */
     void close();
 }

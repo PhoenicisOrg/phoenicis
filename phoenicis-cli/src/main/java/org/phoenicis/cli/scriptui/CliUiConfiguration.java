@@ -16,34 +16,31 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.cli.setupwindow;
+package org.phoenicis.cli.scriptui;
 
-import org.phoenicis.scripts.ui.SetupWindowFactory;
-import org.phoenicis.scripts.ui.SetupWindowUIConfiguration;
-import org.phoenicis.scripts.ui.UIMessageSender;
-import org.phoenicis.scripts.ui.UIQuestionFactory;
+import org.phoenicis.scripts.ui.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Scanner;
 
 @Configuration
-public class SetupWindowCLIConfiguration implements SetupWindowUIConfiguration {
+public class CliUiConfiguration implements UiConfiguration {
     @Override
     @Bean
-    public SetupWindowFactory setupWindowFactory() {
-        return (title) -> new SetupWindowCLIImplementation(title, true, true);
+    public SetupUiFactory setupUiFactory() {
+        return title -> new SetupUiCliImplementation(title, true, true);
     }
 
     @Override
     @Bean
-    public UIMessageSender uiMessageSender() {
-        return new CLIMessageSender();
+    public UiMessageSender uiMessageSender() {
+        return new CliMessageSender();
     }
 
     @Override
     @Bean
-    public UIQuestionFactory uiQuestionFactory() {
+    public UiQuestionFactory uiQuestionFactory() {
         return (questionText, yesCallback, noCallback) -> {
             String answer = "";
 
@@ -64,5 +61,10 @@ public class SetupWindowCLIConfiguration implements SetupWindowUIConfiguration {
                 }
             }
         };
+    }
+
+    @Override
+    public ProgressUiFactory progressUiFactory() {
+        return title -> new ProgressUiCliImplementation(title, true, true);
     }
 }

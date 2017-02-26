@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.scripts.ui.Message;
 import javafx.event.EventHandler;
@@ -37,15 +37,15 @@ import java.net.URL;
 // TODO: Fix this class using CSS and containers instead of static sizes
 abstract class AbstractStepRepresentation {
     private final Message<?> messageWaitingForResponse;
-    private final SetupWindowJavaFXImplementation parent;
+    private final SetupUiJavaFXImplementation parent;
     private Button nextButton;
 
-    AbstractStepRepresentation(SetupWindowJavaFXImplementation parent, Message<?> messageWaitingForResponse) {
+    AbstractStepRepresentation(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse) {
         this.parent = parent;
         this.messageWaitingForResponse = messageWaitingForResponse;
     }
 
-    protected SetupWindowJavaFXImplementation getParent() {
+    protected SetupUiJavaFXImplementation getParent() {
         return this.parent;
     }
 

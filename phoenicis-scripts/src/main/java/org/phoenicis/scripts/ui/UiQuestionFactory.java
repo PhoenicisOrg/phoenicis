@@ -16,25 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.wizard;
+package org.phoenicis.scripts.ui;
 
-import org.phoenicis.scripts.ui.UiConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+public interface UiQuestionFactory {
+    void create(String questionText, Runnable yesCallback, Runnable noCallback);
 
-@Configuration
-public class WizardConfiguration {
-    @Autowired
-    UiConfiguration uiConfiguration;
-
-    @Bean
-    public UiSetupWizardFactory setupWizardFactory() {
-        return new UiSetupWizardFactory(uiConfiguration.uiMessageSender(), uiConfiguration.setupUiFactory());
-    }
-
-    @Bean
-    public UiProgressWizardFactory progressWizardFactory() {
-        return new UiProgressWizardFactory(uiConfiguration.uiMessageSender(), uiConfiguration.progressUiFactory());
+    default void create(String questionText, Runnable yesCallback) {
+        create(questionText, yesCallback, () -> {});
     }
 }

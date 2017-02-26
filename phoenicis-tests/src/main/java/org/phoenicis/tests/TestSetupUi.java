@@ -21,14 +21,14 @@ package org.phoenicis.tests;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupWindow;
+import org.phoenicis.scripts.ui.SetupUi;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-class TestSetupWindow implements SetupWindow {
+class TestSetupUi implements SetupUi {
     @Override
     public void setTopImage(File topImage) throws IOException {
 

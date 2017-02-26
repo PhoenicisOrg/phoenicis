@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupWindow;
+import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -36,7 +36,7 @@ import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow {
+public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
     private final ThemeManager themeManager;
     private final BorderPane root;
     private final String wizardTitle;
@@ -46,7 +46,7 @@ public class SetupWindowJavaFXImplementation extends Tab implements SetupWindow 
     private Runnable onShouldClose = () -> {};
     private final OperatingSystemFetcher operatingSystemFetcher;
 
-    public SetupWindowJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager) {
+    public SetupUiJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager) {
         super();
         this.themeManager = themeManager;
         this.operatingSystemFetcher = operatingSystemFetcher;

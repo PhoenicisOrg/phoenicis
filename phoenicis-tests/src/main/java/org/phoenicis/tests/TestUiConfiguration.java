@@ -16,25 +16,35 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.wizard;
+package org.phoenicis.tests;
 
-import org.phoenicis.scripts.ui.UiConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.phoenicis.cli.scriptui.CliMessageSender;
+import org.phoenicis.scripts.ui.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class WizardConfiguration {
-    @Autowired
-    UiConfiguration uiConfiguration;
-
+class TestUiConfiguration implements UiConfiguration {
+    @Override
     @Bean
-    public UiSetupWizardFactory setupWizardFactory() {
-        return new UiSetupWizardFactory(uiConfiguration.uiMessageSender(), uiConfiguration.setupUiFactory());
+    public SetupUiFactory setupUiFactory() {
+        return title -> new TestSetupUi();
     }
 
+    @Override
     @Bean
-    public UiProgressWizardFactory progressWizardFactory() {
-        return new UiProgressWizardFactory(uiConfiguration.uiMessageSender(), uiConfiguration.progressUiFactory());
+    public UiMessageSender uiMessageSender() {
+        return new CliMessageSender();
+    }
+
+    @Override
+    @Bean
+    public UiQuestionFactory uiQuestionFactory() {
+        return (questionText, yesCallback, noCallback) -> yesCallback.run();
+    }
+
+    @Override
+    public ProgressUiFactory progressUiFactory() {
+        return title -> new TestProgressUi();
     }
 }

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.scripts.ui.Message;
 import javafx.geometry.Insets;
@@ -29,7 +29,7 @@ import javafx.scene.paint.Color;
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     private Pane contentPane;
 
-    AbstractStepRepresentationWithHeader(SetupWindowJavaFXImplementation parent,
+    AbstractStepRepresentationWithHeader(SetupUiJavaFXImplementation parent,
                                          Message<?> messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
 

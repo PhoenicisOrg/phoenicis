@@ -16,42 +16,45 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.setupwindow;
+package org.phoenicis.javafx.views.scriptui;
 
-
+import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.phoenicis.entities.ProgressEntity;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
-import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.text.Text;
+import org.phoenicis.scripts.ui.ProgressUi;
 
-public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressControl {
+public class ProgressUiJavaFXImplementation extends VBox implements ProgressUi, ProgressControl {
     private final ProgressBar progressBar = new ProgressBar();
     private final Text progressText = new Text("");
 
-    public StepRepresentationProgressBar(SetupWindowJavaFXImplementation parent, Message<?> messageWaitingForResponse,
-                                         String textToShow) {
-        super(parent, messageWaitingForResponse, textToShow);
+    private Runnable onShouldClose = () -> {};
+
+    public ProgressUiJavaFXImplementation() {
+        super();
+    }
+
+    @Override
+    public void showProgressBar(Message<ProgressControl> message, String textToShow) {
         progressBar.setProgress(0.0);
-
         progressText.setId("stepText");
-    }
-
-
-    @Override
-    protected void drawStepContent() {
-        super.drawStepContent();
         progressBar.setPrefHeight(30);
-        progressBar.prefWidthProperty().bind(getContentPane().widthProperty());
-        this.addToContentPane(progressBar);
-
-        this.addToContentPane(progressText);
+        progressBar.prefWidthProperty().bind(this.widthProperty());
+        this.getChildren().addAll(progressBar, progressText);
+        message.send(this);
     }
 
     @Override
-    protected void setStepEvents() {
-        this.setNextButtonEnabled(false);
+    public void close() {
+        onShouldClose.run();
+    }
+
+
+    public void setOnShouldClose(Runnable onShouldClose) {
+        this.onShouldClose = onShouldClose;
     }
 
     @Override

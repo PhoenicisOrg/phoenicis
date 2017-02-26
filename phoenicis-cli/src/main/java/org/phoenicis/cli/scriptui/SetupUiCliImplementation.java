@@ -16,13 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.cli.setupwindow;
+package org.phoenicis.cli.scriptui;
 
 import org.jsoup.Jsoup;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupWindow;
+import org.phoenicis.scripts.ui.SetupUi;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,12 +32,12 @@ import java.util.List;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-class SetupWindowCLIImplementation implements SetupWindow {
+class SetupUiCliImplementation implements SetupUi {
     private final String title;
     private final boolean interactive;
     private final boolean verbose;
 
-    SetupWindowCLIImplementation(String title, boolean interactive, boolean verbose) {
+    SetupUiCliImplementation(String title, boolean interactive, boolean verbose) {
         this.title = title;
         this.interactive = interactive;
         this.verbose = verbose;
