@@ -19,11 +19,13 @@
 package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
+import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.function.Consumer;
@@ -74,28 +76,38 @@ public class EnginesController {
     }
 
     private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
-        /*final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
                             final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                            wine.callMember("architecture", engineDTO.getCategory());
-                            wine.callMember("distribution", engineDTO.getDistribution());
-                            wine.callMember("version", engineDTO.getVersion());
-                            wine.callMember("_installVersion");
-                            wine.callMember("wait");
+                            wine.callMember("install", engineDTO.getCategory()
+                                    , engineDTO.getSubCategory()
+                                    , engineDTO.getVersion()
+                                    , engineDTO.getUserData());
                         },
                         errorCallback),
                 errorCallback
-        );*/
-        // TODO
-        System.out.println("install Engine");
+        );
     }
 
     private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
-        // TODO
-        System.out.println("delete Engine");
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+                ignored -> interactiveScriptSession.eval(
+                        "new Wine()",
+                        output -> {
+                            final ScriptObjectMirror wine = (ScriptObjectMirror) output;
+                            wine.callMember("delete", engineDTO.getCategory()
+                                    , engineDTO.getSubCategory()
+                                    , engineDTO.getVersion()
+                                    , engineDTO.getUserData());
+                        },
+                        errorCallback),
+                errorCallback
+        );
     }
 }
