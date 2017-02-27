@@ -35,15 +35,16 @@ public class ProgressUiJavaFXImplementation extends VBox implements ProgressUi, 
 
     public ProgressUiJavaFXImplementation() {
         super();
-    }
-
-    @Override
-    public void showProgressBar(Message<ProgressControl> message, String textToShow) {
         progressBar.setProgress(0.0);
         progressText.setId("stepText");
         progressBar.setPrefHeight(30);
         progressBar.prefWidthProperty().bind(this.widthProperty());
         this.getChildren().addAll(progressBar, progressText);
+    }
+
+    @Override
+    public void showProgressBar(Message<ProgressControl> message, String textToShow) {
+        progressBar.setProgress(0.0);
         message.send(this);
     }
 
