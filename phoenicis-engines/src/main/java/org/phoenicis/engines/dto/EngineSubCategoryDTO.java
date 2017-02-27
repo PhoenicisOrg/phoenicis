@@ -20,22 +20,22 @@ package org.phoenicis.engines.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.tools.version.Version;
 import org.phoenicis.tools.version.VersionComparator;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class WineVersionDistributionDTO {
+public class EngineSubCategoryDTO {
     private final String name;
     private final String description;
-    private final List<WineVersionDTO> packages;
+    private final List<EngineVersionDTO> packages;
 
     @JsonCreator
-    public WineVersionDistributionDTO(@JsonProperty("name") String name,
-                                      @JsonProperty("description") String description,
-                                      @JsonProperty("packages") List<WineVersionDTO> packages) {
+    public EngineSubCategoryDTO(@JsonProperty("name") String name,
+                                @JsonProperty("description") String description,
+                                @JsonProperty("packages") List<EngineVersionDTO> packages) {
         this.name = name;
         this.description = description;
         this.packages = packages;
@@ -49,19 +49,19 @@ public class WineVersionDistributionDTO {
         return name;
     }
 
-    public List<WineVersionDTO> getPackages() {
+    public List<EngineVersionDTO> getPackages() {
         return packages;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(WineVersionDistributionDTO.class)
+        return new ToStringBuilder(EngineSubCategoryDTO.class)
                 .append("name", name)
                 .append("description", description)
                 .append("packages", packages).toString();
     }
 
-    public static Comparator<WineVersionDTO> comparator() {
+    public static Comparator<EngineVersionDTO> comparator() {
         return (o1, o2) -> new VersionComparator().compare(
                 new Version(o1.getVersion()), new Version(o2.getVersion())
         );

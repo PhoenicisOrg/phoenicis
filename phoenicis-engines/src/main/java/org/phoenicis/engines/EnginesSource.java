@@ -20,35 +20,45 @@ package org.phoenicis.engines;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.phoenicis.engines.dto.WineVersionDistributionDTO;
+import org.phoenicis.engines.dto.EngineCategoryDTO;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class WineVersionsManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WineVersionsManager.class);
+public class EnginesSource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnginesSource.class);
     private final ScriptInterpreter scriptInterpreter;
     private final ObjectMapper objectMapper;
 
-    public WineVersionsManager(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
+    public EnginesSource(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
         this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }
 
-    public void fetchAvailableWineVersions(Consumer<List<WineVersionDistributionDTO>> callback) {
+    public void fetchAvailableEngines(Consumer<List<EngineCategoryDTO>> callback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-
+        List<EngineCategoryDTO> engines = new ArrayList<>();
         interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine().getAvailableVersions()",
-                        output -> callback.accept(unSerialize(output)),
+                        output -> {
+                            EngineCategoryDTO wine = new EngineCategoryDTO.Builder()
+                                    .withName("Wine")
+                                    .withDescription("Wine")
+                                    .withSubCategories(unSerialize(output))
+                                    .build();
+                            engines.add(wine);
+                            callback.accept(engines);
+                        },
                         this::throwError
                 ),
                 this::throwError
@@ -57,13 +67,13 @@ public class WineVersionsManager {
     }
 
 
-    private List<WineVersionDistributionDTO> unSerialize(Object json) {
+    private List<EngineSubCategoryDTO> unSerialize(Object json) {
         try {
-            return objectMapper.readValue(json.toString(), new TypeReference<List<WineVersionDistributionDTO>>() {
+            return objectMapper.readValue(json.toString(), new TypeReference<List<EngineSubCategoryDTO>>() {
                 // Default
             });
         } catch (IOException e) {
-            LOGGER.debug("Unable to serialize wine version json");
+            LOGGER.debug("Unable to unserialize engine json");
             return Collections.emptyList();
         }
     }

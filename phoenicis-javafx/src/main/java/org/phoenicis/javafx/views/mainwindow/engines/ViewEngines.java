@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,25 +31,27 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.VBox;
 import org.phoenicis.engines.CombinedEnginesFilter;
 import org.phoenicis.engines.EnginesFilter;
-import org.phoenicis.engines.dto.WineEngineDTO;
-import org.phoenicis.engines.dto.WineVersionDTO;
-import org.phoenicis.engines.dto.WineVersionDistributionDTO;
+import org.phoenicis.engines.dto.EngineDTO;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
+import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.common.widget.StaticMiniature;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftCheckBox;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
+import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewEngines extends MainWindowView {
+
     private class CheckBoxListener implements ChangeListener<Boolean> {
         @Override
         public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
@@ -63,12 +66,14 @@ public class ViewEngines extends MainWindowView {
         }
     }
 
-    private TabPane wineDistributionsTabPane;
+    private TabPane availableEngines;
     private EnginePanel currentEnginePanel;
+    private LeftGroup categoryView;
     private final CombinedEnginesFilter currentFilter = new CombinedEnginesFilter();
     private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
-    private Consumer<WineEngineDTO> setOnInstallEngine = (engine) -> {};
-    private Consumer<WineEngineDTO> setOnDeleteEngine = (engine) -> {};
+    private Consumer<EngineCategoryDTO> onSelectCategory;
+    private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {};
+    private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {};
 
     public ViewEngines(ThemeManager themeManager) {
         super("Engines", themeManager);
@@ -87,10 +92,10 @@ public class ViewEngines extends MainWindowView {
     public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
         this.onApplyFilter = onApplyFilter;
     }
-    public void setOnInstallEngine(Consumer<WineEngineDTO> onInstallEngine) {
+    public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
         this.setOnInstallEngine = onInstallEngine;
     }
-    public void setOnDeleteEngine(Consumer<WineEngineDTO> onDeleteEngine) {
+    public void setOnDeleteEngine(Consumer<EngineDTO> onDeleteEngine) {
         this.setOnDeleteEngine = onDeleteEngine;
     }
 
@@ -99,14 +104,14 @@ public class ViewEngines extends MainWindowView {
     }
 
     private void initWineVersions() {
-        wineDistributionsTabPane = new TabPane();
-        wineDistributionsTabPane.getStyleClass().add("rightPane");
+        availableEngines = new TabPane();
+        availableEngines.getStyleClass().add("rightPane");
 
-        wineDistributionsTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        availableEngines.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
     public void showWineVersions() {
-        showRightView(wineDistributionsTabPane);
+        showRightView(availableEngines);
     }
 
     @Override
@@ -118,10 +123,7 @@ public class ViewEngines extends MainWindowView {
         searchBar.setOnKeyReleased(event -> {
         });
 
-        LeftButton wine = new LeftButton("Wine");
-        final String wineButtonIcon = "icons/mainwindow/engines/wine.png";
-        wine.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(wineButtonIcon) + "');");
-        wine.setOnMouseClicked(event -> showWineVersions());
+        categoryView = new LeftGroup(translate("Engines"));
 
         LeftSpacer spacer = new LeftSpacer();
 
@@ -134,7 +136,7 @@ public class ViewEngines extends MainWindowView {
         notInstalledCheck.setSelected(true);
         notInstalledCheck.selectedProperty().addListener(new CheckBoxListener());
 
-        addToSideBar(searchBar, spacer, new LeftBarTitle("Engines"), wine, new LeftSpacer(), installedCheck, notInstalledCheck);
+        addToSideBar(searchBar, spacer, categoryView, new LeftSpacer(), installedCheck, notInstalledCheck);
     }
 
     public void setUpEvents() {
@@ -142,57 +144,84 @@ public class ViewEngines extends MainWindowView {
     }
 
 
-    public void populate(List<WineVersionDistributionDTO> wineVersionDistributionDTOs, String wineEnginesPath) {
-	wineDistributionsTabPane.getTabs().clear();
-	for (WineVersionDistributionDTO wineVersionDistributionDTO : wineVersionDistributionDTOs) {
-            wineDistributionsTabPane.getTabs().add(createWineDistributionTab(wineVersionDistributionDTO, wineEnginesPath));
-        }
-    }
-
-    private Tab createWineDistributionTab(WineVersionDistributionDTO wineVersionDistributionDTO, String wineEnginesPath) {
-        final MiniatureListWidget tabContent = MiniatureListWidget.create();
-        List<WineVersionDTO> packages = wineVersionDistributionDTO.getPackages();
-        packages.sort(WineVersionDistributionDTO.comparator().reversed());
-
-        for (WineVersionDTO wineVersionDTO :
-                packages) {
-            final Node engineItem = tabContent.addItem(wineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
-            // gray scale if not installed
-            File f = new File(wineEnginesPath + "/" + wineVersionDistributionDTO.getName() + "/" + wineVersionDTO.getVersion());
-            if(!f.exists()) {
-                ColorAdjust grayscale = new ColorAdjust();
-                grayscale.setSaturation(-1);
-                engineItem.setEffect(grayscale);
+    public void populate(List<EngineCategoryDTO> engineCategoryDTOS, String wineEnginesPath) {
+        Platform.runLater(() -> {
+            final List<LeftButton> leftButtonList = new ArrayList<>();
+            for (EngineCategoryDTO category : engineCategoryDTOS) {
+                final LeftButton categoryButton = new LeftButton(category.getName());
+                final String resource = String.format("icons/mainwindow/engines/%s.png", category.getName().toLowerCase());
+                if (themeManager.resourceExists(resource)) {
+                    categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
+                } else {
+                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
+                }
+                categoryButton.setOnMouseClicked(event -> selectCategory(category));
+                leftButtonList.add(categoryButton);
             }
-            final String[] parts = wineVersionDistributionDTO.getName().split("-");
-            final String distribution = parts[0];
-            final String architecture = parts[2];
-            WineEngineDTO wineEngineDTO = new WineEngineDTO.Builder()
-                    .withArchitecture(architecture)
-                    .withDistribution(distribution)
-                    .withVersion(wineVersionDTO.getVersion())
-                    .withMonoFile(wineVersionDTO.getMonoFile())
-                    .withGeckoFile(wineVersionDTO.getGeckoFile())
-                    .build();
-            engineItem.setOnMouseClicked(event -> this.showEngineDetails(wineEngineDTO));
-        }
 
-        return new Tab(wineVersionDistributionDTO.getDescription(), tabContent);
+            categoryView.setNodes(leftButtonList);
+            showAvailableEngines();
+        });
     }
 
-    private void showEngineDetails(WineEngineDTO wineEngineDTO) {
-        currentEnginePanel = new EnginePanel(wineEngineDTO);
+    public void populateEngines(String category, List<EngineSubCategoryDTO> subCategories, String wineEnginesPath) {
+        availableEngines.getTabs().clear();
+        for (EngineSubCategoryDTO subCategory : subCategories) {
+            final MiniatureListWidget tabContent = MiniatureListWidget.create();
+            List<EngineVersionDTO> packages = subCategory.getPackages();
+            packages.sort(EngineSubCategoryDTO.comparator().reversed());
+
+            for (EngineVersionDTO engineVersionDTO :
+                    packages) {
+                final Node engineItem = tabContent.addItem(engineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+                // gray scale if not installed
+                File f = new File(wineEnginesPath + "/" + subCategory.getName() + "/" + engineVersionDTO.getVersion());
+                if (!f.exists()) {
+                    ColorAdjust grayscale = new ColorAdjust();
+                    grayscale.setSaturation(-1);
+                    engineItem.setEffect(grayscale);
+                }
+                Map<String, String> userData = new HashMap<>();
+                userData.put("Mono", engineVersionDTO.getMonoFile());
+                userData.put("Gecko", engineVersionDTO.getGeckoFile());
+                EngineDTO engineDTO = new EngineDTO.Builder()
+                        .withCategory(category)
+                        .withSubCategory(subCategory.getName())
+                        .withVersion(engineVersionDTO.getVersion())
+                        .withUserData(userData)
+                        .build();
+                engineItem.setOnMouseClicked(event -> this.showEngineDetails(engineDTO));
+            }
+            availableEngines.getTabs().add(new Tab(subCategory.getDescription(), tabContent));
+        }
+    }
+
+    public void showAvailableEngines() {
+        showRightView(availableEngines);
+    }
+
+    private void selectCategory(EngineCategoryDTO category) {
+        showRightView(availableEngines);
+        this.onSelectCategory.accept(category);
+    }
+
+    private void showEngineDetails(EngineDTO engineDTO) {
+        currentEnginePanel = new EnginePanel(engineDTO);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
         showRightView(currentEnginePanel);
     }
 
-    private void installEngine(WineEngineDTO wineEngineDTO) {
-        this.setOnInstallEngine.accept(wineEngineDTO);
+    public void setOnSelectCategory(Consumer<EngineCategoryDTO> onSelectCategory) {
+        this.onSelectCategory = onSelectCategory;
     }
 
-    private void deleteEngine(WineEngineDTO wineEngineDTO) {
-        this.setOnDeleteEngine.accept(wineEngineDTO);
+    private void installEngine(EngineDTO engineDTO) {
+        this.setOnInstallEngine.accept(engineDTO);
+    }
+
+    private void deleteEngine(EngineDTO engineDTO) {
+        this.setOnDeleteEngine.accept(engineDTO);
     }
 
     public void showProgress(VBox progressUi) {
