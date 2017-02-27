@@ -18,7 +18,14 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import com.google.common.collect.Sets;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import org.phoenicis.apps.AppsSearchFilter;
+import org.phoenicis.apps.CombinedAppsFilter;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -26,18 +33,11 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -49,6 +49,8 @@ public class ViewApps extends MainWindowView {
     private LeftGroup categoryView;
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
+    private final CombinedAppsFilter currentFilter = new CombinedAppsFilter();
+    private Consumer<CombinedAppsFilter> onApplyFilter = (filter) -> {};
 
     public ViewApps(ThemeManager themeManager) {
         super("Apps", themeManager);
@@ -57,6 +59,10 @@ public class ViewApps extends MainWindowView {
 
         this.drawSideBar();
         this.showWait();
+    }
+
+    public void setOnApplyFilter(Consumer<CombinedAppsFilter> onApplyFilter) {
+        this.onApplyFilter = onApplyFilter;
     }
 
     public void setOnSelectCategory(Consumer<CategoryDTO> onSelectCategory) {
@@ -125,6 +131,15 @@ public class ViewApps extends MainWindowView {
     protected void drawSideBar() {
         searchBar = new TextField();
         searchBar.getStyleClass().add("searchBar");
+        searchBar.textProperty().addListener(obs->{
+            String filter = searchBar.getText().toLowerCase();
+            currentFilter.clear();
+            if(filter != null && filter.length() >= 3) {
+                currentFilter.add(new AppsSearchFilter(filter));
+            }
+            onApplyFilter.accept(currentFilter);
+        });
+
 
         categoryView = new LeftGroup(translate("Categories"));
 
@@ -160,7 +175,6 @@ public class ViewApps extends MainWindowView {
     private void selectCategory(CategoryDTO category) {
         showRightView(availableApps);
         this.onSelectCategory.accept(category);
-        searchBar.setText("");
     }
 
 

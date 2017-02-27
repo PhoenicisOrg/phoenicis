@@ -35,6 +35,7 @@ class FilterApplicationsSource implements ApplicationsSource {
     private final ApplicationsSource applicationsSource;
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final boolean enforceIncompatibleOperatingSystems;
+    private CombinedAppsFilter filter;
 
     FilterApplicationsSource(ApplicationsSource applicationsSource,
                              OperatingSystemFetcher operatingSystemFetcher,
@@ -59,11 +60,13 @@ class FilterApplicationsSource implements ApplicationsSource {
                     scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
                 }
                 if (!scripts.isEmpty()) {
-                    applications.add(
-                            new ApplicationDTO.Builder(application)
-                                    .withScripts(scripts)
-                                    .build()
-                    );
+                    if (filter == null || category.getType() != CategoryDTO.CategoryType.INSTALLERS || filter.applies(application)) {
+                        applications.add(
+                                new ApplicationDTO.Builder(application)
+                                        .withScripts(scripts)
+                                        .build()
+                        );
+                    }
                 }
             }
             if (!applications.isEmpty()) {
@@ -76,5 +79,10 @@ class FilterApplicationsSource implements ApplicationsSource {
         }
 
         return filteredCategories;
+    }
+
+    @Override
+    public void setFilter(CombinedAppsFilter filter) {
+        this.filter = filter;
     }
 }

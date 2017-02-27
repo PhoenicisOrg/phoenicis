@@ -52,6 +52,8 @@ public interface ApplicationsSource {
         return null;
     }
 
+    default void setFilter(CombinedAppsFilter filter) {}
+
     default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
         callback.accept(getScript(path));
     }
