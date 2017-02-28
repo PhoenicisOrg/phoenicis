@@ -41,14 +41,14 @@ public class AppsController {
 
     public void loadApps() {
         this.view.showWait();
-        repositorySource.fetchInstallableApplications(
+        repositorySource.fetchRepositories(
                 this.view::populate,
                 e -> this.view.showFailure()
         );
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
-            repositorySource.fetchInstallableApplications(
+            repositorySource.fetchRepositories(
                     this.view::populate,
                     e -> this.view.showFailure()
             );

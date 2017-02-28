@@ -19,9 +19,12 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class MultipleRepositorySource implements RepositorySource {
     private final RepositorySource repositorySource;
@@ -41,7 +44,8 @@ class MultipleRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return repositorySource.fetchInstallableApplications();
+    public List<RepositoryDTO> fetchRepositories() {
+        return repositorySource.fetchRepositories();
     }
+
 }

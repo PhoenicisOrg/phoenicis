@@ -20,7 +20,7 @@ package org.phoenicis.repository;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Arrays;
 
@@ -32,22 +32,22 @@ public class CachedRepositorySourceTest {
     @Test
     public void testFetchInstallableApplications() throws Exception {
         RepositorySource repositorySource = Mockito.mock(RepositorySource.class);
-        when(repositorySource.fetchInstallableApplications()).thenReturn(Arrays.asList(
-                new CategoryDTO.Builder()
-                        .withName("Category 1")
+        when(repositorySource.fetchRepositories()).thenReturn(Arrays.asList(
+                new RepositoryDTO.Builder()
+                        .withName("Repository 1")
                         .build(),
-                new CategoryDTO.Builder()
-                        .withName("Category 2")
+                new RepositoryDTO.Builder()
+                        .withName("Repository 2")
                         .build()
         ));
 
         final RepositorySource cachedSource = new CachedRepositorySource(repositorySource);
-        cachedSource.fetchInstallableApplications();
-        assertEquals(2, cachedSource.fetchInstallableApplications().size());
-        cachedSource.fetchInstallableApplications();
-        assertEquals(2, cachedSource.fetchInstallableApplications().size());
+        cachedSource.fetchRepositories();
+        assertEquals(2, cachedSource.fetchRepositories().size());
+        cachedSource.fetchRepositories();
+        assertEquals(2, cachedSource.fetchRepositories().size());
 
-        verify(repositorySource, times(1)).fetchInstallableApplications();
+        verify(repositorySource, times(1)).fetchRepositories();
     }
 
 }

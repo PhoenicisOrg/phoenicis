@@ -43,7 +43,7 @@ public class RepositoryConfiguration {
 
     @Bean
     public RepositorySource repositorySource() {
-        RepositorySource repositorySource = new ConfigurableApplicationSource(
+        RepositorySource repositorySource = new ConfigurableRepositorySource(
                 repositoryConfiguration,
                 new LocalRepositorySource.Factory(objectMapper()),
                 new ClasspathRepositorySource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())

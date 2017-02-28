@@ -18,7 +18,7 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,23 +28,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class ConfigurableApplicationSource implements RepositorySource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableApplicationSource.class);
+class ConfigurableRepositorySource implements RepositorySource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableRepositorySource.class);
 
-    private final LocalRepositorySource.Factory localApplicationsSourceFactory;
-    private final ClasspathRepositorySource.Factory classPathApplicationsSourceFactory;
+    private final LocalRepositorySource.Factory localRepositorySourceFactory;
+    private final ClasspathRepositorySource.Factory classPathRepositorySourceFactory;
     private final RepositorySource repositorySource;
 
-    ConfigurableApplicationSource(String sourceUrl, LocalRepositorySource.Factory localApplicationsSourceFactory, ClasspathRepositorySource.Factory classPathApplicationsSourceFactory) {
-        this.localApplicationsSourceFactory = localApplicationsSourceFactory;
-        this.classPathApplicationsSourceFactory = classPathApplicationsSourceFactory;
+    ConfigurableRepositorySource(String sourceUrl, LocalRepositorySource.Factory localRepositorySourceFactory, ClasspathRepositorySource.Factory classPathRepositorySourceFactory) {
+        this.localRepositorySourceFactory = localRepositorySourceFactory;
+        this.classPathRepositorySourceFactory = classPathRepositorySourceFactory;
         final String[] urls = sourceUrl.split(";");
         repositorySource = new MultipleRepositorySource(Arrays.stream(urls).map(this::toApplicationSource).collect(Collectors.toList()));
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return repositorySource.fetchInstallableApplications();
+    public List<RepositoryDTO> fetchRepositories() {
+        return repositorySource.fetchRepositories();
     }
 
     private RepositorySource toApplicationSource(String applicationSourceUrl) {
@@ -55,11 +55,11 @@ class ConfigurableApplicationSource implements RepositorySource {
 
             switch (scheme) {
                 case "git":
-                    return new GitRepositorySource(applicationSourceUrl.replace("git+",""), localApplicationsSourceFactory);
+                    return new GitRepositorySource(applicationSourceUrl.replace("git+",""), localRepositorySourceFactory);
                 case "file":
-                    return localApplicationsSourceFactory.createInstance(url.getRawPath());
+                    return localRepositorySourceFactory.createInstance(url.getRawPath());
                 case "classpath":
-                    return classPathApplicationsSourceFactory.createInstance(url.getPath());
+                    return classPathRepositorySourceFactory.createInstance(url.getPath());
                 default:
                     LOGGER.warn("Unsupported URL: " + applicationSourceUrl);
                     return new NullRepositorySource();

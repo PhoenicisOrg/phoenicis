@@ -21,11 +21,14 @@ package org.phoenicis.repository;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -45,36 +48,47 @@ class FilterRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<RepositoryDTO> fetchRepositories() {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
-        final List<CategoryDTO> categories = repositorySource.fetchInstallableApplications();
-        final List<CategoryDTO> filteredCategories = new ArrayList<>();
-        for (CategoryDTO category : categories) {
-            final List<ApplicationDTO> applications = new ArrayList<>();
-            for (ApplicationDTO application : category.getApplications()) {
-                final List<ScriptDTO> scripts;
-                if(enforceIncompatibleOperatingSystems) {
-                    scripts = application.getScripts();
-                } else {
-                    scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
+        final List<RepositoryDTO> repositories = repositorySource.fetchRepositories();
+        final List<RepositoryDTO> filteredRepositories = new ArrayList<>();
+        for (RepositoryDTO repository : repositories) {
+            final List<CategoryDTO> filteredCategories = new ArrayList<>();
+            for (CategoryDTO category : repository.getCategories()) {
+                final List<ApplicationDTO> applications = new ArrayList<>();
+                for (ApplicationDTO application : category.getApplications()) {
+                    final List<ScriptDTO> scripts;
+                    if (enforceIncompatibleOperatingSystems) {
+                        scripts = application.getScripts();
+                    } else {
+                        scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
+                    }
+                    if (!scripts.isEmpty()) {
+                        applications.add(
+                                new ApplicationDTO.Builder(application)
+                                        .withScripts(scripts)
+                                        .build()
+                        );
+                    }
                 }
-                if (!scripts.isEmpty()) {
-                    applications.add(
-                            new ApplicationDTO.Builder(application)
-                                    .withScripts(scripts)
+                if (!applications.isEmpty()) {
+                    filteredCategories.add(
+                            new CategoryDTO.Builder(category)
+                                    .withApplications(applications)
                                     .build()
                     );
                 }
             }
-            if (!applications.isEmpty()) {
-                filteredCategories.add(
-                        new CategoryDTO.Builder(category)
-                                .withApplications(applications)
+            if (!filteredCategories.isEmpty()) {
+                filteredRepositories.add(
+                        new RepositoryDTO.Builder(repository)
+                                .withCategories(filteredCategories)
                                 .build()
                 );
             }
         }
 
-        return filteredCategories;
+        return filteredRepositories;
     }
+
 }

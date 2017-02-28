@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
@@ -35,7 +36,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -75,10 +78,13 @@ public class ViewApps extends MainWindowView {
     /**
      * Populate with a list of categories containing repository, and then scripts
      *
-     * @param categories CategoryDTO
+     * @param repositories RepositoryDTO
      */
-    public void populate(List<CategoryDTO> categories) {
+    public void populate(List<RepositoryDTO> repositories) {
         Platform.runLater(() -> {
+            final Optional<RepositoryDTO> repositoryDTO = repositories.stream().filter(repository -> repository.getName().equals("Apps")).findFirst();
+            List<CategoryDTO> categories = repositoryDTO.isPresent() ? repositoryDTO.get().getCategories() : Collections.emptyList();
+
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {

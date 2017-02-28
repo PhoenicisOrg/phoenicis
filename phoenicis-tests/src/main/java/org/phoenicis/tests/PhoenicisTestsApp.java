@@ -21,6 +21,7 @@ package org.phoenicis.tests;
 import org.phoenicis.repository.RepositorySource;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -48,8 +49,8 @@ public class PhoenicisTestsApp {
             final RepositorySource repositorySource = applicationContext.getBean("mockedApplicationSource", RepositorySource.class);
             this.applicationContext = applicationContext;
 
-            repositorySource.fetchInstallableApplications(categoryDTOS -> {
-                categoryDTOS.forEach(this::testCategory);
+            repositorySource.fetchRepositories(repositoryDTOs -> {
+                repositoryDTOs.forEach(this::testRepository);
             }, e -> {
                 throw new IllegalStateException(e);
             });
@@ -58,6 +59,11 @@ public class PhoenicisTestsApp {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void testRepository(RepositoryDTO repositoryDTO) {
+        System.out.println("+ " + repositoryDTO.getName());
+        repositoryDTO.getCategories().forEach(categoryDTO -> this.testCategory(categoryDTO));
     }
 
     private void testCategory(CategoryDTO categoryDTO) {

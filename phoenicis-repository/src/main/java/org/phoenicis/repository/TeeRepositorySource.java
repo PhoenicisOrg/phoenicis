@@ -18,35 +18,51 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ResourceDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Function;
 
 public class TeeRepositorySource implements RepositorySource {
-    private final RepositorySource leftApplicationSource;
-    private final RepositorySource rightApplicationSource;
+    private final RepositorySource leftRepositorySource;
+    private final RepositorySource rightRepositorySource;
 
     /**
      * merges fetched applications from two sources
-     * If an application is found in both sources, the leftApplicationSource will be used.
-     * @param leftApplicationSource
-     * @param rightApplicationSource
+     * If an application is found in both sources, the leftRepositorySource will be used.
+     * @param leftRepositorySource
+     * @param rightRepositorySource
      */
-    protected TeeRepositorySource(RepositorySource leftApplicationSource,
-                                  RepositorySource rightApplicationSource) {
-        this.leftApplicationSource = leftApplicationSource;
-        this.rightApplicationSource = rightApplicationSource;
+    protected TeeRepositorySource(RepositorySource leftRepositorySource,
+                                  RepositorySource rightRepositorySource) {
+        this.leftRepositorySource = leftRepositorySource;
+        this.rightRepositorySource = rightRepositorySource;
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
-        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
+    public List<RepositoryDTO> fetchRepositories() {
+        final Map<String, RepositoryDTO> leftRepositories = createSortedMap(leftRepositorySource.fetchRepositories(), RepositoryDTO::getName);
+        final Map<String, RepositoryDTO> rightRepositories = createSortedMap(rightRepositorySource.fetchRepositories(), RepositoryDTO::getName);
+
+        final SortedMap<String, RepositoryDTO> mergedRepositories = new TreeMap<>(rightRepositories);
+
+        for (String repositoryName : leftRepositories.keySet()) {
+            final RepositoryDTO category = leftRepositories.get(repositoryName);
+
+            if (mergedRepositories.containsKey(repositoryName)) {
+                mergedRepositories.put(repositoryName, mergeRepositories(mergedRepositories.get(repositoryName), category));
+            } else {
+                mergedRepositories.put(repositoryName, category);
+            }
+        }
+
+        return new ArrayList<>(mergedRepositories.values());
+    }
+
+    private RepositoryDTO mergeRepositories(RepositoryDTO leftRepository, RepositoryDTO rightRepository) {
+        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftRepository.getCategories(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightRepository.getCategories(), CategoryDTO::getName);
 
         final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
 
@@ -60,7 +76,12 @@ public class TeeRepositorySource implements RepositorySource {
             }
         }
 
-        return new ArrayList<>(mergedCategories.values());
+        final List<CategoryDTO> categories = new ArrayList<>(mergedCategories.values());
+        categories.sort(CategoryDTO.nameComparator());
+        return new RepositoryDTO.Builder()
+                .withCategories(categories)
+                .withName(leftRepository.getName())
+                .build();
     }
 
     private CategoryDTO mergeCategories(CategoryDTO leftCategory, CategoryDTO rightCategory) {

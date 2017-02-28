@@ -21,6 +21,7 @@ package org.phoenicis.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ class ClasspathRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<RepositoryDTO> fetchRepositories() {
         try {
             final List<CategoryDTO> categoryDTOs = new ArrayList<>();
             Resource[] resources = resourceResolver.getResources(packagePath + "/*");
@@ -59,7 +60,12 @@ class ClasspathRepositorySource implements RepositorySource {
                 }
             }
             Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
-            return categoryDTOs;
+            List<RepositoryDTO> repositories = new ArrayList<>();
+            repositories.add(new RepositoryDTO.Builder()
+                    .withName("repository")
+                    .withCategories(categoryDTOs)
+                    .build());
+            return repositories;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
             return Collections.emptyList();

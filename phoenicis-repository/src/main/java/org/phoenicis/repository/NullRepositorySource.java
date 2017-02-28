@@ -19,13 +19,15 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class NullRepositorySource implements RepositorySource {
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<RepositoryDTO> fetchRepositories() {
         return Collections.emptyList();
     }
 }

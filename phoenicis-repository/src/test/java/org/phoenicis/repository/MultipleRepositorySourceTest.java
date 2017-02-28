@@ -18,8 +18,8 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Collections;
 
@@ -29,31 +29,31 @@ public class MultipleRepositorySourceTest {
     @Test
     public void testWithEmptyList_emptySetIsReturned() {
         final MultipleRepositorySource multipleApplicationsSource = new MultipleRepositorySource();
-        assertEquals(0, multipleApplicationsSource.fetchInstallableApplications().size());
+        assertEquals(0, multipleApplicationsSource.fetchRepositories().size());
     }
 
     @Test
     public void testWithThreeSources_threeResults() {
         final RepositorySource firstSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 1")
+                new RepositoryDTO.Builder()
+                        .withName("Repository 1")
                         .build()
         );
 
         final RepositorySource secondSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 2")
+                new RepositoryDTO.Builder()
+                        .withName("Repository 2")
                         .build()
         );
 
         final RepositorySource thirdSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 3")
+                new RepositoryDTO.Builder()
+                        .withName("Repository 3")
                         .build()
         );
 
 
         final MultipleRepositorySource multipleApplicationsSource = new MultipleRepositorySource(firstSource, secondSource, thirdSource);
-        assertEquals(3, multipleApplicationsSource.fetchInstallableApplications().size());
+        assertEquals(3, multipleApplicationsSource.fetchRepositories().size());
     }
 }

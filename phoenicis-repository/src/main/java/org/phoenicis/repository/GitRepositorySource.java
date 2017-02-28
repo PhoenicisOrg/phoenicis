@@ -19,6 +19,7 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +27,12 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class GitRepositorySource implements RepositorySource {
     private final String gitRepositoryURL;
     private final LocalRepositorySource.Factory localAppsSourceFactory;
-    private List<CategoryDTO> cache;
+    private List<RepositoryDTO> cache;
 
     GitRepositorySource(String gitRepositoryURL, LocalRepositorySource.Factory localAppsSourceFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
@@ -38,7 +40,7 @@ class GitRepositorySource implements RepositorySource {
     }
 
     @Override
-    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+    public synchronized List<RepositoryDTO> fetchRepositories() {
         if (cache != null) {
             return cache;
         }
@@ -51,12 +53,11 @@ class GitRepositorySource implements RepositorySource {
                     .start()
                     .waitFor();
 
-            cache = localAppsSourceFactory.createInstance(gitTmp.getAbsolutePath()).fetchInstallableApplications();
+            cache = localAppsSourceFactory.createInstance(gitTmp.getAbsolutePath()).fetchRepositories();
             return cache;
         } catch (IOException | InterruptedException e) {
             return Collections.emptyList();
         }
     }
-
 
 }

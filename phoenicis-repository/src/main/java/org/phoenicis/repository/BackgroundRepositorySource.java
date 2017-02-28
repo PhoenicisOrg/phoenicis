@@ -19,6 +19,7 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.util.List;
@@ -36,13 +37,13 @@ class BackgroundRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<RepositoryDTO> fetchRepositories() {
         throw new UnsupportedOperationException("The background repository manager is asynchroneous");
     }
 
     @Override
-    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedAppManager.fetchInstallableApplications(callback, errorCallback));
+    public void fetchRepositories(Consumer<List<RepositoryDTO>> callback, Consumer<Exception> errorCallback) {
+        executorService.submit(() -> delegatedAppManager.fetchRepositories(callback, errorCallback));
     }
 
     @Override

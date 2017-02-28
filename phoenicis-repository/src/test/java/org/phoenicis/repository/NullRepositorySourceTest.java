@@ -25,6 +25,6 @@ import static org.junit.Assert.assertEquals;
 public class NullRepositorySourceTest {
     @Test
     public void testNullApplicationSource() {
-        assertEquals(0, new NullRepositorySource().fetchInstallableApplications().size());
+        assertEquals(0, new NullRepositorySource().fetchRepositories().size());
     }
 }

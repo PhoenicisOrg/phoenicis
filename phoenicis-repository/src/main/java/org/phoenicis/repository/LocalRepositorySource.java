@@ -19,10 +19,7 @@
 package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ResourceDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -46,21 +43,39 @@ class LocalRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<RepositoryDTO> fetchRepositories() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
         final List<File> categoryDirectories = new ArrayList<>(Arrays.asList(repositoryDirectoryFile.listFiles()));
-        final File repositoryAppsDirectoryFile = new File(repositoryDirectory + "/Apps");
-        categoryDirectories.addAll(Arrays.asList(repositoryAppsDirectoryFile.listFiles()));
 
         if (categoryDirectories == null) {
             return Collections.emptyList();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);
-        return fetchCategories(categoryDirectories);
+        return fetchRepositories(categoryDirectories);
     }
 
-    private List<CategoryDTO> fetchCategories(List<File> categoryDirectories) {
+    private List<RepositoryDTO> fetchRepositories(List<File> repositoryDirectories) {
+        final List<RepositoryDTO> results = new ArrayList<>();
+
+        for (File repositoryDirectory : repositoryDirectories) {
+            if (repositoryDirectory.isDirectory() && !repositoryDirectory.getName().startsWith(".")) {
+                final File repositoryFile = new File(repositoryDirectory, "repository.json");
+
+                final RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder(unSerializeRepository(repositoryFile))
+                        .withName(repositoryDirectory.getName())
+                        .withCategories(fetchCategories(repositoryDirectory.listFiles()));
+
+                RepositoryDTO repository = repositoryDTOBuilder.build();
+                results.add(repository);
+            }
+        }
+
+        Collections.sort(results, Comparator.comparing(RepositoryDTO::getName));
+        return results;
+    }
+
+    private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
         final List<CategoryDTO> results = new ArrayList<>();
 
         for (File categoryDirectory : categoryDirectories) {
@@ -200,6 +215,15 @@ class LocalRepositorySource implements RepositorySource {
         }
 
         return results;
+    }
+
+    private RepositoryDTO unSerializeRepository(File jsonFile) {
+        try {
+            return objectMapper.readValue(jsonFile, RepositoryDTO.class);
+        } catch (IOException e) {
+            LOGGER.debug("JSON file not found", e);
+            return new RepositoryDTO.Builder().build();
+        }
     }
 
     private CategoryDTO unSerializeCategory(File jsonFile) {

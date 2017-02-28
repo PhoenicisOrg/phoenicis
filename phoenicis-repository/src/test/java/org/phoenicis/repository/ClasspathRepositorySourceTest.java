@@ -33,33 +33,33 @@ public class ClasspathRepositorySourceTest {
 
     @Test
     public void fetchInstallableApplications_numberOfCategories() {
-        assertEquals(2, repositorySource.fetchInstallableApplications().size());
+        assertEquals(2, repositorySource.fetchRepositories().get(0).getCategories().size());
     }
 
     @Test
     public void fetchInstallableApplications_categoriesNames() {
-        assertEquals("Development", repositorySource.fetchInstallableApplications().get(0).getName());
-        assertEquals("Graphics", repositorySource.fetchInstallableApplications().get(1).getName());
+        assertEquals("Development", repositorySource.fetchRepositories().get(0).getCategories().get(0).getName());
+        assertEquals("Graphics", repositorySource.fetchRepositories().get(0).getCategories().get(1).getName());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics() {
-        assertEquals(1, repositorySource.fetchInstallableApplications().get(1).getApplications().size());
+        assertEquals(1, repositorySource.fetchRepositories().get(0).getCategories().get(1).getApplications().size());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre() {
-        assertEquals("Photofiltre", repositorySource.fetchInstallableApplications().get(1).getApplications().get(0).getName());
+        assertEquals("Photofiltre", repositorySource.fetchRepositories().get(0).getCategories().get(1).getApplications().get(0).getName());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scripts() {
-        assertEquals(1, repositorySource.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().size());
+        assertEquals(1, repositorySource.fetchRepositories().get(0).getCategories().get(1).getApplications().get(0).getScripts().size());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scriptName() {
-        assertEquals("Online", repositorySource.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScriptName());
+        assertEquals("Online", repositorySource.fetchRepositories().get(0).getCategories().get(1).getApplications().get(0).getScripts().get(0).getScriptName());
     }
 
     @Test
@@ -75,18 +75,18 @@ public class ClasspathRepositorySourceTest {
                 "    .checksum(\"dc965875d698cd3f528423846f837d0dcf39616d\")\n" +
                 "    .category(\"Graphics\")\n" +
                 "    .executable(\"PhotoFiltre.exe\")\n" +
-                "    .go();", repositorySource.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScript().trim());
+                "    .go();", repositorySource.fetchRepositories().get(0).getCategories().get(1).getApplications().get(0).getScripts().get(0).getScript().trim());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_miniatures() {
-        assertEquals(1, repositorySource.fetchInstallableApplications().get(1).getApplications().get(0).getMiniatures().size());
+        assertEquals(1, repositorySource.fetchRepositories().get(0).getCategories().get(1).getApplications().get(0).getMiniatures().size());
     }
 
     @Test
     public void fetchInstallableApplications_categoriesTypes() {
-        assertEquals(CategoryDTO.CategoryType.INSTALLERS, repositorySource.fetchInstallableApplications().get(0).getType());
-        assertEquals(CategoryDTO.CategoryType.FUNCTIONS, repositorySource.fetchInstallableApplications().get(1).getType());
+        assertEquals(CategoryDTO.CategoryType.INSTALLERS, repositorySource.fetchRepositories().get(0).getCategories().get(0).getType());
+        assertEquals(CategoryDTO.CategoryType.FUNCTIONS, repositorySource.fetchRepositories().get(0).getCategories().get(1).getType());
     }
 
 }

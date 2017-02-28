@@ -45,7 +45,7 @@ public class WineVersionsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\", \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine().getAvailableVersions()",
                         output -> callback.accept(unSerialize(output)),
