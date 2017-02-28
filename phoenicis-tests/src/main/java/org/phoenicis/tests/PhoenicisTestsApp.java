@@ -19,8 +19,8 @@
 package org.phoenicis.tests;
 
 import org.phoenicis.repository.RepositorySource;
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -60,18 +60,18 @@ public class PhoenicisTestsApp {
         }
     }
 
-    private void testCategory(CategoryDTO categoryDTO) {
-        System.out.println("+ " + categoryDTO.getName());
-        categoryDTO.getApplications().forEach(applicationDTO -> this.testApplication(categoryDTO, applicationDTO));
+    private void testCategory(ApplicationCategoryDTO applicationCategoryDTO) {
+        System.out.println("+ " + applicationCategoryDTO.getName());
+        applicationCategoryDTO.getApplications().forEach(applicationDTO -> this.testApplication(applicationCategoryDTO, applicationDTO));
     }
 
-    private void testApplication(CategoryDTO categoryDTO, ApplicationDTO applicationDTO) {
+    private void testApplication(ApplicationCategoryDTO applicationCategoryDTO, ApplicationDTO applicationDTO) {
         System.out.println("|-+ " + applicationDTO.getName());
-        applicationDTO.getScripts().forEach(scriptDTO -> testScript(categoryDTO, applicationDTO, scriptDTO));
+        applicationDTO.getScripts().forEach(scriptDTO -> testScript(applicationCategoryDTO, applicationDTO, scriptDTO));
         System.out.println("|");
     }
 
-    private void testScript(CategoryDTO categoryDTO, ApplicationDTO applicationDTO, ScriptDTO scriptDTO) {
+    private void testScript(ApplicationCategoryDTO applicationCategoryDTO, ApplicationDTO applicationDTO, ScriptDTO scriptDTO) {
         final ScriptInterpreter scriptInterpreter = applicationContext.getBean("nashornInterprpeter", ScriptInterpreter.class);
         System.out.print("| |-- " + scriptDTO.getName());
         try {

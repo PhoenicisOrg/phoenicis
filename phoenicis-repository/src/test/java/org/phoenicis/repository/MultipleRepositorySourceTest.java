@@ -18,7 +18,7 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -35,19 +35,19 @@ public class MultipleRepositorySourceTest {
     @Test
     public void testWithThreeSources_threeResults() {
         final RepositorySource firstSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 1")
                         .build()
         );
 
         final RepositorySource secondSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
         );
 
         final RepositorySource thirdSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 3")
                         .build()
         );

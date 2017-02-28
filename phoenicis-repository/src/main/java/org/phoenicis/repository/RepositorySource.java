@@ -18,8 +18,8 @@
 
 package org.phoenicis.repository;
 
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.util.Collections;
@@ -28,9 +28,9 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public interface RepositorySource {
-    List<CategoryDTO> fetchInstallableApplications();
+    List<ApplicationCategoryDTO> fetchInstallableApplications();
 
-    default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
+    default void fetchInstallableApplications(Consumer<List<ApplicationCategoryDTO>> callback, Consumer<Exception> errorCallback) {
         try {
             callback.accept(Collections.unmodifiableList(fetchInstallableApplications()));
         } catch(Exception e) {
@@ -56,17 +56,17 @@ public interface RepositorySource {
         callback.accept(getScript(path));
     }
 
-    default CategoryDTO getCategory(List<String> path) {
-        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().stream().filter(category -> path.get(0).equals(category.getName())).findFirst();
+    default ApplicationCategoryDTO getCategory(List<String> path) {
+        final Optional<ApplicationCategoryDTO> categoryDTO = fetchInstallableApplications().stream().filter(category -> path.get(0).equals(category.getName())).findFirst();
         return categoryDTO.isPresent() ? categoryDTO.get() : null;
     }
     default ApplicationDTO getApplication(List<String> path) {
-        final CategoryDTO categoryDTO = getCategory(path);
-        if(categoryDTO == null) {
+        final ApplicationCategoryDTO applicationCategoryDTO = getCategory(path);
+        if(applicationCategoryDTO == null) {
             return null;
         }
 
-        final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream().filter(application -> path.get(1).equals(application.getName())).findFirst();
+        final Optional<ApplicationDTO> applicationDTO = applicationCategoryDTO.getApplications().stream().filter(application -> path.get(1).equals(application.getName())).findFirst();
         return applicationDTO.isPresent() ? applicationDTO.get() : null;
     }
 }

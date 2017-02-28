@@ -30,14 +30,14 @@ import java.util.List;
 /**
  * Represents a category of application
  */
-@JsonDeserialize(builder = CategoryDTO.Builder.class)
-public class CategoryDTO {
+@JsonDeserialize(builder = ApplicationCategoryDTO.Builder.class)
+public class ApplicationCategoryDTO {
     private final CategoryType type;
     private final String name;
     private final List<ApplicationDTO> applications;
     private final String icon;
 
-    private CategoryDTO(Builder builder) {
+    private ApplicationCategoryDTO(Builder builder) {
         this.type = builder.type;
         this.name = builder.name;
         this.applications = Collections.unmodifiableList(builder.applications);
@@ -67,7 +67,7 @@ public class CategoryDTO {
         return applications;
     }
 
-    public static Comparator<CategoryDTO> nameComparator() {
+    public static Comparator<ApplicationCategoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
@@ -82,11 +82,11 @@ public class CategoryDTO {
             // Default constructor
         }
 
-        public Builder(CategoryDTO categoryDTO) {
-            this.withName(categoryDTO.getName())
-                    .withApplications(categoryDTO.getApplications())
-                    .withIcon(categoryDTO.getIcon())
-                    .withType(categoryDTO.getType());
+        public Builder(ApplicationCategoryDTO applicationCategoryDTO) {
+            this.withName(applicationCategoryDTO.getName())
+                    .withApplications(applicationCategoryDTO.getApplications())
+                    .withIcon(applicationCategoryDTO.getIcon())
+                    .withType(applicationCategoryDTO.getType());
         }
 
 
@@ -110,8 +110,8 @@ public class CategoryDTO {
             return this;
         }
 
-        public CategoryDTO build() {
-            return new CategoryDTO(this);
+        public ApplicationCategoryDTO build() {
+            return new ApplicationCategoryDTO(this);
         }
     }
 

@@ -20,7 +20,7 @@ package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
@@ -48,29 +48,29 @@ class ClasspathRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<ApplicationCategoryDTO> fetchInstallableApplications() {
         try {
-            final List<CategoryDTO> categoryDTOs = new ArrayList<>();
+            final List<ApplicationCategoryDTO> applicationCategoryDTOs = new ArrayList<>();
             Resource[] resources = resourceResolver.getResources(packagePath + "/*");
             for (Resource resource : resources) {
-                final CategoryDTO category = buildCategory(resource.getFilename());
+                final ApplicationCategoryDTO category = buildCategory(resource.getFilename());
                 if (!category.getApplications().isEmpty()) {
-                    categoryDTOs.add(category);
+                    applicationCategoryDTOs.add(category);
                 }
             }
-            Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
-            return categoryDTOs;
+            Collections.sort(applicationCategoryDTOs, Comparator.comparing(ApplicationCategoryDTO::getName));
+            return applicationCategoryDTOs;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
             return Collections.emptyList();
         }
     }
 
-    private CategoryDTO buildCategory(String categoryFileName) throws IOException {
+    private ApplicationCategoryDTO buildCategory(String categoryFileName) throws IOException {
         final String jsonCategoryFile = packagePath + "/" + categoryFileName + "/category.json";
-        final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile), CategoryDTO.class);
+        final ApplicationCategoryDTO applicationCategoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile), ApplicationCategoryDTO.class);
 
-        return new CategoryDTO.Builder(categoryDTO)
+        return new ApplicationCategoryDTO.Builder(applicationCategoryDTO)
                 .withIcon(packagePath + "/" + categoryFileName + "/icon.png")
                 .withApplications(buildApplications(categoryFileName))
                 .build();

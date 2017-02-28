@@ -18,7 +18,7 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import java.util.List;
 class GitRepositorySource implements RepositorySource {
     private final String gitRepositoryURL;
     private final LocalRepositorySource.Factory localAppsSourceFactory;
-    private List<CategoryDTO> cache;
+    private List<ApplicationCategoryDTO> cache;
 
     GitRepositorySource(String gitRepositoryURL, LocalRepositorySource.Factory localAppsSourceFactory) {
         this.gitRepositoryURL = gitRepositoryURL;
@@ -38,7 +38,7 @@ class GitRepositorySource implements RepositorySource {
     }
 
     @Override
-    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+    public synchronized List<ApplicationCategoryDTO> fetchInstallableApplications() {
         if (cache != null) {
             return cache;
         }

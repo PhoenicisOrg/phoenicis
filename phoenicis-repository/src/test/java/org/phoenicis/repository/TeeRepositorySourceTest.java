@@ -18,8 +18,8 @@
 
 package org.phoenicis.repository;
 
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -32,22 +32,22 @@ public class TeeRepositorySourceTest {
     @Test
     public void testFetchInstallableApplications_onlyCategoriesNoCollapse_numberOfResultIsCorrect() {
         final RepositorySource leftSource = () -> Arrays.asList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
         );
 
         final RepositorySource rightSource = () -> Arrays.asList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 3")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 4")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 5")
                         .build()
         );
@@ -60,22 +60,22 @@ public class TeeRepositorySourceTest {
     @Test
     public void testFetchInstallableApplications_onlyCategoriesCollapse_numberOfResultIsCorrect() {
         final RepositorySource leftSource = () -> Arrays.asList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
         );
 
         final RepositorySource rightSource = () -> Arrays.asList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 2")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 4")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 5")
                         .build()
         );
@@ -88,10 +88,10 @@ public class TeeRepositorySourceTest {
     @Test
     public void testFetchInstallableApplications_categoriesAndAppsCollapse_numberOfResultIsCorrect() {
         final RepositorySource leftSource = () -> Arrays.asList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 2")
                         .withApplications(
                                 Arrays.asList(
@@ -106,7 +106,7 @@ public class TeeRepositorySourceTest {
         );
 
         final RepositorySource rightSource = () -> Arrays.asList(
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 2")
                         .withApplications(
                                 Arrays.asList(
@@ -118,10 +118,10 @@ public class TeeRepositorySourceTest {
                                                 .build()
                                 ))
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 4")
                         .build(),
-                new CategoryDTO.Builder()
+                new ApplicationCategoryDTO.Builder()
                         .withName("Category 5")
                         .build()
         );

@@ -18,7 +18,7 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class BackgroundRepositorySourceTest {
     private final ExecutorService mockExecutor = mock(ExecutorService.class);
     private final RepositorySource mockApplicationSource = mock(RepositorySource.class);
     private final BackgroundRepositorySource backgroundApplicationsSource = new BackgroundRepositorySource(mockApplicationSource, mockExecutor);
-    private List<CategoryDTO> mockResults = Arrays.asList(mock(CategoryDTO.class), mock(CategoryDTO.class));
+    private List<ApplicationCategoryDTO> mockResults = Arrays.asList(mock(ApplicationCategoryDTO.class), mock(ApplicationCategoryDTO.class));
 
     @Test
     public void testFetchInstallableApplications_taskIsPassed() {

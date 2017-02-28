@@ -19,8 +19,8 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.entities.OperatingSystem;
+import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
@@ -45,11 +45,11 @@ class FilterRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public List<ApplicationCategoryDTO> fetchInstallableApplications() {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
-        final List<CategoryDTO> categories = repositorySource.fetchInstallableApplications();
-        final List<CategoryDTO> filteredCategories = new ArrayList<>();
-        for (CategoryDTO category : categories) {
+        final List<ApplicationCategoryDTO> categories = repositorySource.fetchInstallableApplications();
+        final List<ApplicationCategoryDTO> filteredCategories = new ArrayList<>();
+        for (ApplicationCategoryDTO category : categories) {
             final List<ApplicationDTO> applications = new ArrayList<>();
             for (ApplicationDTO application : category.getApplications()) {
                 final List<ScriptDTO> scripts;
@@ -68,7 +68,7 @@ class FilterRepositorySource implements RepositorySource {
             }
             if (!applications.isEmpty()) {
                 filteredCategories.add(
-                        new CategoryDTO.Builder(category)
+                        new ApplicationCategoryDTO.Builder(category)
                                 .withApplications(applications)
                                 .build()
                 );
