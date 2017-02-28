@@ -18,10 +18,9 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import com.google.common.collect.Sets;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -68,14 +66,14 @@ public class ViewApps extends MainWindowView {
     }
 
     /**
-     * Show available apps panel
+     * Show available repository panel
      */
     public void showAvailableApps() {
         showRightView(availableApps);
     }
 
     /**
-     * Populate with a list of categories containing apps, and then scripts
+     * Populate with a list of categories containing repository, and then scripts
      *
      * @param categories CategoryDTO
      */
@@ -85,7 +83,7 @@ public class ViewApps extends MainWindowView {
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
-                    final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
+                    final String resource = String.format("icons/mainwindow/repository/%s.png", category.getName().toLowerCase());
                     if (themeManager.resourceExists(resource)) {
                         categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
                     } else {

@@ -18,8 +18,8 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.ApplicationsSource;
-import org.phoenicis.apps.AppsConfiguration;
+import org.phoenicis.repository.RepositorySource;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
@@ -37,18 +37,18 @@ import org.springframework.context.annotation.Import;
         MultithreadingConfiguration.class,
         Win32Configuration.class,
         ToolsConfiguration.class,
-        AppsConfiguration.class,
+        RepositoryConfiguration.class,
         ScriptsConfiguration.class,
         WizardConfiguration.class,
         TestUiConfiguration.class,
 })
 class PhoenicisTestsConfiguration {
     @Autowired
-    private AppsConfiguration appsConfiguration;
+    private RepositoryConfiguration repositoryConfiguration;
 
     @Bean
-    public ApplicationsSource mockedApplicationSource() {
-        return new MockedApplicationSource(appsConfiguration.appsSource());
+    public RepositorySource mockedApplicationSource() {
+        return new MockedRepositorySource(repositoryConfiguration.repositorySource());
     }
 
 }

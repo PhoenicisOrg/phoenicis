@@ -38,7 +38,7 @@
 
         <dependency>
             <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-apps</artifactId>
+            <artifactId>phoenicis-repository</artifactId>
             <version>${project.version}</version>
         </dependency>
 

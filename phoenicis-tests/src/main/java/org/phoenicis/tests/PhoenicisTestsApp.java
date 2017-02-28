@@ -18,10 +18,10 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.ApplicationsSource;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.RepositorySource;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.springframework.context.ApplicationContext;
@@ -45,10 +45,10 @@ public class PhoenicisTestsApp {
         try(final ConfigurableApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(PhoenicisTestsConfiguration.class)) {
 
-            final ApplicationsSource applicationsSource = applicationContext.getBean("mockedApplicationSource", ApplicationsSource.class);
+            final RepositorySource repositorySource = applicationContext.getBean("mockedApplicationSource", RepositorySource.class);
             this.applicationContext = applicationContext;
 
-            applicationsSource.fetchInstallableApplications(categoryDTOS -> {
+            repositorySource.fetchInstallableApplications(categoryDTOS -> {
                 categoryDTOS.forEach(this::testCategory);
             }, e -> {
                 throw new IllegalStateException(e);

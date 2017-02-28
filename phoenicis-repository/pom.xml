@@ -26,60 +26,31 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>phoenicis-javafx</artifactId>
+    <artifactId>phoenicis-repository</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-configuration</artifactId>
+            <artifactId>phoenicis-entities</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-repository</artifactId>
+            <artifactId>phoenicis-multithreading</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-scripts</artifactId>
+            <artifactId>phoenicis-tools</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-library</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-engines</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-containers</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.spullara.mustache.java</groupId>
-            <artifactId>compiler</artifactId>
-            <version>0.9.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
 
@@ -95,18 +66,46 @@
             <version>${spring.version}</version>
         </dependency>
 
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-settings</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
+
 
     </dependencies>
 </project>

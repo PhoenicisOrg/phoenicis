@@ -16,33 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.interpreter;
+package org.phoenicis.repository;
 
-import org.phoenicis.repository.RepositorySource;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class ScriptFetcher {
-    private final RepositorySource appsSource;
+class CachedRepositorySource implements RepositorySource {
+    private final RepositorySource repositorySource;
+    private List<CategoryDTO> cache;
 
-    public ScriptFetcher(RepositorySource appsSource) {
-        this.appsSource = appsSource;
+    CachedRepositorySource(RepositorySource repositorySource) {
+        this.repositorySource = repositorySource;
     }
 
-    public String getScript(List<String> path) {
-        final ScriptDTO script = appsSource.getScript(path);
-
-        if (script == null) {
-            throw new ScriptException("Script not found: " + path);
+    @Override
+    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+        if (cache == null) {
+            cache = repositorySource.fetchInstallableApplications();
         }
 
-        return script.getScript();
+        return cache;
     }
 
-    public String getScript(String... path) {
-        return getScript(Arrays.asList(path));
-    }
 
 }
