@@ -40,7 +40,7 @@ public class CLIController implements AutoCloseable {
 
     public CLIController() {
         applicationContext = new AnnotationConfigApplicationContext(CLIConfiguration.class);
-        repositorySource = applicationContext.getBean("backgroundAppsSource", RepositorySource.class);
+        repositorySource = applicationContext.getBean("backgroundRepositorySource", RepositorySource.class);
         scriptInterpreter = applicationContext.getBean("scriptInterpreter", ScriptInterpreter.class);
     }
 

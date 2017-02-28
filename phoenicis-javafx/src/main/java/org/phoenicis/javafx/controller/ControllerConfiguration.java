@@ -120,7 +120,7 @@ public class ControllerConfiguration {
     public AppsController appsController() {
         return new AppsController(
                 viewsConfiguration.viewApps(),
-                repositoryConfiguration.backgroundAppsSource(),
+                repositoryConfiguration.backgroundRepositorySource(),
                 scriptsConfiguration.scriptInterpreter()
         );
     }

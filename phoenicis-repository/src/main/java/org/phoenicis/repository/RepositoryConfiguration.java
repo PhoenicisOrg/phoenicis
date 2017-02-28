@@ -56,7 +56,7 @@ public class RepositoryConfiguration {
     }
 
     @Bean
-    public RepositorySource backgroundAppsSource() {
+    public RepositorySource backgroundRepositorySource() {
         return new BackgroundRepositorySource(repositorySource(), multithreadingConfiguration.appsExecutorService());
     }
 
