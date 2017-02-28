@@ -65,7 +65,7 @@ public class ClasspathRepositorySourceTest {
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scriptContent() {
-        assertEquals("include([\"Functions\", \"QuickScript\", \"OnlineInstallerScript\"]);\n" +
+        assertEquals("include([\"Functions\", \"Functions\",  \"QuickScript\", \"OnlineInstallerScript\"]);\n" +
                 "\n" +
                 "new OnlineInstallerScript()\n" +
                 "    .name(\"Photofiltre\")\n" +

@@ -1,4 +1,4 @@
-include(["Functions", "QuickScript", "OnlineInstallerScript"]);
+include(["Functions", "Functions",  "QuickScript", "OnlineInstallerScript"]);
 
 new OnlineInstallerScript()
     .name("Photofiltre")

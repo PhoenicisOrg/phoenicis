@@ -75,7 +75,7 @@ public class WinePrefixContainerController {
         // FIXME
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\",  \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
@@ -95,7 +95,7 @@ public class WinePrefixContainerController {
                               Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\",  \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
@@ -119,7 +119,7 @@ public class WinePrefixContainerController {
         LOGGER.info("Updating registry for prefix: " + winePrefix.getPath());
         LOGGER.info(registryPatch);
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\",  \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
@@ -141,7 +141,7 @@ public class WinePrefixContainerController {
                             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\",  \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
@@ -168,7 +168,7 @@ public class WinePrefixContainerController {
         List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
         for (ShortcutDTO shortcutDTO: shortcuts) {
             final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-            interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
+            interactiveScriptSession.eval("include([\"Functions\", \"Functions\",  \"Shortcuts\", \"Reader\"]);",
                     ignored -> interactiveScriptSession.eval(
                             "new ShortcutReader()",
                             output -> {
