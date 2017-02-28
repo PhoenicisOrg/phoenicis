@@ -20,7 +20,7 @@ package org.phoenicis.repository;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.Arrays;
 
@@ -33,10 +33,10 @@ public class CachedRepositorySourceTest {
     public void testFetchInstallableApplications() throws Exception {
         RepositorySource repositorySource = Mockito.mock(RepositorySource.class);
         when(repositorySource.fetchInstallableApplications()).thenReturn(Arrays.asList(
-                new ApplicationCategoryDTO.Builder()
+                new CategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
-                new ApplicationCategoryDTO.Builder()
+                new CategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
         ));

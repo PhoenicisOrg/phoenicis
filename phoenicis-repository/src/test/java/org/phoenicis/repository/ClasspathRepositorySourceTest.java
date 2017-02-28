@@ -19,7 +19,7 @@
 package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -85,8 +85,8 @@ public class ClasspathRepositorySourceTest {
 
     @Test
     public void fetchInstallableApplications_categoriesTypes() {
-        assertEquals(ApplicationCategoryDTO.CategoryType.INSTALLERS, repositorySource.fetchInstallableApplications().get(0).getType());
-        assertEquals(ApplicationCategoryDTO.CategoryType.FUNCTIONS, repositorySource.fetchInstallableApplications().get(1).getType());
+        assertEquals(CategoryDTO.CategoryType.INSTALLERS, repositorySource.fetchInstallableApplications().get(0).getType());
+        assertEquals(CategoryDTO.CategoryType.FUNCTIONS, repositorySource.fetchInstallableApplications().get(1).getType());
     }
 
 }

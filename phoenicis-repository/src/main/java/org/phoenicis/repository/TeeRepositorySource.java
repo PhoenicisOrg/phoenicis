@@ -18,8 +18,8 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ResourceDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
@@ -44,14 +44,14 @@ public class TeeRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<ApplicationCategoryDTO> fetchInstallableApplications() {
-        final Map<String, ApplicationCategoryDTO> leftCategories = createSortedMap(leftApplicationSource.fetchInstallableApplications(), ApplicationCategoryDTO::getName);
-        final Map<String, ApplicationCategoryDTO> rightCategories = createSortedMap(rightApplicationSource.fetchInstallableApplications(), ApplicationCategoryDTO::getName);
+    public List<CategoryDTO> fetchInstallableApplications() {
+        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
 
-        final SortedMap<String, ApplicationCategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
+        final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
 
         for (String categoryName : leftCategories.keySet()) {
-            final ApplicationCategoryDTO category = leftCategories.get(categoryName);
+            final CategoryDTO category = leftCategories.get(categoryName);
 
             if (mergedCategories.containsKey(categoryName)) {
                 mergedCategories.put(categoryName, mergeCategories(mergedCategories.get(categoryName), category));
@@ -63,7 +63,7 @@ public class TeeRepositorySource implements RepositorySource {
         return new ArrayList<>(mergedCategories.values());
     }
 
-    private ApplicationCategoryDTO mergeCategories(ApplicationCategoryDTO leftCategory, ApplicationCategoryDTO rightCategory) {
+    private CategoryDTO mergeCategories(CategoryDTO leftCategory, CategoryDTO rightCategory) {
         final Map<String, ApplicationDTO> leftApplications = createSortedMap(leftCategory.getApplications(), ApplicationDTO::getName);
         final Map<String, ApplicationDTO> rightApplications = createSortedMap(rightCategory.getApplications(), ApplicationDTO::getName);
 
@@ -81,7 +81,7 @@ public class TeeRepositorySource implements RepositorySource {
 
         final List<ApplicationDTO> applications = new ArrayList<>(mergedApps.values());
         applications.sort(ApplicationDTO.nameComparator());
-        return new ApplicationCategoryDTO.Builder()
+        return new CategoryDTO.Builder()
                 .withApplications(applications)
                 .withType(leftCategory.getType())
                 .withIcon(leftCategory.getIcon())

@@ -18,20 +18,20 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.List;
 
 class CachedRepositorySource implements RepositorySource {
     private final RepositorySource repositorySource;
-    private List<ApplicationCategoryDTO> cache;
+    private List<CategoryDTO> cache;
 
     CachedRepositorySource(RepositorySource repositorySource) {
         this.repositorySource = repositorySource;
     }
 
     @Override
-    public synchronized List<ApplicationCategoryDTO> fetchInstallableApplications() {
+    public synchronized List<CategoryDTO> fetchInstallableApplications() {
         if (cache == null) {
             cache = repositorySource.fetchInstallableApplications();
         }

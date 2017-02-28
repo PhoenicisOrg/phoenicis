@@ -18,7 +18,7 @@
 
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ class ConfigurableApplicationSource implements RepositorySource {
     }
 
     @Override
-    public List<ApplicationCategoryDTO> fetchInstallableApplications() {
+    public List<CategoryDTO> fetchInstallableApplications() {
         return repositorySource.fetchInstallableApplications();
     }
 

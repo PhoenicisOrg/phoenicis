@@ -19,8 +19,8 @@
 package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ResourceDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.io.IOUtils;
@@ -46,7 +46,7 @@ class LocalRepositorySource implements RepositorySource {
     }
 
     @Override
-    public List<ApplicationCategoryDTO> fetchInstallableApplications() {
+    public List<CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
         final List<File> categoryDirectories = new ArrayList<>(Arrays.asList(repositoryDirectoryFile.listFiles()));
         final File repositoryAppsDirectoryFile = new File(repositoryDirectory + "/Apps");
@@ -60,14 +60,14 @@ class LocalRepositorySource implements RepositorySource {
         return fetchCategories(categoryDirectories);
     }
 
-    private List<ApplicationCategoryDTO> fetchCategories(List<File> categoryDirectories) {
-        final List<ApplicationCategoryDTO> results = new ArrayList<>();
+    private List<CategoryDTO> fetchCategories(List<File> categoryDirectories) {
+        final List<CategoryDTO> results = new ArrayList<>();
 
         for (File categoryDirectory : categoryDirectories) {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
                 final File categoryFile = new File(categoryDirectory, "category.json");
 
-                final ApplicationCategoryDTO.Builder categoryDTOBuilder = new ApplicationCategoryDTO.Builder(unSerializeCategory(categoryFile))
+                final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(unSerializeCategory(categoryFile))
                         .withName(categoryDirectory.getName())
                         .withApplications(fetchApplications(categoryDirectory));
 
@@ -76,12 +76,12 @@ class LocalRepositorySource implements RepositorySource {
                     categoryDTOBuilder.withIcon("file:///" + categoryIconFile.getAbsolutePath());
                 }
 
-                ApplicationCategoryDTO category = categoryDTOBuilder.build();
+                CategoryDTO category = categoryDTOBuilder.build();
                 results.add(category);
             }
         }
 
-        Collections.sort(results, Comparator.comparing(ApplicationCategoryDTO::getName));
+        Collections.sort(results, Comparator.comparing(CategoryDTO::getName));
         return results;
     }
 
@@ -202,12 +202,12 @@ class LocalRepositorySource implements RepositorySource {
         return results;
     }
 
-    private ApplicationCategoryDTO unSerializeCategory(File jsonFile) {
+    private CategoryDTO unSerializeCategory(File jsonFile) {
         try {
-            return objectMapper.readValue(jsonFile, ApplicationCategoryDTO.class);
+            return objectMapper.readValue(jsonFile, CategoryDTO.class);
         } catch (IOException e) {
             LOGGER.debug("JSON file not found", e);
-            return new ApplicationCategoryDTO.Builder().build();
+            return new CategoryDTO.Builder().build();
         }
     }
 

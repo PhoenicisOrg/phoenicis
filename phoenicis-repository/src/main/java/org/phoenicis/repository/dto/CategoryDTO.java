@@ -30,14 +30,14 @@ import java.util.List;
 /**
  * Represents a category of application
  */
-@JsonDeserialize(builder = ApplicationCategoryDTO.Builder.class)
-public class ApplicationCategoryDTO {
+@JsonDeserialize(builder = CategoryDTO.Builder.class)
+public class CategoryDTO {
     private final CategoryType type;
     private final String name;
     private final List<ApplicationDTO> applications;
     private final String icon;
 
-    private ApplicationCategoryDTO(Builder builder) {
+    private CategoryDTO(Builder builder) {
         this.type = builder.type;
         this.name = builder.name;
         this.applications = Collections.unmodifiableList(builder.applications);
@@ -67,7 +67,7 @@ public class ApplicationCategoryDTO {
         return applications;
     }
 
-    public static Comparator<ApplicationCategoryDTO> nameComparator() {
+    public static Comparator<CategoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
@@ -82,11 +82,11 @@ public class ApplicationCategoryDTO {
             // Default constructor
         }
 
-        public Builder(ApplicationCategoryDTO applicationCategoryDTO) {
-            this.withName(applicationCategoryDTO.getName())
-                    .withApplications(applicationCategoryDTO.getApplications())
-                    .withIcon(applicationCategoryDTO.getIcon())
-                    .withType(applicationCategoryDTO.getType());
+        public Builder(CategoryDTO categoryDTO) {
+            this.withName(categoryDTO.getName())
+                    .withApplications(categoryDTO.getApplications())
+                    .withIcon(categoryDTO.getIcon())
+                    .withType(categoryDTO.getType());
         }
 
 
@@ -110,8 +110,8 @@ public class ApplicationCategoryDTO {
             return this;
         }
 
-        public ApplicationCategoryDTO build() {
-            return new ApplicationCategoryDTO(this);
+        public CategoryDTO build() {
+            return new CategoryDTO(this);
         }
     }
 

@@ -18,8 +18,8 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import org.phoenicis.repository.dto.ApplicationCategoryDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
@@ -45,7 +45,7 @@ public class ViewApps extends MainWindowView {
     private final MiniatureListWidget availableApps;
     private TextField searchBar;
     private LeftGroup categoryView;
-    private Consumer<ApplicationCategoryDTO> onSelectCategory = (category) -> {};
+    private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
 
     public ViewApps(ThemeManager themeManager) {
@@ -57,7 +57,7 @@ public class ViewApps extends MainWindowView {
         this.showWait();
     }
 
-    public void setOnSelectCategory(Consumer<ApplicationCategoryDTO> onSelectCategory) {
+    public void setOnSelectCategory(Consumer<CategoryDTO> onSelectCategory) {
         this.onSelectCategory = onSelectCategory;
     }
 
@@ -75,13 +75,13 @@ public class ViewApps extends MainWindowView {
     /**
      * Populate with a list of categories containing repository, and then scripts
      *
-     * @param categories ApplicationCategoryDTO
+     * @param categories CategoryDTO
      */
-    public void populate(List<ApplicationCategoryDTO> categories) {
+    public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
             final List<LeftButton> leftButtonList = new ArrayList<>();
-            for (ApplicationCategoryDTO category : categories) {
-                if(category.getType() == ApplicationCategoryDTO.CategoryType.INSTALLERS) {
+            for (CategoryDTO category : categories) {
+                if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
                     final String resource = String.format("icons/mainwindow/repository/%s.png", category.getName().toLowerCase());
                     if (themeManager.resourceExists(resource)) {
@@ -155,7 +155,7 @@ public class ViewApps extends MainWindowView {
         this.onSelectScript.accept(scriptDTO);
     }
 
-    private void selectCategory(ApplicationCategoryDTO category) {
+    private void selectCategory(CategoryDTO category) {
         showRightView(availableApps);
         this.onSelectCategory.accept(category);
         searchBar.setText("");
