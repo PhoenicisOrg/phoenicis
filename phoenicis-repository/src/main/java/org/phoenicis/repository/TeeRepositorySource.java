@@ -79,8 +79,9 @@ public class TeeRepositorySource implements RepositorySource {
         final List<CategoryDTO> categories = new ArrayList<>(mergedCategories.values());
         categories.sort(CategoryDTO.nameComparator());
         return new RepositoryDTO.Builder()
-                .withCategories(categories)
                 .withName(leftRepository.getName())
+                .withType(leftRepository.getType())
+                .withCategories(categories)
                 .build();
     }
 
@@ -104,7 +105,6 @@ public class TeeRepositorySource implements RepositorySource {
         applications.sort(ApplicationDTO.nameComparator());
         return new CategoryDTO.Builder()
                 .withApplications(applications)
-                .withType(leftCategory.getType())
                 .withIcon(leftCategory.getIcon())
                 .withName(leftCategory.getName())
                 .build();

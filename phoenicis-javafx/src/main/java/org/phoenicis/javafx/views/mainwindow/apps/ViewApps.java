@@ -82,22 +82,20 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<RepositoryDTO> repositories) {
         Platform.runLater(() -> {
-            final Optional<RepositoryDTO> repositoryDTO = repositories.stream().filter(repository -> repository.getName().equals("Apps")).findFirst();
+            final Optional<RepositoryDTO> repositoryDTO = repositories.stream().filter(repository -> repository.getType() == RepositoryDTO.RepositoryType.APPLICATIONS).findFirst();
             List<CategoryDTO> categories = repositoryDTO.isPresent() ? repositoryDTO.get().getCategories() : Collections.emptyList();
 
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
-                if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    final LeftButton categoryButton = new LeftButton(category.getName());
-                    final String resource = String.format("icons/mainwindow/repository/%s.png", category.getName().toLowerCase());
-                    if (themeManager.resourceExists(resource)) {
-                        categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
-                    } else {
-                        categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-                    }
-                    categoryButton.setOnMouseClicked(event -> selectCategory(category));
-                    leftButtonList.add(categoryButton);
+                final LeftButton categoryButton = new LeftButton(category.getName());
+                final String resource = String.format("icons/mainwindow/repository/%s.png", category.getName().toLowerCase());
+                if (themeManager.resourceExists(resource)) {
+                    categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
+                } else {
+                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
                 }
+                categoryButton.setOnMouseClicked(event -> selectCategory(category));
+                leftButtonList.add(categoryButton);
             }
 
             categoryView.setNodes(leftButtonList);

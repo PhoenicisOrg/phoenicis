@@ -51,46 +51,64 @@ class ClasspathRepositorySource implements RepositorySource {
     @Override
     public List<RepositoryDTO> fetchRepositories() {
         try {
-            final List<CategoryDTO> categoryDTOs = new ArrayList<>();
+            final List<RepositoryDTO> repositoryDTOs = new ArrayList<>();
             Resource[] resources = resourceResolver.getResources(packagePath + "/*");
             for (Resource resource : resources) {
-                final CategoryDTO category = buildCategory(resource.getFilename());
-                if (!category.getApplications().isEmpty()) {
-                    categoryDTOs.add(category);
+                final RepositoryDTO repository = buildRepository(resource.getFilename());
+                if (!repository.getCategories().isEmpty()) {
+                    repositoryDTOs.add(repository);
                 }
             }
-            Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
-            List<RepositoryDTO> repositories = new ArrayList<>();
-            repositories.add(new RepositoryDTO.Builder()
-                    .withName("repository")
-                    .withCategories(categoryDTOs)
-                    .build());
-            return repositories;
+            Collections.sort(repositoryDTOs, Comparator.comparing(RepositoryDTO::getName));
+            return repositoryDTOs;
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
             return Collections.emptyList();
         }
     }
 
-    private CategoryDTO buildCategory(String categoryFileName) throws IOException {
-        final String jsonCategoryFile = packagePath + "/" + categoryFileName + "/category.json";
-        final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile), CategoryDTO.class);
+    private RepositoryDTO buildRepository(String repositoryFileName) throws IOException {
+        final String repositoryScanClassPath = packagePath + "/" + repositoryFileName;
+        final String jsonRepositoryFile = packagePath + "/" + repositoryFileName + "/repository.json";
+        final RepositoryDTO repositoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonRepositoryFile), RepositoryDTO.class);
 
-        return new CategoryDTO.Builder(categoryDTO)
-                .withIcon(packagePath + "/" + categoryFileName + "/icon.png")
-                .withApplications(buildApplications(categoryFileName))
+        final List<CategoryDTO> categoryDTOs = new ArrayList<>();
+        Resource[] resources = resourceResolver.getResources(repositoryScanClassPath + "/*");
+        for (Resource resource : resources) {
+            final String fileName = resource.getFilename();
+            if (!"repository.json".equals(fileName)) {
+                final CategoryDTO category = buildCategory(repositoryFileName, fileName);
+                if (!category.getApplications().isEmpty()) {
+                    categoryDTOs.add(category);
+                }
+            }
+        }
+        Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
+
+        return new RepositoryDTO.Builder(repositoryDTO)
+                .withCategories(categoryDTOs)
                 .build();
     }
 
-    private List<ApplicationDTO> buildApplications(String categoryFileName) throws IOException {
-        final String categoryScanClassPath = packagePath + "/" + categoryFileName;
+    private CategoryDTO buildCategory(String repositoryFileName, String categoryFileName) throws IOException {
+        final String jsonCategoryFile = packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/category.json";
+        final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile), CategoryDTO.class);
+
+        return new CategoryDTO.Builder(categoryDTO)
+                .withIcon(packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/icon.png")
+                .withApplications(buildApplications(repositoryFileName, categoryFileName))
+                .build();
+    }
+
+    private List<ApplicationDTO> buildApplications(String repositoryFileName, String categoryFileName) throws IOException {
+        final String categoryScanClassPath = packagePath + "/" + repositoryFileName + "/" + categoryFileName;
         Resource[] resources = resourceResolver.getResources(categoryScanClassPath + "/*");
         final List<ApplicationDTO> applicationDTOS = new ArrayList<>();
 
         for (Resource resource : resources) {
             final String fileName = resource.getFilename();
             if(!"icon.png".equals(fileName) && !"category.json".equals(fileName)) {
-                final ApplicationDTO application = buildApplication(categoryFileName, fileName);
+                final ApplicationDTO application = buildApplication(repositoryFileName, categoryFileName, fileName);
                 if (!application.getScripts().isEmpty()) {
                     applicationDTOS.add(application);
                 }
@@ -101,22 +119,22 @@ class ClasspathRepositorySource implements RepositorySource {
         return applicationDTOS;
     }
 
-    private ApplicationDTO buildApplication(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationJsonFile = packagePath + "/" + categoryFileName + "/" + applicationFileName + "/application.json";
+    private ApplicationDTO buildApplication(String repositoryFileName, String categoryFileName, String applicationFileName) throws IOException {
+        final String applicationJsonFile = packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/" + applicationFileName + "/application.json";
         final ApplicationDTO applicationDTO = objectMapper.readValue(getClass().getResourceAsStream(applicationJsonFile), ApplicationDTO.class);
 
         return new ApplicationDTO.Builder(applicationDTO)
-                .withScripts(buildScripts(categoryFileName, applicationFileName))
-                .withMiniatures(buildMiniatures(categoryFileName, applicationFileName))
+                .withScripts(buildScripts(repositoryFileName, categoryFileName, applicationFileName))
+                .withMiniatures(buildMiniatures(repositoryFileName, categoryFileName, applicationFileName))
                 .build();
     }
 
-    private List<byte[]> buildMiniatures(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationScanClassPath = packagePath + "/" + categoryFileName + "/" + applicationFileName + "/miniatures/";
+    private List<byte[]> buildMiniatures(String repositoryFileName, String categoryFileName, String applicationFileName) throws IOException {
+        final String applicationScanClassPath = packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/" + applicationFileName + "/miniatures/";
         Resource[] resources = resourceResolver.getResources(applicationScanClassPath + "/*");
 
         return Arrays.stream(resources).map(resource -> {
-            final String resourceFile = packagePath + "/" + categoryFileName + "/" + applicationFileName + "/miniatures/" + resource.getFilename();
+            final String resourceFile = packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/" + applicationFileName + "/miniatures/" + resource.getFilename();
             try {
                 return IOUtils.toByteArray(getClass().getResourceAsStream(resourceFile));
             } catch (IOException e) {
@@ -125,15 +143,15 @@ class ClasspathRepositorySource implements RepositorySource {
         }).collect(Collectors.toList());
     }
 
-    private List<ScriptDTO> buildScripts(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationScanClassPath = packagePath + "/" + categoryFileName + "/" + applicationFileName;
+    private List<ScriptDTO> buildScripts(String repositoryFileName, String categoryFileName, String applicationFileName) throws IOException {
+        final String applicationScanClassPath = packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/" + applicationFileName;
         Resource[] resources = resourceResolver.getResources(applicationScanClassPath + "/*");
         final List<ScriptDTO> scriptDTOs = new ArrayList<>();
 
         for (Resource resource : resources) {
             final String fileName = resource.getFilename();
             if (!"resources".equals(fileName) && !"miniatures".equals(fileName) && !"application.json".equals(fileName)) {
-                final ScriptDTO script = buildScript(categoryFileName, applicationFileName, fileName);
+                final ScriptDTO script = buildScript(repositoryFileName, categoryFileName, applicationFileName, fileName);
                 scriptDTOs.add(script);
             }
         }
@@ -143,10 +161,10 @@ class ClasspathRepositorySource implements RepositorySource {
         return scriptDTOs;
     }
 
-    private ScriptDTO buildScript(String categoryFileName, String applicationFileName, String scriptFileName) throws IOException {
-        final String scriptJsonFile = packagePath + "/" + categoryFileName + "/" + applicationFileName + "/" + scriptFileName + "/script.json";
+    private ScriptDTO buildScript(String repositoryFileName, String categoryFileName, String applicationFileName, String scriptFileName) throws IOException {
+        final String scriptJsonFile = packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/" + applicationFileName + "/" + scriptFileName + "/script.json";
         final InputStream scriptJsonInputStream = getClass().getResourceAsStream(scriptJsonFile);
-        final InputStream scriptFile = getClass().getResourceAsStream(packagePath + "/" + categoryFileName + "/" + applicationFileName + "/" + scriptFileName + "/script.js");
+        final InputStream scriptFile = getClass().getResourceAsStream(packagePath + "/" + repositoryFileName + "/" + categoryFileName + "/" + applicationFileName + "/" + scriptFileName + "/script.js");
 
         if(scriptJsonInputStream == null) {
             return null;

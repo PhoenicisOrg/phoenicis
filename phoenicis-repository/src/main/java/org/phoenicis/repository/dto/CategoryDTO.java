@@ -32,13 +32,11 @@ import java.util.List;
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
 public class CategoryDTO {
-    private final CategoryType type;
     private final String name;
     private final List<ApplicationDTO> applications;
     private final String icon;
 
     private CategoryDTO(Builder builder) {
-        this.type = builder.type;
         this.name = builder.name;
         this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
@@ -46,17 +44,6 @@ public class CategoryDTO {
 
     public String getIcon() {
         return icon;
-    }
-
-
-
-    public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
-    }
-
-    public CategoryType getType() {
-        return type;
     }
 
     public String getName() {
@@ -73,7 +60,6 @@ public class CategoryDTO {
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private CategoryType type;
         private String name;
         private List<ApplicationDTO> applications = new ArrayList<>();
         private String icon;
@@ -85,14 +71,7 @@ public class CategoryDTO {
         public Builder(CategoryDTO categoryDTO) {
             this.withName(categoryDTO.getName())
                     .withApplications(categoryDTO.getApplications())
-                    .withIcon(categoryDTO.getIcon())
-                    .withType(categoryDTO.getType());
-        }
-
-
-        public Builder withType(CategoryType type) {
-            this.type = type;
-            return this;
+                    .withIcon(categoryDTO.getIcon());
         }
 
         public Builder withName(String name) {
@@ -119,7 +98,6 @@ public class CategoryDTO {
     public String toString() {
         return new ToStringBuilder(this)
                 .append(name)
-                .append(type)
                 .toString();
     }
 

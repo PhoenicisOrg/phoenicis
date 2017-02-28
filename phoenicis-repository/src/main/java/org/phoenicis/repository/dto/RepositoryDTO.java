@@ -34,10 +34,12 @@ import java.util.List;
 public class RepositoryDTO {
     private final String name;
     private final List<CategoryDTO> categories;
+    private final RepositoryType type;
 
     private RepositoryDTO(Builder builder) {
         this.name = builder.name;
         this.categories = Collections.unmodifiableList(builder.categories);
+        this.type = builder.type;
     }
 
     public String getName() {
@@ -48,6 +50,15 @@ public class RepositoryDTO {
         return categories;
     }
 
+    public RepositoryType getType() {
+        return type;
+    }
+
+    public enum RepositoryType {
+        APPLICATIONS,
+        FUNCTIONS
+    }
+
     public static Comparator<RepositoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
@@ -56,6 +67,7 @@ public class RepositoryDTO {
     public static class Builder {
         private String name;
         private List<CategoryDTO> categories = new ArrayList<>();
+        private RepositoryType type;
 
         public Builder() {
             // Default constructor
@@ -63,7 +75,8 @@ public class RepositoryDTO {
 
         public Builder(RepositoryDTO repositoryDTO) {
             this.withName(repositoryDTO.getName())
-                    .withCategories(repositoryDTO.getCategories());
+                    .withCategories(repositoryDTO.getCategories())
+                    .withType(repositoryDTO.getType());
         }
 
 
@@ -77,6 +90,12 @@ public class RepositoryDTO {
             return this;
         }
 
+
+        public Builder withType(RepositoryType type) {
+            this.type = type;
+            return this;
+        }
+
         public RepositoryDTO build() {
             return new RepositoryDTO(this);
         }
@@ -86,6 +105,7 @@ public class RepositoryDTO {
     public String toString() {
         return new ToStringBuilder(this)
                 .append(name)
+                .append(type)
                 .toString();
     }
 
