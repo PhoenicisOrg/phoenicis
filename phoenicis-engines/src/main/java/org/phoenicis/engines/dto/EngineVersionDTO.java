@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-@JsonDeserialize(builder = WineVersionDTO.Builder.class)
-public class WineVersionDTO {
+@JsonDeserialize(builder = EngineVersionDTO.Builder.class)
+public class EngineVersionDTO {
     private final String version;
     private final String url;
     private final String sha1sum;
@@ -34,7 +34,7 @@ public class WineVersionDTO {
     private final String monoFile;
     private final String geckoFile;
 
-    private WineVersionDTO(Builder builder) {
+    private EngineVersionDTO(Builder builder) {
         version = builder.version;
         url = builder.url;
         sha1sum = builder.sha1sum;
@@ -84,7 +84,7 @@ public class WineVersionDTO {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(WineVersionDTO.class)
+        return new ToStringBuilder(EngineVersionDTO.class)
                 .append("version", version)
                 .append("url", url)
                 .append("sha1sum", sha1sum)
@@ -152,8 +152,8 @@ public class WineVersionDTO {
             return this;
         }
 
-        public WineVersionDTO build() {
-            return new WineVersionDTO(this);
+        public EngineVersionDTO build() {
+            return new EngineVersionDTO(this);
         }
 
     }

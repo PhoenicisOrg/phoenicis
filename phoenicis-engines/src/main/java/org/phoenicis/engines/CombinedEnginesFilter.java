@@ -19,8 +19,9 @@
 package org.phoenicis.engines;
 
 
-import org.phoenicis.engines.dto.WineVersionDTO;
-import org.phoenicis.engines.dto.WineVersionDistributionDTO;
+import org.phoenicis.engines.dto.EngineCategoryDTO;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
+import org.phoenicis.engines.dto.EngineVersionDTO;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,29 +44,36 @@ public class CombinedEnginesFilter {
         filters.add(filter);
     }
 
-    public void apply(List<WineVersionDistributionDTO> engines, String wineEnginesPath) {
-        List<WineVersionDistributionDTO> filteredDistributions = new ArrayList<>();
-        for (WineVersionDistributionDTO wineVersionDistributionDTO : engines) {
-            List<WineVersionDTO> filteredPackages = new ArrayList<>();
-            for (WineVersionDTO wineVersionDTO : wineVersionDistributionDTO.getPackages()) {
-                if (filters.contains(EnginesFilter.INSTALLED) && isInstalled(wineVersionDistributionDTO, wineVersionDTO, wineEnginesPath)) {
-                    filteredPackages.add(wineVersionDTO);
+    public void apply(List<EngineCategoryDTO> engines, String wineEnginesPath) {
+        List<EngineCategoryDTO> filteredCategories = new ArrayList<>();
+        for (EngineCategoryDTO engineCategoryDTO : engines) {
+            List<EngineSubCategoryDTO> filteredDistributions = new ArrayList<>();
+            for (EngineSubCategoryDTO engineSubCategoryDTO : engineCategoryDTO.getSubCategories()) {
+                List<EngineVersionDTO> filteredPackages = new ArrayList<>();
+                for (EngineVersionDTO engineVersionDTO : engineSubCategoryDTO.getPackages()) {
+                    if (filters.contains(EnginesFilter.INSTALLED) && isInstalled(engineSubCategoryDTO, engineVersionDTO, wineEnginesPath)) {
+                        filteredPackages.add(engineVersionDTO);
+                    }
+                    if (filters.contains(EnginesFilter.NOT_INSTALLED) && !isInstalled(engineSubCategoryDTO, engineVersionDTO, wineEnginesPath)) {
+                        filteredPackages.add(engineVersionDTO);
+                    }
                 }
-                if (filters.contains(EnginesFilter.NOT_INSTALLED) && !isInstalled(wineVersionDistributionDTO, wineVersionDTO, wineEnginesPath)) {
-                    filteredPackages.add(wineVersionDTO);
+                engineSubCategoryDTO.getPackages().clear();
+                engineSubCategoryDTO.getPackages().addAll(filteredPackages);
+                if (engineSubCategoryDTO.getPackages().isEmpty()) {
+                    filteredDistributions.add(engineSubCategoryDTO);
                 }
             }
-            wineVersionDistributionDTO.getPackages().clear();
-            wineVersionDistributionDTO.getPackages().addAll(filteredPackages);
-            if (wineVersionDistributionDTO.getPackages().isEmpty()) {
-                filteredDistributions.add(wineVersionDistributionDTO);
+            engineCategoryDTO.getSubCategories().removeAll(filteredDistributions);
+            if (engineCategoryDTO.getSubCategories().isEmpty()) {
+                filteredCategories.add(engineCategoryDTO);
             }
         }
-        engines.removeAll(filteredDistributions);
+        engines.removeAll(filteredCategories);
     }
 
-    private boolean isInstalled(WineVersionDistributionDTO wineVersionDistributionDTO, WineVersionDTO wineVersionDTO, String wineEnginesPath) {
-        File f = new File(wineEnginesPath + "/" + wineVersionDistributionDTO.getName() + "/" + wineVersionDTO.getVersion());
+    private boolean isInstalled(EngineSubCategoryDTO engineCategoryDTO, EngineVersionDTO engineVersionDTO, String wineEnginesPath) {
+        File f = new File(wineEnginesPath + "/" + engineCategoryDTO.getName() + "/" + engineVersionDTO.getVersion());
         return f.exists();
     }
 }

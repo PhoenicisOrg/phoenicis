@@ -22,12 +22,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import org.phoenicis.engines.dto.WineEngineDTO;
+import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -36,16 +37,16 @@ final class EnginePanel extends VBox {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
-    private final WineEngineDTO wineEngineDTO;
+    private final EngineDTO engineDTO;
     private Node progress;
 
-    private Consumer<WineEngineDTO> onEngineInstall = (engine) -> {};
-    private Consumer<WineEngineDTO> onEngineDelete = (engine) -> {};
+    private Consumer<EngineDTO> onEngineInstall = (engine) -> {};
+    private Consumer<EngineDTO> onEngineDelete = (engine) -> {};
 
-    public EnginePanel(WineEngineDTO wineEngineDTO) {
+    public EnginePanel(EngineDTO engineDTO) {
         super();
         
-        this.wineEngineDTO = wineEngineDTO;
+        this.engineDTO = engineDTO;
 
         getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
 
@@ -53,19 +54,18 @@ final class EnginePanel extends VBox {
         informationContentPane.getStyleClass().add("grid");
 
         informationContentPane.add(new TextWithStyle(translate("Version:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
-        Label name = new Label(wineEngineDTO.getVersion());
+        Label name = new Label(engineDTO.getVersion());
         name.setWrapText(true);
         informationContentPane.add(name, 1, 0);
 
-        informationContentPane.add(new TextWithStyle(translate("Mono:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
-        Label path = new Label(wineEngineDTO.getMonoFile());
-        path.setWrapText(true);
-        informationContentPane.add(path, 1, 1);
-
-        informationContentPane.add(new TextWithStyle(translate("Gecko:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
-        Label version = new Label(wineEngineDTO.getGeckoFile());
-        version.setWrapText(true);
-        informationContentPane.add(version, 1, 2);
+        int rowIdx = 1;
+        for (Map.Entry<String, String> userData : engineDTO.getUserData().entrySet()) {
+            informationContentPane.add(new TextWithStyle(userData.getKey(), CAPTION_TITLE_CSS_CLASS), 0, rowIdx);
+            Label path = new Label(userData.getValue());
+            path.setWrapText(true);
+            informationContentPane.add(path, 1, rowIdx);
+            rowIdx++;
+        }
 
         informationContentPane.setHgap(20);
         informationContentPane.setVgap(10);
@@ -73,7 +73,7 @@ final class EnginePanel extends VBox {
         Button installButton = new Button("Install");
         installButton.setOnMouseClicked(evt -> {
             try {
-                onEngineInstall.accept(wineEngineDTO);
+                onEngineInstall.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
                 new ErrorMessage("Error while trying to install the engine", e).show();
@@ -83,7 +83,7 @@ final class EnginePanel extends VBox {
         Button deleteButton = new Button("Delete");
         deleteButton.setOnMouseClicked(evt -> {
             try {
-                onEngineDelete.accept(wineEngineDTO);
+                onEngineDelete.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
                 new ErrorMessage("Error while trying to delete the engine", e).show();
@@ -111,14 +111,14 @@ final class EnginePanel extends VBox {
         getChildren().add(progress);
     }
 
-    public void setOnEngineInstall(Consumer<WineEngineDTO> onEngineInstall) {
+    public void setOnEngineInstall(Consumer<EngineDTO> onEngineInstall) {
         this.onEngineInstall = onEngineInstall;
     }
-    public void setOnEngineDelete(Consumer<WineEngineDTO> onEngineDelete) {
+    public void setOnEngineDelete(Consumer<EngineDTO> onEngineDelete) {
         this.onEngineDelete = onEngineDelete;
     }
 
-    public WineEngineDTO getWineEngineDTO() {
-        return wineEngineDTO;
+    public EngineDTO getEngineDTO() {
+        return engineDTO;
     }
 }
