@@ -37,7 +37,7 @@ class BackgroundApplicationsSource implements ApplicationsSource {
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        throw new UnsupportedOperationException("The background apps manager is asynchroneous");
+        throw new UnsupportedOperationException("The background apps manager is asynchronous");
     }
 
     @Override
@@ -48,5 +48,10 @@ class BackgroundApplicationsSource implements ApplicationsSource {
     @Override
     public void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedAppManager.getScript(path, callback, errorCallback));
+    }
+
+    @Override
+    public void setFilter(CombinedAppsFilter filter) {
+        delegatedAppManager.setFilter(filter);
     }
 }
