@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.scriptui;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 
@@ -54,11 +55,11 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
                 listViewWidget.getFocusModel().focus(idx);
                 listViewWidget.scrollTo(idx);
             }
-            if (defaultValue.isEmpty()) {
+            if (StringUtils.isBlank(defaultValue)) {
                 setNextButtonEnabled(false);
                 listViewWidget.getSelectionModel().selectedItemProperty()
                         .addListener((observable, oldValue, newValue) -> {
-                            if (newValue.trim().equals("")) {
+                            if (StringUtils.isBlank(newValue)) {
                                 setNextButtonEnabled(false);
                             } else {
                                 setNextButtonEnabled(true);
