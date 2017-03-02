@@ -50,4 +50,9 @@ class BackgroundRepositorySource implements RepositorySource {
     public void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedAppManager.getScript(path, callback, errorCallback));
     }
+
+    @Override
+    public void setFilter(CombinedAppsFilter filter) {
+        delegatedAppManager.setFilter(filter);
+    }
 }

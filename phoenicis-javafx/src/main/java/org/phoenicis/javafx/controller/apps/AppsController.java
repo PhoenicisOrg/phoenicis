@@ -23,10 +23,11 @@ import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import javafx.application.Platform;
+import java.util.Collections;
 
 public class AppsController {
     private final ViewApps view;
-    private final RepositorySource repositorySource;
+    private final ApplicationsSource appsSource;
     private final ScriptInterpreter scriptInterpreter;
 
     private Runnable onAppLoaded = () -> {};
@@ -37,6 +38,15 @@ public class AppsController {
         this.view = view;
         this.repositorySource = repositorySource;
         this.scriptInterpreter = scriptInterpreter;
+
+        this.view.setOnApplyFilter(filter -> {
+            appsSource.setFilter(filter);
+            appsSource.fetchInstallableApplications(
+                    this.view::populate,
+                    e -> this.view.showFailure()
+            );
+            this.view.populateApps(Collections.emptyList());
+        });
     }
 
     public void loadApps() {

@@ -22,64 +22,59 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-@JsonDeserialize(builder = WineEngineDTO.Builder.class)
-public class WineEngineDTO {
-    private final String architecture;
-    private final String distribution;
+import java.util.Map;
+
+@JsonDeserialize(builder = EngineDTO.Builder.class)
+public class EngineDTO {
+    private final String category;
+    private final String subCategory;
     private final String version;
-    private final String monoFile;
-    private final String geckoFile;
+    private final Map<String, String> userData;
 
-    private WineEngineDTO(Builder builder) {
-        architecture = builder.architecture;
-        distribution = builder.distribution;
+    private EngineDTO(Builder builder) {
+        category = builder.category;
+        subCategory = builder.subCategory;
         version = builder.version;
-        monoFile = builder.monoFile;
-        geckoFile = builder.geckoFile;
+        userData = builder.userData;
     }
 
-    public String getArchitecture() {
-        return architecture;
+    public String getCategory() {
+        return category;
     }
 
-    public String getDistribution() {
-        return distribution;
+    public String getSubCategory() {
+        return subCategory;
     }
 
     public String getVersion() {
         return version;
     }
 
-    public String getMonoFile() { return monoFile; }
-
-    public String getGeckoFile() { return geckoFile; }
+    public Map<String, String> getUserData() { return userData; }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(WineEngineDTO.class)
-                .append("architecture", architecture)
-                .append("distribution", distribution)
+        return new ToStringBuilder(EngineDTO.class)
+                .append("category", category)
+                .append("subCategory", subCategory)
                 .append("version", version)
-                .append("mono", monoFile)
-                .append("gecko", geckoFile)
                 .toString();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private String architecture;
-        private String distribution;
+        private String category;
+        private String subCategory;
         private String version;
-        private String monoFile;
-        private String geckoFile;
+        private Map<String, String> userData;
 
-        public Builder withArchitecture(String architecture) {
-            this.architecture = architecture;
+        public Builder withCategory(String category) {
+            this.category = category;
             return this;
         }
 
-        public Builder withDistribution(String distribution) {
-            this.distribution = distribution;
+        public Builder withSubCategory(String distribution) {
+            this.subCategory = distribution;
             return this;
         }
 
@@ -88,18 +83,13 @@ public class WineEngineDTO {
             return this;
         }
 
-        public Builder withMonoFile(String monoFile) {
-            this.monoFile = monoFile;
+        public Builder withUserData(Map<String, String> userData) {
+            this.userData = userData;
             return this;
         }
 
-        public Builder withGeckoFile(String geckoFile) {
-            this.geckoFile = geckoFile;
-            return this;
-        }
-
-        public WineEngineDTO build() {
-            return new WineEngineDTO(this);
+        public EngineDTO build() {
+            return new EngineDTO(this);
         }
 
     }

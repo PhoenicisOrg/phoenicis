@@ -19,8 +19,9 @@
 package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
-import org.phoenicis.engines.WineVersionsManager;
-import org.phoenicis.engines.dto.WineEngineDTO;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.engines.EnginesSource;
+import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
@@ -30,35 +31,35 @@ import java.util.function.Consumer;
 
 public class EnginesController {
     private final ViewEngines viewEngines;
-    private final WineVersionsManager wineVersionsManager;
+    private final EnginesSource enginesSource;
     private final String wineEnginesPath;
     private final ScriptInterpreter scriptInterpreter;
 
-    public EnginesController(ViewEngines viewEngines, WineVersionsManager wineVersionsManager, String wineEnginesPath, ScriptInterpreter scriptInterpreter) {
+    public EnginesController(ViewEngines viewEngines, EnginesSource enginesSource, String wineEnginesPath, ScriptInterpreter scriptInterpreter) {
         this.viewEngines = viewEngines;
-        this.wineVersionsManager = wineVersionsManager;
+        this.enginesSource = enginesSource;
         this.wineEnginesPath = wineEnginesPath;
         this.scriptInterpreter = scriptInterpreter;
 
         this.viewEngines.setOnApplyFilter(filter -> {
-            wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> {
+            enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> {
                 filter.apply(versions, wineEnginesPath);
                 this.viewEngines.populate(versions, wineEnginesPath);
             }));
             this.viewEngines.showWineVersions();
         });
 
-        this.viewEngines.setOnInstallEngine(wineEngineDTO -> {
-            new ConfirmMessage("Install " + wineEngineDTO.getVersion(), "Are you sure you want to install " + wineEngineDTO.getVersion() + "?")
+        this.viewEngines.setOnInstallEngine(engineDTO -> {
+            new ConfirmMessage("Install " + engineDTO.getVersion(), "Are you sure you want to install " + engineDTO.getVersion() + "?")
                     .ask(() -> {
-                        installEngine(wineEngineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        installEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
                     });
         });
 
-        this.viewEngines.setOnDeleteEngine(wineEngineDTO -> {
-            new ConfirmMessage("Delete " + wineEngineDTO.getVersion(), "Are you sure you want to delete " + wineEngineDTO.getVersion() + "?")
+        this.viewEngines.setOnDeleteEngine(engineDTO -> {
+            new ConfirmMessage("Delete " + engineDTO.getVersion(), "Are you sure you want to delete " + engineDTO.getVersion() + "?")
             .ask(() -> {
-                deleteEngine(wineEngineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                deleteEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             });
         });
     }
@@ -68,33 +69,44 @@ public class EnginesController {
     }
 
     public void loadEngines() {
-        wineVersionsManager.fetchAvailableWineVersions(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
+        enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
+        this.viewEngines.setOnSelectCategory(categoryDTO -> this.viewEngines.populateEngines(categoryDTO.getName(), categoryDTO.getSubCategories(), wineEnginesPath));
         this.viewEngines.showWineVersions();
     }
 
-    private void installEngine(WineEngineDTO wineEngineDTO, Consumer<Exception> errorCallback) {
-        /*final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+    private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Functions\",  \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
                             final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                            wine.callMember("architecture", wineEngineDTO.getArchitecture());
-                            wine.callMember("distribution", wineEngineDTO.getDistribution());
-                            wine.callMember("version", wineEngineDTO.getVersion());
-                            wine.callMember("_installVersion");
-                            wine.callMember("wait");
+                            wine.callMember("install", engineDTO.getCategory()
+                                    , engineDTO.getSubCategory()
+                                    , engineDTO.getVersion()
+                                    , engineDTO.getUserData());
                         },
                         errorCallback),
                 errorCallback
-        );*/
-        // TODO
-        System.out.println("install Engine");
+        );
     }
 
-    private void deleteEngine(WineEngineDTO wineEngineDTO, Consumer<Exception> errorCallback) {
-        // TODO
-        System.out.println("delete Engine");
+    private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+                ignored -> interactiveScriptSession.eval(
+                        "new Wine()",
+                        output -> {
+                            final ScriptObjectMirror wine = (ScriptObjectMirror) output;
+                            wine.callMember("delete", engineDTO.getCategory()
+                                    , engineDTO.getSubCategory()
+                                    , engineDTO.getVersion()
+                                    , engineDTO.getUserData());
+                        },
+                        errorCallback),
+                errorCallback
+        );
     }
 }

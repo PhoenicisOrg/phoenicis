@@ -16,21 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.engines;
+package org.phoenicis.apps;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.phoenicis.scripts.ScriptsConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class EnginesConfiguration {
-    @Autowired
-    private ScriptsConfiguration scriptsConfiguration;
+import org.phoenicis.apps.dto.ApplicationDTO;
 
-    @Bean
-    public EnginesSource wineVersionsFetcher() {
-        return new EnginesSource(scriptsConfiguration.scriptInterpreter(), new ObjectMapper());
-    }
+public interface AppsFilter {
+    boolean applies(ApplicationDTO applicationDTO);
 }
