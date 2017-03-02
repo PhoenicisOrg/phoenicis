@@ -47,7 +47,7 @@ public class EnginesSource {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         List<EngineCategoryDTO> engines = new ArrayList<>();
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\", \"Engines\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine().getAvailableVersions()",
                         output -> {

@@ -20,7 +20,7 @@ package org.phoenicis.cli;
 
 
 import org.phoenicis.library.LibraryConfiguration;
-import org.phoenicis.apps.AppsConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.cli.scriptui.CliUiConfiguration;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
@@ -35,7 +35,7 @@ import org.springframework.context.annotation.Import;
 @Import({
         PhoenicisGlobalConfiguration.class,
         ScriptsConfiguration.class,
-        AppsConfiguration.class,
+        RepositoryConfiguration.class,
         EnginesConfiguration.class,
         LibraryConfiguration.class,
         Win32Configuration.class,

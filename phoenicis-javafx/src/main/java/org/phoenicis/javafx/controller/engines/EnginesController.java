@@ -78,7 +78,7 @@ public class EnginesController {
     private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {
@@ -96,7 +96,7 @@ public class EnginesController {
     private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {

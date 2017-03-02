@@ -24,20 +24,22 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import org.phoenicis.apps.AppsSearchFilter;
-import org.phoenicis.apps.CombinedAppsFilter;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.repository.AppsSearchFilter;
+import org.phoenicis.repository.CombinedAppsFilter;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -74,32 +76,33 @@ public class ViewApps extends MainWindowView {
     }
 
     /**
-     * Show available apps panel
+     * Show available repository panel
      */
     public void showAvailableApps() {
         showRightView(availableApps);
     }
 
     /**
-     * Populate with a list of categories containing apps, and then scripts
+     * Populate with a list of categories containing repository, and then scripts
      *
-     * @param categories CategoryDTO
+     * @param repositories RepositoryDTO
      */
-    public void populate(List<CategoryDTO> categories) {
+    public void populate(List<RepositoryDTO> repositories) {
         Platform.runLater(() -> {
+            final Optional<RepositoryDTO> repositoryDTO = repositories.stream().filter(repository -> repository.getType() == RepositoryDTO.RepositoryType.APPLICATIONS).findFirst();
+            List<CategoryDTO> categories = repositoryDTO.isPresent() ? repositoryDTO.get().getCategories() : Collections.emptyList();
+
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (CategoryDTO category : categories) {
-                if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    final LeftButton categoryButton = new LeftButton(category.getName());
-                    final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
-                    if (themeManager.resourceExists(resource)) {
-                        categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
-                    } else {
-                        categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-                    }
-                    categoryButton.setOnMouseClicked(event -> selectCategory(category));
-                    leftButtonList.add(categoryButton);
+                final LeftButton categoryButton = new LeftButton(category.getName());
+                final String resource = String.format("icons/mainwindow/repository/%s.png", category.getName().toLowerCase());
+                if (themeManager.resourceExists(resource)) {
+                    categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
+                } else {
+                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
                 }
+                categoryButton.setOnMouseClicked(event -> selectCategory(category));
+                leftButtonList.add(categoryButton);
             }
 
             categoryView.setNodes(leftButtonList);

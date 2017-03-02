@@ -29,7 +29,7 @@
 		<module>phoenicis-javafx</module>
 		<module>phoenicis-win32</module>
 		<module>phoenicis-dist</module>
-		<module>phoenicis-apps</module>
+		<module>phoenicis-repository</module>
         <module>phoenicis-configuration</module>
 		<module>phoenicis-scripts</module>
         <module>phoenicis-tools</module>

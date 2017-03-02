@@ -21,7 +21,7 @@ package org.phoenicis.javafx.controller;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
-import org.phoenicis.apps.AppsConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.containers.ContainersConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.apps.AppsController;
@@ -56,7 +56,7 @@ public class ControllerConfiguration {
     private ScriptsConfiguration scriptsConfiguration;
 
     @Autowired
-    private AppsConfiguration appsConfiguration;
+    private RepositoryConfiguration repositoryConfiguration;
 
     @Autowired
     private LibraryConfiguration libraryConfiguration;
@@ -120,7 +120,7 @@ public class ControllerConfiguration {
     public AppsController appsController() {
         return new AppsController(
                 viewsConfiguration.viewApps(),
-                appsConfiguration.backgroundAppsSource(),
+                repositoryConfiguration.backgroundRepositorySource(),
                 scriptsConfiguration.scriptInterpreter()
         );
     }

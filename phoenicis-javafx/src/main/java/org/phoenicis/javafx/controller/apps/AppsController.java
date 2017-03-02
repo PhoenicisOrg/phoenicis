@@ -18,31 +18,30 @@
 
 package org.phoenicis.javafx.controller.apps;
 
-import javafx.application.Platform;
-import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.repository.RepositorySource;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-
+import javafx.application.Platform;
 import java.util.Collections;
 
 public class AppsController {
     private final ViewApps view;
-    private final ApplicationsSource appsSource;
+    private final RepositorySource repositorySource;
     private final ScriptInterpreter scriptInterpreter;
 
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
-                          ApplicationsSource appsSource,
+                          RepositorySource repositorySource,
                           ScriptInterpreter scriptInterpreter) {
         this.view = view;
-        this.appsSource = appsSource;
+        this.repositorySource = repositorySource;
         this.scriptInterpreter = scriptInterpreter;
 
         this.view.setOnApplyFilter(filter -> {
-            appsSource.setFilter(filter);
-            appsSource.fetchInstallableApplications(
+            repositorySource.setFilter(filter);
+            repositorySource.fetchRepositories(
                     this.view::populate,
                     e -> this.view.showFailure()
             );
@@ -52,14 +51,14 @@ public class AppsController {
 
     public void loadApps() {
         this.view.showWait();
-        appsSource.fetchInstallableApplications(
+        repositorySource.fetchRepositories(
                 this.view::populate,
                 e -> this.view.showFailure()
         );
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
-            appsSource.fetchInstallableApplications(
+            repositorySource.fetchRepositories(
                     this.view::populate,
                     e -> this.view.showFailure()
             );
