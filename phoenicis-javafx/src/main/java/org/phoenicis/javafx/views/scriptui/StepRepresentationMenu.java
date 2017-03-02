@@ -18,13 +18,13 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.scripts.ui.MenuItem;
-import org.phoenicis.scripts.ui.Message;
-import javafx.collections.FXCollections;
-import javafx.scene.control.ListView;
-
 import java.util.List;
 
+import org.phoenicis.scripts.ui.MenuItem;
+import org.phoenicis.scripts.ui.Message;
+
+import javafx.collections.FXCollections;
+import javafx.scene.control.ListView;
 
 public class StepRepresentationMenu extends StepRepresentationMessage {
     private final String defaultValue;
@@ -32,7 +32,8 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
     private final ListView<String> listViewWidget;
     private final Message<MenuItem> messageWaitingForResponse;
 
-    public StepRepresentationMenu(SetupUiJavaFXImplementation parent, Message<MenuItem> messageWaitingForResponse, String textToShow, List<String> menuItems, String defaultValue) {
+    public StepRepresentationMenu(SetupUiJavaFXImplementation parent, Message<MenuItem> messageWaitingForResponse,
+            String textToShow, List<String> menuItems, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 
@@ -53,17 +54,30 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
                 listViewWidget.getFocusModel().focus(idx);
                 listViewWidget.scrollTo(idx);
             }
+            if (defaultValue.isEmpty()) {
+                setNextButtonEnabled(false);
+                listViewWidget.getSelectionModel().selectedItemProperty()
+                        .addListener((observable, oldValue, newValue) -> {
+                            if (newValue.trim().equals("")) {
+                                setNextButtonEnabled(false);
+                            } else {
+                                setNextButtonEnabled(true);
+                            }
+                        });
+            }
         }
+
         this.addToContentPane(listViewWidget);
+
     }
 
     @Override
     protected void setStepEvents() {
         this.setNextButtonAction(event -> {
-                    MenuItem menuItem = new MenuItem(listViewWidget.getSelectionModel().getSelectedItem(), listViewWidget.getSelectionModel().getSelectedIndex());
-                    messageWaitingForResponse.send(menuItem);
-                }
-        );
+            MenuItem menuItem = new MenuItem(listViewWidget.getSelectionModel().getSelectedItem(),
+                    listViewWidget.getSelectionModel().getSelectedIndex());
+            messageWaitingForResponse.send(menuItem);
+        });
     }
 
 }
