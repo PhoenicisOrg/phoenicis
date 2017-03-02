@@ -25,6 +25,7 @@ import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
+import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.function.Consumer;
@@ -95,7 +96,7 @@ public class EnginesController {
     private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+        interactiveScriptSession.eval("include([\"Functions\", \"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
                 ignored -> interactiveScriptSession.eval(
                         "new Wine()",
                         output -> {

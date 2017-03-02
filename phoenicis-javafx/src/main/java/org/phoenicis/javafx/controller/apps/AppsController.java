@@ -27,7 +27,7 @@ import java.util.Collections;
 
 public class AppsController {
     private final ViewApps view;
-    private final ApplicationsSource appsSource;
+    private final RepositorySource repositorySource;
     private final ScriptInterpreter scriptInterpreter;
 
     private Runnable onAppLoaded = () -> {};
@@ -40,8 +40,8 @@ public class AppsController {
         this.scriptInterpreter = scriptInterpreter;
 
         this.view.setOnApplyFilter(filter -> {
-            appsSource.setFilter(filter);
-            appsSource.fetchInstallableApplications(
+            repositorySource.setFilter(filter);
+            repositorySource.fetchRepositories(
                     this.view::populate,
                     e -> this.view.showFailure()
             );

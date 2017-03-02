@@ -38,6 +38,7 @@ class FilterRepositorySource implements RepositorySource {
     private final RepositorySource repositorySource;
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final boolean enforceIncompatibleOperatingSystems;
+    private CombinedAppsFilter filter;
 
     FilterRepositorySource(RepositorySource repositorySource,
                            OperatingSystemFetcher operatingSystemFetcher,
@@ -64,11 +65,13 @@ class FilterRepositorySource implements RepositorySource {
                         scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
                     }
                     if (!scripts.isEmpty()) {
-                        applications.add(
-                                new ApplicationDTO.Builder(application)
-                                        .withScripts(scripts)
-                                        .build()
-                        );
+                        if (filter == null || repository.getType() != RepositoryDTO.RepositoryType.APPLICATIONS || filter.applies(application)) {
+                            applications.add(
+                                    new ApplicationDTO.Builder(application)
+                                            .withScripts(scripts)
+                                            .build()
+                            );
+                        }
                     }
                 }
                 if (!applications.isEmpty()) {
@@ -89,6 +92,11 @@ class FilterRepositorySource implements RepositorySource {
         }
 
         return filteredRepositories;
+    }
+
+    @Override
+    public void setFilter(CombinedAppsFilter filter) {
+        this.filter = filter;
     }
 
 }

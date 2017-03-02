@@ -18,27 +18,27 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import com.google.common.collect.Sets;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.repository.AppsSearchFilter;
+import org.phoenicis.repository.CombinedAppsFilter;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.Optional;
 import java.util.function.Consumer;
 
