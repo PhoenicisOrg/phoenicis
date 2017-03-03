@@ -18,7 +18,6 @@
 
 package org.phoenicis.apps;
 
-
 import org.phoenicis.apps.dto.ApplicationDTO;
 
 public interface AppsFilter {

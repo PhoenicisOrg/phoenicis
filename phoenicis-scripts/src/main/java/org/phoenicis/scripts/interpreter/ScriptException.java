@@ -18,7 +18,6 @@
 
 package org.phoenicis.scripts.interpreter;
 
-
 public class ScriptException extends RuntimeException {
     public ScriptException(Exception e) {
         super(e);

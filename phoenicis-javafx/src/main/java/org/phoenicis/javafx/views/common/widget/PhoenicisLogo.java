@@ -26,7 +26,8 @@ import javafx.scene.text.Text;
 public class PhoenicisLogo extends HBox {
     public PhoenicisLogo(String applicationName) {
         super();
-        Image logoImage = new Image(this.getClass().getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png"));
+        Image logoImage = new Image(this.getClass().getResourceAsStream(
+                "/org/phoenicis/javafx/views/common/phoenicis.png"));
         ImageView logoView = new ImageView(logoImage);
         logoView.setFitWidth(28);
         logoView.setFitHeight(28);

@@ -24,7 +24,7 @@ import java.io.File;
 
 public interface WinePrefixContainerInputConfiguration {
     /**
-     *
+     * 
      * @return The {@link MouseWarpOverride} value
      */
     MouseWarpOverride getMouseWarpOverride(File registryFile);

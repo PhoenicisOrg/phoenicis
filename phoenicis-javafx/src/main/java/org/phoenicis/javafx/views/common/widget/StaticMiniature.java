@@ -22,11 +22,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class StaticMiniature extends ImageView {
-    public static final Image DEFAULT_MINIATURE =
-            new Image(MiniatureListWidget.class.getResource("defaultMiniature.png").toExternalForm());
+    public static final Image DEFAULT_MINIATURE = new Image(MiniatureListWidget.class.getResource(
+            "defaultMiniature.png").toExternalForm());
 
-    public static final Image WINE_MINIATURE =
-            new Image(MiniatureListWidget.class.getResource("wineMiniature.png").toExternalForm());
+    public static final Image WINE_MINIATURE = new Image(MiniatureListWidget.class.getResource("wineMiniature.png")
+            .toExternalForm());
 
     public StaticMiniature(Image defaultImage) {
         super(defaultImage);

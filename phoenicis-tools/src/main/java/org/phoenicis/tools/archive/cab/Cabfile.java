@@ -42,25 +42,25 @@ public class Cabfile {
                 byte[] nextRead = new byte[1];
                 int numRead = archiveStream.read(nextRead);
 
-                if(numRead == -1) {
+                if (numRead == -1) {
                     throw new CabException("This file does not contain any cabinet archive");
                 }
 
-                if((nextRead[0] & 0xFF) == 0x4D && successBytes == 0) {
+                if ((nextRead[0] & 0xFF) == 0x4D && successBytes == 0) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x53 && successBytes == 1) {
+                } else if ((nextRead[0] & 0xFF) == 0x53 && successBytes == 1) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x43 && successBytes == 2) {
+                } else if ((nextRead[0] & 0xFF) == 0x43 && successBytes == 2) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x46 && successBytes == 3) {
+                } else if ((nextRead[0] & 0xFF) == 0x46 && successBytes == 3) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x00 && successBytes == 4) {
+                } else if ((nextRead[0] & 0xFF) == 0x00 && successBytes == 4) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x00 && successBytes == 5) {
+                } else if ((nextRead[0] & 0xFF) == 0x00 && successBytes == 5) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x00 && successBytes == 6) {
+                } else if ((nextRead[0] & 0xFF) == 0x00 && successBytes == 6) {
                     successBytes++;
-                } else if((nextRead[0] & 0xFF) == 0x00 && successBytes == 7) {
+                } else if ((nextRead[0] & 0xFF) == 0x00 && successBytes == 7) {
                     return i - 7;
                 } else {
                     successBytes = 0;
@@ -172,8 +172,5 @@ public class Cabfile {
             }
         } */
     }
-
-
-
 
 }

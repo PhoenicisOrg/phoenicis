@@ -20,5 +20,4 @@ package org.phoenicis.scripts.wizard;
 
 public interface LogWizard {
 
-
 }

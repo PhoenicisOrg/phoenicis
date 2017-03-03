@@ -18,7 +18,6 @@
 
 package org.phoenicis.scripts.wizard;
 
-
 import org.phoenicis.scripts.ui.ProgressControl;
 
 public interface ProgressWizard extends Wizard {

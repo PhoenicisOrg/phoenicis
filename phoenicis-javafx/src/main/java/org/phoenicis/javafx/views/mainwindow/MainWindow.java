@@ -42,15 +42,8 @@ public class MainWindow extends Stage {
 
     private TabPane tabPane;
 
-
-    public MainWindow(String applicationName,
-                      ViewLibrary library,
-                      ViewApps apps,
-                      ViewEngines engines,
-                      ViewContainers containers,
-                      ViewSettings settings,
-                      ThemeManager themeManager,
-                      PhoenicisLogo phoenicisLogo) {
+    public MainWindow(String applicationName, ViewLibrary library, ViewApps apps, ViewEngines engines,
+            ViewContainers containers, ViewSettings settings, ThemeManager themeManager, PhoenicisLogo phoenicisLogo) {
         super();
 
         this.library = library;
@@ -73,7 +66,9 @@ public class MainWindow extends Stage {
 
         scene = new PhoenicisScene(tabPane, themeManager);
 
-        this.getIcons().add(new Image(JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
+        this.getIcons().add(
+                new Image(JavaFXApplication.class
+                        .getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
         this.setResizable(true);
         this.setScene(scene);

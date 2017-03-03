@@ -34,7 +34,8 @@ public class UiProgressWizardFactory {
     }
 
     public UiProgressWizardImplementation create(String title) {
-        final UiProgressWizardImplementation uiProgressWizardImplementation = new UiProgressWizardImplementation(title, uiMessageSender, progressUiFactory);
+        final UiProgressWizardImplementation uiProgressWizardImplementation = new UiProgressWizardImplementation(title,
+                uiMessageSender, progressUiFactory);
         uiProgressWizardImplementation.init();
         return uiProgressWizardImplementation;
     }

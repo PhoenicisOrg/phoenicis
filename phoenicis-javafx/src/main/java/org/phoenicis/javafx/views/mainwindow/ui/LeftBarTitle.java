@@ -26,4 +26,3 @@ public class LeftBarTitle extends Label {
         this.getStyleClass().add("leftBarTitle");
     }
 }
-
