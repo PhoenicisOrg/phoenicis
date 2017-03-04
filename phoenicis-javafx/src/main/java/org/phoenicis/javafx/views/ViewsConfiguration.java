@@ -42,6 +42,9 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
+    @Value("${application.version}")
+    private String applicationVersion;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
@@ -65,7 +68,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager());
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion);
     }
 
     @Bean
