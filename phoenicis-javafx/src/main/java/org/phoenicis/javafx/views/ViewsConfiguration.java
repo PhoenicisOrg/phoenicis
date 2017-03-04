@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
+import org.phoenicis.javafx.HostServicesSupplier;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -58,6 +59,11 @@ public class ViewsConfiguration {
     private ThemeConfiguration themeConfiguration;
 
     @Bean
+    public HostServicesSupplier hostServicesSupplier() {
+        return new HostServicesSupplier();
+    }
+
+    @Bean
     public ViewApps viewApps() {
         return new ViewApps(themeConfiguration.themeManager());
     }
@@ -74,7 +80,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, hostServicesSupplier());
     }
 
     @Bean

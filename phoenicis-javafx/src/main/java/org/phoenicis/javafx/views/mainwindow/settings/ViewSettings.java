@@ -18,19 +18,11 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
-import javafx.geometry.Insets;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.settings.Setting;
-import org.phoenicis.settings.Settings;
-import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.javafx.views.common.Theme;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.MessagePanel;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
+import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -39,12 +31,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import org.phoenicis.javafx.views.common.TextWithStyle;
+import org.phoenicis.javafx.views.common.Theme;
+import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.MessagePanel;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
+import org.phoenicis.settings.Setting;
+import org.phoenicis.settings.Settings;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
@@ -56,6 +58,7 @@ public class ViewSettings extends MainWindowView {
     private final String applicationVersion;
     private final String applicationGitRevision;
     private final String applicationBuildTimestamp;
+    private Supplier<HostServices> hostServicesSupplier;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
@@ -68,12 +71,13 @@ public class ViewSettings extends MainWindowView {
     private VBox networkPanel = new VBox();
     private VBox aboutPanel = new VBox();
 
-    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp) {
+    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp, Supplier<HostServices> hostServicesSupplier) {
         super("Settings", themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;
         this.applicationGitRevision = applicationGitRevision;
         this.applicationBuildTimestamp = applicationBuildTimestamp;
+        this.hostServicesSupplier = hostServicesSupplier;
 
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
@@ -244,7 +248,11 @@ public class ViewSettings extends MainWindowView {
         gridPane.add(new Label(applicationVersion), 1, 1);
 
         gridPane.add(new TextWithStyle(translate("Git Revision:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
-        gridPane.add(new Label(applicationGitRevision), 1, 2);
+        Hyperlink gitRevisionLink = new Hyperlink(applicationGitRevision);
+        gitRevisionLink.setOnAction(event ->
+                hostServicesSupplier.get().showDocument("https://github.com/PlayOnLinux/POL-POM-5/commit/" + applicationGitRevision)
+        );
+        gridPane.add(gitRevisionLink, 1, 2);
 
         gridPane.add(new TextWithStyle(translate("Build Timestamp:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         gridPane.add(new Label(applicationBuildTimestamp), 1, 3);

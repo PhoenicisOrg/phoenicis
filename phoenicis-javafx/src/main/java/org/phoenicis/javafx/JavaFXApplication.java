@@ -18,12 +18,12 @@
 
 package org.phoenicis.javafx;
 
-import org.phoenicis.javafx.controller.MainController;
-import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.phoenicis.javafx.controller.MainController;
+import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -39,6 +39,9 @@ public class JavaFXApplication extends Application {
         primaryStage.setTitle("Phoenicis");
         loadFonts();
         ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
+
+        final HostServicesSupplier hostServicesSupplier = applicationContext.getBean(HostServicesSupplier.class);
+        hostServicesSupplier.setHostServices(this.getHostServices());
 
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();
