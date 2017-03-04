@@ -18,7 +18,6 @@
 
 package org.phoenicis.tools.files;
 
-
 import java.io.File;
 
 public final class FreeSpaceFetcher {

@@ -18,7 +18,6 @@
 
 package org.phoenicis.configuration.localisation;
 
-
 public final class Localisation {
     // This is a static class
     private Localisation() {

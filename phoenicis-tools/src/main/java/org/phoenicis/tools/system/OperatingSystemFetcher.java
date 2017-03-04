@@ -23,7 +23,7 @@ import org.phoenicis.entities.OperatingSystem;
 public class OperatingSystemFetcher {
     /**
      * Fetch the current Operating System
-     *
+     * 
      * @return The current operating system
      */
     public OperatingSystem fetchCurrentOperationSystem() {

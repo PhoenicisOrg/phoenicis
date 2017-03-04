@@ -107,6 +107,22 @@
 		</pluginManagement>
 
 		<plugins>
+            <plugin><!-- mvn java-formatter:format -->
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <version>0.4</version>
+                <configuration>
+                    <configFile>${project.basedir}/../settings/POL_Formatter_Settings.xml</configFile>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

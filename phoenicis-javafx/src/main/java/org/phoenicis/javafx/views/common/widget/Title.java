@@ -26,4 +26,3 @@ public class Title extends Text {
         this.getStyleClass().add("title");
     }
 }
-

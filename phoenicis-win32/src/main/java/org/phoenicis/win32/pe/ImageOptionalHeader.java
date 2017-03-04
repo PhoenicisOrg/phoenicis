@@ -91,7 +91,7 @@ public class ImageOptionalHeader {
         int numberOfDirectoryEntries = (bytes.length - IMAGE_OPTIONAL_HEADER_BASE_SIZE) / 8;
         dataDirectory = new ImageDataDirectory[numberOfDirectoryEntries];
 
-        for(int i = 0; i < numberOfDirectoryEntries; i++) {
+        for (int i = 0; i < numberOfDirectoryEntries; i++) {
             dataDirectory[i] = new ImageDataDirectory(bytes, IMAGE_OPTIONAL_HEADER_BASE_SIZE + i * 8);
         }
     }

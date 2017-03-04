@@ -24,49 +24,49 @@ import java.io.File;
 
 public interface WinePrefixContainerDisplayConfiguration {
     /**
-     *
+     * 
      * @return The {@link UseGLSL} value
      */
     UseGLSL getGLSL(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link DirectDrawRenderer} value
      */
     DirectDrawRenderer getDirectDrawRenderer(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link Multisampling} value
      */
     Multisampling getMultisampling(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link OffscreenRenderingMode} value
      */
     OffscreenRenderingMode getOffscreenRenderingMode(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link RenderTargetModeLock} value
      */
     RenderTargetModeLock getRenderTargetModeLock(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link StrictDrawOrdering} value
      */
     StrictDrawOrdering getStrictDrawOrdering(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link AlwaysOffscreen} value
      */
     AlwaysOffscreen getAlwaysOffscreen(File registryFile);
 
     /**
-     *
+     * 
      * @return The {@link VideoMemorySize} value
      */
     VideoMemorySize getVideoMemorySize(File registryFile);

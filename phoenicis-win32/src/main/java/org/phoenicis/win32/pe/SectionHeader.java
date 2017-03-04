@@ -38,8 +38,8 @@ public class SectionHeader {
     final ULong characteristics;
 
     public SectionHeader(byte[] bytes) {
-        if(bytes.length != SECTION_HEADER_SIZE) {
-            throw new IllegalStateException("Section Header should be "+SECTION_HEADER_SIZE+" bytes");
+        if (bytes.length != SECTION_HEADER_SIZE) {
+            throw new IllegalStateException("Section Header should be " + SECTION_HEADER_SIZE + " bytes");
         }
         System.arraycopy(bytes, 0, name, 0, 8);
         physicalAddressOrVirtualSize = new ULong(bytes, 8);

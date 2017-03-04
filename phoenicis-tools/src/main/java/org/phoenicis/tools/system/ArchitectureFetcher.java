@@ -30,13 +30,14 @@ public class ArchitectureFetcher {
 
     /**
      * Find the current architecture
+     * 
      * @return The current architecture
      */
     public Architecture fetchCurrentArchitecture() {
-        if(operatingSystemFetcher.fetchCurrentOperationSystem() == OperatingSystem.MACOSX) {
+        if (operatingSystemFetcher.fetchCurrentOperationSystem() == OperatingSystem.MACOSX) {
             return Architecture.AMD64;
         }
-        if("x86".equals(System.getProperty("os.arch")) || "i386".equals(System.getProperty("os.arch"))) {
+        if ("x86".equals(System.getProperty("os.arch")) || "i386".equals(System.getProperty("os.arch"))) {
             return Architecture.I386;
         } else {
             return Architecture.AMD64;

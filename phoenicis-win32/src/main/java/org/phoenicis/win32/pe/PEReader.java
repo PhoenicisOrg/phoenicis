@@ -56,10 +56,11 @@ public final class PEReader {
         return new RsrcSection(rsrcSection);
     }
 
-    private SectionHeader[] readSectionHeaders(CountingInputStream executableInputStream, ImageNTHeaders imageNTHeaders) throws IOException {
+    private SectionHeader[] readSectionHeaders(CountingInputStream executableInputStream, ImageNTHeaders imageNTHeaders)
+            throws IOException {
         final int numberOfSectionHeaders = imageNTHeaders.fileHeader.numberOfSections.getUnsignedValue();
         final SectionHeader[] sectionHeaders = new SectionHeader[numberOfSectionHeaders];
-        for(int i = 0; i < numberOfSectionHeaders; i++) {
+        for (int i = 0; i < numberOfSectionHeaders; i++) {
             byte[] sectionHeaderBytes = new byte[SectionHeader.SECTION_HEADER_SIZE];
             executableInputStream.read(sectionHeaderBytes);
             sectionHeaders[i] = new SectionHeader(sectionHeaderBytes);
@@ -78,7 +79,8 @@ public final class PEReader {
         return imageNTHeaders;
     }
 
-    private byte[] readRealModeStubProgram(InputStream executableInputStream, ImageDOSHeader imageDOSHeader) throws IOException {
+    private byte[] readRealModeStubProgram(InputStream executableInputStream, ImageDOSHeader imageDOSHeader)
+            throws IOException {
         final byte[] realModeStubProgram = new byte[imageDOSHeader.eLfanew - ImageDOSHeader.IMAGE_DOS_HEADER_SIZE];
         executableInputStream.read(realModeStubProgram);
         return realModeStubProgram;

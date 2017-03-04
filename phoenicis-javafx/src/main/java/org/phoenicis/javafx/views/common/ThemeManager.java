@@ -22,17 +22,23 @@ public class ThemeManager {
 
     /**
      * checks if a theme resource exists
-     * @param resource theme resource
+     * 
+     * @param resource
+     *            theme resource
      * @return
      */
     public boolean resourceExists(String resource) {
-        return getClass().getResourceAsStream(String.format("%s/%s/%s", themeUrl, currentTheme.getShortName(), resource)) != null;
+        return getClass().getResourceAsStream(
+                String.format("%s/%s/%s", themeUrl, currentTheme.getShortName(), resource)) != null;
     }
 
     /**
      * returns the full resource URL for a given theme resource
-     * @param resource theme resource
-     * @return full resource URL, falls back to default if resource does not exist in theme
+     * 
+     * @param resource
+     *            theme resource
+     * @return full resource URL, falls back to default if resource does not
+     *         exist in theme
      */
     public String getResourceUrl(String resource) {
         // check if theme contains resource

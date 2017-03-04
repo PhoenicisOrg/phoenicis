@@ -36,7 +36,7 @@ public class PhoenicisScene extends Scene {
     private void applyTheme() {
         final URL style = PhoenicisScene.class.getResource(themePath());
 
-        if(style != null) {
+        if (style != null) {
             this.getStylesheets().add(style.toExternalForm());
         } else {
             final String message = String.format("Theme %s is not found!", theme);

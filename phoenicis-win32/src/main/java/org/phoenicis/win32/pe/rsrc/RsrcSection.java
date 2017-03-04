@@ -18,24 +18,22 @@
 
 package org.phoenicis.win32.pe.rsrc;
 
-
 public class RsrcSection {
     public final ImageResourceDirectory imageResourceDirectory;
     public final ImageResourceDirectoryEntry[] imageResourceDirectoryEntry;
+
     public RsrcSection(byte[] bytes) {
         imageResourceDirectory = new ImageResourceDirectory(bytes);
-        imageResourceDirectoryEntry = new ImageResourceDirectoryEntry[
-                imageResourceDirectory.numberOfNamedEntries.getUnsignedValue() +
-                        imageResourceDirectory.numberOfIdEntries.getUnsignedValue()
-                ];
+        imageResourceDirectoryEntry = new ImageResourceDirectoryEntry[imageResourceDirectory.numberOfNamedEntries
+                .getUnsignedValue() + imageResourceDirectory.numberOfIdEntries.getUnsignedValue()];
 
         int i = 0;
-        for(; i < imageResourceDirectory.numberOfNamedEntries.getUnsignedValue(); i++) {
+        for (; i < imageResourceDirectory.numberOfNamedEntries.getUnsignedValue(); i++) {
             imageResourceDirectoryEntry[i] = new ImageResourceNamedDirectoryEntry(bytes,
                     ImageResourceDirectory.IMAGE_RESOURCE_DIRECTORY_SIZE);
         }
 
-        for(; i < imageResourceDirectory.numberOfIdEntries.getUnsignedValue(); i++) {
+        for (; i < imageResourceDirectory.numberOfIdEntries.getUnsignedValue(); i++) {
             imageResourceDirectoryEntry[i] = new ImageResourceDirectoryEntry(bytes,
                     ImageResourceDirectory.IMAGE_RESOURCE_DIRECTORY_SIZE);
         }
