@@ -48,6 +48,9 @@ public class ViewsConfiguration {
     @Value("${application.gitRevision}")
     private String applicationGitRevision;
 
+    @Value("${application.buildTimestamp}")
+    private String applicationBuildTimestamp;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
@@ -71,7 +74,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision);
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
     }
 
     @Bean

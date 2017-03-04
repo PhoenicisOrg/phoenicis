@@ -55,6 +55,7 @@ public class ViewSettings extends MainWindowView {
     private String applicationName;
     private String applicationVersion;
     private String applicationGitRevision;
+    private String applicationBuildTimestamp;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
@@ -67,11 +68,12 @@ public class ViewSettings extends MainWindowView {
     private VBox networkPanel = new VBox();
     private VBox aboutPanel = new VBox();
 
-    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision) {
+    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp) {
         super("Settings", themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;
         this.applicationGitRevision = applicationGitRevision;
+        this.applicationBuildTimestamp = applicationBuildTimestamp;
 
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
@@ -243,6 +245,9 @@ public class ViewSettings extends MainWindowView {
 
         gridPane.add(new TextWithStyle(translate("Git Revision:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         gridPane.add(new Label(applicationGitRevision), 1, 2);
+
+        gridPane.add(new TextWithStyle(translate("Build Timestamp:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        gridPane.add(new Label(applicationBuildTimestamp), 1, 3);
 
         gridPane.setHgap(20);
         gridPane.setVgap(10);

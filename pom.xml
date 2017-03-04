@@ -123,8 +123,10 @@
 					</execution>
 				</executions>
 				<configuration>
-					<doCheck>false</doCheck>
+                    <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                    <doCheck>false</doCheck>
 					<doUpdate>false</doUpdate>
+                    <timestampFormat>{0, date, yyyy-MM-dd HH:mm}</timestampFormat>
 				</configuration>
 			</plugin>
             <plugin><!-- mvn java-formatter:format -->
