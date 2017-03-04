@@ -23,6 +23,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.apps.AppsSearchFilter;
 import org.phoenicis.apps.CombinedAppsFilter;
@@ -93,8 +94,11 @@ public class ViewApps extends MainWindowView {
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
             final List<LeftToggleButton> leftButtonList = new ArrayList<>();
+            ToggleGroup group = new ToggleGroup();
 
             final LeftToggleButton allCategoryButton = new LeftToggleButton("All");
+            allCategoryButton.setToggleGroup(group);
+            allCategoryButton.setSelected(true);
             final String allCategoryButtonIcon = String.format("icons/mainwindow/apps/all.png");
             allCategoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(allCategoryButtonIcon) + "');");
             allCategoryButton.setOnMouseClicked(event -> selectAll(categories));
@@ -103,6 +107,7 @@ public class ViewApps extends MainWindowView {
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+                    categoryButton.setToggleGroup(group);
                     final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
                     if (themeManager.resourceExists(resource)) {
                         categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
