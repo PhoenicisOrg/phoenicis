@@ -20,11 +20,14 @@ package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
 import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.apps.dto.ApplicationDTO;
+import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppsController {
     private final ViewApps view;
@@ -42,11 +45,17 @@ public class AppsController {
 
         this.view.setOnApplyFilter(filter -> {
             appsSource.setFilter(filter);
-            appsSource.fetchInstallableApplications(
-                    this.view::populate,
+            appsSource.fetchInstallableApplications(categories ->
+                    {
+                        this.view.populate(categories);
+                        List<ApplicationDTO> foundApps = new ArrayList<>();
+                        for (CategoryDTO foundCategory : categories) {
+                            foundApps.addAll(foundCategory.getApplications());
+                        }
+                        this.view.populateApps(foundApps);
+                    },
                     e -> this.view.showFailure()
             );
-            this.view.populateApps(Collections.emptyList());
         });
     }
 
