@@ -27,6 +27,8 @@ import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AppsController {
@@ -73,6 +75,18 @@ public class AppsController {
                     e -> this.view.showFailure()
             );
         });
+
+        this.view.setOnSelectAll(categories -> {
+            List<ApplicationDTO> allApps = new ArrayList<>();
+            for (CategoryDTO categoryDTO: categories) {
+                if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                    allApps.addAll(categoryDTO.getApplications());
+                }
+            }
+            Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
+            this.view.populateApps(allApps);
+        });
+
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),

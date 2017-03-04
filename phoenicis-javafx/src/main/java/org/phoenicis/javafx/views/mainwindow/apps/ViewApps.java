@@ -47,6 +47,7 @@ public class ViewApps extends MainWindowView {
     private final MiniatureListWidget availableApps;
     private TextField searchBar;
     private LeftGroup categoryView;
+    private Consumer<List<CategoryDTO>> onSelectAll = (categories) -> {};
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
     private final CombinedAppsFilter currentFilter = new CombinedAppsFilter();
@@ -63,6 +64,10 @@ public class ViewApps extends MainWindowView {
 
     public void setOnApplyFilter(Consumer<CombinedAppsFilter> onApplyFilter) {
         this.onApplyFilter = onApplyFilter;
+    }
+
+    public void setOnSelectAll(Consumer<List<CategoryDTO>> onSelectAll) {
+        this.onSelectAll = onSelectAll;
     }
 
     public void setOnSelectCategory(Consumer<CategoryDTO> onSelectCategory) {
@@ -88,6 +93,13 @@ public class ViewApps extends MainWindowView {
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
             final List<LeftButton> leftButtonList = new ArrayList<>();
+
+            final LeftButton allCategoryButton = new LeftButton("All");
+            final String allCategoryButtonIcon = String.format("icons/mainwindow/apps/all.png");
+            allCategoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(allCategoryButtonIcon) + "');");
+            allCategoryButton.setOnMouseClicked(event -> selectAll(categories));
+            leftButtonList.add(allCategoryButton);
+
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftButton categoryButton = new LeftButton(category.getName());
@@ -170,6 +182,11 @@ public class ViewApps extends MainWindowView {
 
     private void installScript(ScriptDTO scriptDTO) {
         this.onSelectScript.accept(scriptDTO);
+    }
+
+    private void selectAll(List<CategoryDTO> categories) {
+        showRightView(availableApps);
+        this.onSelectAll.accept(categories);
     }
 
     private void selectCategory(CategoryDTO category) {
