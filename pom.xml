@@ -25,6 +25,9 @@
 	<artifactId>phoenicis</artifactId>
 	<packaging>pom</packaging>
 	<version>5.0-SNAPSHOT</version>
+	<scm>
+		<connection>scm:git:https://github.com/PlayOnLinux/POL-POM-5.git</connection>
+	</scm>
 	<modules>
 		<module>phoenicis-javafx</module>
 		<module>phoenicis-win32</module>
@@ -107,6 +110,23 @@
 		</pluginManagement>
 
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
             <plugin><!-- mvn java-formatter:format -->
                 <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
                 <artifactId>maven-java-formatter-plugin</artifactId>
