@@ -42,5 +42,4 @@ public class PhoenicisCLI {
             throw new RuntimeException(e);
         }
     }
-
 }
