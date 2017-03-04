@@ -52,10 +52,10 @@ public class ViewSettings extends MainWindowView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
-    private String applicationName;
-    private String applicationVersion;
-    private String applicationGitRevision;
-    private String applicationBuildTimestamp;
+    private final String applicationName;
+    private final String applicationVersion;
+    private final String applicationGitRevision;
+    private final String applicationBuildTimestamp;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
