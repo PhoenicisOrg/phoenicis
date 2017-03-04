@@ -92,9 +92,9 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
-            final List<LeftButton> leftButtonList = new ArrayList<>();
+            final List<LeftToggleButton> leftButtonList = new ArrayList<>();
 
-            final LeftButton allCategoryButton = new LeftButton("All");
+            final LeftToggleButton allCategoryButton = new LeftToggleButton("All");
             final String allCategoryButtonIcon = String.format("icons/mainwindow/apps/all.png");
             allCategoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(allCategoryButtonIcon) + "');");
             allCategoryButton.setOnMouseClicked(event -> selectAll(categories));
@@ -102,7 +102,7 @@ public class ViewApps extends MainWindowView {
 
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    final LeftButton categoryButton = new LeftButton(category.getName());
+                    final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
                     final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
                     if (themeManager.resourceExists(resource)) {
                         categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
