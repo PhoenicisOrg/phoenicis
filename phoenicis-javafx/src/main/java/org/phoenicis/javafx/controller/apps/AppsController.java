@@ -47,15 +47,8 @@ public class AppsController {
 
         this.view.setOnApplyFilter(filter -> {
             appsSource.setFilter(filter);
-            appsSource.fetchInstallableApplications(categories ->
-                    {
-                        this.view.populate(categories);
-                        List<ApplicationDTO> foundApps = new ArrayList<>();
-                        for (CategoryDTO foundCategory : categories) {
-                            foundApps.addAll(foundCategory.getApplications());
-                        }
-                        this.view.populateApps(foundApps);
-                    },
+            appsSource.fetchInstallableApplications(
+                    this.view::populate,
                     e -> this.view.showFailure()
             );
         });
