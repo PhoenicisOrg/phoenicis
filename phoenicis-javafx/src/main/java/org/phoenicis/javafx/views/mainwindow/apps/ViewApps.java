@@ -120,7 +120,7 @@ public class ViewApps extends MainWindowView {
             }
 
             categoryView.setNodes(leftButtonList);
-            showAvailableApps();
+            selectAll(categories);
         });
     }
 
