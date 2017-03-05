@@ -19,7 +19,6 @@
 package org.phoenicis.tools.system.opener;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Arrays;
 
 public class OpenerProcessImplementation implements Opener {
@@ -39,8 +38,4 @@ public class OpenerProcessImplementation implements Opener {
         }
     }
 
-    @Override
-    public void open(URI url) {
-        open(url.toString());
-    }
 }
