@@ -16,30 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.cli;
+package org.phoenicis.tools.system.opener;
 
-import com.github.jankroken.commandline.CommandLineParser;
-import com.github.jankroken.commandline.OptionStyle;
+import java.io.IOException;
+import java.util.Arrays;
 
-import java.lang.reflect.InvocationTargetException;
+public class OpenerProcessImplementation implements Opener {
+    private final String commandName;
 
-public class PhoenicisCLI {
-    public static void main(String[] args) {
-        final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
-        phoenicisCLI.run(args);
+    public OpenerProcessImplementation(String commandName) {
+        this.commandName = commandName;
     }
 
-    private void run(String[] args) {
+    @Override
+    public void open(String file) {
+        final ProcessBuilder processBuilder = new ProcessBuilder(Arrays.asList(commandName, file));
         try {
-            final CLIController arguments = CommandLineParser.parse(
-                    CLIController.class,
-                    args,
-                    OptionStyle.SIMPLE
-            );
-
-            arguments.close();
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | InterruptedException e) {
-            throw new RuntimeException(e);
+            processBuilder.start().waitFor();
+        } catch (InterruptedException | IOException e) {
+            throw new IllegalStateException(e);
         }
     }
+
 }

@@ -20,11 +20,16 @@ package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
 import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.apps.dto.ApplicationDTO;
+import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class AppsController {
     private final ViewApps view;
@@ -46,7 +51,6 @@ public class AppsController {
                     this.view::populate,
                     e -> this.view.showFailure()
             );
-            this.view.populateApps(Collections.emptyList());
         });
     }
 
@@ -64,6 +68,18 @@ public class AppsController {
                     e -> this.view.showFailure()
             );
         });
+
+        this.view.setOnSelectAll(categories -> {
+            List<ApplicationDTO> allApps = new ArrayList<>();
+            for (CategoryDTO categoryDTO: categories) {
+                if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
+                    allApps.addAll(categoryDTO.getApplications());
+                }
+            }
+            Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
+            this.view.populateApps(allApps);
+        });
+
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),

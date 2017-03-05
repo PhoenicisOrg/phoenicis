@@ -23,6 +23,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.apps.AppsSearchFilter;
 import org.phoenicis.apps.CombinedAppsFilter;
@@ -47,6 +48,7 @@ public class ViewApps extends MainWindowView {
     private final MiniatureListWidget availableApps;
     private TextField searchBar;
     private LeftGroup categoryView;
+    private Consumer<List<CategoryDTO>> onSelectAll = (categories) -> {};
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
     private final CombinedAppsFilter currentFilter = new CombinedAppsFilter();
@@ -63,6 +65,10 @@ public class ViewApps extends MainWindowView {
 
     public void setOnApplyFilter(Consumer<CombinedAppsFilter> onApplyFilter) {
         this.onApplyFilter = onApplyFilter;
+    }
+
+    public void setOnSelectAll(Consumer<List<CategoryDTO>> onSelectAll) {
+        this.onSelectAll = onSelectAll;
     }
 
     public void setOnSelectCategory(Consumer<CategoryDTO> onSelectCategory) {
@@ -87,10 +93,21 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
-            final List<LeftButton> leftButtonList = new ArrayList<>();
+            final List<LeftToggleButton> leftButtonList = new ArrayList<>();
+            ToggleGroup group = new ToggleGroup();
+
+            final LeftToggleButton allCategoryButton = new LeftToggleButton("All");
+            allCategoryButton.setToggleGroup(group);
+            allCategoryButton.setSelected(true);
+            final String allCategoryButtonIcon = String.format("icons/mainwindow/apps/all.png");
+            allCategoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(allCategoryButtonIcon) + "');");
+            allCategoryButton.setOnMouseClicked(event -> selectAll(categories));
+            leftButtonList.add(allCategoryButton);
+
             for (CategoryDTO category : categories) {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    final LeftButton categoryButton = new LeftButton(category.getName());
+                    final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+                    categoryButton.setToggleGroup(group);
                     final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
                     if (themeManager.resourceExists(resource)) {
                         categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
@@ -103,7 +120,7 @@ public class ViewApps extends MainWindowView {
             }
 
             categoryView.setNodes(leftButtonList);
-            showAvailableApps();
+            selectAll(categories);
         });
     }
 
@@ -170,6 +187,11 @@ public class ViewApps extends MainWindowView {
 
     private void installScript(ScriptDTO scriptDTO) {
         this.onSelectScript.accept(scriptDTO);
+    }
+
+    private void selectAll(List<CategoryDTO> categories) {
+        showRightView(availableApps);
+        this.onSelectAll.accept(categories);
     }
 
     private void selectCategory(CategoryDTO category) {
