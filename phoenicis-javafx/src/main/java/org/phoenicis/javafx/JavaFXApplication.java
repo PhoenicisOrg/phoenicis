@@ -40,8 +40,11 @@ public class JavaFXApplication extends Application {
         loadFonts();
         ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
 
-        final HostServicesSupplier hostServicesSupplier = applicationContext.getBean(HostServicesSupplier.class);
-        hostServicesSupplier.setHostServices(this.getHostServices());
+        // do not use HostServices until
+        // java.lang.ClassNotFoundException: com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory
+        // is fixed
+        //final HostServicesSupplier hostServicesSupplier = applicationContext.getBean(HostServicesSupplier.class);
+        //hostServicesSupplier.setHostServices(this.getHostServices());
 
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();

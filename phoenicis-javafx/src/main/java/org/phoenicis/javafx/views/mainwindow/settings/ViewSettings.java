@@ -41,6 +41,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.settings.Setting;
 import org.phoenicis.settings.Settings;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -250,7 +251,17 @@ public class ViewSettings extends MainWindowView {
         gridPane.add(new TextWithStyle(translate("Git Revision:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         Hyperlink gitRevisionLink = new Hyperlink(applicationGitRevision);
         gitRevisionLink.setOnAction(event ->
-                hostServicesSupplier.get().showDocument("https://github.com/PlayOnLinux/POL-POM-5/commit/" + applicationGitRevision)
+                {
+                    String url = "https://github.com/PlayOnLinux/POL-POM-5/commit/" + applicationGitRevision;
+                    // use xdg-open until HostServices works
+                    Runtime runtime = Runtime.getRuntime();
+                    try {
+                        runtime.exec("xdg-open " + url);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //hostServicesSupplier.get().showDocument(url);
+                }
         );
         gridPane.add(gitRevisionLink, 1, 2);
 
