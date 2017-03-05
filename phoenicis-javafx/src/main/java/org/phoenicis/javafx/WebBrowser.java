@@ -18,7 +18,9 @@
 
 package org.phoenicis.javafx;
 
+import java.net.URI;
+
 public interface WebBrowser {
 
-    void openUrl(String url);
+    void open(URI url);
 }

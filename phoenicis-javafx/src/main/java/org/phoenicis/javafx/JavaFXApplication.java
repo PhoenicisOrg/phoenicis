@@ -41,22 +41,6 @@ public class JavaFXApplication extends Application {
         loadFonts();
         ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
 
-        // do not use HostServices on OSX/Linux until
-        // java.lang.ClassNotFoundException: com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory
-        // is fixed
-        final WebBrowserSupplier webBrowserSupplier = applicationContext.getBean(WebBrowserSupplier.class);
-        final OperatingSystemFetcher operatingSystemFetcher = applicationContext.getBean(OperatingSystemFetcher.class);
-        switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
-            case LINUX:
-                webBrowserSupplier.setWebBrowser(new LinuxWebBrowser());
-                break;
-            case MACOSX:
-                webBrowserSupplier.setWebBrowser(new MacWebBrowser());
-                break;
-            default:
-                webBrowserSupplier.setWebBrowser(new HostServicesWebBrowser(this.getHostServices()));
-        }
-
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();
         mainController.setOnClose(() -> {

@@ -18,15 +18,13 @@
 
 package org.phoenicis.javafx;
 
-import javafx.application.HostServices;
-
 import java.io.IOException;
-import java.util.function.Supplier;
+import java.net.URI;
 
 public class LinuxWebBrowser implements WebBrowser {
 
     @Override
-    public void openUrl(String url) {
+    public void open(URI url) {
         Runtime runtime = Runtime.getRuntime();
         try {
             runtime.exec("xdg-open " + url);

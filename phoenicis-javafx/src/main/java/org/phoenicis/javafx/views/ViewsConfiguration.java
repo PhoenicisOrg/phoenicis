@@ -19,7 +19,8 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.javafx.WebBrowserSupplier;
+import org.phoenicis.javafx.LinuxWebBrowser;
+import org.phoenicis.javafx.WebBrowser;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -59,8 +60,8 @@ public class ViewsConfiguration {
     private ThemeConfiguration themeConfiguration;
 
     @Bean
-    public WebBrowserSupplier webBrowserSupplier() {
-        return new WebBrowserSupplier();
+    public WebBrowser webBrowser() {
+        return new LinuxWebBrowser();
     }
 
     @Bean
@@ -80,7 +81,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, webBrowserSupplier());
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, webBrowser());
     }
 
     @Bean

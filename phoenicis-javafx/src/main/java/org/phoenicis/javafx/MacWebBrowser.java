@@ -19,11 +19,12 @@
 package org.phoenicis.javafx;
 
 import java.io.IOException;
+import java.net.URI;
 
 public class MacWebBrowser implements WebBrowser {
 
     @Override
-    public void openUrl(String url) {
+    public void open(URI url) {
         Runtime runtime = Runtime.getRuntime();
         try {
             runtime.exec("open " + url);
