@@ -30,7 +30,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
-import org.phoenicis.javafx.WebBrowser;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -40,6 +39,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.settings.Setting;
 import org.phoenicis.settings.Settings;
+import org.phoenicis.tools.system.opener.Opener;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -59,7 +59,7 @@ public class ViewSettings extends MainWindowView {
     private final String applicationVersion;
     private final String applicationGitRevision;
     private final String applicationBuildTimestamp;
-    private final WebBrowser opener;
+    private final Opener opener;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
@@ -72,7 +72,7 @@ public class ViewSettings extends MainWindowView {
     private VBox networkPanel = new VBox();
     private VBox aboutPanel = new VBox();
 
-    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp, WebBrowser opener) {
+    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp, Opener opener) {
         super("Settings", themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;

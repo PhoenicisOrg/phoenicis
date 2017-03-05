@@ -19,8 +19,6 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.javafx.LinuxWebBrowser;
-import org.phoenicis.javafx.WebBrowser;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -32,6 +30,7 @@ import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -59,10 +58,8 @@ public class ViewsConfiguration {
     @Autowired
     private ThemeConfiguration themeConfiguration;
 
-    @Bean
-    public WebBrowser webBrowser() {
-        return new LinuxWebBrowser();
-    }
+    @Autowired
+    private ToolsConfiguration toolsConfiguration;
 
     @Bean
     public ViewApps viewApps() {
@@ -81,7 +78,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, webBrowser());
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener());
     }
 
     @Bean
