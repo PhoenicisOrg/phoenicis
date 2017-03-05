@@ -61,5 +61,4 @@ public class ExeAnalyser {
             return peFile.getArchitecture() == architecture;
         }
     }
-
 }
