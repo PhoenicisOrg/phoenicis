@@ -29,6 +29,9 @@ import org.phoenicis.tools.http.Downloader;
 import org.phoenicis.tools.system.ArchitectureFetcher;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.phoenicis.tools.system.SystemConfiguration;
+import org.phoenicis.tools.system.opener.AutomaticOpener;
+import org.phoenicis.tools.system.opener.Opener;
+import org.phoenicis.tools.system.opener.OpenerProcessImplementation;
 import org.phoenicis.tools.system.terminal.TerminalOpener;
 import org.phoenicis.tools.win32.ExeAnalyser;
 import org.phoenicis.win32.Win32Configuration;
@@ -36,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @Import(SystemConfiguration.class)
@@ -124,5 +128,22 @@ public class ToolsConfiguration {
     @Bean
     public TerminalOpener terminalOpener() {
         return systemConfiguration.terminalOpener();
+    }
+
+    @Bean
+    @Lazy
+    Opener linuxOpener() {
+        return new OpenerProcessImplementation("xdg-open");
+    }
+
+    @Bean
+    @Lazy
+    Opener macOsOpener() {
+        return new OpenerProcessImplementation("open");
+    }
+
+    @Bean
+    public Opener opener() {
+        return new AutomaticOpener(linuxOpener(), macOsOpener(), operatingSystemFetcher());
     }
 }
