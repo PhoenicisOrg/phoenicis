@@ -24,6 +24,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -40,11 +41,21 @@ public class JavaFXApplication extends Application {
         loadFonts();
         ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
 
-        // do not use HostServices until
+        // do not use HostServices on OSX/Linux until
         // java.lang.ClassNotFoundException: com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory
         // is fixed
-        //final HostServicesSupplier hostServicesSupplier = applicationContext.getBean(HostServicesSupplier.class);
-        //hostServicesSupplier.setHostServices(this.getHostServices());
+        final WebBrowserSupplier webBrowserSupplier = applicationContext.getBean(WebBrowserSupplier.class);
+        final OperatingSystemFetcher operatingSystemFetcher = applicationContext.getBean(OperatingSystemFetcher.class);
+        switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
+            case LINUX:
+                webBrowserSupplier.setWebBrowser(new LinuxWebBrowser());
+                break;
+            case MACOSX:
+                webBrowserSupplier.setWebBrowser(new MacWebBrowser());
+                break;
+            default:
+                webBrowserSupplier.setWebBrowser(new HostServicesWebBrowser(this.getHostServices()));
+        }
 
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();

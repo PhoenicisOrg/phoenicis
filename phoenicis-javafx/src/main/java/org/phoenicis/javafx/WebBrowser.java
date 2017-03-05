@@ -18,19 +18,7 @@
 
 package org.phoenicis.javafx;
 
-import javafx.application.HostServices;
+public interface WebBrowser {
 
-import java.util.function.Supplier;
-
-public class HostServicesSupplier implements Supplier {
-    private HostServices hostServices;
-
-    public void setHostServices(HostServices hostServices) {
-        this.hostServices = hostServices;
-    }
-
-    @Override
-    public Object get() {
-        return hostServices;
-    }
+    void openUrl(String url);
 }

@@ -31,6 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import org.phoenicis.javafx.WebBrowser;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -41,7 +42,6 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.settings.Setting;
 import org.phoenicis.settings.Settings;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class ViewSettings extends MainWindowView {
     private final String applicationVersion;
     private final String applicationGitRevision;
     private final String applicationBuildTimestamp;
-    private Supplier<HostServices> hostServicesSupplier;
+    private Supplier<WebBrowser> webBrowserSupplier;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
@@ -72,13 +72,13 @@ public class ViewSettings extends MainWindowView {
     private VBox networkPanel = new VBox();
     private VBox aboutPanel = new VBox();
 
-    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp, Supplier<HostServices> hostServicesSupplier) {
+    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp, Supplier<WebBrowser> webBrowserSupplier) {
         super("Settings", themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;
         this.applicationGitRevision = applicationGitRevision;
         this.applicationBuildTimestamp = applicationBuildTimestamp;
-        this.hostServicesSupplier = hostServicesSupplier;
+        this.webBrowserSupplier = webBrowserSupplier;
 
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
@@ -253,14 +253,7 @@ public class ViewSettings extends MainWindowView {
         gitRevisionLink.setOnAction(event ->
                 {
                     String url = "https://github.com/PlayOnLinux/POL-POM-5/commit/" + applicationGitRevision;
-                    // use xdg-open until HostServices works
-                    Runtime runtime = Runtime.getRuntime();
-                    try {
-                        runtime.exec("xdg-open " + url);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //hostServicesSupplier.get().showDocument(url);
+                    webBrowserSupplier.get().openUrl(url);
                 }
         );
         gridPane.add(gitRevisionLink, 1, 2);
