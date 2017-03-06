@@ -61,13 +61,8 @@ public class RegistryParserTest {
     }
 
     @Test
-    public void testParse_realRegFile_testObjectPopulated() {
-        File registryFile = null;
-        try {
-            registryFile = new File(this.getClass().getResource("user.reg").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+    public void testParse_realRegFile_testObjectPopulated() throws URISyntaxException {
+        File registryFile = new File(this.getClass().getResource("user.reg").toURI());
 
         RegistryParser registryParser = new RegistryParser();
         RegistryKey parsedFile = registryParser.parseFile(registryFile, "User");
