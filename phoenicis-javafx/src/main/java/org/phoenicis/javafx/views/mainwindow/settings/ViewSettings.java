@@ -18,19 +18,10 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
-import javafx.geometry.Insets;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.settings.Setting;
-import org.phoenicis.settings.Settings;
-import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.javafx.views.common.Theme;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.MessagePanel;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -39,7 +30,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import org.phoenicis.javafx.views.common.TextWithStyle;
+import org.phoenicis.javafx.views.common.Theme;
+import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.MessagePanel;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
+import org.phoenicis.settings.Setting;
+import org.phoenicis.settings.Settings;
+import org.phoenicis.tools.system.opener.Opener;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,11 @@ public class ViewSettings extends MainWindowView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
+    private final String applicationName;
+    private final String applicationVersion;
+    private final String applicationGitRevision;
+    private final String applicationBuildTimestamp;
+    private final Opener opener;
     private final ObservableList<String> repositories = FXCollections.observableArrayList();
     private ComboBox<Theme> themes;
     private Consumer<Settings> onSave;
@@ -62,9 +70,15 @@ public class ViewSettings extends MainWindowView {
     private VBox repositoriesPanel = new VBox();
     private VBox fileAssociationsPanel = new VBox();
     private VBox networkPanel = new VBox();
+    private VBox aboutPanel = new VBox();
 
-    public ViewSettings(ThemeManager themeManager) {
+    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp, Opener opener) {
         super("Settings", themeManager);
+        this.applicationName = applicationName;
+        this.applicationVersion = applicationVersion;
+        this.applicationGitRevision = applicationGitRevision;
+        this.applicationBuildTimestamp = applicationBuildTimestamp;
+        this.opener = opener;
 
         final List<LeftToggleButton> leftButtonList = new ArrayList<>();
         ToggleGroup group = new ToggleGroup();
@@ -97,6 +111,13 @@ public class ViewSettings extends MainWindowView {
         leftButtonList.add(networkButton);
         networkButton.setOnMouseClicked(event -> showRightView(networkPanel));
 
+        final LeftToggleButton aboutButton = new LeftToggleButton("About");
+        final String aboutButtonIcon = "icons/mainwindow/settings/about.png";
+        aboutButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(aboutButtonIcon) + "');");
+        aboutButton.setToggleGroup(group);
+        leftButtonList.add(aboutButton);
+        aboutButton.setOnMouseClicked(event -> showRightView(aboutPanel));
+
         final LeftGroup leftButtons = new LeftGroup("Settings");
         leftButtons.setNodes(leftButtonList);
 
@@ -107,6 +128,7 @@ public class ViewSettings extends MainWindowView {
         initRepositoriesSettingsPane();
         initFileAssociationsPane();
         initNetworkPane();
+        initAboutPane();
 
         initSelectSettingsPane();
         showRightView(this.selectSettingsPanel);
@@ -208,6 +230,45 @@ public class ViewSettings extends MainWindowView {
 
     private void initNetworkPane() {
 
+    }
+
+    private void initAboutPane() {
+        aboutPanel = new VBox();
+        aboutPanel.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
+
+        final Text title = new TextWithStyle(translate("About"), TITLE_CSS_CLASS);
+        aboutPanel.getChildren().add(title);
+
+        final GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("grid");
+
+        gridPane.add(new TextWithStyle(translate("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        gridPane.add(new Label(applicationName), 1, 0);
+
+        gridPane.add(new TextWithStyle(translate("Version:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
+        gridPane.add(new Label(applicationVersion), 1, 1);
+
+        gridPane.add(new TextWithStyle(translate("Git Revision:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        Hyperlink gitRevisionLink = new Hyperlink(applicationGitRevision);
+        gitRevisionLink.setOnAction(event ->
+                {
+                    try {
+                        URI uri = new URI("https://github.com/PlayOnLinux/POL-POM-5/commit/" + applicationGitRevision);
+                        opener.open(uri);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+        gridPane.add(gitRevisionLink, 1, 2);
+
+        gridPane.add(new TextWithStyle(translate("Build Timestamp:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        gridPane.add(new Label(applicationBuildTimestamp), 1, 3);
+
+        gridPane.setHgap(20);
+        gridPane.setVgap(10);
+
+        aboutPanel.getChildren().add(gridPane);
     }
 
     public void setSettings(Settings settings) {

@@ -30,6 +30,7 @@ import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -42,11 +43,23 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
+    @Value("${application.version}")
+    private String applicationVersion;
+
+    @Value("${application.gitRevision}")
+    private String applicationGitRevision;
+
+    @Value("${application.buildTimestamp}")
+    private String applicationBuildTimestamp;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
     @Autowired
     private ThemeConfiguration themeConfiguration;
+
+    @Autowired
+    private ToolsConfiguration toolsConfiguration;
 
     @Bean
     public ViewApps viewApps() {
@@ -65,7 +78,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager());
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener());
     }
 
     @Bean

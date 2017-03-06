@@ -18,12 +18,13 @@
 
 package org.phoenicis.javafx;
 
-import org.phoenicis.javafx.controller.MainController;
-import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.phoenicis.javafx.controller.MainController;
+import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
