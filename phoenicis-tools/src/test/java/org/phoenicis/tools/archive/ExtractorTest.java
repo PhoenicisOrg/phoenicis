@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
@@ -63,7 +64,12 @@ public class ExtractorTest {
 
     @Test
     public void testUncompress_withSymbolicLinks() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "tarLink.tar.gz");
+        File inputFile = null;
+        try {
+            inputFile = new File(inputUrl.toURI().getPath(), "tarLink.tar.gz");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final File temporaryDirectory = Files.createTempDir();
 
         temporaryDirectory.deleteOnExit();
@@ -83,7 +89,12 @@ public class ExtractorTest {
     }
 
     private void testUncompress(String fileName) throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), fileName);
+        File inputFile = null;
+        try {
+            inputFile = new File(inputUrl.toURI().getPath(), fileName);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final File temporaryDirectory = Files.createTempDir();
 
         temporaryDirectory.deleteOnExit();
@@ -109,7 +120,12 @@ public class ExtractorTest {
 
     @Test
     public void testGunzip() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
+        File inputFile = null;
+        try {
+            inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.gz");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final File outputFile = File.createTempFile("output", "txt");
 
         tar.gunzip(inputFile, outputFile);
@@ -119,7 +135,12 @@ public class ExtractorTest {
 
     @Test
     public void testBunzip2() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
+        File inputFile = null;
+        try {
+            inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.bz2");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final File outputFile = File.createTempFile("output", "txt");
 
         tar.bunzip2(inputFile, outputFile);
@@ -129,7 +150,12 @@ public class ExtractorTest {
 
     @Test(expected = ArchiveException.class)
     public void testBunzip2_extractGzip() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
+        File inputFile = null;
+        try {
+            inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.gz");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();
         tar.bunzip2(inputFile, outputFile);
@@ -137,7 +163,12 @@ public class ExtractorTest {
 
     @Test(expected = ArchiveException.class)
     public void tesGunzip_extractBzip2() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
+        File inputFile = null;
+        try {
+            inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.bz2");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();
         tar.gunzip(inputFile, outputFile);

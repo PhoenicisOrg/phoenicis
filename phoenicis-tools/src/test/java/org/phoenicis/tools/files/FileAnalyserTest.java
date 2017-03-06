@@ -22,6 +22,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
@@ -57,28 +58,48 @@ public class FileAnalyserTest {
 
     @Test
     public void testGetMimetype_GZFile() {
-        assertEquals("application/x-gzip", fileAnalyser.getMimetype(new File(archiveUrl.getPath(), "pol.txt.gz")));
+        try {
+            assertEquals("application/x-gzip", fileAnalyser.getMimetype(new File(archiveUrl.toURI().getPath(), "pol.txt.gz")));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testGetMimetype_BZ2File() {
-        assertEquals("application/x-bzip2", fileAnalyser.getMimetype(new File(archiveUrl.getPath(), "pol.txt.bz2")));
+        try {
+            assertEquals("application/x-bzip2", fileAnalyser.getMimetype(new File(archiveUrl.toURI().getPath(), "pol.txt.bz2")));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testGetMimetype_TarGZFile() {
-        assertEquals("application/x-gzip", fileAnalyser.getMimetype(new File(archiveUrl.getPath(), "test2.tar.gz")));
+        try {
+            assertEquals("application/x-gzip", fileAnalyser.getMimetype(new File(archiveUrl.toURI().getPath(), "test2.tar.gz")));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testGetMimetype_TarBZ2File() {
-        assertEquals("application/x-bzip2", fileAnalyser.getMimetype(new File(archiveUrl.getPath(), "test3.tar.bz2")));
+        try {
+            assertEquals("application/x-bzip2", fileAnalyser.getMimetype(new File(archiveUrl.toURI().getPath(), "test3.tar.bz2")));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     @Ignore
     public void testGetMimetype_TarFile() {
-        assertEquals("application/octet-stream", fileAnalyser.getMimetype(new File(archiveUrl.getPath(), "test1.tar")));
+        try {
+            assertEquals("application/octet-stream", fileAnalyser.getMimetype(new File(archiveUrl.toURI().getPath(), "test1.tar")));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
