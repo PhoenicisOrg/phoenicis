@@ -23,6 +23,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -60,8 +61,8 @@ public class RegistryParserTest {
     }
 
     @Test
-    public void testParse_realRegFile_testObjectPopulated() {
-        File registryFile = new File(this.getClass().getResource("user.reg").getFile());
+    public void testParse_realRegFile_testObjectPopulated() throws URISyntaxException {
+        File registryFile = new File(this.getClass().getResource("user.reg").toURI());
 
         RegistryParser registryParser = new RegistryParser();
         RegistryKey parsedFile = registryParser.parseFile(registryFile, "User");

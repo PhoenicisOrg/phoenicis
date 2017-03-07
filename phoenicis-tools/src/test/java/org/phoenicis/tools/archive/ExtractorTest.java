@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
@@ -42,28 +43,28 @@ public class ExtractorTest {
     private Extractor extractor = new Extractor(new FileAnalyser(), tar, zip);
 
     @Test
-    public void testUncompressTarFile() throws IOException {
+    public void testUncompressTarFile() throws IOException, URISyntaxException {
         testUncompress("test1.tar");
     }
 
     @Test
-    public void testUncompressTarGzFile() throws IOException {
+    public void testUncompressTarGzFile() throws IOException, URISyntaxException {
         testUncompress("test2.tar.gz");
     }
 
     @Test
-    public void testUncompressTarBz2File() throws IOException {
+    public void testUncompressTarBz2File() throws IOException, URISyntaxException {
         testUncompress("test3.tar.bz2");
     }
 
     @Test
-    public void testUncompressZipFile() throws IOException {
+    public void testUncompressZipFile() throws IOException, URISyntaxException {
         testUncompress("test4.zip");
     }
 
     @Test
-    public void testUncompress_withSymbolicLinks() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "tarLink.tar.gz");
+    public void testUncompress_withSymbolicLinks() throws IOException, URISyntaxException {
+        File inputFile = new File(inputUrl.toURI().getPath(), "tarLink.tar.gz");
         final File temporaryDirectory = Files.createTempDir();
 
         temporaryDirectory.deleteOnExit();
@@ -82,8 +83,8 @@ public class ExtractorTest {
         assertTrue(java.nio.file.Files.isSymbolicLink(Paths.get(file2.getPath())));
     }
 
-    private void testUncompress(String fileName) throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), fileName);
+    private void testUncompress(String fileName) throws IOException, URISyntaxException {
+        File inputFile = new File(inputUrl.toURI().getPath(), fileName);
         final File temporaryDirectory = Files.createTempDir();
 
         temporaryDirectory.deleteOnExit();
@@ -108,8 +109,8 @@ public class ExtractorTest {
     }
 
     @Test
-    public void testGunzip() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
+    public void testGunzip() throws IOException, URISyntaxException {
+        File inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
 
         tar.gunzip(inputFile, outputFile);
@@ -118,8 +119,8 @@ public class ExtractorTest {
     }
 
     @Test
-    public void testBunzip2() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
+    public void testBunzip2() throws IOException, URISyntaxException {
+        File inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
 
         tar.bunzip2(inputFile, outputFile);
@@ -128,16 +129,16 @@ public class ExtractorTest {
     }
 
     @Test(expected = ArchiveException.class)
-    public void testBunzip2_extractGzip() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.gz");
+    public void testBunzip2_extractGzip() throws IOException, URISyntaxException {
+        File inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();
         tar.bunzip2(inputFile, outputFile);
     }
 
     @Test(expected = ArchiveException.class)
-    public void tesGunzip_extractBzip2() throws IOException {
-        final File inputFile = new File(inputUrl.getPath(), "pol.txt.bz2");
+    public void tesGunzip_extractBzip2() throws IOException, URISyntaxException {
+        File inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();
         tar.gunzip(inputFile, outputFile);
