@@ -148,7 +148,7 @@
     -fx-font-size: 1.1em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-    -fx-fill: #FFFFFF;
+    -fx-text-fill: #FFFFFF;
 }
 
 .leftButton {
