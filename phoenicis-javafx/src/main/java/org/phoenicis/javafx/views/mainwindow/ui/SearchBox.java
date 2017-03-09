@@ -11,8 +11,6 @@ public class SearchBox extends AnchorPane {
     private TextField searchField;
     private Button clearButton;
 
-    private int pixelOffset;
-
     private static final String cleanButtonIcon = "icons/mainwindow/general/edit-clear.png";
 
     public SearchBox(ThemeManager themeManager) {
@@ -23,6 +21,7 @@ public class SearchBox extends AnchorPane {
         this.searchField.prefWidthProperty().bind(this.prefWidthProperty());
 
         AnchorPane.setLeftAnchor(searchField, 0.0);
+        AnchorPane.setRightAnchor(searchField, 0.0);
 
         this.clearButton = new Button();
         this.clearButton.getStyleClass().add("searchCleanButton");
