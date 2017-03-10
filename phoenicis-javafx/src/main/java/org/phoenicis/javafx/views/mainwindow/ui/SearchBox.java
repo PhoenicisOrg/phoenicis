@@ -31,9 +31,6 @@ public class SearchBox extends AnchorPane {
 
         AnchorPane.setRightAnchor(clearButton, 0.0);
 
-        themeManager.addListener((observableTheme, oldTheme, newTheme) -> clearButton.styleProperty().set(
-                "-fx-graphic: url('" + themeManager.getResourceUrl(SearchBox.cleanButtonIcon) + "');"));
-        
         this.getChildren().addAll(searchField, clearButton);
     }
 

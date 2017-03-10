@@ -1,31 +1,23 @@
 package org.phoenicis.javafx.views.common;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-
 public class ThemeManager {
-    private ObjectProperty<Theme> currentTheme;
+    private Theme currentTheme;
     private final String themeUrl = "/org/phoenicis/javafx/themes";
 
     public ThemeManager() {
-        currentTheme = new SimpleObjectProperty<Theme>(Theme.DEFAULT);
+        currentTheme = Theme.DEFAULT;
     }
 
     public ThemeManager(Theme theme) {
-    	currentTheme = new SimpleObjectProperty<Theme>(theme);
+        currentTheme = theme;
     }
 
     public Theme getCurrentTheme() {
-        return currentTheme.get();
+        return currentTheme;
     }
 
     public void setCurrentTheme(Theme theme) {
-        currentTheme.set(theme);
-    }
-    
-    public void addListener(ChangeListener<Theme> changeListener) {
-    	currentTheme.addListener(changeListener);
+        currentTheme = theme;
     }
 
     /**
@@ -37,7 +29,7 @@ public class ThemeManager {
      */
     public boolean resourceExists(String resource) {
         return getClass().getResourceAsStream(
-                String.format("%s/%s/%s", themeUrl, currentTheme.get().getShortName(), resource)) != null;
+                String.format("%s/%s/%s", themeUrl, currentTheme.getShortName(), resource)) != null;
     }
 
     /**
@@ -51,7 +43,7 @@ public class ThemeManager {
     public String getResourceUrl(String resource) {
         // check if theme contains resource
         if (resourceExists(resource)) {
-            return String.format("%s/%s/%s", themeUrl, currentTheme.get().getShortName(), resource);
+            return String.format("%s/%s/%s", themeUrl, currentTheme.getShortName(), resource);
         } else {
             return String.format("%s/%s/%s", themeUrl, Theme.DEFAULT.getShortName(), resource);
         }
