@@ -118,10 +118,8 @@ public class ViewEngines extends MainWindowView {
     protected void drawSideBar() {
         super.drawSideBar();
 
-        final TextField searchBar = new TextField();
-        searchBar.getStyleClass().add("searchBar");
-        searchBar.setOnKeyReleased(event -> {
-        });
+        final SearchBox searchBar = new SearchBox(themeManager);
+        searchBar.setOnKeyReleased(event -> {});
 
         categoryView = new LeftGroup(translate("Engines"));
 

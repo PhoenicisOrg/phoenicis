@@ -46,7 +46,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
     private final MiniatureListWidget availableApps;
-    private TextField searchBar;
+    private SearchBox searchBar;
     private LeftGroup categoryView;
     private Consumer<List<CategoryDTO>> onSelectAll = (categories) -> {};
     private Consumer<CategoryDTO> onSelectCategory = (category) -> {};
@@ -146,8 +146,7 @@ public class ViewApps extends MainWindowView {
 
     @Override
     protected void drawSideBar() {
-        searchBar = new TextField();
-        searchBar.getStyleClass().add("searchBar");
+        searchBar = new SearchBox(themeManager);
         searchBar.textProperty().addListener(obs->{
             String filter = searchBar.getText().toLowerCase();
             currentFilter.clear();

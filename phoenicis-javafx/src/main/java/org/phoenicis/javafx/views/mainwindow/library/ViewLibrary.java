@@ -26,6 +26,8 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
+import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
+
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -46,7 +48,7 @@ public class ViewLibrary extends MainWindowView {
     private LeftButton runScript;
     private LeftButton runConsole;
     private MiniatureListWidget applicationListWidget;
-    private TextField searchBar;
+    private SearchBox searchBar;
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {};
     private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {};
@@ -150,8 +152,7 @@ public class ViewLibrary extends MainWindowView {
     }
 
     private void drawSideBarWithShortcut(ShortcutDTO shortcut) {
-        searchBar = new TextField();
-        searchBar.getStyleClass().add("searchBar");
+        searchBar = new SearchBox(themeManager);
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
@@ -184,8 +185,7 @@ public class ViewLibrary extends MainWindowView {
     private void drawSideBarWithoutShortcut() {
         clearSideBar();
 
-        searchBar = new TextField();
-        searchBar.getStyleClass().add("searchBar");
+        searchBar = new SearchBox(themeManager);
         searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);

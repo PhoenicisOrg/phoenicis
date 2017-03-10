@@ -25,6 +25,8 @@ import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
+import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
+
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -38,7 +40,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 public class ViewContainers extends MainWindowView {
     private final LeftGroup containersView;
 
-    private TextField searchBar;
+    private SearchBox searchBar;
     private MessagePanel selectContainerPanel;
     private Consumer<ContainerDTO> onSelectContainer = container -> {};
 
@@ -87,8 +89,7 @@ public class ViewContainers extends MainWindowView {
 
     @Override
     protected void drawSideBar() {
-        searchBar = new TextField();
-        searchBar.getStyleClass().add("searchBar");
+        searchBar = new SearchBox(themeManager);
         searchBar.setOnKeyReleased(e -> applyFilter(searchBar.getText()));
 
         addToSideBar(searchBar, new LeftSpacer(), containersView);
