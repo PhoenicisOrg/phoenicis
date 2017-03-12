@@ -31,13 +31,13 @@ class MultipleApplicationsSource implements ApplicationsSource {
     }
 
     MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
-        ApplicationsSource lastApplicationSource = new NullApplicationsSource();
+        ApplicationsSource lastApplicationsSource = new NullApplicationsSource();
 
-        for (ApplicationsSource applicationSource : applicationsSources) {
-            lastApplicationSource = new TeeApplicationsSource(lastApplicationSource, applicationSource);
+        for (ApplicationsSource applicationsSource : applicationsSources) {
+            lastApplicationsSource = new TeeApplicationsSource(lastApplicationsSource, applicationsSource);
         }
 
-        this.applicationsSource = lastApplicationSource;
+        this.applicationsSource = lastApplicationsSource;
     }
 
     @Override

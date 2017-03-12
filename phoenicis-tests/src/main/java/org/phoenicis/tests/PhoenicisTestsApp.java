@@ -45,7 +45,7 @@ public class PhoenicisTestsApp {
         try(final ConfigurableApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(PhoenicisTestsConfiguration.class)) {
 
-            final ApplicationsSource applicationsSource = applicationContext.getBean("mockedApplicationSource", ApplicationsSource.class);
+            final ApplicationsSource applicationsSource = applicationContext.getBean("mockedApplicationsSource", ApplicationsSource.class);
             this.applicationContext = applicationContext;
 
             applicationsSource.fetchInstallableApplications(categoryDTOS -> {

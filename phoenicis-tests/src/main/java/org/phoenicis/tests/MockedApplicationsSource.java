@@ -31,12 +31,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MockedApplicationSource extends TeeApplicationsSource {
-    MockedApplicationSource(ApplicationsSource realApplicationSource) {
-        super(new MockApplicationSource(), realApplicationSource);
+public class MockedApplicationsSource extends TeeApplicationsSource {
+    MockedApplicationsSource(ApplicationsSource realApplicationsSource) {
+        super(new MockApplicationsSource(), realApplicationsSource);
     }
 
-    private static class MockApplicationSource implements ApplicationsSource {
+    private static class MockApplicationsSource implements ApplicationsSource {
         @Override
         public List<CategoryDTO> fetchInstallableApplications() {
             return Collections.singletonList(

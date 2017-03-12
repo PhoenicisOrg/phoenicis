@@ -28,25 +28,25 @@ import java.util.*;
 import java.util.function.Function;
 
 public class TeeApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource leftApplicationSource;
-    private final ApplicationsSource rightApplicationSource;
+    private final ApplicationsSource leftApplicationsSource;
+    private final ApplicationsSource rightApplicationsSource;
 
     /**
      * merges fetched applications from two sources
-     * If an application is found in both sources, the leftApplicationSource will be used.
-     * @param leftApplicationSource
-     * @param rightApplicationSource
+     * If an application is found in both sources, the leftApplicationsSource will be used.
+     * @param leftApplicationsSource
+     * @param rightApplicationsSource
      */
-    protected TeeApplicationsSource(ApplicationsSource leftApplicationSource,
-                                    ApplicationsSource rightApplicationSource) {
-        this.leftApplicationSource = leftApplicationSource;
-        this.rightApplicationSource = rightApplicationSource;
+    protected TeeApplicationsSource(ApplicationsSource leftApplicationsSource,
+                                    ApplicationsSource rightApplicationsSource) {
+        this.leftApplicationsSource = leftApplicationsSource;
+        this.rightApplicationsSource = rightApplicationsSource;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
-        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftApplicationsSource.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightApplicationsSource.fetchInstallableApplications(), CategoryDTO::getName);
 
         final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
 

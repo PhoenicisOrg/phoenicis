@@ -47,8 +47,8 @@ class PhoenicisTestsConfiguration {
     private AppsConfiguration appsConfiguration;
 
     @Bean
-    public ApplicationsSource mockedApplicationSource() {
-        return new MockedApplicationSource(appsConfiguration.appsSource());
+    public ApplicationsSource mockedApplicationsSource() {
+        return new MockedApplicationsSource(appsConfiguration.appsSource());
     }
 
 }

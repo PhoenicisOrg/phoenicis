@@ -43,7 +43,7 @@ public class AppsConfiguration {
 
     @Bean
     public ApplicationsSource appsSource() {
-        ApplicationsSource applicationsSource = new ConfigurableApplicationSource(
+        ApplicationsSource applicationsSource = new ConfigurableApplicationsSource(
                 repositoryConfiguration,
                 new LocalApplicationsSource.Factory(objectMapper()),
                 new ClasspathApplicationsSource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
