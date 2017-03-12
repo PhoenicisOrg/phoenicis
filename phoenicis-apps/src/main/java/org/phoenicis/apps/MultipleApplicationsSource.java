@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
@@ -41,8 +42,15 @@ class MultipleApplicationsSource implements MergeableApplicationsSource {
 
 	@Override
 	public List<CategoryDTO> fetchInstallableApplications() {
-		return this.applicationsSources.parallelStream()
-				.map(ApplicationsSource::fetchInstallableApplications)
+		/*
+		 * This step is needed because we need a mapping between the CategoryDTO
+		 * list and its application source, to preserve the order in the
+		 * reduction step
+		 */
+		Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = this.applicationsSources.parallelStream().collect(
+				Collectors.toConcurrentMap(source -> source, ApplicationsSource::fetchInstallableApplications));
+
+		return applicationsSources.stream().map(applicationSource -> categoriesMap.get(applicationSource))
 				.reduce((leftCategoryList, rightCategoryList) -> {
 					final Map<String, CategoryDTO> leftCategories = createSortedMap(leftCategoryList,
 							CategoryDTO::getName);
