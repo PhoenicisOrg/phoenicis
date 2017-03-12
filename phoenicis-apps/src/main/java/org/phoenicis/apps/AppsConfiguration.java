@@ -35,6 +35,9 @@ public class AppsConfiguration {
     @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
     private boolean enforceUncompatibleOperatingSystems;
 
+    @Value("${application.user.cache}")
+    private String cacheDirectoryPath;
+
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
@@ -45,6 +48,7 @@ public class AppsConfiguration {
     public ApplicationsSource appsSource() {
         ApplicationsSource applicationsSource = new ConfigurableApplicationSource(
                 repositoryConfiguration,
+                cacheDirectoryPath,
                 new LocalApplicationsSource.Factory(objectMapper()),
                 new ClasspathApplicationsSource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
         );
