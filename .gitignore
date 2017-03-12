@@ -10,3 +10,21 @@ target/
 .settings/
 *.class
 .pydevproject
+
+# Sub-.gitignore files
+phoenicis-apps/.gitignore
+phoenicis-cli/.gitignore
+phoenicis-configuration/.gitignore
+phoenicis-containers/.gitignore
+phoenicis-dist/.gitignore
+phoenicis-engines/.gitignore
+phoenicis-entities/.gitignore
+phoenicis-javafx/.gitignore
+phoenicis-library/.gitignore
+phoenicis-multithreading/.gitignore
+phoenicis-scripts/.gitignore
+phoenicis-settings/.gitignore
+phoenicis-tests/.gitignore
+phoenicis-tools/.gitignore
+phoenicis-win32/.gitignore
+
