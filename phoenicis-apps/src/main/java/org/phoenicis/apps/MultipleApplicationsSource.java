@@ -18,30 +18,51 @@
 
 package org.phoenicis.apps;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import org.phoenicis.apps.dto.CategoryDTO;
 
-import java.util.Arrays;
-import java.util.List;
+class MultipleApplicationsSource implements MergeableApplicationsSource {
+	private final List<ApplicationsSource> applicationsSources;
 
-class MultipleApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource applicationsSource;
+	MultipleApplicationsSource(ApplicationsSource... applicationsSources) {
+		this(Arrays.asList(applicationsSources));
+	}
 
-    MultipleApplicationsSource(ApplicationsSource ...applicationsSources) {
-        this(Arrays.asList(applicationsSources));
-    }
+	MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
+		this.applicationsSources = applicationsSources;
+	}
 
-    MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
-        ApplicationsSource lastApplicationSource = new NullApplicationsSource();
+	@Override
+	public List<CategoryDTO> fetchInstallableApplications() {
+		return this.applicationsSources.parallelStream()
+				.map(ApplicationsSource::fetchInstallableApplications)
+				.reduce((leftCategoryList, rightCategoryList) -> {
+					final Map<String, CategoryDTO> leftCategories = createSortedMap(leftCategoryList,
+							CategoryDTO::getName);
+					final Map<String, CategoryDTO> rightCategories = createSortedMap(rightCategoryList,
+							CategoryDTO::getName);
 
-        for (ApplicationsSource applicationSource : applicationsSources) {
-            lastApplicationSource = new TeeApplicationsSource(lastApplicationSource, applicationSource);
-        }
+					final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
 
-        this.applicationsSource = lastApplicationSource;
-    }
+					for (String categoryName : leftCategories.keySet()) {
+						final CategoryDTO category = leftCategories.get(categoryName);
 
-    @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return applicationsSource.fetchInstallableApplications();
-    }
+						if (mergedCategories.containsKey(categoryName)) {
+							mergedCategories.put(categoryName,
+									mergeCategories(mergedCategories.get(categoryName), category));
+						} else {
+							mergedCategories.put(categoryName, category);
+						}
+					}
+
+					return new ArrayList<>(mergedCategories.values());
+				}).orElse(Collections.emptyList());
+	}
 }
