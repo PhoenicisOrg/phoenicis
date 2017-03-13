@@ -37,10 +37,11 @@ class GitApplicationsSource implements ApplicationsSource {
 	private final LocalApplicationsSource.Factory localAppsSourceFactory;
 	private List<CategoryDTO> cache;
 
-	private static final String cacheDirectoryPath = System.getProperty("java.io.tmpdir");
+	private final String cacheDirectoryPath;
 
-	GitApplicationsSource(String gitRepositoryURL, LocalApplicationsSource.Factory localAppsSourceFactory) {
+	GitApplicationsSource(String gitRepositoryURL, String cacheDirectoryPath, LocalApplicationsSource.Factory localAppsSourceFactory) {
 		this.gitRepositoryURL = gitRepositoryURL;
+		this.cacheDirectoryPath = cacheDirectoryPath;
 		this.localAppsSourceFactory = localAppsSourceFactory;
 	}
 
@@ -51,7 +52,7 @@ class GitApplicationsSource implements ApplicationsSource {
 		}
 
 		File gitRepositoryLocation = new File(
-				GitApplicationsSource.cacheDirectoryPath + "/git" + this.gitRepositoryURL.hashCode());
+				this.cacheDirectoryPath + "/git" + this.gitRepositoryURL.hashCode());
 
 		LOGGER.info(String.format("Git-repository '%s' will be saved in '%s'", this.gitRepositoryURL,
 				gitRepositoryLocation.getAbsolutePath()));

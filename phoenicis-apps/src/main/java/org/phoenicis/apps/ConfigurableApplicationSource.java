@@ -31,11 +31,13 @@ import java.util.stream.Collectors;
 class ConfigurableApplicationSource implements ApplicationsSource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableApplicationSource.class);
 
+    private String cacheDirectoryPath;
     private final LocalApplicationsSource.Factory localApplicationsSourceFactory;
     private final ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory;
     private final ApplicationsSource applicationsSource;
 
-    ConfigurableApplicationSource(String sourceUrl, LocalApplicationsSource.Factory localApplicationsSourceFactory, ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory) {
+    ConfigurableApplicationSource(String sourceUrl, String cacheDirectoryPath, LocalApplicationsSource.Factory localApplicationsSourceFactory, ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory) {
+        this.cacheDirectoryPath = cacheDirectoryPath;
         this.localApplicationsSourceFactory = localApplicationsSourceFactory;
         this.classPathApplicationsSourceFactory = classPathApplicationsSourceFactory;
         final String[] urls = sourceUrl.split(";");
@@ -55,7 +57,7 @@ class ConfigurableApplicationSource implements ApplicationsSource {
 
             switch (scheme) {
                 case "git":
-                    return new GitApplicationsSource(applicationSourceUrl.replace("git+",""), localApplicationsSourceFactory);
+                    return new GitApplicationsSource(applicationSourceUrl.replace("git+",""), cacheDirectoryPath, localApplicationsSourceFactory);
                 case "file":
                     return localApplicationsSourceFactory.createInstance(url.getRawPath());
                 case "classpath":
