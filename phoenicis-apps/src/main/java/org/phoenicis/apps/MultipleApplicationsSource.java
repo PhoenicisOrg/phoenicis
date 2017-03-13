@@ -23,8 +23,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.phoenicis.apps.dto.CategoryDTO;
@@ -47,30 +45,44 @@ class MultipleApplicationsSource implements MergeableApplicationsSource {
 		 * list and its application source, to preserve the order in the
 		 * reduction step
 		 */
-		Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = this.applicationsSources.parallelStream().collect(
-				Collectors.toConcurrentMap(source -> source, ApplicationsSource::fetchInstallableApplications));
+		final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = this.applicationsSources.parallelStream()
+				.collect(
+						Collectors.toConcurrentMap(source -> source, ApplicationsSource::fetchInstallableApplications));
 
-		return applicationsSources.stream().map(applicationSource -> categoriesMap.get(applicationSource))
-				.reduce((leftCategoryList, rightCategoryList) -> {
-					final Map<String, CategoryDTO> leftCategories = createSortedMap(leftCategoryList,
-							CategoryDTO::getName);
-					final Map<String, CategoryDTO> rightCategories = createSortedMap(rightCategoryList,
-							CategoryDTO::getName);
+		if (applicationsSources.isEmpty())
+			return Collections.emptyList();
 
-					final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
+		final List<ApplicationsSource> tmpApplicationsSources = new ArrayList<>(applicationsSources);
 
-					for (String categoryName : leftCategories.keySet()) {
-						final CategoryDTO category = leftCategories.get(categoryName);
+		/*
+		 * Reverse the list, because we need to prioritize a later application
+		 * source higher than an earlier one
+		 */
+		Collections.reverse(tmpApplicationsSources);
 
-						if (mergedCategories.containsKey(categoryName)) {
-							mergedCategories.put(categoryName,
-									mergeCategories(mergedCategories.get(categoryName), category));
-						} else {
-							mergedCategories.put(categoryName, category);
-						}
-					}
+		/*
+		 * Take the first application source, from behind, as the default one
+		 * and remove it from the list of remaining application sources
+		 */
+		final Map<String, CategoryDTO> mergedCategories = createSortedMap(
+				categoriesMap.get(tmpApplicationsSources.remove(0)), CategoryDTO::getName);
 
-					return new ArrayList<>(mergedCategories.values());
-				}).orElse(Collections.emptyList());
+		for (ApplicationsSource otherApplicationsSource : tmpApplicationsSources) {
+			final List<CategoryDTO> otherCategories = categoriesMap.get(otherApplicationsSource);
+
+			final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getName);
+
+			for (String categoryName : otherCategoriesMap.keySet()) {
+				final CategoryDTO category = otherCategoriesMap.get(categoryName);
+
+				if (mergedCategories.containsKey(categoryName)) {
+					mergedCategories.put(categoryName, mergeCategories(mergedCategories.get(categoryName), category));
+				} else {
+					mergedCategories.put(categoryName, category);
+				}
+			}
+		}
+
+		return new ArrayList<>(mergedCategories.values());
 	}
 }
