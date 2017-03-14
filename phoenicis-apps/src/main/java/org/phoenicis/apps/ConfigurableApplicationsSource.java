@@ -34,6 +34,7 @@ class ConfigurableApplicationsSource implements ApplicationsSource {
     private final LocalApplicationsSource.Factory localApplicationsSourceFactory;
     private final ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory;
     private final ApplicationsSource applicationsSource;
+    private final String cacheDirectoryPath;
 
     ConfigurableApplicationsSource(String sourceUrl, String cacheDirectoryPath, LocalApplicationsSource.Factory localApplicationsSourceFactory, ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory) {
         this.cacheDirectoryPath = cacheDirectoryPath;
@@ -56,7 +57,7 @@ class ConfigurableApplicationsSource implements ApplicationsSource {
 
             switch (scheme) {
                 case "git":
-                    return new GitApplicationsSource(applicationSourceUrl.replace("git+",""), cacheDirectoryPath, localApplicationsSourceFactory);
+                    return new GitApplicationsSource(applicationsSourceUrl.replace("git+",""), cacheDirectoryPath, localApplicationsSourceFactory);
                 case "file":
                     return localApplicationsSourceFactory.createInstance(url.getRawPath());
                 case "classpath":
