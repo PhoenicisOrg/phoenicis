@@ -18,15 +18,14 @@
 
 package org.phoenicis.apps;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
-public class TeeApplicationsSource implements MergeableApplicationsSource {
+public class TeeApplicationsSource extends MergeableApplicationsSource {
     private final ApplicationsSource leftApplicationSource;
     private final ApplicationsSource rightApplicationSource;
 
@@ -44,23 +43,10 @@ public class TeeApplicationsSource implements MergeableApplicationsSource {
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
-        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightApplicationSource.fetchInstallableApplications(), CategoryDTO::getName);
-
-        final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
-
-        for (String categoryName : leftCategories.keySet()) {
-            final CategoryDTO category = leftCategories.get(categoryName);
-
-            if (mergedCategories.containsKey(categoryName)) {
-                mergedCategories.put(categoryName, mergeCategories(mergedCategories.get(categoryName), category));
-            } else {
-                mergedCategories.put(categoryName, category);
-            }
-        }
-
-        return new ArrayList<>(mergedCategories.values());
+    	final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = Arrays.asList(leftApplicationSource, rightApplicationSource).stream()
+    			.collect(
+						Collectors.toMap(source -> source, ApplicationsSource::fetchInstallableApplications));
+    	
+    	return mergeApplicationsSources(categoriesMap, leftApplicationSource, rightApplicationSource);
     }
-
-    
 }
