@@ -18,30 +18,35 @@
 
 package org.phoenicis.apps;
 
-import org.phoenicis.apps.dto.CategoryDTO;
-
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-class MultipleApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource applicationsSource;
+import org.phoenicis.apps.dto.CategoryDTO;
 
-    MultipleApplicationsSource(ApplicationsSource ...applicationsSources) {
-        this(Arrays.asList(applicationsSources));
-    }
+class MultipleApplicationsSource extends MergeableApplicationsSource {
+	private final ApplicationsSource[] applicationsSources;
 
-    MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
-        ApplicationsSource lastApplicationsSource = new NullApplicationsSource();
+	MultipleApplicationsSource(ApplicationsSource... applicationsSources) {
+		this.applicationsSources = applicationsSources;
+	}
 
-        for (ApplicationsSource applicationsSource : applicationsSources) {
-            lastApplicationsSource = new TeeApplicationsSource(lastApplicationsSource, applicationsSource);
-        }
+	MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
+		this(applicationsSources.toArray(new ApplicationsSource[0]));
+	}
 
-        this.applicationsSource = lastApplicationsSource;
-    }
+	@Override
+	public List<CategoryDTO> fetchInstallableApplications() {
+		/*
+		 * This step is needed because we need a mapping between the CategoryDTO
+		 * list and its application source, to preserve the order in the
+		 * reduction step
+		 */
+		final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = Arrays.stream(this.applicationsSources)
+				.parallel().collect(
+						Collectors.toConcurrentMap(source -> source, ApplicationsSource::fetchInstallableApplications));
 
-    @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return applicationsSource.fetchInstallableApplications();
-    }
+		return mergeApplicationsSources(categoriesMap, applicationsSources);
+	}
 }
