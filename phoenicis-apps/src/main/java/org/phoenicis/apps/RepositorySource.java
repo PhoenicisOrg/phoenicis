@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public interface ApplicationsSource {
+public interface RepositorySource {
     List<CategoryDTO> fetchInstallableApplications();
 
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {

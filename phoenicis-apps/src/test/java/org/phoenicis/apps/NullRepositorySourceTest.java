@@ -22,9 +22,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class NullApplicationsSourceTest {
+public class NullRepositorySourceTest {
     @Test
-    public void testNullApplicationsSource() {
-        assertEquals(0, new NullApplicationsSource().fetchInstallableApplications().size());
+    public void testNullRepositorySourceTest() {
+        assertEquals(0, new NullRepositorySource().fetchInstallableApplications().size());
     }
 }

@@ -20,7 +20,6 @@ package org.phoenicis.apps;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 import java.util.Arrays;
@@ -28,12 +27,12 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class CachedApplicationsSourceTest {
+public class CachedRepositorySourceTest {
 
     @Test
     public void testFetchInstallableApplications() throws Exception {
-        ApplicationsSource applicationsSource = Mockito.mock(ApplicationsSource.class);
-        when(applicationsSource.fetchInstallableApplications()).thenReturn(Arrays.asList(
+        RepositorySource repositorySource = Mockito.mock(RepositorySource.class);
+        when(repositorySource.fetchInstallableApplications()).thenReturn(Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
@@ -42,13 +41,13 @@ public class CachedApplicationsSourceTest {
                         .build()
         ));
 
-        final ApplicationsSource cachedSource = new CachedApplicationsSource(applicationsSource);
+        final RepositorySource cachedSource = new CachedRepositorySource(repositorySource);
         cachedSource.fetchInstallableApplications();
         assertEquals(2, cachedSource.fetchInstallableApplications().size());
         cachedSource.fetchInstallableApplications();
         assertEquals(2, cachedSource.fetchInstallableApplications().size());
 
-        verify(applicationsSource, times(1)).fetchInstallableApplications();
+        verify(repositorySource, times(1)).fetchInstallableApplications();
     }
 
 }

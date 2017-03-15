@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.apps.RepositorySource;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -33,21 +33,21 @@ import java.util.List;
 
 public class AppsController {
     private final ViewApps view;
-    private final ApplicationsSource appsSource;
+    private final RepositorySource repositorySource;
     private final ScriptInterpreter scriptInterpreter;
 
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
-                          ApplicationsSource appsSource,
+                          RepositorySource repositorySource,
                           ScriptInterpreter scriptInterpreter) {
         this.view = view;
-        this.appsSource = appsSource;
+        this.repositorySource = repositorySource;
         this.scriptInterpreter = scriptInterpreter;
 
         this.view.setOnApplyFilter(filter -> {
-            appsSource.setFilter(filter);
-            appsSource.fetchInstallableApplications(
+            repositorySource.setFilter(filter);
+            repositorySource.fetchInstallableApplications(
                     this.view::populate,
                     e -> this.view.showFailure()
             );
@@ -56,14 +56,14 @@ public class AppsController {
 
     public void loadApps() {
         this.view.showWait();
-        appsSource.fetchInstallableApplications(
+        repositorySource.fetchInstallableApplications(
                 this.view::populate,
                 e -> this.view.showFailure()
         );
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
-            appsSource.fetchInstallableApplications(
+            repositorySource.fetchInstallableApplications(
                     this.view::populate,
                     e -> this.view.showFailure()
             );

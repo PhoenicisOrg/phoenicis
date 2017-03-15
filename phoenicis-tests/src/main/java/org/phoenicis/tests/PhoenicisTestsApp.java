@@ -18,7 +18,7 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.apps.RepositorySource;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -45,10 +45,10 @@ public class PhoenicisTestsApp {
         try(final ConfigurableApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(PhoenicisTestsConfiguration.class)) {
 
-            final ApplicationsSource applicationsSource = applicationContext.getBean("mockedApplicationsSource", ApplicationsSource.class);
+            final RepositorySource repositorySource = applicationContext.getBean("mockedRepositorySource", RepositorySource.class);
             this.applicationContext = applicationContext;
 
-            applicationsSource.fetchInstallableApplications(categoryDTOS -> {
+            repositorySource.fetchInstallableApplications(categoryDTOS -> {
                 categoryDTOS.forEach(this::testCategory);
             }, e -> {
                 throw new IllegalStateException(e);

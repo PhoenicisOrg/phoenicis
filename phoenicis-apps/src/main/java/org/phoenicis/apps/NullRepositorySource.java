@@ -20,28 +20,12 @@ package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-class MultipleApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource applicationsSource;
-
-    MultipleApplicationsSource(ApplicationsSource ...applicationsSources) {
-        this(Arrays.asList(applicationsSources));
-    }
-
-    MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
-        ApplicationsSource lastApplicationsSource = new NullApplicationsSource();
-
-        for (ApplicationsSource applicationsSource : applicationsSources) {
-            lastApplicationsSource = new TeeApplicationsSource(lastApplicationsSource, applicationsSource);
-        }
-
-        this.applicationsSource = lastApplicationsSource;
-    }
-
+class NullRepositorySource implements RepositorySource {
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        return applicationsSource.fetchInstallableApplications();
+        return Collections.emptyList();
     }
 }

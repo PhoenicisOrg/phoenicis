@@ -31,16 +31,16 @@ import java.util.stream.Collectors;
 /**
  * Takes an Application Source and removes all unsupported scripts
  */
-class FilterApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource applicationsSource;
+class FilterRepositorySource implements RepositorySource {
+    private final RepositorySource repositorySource;
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final boolean enforceIncompatibleOperatingSystems;
     private CombinedAppsFilter filter;
 
-    FilterApplicationsSource(ApplicationsSource applicationsSource,
+    FilterRepositorySource(RepositorySource repositorySource,
                              OperatingSystemFetcher operatingSystemFetcher,
                              boolean enforceIncompatibleOperatingSystems) {
-        this.applicationsSource = applicationsSource;
+        this.repositorySource = repositorySource;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.enforceIncompatibleOperatingSystems = enforceIncompatibleOperatingSystems;
     }
@@ -48,7 +48,7 @@ class FilterApplicationsSource implements ApplicationsSource {
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
-        final List<CategoryDTO> categories = applicationsSource.fetchInstallableApplications();
+        final List<CategoryDTO> categories = repositorySource.fetchInstallableApplications();
         final List<CategoryDTO> filteredCategories = new ArrayList<>();
         for (CategoryDTO category : categories) {
             final List<ApplicationDTO> applications = new ArrayList<>();

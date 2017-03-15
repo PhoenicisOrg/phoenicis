@@ -25,35 +25,35 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
-public class MultipleApplicationsSourceTest {
+public class MultipleRepositorySourceTest {
     @Test
     public void testWithEmptyList_emptySetIsReturned() {
-        final MultipleApplicationsSource multipleApplicationsSource = new MultipleApplicationsSource();
-        assertEquals(0, multipleApplicationsSource.fetchInstallableApplications().size());
+        final MultipleRepositorySource multipleRepositorySource = new MultipleRepositorySource();
+        assertEquals(0, multipleRepositorySource.fetchInstallableApplications().size());
     }
 
     @Test
     public void testWithThreeSources_threeResults() {
-        final ApplicationsSource firstSource = () -> Collections.singletonList(
+        final RepositorySource firstSource = () -> Collections.singletonList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
                         .build()
         );
 
-        final ApplicationsSource secondSource = () -> Collections.singletonList(
+        final RepositorySource secondSource = () -> Collections.singletonList(
                 new CategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
         );
 
-        final ApplicationsSource thirdSource = () -> Collections.singletonList(
+        final RepositorySource thirdSource = () -> Collections.singletonList(
                 new CategoryDTO.Builder()
                         .withName("Category 3")
                         .build()
         );
 
 
-        final MultipleApplicationsSource multipleApplicationsSource = new MultipleApplicationsSource(firstSource, secondSource, thirdSource);
-        assertEquals(3, multipleApplicationsSource.fetchInstallableApplications().size());
+        final MultipleRepositorySource multipleRepositorySource = new MultipleRepositorySource(firstSource, secondSource, thirdSource);
+        assertEquals(3, multipleRepositorySource.fetchInstallableApplications().size());
     }
 }

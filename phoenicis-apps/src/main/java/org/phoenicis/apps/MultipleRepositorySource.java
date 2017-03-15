@@ -20,24 +20,28 @@ package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
+import java.util.Arrays;
 import java.util.List;
 
-class CachedApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource applicationsSource;
-    private List<CategoryDTO> cache;
+class MultipleRepositorySource implements RepositorySource {
+    private final RepositorySource repositorySource;
 
-    CachedApplicationsSource(ApplicationsSource applicationsSource) {
-        this.applicationsSource = applicationsSource;
+    MultipleRepositorySource(RepositorySource... repositorySources) {
+        this(Arrays.asList(repositorySources));
+    }
+
+    MultipleRepositorySource(List<RepositorySource> repositorySources) {
+        RepositorySource lastRepositorySource = new NullRepositorySource();
+
+        for (RepositorySource repositorySource : repositorySources) {
+            lastRepositorySource = new TeeRepositorySource(lastRepositorySource, repositorySource);
+        }
+
+        this.repositorySource = lastRepositorySource;
     }
 
     @Override
-    public synchronized List<CategoryDTO> fetchInstallableApplications() {
-        if (cache == null) {
-            cache = applicationsSource.fetchInstallableApplications();
-        }
-
-        return cache;
+    public List<CategoryDTO> fetchInstallableApplications() {
+        return repositorySource.fetchInstallableApplications();
     }
-
-
 }

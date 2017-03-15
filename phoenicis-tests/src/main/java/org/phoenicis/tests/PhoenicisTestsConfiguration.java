@@ -18,7 +18,7 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.apps.RepositorySource;
 import org.phoenicis.apps.AppsConfiguration;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
@@ -47,8 +47,8 @@ class PhoenicisTestsConfiguration {
     private AppsConfiguration appsConfiguration;
 
     @Bean
-    public ApplicationsSource mockedApplicationsSource() {
-        return new MockedApplicationsSource(appsConfiguration.appsSource());
+    public RepositorySource mockedRepositorySource() {
+        return new MockedRepositorySource(appsConfiguration.repositorySource());
     }
 
 }

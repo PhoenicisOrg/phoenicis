@@ -27,26 +27,26 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Function;
 
-public class TeeApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource leftApplicationsSource;
-    private final ApplicationsSource rightApplicationsSource;
+public class TeeRepositorySource implements RepositorySource {
+    private final RepositorySource leftRepositorySource;
+    private final RepositorySource rightRepositorySource;
 
     /**
      * merges fetched applications from two sources
-     * If an application is found in both sources, the leftApplicationsSource will be used.
-     * @param leftApplicationsSource
-     * @param rightApplicationsSource
+     * If an application is found in both sources, the leftRepositorySource will be used.
+     * @param leftRepositorySource
+     * @param rightRepositorySource
      */
-    protected TeeApplicationsSource(ApplicationsSource leftApplicationsSource,
-                                    ApplicationsSource rightApplicationsSource) {
-        this.leftApplicationsSource = leftApplicationsSource;
-        this.rightApplicationsSource = rightApplicationsSource;
+    protected TeeRepositorySource(RepositorySource leftRepositorySource,
+                                    RepositorySource rightRepositorySource) {
+        this.leftRepositorySource = leftRepositorySource;
+        this.rightRepositorySource = rightRepositorySource;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftApplicationsSource.fetchInstallableApplications(), CategoryDTO::getName);
-        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightApplicationsSource.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftRepositorySource.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightRepositorySource.fetchInstallableApplications(), CategoryDTO::getName);
 
         final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
 
