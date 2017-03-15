@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 public class NullApplicationsSourceTest {
     @Test
-    public void testNullApplicationSource() {
+    public void testNullApplicationsSource() {
         assertEquals(0, new NullApplicationsSource().fetchInstallableApplications().size());
     }
 }

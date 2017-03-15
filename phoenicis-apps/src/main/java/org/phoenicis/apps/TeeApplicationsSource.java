@@ -26,27 +26,27 @@ import java.util.stream.Collectors;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 public class TeeApplicationsSource extends MergeableApplicationsSource {
-    private final ApplicationsSource leftApplicationSource;
-    private final ApplicationsSource rightApplicationSource;
+    private final ApplicationsSource leftApplicationsSource;
+    private final ApplicationsSource rightApplicationsSource;
 
     /**
      * merges fetched applications from two sources
-     * If an application is found in both sources, the leftApplicationSource will be used.
-     * @param leftApplicationSource
-     * @param rightApplicationSource
+     * If an application is found in both sources, the leftApplicationsSource will be used.
+     * @param leftApplicationsSource
+     * @param rightApplicationsSource
      */
-    protected TeeApplicationsSource(ApplicationsSource leftApplicationSource,
-                                    ApplicationsSource rightApplicationSource) {
-        this.leftApplicationSource = leftApplicationSource;
-        this.rightApplicationSource = rightApplicationSource;
+    protected TeeApplicationsSource(ApplicationsSource leftApplicationsSource,
+                                    ApplicationsSource rightApplicationsSource) {
+        this.leftApplicationsSource = leftApplicationsSource;
+        this.rightApplicationsSource = rightApplicationsSource;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-    	final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = Arrays.asList(leftApplicationSource, rightApplicationSource).stream()
+    	final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = Arrays.asList(leftApplicationsSource, rightApplicationsSource).stream()
     			.collect(
 						Collectors.toMap(source -> source, ApplicationsSource::fetchInstallableApplications));
     	
-    	return mergeApplicationsSources(categoriesMap, leftApplicationSource, rightApplicationSource);
+    	return mergeApplicationsSources(categoriesMap, leftApplicationsSource, rightApplicationsSource);
     }
 }

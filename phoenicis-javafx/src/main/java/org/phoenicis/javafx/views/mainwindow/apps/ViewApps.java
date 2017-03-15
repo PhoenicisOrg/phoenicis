@@ -18,13 +18,14 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import org.phoenicis.apps.AppsSearchFilter;
 import org.phoenicis.apps.CombinedAppsFilter;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -147,13 +148,19 @@ public class ViewApps extends MainWindowView {
     @Override
     protected void drawSideBar() {
         searchBar = new SearchBox(themeManager);
-        searchBar.textProperty().addListener(obs->{
-            String filter = searchBar.getText().toLowerCase();
-            currentFilter.clear();
-            if(filter != null && filter.length() >= 3) {
-                currentFilter.add(new AppsSearchFilter(filter));
-            }
-            onApplyFilter.accept(currentFilter);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+
+        searchBar.textProperty().addListener(obs-> {
+            pause.setOnFinished(event -> {
+                String filter = searchBar.getText().toLowerCase();
+                currentFilter.clear();
+                if (filter != null && filter.length() >= 3) {
+                    currentFilter.add(new AppsSearchFilter(filter));
+                }
+                onApplyFilter.accept(currentFilter);
+            });
+            pause.playFromStart();
         });
 
 

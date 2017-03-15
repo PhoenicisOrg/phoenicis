@@ -28,18 +28,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class ConfigurableApplicationSource implements ApplicationsSource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableApplicationSource.class);
+class ConfigurableApplicationsSource implements ApplicationsSource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableApplicationsSource.class);
 
     private final LocalApplicationsSource.Factory localApplicationsSourceFactory;
     private final ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory;
     private final ApplicationsSource applicationsSource;
+    private final String cacheDirectoryPath;
 
-    ConfigurableApplicationSource(String sourceUrl, LocalApplicationsSource.Factory localApplicationsSourceFactory, ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory) {
+    ConfigurableApplicationsSource(String sourceUrl, String cacheDirectoryPath, LocalApplicationsSource.Factory localApplicationsSourceFactory, ClasspathApplicationsSource.Factory classPathApplicationsSourceFactory) {
+        this.cacheDirectoryPath = cacheDirectoryPath;
         this.localApplicationsSourceFactory = localApplicationsSourceFactory;
         this.classPathApplicationsSourceFactory = classPathApplicationsSourceFactory;
         final String[] urls = sourceUrl.split(";");
-        applicationsSource = new MultipleApplicationsSource(Arrays.stream(urls).map(this::toApplicationSource).collect(Collectors.toList()));
+        applicationsSource = new MultipleApplicationsSource(Arrays.stream(urls).map(this::toApplicationsSource).collect(Collectors.toList()));
     }
 
     @Override
@@ -47,25 +49,25 @@ class ConfigurableApplicationSource implements ApplicationsSource {
         return applicationsSource.fetchInstallableApplications();
     }
 
-    private ApplicationsSource toApplicationSource(String applicationSourceUrl) {
-        LOGGER.info("Registering: " + applicationSourceUrl);
+    private ApplicationsSource toApplicationsSource(String applicationsSourceUrl) {
+        LOGGER.info("Registering: " + applicationsSourceUrl);
         try {
-            final URI url = new URI(applicationSourceUrl);
+            final URI url = new URI(applicationsSourceUrl);
             final String scheme = url.getScheme().split("\\+")[0];
 
             switch (scheme) {
                 case "git":
-                    return new GitApplicationsSource(applicationSourceUrl.replace("git+",""), localApplicationsSourceFactory);
+                    return new GitApplicationsSource(applicationsSourceUrl.replace("git+",""), cacheDirectoryPath, localApplicationsSourceFactory);
                 case "file":
                     return localApplicationsSourceFactory.createInstance(url.getRawPath());
                 case "classpath":
                     return classPathApplicationsSourceFactory.createInstance(url.getPath());
                 default:
-                    LOGGER.warn("Unsupported URL: " + applicationSourceUrl);
+                    LOGGER.warn("Unsupported URL: " + applicationsSourceUrl);
                     return new NullApplicationsSource();
             }
         } catch (URISyntaxException e) {
-            LOGGER.warn("Cannot parse URL: " + applicationSourceUrl, e);
+            LOGGER.warn("Cannot parse URL: " + applicationsSourceUrl, e);
             return new NullApplicationsSource();
         }
     }

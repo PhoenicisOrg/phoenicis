@@ -30,8 +30,8 @@ import static org.mockito.Mockito.*;
 
 public class BackgroundApplicationsSourceTest {
     private final ExecutorService mockExecutor = mock(ExecutorService.class);
-    private final ApplicationsSource mockApplicationSource = mock(ApplicationsSource.class);
-    private final BackgroundApplicationsSource backgroundApplicationsSource = new BackgroundApplicationsSource(mockApplicationSource, mockExecutor);
+    private final ApplicationsSource mockApplicationsSource = mock(ApplicationsSource.class);
+    private final BackgroundApplicationsSource backgroundApplicationsSource = new BackgroundApplicationsSource(mockApplicationsSource, mockExecutor);
     private List<CategoryDTO> mockResults = Arrays.asList(mock(CategoryDTO.class), mock(CategoryDTO.class));
 
     @Test
@@ -41,9 +41,9 @@ public class BackgroundApplicationsSourceTest {
             return null;
         }).when(mockExecutor).submit(any(Runnable.class));
 
-        when(mockApplicationSource.fetchInstallableApplications()).thenReturn(mockResults);
+        when(mockApplicationsSource.fetchInstallableApplications()).thenReturn(mockResults);
         backgroundApplicationsSource.fetchInstallableApplications(categoryDTOs -> {}, e -> {});
 
-        verify(mockApplicationSource).fetchInstallableApplications(any(), any());
+        verify(mockApplicationsSource).fetchInstallableApplications(any(), any());
     }
 }
