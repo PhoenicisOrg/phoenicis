@@ -30,6 +30,7 @@ import java.util.List;
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO {
     private final String scriptName;
+    private final String scriptSource;
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
@@ -38,6 +39,7 @@ public class ScriptDTO {
 
     private ScriptDTO(Builder builder) {
         this.scriptName = builder.scriptName;
+        this.scriptSource = builder.scriptSource;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
@@ -51,6 +53,10 @@ public class ScriptDTO {
 
     public String getName() {
         return scriptName;
+    }
+    
+    public String getScriptSource() {
+    	return scriptSource;
     }
 
     public List<OperatingSystem> getCompatibleOperatingSystems() {
@@ -80,6 +86,7 @@ public class ScriptDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String scriptName;
+        private String scriptSource;
         private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
@@ -109,6 +116,11 @@ public class ScriptDTO {
             return this;
         }
 
+        public Builder withScriptSource(String scriptSource) {
+        	this.scriptSource = scriptSource;
+        	return this;
+        }
+        
         public Builder withCompatibleOperatingSystems(List<OperatingSystem> compatibleOperatingSystems) {
             this.compatibleOperatingSystems = compatibleOperatingSystems;
             return this;

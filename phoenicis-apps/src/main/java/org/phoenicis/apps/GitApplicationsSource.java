@@ -35,11 +35,11 @@ class GitApplicationsSource implements ApplicationsSource {
 
 	private final String gitRepositoryURL;
 	private final LocalApplicationsSource.Factory localAppsSourceFactory;
-	private List<CategoryDTO> cache;
 
 	private final String cacheDirectoryPath;
 
-	GitApplicationsSource(String gitRepositoryURL, String cacheDirectoryPath, LocalApplicationsSource.Factory localAppsSourceFactory) {
+	GitApplicationsSource(String gitRepositoryURL, String cacheDirectoryPath,
+			LocalApplicationsSource.Factory localAppsSourceFactory) {
 		this.gitRepositoryURL = gitRepositoryURL;
 		this.cacheDirectoryPath = cacheDirectoryPath;
 		this.localAppsSourceFactory = localAppsSourceFactory;
@@ -47,26 +47,15 @@ class GitApplicationsSource implements ApplicationsSource {
 
 	@Override
 	public synchronized List<CategoryDTO> fetchInstallableApplications() {
-		if (cache != null) {
-			return cache;
-		}
+		File gitRepositoryLocation = new File(this.cacheDirectoryPath + "/git" + this.gitRepositoryURL.hashCode());
 
-		File gitRepositoryLocation = new File(
-				this.cacheDirectoryPath + "/git" + this.gitRepositoryURL.hashCode());
-
-		LOGGER.info(String.format("Git-repository '%s' will be saved in '%s'", this.gitRepositoryURL,
+		LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.gitRepositoryURL,
 				gitRepositoryLocation.getAbsolutePath()));
 
-		/*
-		 * This value is true if a folder for the git repository exists,
-		 * otherwise it is false
-		 */
-		boolean folderExists = true;
+		boolean folderExists = gitRepositoryLocation.exists();
 
 		// check that the repository folder exists
-		if (!gitRepositoryLocation.exists()) {
-			folderExists = false;
-
+		if (!folderExists) {
 			LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'",
 					gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL));
 
@@ -78,6 +67,8 @@ class GitApplicationsSource implements ApplicationsSource {
 			}
 		}
 
+		List<CategoryDTO> result = Collections.emptyList();
+
 		try {
 			Git gitRepository = null;
 
@@ -86,7 +77,8 @@ class GitApplicationsSource implements ApplicationsSource {
 			 * repository now
 			 */
 			if (!folderExists) {
-				LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.gitRepositoryURL, gitRepositoryLocation.getAbsolutePath()));
+				LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.gitRepositoryURL,
+						gitRepositoryLocation.getAbsolutePath()));
 
 				gitRepository = Git.cloneRepository().setURI(this.gitRepositoryURL).setDirectory(gitRepositoryLocation)
 						.call();
@@ -110,18 +102,15 @@ class GitApplicationsSource implements ApplicationsSource {
 			// close repository to free resources
 			gitRepository.close();
 
-			this.cache = localAppsSourceFactory.createInstance(gitRepositoryLocation.getAbsolutePath())
+			result = localAppsSourceFactory
+					.createInstance(gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL)
 					.fetchInstallableApplications();
 		} catch (RepositoryNotFoundException | GitAPIException e) {
 			LOGGER.error(String.format("Folder '%s' is no git-repository", gitRepositoryLocation.getAbsolutePath()), e);
-
-			this.cache = Collections.emptyList();
 		} catch (IOException e) {
 			LOGGER.error(String.format("An unknown error occured.", e));
-
-			this.cache = Collections.emptyList();
 		}
 
-		return this.cache;
+		return result;
 	}
 }
