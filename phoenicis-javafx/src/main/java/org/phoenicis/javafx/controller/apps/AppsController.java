@@ -25,6 +25,7 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.settings.SettingsManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,16 +36,19 @@ public class AppsController {
     private final ViewApps view;
     private final Repository repository;
     private final ScriptInterpreter scriptInterpreter;
-
+    private final SettingsManager settingsManager;
+    
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
                           Repository repository,
-                          ScriptInterpreter scriptInterpreter) {
+                          ScriptInterpreter scriptInterpreter,
+                          SettingsManager settingsManager) {
         this.view = view;
         this.repository = repository;
         this.scriptInterpreter = scriptInterpreter;
-
+        this.settingsManager = settingsManager;
+        
         this.view.setOnApplyFilter(filter -> {
             repository.setFilter(filter);
             repository.fetchInstallableApplications(
@@ -77,10 +81,10 @@ public class AppsController {
                 }
             }
             Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
-            this.view.populateApps(allApps);
+            this.view.populateApps(allApps, settingsManager);
         });
 
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
+        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications(), settingsManager));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> {

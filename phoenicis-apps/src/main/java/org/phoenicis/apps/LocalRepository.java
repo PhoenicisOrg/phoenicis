@@ -43,11 +43,18 @@ class LocalRepository implements Repository {
     private final String repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    private LocalRepository(String repositoryDirectory, ObjectMapper objectMapper) {
+    private final String repositorySource;    
+
+    private LocalRepository(String repositoryDirectory, String repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
+        this.repositorySource = repositorySource;
     }
-
+    
+    private LocalRepository(String repositoryDirectory, ObjectMapper objectMapper) {
+        this(repositoryDirectory, repositoryDirectory, objectMapper);
+    }
+    
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
@@ -180,6 +187,8 @@ class LocalRepository implements Repository {
                 final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                         unSerializeScript(new File(scriptDirectory, "script.json")));
 
+                scriptDTOBuilder.withScriptSource(repositorySource);
+                
                 if (StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
@@ -239,6 +248,10 @@ class LocalRepository implements Repository {
 
         public LocalRepository createInstance(String path) {
             return new LocalRepository(path, objectMapper);
+        }
+
+        public LocalRepository createInstance(String path, String source) {
+            return new LocalRepository(path, source, objectMapper);
         }
     }
 }

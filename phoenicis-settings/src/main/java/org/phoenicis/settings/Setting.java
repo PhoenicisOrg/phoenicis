@@ -20,6 +20,7 @@ package org.phoenicis.settings;
 
 public enum Setting {
     THEME("application.theme"),
+    VIEW_SOURCE("application.viewsource"),
     REPOSITORY("application.repository.configuration");
 
     private final String propertyName;
