@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.apps.RepositorySource;
+import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -33,21 +33,21 @@ import java.util.List;
 
 public class AppsController {
     private final ViewApps view;
-    private final RepositorySource repositorySource;
+    private final Repository repository;
     private final ScriptInterpreter scriptInterpreter;
 
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
-                          RepositorySource repositorySource,
+                          Repository repository,
                           ScriptInterpreter scriptInterpreter) {
         this.view = view;
-        this.repositorySource = repositorySource;
+        this.repository = repository;
         this.scriptInterpreter = scriptInterpreter;
 
         this.view.setOnApplyFilter(filter -> {
-            repositorySource.setFilter(filter);
-            repositorySource.fetchInstallableApplications(
+            repository.setFilter(filter);
+            repository.fetchInstallableApplications(
                     this.view::populate,
                     e -> this.view.showFailure()
             );
@@ -56,14 +56,14 @@ public class AppsController {
 
     public void loadApps() {
         this.view.showWait();
-        repositorySource.fetchInstallableApplications(
+        repository.fetchInstallableApplications(
                 this.view::populate,
                 e -> this.view.showFailure()
         );
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
-            repositorySource.fetchInstallableApplications(
+            repository.fetchInstallableApplications(
                     this.view::populate,
                     e -> this.view.showFailure()
             );

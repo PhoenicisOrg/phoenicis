@@ -18,21 +18,21 @@
 
 package org.phoenicis.scripts.interpreter;
 
-import org.phoenicis.apps.RepositorySource;
+import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.dto.ScriptDTO;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ScriptFetcher {
-    private final RepositorySource repositorySource;
+    private final Repository repository;
 
-    public ScriptFetcher(RepositorySource repositorySource) {
-        this.repositorySource = repositorySource;
+    public ScriptFetcher(Repository repository) {
+        this.repository = repository;
     }
 
     public String getScript(List<String> path) {
-        final ScriptDTO script = repositorySource.getScript(path);
+        final ScriptDTO script = repository.getScript(path);
 
         if (script == null) {
             throw new ScriptException("Script not found: " + path);

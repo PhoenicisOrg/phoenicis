@@ -20,28 +20,12 @@ package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-class MultipleRepositorySource implements RepositorySource {
-    private final RepositorySource repositorySource;
-
-    MultipleRepositorySource(RepositorySource... repositorySources) {
-        this(Arrays.asList(repositorySources));
-    }
-
-    MultipleRepositorySource(List<RepositorySource> repositorySources) {
-        RepositorySource lastRepositorySource = new NullRepositorySource();
-
-        for (RepositorySource repositorySource : repositorySources) {
-            lastRepositorySource = new TeeRepositorySource(lastRepositorySource, repositorySource);
-        }
-
-        this.repositorySource = lastRepositorySource;
-    }
-
+class NullRepository implements Repository {
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        return repositorySource.fetchInstallableApplications();
+        return Collections.emptyList();
     }
 }

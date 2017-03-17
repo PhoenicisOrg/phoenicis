@@ -30,19 +30,19 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class GitRepositorySource implements RepositorySource {
-	private final static Logger LOGGER = LoggerFactory.getLogger(GitRepositorySource.class);
+class GitRepository implements Repository {
+	private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
 
 	private final String gitRepositoryURL;
-	private final LocalRepositorySource.Factory localRepositorySourceFactory;
+	private final LocalRepository.Factory localRepositoryFactory;
 	private List<CategoryDTO> cache;
 
 	private final String cacheDirectoryPath;
 
-	GitRepositorySource(String gitRepositoryURL, String cacheDirectoryPath, LocalRepositorySource.Factory localRepositorySourceFactory) {
+	GitRepository(String gitRepositoryURL, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory) {
 		this.gitRepositoryURL = gitRepositoryURL;
 		this.cacheDirectoryPath = cacheDirectoryPath;
-		this.localRepositorySourceFactory = localRepositorySourceFactory;
+		this.localRepositoryFactory = localRepositoryFactory;
 	}
 
 	@Override
@@ -110,7 +110,7 @@ class GitRepositorySource implements RepositorySource {
 			// close repository to free resources
 			gitRepository.close();
 
-			this.cache = localRepositorySourceFactory.createInstance(gitRepositoryLocation.getAbsolutePath())
+			this.cache = localRepositoryFactory.createInstance(gitRepositoryLocation.getAbsolutePath())
 					.fetchInstallableApplications();
 		} catch (RepositoryNotFoundException | GitAPIException e) {
 			LOGGER.error(String.format("Folder '%s' is no git-repository", gitRepositoryLocation.getAbsolutePath()), e);

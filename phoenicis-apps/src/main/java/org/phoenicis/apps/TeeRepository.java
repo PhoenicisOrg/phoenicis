@@ -27,26 +27,26 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Function;
 
-public class TeeRepositorySource implements RepositorySource {
-    private final RepositorySource leftRepositorySource;
-    private final RepositorySource rightRepositorySource;
+public class TeeRepository implements Repository {
+    private final Repository leftRepository;
+    private final Repository rightRepository;
 
     /**
      * merges fetched applications from two sources
-     * If an application is found in both sources, the leftRepositorySource will be used.
-     * @param leftRepositorySource
-     * @param rightRepositorySource
+     * If an application is found in both sources, the leftRepository will be used.
+     * @param leftRepository
+     * @param rightRepository
      */
-    protected TeeRepositorySource(RepositorySource leftRepositorySource,
-                                    RepositorySource rightRepositorySource) {
-        this.leftRepositorySource = leftRepositorySource;
-        this.rightRepositorySource = rightRepositorySource;
+    protected TeeRepository(Repository leftRepository,
+                                    Repository rightRepository) {
+        this.leftRepository = leftRepository;
+        this.rightRepository = rightRepository;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftRepositorySource.fetchInstallableApplications(), CategoryDTO::getName);
-        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightRepositorySource.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftRepository.fetchInstallableApplications(), CategoryDTO::getName);
+        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightRepository.fetchInstallableApplications(), CategoryDTO::getName);
 
         final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
 

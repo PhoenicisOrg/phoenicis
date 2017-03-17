@@ -18,9 +18,9 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.RepositorySource;
+import org.phoenicis.apps.Repository;
 import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.apps.TeeRepositorySource;
+import org.phoenicis.apps.TeeRepository;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -31,12 +31,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MockedRepositorySource extends TeeRepositorySource {
-    MockedRepositorySource(RepositorySource realRepositorySource) {
-        super(new MockRepositorySource(), realRepositorySource);
+public class MockedRepository extends TeeRepository {
+    MockedRepository(Repository realRepository) {
+        super(new MockRepository(), realRepository);
     }
 
-    private static class MockRepositorySource implements RepositorySource {
+    private static class MockRepository implements Repository {
         @Override
         public List<CategoryDTO> fetchInstallableApplications() {
             return Collections.singletonList(

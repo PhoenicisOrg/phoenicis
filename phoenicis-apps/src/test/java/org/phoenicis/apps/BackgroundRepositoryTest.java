@@ -28,11 +28,10 @@ import java.util.concurrent.ExecutorService;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class BackgroundRepositorySourceTest {
+public class BackgroundRepositoryTest {
     private final ExecutorService mockExecutor = mock(ExecutorService.class);
-    private final RepositorySource mockRepositorySource = mock(RepositorySource.class);
-    private final BackgroundRepositorySource backgroundRepositorySource = new BackgroundRepositorySource(
-            mockRepositorySource, mockExecutor);
+    private final Repository mockRepository = mock(Repository.class);
+    private final BackgroundRepository backgroundRepository = new BackgroundRepository(mockRepository, mockExecutor);
     private List<CategoryDTO> mockResults = Arrays.asList(mock(CategoryDTO.class), mock(CategoryDTO.class));
 
     @Test
@@ -42,9 +41,9 @@ public class BackgroundRepositorySourceTest {
             return null;
         }).when(mockExecutor).submit(any(Runnable.class));
 
-        when(mockRepositorySource.fetchInstallableApplications()).thenReturn(mockResults);
-        backgroundRepositorySource.fetchInstallableApplications(categoryDTOs -> {}, e -> {});
+        when(mockRepository.fetchInstallableApplications()).thenReturn(mockResults);
+        backgroundRepository.fetchInstallableApplications(categoryDTOs -> {}, e -> {});
 
-        verify(mockRepositorySource).fetchInstallableApplications(any(), any());
+        verify(mockRepository).fetchInstallableApplications(any(), any());
     }
 }

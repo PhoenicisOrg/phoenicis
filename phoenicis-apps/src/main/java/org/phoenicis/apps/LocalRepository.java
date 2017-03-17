@@ -36,14 +36,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class LocalRepositorySource implements RepositorySource {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepositorySource.class);
+class LocalRepository implements Repository {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
     private final String repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    private LocalRepositorySource(String repositoryDirectory, ObjectMapper objectMapper) {
+    private LocalRepository(String repositoryDirectory, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
     }
@@ -237,8 +237,8 @@ class LocalRepositorySource implements RepositorySource {
             this.objectMapper = objectMapper;
         }
 
-        public LocalRepositorySource createInstance(String path) {
-            return new LocalRepositorySource(path, objectMapper);
+        public LocalRepository createInstance(String path) {
+            return new LocalRepository(path, objectMapper);
         }
     }
 }

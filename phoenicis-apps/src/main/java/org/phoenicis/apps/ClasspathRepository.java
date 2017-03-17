@@ -33,13 +33,13 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class ClasspathRepositorySource implements RepositorySource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathRepositorySource.class);
+class ClasspathRepository implements Repository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathRepository.class);
     private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
     private final ObjectMapper objectMapper;
 
-    public ClasspathRepositorySource(String packagePath,
+    public ClasspathRepository(String packagePath,
                                        ResourcePatternResolver resourceResolver,
                                        ObjectMapper objectMapper) {
         this.packagePath = packagePath;
@@ -160,8 +160,8 @@ class ClasspathRepositorySource implements RepositorySource {
             this.resourceResolver = resourceResolver;
         }
 
-        public ClasspathRepositorySource createInstance(String packagePath) {
-            return new ClasspathRepositorySource(packagePath, resourceResolver, objectMapper);
+        public ClasspathRepository createInstance(String packagePath) {
+            return new ClasspathRepository(packagePath, resourceResolver, objectMapper);
         }
     }
 

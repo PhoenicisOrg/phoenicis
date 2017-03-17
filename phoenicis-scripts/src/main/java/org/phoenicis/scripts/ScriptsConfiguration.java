@@ -54,7 +54,7 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptFetcher scriptFetcher() {
-        return new ScriptFetcher(appsConfiguration.repositorySource());
+        return new ScriptFetcher(appsConfiguration.repository());
     }
 
     @Bean

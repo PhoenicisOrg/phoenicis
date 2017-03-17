@@ -22,7 +22,7 @@ import com.github.jankroken.commandline.annotations.AllAvailableArguments;
 import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
-import org.phoenicis.apps.RepositorySource;
+import org.phoenicis.apps.Repository;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -35,12 +35,12 @@ import java.util.List;
 
 public class CLIController implements AutoCloseable {
     private final ConfigurableApplicationContext applicationContext;
-    private final RepositorySource repositorySource;
+    private final Repository repository;
     private final ScriptInterpreter scriptInterpreter;
 
     public CLIController() {
         applicationContext = new AnnotationConfigApplicationContext(CLIConfiguration.class);
-        repositorySource = applicationContext.getBean("backgroundRepositorySource", RepositorySource.class);
+        repository = applicationContext.getBean("backgroundRepository", Repository.class);
         scriptInterpreter = applicationContext.getBean("scriptInterpreter", ScriptInterpreter.class);
     }
 
@@ -76,7 +76,7 @@ public class CLIController implements AutoCloseable {
         final String appName = arguments.get(1);
         final String scriptName = arguments.get(2);
 
-        repositorySource.getScript(Arrays.asList(categoryName, appName, scriptName), scriptDTO -> {
+        repository.getScript(Arrays.asList(categoryName, appName, scriptName), scriptDTO -> {
             scriptInterpreter.runScript(scriptDTO.getScript(), Throwable::printStackTrace);
         }, e -> { throw new IllegalStateException(e); });
     }
