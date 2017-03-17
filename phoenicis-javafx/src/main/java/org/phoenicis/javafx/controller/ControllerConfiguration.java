@@ -121,7 +121,8 @@ public class ControllerConfiguration {
         return new AppsController(
                 viewsConfiguration.viewApps(),
                 appsConfiguration.backgroundAppsSource(),
-                scriptsConfiguration.scriptInterpreter()
+                scriptsConfiguration.scriptInterpreter(),
+                settingsConfiguration.settingsManager()
         );
     }
 

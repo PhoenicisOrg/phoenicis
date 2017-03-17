@@ -30,7 +30,7 @@ public class SettingsController {
         this.view = view;
         this.settingsManager = settingsManager;
         this.view.setOnSave(settingsManager::save);
-        this.view.setSettings(this.settingsManager.load());
+        this.view.setSettings();
     }
 
     public ViewSettings getView() {

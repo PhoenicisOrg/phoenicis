@@ -31,6 +31,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.settings.Setting;
+import org.phoenicis.settings.Settings;
+import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +50,7 @@ final class AppPanel extends VBox {
 
     private Consumer<ScriptDTO> onScriptInstall = (script) -> {};
 
-    public AppPanel(ApplicationDTO applicationDTO, ThemeManager themeManager) {
+    public AppPanel(ApplicationDTO applicationDTO, ThemeManager themeManager, SettingsManager settingsManager) {
         super();
         this.getStyleClass().addAll("rightPane", "appPresentation");
         this.setPadding(new Insets(10));
@@ -67,7 +70,12 @@ final class AppPanel extends VBox {
         grid.setHgap(100);
         int row = 0;
         for (ScriptDTO script: applicationDTO.getScripts()) {
-            Label scriptName = new Label(script.getName());
+        	Label scriptName;
+        	if (settingsManager.isViewScriptSource()) {
+        		scriptName = new Label(String.format("%s (Source: %s)", script.getName(), script.getScriptSource()));
+        	} else {
+        		scriptName = new Label(script.getName());
+        	}
             scriptName.getStyleClass().add("descriptionText");
             Button installButton = new Button("Install");
             installButton.setOnMouseClicked(evt -> {

@@ -43,11 +43,18 @@ class LocalApplicationsSource implements ApplicationsSource {
     private final String repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    private LocalApplicationsSource(String repositoryDirectory, ObjectMapper objectMapper) {
+    private final String repositorySource;    
+
+    private LocalApplicationsSource(String repositoryDirectory, String repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
+        this.repositorySource = repositorySource;
     }
-
+    
+    private LocalApplicationsSource(String repositoryDirectory, ObjectMapper objectMapper) {
+        this(repositoryDirectory, repositoryDirectory, objectMapper);
+    }
+    
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
@@ -180,6 +187,8 @@ class LocalApplicationsSource implements ApplicationsSource {
                 final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                         unSerializeScript(new File(scriptDirectory, "script.json")));
 
+                scriptDTOBuilder.withScriptSource(repositorySource);
+                
                 if (StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
@@ -239,6 +248,10 @@ class LocalApplicationsSource implements ApplicationsSource {
 
         public LocalApplicationsSource createInstance(String path) {
             return new LocalApplicationsSource(path, objectMapper);
+        }
+        
+        public LocalApplicationsSource createInstance(String path, String source) {
+            return new LocalApplicationsSource(path, source, objectMapper);
         }
     }
 }
