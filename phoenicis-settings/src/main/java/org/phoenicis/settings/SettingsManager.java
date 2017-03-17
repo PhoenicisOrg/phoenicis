@@ -27,8 +27,11 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class SettingsManager {
-    @Value("${application.theme}")
+	@Value("${application.theme}")
     private String theme;
+    
+    @Value("${application.viewsource}")
+    private boolean viewScriptSource;
 
     @Value("${application.repository.configuration}")
     private String repository;
@@ -38,8 +41,33 @@ public class SettingsManager {
     public SettingsManager(String settingsFileName) {
         this.settingsFileName = settingsFileName;
     }
+    
+    public String getTheme() {
+		return theme;
+	}
 
-    public void save(Settings settings) {
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public boolean isViewScriptSource() {
+		return viewScriptSource;
+	}
+
+	public void setViewScriptSource(boolean viewScriptSource) {
+		this.viewScriptSource = viewScriptSource;
+	}
+
+	public String getRepository() {
+		return repository;
+	}
+
+	public void setRepository(String repository) {
+		this.repository = repository;
+	}
+
+    public void save() {
+    	Settings settings = load();
         try {
             File file = new File(settingsFileName);
             OutputStream outputStream = new FileOutputStream(file);
@@ -50,9 +78,10 @@ public class SettingsManager {
         }
     }
 
-    public Settings load() {
+    private Settings load() {
         Settings settings = new Settings();
         settings.set(Setting.THEME, theme);
+        settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
         settings.set(Setting.REPOSITORY, repository);
         return settings;
     }

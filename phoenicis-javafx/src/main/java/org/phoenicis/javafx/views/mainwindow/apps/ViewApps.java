@@ -35,6 +35,8 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.settings.Settings;
+import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,7 +127,7 @@ public class ViewApps extends MainWindowView {
         });
     }
 
-    public void populateApps(List<ApplicationDTO> applications) {
+    public void populateApps(List<ApplicationDTO> applications, SettingsManager settingsManager) {
         availableApps.clear();
 
         for (ApplicationDTO application : applications) {
@@ -136,7 +138,7 @@ public class ViewApps extends MainWindowView {
                 applicationItem = availableApps.addItem(application.getName(), application.getMiniatures().get(0));
             }
 
-            applicationItem.setOnMouseClicked(event -> this.showAppDetails(application));
+            applicationItem.setOnMouseClicked(event -> this.showAppDetails(application, settingsManager));
 
         }
     }
@@ -185,8 +187,8 @@ public class ViewApps extends MainWindowView {
         super.drawSideBar();
     }
 
-    private void showAppDetails(ApplicationDTO application) {
-        final AppPanel appPanel = new AppPanel(application, themeManager);
+    private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
+        final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
         showRightView(appPanel);
     }
