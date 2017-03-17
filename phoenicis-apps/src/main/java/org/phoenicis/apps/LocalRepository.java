@@ -36,8 +36,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class LocalApplicationsSource implements ApplicationsSource {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LocalApplicationsSource.class);
+class LocalRepository implements Repository {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
     private final String repositoryDirectory;
@@ -45,13 +45,13 @@ class LocalApplicationsSource implements ApplicationsSource {
 
     private final String repositorySource;    
 
-    private LocalApplicationsSource(String repositoryDirectory, String repositorySource, ObjectMapper objectMapper) {
+    private LocalRepository(String repositoryDirectory, String repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
         this.repositorySource = repositorySource;
     }
     
-    private LocalApplicationsSource(String repositoryDirectory, ObjectMapper objectMapper) {
+    private LocalRepository(String repositoryDirectory, ObjectMapper objectMapper) {
         this(repositoryDirectory, repositoryDirectory, objectMapper);
     }
     
@@ -246,12 +246,12 @@ class LocalApplicationsSource implements ApplicationsSource {
             this.objectMapper = objectMapper;
         }
 
-        public LocalApplicationsSource createInstance(String path) {
-            return new LocalApplicationsSource(path, objectMapper);
+        public LocalRepository createInstance(String path) {
+            return new LocalRepository(path, objectMapper);
         }
-        
-        public LocalApplicationsSource createInstance(String path, String source) {
-            return new LocalApplicationsSource(path, source, objectMapper);
+
+        public LocalRepository createInstance(String path, String source) {
+            return new LocalRepository(path, source, objectMapper);
         }
     }
 }

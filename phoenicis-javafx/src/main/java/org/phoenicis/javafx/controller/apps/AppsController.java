@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.apps.ApplicationsSource;
+import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -34,24 +34,24 @@ import java.util.List;
 
 public class AppsController {
     private final ViewApps view;
-    private final ApplicationsSource appsSource;
+    private final Repository repository;
     private final ScriptInterpreter scriptInterpreter;
     private final SettingsManager settingsManager;
     
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
-                          ApplicationsSource appsSource,
+                          Repository repository,
                           ScriptInterpreter scriptInterpreter,
                           SettingsManager settingsManager) {
         this.view = view;
-        this.appsSource = appsSource;
+        this.repository = repository;
         this.scriptInterpreter = scriptInterpreter;
         this.settingsManager = settingsManager;
         
         this.view.setOnApplyFilter(filter -> {
-            appsSource.setFilter(filter);
-            appsSource.fetchInstallableApplications(
+            repository.setFilter(filter);
+            repository.fetchInstallableApplications(
                     this.view::populate,
                     e -> this.view.showFailure()
             );
@@ -60,14 +60,14 @@ public class AppsController {
 
     public void loadApps() {
         this.view.showWait();
-        appsSource.fetchInstallableApplications(
+        repository.fetchInstallableApplications(
                 this.view::populate,
                 e -> this.view.showFailure()
         );
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
-            appsSource.fetchInstallableApplications(
+            repository.fetchInstallableApplications(
                     this.view::populate,
                     e -> this.view.showFailure()
             );

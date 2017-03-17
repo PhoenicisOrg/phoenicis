@@ -30,19 +30,19 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class GitApplicationsSource implements ApplicationsSource {
-	private final static Logger LOGGER = LoggerFactory.getLogger(GitApplicationsSource.class);
+class GitRepository implements Repository {
+	private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
 
 	private final String gitRepositoryURL;
-	private final LocalApplicationsSource.Factory localAppsSourceFactory;
+	private final LocalRepository.Factory localRepositoryFactory;
+	private List<CategoryDTO> cache;
 
 	private final String cacheDirectoryPath;
 
-	GitApplicationsSource(String gitRepositoryURL, String cacheDirectoryPath,
-			LocalApplicationsSource.Factory localAppsSourceFactory) {
+	GitRepository(String gitRepositoryURL, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory) {
 		this.gitRepositoryURL = gitRepositoryURL;
 		this.cacheDirectoryPath = cacheDirectoryPath;
-		this.localAppsSourceFactory = localAppsSourceFactory;
+		this.localRepositoryFactory = localRepositoryFactory;
 	}
 
 	@Override
@@ -102,7 +102,7 @@ class GitApplicationsSource implements ApplicationsSource {
 			// close repository to free resources
 			gitRepository.close();
 
-			result = localAppsSourceFactory
+			result = localRepositoryFactory
 					.createInstance(gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL)
 					.fetchInstallableApplications();
 		} catch (RepositoryNotFoundException | GitAPIException e) {

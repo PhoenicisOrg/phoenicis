@@ -18,14 +18,13 @@
 
 package org.phoenicis.apps;
 
-import org.phoenicis.apps.dto.CategoryDTO;
+import org.junit.Test;
 
-import java.util.Collections;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
-class NullApplicationsSource implements ApplicationsSource {
-    @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return Collections.emptyList();
+public class NullRepositoryTest {
+    @Test
+    public void testNullRepositoryTest() {
+        assertEquals(0, new NullRepository().fetchInstallableApplications().size());
     }
 }

@@ -25,15 +25,15 @@ import java.util.stream.Collectors;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
-class MultipleApplicationsSource extends MergeableApplicationsSource {
-	private final ApplicationsSource[] applicationsSources;
+class MultipleRepository extends MergeableRepository {
+	private final Repository[] repositories;
 
-	MultipleApplicationsSource(ApplicationsSource... applicationsSources) {
-		this.applicationsSources = applicationsSources;
+	MultipleRepository(Repository... repositories) {
+		this.repositories = repositories;
 	}
 
-	MultipleApplicationsSource(List<ApplicationsSource> applicationsSources) {
-		this(applicationsSources.toArray(new ApplicationsSource[0]));
+	MultipleRepository(List<Repository> repositories) {
+		this(repositories.toArray(new Repository[0]));
 	}
 
 	@Override
@@ -43,10 +43,10 @@ class MultipleApplicationsSource extends MergeableApplicationsSource {
 		 * list and its application source, to preserve the order in the
 		 * reduction step
 		 */
-		final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = Arrays.stream(this.applicationsSources)
+		final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.stream(this.repositories)
 				.parallel().collect(
-						Collectors.toConcurrentMap(source -> source, ApplicationsSource::fetchInstallableApplications));
+						Collectors.toConcurrentMap(source -> source, Repository::fetchInstallableApplications));
 
-		return mergeApplicationsSources(categoriesMap, applicationsSources);
+		return mergeRepositories(categoriesMap, repositories);
 	}
 }

@@ -25,13 +25,13 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
-class BackgroundApplicationsSource implements ApplicationsSource {
-    private final ApplicationsSource delegatedAppsSource;
+class BackgroundRepository implements Repository {
+    private final Repository delegatedRepository;
     private final ExecutorService executorService;
 
-    BackgroundApplicationsSource(ApplicationsSource delegatedAppsSource,
+    BackgroundRepository(Repository delegatedRepository,
                                  ExecutorService executorService) {
-        this.delegatedAppsSource = delegatedAppsSource;
+        this.delegatedRepository = delegatedRepository;
         this.executorService = executorService;
     }
 
@@ -42,16 +42,16 @@ class BackgroundApplicationsSource implements ApplicationsSource {
 
     @Override
     public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedAppsSource.fetchInstallableApplications(callback, errorCallback));
+        executorService.submit(() -> delegatedRepository.fetchInstallableApplications(callback, errorCallback));
     }
 
     @Override
     public void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedAppsSource.getScript(path, callback, errorCallback));
+        executorService.submit(() -> delegatedRepository.getScript(path, callback, errorCallback));
     }
 
     @Override
     public void setFilter(CombinedAppsFilter filter) {
-        delegatedAppsSource.setFilter(filter);
+        delegatedRepository.setFilter(filter);
     }
 }

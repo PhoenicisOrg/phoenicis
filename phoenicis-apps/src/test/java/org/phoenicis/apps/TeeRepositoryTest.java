@@ -28,10 +28,10 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 
 
-public class TeeApplicationsSourceTest {
+public class TeeRepositoryTest {
     @Test
     public void testFetchInstallableApplications_onlyCategoriesNoCollapse_numberOfResultIsCorrect() {
-        final ApplicationsSource leftSource = () -> Arrays.asList(
+        final Repository leftSource = () -> Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
@@ -40,7 +40,7 @@ public class TeeApplicationsSourceTest {
                         .build()
         );
 
-        final ApplicationsSource rightSource = () -> Arrays.asList(
+        final Repository rightSource = () -> Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 3")
                         .build(),
@@ -52,14 +52,14 @@ public class TeeApplicationsSourceTest {
                         .build()
         );
 
-        final ApplicationsSource teeSource = new TeeApplicationsSource(leftSource, rightSource);
+        final Repository teeSource = new TeeRepository(leftSource, rightSource);
         assertEquals(5, teeSource.fetchInstallableApplications().size());
     }
 
 
     @Test
     public void testFetchInstallableApplications_onlyCategoriesCollapse_numberOfResultIsCorrect() {
-        final ApplicationsSource leftSource = () -> Arrays.asList(
+        final Repository leftSource = () -> Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
@@ -68,7 +68,7 @@ public class TeeApplicationsSourceTest {
                         .build()
         );
 
-        final ApplicationsSource rightSource = () -> Arrays.asList(
+        final Repository rightSource = () -> Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 2")
                         .build(),
@@ -80,14 +80,14 @@ public class TeeApplicationsSourceTest {
                         .build()
         );
 
-        final ApplicationsSource teeSource = new TeeApplicationsSource(leftSource, rightSource);
+        final Repository teeSource = new TeeRepository(leftSource, rightSource);
         assertEquals(4, teeSource.fetchInstallableApplications().size());
     }
 
 
     @Test
     public void testFetchInstallableApplications_categoriesAndAppsCollapse_numberOfResultIsCorrect() {
-        final ApplicationsSource leftSource = () -> Arrays.asList(
+        final Repository leftSource = () -> Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
                         .build(),
@@ -105,7 +105,7 @@ public class TeeApplicationsSourceTest {
                         .build()
         );
 
-        final ApplicationsSource rightSource = () -> Arrays.asList(
+        final Repository rightSource = () -> Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 2")
                         .withApplications(
@@ -126,7 +126,7 @@ public class TeeApplicationsSourceTest {
                         .build()
         );
 
-        final ApplicationsSource teeSource = new TeeApplicationsSource(leftSource, rightSource);
+        final Repository teeSource = new TeeRepository(leftSource, rightSource);
         assertEquals(3, teeSource.getCategory(Collections.singletonList("Category 2")).getApplications().size());
     }
 

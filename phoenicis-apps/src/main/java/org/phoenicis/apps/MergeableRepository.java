@@ -20,7 +20,7 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ResourceDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 
-public abstract class MergeableApplicationsSource implements ApplicationsSource {
+public abstract class MergeableRepository implements Repository {
 	/**
 	 * This method merges multiple application sources into a single list of
 	 * category dtos. For this it receives a map, containing a binding between
@@ -34,18 +34,18 @@ public abstract class MergeableApplicationsSource implements ApplicationsSource 
 	 * @param categoriesMap
 	 *            A map containing a binding between the application sources and
 	 *            their category dtos
-	 * @param applicationsSources
+	 * @param repositories
 	 *            A list containing all application sources in the order in
 	 *            which they should be merged
 	 * @return A list containing category dtos of the merged application
 	 *         sources. If no application sources were given, an empty list is
 	 *         returned
 	 */
-	protected List<CategoryDTO> mergeApplicationsSources(Map<ApplicationsSource, List<CategoryDTO>> categoriesMap,
-			ApplicationsSource... applicationsSources) {
-		int numberOfApplicationSources = applicationsSources.length;
+	protected List<CategoryDTO> mergeRepositories(Map<Repository, List<CategoryDTO>> categoriesMap,
+			Repository... repositories) {
+		int numberOfRepositories = repositories.length;
 
-		if (numberOfApplicationSources == 0) {
+		if (numberOfRepositories == 0) {
 			return Collections.emptyList();
 		}
 
@@ -53,12 +53,12 @@ public abstract class MergeableApplicationsSource implements ApplicationsSource 
 		 * Take the first application source, from behind, as the default one
 		 */
 		final Map<String, CategoryDTO> mergedCategories = createSortedMap(
-				categoriesMap.get(applicationsSources[numberOfApplicationSources - 1]), CategoryDTO::getName);
+				categoriesMap.get(repositories[numberOfRepositories - 1]), CategoryDTO::getName);
 
-		for (int otherApplicationSourceIndex = numberOfApplicationSources
-				- 2; otherApplicationSourceIndex >= 0; otherApplicationSourceIndex--) {
+		for (int otherRepositoryIndex = numberOfRepositories
+				- 2; otherRepositoryIndex >= 0; otherRepositoryIndex--) {
 			final List<CategoryDTO> otherCategories = categoriesMap
-					.get(applicationsSources[otherApplicationSourceIndex]);
+					.get(repositories[otherRepositoryIndex]);
 
 			final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getName);
 

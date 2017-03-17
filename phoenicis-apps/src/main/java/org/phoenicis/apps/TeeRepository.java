@@ -25,28 +25,28 @@ import java.util.stream.Collectors;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 
-public class TeeApplicationsSource extends MergeableApplicationsSource {
-    private final ApplicationsSource leftApplicationsSource;
-    private final ApplicationsSource rightApplicationsSource;
+public class TeeRepository extends MergeableRepository {
+    private final Repository leftRepository;
+    private final Repository rightRepository;
 
     /**
      * merges fetched applications from two sources
-     * If an application is found in both sources, the leftApplicationsSource will be used.
-     * @param leftApplicationsSource
-     * @param rightApplicationsSource
+     * If an application is found in both sources, the leftRepository will be used.
+     * @param leftRepository
+     * @param rightRepository
      */
-    protected TeeApplicationsSource(ApplicationsSource leftApplicationsSource,
-                                    ApplicationsSource rightApplicationsSource) {
-        this.leftApplicationsSource = leftApplicationsSource;
-        this.rightApplicationsSource = rightApplicationsSource;
+    protected TeeRepository(Repository leftRepository,
+            Repository rightRepository) {
+        this.leftRepository = leftRepository;
+        this.rightRepository = rightRepository;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-    	final Map<ApplicationsSource, List<CategoryDTO>> categoriesMap = Arrays.asList(leftApplicationsSource, rightApplicationsSource).stream()
+    	final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.asList(leftRepository, rightRepository).stream()
     			.collect(
-						Collectors.toMap(source -> source, ApplicationsSource::fetchInstallableApplications));
+						Collectors.toMap(source -> source, Repository::fetchInstallableApplications));
     	
-    	return mergeApplicationsSources(categoriesMap, leftApplicationsSource, rightApplicationsSource);
+    	return mergeRepositories(categoriesMap, leftRepository, rightRepository);
     }
 }

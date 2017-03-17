@@ -27,39 +27,39 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import static org.junit.Assert.assertEquals;
 
 
-public class ClasspathApplicationsSourceTest {
+public class ClasspathRepositoryTest {
     private final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-    private final ApplicationsSource applicationsSource = new ClasspathApplicationsSource("/org/phoenicis/apps/repositoryTest", resourceResolver, new ObjectMapper());
+    private final Repository repository = new ClasspathRepository("/org/phoenicis/apps/repositoryTest", resourceResolver, new ObjectMapper());
 
     @Test
     public void fetchInstallableApplications_numberOfCategories() {
-        assertEquals(2, applicationsSource.fetchInstallableApplications().size());
+        assertEquals(2, repository.fetchInstallableApplications().size());
     }
 
     @Test
     public void fetchInstallableApplications_categoriesNames() {
-        assertEquals("Development", applicationsSource.fetchInstallableApplications().get(0).getName());
-        assertEquals("Graphics", applicationsSource.fetchInstallableApplications().get(1).getName());
+        assertEquals("Development", repository.fetchInstallableApplications().get(0).getName());
+        assertEquals("Graphics", repository.fetchInstallableApplications().get(1).getName());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics() {
-        assertEquals(1, applicationsSource.fetchInstallableApplications().get(1).getApplications().size());
+        assertEquals(1, repository.fetchInstallableApplications().get(1).getApplications().size());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre() {
-        assertEquals("Photofiltre", applicationsSource.fetchInstallableApplications().get(1).getApplications().get(0).getName());
+        assertEquals("Photofiltre", repository.fetchInstallableApplications().get(1).getApplications().get(0).getName());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scripts() {
-        assertEquals(1, applicationsSource.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().size());
+        assertEquals(1, repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().size());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scriptName() {
-        assertEquals("Online", applicationsSource.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScriptName());
+        assertEquals("Online", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScriptName());
     }
 
     @Test
@@ -75,18 +75,18 @@ public class ClasspathApplicationsSourceTest {
                 "    .checksum(\"dc965875d698cd3f528423846f837d0dcf39616d\")\n" +
                 "    .category(\"Graphics\")\n" +
                 "    .executable(\"PhotoFiltre.exe\")\n" +
-                "    .go();", applicationsSource.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScript().trim());
+                "    .go();", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScript().trim());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_miniatures() {
-        assertEquals(1, applicationsSource.fetchInstallableApplications().get(1).getApplications().get(0).getMiniatures().size());
+        assertEquals(1, repository.fetchInstallableApplications().get(1).getApplications().get(0).getMiniatures().size());
     }
 
     @Test
     public void fetchInstallableApplications_categoriesTypes() {
-        assertEquals(CategoryDTO.CategoryType.INSTALLERS, applicationsSource.fetchInstallableApplications().get(0).getType());
-        assertEquals(CategoryDTO.CategoryType.FUNCTIONS, applicationsSource.fetchInstallableApplications().get(1).getType());
+        assertEquals(CategoryDTO.CategoryType.INSTALLERS, repository.fetchInstallableApplications().get(0).getType());
+        assertEquals(CategoryDTO.CategoryType.FUNCTIONS, repository.fetchInstallableApplications().get(1).getType());
     }
 
 }

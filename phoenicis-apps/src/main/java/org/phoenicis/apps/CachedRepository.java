@@ -18,13 +18,26 @@
 
 package org.phoenicis.apps;
 
-import org.junit.Test;
+import org.phoenicis.apps.dto.CategoryDTO;
 
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
-public class NullApplicationsSourceTest {
-    @Test
-    public void testNullApplicationsSource() {
-        assertEquals(0, new NullApplicationsSource().fetchInstallableApplications().size());
+class CachedRepository implements Repository {
+    private final Repository repository;
+    private List<CategoryDTO> cache;
+
+    CachedRepository(Repository repository) {
+        this.repository = repository;
     }
+
+    @Override
+    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+        if (cache == null) {
+            cache = repository.fetchInstallableApplications();
+        }
+
+        return cache;
+    }
+
+
 }

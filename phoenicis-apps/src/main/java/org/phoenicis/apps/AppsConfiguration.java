@@ -45,23 +45,23 @@ public class AppsConfiguration {
     private ToolsConfiguration toolsConfiguration;
 
     @Bean
-    public ApplicationsSource appsSource() {
-        ApplicationsSource applicationsSource = new ConfigurableApplicationsSource(
+    public Repository repository() {
+        Repository repository = new ConfigurableRepository(
                 repositoryConfiguration,
                 cacheDirectoryPath,
-                new LocalApplicationsSource.Factory(objectMapper()),
-                new ClasspathApplicationsSource.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
+                new LocalRepository.Factory(objectMapper()),
+                new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
         );
-        return new FilterApplicationsSource(
-                new CachedApplicationsSource(applicationsSource),
+        return new FilterRepository(
+                new CachedRepository(repository),
                 toolsConfiguration.operatingSystemFetcher(),
                 enforceUncompatibleOperatingSystems
         );
     }
 
     @Bean
-    public ApplicationsSource backgroundAppsSource() {
-        return new BackgroundApplicationsSource(appsSource(), multithreadingConfiguration.appsExecutorService());
+    public Repository backgroundRepository() {
+        return new BackgroundRepository(repository(), multithreadingConfiguration.appsExecutorService());
     }
 
     @Bean
