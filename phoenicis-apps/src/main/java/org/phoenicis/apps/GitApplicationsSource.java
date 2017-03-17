@@ -59,7 +59,7 @@ class GitApplicationsSource implements ApplicationsSource {
 			LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'",
 					gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL));
 
-			if (!gitRepositoryLocation.mkdir()) {
+			if (!gitRepositoryLocation.mkdirs()) {
 				LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'",
 						this.gitRepositoryURL, gitRepositoryLocation.getAbsolutePath()));
 

@@ -18,7 +18,6 @@
 
 package org.phoenicis.settings;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DefaultPropertiesPersister;
 
@@ -28,21 +27,21 @@ import java.io.OutputStream;
 
 public class SettingsManager {
 	@Value("${application.theme}")
-    private String theme;
-    
-    @Value("${application.viewsource}")
-    private boolean viewScriptSource;
+	private String theme;
 
-    @Value("${application.repository.configuration}")
-    private String repository;
+	@Value("${application.viewsource}")
+	private boolean viewScriptSource;
 
-    private String settingsFileName = "config.properties";
+	@Value("${application.repository.configuration}")
+	private String repository;
 
-    public SettingsManager(String settingsFileName) {
-        this.settingsFileName = settingsFileName;
-    }
-    
-    public String getTheme() {
+	private String settingsFileName = "config.properties";
+
+	public SettingsManager(String settingsFileName) {
+		this.settingsFileName = settingsFileName;
+	}
+
+	public String getTheme() {
 		return theme;
 	}
 
@@ -66,23 +65,23 @@ public class SettingsManager {
 		this.repository = repository;
 	}
 
-    public void save() {
-    	Settings settings = load();
-        try {
-            File file = new File(settingsFileName);
-            OutputStream outputStream = new FileOutputStream(file);
-            DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
-            persister.store(settings.getProperties(), outputStream, "PoL 5 User Settings");
-        } catch (Exception e ) {
-            e.printStackTrace();
-        }
-    }
+	public void save() {
+		Settings settings = load();
+		try {
+			File file = new File(settingsFileName);
+			OutputStream outputStream = new FileOutputStream(file);
+			DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
+			persister.store(settings.getProperties(), outputStream, "PoL 5 User Settings");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    private Settings load() {
-        Settings settings = new Settings();
-        settings.set(Setting.THEME, theme);
-        settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
-        settings.set(Setting.REPOSITORY, repository);
-        return settings;
-    }
+	private Settings load() {
+		Settings settings = new Settings();
+		settings.set(Setting.THEME, theme);
+		settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
+		settings.set(Setting.REPOSITORY, repository);
+		return settings;
+	}
 }
