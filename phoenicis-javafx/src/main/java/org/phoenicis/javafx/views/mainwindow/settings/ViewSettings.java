@@ -51,12 +51,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.StringConverter;
 
 public class ViewSettings extends MainWindowView {
 	private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
@@ -203,17 +201,7 @@ public class ViewSettings extends MainWindowView {
 		repositoryListView.setPrefSize(400, 100);
 		repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		repositoryListView.setEditable(true);
-		repositoryListView.setCellFactory(param -> new TextFieldListCell<>(new StringConverter<String>() {
-			@Override
-			public String toString(String object) {
-				return object;
-			}
-
-			@Override
-			public String fromString(String string) {
-				return string;
-			}
-		}));
+		repositoryListView.setCellFactory(param -> new DragableRepositoryListCell(this::save));
 		HBox repositoryButtonLayout = new HBox();
 		repositoryButtonLayout.setSpacing(5);
 		Button addButton = new Button();
