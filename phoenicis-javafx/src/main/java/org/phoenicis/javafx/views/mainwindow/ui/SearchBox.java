@@ -25,12 +25,11 @@ public class SearchBox extends AnchorPane {
 
         this.clearButton = new Button();
         this.clearButton.getStyleClass().add("searchCleanButton");
-        this.clearButton.styleProperty().set(
-                "-fx-graphic: url('" + themeManager.getResourceUrl(SearchBox.cleanButtonIcon) + "');");
         this.clearButton.setOnMouseClicked(event -> this.searchField.clear());
 
         AnchorPane.setRightAnchor(clearButton, 0.0);
 
+        this.getStyleClass().add("searchBox");
         this.getChildren().addAll(searchField, clearButton);
     }
 

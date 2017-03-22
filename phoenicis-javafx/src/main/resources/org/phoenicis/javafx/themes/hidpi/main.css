@@ -15,394 +15,338 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
 .text-field {
-    -fx-background-radius: 2em;
+  -fx-background-radius: 2em;
 }
-
 /*******************************************************/
 /****************** main window scene ******************/
 /*******************************************************/
 .mainWindowScene {
-    -fx-min-height: 70.4em;
-    -fx-fit-to-height: true;
+  -fx-min-height: 70.4em;
+  -fx-fit-to-height: true;
 }
-
 /*******************************************************/
 /************************ logo *************************/
 /*******************************************************/
 #logoText {
-    -fx-font-family: "Maven Pro";
-    -fx-font-size: 3.6em;
-    -fx-translate-x: 2.4em;
-    -fx-translate-y: -0.2em;
-    -fx-fill: white;
+  -fx-font-family: "Maven Pro";
+  -fx-font-size: 3.6em;
+  -fx-translate-x: 2.4em;
+  -fx-translate-y: -0.2em;
+  -fx-fill: white;
 }
-
 /*******************************************************/
 /************************ menu *************************/
 /*******************************************************/
 #menuPane {
-    -fx-tab-min-width: 14em;
-    -fx-padding: -20 0 0 0;
-    -fx-spacing: 0;
-    -fx-pref-height: 86.6em;
+  -fx-tab-min-width: 14em;
+  -fx-padding: -20 0 0 0;
+  -fx-spacing: 0;
+  -fx-pref-height: 86.6em;
 }
-
 #menuPane > .tab-header-area .tab {
-    -fx-background-color: transparent;
-    -fx-background-opacity: 0;
-    -fx-pref-height: 7em;
+  -fx-background-color: transparent;
+  -fx-background-opacity: 0;
+  -fx-pref-height: 7em;
 }
-
 #menuPane > .tab-header-area .tab-label {
-    -fx-alignment: CENTER;
-    -fx-padding: 0 0 -10 0;
-    -fx-text-font-family: "Roboto Light";
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 2.4em;
-    -fx-cursor: hand;
+  -fx-alignment: CENTER;
+  -fx-padding: 0 0 -10 0;
+  -fx-text-font-family: "Roboto Light";
+  -fx-text-fill: #FFFFFF;
+  -fx-font-size: 2.4em;
+  -fx-cursor: hand;
 }
-
 #menuPane > .tab-header-area .tab-header-background {
-    -fx-background-color: linear-gradient(#428bca, #116395);
-    -fx-min-height: 5em;
-    -fx-max-height: 5em;
+  -fx-background-color: linear-gradient(#428bca, #116395);
+  -fx-min-height: 5em;
+  -fx-max-height: 5em;
 }
-
 #menuPane > .tab-header-area .tab:disabled {
-    -fx-opacity: 1;
+  -fx-opacity: 1;
 }
-
 /*******************************************************/
 /************************* left ************************/
 /*******************************************************/
 .leftPane {
-    -fx-background-color: #F0F0F0;
-    -fx-min-height: 20em;
-    -fx-min-width: 30em;
-    -fx-pref-width: 30em;
-    -fx-spacing: 0.8em;
-    -fx-padding: 2em;
+  -fx-background-color: #F0F0F0;
+  -fx-min-height: 20em;
+  -fx-min-width: 30em;
+  -fx-pref-width: 30em;
+  -fx-spacing: 0.8em;
+  -fx-padding: 2em;
 }
-
 .leftPaneScrollbar {
-    -fx-border-width: 0;
-    -fx-background-color:#F0F0F0;
-    -fx-min-width: 30em;
+  -fx-border-width: 0;
+  -fx-background-color: #F0F0F0;
+  -fx-min-width: 30em;
 }
-
 .leftPaneScrollbar > .viewport {
-    -fx-background-color: #F0F0F0;
+  -fx-background-color: #F0F0F0;
 }
-
 .leftPaneScrollbar .scroll-bar:vertical {
-    -fx-max-width: 10px;
-    -fx-pref-width: 10px;
+  -fx-max-width: 10px;
+  -fx-pref-width: 10px;
 }
-
-.leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
-    -fx-pref-height: 0;
-    -fx-font-size: 0;
-    -fx-opacity: 0;
+.leftPaneScrollbar .increment-button,
+.leftPaneScrollbar .decrement-button {
+  -fx-pref-height: 0;
+  -fx-font-size: 0;
+  -fx-opacity: 0;
 }
-
 .leftPaneScrollbar .scroll-bar:vertical .track {
-    -fx-background-color: #F0F0F0;
-    -fx-border-width: 0;
-    -fx-background-radius: 0em;
-    -fx-pref-width: 10px;
-    -fx-max-width: 10px;
+  -fx-background-color: #F0F0F0;
+  -fx-border-width: 0;
+  -fx-background-radius: 0em;
+  -fx-pref-width: 10px;
+  -fx-max-width: 10px;
 }
-
 .leftPaneScrollbar .scroll-bar:vertical .thumb {
-    -fx-background-color:derive(black,90%);
-    -fx-background-insets: 0, 0, 0;
-    -fx-background-radius: 2em;
-    -fx-pref-width: 8px;
-    -fx-max-width: 8px;
+  -fx-background-color: derive(#000000, 90%);
+  -fx-background-insets: 0, 0, 0;
+  -fx-background-radius: 2em;
+  -fx-pref-width: 8px;
+  -fx-max-width: 8px;
 }
-
 .leftPaneInside {
-    -fx-spacing: 0.8em;
+  -fx-spacing: 0.8em;
 }
-
 .leftSpacer {
-    -fx-pref-height: 1.6em;
+  -fx-pref-height: 1.6em;
 }
-
 .leftBarTitle {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 2.2em;
-    -fx-alignment: baseline-left;
-    -fx-translate-y: -0.2em;
+  -fx-font-family: "Roboto Regular";
+  -fx-font-size: 2.2em;
+  -fx-alignment: baseline-left;
+  -fx-translate-y: -0.2em;
 }
-
 .leftButton {
-    -fx-background-color:transparent;
-    -fx-cursor: hand;
-    -fx-txt-font-family: "Roboto Light";
-    -fx-label-padding: 2 0 2 26;
-    -fx-background-size: 24px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
+  -fx-background-color: transparent;
+  -fx-cursor: hand;
+  -fx-txt-font-family: "Roboto Light";
+  -fx-label-padding: 2 0 2 26;
+  -fx-background-size: 24px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left;
 }
-
-.leftButton:hover, .leftButton:selected {
-    -fx-background-color: #D3D3D3;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 3, 2, 1;
+.leftButton:hover,
+.leftButton:selected {
+  -fx-background-color: #D3D3D3;
+  -fx-background-insets: 0, 1, 2;
+  -fx-background-radius: 3, 2, 1;
 }
-
 .searchCleanButton {
-	-fx-background-color: transparent;
+  -fx-background-color: transparent;
 }
-
 /*******************************************************/
 /************************ right ************************/
 /*******************************************************/
 .rightPane {
-    -fx-pref-width: 110em;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-focus-traversable: false;
-    -fx-background-color: transparent;
-
+  -fx-pref-width: 110em;
+  -fx-border-width: 0;
+  -fx-border-style: none;
+  -fx-focus-traversable: false;
+  -fx-background-color: transparent;
 }
-
 .rightPane > .viewport {
-    -fx-background-color: #FFFFFF;
-    -fx-border-width: 0;
+  -fx-background-color: #FFFFFF;
+  -fx-border-width: 0;
 }
-
 .retryButton {
-    -fx-label-padding: 2 0 2 6;
-    -fx-background-size: 16px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
+  -fx-label-padding: 2 0 2 6;
+  -fx-background-size: 16px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left;
 }
-
 /*******************************************************/
 /************************* apps ************************/
 /*******************************************************/
 .appPresentation {
-    -fx-background-color: #FFFFFF;
+  -fx-background-color: #FFFFFF;
 }
-
 .appPresentation > * {
-    -fx-padding: 1.0em;
-    -fx-spacing: 1.0em;
+  -fx-padding: 1.0em;
+  -fx-spacing: 1.0em;
 }
-
 .appPanelMiniaturesPane {
-    -fx-background-color: #FAFAFA;
-    -fx-padding: 1.0em;
+  -fx-background-color: #FAFAFA;
+  -fx-padding: 1.0em;
 }
-
 .appPanelMiniaturesPaneWrapper {
-    -fx-padding: 0px;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-focus-traversable: false;
-    -fx-background-color: transparent;
-    -fx-min-height: 300;
+  -fx-padding: 0px;
+  -fx-border-width: 0;
+  -fx-border-style: none;
+  -fx-focus-traversable: false;
+  -fx-background-color: transparent;
+  -fx-min-height: 300;
 }
-
 .appPanelMiniaturesPaneWrapper > .viewport {
-    -fx-background-color: #FAFAFA;
-    -fx-border-width: 0;
+  -fx-background-color: #FAFAFA;
+  -fx-border-width: 0;
 }
-
 /********************** description ********************/
 .descriptionTitle {
-    -fx-font-family: "Roboto light";
-    -fx-text-fill: #428bca;
-    -fx-font-size: 16;
+  -fx-font-family: "Roboto light";
+  -fx-text-fill: #428bca;
+  -fx-font-size: 16;
 }
-
 /*******************************************************/
 /********************** containers *********************/
 /*******************************************************/
 .containerConfigurationPane {
-    -fx-padding: 20px;
+  -fx-padding: 20px;
 }
-
 .containerConfigurationPane > .grid {
-    -fx-padding: 20px;
+  -fx-padding: 20px;
 }
-
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
 .rightPane .miniatureList {
-    -fx-pref-width: 107em;
-    -fx-background-color: #FFFFFF;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-padding: 1em;
+  -fx-pref-width: 107em;
+  -fx-background-color: #FFFFFF;
+  -fx-border-width: 0;
+  -fx-border-style: none;
+  -fx-padding: 1em;
 }
-
 .miniatureListElement {
-    -fx-pref-width: 24em;
-    -fx-pref-height: 18em;
-    -fx-max-height: 18em;
-    -fx-min-height: 18em;
-    -fx-font-family: "Roboto Light";
-    -fx-alignment: top-center;
-    -fx-spacing: 0.6em;
-    -fx-padding: 1.0em;
-    -fx-cursor: hand;
-    -fx-background-radius: 1.6em;
+  -fx-pref-width: 24em;
+  -fx-pref-height: 18em;
+  -fx-max-height: 18em;
+  -fx-min-height: 18em;
+  -fx-font-family: "Roboto Light";
+  -fx-alignment: top-center;
+  -fx-spacing: 0.6em;
+  -fx-padding: 1.0em;
+  -fx-cursor: hand;
+  -fx-background-radius: 1.6em;
 }
-
 .miniatureListElement:hover {
-    -fx-background-color: #EFEFEF;
+  -fx-background-color: #EFEFEF;
 }
-
 .miniatureListElement.selected {
-    -fx-background-color: #EAEAEA;
+  -fx-background-color: #EAEAEA;
 }
-
 .miniatureText {
-    -fx-font-size: 1.80em;
-    -fx-wrap-text: true;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
+  -fx-font-size: 1.80em;
+  -fx-wrap-text: true;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
 }
-
 .miniatureImage {
-    -fx-border-radius: 0.8em;
-    -fx-background-radius: 0.8em;
+  -fx-border-radius: 0.8em;
+  -fx-background-radius: 0.8em;
 }
-
 /*******************************************************/
 /***************** installation wizard *****************/
 /*******************************************************/
 #presentationBackground {
-    -fx-background-color: white;
-    -fx-padding: 10;
+  -fx-background-color: white;
+  -fx-padding: 10;
 }
-
 #presentationScrollPane {
-    -fx-background: white;
-    -fx-border-color: white;
+  -fx-background: white;
+  -fx-border-color: white;
 }
-
 #presentationTextTitle {
-    -fx-font-weight: bold;
-    -fx-fill: black;
-    -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-fill: black;
+  -fx-font-size: 16px;
 }
-
 #presentationText {
-    -fx-fill: black;
+  -fx-fill: black;
 }
-
 /************************ step *************************/
 #panelForTopheader {
-    -fx-padding: 60px;
-    -fx-background-color: #F4F4F4;
+  -fx-padding: 60px;
+  -fx-background-color: #F4F4F4;
 }
-
 #header {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 2px 0;
-    -fx-background-color: #FFFFFF;
+  -fx-border-color: #CCCCCC;
+  -fx-border-style: solid;
+  -fx-border-width: 0 0 2px 0;
+  -fx-background-color: #FFFFFF;
 }
-
 #footer {
-    -fx-border-color: #CCCCCC;
-    -fx-border-style: solid;
-    -fx-border-width: 2px 0 0 0;
+  -fx-border-color: #CCCCCC;
+  -fx-border-style: solid;
+  -fx-border-width: 2px 0 0 0;
 }
-
 #stepScrollPane {
-    -fx-background: #F4F4F4;
-    -fx-border-color: #F4F4F4;
+  -fx-background: #F4F4F4;
+  -fx-border-color: #F4F4F4;
 }
-
 .dragAndDropBox {
-    -fx-background-color: #F6F6F6;
-    -fx-text-alignment: center;
-    -fx-alignment: center;
-    -fx-border-style: dashed;
-    -fx-border-color: #CCC;
-    -fx-border-width: 1.0em;
+  -fx-background-color: #F6F6F6;
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+  -fx-border-style: dashed;
+  -fx-border-color: #CCC;
+  -fx-border-width: 1.0em;
 }
-
 /*******************************************************/
 /*********************** console ***********************/
 /*******************************************************/
 .console {
-    -fx-pref-width: 120em;
-    -fx-padding: 1.0em;
-    -fx-font-family: "Lucida Console";
+  -fx-pref-width: 120em;
+  -fx-padding: 1.0em;
+  -fx-font-family: "Lucida Console";
 }
-
-.console, .console .viewport {
-    -fx-background-color: #FFFFFF;
+.console,
+.console .viewport {
+  -fx-background-color: #FFFFFF;
 }
-
 .consoleCommandType {
-    -fx-border-radius: 0;
-    -fx-background-color: #FFF;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0;
-    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+  -fx-border-radius: 0;
+  -fx-background-color: #FFF;
+  -fx-background-insets: 0, 1, 2;
+  -fx-background-radius: 0;
+  -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }
-
 .consoleText.normal {
-    -fx-fill: black;
+  -fx-fill: black;
 }
-
 .consoleText.default {
-    -fx-fill: #999999;
+  -fx-fill: #999999;
 }
-
 .consoleText.error {
-    -fx-fill: #cc0000;
+  -fx-fill: #cc0000;
 }
-
 /*******************************************************/
 /********************** wine tools *********************/
 /*******************************************************/
 .wineToolButton {
-    -fx-pref-width: 192px;
-    -fx-pref-height: 192px;
-    -fx-content-display: graphic-only;
-    -fx-background-size: 96px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
+  -fx-pref-width: 192px;
+  -fx-pref-height: 192px;
+  -fx-content-display: graphic-only;
+  -fx-background-size: 96px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
 }
-
 .wineToolCaption {
-    -fx-font-size: 1.7em;
-    -fx-pref-width: 192px;
+  -fx-font-size: 1.7em;
+  -fx-pref-width: 192px;
 }
-
 /*******************************************************/
 /************************* misc ************************/
 /*******************************************************/
 .title {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 2.8em;
-    -fx-alignment: baseline-left;
-    -fx-translate-y: -0.2em;
-    -fx-fill: #428bca;
+  -fx-font-family: "Roboto Regular";
+  -fx-font-size: 2.8em;
+  -fx-alignment: baseline-left;
+  -fx-translate-y: -0.2em;
+  -fx-fill: #428bca;
 }
-
 .captionTitle {
-    -fx-font-weight: normal;
+  -fx-font-weight: normal;
 }
-
 .boldLabel {
-    -fx-font-family: "Roboto Bold";
+  -fx-font-family: "Roboto Bold";
+}
+.normalLabel {
+  -fx-font-family: "Roboto Light";
 }
 
-.normalLabel {
-    -fx-font-family: "Roboto Light";
-}
