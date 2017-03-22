@@ -52,7 +52,7 @@
 						</goals>
 						<configuration>
 							 <sourceDirectory>src/main/resources</sourceDirectory>
-                     		 <outputDirectory>src/main/resources</outputDirectory>
+                     		 <outputDirectory>target/classes</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
