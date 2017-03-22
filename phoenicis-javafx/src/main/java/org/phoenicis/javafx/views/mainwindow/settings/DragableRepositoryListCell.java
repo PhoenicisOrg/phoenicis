@@ -9,7 +9,6 @@ import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.ClipboardContent;
@@ -23,10 +22,7 @@ import javafx.scene.layout.GridPane;
  */
 public class DragableRepositoryListCell extends ListCell<String> implements ChangeListener<Number> {
 
-	/**
-	 * What should be done after this cell has been dragged
-	 */
-	private Runnable onDragDone;
+	private final Runnable onDragDone;
 	
 	public DragableRepositoryListCell(Runnable onDragDone) {
 		super();
@@ -44,7 +40,6 @@ public class DragableRepositoryListCell extends ListCell<String> implements Chan
 		GridPane itemPane = new GridPane();
 
 		Label indexLabel = new Label(String.valueOf(repositories.size() - repositories.indexOf(item)));
-		indexLabel.setAlignment(Pos.CENTER);
 		indexLabel.setPrefWidth(50);
 
 		Label repositoryLocationLabel = new Label(item);
