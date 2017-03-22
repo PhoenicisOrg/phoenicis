@@ -176,9 +176,11 @@ public class ViewSettings extends MainWindowView {
 
 		uiPanel.getChildren().add(gridPane);
 
+		// Legend below
 		final Label restartHint = new Label(
 				translate("If you change the theme, please restart to load the icons of the new theme."));
 		restartHint.setPadding(new Insets(10));
+		
 		uiPanel.getChildren().add(restartHint);
 	}
 
@@ -231,6 +233,13 @@ public class ViewSettings extends MainWindowView {
 		gridPane.setVgap(10);
 
 		repositoriesPanel.getChildren().add(gridPane);
+		
+		final Label priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
+		priorityHint.setWrapText(true);
+		priorityHint.maxWidthProperty().bind(repositoriesPanel.widthProperty());
+		priorityHint.setPadding(new Insets(10));
+		
+		repositoriesPanel.getChildren().add(priorityHint);
 	}
 
 	private void initFileAssociationsPane() {
