@@ -5,6 +5,7 @@ package org.phoenicis.javafx;
 
 import java.util.concurrent.TimeoutException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testfx.api.FxToolkit;
@@ -16,6 +17,7 @@ import org.testfx.api.FxToolkit;
 public class AppConfigurationInitialisationTest {
 
 	@Test
+	@Ignore
 	public void testAppConfigurationInitialisation() throws TimeoutException {
 		FxToolkit.registerPrimaryStage();
 		FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
