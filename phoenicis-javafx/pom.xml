@@ -28,6 +28,10 @@
 
     <artifactId>phoenicis-javafx</artifactId>
 
+    <properties>
+        <testfx.version>4.0.6-alpha</testfx.version>
+    </properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -118,14 +122,14 @@
         <dependency>
 			<groupId>org.testfx</groupId>
 			<artifactId>testfx-core</artifactId>
-			<version>4.0.5-alpha</version>
+			<version>${testfx.version}</version>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.testfx</groupId>
 			<artifactId>testfx-junit</artifactId>
-			<version>4.0.6-alpha</version>
+			<version>${testfx.version}</version>
 			<scope>test</scope>
 		</dependency>
 		
