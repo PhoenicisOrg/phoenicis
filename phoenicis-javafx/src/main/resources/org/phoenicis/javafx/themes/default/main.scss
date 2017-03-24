@@ -16,6 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+$root-url: "/org/phoenicis/javafx/themes/default/";
+
+@mixin graphic($relative-url) {
+	-fx-background-color: transparent;
+    -fx-graphic: url($root-url + $relative-url);
+}
+
+
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
@@ -168,8 +176,13 @@
     -fx-background-radius: 3, 2, 1;
 }
 
-.searchCleanButton {
-	-fx-background-color: transparent;
+.searchBox {
+	.searchCleanButton {
+		@include graphic("icons/mainwindow/general/edit-clear.png");
+		
+		-fx-border-radius: 0;
+		-fx-border-color: transparent;		
+	}
 }
 
 /*******************************************************/
