@@ -68,6 +68,11 @@ class LocalRepository implements Repository {
         return fetchCategories(categoryDirectories);
     }
 
+    @Override
+    public void delete() {
+        // nothing to do
+    }
+
     private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
         final List<CategoryDTO> results = new ArrayList<>();
 

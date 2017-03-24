@@ -39,5 +39,8 @@ class CachedRepository implements Repository {
         return cache;
     }
 
-
+    @Override
+    public void delete() {
+        this.repository.delete();
+    }
 }

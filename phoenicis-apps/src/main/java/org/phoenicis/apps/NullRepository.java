@@ -28,4 +28,9 @@ class NullRepository implements Repository {
     public List<CategoryDTO> fetchInstallableApplications() {
         return Collections.emptyList();
     }
+
+    @Override
+    public void delete() {
+        // nothing to do
+    }
 }

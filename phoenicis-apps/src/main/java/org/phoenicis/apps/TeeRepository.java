@@ -49,4 +49,10 @@ public class TeeRepository extends MergeableRepository {
     	
     	return mergeRepositories(categoriesMap, leftRepository, rightRepository);
     }
+
+    @Override
+    public void delete() {
+        this.leftRepository.delete();
+        this.rightRepository.delete();
+    }
 }

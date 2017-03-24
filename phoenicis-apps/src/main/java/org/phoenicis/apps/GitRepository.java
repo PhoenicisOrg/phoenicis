@@ -18,17 +18,18 @@
 
 package org.phoenicis.apps;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 class GitRepository implements Repository {
 	private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
@@ -112,5 +113,24 @@ class GitRepository implements Repository {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void delete() {
+		File gitRepositoryLocation = new File(this.cacheDirectoryPath + "/git" + this.gitRepositoryURL.hashCode());
+
+		deleteFile(gitRepositoryLocation);
+
+		LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.gitRepositoryURL, gitRepositoryLocation.getAbsolutePath()));
+	}
+
+	private void deleteFile(File file) {
+		if (file.isDirectory()) {
+			List<File> entries = Arrays.asList(file.listFiles());
+
+			entries.stream().forEach(this::deleteFile);
+		}
+
+		file.delete();
 	}
 }

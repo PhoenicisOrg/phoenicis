@@ -49,6 +49,11 @@ class ConfigurableRepository implements Repository {
         return repository.fetchInstallableApplications();
     }
 
+    @Override
+    public void delete() {
+        this.repository.delete();
+    }
+
     private Repository toRepository(String repositoryUrl) {
         LOGGER.info("Registering: " + repositoryUrl);
         try {
