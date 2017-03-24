@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.phoenicis.javafx.views.mainwindow.settings;
 
 import java.util.ArrayList;
