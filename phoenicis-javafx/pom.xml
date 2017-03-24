@@ -125,7 +125,7 @@
 		<dependency>
 			<groupId>org.testfx</groupId>
 			<artifactId>testfx-junit</artifactId>
-			<version>4.0.5-alpha</version>
+			<version>4.0.6-alpha</version>
 			<scope>test</scope>
 		</dependency>
 		
