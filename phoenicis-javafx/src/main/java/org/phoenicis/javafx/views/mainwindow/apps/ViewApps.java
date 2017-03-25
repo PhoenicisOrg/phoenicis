@@ -112,7 +112,7 @@ public class ViewApps extends MainWindowView {
                     cssBuilder.append("}\n");
                 }
                 String css = cssBuilder.toString();
-                Path temp = Paths.get("tempfile.css");
+                Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
                 Files.write(temp, css.getBytes());
                 String defaultCategoryIconsCss = temp.toUri().toString();
                 themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
