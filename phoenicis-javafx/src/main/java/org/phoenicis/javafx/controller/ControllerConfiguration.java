@@ -122,7 +122,8 @@ public class ControllerConfiguration {
                 viewsConfiguration.viewApps(),
                 appsConfiguration.backgroundRepository(),
                 scriptsConfiguration.scriptInterpreter(),
-                settingsConfiguration.settingsManager()
+                settingsConfiguration.settingsManager(),
+                themeConfiguration.themeManager()
         );
     }
 

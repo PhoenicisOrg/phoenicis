@@ -23,10 +23,14 @@ import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.settings.SettingsManager;
 
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,18 +41,21 @@ public class AppsController {
     private final Repository repository;
     private final ScriptInterpreter scriptInterpreter;
     private final SettingsManager settingsManager;
-    
+    private ThemeManager themeManager;
+
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
                           Repository repository,
                           ScriptInterpreter scriptInterpreter,
-                          SettingsManager settingsManager) {
+                          SettingsManager settingsManager,
+                          ThemeManager themeManager) {
         this.view = view;
         this.repository = repository;
         this.scriptInterpreter = scriptInterpreter;
         this.settingsManager = settingsManager;
-        
+        this.themeManager = themeManager;
+
         this.view.setOnApplyFilter(filter -> {
             repository.setFilter(filter);
             repository.fetchInstallableApplications(
@@ -85,6 +92,33 @@ public class AppsController {
         });
 
         this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications(), settingsManager));
+
+        this.view.setOnSetDefaultCategoryIcons(categoryDTOS -> {
+            // set default category icons
+            try {
+                StringBuilder cssBuilder = new StringBuilder();
+                for (CategoryDTO category : categoryDTOS) {
+                    cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
+                    cssBuilder.append("-fx-background-image: url('" + category.getIcon() + "');\n");
+                    cssBuilder.append("}\n");
+                }
+                String css = cssBuilder.toString();
+                Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
+                Files.write(temp, css.getBytes());
+                String defaultCategoryIconsCss = temp.toUri().toString();
+                themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
+
+                // apply current theme again to fix hierarchy
+                final String shortName = themeManager.getCurrentTheme().getShortName();
+                final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
+                final URL style = this.getClass().getResource(url);
+                this.view.getTabPane().getScene().getStylesheets().clear();
+                this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss, style.toExternalForm());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> {

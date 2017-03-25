@@ -35,18 +35,10 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
-import org.phoenicis.settings.Settings;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -63,6 +55,7 @@ public class ViewApps extends MainWindowView {
     private Consumer<ScriptDTO> onSelectScript = (script) -> {};
     private final CombinedAppsFilter currentFilter = new CombinedAppsFilter();
     private Consumer<CombinedAppsFilter> onApplyFilter = (filter) -> {};
+    private Consumer<List<CategoryDTO>> onSetDefaultCategoryIcons;
 
     public ViewApps(ThemeManager themeManager) {
         super("Apps", themeManager);
@@ -85,6 +78,10 @@ public class ViewApps extends MainWindowView {
         this.onSelectCategory = onSelectCategory;
     }
 
+    public void setOnSetDefaultCategoryIcons(Consumer<List<CategoryDTO>> onSetDefaultCategoryIcons) {
+        this.onSetDefaultCategoryIcons = onSetDefaultCategoryIcons;
+    }
+
     public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
         this.onSelectScript = onSelectScript;
     }
@@ -103,29 +100,7 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
-            // set default category icons
-            try{
-                StringBuilder cssBuilder = new StringBuilder();
-                for (CategoryDTO category : categories) {
-                    cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
-                    cssBuilder.append("-fx-background-image: url('" + category.getIcon() + "');\n");
-                    cssBuilder.append("}\n");
-                }
-                String css = cssBuilder.toString();
-                Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
-                Files.write(temp, css.getBytes());
-                String defaultCategoryIconsCss = temp.toUri().toString();
-                themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-
-                // apply current theme again to fix hierarchy
-                final String shortName = themeManager.getCurrentTheme().getShortName();
-                final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-                final URL style = this.getClass().getResource(url);
-                getTabPane().getScene().getStylesheets().clear();
-                getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss, style.toExternalForm());
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+            setDefaultCategoryIcons(categories);
 
             final List<LeftToggleButton> leftButtonList = new ArrayList<>();
             ToggleGroup group = new ToggleGroup();
@@ -218,6 +193,10 @@ public class ViewApps extends MainWindowView {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
         showRightView(appPanel);
+    }
+
+    private void setDefaultCategoryIcons(List<CategoryDTO> categories) {
+        this.onSetDefaultCategoryIcons.accept(categories);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
