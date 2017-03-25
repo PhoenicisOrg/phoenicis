@@ -19,6 +19,7 @@
 package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,10 +37,13 @@ class ConfigurableRepository implements Repository {
     private final Repository repository;
     private final String cacheDirectoryPath;
 
-    ConfigurableRepository(String sourceUrl, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
+    private final FileUtilities fileUtilities;
+
+    ConfigurableRepository(String sourceUrl, String cacheDirectoryPath, FileUtilities fileUtilities, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
         this.cacheDirectoryPath = cacheDirectoryPath;
         this.localRepositoryFactory = localRepositoryFactory;
         this.classPathRepositoryFactory = classPathRepositoryFactory;
+        this.fileUtilities = fileUtilities;
         final String[] urls = sourceUrl.split(";");
         repository = new MultipleRepository(Arrays.stream(urls).map(this::toRepository).collect(Collectors.toList()));
     }
@@ -63,7 +67,7 @@ class ConfigurableRepository implements Repository {
             switch (scheme) {
                 case "git":
                     return new GitRepository(repositoryUrl.replace("git+",""), cacheDirectoryPath,
-                            localRepositoryFactory);
+                            localRepositoryFactory, fileUtilities);
                 case "file":
                     return localRepositoryFactory.createInstance(url.getRawPath());
                 case "classpath":

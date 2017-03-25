@@ -21,11 +21,14 @@ package org.phoenicis.apps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
+import org.phoenicis.tools.files.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import java.io.File;
 
 @Configuration
 public class AppsConfiguration {
@@ -44,11 +47,15 @@ public class AppsConfiguration {
     @Autowired
     private ToolsConfiguration toolsConfiguration;
 
+    @Autowired
+    private FileUtilities fileUtilities;
+
     @Bean
     public Repository repository() {
         Repository repository = new ConfigurableRepository(
                 repositoryConfiguration,
                 cacheDirectoryPath,
+                fileUtilities,
                 new LocalRepository.Factory(objectMapper()),
                 new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
         );

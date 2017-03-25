@@ -66,11 +66,6 @@ class ClasspathRepository implements Repository {
         }
     }
 
-    @Override
-    public void delete() {
-        // nothing to do
-    }
-
     private CategoryDTO buildCategory(String categoryFileName) throws IOException {
         final String jsonCategoryFile = packagePath + "/" + categoryFileName + "/category.json";
         final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile), CategoryDTO.class);

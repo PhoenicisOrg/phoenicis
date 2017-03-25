@@ -30,7 +30,9 @@ import java.util.function.Consumer;
 public interface Repository {
     List<CategoryDTO> fetchInstallableApplications();
 
-    void delete();
+    default void delete() {
+        // do nothing
+    }
 
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         try {
