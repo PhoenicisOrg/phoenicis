@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
@@ -28,6 +29,8 @@ import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.settings.SettingsManager;
 
+import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -99,7 +102,12 @@ public class AppsController {
                 StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categoryDTOS) {
                     cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
-                    cssBuilder.append("-fx-background-image: url('" + category.getIcon() + "');\n");
+                    String categoryIcon = category.getIcon();
+                    if (StringUtils.isEmpty(categoryIcon) || ! new File(new URI(categoryIcon)).exists()) {
+                        cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
+                    } else {
+                        cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
+                    }
                     cssBuilder.append("}\n");
                 }
                 String css = cssBuilder.toString();
