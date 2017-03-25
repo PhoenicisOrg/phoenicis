@@ -28,6 +28,7 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.settings.SettingsManager;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URI;
@@ -40,6 +41,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class AppsController {
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ViewApps view;
     private final Repository repository;
     private final ScriptInterpreter scriptInterpreter;
@@ -123,7 +125,7 @@ public class AppsController {
                 this.view.getTabPane().getScene().getStylesheets().clear();
                 this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss, style.toExternalForm());
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.warn("Could not set default category icons.", e);
             }
         });
 
