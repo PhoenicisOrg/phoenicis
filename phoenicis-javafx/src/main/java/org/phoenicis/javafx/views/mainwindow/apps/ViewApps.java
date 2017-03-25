@@ -104,7 +104,7 @@ public class ViewApps extends MainWindowView {
             try{
                 StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categories) {
-                    cssBuilder.append("." + category.getName().toLowerCase() + "Button{\n");
+                    cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
                     cssBuilder.append("-fx-background-image: url('" + category.getIcon() + "');\n");
                     cssBuilder.append("}\n");
                 }
@@ -144,7 +144,7 @@ public class ViewApps extends MainWindowView {
                     final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
                     categoryButton.setToggleGroup(group);
                     final String themeName = new String(category.getName().toLowerCase() + "Button");
-                    categoryButton.getStyleClass().add(themeName);
+                    categoryButton.setId(themeName);
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }

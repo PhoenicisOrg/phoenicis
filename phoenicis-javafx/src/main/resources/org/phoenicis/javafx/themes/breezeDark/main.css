@@ -640,38 +640,38 @@
 /*******************************************************/
 
 /************************ apps *************************/
-.customButton {
+#customButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/custom.png');
 }
 
-.developmentButton {
+#developmentButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/development.png');
 }
 
-.gamesButton {
+#gamesButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/games.png');
 }
 
-.graphicsButton {
+#graphicsButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/graphics.png');
 }
 
-.internetButton {
+#internetButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/internet.png');
 }
 
-.multimediaButton {
+#multimediaButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/multimedia.png');
 }
 
-.officeButton {
+#officeButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/office.png');
 }
 
-.otherButton {
+#otherButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/other.png');
 }
 
-.scienceButton {
+#scienceButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/science.png');
 }
