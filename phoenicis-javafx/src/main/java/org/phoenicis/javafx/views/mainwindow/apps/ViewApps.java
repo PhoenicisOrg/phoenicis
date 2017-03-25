@@ -40,6 +40,10 @@ import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -96,6 +100,30 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
+            // set default category icons
+            try{
+                String css = "";
+                for (CategoryDTO category : categories) {
+                    css += "." + category.getName().toLowerCase() + "Button{\n";
+                    css += "-fx-background-image: url('" + category.getIcon() + "');\n";
+                    css += "}\n";
+                }
+                File temp = new File("tempfile.css");
+                temp.delete();
+                temp.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
+                bw.write(css);
+                bw.close();
+                // apply current theme again to fix hierarchy
+                final String shortName = themeManager.getCurrentTheme().getShortName();
+                final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
+                final URL style = this.getClass().getResource(url);
+                getTabPane().getScene().getStylesheets().clear();
+                getTabPane().getScene().getStylesheets().addAll(temp.toURI().toString(), style.toExternalForm());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
             final List<LeftToggleButton> leftButtonList = new ArrayList<>();
             ToggleGroup group = new ToggleGroup();
 
@@ -111,12 +139,8 @@ public class ViewApps extends MainWindowView {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
                     categoryButton.setToggleGroup(group);
-                    final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
-                    if (themeManager.resourceExists(resource)) {
-                        categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
-                    } else {
-                        categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-                    }
+                    final String themeName = new String(category.getName().toLowerCase() + "Button");
+                    categoryButton.getStyleClass().add(themeName);
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }

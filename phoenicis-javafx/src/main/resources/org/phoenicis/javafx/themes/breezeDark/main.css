@@ -634,3 +634,12 @@
 .normalLabel {
     -fx-font-family: "Roboto Light";
 }
+
+/*******************************************************/
+/************************ icons ************************/
+/*******************************************************/
+
+/************************ apps *************************/
+.gamesButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/games.png');
+}
