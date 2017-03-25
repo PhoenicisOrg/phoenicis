@@ -102,12 +102,13 @@ public class ViewApps extends MainWindowView {
         Platform.runLater(() -> {
             // set default category icons
             try{
-                String css = "";
+                StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categories) {
-                    css += "." + category.getName().toLowerCase() + "Button{\n";
-                    css += "-fx-background-image: url('" + category.getIcon() + "');\n";
-                    css += "}\n";
+                    cssBuilder.append("." + category.getName().toLowerCase() + "Button{\n");
+                    cssBuilder.append("-fx-background-image: url('" + category.getIcon() + "');\n");
+                    cssBuilder.append("}\n");
                 }
+                String css = cssBuilder.toString();
                 File temp = new File("tempfile.css");
                 temp.delete();
                 temp.createNewFile();
