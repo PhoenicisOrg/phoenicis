@@ -44,6 +44,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -109,13 +112,9 @@ public class ViewApps extends MainWindowView {
                     cssBuilder.append("}\n");
                 }
                 String css = cssBuilder.toString();
-                File temp = new File("tempfile.css");
-                temp.delete();
-                temp.createNewFile();
-                BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
-                bw.write(css);
-                bw.close();
-                String defaultCategoryIconsCss = new String(temp.toURI().toString());
+                Path temp = Paths.get("tempfile.css");
+                Files.write(temp, css.getBytes());
+                String defaultCategoryIconsCss = temp.toUri().toString();
                 themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
 
                 // apply current theme again to fix hierarchy
