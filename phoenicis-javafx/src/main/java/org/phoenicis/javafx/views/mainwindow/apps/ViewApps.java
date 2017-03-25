@@ -117,8 +117,7 @@ public class ViewApps extends MainWindowView {
                 if(category.getType() == CategoryDTO.CategoryType.INSTALLERS) {
                     final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
                     categoryButton.setToggleGroup(group);
-                    final String themeName = new String(category.getName().toLowerCase() + "Button");
-                    categoryButton.setId(themeName);
+                    categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
                     categoryButton.setOnMouseClicked(event -> selectCategory(category));
                     leftButtonList.add(categoryButton);
                 }
