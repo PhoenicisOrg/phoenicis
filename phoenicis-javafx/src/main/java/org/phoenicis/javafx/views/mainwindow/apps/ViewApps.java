@@ -114,12 +114,15 @@ public class ViewApps extends MainWindowView {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
                 bw.write(css);
                 bw.close();
+                String defaultCategoryIconsCss = new String(temp.toURI().toString());
+                themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
+
                 // apply current theme again to fix hierarchy
                 final String shortName = themeManager.getCurrentTheme().getShortName();
                 final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
                 final URL style = this.getClass().getResource(url);
                 getTabPane().getScene().getStylesheets().clear();
-                getTabPane().getScene().getStylesheets().addAll(temp.toURI().toString(), style.toExternalForm());
+                getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss, style.toExternalForm());
             }catch(Exception e){
                 e.printStackTrace();
             }

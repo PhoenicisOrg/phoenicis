@@ -322,13 +322,12 @@ public class ViewSettings extends MainWindowView {
 	}
 
 	private void handleThemeChange(ActionEvent evt) {
-		File temp = new File("tempfile.css");
 		final Theme theme = themes.getSelectionModel().getSelectedItem();
 		themeManager.setCurrentTheme(theme);
 		final String shortName = theme.getShortName();
 		final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
 		final URL style = this.getClass().getResource(url);
 		getContent().getScene().getStylesheets().clear();
-		getContent().getScene().getStylesheets().addAll(temp.toURI().toString(), style.toExternalForm());
+		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(), style.toExternalForm());
 	}
 }
