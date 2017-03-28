@@ -40,7 +40,7 @@ class CachedRepository implements Repository {
     }
 
     @Override
-    public void delete() {
-        this.repository.delete();
+    public void onDelete() {
+        this.repository.onDelete();
     }
 }

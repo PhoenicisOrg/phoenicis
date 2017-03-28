@@ -41,8 +41,8 @@ class BackgroundRepository implements Repository {
     }
 
     @Override
-    public void delete() {
-        this.delegatedRepository.delete();
+    public void onDelete() {
+        this.delegatedRepository.onDelete();
     }
 
     @Override

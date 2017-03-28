@@ -51,8 +51,8 @@ public class TeeRepository extends MergeableRepository {
     }
 
     @Override
-    public void delete() {
-        this.leftRepository.delete();
-        this.rightRepository.delete();
+    public void onDelete() {
+        this.leftRepository.onDelete();
+        this.rightRepository.onDelete();
     }
 }

@@ -117,7 +117,7 @@ class GitRepository implements Repository {
 	}
 
 	@Override
-	public void delete() {
+	public void onDelete() {
 		try {
 			fileUtilities.remove(this.gitRepositoryLocation);
 

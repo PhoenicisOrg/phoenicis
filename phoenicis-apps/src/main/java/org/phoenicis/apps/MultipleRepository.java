@@ -51,7 +51,7 @@ class MultipleRepository extends MergeableRepository {
 	}
 
 	@Override
-	public void delete() {
-		Arrays.stream(repositories).forEach(Repository::delete);
+	public void onDelete() {
+		Arrays.stream(repositories).forEach(Repository::onDelete);
 	}
 }
