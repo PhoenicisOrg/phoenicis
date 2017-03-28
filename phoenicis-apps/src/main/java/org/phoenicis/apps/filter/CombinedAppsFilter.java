@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.filter;
 
 
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -24,10 +24,14 @@ import org.phoenicis.apps.dto.ApplicationDTO;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CombinedAppsFilter implements AppsFilter{
-    private final Set<AppsFilter> filters = new HashSet<>();
+public class CombinedAppsFilter implements AppsFilter {
+    private final Set<AppsFilter> filters;
+
+    private final AppsSearchFilter searchFilter;
 
     public CombinedAppsFilter() {
+        this.searchFilter = new AppsSearchFilter();
+        this.filters = new HashSet<>();
     }
 
     public void remove(AppsFilter filter) {
@@ -38,19 +42,25 @@ public class CombinedAppsFilter implements AppsFilter{
         filters.add(filter);
     }
 
-    public void clear() { filters.clear(); }
+    public void clear() {
+        this.filters.clear();
+    }
 
     public boolean applies(ApplicationDTO applicationDTO) {
+        boolean result = false;
+
         if (filters.isEmpty()) {
-            return true;
+            result = true;
         }
 
-        boolean applies = false;
         for (AppsFilter filter : filters) {
-            if (filter.applies(applicationDTO)) {
-                return true;
-            }
+            result |= filter.applies(applicationDTO);
         }
-        return applies;
+
+        return result && searchFilter.applies(applicationDTO);
+    }
+
+    public void setFilterText(String filterText) {
+        this.searchFilter.setFilter(filterText);
     }
 }

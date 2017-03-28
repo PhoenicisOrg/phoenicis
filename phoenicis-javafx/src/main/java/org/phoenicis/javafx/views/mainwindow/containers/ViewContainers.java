@@ -89,8 +89,7 @@ public class ViewContainers extends MainWindowView {
 
     @Override
     protected void drawSideBar() {
-        searchBar = new SearchBox(themeManager);
-        searchBar.setOnKeyReleased(e -> applyFilter(searchBar.getText()));
+        searchBar = new SearchBox(themeManager, this::applyFilter, () -> {});
 
         addToSideBar(searchBar, new LeftSpacer(), containersView);
 

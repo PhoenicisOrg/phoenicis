@@ -25,7 +25,7 @@ import javafx.scene.text.TextFlow;
 import java.util.List;
 
 
-public final class LeftGroup extends VBox {
+public class LeftGroup extends VBox {
     private String name;
     private List<? extends Node> nodes;
 

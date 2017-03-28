@@ -48,14 +48,6 @@ public class AppsController {
         this.repository = repository;
         this.scriptInterpreter = scriptInterpreter;
         this.settingsManager = settingsManager;
-        
-        this.view.setOnApplyFilter(filter -> {
-            repository.setFilter(filter);
-            repository.fetchInstallableApplications(
-                    this.view::populate,
-                    e -> this.view.showFailure()
-            );
-        });
     }
 
     public void loadApps() {
@@ -73,18 +65,6 @@ public class AppsController {
             );
         });
 
-        this.view.setOnSelectAll(categories -> {
-            List<ApplicationDTO> allApps = new ArrayList<>();
-            for (CategoryDTO categoryDTO: categories) {
-                if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    allApps.addAll(categoryDTO.getApplications());
-                }
-            }
-            Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
-            this.view.populateApps(allApps);
-        });
-
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> {
