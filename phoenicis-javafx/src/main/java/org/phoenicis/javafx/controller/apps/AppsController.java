@@ -81,10 +81,10 @@ public class AppsController {
                 }
             }
             Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
-            this.view.populateApps(allApps, settingsManager);
+            this.view.populateApps(allApps);
         });
 
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications(), settingsManager));
+        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> {
