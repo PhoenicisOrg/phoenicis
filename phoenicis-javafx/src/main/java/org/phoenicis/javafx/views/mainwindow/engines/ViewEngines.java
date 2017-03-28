@@ -22,12 +22,9 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.VBox;
 import org.phoenicis.engines.CombinedEnginesFilter;
 import org.phoenicis.engines.EnginesFilter;
@@ -37,7 +34,6 @@ import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
-import org.phoenicis.javafx.views.common.widget.StaticMiniature;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
@@ -164,21 +160,15 @@ public class ViewEngines extends MainWindowView {
 
     public void populateEngines(String category, List<EngineSubCategoryDTO> subCategories, String wineEnginesPath) {
         availableEngines.getTabs().clear();
-        for (EngineSubCategoryDTO subCategory : subCategories) {
-            final MiniatureListWidget tabContent = MiniatureListWidget.create();
-            List<EngineVersionDTO> packages = subCategory.getPackages();
-            packages.sort(EngineSubCategoryDTO.comparator().reversed());
 
-            for (EngineVersionDTO engineVersionDTO :
-                    packages) {
-                final Node engineItem = tabContent.addItem(engineVersionDTO.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
-                // gray scale if not installed
+        for (EngineSubCategoryDTO subCategory : subCategories) {
+            final MiniatureListWidget<EngineVersionDTO> tabContent = MiniatureListWidget.create(engineVersionDTO -> {
                 File f = new File(wineEnginesPath + "/" + subCategory.getName() + "/" + engineVersionDTO.getVersion());
-                if (!f.exists()) {
-                    ColorAdjust grayscale = new ColorAdjust();
-                    grayscale.setSaturation(-1);
-                    engineItem.setEffect(grayscale);
-                }
+
+                return MiniatureListWidget.Element.create(engineVersionDTO, f.exists());
+            },(engineItem, event) -> {
+                EngineVersionDTO engineVersionDTO = engineItem.getValue();
+                
                 Map<String, String> userData = new HashMap<>();
                 userData.put("Mono", engineVersionDTO.getMonoFile());
                 userData.put("Gecko", engineVersionDTO.getGeckoFile());
@@ -188,8 +178,15 @@ public class ViewEngines extends MainWindowView {
                         .withVersion(engineVersionDTO.getVersion())
                         .withUserData(userData)
                         .build();
-                engineItem.setOnMouseClicked(event -> this.showEngineDetails(engineDTO));
-            }
+
+                this.showEngineDetails(engineDTO);
+            });
+
+            List<EngineVersionDTO> packages = subCategory.getPackages();
+            packages.sort(EngineSubCategoryDTO.comparator().reversed());
+
+            tabContent.setItems(packages);
+
             availableEngines.getTabs().add(new Tab(subCategory.getDescription(), tabContent));
         }
     }

@@ -21,7 +21,6 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -35,7 +34,6 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
-import org.phoenicis.settings.Settings;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +46,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
-    private final MiniatureListWidget availableApps;
+    private final MiniatureListWidget<ApplicationDTO> availableApps;
     private SearchBox searchBar;
     private LeftGroup categoryView;
     private Consumer<List<CategoryDTO>> onSelectAll = (categories) -> {};
@@ -57,10 +55,11 @@ public class ViewApps extends MainWindowView {
     private final CombinedAppsFilter currentFilter = new CombinedAppsFilter();
     private Consumer<CombinedAppsFilter> onApplyFilter = (filter) -> {};
 
-    public ViewApps(ThemeManager themeManager) {
+
+    public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        availableApps = MiniatureListWidget.create();
+        availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create, (element, event) -> showAppDetails(element.getValue(), settingsManager));
 
         this.drawSideBar();
         this.showWait();
@@ -127,20 +126,8 @@ public class ViewApps extends MainWindowView {
         });
     }
 
-    public void populateApps(List<ApplicationDTO> applications, SettingsManager settingsManager) {
-        availableApps.clear();
-
-        for (ApplicationDTO application : applications) {
-            final Node applicationItem;
-            if(application.getMiniatures().isEmpty()) {
-                applicationItem = availableApps.addItem(application.getName());
-            } else {
-                applicationItem = availableApps.addItem(application.getName(), application.getMiniatures().get(0));
-            }
-
-            applicationItem.setOnMouseClicked(event -> this.showAppDetails(application, settingsManager));
-
-        }
+    public void populateApps(List<ApplicationDTO> applications) {
+        this.availableApps.setItems(applications);
     }
 
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {

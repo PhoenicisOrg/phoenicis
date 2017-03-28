@@ -30,7 +30,6 @@ import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +46,7 @@ public class ViewLibrary extends MainWindowView {
 
     private LeftButton runScript;
     private LeftButton runConsole;
-    private MiniatureListWidget applicationListWidget;
+    private MiniatureListWidget<ShortcutDTO> applicationListWidget;
     private SearchBox searchBar;
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {};
@@ -101,31 +100,12 @@ public class ViewLibrary extends MainWindowView {
     }
 
     public void populate(List<ShortcutDTO> shortcutDTOs) {
-        applicationListWidget.clear();
-        for (ShortcutDTO shortcutDTO : shortcutDTOs) {
-            final MiniatureListWidget.Element selectedItem
-                    = applicationListWidget.addItem(shortcutDTO.getName(), shortcutDTO.getMiniature());
-
-            selectedItem.setOnMouseClicked(event -> {
-                applicationListWidget.unSelecteAll();
-                applicationListWidget.select(selectedItem);
-                onShortcutSelected.accept(shortcutDTO);
-
-                clearSideBar();
-                drawSideBarWithShortcut(shortcutDTO);
-
-                if(event.getClickCount() == 2) {
-                    onShortcutDoubleClicked.accept(shortcutDTO);
-                }
-
-                event.consume();
-            });
-        }
+        applicationListWidget.setItems(shortcutDTOs);
 
         applicationListWidget.setOnMouseClicked(event -> {
             clearSideBar();
             drawSideBarWithoutShortcut();
-            applicationListWidget.unSelecteAll();
+            applicationListWidget.unselectAll();
             onShortcutSelected.accept(null);
             event.consume();
         });
@@ -140,7 +120,22 @@ public class ViewLibrary extends MainWindowView {
         installedApplication.setText(translate("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
-        applicationListWidget = MiniatureListWidget.create();
+        applicationListWidget = MiniatureListWidget.create(MiniatureListWidget.Element::create, (selectedItem, event) -> {
+            ShortcutDTO shortcutDTO = selectedItem.getValue();
+
+            applicationListWidget.unselectAll();
+            applicationListWidget.select(selectedItem);
+            onShortcutSelected.accept(shortcutDTO);
+
+            clearSideBar();
+            drawSideBarWithShortcut(shortcutDTO);
+
+            if(event.getClickCount() == 2) {
+                onShortcutDoubleClicked.accept(shortcutDTO);
+            }
+
+            event.consume();
+        });
 
         installedApplication.setContent(applicationListWidget);
     }
