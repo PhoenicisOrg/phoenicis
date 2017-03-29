@@ -18,7 +18,6 @@
 
 package org.phoenicis.apps;
 
-import org.phoenicis.apps.filter.CombinedAppsFilter;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;

@@ -16,10 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps.filter;
+package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.ApplicationDTO;
 
-public interface AppsFilter {
-    boolean applies(ApplicationDTO applicationDTO);
+public class AppsSearchFilter implements AppsFilter {
+    private String filter = new String();
+
+    public AppsSearchFilter(String filter) {
+        this.filter = filter;
+    }
+
+    public boolean applies(ApplicationDTO applicationDTO) {
+        return applicationDTO.getName().toLowerCase().contains(filter);
+    }
 }

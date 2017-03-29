@@ -20,7 +20,6 @@ package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
-import org.phoenicis.apps.filter.CombinedAppsFilter;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
