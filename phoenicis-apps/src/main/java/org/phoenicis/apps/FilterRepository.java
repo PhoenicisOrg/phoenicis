@@ -82,6 +82,11 @@ class FilterRepository implements Repository {
     }
 
     @Override
+    public void onDelete() {
+        this.repository.onDelete();
+    }
+
+    @Override
     public void setFilter(CombinedAppsFilter filter) {
         this.filter = filter;
     }

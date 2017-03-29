@@ -18,37 +18,39 @@
 
 package org.phoenicis.apps;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 class GitRepository implements Repository {
 	private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
 
+	private final FileUtilities fileUtilities;
+
 	private final String gitRepositoryURL;
 	private final LocalRepository.Factory localRepositoryFactory;
-	private List<CategoryDTO> cache;
 
-	private final String cacheDirectoryPath;
+	private final File gitRepositoryLocation;
 
-	GitRepository(String gitRepositoryURL, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory) {
+	GitRepository(String gitRepositoryURL, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
+		this.fileUtilities = fileUtilities;
 		this.gitRepositoryURL = gitRepositoryURL;
-		this.cacheDirectoryPath = cacheDirectoryPath;
 		this.localRepositoryFactory = localRepositoryFactory;
+		this.gitRepositoryLocation = new File(cacheDirectoryPath + "/git" + gitRepositoryURL.hashCode());
 	}
 
 	@Override
 	public synchronized List<CategoryDTO> fetchInstallableApplications() {
-		File gitRepositoryLocation = new File(this.cacheDirectoryPath + "/git" + this.gitRepositoryURL.hashCode());
-
 		LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.gitRepositoryURL,
 				gitRepositoryLocation.getAbsolutePath()));
 
@@ -112,5 +114,16 @@ class GitRepository implements Repository {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void onDelete() {
+		try {
+			fileUtilities.remove(this.gitRepositoryLocation);
+
+			LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.gitRepositoryURL, gitRepositoryLocation.getAbsolutePath()));
+		} catch (IOException e) {
+			LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'", gitRepositoryLocation.getAbsolutePath()), e);
+		}
 	}
 }
