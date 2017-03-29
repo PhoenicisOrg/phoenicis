@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -29,6 +30,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -61,6 +63,8 @@ public class ViewApps extends MainWindowView {
     private ObservableList<ApplicationDTO> applications;
     private FilteredList<ApplicationDTO> filteredApplications;
     private SortedList<ApplicationDTO> sortedApplications;
+
+    private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
@@ -167,13 +171,17 @@ public class ViewApps extends MainWindowView {
     }
 
     private void processFilterText(String filterText) {
-        String text = filterText.toLowerCase();
+        this.pause.setOnFinished(event -> {
+            String text = filterText.toLowerCase();
 
-        if (text != null && text.length() >= 3) {
-            filter.setFilterText(text);
-        } else {
-            filter.setFilterText("");
-        }
+            if (text != null && text.length() >= 3) {
+                filter.setFilterText(text);
+            } else {
+                filter.setFilterText("");
+            }
+        });
+
+        this.pause.playFromStart();
 
         this.showAvailableApps();
     }
