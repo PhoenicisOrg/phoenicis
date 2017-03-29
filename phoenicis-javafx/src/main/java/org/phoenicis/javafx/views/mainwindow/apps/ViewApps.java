@@ -32,8 +32,6 @@ import javafx.scene.input.MouseEvent;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
-import org.phoenicis.apps.filter.CategoryFilter;
-import org.phoenicis.apps.filter.CombinedAppsFilter;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
