@@ -51,7 +51,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
     private final MiniatureListWidget<ApplicationDTO> availableApps;
-    private final CombinedAppsFilter currentFilter = new CombinedAppsFilter();
+    private final ApplicationFilter<ApplicationDTO> filter;
     private SearchBox searchBar;
     private LeftToggleGroup<CategoryDTO> categoryView;
 
@@ -76,8 +76,10 @@ public class ViewApps extends MainWindowView {
         this.installableCategories = this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
 
         this.applications = FXCollections.observableArrayList();
-        this.filteredApplications = this.applications.filtered(currentFilter::applies);
+        this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
+
+        this.filter = new ApplicationFilter<ApplicationDTO>(filteredApplications, (filterText, application) -> application.getName().toLowerCase().contains(filterText));
 
         this.installableCategories.addListener((ListChangeListener<? super CategoryDTO>) change -> {
             while (change.next()) {
@@ -121,7 +123,7 @@ public class ViewApps extends MainWindowView {
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
-            this.currentFilter.clear();
+            this.filter.clearAll();
             this.categoryView.selectAll();
             this.showAvailableApps();
         });
@@ -136,7 +138,7 @@ public class ViewApps extends MainWindowView {
         final CheckBox testingCheck = new LeftCheckBox(translate("Testing"));
         final CheckBox noCdNeededCheck = new LeftCheckBox(translate("No CD needed"));
         final CheckBox commercialCheck = new LeftCheckBox(translate("Commercial"));
-        
+
         addToSideBar(
                 searchBar,
                 new LeftSpacer(),
@@ -162,21 +164,19 @@ public class ViewApps extends MainWindowView {
     }
 
     private void clearFilterText() {
-        this.currentFilter.setFilterText("");
-        this.filteredApplications.setPredicate(currentFilter::applies);
+        this.filter.setFilterText("");
         this.showAvailableApps();
     }
 
     private void processFilterText(String filterText) {
-        String filter = filterText.toLowerCase();
+        String text = filterText.toLowerCase();
 
-        if (filter != null && filter.length() >= 3) {
-            currentFilter.setFilterText(filter);
+        if (text != null && text.length() >= 3) {
+            filter.setFilterText(text);
         } else {
-            currentFilter.setFilterText("");
+            filter.setFilterText("");
         }
 
-        this.filteredApplications.setPredicate(currentFilter::applies);
         this.showAvailableApps();
     }
 
@@ -186,8 +186,7 @@ public class ViewApps extends MainWindowView {
         final String allCategoryButtonIcon = String.format("icons/mainwindow/apps/all.png");
         allCategoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(allCategoryButtonIcon) + "');");
         allCategoryButton.setOnMouseClicked(event -> {
-            currentFilter.clear();
-            filteredApplications.setPredicate(currentFilter::applies);
+            filter.clearFilters();
             showAvailableApps();
         });
 
@@ -204,9 +203,7 @@ public class ViewApps extends MainWindowView {
             categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
         }
         categoryButton.setOnMouseClicked(event -> {
-            currentFilter.clear();
-            currentFilter.add(new CategoryFilter(category));
-            filteredApplications.setPredicate(currentFilter::applies);
+            filter.setFilters(category.getApplications()::contains);
             showAvailableApps();
         });
 
