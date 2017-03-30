@@ -50,15 +50,17 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
+
     private final MiniatureListWidget<ApplicationDTO> availableApps;
+    private final LeftToggleGroup<CategoryDTO> categoryView;
     private final ApplicationFilter<ApplicationDTO> filter;
-    private SearchBox searchBar;
-    private LeftToggleGroup<CategoryDTO> categoryView;
+    private final SearchBox searchBar;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> { };
 
     private ObservableList<CategoryDTO> categories;
     private FilteredList<CategoryDTO> installableCategories;
+    private SortedList<CategoryDTO> sortedCategories;
 
     private ObservableList<ApplicationDTO> applications;
     private FilteredList<ApplicationDTO> filteredApplications;
@@ -76,6 +78,7 @@ public class ViewApps extends MainWindowView {
 
         this.categories = FXCollections.observableArrayList();
         this.installableCategories = this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
+        this.sortedCategories = this.installableCategories.sorted(Comparator.comparing(CategoryDTO::getName));
 
         this.applications = FXCollections.observableArrayList();
         this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
@@ -99,7 +102,7 @@ public class ViewApps extends MainWindowView {
             }
         });
 
-        Bindings.bindContent(this.categoryView.getElements(), this.installableCategories);
+        Bindings.bindContent(this.categoryView.getElements(), this.sortedCategories);
         Bindings.bindContent(this.availableApps.getItems(), this.sortedApplications);
 
         this.drawSideBar();
