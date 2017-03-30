@@ -23,7 +23,7 @@ public class SearchBox extends AnchorPane {
         this.searchField.getStyleClass().add("searchBar");
         this.searchField.prefHeightProperty().bind(this.prefHeightProperty());
         this.searchField.prefWidthProperty().bind(this.prefWidthProperty());
-        this.searchField.setOnAction(event -> onSearch.accept(getText()));
+        this.searchField.textProperty().addListener(event -> onSearch.accept(getText()));
 
         AnchorPane.setLeftAnchor(searchField, 0.0);
         AnchorPane.setRightAnchor(searchField, 0.0);
