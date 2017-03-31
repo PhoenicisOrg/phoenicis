@@ -239,6 +239,21 @@ class LocalRepository implements Repository {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LocalRepository that = (LocalRepository) o;
+
+        return repositoryDirectory != null ? repositoryDirectory.equals(that.repositoryDirectory) : that.repositoryDirectory == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return repositoryDirectory != null ? repositoryDirectory.hashCode() : 0;
+    }
+
     static class Factory {
         private final ObjectMapper objectMapper;
 

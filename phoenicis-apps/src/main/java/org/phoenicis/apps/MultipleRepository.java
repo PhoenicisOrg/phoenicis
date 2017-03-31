@@ -19,6 +19,7 @@
 package org.phoenicis.apps;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,6 +56,18 @@ class MultipleRepository extends MergeableRepository {
 		Arrays.stream(repositories).forEach(Repository::onDelete);
 	}
 
+	public void moveRepository(Repository repository, int toIndex) {
+		List<Repository> newRepositories = Arrays.asList(this.repositories);
+
+		int oldIndex = newRepositories.indexOf(repository);
+
+		if (oldIndex >= 0 && toIndex >= 0 && toIndex < newRepositories.size()) {
+			Collections.swap(newRepositories, oldIndex, toIndex);
+
+			this.repositories = newRepositories.toArray(new Repository[0]);
+		}
+	}
+
 	public void addRepository(Repository repository) {
 		Repository[] newRepositories = Arrays.copyOf(this.repositories, this.repositories.length + 1);
 
@@ -64,10 +77,29 @@ class MultipleRepository extends MergeableRepository {
 	}
 
 	public void removeRepository(Repository repository) {
-		List<Repository> newRepositories = Arrays.asList(this.repositories);
+		int index = Arrays.asList(this.repositories).indexOf(repository);
 
-		newRepositories.remove(repository);
+		if (index >= 0) {
+			Repository[] newRepositories = new Repository[this.repositories.length - 1];
 
-		this.repositories = newRepositories.toArray(new Repository[0]);
+			System.arraycopy(this.repositories, 0, newRepositories, 0, index);
+			System.arraycopy(this.repositories, index + 1, newRepositories, index, this.repositories.length - 1 - index);
+		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		MultipleRepository that = (MultipleRepository) o;
+
+		// Probably incorrect - comparing Object[] arrays with Arrays.equals
+		return Arrays.equals(repositories, that.repositories);
+	}
+
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(repositories);
 	}
 }

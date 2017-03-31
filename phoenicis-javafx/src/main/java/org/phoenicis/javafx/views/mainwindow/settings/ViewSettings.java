@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.phoenicis.apps.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -72,6 +73,8 @@ public class ViewSettings extends MainWindowView {
 	private SettingsManager settingsManager;
 	private MessagePanel selectSettingsPanel;
 
+	private RepositoryManager repositoryManager;
+
 	private VBox uiPanel = new VBox();
 	private VBox repositoriesPanel = new VBox();
 	private VBox fileAssociationsPanel = new VBox();
@@ -80,7 +83,7 @@ public class ViewSettings extends MainWindowView {
 
 	public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
 			String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-			SettingsManager settingsManager) {
+			SettingsManager settingsManager, RepositoryManager repositoryManager) {
 		super("Settings", themeManager);
 		this.applicationName = applicationName;
 		this.applicationVersion = applicationVersion;
@@ -88,6 +91,7 @@ public class ViewSettings extends MainWindowView {
 		this.applicationBuildTimestamp = applicationBuildTimestamp;
 		this.opener = opener;
 		this.settingsManager = settingsManager;
+		this.repositoryManager = repositoryManager;
 
 		final List<LeftToggleButton> leftButtonList = new ArrayList<>();
 		ToggleGroup group = new ToggleGroup();
@@ -203,7 +207,9 @@ public class ViewSettings extends MainWindowView {
 		repositoryListView.setPrefSize(400, 100);
 		repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		repositoryListView.setEditable(true);
-		repositoryListView.setCellFactory(param -> new DragableRepositoryListCell(this::save));
+		repositoryListView.setCellFactory(param -> new DragableRepositoryListCell((repositoryUrl, toIndex) -> {
+			this.repositoryManager.moveRepository(repositoryUrl, toIndex.intValue());
+		}));
 		HBox repositoryButtonLayout = new HBox();
 		repositoryButtonLayout.setSpacing(5);
 		Button addButton = new Button();
@@ -216,14 +222,24 @@ public class ViewSettings extends MainWindowView {
 			dialog.setContentText("Please add the new repository:");
 
 			Optional<String> result = dialog.showAndWait();
-			result.ifPresent(repositories::add);
-			this.save();
+			result.ifPresent(newRepository -> {
+				repositories.add(newRepository);
+
+				this.save();
+
+				repositoryManager.addRepository(newRepository);
+			});
 		});
 		Button removeButton = new Button();
 		removeButton.setText("Remove");
 		removeButton.setOnAction((ActionEvent event) -> {
+			String[] toRemove = repositoryListView.getSelectionModel().getSelectedItems().toArray(new String[0]);
+
 			repositories.removeAll(repositoryListView.getSelectionModel().getSelectedItems());
+
 			this.save();
+
+			repositoryManager.removeRepositories(toRemove);
 		});
 		repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
 		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);

@@ -47,4 +47,19 @@ class CachedRepository implements Repository {
     public void clearCache() {
         this.cache = null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CachedRepository that = (CachedRepository) o;
+
+        return repository != null ? repository.equals(that.repository) : that.repository == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return repository != null ? repository.hashCode() : 0;
+    }
 }

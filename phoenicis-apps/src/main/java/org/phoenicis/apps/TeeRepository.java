@@ -55,4 +55,23 @@ public class TeeRepository extends MergeableRepository {
         this.leftRepository.onDelete();
         this.rightRepository.onDelete();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TeeRepository that = (TeeRepository) o;
+
+        if (leftRepository != null ? !leftRepository.equals(that.leftRepository) : that.leftRepository != null)
+            return false;
+        return rightRepository != null ? rightRepository.equals(that.rightRepository) : that.rightRepository == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = leftRepository != null ? leftRepository.hashCode() : 0;
+        result = 31 * result + (rightRepository != null ? rightRepository.hashCode() : 0);
+        return result;
+    }
 }

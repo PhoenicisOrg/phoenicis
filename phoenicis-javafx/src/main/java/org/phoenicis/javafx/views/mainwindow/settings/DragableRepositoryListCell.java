@@ -2,6 +2,7 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,9 +20,9 @@ import javafx.scene.layout.GridPane;
  */
 public class DragableRepositoryListCell extends ListCell<String> implements ChangeListener<Number> {
 
-	private final Runnable onDragDone;
+	private final BiConsumer<String, Number> onDragDone;
 	
-	public DragableRepositoryListCell(Runnable onDragDone) {
+	public DragableRepositoryListCell(BiConsumer<String, Number> onDragDone) {
 		super();
 
 		this.onDragDone = onDragDone;
@@ -46,6 +47,8 @@ public class DragableRepositoryListCell extends ListCell<String> implements Chan
 
 		if (!empty) {
 			setGraphic(itemPane);
+		} else {
+			setGraphic(null);
 		}
 	}
 
@@ -105,7 +108,7 @@ public class DragableRepositoryListCell extends ListCell<String> implements Chan
 		});
 
 		setOnDragDone(event -> {
-			onDragDone.run();			
+			onDragDone.accept(getItem(), newValue);
 			
 			event.consume();
 		});

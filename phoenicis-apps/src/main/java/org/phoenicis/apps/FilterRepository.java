@@ -90,4 +90,27 @@ class FilterRepository implements Repository {
     public void setFilter(CombinedAppsFilter filter) {
         this.filter = filter;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FilterRepository that = (FilterRepository) o;
+
+        if (enforceIncompatibleOperatingSystems != that.enforceIncompatibleOperatingSystems) return false;
+        if (repository != null ? !repository.equals(that.repository) : that.repository != null) return false;
+        if (operatingSystemFetcher != null ? !operatingSystemFetcher.equals(that.operatingSystemFetcher) : that.operatingSystemFetcher != null)
+            return false;
+        return filter != null ? filter.equals(that.filter) : that.filter == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = repository != null ? repository.hashCode() : 0;
+        result = 31 * result + (operatingSystemFetcher != null ? operatingSystemFetcher.hashCode() : 0);
+        result = 31 * result + (enforceIncompatibleOperatingSystems ? 1 : 0);
+        result = 31 * result + (filter != null ? filter.hashCode() : 0);
+        return result;
+    }
 }

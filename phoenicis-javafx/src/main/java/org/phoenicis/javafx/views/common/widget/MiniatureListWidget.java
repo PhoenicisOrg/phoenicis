@@ -34,9 +34,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import org.fxmisc.easybind.EasyBind;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.io.ByteArrayInputStream;
@@ -56,7 +56,7 @@ public final class MiniatureListWidget<E> extends ScrollPane {
 
         this.content = content;
         this.items = FXCollections.observableArrayList();
-        this.mappedElements = EasyBind.map(items, value -> {
+        this.mappedElements = new MappedList<Element<E>, E>(items, value -> {
             Element newElement = converter.apply(value);
 
             newElement.setOnMouseClicked(event -> setOnMouseClicked.accept(newElement, event));

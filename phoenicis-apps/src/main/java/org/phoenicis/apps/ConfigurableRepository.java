@@ -81,4 +81,22 @@ class ConfigurableRepository implements Repository {
             return new NullRepository();
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ConfigurableRepository that = (ConfigurableRepository) o;
+
+        if (repository != null ? !repository.equals(that.repository) : that.repository != null) return false;
+        return cacheDirectoryPath != null ? cacheDirectoryPath.equals(that.cacheDirectoryPath) : that.cacheDirectoryPath == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = repository != null ? repository.hashCode() : 0;
+        result = 31 * result + (cacheDirectoryPath != null ? cacheDirectoryPath.hashCode() : 0);
+        return result;
+    }
 }

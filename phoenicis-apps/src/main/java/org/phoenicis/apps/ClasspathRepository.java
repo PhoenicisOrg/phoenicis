@@ -151,6 +151,21 @@ class ClasspathRepository implements Repository {
                 .build();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClasspathRepository that = (ClasspathRepository) o;
+
+        return packagePath != null ? packagePath.equals(that.packagePath) : that.packagePath == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return packagePath != null ? packagePath.hashCode() : 0;
+    }
+
     static class Factory {
         private final ObjectMapper objectMapper;
         private final ResourcePatternResolver resourceResolver;

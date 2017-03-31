@@ -126,4 +126,19 @@ class GitRepository implements Repository {
 			LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'", gitRepositoryLocation.getAbsolutePath()), e);
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		GitRepository that = (GitRepository) o;
+
+		return gitRepositoryURL != null ? gitRepositoryURL.equals(that.gitRepositoryURL) : that.gitRepositoryURL == null;
+	}
+
+	@Override
+	public int hashCode() {
+		return gitRepositoryURL != null ? gitRepositoryURL.hashCode() : 0;
+	}
 }

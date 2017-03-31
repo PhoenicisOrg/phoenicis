@@ -66,17 +66,32 @@ public class RepositoryManager {
         this.triggerRepositoryChange();
     }
 
+    public void moveRepository(String repositoryUrl, int toIndex) {
+        LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
+        this.multipleRepository.moveRepository(toRepository(repositoryUrl), toIndex);
+        this.triggerRepositoryChange();
+    }
+
     public void addRepositories(String ... repositoryUrls) {
+        LOGGER.info(String.format("Adding repositories: %s", Arrays.toString(repositoryUrls)));
         Arrays.stream(repositoryUrls).map(this::toRepository).forEach(this.multipleRepository::addRepository);
         this.triggerRepositoryChange();
     }
 
     public void addRepository(String repositoryUrl) {
+        LOGGER.info(String.format("Adding repository: %s", repositoryUrl));
         this.multipleRepository.addRepository(toRepository(repositoryUrl));
         this.triggerRepositoryChange();
     }
 
+    public void removeRepositories(String ... repositoryUrls) {
+        LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
+        Arrays.stream(repositoryUrls).map(this::toRepository).forEach(this.multipleRepository::removeRepository);
+        this.triggerRepositoryChange();
+    }
+
     public void removeRepository(String repositoryUrl) {
+        LOGGER.info(String.format("Removing repository: %s", repositoryUrl));
         Repository toDelete = toRepository(repositoryUrl);
         this.multipleRepository.removeRepository(toDelete);
         this.triggerRepositoryChange();

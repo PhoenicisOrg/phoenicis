@@ -59,4 +59,19 @@ class BackgroundRepository implements Repository {
     public void setFilter(CombinedAppsFilter filter) {
         delegatedRepository.setFilter(filter);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BackgroundRepository that = (BackgroundRepository) o;
+
+        return delegatedRepository != null ? delegatedRepository.equals(that.delegatedRepository) : that.delegatedRepository == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return delegatedRepository != null ? delegatedRepository.hashCode() : 0;
+    }
 }
