@@ -43,4 +43,8 @@ class CachedRepository implements Repository {
     public void onDelete() {
         this.repository.onDelete();
     }
+
+    public void clearCache() {
+        this.cache = null;
+    }
 }

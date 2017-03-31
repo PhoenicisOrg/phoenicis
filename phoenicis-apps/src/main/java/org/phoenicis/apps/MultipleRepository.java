@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 class MultipleRepository extends MergeableRepository {
-	private final Repository[] repositories;
+	private Repository[] repositories;
 
 	MultipleRepository(Repository... repositories) {
 		this.repositories = repositories;
@@ -53,5 +53,21 @@ class MultipleRepository extends MergeableRepository {
 	@Override
 	public void onDelete() {
 		Arrays.stream(repositories).forEach(Repository::onDelete);
+	}
+
+	public void addRepository(Repository repository) {
+		Repository[] newRepositories = Arrays.copyOf(this.repositories, this.repositories.length + 1);
+
+		newRepositories[this.repositories.length] = repository;
+
+		this.repositories = newRepositories;
+	}
+
+	public void removeRepository(Repository repository) {
+		List<Repository> newRepositories = Arrays.asList(this.repositories);
+
+		newRepositories.remove(repository);
+
+		this.repositories = newRepositories.toArray(new Repository[0]);
 	}
 }
