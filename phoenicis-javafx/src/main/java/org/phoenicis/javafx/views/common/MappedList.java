@@ -1,117 +1,105 @@
 package org.phoenicis.javafx.views.common;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.TransformationList;
 
-public class MappedList<E, F> extends TransformationList<E, F> {
-    private final Map<? super F, E> mappedValues;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+public class MappedList<E, F> extends TransformationList<E, F> {
     private final Function<? super F, ? extends E> mapper;
+
+    private List<E> mappedValues;
 
     public MappedList(ObservableList<? extends F> source, Function<? super F, ? extends E> mapper) {
         super(source);
 
-        this.mappedValues = new HashMap<F, E>();
+        this.mappedValues = source.stream().map(mapper).collect(Collectors.toList());
         this.mapper = mapper;
     }
 
     @Override
     public int getSourceIndex(int index) {
+        if (index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
         return index;
     }
 
     @Override
     public E get(int index) {
-        F sourceValue = getSource().get(index);
-        if (!this.mappedValues.containsKey(sourceValue)) {
-            this.mappedValues.put(sourceValue, mapper.apply(sourceValue));
+        if (index >= size()) {
+            throw new IndexOutOfBoundsException();
         }
-        return mappedValues.get(sourceValue);
+        return mappedValues.get(index);
     }
 
     @Override
     public int size() {
-        return getSource().size();
+        return mappedValues.size();
+    }
+
+    private void permutate(Change<? extends F> c) {
+        int from = c.getFrom();
+        int to = c.getTo();
+
+        if (to > from) {
+            List<E> clone = new ArrayList<E>(mappedValues);
+            int[] perm = IntStream.range(0, size()).toArray();
+
+            for (int i = from; i < to; ++i) {
+                perm[i] = c.getPermutation(i);
+                mappedValues.set(i, clone.get(c.getPermutation(i)));
+            }
+
+            nextPermutation(from, to, perm);
+        }
+    }
+
+    private void update(Change<? extends F> c) {
+        int from = c.getFrom();
+        int to = c.getTo();
+
+        if (to > from) {
+            for (int i = from; i < to; ++i) {
+                mappedValues.set(i, mapper.apply(getSource().get(i)));
+
+                nextUpdate(i);
+            }
+        }
+    }
+
+    private void addRemove(Change<? extends F> c) {
+        int from = c.getFrom();
+        int to = c.getTo();
+
+        for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
+           nextRemove(index, mappedValues.remove(index));
+        }
+
+        for (int index = from; index < from + c.getAddedSize(); index++) {
+            mappedValues.add(index, mapper.apply(getSource().get(index)));
+
+            nextAdd(index, index + 1);
+        }
     }
 
     @Override
     protected void sourceChanged(Change<? extends F> c) {
-        fireChange(new Change<E>(this) {
-
-            @Override
-            public boolean wasAdded() {
-                return c.wasAdded();
+        beginChange();
+        while (c.next()) {
+            if (c.wasPermutated()) {
+                permutate(c);
+            } else if (c.wasUpdated()) {
+                update(c);
+            } else {
+                addRemove(c);
             }
-
-            @Override
-            public boolean wasRemoved() {
-                return c.wasRemoved();
-            }
-
-            @Override
-            public boolean wasReplaced() {
-                return c.wasReplaced();
-            }
-
-            @Override
-            public boolean wasUpdated() {
-                return c.wasUpdated();
-            }
-
-            @Override
-            public boolean wasPermutated() {
-                return c.wasPermutated();
-            }
-
-            @Override
-            public int getPermutation(int i) {
-                return c.getPermutation(i);
-            }
-
-            @Override
-            protected int[] getPermutation() {
-                // This method is only called by the superclass methods
-                // wasPermutated() and getPermutation(int), which are
-                // both overriden by this class. There is no other way
-                // this method can be called.
-                throw new AssertionError("Unreachable code");
-            }
-
-            @Override
-            public List<E> getRemoved() {
-                ArrayList<E> res = new ArrayList<>(c.getRemovedSize());
-                for(F e: c.getRemoved()) {
-                    res.add(mappedValues.get(e));
-                }
-                return res;
-            }
-
-            @Override
-            public int getFrom() {
-                return c.getFrom();
-            }
-
-            @Override
-            public int getTo() {
-                return c.getTo();
-            }
-
-            @Override
-            public boolean next() {
-                return c.next();
-            }
-
-            @Override
-            public void reset() {
-                c.reset();
-            }
-        });
+        }
+        endChange();
     }
 }
