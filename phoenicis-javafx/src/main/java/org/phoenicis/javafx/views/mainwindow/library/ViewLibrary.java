@@ -147,8 +147,7 @@ public class ViewLibrary extends MainWindowView {
     }
 
     private void drawSideBarWithShortcut(ShortcutDTO shortcut) {
-        searchBar = new SearchBox(themeManager);
-        searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
+        searchBar = new SearchBox(themeManager, this::applyFilter, () -> {});
 
         addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
@@ -180,8 +179,7 @@ public class ViewLibrary extends MainWindowView {
     private void drawSideBarWithoutShortcut() {
         clearSideBar();
 
-        searchBar = new SearchBox(themeManager);
-        searchBar.setOnKeyReleased(event -> applyFilter(searchBar.getText()));
+        searchBar = new SearchBox(themeManager, this::applyFilter, () -> {});
 
         addToSideBar(searchBar, new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }

@@ -121,8 +121,7 @@ public class ControllerConfiguration {
         return new AppsController(
                 viewsConfiguration.viewApps(),
                 appsConfiguration.repositoryManager(),
-                scriptsConfiguration.scriptInterpreter(),
-                settingsConfiguration.settingsManager()
+                scriptsConfiguration.scriptInterpreter()
         );
     }
 

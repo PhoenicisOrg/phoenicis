@@ -19,41 +19,28 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.RepositoryManager;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.settings.SettingsManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 public class AppsController {
     private final ViewApps view;
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
-    private final SettingsManager settingsManager;
     
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
                           RepositoryManager repositoryManager,
-                          ScriptInterpreter scriptInterpreter,
-                          SettingsManager settingsManager) {
+                          ScriptInterpreter scriptInterpreter) {
         this.view = view;
         this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;
-        this.settingsManager = settingsManager;
 
         this.repositoryManager.setOnRepositoryChange(this.view::populate);
         this.repositoryManager.setOnError(e -> this.view.showFailure());
-
-        this.view.setOnApplyFilter(repositoryManager::setFilter);
     }
 
     public void loadApps() {
@@ -65,18 +52,6 @@ public class AppsController {
             this.repositoryManager.triggerRepositoryChange();
         });
 
-        this.view.setOnSelectAll(categories -> {
-            List<ApplicationDTO> allApps = new ArrayList<>();
-            for (CategoryDTO categoryDTO: categories) {
-                if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    allApps.addAll(categoryDTO.getApplications());
-                }
-            }
-            Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
-            this.view.populateApps(allApps);
-        });
-
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications()));
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
                 e -> Platform.runLater(() -> {

@@ -18,8 +18,8 @@
 
 package org.phoenicis.javafx.views.common.widget;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
@@ -34,6 +34,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import org.fxmisc.easybind.EasyBind;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -42,19 +43,28 @@ import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public final class MiniatureListWidget<E> extends ScrollPane {
     private final Pane content;
     private Element selectedItem;
 
-    private ObservableList<E> elements;
+    private ObservableList<E> items;
+    private ObservableList<Element<E>> mappedElements;
 
     private MiniatureListWidget(Pane content, Function<E, Element> converter, BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
         super(content);
 
         this.content = content;
-        this.elements = FXCollections.observableArrayList();
+        this.items = FXCollections.observableArrayList();
+        this.mappedElements = EasyBind.map(items, value -> {
+            Element newElement = converter.apply(value);
+
+            newElement.setOnMouseClicked(event -> setOnMouseClicked.accept(newElement, event));
+
+            return newElement;
+        });
+
+        Bindings.bindContent(content.getChildren(), this.mappedElements);
 
         this.getStyleClass().add("rightPane");
 
@@ -67,8 +77,6 @@ public final class MiniatureListWidget<E> extends ScrollPane {
 
         this.content.prefWidthProperty().bind(this.widthProperty());
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
-
-        this.bind(converter, setOnMouseClicked);
     }
 
     /**
@@ -77,55 +85,23 @@ public final class MiniatureListWidget<E> extends ScrollPane {
      * @param converter         A converter function that converts values of type @type T to Element
      * @param setOnMouseClicked A mouse listener function, that is called whenever a user clicks on an element.
      *                          This listener function receives the element, which has been clicked, and the event as parameters
-     * @param <T>               The type of elements to be added to this MiniatureListWidget
+     * @param <T>               The type of items to be added to this MiniatureListWidget
      * @return
      */
     public static <T> MiniatureListWidget<T> create(Function<T, Element> converter, BiConsumer<Element<T>, MouseEvent> setOnMouseClicked) {
         return new MiniatureListWidget<T>(new FlowPane(), converter, setOnMouseClicked);
     }
 
-    private void bind(Function<E, Element> converter, BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
-        ObservableList<Node> target = content.getChildren();
-
-        elements.addListener((ListChangeListener<? super E>) change -> {
-            while (change.next()) {
-                int from = change.getFrom();
-                int to = change.getTo();
-                if (change.wasPermutated()) {
-                    target.subList(from, to).clear();
-                    target.addAll(from, elements.subList(from, to).stream().map(e -> {
-                        Element<E> result = converter.apply(e);
-
-                        result.setOnMouseClicked(event -> setOnMouseClicked.accept(result, event));
-
-                        return result;
-                    }).collect(Collectors.toList()));
-                } else {
-                    target.subList(from, from + change.getRemovedSize()).clear();
-                    target.addAll(from, elements.subList(from, from + change.getAddedSize()).stream().map(e -> {
-                        Element<E> result = converter.apply(e);
-
-                        result.setOnMouseClicked(event -> setOnMouseClicked.accept(result, event));
-
-                        return result;
-                    }).collect(Collectors.toList()));
-                }
-            }
-        });
-    }
-
     public ObservableList<E> getItems() {
-        return this.elements;
+        return this.items;
     }
 
     public void setItems(List<E> items) {
-        this.elements.setAll(items);
+        this.items.setAll(items);
     }
 
-    public List<Element> getElements() {
-        return content.getChildren().stream().filter(node -> node instanceof Element)
-                .map(node -> (Element) node)
-                .collect(Collectors.toList());
+    public List<Element<E>> getElements() {
+        return this.mappedElements;
     }
 
     public void unselectAll() {
@@ -211,6 +187,22 @@ public final class MiniatureListWidget<E> extends ScrollPane {
 
         public String getName() {
             return elementName;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.value.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof Element)) {
+                return false;
+            }
+
+            Element<?> otherElement = (Element<?>) other;
+
+            return this.value.equals(otherElement.value);
         }
     }
 }

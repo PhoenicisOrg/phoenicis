@@ -59,27 +59,6 @@ public class AppsConfiguration {
         return repositoryManager;
     }
 
-//    @Bean
-//    public Repository repository() {
-//        Repository repository = new ConfigurableRepository(
-//                repositoryConfiguration,
-//                cacheDirectoryPath,
-//                fileUtilities,
-//                new LocalRepository.Factory(objectMapper()),
-//                new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
-//        );
-//        return new FilterRepository(
-//                new CachedRepository(repository),
-//                toolsConfiguration.operatingSystemFetcher(),
-//                enforceUncompatibleOperatingSystems
-//        );
-//    }
-//
-//    @Bean
-//    public Repository backgroundRepository() {
-//        return new BackgroundRepository(repository(), multithreadingConfiguration.appsExecutorService());
-//    }
-
     @Bean
     ObjectMapper objectMapper() {
         return new ObjectMapper();
