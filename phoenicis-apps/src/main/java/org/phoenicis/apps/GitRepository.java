@@ -18,6 +18,8 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
@@ -129,16 +131,31 @@ class GitRepository implements Repository {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o) {
+			return true;
+		}
+
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
 		GitRepository that = (GitRepository) o;
 
-		return gitRepositoryURL != null ? gitRepositoryURL.equals(that.gitRepositoryURL) : that.gitRepositoryURL == null;
+		EqualsBuilder builder = new EqualsBuilder();
+
+		builder.append(gitRepositoryURL, that.gitRepositoryURL);
+		builder.append(gitRepositoryLocation, that.gitRepositoryLocation);
+
+		return builder.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-		return gitRepositoryURL != null ? gitRepositoryURL.hashCode() : 0;
+		HashCodeBuilder builder = new HashCodeBuilder();
+
+		builder.append(gitRepositoryURL);
+		builder.append(gitRepositoryLocation);
+
+		return builder.toHashCode();
 	}
 }

@@ -34,6 +34,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.MappedList;
@@ -190,19 +192,31 @@ public final class MiniatureListWidget<E> extends ScrollPane {
         }
 
         @Override
-        public int hashCode() {
-            return this.value.hashCode();
-        }
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
 
-        @Override
-        public boolean equals(Object other) {
-            if (!(other instanceof Element)) {
+            if (o == null || getClass() != o.getClass()) {
                 return false;
             }
 
-            Element<?> otherElement = (Element<?>) other;
+            Element<?> that = (Element<?>) o;
 
-            return this.value.equals(otherElement.value);
+            EqualsBuilder builder = new EqualsBuilder();
+
+            builder.append(value, that.value);
+
+            return builder.isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            HashCodeBuilder builder = new HashCodeBuilder();
+
+            builder.append(value);
+
+            return builder.toHashCode();
         }
     }
 }

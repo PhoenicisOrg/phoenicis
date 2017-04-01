@@ -18,6 +18,8 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
@@ -93,24 +95,35 @@ class FilterRepository implements Repository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         FilterRepository that = (FilterRepository) o;
 
-        if (enforceIncompatibleOperatingSystems != that.enforceIncompatibleOperatingSystems) return false;
-        if (repository != null ? !repository.equals(that.repository) : that.repository != null) return false;
-        if (operatingSystemFetcher != null ? !operatingSystemFetcher.equals(that.operatingSystemFetcher) : that.operatingSystemFetcher != null)
-            return false;
-        return filter != null ? filter.equals(that.filter) : that.filter == null;
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(enforceIncompatibleOperatingSystems, that.enforceIncompatibleOperatingSystems);
+        builder.append(repository, that.repository);
+        builder.append(operatingSystemFetcher, that.operatingSystemFetcher);
+        builder.append(filter, that.filter);
+
+        return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = repository != null ? repository.hashCode() : 0;
-        result = 31 * result + (operatingSystemFetcher != null ? operatingSystemFetcher.hashCode() : 0);
-        result = 31 * result + (enforceIncompatibleOperatingSystems ? 1 : 0);
-        result = 31 * result + (filter != null ? filter.hashCode() : 0);
-        return result;
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(enforceIncompatibleOperatingSystems);
+        builder.append(repository);
+        builder.append(enforceIncompatibleOperatingSystems);
+        builder.append(filter);
+
+        return builder.toHashCode();
     }
 }

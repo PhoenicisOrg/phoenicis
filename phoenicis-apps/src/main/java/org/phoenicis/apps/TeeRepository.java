@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 public class TeeRepository extends MergeableRepository {
@@ -58,20 +60,31 @@ public class TeeRepository extends MergeableRepository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         TeeRepository that = (TeeRepository) o;
 
-        if (leftRepository != null ? !leftRepository.equals(that.leftRepository) : that.leftRepository != null)
-            return false;
-        return rightRepository != null ? rightRepository.equals(that.rightRepository) : that.rightRepository == null;
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(leftRepository, that.leftRepository);
+        builder.append(rightRepository, that.rightRepository);
+
+        return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = leftRepository != null ? leftRepository.hashCode() : 0;
-        result = 31 * result + (rightRepository != null ? rightRepository.hashCode() : 0);
-        return result;
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(leftRepository);
+        builder.append(rightRepository);
+
+        return builder.toHashCode();
     }
 }

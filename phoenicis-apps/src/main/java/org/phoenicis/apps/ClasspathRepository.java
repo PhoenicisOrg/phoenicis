@@ -19,6 +19,8 @@
 package org.phoenicis.apps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -153,17 +155,30 @@ class ClasspathRepository implements Repository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ClasspathRepository that = (ClasspathRepository) o;
 
-        return packagePath != null ? packagePath.equals(that.packagePath) : that.packagePath == null;
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(packagePath, that.packagePath);
+
+        return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
-        return packagePath != null ? packagePath.hashCode() : 0;
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(packagePath);
+
+        return builder.toHashCode();
     }
 
     static class Factory {

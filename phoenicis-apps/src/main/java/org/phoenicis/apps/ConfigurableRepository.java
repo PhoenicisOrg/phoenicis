@@ -18,6 +18,8 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
@@ -84,19 +86,31 @@ class ConfigurableRepository implements Repository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ConfigurableRepository that = (ConfigurableRepository) o;
 
-        if (repository != null ? !repository.equals(that.repository) : that.repository != null) return false;
-        return cacheDirectoryPath != null ? cacheDirectoryPath.equals(that.cacheDirectoryPath) : that.cacheDirectoryPath == null;
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(repository, that.repository);
+        builder.append(cacheDirectoryPath, that.cacheDirectoryPath);
+
+        return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = repository != null ? repository.hashCode() : 0;
-        result = 31 * result + (cacheDirectoryPath != null ? cacheDirectoryPath.hashCode() : 0);
-        return result;
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(repository);
+        builder.append(cacheDirectoryPath);
+
+        return builder.toHashCode();
     }
 }

@@ -18,6 +18,8 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 
@@ -62,16 +64,29 @@ class BackgroundRepository implements Repository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         BackgroundRepository that = (BackgroundRepository) o;
 
-        return delegatedRepository != null ? delegatedRepository.equals(that.delegatedRepository) : that.delegatedRepository == null;
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(delegatedRepository, that.delegatedRepository);
+
+        return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
-        return delegatedRepository != null ? delegatedRepository.hashCode() : 0;
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(delegatedRepository);
+
+        return builder.toHashCode();
     }
 }
