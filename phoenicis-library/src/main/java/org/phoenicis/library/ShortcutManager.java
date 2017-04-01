@@ -135,6 +135,14 @@ public class ShortcutManager {
             descriptionFile.delete();
         }
 
+        if (this.desktopShortcutDirectory != null) {
+            final File desktopShortcutDirectoryFile = new File(this.desktopShortcutDirectory);
+            final File desktopShortcutFile = new File(desktopShortcutDirectoryFile, baseName + ".desktop");
+            if (desktopShortcutFile.exists()) {
+                desktopShortcutFile.delete();
+            }
+        }
+
         libraryManager.refresh();
     }
 }
