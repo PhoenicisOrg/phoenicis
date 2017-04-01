@@ -21,7 +21,6 @@ package org.phoenicis.javafx.controller.apps;
 import javafx.application.Platform;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.apps.Repository;
-import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -30,15 +29,9 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
@@ -84,7 +77,7 @@ public class AppsController {
                 for (CategoryDTO category : categoryDTOS) {
                     cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
                     String categoryIcon = category.getIcon();
-                    if (StringUtils.isEmpty(categoryIcon) || ! new File(new URI(categoryIcon)).exists()) {
+                    if (StringUtils.isEmpty(categoryIcon)) {
                         cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
                     } else {
                         cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
