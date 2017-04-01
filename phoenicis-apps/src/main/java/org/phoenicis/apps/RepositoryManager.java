@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Created by marc on 31.03.17.
@@ -86,8 +87,13 @@ public class RepositoryManager {
 
     public void removeRepositories(String ... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
-        Arrays.stream(repositoryUrls).map(this::toRepository).forEach(this.multipleRepository::removeRepository);
+
+        List<Repository> toDeleteRepositories = Arrays.stream(repositoryUrls).map(this::toRepository).collect(Collectors.toList());
+        toDeleteRepositories.forEach(this.multipleRepository::removeRepository);
+
         this.triggerRepositoryChange();
+
+        toDeleteRepositories.forEach(Repository::onDelete);
     }
 
     public void removeRepository(String repositoryUrl) {
@@ -107,7 +113,7 @@ public class RepositoryManager {
     }
 
     private Repository toRepository(String repositoryUrl) {
-        LOGGER.info("Registering: " + repositoryUrl);
+        LOGGER.info("Converting: " + repositoryUrl + " to Repository");
         try {
             final URI url = new URI(repositoryUrl);
             final String scheme = url.getScheme().split("\\+")[0];

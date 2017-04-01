@@ -235,7 +235,7 @@ public class ViewSettings extends MainWindowView {
 		removeButton.setOnAction((ActionEvent event) -> {
 			String[] toRemove = repositoryListView.getSelectionModel().getSelectedItems().toArray(new String[0]);
 
-			repositories.removeAll(repositoryListView.getSelectionModel().getSelectedItems());
+			repositories.removeAll(toRemove);
 
 			this.save();
 
