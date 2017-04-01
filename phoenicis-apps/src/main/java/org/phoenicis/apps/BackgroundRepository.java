@@ -41,6 +41,11 @@ class BackgroundRepository implements Repository {
     }
 
     @Override
+    public void onDelete() {
+        this.delegatedRepository.onDelete();
+    }
+
+    @Override
     public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedRepository.fetchInstallableApplications(callback, errorCallback));
     }

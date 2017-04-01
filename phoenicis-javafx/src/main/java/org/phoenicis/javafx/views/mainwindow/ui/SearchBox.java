@@ -1,5 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import org.phoenicis.javafx.views.common.ThemeManager;
 
 import javafx.beans.property.StringProperty;
@@ -7,18 +9,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.function.Consumer;
+
 public class SearchBox extends AnchorPane {
     private TextField searchField;
     private Button clearButton;
 
     private static final String cleanButtonIcon = "icons/mainwindow/general/edit-clear.png";
 
-    public SearchBox(ThemeManager themeManager) {
+    public SearchBox(ThemeManager themeManager, Consumer<String> onSearch, Runnable onClear) {
         this.searchField = new TextField();
 
         this.searchField.getStyleClass().add("searchBar");
         this.searchField.prefHeightProperty().bind(this.prefHeightProperty());
         this.searchField.prefWidthProperty().bind(this.prefWidthProperty());
+        this.searchField.textProperty().addListener(event -> onSearch.accept(getText()));
 
         AnchorPane.setLeftAnchor(searchField, 0.0);
         AnchorPane.setRightAnchor(searchField, 0.0);
@@ -27,7 +32,10 @@ public class SearchBox extends AnchorPane {
         this.clearButton.getStyleClass().add("searchCleanButton");
         this.clearButton.styleProperty().set(
                 "-fx-graphic: url('" + themeManager.getResourceUrl(SearchBox.cleanButtonIcon) + "');");
-        this.clearButton.setOnMouseClicked(event -> this.searchField.clear());
+        this.clearButton.setOnMouseClicked(event -> {
+            this.searchField.clear();
+            onClear.run();
+        });
 
         AnchorPane.setRightAnchor(clearButton, 0.0);
 

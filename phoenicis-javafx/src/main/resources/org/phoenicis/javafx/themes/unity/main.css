@@ -19,7 +19,7 @@
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
-.root {
+* {
     -fx-background: #f2f1f0;
     -fx-focus-color: #df5e1e;
     -fx-faint-focus-color: #df5e1e;
@@ -105,6 +105,7 @@
 
 .tab-header-area .tab-header-background {
     -fx-background-color: #e7e5e4;
+    -fx-background-radius: 0;
 }
 
 .tab-header-area .tab:selected {
@@ -118,6 +119,7 @@
     -fx-background-color: #f2f1f0;
     -fx-border-width: 0;
     -fx-background-opacity: 0;
+    -fx-border-radius: 0;
 }
 
 .tab-header-area .tab:selected .tab-label {
@@ -294,6 +296,10 @@
     -fx-border-color: #df5e1e;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
+}
+
+#menuPane > .tab-header-area .tab:selected .focus-indicator {
+    -fx-border-style: hidden hidden hidden hidden;
 }
 
 #menuPane > .tab-header-area .tab:disabled {

@@ -60,14 +60,6 @@ public class AppsController {
         this.scriptInterpreter = scriptInterpreter;
         this.settingsManager = settingsManager;
         this.themeManager = themeManager;
-
-        this.view.setOnApplyFilter(filter -> {
-            repository.setFilter(filter);
-            repository.fetchInstallableApplications(
-                    this.view::populate,
-                    e -> this.view.showFailure()
-            );
-        });
     }
 
     public void loadApps() {
@@ -84,19 +76,6 @@ public class AppsController {
                     e -> this.view.showFailure()
             );
         });
-
-        this.view.setOnSelectAll(categories -> {
-            List<ApplicationDTO> allApps = new ArrayList<>();
-            for (CategoryDTO categoryDTO: categories) {
-                if (categoryDTO.getType() == CategoryDTO.CategoryType.INSTALLERS) {
-                    allApps.addAll(categoryDTO.getApplications());
-                }
-            }
-            Collections.sort(allApps, Comparator.comparing(ApplicationDTO::getName));
-            this.view.populateApps(allApps, settingsManager);
-        });
-
-        this.view.setOnSelectCategory(categoryDTO -> this.view.populateApps(categoryDTO.getApplications(), settingsManager));
 
         this.view.setOnSetDefaultCategoryIcons(categoryDTOS -> {
             // set default category icons

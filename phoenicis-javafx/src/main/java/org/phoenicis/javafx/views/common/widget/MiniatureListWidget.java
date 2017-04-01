@@ -18,30 +18,54 @@
 
 package org.phoenicis.javafx.views.common.widget;
 
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import org.fxmisc.easybind.EasyBind;
+import org.phoenicis.apps.dto.ApplicationDTO;
+import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
-public final class MiniatureListWidget extends ScrollPane {
+public final class MiniatureListWidget<E> extends ScrollPane {
     private final Pane content;
     private Element selectedItem;
 
-    private MiniatureListWidget(Pane content) {
+    private ObservableList<E> items;
+    private ObservableList<Element<E>> mappedElements;
+
+    private MiniatureListWidget(Pane content, Function<E, Element> converter, BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
         super(content);
 
         this.content = content;
+        this.items = FXCollections.observableArrayList();
+        this.mappedElements = EasyBind.map(items, value -> {
+            Element newElement = converter.apply(value);
+
+            newElement.setOnMouseClicked(event -> setOnMouseClicked.accept(newElement, event));
+
+            return newElement;
+        });
+
+        Bindings.bindContent(content.getChildren(), this.mappedElements);
+
         this.getStyleClass().add("rightPane");
 
         this.content.getStyleClass().addAll("miniatureList");
@@ -55,40 +79,33 @@ public final class MiniatureListWidget extends ScrollPane {
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
     }
 
-    public static MiniatureListWidget create() {
-        return new MiniatureListWidget(new FlowPane());
+    /**
+     * Creates a new @class MiniatureListWidget of type @type <T>.
+     *
+     * @param converter         A converter function that converts values of type @type T to Element
+     * @param setOnMouseClicked A mouse listener function, that is called whenever a user clicks on an element.
+     *                          This listener function receives the element, which has been clicked, and the event as parameters
+     * @param <T>               The type of items to be added to this MiniatureListWidget
+     * @return
+     */
+    public static <T> MiniatureListWidget<T> create(Function<T, Element> converter, BiConsumer<Element<T>, MouseEvent> setOnMouseClicked) {
+        return new MiniatureListWidget<T>(new FlowPane(), converter, setOnMouseClicked);
     }
 
-    public void clear() {
-        content.getChildren().clear();
+    public ObservableList<E> getItems() {
+        return this.items;
     }
 
-    public Element addItem(String appsItem) {
-        final Element element = new Element(appsItem);
-        content.getChildren().add(element);
-        return element;
+    public void setItems(List<E> items) {
+        this.items.setAll(items);
     }
 
-    public Element addItem(String appsItem, Node miniature) {
-        final Element element = new Element(appsItem, miniature);
-        content.getChildren().add(element);
-        return element;
+    public List<Element<E>> getElements() {
+        return this.mappedElements;
     }
 
-    public Element addItem(String appName, byte[] miniature) {
-        final Element element = new Element(appName, new StaticMiniature(new Image(new ByteArrayInputStream(miniature))));
-        content.getChildren().add(element);
-        return element;
-    }
-
-    public List<Element> getItems() {
-        return content.getChildren().stream().filter(node -> node instanceof Element)
-                .map(node -> (Element) node)
-                .collect(Collectors.toList());
-    }
-
-    public void unSelecteAll() {
-        getItems().forEach(element -> element.getStyleClass().remove("selected"));
+    public void unselectAll() {
+        getElements().forEach(element -> element.getStyleClass().remove("selected"));
         this.selectedItem = null;
     }
 
@@ -101,19 +118,19 @@ public final class MiniatureListWidget extends ScrollPane {
         return selectedItem;
     }
 
-    public static class Element extends VBox {
+    public static class Element<E> extends VBox {
         private final String elementName;
 
-        public Element(String elementName) {
-            this(elementName, new StaticMiniature());
-        }
+        private final E value;
 
-        public Element(String appsItem, Node miniature) {
+        public Element(E value, String elementName, Node miniature) {
             super();
+
             this.getStyleClass().add("miniatureListElement");
 
             this.setAlignment(Pos.CENTER);
-            this.elementName = appsItem;
+            this.elementName = elementName;
+            this.value = value;
 
             this.widthProperty().addListener((observable, oldValue, newValue) -> {
                 final Rectangle clip = new Rectangle(this.getWidth(), this.getHeight());
@@ -126,20 +143,66 @@ public final class MiniatureListWidget extends ScrollPane {
             });
 
 
-            final Label label = new Label(appsItem);
+            final Label label = new Label(elementName);
             label.getStyleClass().add("miniatureText");
 
             this.getChildren().add(miniature);
             this.getChildren().add(label);
 
-            final Tooltip tooltip = new Tooltip(appsItem);
+            final Tooltip tooltip = new Tooltip(elementName);
             Tooltip.install(miniature, tooltip);
-
         }
 
-        String getName() {
+        public Element(String appsItem, Node miniature) {
+            this(null, appsItem, miniature);
+        }
+
+        public Element(String elementName) {
+            this(elementName, new StaticMiniature());
+        }
+
+        public static Element<ApplicationDTO> create(ApplicationDTO application) {
+            return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().isEmpty() ? new StaticMiniature() : new StaticMiniature(new Image(new ByteArrayInputStream(application.getMiniatures().get(0)))));
+        }
+
+        public static Element<ShortcutDTO> create(ShortcutDTO shortcut) {
+            return new Element<ShortcutDTO>(shortcut, shortcut.getName(), shortcut.getMiniature() == null ? new StaticMiniature() : new StaticMiniature(new Image(new ByteArrayInputStream(shortcut.getMiniature()))));
+        }
+
+        public static Element<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
+            Element<EngineVersionDTO> result = new Element<EngineVersionDTO>(engineVersion, engineVersion.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+
+            if (!installed) {
+                ColorAdjust grayscale = new ColorAdjust();
+                grayscale.setSaturation(-1);
+                result.setEffect(grayscale);
+            }
+
+            return result;
+        }
+
+        public E getValue() {
+            return this.value;
+        }
+
+        public String getName() {
             return elementName;
         }
-    }
 
+        @Override
+        public int hashCode() {
+            return this.value.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof Element)) {
+                return false;
+            }
+
+            Element<?> otherElement = (Element<?>) other;
+
+            return this.value.equals(otherElement.value);
+        }
+    }
 }
