@@ -10,6 +10,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Created by marc on 01.04.17.
+ */
 public class MappedList<E, F> extends TransformationList<E, F> {
     private final Function<? super F, ? extends E> mapper;
 

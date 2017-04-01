@@ -34,6 +34,7 @@ import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
@@ -80,27 +81,11 @@ public class ViewApps extends MainWindowView {
         this.installableCategories = this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
         this.sortedCategories = this.installableCategories.sorted(Comparator.comparing(CategoryDTO::getName));
 
-        this.applications = FXCollections.observableArrayList();
+        this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories, CategoryDTO::getApplications);
         this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
         this.filter = new ApplicationFilter<ApplicationDTO>(filteredApplications, (filterText, application) -> application.getName().toLowerCase().contains(filterText));
-
-        this.installableCategories.addListener((ListChangeListener<? super CategoryDTO>) change -> {
-            while (change.next()) {
-                if (change.wasRemoved()) {
-                    for (CategoryDTO removedCategory : change.getRemoved()) {
-                        this.applications.removeAll(removedCategory.getApplications());
-                    }
-                }
-
-                if (change.wasAdded()) {
-                    for (CategoryDTO addedCategory : change.getAddedSubList()) {
-                        this.applications.addAll(addedCategory.getApplications());
-                    }
-                }
-            }
-        });
 
         Bindings.bindContent(this.categoryView.getElements(), this.sortedCategories);
         Bindings.bindContent(this.availableApps.getItems(), this.sortedApplications);

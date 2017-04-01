@@ -14,6 +14,18 @@ import java.util.Comparator;
  */
 public class MappedListTest {
     @Test
+    public void testListCreation() {
+        ObservableList<Integer> observableList = FXCollections.observableArrayList(Arrays.asList(3, 7, 1, 5));
+        MappedList<String, Integer> mappedList = new MappedList<>(observableList, i -> String.valueOf(i));
+
+        assertEquals(4, mappedList.size());
+        assertEquals("3", mappedList.get(0));
+        assertEquals("7", mappedList.get(1));
+        assertEquals("1", mappedList.get(2));
+        assertEquals("5", mappedList.get(3));
+    }
+
+    @Test
     public void testListAdd() {
         ObservableList<Integer> observableList = FXCollections.observableArrayList(Arrays.asList(3, 7, 1, 5));
         MappedList<String, Integer> mappedList = new MappedList<>(observableList, i -> String.valueOf(i));
