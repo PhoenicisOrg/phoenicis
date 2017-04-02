@@ -115,12 +115,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.fxmisc.easybind</groupId>
-            <artifactId>easybind</artifactId>
-            <version>1.0.3</version>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>

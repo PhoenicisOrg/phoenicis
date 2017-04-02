@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import org.fxmisc.easybind.EasyBind;
+import org.phoenicis.javafx.views.common.MappedList;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -36,7 +36,7 @@ public class LeftToggleGroup<E> extends LeftGroup {
         this.toggleButtonBox.getStyleClass().add("leftPaneInside");
 
         this.elements = FXCollections.observableArrayList();
-        this.mappedToggleButtons = EasyBind.map(this.elements, value -> {
+        this.mappedToggleButtons = new MappedList<ToggleButton, E>(this.elements, value -> {
             ToggleButton button = converter.apply(value);
 
             button.setToggleGroup(toggleGroup);

@@ -19,6 +19,8 @@
 package org.phoenicis.apps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ResourceDTO;
@@ -237,6 +239,34 @@ class LocalRepository implements Repository {
             LOGGER.debug("JSON file not found", e);
             return new ApplicationDTO.Builder().build();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        LocalRepository that = (LocalRepository) o;
+
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(repositoryDirectory, that.repositoryDirectory);
+
+        return builder.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(repositoryDirectory);
+
+        return builder.toHashCode();
     }
 
     static class Factory {

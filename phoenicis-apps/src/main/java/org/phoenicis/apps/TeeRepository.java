@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 public class TeeRepository extends MergeableRepository {
@@ -54,5 +56,35 @@ public class TeeRepository extends MergeableRepository {
     public void onDelete() {
         this.leftRepository.onDelete();
         this.rightRepository.onDelete();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        TeeRepository that = (TeeRepository) o;
+
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(leftRepository, that.leftRepository);
+        builder.append(rightRepository, that.rightRepository);
+
+        return builder.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(leftRepository);
+        builder.append(rightRepository);
+
+        return builder.toHashCode();
     }
 }

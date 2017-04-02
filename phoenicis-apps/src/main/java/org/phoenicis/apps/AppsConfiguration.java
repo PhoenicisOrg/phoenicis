@@ -28,8 +28,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.File;
-
 @Configuration
 public class AppsConfiguration {
     @Value("${application.repository.configuration}")
@@ -51,24 +49,14 @@ public class AppsConfiguration {
     private FileUtilities fileUtilities;
 
     @Bean
-    public Repository repository() {
-        Repository repository = new ConfigurableRepository(
-                repositoryConfiguration,
-                cacheDirectoryPath,
-                fileUtilities,
-                new LocalRepository.Factory(objectMapper()),
-                new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver())
-        );
-        return new FilterRepository(
-                new CachedRepository(repository),
-                toolsConfiguration.operatingSystemFetcher(),
-                enforceUncompatibleOperatingSystems
-        );
-    }
+    public RepositoryManager repositoryManager() {
+        RepositoryManager repositoryManager = new RepositoryManager(multithreadingConfiguration.appsExecutorService(), enforceUncompatibleOperatingSystems, toolsConfiguration, cacheDirectoryPath, fileUtilities,
+                new LocalRepository.Factory(objectMapper()), new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver()));
 
-    @Bean
-    public Repository backgroundRepository() {
-        return new BackgroundRepository(repository(), multithreadingConfiguration.appsExecutorService());
+        // set initial repositories
+        repositoryManager.addRepositories(this.repositoryConfiguration.split(";"));
+
+        return repositoryManager;
     }
 
     @Bean
