@@ -103,7 +103,7 @@ public abstract class MergeableRepository implements Repository {
 
 	protected ApplicationDTO mergeApplications(ApplicationDTO leftApplication, ApplicationDTO rightApplication) {
 		final List<ScriptDTO> scripts = mergeListOfDtos(leftApplication.getScripts(), rightApplication.getScripts(),
-				ScriptDTO::getName, ScriptDTO.nameComparator());
+				ScriptDTO::getScriptName, ScriptDTO.nameComparator());
 		final List<ResourceDTO> resources = mergeListOfDtos(leftApplication.getResources(),
 				rightApplication.getResources(), ResourceDTO::getName, ResourceDTO.nameComparator());
 

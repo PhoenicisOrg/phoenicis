@@ -47,7 +47,7 @@ public interface Repository {
 
         if(applicationDTO != null) {
             for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                if (path.get(2).equals(scriptDTO.getName())) {
+                if (path.get(2).equals(scriptDTO.getScriptName())) {
                     return scriptDTO;
                 }
             }
