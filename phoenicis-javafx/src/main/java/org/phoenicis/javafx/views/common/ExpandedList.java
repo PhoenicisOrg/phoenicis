@@ -5,12 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.TransformationList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Created by marc on 01.04.17.
@@ -24,18 +21,12 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         super(source);
 
         this.expander = expander;
-        this.expandedValues = new ArrayList<List<? extends E>>();
-
-        for (int index = 0; index < source.size(); index++) {
-            List<? extends E> expanded = expander.apply(source.get(index));
-
-            this.expandedValues.add(expanded);
-        }
+        this.expandedValues = source.stream().map(expander).collect(Collectors.toList());
     }
 
     @Override
     public int getSourceIndex(int index) {
-        if (index >= size()) {
+        if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -56,7 +47,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
 
     @Override
     public E get(int index) {
-        if (index >= size()) {
+        if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -81,7 +72,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         return expandedValues.stream().mapToInt(List::size).sum();
     }
 
-    private int getFirstPosition(int sourceIndex) {
+    private int getFirstIndex(int sourceIndex) {
         int position = 0;
 
         for (int i = 0; i < sourceIndex; i++) {
@@ -91,7 +82,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         return position;
     }
 
-    private int getLastPosition(int sourceIndex) {
+    private int getLastIndexPlusOne(int sourceIndex) {
         int position = 0;
 
         for (int i = 0; i <= sourceIndex; i++) {
@@ -110,10 +101,10 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
             List<List<? extends E>> valuesClone = new ArrayList<List<? extends E>>(expandedValues);
 
             for (int i = from; i < to; ++i) {
-                int firstOldIndex = getFirstPosition(i);
-                int lastOldIndexPlusOne = getLastPosition(i);
+                int firstOldIndex = getFirstIndex(i);
+                int lastOldIndexPlusOne = getLastIndexPlusOne(i);
 
-                int firstNewIndex = getFirstPosition(c.getPermutation(i));
+                int firstNewIndex = getFirstIndex(c.getPermutation(i));
 
                 int numberOfElements = lastOldIndexPlusOne - firstOldIndex;
 
@@ -124,7 +115,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
 
             List<? extends E> afterPermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
 
-            int[] perm = beforePermutation.stream().mapToInt(value -> afterPermutation.indexOf(value)).toArray();
+            int[] perm = beforePermutation.stream().mapToInt(afterPermutation::indexOf).toArray();
 
             nextPermutation(from, to, perm);
         }
@@ -136,8 +127,8 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
 
         if (to > from) {
             for (int i = from; i < to; ++i) {
-                int firstOldIndex = getFirstPosition(i);
-                int lastOldIndexPlusOne = getLastPosition(i);
+                int firstOldIndex = getFirstIndex(i);
+                int lastOldIndexPlusOne = getLastIndexPlusOne(i);
 
                 List<? extends E> oldValues = expandedValues.get(i);
 
@@ -150,9 +141,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
                         nextUpdate(firstOldIndex + count);
                     }
 
-                    for (int count = newValues.size(); count < oldValues.size(); count++) {
-                        nextRemove(firstOldIndex + count, oldValues.get(count));
-                    }
+                    nextRemove(firstOldIndex, oldValues.subList(newValues.size(), oldValues.size()));
                 }
 
                 if (oldValues.size() < newValues.size()) {
@@ -177,13 +166,13 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         int to = c.getTo();
 
         for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
-            int firstOldIndex = getFirstPosition(index);
+            int firstOldIndex = getFirstIndex(index);
 
             nextRemove(firstOldIndex, expandedValues.remove(index));
         }
 
         for (int index = from; index < from + c.getAddedSize(); index++) {
-            int lastOldIndex = getLastPosition(index - 1);
+            int lastOldIndex = getLastIndexPlusOne(index - 1);
 
             List<? extends E> newValues = expander.apply(getSource().get(index));
 
