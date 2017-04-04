@@ -78,6 +78,17 @@ class MultipleRepository extends MergeableRepository {
 		this.repositories = newRepositories;
 	}
 
+	public void addRepository(int index, Repository repository) {
+		Repository[] newRepositories = new Repository[this.repositories.length + 1];
+
+		System.arraycopy(this.repositories, 0, newRepositories, 1, index);
+		System.arraycopy(this.repositories, index, newRepositories, 1 + index, this.repositories.length - index);
+
+		newRepositories[index] = repository;
+
+		this.repositories = newRepositories;
+	}
+
 	public void removeRepository(Repository repository) {
 		int index = Arrays.asList(this.repositories).indexOf(repository);
 

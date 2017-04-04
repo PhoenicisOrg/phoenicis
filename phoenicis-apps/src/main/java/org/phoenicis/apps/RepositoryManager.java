@@ -85,6 +85,12 @@ public class RepositoryManager {
         this.triggerRepositoryChange();
     }
 
+    public void addRepository(int index, String repositoryUrl) {
+        LOGGER.info(String.format("Adding repository: %s at index %d", repositoryUrl, index));
+        this.multipleRepository.addRepository(index, toRepository(repositoryUrl));
+        this.triggerRepositoryChange();
+    }
+
     public void removeRepositories(String ... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 

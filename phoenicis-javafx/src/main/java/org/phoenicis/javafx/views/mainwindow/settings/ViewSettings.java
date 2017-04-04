@@ -209,6 +209,8 @@ public class ViewSettings extends MainWindowView {
 		repositoryListView.setEditable(true);
 		repositoryListView.setCellFactory(param -> new DragableRepositoryListCell((repositoryUrl, toIndex) -> {
 			this.repositoryManager.moveRepository(repositoryUrl, toIndex.intValue());
+
+			this.save();
 		}));
 		HBox repositoryButtonLayout = new HBox();
 		repositoryButtonLayout.setSpacing(5);
@@ -223,11 +225,11 @@ public class ViewSettings extends MainWindowView {
 
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(newRepository -> {
-				repositories.add(newRepository);
+				repositories.add(0, newRepository);
 
 				this.save();
 
-				repositoryManager.addRepository(newRepository);
+				repositoryManager.addRepository(0, newRepository);
 			});
 		});
 		Button removeButton = new Button();
