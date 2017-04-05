@@ -1,6 +1,8 @@
 package org.phoenicis.apps;
 
+import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorService;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
@@ -57,8 +59,12 @@ public class RepositoryManager {
         this.onError = onError;
     }
 
-    public Repository cachedRepository() {
-        return this.cachedRepository;
+    public ApplicationDTO getApplication(List<String> path) {
+        return this.cachedRepository.getApplication(path);
+    }
+
+    public ScriptDTO getScript(List<String> path) {
+        return this.cachedRepository.getScript(path);
     }
 
     @Deprecated

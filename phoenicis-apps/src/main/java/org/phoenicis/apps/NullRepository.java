@@ -23,7 +23,7 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import java.util.Collections;
 import java.util.List;
 
-class NullRepository implements Repository {
+public class NullRepository implements Repository {
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         return Collections.emptyList();
