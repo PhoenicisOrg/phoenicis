@@ -134,7 +134,7 @@ class ClasspathRepository implements Repository {
             }
         }
 
-        Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getScriptName));
+        Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getName));
 
         return scriptDTOs;
     }

@@ -59,7 +59,7 @@ public class ClasspathRepositoryTest {
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scriptName() {
-        assertEquals("Online", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScriptName());
+        assertEquals("Online", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getName());
     }
 
     @Test

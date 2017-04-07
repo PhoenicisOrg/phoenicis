@@ -29,8 +29,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO {
-    private final String scriptName;
-    private final String scriptSource;
+    private final String name;
+    private final String source;
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
@@ -38,8 +38,8 @@ public class ScriptDTO {
     private final String script;
 
     private ScriptDTO(Builder builder) {
-        this.scriptName = builder.scriptName;
-        this.scriptSource = builder.scriptSource;
+        this.name = builder.name;
+        this.source = builder.source;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
@@ -47,12 +47,12 @@ public class ScriptDTO {
         this.script = builder.script;
     }
 
-    public String getScriptName() {
-        return scriptName;
+    public String getName() {
+        return name;
     }
     
-    public String getScriptSource() {
-    	return scriptSource;
+    public String getSource() {
+    	return source;
     }
 
     public List<OperatingSystem> getCompatibleOperatingSystems() {
@@ -76,13 +76,13 @@ public class ScriptDTO {
     }
 
     public static Comparator<ScriptDTO> nameComparator() {
-        return (o1, o2) -> o1.getScriptName().compareToIgnoreCase(o2.getScriptName());
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private String scriptName;
-        private String scriptSource;
+        private String name;
+        private String source;
         private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
@@ -94,7 +94,7 @@ public class ScriptDTO {
         }
 
         public Builder(ScriptDTO scriptDTO) {
-            this.withScriptName(scriptDTO.getScriptName())
+            this.withName(scriptDTO.getName())
                     .withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
                     .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems())
@@ -102,8 +102,8 @@ public class ScriptDTO {
                     .withRequiresNoCD(scriptDTO.requiresNoCD);
         }
 
-        public Builder withScriptName(String name) {
-            this.scriptName = name;
+        public Builder withName(String name) {
+            this.name = name;
             return this;
         }
 
@@ -112,8 +112,8 @@ public class ScriptDTO {
             return this;
         }
 
-        public Builder withScriptSource(String scriptSource) {
-        	this.scriptSource = scriptSource;
+        public Builder withSource(String source) {
+        	this.source = source;
         	return this;
         }
         
@@ -141,8 +141,8 @@ public class ScriptDTO {
             return new ScriptDTO(this);
         }
 
-        public String getScriptName() {
-            return scriptName;
+        public String getName() {
+            return name;
         }
     }
 }

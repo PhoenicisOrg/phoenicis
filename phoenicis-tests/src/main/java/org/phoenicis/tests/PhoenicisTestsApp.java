@@ -73,7 +73,7 @@ public class PhoenicisTestsApp {
 
     private void testScript(CategoryDTO categoryDTO, ApplicationDTO applicationDTO, ScriptDTO scriptDTO) {
         final ScriptInterpreter scriptInterpreter = applicationContext.getBean("nashornInterprpeter", ScriptInterpreter.class);
-        System.out.print("| |-- " + scriptDTO.getScriptName());
+        System.out.print("| |-- " + scriptDTO.getName());
         try {
             scriptInterpreter.runScript(scriptDTO.getScript(), e -> {
                 throw new TestException(e);
