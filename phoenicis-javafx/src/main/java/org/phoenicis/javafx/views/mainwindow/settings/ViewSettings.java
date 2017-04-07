@@ -227,7 +227,7 @@ public class ViewSettings extends MainWindowView {
 
 				this.save();
 
-				repositoryManager.addRepository(newRepository);
+				repositoryManager.addRepositories(newRepository);
 			});
 		});
 		Button removeButton = new Button();

@@ -3,142 +3,72 @@ package org.phoenicis.apps;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
-import org.phoenicis.multithreading.ControlledThreadPoolExecutorService;
-import org.phoenicis.tools.ToolsConfiguration;
-import org.phoenicis.tools.files.FileUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
- * Created by marc on 31.03.17.
+ * This Interface contains all methods a RepositoryManager must implement.
+ *
+ * @author marc
+ * @since 07.04.17
  */
-public class RepositoryManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryManager.class);
+public interface RepositoryManager {
+    /**
+     * This method adds a corresponding pair of callbacks to this repository manager
+     *
+     * @param onRepositoryChange The callback that should be called with the new CategoryDTOs when the repository change succeeded
+     * @param onError            The callback that should be called when the repository change failed
+     */
+    public void addCallbacks(Consumer<List<CategoryDTO>> onRepositoryChange, Consumer<Exception> onError);
 
-    private final LocalRepository.Factory localRepositoryFactory;
-    private final ClasspathRepository.Factory classPathRepositoryFactory;
-    private final String cacheDirectoryPath;
+    /**
+     * This method returns the {@link org.phoenicis.apps.dto.ApplicationDTO}, which can be found at the given path.
+     *
+     * @param path The path, where the searched ApplicationDTO can be found
+     * @return The found ApplicationDTO
+     */
+    public ApplicationDTO getApplication(List<String> path);
 
-    private final FileUtilities fileUtilities;
+    /**
+     * This method returns the {@link org.phoenicis.apps.dto.ScriptDTO}, which can be found at the given path
+     *
+     * @param path The path, where the searched ScriptDTO can be found
+     * @return The found ScriptDTO
+     */
+    public ScriptDTO getScript(List<String> path);
 
-    private MultipleRepository multipleRepository;
-    private FilterRepository filterRepository;
-    private CachedRepository cachedRepository;
-    private BackgroundRepository backgroundRepository;
+    /**
+     * This method moves the repository, belonging to the given repository url, to the given index.
+     * This is done by swapping the current content at the given index with old index of the given repository url
+     * After this method has been called {@link #triggerRepositoryChange()} will be called once.
+     *
+     * @param repositoryUrl The repository url belonging to the repository that should be moved to @param toIndex
+     * @param toIndex       The index, to which the repository should be moved
+     */
+    public void moveRepository(String repositoryUrl, int toIndex);
 
-    private Consumer<List<CategoryDTO>> onRepositoryChange;
-    private Consumer<Exception> onError;
+    /**
+     * This method adds a number of given repositories to this manager. This is done by appending the repositories at the end, which makes them the lowest priority.
+     * After this method has been called {@link #triggerRepositoryChange()} will be called once.
+     *
+     * @param repositoryUrls An array containing the urls to the to be added repositories
+     */
+    public void addRepositories(String... repositoryUrls);
 
-    public RepositoryManager(ExecutorService executorService, boolean enforceUncompatibleOperatingSystems, ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
-        super();
+    /**
+     * This method removes the repositories belonging to the given array of repository urls from this manager.
+     * After this method has been called {@link #triggerRepositoryChange()} will be called once.
+     *
+     * @param repositoryUrls An array containing the urls of the to be removed repositories.
+     */
+    public void removeRepositories(String... repositoryUrls);
 
-        this.localRepositoryFactory = localRepositoryFactory;
-        this.classPathRepositoryFactory = classPathRepositoryFactory;
-        this.cacheDirectoryPath = cacheDirectoryPath;
-        this.fileUtilities = fileUtilities;
+    /**
+     * This method will fetch a new list of {@link org.phoenicis.apps.dto.CategoryDTO}s from the managed repositories.
+     * After the new category dtos have been fetched, this method will call the previously added onRepositoryChange callbacks with the newly fetched category dtos.
+     * If an error appeared, the onError callbacks will be called, with the error.
+     */
+    public void triggerRepositoryChange();
 
-        this.multipleRepository = new MultipleRepository();
-        this.filterRepository = new FilterRepository(multipleRepository, toolsConfiguration.operatingSystemFetcher(), enforceUncompatibleOperatingSystems);
-        this.cachedRepository = new CachedRepository(filterRepository);
-        this.backgroundRepository = new BackgroundRepository(cachedRepository, executorService);
-    }
-
-    public void setOnRepositoryChange(Consumer<List<CategoryDTO>> onRepositoryChange) {
-        this.onRepositoryChange = onRepositoryChange;
-    }
-
-    public void setOnError(Consumer<Exception> onError) {
-        this.onError = onError;
-    }
-
-    public ApplicationDTO getApplication(List<String> path) {
-        return this.cachedRepository.getApplication(path);
-    }
-
-    public ScriptDTO getScript(List<String> path) {
-        return this.cachedRepository.getScript(path);
-    }
-
-    @Deprecated
-    public void setFilter(CombinedAppsFilter filter) {
-        this.filterRepository.setFilter(filter);
-        this.triggerRepositoryChange();
-    }
-
-    public void moveRepository(String repositoryUrl, int toIndex) {
-        LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
-        this.multipleRepository.moveRepository(toRepository(repositoryUrl), toIndex);
-        this.triggerRepositoryChange();
-    }
-
-    public void addRepositories(String ... repositoryUrls) {
-        LOGGER.info(String.format("Adding repositories: %s", Arrays.toString(repositoryUrls)));
-        Arrays.stream(repositoryUrls).map(this::toRepository).forEach(this.multipleRepository::addRepository);
-        this.triggerRepositoryChange();
-    }
-
-    public void addRepository(String repositoryUrl) {
-        LOGGER.info(String.format("Adding repository: %s", repositoryUrl));
-        this.multipleRepository.addRepository(toRepository(repositoryUrl));
-        this.triggerRepositoryChange();
-    }
-
-    public void removeRepositories(String ... repositoryUrls) {
-        LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
-
-        List<Repository> toDeleteRepositories = Arrays.stream(repositoryUrls).map(this::toRepository).collect(Collectors.toList());
-        toDeleteRepositories.forEach(this.multipleRepository::removeRepository);
-
-        this.triggerRepositoryChange();
-
-        toDeleteRepositories.forEach(Repository::onDelete);
-    }
-
-    public void removeRepository(String repositoryUrl) {
-        LOGGER.info(String.format("Removing repository: %s", repositoryUrl));
-        Repository toDelete = toRepository(repositoryUrl);
-        this.multipleRepository.removeRepository(toDelete);
-        this.triggerRepositoryChange();
-        toDelete.onDelete();
-    }
-
-    public void triggerRepositoryChange() {
-        this.cachedRepository.clearCache();
-
-        if (this.onRepositoryChange != null && this.onError != null) {
-            this.backgroundRepository.fetchInstallableApplications(onRepositoryChange, onError);
-        }
-    }
-
-    private Repository toRepository(String repositoryUrl) {
-        LOGGER.info("Converting: " + repositoryUrl + " to Repository");
-        try {
-            final URI url = new URI(repositoryUrl);
-            final String scheme = url.getScheme().split("\\+")[0];
-
-            switch (scheme) {
-                case "git":
-                    return new GitRepository(repositoryUrl.replace("git+",""), cacheDirectoryPath,
-                            localRepositoryFactory, fileUtilities);
-                case "file":
-                    return localRepositoryFactory.createInstance(url.getRawPath());
-                case "classpath":
-                    return classPathRepositoryFactory.createInstance(url.getPath());
-                default:
-                    LOGGER.warn("Unsupported URL: " + repositoryUrl);
-                    return new NullRepository();
-            }
-        } catch (URISyntaxException e) {
-            LOGGER.warn("Cannot parse URL: " + repositoryUrl, e);
-            return new NullRepository();
-        }
-    }
 }
