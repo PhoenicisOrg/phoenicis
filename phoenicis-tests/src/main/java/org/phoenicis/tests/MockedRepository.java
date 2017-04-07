@@ -47,7 +47,7 @@ public class MockedRepository extends TeeRepository {
                                                     .withName("Engines")
                                                     .withScripts(Arrays.asList(
                                                             new ScriptDTO.Builder()
-                                                                    .withName("Wine")
+                                                                    .withScriptName("Wine")
                                                                     .withCompatibleOperatingSystems(Arrays.asList(OperatingSystem.LINUX, OperatingSystem.MACOSX))
                                                                     .withScript(wineScript())
                                                                     .build()

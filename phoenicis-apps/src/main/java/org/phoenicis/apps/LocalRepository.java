@@ -189,10 +189,10 @@ class LocalRepository implements Repository {
                 final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                         unSerializeScript(new File(scriptDirectory, "script.json")));
 
-                scriptDTOBuilder.withSource(repositorySource);
+                scriptDTOBuilder.withScriptSource(repositorySource);
                 
-                if (StringUtils.isBlank(scriptDTOBuilder.getName())) {
-                    scriptDTOBuilder.withName(scriptDirectory.getName());
+                if (StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
+                    scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
 
                 final File scriptFile = new File(scriptDirectory, "script.js");

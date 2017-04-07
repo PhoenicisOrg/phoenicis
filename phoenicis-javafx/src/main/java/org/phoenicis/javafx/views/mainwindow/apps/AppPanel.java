@@ -69,9 +69,9 @@ final class AppPanel extends VBox {
         for (ScriptDTO script: applicationDTO.getScripts()) {
         	Label scriptName;
         	if (settingsManager.isViewScriptSource()) {
-        		scriptName = new Label(String.format("%s (Source: %s)", script.getName(), script.getSource()));
+        		scriptName = new Label(String.format("%s (Source: %s)", script.getScriptName(), script.getScriptSource()));
         	} else {
-        		scriptName = new Label(script.getName());
+        		scriptName = new Label(script.getScriptName());
         	}
             scriptName.getStyleClass().add("descriptionText");
             Button installButton = new Button("Install");
