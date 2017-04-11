@@ -22,7 +22,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -31,8 +30,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.settings.Setting;
-import org.phoenicis.settings.Settings;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,9 +69,9 @@ final class AppPanel extends VBox {
         for (ScriptDTO script: applicationDTO.getScripts()) {
         	Label scriptName;
         	if (settingsManager.isViewScriptSource()) {
-        		scriptName = new Label(String.format("%s (Source: %s)", script.getName(), script.getScriptSource()));
+        		scriptName = new Label(String.format("%s (Source: %s)", script.getScriptName(), script.getScriptSource()));
         	} else {
-        		scriptName = new Label(script.getName());
+        		scriptName = new Label(script.getScriptName());
         	}
             scriptName.getStyleClass().add("descriptionText");
             Button installButton = new Button("Install");
