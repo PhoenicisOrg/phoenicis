@@ -18,8 +18,9 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.Repository;
 import org.phoenicis.apps.AppsConfiguration;
+import org.phoenicis.apps.NullRepository;
+import org.phoenicis.apps.Repository;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
@@ -48,7 +49,7 @@ class PhoenicisTestsConfiguration {
 
     @Bean
     public Repository mockedRepository() {
-        return new MockedRepository(appsConfiguration.repositoryManager().cachedRepository());
+        return new MockedRepository(new NullRepository());
     }
 
 }

@@ -39,8 +39,7 @@ public class AppsController {
         this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;
 
-        this.repositoryManager.setOnRepositoryChange(this.view::populate);
-        this.repositoryManager.setOnError(e -> this.view.showFailure());
+        this.repositoryManager.addCallbacks(view::populate, e -> view.showFailure());
     }
 
     public void loadApps() {
