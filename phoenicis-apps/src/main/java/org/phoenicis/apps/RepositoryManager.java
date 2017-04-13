@@ -49,6 +49,15 @@ public interface RepositoryManager {
     public void moveRepository(String repositoryUrl, int toIndex);
 
     /**
+     * This method adds a number of given repositories to this manager. This is done by inserting the repositories at the given position.
+     * After this method has been called {@link #triggerRepositoryChange()} will be called once.
+     *
+     * @param index The start position, where the repositories should be added
+     * @param repositoryUrls An array containing the urls to the to be added repositories
+     */
+    public void addRepositories(int index, String... repositoryUrls);
+
+    /**
      * This method adds a number of given repositories to this manager. This is done by appending the repositories at the end, which makes them the lowest priority.
      * After this method has been called {@link #triggerRepositoryChange()} will be called once.
      *
@@ -70,5 +79,4 @@ public interface RepositoryManager {
      * If an error appeared, the onError callbacks will be called, with the error.
      */
     public void triggerRepositoryChange();
-
 }

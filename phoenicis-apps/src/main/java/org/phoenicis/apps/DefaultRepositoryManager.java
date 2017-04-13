@@ -71,12 +71,19 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.triggerRepositoryChange();
     }
 
-    public void addRepositories(String ... repositoryUrls) {
-        LOGGER.info(String.format("Adding repositories: %s", Arrays.toString(repositoryUrls)));
-        Arrays.stream(repositoryUrls).map(this::toRepository).forEach(this.multipleRepository::addRepository);
+    public void addRepositories(int index, String ... repositoryUrls) {
+        LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
+        for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
+            Repository repository = toRepository(repositoryUrls[repositoryUrlIndex]);
+
+            this.multipleRepository.addRepository(index + repositoryUrlIndex, repository);
+        }
         this.triggerRepositoryChange();
     }
 
+    public void addRepositories(String ... repositoryUrls) {
+        this.addRepositories(this.multipleRepository.size(), repositoryUrls);
+    }
 
     public void removeRepositories(String ... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));

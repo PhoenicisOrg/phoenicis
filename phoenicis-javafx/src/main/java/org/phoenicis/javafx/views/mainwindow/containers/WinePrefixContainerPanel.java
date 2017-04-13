@@ -18,8 +18,13 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.*;
+import org.phoenicis.engines.EnginesSource;
+import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import com.sun.javafx.collections.ImmutableObservableList;
@@ -29,10 +34,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -65,8 +66,8 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
 
     private BiConsumer<WinePrefixContainerDTO, RegistryParameter> onChangeSetting = (winePrefix, value) -> {};
 
-    public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity, ThemeManager themeManager) {
-        super(containerEntity, themeManager);
+    public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity, ThemeManager themeManager, List<EngineVersionDTO> engineVersions) {
+        super(containerEntity, themeManager, engineVersions);
         this.getTabs().add(drawDisplayTab(containerEntity));
         this.getTabs().add(drawInputTab(containerEntity));
         this.getTabs().add(drawWineToolsTab(containerEntity));
@@ -78,7 +79,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     }
 
     @Override
-    Tab drawInformationTab(WinePrefixContainerDTO container) {
+    Tab drawInformationTab(WinePrefixContainerDTO container, List<EngineVersionDTO> engineVersions) {
         final Tab informationTab = new Tab(translate("Information"));
         final VBox informationPane = new VBox();
         final Text title = new TextWithStyle(translate("Information"), TITLE_CSS_CLASS);
@@ -117,14 +118,30 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         informationContentPane.setHgap(20);
         informationContentPane.setVgap(10);
 
+        informationPane.setSpacing(10);
+
         Region spacer = new Region();
-        spacer.setPrefHeight(30);
+        spacer.setPrefHeight(20);
         VBox.setVgrow(spacer, Priority.NEVER);
+
+        ComboBox<EngineVersionDTO> changeEngineComboBox = new ComboBox<EngineVersionDTO>(FXCollections.observableList(engineVersions));
+        changeEngineComboBox.setConverter(new StringConverter<EngineVersionDTO>() {
+            @Override
+            public String toString(EngineVersionDTO object) {
+                return object.getVersion();
+            }
+
+            @Override
+            public EngineVersionDTO fromString(String string) {
+                return engineVersions.stream().filter(engineVersion -> engineVersion.getVersion().equals(string)).findFirst().get();
+            }
+        });
+        changeEngineComboBox.getSelectionModel().select(engineVersions.stream().filter(engineVersion -> engineVersion.getVersion().equals(container.getVersion())).findFirst().get());
 
         Button deleteButton = new Button("Delete container");
         deleteButton.setOnMouseClicked(event -> this.deletePrefix(container));
 
-        informationPane.getChildren().addAll(informationContentPane, spacer, deleteButton);
+        informationPane.getChildren().addAll(informationContentPane, spacer, changeEngineComboBox, deleteButton);
         informationTab.setContent(informationPane);
         informationTab.setClosable(false);
         return informationTab;
