@@ -18,21 +18,18 @@
 
 package org.phoenicis.javafx.controller.containers;
 
-import com.sun.xml.internal.ws.api.pipe.Engine;
 import javafx.application.Platform;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.engines.EnginesSource;
-import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class ContainersController {
