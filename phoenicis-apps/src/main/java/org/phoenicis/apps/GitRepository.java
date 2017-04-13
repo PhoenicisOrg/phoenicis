@@ -18,6 +18,8 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
@@ -125,5 +127,35 @@ class GitRepository implements Repository {
 		} catch (IOException e) {
 			LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'", gitRepositoryLocation.getAbsolutePath()), e);
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		GitRepository that = (GitRepository) o;
+
+		EqualsBuilder builder = new EqualsBuilder();
+
+		builder.append(gitRepositoryURL, that.gitRepositoryURL);
+		builder.append(gitRepositoryLocation, that.gitRepositoryLocation);
+
+		return builder.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+
+		builder.append(gitRepositoryURL);
+		builder.append(gitRepositoryLocation);
+
+		return builder.toHashCode();
 	}
 }

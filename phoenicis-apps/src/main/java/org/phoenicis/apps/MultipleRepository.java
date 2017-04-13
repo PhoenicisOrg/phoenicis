@@ -19,14 +19,17 @@
 package org.phoenicis.apps;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 class MultipleRepository extends MergeableRepository {
-	private final Repository[] repositories;
+	private Repository[] repositories;
 
 	MultipleRepository(Repository... repositories) {
 		this.repositories = repositories;
@@ -53,5 +56,77 @@ class MultipleRepository extends MergeableRepository {
 	@Override
 	public void onDelete() {
 		Arrays.stream(repositories).forEach(Repository::onDelete);
+	}
+
+	public void moveRepository(Repository repository, int toIndex) {
+		List<Repository> newRepositories = Arrays.asList(this.repositories);
+
+		int oldIndex = newRepositories.indexOf(repository);
+
+		if (oldIndex >= 0 && toIndex >= 0 && toIndex < newRepositories.size()) {
+			Collections.swap(newRepositories, oldIndex, toIndex);
+
+			this.repositories = newRepositories.toArray(new Repository[0]);
+		}
+	}
+
+	public void addRepository(Repository repository) {
+		Repository[] newRepositories = Arrays.copyOf(this.repositories, this.repositories.length + 1);
+
+		newRepositories[this.repositories.length] = repository;
+
+		this.repositories = newRepositories;
+	}
+
+	public void addRepository(int index, Repository repository) {
+		Repository[] newRepositories = new Repository[this.repositories.length + 1];
+
+		System.arraycopy(this.repositories, 0, newRepositories, 1, index);
+		System.arraycopy(this.repositories, index, newRepositories, 1 + index, this.repositories.length - index);
+
+		newRepositories[index] = repository;
+
+		this.repositories = newRepositories;
+	}
+
+	public void removeRepository(Repository repository) {
+		int index = Arrays.asList(this.repositories).indexOf(repository);
+
+		if (index >= 0) {
+			Repository[] newRepositories = new Repository[this.repositories.length - 1];
+
+			System.arraycopy(this.repositories, 0, newRepositories, 0, index);
+			System.arraycopy(this.repositories, index + 1, newRepositories, index, this.repositories.length - 1 - index);
+
+			this.repositories = newRepositories;
+		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		MultipleRepository that = (MultipleRepository) o;
+
+		EqualsBuilder builder = new EqualsBuilder();
+
+		builder.append(repositories, that.repositories);
+
+		return builder.isEquals();
+	}
+
+	@Override
+	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+
+		builder.append(repositories);
+
+		return builder.toHashCode();
 	}
 }

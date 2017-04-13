@@ -18,6 +18,8 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
@@ -89,5 +91,39 @@ class FilterRepository implements Repository {
     @Override
     public void setFilter(CombinedAppsFilter filter) {
         this.filter = filter;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FilterRepository that = (FilterRepository) o;
+
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(enforceIncompatibleOperatingSystems, that.enforceIncompatibleOperatingSystems);
+        builder.append(repository, that.repository);
+        builder.append(operatingSystemFetcher, that.operatingSystemFetcher);
+        builder.append(filter, that.filter);
+
+        return builder.isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(enforceIncompatibleOperatingSystems);
+        builder.append(repository);
+        builder.append(enforceIncompatibleOperatingSystems);
+        builder.append(filter);
+
+        return builder.toHashCode();
     }
 }

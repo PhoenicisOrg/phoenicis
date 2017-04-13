@@ -50,10 +50,6 @@ public class ScriptDTO {
     public String getScriptName() {
         return scriptName;
     }
-
-    public String getName() {
-        return scriptName;
-    }
     
     public String getScriptSource() {
     	return scriptSource;
@@ -80,7 +76,7 @@ public class ScriptDTO {
     }
 
     public static Comparator<ScriptDTO> nameComparator() {
-        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+        return (o1, o2) -> o1.getScriptName().compareToIgnoreCase(o2.getScriptName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
@@ -98,7 +94,7 @@ public class ScriptDTO {
         }
 
         public Builder(ScriptDTO scriptDTO) {
-            this.withScriptName(scriptDTO.getName())
+            this.withScriptName(scriptDTO.getScriptName())
                     .withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
                     .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems())

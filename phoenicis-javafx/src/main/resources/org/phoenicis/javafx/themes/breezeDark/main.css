@@ -267,6 +267,10 @@
     -fx-faint-focus-color: transparent;
 }
 
+#menuPane > .tab-header-area .tab:selected .focus-indicator {
+    -fx-border-style: hidden hidden hidden hidden;
+}
+
 #menuPane > .tab-header-area .tab:disabled {
     -fx-opacity: 1;
 }

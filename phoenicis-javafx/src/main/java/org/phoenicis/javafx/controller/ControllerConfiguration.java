@@ -89,7 +89,8 @@ public class ControllerConfiguration {
                 viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.winePrefixContainerPanelFactory(),
-                containersConfiguration.winePrefixContainerController()
+                containersConfiguration.winePrefixContainerController(),
+                enginesConfiguration.wineVersionsFetcher()
         );
     }
 
@@ -120,9 +121,8 @@ public class ControllerConfiguration {
     public AppsController appsController() {
         return new AppsController(
                 viewsConfiguration.viewApps(),
-                appsConfiguration.backgroundRepository(),
+                appsConfiguration.repositoryManager(),
                 scriptsConfiguration.scriptInterpreter(),
-                settingsConfiguration.settingsManager(),
                 themeConfiguration.themeManager()
         );
     }

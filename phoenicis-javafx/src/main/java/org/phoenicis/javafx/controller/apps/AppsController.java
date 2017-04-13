@@ -20,13 +20,12 @@ package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.apps.Repository;
+import org.phoenicis.apps.RepositoryManager;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.settings.SettingsManager;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
@@ -36,39 +35,33 @@ import java.nio.file.Path;
 public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ViewApps view;
-    private final Repository repository;
+    private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
-    private final SettingsManager settingsManager;
     private ThemeManager themeManager;
-
+    
     private Runnable onAppLoaded = () -> {};
 
     public AppsController(ViewApps view,
-                          Repository repository,
+                          RepositoryManager repositoryManager,
                           ScriptInterpreter scriptInterpreter,
-                          SettingsManager settingsManager,
                           ThemeManager themeManager) {
         this.view = view;
-        this.repository = repository;
+        this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;
-        this.settingsManager = settingsManager;
         this.themeManager = themeManager;
+
+        this.repositoryManager.setOnRepositoryChange(this.view::populate);
+        this.repositoryManager.setOnError(e -> this.view.showFailure());
     }
 
     public void loadApps() {
         this.view.showWait();
-        repository.fetchInstallableApplications(
-                this.view::populate,
-                e -> this.view.showFailure()
-        );
+        this.repositoryManager.triggerRepositoryChange();
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
-            repository.fetchInstallableApplications(
-                    this.view::populate,
-                    e -> this.view.showFailure()
-            );
-        });
+            this.repositoryManager.triggerRepositoryChange();
+        });	
 
         this.view.setOnSetDefaultCategoryIcons(categoryDTOS -> {
             // set default category icons

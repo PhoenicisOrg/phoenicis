@@ -48,7 +48,7 @@ class PhoenicisTestsConfiguration {
 
     @Bean
     public Repository mockedRepository() {
-        return new MockedRepository(appsConfiguration.repository());
+        return new MockedRepository(appsConfiguration.repositoryManager().cachedRepository());
     }
 
 }
