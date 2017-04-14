@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -342,6 +343,6 @@ public class ViewSettings extends MainWindowView {
 		final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
 		final URL style = this.getClass().getResource(url);
 		getContent().getScene().getStylesheets().clear();
-		getContent().getScene().getStylesheets().add(style.toExternalForm());
+		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(), style.toExternalForm());
 	}
 }
