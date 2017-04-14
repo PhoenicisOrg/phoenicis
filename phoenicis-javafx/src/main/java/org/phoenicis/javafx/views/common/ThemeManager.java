@@ -3,6 +3,7 @@ package org.phoenicis.javafx.views.common;
 public class ThemeManager {
     private Theme currentTheme;
     private final String themeUrl = "/org/phoenicis/javafx/themes";
+    private String defaultCategoryIconsCss;
 
     public ThemeManager() {
         currentTheme = Theme.DEFAULT;
@@ -47,5 +48,23 @@ public class ThemeManager {
         } else {
             return String.format("%s/%s/%s", themeUrl, Theme.DEFAULT.getShortName(), resource);
         }
+    }
+
+    /**
+     * sets the CSS file containing the default category icons from the repository
+     *
+     * @param defaultCategoryIconsCss default category icons from the repository
+     */
+    public void setDefaultCategoryIconsCss(String defaultCategoryIconsCss) {
+        this.defaultCategoryIconsCss = defaultCategoryIconsCss;
+    }
+
+    /**
+     * returns the CSS file containing the default category icons from the repository
+     *
+     * @return default category icons from the repository
+     */
+    public String getDefaultCategoryIconsCss() {
+        return defaultCategoryIconsCss;
     }
 }

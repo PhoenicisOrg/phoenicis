@@ -27,10 +27,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import org.phoenicis.apps.AppsSearchFilter;
+import org.phoenicis.apps.CombinedAppsFilter;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -39,6 +42,7 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.settings.Settings;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +62,7 @@ public class ViewApps extends MainWindowView {
     private final SearchBox searchBar;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> { };
+    private Consumer<List<CategoryDTO>> onSetDefaultCategoryIcons;
 
     private ObservableList<CategoryDTO> categories;
     private FilteredList<CategoryDTO> installableCategories;
@@ -98,6 +103,10 @@ public class ViewApps extends MainWindowView {
         this.onSelectScript = onSelectScript;
     }
 
+    public void setOnSetDefaultCategoryIcons(Consumer<List<CategoryDTO>> onSetDefaultCategoryIcons) {
+        this.onSetDefaultCategoryIcons = onSetDefaultCategoryIcons;
+    }
+
     /**
      * Show available apps panel
      */
@@ -112,6 +121,7 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
+            setDefaultCategoryIcons(categories);
             this.categories.setAll(categories);
             this.filter.clearAll();
             this.categoryView.selectAll();
@@ -147,6 +157,10 @@ public class ViewApps extends MainWindowView {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
         showRightView(appPanel);
+    }
+
+    private void setDefaultCategoryIcons(List<CategoryDTO> categories) {
+        this.onSetDefaultCategoryIcons.accept(categories);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
@@ -190,12 +204,8 @@ public class ViewApps extends MainWindowView {
     private ToggleButton createCategoryToggleButton(CategoryDTO category) {
         final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
 
-        final String resource = String.format("icons/mainwindow/apps/%s.png", category.getName().toLowerCase());
-        if (themeManager.resourceExists(resource)) {
-            categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
-        } else {
-            categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-        }
+	categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
+
         categoryButton.setOnMouseClicked(event -> {
             filter.setFilters(category.getApplications()::contains);
             showAvailableApps();
