@@ -87,7 +87,8 @@ public class AppsController {
                 final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
                 final URL style = this.getClass().getResource(url);
                 this.view.getTabPane().getScene().getStylesheets().clear();
-                this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss, style.toExternalForm());
+                this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss,
+                        themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
             } catch (Exception e) {
                 LOGGER.warn("Could not set default category icons.", e);
             }

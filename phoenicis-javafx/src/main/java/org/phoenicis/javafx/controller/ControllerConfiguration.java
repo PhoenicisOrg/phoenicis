@@ -101,7 +101,8 @@ public class ControllerConfiguration {
                 viewsConfiguration.viewEngines(),
                 enginesConfiguration.wineVersionsFetcher(),
                 wineEnginesPath,
-                scriptsConfiguration.scriptInterpreter()
+                scriptsConfiguration.scriptInterpreter(),
+                themeConfiguration.themeManager()
         );
     }
 

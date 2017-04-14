@@ -693,7 +693,7 @@
 }
 
 /*********************** engines ***********************/
-.wineButton {
+#wineButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/engines/wine.png');
 }
 

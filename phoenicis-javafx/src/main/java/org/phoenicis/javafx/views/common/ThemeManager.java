@@ -4,6 +4,7 @@ public class ThemeManager {
     private Theme currentTheme;
     private final String themeUrl = "/org/phoenicis/javafx/themes";
     private String defaultCategoryIconsCss;
+    private String defaultEngineIconsCss = "";
 
     public ThemeManager() {
         currentTheme = Theme.DEFAULT;
@@ -66,5 +67,23 @@ public class ThemeManager {
      */
     public String getDefaultCategoryIconsCss() {
         return defaultCategoryIconsCss;
+    }
+
+    /**
+     * sets the CSS file containing the default engine icons from the repository
+     *
+     * @param defaultEngineIconsCss default engine icons from the repository
+     */
+    public void setDefaultEngineIconsCss(String defaultEngineIconsCss) {
+        this.defaultEngineIconsCss = defaultEngineIconsCss;
+    }
+
+    /**
+     * returns the CSS file containing the default engine icons from the repository
+     *
+     * @return default engine icons from the repository
+     */
+    public String getDefaultEngineIconsCss() {
+        return defaultEngineIconsCss;
     }
 }

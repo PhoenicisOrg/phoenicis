@@ -336,6 +336,7 @@ public class ViewSettings extends MainWindowView {
 		final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
 		final URL style = this.getClass().getResource(url);
 		getContent().getScene().getStylesheets().clear();
-		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(), style.toExternalForm());
+		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
+			themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
 	}
 }
