@@ -18,14 +18,14 @@
 
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.apps.dto.CategoryDTO;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.apps.dto.CategoryDTO;
 
 public class TeeRepository extends MergeableRepository {
     private final Repository leftRepository;
@@ -49,7 +49,7 @@ public class TeeRepository extends MergeableRepository {
     			.collect(
 						Collectors.toMap(source -> source, Repository::fetchInstallableApplications));
     	
-    	return mergeRepositories(categoriesMap, leftRepository, rightRepository);
+    	return mergeRepositories(categoriesMap, Arrays.asList(leftRepository, rightRepository));
     }
 
     @Override

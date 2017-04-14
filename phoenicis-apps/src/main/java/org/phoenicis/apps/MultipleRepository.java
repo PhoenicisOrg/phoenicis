@@ -18,25 +18,22 @@
 
 package org.phoenicis.apps;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 
-class MultipleRepository extends MergeableRepository {
-	private Repository[] repositories;
+import java.util.*;
+import java.util.stream.Collectors;
 
-	MultipleRepository(Repository... repositories) {
-		this.repositories = repositories;
+public class MultipleRepository extends MergeableRepository {
+	private List<Repository> repositories;
+
+	public MultipleRepository(Repository... repositories) {
+		this.repositories = new ArrayList<Repository>(Arrays.asList(repositories));
 	}
 
-	MultipleRepository(List<Repository> repositories) {
-		this(repositories.toArray(new Repository[0]));
+	public MultipleRepository(List<Repository> repositories) {
+		this.repositories = repositories;
 	}
 
 	@Override
@@ -46,7 +43,7 @@ class MultipleRepository extends MergeableRepository {
 		 * list and its application source, to preserve the order in the
 		 * reduction step
 		 */
-		final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.stream(this.repositories)
+		final Map<Repository, List<CategoryDTO>> categoriesMap = this.repositories.stream()
 				.parallel().collect(
 						Collectors.toConcurrentMap(source -> source, Repository::fetchInstallableApplications));
 
@@ -55,55 +52,29 @@ class MultipleRepository extends MergeableRepository {
 
 	@Override
 	public void onDelete() {
-		Arrays.stream(repositories).forEach(Repository::onDelete);
+		repositories.stream().forEach(Repository::onDelete);
 	}
 
 	public int size() {
-		return this.repositories.length;
+		return this.repositories.size();
 	}
 
 	public void moveRepository(Repository repository, int toIndex) {
-		List<Repository> newRepositories = Arrays.asList(this.repositories);
+		int oldIndex = this.repositories.indexOf(repository);
 
-		int oldIndex = newRepositories.indexOf(repository);
-
-		if (oldIndex >= 0 && toIndex >= 0 && toIndex < newRepositories.size()) {
-			Collections.swap(newRepositories, oldIndex, toIndex);
-
-			this.repositories = newRepositories.toArray(new Repository[0]);
-		}
+		Collections.swap(this.repositories, oldIndex, toIndex);
 	}
 
 	public void addRepository(Repository repository) {
-		Repository[] newRepositories = Arrays.copyOf(this.repositories, this.repositories.length + 1);
-
-		newRepositories[this.repositories.length] = repository;
-
-		this.repositories = newRepositories;
+		this.repositories.add(repository);
 	}
 
 	public void addRepository(int index, Repository repository) {
-		Repository[] newRepositories = new Repository[this.repositories.length + 1];
-
-		System.arraycopy(this.repositories, 0, newRepositories, 0, index);
-		System.arraycopy(this.repositories, index, newRepositories, index + 1, this.repositories.length - index);
-
-		newRepositories[index] = repository;
-
-		this.repositories = newRepositories;
+		this.repositories.add(index, repository);
 	}
 
 	public void removeRepository(Repository repository) {
-		int index = Arrays.asList(this.repositories).indexOf(repository);
-
-		if (index >= 0) {
-			Repository[] newRepositories = new Repository[this.repositories.length - 1];
-
-			System.arraycopy(this.repositories, 0, newRepositories, 0, index);
-			System.arraycopy(this.repositories, index + 1, newRepositories, index, this.repositories.length - 1 - index);
-
-			this.repositories = newRepositories;
-		}
+		this.repositories.remove(repository);
 	}
 
 	@Override
