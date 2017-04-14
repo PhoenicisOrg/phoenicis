@@ -18,16 +18,17 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.phoenicis.apps.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.common.Theme;
@@ -39,24 +40,14 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewSettings extends MainWindowView {
 	private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
@@ -213,8 +204,10 @@ public class ViewSettings extends MainWindowView {
 
 			this.save();
 		}));
+
 		HBox repositoryButtonLayout = new HBox();
 		repositoryButtonLayout.setSpacing(5);
+
 		Button addButton = new Button();
 		addButton.setText("Add");
 		addButton.setOnAction((ActionEvent event) -> {
@@ -233,6 +226,7 @@ public class ViewSettings extends MainWindowView {
 				repositoryManager.addRepositories(0, newRepository);
 			});
 		});
+
 		Button removeButton = new Button();
 		removeButton.setText("Remove");
 		removeButton.setOnAction((ActionEvent event) -> {
@@ -244,8 +238,28 @@ public class ViewSettings extends MainWindowView {
 
 			repositoryManager.removeRepositories(toRemove);
 		});
+
+		HBox refreshLayout = new HBox();
+		refreshLayout.setSpacing(5);
+
+		Button refreshRepositoriesButton = new Button();
+		refreshRepositoriesButton.setText("Refresh Repositories");
+		refreshRepositoriesButton.setOnAction(event -> {
+			refreshRepositoriesButton.setStyle("-fx-graphic: url('" + themeManager.getResourceUrl("icons/mainwindow/refresh.png") + "');");
+			refreshRepositoriesButton.setDisable(true);
+			repositoryManager.triggerRepositoryChange();
+		});
+
+		repositoryManager.addCallbacks(categories -> {
+			Platform.runLater(() -> {
+				refreshRepositoriesButton.setStyle(null);
+				refreshRepositoriesButton.setDisable(false);
+			});
+		}, error -> {});
+
+		refreshLayout.getChildren().addAll(refreshRepositoriesButton);
 		repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
-		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
+		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout, refreshLayout);
 		gridPane.add(repositoryLayout, 1, 0);
 
 		gridPane.setHgap(20);
