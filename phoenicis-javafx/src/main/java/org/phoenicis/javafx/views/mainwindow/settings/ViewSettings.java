@@ -173,13 +173,6 @@ public class ViewSettings extends MainWindowView {
 		gridPane.setVgap(10);
 
 		uiPanel.getChildren().add(gridPane);
-
-		// Legend below
-		final Label restartHint = new Label(
-				translate("If you change the theme, please restart to load the icons of the new theme."));
-		restartHint.setPadding(new Insets(10));
-		
-		uiPanel.getChildren().add(restartHint);
 	}
 
 	private void initRepositoriesSettingsPane() {
