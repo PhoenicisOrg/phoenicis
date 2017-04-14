@@ -58,6 +58,10 @@ class MultipleRepository extends MergeableRepository {
 		Arrays.stream(repositories).forEach(Repository::onDelete);
 	}
 
+	public int size() {
+		return this.repositories.length;
+	}
+
 	public void moveRepository(Repository repository, int toIndex) {
 		List<Repository> newRepositories = Arrays.asList(this.repositories);
 
@@ -81,8 +85,8 @@ class MultipleRepository extends MergeableRepository {
 	public void addRepository(int index, Repository repository) {
 		Repository[] newRepositories = new Repository[this.repositories.length + 1];
 
-		System.arraycopy(this.repositories, 0, newRepositories, 1, index);
-		System.arraycopy(this.repositories, index, newRepositories, 1 + index, this.repositories.length - index);
+		System.arraycopy(this.repositories, 0, newRepositories, 0, index);
+		System.arraycopy(this.repositories, index, newRepositories, index + 1, this.repositories.length - index);
 
 		newRepositories[index] = repository;
 

@@ -50,8 +50,7 @@ public class AppsController {
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
-        this.repositoryManager.setOnRepositoryChange(this.view::populate);
-        this.repositoryManager.setOnError(e -> this.view.showFailure());
+        this.repositoryManager.addCallbacks(view::populate, e -> view.showFailure());
     }
 
     public void loadApps() {
