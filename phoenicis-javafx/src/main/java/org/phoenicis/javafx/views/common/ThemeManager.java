@@ -52,27 +52,27 @@ public class ThemeManager {
     }
 
     /**
-     * sets the CSS file containing the default category icons from the repository
+     * sets the path of the CSS file containing the default category icons from the repository
      *
-     * @param defaultCategoryIconsCss default category icons from the repository
+     * @param defaultCategoryIconsCss path of the default category icons from the repository
      */
     public void setDefaultCategoryIconsCss(String defaultCategoryIconsCss) {
         this.defaultCategoryIconsCss = defaultCategoryIconsCss;
     }
 
     /**
-     * returns the CSS file containing the default category icons from the repository
+     * returns the path of the CSS file containing the default category icons from the repository
      *
-     * @return default category icons from the repository
+     * @return path of the default category icons from the repository
      */
     public String getDefaultCategoryIconsCss() {
         return defaultCategoryIconsCss;
     }
 
     /**
-     * sets the CSS file containing the default engine icons from the repository
+     * sets the path of the CSS file containing the default engine icons from the repository
      *
-     * @param defaultEngineIconsCss default engine icons from the repository
+     * @param defaultEngineIconsCss path of the default engine icons from the repository
      */
     public void setDefaultEngineIconsCss(String defaultEngineIconsCss) {
         this.defaultEngineIconsCss = defaultEngineIconsCss;
