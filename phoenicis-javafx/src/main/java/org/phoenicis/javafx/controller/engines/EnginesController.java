@@ -33,6 +33,7 @@ import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -158,7 +159,7 @@ public class EnginesController {
             this.viewEngines.getTabPane().getScene().getStylesheets().clear();
             this.viewEngines.getTabPane().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
                     defaultEngineIconsCss, style.toExternalForm());
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.warn("Could not set default engine icons.", e);
         }
     }
