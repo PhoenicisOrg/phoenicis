@@ -25,9 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.phoenicis.apps.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -187,11 +185,11 @@ public class ViewSettings extends MainWindowView {
 		final Text title = new TextWithStyle(translate("Repositories Settings"), TITLE_CSS_CLASS);
 		repositoriesPanel.getChildren().add(title);
 
-		final GridPane gridPane = new GridPane();
-		gridPane.getStyleClass().add("grid");
+		final GridPane repositoryPane = new GridPane();
+		repositoryPane.getStyleClass().add("grid");
 
 		TextWithStyle repositoryText = new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS);
-		gridPane.add(repositoryText, 0, 0);
+		repositoryPane.add(repositoryText, 0, 0);
 		GridPane.setValignment(repositoryText, VPos.TOP);
 		VBox repositoryLayout = new VBox();
 		repositoryLayout.setSpacing(5);
@@ -239,8 +237,25 @@ public class ViewSettings extends MainWindowView {
 			repositoryManager.removeRepositories(toRemove);
 		});
 
-		HBox refreshLayout = new HBox();
-		refreshLayout.setSpacing(5);
+		repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
+		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
+		repositoryPane.add(repositoryLayout, 1, 0);
+
+		repositoryPane.setHgap(20);
+		repositoryPane.setVgap(10);
+
+		// Refresh Repositories
+		GridPane refreshLayout = new GridPane();
+		refreshLayout.setHgap(20);
+		repositoryPane.setVgap(10);
+
+		ColumnConstraints columnConstraints = new ColumnConstraints();
+		columnConstraints.setFillWidth(true);
+		columnConstraints.setHgrow(Priority.ALWAYS);
+		refreshLayout.getColumnConstraints().add(columnConstraints);
+
+		Label refreshRepositoriesLabel = new Label(translate("Fetch updates for the repositories to retrieve the newest script versions"));
+		refreshRepositoriesLabel.setWrapText(true);
 
 		Button refreshRepositoriesButton = new Button();
 		refreshRepositoriesButton.setText("Refresh Repositories");
@@ -257,22 +272,16 @@ public class ViewSettings extends MainWindowView {
 			});
 		}, error -> {});
 
-		refreshLayout.getChildren().addAll(refreshRepositoriesButton);
-		repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
-		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout, refreshLayout);
-		gridPane.add(repositoryLayout, 1, 0);
+		refreshLayout.add(refreshRepositoriesLabel, 0, 0);
+		refreshLayout.add(refreshRepositoriesButton, 1, 0);
 
-		gridPane.setHgap(20);
-		gridPane.setVgap(10);
-
-		repositoriesPanel.getChildren().add(gridPane);
-		
+		// Legend
 		final Label priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
 		priorityHint.setWrapText(true);
 		priorityHint.maxWidthProperty().bind(repositoriesPanel.widthProperty());
 		priorityHint.setPadding(new Insets(10));
 		
-		repositoriesPanel.getChildren().add(priorityHint);
+		repositoriesPanel.getChildren().addAll(repositoryPane, refreshLayout, priorityHint);
 	}
 
 	private void initFileAssociationsPane() {
