@@ -33,6 +33,7 @@ import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -148,6 +149,8 @@ public class EnginesController {
             }
             String css = cssBuilder.toString();
             Path temp = Files.createTempFile("defaultEngineIcons", ".css").toAbsolutePath();
+            File tempFile = temp.toFile();
+            tempFile.deleteOnExit();
             Files.write(temp, css.getBytes());
             String defaultEngineIconsCss = temp.toUri().toString();
             themeManager.setDefaultEngineIconsCss(defaultEngineIconsCss);
