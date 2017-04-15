@@ -28,7 +28,6 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
 
 import javafx.application.Platform;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
 import java.util.ArrayList;
@@ -88,7 +87,7 @@ public class ViewContainers extends MainWindowView {
 
     @Override
     protected void drawSideBar() {
-        searchBar = new SearchBox(themeManager, this::applyFilter, () -> {});
+        searchBar = new SearchBox(this::applyFilter, () -> {});
 
         addToSideBar(searchBar, new LeftSpacer(), containersView);
 
