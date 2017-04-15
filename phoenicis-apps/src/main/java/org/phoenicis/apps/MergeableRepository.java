@@ -42,8 +42,8 @@ public abstract class MergeableRepository implements Repository {
 	 *         returned
 	 */
 	protected List<CategoryDTO> mergeRepositories(Map<Repository, List<CategoryDTO>> categoriesMap,
-			Repository... repositories) {
-		int numberOfRepositories = repositories.length;
+			List<Repository> repositories) {
+		int numberOfRepositories = repositories.size();
 
 		if (numberOfRepositories == 0) {
 			return Collections.emptyList();
@@ -53,12 +53,12 @@ public abstract class MergeableRepository implements Repository {
 		 * Take the first application source, from behind, as the default one
 		 */
 		final Map<String, CategoryDTO> mergedCategories = createSortedMap(
-				categoriesMap.get(repositories[numberOfRepositories - 1]), CategoryDTO::getName);
+				categoriesMap.get(repositories.get(numberOfRepositories - 1)), CategoryDTO::getName);
 
 		for (int otherRepositoryIndex = numberOfRepositories
 				- 2; otherRepositoryIndex >= 0; otherRepositoryIndex--) {
 			final List<CategoryDTO> otherCategories = categoriesMap
-					.get(repositories[otherRepositoryIndex]);
+					.get(repositories.get(otherRepositoryIndex));
 
 			final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getName);
 
