@@ -15,8 +15,6 @@ public class SearchBox extends AnchorPane {
     private TextField searchField;
     private Button clearButton;
 
-    private static final String cleanButtonIcon = "icons/mainwindow/general/edit-clear.png";
-
     public SearchBox(ThemeManager themeManager, Consumer<String> onSearch, Runnable onClear) {
         this.searchField = new TextField();
 
@@ -30,8 +28,6 @@ public class SearchBox extends AnchorPane {
 
         this.clearButton = new Button();
         this.clearButton.getStyleClass().add("searchCleanButton");
-        this.clearButton.styleProperty().set(
-                "-fx-graphic: url('" + themeManager.getResourceUrl(SearchBox.cleanButtonIcon) + "');");
         this.clearButton.setOnMouseClicked(event -> {
             this.searchField.clear();
             onClear.run();

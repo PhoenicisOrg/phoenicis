@@ -372,6 +372,7 @@
 
 .searchCleanButton {
 	-fx-background-color: transparent;
+	-fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
 }
 
 /*******************************************************/
