@@ -21,7 +21,6 @@ package org.phoenicis.javafx.controller.engines;
 import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
@@ -37,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class EnginesController {
@@ -61,7 +61,7 @@ public class EnginesController {
         this.viewEngines.setOnApplyFilter(filter -> {
             enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> {
                 filter.apply(versions, wineEnginesPath);
-                this.viewEngines.populate(versions, wineEnginesPath);
+                this.viewEngines.populate(versions);
             }));
             this.viewEngines.showWineVersions();
         });
@@ -86,41 +86,8 @@ public class EnginesController {
     }
 
     public void loadEngines() {
-        enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> this.viewEngines.populate(versions, wineEnginesPath)));
+        enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> populateView(versions)));
         this.viewEngines.setOnSelectCategory(categoryDTO -> this.viewEngines.populateEngines(categoryDTO.getName(), categoryDTO.getSubCategories(), wineEnginesPath));
-
-        this.viewEngines.setOnSetDefaultEngineIcons(categoryDTOS -> {
-            // set default engine icons
-            try {
-                StringBuilder cssBuilder = new StringBuilder();
-                for (EngineCategoryDTO category : categoryDTOS) {
-                    cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
-                    String categoryIcon = category.getIcon();
-                    if (StringUtils.isEmpty(categoryIcon)) {
-                        cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                    } else {
-                        cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                    }
-                    cssBuilder.append("}\n");
-                }
-                String css = cssBuilder.toString();
-                Path temp = Files.createTempFile("defaultEngineIcons", ".css").toAbsolutePath();
-                Files.write(temp, css.getBytes());
-                String defaultEngineIconsCss = temp.toUri().toString();
-                themeManager.setDefaultEngineIconsCss(defaultEngineIconsCss);
-
-                // apply current theme again to fix hierarchy
-                final String shortName = themeManager.getCurrentTheme().getShortName();
-                final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-                final URL style = this.getClass().getResource(url);
-                this.viewEngines.getTabPane().getScene().getStylesheets().clear();
-                this.viewEngines.getTabPane().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
-                        defaultEngineIconsCss, style.toExternalForm());
-            } catch (Exception e) {
-                LOGGER.warn("Could not set default engine icons.", e);
-            }
-        });
-
         this.viewEngines.showWineVersions();
     }
 
@@ -158,5 +125,41 @@ public class EnginesController {
                         errorCallback),
                 errorCallback
         );
+    }
+
+    private void populateView(List<EngineCategoryDTO> engineCategoryDTOS) {
+        setDefaultEngineIcons(engineCategoryDTOS);
+        this.viewEngines.populate(engineCategoryDTOS);
+    }
+
+    private void setDefaultEngineIcons(List<EngineCategoryDTO> engineCategoryDTOS) {
+        try {
+            StringBuilder cssBuilder = new StringBuilder();
+            for (EngineCategoryDTO category : engineCategoryDTOS) {
+                cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
+                String categoryIcon = category.getIcon();
+                if (StringUtils.isEmpty(categoryIcon)) {
+                    cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
+                } else {
+                    cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
+                }
+                cssBuilder.append("}\n");
+            }
+            String css = cssBuilder.toString();
+            Path temp = Files.createTempFile("defaultEngineIcons", ".css").toAbsolutePath();
+            Files.write(temp, css.getBytes());
+            String defaultEngineIconsCss = temp.toUri().toString();
+            themeManager.setDefaultEngineIconsCss(defaultEngineIconsCss);
+
+            // apply current theme again to fix hierarchy
+            final String shortName = themeManager.getCurrentTheme().getShortName();
+            final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
+            final URL style = this.getClass().getResource(url);
+            this.viewEngines.getTabPane().getScene().getStylesheets().clear();
+            this.viewEngines.getTabPane().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
+                    defaultEngineIconsCss, style.toExternalForm());
+        } catch (Exception e) {
+            LOGGER.warn("Could not set default engine icons.", e);
+        }
     }
 }

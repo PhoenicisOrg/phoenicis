@@ -68,7 +68,6 @@ public class ViewEngines extends MainWindowView {
     private final CombinedEnginesFilter currentFilter = new CombinedEnginesFilter();
     private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
     private Consumer<EngineCategoryDTO> onSelectCategory;
-    private Consumer<List<EngineCategoryDTO>> onSetDefaultEngineIcons;
     private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {};
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {};
 
@@ -94,9 +93,6 @@ public class ViewEngines extends MainWindowView {
     }
     public void setOnDeleteEngine(Consumer<EngineDTO> onDeleteEngine) {
         this.setOnDeleteEngine = onDeleteEngine;
-    }
-    public void setOnSetDefaultEngineIcons(Consumer<List<EngineCategoryDTO>> onSetDefaultEngineIcons) {
-        this.onSetDefaultEngineIcons = onSetDefaultEngineIcons;
     }
 
     private void initFailure() {
@@ -142,9 +138,8 @@ public class ViewEngines extends MainWindowView {
     }
 
 
-    public void populate(List<EngineCategoryDTO> engineCategoryDTOS, String wineEnginesPath) {
+    public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
-            setDefaultEngineIcons(engineCategoryDTOS);
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (EngineCategoryDTO category : engineCategoryDTOS) {
                 final LeftButton categoryButton = new LeftButton(category.getName());
@@ -209,10 +204,6 @@ public class ViewEngines extends MainWindowView {
 
     public void setOnSelectCategory(Consumer<EngineCategoryDTO> onSelectCategory) {
         this.onSelectCategory = onSelectCategory;
-    }
-
-    private void setDefaultEngineIcons(List<EngineCategoryDTO> engines) {
-        this.onSetDefaultEngineIcons.accept(engines);
     }
 
     private void installEngine(EngineDTO engineDTO) {

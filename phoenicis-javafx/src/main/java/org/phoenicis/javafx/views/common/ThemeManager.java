@@ -3,7 +3,7 @@ package org.phoenicis.javafx.views.common;
 public class ThemeManager {
     private Theme currentTheme;
     private final String themeUrl = "/org/phoenicis/javafx/themes";
-    private String defaultCategoryIconsCss;
+    private String defaultCategoryIconsCss = "";
     private String defaultEngineIconsCss = "";
 
     public ThemeManager() {

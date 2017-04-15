@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
@@ -50,7 +51,7 @@ public class AppsController {
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(view::populate, e -> view.showFailure());
+        this.repositoryManager.addCallbacks(this::populateView, e -> view.showFailure());
     }
 
     public void loadApps() {
@@ -61,38 +62,6 @@ public class AppsController {
             this.view.showWait();
             this.repositoryManager.triggerRepositoryChange();
         });	
-
-        this.view.setOnSetDefaultCategoryIcons(categoryDTOS -> {
-            // set default category icons
-            try {
-                StringBuilder cssBuilder = new StringBuilder();
-                for (CategoryDTO category : categoryDTOS) {
-                    cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
-                    String categoryIcon = category.getIcon();
-                    if (StringUtils.isEmpty(categoryIcon)) {
-                        cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                    } else {
-                        cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                    }
-                    cssBuilder.append("}\n");
-                }
-                String css = cssBuilder.toString();
-                Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
-                Files.write(temp, css.getBytes());
-                String defaultCategoryIconsCss = temp.toUri().toString();
-                themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-
-                // apply current theme again to fix hierarchy
-                final String shortName = themeManager.getCurrentTheme().getShortName();
-                final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-                final URL style = this.getClass().getResource(url);
-                this.view.getTabPane().getScene().getStylesheets().clear();
-                this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss,
-                        themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
-            } catch (Exception e) {
-                LOGGER.warn("Could not set default category icons.", e);
-            }
-        });
 
         this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
                 scriptDTO.getScript(),
@@ -113,5 +82,43 @@ public class AppsController {
 
     public ViewApps getView() {
         return view;
+    }
+
+    private void populateView(List<CategoryDTO> categoryDTOS) {
+        Platform.runLater(() -> {
+            setDefaultCategoryIcons(categoryDTOS);
+            this.view.populate(categoryDTOS);
+        });
+    }
+
+    private void setDefaultCategoryIcons(List<CategoryDTO> categoryDTOS) {
+        try {
+            StringBuilder cssBuilder = new StringBuilder();
+            for (CategoryDTO category : categoryDTOS) {
+                cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
+                String categoryIcon = category.getIcon();
+                if (StringUtils.isEmpty(categoryIcon)) {
+                    cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
+                } else {
+                    cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
+                }
+                cssBuilder.append("}\n");
+            }
+            String css = cssBuilder.toString();
+            Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
+            Files.write(temp, css.getBytes());
+            String defaultCategoryIconsCss = temp.toUri().toString();
+            themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
+
+            // apply current theme again to fix hierarchy
+            final String shortName = themeManager.getCurrentTheme().getShortName();
+            final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
+            final URL style = this.getClass().getResource(url);
+            this.view.getTabPane().getScene().getStylesheets().clear();
+            this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss,
+                    themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
+        } catch (Exception e) {
+            LOGGER.warn("Could not set default category icons.", e);
+        }
     }
 }

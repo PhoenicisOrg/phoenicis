@@ -62,7 +62,6 @@ public class ViewApps extends MainWindowView {
     private final SearchBox searchBar;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> { };
-    private Consumer<List<CategoryDTO>> onSetDefaultCategoryIcons;
 
     private ObservableList<CategoryDTO> categories;
     private FilteredList<CategoryDTO> installableCategories;
@@ -103,10 +102,6 @@ public class ViewApps extends MainWindowView {
         this.onSelectScript = onSelectScript;
     }
 
-    public void setOnSetDefaultCategoryIcons(Consumer<List<CategoryDTO>> onSetDefaultCategoryIcons) {
-        this.onSetDefaultCategoryIcons = onSetDefaultCategoryIcons;
-    }
-
     /**
      * Show available apps panel
      */
@@ -121,7 +116,6 @@ public class ViewApps extends MainWindowView {
      */
     public void populate(List<CategoryDTO> categories) {
         Platform.runLater(() -> {
-            setDefaultCategoryIcons(categories);
             this.categories.setAll(categories);
             this.filter.clearAll();
             this.categoryView.selectAll();
@@ -157,10 +151,6 @@ public class ViewApps extends MainWindowView {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
         showRightView(appPanel);
-    }
-
-    private void setDefaultCategoryIcons(List<CategoryDTO> categories) {
-        this.onSetDefaultCategoryIcons.accept(categories);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
