@@ -244,6 +244,12 @@ public class ViewSettings extends MainWindowView {
 		repositoryPane.setHgap(20);
 		repositoryPane.setVgap(10);
 
+		// Legend
+		final Label priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
+		priorityHint.setWrapText(true);
+		priorityHint.maxWidthProperty().bind(repositoriesPanel.widthProperty());
+		priorityHint.setPadding(new Insets(10));
+
 		// Refresh Repositories
 		GridPane refreshLayout = new GridPane();
 		refreshLayout.setHgap(20);
@@ -274,14 +280,8 @@ public class ViewSettings extends MainWindowView {
 
 		refreshLayout.add(refreshRepositoriesLabel, 0, 0);
 		refreshLayout.add(refreshRepositoriesButton, 1, 0);
-
-		// Legend
-		final Label priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
-		priorityHint.setWrapText(true);
-		priorityHint.maxWidthProperty().bind(repositoriesPanel.widthProperty());
-		priorityHint.setPadding(new Insets(10));
 		
-		repositoriesPanel.getChildren().addAll(repositoryPane, refreshLayout, priorityHint);
+		repositoriesPanel.getChildren().addAll(repositoryPane, priorityHint, refreshLayout);
 	}
 
 	private void initFileAssociationsPane() {
