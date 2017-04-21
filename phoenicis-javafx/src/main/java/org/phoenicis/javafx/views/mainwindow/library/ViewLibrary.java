@@ -18,24 +18,16 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftBarTitle;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
-import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
-
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.stage.FileChooser;
+import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -44,14 +36,12 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 public class ViewLibrary extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
 
-    private ApplicationSideBar sideBar;
+    private LibrarySideBar sideBar;
 
     private MiniatureListWidget<ShortcutDTO> applicationListWidget;
 
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {};
-
-    private String lastSearch = "";
 
     private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {};
     private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {};
@@ -60,7 +50,7 @@ public class ViewLibrary extends MainWindowView {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        this.sideBar = new ApplicationSideBar(applicationName);
+        this.sideBar = new LibrarySideBar(applicationName);
 
         this.drawSideBar();
         this.drawContent();

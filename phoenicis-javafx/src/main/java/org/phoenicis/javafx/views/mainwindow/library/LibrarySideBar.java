@@ -14,7 +14,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 /**
  * Created by marc on 15.04.17.
  */
-public class ApplicationSideBar extends VBox {
+public class LibrarySideBar extends VBox {
     // the search bar used for filtering
     private SearchBox searchBar;
 
@@ -49,7 +49,7 @@ public class ApplicationSideBar extends VBox {
     private Consumer<File> onScriptRun;
     private Runnable onOpenConsole;
 
-    public ApplicationSideBar(String applicationName) {
+    public LibrarySideBar(String applicationName) {
         super();
 
         this.applicationName = applicationName;
