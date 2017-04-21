@@ -79,7 +79,6 @@ public class MainWindow extends Stage {
     }
 
     private void setUpEvents() {
-        library.setUpEvents();
         engines.setUpEvents();
     }
 

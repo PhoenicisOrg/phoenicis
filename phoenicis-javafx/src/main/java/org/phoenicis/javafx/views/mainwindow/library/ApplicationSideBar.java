@@ -57,9 +57,11 @@ public class ApplicationSideBar extends VBox {
         this.populateSearchBar();
         this.populateShortcut();
         this.populateAdvancedTools();
+
+        this.hideShortcut();
     }
 
-    private void showShortcut(ShortcutDTO shortcut) {
+    public void showShortcut(ShortcutDTO shortcut) {
         this.shortcut = shortcut;
 
         this.shortcutGroup.setName(shortcut.getName());
@@ -67,7 +69,7 @@ public class ApplicationSideBar extends VBox {
         this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.shortcutGroup, new LeftSpacer(), this.advancedToolsGroup);
     }
 
-    private void hideShortcut() {
+    public void hideShortcut() {
         this.shortcut = null;
 
         this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.advancedToolsGroup);
@@ -91,7 +93,7 @@ public class ApplicationSideBar extends VBox {
         this.stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcut));
         this.uninstallButton.setOnMouseClicked(event -> {onShortcutUninstall.accept(shortcut); hideShortcut();});
 
-        this.shortcutGroup = new LeftGroup("", runButton, stopButton, uninstallButton);
+        this.shortcutGroup = new LeftGroup("Unknown application", runButton, stopButton, uninstallButton);
     }
 
     private void populateAdvancedTools() {
@@ -115,5 +117,29 @@ public class ApplicationSideBar extends VBox {
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
         this.advancedToolsGroup = new LeftGroup("Advanced tools", runScript, runConsole);
+    }
+
+    public void setOnSearch(Consumer<String> onSearch) {
+        this.onSearch = onSearch;
+    }
+
+    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
+        this.onShortcutRun = onShortcutRun;
+    }
+
+    public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
+        this.onShortcutStop = onShortcutStop;
+    }
+
+    public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
+        this.onShortcutUninstall = onShortcutUninstall;
+    }
+
+    public void setOnScriptRun(Consumer<File> onScriptRun) {
+        this.onScriptRun = onScriptRun;
+    }
+
+    public void setOnOpenConsole(Runnable onOpenConsole) {
+        this.onOpenConsole = onOpenConsole;
     }
 }
