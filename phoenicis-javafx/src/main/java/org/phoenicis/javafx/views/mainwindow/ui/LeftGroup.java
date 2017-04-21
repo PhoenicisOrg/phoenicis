@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -33,6 +34,18 @@ public class LeftGroup extends VBox {
         this.name = name;
         this.getStyleClass().add("leftPaneInside");
         this.clear();
+    }
+
+    public LeftGroup(Node ... content) {
+        this.getStyleClass().add("leftPaneInside");
+
+        this.setNodes(Arrays.asList(content));
+    }
+
+    public LeftGroup(String name, Node ... content) {
+        this(name);
+
+        this.setNodes(Arrays.asList(content));
     }
 
     public void setName(String name) {
