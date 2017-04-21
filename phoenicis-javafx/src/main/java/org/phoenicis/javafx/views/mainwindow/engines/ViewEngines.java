@@ -114,7 +114,7 @@ public class ViewEngines extends MainWindowView {
     protected void drawSideBar() {
         super.drawSideBar();
 
-        final SearchBox searchBar = new SearchBox(themeManager, filterText -> {}, () -> {});
+        final SearchBox searchBar = new SearchBox(filterText -> {}, () -> {});
         searchBar.setOnKeyReleased(event -> {});
 
         categoryView = new LeftGroup(translate("Engines"));
@@ -138,17 +138,12 @@ public class ViewEngines extends MainWindowView {
     }
 
 
-    public void populate(List<EngineCategoryDTO> engineCategoryDTOS, String wineEnginesPath) {
+    public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
             final List<LeftButton> leftButtonList = new ArrayList<>();
             for (EngineCategoryDTO category : engineCategoryDTOS) {
                 final LeftButton categoryButton = new LeftButton(category.getName());
-                final String resource = String.format("icons/mainwindow/engines/%s.png", category.getName().toLowerCase());
-                if (themeManager.resourceExists(resource)) {
-                    categoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(resource) + "');");
-                } else {
-                    categoryButton.setStyle("-fx-background-image: url('" + category.getIcon() + "');");
-                }
+                categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
                 categoryButton.setOnMouseClicked(event -> selectCategory(category));
                 leftButtonList.add(categoryButton);
             }

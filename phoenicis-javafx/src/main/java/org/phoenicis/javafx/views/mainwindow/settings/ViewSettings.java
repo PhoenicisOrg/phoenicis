@@ -98,38 +98,31 @@ public class ViewSettings extends MainWindowView {
 		ToggleGroup group = new ToggleGroup();
 
 		final LeftToggleButton uiButton = new LeftToggleButton("User Interface");
-		final String uiButtonIcon = "icons/mainwindow/settings/userInterface.png";
-		uiButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(uiButtonIcon) + "');");
+		uiButton.getStyleClass().add("userInterfaceButton");
 		uiButton.setToggleGroup(group);
 		leftButtonList.add(uiButton);
 		uiButton.setOnMouseClicked(event -> showRightView(uiPanel));
 
 		final LeftToggleButton repositoriesButton = new LeftToggleButton("Repositories");
-		final String repositoriesButtonIcon = "icons/mainwindow/settings/repository.png";
-		repositoriesButton
-				.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(repositoriesButtonIcon) + "');");
+		repositoriesButton.getStyleClass().add("repositoriesButton");
 		repositoriesButton.setToggleGroup(group);
 		leftButtonList.add(repositoriesButton);
 		repositoriesButton.setOnMouseClicked(event -> showRightView(repositoriesPanel));
 
 		final LeftToggleButton fileAssociationsButton = new LeftToggleButton("File Associations");
-		final String fileAssociationsButtonIcon = "icons/mainwindow/settings/settings.png";
-		fileAssociationsButton.setStyle(
-				"-fx-background-image: url('" + themeManager.getResourceUrl(fileAssociationsButtonIcon) + "');");
+		fileAssociationsButton.getStyleClass().add("settingsButton");
 		fileAssociationsButton.setToggleGroup(group);
 		leftButtonList.add(fileAssociationsButton);
 		fileAssociationsButton.setOnMouseClicked(event -> showRightView(fileAssociationsPanel));
 
 		final LeftToggleButton networkButton = new LeftToggleButton("Network");
-		final String networkButtonIcon = "icons/mainwindow/settings/network.png";
-		networkButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(networkButtonIcon) + "');");
+		networkButton.getStyleClass().add("networkButton");
 		networkButton.setToggleGroup(group);
 		leftButtonList.add(networkButton);
 		networkButton.setOnMouseClicked(event -> showRightView(networkPanel));
 
 		final LeftToggleButton aboutButton = new LeftToggleButton("About");
-		final String aboutButtonIcon = "icons/mainwindow/settings/about.png";
-		aboutButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(aboutButtonIcon) + "');");
+		aboutButton.getStyleClass().add("aboutButton");
 		aboutButton.setToggleGroup(group);
 		leftButtonList.add(aboutButton);
 		aboutButton.setOnMouseClicked(event -> showRightView(aboutPanel));
@@ -180,13 +173,6 @@ public class ViewSettings extends MainWindowView {
 		gridPane.setVgap(10);
 
 		uiPanel.getChildren().add(gridPane);
-
-		// Legend below
-		final Label restartHint = new Label(
-				translate("If you change the theme, please restart to load the icons of the new theme."));
-		restartHint.setPadding(new Insets(10));
-		
-		uiPanel.getChildren().add(restartHint);
 	}
 
 	private void initRepositoriesSettingsPane() {
@@ -343,6 +329,7 @@ public class ViewSettings extends MainWindowView {
 		final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
 		final URL style = this.getClass().getResource(url);
 		getContent().getScene().getStylesheets().clear();
-		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(), style.toExternalForm());
+		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
+			themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
 	}
 }
