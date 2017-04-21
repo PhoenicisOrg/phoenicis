@@ -372,6 +372,7 @@
 
 .searchCleanButton {
 	-fx-background-color: transparent;
+	-fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
 }
 
 /*******************************************************/
@@ -678,4 +679,56 @@
 
 #scienceButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/science.png');
+}
+
+/********************* containers **********************/
+.containerButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/containers/container.png');
+}
+
+/*********************** engines ***********************/
+#wineButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/engines/wine.png');
+}
+
+/*********************** library ***********************/
+.runButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/play.png');
+}
+
+.stopButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/stop.png');
+}
+
+.uninstallButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/remove.png');
+}
+
+.scriptButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/script.png');
+}
+
+.consoleButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/console.png');
+}
+
+/*********************** settings **********************/
+.userInterfaceButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/userInterface.png');
+}
+
+.repositoriesButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/repository.png');
+}
+
+.settingsButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/settings.png');
+}
+
+.networkButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/network.png');
+}
+
+.aboutButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/about.png');
 }

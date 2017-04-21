@@ -67,11 +67,9 @@ public class ViewLibrary extends MainWindowView {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
         this.runScript = new LeftButton(translate("Run a script"));
-        final String scriptButtonIcon = "icons/mainwindow/library/script.png";
-        this.runScript.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(scriptButtonIcon) + "');");
+        this.runScript.getStyleClass().add("scriptButton");
         this.runConsole = new LeftButton(translate(applicationName + " console"));
-        final String consoleButtonIcon = "icons/mainwindow/library/console.png";
-        this.runConsole.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(consoleButtonIcon) + "');");
+        this.runConsole.getStyleClass().add("consoleButton");
 
         this.drawSideBar();
         this.drawContent();
@@ -147,7 +145,7 @@ public class ViewLibrary extends MainWindowView {
     }
 
     private void drawSideBarWithShortcut(ShortcutDTO shortcut) {
-        searchBar = new SearchBox(themeManager, this::applyFilter, () -> {});
+        searchBar = new SearchBox(this::applyFilter, () -> {});
 
         addToSideBar(searchBar, new LeftSpacer(), shortcutGroup(shortcut), new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
@@ -155,14 +153,11 @@ public class ViewLibrary extends MainWindowView {
     private LeftGroup shortcutGroup(ShortcutDTO shortcut) {
         final LeftGroup shortcutGroup = new LeftGroup(shortcut.getName());
         final LeftButton runButton = new LeftButton(translate("Run"));
-        final String runButtonIcon = "icons/mainwindow/library/play.png";
-        runButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(runButtonIcon) + "');");
+        runButton.getStyleClass().add("runButton");
         final LeftButton stopButton = new LeftButton(translate("Close"));
-        final String stopButtonIcon = "icons/mainwindow/library/stop.png";
-        stopButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(stopButtonIcon) + "');");
+        stopButton.getStyleClass().add("stopButton");
         final LeftButton uninstallButton = new LeftButton(translate("Uninstall"));
-        final String uninstallButtonIcon = "icons/mainwindow/library/remove.png";
-        uninstallButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(uninstallButtonIcon) + "');");
+        uninstallButton.getStyleClass().add("uninstallButton");
 
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
         uninstallButton.setOnMouseClicked(event -> {onShortcutUninstall.accept(shortcut); drawSideBarWithoutShortcut();});
@@ -179,7 +174,7 @@ public class ViewLibrary extends MainWindowView {
     private void drawSideBarWithoutShortcut() {
         clearSideBar();
 
-        searchBar = new SearchBox(themeManager, this::applyFilter, () -> {});
+        searchBar = new SearchBox(this::applyFilter, () -> {});
 
         addToSideBar(searchBar, new LeftSpacer(), new LeftBarTitle("Advanced tools"), runScript, runConsole);
     }
