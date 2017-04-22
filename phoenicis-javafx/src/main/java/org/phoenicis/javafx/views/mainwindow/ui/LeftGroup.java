@@ -56,7 +56,7 @@ public class LeftGroup extends VBox {
 
     private void clear() {
         this.getChildren().clear();
-        this.getChildren().add(new TextFlow(new LeftBarTitle(name)));
+        this.getChildren().add(new LeftBarTitle(name));
     }
 
     public void setNodes(List<? extends Node> nodes) {

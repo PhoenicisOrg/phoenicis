@@ -24,5 +24,6 @@ public class LeftBarTitle extends Label {
     public LeftBarTitle(String defaultValue) {
         super(defaultValue);
         this.getStyleClass().add("leftBarTitle");
+        this.setWrapText(true);
     }
 }
