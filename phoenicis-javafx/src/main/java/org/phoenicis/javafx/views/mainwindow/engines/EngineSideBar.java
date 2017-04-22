@@ -16,38 +16,73 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 /**
- * Created by marc on 22.04.17.
+ * An instance of this class represents the left sidebar of the engines tab view.
+ * This sidebar contains three items:
+ * <ul>
+ * <li>
+ * A searchbar, which enables the user to search for an engine.
+ * </li>
+ * <li>
+ * A button group containing a button for all known engine groups.
+ * After pressing on one such button all engines belonging to the selected engine group are shown in the main window panel.
+ * </li>
+ * <li>
+ * A button group containing buttons to filter for installed and uninstalled engines.
+ * </li>
+ * </ul>
+ *
+ * @author marc
+ * @since 22.04.17
  */
 public class EngineSideBar extends VBox {
+    // the search bar used for filtering
     private SearchBox searchBar;
 
+    // the button group containing a button for all engine categories
     private LeftToggleGroup<EngineCategoryDTO> categoryView;
 
+    // the button group containing a button to filter the engines for installed and uninstalled engines
     private LeftGroup installationFilterGroup;
 
     private CheckBox installedCheck;
     private CheckBox notInstalledCheck;
 
+    // the engines filter
     private CombinedEnginesFilter currentFilter;
 
-    private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
+    // consumer called when a filter in the installation filter group has been activated
+    private Consumer<CombinedEnginesFilter> onApplyFilter = filter -> {};
 
+    // consumer called when a category has been selected
     private Consumer<EngineCategoryDTO> onCategorySelection;
 
+    /**
+     * Constructor
+     */
     public EngineSideBar() {
+        super();
+
         this.initializeFilter();
 
         this.populateSearchBar();
-        this.populateEngineTypes();
+        this.populateEngineCategories();
         this.populateInstallationFilters();
 
         this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(), this.installationFilterGroup);
     }
 
+    /**
+     * This method takes an {@link ObservableList} of engine categories and binds it to the engrine categories button group
+     *
+     * @param engineCategories The list of engine categories
+     */
     public void bindEngineCategories(ObservableList<EngineCategoryDTO> engineCategories) {
         Bindings.bindContent(categoryView.getElements(), engineCategories);
     }
 
+    /**
+     * This method initializes the engines filter, which is responsible for filtering installed and/or not installed engines
+     */
     private void initializeFilter() {
         this.currentFilter = new CombinedEnginesFilter();
 
@@ -55,15 +90,24 @@ public class EngineSideBar extends VBox {
         this.currentFilter.add(EnginesFilter.NOT_INSTALLED);
     }
 
+    /**
+     * This method populates the searchbar
+     */
     private void populateSearchBar() {
         // TODO: do something when a search term has been entered
         this.searchBar = new SearchBox(filterText -> {}, () -> {});
     }
 
-    private void populateEngineTypes() {
+    /**
+     * This method populates the button group showing all known engine categories
+     */
+    private void populateEngineCategories() {
         this.categoryView = LeftToggleGroup.create(translate("Engines"), this::createCategoryToggleButton);
     }
 
+    /**
+     * This method populates the button group containing buttons to filter for installed and not installed engines
+     */
     private void populateInstallationFilters() {
         this.installedCheck = new LeftCheckBox(translate("Installed"));
         this.installedCheck.setUserData(EnginesFilter.INSTALLED);
@@ -96,6 +140,12 @@ public class EngineSideBar extends VBox {
         this.installationFilterGroup = new LeftGroup(installedCheck, notInstalledCheck);
     }
 
+    /**
+     * This method creates a new toggle button for a given engine category.
+     *
+     * @param category The engine category, for which a new toggle button should be created
+     * @return The created toggle button
+     */
     private ToggleButton createCategoryToggleButton(EngineCategoryDTO category) {
         ToggleButton categoryButton = new LeftToggleButton(category.getName());
 
@@ -105,10 +155,20 @@ public class EngineSideBar extends VBox {
         return categoryButton;
     }
 
+    /**
+     * This method updates the consumer, that is called when the installed or not installed engines filter gets applied
+     *
+     * @param onApplyFilter The new consumer to be called
+     */
     public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
         this.onApplyFilter = onApplyFilter;
     }
 
+    /**
+     * This method updates the consumer, that is called when an engines category gets selected
+     *
+     * @param onCategorySelection The new consumer to be called
+     */
     public void setOnCategorySelection(Consumer<EngineCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
     }
