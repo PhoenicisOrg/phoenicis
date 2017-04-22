@@ -74,12 +74,6 @@ public class MainWindow extends Stage {
         this.setScene(scene);
         this.setTitle(applicationName);
         this.show();
-
-        this.setUpEvents();
-    }
-
-    private void setUpEvents() {
-        engines.setUpEvents();
     }
 
     public void showLibrary() {
