@@ -59,7 +59,6 @@ public class ViewEngines extends MainWindowView {
 
         this.engineCategories = FXCollections.observableArrayList();
 
-        this.sideBar.setOnAllCategorySelection(this::showAvailableEngines);
         this.sideBar.setOnCategorySelection(this::selectCategory);
 
         this.sideBar.bindEngineCategories(engineCategories);
