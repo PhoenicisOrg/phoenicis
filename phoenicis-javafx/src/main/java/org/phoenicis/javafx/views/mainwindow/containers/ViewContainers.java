@@ -18,6 +18,8 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
@@ -37,25 +39,31 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewContainers extends MainWindowView {
-    private final LeftGroup containersView;
+    private ContainerSideBar sideBar;
 
-    private SearchBox searchBar;
+    private ObservableList<ContainerDTO> containers;
+
     private MessagePanel selectContainerPanel;
-    private Consumer<ContainerDTO> onSelectContainer = container -> {};
 
     public ViewContainers(ThemeManager themeManager) {
         super("Containers", themeManager);
 
-        this.containersView = new LeftGroup(translate("Containers"));
+        this.sideBar = new ContainerSideBar();
+
+        this.containers = FXCollections.observableArrayList();
+
+        this.sideBar.setOnApplyFilter(this::applyFilter);
+
+        this.sideBar.bindContainers(this.containers);
 
         this.drawSideBar();
+        this.initSelectContainerPane();
 
-        initSelectContainerPane();
         showRightView(selectContainerPanel);
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
-        this.onSelectContainer = onSelectContainer;
+        this.sideBar.setOnSelectContainer(onSelectContainer);
     }
 
     private void initSelectContainerPane() {
@@ -64,39 +72,21 @@ public class ViewContainers extends MainWindowView {
 
     public void populate(List<ContainerDTO> containers) {
         Platform.runLater(() -> {
-            final List<LeftToggleButton> leftButtonList = new ArrayList<>();
-            ToggleGroup group = new ToggleGroup();
+            this.containers.setAll(containers);
 
-            for (ContainerDTO container : containers) {
-                final LeftToggleButton containerButton = new LeftToggleButton(container.getName());
-                containerButton.getStyleClass().add("containerButton");
-                containerButton.setToggleGroup(group);
-                leftButtonList.add(containerButton);
-                containerButton.setOnMouseClicked(event -> this.selectContainer(container));
-            }
+            this.initSelectContainerPane();
 
-            initSelectContainerPane();
             showRightView(selectContainerPanel);
-            containersView.setNodes(leftButtonList);
         });
-    }
-
-    private void selectContainer(ContainerDTO container) {
-        this.onSelectContainer.accept(container);
     }
 
     @Override
     protected void drawSideBar() {
-        searchBar = new SearchBox(this::applyFilter, () -> {});
-
-        addToSideBar(searchBar, new LeftSpacer(), containersView);
-
+        addToSideBar(this.sideBar);
         super.drawSideBar();
     }
 
     private void applyFilter(String searchText) {
-
+        // TODO: Do some filtering here
     }
-
-
 }
