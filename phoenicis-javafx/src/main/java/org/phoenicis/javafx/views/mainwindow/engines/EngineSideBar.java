@@ -150,9 +150,18 @@ public class EngineSideBar extends VBox {
         ToggleButton categoryButton = new LeftToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
-        categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
+        categoryButton.setOnAction(event -> onCategorySelection.accept(category));
 
         return categoryButton;
+    }
+
+    /**
+     * This method selects the button belonging to the given engine category in the engine category button group.
+     *
+     * @param engineCategory The engine category to be selected
+     */
+    public void selectEngineCategory(EngineCategoryDTO engineCategory) {
+        this.categoryView.select(engineCategory);
     }
 
     /**

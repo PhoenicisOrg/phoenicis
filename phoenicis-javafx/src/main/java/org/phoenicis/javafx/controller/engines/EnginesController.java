@@ -65,7 +65,6 @@ public class EnginesController {
                 filter.apply(versions, wineEnginesPath);
                 this.viewEngines.populate(versions);
             }));
-            this.viewEngines.showWineVersions();
         });
 
         this.viewEngines.setOnInstallEngine(engineDTO -> {
@@ -89,8 +88,6 @@ public class EnginesController {
 
     public void loadEngines() {
         enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> populateView(versions)));
-        this.viewEngines.setOnSelectCategory(categoryDTO -> this.viewEngines.populateEngines(categoryDTO.getName(), categoryDTO.getSubCategories(), wineEnginesPath));
-        this.viewEngines.showWineVersions();
     }
 
     private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
