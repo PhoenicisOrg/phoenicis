@@ -64,7 +64,7 @@ public class EngineSideBar extends VBox {
     }
 
     private void populateEngineTypes() {
-        this.categoryView = LeftToggleGroup.create(translate("Engines"), this::createAllCategoriesToggleButton, this::createCategoryToggleButton);
+        this.categoryView = LeftToggleGroup.create(translate("Engines"), this::createCategoryToggleButton);
     }
 
     private void populateInstallationFilters() {
@@ -99,15 +99,6 @@ public class EngineSideBar extends VBox {
         this.installationFilterGroup = new LeftGroup(installedCheck, notInstalledCheck);
     }
 
-    private ToggleButton createAllCategoriesToggleButton() {
-        ToggleButton categoryButton = new LeftToggleButton("All");
-
-        categoryButton.setId("allButton");
-        categoryButton.setOnMouseClicked(event -> onAllCategorySelection.run());
-
-        return categoryButton;
-    }
-
     private ToggleButton createCategoryToggleButton(EngineCategoryDTO category) {
         ToggleButton categoryButton = new LeftToggleButton(category.getName());
 
@@ -115,5 +106,17 @@ public class EngineSideBar extends VBox {
         categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
 
         return categoryButton;
+    }
+
+    public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
+        this.onApplyFilter = onApplyFilter;
+    }
+
+    public void setOnCategorySelection(Consumer<EngineCategoryDTO> onCategorySelection) {
+        this.onCategorySelection = onCategorySelection;
+    }
+
+    public void setOnAllCategorySelection(Runnable onAllCategorySelection) {
+        this.onAllCategorySelection = onAllCategorySelection;
     }
 }

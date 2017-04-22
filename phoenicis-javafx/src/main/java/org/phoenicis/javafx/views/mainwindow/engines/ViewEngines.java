@@ -19,54 +19,35 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.CheckBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import org.phoenicis.engines.CombinedEnginesFilter;
-import org.phoenicis.engines.EnginesFilter;
+import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
 public class ViewEngines extends MainWindowView {
-
-    private class CheckBoxListener implements ChangeListener<Boolean> {
-        @Override
-        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-            BooleanProperty selectedProperty = (BooleanProperty) observableValue;
-            CheckBox checkBox = (CheckBox) selectedProperty.getBean();
-            if (newValue) {
-                currentFilter.add((EnginesFilter) checkBox.getUserData());
-            } else {
-                currentFilter.remove((EnginesFilter) checkBox.getUserData());
-            }
-            onApplyFilter.accept(currentFilter);
-        }
-    }
+    private EngineSideBar sideBar;
 
     private TabPane availableEngines;
+
     private EnginePanel currentEnginePanel;
-    private LeftGroup categoryView;
-    private final CombinedEnginesFilter currentFilter = new CombinedEnginesFilter();
-    private Consumer<CombinedEnginesFilter> onApplyFilter = (filter) -> {};
+
+    private ObservableList<EngineCategoryDTO> engineCategories;
+
     private Consumer<EngineCategoryDTO> onSelectCategory;
     private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {};
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {};
@@ -74,9 +55,14 @@ public class ViewEngines extends MainWindowView {
     public ViewEngines(ThemeManager themeManager) {
         super("Engines", themeManager);
 
-        //   entitiesProvider = eventHandlerLibrary.getRemoteWineVersions();
-        currentFilter.add(EnginesFilter.INSTALLED);
-        currentFilter.add(EnginesFilter.NOT_INSTALLED);
+        this.sideBar = new EngineSideBar();
+
+        this.engineCategories = FXCollections.observableArrayList();
+
+        this.sideBar.setOnAllCategorySelection(this::showAvailableEngines);
+        this.sideBar.setOnCategorySelection(this::selectCategory);
+
+        this.sideBar.bindEngineCategories(engineCategories);
 
         this.initFailure();
         this.initWineVersions();
@@ -86,11 +72,13 @@ public class ViewEngines extends MainWindowView {
     }
 
     public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
-        this.onApplyFilter = onApplyFilter;
+        this.sideBar.setOnApplyFilter(onApplyFilter);
     }
+
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
         this.setOnInstallEngine = onInstallEngine;
     }
+
     public void setOnDeleteEngine(Consumer<EngineDTO> onDeleteEngine) {
         this.setOnDeleteEngine = onDeleteEngine;
     }
@@ -112,44 +100,14 @@ public class ViewEngines extends MainWindowView {
 
     @Override
     protected void drawSideBar() {
+        addToSideBar(this.sideBar);
         super.drawSideBar();
-
-        final SearchBox searchBar = new SearchBox(filterText -> {}, () -> {});
-        searchBar.setOnKeyReleased(event -> {});
-
-        categoryView = new LeftGroup(translate("Engines"));
-
-        LeftSpacer spacer = new LeftSpacer();
-
-        final CheckBox installedCheck = new LeftCheckBox(translate("Installed"));
-        installedCheck.setUserData(EnginesFilter.INSTALLED);
-        installedCheck.setSelected(true);
-        installedCheck.selectedProperty().addListener(new CheckBoxListener());
-        final CheckBox notInstalledCheck = new LeftCheckBox(translate("Not installed"));
-        notInstalledCheck.setUserData(EnginesFilter.NOT_INSTALLED);
-        notInstalledCheck.setSelected(true);
-        notInstalledCheck.selectedProperty().addListener(new CheckBoxListener());
-
-        addToSideBar(searchBar, spacer, categoryView, new LeftSpacer(), installedCheck, notInstalledCheck);
     }
-
-    public void setUpEvents() {
-        //entitiesProvider.setOnChange(this::update);
-    }
-
 
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
-            final List<LeftButton> leftButtonList = new ArrayList<>();
-            for (EngineCategoryDTO category : engineCategoryDTOS) {
-                final LeftButton categoryButton = new LeftButton(category.getName());
-                categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
-                categoryButton.setOnMouseClicked(event -> selectCategory(category));
-                leftButtonList.add(categoryButton);
-            }
-
-            categoryView.setNodes(leftButtonList);
-            showAvailableEngines();
+            this.engineCategories.setAll(engineCategoryDTOS);
+            this.showAvailableEngines();
         });
     }
 
@@ -191,7 +149,7 @@ public class ViewEngines extends MainWindowView {
     }
 
     private void selectCategory(EngineCategoryDTO category) {
-        showRightView(availableEngines);
+        this.showRightView(availableEngines);
         this.onSelectCategory.accept(category);
     }
 
