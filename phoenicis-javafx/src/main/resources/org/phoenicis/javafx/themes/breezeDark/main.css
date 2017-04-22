@@ -645,6 +645,10 @@
 /*******************************************************/
 
 /************************ apps *************************/
+#allButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/all.png');
+}
+
 #customButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/custom.png');
 }

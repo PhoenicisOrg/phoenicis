@@ -51,10 +51,10 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
 public class ViewApps extends MainWindowView {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
 
+    private ApplicationSideBar sideBar;
+
     private final MiniatureListWidget<ApplicationDTO> availableApps;
-    private final LeftToggleGroup<CategoryDTO> categoryView;
     private final ApplicationFilter<ApplicationDTO> filter;
-    private final SearchBox searchBar;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> { };
 
@@ -71,23 +71,38 @@ public class ViewApps extends MainWindowView {
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        this.searchBar = new SearchBox(this::processFilterText, this::clearFilterText);
-
+        this.sideBar = new ApplicationSideBar();
         this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create, (element, event) -> showAppDetails(element.getValue(), settingsManager));
-        this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton, this::createCategoryToggleButton);
 
+        // initialising the category lists
         this.categories = FXCollections.observableArrayList();
         this.installableCategories = this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
         this.sortedCategories = this.installableCategories.sorted(Comparator.comparing(CategoryDTO::getName));
 
+        // initialising the application lists
         this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories, CategoryDTO::getApplications);
         this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
         this.filter = new ApplicationFilter<ApplicationDTO>(filteredApplications, (filterText, application) -> application.getName().toLowerCase().contains(filterText));
 
-        Bindings.bindContent(this.categoryView.getElements(), this.sortedCategories);
+        // create the bindings between the visual components and the observable lists
+        this.sideBar.bindCategories(this.sortedCategories);
         Bindings.bindContent(this.availableApps.getItems(), this.sortedApplications);
+
+        // set the filter event consumers
+        this.sideBar.setOnFilterTextEnter(this::processFilterText);
+        this.sideBar.setOnFilterClear(this::clearFilterText);
+
+        // set the category selection consumers
+        this.sideBar.setOnCategorySelection(category -> {
+            filter.setFilters(category.getApplications()::contains);
+            showAvailableApps();
+        });
+        this.sideBar.setOnAllCategorySelection(() -> {
+            filter.clearFilters();
+            showAvailableApps();
+        });
 
         this.drawSideBar();
         this.showWait();
@@ -113,7 +128,8 @@ public class ViewApps extends MainWindowView {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
             this.filter.clearAll();
-            this.categoryView.selectAll();
+            this.sideBar.selectAllCategories();
+
             this.showAvailableApps();
         });
     }
@@ -124,21 +140,7 @@ public class ViewApps extends MainWindowView {
 
     @Override
     protected void drawSideBar() {
-        final CheckBox testingCheck = new LeftCheckBox(translate("Testing"));
-        final CheckBox noCdNeededCheck = new LeftCheckBox(translate("No CD needed"));
-        final CheckBox commercialCheck = new LeftCheckBox(translate("Commercial"));
-
-        addToSideBar(
-                searchBar,
-                new LeftSpacer(),
-                categoryView,
-                new LeftSpacer(),
-                new LeftBarTitle("Filters"),
-                testingCheck,
-                noCdNeededCheck,
-                commercialCheck
-        );
-
+        addToSideBar(sideBar);
         super.drawSideBar();
     }
 
@@ -171,31 +173,5 @@ public class ViewApps extends MainWindowView {
         this.pause.playFromStart();
 
         this.showAvailableApps();
-    }
-
-    private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton("All");
-        allCategoryButton.setSelected(true);
-        final String allCategoryButtonIcon = String.format("icons/mainwindow/apps/all.png");
-        allCategoryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(allCategoryButtonIcon) + "');");
-        allCategoryButton.setOnMouseClicked(event -> {
-            filter.clearFilters();
-            showAvailableApps();
-        });
-
-        return allCategoryButton;
-    }
-
-    private ToggleButton createCategoryToggleButton(CategoryDTO category) {
-        final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
-
-	categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
-
-        categoryButton.setOnMouseClicked(event -> {
-            filter.setFilters(category.getApplications()::contains);
-            showAvailableApps();
-        });
-
-        return categoryButton;
     }
 }

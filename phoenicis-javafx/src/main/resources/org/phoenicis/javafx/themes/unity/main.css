@@ -688,6 +688,11 @@
 /*******************************************************/
 /************************ icons ************************/
 /*******************************************************/
+/************************ apps *************************/
+#allButton {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/all.png');
+}
+
 /********************* containers **********************/
 .containerButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/container.png');
