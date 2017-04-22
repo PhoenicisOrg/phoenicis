@@ -18,16 +18,15 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import org.phoenicis.apps.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.common.Theme;
@@ -39,24 +38,14 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewSettings extends MainWindowView {
 	private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
@@ -182,11 +171,11 @@ public class ViewSettings extends MainWindowView {
 		final Text title = new TextWithStyle(translate("Repositories Settings"), TITLE_CSS_CLASS);
 		repositoriesPanel.getChildren().add(title);
 
-		final GridPane gridPane = new GridPane();
-		gridPane.getStyleClass().add("grid");
+		final GridPane repositoryPane = new GridPane();
+		repositoryPane.getStyleClass().add("grid");
 
 		TextWithStyle repositoryText = new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS);
-		gridPane.add(repositoryText, 0, 0);
+		repositoryPane.add(repositoryText, 0, 0);
 		GridPane.setValignment(repositoryText, VPos.TOP);
 		VBox repositoryLayout = new VBox();
 		repositoryLayout.setSpacing(5);
@@ -199,8 +188,10 @@ public class ViewSettings extends MainWindowView {
 
 			this.save();
 		}));
+
 		HBox repositoryButtonLayout = new HBox();
 		repositoryButtonLayout.setSpacing(5);
+
 		Button addButton = new Button();
 		addButton.setText("Add");
 		addButton.setOnAction((ActionEvent event) -> {
@@ -219,6 +210,7 @@ public class ViewSettings extends MainWindowView {
 				repositoryManager.addRepositories(0, newRepository);
 			});
 		});
+
 		Button removeButton = new Button();
 		removeButton.setText("Remove");
 		removeButton.setOnAction((ActionEvent event) -> {
@@ -230,21 +222,52 @@ public class ViewSettings extends MainWindowView {
 
 			repositoryManager.removeRepositories(toRemove);
 		});
+
 		repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
 		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
-		gridPane.add(repositoryLayout, 1, 0);
+		repositoryPane.add(repositoryLayout, 1, 0);
 
-		gridPane.setHgap(20);
-		gridPane.setVgap(10);
+		repositoryPane.setHgap(20);
+		repositoryPane.setVgap(10);
 
-		repositoriesPanel.getChildren().add(gridPane);
-		
+		// Legend
 		final Label priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
 		priorityHint.setWrapText(true);
 		priorityHint.maxWidthProperty().bind(repositoriesPanel.widthProperty());
 		priorityHint.setPadding(new Insets(10));
+
+		// Refresh Repositories
+		GridPane refreshLayout = new GridPane();
+		refreshLayout.setHgap(20);
+		repositoryPane.setVgap(10);
+
+		ColumnConstraints columnConstraints = new ColumnConstraints();
+		columnConstraints.setFillWidth(true);
+		columnConstraints.setHgrow(Priority.ALWAYS);
+		refreshLayout.getColumnConstraints().add(columnConstraints);
+
+		Label refreshRepositoriesLabel = new Label(translate("Fetch updates for the repositories to retrieve the newest script versions"));
+		refreshRepositoriesLabel.setWrapText(true);
+
+		Button refreshRepositoriesButton = new Button();
+		refreshRepositoriesButton.setText("Refresh Repositories");
+		refreshRepositoriesButton.setOnAction(event -> {
+			refreshRepositoriesButton.setStyle("-fx-graphic: url('" + themeManager.getResourceUrl("icons/mainwindow/refresh.png") + "');");
+			refreshRepositoriesButton.setDisable(true);
+			repositoryManager.triggerRepositoryChange();
+		});
+
+		repositoryManager.addCallbacks(categories -> {
+			Platform.runLater(() -> {
+				refreshRepositoriesButton.setStyle(null);
+				refreshRepositoriesButton.setDisable(false);
+			});
+		}, error -> {});
+
+		refreshLayout.add(refreshRepositoriesLabel, 0, 0);
+		refreshLayout.add(refreshRepositoriesButton, 1, 0);
 		
-		repositoriesPanel.getChildren().add(priorityHint);
+		repositoriesPanel.getChildren().addAll(repositoryPane, priorityHint, refreshLayout);
 	}
 
 	private void initFileAssociationsPane() {
