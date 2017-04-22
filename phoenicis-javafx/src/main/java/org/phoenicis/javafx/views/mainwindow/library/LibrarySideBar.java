@@ -29,7 +29,6 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * This group is always shown.
  * </li>
  * </ul>
- * <p>
  *
  * @author marc
  * @since 15.04.17
