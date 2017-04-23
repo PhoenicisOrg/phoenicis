@@ -43,9 +43,6 @@ public class ControllerConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.user.engines.wine}")
-    private String wineEnginesPath;
-
     @Autowired
     private ThemeConfiguration themeConfiguration;
 
@@ -100,7 +97,6 @@ public class ControllerConfiguration {
         return new EnginesController(
                 viewsConfiguration.viewEngines(),
                 enginesConfiguration.wineVersionsFetcher(),
-                wineEnginesPath,
                 scriptsConfiguration.scriptInterpreter(),
                 themeConfiguration.themeManager()
         );
@@ -144,7 +140,4 @@ public class ControllerConfiguration {
         );
     }
 
-    public String getEnginesPath() {
-        return this.wineEnginesPath;
-    }
 }

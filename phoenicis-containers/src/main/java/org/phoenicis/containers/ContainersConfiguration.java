@@ -48,8 +48,8 @@ public class ContainersConfiguration {
     @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
-    @Value("${application.user.engines.wine}")
-    private String wineEnginesPath;
+    @Value("${application.user.engines}")
+    private String enginesPath;
 
     @Bean
     public ContainersManager containersManager() {
@@ -70,7 +70,7 @@ public class ContainersConfiguration {
         return new WinePrefixContainerController(
                 scriptsConfiguration.scriptInterpreter(),
                 toolsConfiguration.terminalOpener(),
-                wineEnginesPath,
+                enginesPath + "/wine",
                 toolsConfiguration.operatingSystemFetcher(),
                 win32Configuration.registryWriter(),
                 libraryConfiguration.libraryManager(),
