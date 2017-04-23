@@ -47,11 +47,13 @@ public class EngineSideBar extends VBox {
     private CheckBox installedCheck;
     private CheckBox notInstalledCheck;
 
-    // the engines filter
-    private CombinedEnginesFilter currentFilter;
+    // consumers called when an action inside the search bar has been performed
+    private Consumer<String> onApplySearchTerm;
+    private Runnable onSearchTermClear;
 
-    // consumer called when a filter in the installation filter group has been activated
-    private Consumer<CombinedEnginesFilter> onApplyFilter = filter -> {};
+    // consumers called when a filter in the installation filter group has been activated
+    private Consumer<Boolean> onApplyInstalledFilter;
+    private Consumer<Boolean> onApplyUninstalledFilter;
 
     // consumer called when a category has been selected
     private Consumer<EngineCategoryDTO> onCategorySelection;
@@ -61,8 +63,6 @@ public class EngineSideBar extends VBox {
      */
     public EngineSideBar() {
         super();
-
-        this.initializeFilter();
 
         this.populateSearchBar();
         this.populateEngineCategories();
@@ -81,21 +81,10 @@ public class EngineSideBar extends VBox {
     }
 
     /**
-     * This method initializes the engines filter, which is responsible for filtering installed and/or not installed engines
-     */
-    private void initializeFilter() {
-        this.currentFilter = new CombinedEnginesFilter();
-
-        this.currentFilter.add(EnginesFilter.INSTALLED);
-        this.currentFilter.add(EnginesFilter.NOT_INSTALLED);
-    }
-
-    /**
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        // TODO: do something when a search term has been entered
-        this.searchBar = new SearchBox(filterText -> {}, () -> {});
+        this.searchBar = new SearchBox(filterText -> onApplySearchTerm.accept(filterText), () -> onSearchTermClear.run());
     }
 
     /**
@@ -112,30 +101,14 @@ public class EngineSideBar extends VBox {
         this.installedCheck = new LeftCheckBox(translate("Installed"));
         this.installedCheck.setUserData(EnginesFilter.INSTALLED);
         this.installedCheck.setSelected(true);
-        this.installedCheck.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            BooleanProperty selectedProperty = (BooleanProperty) observableValue;
-            CheckBox checkBox = (CheckBox) selectedProperty.getBean();
-            if (newValue) {
-                currentFilter.add((EnginesFilter) checkBox.getUserData());
-            } else {
-                currentFilter.remove((EnginesFilter) checkBox.getUserData());
-            }
-            onApplyFilter.accept(currentFilter);
-        });
+        this.installedCheck.selectedProperty()
+                .addListener((observableValue, oldValue, newValue) -> onApplyInstalledFilter.accept(newValue));
 
         this.notInstalledCheck = new LeftCheckBox(translate("Not installed"));
         this.notInstalledCheck.setUserData(EnginesFilter.NOT_INSTALLED);
         this.notInstalledCheck.setSelected(true);
-        this.notInstalledCheck.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            BooleanProperty selectedProperty = (BooleanProperty) observableValue;
-            CheckBox checkBox = (CheckBox) selectedProperty.getBean();
-            if (newValue) {
-                currentFilter.add((EnginesFilter) checkBox.getUserData());
-            } else {
-                currentFilter.remove((EnginesFilter) checkBox.getUserData());
-            }
-            onApplyFilter.accept(currentFilter);
-        });
+        this.notInstalledCheck.selectedProperty()
+                .addListener((observableValue, oldValue, newValue) -> onApplyUninstalledFilter.accept(newValue));
 
         this.installationFilterGroup = new LeftGroup(installedCheck, notInstalledCheck);
     }
@@ -165,20 +138,27 @@ public class EngineSideBar extends VBox {
     }
 
     /**
-     * This method updates the consumer, that is called when the installed or not installed engines filter gets applied
-     *
-     * @param onApplyFilter The new consumer to be called
-     */
-    public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
-        this.onApplyFilter = onApplyFilter;
-    }
-
-    /**
      * This method updates the consumer, that is called when an engines category gets selected
      *
      * @param onCategorySelection The new consumer to be called
      */
     public void setOnCategorySelection(Consumer<EngineCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
+    }
+
+    public void setOnApplySearchTerm(Consumer<String> onApplySearchTerm) {
+        this.onApplySearchTerm = onApplySearchTerm;
+    }
+
+    public void setOnSearchTermClear(Runnable onSearchTermClear) {
+        this.onSearchTermClear = onSearchTermClear;
+    }
+
+    public void setOnApplyInstalledFilter(Consumer<Boolean> onApplyInstalledFilter) {
+        this.onApplyInstalledFilter = onApplyInstalledFilter;
+    }
+
+    public void setOnApplyUninstalledFilter(Consumer<Boolean> onApplyUninstalledFilter) {
+        this.onApplyUninstalledFilter = onApplyUninstalledFilter;
     }
 }

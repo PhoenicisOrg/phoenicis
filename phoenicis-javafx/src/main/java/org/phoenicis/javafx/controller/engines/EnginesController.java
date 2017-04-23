@@ -60,13 +60,6 @@ public class EnginesController {
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
-        this.viewEngines.setOnApplyFilter(filter -> {
-            enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> {
-                filter.apply(versions, wineEnginesPath);
-                this.viewEngines.populate(versions);
-            }));
-        });
-
         this.viewEngines.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage("Install " + engineDTO.getVersion(), "Are you sure you want to install " + engineDTO.getVersion() + "?")
                     .ask(() -> {

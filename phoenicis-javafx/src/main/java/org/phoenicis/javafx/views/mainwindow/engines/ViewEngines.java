@@ -18,13 +18,14 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
-import org.phoenicis.engines.CombinedEnginesFilter;
+import javafx.util.Duration;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
@@ -47,10 +48,12 @@ public class ViewEngines extends MainWindowView {
     private ObservableList<EngineCategoryDTO> engineCategories;
 
     private ObservableList<EngineSubCategoryDTO> engineSubCategories;
-    private MappedList<EngineGroupTab, EngineSubCategoryDTO> mappedSubCategoryTabs;
+    private MappedList<EngineSubCategoryTab, EngineSubCategoryDTO> mappedSubCategoryTabs;
 
     private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {};
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {};
+
+    private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
     public ViewEngines(ThemeManager themeManager, String wineEnginesPath) {
         super("Engines", themeManager);
@@ -61,7 +64,7 @@ public class ViewEngines extends MainWindowView {
         this.engineSubCategories = FXCollections.observableArrayList();
         this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories,
                 engineSubCategory -> {
-                    EngineGroupTab result = new EngineGroupTab(selectedCategory, engineSubCategory, wineEnginesPath);
+                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, wineEnginesPath);
 
                     result.setOnSelectEngine(this::showEngineDetails);
 
@@ -69,6 +72,13 @@ public class ViewEngines extends MainWindowView {
                 });
 
         this.sideBar.setOnCategorySelection(this::selectCategory);
+        this.sideBar.setOnApplyInstalledFilter(newValue ->
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForInstalled(newValue)));
+        this.sideBar.setOnApplyUninstalledFilter(newValue ->
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForUninstalled(newValue)));
+        this.sideBar.setOnSearchTermClear(() ->
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm("")));
+        this.sideBar.setOnApplySearchTerm(this::processFilterText);
 
         this.sideBar.bindEngineCategories(engineCategories);
 
@@ -79,10 +89,6 @@ public class ViewEngines extends MainWindowView {
 
         this.drawSideBar();
         this.showWait();
-    }
-
-    public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
-        this.sideBar.setOnApplyFilter(onApplyFilter);
     }
 
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
@@ -104,6 +110,7 @@ public class ViewEngines extends MainWindowView {
         availableEngines.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
+    // TODO: delete this method because it doesn't do what it promises, namely showing the wine versions tab
     @Deprecated
     public void showWineVersions() {
         showRightView(availableEngines);
@@ -146,6 +153,16 @@ public class ViewEngines extends MainWindowView {
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
         showRightView(currentEnginePanel);
+    }
+
+    private void processFilterText(String filterText) {
+        this.pause.setOnFinished(event -> {
+            String text = filterText.toLowerCase();
+
+            availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm(text));
+        });
+
+        this.pause.playFromStart();
     }
 
     private void installEngine(EngineDTO engineDTO) {
