@@ -644,6 +644,11 @@
 /************************ icons ************************/
 /*******************************************************/
 
+/************************ util *************************/
+.refreshIcon {
+    -fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/refresh.png');
+}
+
 /************************ apps *************************/
 #allButton {
     -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/all.png');

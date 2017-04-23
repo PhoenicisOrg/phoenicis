@@ -29,8 +29,6 @@ public class SettingsController {
                               SettingsManager settingsManager) {
         this.view = view;
         this.settingsManager = settingsManager;
-        this.view.setOnSave(settingsManager::save);
-        this.view.setSettings();
     }
 
     public ViewSettings getView() {

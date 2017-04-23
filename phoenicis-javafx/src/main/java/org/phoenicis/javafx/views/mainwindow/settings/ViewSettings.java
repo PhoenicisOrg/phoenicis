@@ -18,341 +18,73 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import org.phoenicis.apps.RepositoryManager;
-import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.MessagePanel;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewSettings extends MainWindowView {
-	private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
-	private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
-	private static final String TITLE_CSS_CLASS = "title";
-	private final String applicationName;
-	private final String applicationVersion;
-	private final String applicationGitRevision;
-	private final String applicationBuildTimestamp;
-	private final Opener opener;
-	private final ObservableList<String> repositories = FXCollections.observableArrayList();
-	private ComboBox<Theme> themes;
-	private CheckBox showScriptSource;
-	private Runnable onSave;
-	private SettingsManager settingsManager;
-	private MessagePanel selectSettingsPanel;
-
-	private RepositoryManager repositoryManager;
-
-	private VBox uiPanel = new VBox();
-	private VBox repositoriesPanel = new VBox();
-	private VBox fileAssociationsPanel = new VBox();
-	private VBox networkPanel = new VBox();
-	private VBox aboutPanel = new VBox();
-
-	public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
-			String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-			SettingsManager settingsManager, RepositoryManager repositoryManager) {
-		super("Settings", themeManager);
-		this.applicationName = applicationName;
-		this.applicationVersion = applicationVersion;
-		this.applicationGitRevision = applicationGitRevision;
-		this.applicationBuildTimestamp = applicationBuildTimestamp;
-		this.opener = opener;
-		this.settingsManager = settingsManager;
-		this.repositoryManager = repositoryManager;
-
-		final List<LeftToggleButton> leftButtonList = new ArrayList<>();
-		ToggleGroup group = new ToggleGroup();
-
-		final LeftToggleButton uiButton = new LeftToggleButton("User Interface");
-		uiButton.getStyleClass().add("userInterfaceButton");
-		uiButton.setToggleGroup(group);
-		leftButtonList.add(uiButton);
-		uiButton.setOnMouseClicked(event -> showRightView(uiPanel));
-
-		final LeftToggleButton repositoriesButton = new LeftToggleButton("Repositories");
-		repositoriesButton.getStyleClass().add("repositoriesButton");
-		repositoriesButton.setToggleGroup(group);
-		leftButtonList.add(repositoriesButton);
-		repositoriesButton.setOnMouseClicked(event -> showRightView(repositoriesPanel));
-
-		final LeftToggleButton fileAssociationsButton = new LeftToggleButton("File Associations");
-		fileAssociationsButton.getStyleClass().add("settingsButton");
-		fileAssociationsButton.setToggleGroup(group);
-		leftButtonList.add(fileAssociationsButton);
-		fileAssociationsButton.setOnMouseClicked(event -> showRightView(fileAssociationsPanel));
-
-		final LeftToggleButton networkButton = new LeftToggleButton("Network");
-		networkButton.getStyleClass().add("networkButton");
-		networkButton.setToggleGroup(group);
-		leftButtonList.add(networkButton);
-		networkButton.setOnMouseClicked(event -> showRightView(networkPanel));
-
-		final LeftToggleButton aboutButton = new LeftToggleButton("About");
-		aboutButton.getStyleClass().add("aboutButton");
-		aboutButton.setToggleGroup(group);
-		leftButtonList.add(aboutButton);
-		aboutButton.setOnMouseClicked(event -> showRightView(aboutPanel));
-
-		final LeftGroup leftButtons = new LeftGroup("Settings");
-		leftButtons.setNodes(leftButtonList);
-
-		addToSideBar(leftButtons);
-		super.drawSideBar();
-
-		initUiSettingsPane();
-		initRepositoriesSettingsPane();
-		initFileAssociationsPane();
-		initNetworkPane();
-		initAboutPane();
-
-		initSelectSettingsPane();
-		showRightView(this.selectSettingsPanel);
-	}
-
-	private void initUiSettingsPane() {
-		uiPanel = new VBox();
-		uiPanel.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
-
-		final Text title = new TextWithStyle(translate("User Interface Settings"), TITLE_CSS_CLASS);
-		uiPanel.getChildren().add(title);
-
-		final GridPane gridPane = new GridPane();
-		gridPane.getStyleClass().add("grid");
-
-		// Change Theme
-		gridPane.add(new TextWithStyle(translate("Theme:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
-		themes = new ComboBox<>();
-		themes.getItems().setAll(Theme.values());
-		themes.setOnAction(event -> {
-			this.handleThemeChange(event);
-			this.save();
-		});
-		gridPane.add(themes, 1, 0);
-
-		// View Script Sources
-		showScriptSource = new CheckBox();
-		showScriptSource.setOnAction(event -> this.save());
-		gridPane.add(showScriptSource, 0, 1);
-		gridPane.add(new Label(translate("Select, if you want to view the source repository of the scripts")), 1, 1);
-
-		gridPane.setHgap(20);
-		gridPane.setVgap(10);
-
-		uiPanel.getChildren().add(gridPane);
-	}
-
-	private void initRepositoriesSettingsPane() {
-		repositoriesPanel = new VBox();
-		repositoriesPanel.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
-
-		final Text title = new TextWithStyle(translate("Repositories Settings"), TITLE_CSS_CLASS);
-		repositoriesPanel.getChildren().add(title);
-
-		final GridPane repositoryPane = new GridPane();
-		repositoryPane.getStyleClass().add("grid");
-
-		TextWithStyle repositoryText = new TextWithStyle(translate("Repository:"), CAPTION_TITLE_CSS_CLASS);
-		repositoryPane.add(repositoryText, 0, 0);
-		GridPane.setValignment(repositoryText, VPos.TOP);
-		VBox repositoryLayout = new VBox();
-		repositoryLayout.setSpacing(5);
-		ListView<String> repositoryListView = new ListView<>(repositories);
-		repositoryListView.setPrefSize(400, 100);
-		repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		repositoryListView.setEditable(true);
-		repositoryListView.setCellFactory(param -> new DragableRepositoryListCell((repositoryUrl, toIndex) -> {
-			this.repositoryManager.moveRepository(repositoryUrl, toIndex.intValue());
-
-			this.save();
-		}));
-
-		HBox repositoryButtonLayout = new HBox();
-		repositoryButtonLayout.setSpacing(5);
-
-		Button addButton = new Button();
-		addButton.setText("Add");
-		addButton.setOnAction((ActionEvent event) -> {
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.initOwner(getContent().getScene().getWindow());
-			dialog.setTitle("Add repository");
-			dialog.setHeaderText("Add repository");
-			dialog.setContentText("Please add the new repository:");
-
-			Optional<String> result = dialog.showAndWait();
-			result.ifPresent(newRepository -> {
-				repositories.add(0, newRepository);
-
-				this.save();
-
-				repositoryManager.addRepositories(0, newRepository);
-			});
-		});
-
-		Button removeButton = new Button();
-		removeButton.setText("Remove");
-		removeButton.setOnAction((ActionEvent event) -> {
-			String[] toRemove = repositoryListView.getSelectionModel().getSelectedItems().toArray(new String[0]);
-
-			repositories.removeAll(toRemove);
-
-			this.save();
-
-			repositoryManager.removeRepositories(toRemove);
-		});
-
-		repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
-		repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
-		repositoryPane.add(repositoryLayout, 1, 0);
-
-		repositoryPane.setHgap(20);
-		repositoryPane.setVgap(10);
-
-		// Legend
-		final Label priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
-		priorityHint.setWrapText(true);
-		priorityHint.maxWidthProperty().bind(repositoriesPanel.widthProperty());
-		priorityHint.setPadding(new Insets(10));
-
-		// Refresh Repositories
-		GridPane refreshLayout = new GridPane();
-		refreshLayout.setHgap(20);
-		repositoryPane.setVgap(10);
-
-		ColumnConstraints columnConstraints = new ColumnConstraints();
-		columnConstraints.setFillWidth(true);
-		columnConstraints.setHgrow(Priority.ALWAYS);
-		refreshLayout.getColumnConstraints().add(columnConstraints);
-
-		Label refreshRepositoriesLabel = new Label(translate("Fetch updates for the repositories to retrieve the newest script versions"));
-		refreshRepositoriesLabel.setWrapText(true);
-
-		Button refreshRepositoriesButton = new Button();
-		refreshRepositoriesButton.setText("Refresh Repositories");
-		refreshRepositoriesButton.setOnAction(event -> {
-			refreshRepositoriesButton.setStyle("-fx-graphic: url('" + themeManager.getResourceUrl("icons/mainwindow/refresh.png") + "');");
-			refreshRepositoriesButton.setDisable(true);
-			repositoryManager.triggerRepositoryChange();
-		});
-
-		repositoryManager.addCallbacks(categories -> {
-			Platform.runLater(() -> {
-				refreshRepositoriesButton.setStyle(null);
-				refreshRepositoriesButton.setDisable(false);
-			});
-		}, error -> {});
-
-		refreshLayout.add(refreshRepositoriesLabel, 0, 0);
-		refreshLayout.add(refreshRepositoriesButton, 1, 0);
-		
-		repositoriesPanel.getChildren().addAll(repositoryPane, priorityHint, refreshLayout);
-	}
-
-	private void initFileAssociationsPane() {
-
-	}
-
-	private void initNetworkPane() {
-
-	}
-
-	private void initAboutPane() {
-		aboutPanel = new VBox();
-		aboutPanel.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
-
-		final Text title = new TextWithStyle(translate("About"), TITLE_CSS_CLASS);
-		aboutPanel.getChildren().add(title);
-
-		final GridPane gridPane = new GridPane();
-		gridPane.getStyleClass().add("grid");
-
-		gridPane.add(new TextWithStyle(translate("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
-		gridPane.add(new Label(applicationName), 1, 0);
-
-		gridPane.add(new TextWithStyle(translate("Version:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
-		gridPane.add(new Label(applicationVersion), 1, 1);
-
-		gridPane.add(new TextWithStyle(translate("Git Revision:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
-		Hyperlink gitRevisionLink = new Hyperlink(applicationGitRevision);
-		gitRevisionLink.setOnAction(event -> {
-			try {
-				URI uri = new URI("https://github.com/PlayOnLinux/POL-POM-5/commit/" + applicationGitRevision);
-				opener.open(uri);
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
-		});
-		gridPane.add(gitRevisionLink, 1, 2);
-
-		gridPane.add(new TextWithStyle(translate("Build Timestamp:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
-		gridPane.add(new Label(applicationBuildTimestamp), 1, 3);
-
-		gridPane.setHgap(20);
-		gridPane.setVgap(10);
-
-		aboutPanel.getChildren().add(gridPane);
-	}
-
-	public void setSettings() {
-		final Theme setTheme = Theme.fromShortName(settingsManager.getTheme());
-		themes.setValue(setTheme);
-
-		showScriptSource.setSelected(settingsManager.isViewScriptSource());
-
-		repositories.addAll(settingsManager.getRepository().split(";"));
-	}
-
-	public void setOnSave(Runnable onSave) {
-		this.onSave = onSave;
-	}
-
-	private void initSelectSettingsPane() {
-		this.selectSettingsPanel = new MessagePanel(translate("Please select a settings category"));
-	}
-
-	private void save() {
-		settingsManager.setTheme(themes.getSelectionModel().getSelectedItem().getShortName());
-		settingsManager.setViewScriptSource(showScriptSource.isSelected());
-
-		StringBuilder stringBuilder = new StringBuilder();
-		for (String repository : repositories) {
-			stringBuilder.append(repository).append(";");
-		}
-		settingsManager.setRepository(stringBuilder.toString());
-
-		onSave.run();
-	}
-
-	private void handleThemeChange(ActionEvent evt) {
-		final Theme theme = themes.getSelectionModel().getSelectedItem();
-		themeManager.setCurrentTheme(theme);
-		final String shortName = theme.getShortName();
-		final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-		final URL style = this.getClass().getResource(url);
-		getContent().getScene().getStylesheets().clear();
-		getContent().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
-			themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
-	}
+    private final String applicationName;
+    private final String applicationVersion;
+    private final String applicationGitRevision;
+    private final String applicationBuildTimestamp;
+    private final Opener opener;
+
+    private SettingsManager settingsManager;
+    private RepositoryManager repositoryManager;
+
+    private SettingsSideBar sideBar;
+
+    private MessagePanel selectSettingsPanel;
+
+    private ObservableList<SettingsSideBar.SettingsSideBarItem> settingsItems;
+
+    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
+                        String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
+                        SettingsManager settingsManager, RepositoryManager repositoryManager) {
+        super("Settings", themeManager);
+        this.applicationName = applicationName;
+        this.applicationVersion = applicationVersion;
+        this.applicationGitRevision = applicationGitRevision;
+        this.applicationBuildTimestamp = applicationBuildTimestamp;
+        this.opener = opener;
+        this.settingsManager = settingsManager;
+        this.repositoryManager = repositoryManager;
+
+        this.initializeSettingsItems();
+
+        this.sideBar = new SettingsSideBar();
+
+        this.sideBar.setOnSelectSettingsItem(this::showRightView);
+
+        this.sideBar.bindSettingsItems(this.settingsItems);
+
+        addToSideBar(sideBar);
+        super.drawSideBar();
+
+        initSelectSettingsPane();
+        showRightView(this.selectSettingsPanel);
+    }
+
+    private void initializeSettingsItems() {
+        AboutPanel.ApplicationBuildInformation buildInformation =
+                new AboutPanel.ApplicationBuildInformation(applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
+
+        this.settingsItems = FXCollections.observableArrayList(
+                new SettingsSideBar.SettingsSideBarItem(new UserInterfacePanel(settingsManager, themeManager), "userInterfaceButton", "User Interface"),
+                new SettingsSideBar.SettingsSideBarItem(new RepositoriesPanel(settingsManager, repositoryManager), "repositoriesButton", "Repositories"),
+                new SettingsSideBar.SettingsSideBarItem(new FileAssociationsPanel(), "settingsButton", "File Associations"),
+                new SettingsSideBar.SettingsSideBarItem(new NetworkPanel(), "networkButton", "Network"),
+                new SettingsSideBar.SettingsSideBarItem(new AboutPanel(buildInformation, opener), "aboutButton", "About"));
+    }
+
+    private void initSelectSettingsPane() {
+        this.selectSettingsPanel = new MessagePanel(translate("Please select a settings category"));
+    }
 }
