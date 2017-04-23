@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  * Installed engine versions
  * </li>
  * <li>
- * Uninstalled engine versions
+ * Not installed engine versions
  * </li>
  * <li>
  * Engine versions containing a search term
@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 public class EnginesFilter implements Predicate<EngineVersionDTO> {
     private EngineSubCategoryDTO engineSubCategory;
 
-    private String wineEnginesPath;
+    private String enginesPath;
 
     /**
      * The search term entered into the search field
@@ -36,26 +36,26 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
     private String searchTerm = "";
 
     /**
-     * Are only installed engines searched
+     * Are installed engines searched
      */
-    private boolean onlyInstalled = true;
+    private boolean showInstalled = true;
 
     /**
-     * Are only not installed engines searched
+     * Are not installed engines searched
      */
-    private boolean onlyUninstalled = true;
+    private boolean showNotInstalled = true;
 
     /**
      * Constructor
      *
      * @param engineSubCategory The engine sub category used for this filter
-     * @param wineEnginesPath   The path to the installed wine engines
+     * @param enginesPath   The path to the installed engines
      */
-    public EnginesFilter(EngineSubCategoryDTO engineSubCategory, String wineEnginesPath) {
+    public EnginesFilter(EngineSubCategoryDTO engineSubCategory, String enginesPath) {
         super();
 
         this.engineSubCategory = engineSubCategory;
-        this.wineEnginesPath = wineEnginesPath;
+        this.enginesPath = enginesPath;
     }
 
     /**
@@ -65,24 +65,24 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @return True if the engine version is installed, false otherwise
      */
     private boolean isInstalled(EngineVersionDTO engineVersionDTO) {
-        return Files.exists(Paths.get(wineEnginesPath, engineSubCategory.getName(), engineVersionDTO.getVersion()));
+        return Files.exists(Paths.get(enginesPath, engineSubCategory.getName(), engineVersionDTO.getVersion()));
     }
 
     @Override
     public boolean test(EngineVersionDTO engineVersion) {
         return engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase()) &&
-                ((this.onlyInstalled && isInstalled(engineVersion)) || (this.onlyUninstalled && !isInstalled(engineVersion)));
+                ((this.showInstalled && isInstalled(engineVersion)) || (this.showNotInstalled && !isInstalled(engineVersion)));
     }
 
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
     }
 
-    public void setOnlyInstalled(boolean onlyInstalled) {
-        this.onlyInstalled = onlyInstalled;
+    public void setShowInstalled(boolean showInstalled) {
+        this.showInstalled = showInstalled;
     }
 
-    public void setOnlyUninstalled(boolean onlyUninstalled) {
-        this.onlyUninstalled = onlyUninstalled;
+    public void setShowNotInstalled(boolean showNotInstalled) {
+        this.showNotInstalled = showNotInstalled;
     }
 }

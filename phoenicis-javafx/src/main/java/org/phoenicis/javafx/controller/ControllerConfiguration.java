@@ -144,7 +144,7 @@ public class ControllerConfiguration {
         );
     }
 
-    public String getWineEnginesPath() {
+    public String getEnginesPath() {
         return this.wineEnginesPath;
     }
 }

@@ -80,7 +80,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewEngines viewEngines() {
-        return new ViewEngines(themeConfiguration.themeManager(), controllerConfiguration.getWineEnginesPath());
+        return new ViewEngines(themeConfiguration.themeManager(), controllerConfiguration.getEnginesPath());
     }
 
     @Bean

@@ -75,7 +75,7 @@ public class ViewEngines extends MainWindowView {
         this.sideBar.setOnApplyInstalledFilter(newValue ->
                 availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForInstalled(newValue)));
         this.sideBar.setOnApplyUninstalledFilter(newValue ->
-                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForUninstalled(newValue)));
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForNotInstalled(newValue)));
         this.sideBar.setOnSearchTermClear(() ->
                 availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm("")));
         this.sideBar.setOnApplySearchTerm(this::processFilterText);
@@ -127,7 +127,7 @@ public class ViewEngines extends MainWindowView {
             this.engineCategories.setAll(engineCategoryDTOS);
 
             if (!engineCategoryDTOS.isEmpty()) {
-                this.sideBar.selectEngineCategory(engineCategoryDTOS.get(0));
+                this.sideBar.selectFirstEngineCategory();
             }
 
             this.showAvailableEngines();

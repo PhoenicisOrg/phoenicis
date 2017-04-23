@@ -129,12 +129,13 @@ public class EngineSideBar extends VBox {
     }
 
     /**
-     * This method selects the button belonging to the given engine category in the engine category button group.
+     * This method selects the button belonging to the first engine category in the engine category button group.
+     * If no engine category exists, this method will throw an {@link IllegalArgumentException}.
      *
-     * @param engineCategory The engine category to be selected
+     * @throws IllegalArgumentException
      */
-    public void selectEngineCategory(EngineCategoryDTO engineCategory) {
-        this.categoryView.select(engineCategory);
+    public void selectFirstEngineCategory() {
+        this.categoryView.select(0);
     }
 
     /**

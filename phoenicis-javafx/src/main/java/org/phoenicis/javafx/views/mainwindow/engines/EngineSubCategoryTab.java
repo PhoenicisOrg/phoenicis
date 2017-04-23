@@ -29,7 +29,7 @@ public class EngineSubCategoryTab extends Tab {
     private EngineCategoryDTO engineCategory;
     private EngineSubCategoryDTO engineSubCategory;
 
-    private String wineEnginesPath;
+    private String enginesPath;
 
     private MiniatureListWidget<EngineVersionDTO> engineVersionsView;
 
@@ -46,16 +46,16 @@ public class EngineSubCategoryTab extends Tab {
      *
      * @param engineCategory    The engine category, which contains the engine sub category
      * @param engineSubCategory The engine sub category to be shown in this tab
-     * @param wineEnginesPath   The path to the wine engines
+     * @param enginesPath   The path to the engines
      */
-    public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory, String wineEnginesPath) {
+    public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory, String enginesPath) {
         super(engineSubCategory.getDescription());
 
         this.engineCategory = engineCategory;
         this.engineSubCategory = engineSubCategory;
-        this.wineEnginesPath = wineEnginesPath;
+        this.enginesPath = enginesPath;
 
-        this.enginesFilter = new EnginesFilter(engineSubCategory, wineEnginesPath);
+        this.enginesFilter = new EnginesFilter(engineSubCategory, enginesPath);
 
         this.engineVersions = FXCollections.observableArrayList(engineSubCategory.getPackages());
         this.sortedEngineVersions = engineVersions.sorted(EngineSubCategoryDTO.comparator().reversed());
@@ -72,7 +72,7 @@ public class EngineSubCategoryTab extends Tab {
     private void populate() {
         this.engineVersionsView = MiniatureListWidget.create(
                 engineVersionDTO -> MiniatureListWidget.Element.create(engineVersionDTO,
-                        Files.exists(Paths.get(wineEnginesPath, engineSubCategory.getName(), engineVersionDTO.getVersion()))),
+                        Files.exists(Paths.get(enginesPath, engineSubCategory.getName(), engineVersionDTO.getVersion()))),
                 (engineItem, event) -> {
                     EngineVersionDTO engineVersionDTO = engineItem.getValue();
 
@@ -109,18 +109,18 @@ public class EngineSubCategoryTab extends Tab {
      * @param installed The new filter value for installed engine versions
      */
     public void setFilterForInstalled(boolean installed) {
-        this.enginesFilter.setOnlyInstalled(installed);
+        this.enginesFilter.setShowInstalled(installed);
         this.filteredEngineVersions.setPredicate(enginesFilter::test);
     }
 
     /**
-     * This method updates the filter value if uninstalled engine versions are to be shown in this tab.
+     * This method updates the filter value if not installed engine versions are to be shown in this tab.
      * This method also triggers an automatic update of the view.
      *
-     * @param uninstalled The new filter value for uninstalled engine versions
+     * @param notInstalled The new filter value for not installed engine versions
      */
-    public void setFilterForUninstalled(boolean uninstalled) {
-        this.enginesFilter.setOnlyUninstalled(uninstalled);
+    public void setFilterForNotInstalled(boolean notInstalled) {
+        this.enginesFilter.setShowNotInstalled(notInstalled);
         this.filteredEngineVersions.setPredicate(enginesFilter::test);
     }
 
