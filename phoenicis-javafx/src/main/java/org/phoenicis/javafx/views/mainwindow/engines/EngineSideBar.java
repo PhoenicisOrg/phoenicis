@@ -1,13 +1,10 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
-import org.phoenicis.engines.CombinedEnginesFilter;
-import org.phoenicis.engines.EnginesFilter;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
@@ -99,13 +96,11 @@ public class EngineSideBar extends VBox {
      */
     private void populateInstallationFilters() {
         this.installedCheck = new LeftCheckBox(translate("Installed"));
-        this.installedCheck.setUserData(EnginesFilter.INSTALLED);
         this.installedCheck.setSelected(true);
         this.installedCheck.selectedProperty()
                 .addListener((observableValue, oldValue, newValue) -> onApplyInstalledFilter.accept(newValue));
 
         this.notInstalledCheck = new LeftCheckBox(translate("Not installed"));
-        this.notInstalledCheck.setUserData(EnginesFilter.NOT_INSTALLED);
         this.notInstalledCheck.setSelected(true);
         this.notInstalledCheck.selectedProperty()
                 .addListener((observableValue, oldValue, newValue) -> onApplyUninstalledFilter.accept(newValue));
