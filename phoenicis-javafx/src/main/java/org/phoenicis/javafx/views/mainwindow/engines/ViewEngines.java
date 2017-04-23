@@ -18,25 +18,22 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
-import org.phoenicis.engines.CombinedEnginesFilter;
+import javafx.util.Duration;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
-import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class ViewEngines extends MainWindowView {
@@ -46,32 +43,52 @@ public class ViewEngines extends MainWindowView {
 
     private EnginePanel currentEnginePanel;
 
+    private EngineCategoryDTO selectedCategory;
+
     private ObservableList<EngineCategoryDTO> engineCategories;
 
-    private Consumer<EngineCategoryDTO> onSelectCategory;
+    private ObservableList<EngineSubCategoryDTO> engineSubCategories;
+    private MappedList<EngineSubCategoryTab, EngineSubCategoryDTO> mappedSubCategoryTabs;
+
     private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {};
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {};
 
-    public ViewEngines(ThemeManager themeManager) {
+    private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+
+    public ViewEngines(ThemeManager themeManager, String wineEnginesPath) {
         super("Engines", themeManager);
 
         this.sideBar = new EngineSideBar();
 
         this.engineCategories = FXCollections.observableArrayList();
+        this.engineSubCategories = FXCollections.observableArrayList();
+        this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories,
+                engineSubCategory -> {
+                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, wineEnginesPath);
+
+                    result.setOnSelectEngine(this::showEngineDetails);
+
+                    return result;
+                });
 
         this.sideBar.setOnCategorySelection(this::selectCategory);
+        this.sideBar.setOnApplyInstalledFilter(newValue ->
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForInstalled(newValue)));
+        this.sideBar.setOnApplyUninstalledFilter(newValue ->
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForNotInstalled(newValue)));
+        this.sideBar.setOnSearchTermClear(() ->
+                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm("")));
+        this.sideBar.setOnApplySearchTerm(this::processFilterText);
 
         this.sideBar.bindEngineCategories(engineCategories);
 
         this.initFailure();
         this.initWineVersions();
 
+        Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
+
         this.drawSideBar();
         this.showWait();
-    }
-
-    public void setOnApplyFilter(Consumer<CombinedEnginesFilter> onApplyFilter) {
-        this.sideBar.setOnApplyFilter(onApplyFilter);
     }
 
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
@@ -93,6 +110,8 @@ public class ViewEngines extends MainWindowView {
         availableEngines.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
+    // TODO: delete this method because it doesn't do what it promises, namely showing the wine versions tab
+    @Deprecated
     public void showWineVersions() {
         showRightView(availableEngines);
     }
@@ -106,41 +125,18 @@ public class ViewEngines extends MainWindowView {
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
             this.engineCategories.setAll(engineCategoryDTOS);
+
+            if (!engineCategoryDTOS.isEmpty()) {
+                this.sideBar.selectFirstEngineCategory();
+            }
+
             this.showAvailableEngines();
         });
     }
 
-    public void populateEngines(String category, List<EngineSubCategoryDTO> subCategories, String wineEnginesPath) {
-        availableEngines.getTabs().clear();
-
-        for (EngineSubCategoryDTO subCategory : subCategories) {
-            final MiniatureListWidget<EngineVersionDTO> tabContent = MiniatureListWidget.create(engineVersionDTO -> {
-                File f = new File(wineEnginesPath + "/" + subCategory.getName() + "/" + engineVersionDTO.getVersion());
-
-                return MiniatureListWidget.Element.create(engineVersionDTO, f.exists());
-            },(engineItem, event) -> {
-                EngineVersionDTO engineVersionDTO = engineItem.getValue();
-                
-                Map<String, String> userData = new HashMap<>();
-                userData.put("Mono", engineVersionDTO.getMonoFile());
-                userData.put("Gecko", engineVersionDTO.getGeckoFile());
-                EngineDTO engineDTO = new EngineDTO.Builder()
-                        .withCategory(category)
-                        .withSubCategory(subCategory.getName())
-                        .withVersion(engineVersionDTO.getVersion())
-                        .withUserData(userData)
-                        .build();
-
-                this.showEngineDetails(engineDTO);
-            });
-
-            List<EngineVersionDTO> packages = subCategory.getPackages();
-            packages.sort(EngineSubCategoryDTO.comparator().reversed());
-
-            tabContent.setItems(packages);
-
-            availableEngines.getTabs().add(new Tab(subCategory.getDescription(), tabContent));
-        }
+    public void populateEngines(EngineCategoryDTO category) {
+        this.selectedCategory = category;
+        this.engineSubCategories.setAll(category.getSubCategories());
     }
 
     public void showAvailableEngines() {
@@ -149,7 +145,7 @@ public class ViewEngines extends MainWindowView {
 
     private void selectCategory(EngineCategoryDTO category) {
         this.showRightView(availableEngines);
-        this.onSelectCategory.accept(category);
+        this.populateEngines(category);
     }
 
     private void showEngineDetails(EngineDTO engineDTO) {
@@ -159,8 +155,14 @@ public class ViewEngines extends MainWindowView {
         showRightView(currentEnginePanel);
     }
 
-    public void setOnSelectCategory(Consumer<EngineCategoryDTO> onSelectCategory) {
-        this.onSelectCategory = onSelectCategory;
+    private void processFilterText(String filterText) {
+        this.pause.setOnFinished(event -> {
+            String text = filterText.toLowerCase();
+
+            availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm(text));
+        });
+
+        this.pause.playFromStart();
     }
 
     private void installEngine(EngineDTO engineDTO) {

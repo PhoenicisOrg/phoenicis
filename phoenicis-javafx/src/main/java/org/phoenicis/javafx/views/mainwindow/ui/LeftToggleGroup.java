@@ -94,4 +94,16 @@ public class LeftToggleGroup<E> extends LeftGroup {
     public void selectAll() {
         this.allButton.ifPresent(button -> button.setSelected(true));
     }
+
+    public void select(int elementIndex) {
+        if (elementIndex < 0 || elementIndex >= this.elements.size()) {
+            throw new IllegalArgumentException(String.format("Element at index %d doesn't exist", elementIndex));
+        } else {
+            mappedToggleButtons.get(elementIndex).fire();
+        }
+    }
+
+    public void select(E element) {
+        this.select(this.elements.indexOf(element));
+    }
 }

@@ -143,4 +143,8 @@ public class ControllerConfiguration {
                 settingsConfiguration.settingsManager()
         );
     }
+
+    public String getEnginesPath() {
+        return this.wineEnginesPath;
+    }
 }

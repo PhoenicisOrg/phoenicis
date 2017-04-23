@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views;
 
 import org.phoenicis.apps.AppsConfiguration;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
+import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -69,6 +70,9 @@ public class ViewsConfiguration {
     @Autowired
     private AppsConfiguration appsConfiguration;
 
+    @Autowired
+    private ControllerConfiguration controllerConfiguration;
+
     @Bean
     public ViewApps viewApps() {
         return new ViewApps(themeConfiguration.themeManager(), settingsConfiguration.settingsManager());
@@ -76,7 +80,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewEngines viewEngines() {
-        return new ViewEngines(themeConfiguration.themeManager());
+        return new ViewEngines(themeConfiguration.themeManager(), controllerConfiguration.getEnginesPath());
     }
 
     @Bean
