@@ -27,8 +27,6 @@ import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
 public class ViewSettings extends MainWindowView {
     private final String applicationName;
     private final String applicationVersion;
@@ -68,8 +66,7 @@ public class ViewSettings extends MainWindowView {
         addToSideBar(sideBar);
         super.drawSideBar();
 
-        initSelectSettingsPane();
-        showRightView(this.selectSettingsPanel);
+        this.sideBar.selectFirstSettingsCategory();
     }
 
     private void initializeSettingsItems() {
@@ -82,9 +79,5 @@ public class ViewSettings extends MainWindowView {
                 new SettingsSideBar.SettingsSideBarItem(new FileAssociationsPanel(), "settingsButton", "File Associations"),
                 new SettingsSideBar.SettingsSideBarItem(new NetworkPanel(), "networkButton", "Network"),
                 new SettingsSideBar.SettingsSideBarItem(new AboutPanel(buildInformation, opener), "aboutButton", "About"));
-    }
-
-    private void initSelectSettingsPane() {
-        this.selectSettingsPanel = new MessagePanel(translate("Please select a settings category"));
     }
 }

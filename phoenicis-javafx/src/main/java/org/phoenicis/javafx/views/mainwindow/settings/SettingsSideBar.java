@@ -66,6 +66,13 @@ public class SettingsSideBar extends VBox {
     }
 
     /**
+     * This method selects the first settings category
+     */
+    public void selectFirstSettingsCategory() {
+        this.settingsItems.select(0);
+    }
+
+    /**
      * This method updates the consumer that is called when a settings toggle button has been clicked
      *
      * @param onSelectSettingsItem The new consumer to be called
