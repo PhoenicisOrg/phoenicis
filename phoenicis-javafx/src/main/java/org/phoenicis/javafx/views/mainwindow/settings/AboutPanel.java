@@ -39,6 +39,12 @@ public class AboutPanel extends VBox {
     private Text buildTimestampDescription;
     private Label buildTimestampLabel;
 
+    /**
+     * Constructor
+     *
+     * @param buildInformation The information of the used build of POL 5
+     * @param opener           The opener util object to be used to open websites
+     */
     public AboutPanel(ApplicationBuildInformation buildInformation, Opener opener) {
         super();
 
@@ -93,12 +99,27 @@ public class AboutPanel extends VBox {
         this.aboutGrid.add(buildTimestampLabel, 1, 3);
     }
 
+    /**
+     * This class contains information about the POL 5 build
+     */
     public static class ApplicationBuildInformation {
+        // the name of the application
         private String applicationName;
+        // the version of the application (taken from the maven pom file)
         private String applicationVersion;
+        // the git revision/commit used to build POL 5
         private String applicationGitRevision;
+        // the timestamp when POL 5 was built
         private String applicationBuildTimestamp;
 
+        /**
+         * Constructor
+         *
+         * @param applicationName           the name of the application
+         * @param applicationVersion        the version of the application
+         * @param applicationGitRevision    the git revision/commit used to build POL 5
+         * @param applicationBuildTimestamp the timestamp when POL 5 was built
+         */
         public ApplicationBuildInformation(String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp) {
             this.applicationName = applicationName;
             this.applicationVersion = applicationVersion;
