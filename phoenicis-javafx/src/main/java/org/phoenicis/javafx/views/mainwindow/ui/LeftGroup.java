@@ -20,52 +20,99 @@ package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextFlow;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-
+/**
+ * This class represents a group of visual objects shown in the left sidebar.
+ * This group can have a title and other content consisting of multiple {@link Node}s.
+ *
+ * @since 26.04.17
+ */
 public class LeftGroup extends VBox {
-    private String name;
-    private List<? extends Node> nodes;
+    /**
+     * The title of this group.
+     * This title if optional.
+     */
+    private Optional<String> title;
 
-    public LeftGroup(String name) {
-        this.name = name;
+    /**
+     * A list of nodes to be contained below the title in this group.
+     */
+    private List<Node> nodes;
+
+    /**
+     * Constructor
+     */
+    private LeftGroup() {
+        super();
+
+        this.nodes = new ArrayList<>();
+    }
+
+    /**
+     * Constructor
+     *
+     * @param title   The title string to be used for this group. If no title string is to be set null can be used.
+     * @param content Zero or more nodes, which make up the content of this group.
+     */
+    public LeftGroup(String title, Node... content) {
+        this();
+
+        this.title = Optional.ofNullable(title);
+        this.nodes.addAll(Arrays.asList(content));
+
         this.getStyleClass().add("leftPaneInside");
-        this.clear();
+
+        this.refreshContent();
     }
 
-    public LeftGroup(Node ... content) {
-        this.getStyleClass().add("leftPaneInside");
-
-        this.setNodes(Arrays.asList(content));
+    /**
+     * Constructor
+     *
+     * @param content Zero or more nodes, which make up the content of this group.
+     */
+    public LeftGroup(Node... content) {
+        this(null, content);
     }
 
-    public LeftGroup(String name, Node ... content) {
-        this(name);
+    /**
+     * This method updates the title of this group.
+     *
+     * @param title The new title of this group
+     */
+    public void setTitle(String title) {
+        this.title = Optional.ofNullable(title);
 
-        this.setNodes(Arrays.asList(content));
+        this.refreshContent();
     }
 
-    public void setName(String name) {
-        this.name = name;
-        clear();
-        setNodes(nodes);
-    }
-
-    private void clear() {
-        this.getChildren().clear();
-        this.getChildren().add(new LeftBarTitle(name));
-    }
-
+    /**
+     * This method updates the nodes inside this group.
+     *
+     * @param nodes The new nodes inside this group
+     */
     public void setNodes(List<? extends Node> nodes) {
-        this.clear();
-        this.nodes = nodes;
-        for(Node node: nodes) {
-            this.getChildren().add(node);
-        }
+        this.nodes.clear();
+        this.nodes.addAll(nodes);
+
+        this.refreshContent();
     }
 
+    /**
+     * This method refreshes the visual components inside this group.
+     * This method should be called whenever the title or the nodes of this group changes
+     */
+    private void refreshContent() {
+        this.getChildren().clear();
 
+        this.title.ifPresent(nameString -> {
+            this.getChildren().add(new LeftBarTitle(nameString));
+        });
+
+        this.getChildren().addAll(this.nodes);
+    }
 }
