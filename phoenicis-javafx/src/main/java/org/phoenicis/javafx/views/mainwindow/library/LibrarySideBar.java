@@ -96,7 +96,7 @@ public class LibrarySideBar extends VBox {
     public void showShortcut(ShortcutDTO shortcut) {
         this.shortcut = shortcut;
 
-        this.shortcutGroup.setName(shortcut.getName());
+        this.shortcutGroup.setTitle(shortcut.getName());
 
         this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.shortcutGroup, new LeftSpacer(), this.advancedToolsGroup);
     }
