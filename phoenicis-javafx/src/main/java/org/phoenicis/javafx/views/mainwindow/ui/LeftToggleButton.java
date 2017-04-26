@@ -22,7 +22,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 
+/**
+ * This class represents a toggle button in the sidebar.
+ */
 public class LeftToggleButton extends ToggleButton {
+    /**
+     * The text shown in the button
+     */
     private final String name;
 
     public LeftToggleButton(String name) {
@@ -32,6 +38,17 @@ public class LeftToggleButton extends ToggleButton {
         this.setPrefWidth(Double.MAX_VALUE);
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(2));
+    }
+
+    @Override
+    public void fire() {
+        /**
+         * Taken from:
+         * https://bitbucket.org/controlsfx/controlsfx/issues/84/segmented-button-control-clicking-on
+         */
+        if (getToggleGroup() == null || !isSelected()) {
+            super.fire();
+        }
     }
 
     public String getName() {

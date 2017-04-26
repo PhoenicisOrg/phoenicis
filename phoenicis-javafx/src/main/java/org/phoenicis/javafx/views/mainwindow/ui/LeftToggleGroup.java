@@ -8,6 +8,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import org.phoenicis.javafx.views.common.AdhocList;
 import org.phoenicis.javafx.views.common.MappedList;
 
 import javax.swing.text.html.Option;
@@ -26,37 +27,14 @@ public class LeftToggleGroup<E> extends LeftGroup {
 
     private final ObservableList<E> elements;
     private final ObservableList<? extends ToggleButton> mappedToggleButtons;
+    private final ObservableList<? extends ToggleButton> adhocToggleButtons;
 
     public static <T> LeftToggleGroup<T> create(String name, Function<T, ? extends ToggleButton> converter) {
-        return new LeftToggleGroup<T>(name, converter);
+        return new LeftToggleGroup<T>(name, null, converter);
     }
 
     public static <T> LeftToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier, Function<T, ? extends ToggleButton> converter) {
         return new LeftToggleGroup<T>(name, allButtonSupplier, converter);
-    }
-
-    private LeftToggleGroup(String name, Function<E, ? extends ToggleButton> converter) {
-        super(name);
-
-        this.toggleGroup = new ToggleGroup();
-        this.toggleButtonBox = new VBox();
-        this.toggleButtonBox.getStyleClass().add("leftPaneInside");
-
-        this.elements = FXCollections.observableArrayList();
-        this.mappedToggleButtons = new MappedList<ToggleButton, E>(this.elements, value -> {
-            ToggleButton button = converter.apply(value);
-
-            button.setToggleGroup(toggleGroup);
-
-            return button;
-        });
-
-        this.allButton = Optional.empty();
-
-        ObservableList<Node> target = this.getChildren();
-        target.add(toggleButtonBox);
-
-        Bindings.bindContent(this.toggleButtonBox.getChildren(), this.mappedToggleButtons);
     }
 
     private LeftToggleGroup(String name, Supplier<ToggleButton> allButtonSupplier, Function<E, ? extends ToggleButton> converter) {
@@ -67,24 +45,22 @@ public class LeftToggleGroup<E> extends LeftGroup {
         this.toggleButtonBox.getStyleClass().add("leftPaneInside");
 
         this.elements = FXCollections.observableArrayList();
-        this.mappedToggleButtons = new MappedList<ToggleButton, E>(this.elements, value -> {
-            ToggleButton button = converter.apply(value);
+        this.mappedToggleButtons = new MappedList<ToggleButton, E>(this.elements, value -> converter.apply(value));
 
-            button.setToggleGroup(toggleGroup);
+        if (allButtonSupplier != null) {
+            ToggleButton newAllButton = allButtonSupplier.get();
 
-            return button;
-        });
+            this.allButton = Optional.of(newAllButton);
+            this.adhocToggleButtons = new AdhocList<ToggleButton>(this.mappedToggleButtons, newAllButton);
+        } else {
+            this.allButton = Optional.empty();
+            this.adhocToggleButtons = new AdhocList<ToggleButton>(this.mappedToggleButtons);
+        }
 
-        ToggleButton createdAllButton = allButtonSupplier.get();
-        createdAllButton.setToggleGroup(toggleGroup);
+        Bindings.bindContent(this.toggleGroup.getToggles(), this.adhocToggleButtons);
+        Bindings.bindContent(this.toggleButtonBox.getChildren(), this.adhocToggleButtons);
 
-        this.allButton = Optional.of(createdAllButton);
-
-        ObservableList<Node> target = this.getChildren();
-        target.add(createdAllButton);
-        target.add(toggleButtonBox);
-
-        Bindings.bindContent(this.toggleButtonBox.getChildren(), this.mappedToggleButtons);
+        this.getChildren().add(this.toggleButtonBox);
     }
 
     public ObservableList<E> getElements() {
