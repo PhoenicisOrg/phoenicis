@@ -97,7 +97,7 @@ public class AdhocListTest {
 
     @Test
     public void testListPermutation() {
-        SortedList<String> sortedList = FXCollections.observableArrayList(Arrays.asList("3", "7", "1", "5")).sorted();
+        SortedList<String> sortedList = FXCollections.observableArrayList(Arrays.asList("3", "7", "1", "5")).sorted(Comparator.naturalOrder());
         AdhocList<String> mappedList = new AdhocList<>(sortedList, "0");
 
         assertEquals(5, mappedList.size());
