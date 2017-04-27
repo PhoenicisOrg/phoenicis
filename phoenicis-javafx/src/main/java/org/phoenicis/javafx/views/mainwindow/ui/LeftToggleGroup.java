@@ -30,7 +30,7 @@ public class LeftToggleGroup<E> extends LeftGroup {
     private final ObservableList<? extends ToggleButton> adhocToggleButtons;
 
     public static <T> LeftToggleGroup<T> create(String name, Function<T, ? extends ToggleButton> converter) {
-        return new LeftToggleGroup<T>(name, null, converter);
+        return new LeftToggleGroup<T>(name, converter);
     }
 
     public static <T> LeftToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier, Function<T, ? extends ToggleButton> converter) {
@@ -61,6 +61,10 @@ public class LeftToggleGroup<E> extends LeftGroup {
         Bindings.bindContent(this.toggleButtonBox.getChildren(), this.adhocToggleButtons);
 
         this.getChildren().add(this.toggleButtonBox);
+    }
+
+    private LeftToggleGroup(String name, Function<E, ? extends ToggleButton> converter) {
+        this(name, null, converter);
     }
 
     public ObservableList<E> getElements() {
