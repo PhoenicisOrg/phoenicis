@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.common;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;

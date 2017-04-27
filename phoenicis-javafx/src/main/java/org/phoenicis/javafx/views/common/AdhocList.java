@@ -7,11 +7,24 @@ import javafx.collections.transformation.TransformationList;
 import java.util.stream.IntStream;
 
 /**
- * Created by marc on 26.04.17.
+ * This class combines an {@link ObservableList} and a number of non exchangeable objects called <code>others</code> to a single {@link ObservableList}.
+ * These <code>others</code> are prepended to the given {@link ObservableList}.
+ *
+ * @author marc
+ * @since 26.04.17
  */
 public class AdhocList<E> extends TransformationList<E, E> {
+    /**
+     * An array containing a number of objects that are prepended to the {@link ObservableList} <code>source</code>
+     */
     private E[] others;
 
+    /**
+     * Constructor
+     *
+     * @param source An observable list which should be part of this list
+     * @param others A number of objects of the same type as <code>source</code> that should be prepended to <code>source</code>
+     */
     public AdhocList(ObservableList<? extends E> source, E... others) {
         super(source);
 

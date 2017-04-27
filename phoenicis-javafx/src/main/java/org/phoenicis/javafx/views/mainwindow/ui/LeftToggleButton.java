@@ -31,6 +31,11 @@ public class LeftToggleButton extends ToggleButton {
      */
     private final String name;
 
+    /**
+     * Constructor
+     *
+     * @param name The text to be shown in this toggle button
+     */
     public LeftToggleButton(String name) {
         super(name);
         this.name = name;
@@ -40,6 +45,13 @@ public class LeftToggleButton extends ToggleButton {
         this.setPadding(new Insets(2));
     }
 
+    /**
+     * This method is called whenever the {@link LeftToggleButton} has been clicked.
+     * It is overriden to ensure that the button only fires an event ({@link javafx.event.ActionEvent} or {@link javafx.scene.input.MouseEvent})
+     * if it is either currently not selected or it isn't part of a {@link javafx.scene.control.ToggleGroup}.
+     *
+     * @see ToggleButton
+     */
     @Override
     public void fire() {
         /**
@@ -51,6 +63,11 @@ public class LeftToggleButton extends ToggleButton {
         }
     }
 
+    /**
+     * This method returns the shown text of this button.
+     *
+     * @return The currently shown text of this button.
+     */
     public String getName() {
         return name;
     }
