@@ -137,7 +137,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
 
-        this.navigateTo(currentEnginePanel);
+        this.navigateToAtPosition(1, currentEnginePanel);
     }
 
     private void processFilterText(String filterText) {

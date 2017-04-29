@@ -121,6 +121,11 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.navigationChronicle.add(destination);
     }
 
+    public void navigateToAtPosition(int index, Node destination) {
+        returnTo(index - 1);
+        navigateTo(destination);
+    }
+
     public void clearChronicleNavigateTo(Node destination) {
         this.navigationChronicle.setAll(destination);
     }

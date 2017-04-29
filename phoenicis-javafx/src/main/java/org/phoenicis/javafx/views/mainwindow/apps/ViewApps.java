@@ -137,7 +137,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
 
-        this.navigateTo(appPanel);
+        this.navigateToAtPosition(1, appPanel);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
