@@ -6,7 +6,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
@@ -59,8 +58,8 @@ public class EngineSideBar extends LeftSideBar {
     /**
      * Constructor
      */
-    public EngineSideBar(MainWindowView<EngineSideBar> mainWindow) {
-        super(mainWindow);
+    public EngineSideBar() {
+        super();
 
         this.populateSearchBar();
         this.populateEngineCategories();

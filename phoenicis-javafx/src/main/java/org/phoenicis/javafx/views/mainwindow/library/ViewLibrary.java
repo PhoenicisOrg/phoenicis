@@ -50,7 +50,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        this.sideBar = new LibrarySideBar(applicationName, this);
+        this.sideBar = new LibrarySideBar(applicationName);
 
         this.drawContent();
 

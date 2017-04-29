@@ -58,7 +58,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
     public ViewEngines(ThemeManager themeManager, String wineEnginesPath) {
         super("Engines", themeManager);
 
-        this.sideBar = new EngineSideBar(this);
+        this.sideBar = new EngineSideBar();
 
         this.engineCategories = FXCollections.observableArrayList();
         this.engineSubCategories = FXCollections.observableArrayList();

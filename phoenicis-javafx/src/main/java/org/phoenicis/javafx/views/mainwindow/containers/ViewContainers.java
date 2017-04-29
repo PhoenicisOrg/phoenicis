@@ -48,7 +48,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
     public ViewContainers(ThemeManager themeManager) {
         super("Containers", themeManager);
 
-        this.sideBar = new ContainerSideBar(this);
+        this.sideBar = new ContainerSideBar();
 
         this.containers = FXCollections.observableArrayList();
 

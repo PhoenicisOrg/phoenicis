@@ -4,7 +4,6 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
@@ -28,8 +27,8 @@ public class SettingsSideBar extends LeftSideBar {
     /**
      * Constructor
      */
-    public SettingsSideBar(MainWindowView<SettingsSideBar> mainWindow) {
-        super(mainWindow);
+    public SettingsSideBar() {
+        super();
 
         this.populate();
 

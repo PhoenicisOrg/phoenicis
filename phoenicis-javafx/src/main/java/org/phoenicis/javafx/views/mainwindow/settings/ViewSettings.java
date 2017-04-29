@@ -57,7 +57,7 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
 
         this.initializeSettingsItems();
 
-        this.sideBar = new SettingsSideBar(this);
+        this.sideBar = new SettingsSideBar();
 
         this.sideBar.setOnSelectSettingsItem(this::clearChronicleNavigateTo);
 

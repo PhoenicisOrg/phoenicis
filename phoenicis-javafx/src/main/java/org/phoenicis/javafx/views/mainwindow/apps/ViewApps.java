@@ -71,7 +71,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        this.sideBar = new ApplicationSideBar(this);
+        this.sideBar = new ApplicationSideBar();
         this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create, (element, event) -> showAppDetails(element.getValue(), settingsManager));
 
         // initialising the category lists
