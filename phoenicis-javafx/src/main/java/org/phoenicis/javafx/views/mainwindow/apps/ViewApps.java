@@ -26,8 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -37,7 +35,6 @@ import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +42,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
@@ -141,7 +136,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
-        showRightView(appPanel);
+        appPanel.setMaxWidth(400);
+        this.showDetailsView(appPanel);
     }
 
     private void installScript(ScriptDTO scriptDTO) {

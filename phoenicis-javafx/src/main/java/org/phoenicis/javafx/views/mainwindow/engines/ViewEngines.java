@@ -146,7 +146,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         currentEnginePanel = new EnginePanel(engineDTO);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
-        showRightView(currentEnginePanel);
+        this.showDetailsView(currentEnginePanel);
     }
 
     private void processFilterText(String filterText) {
