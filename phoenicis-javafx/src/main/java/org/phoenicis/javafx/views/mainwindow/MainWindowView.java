@@ -22,12 +22,17 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 
@@ -44,12 +49,32 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     private FailurePanel failurePanel;
 
     private ObservableList<Node> navigationChronicle;
+    private MappedList<Node, Node> closeableChronicle;
 
     public MainWindowView(String text, ThemeManager themeManager) {
         super(text);
 
         this.themeManager = themeManager;
         this.navigationChronicle = FXCollections.observableArrayList();
+        this.closeableChronicle = new MappedList<>(this.navigationChronicle, item -> {
+            if (this.navigationChronicle.indexOf(item) > 0) {
+                StackPane result = new StackPane();
+
+                Button closeButton = new Button("x");
+                closeButton.setOnAction(event -> {
+                    this.returnTo(navigationChronicle.indexOf(item) - 1);
+                });
+
+                result.setAlignment(Pos.TOP_RIGHT);
+                result.getChildren().setAll(item, closeButton);
+
+                StackPane.setMargin(closeButton, new Insets(5, 5, 0, 0));
+
+                return result;
+            } else {
+                return item;
+            }
+        });
 
         this.populateSidebarContainer();
         this.populateMainContainer();
@@ -61,7 +86,7 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.content.setLeft(leftContent);
         this.content.setCenter(mainContent);
 
-        Bindings.bindContent(mainContent.getItems(), navigationChronicle);
+        Bindings.bindContent(mainContent.getItems(), closeableChronicle);
 
         this.setContent(content);
     }
