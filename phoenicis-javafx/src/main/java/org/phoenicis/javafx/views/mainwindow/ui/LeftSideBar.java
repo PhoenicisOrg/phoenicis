@@ -25,18 +25,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 
-public class LeftSideBar extends ScrollPane {
+public abstract class LeftSideBar extends VBox {
 
     public LeftSideBar() {
-        super(new VBox());
-        this.setHbarPolicy(ScrollBarPolicy.NEVER);
-        this.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-        this.setBorder(Border.EMPTY);
-        this.getStyleClass().add("leftPaneScrollbar");
-        this.getContent().getStyleClass().add("leftPane");
-    }
+        super();
 
-    public ObservableList<Node> getContentChildren() {
-        return ((VBox) this.getContent()).getChildren();
+        this.getStyleClass().add("leftPane");
     }
 }

@@ -38,7 +38,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-public class ViewContainers extends MainWindowView {
+public class ViewContainers extends MainWindowView<ContainerSideBar> {
     private ContainerSideBar sideBar;
 
     private ObservableList<ContainerDTO> containers;
@@ -56,10 +56,10 @@ public class ViewContainers extends MainWindowView {
 
         this.sideBar.bindContainers(this.containers);
 
-        this.drawSideBar();
         this.initSelectContainerPane();
 
-        showRightView(selectContainerPanel);
+        this.setSideBar(sideBar);
+        this.showRightView(selectContainerPanel);
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
@@ -78,12 +78,6 @@ public class ViewContainers extends MainWindowView {
 
             showRightView(selectContainerPanel);
         });
-    }
-
-    @Override
-    protected void drawSideBar() {
-        addToSideBar(this.sideBar);
-        super.drawSideBar();
     }
 
     private void applyFilter(String searchText) {

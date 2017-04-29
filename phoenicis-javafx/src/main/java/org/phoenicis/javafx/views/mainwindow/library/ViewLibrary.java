@@ -33,7 +33,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-public class ViewLibrary extends MainWindowView {
+public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
 
     private LibrarySideBar sideBar;
@@ -52,10 +52,10 @@ public class ViewLibrary extends MainWindowView {
 
         this.sideBar = new LibrarySideBar(applicationName);
 
-        this.drawSideBar();
         this.drawContent();
 
-        showRightView(libraryTabs);
+        this.setSideBar(sideBar);
+        this.showRightView(libraryTabs);
     }
 
     public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {
@@ -115,12 +115,6 @@ public class ViewLibrary extends MainWindowView {
         });
 
         installedApplication.setContent(applicationListWidget);
-    }
-
-    @Override
-    protected void drawSideBar() {
-        this.addToSideBar(sideBar);
-        super.drawSideBar();
     }
 
     public void createNewTab(Tab tab) {

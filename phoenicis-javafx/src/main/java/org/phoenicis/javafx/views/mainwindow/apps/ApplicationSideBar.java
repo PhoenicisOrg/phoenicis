@@ -31,7 +31,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @author marc
  * @since 21.04.17
  */
-public class ApplicationSideBar extends VBox {
+public class ApplicationSideBar extends LeftSideBar {
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
 

@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
+import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
 
@@ -30,7 +27,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @author marc
  * @since 22.04.17
  */
-public class ContainerSideBar extends VBox {
+public class ContainerSideBar extends LeftSideBar {
     // the search bar used for filtering
     private SearchBox searchBar;
 

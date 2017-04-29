@@ -48,7 +48,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-public class ViewApps extends MainWindowView {
+public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
 
     private ApplicationSideBar sideBar;
@@ -104,7 +104,7 @@ public class ViewApps extends MainWindowView {
             showAvailableApps();
         });
 
-        this.drawSideBar();
+        this.setSideBar(sideBar);
         this.showWait();
     }
 
@@ -136,12 +136,6 @@ public class ViewApps extends MainWindowView {
 
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
         getFailurePanel().getRetryButton().setOnMouseClicked(event);
-    }
-
-    @Override
-    protected void drawSideBar() {
-        addToSideBar(sideBar);
-        super.drawSideBar();
     }
 
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {

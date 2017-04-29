@@ -18,55 +18,64 @@
 
 package org.phoenicis.javafx.views.mainwindow;
 
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 
-public class MainWindowView extends Tab {
+public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     protected final ThemeManager themeManager;
-    private final HBox hBox;
+
+    private final BorderPane content;
+
+    private ScrollPane leftContent;
+
     private HBox waitPanel;
     private FailurePanel failurePanel;
-    private final LeftSideBar leftContent;
-
-    private Node visiblePane;
 
     public MainWindowView(String text, ThemeManager themeManager) {
         super(text);
 
         this.themeManager = themeManager;
 
-        hBox = new HBox();
-        hBox.getStyleClass().add("mainWindowScene");
-        leftContent = new LeftSideBar();
-        setContent(hBox);
+        this.populateSidebarContainer();
+        this.populateFailurePanel();
+        this.populateWaitPanel();
 
-        waitPanel = new WaitPanel();
-        failurePanel = new FailurePanel(themeManager);
+        this.content = new BorderPane();
+        this.content.getStyleClass().add("mainWindowScene");
+        this.content.setLeft(leftContent);
+        this.content.setCenter(waitPanel);
+
+        this.setContent(content);
     }
 
-    protected void drawSideBar() {
-        hBox.getChildren().add(leftContent);
+    private void populateSidebarContainer() {
+        this.leftContent = new ScrollPane();
+        this.leftContent.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        this.leftContent.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        this.leftContent.setBorder(Border.EMPTY);
+        this.leftContent.getStyleClass().add("leftPaneScrollbar");
     }
 
-    protected void clearSideBar() {
-        leftContent.getContentChildren().clear();
+    private void populateWaitPanel() {
+        this.waitPanel = new WaitPanel();
     }
 
-    protected void addToSideBar(Node... nodes) {
-        leftContent.getContentChildren().addAll(nodes);
+    private void populateFailurePanel() {
+        this.failurePanel = new FailurePanel(themeManager);
+    }
+
+    protected void setSideBar(SideBar sideBar) {
+        this.leftContent.setContent(sideBar);
     }
 
     public void showRightView(Node nodeToShow) {
-        if(visiblePane != null) {
-            hBox.getChildren().remove(visiblePane);
-        }
-        visiblePane = nodeToShow;
-        hBox.getChildren().add(visiblePane);
-        HBox.setHgrow(visiblePane, Priority.ALWAYS);
+        this.content.setCenter(nodeToShow);
     }
 
     public void showWait() {
