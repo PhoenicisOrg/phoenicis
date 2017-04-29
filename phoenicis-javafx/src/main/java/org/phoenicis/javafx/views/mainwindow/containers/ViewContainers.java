@@ -48,7 +48,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
     public ViewContainers(ThemeManager themeManager) {
         super("Containers", themeManager);
 
-        this.sideBar = new ContainerSideBar();
+        this.sideBar = new ContainerSideBar(this);
 
         this.containers = FXCollections.observableArrayList();
 
@@ -59,7 +59,8 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         this.initSelectContainerPane();
 
         this.setSideBar(sideBar);
-        this.showRightView(selectContainerPanel);
+
+        this.clearChronicleNavigateTo(selectContainerPanel);
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
@@ -74,9 +75,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         Platform.runLater(() -> {
             this.containers.setAll(containers);
 
-            this.initSelectContainerPane();
-
-            showRightView(selectContainerPanel);
+            this.clearChronicleNavigateTo(selectContainerPanel);
         });
     }
 

@@ -6,6 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
@@ -53,7 +54,9 @@ public class ApplicationSideBar extends LeftSideBar {
     private Runnable onAllCategorySelection;
     private Consumer<CategoryDTO> onCategorySelection;
 
-    public ApplicationSideBar() {
+    public ApplicationSideBar(MainWindowView<ApplicationSideBar> mainWindow) {
+        super(mainWindow);
+
         this.populateSearchBar();
         this.populateCategories();
         this.populateFilters();

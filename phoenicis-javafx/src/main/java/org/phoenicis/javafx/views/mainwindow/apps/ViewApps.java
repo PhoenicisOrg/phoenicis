@@ -71,7 +71,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        this.sideBar = new ApplicationSideBar();
+        this.sideBar = new ApplicationSideBar(this);
         this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create, (element, event) -> showAppDetails(element.getValue(), settingsManager));
 
         // initialising the category lists
@@ -97,11 +97,13 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
             filter.setFilters(category.getApplications()::contains);
-            showAvailableApps();
+
+            this.clearChronicleNavigateTo(availableApps);
         });
         this.sideBar.setOnAllCategorySelection(() -> {
             filter.clearFilters();
-            showAvailableApps();
+
+            this.clearChronicleNavigateTo(availableApps);
         });
 
         this.setSideBar(sideBar);
@@ -110,13 +112,6 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
         this.onSelectScript = onSelectScript;
-    }
-
-    /**
-     * Show available apps panel
-     */
-    public void showAvailableApps() {
-        showRightView(availableApps);
     }
 
     /**
@@ -130,7 +125,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
             this.filter.clearAll();
             this.sideBar.selectAllCategories();
 
-            this.showAvailableApps();
+            this.clearChronicleNavigateTo(availableApps);
         });
     }
 
@@ -141,7 +136,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
-        showRightView(appPanel);
+
+        this.navigateTo(appPanel);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
@@ -150,7 +146,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private void clearFilterText() {
         this.filter.setFilterText("");
-        this.showAvailableApps();
+
+        this.clearChronicleNavigateTo(availableApps);
     }
 
     private void processFilterText(String filterText) {
@@ -166,6 +163,6 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
         this.pause.playFromStart();
 
-        this.showAvailableApps();
+        this.clearChronicleNavigateTo(availableApps);
     }
 }

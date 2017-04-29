@@ -18,12 +18,16 @@
 
 package org.phoenicis.javafx.views.mainwindow;
 
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 
@@ -34,22 +38,30 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
 
     private ScrollPane leftContent;
 
+    private SplitPane mainContent;
+
     private HBox waitPanel;
     private FailurePanel failurePanel;
+
+    private ObservableList<Node> navigationChronicle;
 
     public MainWindowView(String text, ThemeManager themeManager) {
         super(text);
 
         this.themeManager = themeManager;
+        this.navigationChronicle = FXCollections.observableArrayList();
 
         this.populateSidebarContainer();
+        this.populateMainContainer();
         this.populateFailurePanel();
         this.populateWaitPanel();
 
         this.content = new BorderPane();
         this.content.getStyleClass().add("mainWindowScene");
         this.content.setLeft(leftContent);
-        this.content.setCenter(waitPanel);
+        this.content.setCenter(mainContent);
+
+        Bindings.bindContent(mainContent.getItems(), navigationChronicle);
 
         this.setContent(content);
     }
@@ -60,6 +72,12 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.leftContent.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         this.leftContent.setBorder(Border.EMPTY);
         this.leftContent.getStyleClass().add("leftPaneScrollbar");
+    }
+
+    private void populateMainContainer() {
+        this.mainContent = new SplitPane();
+        this.mainContent.setBorder(Border.EMPTY);
+        this.mainContent.setPadding(new Insets(0));
     }
 
     private void populateWaitPanel() {
@@ -74,16 +92,24 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.leftContent.setContent(sideBar);
     }
 
-    public void showRightView(Node nodeToShow) {
-        this.content.setCenter(nodeToShow);
+    public void navigateTo(Node destination) {
+        this.navigationChronicle.add(destination);
+    }
+
+    public void clearChronicleNavigateTo(Node destination) {
+        this.navigationChronicle.setAll(destination);
+    }
+
+    public void returnTo(int index) {
+        this.navigationChronicle.subList(index + 1, navigationChronicle.size()).clear();
     }
 
     public void showWait() {
-        showRightView(waitPanel);
+        clearChronicleNavigateTo(waitPanel);
     }
 
     public void showFailure() {
-        showRightView(failurePanel);
+        clearChronicleNavigateTo(failurePanel);
     }
 
     public FailurePanel getFailurePanel() {
