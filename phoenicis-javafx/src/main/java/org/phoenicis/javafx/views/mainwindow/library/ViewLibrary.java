@@ -50,12 +50,12 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        this.sideBar = new LibrarySideBar(applicationName);
+        this.sideBar = new LibrarySideBar(applicationName, this);
 
         this.drawContent();
 
         this.setSideBar(sideBar);
-        this.showRightView(libraryTabs);
+        this.navigateTo(libraryTabs);
     }
 
     public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {

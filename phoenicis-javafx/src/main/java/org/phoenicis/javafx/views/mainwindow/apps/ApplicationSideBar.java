@@ -2,12 +2,14 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.VBox;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -35,6 +37,9 @@ public class ApplicationSideBar extends LeftSideBar {
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
 
+    // an optional button used to return to the last page
+    private Button backButton;
+
     // the toggleable categories
     private LeftToggleGroup<CategoryDTO> categoryView;
 
@@ -53,12 +58,34 @@ public class ApplicationSideBar extends LeftSideBar {
     private Runnable onAllCategorySelection;
     private Consumer<CategoryDTO> onCategorySelection;
 
-    public ApplicationSideBar() {
+    /**
+     * Constructor
+     *
+     * @param mainWindow The main window view in which this sidebar resides
+     */
+    public ApplicationSideBar(MainWindowView<ApplicationSideBar> mainWindow) {
+        super(mainWindow);
+
         this.populateSearchBar();
         this.populateCategories();
         this.populateFilters();
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(), this.filterGroup);
+        this.showContent(Optional.empty());
+    }
+
+    public void showContent(Optional<MainWindowView.NavigationStep> lastNavigationStep) {
+        if (!lastNavigationStep.isPresent()) {
+            this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(), this.filterGroup);
+        } else {
+            this.backButton = new Button("Back");
+
+            lastNavigationStep.get().getName().ifPresent(to -> this.backButton.setText(String.format("Back to %s", to)));
+
+            this.backButton.setWrapText(true);
+            this.backButton.setOnAction(event -> mainWindow.navigateToLast());
+
+            this.getChildren().setAll(this.backButton, new LeftSpacer(), this.categoryView, new LeftSpacer(), this.filterGroup);
+        }
     }
 
     /**

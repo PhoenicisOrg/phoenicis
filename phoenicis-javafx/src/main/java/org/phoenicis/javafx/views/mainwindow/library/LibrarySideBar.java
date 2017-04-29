@@ -2,6 +2,7 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutDTO;
 
@@ -70,8 +71,8 @@ public class LibrarySideBar extends LeftSideBar {
      *
      * @param applicationName The name of this application (normally "PlayOnLinux")
      */
-    public LibrarySideBar(String applicationName) {
-        super();
+    public LibrarySideBar(String applicationName, MainWindowView<LibrarySideBar> mainWindow) {
+        super(mainWindow);
 
         this.applicationName = applicationName;
 

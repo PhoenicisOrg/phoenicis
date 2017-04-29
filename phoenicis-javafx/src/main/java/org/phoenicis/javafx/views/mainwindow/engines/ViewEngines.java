@@ -58,7 +58,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
     public ViewEngines(ThemeManager themeManager, String wineEnginesPath) {
         super("Engines", themeManager);
 
-        this.sideBar = new EngineSideBar();
+        this.sideBar = new EngineSideBar(this);
 
         this.engineCategories = FXCollections.observableArrayList();
         this.engineSubCategories = FXCollections.observableArrayList();
@@ -87,6 +87,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
 
         Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
 
+        this.setOnViewChanged(sideBar::showContent);
         this.setSideBar(sideBar);
         this.showWait();
     }
@@ -110,12 +111,6 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         availableEngines.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
-    // TODO: delete this method because it doesn't do what it promises, namely showing the wine versions tab
-    @Deprecated
-    public void showWineVersions() {
-        showRightView(availableEngines);
-    }
-
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
             this.engineCategories.setAll(engineCategoryDTOS);
@@ -124,7 +119,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
                 this.sideBar.selectFirstEngineCategory();
             }
 
-            this.showAvailableEngines();
+            this.clearChronicleNavigateTo("Engines", availableEngines);
         });
     }
 
@@ -133,12 +128,8 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         this.engineSubCategories.setAll(category.getSubCategories());
     }
 
-    public void showAvailableEngines() {
-        showRightView(availableEngines);
-    }
-
     private void selectCategory(EngineCategoryDTO category) {
-        this.showRightView(availableEngines);
+        this.clearChronicleNavigateTo(String.format("%s engines", category.getName()), availableEngines);
         this.populateEngines(category);
     }
 
@@ -146,7 +137,8 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         currentEnginePanel = new EnginePanel(engineDTO);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
-        showRightView(currentEnginePanel);
+
+        this.navigateTo(currentEnginePanel);
     }
 
     private void processFilterText(String filterText) {

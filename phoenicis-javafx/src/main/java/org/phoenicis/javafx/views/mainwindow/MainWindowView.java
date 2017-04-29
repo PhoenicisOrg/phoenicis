@@ -27,6 +27,10 @@ import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 
+import java.util.Optional;
+import java.util.Stack;
+import java.util.function.Consumer;
+
 public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     protected final ThemeManager themeManager;
 
@@ -37,10 +41,15 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     private HBox waitPanel;
     private FailurePanel failurePanel;
 
+    private Stack<NavigationStep> navigationChronicle;
+
+    private Consumer<Optional<NavigationStep>> onViewChanged;
+
     public MainWindowView(String text, ThemeManager themeManager) {
         super(text);
 
         this.themeManager = themeManager;
+        this.navigationChronicle = new Stack<NavigationStep>();
 
         this.populateSidebarContainer();
         this.populateFailurePanel();
@@ -74,16 +83,51 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.leftContent.setContent(sideBar);
     }
 
-    public void showRightView(Node nodeToShow) {
-        this.content.setCenter(nodeToShow);
+    public void navigateTo(Node destination) {
+        navigateTo(null, destination);
+    }
+
+    public void navigateTo(String name, Node destination) {
+        if (this.onViewChanged != null) {
+            if (this.navigationChronicle.isEmpty()) {
+                this.onViewChanged.accept(Optional.empty());
+            } else {
+                this.onViewChanged.accept(Optional.of(this.navigationChronicle.peek()));
+            }
+        }
+
+        this.navigationChronicle.push(new NavigationStep(name, destination));
+
+        this.content.setCenter(destination);
+    }
+
+    public void navigateToLast() {
+        if (this.navigationChronicle.size() >= 2) {
+            // delete last step
+            this.navigationChronicle.pop();
+
+            NavigationStep last = this.navigationChronicle.pop();
+
+            navigateTo(last.getName().orElse(null), last.getDestination());
+        }
+    }
+
+    public void clearChronicleNavigateTo(Node destination) {
+        clearChronicleNavigateTo(null, destination);
+    }
+
+    public void clearChronicleNavigateTo(String name, Node destination) {
+        this.navigationChronicle.clear();
+
+        navigateTo(name, destination);
     }
 
     public void showWait() {
-        showRightView(waitPanel);
+        clearChronicleNavigateTo(waitPanel);
     }
 
     public void showFailure() {
-        showRightView(failurePanel);
+        clearChronicleNavigateTo(failurePanel);
     }
 
     public FailurePanel getFailurePanel() {
@@ -91,4 +135,26 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     }
 
     public ThemeManager getThemeManager() { return themeManager; }
+
+    public void setOnViewChanged(Consumer<Optional<NavigationStep>> onViewChanged) {
+        this.onViewChanged = onViewChanged;
+    }
+
+    public static class NavigationStep {
+        private final Optional<String> name;
+        private final Node destination;
+
+        public NavigationStep(String name, Node destination) {
+            this.name = Optional.ofNullable(name);
+            this.destination = destination;
+        }
+
+        public Optional<String> getName() {
+            return name;
+        }
+
+        public Node getDestination() {
+            return destination;
+        }
+    }
 }

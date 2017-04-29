@@ -26,8 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -37,7 +35,6 @@ import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +42,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
@@ -71,7 +66,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        this.sideBar = new ApplicationSideBar();
+        this.sideBar = new ApplicationSideBar(this);
         this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create, (element, event) -> showAppDetails(element.getValue(), settingsManager));
 
         // initialising the category lists
@@ -97,26 +92,22 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
             filter.setFilters(category.getApplications()::contains);
-            showAvailableApps();
+
+            this.clearChronicleNavigateTo("Applications", availableApps);
         });
         this.sideBar.setOnAllCategorySelection(() -> {
             filter.clearFilters();
-            showAvailableApps();
+
+            this.clearChronicleNavigateTo("Applications", availableApps);
         });
 
+        this.setOnViewChanged(sideBar::showContent);
         this.setSideBar(sideBar);
         this.showWait();
     }
 
     public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
         this.onSelectScript = onSelectScript;
-    }
-
-    /**
-     * Show available apps panel
-     */
-    public void showAvailableApps() {
-        showRightView(availableApps);
     }
 
     /**
@@ -130,7 +121,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
             this.filter.clearAll();
             this.sideBar.selectAllCategories();
 
-            this.showAvailableApps();
+            this.clearChronicleNavigateTo("Applications", availableApps);
         });
     }
 
@@ -141,7 +132,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
-        showRightView(appPanel);
+
+        this.navigateTo(appPanel);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
@@ -150,7 +142,6 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private void clearFilterText() {
         this.filter.setFilterText("");
-        this.showAvailableApps();
     }
 
     private void processFilterText(String filterText) {
@@ -165,7 +156,5 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         });
 
         this.pause.playFromStart();
-
-        this.showAvailableApps();
     }
 }

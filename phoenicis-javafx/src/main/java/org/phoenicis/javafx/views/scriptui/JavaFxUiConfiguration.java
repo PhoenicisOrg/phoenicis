@@ -73,7 +73,7 @@ public class JavaFxUiConfiguration implements UiConfiguration {
         return title -> {
             final ProgressUiJavaFXImplementation progressUi = new ProgressUiJavaFXImplementation();
             viewsConfiguration.viewEngines().showProgress(progressUi);
-            progressUi.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
+
             return progressUi;
         };
     }
