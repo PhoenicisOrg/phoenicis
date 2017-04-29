@@ -2,10 +2,7 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
-import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
+import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.io.File;
@@ -33,7 +30,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @author marc
  * @since 15.04.17
  */
-public class LibrarySideBar extends VBox {
+public class LibrarySideBar extends LeftSideBar {
     // the name of this application
     private final String applicationName;
 

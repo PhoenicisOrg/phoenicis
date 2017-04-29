@@ -27,7 +27,7 @@ import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
-public class ViewSettings extends MainWindowView {
+public class ViewSettings extends MainWindowView<SettingsSideBar> {
     private final String applicationName;
     private final String applicationVersion;
     private final String applicationGitRevision;
@@ -63,9 +63,7 @@ public class ViewSettings extends MainWindowView {
 
         this.sideBar.bindSettingsItems(this.settingsItems);
 
-        addToSideBar(sideBar);
-        super.drawSideBar();
-
+        this.setSideBar(sideBar);
         this.sideBar.selectFirstSettingsCategory();
     }
 
