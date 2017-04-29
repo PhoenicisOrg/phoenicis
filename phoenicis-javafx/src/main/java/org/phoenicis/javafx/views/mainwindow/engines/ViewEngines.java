@@ -55,7 +55,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
-    public ViewEngines(ThemeManager themeManager, String wineEnginesPath) {
+    public ViewEngines(ThemeManager themeManager, String enginesPath) {
         super("Engines", themeManager);
 
         this.sideBar = new EngineSideBar();
@@ -64,7 +64,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         this.engineSubCategories = FXCollections.observableArrayList();
         this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories,
                 engineSubCategory -> {
-                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, wineEnginesPath);
+                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath);
 
                     result.setOnSelectEngine(this::showEngineDetails);
 

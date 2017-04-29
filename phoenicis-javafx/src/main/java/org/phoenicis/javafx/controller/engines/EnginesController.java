@@ -45,18 +45,15 @@ public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ViewEngines viewEngines;
     private final EnginesSource enginesSource;
-    private final String wineEnginesPath;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
 
     public EnginesController(ViewEngines viewEngines,
             EnginesSource enginesSource,
-            String wineEnginesPath,
             ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
         this.viewEngines = viewEngines;
         this.enginesSource = enginesSource;
-        this.wineEnginesPath = wineEnginesPath;
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
