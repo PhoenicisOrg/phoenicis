@@ -425,6 +425,15 @@
 .refreshIcon {
     -fx-graphic: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/refresh.png');
 }
+.closeIcon {
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/window-close.png');
+    -fx-background-size: 25px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-pref-width: 25px;
+    -fx-pref-height: 25px;
+}
 
 /************************ apps *************************/
 #allButton {

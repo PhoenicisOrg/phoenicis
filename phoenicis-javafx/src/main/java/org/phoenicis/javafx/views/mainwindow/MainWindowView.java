@@ -60,7 +60,8 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
             if (this.navigationChronicle.indexOf(item) > 0) {
                 StackPane result = new StackPane();
 
-                Button closeButton = new Button("x");
+                Button closeButton = new Button();
+                closeButton.getStyleClass().add("closeIcon");
                 closeButton.setOnAction(event -> {
                     this.returnTo(navigationChronicle.indexOf(item) - 1);
                 });
