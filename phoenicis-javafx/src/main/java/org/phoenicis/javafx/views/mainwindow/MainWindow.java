@@ -31,6 +31,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.phoenicis.settings.SettingsManager;
 
 public class MainWindow extends Stage {
     private final ViewLibrary library;
@@ -43,7 +44,8 @@ public class MainWindow extends Stage {
     private TabPane tabPane;
 
     public MainWindow(String applicationName, ViewLibrary library, ViewApps apps, ViewEngines engines,
-            ViewContainers containers, ViewSettings settings, ThemeManager themeManager, PhoenicisLogo phoenicisLogo) {
+            ViewContainers containers, ViewSettings settings, ThemeManager themeManager, SettingsManager settingsManager,
+            PhoenicisLogo phoenicisLogo) {
         super();
 
         this.library = library;
@@ -64,7 +66,7 @@ public class MainWindow extends Stage {
 
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
 
-        scene = new PhoenicisScene(tabPane, themeManager);
+        scene = new PhoenicisScene(tabPane, themeManager, settingsManager);
 
         this.getIcons().add(
                 new Image(JavaFXApplication.class
