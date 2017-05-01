@@ -29,6 +29,9 @@ public class SettingsManager {
 	@Value("${application.theme}")
 	private String theme;
 
+	@Value("${application.scale}")
+	private double scale;
+
 	@Value("${application.viewsource}")
 	private boolean viewScriptSource;
 
@@ -47,6 +50,14 @@ public class SettingsManager {
 
 	public void setTheme(String theme) {
 		this.theme = theme;
+	}
+
+	public double getScale() {
+		return scale;
+	}
+
+	public void setScale(double scale) {
+		this.scale = scale;
 	}
 
 	public boolean isViewScriptSource() {
@@ -71,7 +82,7 @@ public class SettingsManager {
 			File file = new File(settingsFileName);
 			OutputStream outputStream = new FileOutputStream(file);
 			DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
-			persister.store(settings.getProperties(), outputStream, "PoL 5 User Settings");
+			persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,6 +91,7 @@ public class SettingsManager {
 	private Settings load() {
 		Settings settings = new Settings();
 		settings.set(Setting.THEME, theme);
+		settings.set(Setting.SCALE, scale);
 		settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
 		settings.set(Setting.REPOSITORY, repository);
 		return settings;

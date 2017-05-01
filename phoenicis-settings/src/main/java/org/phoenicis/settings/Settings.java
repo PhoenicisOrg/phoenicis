@@ -31,6 +31,10 @@ public class Settings {
         properties.setProperty(setting.toString(), value);
     }
 
+    public void set(Setting setting, double value) {
+        properties.setProperty(setting.toString(), String.valueOf(value));
+    }
+
     public Properties getProperties() {
         return properties;
     }
