@@ -115,11 +115,6 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         distribution.setWrapText(true);
         informationContentPane.add(distribution, 1, 4);
 
-        informationContentPane.setHgap(20);
-        informationContentPane.setVgap(10);
-
-        informationPane.setSpacing(10);
-
         Region spacer = new Region();
         spacer.setPrefHeight(20);
         VBox.setVgrow(spacer, Priority.NEVER);
@@ -227,20 +222,6 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
 
-        displayContentPane.getRowConstraints().addAll(
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.),
-                new RowConstraints(50.)
-        );
-
-        displayContentPane.setHgap(20);
-
         Region spacer = new Region();
         GridPane.setHgrow(spacer, Priority.ALWAYS);
         displayContentPane.add(spacer, 2, 0);
@@ -279,10 +260,6 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         addItems(mouseWarpOverrideComboBox, MouseWarpOverride.class);
         inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         inputContentPane.add(mouseWarpOverrideComboBox, 1, 0);
-
-        inputContentPane.getRowConstraints().addAll(
-                new RowConstraints(50.)
-        );
 
         inputContentPane.getColumnConstraints().addAll(
                 new ColumnConstraintsWithPercentage(30),
@@ -350,15 +327,6 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
                 new ColumnConstraintsWithPercentage(25)
         );
 
-        toolsContentPane.getRowConstraints().addAll(
-                new RowConstraints(96.),
-                new RowConstraints(25.),
-                new RowConstraints(30.),
-                new RowConstraints(96.),
-                new RowConstraints(25.)
-        );
-
-
         toolsTab.setContent(toolsPane);
         toolsTab.setClosable(false);
         return toolsTab;
@@ -387,15 +355,6 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
                 new ColumnConstraintsWithPercentage(25),
                 new ColumnConstraintsWithPercentage(25)
         );
-
-        toolsContentPane.getRowConstraints().addAll(
-                new RowConstraints(96.),
-                new RowConstraints(25.),
-                new RowConstraints(30.),
-                new RowConstraints(96.),
-                new RowConstraints(25.)
-        );
-
 
         toolsTab.setContent(toolsPane);
         toolsTab.setClosable(false);
