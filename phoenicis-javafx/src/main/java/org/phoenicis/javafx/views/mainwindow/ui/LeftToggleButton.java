@@ -22,9 +22,20 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 
+/**
+ * This class represents a toggle button in the sidebar.
+ */
 public class LeftToggleButton extends ToggleButton {
+    /**
+     * The text shown in the button
+     */
     private final String name;
 
+    /**
+     * Constructor
+     *
+     * @param name The text to be shown in this toggle button
+     */
     public LeftToggleButton(String name) {
         super(name);
         this.name = name;
@@ -34,6 +45,29 @@ public class LeftToggleButton extends ToggleButton {
         this.setPadding(new Insets(2));
     }
 
+    /**
+     * This method is called whenever the {@link LeftToggleButton} has been clicked.
+     * It is overriden to ensure that the button only fires an event ({@link javafx.event.ActionEvent} or {@link javafx.scene.input.MouseEvent})
+     * if it is either currently not selected or it isn't part of a {@link javafx.scene.control.ToggleGroup}.
+     *
+     * @see ToggleButton
+     */
+    @Override
+    public void fire() {
+        /**
+         * Taken from:
+         * https://bitbucket.org/controlsfx/controlsfx/issues/84/segmented-button-control-clicking-on
+         */
+        if (getToggleGroup() == null || !isSelected()) {
+            super.fire();
+        }
+    }
+
+    /**
+     * This method returns the shown text of this button.
+     *
+     * @return The currently shown text of this button.
+     */
     public String getName() {
         return name;
     }
