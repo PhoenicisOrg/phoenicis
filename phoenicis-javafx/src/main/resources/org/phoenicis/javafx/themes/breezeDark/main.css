@@ -218,11 +218,15 @@
 /*******************************************************/
 /************************ logo *************************/
 /*******************************************************/
-#logoText {
+#logo {
+    -fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');
+    -fx-background-size: 1.8em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left center;
+    -fx-label-padding: 0 0 0 2.2em;
+    -fx-vpos: center;
     -fx-font-family: "Maven Pro";
     -fx-font-size: 1.8em;
-    -fx-translate-x: 1.2em;
-    -fx-translate-y: -0.1em;
     -fx-fill: white;
 }
 

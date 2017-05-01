@@ -18,19 +18,20 @@
 
 package org.phoenicis.javafx.views.mainwindow;
 
+import javafx.scene.Cursor;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import org.phoenicis.settings.SettingsManager;
 
 public class MainWindow extends Stage {
@@ -44,8 +45,8 @@ public class MainWindow extends Stage {
     private TabPane tabPane;
 
     public MainWindow(String applicationName, ViewLibrary library, ViewApps apps, ViewEngines engines,
-            ViewContainers containers, ViewSettings settings, ThemeManager themeManager, SettingsManager settingsManager,
-            PhoenicisLogo phoenicisLogo) {
+            ViewContainers containers, ViewSettings settings, ThemeManager themeManager,
+            SettingsManager settingsManager) {
         super();
 
         this.library = library;
@@ -55,13 +56,14 @@ public class MainWindow extends Stage {
         this.settings = settings;
 
         tabPane = new TabPane();
-        tabPane.setTabMinHeight(50);
         tabPane.setId("menuPane");
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab logoTab = new Tab();
-        phoenicisLogo.setMinWidth(200);
-        logoTab.setGraphic(phoenicisLogo);
+        Label logo = new Label(applicationName.toLowerCase());
+        logo.setId("logo");
+        logo.setCursor(Cursor.DEFAULT);
+        logoTab.setGraphic(logo);
         logoTab.setDisable(true);
 
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);

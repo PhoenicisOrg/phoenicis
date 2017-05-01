@@ -18,17 +18,16 @@
 
 package org.phoenicis.javafx.controller;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.MainWindow;
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
@@ -47,8 +46,7 @@ public class MainController {
                           ContainersController containersController,
                           SettingsController settingsController,
                           ThemeManager themeManager,
-                          SettingsManager settingsManager,
-                          PhoenicisLogo phoenicisLogo) {
+                          SettingsManager settingsManager) {
         super();
 
         this.applicationName = applicationName;
@@ -61,8 +59,7 @@ public class MainController {
                 containersController.getView(),
                 settingsController.getView(),
                 themeManager,
-                settingsManager,
-                phoenicisLogo
+                settingsManager
         );
 
         libraryController.setOnTabOpened(mainWindow::showLibrary);

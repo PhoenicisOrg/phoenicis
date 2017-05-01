@@ -22,7 +22,6 @@ import org.phoenicis.apps.AppsConfiguration;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
-import org.phoenicis.javafx.views.common.widget.PhoenicisLogo;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
@@ -94,11 +93,6 @@ public class ViewsConfiguration {
     @Bean
     public ViewSettings viewSettings() {
         return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener(), settingsConfiguration.settingsManager(), appsConfiguration.repositoryManager());
-    }
-
-    @Bean
-    public PhoenicisLogo phoenicisLogo() {
-        return new PhoenicisLogo(applicationName);
     }
 
     @Bean
