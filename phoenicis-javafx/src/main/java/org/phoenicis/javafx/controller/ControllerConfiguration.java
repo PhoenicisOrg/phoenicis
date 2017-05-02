@@ -77,6 +77,7 @@ public class ControllerConfiguration {
                 containersController(),
                 settingsController(),
                 themeConfiguration.themeManager(),
+                settingsConfiguration.settingsManager(),
                 viewsConfiguration.phoenicisLogo());
     }
 

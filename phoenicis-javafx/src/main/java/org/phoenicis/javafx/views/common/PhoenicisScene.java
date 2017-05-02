@@ -20,17 +20,20 @@ package org.phoenicis.javafx.views.common;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import org.phoenicis.settings.SettingsManager;
 
 import java.net.URL;
 
 public class PhoenicisScene extends Scene {
     private Theme theme;
 
-    public PhoenicisScene(Parent parent, ThemeManager themeManager) {
+    public PhoenicisScene(Parent parent, ThemeManager themeManager, SettingsManager settingsManager) {
         super(parent);
 
         this.theme = themeManager.getCurrentTheme();
         applyTheme();
+
+        this.getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", settingsManager.getScale()));
     }
 
     private void applyTheme() {

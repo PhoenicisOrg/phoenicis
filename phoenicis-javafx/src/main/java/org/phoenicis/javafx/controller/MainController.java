@@ -29,6 +29,7 @@ import org.phoenicis.javafx.views.mainwindow.MainWindow;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
 
@@ -46,6 +47,7 @@ public class MainController {
                           ContainersController containersController,
                           SettingsController settingsController,
                           ThemeManager themeManager,
+                          SettingsManager settingsManager,
                           PhoenicisLogo phoenicisLogo) {
         super();
 
@@ -59,6 +61,7 @@ public class MainController {
                 containersController.getView(),
                 settingsController.getView(),
                 themeManager,
+                settingsManager,
                 phoenicisLogo
         );
 
