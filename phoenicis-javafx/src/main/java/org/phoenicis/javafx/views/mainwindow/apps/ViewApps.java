@@ -111,7 +111,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
      * Show available apps panel
      */
     public void showAvailableApps() {
-        this.showDetailsView(null);
+        this.closeDetailsView();
         showRightView(availableApps);
     }
 

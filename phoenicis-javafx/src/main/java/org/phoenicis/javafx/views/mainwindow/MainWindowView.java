@@ -80,6 +80,8 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
 
     public void showDetailsView(Node nodeToShow) { this.content.setRight(nodeToShow); }
 
+    public void closeDetailsView() { this.content.setRight(null); }
+
     public void showWait() {
         showRightView(waitPanel);
     }
