@@ -112,7 +112,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
      */
     public void showAvailableApps() {
         this.closeDetailsView();
-        showRightView(availableApps);
+        setCenter(availableApps);
     }
 
     /**

@@ -55,7 +55,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.drawContent();
 
         this.setSideBar(sideBar);
-        this.showRightView(libraryTabs);
+        this.setCenter(libraryTabs);
     }
 
     public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {
