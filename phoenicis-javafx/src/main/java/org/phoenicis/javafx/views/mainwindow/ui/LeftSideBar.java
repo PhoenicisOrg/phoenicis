@@ -24,11 +24,15 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 
 public abstract class LeftSideBar extends VBox {
+    protected MainWindowView<? extends LeftSideBar> mainWindow;
 
-    public LeftSideBar() {
+    public LeftSideBar(MainWindowView<? extends LeftSideBar> mainWindow) {
         super();
+
+        this.mainWindow = mainWindow;
 
         this.getStyleClass().add("leftPane");
     }

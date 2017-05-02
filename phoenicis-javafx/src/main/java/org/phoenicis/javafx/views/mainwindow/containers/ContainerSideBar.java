@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
@@ -43,8 +44,8 @@ public class ContainerSideBar extends LeftSideBar {
     /**
      * Constructor
      */
-    public ContainerSideBar() {
-        super();
+    public ContainerSideBar(MainWindowView<ContainerSideBar> mainWindow) {
+        super(mainWindow);
 
         this.populateSearchBar();
         this.populateContainers();
