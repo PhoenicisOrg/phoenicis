@@ -36,7 +36,7 @@ import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ViewEngines extends MainWindowView {
+public class ViewEngines extends MainWindowView<EngineSideBar> {
     private EngineSideBar sideBar;
 
     private TabPane availableEngines;
@@ -55,7 +55,7 @@ public class ViewEngines extends MainWindowView {
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
-    public ViewEngines(ThemeManager themeManager, String wineEnginesPath) {
+    public ViewEngines(ThemeManager themeManager, String enginesPath) {
         super("Engines", themeManager);
 
         this.sideBar = new EngineSideBar();
@@ -64,7 +64,7 @@ public class ViewEngines extends MainWindowView {
         this.engineSubCategories = FXCollections.observableArrayList();
         this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories,
                 engineSubCategory -> {
-                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, wineEnginesPath);
+                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath);
 
                     result.setOnSelectEngine(this::showEngineDetails);
 
@@ -87,7 +87,7 @@ public class ViewEngines extends MainWindowView {
 
         Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
 
-        this.drawSideBar();
+        this.setSideBar(sideBar);
         this.showWait();
     }
 
@@ -114,12 +114,6 @@ public class ViewEngines extends MainWindowView {
     @Deprecated
     public void showWineVersions() {
         showRightView(availableEngines);
-    }
-
-    @Override
-    protected void drawSideBar() {
-        addToSideBar(this.sideBar);
-        super.drawSideBar();
     }
 
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {

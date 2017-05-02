@@ -55,6 +55,9 @@ public class ViewsConfiguration {
     @Value("${application.buildTimestamp}")
     private String applicationBuildTimestamp;
 
+    @Value("${application.user.engines}")
+    private String enginesPath;
+
     @Autowired
     private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
@@ -80,7 +83,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewEngines viewEngines() {
-        return new ViewEngines(themeConfiguration.themeManager(), controllerConfiguration.getEnginesPath());
+        return new ViewEngines(themeConfiguration.themeManager(), enginesPath);
     }
 
     @Bean

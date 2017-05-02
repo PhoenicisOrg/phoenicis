@@ -31,7 +31,7 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @author marc
  * @since 22.04.17
  */
-public class EngineSideBar extends VBox {
+public class EngineSideBar extends LeftSideBar {
     // the search bar used for filtering
     private SearchBox searchBar;
 

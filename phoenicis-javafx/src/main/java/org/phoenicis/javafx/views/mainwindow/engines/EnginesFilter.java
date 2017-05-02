@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 
@@ -26,8 +27,8 @@ import java.util.function.Predicate;
  * @since 23.04.17
  */
 public class EnginesFilter implements Predicate<EngineVersionDTO> {
+    private EngineCategoryDTO engineCategory;
     private EngineSubCategoryDTO engineSubCategory;
-
     private String enginesPath;
 
     /**
@@ -51,9 +52,9 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @param engineSubCategory The engine sub category used for this filter
      * @param enginesPath   The path to the installed engines
      */
-    public EnginesFilter(EngineSubCategoryDTO engineSubCategory, String enginesPath) {
+    public EnginesFilter(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory, String enginesPath) {
         super();
-
+        this.engineCategory = engineCategory;
         this.engineSubCategory = engineSubCategory;
         this.enginesPath = enginesPath;
     }
@@ -65,7 +66,7 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @return True if the engine version is installed, false otherwise
      */
     private boolean isInstalled(EngineVersionDTO engineVersionDTO) {
-        return Files.exists(Paths.get(enginesPath, engineSubCategory.getName(), engineVersionDTO.getVersion()));
+        return Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(), engineVersionDTO.getVersion()));
     }
 
     @Override

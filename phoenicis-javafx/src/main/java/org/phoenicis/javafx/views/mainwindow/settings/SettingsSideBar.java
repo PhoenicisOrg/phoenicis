@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
 
@@ -16,7 +17,7 @@ import java.util.function.Consumer;
  * @author marc
  * @since 23.04.17
  */
-public class SettingsSideBar extends VBox {
+public class SettingsSideBar extends LeftSideBar {
     // the toggle button group containing the buttons used to navigate to the different setting panels
     private LeftToggleGroup<SettingsSideBarItem> settingsItems;
 

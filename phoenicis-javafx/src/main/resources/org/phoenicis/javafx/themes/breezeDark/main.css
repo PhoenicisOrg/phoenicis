@@ -231,14 +231,14 @@
 /************************ menu *************************/
 /*******************************************************/
 #menuPane {
-    -fx-tab-min-width: 90px;
-    -fx-padding: -10 0 0 0;
+    -fx-tab-min-width: 7.5em;
+    -fx-padding: -0.9em 0 0 0;
     -fx-spacing: 0;
     -fx-pref-height: 43.3em;
 }
 
 #menuPane > .tab-header-area .tab {
-    -fx-border-width: 4;
+    -fx-border-width: 0.3em;
     -fx-border-color: transparent;
     -fx-border-style: hidden hidden solid hidden;
     -fx-background-color: transparent;
@@ -248,7 +248,7 @@
 
 #menuPane > .tab-header-area .tab-label {
     -fx-alignment: CENTER;
-    -fx-padding: 0 0 -5 0;
+    -fx-padding: 0 0 -0.4em 0;
     -fx-text-font-family: "Roboto Light";
     -fx-font-size: 1.2em;
     -fx-cursor: hand;
@@ -260,7 +260,7 @@
 }
 
 #menuPane > .tab-header-area .tab:selected {
-    -fx-border-width: 4;
+    -fx-border-width: 0.3em;
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: #3daee9;
     -fx-focus-color: transparent;
@@ -297,8 +297,8 @@
 }
 
 .leftPaneScrollbar .scroll-bar:vertical {
-    -fx-max-width: 5px;
-    -fx-pref-width: 5px;
+    -fx-max-width: 0.4em;
+    -fx-pref-width: 0.4em;
 }
 
 .leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
@@ -311,16 +311,16 @@
     -fx-background-color: #3c3f41;
     -fx-border-width: 0;
     -fx-background-radius: 1em;
-    -fx-pref-width: 5px;
-    -fx-max-width: 5px;
+    -fx-pref-width: 0.4em;
+    -fx-max-width: 0.4em;
 }
 
 .leftPaneScrollbar .scroll-bar:vertical .thumb {
     -fx-background-color:derive(black,70%);
     -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 0em;
-    -fx-pref-width: 4px;
-    -fx-max-width: 4px;
+    -fx-pref-width: 0.3em;
+    -fx-max-width: 0.3em;
 }
 
 .leftPaneInside {
@@ -344,8 +344,8 @@
     -fx-cursor: hand;
     -fx-text-fill: #eff0f1;
     -fx-txt-font-family: "Roboto Light";
-    -fx-label-padding: 2 0 2 26;
-    -fx-background-size: 24px;
+    -fx-label-padding: 0.2em 0 0.2em 2.2em;
+    -fx-background-size: 2em;
     -fx-background-repeat: no-repeat;
     -fx-background-position: left;
 }
@@ -392,8 +392,8 @@
 }
 
 .retryButton {
-    -fx-label-padding: 2 0 2 6;
-    -fx-background-size: 16px;
+    -fx-label-padding: 0.2em 0 0.2em 0.5em;
+    -fx-background-size: 1.3em;
     -fx-background-repeat: no-repeat;
     -fx-background-position: left;
 }
@@ -416,12 +416,12 @@
 }
 
 .appPanelMiniaturesPaneWrapper {
-    -fx-padding: 0px;
+    -fx-padding: 0em;
     -fx-border-width: 0;
     -fx-border-style: none;
     -fx-focus-traversable: false;
     -fx-background-color: transparent;
-    -fx-min-height: 150;
+    -fx-min-height: 12em;
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
@@ -433,18 +433,18 @@
 .descriptionTitle {
     -fx-font-family: "Roboto light";
     -fx-text-fill: #3daee9;
-    -fx-font-size: 16;
+    -fx-font-size: 1.3em;
 }
 
 /*******************************************************/
 /********************** containers *********************/
 /*******************************************************/
 .containerConfigurationPane {
-    -fx-padding: 10px;
+    -fx-padding: 1em;
 }
 
 .containerConfigurationPane > .grid {
-    -fx-padding: 10px;
+    -fx-padding: 1em;
 }
 
 /*******************************************************/
@@ -495,7 +495,7 @@
 /*******************************************************/
 #presentationBackground {
     -fx-background-color: #232629;
-    -fx-padding: 10;
+    -fx-padding: 0.8em;
 }
 
 #presentationScrollPane {
@@ -506,7 +506,7 @@
 #presentationTextTitle {
     -fx-font-weight: bold;
     -fx-fill: -fx-text-fill;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.3em;
 }
 
 #presentationText {
@@ -515,7 +515,7 @@
 
 /************************ step *************************/
 #panelForTopheader {
-    -fx-padding: 30px;
+    -fx-padding: 2.5em;
     -fx-background-color: -fx-background;
     -fx-border-color: transparent;
 }
@@ -523,14 +523,14 @@
 #header {
     -fx-border-color: -fx-focus-color;
     -fx-border-style: solid;
-    -fx-border-width: 0 0 1px 0;
+    -fx-border-width: 0 0 0.1em 0;
     -fx-background-color: -fx-background;
 }
 
 #footer {
     -fx-border-color: #bdc3c7;
     -fx-border-style: solid hidden hidden hidden;
-    -fx-border-width: 2;
+    -fx-border-width: 0.2em;
 }
 
 #stepScrollPane {
@@ -602,17 +602,17 @@
 /********************** wine tools *********************/
 /*******************************************************/
 .wineToolButton {
-    -fx-pref-width: 96px;
-    -fx-pref-height: 96px;
+    -fx-pref-width: 8em;
+    -fx-pref-height: 8em;
     -fx-content-display: graphic-only;
-    -fx-background-size: 48px;
+    -fx-background-size: 4em;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
 
 .wineToolCaption {
     -fx-font-size: 1em;
-    -fx-pref-width: 96px;
+    -fx-pref-width: 8em;
     -fx-fill: -fx-text-base-color;
 }
 

@@ -244,6 +244,9 @@
 
 .containerConfigurationPane > .grid {
     -fx-padding: 10px;
+    -fx-hgap: 1em;
+    -fx-vgap: 1em;
+    -fx-spacing: 1em;
 }
 
 /*******************************************************/

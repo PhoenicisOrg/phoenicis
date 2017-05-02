@@ -55,7 +55,7 @@ public class EngineSubCategoryTab extends Tab {
         this.engineSubCategory = engineSubCategory;
         this.enginesPath = enginesPath;
 
-        this.enginesFilter = new EnginesFilter(engineSubCategory, enginesPath);
+        this.enginesFilter = new EnginesFilter(engineCategory, engineSubCategory, enginesPath);
 
         this.engineVersions = FXCollections.observableArrayList(engineSubCategory.getPackages());
         this.sortedEngineVersions = engineVersions.sorted(EngineSubCategoryDTO.comparator().reversed());
@@ -72,7 +72,7 @@ public class EngineSubCategoryTab extends Tab {
     private void populate() {
         this.engineVersionsView = MiniatureListWidget.create(
                 engineVersionDTO -> MiniatureListWidget.Element.create(engineVersionDTO,
-                        Files.exists(Paths.get(enginesPath, engineSubCategory.getName(), engineVersionDTO.getVersion()))),
+                        Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(), engineVersionDTO.getVersion()))),
                 (engineItem, event) -> {
                     EngineVersionDTO engineVersionDTO = engineItem.getValue();
 
