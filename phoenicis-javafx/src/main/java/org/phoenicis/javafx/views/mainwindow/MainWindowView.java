@@ -83,10 +83,12 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     public void closeDetailsView() { this.content.setRight(null); }
 
     public void showWait() {
+        closeDetailsView();
         setCenter(waitPanel);
     }
 
     public void showFailure() {
+        closeDetailsView();
         setCenter(failurePanel);
     }
 
