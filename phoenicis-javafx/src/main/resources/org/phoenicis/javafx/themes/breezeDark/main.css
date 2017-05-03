@@ -470,7 +470,7 @@
 }
 
 .miniatureListElement:hover {
-    -fx-background-color: #3daee9;
+    -fx-background-color: #284150;
 }
 
 .miniatureListElement.selected {
