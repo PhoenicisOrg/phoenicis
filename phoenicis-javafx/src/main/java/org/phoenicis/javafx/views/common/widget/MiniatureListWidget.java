@@ -61,7 +61,11 @@ public final class MiniatureListWidget<E> extends ScrollPane {
         this.mappedElements = new MappedList<Element<E>, E>(items, value -> {
             Element newElement = converter.apply(value);
 
-            newElement.setOnMouseClicked(event -> setOnMouseClicked.accept(newElement, event));
+            newElement.setOnMouseClicked(event -> {
+                unselectAll();
+                setOnMouseClicked.accept(newElement, event);
+                select(newElement);
+            });
 
             return newElement;
         });

@@ -134,7 +134,7 @@ public class ContainersController {
                             });
                 });
 
-                Platform.runLater(() -> viewContainers.showRightView(panel));
+                Platform.runLater(() -> viewContainers.clearChronicleNavigateTo(panel));
             });
         });
     }
