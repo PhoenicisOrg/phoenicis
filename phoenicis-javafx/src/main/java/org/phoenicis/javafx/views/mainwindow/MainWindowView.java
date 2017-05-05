@@ -75,6 +75,7 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     }
 
     public void setCenter(Node nodeToShow) {
+        closeDetailsView();
         this.content.setCenter(nodeToShow);
     }
 
