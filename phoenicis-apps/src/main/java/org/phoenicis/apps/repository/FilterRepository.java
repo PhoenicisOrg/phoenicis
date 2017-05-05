@@ -39,8 +39,8 @@ public class FilterRepository implements Repository {
     private final boolean enforceIncompatibleOperatingSystems;
 
     public FilterRepository(Repository repository,
-                     OperatingSystemFetcher operatingSystemFetcher,
-                     boolean enforceIncompatibleOperatingSystems) {
+                            OperatingSystemFetcher operatingSystemFetcher,
+                            boolean enforceIncompatibleOperatingSystems) {
         this.repository = repository;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.enforceIncompatibleOperatingSystems = enforceIncompatibleOperatingSystems;
@@ -57,16 +57,18 @@ public class FilterRepository implements Repository {
                     for (ApplicationDTO application : category.getApplications()) {
                         List<ScriptDTO> scripts = application.getScripts();
                         if (!enforceIncompatibleOperatingSystems) {
-                            scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
+                            scripts = application.getScripts().stream()
+                                    .filter(script ->
+                                            script.getCompatibleOperatingSystems() == null ||
+                                                    script.getCompatibleOperatingSystems().contains(currentOperatingSystem))
+                                    .collect(Collectors.toList());
                         }
                         if (!scripts.isEmpty()) {
-                            if (category.getType() != CategoryDTO.CategoryType.INSTALLERS) {
-                                applications.add(
-                                        new ApplicationDTO.Builder(application)
-                                                .withScripts(scripts)
-                                                .build()
-                                );
-                            }
+                            applications.add(
+                                    new ApplicationDTO.Builder(application)
+                                            .withScripts(scripts)
+                                            .build()
+                            );
                         }
                     }
 
