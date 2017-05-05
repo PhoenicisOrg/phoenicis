@@ -21,6 +21,8 @@ package org.phoenicis.apps;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.apps.repository.ClasspathRepository;
+import org.phoenicis.apps.repository.Repository;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 

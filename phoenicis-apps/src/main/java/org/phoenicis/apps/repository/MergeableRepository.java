@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

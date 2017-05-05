@@ -19,6 +19,7 @@
 package org.phoenicis.apps;
 
 import org.junit.Test;
+import org.phoenicis.apps.repository.NullRepository;
 
 import static org.junit.Assert.assertEquals;
 

@@ -21,6 +21,8 @@ package org.phoenicis.apps;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.apps.repository.Repository;
+import org.phoenicis.apps.repository.TeeRepository;
 
 import java.util.Arrays;
 import java.util.Collections;

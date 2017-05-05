@@ -21,6 +21,8 @@ package org.phoenicis.apps;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.apps.repository.CachedRepository;
+import org.phoenicis.apps.repository.Repository;
 
 import java.util.Arrays;
 

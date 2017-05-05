@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class ConfigurableRepository implements Repository {
+public class ConfigurableRepository implements Repository {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurableRepository.class);
 
     private final LocalRepository.Factory localRepositoryFactory;
@@ -41,7 +41,7 @@ class ConfigurableRepository implements Repository {
 
     private final FileUtilities fileUtilities;
 
-    ConfigurableRepository(String sourceUrl, String cacheDirectoryPath, FileUtilities fileUtilities, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
+    public ConfigurableRepository(String sourceUrl, String cacheDirectoryPath, FileUtilities fileUtilities, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
         this.cacheDirectoryPath = cacheDirectoryPath;
         this.localRepositoryFactory = localRepositoryFactory;
         this.classPathRepositoryFactory = classPathRepositoryFactory;

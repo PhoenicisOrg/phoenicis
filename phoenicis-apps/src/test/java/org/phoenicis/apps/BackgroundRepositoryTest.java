@@ -20,6 +20,8 @@ package org.phoenicis.apps;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.apps.repository.BackgroundRepository;
+import org.phoenicis.apps.repository.Repository;
 
 import java.util.Arrays;
 import java.util.List;

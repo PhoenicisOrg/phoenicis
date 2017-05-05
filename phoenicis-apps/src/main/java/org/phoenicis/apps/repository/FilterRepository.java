@@ -16,14 +16,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.ArrayList;
@@ -33,15 +33,14 @@ import java.util.stream.Collectors;
 /**
  * Takes an Application Source and removes all unsupported scripts
  */
-class FilterRepository implements Repository {
+public class FilterRepository implements Repository {
     private final Repository repository;
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final boolean enforceIncompatibleOperatingSystems;
-    private CombinedAppsFilter filter;
 
-    FilterRepository(Repository repository,
-                             OperatingSystemFetcher operatingSystemFetcher,
-                             boolean enforceIncompatibleOperatingSystems) {
+    public FilterRepository(Repository repository,
+                     OperatingSystemFetcher operatingSystemFetcher,
+                     boolean enforceIncompatibleOperatingSystems) {
         this.repository = repository;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.enforceIncompatibleOperatingSystems = enforceIncompatibleOperatingSystems;
@@ -51,46 +50,36 @@ class FilterRepository implements Repository {
     public List<CategoryDTO> fetchInstallableApplications() {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
         final List<CategoryDTO> categories = repository.fetchInstallableApplications();
-        final List<CategoryDTO> filteredCategories = new ArrayList<>();
-        for (CategoryDTO category : categories) {
-            final List<ApplicationDTO> applications = new ArrayList<>();
-            for (ApplicationDTO application : category.getApplications()) {
-                final List<ScriptDTO> scripts;
-                if(enforceIncompatibleOperatingSystems) {
-                    scripts = application.getScripts();
-                } else {
-                    scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
-                }
-                if (!scripts.isEmpty()) {
-                    if (filter == null || category.getType() != CategoryDTO.CategoryType.INSTALLERS || filter.applies(application)) {
-                        applications.add(
-                                new ApplicationDTO.Builder(application)
-                                        .withScripts(scripts)
-                                        .build()
-                        );
-                    }
-                }
-            }
-            if (!applications.isEmpty()) {
-                filteredCategories.add(
-                        new CategoryDTO.Builder(category)
-                                .withApplications(applications)
-                                .build()
-                );
-            }
-        }
 
-        return filteredCategories;
+        return categories.stream()
+                .map(category -> {
+                    final List<ApplicationDTO> applications = new ArrayList<>();
+                    for (ApplicationDTO application : category.getApplications()) {
+                        List<ScriptDTO> scripts = application.getScripts();
+                        if (!enforceIncompatibleOperatingSystems) {
+                            scripts = application.getScripts().stream().filter(script -> script.getCompatibleOperatingSystems() == null || script.getCompatibleOperatingSystems().contains(currentOperatingSystem)).collect(Collectors.toList());
+                        }
+                        if (!scripts.isEmpty()) {
+                            if (category.getType() != CategoryDTO.CategoryType.INSTALLERS) {
+                                applications.add(
+                                        new ApplicationDTO.Builder(application)
+                                                .withScripts(scripts)
+                                                .build()
+                                );
+                            }
+                        }
+                    }
+
+                    return new CategoryDTO.Builder(category)
+                            .withApplications(applications)
+                            .build();
+                })
+                .filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
     }
 
     @Override
     public void onDelete() {
         this.repository.onDelete();
-    }
-
-    @Override
-    public void setFilter(CombinedAppsFilter filter) {
-        this.filter = filter;
     }
 
     @Override
@@ -110,7 +99,6 @@ class FilterRepository implements Repository {
         builder.append(enforceIncompatibleOperatingSystems, that.enforceIncompatibleOperatingSystems);
         builder.append(repository, that.repository);
         builder.append(operatingSystemFetcher, that.operatingSystemFetcher);
-        builder.append(filter, that.filter);
 
         return builder.isEquals();
     }
@@ -122,7 +110,6 @@ class FilterRepository implements Repository {
         builder.append(enforceIncompatibleOperatingSystems);
         builder.append(repository);
         builder.append(enforceIncompatibleOperatingSystems);
-        builder.append(filter);
 
         return builder.toHashCode();
     }
