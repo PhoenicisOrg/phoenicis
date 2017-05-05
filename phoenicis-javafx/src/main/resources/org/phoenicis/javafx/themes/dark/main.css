@@ -417,12 +417,20 @@
     -fx-font-family: "Roboto Light";
 }
 
+.buttonWithIcon {
+    -fx-background-color:transparent;
+    -fx-label-padding: 2 0 2 26;
+    -fx-background-size: 24px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left;
+}
+
 /*******************************************************/
 /************************ icons ************************/
 /*******************************************************/
 /************************ util *************************/
 .refreshIcon {
-    -fx-graphic: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/refresh.png');
+    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/refresh.png');
 }
 
 /************************ apps *************************/

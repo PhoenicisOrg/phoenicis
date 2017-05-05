@@ -169,6 +169,7 @@ public class RepositoriesPanel extends VBox {
         this.refreshRepositoriesLabel.setWrapText(true);
 
         this.refreshRepositoriesButton = new Button("Refresh Repositories");
+        this.refreshRepositoriesButton.getStyleClass().add("buttonWithIcon");
         this.refreshRepositoriesButton.setOnAction(event -> {
             refreshRepositoriesButton.getStyleClass().add("refreshIcon");
             refreshRepositoriesButton.setDisable(true);
