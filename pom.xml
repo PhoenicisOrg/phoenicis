@@ -29,6 +29,7 @@
 		<connection>scm:git:https://github.com/PlayOnLinux/POL-POM-5.git</connection>
 	</scm>
 	<modules>
+		<module>build-tools</module>
 		<module>phoenicis-javafx</module>
 		<module>phoenicis-win32</module>
 		<module>phoenicis-dist</module>
@@ -143,13 +144,27 @@
                     <timestampFormat>{0, date, yyyy-MM-dd HH:mm}</timestampFormat>
 				</configuration>
 			</plugin>
-            <plugin><!-- mvn java-formatter:format -->
-                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-                <artifactId>maven-java-formatter-plugin</artifactId>
-                <version>0.4</version>
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>2.0.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
                 <configuration>
-                    <configFile>${project.basedir}/../settings/POL_Formatter_Settings.xml</configFile>
+                    <configFile>eclipse/POL_Formatter_Settings.xml</configFile>
                 </configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.phoenicis</groupId>
+						<artifactId>build-tools</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+				</dependencies>
             </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
