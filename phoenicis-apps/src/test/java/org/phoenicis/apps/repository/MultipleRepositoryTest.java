@@ -16,40 +16,46 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
-import org.junit.Test;
-import org.mockito.Mockito;
 import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.repository.CachedRepository;
+import org.junit.Test;
+import org.phoenicis.apps.repository.MultipleRepository;
 import org.phoenicis.apps.repository.Repository;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
-public class CachedRepositoryTest {
+public class MultipleRepositoryTest {
+    @Test
+    public void testWithEmptyList_emptySetIsReturned() {
+        final MultipleRepository multipleRepository = new MultipleRepository();
+        assertEquals(0, multipleRepository.fetchInstallableApplications().size());
+    }
 
     @Test
-    public void testFetchInstallableApplications() throws Exception {
-        Repository repository = Mockito.mock(Repository.class);
-        when(repository.fetchInstallableApplications()).thenReturn(Arrays.asList(
+    public void testWithThreeSources_threeResults() {
+        final Repository firstSource = () -> Collections.singletonList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
-                        .build(),
+                        .build()
+        );
+
+        final Repository secondSource = () -> Collections.singletonList(
                 new CategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
-        ));
+        );
 
-        final Repository cachedSource = new CachedRepository(repository);
-        cachedSource.fetchInstallableApplications();
-        assertEquals(2, cachedSource.fetchInstallableApplications().size());
-        cachedSource.fetchInstallableApplications();
-        assertEquals(2, cachedSource.fetchInstallableApplications().size());
+        final Repository thirdSource = () -> Collections.singletonList(
+                new CategoryDTO.Builder()
+                        .withName("Category 3")
+                        .build()
+        );
 
-        verify(repository, times(1)).fetchInstallableApplications();
+
+        final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);
+        assertEquals(3, multipleRepository.fetchInstallableApplications().size());
     }
-
 }

@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.apps.dto.CategoryDTO;
