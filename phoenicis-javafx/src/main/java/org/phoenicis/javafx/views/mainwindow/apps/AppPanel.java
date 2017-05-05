@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -64,16 +65,18 @@ final class AppPanel extends VBox {
         installers.getStyleClass().add("descriptionTitle");
 
         GridPane grid = new GridPane();
-        grid.setHgap(100);
+        ColumnConstraints column1 = new ColumnConstraints(100,100,Double.MAX_VALUE);
+        column1.setHgrow(Priority.ALWAYS);
+        ColumnConstraints column2 = new ColumnConstraints(100);
+        grid.getColumnConstraints().addAll(column1, column2);
         int row = 0;
         for (ScriptDTO script: applicationDTO.getScripts()) {
-        	Label scriptName;
-        	if (settingsManager.isViewScriptSource()) {
-        		scriptName = new Label(String.format("%s (Source: %s)", script.getScriptName(), script.getScriptSource()));
-        	} else {
-        		scriptName = new Label(script.getScriptName());
-        	}
-            scriptName.getStyleClass().add("descriptionText");
+        	Label scriptName = new Label(script.getScriptName());
+            if (settingsManager.isViewScriptSource()) {
+                final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
+                Tooltip.install(scriptName, tooltip);
+            }
+
             Button installButton = new Button("Install");
             installButton.setOnMouseClicked(evt -> {
                 try {

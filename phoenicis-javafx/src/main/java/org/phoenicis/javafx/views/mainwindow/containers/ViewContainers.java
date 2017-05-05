@@ -24,15 +24,9 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.MessagePanel;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSpacer;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.SearchBox;
 
 import javafx.application.Platform;
-import javafx.scene.control.ToggleGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -59,7 +53,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         this.initSelectContainerPane();
 
         this.setSideBar(sideBar);
-        this.showRightView(selectContainerPanel);
+        this.setCenter(selectContainerPanel);
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
@@ -76,7 +70,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
 
             this.initSelectContainerPane();
 
-            showRightView(selectContainerPanel);
+            setCenter(selectContainerPanel);
         });
     }
 

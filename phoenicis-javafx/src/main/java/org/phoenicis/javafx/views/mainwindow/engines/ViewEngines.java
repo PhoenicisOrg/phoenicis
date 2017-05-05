@@ -113,7 +113,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
     // TODO: delete this method because it doesn't do what it promises, namely showing the wine versions tab
     @Deprecated
     public void showWineVersions() {
-        showRightView(availableEngines);
+        setCenter(availableEngines);
     }
 
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
@@ -134,11 +134,11 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
     }
 
     public void showAvailableEngines() {
-        showRightView(availableEngines);
+        setCenter(availableEngines);
     }
 
     private void selectCategory(EngineCategoryDTO category) {
-        this.showRightView(availableEngines);
+        this.setCenter(availableEngines);
         this.populateEngines(category);
     }
 
@@ -146,7 +146,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         currentEnginePanel = new EnginePanel(engineDTO);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
-        showRightView(currentEnginePanel);
+        this.showDetailsView(currentEnginePanel);
     }
 
     private void processFilterText(String filterText) {

@@ -74,16 +74,23 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.leftContent.setContent(sideBar);
     }
 
-    public void showRightView(Node nodeToShow) {
+    public void setCenter(Node nodeToShow) {
+        closeDetailsView();
         this.content.setCenter(nodeToShow);
     }
 
+    public void showDetailsView(Node nodeToShow) { this.content.setRight(nodeToShow); }
+
+    public void closeDetailsView() { this.content.setRight(null); }
+
     public void showWait() {
-        showRightView(waitPanel);
+        closeDetailsView();
+        setCenter(waitPanel);
     }
 
     public void showFailure() {
-        showRightView(failurePanel);
+        closeDetailsView();
+        setCenter(failurePanel);
     }
 
     public FailurePanel getFailurePanel() {

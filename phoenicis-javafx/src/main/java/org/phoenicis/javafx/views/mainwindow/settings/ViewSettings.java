@@ -59,7 +59,7 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
 
         this.sideBar = new SettingsSideBar();
 
-        this.sideBar.setOnSelectSettingsItem(this::showRightView);
+        this.sideBar.setOnSelectSettingsItem(this::setCenter);
 
         this.sideBar.bindSettingsItems(this.settingsItems);
 
