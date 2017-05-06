@@ -16,17 +16,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ResourceDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,25 +39,25 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class LocalRepository implements Repository {
+public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
     private final String repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    private final String repositorySource;    
+    private final String repositorySource;
 
     private LocalRepository(String repositoryDirectory, String repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
         this.repositorySource = repositorySource;
     }
-    
+
     private LocalRepository(String repositoryDirectory, ObjectMapper objectMapper) {
         this(repositoryDirectory, repositoryDirectory, objectMapper);
     }
-    
+
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
         final File repositoryDirectoryFile = new File(repositoryDirectory);
@@ -162,7 +163,7 @@ class LocalRepository implements Repository {
         final List<ResourceDTO> results = new ArrayList<>();
 
         for (File resourceFile : resources) {
-            if(!resourceFile.isDirectory() && !resourceFile.getName().startsWith(".")) {
+            if (!resourceFile.isDirectory() && !resourceFile.getName().startsWith(".")) {
                 try {
                     results.add(new ResourceDTO(resourceFile.getName(), IOUtils.toByteArray(new FileInputStream(resourceFile))));
                 } catch (IOException ignored) {
@@ -190,7 +191,7 @@ class LocalRepository implements Repository {
                         unSerializeScript(new File(scriptDirectory, "script.json")));
 
                 scriptDTOBuilder.withScriptSource(repositorySource);
-                
+
                 if (StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
@@ -242,6 +243,14 @@ class LocalRepository implements Repository {
     }
 
     @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("repositorySource", repositorySource)
+                .append("repositoryDirectory", repositoryDirectory)
+                .toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -269,10 +278,10 @@ class LocalRepository implements Repository {
         return builder.toHashCode();
     }
 
-    static class Factory {
+    public static class Factory {
         private final ObjectMapper objectMapper;
 
-        Factory(ObjectMapper objectMapper) {
+        public Factory(ObjectMapper objectMapper) {
             this.objectMapper = objectMapper;
         }
 

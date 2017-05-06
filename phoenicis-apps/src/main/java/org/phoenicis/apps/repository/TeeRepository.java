@@ -16,50 +16,46 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-class BackgroundRepository implements Repository {
-    private final Repository delegatedRepository;
-    private final ExecutorService executorService;
+public class TeeRepository extends MergeableRepository {
+    private final Repository leftRepository;
+    private final Repository rightRepository;
 
-    BackgroundRepository(Repository delegatedRepository,
-                                 ExecutorService executorService) {
-        this.delegatedRepository = delegatedRepository;
-        this.executorService = executorService;
+    /**
+     * merges fetched applications from two sources
+     * If an application is found in both sources, the leftRepository will be used.
+     * @param leftRepository
+     * @param rightRepository
+     */
+    public TeeRepository(Repository leftRepository,
+            Repository rightRepository) {
+        this.leftRepository = leftRepository;
+        this.rightRepository = rightRepository;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        throw new UnsupportedOperationException("The background apps manager is asynchronous");
+    	final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.asList(leftRepository, rightRepository).stream()
+    			.collect(
+						Collectors.toMap(source -> source, Repository::fetchInstallableApplications));
+    	
+    	return mergeRepositories(categoriesMap, Arrays.asList(leftRepository, rightRepository));
     }
 
     @Override
     public void onDelete() {
-        this.delegatedRepository.onDelete();
-    }
-
-    @Override
-    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedRepository.fetchInstallableApplications(callback, errorCallback));
-    }
-
-    @Override
-    public void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedRepository.getScript(path, callback, errorCallback));
-    }
-
-    @Override
-    public void setFilter(CombinedAppsFilter filter) {
-        delegatedRepository.setFilter(filter);
+        this.leftRepository.onDelete();
+        this.rightRepository.onDelete();
     }
 
     @Override
@@ -72,11 +68,12 @@ class BackgroundRepository implements Repository {
             return false;
         }
 
-        BackgroundRepository that = (BackgroundRepository) o;
+        TeeRepository that = (TeeRepository) o;
 
         EqualsBuilder builder = new EqualsBuilder();
 
-        builder.append(delegatedRepository, that.delegatedRepository);
+        builder.append(leftRepository, that.leftRepository);
+        builder.append(rightRepository, that.rightRepository);
 
         return builder.isEquals();
     }
@@ -85,7 +82,8 @@ class BackgroundRepository implements Repository {
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder();
 
-        builder.append(delegatedRepository);
+        builder.append(leftRepository);
+        builder.append(rightRepository);
 
         return builder.toHashCode();
     }

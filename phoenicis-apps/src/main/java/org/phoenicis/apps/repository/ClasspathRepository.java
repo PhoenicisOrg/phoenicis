@@ -16,11 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -35,7 +36,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class ClasspathRepository implements Repository {
+public class ClasspathRepository implements Repository {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathRepository.class);
     private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
@@ -154,6 +155,13 @@ class ClasspathRepository implements Repository {
     }
 
     @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("packagePath", packagePath)
+                .toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -181,11 +189,11 @@ class ClasspathRepository implements Repository {
         return builder.toHashCode();
     }
 
-    static class Factory {
+    public static class Factory {
         private final ObjectMapper objectMapper;
         private final ResourcePatternResolver resourceResolver;
 
-        Factory(ObjectMapper objectMapper, ResourcePatternResolver resourceResolver) {
+        public Factory(ObjectMapper objectMapper, ResourcePatternResolver resourceResolver) {
             this.objectMapper = objectMapper;
             this.resourceResolver = resourceResolver;
         }

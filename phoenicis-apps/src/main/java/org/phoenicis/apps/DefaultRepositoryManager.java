@@ -3,6 +3,7 @@ package org.phoenicis.apps;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.apps.repository.*;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
@@ -57,20 +58,24 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.callbacks.add(new CallbackPair(onRepositoryChange, onError));
     }
 
+    @Override
     public ApplicationDTO getApplication(List<String> path) {
         return this.cachedRepository.getApplication(path);
     }
 
+    @Override
     public ScriptDTO getScript(List<String> path) {
         return this.cachedRepository.getScript(path);
     }
 
+    @Override
     public void moveRepository(String repositoryUrl, int toIndex) {
         LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
         this.multipleRepository.moveRepository(toRepository(repositoryUrl), toIndex);
         this.triggerRepositoryChange();
     }
 
+    @Override
     public void addRepositories(int index, String ... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
@@ -81,10 +86,12 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.triggerRepositoryChange();
     }
 
+    @Override
     public void addRepositories(String ... repositoryUrls) {
         this.addRepositories(this.multipleRepository.size(), repositoryUrls);
     }
 
+    @Override
     public void removeRepositories(String ... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 
@@ -96,6 +103,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
         toDeleteRepositories.forEach(Repository::onDelete);
     }
 
+    @Override
     public void triggerRepositoryChange() {
         this.cachedRepository.clearCache();
 

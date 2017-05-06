@@ -16,10 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.apps.repository.BackgroundRepository;
+import org.phoenicis.apps.repository.Repository;
 
 import java.util.Arrays;
 import java.util.List;

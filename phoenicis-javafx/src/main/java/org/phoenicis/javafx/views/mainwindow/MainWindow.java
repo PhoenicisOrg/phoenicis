@@ -44,8 +44,8 @@ public class MainWindow extends Stage {
     private TabPane tabPane;
 
     public MainWindow(String applicationName, ViewLibrary library, ViewApps apps, ViewEngines engines,
-            ViewContainers containers, ViewSettings settings, ThemeManager themeManager, SettingsManager settingsManager,
-            PhoenicisLogo phoenicisLogo) {
+            ViewContainers containers, ViewSettings settings, ThemeManager themeManager,
+            SettingsManager settingsManager, PhoenicisLogo phoenicisLogo) {
         super();
 
         this.library = library;

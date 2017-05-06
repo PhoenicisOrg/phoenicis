@@ -22,7 +22,7 @@ import com.github.jankroken.commandline.annotations.AllAvailableArguments;
 import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
-import org.phoenicis.apps.Repository;
+import org.phoenicis.apps.repository.Repository;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;

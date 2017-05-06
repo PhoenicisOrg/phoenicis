@@ -16,10 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
@@ -30,11 +31,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-class GitRepository implements Repository {
+public class GitRepository implements Repository {
 	private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
 
 	private final FileUtilities fileUtilities;
@@ -44,7 +44,7 @@ class GitRepository implements Repository {
 
 	private final File gitRepositoryLocation;
 
-	GitRepository(String gitRepositoryURL, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
+	public GitRepository(String gitRepositoryURL, String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
 		this.fileUtilities = fileUtilities;
 		this.gitRepositoryURL = gitRepositoryURL;
 		this.localRepositoryFactory = localRepositoryFactory;
@@ -127,6 +127,14 @@ class GitRepository implements Repository {
 		} catch (IOException e) {
 			LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'", gitRepositoryLocation.getAbsolutePath()), e);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("gitRepositoryURL", gitRepositoryURL)
+				.append("gitRepositoryLocation", gitRepositoryLocation)
+				.toString();
 	}
 
 	@Override

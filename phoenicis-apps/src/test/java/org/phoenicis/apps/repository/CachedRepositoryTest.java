@@ -16,44 +16,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
-import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.apps.repository.CachedRepository;
+import org.phoenicis.apps.repository.Repository;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
-public class MultipleRepositoryTest {
-    @Test
-    public void testWithEmptyList_emptySetIsReturned() {
-        final MultipleRepository multipleRepository = new MultipleRepository();
-        assertEquals(0, multipleRepository.fetchInstallableApplications().size());
-    }
+public class CachedRepositoryTest {
 
     @Test
-    public void testWithThreeSources_threeResults() {
-        final Repository firstSource = () -> Collections.singletonList(
+    public void testFetchInstallableApplications() throws Exception {
+        Repository repository = Mockito.mock(Repository.class);
+        when(repository.fetchInstallableApplications()).thenReturn(Arrays.asList(
                 new CategoryDTO.Builder()
                         .withName("Category 1")
-                        .build()
-        );
-
-        final Repository secondSource = () -> Collections.singletonList(
+                        .build(),
                 new CategoryDTO.Builder()
                         .withName("Category 2")
                         .build()
-        );
+        ));
 
-        final Repository thirdSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 3")
-                        .build()
-        );
+        final Repository cachedSource = new CachedRepository(repository);
+        cachedSource.fetchInstallableApplications();
+        assertEquals(2, cachedSource.fetchInstallableApplications().size());
+        cachedSource.fetchInstallableApplications();
+        assertEquals(2, cachedSource.fetchInstallableApplications().size());
 
-
-        final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);
-        assertEquals(3, multipleRepository.fetchInstallableApplications().size());
+        verify(repository, times(1)).fetchInstallableApplications();
     }
+
 }
