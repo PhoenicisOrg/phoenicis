@@ -20,19 +20,29 @@ package org.phoenicis.javafx.views.common.widget;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 
-public class StaticMiniature extends ImageView {
-    public static final Image DEFAULT_MINIATURE = new Image(
-            MiniatureListWidget.class.getResource("defaultMiniature.png").toExternalForm());
+import java.net.URI;
+import java.net.URISyntaxException;
 
-    public static final Image WINE_MINIATURE = new Image(
-            MiniatureListWidget.class.getResource("wineMiniature.png").toExternalForm());
+public class StaticMiniature extends Region {
+    public static URI DEFAULT_MINIATURE;
+    public static URI WINE_MINIATURE;
 
-    public StaticMiniature(Image defaultImage) {
-        super(defaultImage);
-        this.setFitWidth(120);
-        this.setFitHeight(90);
+    static {
+        try {
+            DEFAULT_MINIATURE = MiniatureListWidget.class.getResource("defaultMiniature.png").toURI();
+            WINE_MINIATURE = MiniatureListWidget.class.getResource("wineMiniature.png").toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public StaticMiniature(URI miniatureImageUri) {
+        super();
+
         this.getStyleClass().add("miniatureImage");
+        this.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureImageUri.toString()));
     }
 
     public StaticMiniature() {

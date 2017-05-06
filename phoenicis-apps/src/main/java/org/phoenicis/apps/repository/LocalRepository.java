@@ -34,10 +34,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.net.URI;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
@@ -135,22 +134,13 @@ public class LocalRepository implements Repository {
         return results;
     }
 
-    private List<byte[]> fetchMiniatures(File miniaturesDirectory) throws IOException {
-        final List<byte[]> miniatures = new ArrayList<>();
+    private List<URI> fetchMiniatures(File miniaturesDirectory) throws IOException {
+
         final File[] miniatureFiles = miniaturesDirectory.listFiles();
 
-        if (miniatureFiles != null) {
-            for (File miniatureFile : miniatureFiles) {
-                if (!miniatureFile.isDirectory() && !miniatureFile.getName().startsWith(".")) {
-                    if ("main.png".equals(miniatureFile.getName())) {
-                        miniatures.add(0, IOUtils.toByteArray(new FileInputStream(miniatureFile)));
-                    } else {
-                        miniatures.add(IOUtils.toByteArray(new FileInputStream(miniatureFile)));
-                    }
-                }
-            }
-        }
-        return miniatures;
+        return Arrays.stream(miniatureFiles)
+                .filter(miniatureFile -> !miniatureFile.isDirectory() && !miniatureFile.getName().startsWith("."))
+                .map(File::toURI).collect(Collectors.toList());
     }
 
     private List<ResourceDTO> fetchResources(File applicationDirectory) {

@@ -214,6 +214,12 @@
     -fx-padding: 0.5em;
 }
 
+.appMiniature {
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left center;
+}
+
 .appPanelMiniaturesPaneWrapper {
     -fx-padding: 0px;
     -fx-border-width: 0;
@@ -284,6 +290,11 @@
 .miniatureImage {
     -fx-border-radius: 0.4em;
     -fx-background-radius: 0.4em;
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-pref-width: 15em;
+    -fx-pref-height: 12em;
 }
 
 .miniatureText {

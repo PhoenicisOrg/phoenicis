@@ -21,14 +21,15 @@ package org.phoenicis.library.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import java.net.URI;
 import java.util.Comparator;
 
 @JsonDeserialize(builder = ShortcutDTO.Builder.class)
 public class ShortcutDTO {
     private final String name;
     private final String description;
-    private final byte[] icon;
-    private final byte[] miniature;
+    private final URI icon;
+    private final URI miniature;
     private final String script;
 
     private ShortcutDTO(Builder builder) {
@@ -39,11 +40,11 @@ public class ShortcutDTO {
         script = builder.script;
     }
 
-    public byte[] getIcon() {
+    public URI getIcon() {
         return icon;
     }
 
-    public byte[] getMiniature() {
+    public URI getMiniature() {
         return miniature;
     }
 
@@ -67,8 +68,8 @@ public class ShortcutDTO {
     public static class Builder {
         private String name;
         private String description;
-        private byte[] icon;
-        private byte[] miniature;
+        private URI icon;
+        private URI miniature;
         private String script;
 
         public Builder() {
@@ -93,12 +94,12 @@ public class ShortcutDTO {
             return this;
         }
 
-        public Builder withIcon(byte[] icon) {
+        public Builder withIcon(URI icon) {
             this.icon = icon;
             return this;
         }
 
-        public Builder withMiniature(byte[] miniature) {
+        public Builder withMiniature(URI miniature) {
             this.miniature = miniature;
             return this;
         }
