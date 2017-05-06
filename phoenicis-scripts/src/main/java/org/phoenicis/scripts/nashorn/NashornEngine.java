@@ -51,7 +51,7 @@ class NashornEngine {
     Object evalAndReturn(String line, Consumer<Exception> errorCallback) {
         try {
             final Object evaluation = this.scriptEngine.eval(line);
-            if(evaluation == null) {
+            if (evaluation == null) {
                 return null;
             }
             return evaluation;
@@ -68,7 +68,6 @@ class NashornEngine {
         errorCallback.accept(e);
     }
 
-
     void put(String name, Object object, Consumer<Exception> errorCallback) {
         try {
             this.scriptEngine.put(name, object);
@@ -80,6 +79,5 @@ class NashornEngine {
     void addErrorHandler(Consumer<Exception> errorHandler) {
         errorHandlers.add(errorHandler);
     }
-
 
 }

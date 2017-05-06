@@ -88,7 +88,8 @@ public class MappedListTest {
 
     @Test
     public void testListPermutation() {
-        SortedList<Integer> sortedList = FXCollections.observableList(Arrays.asList(3, 7, 1, 5)).sorted(Comparator.naturalOrder());
+        SortedList<Integer> sortedList = FXCollections.observableList(Arrays.asList(3, 7, 1, 5))
+                .sorted(Comparator.naturalOrder());
         MappedList<String, Integer> mappedList = new MappedList<>(sortedList, i -> String.valueOf(i));
 
         assertEquals(4, mappedList.size());

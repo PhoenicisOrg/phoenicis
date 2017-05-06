@@ -66,13 +66,15 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @return True if the engine version is installed, false otherwise
      */
     private boolean isInstalled(EngineVersionDTO engineVersionDTO) {
-        return Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(), engineVersionDTO.getVersion()));
+        return Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(),
+                engineVersionDTO.getVersion()));
     }
 
     @Override
     public boolean test(EngineVersionDTO engineVersion) {
-        return engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase()) &&
-                ((this.showInstalled && isInstalled(engineVersion)) || (this.showNotInstalled && !isInstalled(engineVersion)));
+        return engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase())
+                && ((this.showInstalled && isInstalled(engineVersion))
+                        || (this.showNotInstalled && !isInstalled(engineVersion)));
     }
 
     public void setSearchTerm(String searchTerm) {

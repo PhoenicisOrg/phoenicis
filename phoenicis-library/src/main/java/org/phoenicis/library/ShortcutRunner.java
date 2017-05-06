@@ -43,32 +43,22 @@ public class ShortcutRunner {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
-                ignored -> interactiveScriptSession.eval(
-                    "new ShortcutReader()",
-                    output -> {
-                        final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                        shortcutReader.callMember("of", shortcutDTO);
-                        shortcutReader.callMember("run", arguments);
-                    },
-                    errorCallback),
-                errorCallback
-        );
+                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                    shortcutReader.callMember("of", shortcutDTO);
+                    shortcutReader.callMember("run", arguments);
+                }, errorCallback), errorCallback);
     }
 
     public void stop(ShortcutDTO shortcutDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
-                ignored -> interactiveScriptSession.eval(
-                        "new ShortcutReader()",
-                        output -> {
-                            final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                            shortcutReader.callMember("of", shortcutDTO);
-                            shortcutReader.callMember("stop");
-                        },
-                        errorCallback),
-                errorCallback
-        );
+                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                    shortcutReader.callMember("of", shortcutDTO);
+                    shortcutReader.callMember("stop");
+                }, errorCallback), errorCallback);
     }
 
 }

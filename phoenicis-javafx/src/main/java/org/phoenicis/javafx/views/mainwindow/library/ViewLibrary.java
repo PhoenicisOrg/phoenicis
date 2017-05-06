@@ -41,10 +41,13 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     private MiniatureListWidget<ShortcutDTO> applicationListWidget;
 
     private TabPane libraryTabs;
-    private Runnable onTabOpened = () -> {};
+    private Runnable onTabOpened = () -> {
+    };
 
-    private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {};
-    private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {};
+    private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {
+    };
+    private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
+    };
 
     public ViewLibrary(String applicationName, ThemeManager themeManager) {
         super("Library", themeManager);
@@ -98,21 +101,22 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         installedApplication.setText(translate("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
-        applicationListWidget = MiniatureListWidget.create(MiniatureListWidget.Element::create, (selectedItem, event) -> {
-            ShortcutDTO shortcutDTO = selectedItem.getValue();
+        applicationListWidget = MiniatureListWidget.create(MiniatureListWidget.Element::create,
+                (selectedItem, event) -> {
+                    ShortcutDTO shortcutDTO = selectedItem.getValue();
 
-            applicationListWidget.unselectAll();
-            applicationListWidget.select(selectedItem);
-            onShortcutSelected.accept(shortcutDTO);
+                    applicationListWidget.unselectAll();
+                    applicationListWidget.select(selectedItem);
+                    onShortcutSelected.accept(shortcutDTO);
 
-            sideBar.showShortcut(shortcutDTO);
+                    sideBar.showShortcut(shortcutDTO);
 
-            if(event.getClickCount() == 2) {
-                onShortcutDoubleClicked.accept(shortcutDTO);
-            }
+                    if (event.getClickCount() == 2) {
+                        onShortcutDoubleClicked.accept(shortcutDTO);
+                    }
 
-            event.consume();
-        });
+                    event.consume();
+                });
 
         installedApplication.setContent(applicationListWidget);
     }

@@ -22,6 +22,7 @@ public interface UiQuestionFactory {
     void create(String questionText, Runnable yesCallback, Runnable noCallback);
 
     default void create(String questionText, Runnable yesCallback) {
-        create(questionText, yesCallback, () -> {});
+        create(questionText, yesCallback, () -> {
+        });
     }
 }

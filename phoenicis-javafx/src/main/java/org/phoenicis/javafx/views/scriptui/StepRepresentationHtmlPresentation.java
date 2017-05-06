@@ -29,7 +29,8 @@ import java.net.URL;
 public class StepRepresentationHtmlPresentation extends AbstractStepRepresentation {
     private final String htmlToShow;
 
-    public StepRepresentationHtmlPresentation(SetupUiJavaFXImplementation parent, Message<?> message, String htmlToShow) {
+    public StepRepresentationHtmlPresentation(SetupUiJavaFXImplementation parent, Message<?> message,
+            String htmlToShow) {
         super(parent, message);
         this.htmlToShow = htmlToShow;
     }
@@ -48,7 +49,8 @@ public class StepRepresentationHtmlPresentation extends AbstractStepRepresentati
         VBox.setVgrow(webView, Priority.ALWAYS);
 
         webView.getEngine().loadContent(htmlToShow);
-        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", getParent().getThemeManager().getCurrentTheme().getShortName()));
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css",
+                getParent().getThemeManager().getCurrentTheme().getShortName()));
         webView.getEngine().setUserStyleSheetLocation(style.toString());
 
         contentPane.getChildren().addAll(webView);

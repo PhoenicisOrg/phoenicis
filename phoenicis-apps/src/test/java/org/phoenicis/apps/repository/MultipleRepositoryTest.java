@@ -36,24 +36,14 @@ public class MultipleRepositoryTest {
 
     @Test
     public void testWithThreeSources_threeResults() {
-        final Repository firstSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 1")
-                        .build()
-        );
+        final Repository firstSource = () -> Collections
+                .singletonList(new CategoryDTO.Builder().withName("Category 1").build());
 
-        final Repository secondSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 2")
-                        .build()
-        );
+        final Repository secondSource = () -> Collections
+                .singletonList(new CategoryDTO.Builder().withName("Category 2").build());
 
-        final Repository thirdSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 3")
-                        .build()
-        );
-
+        final Repository thirdSource = () -> Collections
+                .singletonList(new CategoryDTO.Builder().withName("Category 3").build());
 
         final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);
         assertEquals(3, multipleRepository.fetchInstallableApplications().size());

@@ -38,8 +38,8 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
     private List<String> extensions;
     private File selectedFile;
 
-    public StepRepresentationBrowse(SetupUiJavaFXImplementation parent, Message<String> message,
-                                    String textToShow, File browseDirectory, List<String> extensions) {
+    public StepRepresentationBrowse(SetupUiJavaFXImplementation parent, Message<String> message, String textToShow,
+            File browseDirectory, List<String> extensions) {
         super(parent, message);
         this.browseDirectory = browseDirectory;
         this.extensions = extensions;
@@ -86,13 +86,14 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
 
         dragTarget.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
-            if(extensions != null) {
-                fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(translate("Allowed files"), extensions));
+            if (extensions != null) {
+                fileChooser.setSelectedExtensionFilter(
+                        new FileChooser.ExtensionFilter(translate("Allowed files"), extensions));
             }
             fileChooser.setInitialDirectory(browseDirectory);
 
             File dialogResult = fileChooser.showOpenDialog(null);
-            if(dialogResult != null){
+            if (dialogResult != null) {
                 selectFile(dialogResult);
             }
         });
@@ -101,16 +102,14 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
     }
 
     private void selectFile(File selectedFile) {
-        if(selectedFile != null) {
+        if (selectedFile != null) {
             message.send(selectedFile.getAbsolutePath());
         }
     }
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event ->
-                        message.send(selectedFile.toString())
-        );
+        this.setNextButtonAction(event -> message.send(selectedFile.toString()));
     }
 
 }

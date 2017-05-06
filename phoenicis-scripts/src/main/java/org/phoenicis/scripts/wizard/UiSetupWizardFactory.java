@@ -32,7 +32,6 @@ public class UiSetupWizardFactory {
     @Value("${application.name}")
     private String applicationName;
 
-
     private final UiMessageSender uiMessageSender;
     private final SetupUiFactory setupUiFactory;
 
@@ -42,7 +41,8 @@ public class UiSetupWizardFactory {
     }
 
     public UiSetupWizardImplementation create(String title) {
-        final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title, uiMessageSender, setupUiFactory, userHome, applicationUserRoot, applicationName);
+        final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title,
+                uiMessageSender, setupUiFactory, userHome, applicationUserRoot, applicationName);
         uiSetupWizardImplementation.init();
         return uiSetupWizardImplementation;
     }

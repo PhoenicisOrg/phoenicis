@@ -44,7 +44,9 @@ public class BackgroundRepositoryTest {
         }).when(mockExecutor).submit(any(Runnable.class));
 
         when(mockRepository.fetchInstallableApplications()).thenReturn(mockResults);
-        backgroundRepository.fetchInstallableApplications(categoryDTOs -> {}, e -> {});
+        backgroundRepository.fetchInstallableApplications(categoryDTOs -> {
+        }, e -> {
+        });
 
         verify(mockRepository).fetchInstallableApplications(any(), any());
     }

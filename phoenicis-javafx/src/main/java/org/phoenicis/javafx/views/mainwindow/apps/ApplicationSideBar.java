@@ -58,7 +58,8 @@ public class ApplicationSideBar extends LeftSideBar {
         this.populateCategories();
         this.populateFilters();
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(), this.filterGroup);
+        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(),
+                this.filterGroup);
     }
 
     /**
@@ -82,7 +83,8 @@ public class ApplicationSideBar extends LeftSideBar {
     }
 
     private void populateCategories() {
-        this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton, this::createCategoryToggleButton);
+        this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton,
+                this::createCategoryToggleButton);
     }
 
     private void populateFilters() {

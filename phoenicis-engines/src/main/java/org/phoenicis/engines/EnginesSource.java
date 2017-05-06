@@ -48,24 +48,14 @@ public class EnginesSource {
 
         List<EngineCategoryDTO> engines = new ArrayList<>();
         interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
-                ignored -> interactiveScriptSession.eval(
-                        "new Wine().getAvailableVersions()",
-                        output -> {
-                            EngineCategoryDTO wine = new EngineCategoryDTO.Builder()
-                                    .withName("Wine")
-                                    .withDescription("Wine")
-                                    .withSubCategories(unSerialize(output))
-                                    .build();
-                            engines.add(wine);
-                            callback.accept(engines);
-                        },
-                        this::throwError
-                ),
-                this::throwError
-        );
+                ignored -> interactiveScriptSession.eval("new Wine().getAvailableVersions()", output -> {
+                    EngineCategoryDTO wine = new EngineCategoryDTO.Builder().withName("Wine").withDescription("Wine")
+                            .withSubCategories(unSerialize(output)).build();
+                    engines.add(wine);
+                    callback.accept(engines);
+                }, this::throwError), this::throwError);
 
     }
-
 
     private List<EngineSubCategoryDTO> unSerialize(Object json) {
         try {

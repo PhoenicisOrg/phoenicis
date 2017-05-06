@@ -23,9 +23,7 @@ import org.phoenicis.tools.system.OperatingSystemFetcher;
 public class AutomaticOpener implements Opener {
     private final Opener delegatedOpener;
 
-    public AutomaticOpener(Opener linuxOpener,
-                           Opener macOsOpener,
-                           OperatingSystemFetcher operatingSystemFetcher) {
+    public AutomaticOpener(Opener linuxOpener, Opener macOsOpener, OperatingSystemFetcher operatingSystemFetcher) {
 
         switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
             case LINUX:
@@ -41,7 +39,6 @@ public class AutomaticOpener implements Opener {
                 };
         }
     }
-
 
     @Override
     public void open(String file) {

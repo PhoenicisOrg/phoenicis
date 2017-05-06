@@ -76,7 +76,8 @@ public class AboutPanel extends VBox {
         this.gitRevisionHyperlink = new Hyperlink(buildInformation.getApplicationGitRevision());
         this.gitRevisionHyperlink.setOnAction(event -> {
             try {
-                URI uri = new URI("https://github.com/PlayOnLinux/POL-POM-5/commit/" + buildInformation.getApplicationGitRevision());
+                URI uri = new URI("https://github.com/PlayOnLinux/POL-POM-5/commit/"
+                        + buildInformation.getApplicationGitRevision());
                 opener.open(uri);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
@@ -120,7 +121,8 @@ public class AboutPanel extends VBox {
          * @param applicationGitRevision    the git revision/commit used to build POL 5
          * @param applicationBuildTimestamp the timestamp when POL 5 was built
          */
-        public ApplicationBuildInformation(String applicationName, String applicationVersion, String applicationGitRevision, String applicationBuildTimestamp) {
+        public ApplicationBuildInformation(String applicationName, String applicationVersion,
+                String applicationGitRevision, String applicationBuildTimestamp) {
             this.applicationName = applicationName;
             this.applicationVersion = applicationVersion;
             this.applicationGitRevision = applicationGitRevision;

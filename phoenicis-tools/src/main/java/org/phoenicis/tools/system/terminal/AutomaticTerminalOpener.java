@@ -26,7 +26,7 @@ public class AutomaticTerminalOpener implements TerminalOpener {
     private final TerminalOpener terminalOpener;
 
     public AutomaticTerminalOpener(TerminalOpenerFactory terminalOpenerFactory,
-                                   OperatingSystemFetcher operatingSystemFetcher) {
+            OperatingSystemFetcher operatingSystemFetcher) {
         switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
             case LINUX:
                 terminalOpener = terminalOpenerFactory.createInstance(LinuxTerminalOpener.class);
@@ -36,7 +36,9 @@ public class AutomaticTerminalOpener implements TerminalOpener {
                 break;
             case FREEBSD:
             default:
-                terminalOpener = (workingDirectory, environment) -> { throw new UnsupportedOperationException(); };
+                terminalOpener = (workingDirectory, environment) -> {
+                    throw new UnsupportedOperationException();
+                };
         }
     }
 

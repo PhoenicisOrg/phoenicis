@@ -46,7 +46,7 @@ public class Message<T> {
     }
 
     T get() {
-        if(Thread.currentThread().isInterrupted()) {
+        if (Thread.currentThread().isInterrupted()) {
             throw new ScriptException("The script was interrupted");
         }
         return message;

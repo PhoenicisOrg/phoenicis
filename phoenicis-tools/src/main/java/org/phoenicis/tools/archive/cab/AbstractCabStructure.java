@@ -33,7 +33,7 @@ abstract class AbstractCabStructure {
 
     protected int readVariableField(InputStream inputStream, byte[] results) {
         int i = 0;
-        while(true) {
+        while (true) {
             byte[] nextByte = new byte[1];
             int nbReadbytes;
             try {
@@ -41,13 +41,13 @@ abstract class AbstractCabStructure {
             } catch (IOException e) {
                 throw new CabException("Unable to read input stream", e);
             }
-            if(nbReadbytes == -1) {
+            if (nbReadbytes == -1) {
                 throw new CabException("This archive seems to be corrupted");
             }
             assert 1 == nbReadbytes;
             results[i] = nextByte[0];
             i++;
-            if(nextByte[0] == (int) '\0') {
+            if (nextByte[0] == (int) '\0') {
                 break;
             }
         }
@@ -56,7 +56,8 @@ abstract class AbstractCabStructure {
 
     protected long decodeLittleEndian(byte[] bytes) {
         if (bytes.length == 4) {
-            return (long) ((bytes[3] & 0xFF) << 24 | (bytes[2] & 0xFF) << 16 | (bytes[1] & 0xFF) << 8 | bytes[0] & 0xFF);
+            return (long) ((bytes[3] & 0xFF) << 24 | (bytes[2] & 0xFF) << 16 | (bytes[1] & 0xFF) << 8
+                    | bytes[0] & 0xFF);
         } else {
             return (long) ((bytes[1] & 0xFF) << 8 | bytes[0] & 0xFF);
         }

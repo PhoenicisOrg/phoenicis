@@ -72,10 +72,10 @@ abstract class AbstractStepRepresentation {
     protected void drawLeftImage() {
         AnchorPane pane = new AnchorPane();
         pane.setPrefWidth(187);
-        Stop[] stops = new Stop[] { new Stop(0, Color.web("#3c79b2")), new Stop(1, Color.web("#2d5d8b"))};
-        RadialGradient gradient = new RadialGradient(0,0,0.5,0.5,1,true, CycleMethod.NO_CYCLE, stops);
+        Stop[] stops = new Stop[] { new Stop(0, Color.web("#3c79b2")), new Stop(1, Color.web("#2d5d8b")) };
+        RadialGradient gradient = new RadialGradient(0, 0, 0.5, 0.5, 1, true, CycleMethod.NO_CYCLE, stops);
 
-        Background background = new Background(new BackgroundFill(gradient,null,null));
+        Background background = new Background(new BackgroundFill(gradient, null, null));
         pane.setBackground(background);
 
         Text text = new Text(this.parent.getLeftImageText());
@@ -142,6 +142,5 @@ abstract class AbstractStepRepresentation {
         this.setStepEvents();
         this.drawStepContent();
     }
-
 
 }

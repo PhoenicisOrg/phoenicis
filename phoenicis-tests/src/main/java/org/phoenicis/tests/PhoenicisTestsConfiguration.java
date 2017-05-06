@@ -33,16 +33,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({
-        PhoenicisGlobalConfiguration.class,
-        MultithreadingConfiguration.class,
-        Win32Configuration.class,
-        ToolsConfiguration.class,
-        AppsConfiguration.class,
-        ScriptsConfiguration.class,
-        WizardConfiguration.class,
-        TestUiConfiguration.class,
-})
+@Import({ PhoenicisGlobalConfiguration.class, MultithreadingConfiguration.class, Win32Configuration.class,
+        ToolsConfiguration.class, AppsConfiguration.class, ScriptsConfiguration.class, WizardConfiguration.class,
+        TestUiConfiguration.class, })
 class PhoenicisTestsConfiguration {
     @Autowired
     private AppsConfiguration appsConfiguration;

@@ -46,24 +46,26 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
     private static final String VIDEO_MEMORY_SIZE = "VideoMemorySize";
     private static final String WINE = "Wine";
     private static final String SOFTWARE = "Software";
-    
+
     private static final String HKEY_CURRENT_USER = "HKEY_CURRENT_USER";
 
     private final RegistryParser registryParser;
     private final WinePrefixContainerDisplayConfiguration defaultConfiguration;
 
-    public RegistryWinePrefixContainerDisplayConfiguration(RegistryParser registryParser, WinePrefixContainerDisplayConfiguration defaultConfiguration) {
+    public RegistryWinePrefixContainerDisplayConfiguration(RegistryParser registryParser,
+            WinePrefixContainerDisplayConfiguration defaultConfiguration) {
         this.defaultConfiguration = defaultConfiguration;
         this.registryParser = registryParser;
     }
 
     @Override
     public UseGLSL getGLSL(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getGLSL(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D, USE_GLSL);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, USE_GLSL);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case ENABLED:
@@ -80,12 +82,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public DirectDrawRenderer getDirectDrawRenderer(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getDirectDrawRenderer(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D,
-                DIRECT_DRAW_RENDERER);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, DIRECT_DRAW_RENDERER);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case GDI:
@@ -101,11 +103,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public Multisampling getMultisampling(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getMultisampling(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D, MULTISAMPLING);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, MULTISAMPLING);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case ENABLED:
@@ -122,12 +125,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public OffscreenRenderingMode getOffscreenRenderingMode(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getOffscreenRenderingMode(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D,
-                OFFSCREEN_RENDERING_MODE);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, OFFSCREEN_RENDERING_MODE);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case FBO:
@@ -145,12 +148,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public RenderTargetModeLock getRenderTargetModeLock(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getRenderTargetModeLock(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D,
-                RENDER_TARGET_MODE_LOCK);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, RENDER_TARGET_MODE_LOCK);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case DISABLED:
@@ -169,12 +172,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public StrictDrawOrdering getStrictDrawOrdering(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getStrictDrawOrdering(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D,
-                STRICT_DRAW_ORDERING);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, STRICT_DRAW_ORDERING);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case ENABLED:
@@ -190,12 +193,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public AlwaysOffscreen getAlwaysOffscreen(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getAlwaysOffscreen(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D,
-                ALWAYS_OFFSCREEN);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, ALWAYS_OFFSCREEN);
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case ENABLED:
@@ -211,12 +214,12 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
 
     @Override
     public VideoMemorySize getVideoMemorySize(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getVideoMemorySize(registryFile);
         }
 
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER).getChild(SOFTWARE, WINE, DIRECT3D,
-                VIDEO_MEMORY_SIZE);
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, HKEY_CURRENT_USER)
+                .getChild(SOFTWARE, WINE, DIRECT3D, VIDEO_MEMORY_SIZE);
         if (registryChild instanceof RegistryValue) {
             try {
                 int videoMemorySize = Integer.valueOf(((RegistryValue<?>) registryChild).getText());

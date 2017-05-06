@@ -40,12 +40,14 @@ final class EnginePanel extends VBox {
     private final EngineDTO engineDTO;
     private Node progress;
 
-    private Consumer<EngineDTO> onEngineInstall = (engine) -> {};
-    private Consumer<EngineDTO> onEngineDelete = (engine) -> {};
+    private Consumer<EngineDTO> onEngineInstall = (engine) -> {
+    };
+    private Consumer<EngineDTO> onEngineDelete = (engine) -> {
+    };
 
     public EnginePanel(EngineDTO engineDTO) {
         super();
-        
+
         this.engineDTO = engineDTO;
 
         getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
@@ -114,6 +116,7 @@ final class EnginePanel extends VBox {
     public void setOnEngineInstall(Consumer<EngineDTO> onEngineInstall) {
         this.onEngineInstall = onEngineInstall;
     }
+
     public void setOnEngineDelete(Consumer<EngineDTO> onEngineDelete) {
         this.onEngineDelete = onEngineDelete;
     }

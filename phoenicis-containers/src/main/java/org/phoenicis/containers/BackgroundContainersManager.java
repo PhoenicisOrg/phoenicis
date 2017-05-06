@@ -28,8 +28,7 @@ class BackgroundContainersManager implements ContainersManager {
     private final ContainersManager delegatedContainersManager;
     private final ExecutorService executorService;
 
-    BackgroundContainersManager(ContainersManager delegatedContainersManager,
-                                 ExecutorService executorService) {
+    BackgroundContainersManager(ContainersManager delegatedContainersManager, ExecutorService executorService) {
         this.delegatedContainersManager = delegatedContainersManager;
         this.executorService = executorService;
     }

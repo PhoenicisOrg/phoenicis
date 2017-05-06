@@ -56,22 +56,13 @@ public class DownloaderTest {
 
     @Test
     public void testGet_DownloadFile_FileIsDownloaded() throws Exception {
-        mockServer.when(
-                request()
-                        .withMethod("GET")
-                        .withPath("/test.txt")
-        ).respond(
-                response()
-                        .withStatusCode(200)
-                        .withHeaders(
-                                new Header("Content-Type", "application/config")
-                        )
-                        .withBody("Content file to download")
-        );
+        mockServer.when(request().withMethod("GET").withPath("/test.txt")).respond(response().withStatusCode(200)
+                .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download"));
 
         File temporaryFile = File.createTempFile("test", "txt");
         temporaryFile.deleteOnExit();
-        new Downloader(new FileSizeUtilities()).get(mockServerURL, temporaryFile, e -> {});
+        new Downloader(new FileSizeUtilities()).get(mockServerURL, temporaryFile, e -> {
+        });
 
         String fileContent = IOUtils.toString(new FileReader(temporaryFile));
 
@@ -80,20 +71,11 @@ public class DownloaderTest {
 
     @Test
     public void testGet_DownloadFileInAString_FileIsDownloaded() throws Exception {
-        mockServer.when(
-                request()
-                        .withMethod("GET")
-                        .withPath("/test2.txt")
-        ).respond(
-                response()
-                        .withStatusCode(200)
-                        .withHeaders(
-                                new Header("Content-Type", "application/config")
-                        )
-                        .withBody("Content file to download 2")
-        );
+        mockServer.when(request().withMethod("GET").withPath("/test2.txt")).respond(response().withStatusCode(200)
+                .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download 2"));
 
-        String result = new Downloader(new FileSizeUtilities()).get(mockServerURLFile2, e -> {});
+        String result = new Downloader(new FileSizeUtilities()).get(mockServerURLFile2, e -> {
+        });
 
         assertEquals("Content file to download 2", result);
     }

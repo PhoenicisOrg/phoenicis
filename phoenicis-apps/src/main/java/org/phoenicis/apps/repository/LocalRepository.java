@@ -78,9 +78,9 @@ public class LocalRepository implements Repository {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
                 final File categoryFile = new File(categoryDirectory, "category.json");
 
-                final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(unSerializeCategory(categoryFile))
-                        .withName(categoryDirectory.getName())
-                        .withApplications(fetchApplications(categoryDirectory));
+                final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(
+                        unSerializeCategory(categoryFile)).withName(categoryDirectory.getName())
+                                .withApplications(fetchApplications(categoryDirectory));
 
                 final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
                 if (categoryIconFile.exists()) {
@@ -165,7 +165,8 @@ public class LocalRepository implements Repository {
         for (File resourceFile : resources) {
             if (!resourceFile.isDirectory() && !resourceFile.getName().startsWith(".")) {
                 try {
-                    results.add(new ResourceDTO(resourceFile.getName(), IOUtils.toByteArray(new FileInputStream(resourceFile))));
+                    results.add(new ResourceDTO(resourceFile.getName(),
+                            IOUtils.toByteArray(new FileInputStream(resourceFile))));
                 } catch (IOException ignored) {
 
                 }
@@ -184,8 +185,7 @@ public class LocalRepository implements Repository {
         final List<ScriptDTO> results = new ArrayList<>();
 
         for (File scriptDirectory : scriptDirectories) {
-            if (scriptDirectory.isDirectory()
-                    && !"miniatures".equals(scriptDirectory.getName())
+            if (scriptDirectory.isDirectory() && !"miniatures".equals(scriptDirectory.getName())
                     && !"resources".equals(scriptDirectory.getName())) {
                 final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                         unSerializeScript(new File(scriptDirectory, "script.json")));
@@ -200,9 +200,7 @@ public class LocalRepository implements Repository {
 
                 if (scriptFile.exists()) {
                     try {
-                        scriptDTOBuilder.withScript(
-                                new String(IOUtils.toByteArray(new FileInputStream(scriptFile)))
-                        );
+                        scriptDTOBuilder.withScript(new String(IOUtils.toByteArray(new FileInputStream(scriptFile))));
                     } catch (IOException e) {
                         LOGGER.warn("Script not found", e);
                     }
@@ -244,10 +242,8 @@ public class LocalRepository implements Repository {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("repositorySource", repositorySource)
-                .append("repositoryDirectory", repositoryDirectory)
-                .toString();
+        return new ToStringBuilder(this).append("repositorySource", repositorySource)
+                .append("repositoryDirectory", repositoryDirectory).toString();
     }
 
     @Override

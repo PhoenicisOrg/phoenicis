@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.console;
 
-
 import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -38,7 +37,8 @@ public class ConsoleTab extends Tab {
     private final TextFlow console = new TextFlow();
     private final ScrollPane consolePane;
     private boolean forceScroll = false;
-    private Consumer<String> onSendCommand = text -> {};
+    private Consumer<String> onSendCommand = text -> {
+    };
 
     public ConsoleTab() {
         final BorderPane content = new BorderPane();
@@ -49,18 +49,17 @@ public class ConsoleTab extends Tab {
         command.getStyleClass().add("consoleCommandType");
         consolePane = new ScrollPane(console);
 
-        content.widthProperty().addListener((observable, oldValue, newValue)
-                -> console.setPrefWidth(content.getWidth() * 0.94));
+        content.widthProperty()
+                .addListener((observable, oldValue, newValue) -> console.setPrefWidth(content.getWidth() * 0.94));
 
         content.getStyleClass().add("rightPane");
 
         consolePane.getStyleClass().add("console");
         consolePane.vvalueProperty().addListener((ov, oldValue, newValue) -> {
-            if(forceScroll && (double) newValue != 1.0) {
+            if (forceScroll && (double) newValue != 1.0) {
                 consolePane.vvalueProperty().setValue(1.0);
             }
         });
-
 
         content.setCenter(consolePane);
         content.setBottom(command);
@@ -130,6 +129,5 @@ public class ConsoleTab extends Tab {
             consolePane.vvalueProperty().setValue(1.0);
         });
     }
-
 
 }

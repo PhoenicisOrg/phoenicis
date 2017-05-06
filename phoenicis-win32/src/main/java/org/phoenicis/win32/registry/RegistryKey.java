@@ -34,9 +34,7 @@ public class RegistryKey extends AbstractRegistryNode {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("+ ")
-                .append(this.name).append("\n");
+        stringBuilder.append("+ ").append(this.name).append("\n");
         for (AbstractRegistryNode child : children) {
             for (String line : child.toString().split("\n")) {
                 stringBuilder.append("| ").append(line).append("\n");
@@ -48,8 +46,7 @@ public class RegistryKey extends AbstractRegistryNode {
     @Override
     public String toRegString() {
         final List<String> registryPath = new ArrayList<>();
-        for (AbstractRegistryNode registryNode = this; registryNode != null;
-             registryNode = registryNode.parent) {
+        for (AbstractRegistryNode registryNode = this; registryNode != null; registryNode = registryNode.parent) {
             registryPath.add(0, registryNode.getName());
         }
 
@@ -80,7 +77,8 @@ public class RegistryKey extends AbstractRegistryNode {
     }
 
     public RegistryKey addDeepChildren(String... newChildren) {
-        return (RegistryKey) addDeepChildren(Arrays.stream(newChildren).map(RegistryKey::new).collect(Collectors.toList()));
+        return (RegistryKey) addDeepChildren(
+                Arrays.stream(newChildren).map(RegistryKey::new).collect(Collectors.toList()));
     }
 
     public List<AbstractRegistryNode> getChildren() {

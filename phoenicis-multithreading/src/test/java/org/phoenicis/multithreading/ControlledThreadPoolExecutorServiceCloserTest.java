@@ -28,8 +28,8 @@ import static org.mockito.Mockito.verify;
 public class ControlledThreadPoolExecutorServiceCloserTest {
     private ControlledThreadPoolExecutorService mock1 = mock(ControlledThreadPoolExecutorService.class);
     private ControlledThreadPoolExecutorService mock2 = mock(ControlledThreadPoolExecutorService.class);
-    private ControlledThreadPoolExecutorServiceCloser controlledThreadPoolExecutorCloser =
-            new ControlledThreadPoolExecutorServiceCloser(mock1, mock2);
+    private ControlledThreadPoolExecutorServiceCloser controlledThreadPoolExecutorCloser = new ControlledThreadPoolExecutorServiceCloser(
+            mock1, mock2);
 
     @Test
     public void testClose() throws InterruptedException {

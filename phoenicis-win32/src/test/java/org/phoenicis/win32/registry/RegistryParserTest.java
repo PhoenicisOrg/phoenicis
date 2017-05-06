@@ -84,8 +84,8 @@ public class RegistryParserTest {
             outputStream.flush();
         }
 
-        AbstractRegistryNode registryNode = registryParser.parseFile(temporaryFile, "Temporary")
-                .getChild("Software", "Wine", "DllOverrides", "*d3dx9_24");
+        AbstractRegistryNode registryNode = registryParser.parseFile(temporaryFile, "Temporary").getChild("Software",
+                "Wine", "DllOverrides", "*d3dx9_24");
         RegistryValue<?> registryValue = null;
         if (registryNode instanceof RegistryValue) {
             registryValue = (RegistryValue<?>) registryNode;

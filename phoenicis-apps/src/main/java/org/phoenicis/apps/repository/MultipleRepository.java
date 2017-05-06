@@ -45,14 +45,13 @@ public class MultipleRepository extends MergeableRepository {
     public List<CategoryDTO> fetchInstallableApplications() {
         LOGGER.info(String.format("Fetching applications for: %s", this.toString()));
 
-		/*
-         * This step is needed because we need a mapping between the CategoryDTO
-		 * list and its application source, to preserve the order in the
-		 * reduction step
-		 */
-        final Map<Repository, List<CategoryDTO>> categoriesMap = this.repositories.stream()
-                .parallel().collect(
-                        Collectors.toConcurrentMap(source -> source, Repository::fetchInstallableApplications));
+        /*
+        * This step is needed because we need a mapping between the CategoryDTO
+         * list and its application source, to preserve the order in the
+         * reduction step
+         */
+        final Map<Repository, List<CategoryDTO>> categoriesMap = this.repositories.stream().parallel()
+                .collect(Collectors.toConcurrentMap(source -> source, Repository::fetchInstallableApplications));
 
         return mergeRepositories(categoriesMap, repositories);
     }
@@ -86,9 +85,7 @@ public class MultipleRepository extends MergeableRepository {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("repositories", repositories)
-                .toString();
+        return new ToStringBuilder(this).append("repositories", repositories).toString();
     }
 
     @Override

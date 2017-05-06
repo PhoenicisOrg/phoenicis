@@ -29,13 +29,14 @@ class FilesManipulator {
     private String userRoot;
 
     private boolean isInSubDirectory(File directory, File fileIside) {
-        return fileIside != null && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
+        return fileIside != null
+                && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
     }
 
     void assertInDirectory(File file) {
-        if(!isInSubDirectory(new File(userRoot), file)) {
-            throw new IllegalArgumentException(format("The file (%s) must be in a the Phoenicis root directory (%s)",
-                    file, userRoot));
+        if (!isInSubDirectory(new File(userRoot), file)) {
+            throw new IllegalArgumentException(
+                    format("The file (%s) must be in a the Phoenicis root directory (%s)", file, userRoot));
         }
     }
 

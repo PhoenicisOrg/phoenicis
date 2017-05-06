@@ -23,9 +23,8 @@ import org.phoenicis.win32.registry.*;
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public enum AlwaysOffscreen implements RegistryParameter {
-    DEFAULT(translate("Default"), ""),
-    DISABLED(translate("Disabled"), "disabled"),
-    ENABLED(translate("Enabled"), "enabled");
+    DEFAULT(translate("Default"), ""), DISABLED(translate("Disabled"), "disabled"), ENABLED(translate("Enabled"),
+            "enabled");
 
     private final String translatedName;
     private final String registryValue;
@@ -35,7 +34,6 @@ public enum AlwaysOffscreen implements RegistryParameter {
         this.registryValue = registryValue;
     }
 
-
     @Override
     public String toString() {
         return translatedName;
@@ -43,9 +41,8 @@ public enum AlwaysOffscreen implements RegistryParameter {
 
     @Override
     public AbstractRegistryNode toRegistryPatch() {
-        final RegistryKey registryNode
-                = new RegistryKey("HKEY_CURRENT_USER")
-                .addDeepChildren("Software", "Wine", "Direct3D");
+        final RegistryKey registryNode = new RegistryKey("HKEY_CURRENT_USER").addDeepChildren("Software", "Wine",
+                "Direct3D");
 
         switch (this) {
             case DEFAULT:

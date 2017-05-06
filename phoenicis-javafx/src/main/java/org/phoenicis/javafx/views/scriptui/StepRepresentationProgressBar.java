@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-
 import org.phoenicis.entities.ProgressEntity;
 import org.phoenicis.scripts.ui.Message;
 import org.phoenicis.scripts.ui.ProgressControl;
@@ -31,13 +30,12 @@ public class StepRepresentationProgressBar extends StepRepresentationMessage imp
     private final Text progressText = new Text("");
 
     public StepRepresentationProgressBar(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse,
-                                         String textToShow) {
+            String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         progressBar.setProgress(0.0);
 
         progressText.setId("stepText");
     }
-
 
     @Override
     protected void drawStepContent() {

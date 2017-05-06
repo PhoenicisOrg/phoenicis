@@ -37,16 +37,18 @@ public class ConfirmMessage {
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.setContentText(message);
-        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
+        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label)
+                .forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
     }
 
     public void ask(Runnable yesCallback) {
-        ask(yesCallback, () -> {});
+        ask(yesCallback, () -> {
+        });
     }
 
     public void ask(Runnable yesCallback, Runnable noCallback) {
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             LOGGER.info("User response: yes");
             yesCallback.run();
         } else {

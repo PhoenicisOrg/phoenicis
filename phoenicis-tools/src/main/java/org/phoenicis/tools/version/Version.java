@@ -35,7 +35,7 @@ public class Version {
         final String[] splitCompleteVersion = completeVersionAsString.split("-");
         final String versionAsString = splitCompleteVersion[0];
 
-        if(splitCompleteVersion.length > 1) {
+        if (splitCompleteVersion.length > 1) {
             customName = splitCompleteVersion[1].trim();
         } else {
             customName = "";
@@ -44,13 +44,13 @@ public class Version {
         final String[] splitVersion = versionAsString.split("\\.");
         bigNumber = readInteger(splitVersion[0]);
 
-        if(splitVersion.length <= 1) {
+        if (splitVersion.length <= 1) {
             intermediateNumber = 0;
         } else {
             intermediateNumber = readInteger(splitVersion[1]);
         }
 
-        if(splitVersion.length <= 2) {
+        if (splitVersion.length <= 2) {
             lowNumber = 0;
         } else {
             lowNumber = readInteger(splitVersion[2]);
@@ -77,7 +77,9 @@ public class Version {
         return lowNumber;
     }
 
-    public String getCustomName() { return customName; }
+    public String getCustomName() {
+        return customName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -91,26 +93,19 @@ public class Version {
 
         Version version = (Version) o;
 
-        return new EqualsBuilder()
-                .append(bigNumber, version.bigNumber)
-                .append(intermediateNumber, version.intermediateNumber)
-                .append(lowNumber, version.lowNumber)
-                .append(customName, version.customName)
-                .isEquals();
+        return new EqualsBuilder().append(bigNumber, version.bigNumber)
+                .append(intermediateNumber, version.intermediateNumber).append(lowNumber, version.lowNumber)
+                .append(customName, version.customName).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder()
-                .append(bigNumber)
-                .append(intermediateNumber)
-                .append(lowNumber)
-                .toHashCode();
+        return new HashCodeBuilder().append(bigNumber).append(intermediateNumber).append(lowNumber).toHashCode();
     }
 
     @Override
     public String toString() {
-        if(StringUtils.isBlank(customName)) {
+        if (StringUtils.isBlank(customName)) {
             if (lowNumber == 0) {
                 return String.format("%s.%s", bigNumber, intermediateNumber);
             }

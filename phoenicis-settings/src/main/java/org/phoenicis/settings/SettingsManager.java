@@ -26,74 +26,74 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class SettingsManager {
-	@Value("${application.theme}")
-	private String theme;
+    @Value("${application.theme}")
+    private String theme;
 
-	@Value("${application.scale}")
-	private double scale;
+    @Value("${application.scale}")
+    private double scale;
 
-	@Value("${application.viewsource}")
-	private boolean viewScriptSource;
+    @Value("${application.viewsource}")
+    private boolean viewScriptSource;
 
-	@Value("${application.repository.configuration}")
-	private String repository;
+    @Value("${application.repository.configuration}")
+    private String repository;
 
-	private String settingsFileName = "config.properties";
+    private String settingsFileName = "config.properties";
 
-	public SettingsManager(String settingsFileName) {
-		this.settingsFileName = settingsFileName;
-	}
+    public SettingsManager(String settingsFileName) {
+        this.settingsFileName = settingsFileName;
+    }
 
-	public String getTheme() {
-		return theme;
-	}
+    public String getTheme() {
+        return theme;
+    }
 
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 
-	public double getScale() {
-		return scale;
-	}
+    public double getScale() {
+        return scale;
+    }
 
-	public void setScale(double scale) {
-		this.scale = scale;
-	}
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
 
-	public boolean isViewScriptSource() {
-		return viewScriptSource;
-	}
+    public boolean isViewScriptSource() {
+        return viewScriptSource;
+    }
 
-	public void setViewScriptSource(boolean viewScriptSource) {
-		this.viewScriptSource = viewScriptSource;
-	}
+    public void setViewScriptSource(boolean viewScriptSource) {
+        this.viewScriptSource = viewScriptSource;
+    }
 
-	public String getRepository() {
-		return repository;
-	}
+    public String getRepository() {
+        return repository;
+    }
 
-	public void setRepository(String repository) {
-		this.repository = repository;
-	}
+    public void setRepository(String repository) {
+        this.repository = repository;
+    }
 
-	public void save() {
-		Settings settings = load();
-		try {
-			File file = new File(settingsFileName);
-			OutputStream outputStream = new FileOutputStream(file);
-			DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
-			persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public void save() {
+        Settings settings = load();
+        try {
+            File file = new File(settingsFileName);
+            OutputStream outputStream = new FileOutputStream(file);
+            DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
+            persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	private Settings load() {
-		Settings settings = new Settings();
-		settings.set(Setting.THEME, theme);
-		settings.set(Setting.SCALE, scale);
-		settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
-		settings.set(Setting.REPOSITORY, repository);
-		return settings;
-	}
+    private Settings load() {
+        Settings settings = new Settings();
+        settings.set(Setting.THEME, theme);
+        settings.set(Setting.SCALE, scale);
+        settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
+        settings.set(Setting.REPOSITORY, repository);
+        return settings;
+    }
 }

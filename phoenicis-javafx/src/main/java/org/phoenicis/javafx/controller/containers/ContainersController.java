@@ -39,9 +39,9 @@ public class ContainersController {
     private final WinePrefixContainerController winePrefixContainerController;
     private final EnginesSource enginesSource;
 
-    public ContainersController(ViewContainers viewContainers,
-                                ContainersManager containersManager,
-                                ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory, WinePrefixContainerController winePrefixContainerController, EnginesSource enginesSource) {
+    public ContainersController(ViewContainers viewContainers, ContainersManager containersManager,
+            ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
+            WinePrefixContainerController winePrefixContainerController, EnginesSource enginesSource) {
         this.viewContainers = viewContainers;
         this.containersManager = containersManager;
         this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
@@ -56,60 +56,37 @@ public class ContainersController {
 
         viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
             enginesSource.fetchAvailableEngines(engineCategoryDTOS -> {
-                final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel((WinePrefixContainerDTO) containerDTO, viewContainers.getThemeManager(), engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream()).flatMap(subCategory -> subCategory.getPackages().stream()).collect(Collectors.toList()));
-                panel.setOnWineCfg(winePrefixDTO -> winePrefixContainerController.runInPrefix(
-                        winePrefixDTO,
-                        "winecfg",
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
+                        (WinePrefixContainerDTO) containerDTO, viewContainers.getThemeManager(),
+                        engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
+                                .flatMap(subCategory -> subCategory.getPackages().stream())
+                                .collect(Collectors.toList()));
+                panel.setOnWineCfg(winePrefixDTO -> winePrefixContainerController.runInPrefix(winePrefixDTO, "winecfg",
+                        panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnRegedit(winePrefixDTO -> winePrefixContainerController.runInPrefix(
-                        winePrefixDTO,
-                        "regedit",
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnRegedit(winePrefixDTO -> winePrefixContainerController.runInPrefix(winePrefixDTO, "regedit",
+                        panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnWineboot(winePrefixDTO -> winePrefixContainerController.runInPrefix(
-                        winePrefixDTO,
-                        "wineboot",
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnWineboot(
+                        winePrefixDTO -> winePrefixContainerController.runInPrefix(winePrefixDTO, "wineboot",
+                                panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnWinebootRepair(winePrefixDTO -> winePrefixContainerController.repairPrefix(
-                        winePrefixDTO,
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnWinebootRepair(winePrefixDTO -> winePrefixContainerController.repairPrefix(winePrefixDTO,
+                        panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnWineConsole(winePrefixDTO -> winePrefixContainerController.runInPrefix(
-                        winePrefixDTO,
-                        "wineconsole",
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnWineConsole(
+                        winePrefixDTO -> winePrefixContainerController.runInPrefix(winePrefixDTO, "wineconsole",
+                                panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnTaskMgr(winePrefixDTO -> winePrefixContainerController.runInPrefix(
-                        winePrefixDTO,
-                        "taskmgr",
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnTaskMgr(winePrefixDTO -> winePrefixContainerController.runInPrefix(winePrefixDTO, "taskmgr",
+                        panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnUninstaller(winePrefixDTO -> winePrefixContainerController.runInPrefix(
-                        winePrefixDTO,
-                        "uninstaller",
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnUninstaller(
+                        winePrefixDTO -> winePrefixContainerController.runInPrefix(winePrefixDTO, "uninstaller",
+                                panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
-                panel.setOnKillProcess(winePrefixDTO -> winePrefixContainerController.killProcesses(
-                        winePrefixDTO,
-                        panel::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()))
-                );
+                panel.setOnKillProcess(winePrefixDTO -> winePrefixContainerController.killProcesses(winePrefixDTO,
+                        panel::unlockAll, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())));
 
                 panel.setOnOpenTerminalInWinePrefix(winePrefix -> {
                     winePrefixContainerController.openTerminalInPrefix(winePrefix);
@@ -117,21 +94,19 @@ public class ContainersController {
                 });
 
                 panel.setOnChangeSetting((winePrefixDTO, setting) -> {
-                    winePrefixContainerController.changeSetting(
-                            winePrefixDTO,
-                            setting,
-                            panel::unlockAll,
-                            e -> Platform.runLater(() -> new ErrorMessage("Error", e).show())
-                    );
+                    winePrefixContainerController.changeSetting(winePrefixDTO, setting, panel::unlockAll,
+                            e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
                     panel.unlockAll();
                 });
 
                 panel.setOnDeletePrefix(winePrefixDTO -> {
-                    new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container", "Are you sure you want to delete the " + winePrefixDTO.getName() + " container?")
-                            .ask(() -> {
-                                winePrefixContainerController.deletePrefix(winePrefixDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-                                loadContainers();
-                            });
+                    new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container",
+                            "Are you sure you want to delete the " + winePrefixDTO.getName() + " container?")
+                                    .ask(() -> {
+                                        winePrefixContainerController.deletePrefix(winePrefixDTO,
+                                                e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                                        loadContainers();
+                                    });
                 });
 
                 Platform.runLater(() -> viewContainers.setCenter(panel));

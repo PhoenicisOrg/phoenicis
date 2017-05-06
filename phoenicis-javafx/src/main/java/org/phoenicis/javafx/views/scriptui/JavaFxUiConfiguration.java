@@ -48,7 +48,8 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Bean
     public SetupUiFactory setupUiFactory() {
         return title -> {
-            final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title, toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
+            final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
+                    toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
             viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
             setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
             return setupWindow;
@@ -64,7 +65,8 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
-        return (text, yesCallback, noCallback) -> Platform.runLater(() -> new ConfirmMessage("Question", text).ask(yesCallback, noCallback));
+        return (text, yesCallback, noCallback) -> Platform
+                .runLater(() -> new ConfirmMessage("Question", text).ask(yesCallback, noCallback));
     }
 
     @Override

@@ -34,14 +34,9 @@ public class CachedRepositoryTest {
     @Test
     public void testFetchInstallableApplications() throws Exception {
         Repository repository = Mockito.mock(Repository.class);
-        when(repository.fetchInstallableApplications()).thenReturn(Arrays.asList(
-                new CategoryDTO.Builder()
-                        .withName("Category 1")
-                        .build(),
-                new CategoryDTO.Builder()
-                        .withName("Category 2")
-                        .build()
-        ));
+        when(repository.fetchInstallableApplications())
+                .thenReturn(Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
+                        new CategoryDTO.Builder().withName("Category 2").build()));
 
         final Repository cachedSource = new CachedRepository(repository);
         cachedSource.fetchInstallableApplications();

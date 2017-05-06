@@ -48,11 +48,8 @@ public class CategoryDTO {
         return icon;
     }
 
-
-
     public enum CategoryType {
-        INSTALLERS,
-        FUNCTIONS
+        INSTALLERS, FUNCTIONS
     }
 
     public CategoryType getType() {
@@ -83,12 +80,9 @@ public class CategoryDTO {
         }
 
         public Builder(CategoryDTO categoryDTO) {
-            this.withName(categoryDTO.getName())
-                    .withApplications(categoryDTO.getApplications())
-                    .withIcon(categoryDTO.getIcon())
-                    .withType(categoryDTO.getType());
+            this.withName(categoryDTO.getName()).withApplications(categoryDTO.getApplications())
+                    .withIcon(categoryDTO.getIcon()).withType(categoryDTO.getType());
         }
-
 
         public Builder withType(CategoryType type) {
             this.type = type;
@@ -117,10 +111,7 @@ public class CategoryDTO {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append(name)
-                .append(type)
-                .toString();
+        return new ToStringBuilder(this).append(name).append(type).toString();
     }
 
 }

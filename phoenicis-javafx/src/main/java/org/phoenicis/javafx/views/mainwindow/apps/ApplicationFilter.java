@@ -27,7 +27,8 @@ public class ApplicationFilter<E> {
         this.filters = FXCollections.observableArrayList();
 
         this.filterText.addListener((observableValue, oldValue, newValue) -> filteredList.setPredicate(this::filter));
-        this.filters.addListener((ListChangeListener<? super Predicate<E>>) change -> filteredList.setPredicate(this::filter));
+        this.filters.addListener(
+                (ListChangeListener<? super Predicate<E>>) change -> filteredList.setPredicate(this::filter));
     }
 
     public void setFilterText(String filterText) {
@@ -38,7 +39,7 @@ public class ApplicationFilter<E> {
         this.filters.add(filter);
     }
 
-    public void setFilters(Predicate<E> ... filters) {
+    public void setFilters(Predicate<E>... filters) {
         this.filters.setAll(filters);
     }
 

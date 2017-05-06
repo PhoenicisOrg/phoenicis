@@ -41,7 +41,8 @@ public class ConfigurableRepository implements Repository {
 
     private final FileUtilities fileUtilities;
 
-    public ConfigurableRepository(String sourceUrl, String cacheDirectoryPath, FileUtilities fileUtilities, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
+    public ConfigurableRepository(String sourceUrl, String cacheDirectoryPath, FileUtilities fileUtilities,
+            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
         this.cacheDirectoryPath = cacheDirectoryPath;
         this.localRepositoryFactory = localRepositoryFactory;
         this.classPathRepositoryFactory = classPathRepositoryFactory;
@@ -68,7 +69,7 @@ public class ConfigurableRepository implements Repository {
 
             switch (scheme) {
                 case "git":
-                    return new GitRepository(repositoryUrl.replace("git+",""), cacheDirectoryPath,
+                    return new GitRepository(repositoryUrl.replace("git+", ""), cacheDirectoryPath,
                             localRepositoryFactory, fileUtilities);
                 case "file":
                     return localRepositoryFactory.createInstance(url.getRawPath());

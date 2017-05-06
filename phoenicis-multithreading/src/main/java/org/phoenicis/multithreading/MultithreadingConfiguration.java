@@ -40,6 +40,7 @@ public class MultithreadingConfiguration {
 
     @Bean
     public ControlledThreadPoolExecutorServiceCloser controllerThreadPoolExecutorServiceCloser() {
-        return new ControlledThreadPoolExecutorServiceCloser(appsExecutorService(), containersExecutorService(), scriptExecutorService());
+        return new ControlledThreadPoolExecutorServiceCloser(appsExecutorService(), containersExecutorService(),
+                scriptExecutorService());
     }
 }

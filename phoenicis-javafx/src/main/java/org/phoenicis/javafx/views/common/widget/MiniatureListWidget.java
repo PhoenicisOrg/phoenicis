@@ -53,7 +53,8 @@ public final class MiniatureListWidget<E> extends ScrollPane {
     private ObservableList<E> items;
     private ObservableList<Element<E>> mappedElements;
 
-    private MiniatureListWidget(Pane content, Function<E, Element> converter, BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
+    private MiniatureListWidget(Pane content, Function<E, Element> converter,
+            BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
         super(content);
 
         this.content = content;
@@ -94,7 +95,8 @@ public final class MiniatureListWidget<E> extends ScrollPane {
      * @param <T>               The type of items to be added to this MiniatureListWidget
      * @return
      */
-    public static <T> MiniatureListWidget<T> create(Function<T, Element> converter, BiConsumer<Element<T>, MouseEvent> setOnMouseClicked) {
+    public static <T> MiniatureListWidget<T> create(Function<T, Element> converter,
+            BiConsumer<Element<T>, MouseEvent> setOnMouseClicked) {
         return new MiniatureListWidget<T>(new FlowPane(), converter, setOnMouseClicked);
     }
 
@@ -148,7 +150,6 @@ public final class MiniatureListWidget<E> extends ScrollPane {
                 this.setClip(clip);
             });
 
-
             final Label label = new Label(elementName);
             label.getStyleClass().add("miniatureText");
 
@@ -168,15 +169,20 @@ public final class MiniatureListWidget<E> extends ScrollPane {
         }
 
         public static Element<ApplicationDTO> create(ApplicationDTO application) {
-            return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().isEmpty() ? new StaticMiniature() : new StaticMiniature(new Image(new ByteArrayInputStream(application.getMiniatures().get(0)))));
+            return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().isEmpty()
+                    ? new StaticMiniature()
+                    : new StaticMiniature(new Image(new ByteArrayInputStream(application.getMiniatures().get(0)))));
         }
 
         public static Element<ShortcutDTO> create(ShortcutDTO shortcut) {
-            return new Element<ShortcutDTO>(shortcut, shortcut.getName(), shortcut.getMiniature() == null ? new StaticMiniature() : new StaticMiniature(new Image(new ByteArrayInputStream(shortcut.getMiniature()))));
+            return new Element<ShortcutDTO>(shortcut, shortcut.getName(),
+                    shortcut.getMiniature() == null ? new StaticMiniature()
+                            : new StaticMiniature(new Image(new ByteArrayInputStream(shortcut.getMiniature()))));
         }
 
         public static Element<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-            Element<EngineVersionDTO> result = new Element<EngineVersionDTO>(engineVersion, engineVersion.getVersion(), new StaticMiniature(StaticMiniature.WINE_MINIATURE));
+            Element<EngineVersionDTO> result = new Element<EngineVersionDTO>(engineVersion, engineVersion.getVersion(),
+                    new StaticMiniature(StaticMiniature.WINE_MINIATURE));
 
             if (!installed) {
                 ColorAdjust grayscale = new ColorAdjust();

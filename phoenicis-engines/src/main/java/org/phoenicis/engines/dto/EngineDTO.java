@@ -50,15 +50,14 @@ public class EngineDTO {
         return version;
     }
 
-    public Map<String, String> getUserData() { return userData; }
+    public Map<String, String> getUserData() {
+        return userData;
+    }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(EngineDTO.class)
-                .append("category", category)
-                .append("subCategory", subCategory)
-                .append("version", version)
-                .toString();
+        return new ToStringBuilder(EngineDTO.class).append("category", category).append("subCategory", subCategory)
+                .append("version", version).toString();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

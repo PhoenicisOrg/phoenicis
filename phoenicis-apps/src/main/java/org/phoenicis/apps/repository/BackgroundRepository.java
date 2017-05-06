@@ -31,8 +31,7 @@ public class BackgroundRepository implements Repository {
     private final Repository delegatedRepository;
     private final ExecutorService executorService;
 
-    public BackgroundRepository(Repository delegatedRepository,
-                                 ExecutorService executorService) {
+    public BackgroundRepository(Repository delegatedRepository, ExecutorService executorService) {
         this.delegatedRepository = delegatedRepository;
         this.executorService = executorService;
     }

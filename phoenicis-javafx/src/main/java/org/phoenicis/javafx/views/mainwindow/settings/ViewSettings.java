@@ -44,8 +44,8 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
     private ObservableList<SettingsSideBar.SettingsSideBarItem> settingsItems;
 
     public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
-                        String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-                        SettingsManager settingsManager, RepositoryManager repositoryManager) {
+            String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
+            SettingsManager settingsManager, RepositoryManager repositoryManager) {
         super("Settings", themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;
@@ -68,14 +68,18 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
     }
 
     private void initializeSettingsItems() {
-        AboutPanel.ApplicationBuildInformation buildInformation =
-                new AboutPanel.ApplicationBuildInformation(applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
+        AboutPanel.ApplicationBuildInformation buildInformation = new AboutPanel.ApplicationBuildInformation(
+                applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSideBar.SettingsSideBarItem(new UserInterfacePanel(settingsManager, themeManager), "userInterfaceButton", "User Interface"),
-                new SettingsSideBar.SettingsSideBarItem(new RepositoriesPanel(settingsManager, repositoryManager), "repositoriesButton", "Repositories"),
-                new SettingsSideBar.SettingsSideBarItem(new FileAssociationsPanel(), "settingsButton", "File Associations"),
+                new SettingsSideBar.SettingsSideBarItem(new UserInterfacePanel(settingsManager, themeManager),
+                        "userInterfaceButton", "User Interface"),
+                new SettingsSideBar.SettingsSideBarItem(new RepositoriesPanel(settingsManager, repositoryManager),
+                        "repositoriesButton", "Repositories"),
+                new SettingsSideBar.SettingsSideBarItem(new FileAssociationsPanel(), "settingsButton",
+                        "File Associations"),
                 new SettingsSideBar.SettingsSideBarItem(new NetworkPanel(), "networkButton", "Network"),
-                new SettingsSideBar.SettingsSideBarItem(new AboutPanel(buildInformation, opener), "aboutButton", "About"));
+                new SettingsSideBar.SettingsSideBarItem(new AboutPanel(buildInformation, opener), "aboutButton",
+                        "About"));
     }
 }
