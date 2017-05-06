@@ -23,6 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
@@ -60,10 +62,16 @@ public class MainWindow extends Stage {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab logoTab = new Tab();
-        Label logo = new Label(applicationName.toLowerCase());
+        HBox logoLayout = new HBox();
+        Region logo = new Region();
         logo.setId("logo");
         logo.setCursor(Cursor.DEFAULT);
-        logoTab.setGraphic(logo);
+        Label logoText = new Label(applicationName.toLowerCase());
+        logoText.setId("logoText");
+        logoText.setCursor(Cursor.DEFAULT);
+        logo.prefWidthProperty().bind(logoText.heightProperty());
+        logoLayout.getChildren().addAll(logo, logoText);
+        logoTab.setGraphic(logoLayout);
         logoTab.setDisable(true);
 
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
