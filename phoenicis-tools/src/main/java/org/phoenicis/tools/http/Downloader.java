@@ -38,9 +38,7 @@ public class Downloader {
         this.fileSizeUtilities = fileSizeUtilities;
     }
 
-    public void get(String url,
-                    String localFile,
-                    Consumer<ProgressEntity> onChange) {
+    public void get(String url, String localFile, Consumer<ProgressEntity> onChange) {
         try {
             get(new URL(url), new File(localFile), onChange);
         } catch (MalformedURLException e) {
@@ -48,10 +46,7 @@ public class Downloader {
         }
     }
 
-
-    public void get(URL url,
-                    File localFile,
-                    Consumer<ProgressEntity> onChange) {
+    public void get(URL url, File localFile, Consumer<ProgressEntity> onChange) {
         try {
             get(url, new FileOutputStream(localFile), onChange);
         } catch (IOException e) {
@@ -90,15 +85,13 @@ public class Downloader {
         }
     }
 
-    private void saveConnectionToStream(URL url,
-                                        URLConnection connection,
-                                        OutputStream outputStream,
-                                        Consumer<ProgressEntity> onChange) {
+    private void saveConnectionToStream(URL url, URLConnection connection, OutputStream outputStream,
+            Consumer<ProgressEntity> onChange) {
         float percentage = 0F;
         changeState(ProgressState.READY, percentage, "", onChange);
 
         try (BufferedInputStream inputStream = new BufferedInputStream(connection.getInputStream());
-             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, BLOCK_SIZE)) {
             long fileSize = connection.getContentLengthLong();
 
             byte[] data = new byte[BLOCK_SIZE];
@@ -110,14 +103,11 @@ public class Downloader {
 
                 percentage = ((float) totalDataRead * 100) / ((float) fileSize);
 
-                changeState(
-                        ProgressState.PROGRESSING, percentage,
+                changeState(ProgressState.PROGRESSING, percentage,
                         String.format("%s / %s downloaded",
                                 fileSizeUtilities.humanReadableByteCount(totalDataRead, false),
-                                fileSizeUtilities.humanReadableByteCount(fileSize, false)
-                        ),
-                        onChange
-                );
+                                fileSizeUtilities.humanReadableByteCount(fileSize, false)),
+                        onChange);
 
                 if (Thread.currentThread().isInterrupted()) {
                     throw new InterruptedException("The download has been aborted");
@@ -133,16 +123,11 @@ public class Downloader {
         changeState(ProgressState.SUCCESS, percentage, "", onChange);
     }
 
-    private void changeState(ProgressState state,
-                             float percentage,
-                             String progressText,
-                             Consumer<ProgressEntity> onChange) {
-        if(onChange != null){
-            ProgressEntity currentState = new ProgressEntity.Builder()
-                    .withPercent(percentage)
-                    .withState(state)
-                    .withProgressText(progressText)
-                    .build();
+    private void changeState(ProgressState state, float percentage, String progressText,
+            Consumer<ProgressEntity> onChange) {
+        if (onChange != null) {
+            ProgressEntity currentState = new ProgressEntity.Builder().withPercent(percentage).withState(state)
+                    .withProgressText(progressText).build();
             onChange.accept(currentState);
         }
     }

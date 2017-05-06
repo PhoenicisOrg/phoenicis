@@ -23,7 +23,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class RegistryKeyTest {
 
     RegistryKey a1;
@@ -65,13 +64,8 @@ public class RegistryKeyTest {
 
     @Test
     public void testRegistryKey_toString_goodFormat() {
-        assertEquals("+ A1\n" +
-                "| + B1\n" +
-                "| + B2\n" +
-                "| | + C1\n" +
-                "| | | - (StringValueType) V1 -> Content 1\n" +
-                "| | + C2\n" +
-                "| | | - (StringValueType) V2 -> Content 2\n" +
-                "| | | - (StringValueType) V3 -> Content 3\n", a1.toString());
+        assertEquals("+ A1\n" + "| + B1\n" + "| + B2\n" + "| | + C1\n" + "| | | - (StringValueType) V1 -> Content 1\n"
+                + "| | + C2\n" + "| | | - (StringValueType) V2 -> Content 2\n"
+                + "| | | - (StringValueType) V3 -> Content 3\n", a1.toString());
     }
 }

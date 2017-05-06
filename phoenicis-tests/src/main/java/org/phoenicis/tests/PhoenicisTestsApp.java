@@ -42,8 +42,8 @@ public class PhoenicisTestsApp {
     }
 
     private void run(String[] args) {
-        try(final ConfigurableApplicationContext applicationContext =
-                new AnnotationConfigApplicationContext(PhoenicisTestsConfiguration.class)) {
+        try (final ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+                PhoenicisTestsConfiguration.class)) {
 
             final Repository repository = applicationContext.getBean("mockedRepository", Repository.class);
             this.applicationContext = applicationContext;
@@ -72,14 +72,15 @@ public class PhoenicisTestsApp {
     }
 
     private void testScript(CategoryDTO categoryDTO, ApplicationDTO applicationDTO, ScriptDTO scriptDTO) {
-        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("nashornInterprpeter", ScriptInterpreter.class);
+        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("nashornInterprpeter",
+                ScriptInterpreter.class);
         System.out.print("| |-- " + scriptDTO.getScriptName());
         try {
             scriptInterpreter.runScript(scriptDTO.getScript(), e -> {
                 throw new TestException(e);
             });
             System.out.println(" [OK] ");
-        } catch(TestException e) {
+        } catch (TestException e) {
             e.printStackTrace();
             System.out.println(" [KO] ");
         }

@@ -53,7 +53,6 @@ class CommandHistory {
         return Item.EMPTY;
     }
 
-
     static final class Item {
         static final Item EMPTY = new Item("", 0);
 

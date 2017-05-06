@@ -37,19 +37,17 @@ public class TeeRepository extends MergeableRepository {
      * @param leftRepository
      * @param rightRepository
      */
-    public TeeRepository(Repository leftRepository,
-            Repository rightRepository) {
+    public TeeRepository(Repository leftRepository, Repository rightRepository) {
         this.leftRepository = leftRepository;
         this.rightRepository = rightRepository;
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-    	final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.asList(leftRepository, rightRepository).stream()
-    			.collect(
-						Collectors.toMap(source -> source, Repository::fetchInstallableApplications));
-    	
-    	return mergeRepositories(categoriesMap, Arrays.asList(leftRepository, rightRepository));
+        final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.asList(leftRepository, rightRepository).stream()
+                .collect(Collectors.toMap(source -> source, Repository::fetchInstallableApplications));
+
+        return mergeRepositories(categoriesMap, Arrays.asList(leftRepository, rightRepository));
     }
 
     @Override

@@ -18,7 +18,6 @@
 
 package org.phoenicis.multithreading;
 
-
 import javax.annotation.PreDestroy;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +38,7 @@ public class ControlledThreadPoolExecutorServiceCloser implements AutoCloseable 
     public void close() throws InterruptedException {
         for (ControlledThreadPoolExecutorService executorService : executorServices) {
             executorService.sendShutdownSignal();
-            if(!closeImmediately) {
+            if (!closeImmediately) {
                 executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
             }
             executorService.shutdownNow();

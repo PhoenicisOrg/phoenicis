@@ -60,7 +60,8 @@ class TestSetupUi implements SetupUi {
     }
 
     @Override
-    public void showMenuStep(Message<MenuItem> doneCallback, String textToShow, List<String> menuItems, String defaultValue) {
+    public void showMenuStep(Message<MenuItem> doneCallback, String textToShow, List<String> menuItems,
+            String defaultValue) {
         doneCallback.send(null);
     }
 
@@ -100,7 +101,8 @@ class TestSetupUi implements SetupUi {
     }
 
     @Override
-    public void showBrowseStep(Message<String> doneCallback, String textToShow, File browseDirectory, List<String> extensions) {
+    public void showBrowseStep(Message<String> doneCallback, String textToShow, File browseDirectory,
+            List<String> extensions) {
         doneCallback.send(null);
     }
 

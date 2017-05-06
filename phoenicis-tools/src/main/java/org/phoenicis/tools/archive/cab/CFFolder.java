@@ -37,7 +37,6 @@ public class CFFolder extends AbstractCabStructure {
         super(offset);
     }
 
-
     @Override
     public void populate(InputStream inputStream) {
         try {
@@ -62,16 +61,16 @@ public class CFFolder extends AbstractCabStructure {
 
     public CompressionType getCompressType() {
         Long compressType = decodeLittleEndian(typeCompress) & 0x000F;
-        if(compressType == 0) {
+        if (compressType == 0) {
             return CompressionType.NONE;
         }
-        if(compressType == 1) {
+        if (compressType == 1) {
             return CompressionType.MSZIP;
         }
-        if(compressType == 2) {
+        if (compressType == 2) {
             return CompressionType.QUANTUM;
         }
-        if(compressType == 3) {
+        if (compressType == 3) {
             return CompressionType.LZX;
         }
         throw new CabException("Unsupported compression type");
@@ -88,17 +87,9 @@ public class CFFolder extends AbstractCabStructure {
         }
 
         return String.format(
-                "Offset: %s\n" +
-                "Size: %s\n" +
-                "Offset of the first data: %s\n" +
-                "Number of data structures: %s\n" +
-                "typeCompress: %s\n",
-                offset,
-                getStructureSize(),
-                getOffsetStartData(),
-                getNumberOfDataStructures(),
-                compressType
-        );
+                "Offset: %s\n" + "Size: %s\n" + "Offset of the first data: %s\n" + "Number of data structures: %s\n"
+                        + "typeCompress: %s\n",
+                offset, getStructureSize(), getOffsetStartData(), getNumberOfDataStructures(), compressType);
     }
 
 }

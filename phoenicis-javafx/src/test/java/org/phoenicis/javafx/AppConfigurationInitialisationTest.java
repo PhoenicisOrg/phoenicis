@@ -15,10 +15,10 @@ import java.util.concurrent.TimeoutException;
  */
 public class AppConfigurationInitialisationTest {
 
-	@Test
-	public void testAppConfigurationInitialisation() throws TimeoutException {
-		FxToolkit.registerPrimaryStage();
-		FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
-	}
+    @Test
+    public void testAppConfigurationInitialisation() throws TimeoutException {
+        FxToolkit.registerPrimaryStage();
+        FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
+    }
 
 }

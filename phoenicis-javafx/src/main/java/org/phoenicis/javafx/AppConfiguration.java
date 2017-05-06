@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx;
 
-
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
@@ -37,23 +36,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({
-        PhoenicisGlobalConfiguration.class,
-        ControllerConfiguration.class,
-        ScriptsConfiguration.class,
-        ThemeConfiguration.class,
-        ViewsConfiguration.class,
-        AppsConfiguration.class,
-        EnginesConfiguration.class,
-        LibraryConfiguration.class,
-        SettingsConfiguration.class,
-        JavaFxUiConfiguration.class,
-        MultithreadingConfiguration.class,
-        Win32Configuration.class,
-        ToolsConfiguration.class,
-        ContainersConfiguration.class
-})
+@Import({ PhoenicisGlobalConfiguration.class, ControllerConfiguration.class, ScriptsConfiguration.class,
+        ThemeConfiguration.class, ViewsConfiguration.class, AppsConfiguration.class, EnginesConfiguration.class,
+        LibraryConfiguration.class, SettingsConfiguration.class, JavaFxUiConfiguration.class,
+        MultithreadingConfiguration.class, Win32Configuration.class, ToolsConfiguration.class,
+        ContainersConfiguration.class })
 class AppConfiguration {
-
 
 }

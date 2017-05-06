@@ -57,11 +57,8 @@ public class Zip {
      * @return A list of extracted files
      * @throws ArchiveException if the process fails
      */
-    private List<File> uncompress(final InputStream inputStream,
-                                  CountingInputStream countingInputStream,
-                                  final File outputDir,
-                                  long finalSize,
-                                  Consumer<ProgressEntity> stateCallback) {
+    private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
+            final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
         final List<File> uncompressedFiles = new LinkedList<>();
         try (ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("zip",
                 inputStream)) {

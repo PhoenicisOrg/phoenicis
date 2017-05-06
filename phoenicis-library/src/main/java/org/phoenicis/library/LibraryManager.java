@@ -41,19 +41,19 @@ public class LibraryManager {
     public List<ShortcutDTO> fetchShortcuts() {
         final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
-        if(!shortcutDirectoryFile.exists()) {
+        if (!shortcutDirectoryFile.exists()) {
             shortcutDirectoryFile.mkdirs();
             return Collections.emptyList();
         }
 
         final File[] directoryContent = shortcutDirectoryFile.listFiles();
-        if(directoryContent == null) {
+        if (directoryContent == null) {
             return Collections.emptyList();
         }
 
         final List<ShortcutDTO> shortcuts = new ArrayList<>();
         for (File file : directoryContent) {
-            if("shortcut".equals(FilenameUtils.getExtension(file.getName()))) {
+            if ("shortcut".equals(FilenameUtils.getExtension(file.getName()))) {
                 shortcuts.add(fetchShortcutDTO(shortcutDirectoryFile, file));
             }
         }
@@ -65,14 +65,13 @@ public class LibraryManager {
 
     public ShortcutDTO fetchShortcutsFromName(String name) {
         for (ShortcutDTO shortcutDTO : fetchShortcuts()) {
-            if(name.equals(shortcutDTO.getName())) {
+            if (name.equals(shortcutDTO.getName())) {
                 return shortcutDTO;
             }
         }
 
         return null;
     }
-
 
     public void setOnUpdate(Runnable onUpdate) {
         this.onUpdate = onUpdate;
@@ -85,20 +84,18 @@ public class LibraryManager {
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
 
         try {
-            final byte[] icon = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(iconFile) : getClass().getResourceAsStream("phoenicis.png"));
-            final byte[] miniature = IOUtils.toByteArray(miniatureFile.exists() ? new FileInputStream(miniatureFile) : getClass().getResourceAsStream("defaultMiniature.png"));
-            final String description = descriptionFile.exists() ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
-            return new ShortcutDTO.Builder()
-                    .withName(baseName)
-                    .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8"))
-                    .withIcon(icon)
-                    .withMiniature(miniature)
-                    .withDescription(description)
-                    .build();
+            final byte[] icon = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(iconFile)
+                    : getClass().getResourceAsStream("phoenicis.png"));
+            final byte[] miniature = IOUtils.toByteArray(miniatureFile.exists() ? new FileInputStream(miniatureFile)
+                    : getClass().getResourceAsStream("defaultMiniature.png"));
+            final String description = descriptionFile.exists()
+                    ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
+            return new ShortcutDTO.Builder().withName(baseName)
+                    .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8")).withIcon(icon)
+                    .withMiniature(miniature).withDescription(description).build();
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
-
 
     }
 

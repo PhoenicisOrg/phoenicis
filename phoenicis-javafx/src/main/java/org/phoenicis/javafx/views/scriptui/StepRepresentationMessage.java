@@ -46,14 +46,12 @@ public class StepRepresentationMessage extends AbstractStepRepresentationWithHea
 
         this.addToContentPane(scrollPane);
 
-	    VBox.setVgrow(scrollPane, Priority.ALWAYS);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
     }
 
     @Override
     protected void setStepEvents() {
-        this.setNextButtonAction(event ->
-            getMessageAwaitingForResponse().send(null)
-        );
+        this.setNextButtonAction(event -> getMessageAwaitingForResponse().send(null));
     }
 
 }

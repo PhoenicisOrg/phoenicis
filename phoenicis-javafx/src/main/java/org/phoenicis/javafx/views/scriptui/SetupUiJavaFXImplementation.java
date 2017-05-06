@@ -43,10 +43,12 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
 
     private URL topImage;
     private String leftImageText;
-    private Runnable onShouldClose = () -> {};
+    private Runnable onShouldClose = () -> {
+    };
     private final OperatingSystemFetcher operatingSystemFetcher;
 
-    public SetupUiJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager) {
+    public SetupUiJavaFXImplementation(String title, OperatingSystemFetcher operatingSystemFetcher,
+            ThemeManager themeManager) {
         super();
         this.themeManager = themeManager;
         this.operatingSystemFetcher = operatingSystemFetcher;
@@ -74,7 +76,7 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
 
     private void loadImages() {
         this.topImage = this.getClass().getResource("defaultTopImage.png");
-        switch ( operatingSystemFetcher.fetchCurrentOperationSystem() ) {
+        switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
             case MACOSX:
                 this.leftImageText = "playonmac";
                 break;
@@ -111,8 +113,10 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
     }
 
     @Override
-    public void showMenuStep(Message<MenuItem> message, String textToShow, List<String> menuItems, String defaultValue) {
-        StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems, defaultValue);
+    public void showMenuStep(Message<MenuItem> message, String textToShow, List<String> menuItems,
+            String defaultValue) {
+        StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems,
+                defaultValue);
         stepMenu.installStep();
     }
 
@@ -132,29 +136,30 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
 
     @Override
     public void showHtmlPresentationStep(Message<Void> message, String htmlToShow) {
-        StepRepresentationHtmlPresentation stepRepresentationHtmlPresentation =
-                new StepRepresentationHtmlPresentation(this, message, htmlToShow);
+        StepRepresentationHtmlPresentation stepRepresentationHtmlPresentation = new StepRepresentationHtmlPresentation(
+                this, message, htmlToShow);
         stepRepresentationHtmlPresentation.installStep();
     }
 
     @Override
     public void showPresentationStep(Message<Void> message, String textToShow) {
-        StepRepresentationPresentation stepRepresentationPresentation =
-                new StepRepresentationPresentation(this, message, textToShow);
+        StepRepresentationPresentation stepRepresentationPresentation = new StepRepresentationPresentation(this,
+                message, textToShow);
         stepRepresentationPresentation.installStep();
     }
 
     @Override
     public void showLicenceStep(Message<Void> message, String textToShow, String licenceText) {
-        StepRepresentationLicence stepRepresentationLicence =
-                new StepRepresentationLicence(this, message, textToShow, licenceText);
+        StepRepresentationLicence stepRepresentationLicence = new StepRepresentationLicence(this, message, textToShow,
+                licenceText);
         stepRepresentationLicence.installStep();
     }
 
     @Override
-    public void showBrowseStep(Message<String> message, String textToShow, File browseDirectory, List<String> extensions) {
-        StepRepresentationBrowse stepRepresentationBrowse =
-                new StepRepresentationBrowse(this, message, textToShow, browseDirectory, extensions);
+    public void showBrowseStep(Message<String> message, String textToShow, File browseDirectory,
+            List<String> extensions) {
+        StepRepresentationBrowse stepRepresentationBrowse = new StepRepresentationBrowse(this, message, textToShow,
+                browseDirectory, extensions);
         stepRepresentationBrowse.installStep();
     }
 

@@ -38,8 +38,8 @@ public class ShortcutManager {
     private final ScriptInterpreter scriptInterpreter;
     private final String desktopShortcutDirectory;
 
-    ShortcutManager(String shortcutDirectory, String desktopShortcutDirectory,
-                    LibraryManager libraryManager, ScriptInterpreter scriptInterpreter) {
+    ShortcutManager(String shortcutDirectory, String desktopShortcutDirectory, LibraryManager libraryManager,
+            ScriptInterpreter scriptInterpreter) {
         this.shortcutDirectory = shortcutDirectory;
         this.desktopShortcutDirectory = desktopShortcutDirectory;
         this.libraryManager = libraryManager;
@@ -55,7 +55,7 @@ public class ShortcutManager {
         final File miniatureFile = new File(shortcutDirectoryFile, baseName + ".miniature");
         final File descriptionFile = new File(shortcutDirectoryFile, baseName + ".description");
 
-        if(!shortcutDirectoryFile.exists()) {
+        if (!shortcutDirectoryFile.exists()) {
             shortcutDirectoryFile.mkdirs();
         }
 
@@ -70,7 +70,7 @@ public class ShortcutManager {
             if (shortcutDTO.getMiniature() != null) {
                 FileUtils.writeByteArrayToFile(miniatureFile, shortcutDTO.getMiniature());
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             LOGGER.warn("Error while creating shortcut", e);
         } finally {
             libraryManager.refresh();
@@ -80,14 +80,11 @@ public class ShortcutManager {
             final File desktopShortcutDirectoryFile = new File(this.desktopShortcutDirectory);
             final File desktopShortcutFile = new File(desktopShortcutDirectoryFile, baseName + ".desktop");
             try {
-                final String content =
-                        "[Desktop Entry]\n" +
-                        "Name=" + shortcutDTO.getName() + "\n" +
-                        "Type=Application\n" +
-                        "Icon=" + miniatureFile.getAbsolutePath() + "\n" +
-                        "Exec=phoenicis-cli -run \"" + shortcutDTO.getName() + "\"";
+                final String content = "[Desktop Entry]\n" + "Name=" + shortcutDTO.getName() + "\n"
+                        + "Type=Application\n" + "Icon=" + miniatureFile.getAbsolutePath() + "\n"
+                        + "Exec=phoenicis-cli -run \"" + shortcutDTO.getName() + "\"";
                 FileUtils.writeStringToFile(desktopShortcutFile, content, ENCODING);
-            } catch(IOException e) {
+            } catch (IOException e) {
                 LOGGER.warn("Error while creating .desktop", e);
             }
         }
@@ -97,16 +94,11 @@ public class ShortcutManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
-                ignored -> interactiveScriptSession.eval(
-                        "new ShortcutReader()",
-                        output -> {
-                            final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                            shortcutReader.callMember("of", shortcutDTO);
-                            shortcutReader.callMember("uninstall");
-                        },
-                        errorCallback),
-                errorCallback
-        );
+                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                    shortcutReader.callMember("of", shortcutDTO);
+                    shortcutReader.callMember("uninstall");
+                }, errorCallback), errorCallback);
     }
 
     public void deleteShortcut(ShortcutDTO shortcutDTO) {
@@ -118,20 +110,19 @@ public class ShortcutManager {
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
 
-
-        if(scriptFile.exists()) {
+        if (scriptFile.exists()) {
             scriptFile.delete();
         }
 
-        if(iconFile.exists()) {
+        if (iconFile.exists()) {
             iconFile.delete();
         }
 
-        if(miniatureFile.delete()) {
+        if (miniatureFile.delete()) {
             miniatureFile.delete();
         }
 
-        if(descriptionFile.exists()) {
+        if (descriptionFile.exists()) {
             descriptionFile.delete();
         }
 

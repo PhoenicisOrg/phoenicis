@@ -50,8 +50,10 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
     private ObservableList<EngineSubCategoryDTO> engineSubCategories;
     private MappedList<EngineSubCategoryTab, EngineSubCategoryDTO> mappedSubCategoryTabs;
 
-    private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {};
-    private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {};
+    private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {
+    };
+    private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {
+    };
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
@@ -62,22 +64,21 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
 
         this.engineCategories = FXCollections.observableArrayList();
         this.engineSubCategories = FXCollections.observableArrayList();
-        this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories,
-                engineSubCategory -> {
-                    EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath);
+        this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories, engineSubCategory -> {
+            EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath);
 
-                    result.setOnSelectEngine(this::showEngineDetails);
+            result.setOnSelectEngine(this::showEngineDetails);
 
-                    return result;
-                });
+            return result;
+        });
 
         this.sideBar.setOnCategorySelection(this::selectCategory);
-        this.sideBar.setOnApplyInstalledFilter(newValue ->
-                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForInstalled(newValue)));
-        this.sideBar.setOnApplyUninstalledFilter(newValue ->
-                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForNotInstalled(newValue)));
-        this.sideBar.setOnSearchTermClear(() ->
-                availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm("")));
+        this.sideBar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()
+                .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForInstalled(newValue)));
+        this.sideBar.setOnApplyUninstalledFilter(newValue -> availableEngines.getTabs()
+                .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForNotInstalled(newValue)));
+        this.sideBar.setOnSearchTermClear(() -> availableEngines.getTabs()
+                .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForSearchTerm("")));
         this.sideBar.setOnApplySearchTerm(this::processFilterText);
 
         this.sideBar.bindEngineCategories(engineCategories);
@@ -153,7 +154,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         this.pause.setOnFinished(event -> {
             String text = filterText.toLowerCase();
 
-            availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab)tab).setFilterForSearchTerm(text));
+            availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForSearchTerm(text));
         });
 
         this.pause.playFromStart();

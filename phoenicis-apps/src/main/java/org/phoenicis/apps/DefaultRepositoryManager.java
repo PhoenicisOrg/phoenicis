@@ -37,7 +37,9 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
     private List<CallbackPair> callbacks;
 
-    public DefaultRepositoryManager(ExecutorService executorService, boolean enforceUncompatibleOperatingSystems, ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities, LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
+    public DefaultRepositoryManager(ExecutorService executorService, boolean enforceUncompatibleOperatingSystems,
+            ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities,
+            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
         super();
 
         this.localRepositoryFactory = localRepositoryFactory;
@@ -48,7 +50,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.callbacks = new ArrayList<CallbackPair>();
 
         this.multipleRepository = new MultipleRepository();
-        this.filterRepository = new FilterRepository(multipleRepository, toolsConfiguration.operatingSystemFetcher(), enforceUncompatibleOperatingSystems);
+        this.filterRepository = new FilterRepository(multipleRepository, toolsConfiguration.operatingSystemFetcher(),
+                enforceUncompatibleOperatingSystems);
         this.cachedRepository = new CachedRepository(filterRepository);
         this.backgroundRepository = new BackgroundRepository(cachedRepository, executorService);
     }
@@ -76,7 +79,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addRepositories(int index, String ... repositoryUrls) {
+    public void addRepositories(int index, String... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
             Repository repository = toRepository(repositoryUrls[repositoryUrlIndex]);
@@ -87,15 +90,16 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addRepositories(String ... repositoryUrls) {
+    public void addRepositories(String... repositoryUrls) {
         this.addRepositories(this.multipleRepository.size(), repositoryUrls);
     }
 
     @Override
-    public void removeRepositories(String ... repositoryUrls) {
+    public void removeRepositories(String... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 
-        List<Repository> toDeleteRepositories = Arrays.stream(repositoryUrls).map(this::toRepository).collect(Collectors.toList());
+        List<Repository> toDeleteRepositories = Arrays.stream(repositoryUrls).map(this::toRepository)
+                .collect(Collectors.toList());
         toDeleteRepositories.forEach(this.multipleRepository::removeRepository);
 
         this.triggerRepositoryChange();
@@ -109,7 +113,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
         if (!this.callbacks.isEmpty()) {
             this.backgroundRepository.fetchInstallableApplications(
-                    categories -> this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(categories)),
+                    categories -> this.callbacks
+                            .forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(categories)),
                     exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
     }
@@ -122,7 +127,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
             switch (scheme) {
                 case "git":
-                    return new GitRepository(repositoryUrl.replace("git+",""), cacheDirectoryPath,
+                    return new GitRepository(repositoryUrl.replace("git+", ""), cacheDirectoryPath,
                             localRepositoryFactory, fileUtilities);
                 case "file":
                     return localRepositoryFactory.createInstance(url.getRawPath());

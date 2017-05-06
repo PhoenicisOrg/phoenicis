@@ -28,10 +28,10 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class ClasspathRepositoryTest {
     private final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-    private final Repository repository = new ClasspathRepository("/org/phoenicis/apps/repositoryTest", resourceResolver, new ObjectMapper());
+    private final Repository repository = new ClasspathRepository("/org/phoenicis/apps/repositoryTest",
+            resourceResolver, new ObjectMapper());
 
     @Test
     public void fetchInstallableApplications_numberOfCategories() {
@@ -51,7 +51,8 @@ public class ClasspathRepositoryTest {
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre() {
-        assertEquals("Photofiltre", repository.fetchInstallableApplications().get(1).getApplications().get(0).getName());
+        assertEquals("Photofiltre",
+                repository.fetchInstallableApplications().get(1).getApplications().get(0).getName());
     }
 
     @Test
@@ -61,28 +62,27 @@ public class ClasspathRepositoryTest {
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scriptName() {
-        assertEquals("Online", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScriptName());
+        assertEquals("Online", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts()
+                .get(0).getScriptName());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_scriptContent() {
-        assertEquals("include([\"Functions\", \"QuickScript\", \"OnlineInstallerScript\"]);\n" +
-                "\n" +
-                "new OnlineInstallerScript()\n" +
-                "    .name(\"Photofiltre\")\n" +
-                "    .editor(\"Antonio Da Cruz\")\n" +
-                "    .applicationHomepage(\"http://photofiltre.free.fr\")\n" +
-                "    .author(\"Quentin PÂRIS\")\n" +
-                "    .url(\"http://photofiltre.free.fr/utils/pf-setup-fr-652.exe\")\n" +
-                "    .checksum(\"dc965875d698cd3f528423846f837d0dcf39616d\")\n" +
-                "    .category(\"Graphics\")\n" +
-                "    .executable(\"PhotoFiltre.exe\")\n" +
-                "    .go();", repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0).getScript().trim());
+        assertEquals("include([\"Functions\", \"QuickScript\", \"OnlineInstallerScript\"]);\n" + "\n"
+                + "new OnlineInstallerScript()\n" + "    .name(\"Photofiltre\")\n"
+                + "    .editor(\"Antonio Da Cruz\")\n" + "    .applicationHomepage(\"http://photofiltre.free.fr\")\n"
+                + "    .author(\"Quentin PÂRIS\")\n"
+                + "    .url(\"http://photofiltre.free.fr/utils/pf-setup-fr-652.exe\")\n"
+                + "    .checksum(\"dc965875d698cd3f528423846f837d0dcf39616d\")\n" + "    .category(\"Graphics\")\n"
+                + "    .executable(\"PhotoFiltre.exe\")\n" + "    .go();",
+                repository.fetchInstallableApplications().get(1).getApplications().get(0).getScripts().get(0)
+                        .getScript().trim());
     }
 
     @Test
     public void fetchInstallableApplications_Graphics_Photofiltre_miniatures() {
-        assertEquals(1, repository.fetchInstallableApplications().get(1).getApplications().get(0).getMiniatures().size());
+        assertEquals(1,
+                repository.fetchInstallableApplications().get(1).getApplications().get(0).getMiniatures().size());
     }
 
     @Test

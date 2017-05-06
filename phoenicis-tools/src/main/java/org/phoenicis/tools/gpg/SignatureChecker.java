@@ -89,7 +89,7 @@ public class SignatureChecker {
                 }
             }
 
-            if(pgpSignature == null) {
+            if (pgpSignature == null) {
                 return false;
             }
 
@@ -102,19 +102,19 @@ public class SignatureChecker {
         }
     }
 
-    private void initVerify(PGPSignature pgpSignature, PGPPublicKey pgpSigningKey) throws PGPException, NoSuchProviderException {
+    private void initVerify(PGPSignature pgpSignature, PGPPublicKey pgpSigningKey)
+            throws PGPException, NoSuchProviderException {
         try {
             pgpSignature.initVerify(pgpSigningKey, "BC");
-        } catch(NoSuchProviderException e) {
+        } catch (NoSuchProviderException e) {
             LOGGER.debug("No security provider found. Adding bouncy castle. This message can be ignored", e);
             Security.addProvider(new BouncyCastleProvider());
             pgpSignature.initVerify(pgpSigningKey, "BC");
         }
     }
 
-
     private PGPPublicKey readPublicKey(InputStream publicKeyInputStream) {
-        try(InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream)) {
+        try (InputStream publicKeyDecoderStream = getDecoderStream(publicKeyInputStream)) {
             final PGPPublicKeyRingCollection pgpPub = new PGPPublicKeyRingCollection(publicKeyDecoderStream);
             PGPPublicKey key = null;
 
@@ -139,12 +139,12 @@ public class SignatureChecker {
     }
 
     public static String getPublicKey() {
-        final BufferedReader reader =
-                new BufferedReader(new InputStreamReader(SignatureChecker.class.getResourceAsStream("phoenicis.gpg")));
+        final BufferedReader reader = new BufferedReader(
+                new InputStreamReader(SignatureChecker.class.getResourceAsStream("phoenicis.gpg")));
 
         final StringBuilder readPublicKey = new StringBuilder();
         try {
-            for(String line = reader.readLine(); line != null; line = reader.readLine()) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 readPublicKey.append(line).append("\n");
             }
         } catch (IOException e) {
@@ -155,10 +155,7 @@ public class SignatureChecker {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(SignatureChecker.class)
-                .append(publicKey)
-                .append(signedData)
-                .append(signature)
+        return new ToStringBuilder(SignatureChecker.class).append(publicKey).append(signedData).append(signature)
                 .toString();
     }
 }

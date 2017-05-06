@@ -81,7 +81,7 @@ public class MappedList<E, F> extends TransformationList<E, F> {
         int to = c.getTo();
 
         for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
-           nextRemove(index, mappedValues.remove(index));
+            nextRemove(index, mappedValues.remove(index));
         }
 
         for (int index = from; index < from + c.getAddedSize(); index++) {

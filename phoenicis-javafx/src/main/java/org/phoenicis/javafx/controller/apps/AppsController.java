@@ -41,13 +41,12 @@ public class AppsController {
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
-    
-    private Runnable onAppLoaded = () -> {};
 
-    public AppsController(ViewApps view,
-                          RepositoryManager repositoryManager,
-                          ScriptInterpreter scriptInterpreter,
-                          ThemeManager themeManager) {
+    private Runnable onAppLoaded = () -> {
+    };
+
+    public AppsController(ViewApps view, RepositoryManager repositoryManager, ScriptInterpreter scriptInterpreter,
+            ThemeManager themeManager) {
         this.view = view;
         this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;
@@ -63,17 +62,15 @@ public class AppsController {
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();
             this.repositoryManager.triggerRepositoryChange();
-        });	
+        });
 
-        this.view.setOnSelectScript(scriptDTO -> scriptInterpreter.runScript(
-                scriptDTO.getScript(),
-                e -> Platform.runLater(() -> {
+        this.view.setOnSelectScript(
+                scriptDTO -> scriptInterpreter.runScript(scriptDTO.getScript(), e -> Platform.runLater(() -> {
                     // no exception if installation is cancelled
                     if (!(e.getCause() instanceof InterruptedException)) {
                         new ErrorMessage("The script ended unexpectedly", e);
                     }
-                })
-        ));
+                })));
 
         onAppLoaded.run();
     }
@@ -100,7 +97,8 @@ public class AppsController {
                 cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
                 String categoryIcon = category.getIcon();
                 if (StringUtils.isEmpty(categoryIcon)) {
-                    cssBuilder.append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
+                    cssBuilder
+                            .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
                 } else {
                     cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
                 }

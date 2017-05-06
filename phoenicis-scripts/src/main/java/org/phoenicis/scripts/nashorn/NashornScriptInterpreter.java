@@ -40,5 +40,4 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
         return new NashornInteractiveSession(nashornEngineFactory);
     }
 
-
 }

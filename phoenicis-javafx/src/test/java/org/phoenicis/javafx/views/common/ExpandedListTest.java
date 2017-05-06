@@ -21,7 +21,8 @@ import static org.junit.Assert.assertEquals;
 public class ExpandedListTest {
     @Test
     public void testListCreation() {
-        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList());
+        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"),
+                Arrays.asList("21", "22"), Arrays.asList());
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 
@@ -40,7 +41,8 @@ public class ExpandedListTest {
 
     @Test
     public void testListAdd() {
-        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList());
+        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"),
+                Arrays.asList("21", "22"), Arrays.asList());
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 
@@ -75,7 +77,8 @@ public class ExpandedListTest {
 
     @Test
     public void testListRemove1() {
-        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList());
+        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"),
+                Arrays.asList("21", "22"), Arrays.asList());
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 
@@ -104,7 +107,8 @@ public class ExpandedListTest {
 
     @Test
     public void testListRemove2() {
-        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList());
+        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"),
+                Arrays.asList("21", "22"), Arrays.asList());
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 
@@ -131,7 +135,8 @@ public class ExpandedListTest {
 
     @Test
     public void testListRemove3() {
-        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList());
+        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"),
+                Arrays.asList("21", "22"), Arrays.asList());
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 
@@ -162,7 +167,8 @@ public class ExpandedListTest {
 
     @Test
     public void testListUpdate1() {
-        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList());
+        ObservableList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"),
+                Arrays.asList("21", "22"), Arrays.asList());
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 
@@ -199,7 +205,8 @@ public class ExpandedListTest {
 
     @Test
     public void testListUpdate2() {
-        FilteredList<List<String>> observableList = FXCollections.observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList("31"))
+        FilteredList<List<String>> observableList = FXCollections
+                .observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList("31"))
                 .filtered(value -> true);
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
@@ -245,7 +252,9 @@ public class ExpandedListTest {
 
     @Test
     public void testListPermutation() {
-        SortedList<List<String>> observableList = FXCollections.<List<String>>observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList()).sorted(Comparator.comparing(List::size));
+        SortedList<List<String>> observableList = FXCollections
+                .<List<String>> observableArrayList(Arrays.asList("11"), Arrays.asList("21", "22"), Arrays.asList())
+                .sorted(Comparator.comparing(List::size));
         ExpandedList<String, List<String>> expandedList = new ExpandedList<>(observableList, Function.identity());
         List<String> actual = new ArrayList<>();
 

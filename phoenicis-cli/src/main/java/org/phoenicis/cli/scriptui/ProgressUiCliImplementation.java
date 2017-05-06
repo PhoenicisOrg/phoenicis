@@ -60,6 +60,7 @@ class ProgressUiCliImplementation implements ProgressUi {
             }
         });
     }
+
     @Override
     public void close() {
         // Do nothing

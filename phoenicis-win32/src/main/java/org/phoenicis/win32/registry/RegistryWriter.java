@@ -23,7 +23,7 @@ public class RegistryWriter {
         final StringBuilder generatedRegFileBuilder = new StringBuilder();
         generatedRegFileBuilder.append(node.toRegString()).append("\n");
 
-        if(node instanceof RegistryKey) {
+        if (node instanceof RegistryKey) {
             for (AbstractRegistryNode child : ((RegistryKey) node).getChildren()) {
                 generatedRegFileBuilder.append(buildRegTreeString(child));
             }

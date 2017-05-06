@@ -33,9 +33,8 @@ public class EngineSubCategoryDTO {
     private final List<EngineVersionDTO> packages;
 
     @JsonCreator
-    public EngineSubCategoryDTO(@JsonProperty("name") String name,
-                                @JsonProperty("description") String description,
-                                @JsonProperty("packages") List<EngineVersionDTO> packages) {
+    public EngineSubCategoryDTO(@JsonProperty("name") String name, @JsonProperty("description") String description,
+            @JsonProperty("packages") List<EngineVersionDTO> packages) {
         this.name = name;
         this.description = description;
         this.packages = packages;
@@ -55,15 +54,11 @@ public class EngineSubCategoryDTO {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(EngineSubCategoryDTO.class)
-                .append("name", name)
-                .append("description", description)
+        return new ToStringBuilder(EngineSubCategoryDTO.class).append("name", name).append("description", description)
                 .append("packages", packages).toString();
     }
 
     public static Comparator<EngineVersionDTO> comparator() {
-        return (o1, o2) -> new VersionComparator().compare(
-                new Version(o1.getVersion()), new Version(o2.getVersion())
-        );
+        return (o1, o2) -> new VersionComparator().compare(new Version(o1.getVersion()), new Version(o2.getVersion()));
     }
 }

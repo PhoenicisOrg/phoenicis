@@ -23,10 +23,8 @@ import org.phoenicis.win32.registry.*;
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public enum RenderTargetModeLock implements RegistryParameter {
-    DEFAULT(translate("Default"), ""),
-    DISABLED(translate("Disabled"), "disabled"),
-    READDRAW("readdraw", "readdraw"),
-    READTEX("readtext", "readtext");
+    DEFAULT(translate("Default"), ""), DISABLED(translate("Disabled"), "disabled"), READDRAW("readdraw",
+            "readdraw"), READTEX("readtext", "readtext");
 
     private final String translatedName;
     private final String registryValue;
@@ -43,9 +41,8 @@ public enum RenderTargetModeLock implements RegistryParameter {
 
     @Override
     public AbstractRegistryNode toRegistryPatch() {
-        final RegistryKey registryNode
-                = new RegistryKey("HKEY_CURRENT_USER")
-                .addDeepChildren("Software", "Wine", "Direct3D");
+        final RegistryKey registryNode = new RegistryKey("HKEY_CURRENT_USER").addDeepChildren("Software", "Wine",
+                "Direct3D");
 
         switch (this) {
             case DEFAULT:

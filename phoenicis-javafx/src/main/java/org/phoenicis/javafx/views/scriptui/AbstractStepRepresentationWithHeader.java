@@ -29,8 +29,7 @@ import javafx.scene.paint.Color;
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
     private Pane contentPane;
 
-    AbstractStepRepresentationWithHeader(SetupUiJavaFXImplementation parent,
-                                         Message<?> messageWaitingForResponse) {
+    AbstractStepRepresentationWithHeader(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);
 
         this.contentPane = new VBox();
@@ -46,6 +45,7 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
         this.contentPane.getChildren().add(contentToAdd);
         getParent().getRoot().setCenter(this.contentPane);
     }
+
     /**
      * Draw the header at the top of the window
      */

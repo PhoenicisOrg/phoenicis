@@ -39,25 +39,16 @@ public class MockedRepository extends TeeRepository {
     private static class MockRepository implements Repository {
         @Override
         public List<CategoryDTO> fetchInstallableApplications() {
-            return Collections.singletonList(
-                    new CategoryDTO.Builder()
-                            .withApplications(
-                                    Arrays.asList(
-                                            new ApplicationDTO.Builder()
-                                                    .withName("Engines")
-                                                    .withScripts(Arrays.asList(
-                                                            new ScriptDTO.Builder()
-                                                                    .withScriptName("Wine")
-                                                                    .withCompatibleOperatingSystems(Arrays.asList(OperatingSystem.LINUX, OperatingSystem.MACOSX))
-                                                                    .withScript(wineScript())
-                                                                    .build()
-                                                    ))
-                                                    .build()
-                                    )
-                            )
-                            .withName("Functions")
-                            .build()
-            );
+            return Collections
+                    .singletonList(
+                            new CategoryDTO.Builder()
+                                    .withApplications(Arrays.asList(new ApplicationDTO.Builder().withName("Engines")
+                                            .withScripts(Arrays.asList(new ScriptDTO.Builder().withScriptName("Wine")
+                                                    .withCompatibleOperatingSystems(Arrays.asList(OperatingSystem.LINUX,
+                                                            OperatingSystem.MACOSX))
+                                                    .withScript(wineScript()).build()))
+                                            .build()))
+                                    .withName("Functions").build());
         }
 
         private String wineScript() {

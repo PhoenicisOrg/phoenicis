@@ -38,9 +38,8 @@ public class FilterRepository implements Repository {
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final boolean enforceIncompatibleOperatingSystems;
 
-    public FilterRepository(Repository repository,
-                            OperatingSystemFetcher operatingSystemFetcher,
-                            boolean enforceIncompatibleOperatingSystems) {
+    public FilterRepository(Repository repository, OperatingSystemFetcher operatingSystemFetcher,
+            boolean enforceIncompatibleOperatingSystems) {
         this.repository = repository;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.enforceIncompatibleOperatingSystems = enforceIncompatibleOperatingSystems;
@@ -51,32 +50,23 @@ public class FilterRepository implements Repository {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
         final List<CategoryDTO> categories = repository.fetchInstallableApplications();
 
-        return categories.stream()
-                .map(category -> {
-                    final List<ApplicationDTO> applications = new ArrayList<>();
-                    for (ApplicationDTO application : category.getApplications()) {
-                        List<ScriptDTO> scripts = application.getScripts();
-                        if (!enforceIncompatibleOperatingSystems) {
-                            scripts = application.getScripts().stream()
-                                    .filter(script ->
-                                            script.getCompatibleOperatingSystems() == null ||
-                                                    script.getCompatibleOperatingSystems().contains(currentOperatingSystem))
-                                    .collect(Collectors.toList());
-                        }
-                        if (!scripts.isEmpty()) {
-                            applications.add(
-                                    new ApplicationDTO.Builder(application)
-                                            .withScripts(scripts)
-                                            .build()
-                            );
-                        }
-                    }
+        return categories.stream().map(category -> {
+            final List<ApplicationDTO> applications = new ArrayList<>();
+            for (ApplicationDTO application : category.getApplications()) {
+                List<ScriptDTO> scripts = application.getScripts();
+                if (!enforceIncompatibleOperatingSystems) {
+                    scripts = application.getScripts().stream()
+                            .filter(script -> script.getCompatibleOperatingSystems() == null
+                                    || script.getCompatibleOperatingSystems().contains(currentOperatingSystem))
+                            .collect(Collectors.toList());
+                }
+                if (!scripts.isEmpty()) {
+                    applications.add(new ApplicationDTO.Builder(application).withScripts(scripts).build());
+                }
+            }
 
-                    return new CategoryDTO.Builder(category)
-                            .withApplications(applications)
-                            .build();
-                })
-                .filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
+            return new CategoryDTO.Builder(category).withApplications(applications).build();
+        }).filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
     }
 
     @Override

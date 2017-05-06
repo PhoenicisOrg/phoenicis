@@ -30,24 +30,12 @@ public class VideoMemorySize implements RegistryParameter {
     }
 
     public static VideoMemorySize[] possibleValues() {
-        return new VideoMemorySize[]{
-                new VideoMemorySize(true, 0),
-                new VideoMemorySize(false, 32),
-                new VideoMemorySize(false, 64),
-                new VideoMemorySize(false, 128),
-                new VideoMemorySize(false, 256),
-                new VideoMemorySize(false, 384),
-                new VideoMemorySize(false, 512),
-                new VideoMemorySize(false, 768),
-                new VideoMemorySize(false, 1024),
-                new VideoMemorySize(false, 2048),
-                new VideoMemorySize(false, 3072),
-                new VideoMemorySize(false, 4096),
-                new VideoMemorySize(false, 5120),
-                new VideoMemorySize(false, 6144),
-                new VideoMemorySize(false, 7168),
-                new VideoMemorySize(false, 8192)
-        };
+        return new VideoMemorySize[] { new VideoMemorySize(true, 0), new VideoMemorySize(false, 32),
+                new VideoMemorySize(false, 64), new VideoMemorySize(false, 128), new VideoMemorySize(false, 256),
+                new VideoMemorySize(false, 384), new VideoMemorySize(false, 512), new VideoMemorySize(false, 768),
+                new VideoMemorySize(false, 1024), new VideoMemorySize(false, 2048), new VideoMemorySize(false, 3072),
+                new VideoMemorySize(false, 4096), new VideoMemorySize(false, 5120), new VideoMemorySize(false, 6144),
+                new VideoMemorySize(false, 7168), new VideoMemorySize(false, 8192) };
     }
 
     public int getVideoSize() {
@@ -69,14 +57,14 @@ public class VideoMemorySize implements RegistryParameter {
 
     @Override
     public AbstractRegistryNode toRegistryPatch() {
-        final RegistryKey registryNode
-                = new RegistryKey("HKEY_CURRENT_USER")
-                .addDeepChildren("Software", "Wine", "Direct3D");
+        final RegistryKey registryNode = new RegistryKey("HKEY_CURRENT_USER").addDeepChildren("Software", "Wine",
+                "Direct3D");
 
         if (isDefault) {
             registryNode.addChild(new RegistryValue<>("VideoMemorySize", new RemoveValueType()));
         } else {
-            registryNode.addChild(new RegistryValue<>("VideoMemorySize", new StringValueType(Integer.toString(videoSize))));
+            registryNode
+                    .addChild(new RegistryValue<>("VideoMemorySize", new StringValueType(Integer.toString(videoSize))));
         }
 
         return registryNode;

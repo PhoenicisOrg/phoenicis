@@ -85,7 +85,8 @@ public class UserInterfacePanel extends VBox {
         this.showScriptSource.setSelected(settingsManager.isViewScriptSource());
         this.showScriptSource.setOnAction(event -> this.save());
 
-        this.showScriptDescription = new Label(translate("Select, if you want to view the source repository of the scripts"));
+        this.showScriptDescription = new Label(
+                translate("Select, if you want to view the source repository of the scripts"));
 
         // Scale UI
         this.scale = new Slider(8, 16, settingsManager.getScale());
@@ -113,8 +114,8 @@ public class UserInterfacePanel extends VBox {
         final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
         final URL style = this.getClass().getResource(url);
 
-        getScene().getStylesheets()
-                .setAll(themeManager.getDefaultCategoryIconsCss(), themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
+        getScene().getStylesheets().setAll(themeManager.getDefaultCategoryIconsCss(),
+                themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
     }
 
     private void save() {

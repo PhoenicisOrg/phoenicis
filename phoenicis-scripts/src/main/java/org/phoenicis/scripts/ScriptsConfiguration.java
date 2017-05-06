@@ -49,7 +49,8 @@ public class ScriptsConfiguration {
 
     @Bean
     public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(wizardConfiguration.setupWizardFactory(), wizardConfiguration.progressWizardFactory(), scriptFetcher());
+        return new NashornEngineFactory(wizardConfiguration.setupWizardFactory(),
+                wizardConfiguration.progressWizardFactory(), scriptFetcher());
     }
 
     @Bean
@@ -59,7 +60,8 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptInterpreter scriptInterpreter() {
-        return new BackgroundScriptInterpreter(nashornInterprpeter(), multithreadingConfiguration.scriptExecutorService());
+        return new BackgroundScriptInterpreter(nashornInterprpeter(),
+                multithreadingConfiguration.scriptExecutorService());
     }
 
     @Bean

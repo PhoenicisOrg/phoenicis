@@ -35,7 +35,8 @@ public class ChecksumCalculatorTest {
             fileOutputStream.write("TEST".getBytes());
         }
 
-        assertEquals("033bd94b1168d7e4f0d644c3c95e35bf", new ChecksumCalculator().calculate(temporaryFile, "MD5", e -> {}));
+        assertEquals("033bd94b1168d7e4f0d644c3c95e35bf", new ChecksumCalculator().calculate(temporaryFile, "MD5", e -> {
+        }));
     }
 
     @Test
@@ -47,6 +48,7 @@ public class ChecksumCalculatorTest {
         }
 
         assertEquals("984816fd329622876e14907634264e6f332e9fb3",
-                new ChecksumCalculator().calculate(temporaryFile, "SHA1", e -> {}));
+                new ChecksumCalculator().calculate(temporaryFile, "SHA1", e -> {
+                }));
     }
 }

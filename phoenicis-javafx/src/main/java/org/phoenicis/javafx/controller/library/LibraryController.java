@@ -43,12 +43,9 @@ public class LibraryController {
 
     private String keywords = "";
 
-    public LibraryController(ViewLibrary viewLibrary,
-                             ConsoleController consoleController,
-                             LibraryManager libraryManager,
-                             ShortcutRunner shortcutRunner,
-                             ShortcutManager shortcutManager,
-                             ScriptInterpreter scriptInterpreter) {
+    public LibraryController(ViewLibrary viewLibrary, ConsoleController consoleController,
+            LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
+            ScriptInterpreter scriptInterpreter) {
         this.consoleController = consoleController;
 
         this.viewLibrary = viewLibrary;
@@ -67,11 +64,14 @@ public class LibraryController {
 
         this.viewLibrary.setOnShortcutRun(this::runShortcut);
         this.viewLibrary.setOnShortcutDoubleClicked(this::runShortcut);
-        this.viewLibrary.setOnShortcutStop(shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage("Error", e)));
+        this.viewLibrary
+                .setOnShortcutStop(shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage("Error", e)));
 
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
-            new ConfirmMessage("Uninstall " + shortcutDTO.getName(), "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
-                    .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO, e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e)));
+            new ConfirmMessage("Uninstall " + shortcutDTO.getName(),
+                    "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
+                            .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO,
+                                    e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e)));
         });
 
         this.viewLibrary.setOnOpenConsole(() -> {
@@ -79,7 +79,8 @@ public class LibraryController {
         });
 
         this.viewLibrary.setOnScriptRun(file -> {
-            scriptInterpreter.runScript(file, e -> Platform.runLater(() -> new ErrorMessage("Error while running script", e)));
+            scriptInterpreter.runScript(file,
+                    e -> Platform.runLater(() -> new ErrorMessage("Error while running script", e)));
         });
     }
 
@@ -93,15 +94,9 @@ public class LibraryController {
 
     private void updateLibrary() {
         final List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
-        final List<ShortcutDTO> shortcutsCorrespondingToKeywords =
-                shortcuts.stream()
-                        .filter(shortcutDTO ->
-                                shortcutDTO
-                                        .getName()
-                                        .toLowerCase()
-                                        .contains(keywords.toLowerCase().trim())
-                        ).collect(Collectors.toList());
-
+        final List<ShortcutDTO> shortcutsCorrespondingToKeywords = shortcuts.stream()
+                .filter(shortcutDTO -> shortcutDTO.getName().toLowerCase().contains(keywords.toLowerCase().trim()))
+                .collect(Collectors.toList());
 
         Platform.runLater(() -> this.viewLibrary.populate(shortcutsCorrespondingToKeywords));
     }

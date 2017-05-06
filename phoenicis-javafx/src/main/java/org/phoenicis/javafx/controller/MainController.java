@@ -40,36 +40,23 @@ public class MainController {
 
     private String applicationName;
 
-    public MainController(String applicationName,
-                          LibraryController libraryController,
-                          AppsController appsController,
-                          EnginesController enginesController,
-                          ContainersController containersController,
-                          SettingsController settingsController,
-                          ThemeManager themeManager,
-                          SettingsManager settingsManager,
-                          PhoenicisLogo phoenicisLogo) {
+    public MainController(String applicationName, LibraryController libraryController, AppsController appsController,
+            EnginesController enginesController, ContainersController containersController,
+            SettingsController settingsController, ThemeManager themeManager, SettingsManager settingsManager,
+            PhoenicisLogo phoenicisLogo) {
         super();
 
         this.applicationName = applicationName;
 
-        this.mainWindow = new MainWindow(
-                applicationName,
-                libraryController.getView(),
-                appsController.getView(),
-                enginesController.getView(),
-                containersController.getView(),
-                settingsController.getView(),
-                themeManager,
-                settingsManager,
-                phoenicisLogo
-        );
+        this.mainWindow = new MainWindow(applicationName, libraryController.getView(), appsController.getView(),
+                enginesController.getView(), containersController.getView(), settingsController.getView(), themeManager,
+                settingsManager, phoenicisLogo);
 
         libraryController.setOnTabOpened(mainWindow::showLibrary);
 
         appsController.setOnAppLoaded(() -> {
-                enginesController.loadEngines();
-                containersController.loadContainers();
+            enginesController.loadEngines();
+            containersController.loadContainers();
         });
 
         appsController.loadApps();

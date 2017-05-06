@@ -19,9 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.console;
 
 public enum ConsoleTextType {
-    NORMAL("normal"),
-    DEFAULT("default"),
-    ERROR("error");
+    NORMAL("normal"), DEFAULT("default"), ERROR("error");
 
     private final String cssName;
 

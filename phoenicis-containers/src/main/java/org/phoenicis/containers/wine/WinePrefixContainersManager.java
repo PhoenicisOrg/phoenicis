@@ -42,8 +42,8 @@ public class WinePrefixContainersManager implements ContainersManager {
     private final WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration;
 
     public WinePrefixContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
-                                       WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
-                                       WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration) {
+            WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
+            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
         this.winePrefixContainerDisplayConfiguration = winePrefixContainerDisplayConfiguration;
         this.winePrefixContainerInputConfiguration = winePrefixContainerInputConfiguration;
@@ -56,32 +56,37 @@ public class WinePrefixContainersManager implements ContainersManager {
 
         final File[] winePrefixes = winePrefixesFile.listFiles();
 
-        if(winePrefixes == null) {
+        if (winePrefixes == null) {
             callback.accept(Collections.emptyList());
         } else {
             final List<ContainerDTO> containers = new ArrayList<>();
             for (File winePrefix : winePrefixes) {
-                final ConfigFile configFile = compatibleConfigFileFormatFactory.open(new File(winePrefix, "phoenicis.cfg"));
+                final ConfigFile configFile = compatibleConfigFileFormatFactory
+                        .open(new File(winePrefix, "phoenicis.cfg"));
                 final File userRegistryFile = new File(winePrefix, "user.reg");
 
-                containers.add(
-                        new WinePrefixContainerDTO.Builder()
-                            .withName(winePrefix.getName())
-                            .withPath(winePrefix.getAbsolutePath())
-                            .withArchitecture(configFile.readValue("wineArchitecture", ""))
-                            .withDistribution(configFile.readValue("wineDistribution", ""))
-                            .withVersion(configFile.readValue("wineVersion", ""))
-                            .withGlslValue(winePrefixContainerDisplayConfiguration.getGLSL(userRegistryFile))
-                            .withDirectDrawRenderer(winePrefixContainerDisplayConfiguration.getDirectDrawRenderer(userRegistryFile))
-                            .withVideoMemorySize(winePrefixContainerDisplayConfiguration.getVideoMemorySize(userRegistryFile))
-                            .withOffscreenRenderingMode(winePrefixContainerDisplayConfiguration.getOffscreenRenderingMode(userRegistryFile))
-                            .withMultisampling(winePrefixContainerDisplayConfiguration.getMultisampling(userRegistryFile))
-                            .withAlwaysOffscreen(winePrefixContainerDisplayConfiguration.getAlwaysOffscreen(userRegistryFile))
-                            .withStrictDrawOrdering(winePrefixContainerDisplayConfiguration.getStrictDrawOrdering(userRegistryFile))
-                            .withRenderTargetModeLock(winePrefixContainerDisplayConfiguration.getRenderTargetModeLock(userRegistryFile))
-                            .withMouseWarpOverride(winePrefixContainerInputConfiguration.getMouseWarpOverride(userRegistryFile))
-                            .build()
-                );
+                containers.add(new WinePrefixContainerDTO.Builder().withName(winePrefix.getName())
+                        .withPath(winePrefix.getAbsolutePath())
+                        .withArchitecture(configFile.readValue("wineArchitecture", ""))
+                        .withDistribution(configFile.readValue("wineDistribution", ""))
+                        .withVersion(configFile.readValue("wineVersion", ""))
+                        .withGlslValue(winePrefixContainerDisplayConfiguration.getGLSL(userRegistryFile))
+                        .withDirectDrawRenderer(
+                                winePrefixContainerDisplayConfiguration.getDirectDrawRenderer(userRegistryFile))
+                        .withVideoMemorySize(
+                                winePrefixContainerDisplayConfiguration.getVideoMemorySize(userRegistryFile))
+                        .withOffscreenRenderingMode(
+                                winePrefixContainerDisplayConfiguration.getOffscreenRenderingMode(userRegistryFile))
+                        .withMultisampling(winePrefixContainerDisplayConfiguration.getMultisampling(userRegistryFile))
+                        .withAlwaysOffscreen(
+                                winePrefixContainerDisplayConfiguration.getAlwaysOffscreen(userRegistryFile))
+                        .withStrictDrawOrdering(
+                                winePrefixContainerDisplayConfiguration.getStrictDrawOrdering(userRegistryFile))
+                        .withRenderTargetModeLock(
+                                winePrefixContainerDisplayConfiguration.getRenderTargetModeLock(userRegistryFile))
+                        .withMouseWarpOverride(
+                                winePrefixContainerInputConfiguration.getMouseWarpOverride(userRegistryFile))
+                        .build());
             }
 
             containers.sort(ContainerDTO.nameComparator());

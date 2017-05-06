@@ -31,11 +31,7 @@ public class PhoenicisCLI {
 
     private void run(String[] args) {
         try {
-            final CLIController arguments = CommandLineParser.parse(
-                    CLIController.class,
-                    args,
-                    OptionStyle.SIMPLE
-            );
+            final CLIController arguments = CommandLineParser.parse(CLIController.class, args, OptionStyle.SIMPLE);
 
             arguments.close();
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | InterruptedException e) {

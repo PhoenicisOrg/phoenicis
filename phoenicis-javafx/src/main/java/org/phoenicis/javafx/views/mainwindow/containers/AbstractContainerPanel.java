@@ -46,5 +46,4 @@ abstract class AbstractContainerPanel<T> extends VBox {
         return tabPane.getTabs();
     }
 
-
 }

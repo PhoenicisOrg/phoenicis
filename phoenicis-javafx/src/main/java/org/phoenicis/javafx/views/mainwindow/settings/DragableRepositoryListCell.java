@@ -20,97 +20,97 @@ import javafx.scene.layout.GridPane;
  */
 public class DragableRepositoryListCell extends ListCell<String> implements ChangeListener<Number> {
 
-	private final BiConsumer<String, Number> onDragDone;
-	
-	public DragableRepositoryListCell(BiConsumer<String, Number> onDragDone) {
-		super();
+    private final BiConsumer<String, Number> onDragDone;
 
-		this.onDragDone = onDragDone;
-		this.indexProperty().addListener(this);
-	}
+    public DragableRepositoryListCell(BiConsumer<String, Number> onDragDone) {
+        super();
 
-	@Override
-	protected void updateItem(String item, boolean empty) {
-		super.updateItem(item, empty);
+        this.onDragDone = onDragDone;
+        this.indexProperty().addListener(this);
+    }
 
-		ObservableList<String> repositories = getListView().getItems();
+    @Override
+    protected void updateItem(String item, boolean empty) {
+        super.updateItem(item, empty);
 
-		GridPane itemPane = new GridPane();
+        ObservableList<String> repositories = getListView().getItems();
 
-		Label indexLabel = new Label(String.valueOf(repositories.size() - repositories.indexOf(item)));
-		indexLabel.setPrefWidth(50);
+        GridPane itemPane = new GridPane();
 
-		Label repositoryLocationLabel = new Label(item);
+        Label indexLabel = new Label(String.valueOf(repositories.size() - repositories.indexOf(item)));
+        indexLabel.setPrefWidth(50);
 
-		itemPane.add(indexLabel, 0, 0);
-		itemPane.add(repositoryLocationLabel, 1, 0);
+        Label repositoryLocationLabel = new Label(item);
 
-		if (!empty) {
-			setGraphic(itemPane);
-		} else {
-			setGraphic(null);
-		}
-	}
+        itemPane.add(indexLabel, 0, 0);
+        itemPane.add(repositoryLocationLabel, 1, 0);
 
-	@Override
-	public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-		setOnDragDetected(event -> {
-			if (getItem() == null) {
-				return;
-			}
+        if (!empty) {
+            setGraphic(itemPane);
+        } else {
+            setGraphic(null);
+        }
+    }
 
-			Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
-			ClipboardContent content = new ClipboardContent();
-			content.putString(getItem());
-			dragboard.setContent(content);
+    @Override
+    public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+        setOnDragDetected(event -> {
+            if (getItem() == null) {
+                return;
+            }
 
-			event.consume();
-		});
+            Dragboard dragboard = startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(getItem());
+            dragboard.setContent(content);
 
-		setOnDragOver(event -> {
-			event.acceptTransferModes(TransferMode.MOVE);
+            event.consume();
+        });
 
-			event.consume();
-		});
+        setOnDragOver(event -> {
+            event.acceptTransferModes(TransferMode.MOVE);
 
-		setOnDragEntered(event -> {
-			setOpacity(0.3);
-		});
+            event.consume();
+        });
 
-		setOnDragExited(event -> {
-			setOpacity(1);
-		});
+        setOnDragEntered(event -> {
+            setOpacity(0.3);
+        });
 
-		setOnDragDropped(event -> {
-			if (getItem() == null) {
-				return;
-			}
+        setOnDragExited(event -> {
+            setOpacity(1);
+        });
 
-			Dragboard db = event.getDragboard();
-			boolean success = false;
+        setOnDragDropped(event -> {
+            if (getItem() == null) {
+                return;
+            }
 
-			if (db.hasString()) {
-				ObservableList<String> items = getListView().getItems();
-				int draggedIdx = items.indexOf(db.getString());
-				int thisIdx = items.indexOf(getItem());
+            Dragboard db = event.getDragboard();
+            boolean success = false;
 
-				items.set(draggedIdx, getItem());
-				items.set(thisIdx, db.getString());
+            if (db.hasString()) {
+                ObservableList<String> items = getListView().getItems();
+                int draggedIdx = items.indexOf(db.getString());
+                int thisIdx = items.indexOf(getItem());
 
-				List<String> itemscopy = new ArrayList<>(getListView().getItems());
-				getListView().getItems().setAll(itemscopy);
+                items.set(draggedIdx, getItem());
+                items.set(thisIdx, db.getString());
 
-				success = true;
-			}
-			event.setDropCompleted(success);
+                List<String> itemscopy = new ArrayList<>(getListView().getItems());
+                getListView().getItems().setAll(itemscopy);
 
-			event.consume();
-		});
+                success = true;
+            }
+            event.setDropCompleted(success);
 
-		setOnDragDone(event -> {
-			onDragDone.accept(getItem(), newValue);
-			
-			event.consume();
-		});
-	}
+            event.consume();
+        });
+
+        setOnDragDone(event -> {
+            onDragDone.accept(getItem(), newValue);
+
+            event.consume();
+        });
+    }
 }

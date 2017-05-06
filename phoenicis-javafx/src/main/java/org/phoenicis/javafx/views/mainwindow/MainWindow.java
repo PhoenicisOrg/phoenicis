@@ -68,9 +68,8 @@ public class MainWindow extends Stage {
 
         scene = new PhoenicisScene(tabPane, themeManager, settingsManager);
 
-        this.getIcons().add(
-                new Image(JavaFXApplication.class
-                        .getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
+        this.getIcons().add(new Image(
+                JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
         this.setResizable(true);
         this.setScene(scene);

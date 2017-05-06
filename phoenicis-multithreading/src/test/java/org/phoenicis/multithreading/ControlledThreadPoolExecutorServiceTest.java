@@ -28,10 +28,11 @@ import static org.junit.Assert.assertEquals;
 public class ControlledThreadPoolExecutorServiceTest {
     @Test
     public void testSubmitTask_taskAreExecuted() throws InterruptedException {
-        final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService("test", 4, 2);
+        final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService(
+                "test", 4, 2);
         final AtomicInteger atomicInteger = new AtomicInteger(0);
 
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             controlledThreadPoolExecutor.submit(() -> atomicInteger.accumulateAndGet(1, (left, right) -> left + right));
         }
         controlledThreadPoolExecutor.shutdown();
@@ -44,14 +45,16 @@ public class ControlledThreadPoolExecutorServiceTest {
 
     @Test
     public void testGetName() {
-        final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService("test", 4, 2);
+        final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService(
+                "test", 4, 2);
 
         assertEquals("test", controlledThreadPoolExecutor.getName());
     }
 
     @Test
     public void testInitialState() {
-        final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService("test", 10, 20);
+        final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService(
+                "test", 10, 20);
 
         assertEquals(20, controlledThreadPoolExecutor.getQueueSize());
         assertEquals(0, controlledThreadPoolExecutor.getNumberOfProcessedTasks());

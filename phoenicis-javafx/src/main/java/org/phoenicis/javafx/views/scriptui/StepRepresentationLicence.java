@@ -28,8 +28,8 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
     private final String licenceText;
     private boolean isAgree;
 
-    public StepRepresentationLicence(SetupUiJavaFXImplementation parent, Message messageWaitingForResponse, String textToShow,
-                                     String licenceText) {
+    public StepRepresentationLicence(SetupUiJavaFXImplementation parent, Message messageWaitingForResponse,
+            String textToShow, String licenceText) {
         super(parent, messageWaitingForResponse, textToShow);
 
         this.licenceText = licenceText;

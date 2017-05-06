@@ -65,7 +65,8 @@ public class EngineSideBar extends LeftSideBar {
         this.populateEngineCategories();
         this.populateInstallationFilters();
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(), this.installationFilterGroup);
+        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(),
+                this.installationFilterGroup);
     }
 
     /**
@@ -81,7 +82,8 @@ public class EngineSideBar extends LeftSideBar {
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(filterText -> onApplySearchTerm.accept(filterText), () -> onSearchTermClear.run());
+        this.searchBar = new SearchBox(filterText -> onApplySearchTerm.accept(filterText),
+                () -> onSearchTermClear.run());
     }
 
     /**

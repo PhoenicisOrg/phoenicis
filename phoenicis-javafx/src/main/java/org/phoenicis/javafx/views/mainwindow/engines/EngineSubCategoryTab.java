@@ -48,7 +48,8 @@ public class EngineSubCategoryTab extends Tab {
      * @param engineSubCategory The engine sub category to be shown in this tab
      * @param enginesPath   The path to the engines
      */
-    public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory, String enginesPath) {
+    public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory,
+            String enginesPath) {
         super(engineSubCategory.getDescription());
 
         this.engineCategory = engineCategory;
@@ -71,8 +72,10 @@ public class EngineSubCategoryTab extends Tab {
      */
     private void populate() {
         this.engineVersionsView = MiniatureListWidget.create(
-                engineVersionDTO -> MiniatureListWidget.Element.create(engineVersionDTO,
-                        Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(), engineVersionDTO.getVersion()))),
+                engineVersionDTO -> MiniatureListWidget.Element
+                        .create(engineVersionDTO,
+                                Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(),
+                                        engineSubCategory.getName(), engineVersionDTO.getVersion()))),
                 (engineItem, event) -> {
                     EngineVersionDTO engineVersionDTO = engineItem.getValue();
 
@@ -80,12 +83,9 @@ public class EngineSubCategoryTab extends Tab {
                     userData.put("Mono", engineVersionDTO.getMonoFile());
                     userData.put("Gecko", engineVersionDTO.getGeckoFile());
 
-                    EngineDTO engineDTO = new EngineDTO.Builder()
-                            .withCategory(engineCategory.getName())
-                            .withSubCategory(engineSubCategory.getName())
-                            .withVersion(engineVersionDTO.getVersion())
-                            .withUserData(userData)
-                            .build();
+                    EngineDTO engineDTO = new EngineDTO.Builder().withCategory(engineCategory.getName())
+                            .withSubCategory(engineSubCategory.getName()).withVersion(engineVersionDTO.getVersion())
+                            .withUserData(userData).build();
 
                     onSelectEngine.accept(engineDTO);
                 });

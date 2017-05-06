@@ -79,9 +79,13 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.content.setCenter(nodeToShow);
     }
 
-    public void showDetailsView(Node nodeToShow) { this.content.setRight(nodeToShow); }
+    public void showDetailsView(Node nodeToShow) {
+        this.content.setRight(nodeToShow);
+    }
 
-    public void closeDetailsView() { this.content.setRight(null); }
+    public void closeDetailsView() {
+        this.content.setRight(null);
+    }
 
     public void showWait() {
         closeDetailsView();
@@ -97,5 +101,7 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         return failurePanel;
     }
 
-    public ThemeManager getThemeManager() { return themeManager; }
+    public ThemeManager getThemeManager() {
+        return themeManager;
+    }
 }

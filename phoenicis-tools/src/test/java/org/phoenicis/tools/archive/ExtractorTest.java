@@ -34,7 +34,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-
 public class ExtractorTest {
     final URL inputUrl = ExtractorTest.class.getResource(".");
     private Tar tar = new Tar(new FileUtilities());
@@ -69,7 +68,8 @@ public class ExtractorTest {
 
         temporaryDirectory.deleteOnExit();
 
-        final List<File> extractedFiles = extractor.uncompress(inputFile, temporaryDirectory, e -> {});
+        final List<File> extractedFiles = extractor.uncompress(inputFile, temporaryDirectory, e -> {
+        });
 
         final File file1 = new File(temporaryDirectory, "file1.txt");
         final File file2 = new File(temporaryDirectory, "file1_link.txt");
@@ -89,7 +89,8 @@ public class ExtractorTest {
 
         temporaryDirectory.deleteOnExit();
 
-        final List<File> extractedFiles = extractor.uncompress(inputFile, temporaryDirectory, e -> {});
+        final List<File> extractedFiles = extractor.uncompress(inputFile, temporaryDirectory, e -> {
+        });
 
         assertTrue(new File(temporaryDirectory, "directory1").isDirectory());
         final File file1 = new File(temporaryDirectory, "file1.txt");
@@ -104,7 +105,8 @@ public class ExtractorTest {
         assertEquals("file2content", new String(FileUtils.readFileToByteArray(file2)));
         assertEquals("file0content", new String(FileUtils.readFileToByteArray(file0)));
 
-        System.out.println(extractedFiles);;
+        System.out.println(extractedFiles);
+        ;
         assertEquals(4, extractedFiles.size());
     }
 

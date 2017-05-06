@@ -50,9 +50,9 @@ public class ScriptDTO {
     public String getScriptName() {
         return scriptName;
     }
-    
+
     public String getScriptSource() {
-    	return scriptSource;
+        return scriptSource;
     }
 
     public List<OperatingSystem> getCompatibleOperatingSystems() {
@@ -94,11 +94,9 @@ public class ScriptDTO {
         }
 
         public Builder(ScriptDTO scriptDTO) {
-            this.withScriptName(scriptDTO.getScriptName())
-                    .withScript(scriptDTO.getScript())
+            this.withScriptName(scriptDTO.getScriptName()).withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
-                    .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems())
-                    .withFree(scriptDTO.isFree())
+                    .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems()).withFree(scriptDTO.isFree())
                     .withRequiresNoCD(scriptDTO.requiresNoCD);
         }
 
@@ -113,10 +111,10 @@ public class ScriptDTO {
         }
 
         public Builder withScriptSource(String scriptSource) {
-        	this.scriptSource = scriptSource;
-        	return this;
+            this.scriptSource = scriptSource;
+            return this;
         }
-        
+
         public Builder withCompatibleOperatingSystems(List<OperatingSystem> compatibleOperatingSystems) {
             this.compatibleOperatingSystems = compatibleOperatingSystems;
             return this;

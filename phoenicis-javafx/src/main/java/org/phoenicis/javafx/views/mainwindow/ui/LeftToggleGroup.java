@@ -62,7 +62,8 @@ public class LeftToggleGroup<E> extends LeftGroup {
      * @param allButtonSupplier A supplier function used to create the optional "all" ToggleButton. If no such button is needed null can be used
      * @param converter         A converter function used to convert the source objects to ToggleButtons
      */
-    private LeftToggleGroup(String name, Supplier<ToggleButton> allButtonSupplier, Function<E, ? extends ToggleButton> converter) {
+    private LeftToggleGroup(String name, Supplier<ToggleButton> allButtonSupplier,
+            Function<E, ? extends ToggleButton> converter) {
         super(name);
 
         this.toggleGroup = new ToggleGroup();
@@ -119,7 +120,8 @@ public class LeftToggleGroup<E> extends LeftGroup {
      * @param <T>               The type of the source objects in the new LeftToggleGroup
      * @return The newly created LeftToggleGroup with the given arguments
      */
-    public static <T> LeftToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier, Function<T, ? extends ToggleButton> converter) {
+    public static <T> LeftToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier,
+            Function<T, ? extends ToggleButton> converter) {
         return new LeftToggleGroup<T>(name, allButtonSupplier, converter);
     }
 
