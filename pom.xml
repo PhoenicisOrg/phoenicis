@@ -29,7 +29,6 @@
 		<connection>scm:git:https://github.com/PlayOnLinux/POL-POM-5.git</connection>
 	</scm>
 	<modules>
-		<module>build-tools</module>
 		<module>phoenicis-javafx</module>
 		<module>phoenicis-win32</module>
 		<module>phoenicis-dist</module>
@@ -156,7 +155,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<configFile>eclipse/POL_Formatter_Settings.xml</configFile>
+					<configFile>../settings/POL_Formatter_Settings.xml</configFile>
 				</configuration>
 				<dependencies>
 					<dependency>
