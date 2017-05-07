@@ -69,6 +69,8 @@ public class RepositoriesPanel extends VBox {
         this.initializeRefreshCallback();
 
         this.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
+
+        VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
     }
 
     private void initializeRefreshCallback() {
@@ -86,8 +88,6 @@ public class RepositoriesPanel extends VBox {
 
         this.repositoryGrid = new GridPane();
         this.repositoryGrid.getStyleClass().add("grid");
-        this.repositoryGrid.setHgap(20);
-        this.repositoryGrid.setVgap(10);
 
         this.repositoryText = new TextWithStyle(translate("Repository:"), "captionTitle");
 
@@ -140,6 +140,8 @@ public class RepositoriesPanel extends VBox {
         this.repositoryButtonLayout.getChildren().addAll(addButton, removeButton);
 
         this.repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
+
+        VBox.setVgrow(repositoryListView, Priority.ALWAYS);
 
         this.repositoryGrid.add(repositoryText, 0, 0);
         this.repositoryGrid.add(repositoryLayout, 1, 0);
