@@ -38,7 +38,7 @@ public class FileSearcher extends FilesManipulator {
 
     public List<File> search(File directory, String name) {
         assertInDirectory(directory);
-        if(!directory.exists()) {
+        if (!directory.exists()) {
             return Collections.emptyList();
         }
         final List<File> results = new ArrayList<>();
@@ -47,8 +47,7 @@ public class FileSearcher extends FilesManipulator {
         try {
             Files.walkFileTree(startPath, new SimpleFileVisitor<Path>() {
                 @Override
-                public FileVisitResult preVisitDirectory(Path dir,
-                                                         BasicFileAttributes attrs) {
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
                     return FileVisitResult.CONTINUE;
                 }
 

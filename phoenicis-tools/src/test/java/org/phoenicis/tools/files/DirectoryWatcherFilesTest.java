@@ -77,8 +77,7 @@ public class DirectoryWatcherFilesTest {
             throws InterruptedException, IOException {
         final File temporaryDirectory = Files.createTempDir();
 
-        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(
-                mockExecutorService,
+        try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
                 temporaryDirectory.toPath())) {
 
             final Consumer<List<File>> mockConsumer = mock(Consumer.class);

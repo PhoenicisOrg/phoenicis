@@ -22,7 +22,7 @@ import com.github.jankroken.commandline.annotations.AllAvailableArguments;
 import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
-import org.phoenicis.apps.Repository;
+import org.phoenicis.apps.repository.Repository;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -53,7 +53,9 @@ public class CLIController implements AutoCloseable {
         arguments.remove(0);
 
         final ShortcutRunner shortcutRunner = applicationContext.getBean(ShortcutRunner.class);
-        shortcutRunner.run(shortcutName, arguments, e -> { throw new IllegalStateException(e); });
+        shortcutRunner.run(shortcutName, arguments, e -> {
+            throw new IllegalStateException(e);
+        });
     }
 
     @Option
@@ -63,8 +65,11 @@ public class CLIController implements AutoCloseable {
     public void runScript(List<String> arguments) {
         final String scriptPath = arguments.get(0);
         final File scriptFile = new File(scriptPath);
-        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("scriptInterpreter", ScriptInterpreter.class);
-        scriptInterpreter.runScript(scriptFile, e -> { throw new IllegalStateException(e); });
+        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("scriptInterpreter",
+                ScriptInterpreter.class);
+        scriptInterpreter.runScript(scriptFile, e -> {
+            throw new IllegalStateException(e);
+        });
     }
 
     @Option
@@ -78,7 +83,9 @@ public class CLIController implements AutoCloseable {
 
         repository.getScript(Arrays.asList(categoryName, appName, scriptName), scriptDTO -> {
             scriptInterpreter.runScript(scriptDTO.getScript(), Throwable::printStackTrace);
-        }, e -> { throw new IllegalStateException(e); });
+        }, e -> {
+            throw new IllegalStateException(e);
+        });
     }
 
     @Override

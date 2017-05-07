@@ -36,9 +36,8 @@ public class UiProgressWizardImplementation implements ProgressWizard {
      * @param messageSender
      * @param progressUiFactory
      */
-    public UiProgressWizardImplementation(String title,
-                                          UiMessageSender messageSender,
-                                          ProgressUiFactory progressUiFactory) {
+    public UiProgressWizardImplementation(String title, UiMessageSender messageSender,
+            ProgressUiFactory progressUiFactory) {
         this.title = title;
         this.messageSender = messageSender;
         this.progressUiFactory = progressUiFactory;
@@ -51,7 +50,6 @@ public class UiProgressWizardImplementation implements ProgressWizard {
     public void init() {
         messageSender.run(() -> progressUi = progressUiFactory.create(title));
     }
-
 
     /**
      * Closes the progress UI

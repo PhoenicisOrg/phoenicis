@@ -76,10 +76,8 @@ public class EngineCategoryDTO {
         }
 
         public Builder(EngineCategoryDTO categoryDTO) {
-            this.withName(categoryDTO.getName())
-                    .withDescription(categoryDTO.getDescription())
-                    .withSubCategories(categoryDTO.getSubCategories())
-                    .withIcon(categoryDTO.getIcon());
+            this.withName(categoryDTO.getName()).withDescription(categoryDTO.getDescription())
+                    .withSubCategories(categoryDTO.getSubCategories()).withIcon(categoryDTO.getIcon());
         }
 
         public Builder withName(String name) {
@@ -109,9 +107,7 @@ public class EngineCategoryDTO {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append(name)
-                .toString();
+        return new ToStringBuilder(this).append(name).toString();
     }
 
 }

@@ -38,7 +38,8 @@ public class ContainerSideBar extends LeftSideBar {
     private Consumer<String> onApplyFilter;
 
     // consumer called when a container is selected
-    private Consumer<ContainerDTO> onSelectContainer = container -> {};
+    private Consumer<ContainerDTO> onSelectContainer = container -> {
+    };
 
     /**
      * Constructor
@@ -56,7 +57,8 @@ public class ContainerSideBar extends LeftSideBar {
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(filterText -> onApplyFilter.accept(filterText), () -> {});
+        this.searchBar = new SearchBox(filterText -> onApplyFilter.accept(filterText), () -> {
+        });
     }
 
     /**

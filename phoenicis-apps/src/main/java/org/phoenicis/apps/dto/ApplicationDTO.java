@@ -131,7 +131,6 @@ public class ApplicationDTO {
             return new ApplicationDTO(this);
         }
 
-
         public String getName() {
             return name;
         }

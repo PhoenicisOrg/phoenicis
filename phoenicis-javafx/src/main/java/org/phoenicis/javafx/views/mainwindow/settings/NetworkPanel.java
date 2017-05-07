@@ -4,7 +4,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * This class represents the "Network" settings category
- *
+ * 
  * @author marc
  * @since 23.04.17
  */

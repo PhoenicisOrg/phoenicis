@@ -19,11 +19,8 @@
 package org.phoenicis.javafx.views.common;
 
 public enum Theme {
-    DEFAULT("Default theme", "default"),
-    DARK("Dark theme", "dark"),
-    BREEZE_DARK("Breeze Dark theme", "breezeDark"),
-    UNITY("Unity theme", "unity"),
-    HIDPI("HiDPI theme", "hidpi");
+    DEFAULT("Default theme", "default"), DARK("Dark theme", "dark"), BREEZE_DARK("Breeze Dark theme",
+            "breezeDark"), UNITY("Unity theme", "unity");
 
     private final String name;
     private final String shortName;
@@ -43,8 +40,8 @@ public enum Theme {
     }
 
     public static Theme fromShortName(String shortName) {
-        for(Theme theme: Theme.values()) {
-            if(theme.shortName.equals(shortName)) {
+        for (Theme theme : Theme.values()) {
+            if (theme.shortName.equals(shortName)) {
                 return theme;
             }
         }

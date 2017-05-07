@@ -69,75 +69,46 @@ public class ControllerConfiguration {
 
     @Bean
     public MainController mainController() {
-        return new MainController(
-                applicationName,
-                libraryController(),
-                appsController(),
-                enginesController(),
-                containersController(),
-                settingsController(),
-                themeConfiguration.themeManager(),
+        return new MainController(applicationName, libraryController(), appsController(), enginesController(),
+                containersController(), settingsController(), themeConfiguration.themeManager(),
                 settingsConfiguration.settingsManager());
     }
 
     @Bean
     public ContainersController containersController() {
-        return new ContainersController(
-                viewsConfiguration.viewContainers(),
+        return new ContainersController(viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.winePrefixContainerPanelFactory(),
-                containersConfiguration.winePrefixContainerController(),
-                enginesConfiguration.wineVersionsFetcher()
-        );
+                containersConfiguration.winePrefixContainerController(), enginesConfiguration.wineVersionsFetcher());
     }
-
 
     @Bean
     public EnginesController enginesController() {
-        return new EnginesController(
-                viewsConfiguration.viewEngines(),
-                enginesConfiguration.wineVersionsFetcher(),
-                scriptsConfiguration.scriptInterpreter(),
-                themeConfiguration.themeManager()
-        );
+        return new EnginesController(viewsConfiguration.viewEngines(), enginesConfiguration.wineVersionsFetcher(),
+                scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
     }
 
     @Bean
     public LibraryController libraryController() {
-        return new LibraryController(
-                viewsConfiguration.viewLibrary(),
-                consoleController(),
-                libraryConfiguration.libraryManager(),
-                libraryConfiguration.shortcutRunner(),
-                libraryConfiguration.shortcutManager(),
-                scriptsConfiguration.scriptInterpreter()
-        );
+        return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(),
+                libraryConfiguration.libraryManager(), libraryConfiguration.shortcutRunner(),
+                libraryConfiguration.shortcutManager(), scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean
     public AppsController appsController() {
-        return new AppsController(
-                viewsConfiguration.viewApps(),
-                appsConfiguration.repositoryManager(),
-                scriptsConfiguration.scriptInterpreter(),
-                themeConfiguration.themeManager()
-        );
+        return new AppsController(viewsConfiguration.viewApps(), appsConfiguration.repositoryManager(),
+                scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
     }
 
     @Bean
     public ConsoleController consoleController() {
-        return new ConsoleController(
-                viewsConfiguration.consoleTabFactory(),
-                scriptsConfiguration.scriptInterpreter()
-        );
+        return new ConsoleController(viewsConfiguration.consoleTabFactory(), scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean
     public SettingsController settingsController() {
-        return new SettingsController(
-                viewsConfiguration.viewSettings(),
-                settingsConfiguration.settingsManager()
-        );
+        return new SettingsController(viewsConfiguration.viewSettings(), settingsConfiguration.settingsManager());
     }
 
 }

@@ -25,8 +25,7 @@ public class SettingsController {
     private final ViewSettings view;
     private final SettingsManager settingsManager;
 
-    public SettingsController(ViewSettings view,
-                              SettingsManager settingsManager) {
+    public SettingsController(ViewSettings view, SettingsManager settingsManager) {
         this.view = view;
         this.settingsManager = settingsManager;
     }

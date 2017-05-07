@@ -34,8 +34,8 @@ public class ImageFileHeader {
 
     public ImageFileHeader(byte[] bytes, int offset) {
         if (bytes.length != IMAGE_FILE_HEADER_SIZE + offset) {
-            throw new IllegalStateException("An ImageFileHeader should be " + IMAGE_FILE_HEADER_SIZE
-                    + " bytes long. Got " + bytes.length);
+            throw new IllegalStateException(
+                    "An ImageFileHeader should be " + IMAGE_FILE_HEADER_SIZE + " bytes long. Got " + bytes.length);
         }
 
         machine = new Word(bytes, offset);

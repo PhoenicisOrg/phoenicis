@@ -16,10 +16,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
-import org.phoenicis.apps.dto.ApplicationDTO;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.apps.dto.CategoryDTO;
 
-public interface AppsFilter {
-    boolean applies(ApplicationDTO applicationDTO);
+import java.util.Collections;
+import java.util.List;
+
+public class NullRepository implements Repository {
+    @Override
+    public List<CategoryDTO> fetchInstallableApplications() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        return builder.toHashCode();
+    }
 }

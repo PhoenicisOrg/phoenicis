@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * but it will store everything in v5 format (json)
  */
 public class CompatibleConfigFileFormat implements ConfigFile {
-    private final Logger LOGGER  = LoggerFactory.getLogger(CompatibleConfigFileFormat.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(CompatibleConfigFileFormat.class);
     private final File configFile;
     private final ObjectMapper mapper;
 

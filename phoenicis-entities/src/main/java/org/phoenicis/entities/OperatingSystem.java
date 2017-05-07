@@ -22,9 +22,7 @@ package org.phoenicis.entities;
  * Represents a supported Operating System
  */
 public enum OperatingSystem {
-    MACOSX("Mac OS X", "Mac", "darwin"),
-    LINUX("Linux", "Linux", "linux"),
-    FREEBSD("FreeBSD", "FreeBSD", "freebsd");
+    MACOSX("Mac OS X", "Mac", "darwin"), LINUX("Linux", "Linux", "linux"), FREEBSD("FreeBSD", "FreeBSD", "freebsd");
 
     private final String fullName;
     private final String legacyName;
@@ -51,7 +49,6 @@ public enum OperatingSystem {
 
         throw new IllegalArgumentException(String.format("Incompatible operation system \"%s\"", fullName));
     }
-
 
     /**
      * @return Phoenicis v4 compatible short name

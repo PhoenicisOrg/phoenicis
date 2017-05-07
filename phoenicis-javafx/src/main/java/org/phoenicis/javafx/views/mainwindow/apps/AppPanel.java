@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -45,7 +46,8 @@ final class AppPanel extends VBox {
         this.onScriptInstall = onScriptInstall;
     }
 
-    private Consumer<ScriptDTO> onScriptInstall = (script) -> {};
+    private Consumer<ScriptDTO> onScriptInstall = (script) -> {
+    };
 
     public AppPanel(ApplicationDTO applicationDTO, ThemeManager themeManager, SettingsManager settingsManager) {
         super();
@@ -58,22 +60,25 @@ final class AppPanel extends VBox {
         WebView appDescription = new WebView();
         VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
-        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css", themeManager.getCurrentTheme().getShortName()));
+        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css",
+                themeManager.getCurrentTheme().getShortName()));
         appDescription.getEngine().setUserStyleSheetLocation(style.toString());
         Label installers = new Label("Installers");
         installers.getStyleClass().add("descriptionTitle");
 
         GridPane grid = new GridPane();
-        grid.setHgap(100);
+        ColumnConstraints column1 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
+        column1.setHgrow(Priority.ALWAYS);
+        ColumnConstraints column2 = new ColumnConstraints(100);
+        grid.getColumnConstraints().addAll(column1, column2);
         int row = 0;
-        for (ScriptDTO script: applicationDTO.getScripts()) {
-        	Label scriptName;
-        	if (settingsManager.isViewScriptSource()) {
-        		scriptName = new Label(String.format("%s (Source: %s)", script.getScriptName(), script.getScriptSource()));
-        	} else {
-        		scriptName = new Label(script.getScriptName());
-        	}
-            scriptName.getStyleClass().add("descriptionText");
+        for (ScriptDTO script : applicationDTO.getScripts()) {
+            Label scriptName = new Label(script.getScriptName());
+            if (settingsManager.isViewScriptSource()) {
+                final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
+                Tooltip.install(scriptName, tooltip);
+            }
+
             Button installButton = new Button("Install");
             installButton.setOnMouseClicked(evt -> {
                 try {
@@ -83,7 +88,7 @@ final class AppPanel extends VBox {
                     new ErrorMessage("Error while trying to download the installer", e).show();
                 }
             });
-            grid.addRow(row,scriptName, installButton);
+            grid.addRow(row, scriptName, installButton);
             row++;
         }
 

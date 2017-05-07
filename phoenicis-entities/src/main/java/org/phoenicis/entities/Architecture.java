@@ -22,8 +22,7 @@ package org.phoenicis.entities;
  * Represents an architecture
  */
 public enum Architecture {
-    I386,
-    AMD64;
+    I386, AMD64;
 
     public String getNameForWinePackages() {
         switch (this) {

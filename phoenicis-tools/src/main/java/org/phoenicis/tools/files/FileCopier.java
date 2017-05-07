@@ -26,13 +26,14 @@ import java.util.function.Consumer;
 public class FileCopier {
     private static final int BLOCK_SIZE = 1024;
 
-    public void copyFile(File sourceFile, File destinationFile, Consumer<ProgressEntity> onChange) throws IOException, InterruptedException {
+    public void copyFile(File sourceFile, File destinationFile, Consumer<ProgressEntity> onChange)
+            throws IOException, InterruptedException {
         int fileSize = (int) sourceFile.length();
         float totalDataRead = 0.0F;
 
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(sourceFile));
-             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile),
-                     BLOCK_SIZE)) {
+                BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile),
+                        BLOCK_SIZE)) {
             byte[] data = new byte[BLOCK_SIZE];
             int i;
             while ((i = inputStream.read(data, 0, BLOCK_SIZE)) >= 0) {

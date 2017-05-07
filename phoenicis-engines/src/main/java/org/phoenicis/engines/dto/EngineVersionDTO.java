@@ -84,15 +84,9 @@ public class EngineVersionDTO {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(EngineVersionDTO.class)
-                .append("version", version)
-                .append("url", url)
-                .append("sha1sum", sha1sum)
-                .append("geckoUrl", geckoUrl)
-                .append("geckoMd5", geckoMd5)
-                .append("monoUrl", monoUrl)
-                .append("monoMd5", monoMd5)
-                .toString();
+        return new ToStringBuilder(EngineVersionDTO.class).append("version", version).append("url", url)
+                .append("sha1sum", sha1sum).append("geckoUrl", geckoUrl).append("geckoMd5", geckoMd5)
+                .append("monoUrl", monoUrl).append("monoMd5", monoMd5).toString();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

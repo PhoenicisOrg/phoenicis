@@ -26,10 +26,8 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final Message<String> messageWaitingForResponse;
     private TextField textField;
 
-    public StepRepresentationTextBox(SetupUiJavaFXImplementation parent,
-                                     Message<String> messageWaitingForResponse,
-                                     String textToShow,
-                                     String defaultValue) {
+    public StepRepresentationTextBox(SetupUiJavaFXImplementation parent, Message<String> messageWaitingForResponse,
+            String textToShow, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 

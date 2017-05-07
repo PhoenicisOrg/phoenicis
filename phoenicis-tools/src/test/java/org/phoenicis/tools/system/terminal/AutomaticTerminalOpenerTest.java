@@ -43,7 +43,8 @@ public class AutomaticTerminalOpenerTest {
     @Test
     public void openTerminal_testOSX() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.MACOSX);
-        final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory, mockOperatingSystemFetcher);
+        final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
+                mockOperatingSystemFetcher);
 
         final Map<String, String> map = new HashMap<>();
         automaticTerminalOpener.openTerminal("workingDirectory", map);
@@ -52,11 +53,11 @@ public class AutomaticTerminalOpenerTest {
         verifyNoMoreInteractions(mockLinuxTerminalOpener, mockMacTerminalOpener);
     }
 
-
     @Test
     public void openTerminal_testLinux() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.LINUX);
-        final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory, mockOperatingSystemFetcher);
+        final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
+                mockOperatingSystemFetcher);
 
         final Map<String, String> map = new HashMap<>();
         automaticTerminalOpener.openTerminal("workingDirectory", map);

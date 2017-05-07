@@ -16,9 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.junit.Test;
+import org.phoenicis.apps.repository.NullRepository;
 
 import static org.junit.Assert.assertEquals;
 

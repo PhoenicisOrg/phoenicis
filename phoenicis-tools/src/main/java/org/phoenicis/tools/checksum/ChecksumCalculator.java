@@ -32,18 +32,18 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
     private static final String WAIT_MESSAGE = translate("Please wait while we are verifying the file...");
 
-    public String calculate(String fileToCheck, String algorithm, Consumer<ProgressEntity> onChange) throws IOException {
+    public String calculate(String fileToCheck, String algorithm, Consumer<ProgressEntity> onChange)
+            throws IOException {
         return calculate(new File(fileToCheck), algorithm, onChange);
     }
 
     public String calculate(File fileToCheck, String algorithm, Consumer<ProgressEntity> onChange) throws IOException {
         final long fileSize = FileUtils.sizeOf(fileToCheck);
-        try(final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
+        try (final FileInputStream inputStream = new FileInputStream(fileToCheck)) {
             MessageDigest messageDigest;
             try {
                 messageDigest = MessageDigest.getInstance(algorithm);
@@ -56,8 +56,8 @@ public class ChecksumCalculator {
         }
     }
 
-    private byte[] getDigest(InputStream inputStream, MessageDigest messageDigest, long sizeInBytes, Consumer<ProgressEntity> onChange)
-            throws IOException {
+    private byte[] getDigest(InputStream inputStream, MessageDigest messageDigest, long sizeInBytes,
+            Consumer<ProgressEntity> onChange) throws IOException {
 
         messageDigest.reset();
         byte[] bytes = new byte[BLOCK_SIZE];
@@ -66,7 +66,7 @@ public class ChecksumCalculator {
         while ((numBytes = inputStream.read(bytes)) != -1) {
             messageDigest.update(bytes, 0, numBytes);
             readBytes += numBytes;
-            if(sizeInBytes != 0L) {
+            if (sizeInBytes != 0L) {
                 double percentage = (double) readBytes * 100. / (double) sizeInBytes;
                 changeState(percentage, onChange);
             }
@@ -75,12 +75,9 @@ public class ChecksumCalculator {
     }
 
     private void changeState(double percentage, Consumer<ProgressEntity> onChange) {
-        if(onChange != null){
-            onChange.accept(new ProgressEntity.Builder()
-                    .withPercent(percentage)
-                    .withProgressText(WAIT_MESSAGE)
-                    .build()
-            );
+        if (onChange != null) {
+            onChange.accept(
+                    new ProgressEntity.Builder().withPercent(percentage).withProgressText(WAIT_MESSAGE).build());
         }
     }
 }

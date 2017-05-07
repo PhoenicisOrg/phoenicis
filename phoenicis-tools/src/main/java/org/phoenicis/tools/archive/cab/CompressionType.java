@@ -19,8 +19,5 @@
 package org.phoenicis.tools.archive.cab;
 
 public enum CompressionType {
-    NONE,
-    MSZIP,
-    QUANTUM,
-    LZX
+    NONE, MSZIP, QUANTUM, LZX
 }

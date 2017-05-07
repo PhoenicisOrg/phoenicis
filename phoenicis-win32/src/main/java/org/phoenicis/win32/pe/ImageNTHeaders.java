@@ -41,10 +41,7 @@ public class ImageNTHeaders {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(ImageNTHeaders.class)
-                .append("signature", signature)
-                .append("fileHeader", fileHeader)
-                .append("optionalHeader", optionalHeader)
-                .toString();
+        return new ToStringBuilder(ImageNTHeaders.class).append("signature", signature).append("fileHeader", fileHeader)
+                .append("optionalHeader", optionalHeader).toString();
     }
 }

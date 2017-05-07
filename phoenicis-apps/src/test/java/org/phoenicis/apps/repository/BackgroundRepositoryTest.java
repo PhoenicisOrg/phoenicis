@@ -16,10 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.apps.repository.BackgroundRepository;
+import org.phoenicis.apps.repository.Repository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +44,9 @@ public class BackgroundRepositoryTest {
         }).when(mockExecutor).submit(any(Runnable.class));
 
         when(mockRepository.fetchInstallableApplications()).thenReturn(mockResults);
-        backgroundRepository.fetchInstallableApplications(categoryDTOs -> {}, e -> {});
+        backgroundRepository.fetchInstallableApplications(categoryDTOs -> {
+        }, e -> {
+        });
 
         verify(mockRepository).fetchInstallableApplications(any(), any());
     }

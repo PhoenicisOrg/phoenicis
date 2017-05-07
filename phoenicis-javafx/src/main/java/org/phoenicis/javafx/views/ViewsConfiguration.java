@@ -65,7 +65,7 @@ public class ViewsConfiguration {
 
     @Autowired
     private ToolsConfiguration toolsConfiguration;
-    
+
     @Autowired
     private SettingsConfiguration settingsConfiguration;
 
@@ -92,7 +92,9 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener(), settingsConfiguration.settingsManager(), appsConfiguration.repositoryManager());
+        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion,
+                applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener(),
+                settingsConfiguration.settingsManager(), appsConfiguration.repositoryManager());
     }
 
     @Bean

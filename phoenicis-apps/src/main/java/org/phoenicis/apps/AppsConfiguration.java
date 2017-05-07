@@ -19,6 +19,8 @@
 package org.phoenicis.apps;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.apps.repository.ClasspathRepository;
+import org.phoenicis.apps.repository.LocalRepository;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
@@ -50,8 +52,10 @@ public class AppsConfiguration {
 
     @Bean
     public RepositoryManager repositoryManager() {
-        RepositoryManager repositoryManager = new DefaultRepositoryManager(multithreadingConfiguration.appsExecutorService(), enforceUncompatibleOperatingSystems, toolsConfiguration, cacheDirectoryPath, fileUtilities,
-                new LocalRepository.Factory(objectMapper()), new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver()));
+        RepositoryManager repositoryManager = new DefaultRepositoryManager(
+                multithreadingConfiguration.appsExecutorService(), enforceUncompatibleOperatingSystems,
+                toolsConfiguration, cacheDirectoryPath, fileUtilities, new LocalRepository.Factory(objectMapper()),
+                new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver()));
 
         // set initial repositories
         repositoryManager.addRepositories(this.repositoryConfiguration.split(";"));

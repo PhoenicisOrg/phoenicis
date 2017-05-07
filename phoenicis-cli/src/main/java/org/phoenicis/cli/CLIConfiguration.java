@@ -18,7 +18,6 @@
 
 package org.phoenicis.cli;
 
-
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.apps.AppsConfiguration;
 import org.phoenicis.cli.scriptui.CliUiConfiguration;
@@ -32,17 +31,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({
-        PhoenicisGlobalConfiguration.class,
-        ScriptsConfiguration.class,
-        AppsConfiguration.class,
-        EnginesConfiguration.class,
-        LibraryConfiguration.class,
-        Win32Configuration.class,
-        ToolsConfiguration.class,
-        MultithreadingConfiguration.class,
-        CliUiConfiguration.class
-})
+@Import({ PhoenicisGlobalConfiguration.class, ScriptsConfiguration.class, AppsConfiguration.class,
+        EnginesConfiguration.class, LibraryConfiguration.class, Win32Configuration.class, ToolsConfiguration.class,
+        MultithreadingConfiguration.class, CliUiConfiguration.class })
 class CLIConfiguration {
 
 }

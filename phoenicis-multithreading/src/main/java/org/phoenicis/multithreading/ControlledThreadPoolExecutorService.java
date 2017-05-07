@@ -59,20 +59,20 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
     @Override
     public void afterExecute(Runnable runnable, Throwable throwable) {
         super.afterExecute(runnable, throwable);
-        if(throwable != null) {
+        if (throwable != null) {
             LOGGER.error(ExceptionUtils.getFullStackTrace(throwable));
         }
         semaphore.release();
         processed.addAndGet(1);
-        if(remainingTasks.decrementAndGet() == 0) {
-            if(shouldShutdown) {
+        if (remainingTasks.decrementAndGet() == 0) {
+            if (shouldShutdown) {
                 shutdown();
             }
         }
     }
 
     public void sendShutdownSignal() {
-        if(remainingTasks.get() == 0) {
+        if (remainingTasks.get() == 0) {
             shutdown();
         }
         shouldShutdown = true;

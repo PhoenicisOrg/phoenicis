@@ -16,11 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.apps.repository.CachedRepository;
+import org.phoenicis.apps.repository.Repository;
 
 import java.util.Arrays;
 
@@ -32,14 +34,9 @@ public class CachedRepositoryTest {
     @Test
     public void testFetchInstallableApplications() throws Exception {
         Repository repository = Mockito.mock(Repository.class);
-        when(repository.fetchInstallableApplications()).thenReturn(Arrays.asList(
-                new CategoryDTO.Builder()
-                        .withName("Category 1")
-                        .build(),
-                new CategoryDTO.Builder()
-                        .withName("Category 2")
-                        .build()
-        ));
+        when(repository.fetchInstallableApplications())
+                .thenReturn(Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
+                        new CategoryDTO.Builder().withName("Category 2").build()));
 
         final Repository cachedSource = new CachedRepository(repository);
         cachedSource.fetchInstallableApplications();

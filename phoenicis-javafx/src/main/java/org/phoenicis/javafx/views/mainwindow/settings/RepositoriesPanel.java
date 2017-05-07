@@ -149,7 +149,8 @@ public class RepositoriesPanel extends VBox {
     }
 
     private void populateRepositoryLegend() {
-        this.priorityHint = new Label(translate("The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
+        this.priorityHint = new Label(translate(
+                "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
         this.priorityHint.setWrapText(true);
         this.priorityHint.setPadding(new Insets(10));
     }
@@ -165,10 +166,12 @@ public class RepositoriesPanel extends VBox {
         columnConstraints.setHgrow(Priority.ALWAYS);
         this.refreshLayout.getColumnConstraints().add(columnConstraints);
 
-        this.refreshRepositoriesLabel = new Label(translate("Fetch updates for the repositories to retrieve the newest script versions"));
+        this.refreshRepositoriesLabel = new Label(
+                translate("Fetch updates for the repositories to retrieve the newest script versions"));
         this.refreshRepositoriesLabel.setWrapText(true);
 
         this.refreshRepositoriesButton = new Button("Refresh Repositories");
+        this.refreshRepositoriesButton.getStyleClass().add("buttonWithIcon");
         this.refreshRepositoriesButton.setOnAction(event -> {
             refreshRepositoriesButton.getStyleClass().add("refreshIcon");
             refreshRepositoriesButton.setDisable(true);

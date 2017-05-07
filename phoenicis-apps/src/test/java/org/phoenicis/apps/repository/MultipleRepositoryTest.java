@@ -16,10 +16,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.junit.Test;
+import org.phoenicis.apps.repository.MultipleRepository;
+import org.phoenicis.apps.repository.Repository;
 
 import java.util.Collections;
 
@@ -34,24 +36,14 @@ public class MultipleRepositoryTest {
 
     @Test
     public void testWithThreeSources_threeResults() {
-        final Repository firstSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 1")
-                        .build()
-        );
+        final Repository firstSource = () -> Collections
+                .singletonList(new CategoryDTO.Builder().withName("Category 1").build());
 
-        final Repository secondSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 2")
-                        .build()
-        );
+        final Repository secondSource = () -> Collections
+                .singletonList(new CategoryDTO.Builder().withName("Category 2").build());
 
-        final Repository thirdSource = () -> Collections.singletonList(
-                new CategoryDTO.Builder()
-                        .withName("Category 3")
-                        .build()
-        );
-
+        final Repository thirdSource = () -> Collections
+                .singletonList(new CategoryDTO.Builder().withName("Category 3").build());
 
         final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);
         assertEquals(3, multipleRepository.fetchInstallableApplications().size());

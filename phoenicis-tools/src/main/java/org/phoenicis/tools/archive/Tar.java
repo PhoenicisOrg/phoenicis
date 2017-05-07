@@ -90,8 +90,6 @@ public class Tar {
         }
     }
 
-
-
     /**
      * Gunzip a file
      * 
@@ -140,7 +138,6 @@ public class Tar {
         }
     }
 
-
     /**
      * Uncompress a tar
      *
@@ -153,7 +150,7 @@ public class Tar {
      *             if the process fails
      */
     private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
-                                  final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
+            final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
         final List<File> uncompressedFiles = new LinkedList<>();
         try (ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("tar",
                 inputStream)) {

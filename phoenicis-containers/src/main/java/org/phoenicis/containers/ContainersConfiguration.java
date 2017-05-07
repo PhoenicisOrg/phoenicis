@@ -53,39 +53,33 @@ public class ContainersConfiguration {
 
     @Bean
     public ContainersManager containersManager() {
-        return new WinePrefixContainersManager(
-                toolsConfiguration.compatibleConfigFileFormatFactory(),
-                winePrefixDisplayConfiguration(),
-                winePrefixInputConfiguration()
-        );
+        return new WinePrefixContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
+                winePrefixDisplayConfiguration(), winePrefixInputConfiguration());
     }
 
     @Bean
     public ContainersManager backgroundContainersManager() {
-        return new BackgroundContainersManager(containersManager(), multithreadingConfiguration.containersExecutorService());
+        return new BackgroundContainersManager(containersManager(),
+                multithreadingConfiguration.containersExecutorService());
     }
 
     @Bean
     public WinePrefixContainerController winePrefixContainerController() {
-        return new WinePrefixContainerController(
-                scriptsConfiguration.scriptInterpreter(),
-                toolsConfiguration.terminalOpener(),
-                enginesPath + "/wine",
-                toolsConfiguration.operatingSystemFetcher(),
-                win32Configuration.registryWriter(),
-                libraryConfiguration.libraryManager(),
-                libraryConfiguration.shortcutManager(),
-                toolsConfiguration.fileUtilities()
-        );
+        return new WinePrefixContainerController(scriptsConfiguration.scriptInterpreter(),
+                toolsConfiguration.terminalOpener(), enginesPath + "/wine", toolsConfiguration.operatingSystemFetcher(),
+                win32Configuration.registryWriter(), libraryConfiguration.libraryManager(),
+                libraryConfiguration.shortcutManager(), toolsConfiguration.fileUtilities());
     }
 
     @Bean
     WinePrefixContainerInputConfiguration winePrefixInputConfiguration() {
-        return new RegistryWinePrefixContainerInputConfiguration(win32Configuration.registryParser(), new DefaultWinePrefixContainerInputConfiguration());
+        return new RegistryWinePrefixContainerInputConfiguration(win32Configuration.registryParser(),
+                new DefaultWinePrefixContainerInputConfiguration());
     }
 
     @Bean
     WinePrefixContainerDisplayConfiguration winePrefixDisplayConfiguration() {
-        return new RegistryWinePrefixContainerDisplayConfiguration(win32Configuration.registryParser(), new DefaultWinePrefixContainerDisplayConfiguration());
+        return new RegistryWinePrefixContainerDisplayConfiguration(win32Configuration.registryParser(),
+                new DefaultWinePrefixContainerDisplayConfiguration());
     }
 }

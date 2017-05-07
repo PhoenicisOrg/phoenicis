@@ -29,18 +29,19 @@ public class RegistryWinePrefixContainerInputConfiguration implements WinePrefix
     private final RegistryParser registryParser;
     private final WinePrefixContainerInputConfiguration defaultConfiguration;
 
-    public RegistryWinePrefixContainerInputConfiguration(RegistryParser registryParser, WinePrefixContainerInputConfiguration defaultConfiguration) {
+    public RegistryWinePrefixContainerInputConfiguration(RegistryParser registryParser,
+            WinePrefixContainerInputConfiguration defaultConfiguration) {
         this.registryParser = registryParser;
         this.defaultConfiguration = defaultConfiguration;
     }
 
     @Override
     public MouseWarpOverride getMouseWarpOverride(File registryFile) {
-        if(!registryFile.exists()) {
+        if (!registryFile.exists()) {
             return defaultConfiguration.getMouseWarpOverride(registryFile);
         }
-        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, "HKEY_CURRENT_USER").getChild("Software", "Wine", "DirectInput",
-                "MouseWarpOverride");
+        final AbstractRegistryNode registryChild = registryParser.parseFile(registryFile, "HKEY_CURRENT_USER")
+                .getChild("Software", "Wine", "DirectInput", "MouseWarpOverride");
         if (registryChild instanceof RegistryValue) {
             switch (((RegistryValue<?>) registryChild).getText()) {
                 case "enable":

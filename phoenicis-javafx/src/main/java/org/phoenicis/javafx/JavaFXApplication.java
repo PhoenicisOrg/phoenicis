@@ -39,7 +39,8 @@ public class JavaFXApplication extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/phoenicis.png")));
         primaryStage.setTitle("Phoenicis");
         loadFonts();
-        ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
+        ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+                AppConfiguration.class);
 
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();
@@ -55,6 +56,5 @@ public class JavaFXApplication extends Application {
         Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
         Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Bold.ttf").toExternalForm(), 12);
     }
-
 
 }

@@ -54,8 +54,6 @@ public class Extractor {
         LOGGER.info(
                 String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
-
-
         switch (fileAnalyser.getMimetype(inputFile)) {
             case "application/x-bzip2":
                 return tar.uncompressTarBz2File(inputFile, outputDir, onChange);

@@ -65,21 +65,11 @@ public class CFFile extends AbstractCabStructure {
 
     @Override
     public String toString() {
-        return String.format(
-                "Offset: %s\n" +
-                "Size: %s\n" +
-                "Uncompressed size: %s\n" +
-                "Data offset: %s\n" +
-                "Folder: %s\n" +
-                "szName: %s\n",
+        return String.format("Offset: %s\n" + "Size: %s\n" + "Uncompressed size: %s\n" + "Data offset: %s\n"
+                + "Folder: %s\n" + "szName: %s\n",
 
-                offset,
-                getStructureSize(),
-                this.getUncompressedSize(),
-                this.getOffsetStartDataInsideFolder(),
-                this.getFolderIndex(),
-                this.getFilename()
-        );
+                offset, getStructureSize(), this.getUncompressedSize(), this.getOffsetStartDataInsideFolder(),
+                this.getFolderIndex(), this.getFilename());
     }
 
     public String getFilename() {

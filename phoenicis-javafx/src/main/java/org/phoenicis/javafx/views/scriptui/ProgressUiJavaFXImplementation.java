@@ -31,7 +31,8 @@ public class ProgressUiJavaFXImplementation extends VBox implements ProgressUi, 
     private final ProgressBar progressBar = new ProgressBar();
     private final Text progressText = new Text("");
 
-    private Runnable onShouldClose = () -> {};
+    private Runnable onShouldClose = () -> {
+    };
 
     public ProgressUiJavaFXImplementation() {
         super();
@@ -52,7 +53,6 @@ public class ProgressUiJavaFXImplementation extends VBox implements ProgressUi, 
     public void close() {
         onShouldClose.run();
     }
-
 
     public void setOnShouldClose(Runnable onShouldClose) {
         this.onShouldClose = onShouldClose;

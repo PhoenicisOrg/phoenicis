@@ -31,7 +31,6 @@ import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
     private final UiMessageSender messageSender;
@@ -51,11 +50,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * @param title title of the setupUi
      * @param userHome
      */
-    public UiSetupWizardImplementation(String title,
-                                       UiMessageSender messageSender,
-                                       SetupUiFactory setupUiFactory,
-                                       String userHome, String applicationUserRoot,
-                                       String applicationName) {
+    public UiSetupWizardImplementation(String title, UiMessageSender messageSender, SetupUiFactory setupUiFactory,
+            String userHome, String applicationUserRoot, String applicationName) {
         this.title = title;
         this.messageSender = messageSender;
         this.setupUiFactory = setupUiFactory;
@@ -103,7 +99,6 @@ public class UiSetupWizardImplementation implements SetupWizard {
         });
     }
 
-
     /**
      * Shows a simple showSimpleMessageStep
      *
@@ -133,20 +128,18 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * @param scriptorName  the scriptor name
      */
     @Override
-    public Void presentation(String programName, String programEditor, String applicationHomepage, String scriptorName) {
-        final String htmlToShow = String.format(translate(
-                "<body>"
-                        + "This wizard will help you install \"%1$s\" on your computer.<br><br>"
+    public Void presentation(String programName, String programEditor, String applicationHomepage,
+            String scriptorName) {
+        final String htmlToShow = String.format(
+                translate("<body>" + "This wizard will help you install \"%1$s\" on your computer.<br><br>"
                         + "This program was created by: %2$s<br><br>"
                         + "For more information about this program, visit:<br><a href=\"%3$s\">%3$s</a><br><br>"
                         + "This installation program is provided by: %4$s<br><br>"
                         + "<br><br>%1$s will be installed in: %5$s<br><br>"
                         + "%6$s is not responsible for anything that might happen as a result of using"
-                        + " these scripts.<br><br>Click Next to start"
-                        + "</body>")
-                , programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
-        return messageSender.runAndWait(message -> setupUi.showHtmlPresentationStep(message, htmlToShow)
-        );
+                        + " these scripts.<br><br>Click Next to start" + "</body>"),
+                programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
+        return messageSender.runAndWait(message -> setupUi.showHtmlPresentationStep(message, htmlToShow));
     }
 
     /**
@@ -168,7 +161,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
     @Override
     public Void licenceFile(String textToShow, File licenceFile) {
         try {
-            try(final FileInputStream content = new FileInputStream(licenceFile)) {
+            try (final FileInputStream content = new FileInputStream(licenceFile)) {
                 final StringWriter writer = new StringWriter();
                 IOUtils.copy(content, writer, "UTF-8");
                 return licence(textToShow, writer.toString());
@@ -270,10 +263,9 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public String browse(String textToShow, String directory, List<String> allowedExtensions) {
-        return messageSender.runAndWait(message -> setupUi.showBrowseStep(message, textToShow,
-                new File(directory), allowedExtensions));
+        return messageSender.runAndWait(
+                message -> setupUi.showBrowseStep(message, textToShow, new File(directory), allowedExtensions));
     }
-
 
     /**
      * Displays a showSimpleMessageStep to the user with a waiting symbol, and releases the script just afterward

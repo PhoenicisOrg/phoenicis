@@ -26,7 +26,7 @@ import java.io.InputStream;
 
 public final class PEReader {
     public PEFile parseExecutable(InputStream inputStream) throws IOException {
-        try(CountingInputStream executableInputStream = new CountingInputStream(inputStream)) {
+        try (CountingInputStream executableInputStream = new CountingInputStream(inputStream)) {
             final ImageDOSHeader imageDOSHeader = readDosHeader(executableInputStream);
             final byte[] realModeStubProgram = readRealModeStubProgram(executableInputStream, imageDOSHeader);
             final ImageNTHeaders imageNTHeaders = readImageNTHeaders(executableInputStream);
@@ -36,7 +36,8 @@ public final class PEReader {
         }
     }
 
-    private RsrcSection readResourceSection(CountingInputStream executableInputStream, SectionHeader[] sectionHeaders) throws IOException {
+    private RsrcSection readResourceSection(CountingInputStream executableInputStream, SectionHeader[] sectionHeaders)
+            throws IOException {
         SectionHeader rsrcSectionHeader = null;
         for (SectionHeader sectionHeader : sectionHeaders) {
             if (".rsrc\u0000\u0000\u0000".equals(new String(sectionHeader.name))) {
@@ -44,7 +45,7 @@ public final class PEReader {
             }
         }
 
-        if(rsrcSectionHeader == null) {
+        if (rsrcSectionHeader == null) {
             return null;
         }
 

@@ -97,7 +97,8 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         int to = c.getTo();
 
         if (to > from) {
-            List<? extends E> beforePermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
+            List<? extends E> beforePermutation = expandedValues.stream().flatMap(List::stream)
+                    .collect(Collectors.toList());
             List<List<? extends E>> valuesClone = new ArrayList<List<? extends E>>(expandedValues);
 
             for (int i = from; i < to; ++i) {
@@ -113,7 +114,8 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
 
             this.expandedValues = valuesClone;
 
-            List<? extends E> afterPermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
+            List<? extends E> afterPermutation = expandedValues.stream().flatMap(List::stream)
+                    .collect(Collectors.toList());
 
             int[] perm = beforePermutation.stream().mapToInt(afterPermutation::indexOf).toArray();
 

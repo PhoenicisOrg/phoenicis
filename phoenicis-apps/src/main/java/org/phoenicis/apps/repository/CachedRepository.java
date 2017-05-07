@@ -16,20 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
-import com.jcraft.jsch.HASH;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.CategoryDTO;
 
 import java.util.List;
 
-class CachedRepository implements Repository {
+public class CachedRepository implements Repository {
     private final Repository repository;
     private List<CategoryDTO> cache;
 
-    CachedRepository(Repository repository) {
+    public CachedRepository(Repository repository) {
         this.repository = repository;
     }
 

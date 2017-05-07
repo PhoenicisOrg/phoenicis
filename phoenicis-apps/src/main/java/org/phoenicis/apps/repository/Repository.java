@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.apps;
+package org.phoenicis.apps.repository;
 
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
@@ -37,7 +37,7 @@ public interface Repository {
     default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
         try {
             callback.accept(Collections.unmodifiableList(fetchInstallableApplications()));
-        } catch(Exception e) {
+        } catch (Exception e) {
             errorCallback.accept(e);
         }
     }
@@ -45,7 +45,7 @@ public interface Repository {
     default ScriptDTO getScript(List<String> path) {
         final ApplicationDTO applicationDTO = getApplication(path);
 
-        if(applicationDTO != null) {
+        if (applicationDTO != null) {
             for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
                 if (path.get(2).equals(scriptDTO.getScriptName())) {
                     return scriptDTO;
@@ -56,23 +56,24 @@ public interface Repository {
         return null;
     }
 
-    default void setFilter(CombinedAppsFilter filter) {}
-
     default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
         callback.accept(getScript(path));
     }
 
     default CategoryDTO getCategory(List<String> path) {
-        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().stream().filter(category -> path.get(0).equals(category.getName())).findFirst();
+        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().stream()
+                .filter(category -> path.get(0).equals(category.getName())).findFirst();
         return categoryDTO.isPresent() ? categoryDTO.get() : null;
     }
+
     default ApplicationDTO getApplication(List<String> path) {
         final CategoryDTO categoryDTO = getCategory(path);
-        if(categoryDTO == null) {
+        if (categoryDTO == null) {
             return null;
         }
 
-        final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream().filter(application -> path.get(1).equals(application.getName())).findFirst();
+        final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
+                .filter(application -> path.get(1).equals(application.getName())).findFirst();
         return applicationDTO.isPresent() ? applicationDTO.get() : null;
     }
 }

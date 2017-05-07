@@ -21,10 +21,7 @@ package org.phoenicis.containers.wine.parameters;
 import org.phoenicis.win32.registry.*;
 
 public enum OffscreenRenderingMode implements RegistryParameter {
-    DEFAULT("Default", ""),
-    FBO("FBO", "fbo"),
-    BACKBUFFER("Backbuffer", "backbuffer"),
-    PBUFFER("PBuffer", "pbuffer");
+    DEFAULT("Default", ""), FBO("FBO", "fbo"), BACKBUFFER("Backbuffer", "backbuffer"), PBUFFER("PBuffer", "pbuffer");
 
     private final String translatedName;
     private final String registryValue;
@@ -41,9 +38,8 @@ public enum OffscreenRenderingMode implements RegistryParameter {
 
     @Override
     public AbstractRegistryNode toRegistryPatch() {
-        final RegistryKey registryNode
-                = new RegistryKey("HKEY_CURRENT_USER")
-                .addDeepChildren("Software", "Wine", "Direct3D");
+        final RegistryKey registryNode = new RegistryKey("HKEY_CURRENT_USER").addDeepChildren("Software", "Wine",
+                "Direct3D");
 
         switch (this) {
             case DEFAULT:
@@ -52,7 +48,8 @@ public enum OffscreenRenderingMode implements RegistryParameter {
             case FBO:
             case BACKBUFFER:
             case PBUFFER:
-                registryNode.addChild(new RegistryValue<>("OffscreenRenderingMode", new StringValueType(registryValue)));
+                registryNode
+                        .addChild(new RegistryValue<>("OffscreenRenderingMode", new StringValueType(registryValue)));
                 break;
         }
 

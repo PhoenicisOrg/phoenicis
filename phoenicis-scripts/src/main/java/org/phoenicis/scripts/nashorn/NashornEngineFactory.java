@@ -45,7 +45,8 @@ public class NashornEngineFactory {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public NashornEngineFactory(UiSetupWizardFactory uiSetupWizardFactory, UiProgressWizardFactory uiProgressWizardFactory, ScriptFetcher scriptFetcher) {
+    public NashornEngineFactory(UiSetupWizardFactory uiSetupWizardFactory,
+            UiProgressWizardFactory uiProgressWizardFactory, ScriptFetcher scriptFetcher) {
         this.uiSetupWizardFactory = uiSetupWizardFactory;
         this.uiProgressWizardFactory = uiProgressWizardFactory;
         this.scriptFetcher = scriptFetcher;
@@ -54,16 +55,12 @@ public class NashornEngineFactory {
     NashornEngine createEngine() {
         final Set<List<String>> includedScripts = new HashSet<>();
 
-        final NashornEngine nashornEngine = new NashornEngine(
-                new ScriptEngineManager().getEngineByName("nashorn")
-        );
+        final NashornEngine nashornEngine = new NashornEngine(new ScriptEngineManager().getEngineByName("nashorn"));
 
-        nashornEngine.eval(
-                new InputStreamReader(getClass().getResourceAsStream("utils.js")),
-                this::throwException
-        );
+        nashornEngine.eval(new InputStreamReader(getClass().getResourceAsStream("utils.js")), this::throwException);
 
-        nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title), this::throwException);
+        nashornEngine.put("Bean", (Function<String, Object>) title -> applicationContext.getBean(title),
+                this::throwException);
         nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
             final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
@@ -79,12 +76,13 @@ public class NashornEngineFactory {
         nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {
             final String[] arguments = args.to(String[].class);
             final String script = scriptFetcher.getScript(arguments);
-            if(script == null) {
+            if (script == null) {
                 throwException(new ScriptException(Arrays.asList(arguments).toString() + " is not found"));
             }
 
-            if(includedScripts.add(Arrays.asList(arguments))) {
-                nashornEngine.eval("//# sourceURL=" + Arrays.asList(arguments).toString() + "\n" + script, this::throwException);
+            if (includedScripts.add(Arrays.asList(arguments))) {
+                nashornEngine.eval("//# sourceURL=" + Arrays.asList(arguments).toString() + "\n" + script,
+                        this::throwException);
             }
         }, this::throwException);
 

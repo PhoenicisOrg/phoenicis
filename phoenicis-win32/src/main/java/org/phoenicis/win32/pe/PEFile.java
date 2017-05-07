@@ -25,17 +25,15 @@ public class PEFile {
     public enum Architecture {
         AMD64, I386, IA64
     }
+
     public final ImageDOSHeader imageDOSHeader;
     public final byte[] realModeStubProgram;
     public final ImageNTHeaders imageNTHeaders;
     public final SectionHeader[] sectionHeaders;
     public final RsrcSection resourceSection;
 
-    public PEFile(ImageDOSHeader imageDOSHeader,
-                  byte[] realModeStubProgram,
-                  ImageNTHeaders imageNTHeaders,
-                  SectionHeader[] sectionHeaders,
-                  RsrcSection resourceSection) {
+    public PEFile(ImageDOSHeader imageDOSHeader, byte[] realModeStubProgram, ImageNTHeaders imageNTHeaders,
+            SectionHeader[] sectionHeaders, RsrcSection resourceSection) {
         this.imageDOSHeader = imageDOSHeader;
         this.realModeStubProgram = realModeStubProgram;
         this.imageNTHeaders = imageNTHeaders;

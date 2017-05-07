@@ -23,10 +23,8 @@ import org.phoenicis.win32.registry.*;
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public enum MouseWarpOverride implements RegistryParameter {
-    DEFAULT(translate("Default"), ""),
-    DISABLED(translate("Disabled"), "disabled"),
-    ENABLED(translate("Enabled"), "enabled"),
-    FORCE(translate("Force"), "force");
+    DEFAULT(translate("Default"), ""), DISABLED(translate("Disabled"), "disabled"), ENABLED(translate("Enabled"),
+            "enabled"), FORCE(translate("Force"), "force");
 
     private final String translatedName;
     private final String registryValue;
@@ -43,9 +41,8 @@ public enum MouseWarpOverride implements RegistryParameter {
 
     @Override
     public AbstractRegistryNode toRegistryPatch() {
-        final RegistryKey registryNode
-                = new RegistryKey("HKEY_CURRENT_USER")
-                .addDeepChildren("Software", "Wine", "DirectInput");
+        final RegistryKey registryNode = new RegistryKey("HKEY_CURRENT_USER").addDeepChildren("Software", "Wine",
+                "DirectInput");
 
         switch (this) {
             case DEFAULT:

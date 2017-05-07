@@ -26,8 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -37,7 +35,6 @@ import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +42,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static org.phoenicis.configuration.localisation.Localisation.translate;
 
 public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
@@ -56,7 +51,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final MiniatureListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter<ApplicationDTO> filter;
 
-    private Consumer<ScriptDTO> onSelectScript = (script) -> { };
+    private Consumer<ScriptDTO> onSelectScript = (script) -> {
+    };
 
     private ObservableList<CategoryDTO> categories;
     private FilteredList<CategoryDTO> installableCategories;
@@ -72,19 +68,23 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         super("Apps", themeManager);
 
         this.sideBar = new ApplicationSideBar();
-        this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create, (element, event) -> showAppDetails(element.getValue(), settingsManager));
+        this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create,
+                (element, event) -> showAppDetails(element.getValue(), settingsManager));
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();
-        this.installableCategories = this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
+        this.installableCategories = this.categories
+                .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
         this.sortedCategories = this.installableCategories.sorted(Comparator.comparing(CategoryDTO::getName));
 
         // initialising the application lists
-        this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories, CategoryDTO::getApplications);
+        this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories,
+                CategoryDTO::getApplications);
         this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
-        this.filter = new ApplicationFilter<ApplicationDTO>(filteredApplications, (filterText, application) -> application.getName().toLowerCase().contains(filterText));
+        this.filter = new ApplicationFilter<ApplicationDTO>(filteredApplications,
+                (filterText, application) -> application.getName().toLowerCase().contains(filterText));
 
         // create the bindings between the visual components and the observable lists
         this.sideBar.bindCategories(this.sortedCategories);
@@ -116,7 +116,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
      * Show available apps panel
      */
     public void showAvailableApps() {
-        showRightView(availableApps);
+        this.closeDetailsView();
+        setCenter(availableApps);
     }
 
     /**
@@ -141,7 +142,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
-        showRightView(appPanel);
+        appPanel.setMaxWidth(400);
+        this.showDetailsView(appPanel);
     }
 
     private void installScript(ScriptDTO scriptDTO) {
