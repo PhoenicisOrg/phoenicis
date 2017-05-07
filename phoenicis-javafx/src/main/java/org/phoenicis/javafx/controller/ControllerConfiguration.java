@@ -71,7 +71,7 @@ public class ControllerConfiguration {
     public MainController mainController() {
         return new MainController(applicationName, libraryController(), appsController(), enginesController(),
                 containersController(), settingsController(), themeConfiguration.themeManager(),
-                settingsConfiguration.settingsManager(), viewsConfiguration.phoenicisLogo());
+                settingsConfiguration.settingsManager());
     }
 
     @Bean
