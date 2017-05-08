@@ -95,6 +95,7 @@ public class RepositoriesPanel extends VBox {
         this.repositoryLayout.setSpacing(5);
 
         this.repositoryListView = new ListView<>(repositories);
+        this.repositoryListView.setPrefHeight(0);
         this.repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.repositoryListView.setEditable(true);
         this.repositoryListView.setCellFactory(param -> new DragableRepositoryListCell((repositoryUrl, toIndex) -> {
