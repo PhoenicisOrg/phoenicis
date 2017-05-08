@@ -69,6 +69,8 @@ public class RepositoriesPanel extends VBox {
         this.initializeRefreshCallback();
 
         this.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
+
+        VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
     }
 
     private void initializeRefreshCallback() {
@@ -86,8 +88,6 @@ public class RepositoriesPanel extends VBox {
 
         this.repositoryGrid = new GridPane();
         this.repositoryGrid.getStyleClass().add("grid");
-        this.repositoryGrid.setHgap(20);
-        this.repositoryGrid.setVgap(10);
 
         this.repositoryText = new TextWithStyle(translate("Repository:"), "captionTitle");
 
@@ -95,7 +95,7 @@ public class RepositoriesPanel extends VBox {
         this.repositoryLayout.setSpacing(5);
 
         this.repositoryListView = new ListView<>(repositories);
-        this.repositoryListView.setPrefSize(400, 100);
+        this.repositoryListView.setPrefHeight(0);
         this.repositoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.repositoryListView.setEditable(true);
         this.repositoryListView.setCellFactory(param -> new DragableRepositoryListCell((repositoryUrl, toIndex) -> {
@@ -142,8 +142,13 @@ public class RepositoriesPanel extends VBox {
 
         this.repositoryLayout.getChildren().addAll(repositoryListView, repositoryButtonLayout);
 
+        VBox.setVgrow(repositoryListView, Priority.ALWAYS);
+
         this.repositoryGrid.add(repositoryText, 0, 0);
         this.repositoryGrid.add(repositoryLayout, 1, 0);
+
+        GridPane.setHgrow(repositoryLayout, Priority.ALWAYS);
+        GridPane.setVgrow(repositoryLayout, Priority.ALWAYS);
 
         GridPane.setValignment(repositoryText, VPos.TOP);
     }
@@ -161,11 +166,6 @@ public class RepositoriesPanel extends VBox {
         this.refreshLayout.setHgap(20);
         this.refreshLayout.setVgap(10);
 
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setFillWidth(true);
-        columnConstraints.setHgrow(Priority.ALWAYS);
-        this.refreshLayout.getColumnConstraints().add(columnConstraints);
-
         this.refreshRepositoriesLabel = new Label(
                 translate("Fetch updates for the repositories to retrieve the newest script versions"));
         this.refreshRepositoriesLabel.setWrapText(true);
@@ -180,6 +180,8 @@ public class RepositoriesPanel extends VBox {
 
         this.refreshLayout.add(refreshRepositoriesLabel, 0, 0);
         this.refreshLayout.add(refreshRepositoriesButton, 1, 0);
+
+        GridPane.setHgrow(refreshRepositoriesLabel, Priority.ALWAYS);
     }
 
     private void save() {
