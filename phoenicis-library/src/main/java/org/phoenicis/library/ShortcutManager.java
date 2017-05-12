@@ -65,10 +65,10 @@ public class ShortcutManager {
                 FileUtils.writeStringToFile(descriptionFile, shortcutDTO.getDescription(), ENCODING);
             }
             if (shortcutDTO.getIcon() != null) {
-                FileUtils.copyFile(new File(shortcutDTO.getIcon()), iconFile);
+                FileUtils.writeByteArrayToFile(iconFile, shortcutDTO.getIcon());
             }
             if (shortcutDTO.getMiniature() != null) {
-                FileUtils.copyFile(new File(shortcutDTO.getMiniature()), miniatureFile);
+                FileUtils.writeByteArrayToFile(miniatureFile, shortcutDTO.getMiniature());
             }
         } catch (IOException e) {
             LOGGER.warn("Error while creating shortcut", e);

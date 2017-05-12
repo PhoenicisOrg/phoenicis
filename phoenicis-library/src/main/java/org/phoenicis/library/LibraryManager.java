@@ -25,10 +25,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -87,23 +84,19 @@ public class LibraryManager {
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
 
         try {
-            final URI icon = iconFile.exists() ? iconFile.toURI() : getClass().getResource("phoenicis.png").toURI();
-            final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
-                    : getClass().getResource("defaultMiniature.png").toURI();
-
+            final byte[] icon = IOUtils.toByteArray(iconFile.exists() ? new FileInputStream(iconFile)
+                    : getClass().getResourceAsStream("phoenicis.png"));
+            final byte[] miniature = IOUtils.toByteArray(miniatureFile.exists() ? new FileInputStream(miniatureFile)
+                    : getClass().getResourceAsStream("defaultMiniature.png"));
             final String description = descriptionFile.exists()
                     ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
-
             return new ShortcutDTO.Builder().withName(baseName)
                     .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8")).withIcon(icon)
                     .withMiniature(miniature).withDescription(description).build();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(e);
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException(e);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+
     }
 
     public void refresh() {
