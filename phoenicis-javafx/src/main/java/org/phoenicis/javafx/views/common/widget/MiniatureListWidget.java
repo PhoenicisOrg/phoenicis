@@ -170,14 +170,12 @@ public final class MiniatureListWidget<E> extends ScrollPane {
 
         public static Element<ApplicationDTO> create(ApplicationDTO application) {
             return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().isEmpty()
-                    ? new StaticMiniature()
-                    : new StaticMiniature(new Image(new ByteArrayInputStream(application.getMiniatures().get(0)))));
+                    ? new StaticMiniature() : new StaticMiniature(application.getMiniatures().get(0)));
         }
 
         public static Element<ShortcutDTO> create(ShortcutDTO shortcut) {
-            return new Element<ShortcutDTO>(shortcut, shortcut.getName(),
-                    shortcut.getMiniature() == null ? new StaticMiniature()
-                            : new StaticMiniature(new Image(new ByteArrayInputStream(shortcut.getMiniature()))));
+            return new Element<ShortcutDTO>(shortcut, shortcut.getName(), shortcut.getMiniature() == null
+                    ? new StaticMiniature() : new StaticMiniature(shortcut.getMiniature()));
         }
 
         public static Element<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {

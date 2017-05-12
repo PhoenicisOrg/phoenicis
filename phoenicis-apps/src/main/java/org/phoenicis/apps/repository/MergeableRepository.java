@@ -3,7 +3,9 @@
  */
 package org.phoenicis.apps.repository;
 
+import java.net.URI;
 import java.nio.ByteBuffer;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -105,16 +107,12 @@ public abstract class MergeableRepository implements Repository {
         final List<ResourceDTO> resources = mergeListOfDtos(leftApplication.getResources(),
                 rightApplication.getResources(), ResourceDTO::getName, ResourceDTO.nameComparator());
 
-        final Set<ByteBuffer> mergeMiniaturesSet = new HashSet<>();
-        leftApplication.getMiniatures().forEach(miniature -> mergeMiniaturesSet.add(ByteBuffer.wrap(miniature)));
-        rightApplication.getMiniatures().forEach(miniature -> mergeMiniaturesSet.add(ByteBuffer.wrap(miniature)));
-
-        final List<byte[]> mergeMiniatures = new ArrayList<>();
-        mergeMiniaturesSet.forEach(miniature -> mergeMiniatures.add(miniature.array()));
+        final Set<URI> mergeMiniaturesSet = new HashSet<URI>(leftApplication.getMiniatures());
+        mergeMiniaturesSet.addAll(rightApplication.getMiniatures());
 
         return new ApplicationDTO.Builder().withName(leftApplication.getName()).withResources(resources)
                 .withScripts(scripts).withDescription(leftApplication.getDescription())
-                .withIcon(leftApplication.getIcon()).withMiniatures(mergeMiniatures).build();
+                .withIcon(leftApplication.getIcon()).withMiniatures(new ArrayList<>(mergeMiniaturesSet)).build();
     }
 
     protected <T> List<T> mergeListOfDtos(List<T> leftList, List<T> rightList, Function<T, String> nameSupplier,

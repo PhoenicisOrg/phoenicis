@@ -34,8 +34,10 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.ranges.Range;
 
 import java.io.ByteArrayInputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.function.Consumer;
 
@@ -100,14 +102,15 @@ final class AppPanel extends VBox {
         final ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
         miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
-        for (byte[] miniatureBytes : applicationDTO.getMiniatures()) {
-            Image image = new Image(new ByteArrayInputStream(miniatureBytes));
-            ImageView imageView = new ImageView(image);
-            imageView.fitHeightProperty().bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
-            imageView.setPreserveRatio(true);
-            imageView.setSmooth(true);
-            imageView.setCache(true);
-            miniaturesPane.getChildren().add(imageView);
+        for (URI miniatureUri : applicationDTO.getMiniatures()) {
+            Region image = new Region();
+            image.getStyleClass().add("appMiniature");
+            image.setStyle(String.format("-fx-background-image: url('%s');", miniatureUri.toString()));
+
+            image.prefHeightProperty().bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
+            image.prefWidthProperty().bind(image.prefHeightProperty().multiply(1.5));
+
+            miniaturesPane.getChildren().add(image);
         }
 
         getChildren().addAll(descriptionWidget, miniaturesPaneWrapper);
