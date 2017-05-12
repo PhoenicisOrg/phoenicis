@@ -21,7 +21,6 @@ package org.phoenicis.apps.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,8 +33,8 @@ import java.util.List;
 public class ApplicationDTO {
     private final String name;
     private final String description;
-    private final URI icon;
-    private final List<URI> miniatures;
+    private final byte[] icon;
+    private final List<byte[]> miniatures;
     private final List<ScriptDTO> scripts;
     private final List<ResourceDTO> resources;
 
@@ -52,11 +51,11 @@ public class ApplicationDTO {
         return resources;
     }
 
-    public URI getIcon() {
+    public byte[] getIcon() {
         return icon;
     }
 
-    public List<URI> getMiniatures() {
+    public List<byte[]> getMiniatures() {
         return miniatures;
     }
 
@@ -80,8 +79,8 @@ public class ApplicationDTO {
     public static class Builder {
         private String name;
         private String description;
-        private URI icon;
-        private List<URI> miniatures = new ArrayList<>();
+        private byte[] icon;
+        private List<byte[]> miniatures = new ArrayList<>();
         private List<ScriptDTO> scripts = new ArrayList<>();
         private List<ResourceDTO> resources = new ArrayList<>();
 
@@ -113,12 +112,12 @@ public class ApplicationDTO {
             return this;
         }
 
-        public Builder withIcon(URI icon) {
+        public Builder withIcon(byte[] icon) {
             this.icon = icon;
             return this;
         }
 
-        public Builder withMiniatures(List<URI> miniatures) {
+        public Builder withMiniatures(List<byte[]> miniatures) {
             this.miniatures = miniatures;
             return this;
         }

@@ -33,8 +33,6 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -109,7 +107,7 @@ public class ClasspathRepository implements Repository {
                 .withMiniatures(buildMiniatures(categoryFileName, applicationFileName)).build();
     }
 
-    private List<URI> buildMiniatures(String categoryFileName, String applicationFileName) throws IOException {
+    private List<byte[]> buildMiniatures(String categoryFileName, String applicationFileName) throws IOException {
         final String applicationScanClassPath = packagePath + "/" + categoryFileName + "/" + applicationFileName
                 + "/miniatures/";
         Resource[] resources = resourceResolver.getResources(applicationScanClassPath + "/*");
@@ -117,10 +115,9 @@ public class ClasspathRepository implements Repository {
         return Arrays.stream(resources).map(resource -> {
             final String resourceFile = packagePath + "/" + categoryFileName + "/" + applicationFileName
                     + "/miniatures/" + resource.getFilename();
-
             try {
-                return getClass().getResource(resourceFile).toURI();
-            } catch (URISyntaxException e) {
+                return IOUtils.toByteArray(getClass().getResourceAsStream(resourceFile));
+            } catch (IOException e) {
                 return null;
             }
         }).collect(Collectors.toList());
