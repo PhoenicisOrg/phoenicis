@@ -29,5 +29,9 @@
 
     <artifactId>phoenicis-entities</artifactId>
 
+    <properties>
+        <project.settings>${project.basedir}/../settings</project.settings>
+    </properties>
+
 
 </project>

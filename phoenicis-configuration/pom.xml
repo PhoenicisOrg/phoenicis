@@ -29,6 +29,10 @@
 
     <artifactId>phoenicis-configuration</artifactId>
 
+    <properties>
+        <project.settings>${project.basedir}/../settings</project.settings>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -51,7 +55,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>18.0</version>
+            <version>21.0</version>
         </dependency>
 
     </dependencies>

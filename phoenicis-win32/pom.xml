@@ -29,17 +29,21 @@
 
     <artifactId>phoenicis-win32</artifactId>
 
+    <properties>
+        <project.settings>${project.basedir}/../settings</project.settings>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>2.5</version>
         </dependency>
 
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.4</version>
+            <version>2.6</version>
         </dependency>
 
         <dependency>

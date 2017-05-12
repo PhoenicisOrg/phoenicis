@@ -29,6 +29,10 @@
 
     <artifactId>phoenicis-scripts</artifactId>
 
+    <properties>
+        <project.settings>${project.basedir}/../settings</project.settings>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
