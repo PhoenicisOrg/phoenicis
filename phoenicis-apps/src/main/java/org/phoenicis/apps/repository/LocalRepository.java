@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -83,7 +84,11 @@ public class LocalRepository implements Repository {
 
                 final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
                 if (categoryIconFile.exists()) {
-                    categoryDTOBuilder.withIcon("file:///" + categoryIconFile.getAbsolutePath());
+                    try {
+                        categoryDTOBuilder.withIcon(new URI("file:///" + categoryIconFile.getAbsolutePath()));
+                    } catch (URISyntaxException e) {
+                        LOGGER.warn("Invalid icon path", e);
+                    }
                 }
 
                 CategoryDTO category = categoryDTOBuilder.build();
