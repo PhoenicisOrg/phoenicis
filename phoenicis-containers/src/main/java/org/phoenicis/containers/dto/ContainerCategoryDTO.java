@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,7 +36,7 @@ public class ContainerCategoryDTO {
     private final String name;
     private final String description;
     private final List<ContainerDTO> containers;
-    private String icon;
+    private URI icon;
 
     private ContainerCategoryDTO(Builder builder) {
         this.name = builder.name;
@@ -56,7 +57,7 @@ public class ContainerCategoryDTO {
         return containers;
     }
 
-    public String getIcon() {
+    public URI getIcon() {
         return icon;
     }
 
@@ -69,7 +70,7 @@ public class ContainerCategoryDTO {
         private String name;
         private String description;
         private List<ContainerDTO> containers = new ArrayList<>();
-        private String icon;
+        private URI icon;
 
         public Builder() {
             // Default constructor
@@ -95,7 +96,7 @@ public class ContainerCategoryDTO {
             return this;
         }
 
-        public Builder withIcon(String iconPath) {
+        public Builder withIcon(URI iconPath) {
             this.icon = iconPath;
             return this;
         }
