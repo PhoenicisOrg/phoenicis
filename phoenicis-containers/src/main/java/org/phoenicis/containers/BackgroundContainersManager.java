@@ -18,7 +18,7 @@
 
 package org.phoenicis.containers;
 
-import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.containers.dto.ContainerCategoryDTO;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,7 +34,7 @@ class BackgroundContainersManager implements ContainersManager {
     }
 
     @Override
-    public void fetchContainers(Consumer<List<ContainerDTO>> callback, Consumer<Exception> errorCallback) {
+    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedContainersManager.fetchContainers(callback, errorCallback));
     }
 }

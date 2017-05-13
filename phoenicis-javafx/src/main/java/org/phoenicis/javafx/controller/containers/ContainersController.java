@@ -109,7 +109,7 @@ public class ContainersController {
                                     });
                 });
 
-                Platform.runLater(() -> viewContainers.setCenter(panel));
+                Platform.runLater(() -> viewContainers.showDetailsView(panel));
             });
         });
     }

@@ -28,11 +28,13 @@ import java.net.URISyntaxException;
 public class StaticMiniature extends Region {
     public static URI DEFAULT_MINIATURE;
     public static URI WINE_MINIATURE;
+    public static URI CONTAINER_MINIATURE;
 
     static {
         try {
             DEFAULT_MINIATURE = MiniatureListWidget.class.getResource("defaultMiniature.png").toURI();
             WINE_MINIATURE = MiniatureListWidget.class.getResource("wineMiniature.png").toURI();
+            CONTAINER_MINIATURE = MiniatureListWidget.class.getResource("containerMiniature.png").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

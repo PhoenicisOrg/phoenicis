@@ -70,7 +70,7 @@ public class EngineSideBar extends LeftSideBar {
     }
 
     /**
-     * This method takes an {@link ObservableList} of engine categories and binds it to the engrine categories button group
+     * This method takes an {@link ObservableList} of engine categories and binds it to the engine categories button group
      *
      * @param engineCategories The list of engine categories
      */
