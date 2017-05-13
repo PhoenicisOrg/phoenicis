@@ -18,10 +18,11 @@
 
 package org.phoenicis.library;
 
-import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.multithreading.functional.NullRunnable;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
+import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.multithreading.functional.NullRunnable;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +32,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class LibraryManager {
@@ -41,7 +43,7 @@ public class LibraryManager {
         this.shortcutDirectory = shortcutDirectory;
     }
 
-    public List<ShortcutDTO> fetchShortcuts() {
+    public List<ShortcutCategoryDTO> fetchShortcuts() {
         final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
         if (!shortcutDirectoryFile.exists()) {
@@ -54,22 +56,34 @@ public class LibraryManager {
             return Collections.emptyList();
         }
 
-        final List<ShortcutDTO> shortcuts = new ArrayList<>();
+        HashMap<String, List<ShortcutDTO>> categoryMap = new HashMap<>();
         for (File file : directoryContent) {
             if ("shortcut".equals(FilenameUtils.getExtension(file.getName()))) {
-                shortcuts.add(fetchShortcutDTO(shortcutDirectoryFile, file));
+                ShortcutDTO shortcut = fetchShortcutDTO(shortcutDirectoryFile, file);
+                String categoryName = shortcut.getCategory();
+                if (!categoryMap.containsKey(categoryName)) {
+                   categoryMap.put(categoryName, new ArrayList<>());
+                }
+                categoryMap.get(categoryName).add(shortcut);
             }
         }
 
-        shortcuts.sort(ShortcutDTO.nameComparator());
+        List<ShortcutCategoryDTO> shortcuts = new ArrayList<>();
+        for (String categoryName : categoryMap.keySet()) {
+            categoryMap.get(categoryName).sort(ShortcutDTO.nameComparator());
+            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withName(categoryName).withShortcuts(categoryMap.get(categoryName)).build();
+            shortcuts.add(category);
+        }
 
         return shortcuts;
     }
 
     public ShortcutDTO fetchShortcutsFromName(String name) {
-        for (ShortcutDTO shortcutDTO : fetchShortcuts()) {
-            if (name.equals(shortcutDTO.getName())) {
-                return shortcutDTO;
+        for (ShortcutCategoryDTO shortcutCategoryDTO : fetchShortcuts()) {
+            for (ShortcutDTO shortcutDTO : shortcutCategoryDTO.getShortcuts()) {
+                if (name.equals(shortcutDTO.getName())) {
+                    return shortcutDTO;
+                }
             }
         }
 
@@ -82,6 +96,7 @@ public class LibraryManager {
 
     private ShortcutDTO fetchShortcutDTO(File shortcutDirectory, File file) {
         final String baseName = FilenameUtils.getBaseName(file.getName());
+        final File categoryFile = new File(shortcutDirectory, baseName + ".category");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
@@ -91,10 +106,13 @@ public class LibraryManager {
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
+            final String category = categoryFile.exists()
+                    ? IOUtils.toString(new FileInputStream(categoryFile), "UTF-8") : "default";
+
             final String description = descriptionFile.exists()
                     ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
 
-            return new ShortcutDTO.Builder().withName(baseName)
+            return new ShortcutDTO.Builder().withName(baseName).withCategory(category)
                     .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8")).withIcon(icon)
                     .withMiniature(miniature).withDescription(description).build();
         } catch (URISyntaxException e) {

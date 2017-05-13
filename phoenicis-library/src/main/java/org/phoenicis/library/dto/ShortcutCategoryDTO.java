@@ -20,85 +20,69 @@ package org.phoenicis.library.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-@JsonDeserialize(builder = ShortcutDTO.Builder.class)
-public class ShortcutDTO {
+/**
+ * Represents a category of application
+ */
+@JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
+public class ShortcutCategoryDTO {
     private final String name;
-    private final String category;
     private final String description;
-    private final URI icon;
-    private final URI miniature;
-    private final String script;
+    private final List<ShortcutDTO> shortcuts;
+    private URI icon;
 
-    private ShortcutDTO(Builder builder) {
-        name = builder.name;
-        category = builder.category;
-        description = builder.description;
-        icon = builder.icon;
-        miniature = builder.miniature;
-        script = builder.script;
-    }
-
-    public URI getIcon() {
-        return icon;
-    }
-
-    public URI getMiniature() {
-        return miniature;
+    private ShortcutCategoryDTO(Builder builder) {
+        this.name = builder.name;
+        this.description = builder.description;
+        this.shortcuts = Collections.unmodifiableList(builder.shortcuts);
+        this.icon = builder.icon;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public String getScript() {
-        return script;
+    public List<ShortcutDTO> getShortcuts() {
+        return shortcuts;
     }
 
-    public static Comparator<ShortcutDTO> nameComparator() {
+    public URI getIcon() {
+        return icon;
+    }
+
+    public static Comparator<ShortcutCategoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String name;
-        private String category;
         private String description;
+        private List<ShortcutDTO> shortcuts = new ArrayList<>();
         private URI icon;
-        private URI miniature;
-        private String script;
 
         public Builder() {
             // Default constructor
         }
 
-        public Builder(ShortcutDTO shortcutDTO) {
-            this.name = shortcutDTO.name;
-            this.category = shortcutDTO.category;
-            this.description = shortcutDTO.description;
-            this.icon = shortcutDTO.icon;
-            this.miniature = shortcutDTO.miniature;
-            this.script = shortcutDTO.script;
+        public Builder(ShortcutCategoryDTO categoryDTO) {
+            this.withName(categoryDTO.getName()).withDescription(categoryDTO.getDescription())
+                    .withShortcuts(categoryDTO.getShortcuts()).withIcon(categoryDTO.getIcon());
         }
 
         public Builder withName(String name) {
             this.name = name;
-            return this;
-        }
-
-        public Builder withCategory(String category) {
-            this.category = category;
             return this;
         }
 
@@ -107,28 +91,24 @@ public class ShortcutDTO {
             return this;
         }
 
-        public Builder withIcon(URI icon) {
-            this.icon = icon;
+        public Builder withShortcuts(List<ShortcutDTO> shortcuts) {
+            this.shortcuts = shortcuts;
             return this;
         }
 
-        public Builder withMiniature(URI miniature) {
-            this.miniature = miniature;
+        public Builder withIcon(URI iconPath) {
+            this.icon = iconPath;
             return this;
         }
 
-        public Builder withScript(String script) {
-            this.script = script;
-            return this;
+        public ShortcutCategoryDTO build() {
+            return new ShortcutCategoryDTO(this);
         }
+    }
 
-        public ShortcutDTO build() {
-            return new ShortcutDTO(this);
-        }
-
-        public String getName() {
-            return name;
-        }
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append(name).toString();
     }
 
 }
