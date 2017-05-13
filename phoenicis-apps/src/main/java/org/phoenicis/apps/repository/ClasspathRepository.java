@@ -75,8 +75,14 @@ public class ClasspathRepository implements Repository {
         final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile),
                 CategoryDTO.class);
 
-        return new CategoryDTO.Builder(categoryDTO).withIcon(packagePath + "/" + categoryFileName + "/icon.png")
-                .withApplications(buildApplications(categoryFileName)).build();
+        try {
+            return new CategoryDTO.Builder(categoryDTO)
+                    .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png"))
+                    .withApplications(buildApplications(categoryFileName)).build();
+        } catch (URISyntaxException e) {
+            LOGGER.warn("Invalid icon path", e);
+            return new CategoryDTO.Builder(categoryDTO).withApplications(buildApplications(categoryFileName)).build();
+        }
     }
 
     private List<ApplicationDTO> buildApplications(String categoryFileName) throws IOException {
