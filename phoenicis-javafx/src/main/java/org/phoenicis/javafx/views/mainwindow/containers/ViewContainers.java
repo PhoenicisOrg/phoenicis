@@ -69,12 +69,8 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         Bindings.bindContent(this.availableContainers.getItems(), this.sortedContainers);
 
         // set the category selection consumers
-        this.sideBar.setOnCategorySelection(category -> {
-            showAvailableContainers();
-        });
-        this.sideBar.setOnAllCategorySelection(() -> {
-            showAvailableContainers();
-        });
+        this.sideBar.setOnCategorySelection(category -> showAvailableContainers());
+        this.sideBar.setOnAllCategorySelection(this::showAvailableContainers);
 
         this.setSideBar(sideBar);
     }
