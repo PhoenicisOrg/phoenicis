@@ -44,6 +44,22 @@
                     </argLine>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>biz.gabrys.maven.plugins</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>src/main/resources</sourceDirectory>
+                            <outputDirectory>target/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
