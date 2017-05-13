@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,8 +96,8 @@ public class AppsController {
             StringBuilder cssBuilder = new StringBuilder();
             for (CategoryDTO category : categoryDTOS) {
                 cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
-                String categoryIcon = category.getIcon();
-                if (StringUtils.isEmpty(categoryIcon)) {
+                URI categoryIcon = category.getIcon();
+                if (categoryIcon == null) {
                     cssBuilder
                             .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
                 } else {
