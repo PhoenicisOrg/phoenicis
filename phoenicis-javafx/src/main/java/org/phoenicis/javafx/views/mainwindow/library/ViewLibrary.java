@@ -70,22 +70,21 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        availableShortcuts = MiniatureListWidget.create(MiniatureListWidget.Element::create,
-                (selectedItem, event) -> {
-                    ShortcutDTO shortcutDTO = selectedItem.getValue();
+        availableShortcuts = MiniatureListWidget.create(MiniatureListWidget.Element::create, (selectedItem, event) -> {
+            ShortcutDTO shortcutDTO = selectedItem.getValue();
 
-                    availableShortcuts.unselectAll();
-                    availableShortcuts.select(selectedItem);
-                    onShortcutSelected.accept(shortcutDTO);
+            availableShortcuts.unselectAll();
+            availableShortcuts.select(selectedItem);
+            onShortcutSelected.accept(shortcutDTO);
 
-                    sideBar.showShortcut(shortcutDTO);
+            sideBar.showShortcut(shortcutDTO);
 
-                    if (event.getClickCount() == 2) {
-                        onShortcutDoubleClicked.accept(shortcutDTO);
-                    }
+            if (event.getClickCount() == 2) {
+                onShortcutDoubleClicked.accept(shortcutDTO);
+            }
 
-                    event.consume();
-                });
+            event.consume();
+        });
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();
@@ -124,7 +123,6 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.drawContent();
 
         this.setSideBar(sideBar);
-        this.setCenter(libraryTabs);
     }
 
     public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {
@@ -152,7 +150,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
      */
     public void showAvailableShortcuts() {
         this.closeDetailsView();
-        setCenter(availableShortcuts);
+        drawContent();
     }
 
     public void populate(List<ShortcutCategoryDTO> categories) {
@@ -175,6 +173,8 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         libraryTabs.getTabs().add(installedApplication);
 
         installedApplication.setContent(availableShortcuts);
+
+        this.setCenter(libraryTabs);
     }
 
     public void createNewTab(Tab tab) {
