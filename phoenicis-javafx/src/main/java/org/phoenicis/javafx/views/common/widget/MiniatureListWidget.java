@@ -37,6 +37,7 @@ import javafx.scene.shape.Rectangle;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.apps.dto.ApplicationDTO;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -171,6 +172,11 @@ public final class MiniatureListWidget<E> extends ScrollPane {
         public static Element<ApplicationDTO> create(ApplicationDTO application) {
             return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().isEmpty()
                     ? new StaticMiniature() : new StaticMiniature(application.getMiniatures().get(0)));
+        }
+
+        public static Element<ContainerDTO> create(ContainerDTO container) {
+            return new Element<ContainerDTO>(container, container.getName(),
+                    new StaticMiniature(StaticMiniature.CONTAINER_MINIATURE));
         }
 
         public static Element<ShortcutDTO> create(ShortcutDTO shortcut) {
