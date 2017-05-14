@@ -19,6 +19,7 @@
 package org.phoenicis.containers.wine;
 
 import org.phoenicis.containers.ContainersManager;
+import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.configurations.WinePrefixContainerDisplayConfiguration;
@@ -50,7 +51,7 @@ public class WinePrefixContainersManager implements ContainersManager {
     }
 
     @Override
-    public void fetchContainers(Consumer<List<ContainerDTO>> callback, Consumer<Exception> errorCallback) {
+    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
         final File winePrefixesFile = new File(winePrefixPath);
         winePrefixesFile.mkdirs();
 
@@ -59,6 +60,7 @@ public class WinePrefixContainersManager implements ContainersManager {
         if (winePrefixes == null) {
             callback.accept(Collections.emptyList());
         } else {
+            final List<ContainerCategoryDTO> containerCategories = new ArrayList<>();
             final List<ContainerDTO> containers = new ArrayList<>();
             for (File winePrefix : winePrefixes) {
                 final ConfigFile configFile = compatibleConfigFileFormatFactory
@@ -91,7 +93,10 @@ public class WinePrefixContainersManager implements ContainersManager {
 
             containers.sort(ContainerDTO.nameComparator());
 
-            callback.accept(containers);
+            containerCategories
+                    .add(new ContainerCategoryDTO.Builder().withName("Wine").withContainers(containers).build());
+
+            callback.accept(containerCategories);
         }
     }
 

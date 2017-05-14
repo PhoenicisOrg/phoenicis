@@ -18,11 +18,11 @@
 
 package org.phoenicis.containers;
 
-import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.containers.dto.ContainerCategoryDTO;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 public interface ContainersManager {
-    void fetchContainers(Consumer<List<ContainerDTO>> callback, Consumer<Exception> errorCallback);
+    void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback);
 }
