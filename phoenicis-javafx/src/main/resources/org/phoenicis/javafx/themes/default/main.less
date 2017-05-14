@@ -16,6 +16,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+@background-color: #F0F0F0;
+
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
@@ -98,7 +100,7 @@
 /************************* left ************************/
 /*******************************************************/
 .leftPane {
-    -fx-background-color: #F0F0F0;
+    -fx-background-color: @background-color;
     -fx-min-height: 10em;
     -fx-min-width: 15em;
     -fx-pref-width: 15em;
@@ -108,12 +110,12 @@
 
 .leftPaneScrollbar {
     -fx-border-width: 0;
-    -fx-background-color:#F0F0F0;
+    -fx-background-color:@background-color;
     -fx-min-width: 15em;
 }
 
 .leftPaneScrollbar > .viewport {
-    -fx-background-color: #F0F0F0;
+    -fx-background-color: @background-color;
 }
 
 .leftPaneScrollbar .scroll-bar:vertical {
@@ -128,7 +130,7 @@
 }
 
 .leftPaneScrollbar .scroll-bar:vertical .track {
-    -fx-background-color: #F0F0F0;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-background-radius: 0em;
     -fx-pref-width: 0.4em;

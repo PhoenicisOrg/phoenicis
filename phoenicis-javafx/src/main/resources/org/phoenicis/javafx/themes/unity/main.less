@@ -16,16 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+@background-color: #f2f1f0;
+@main-color: #e7e5e4;
+@focus-color: #df5e1e;
+@text-color: #6b6b6a;
+
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
 * {
-    -fx-background: #f2f1f0;
-    -fx-focus-color: #df5e1e;
-    -fx-faint-focus-color: #df5e1e;
-    -fx-text-fill: #6b6b6a;
-    -fx-text-base-color: #6b6b6a;
-    -fx-text-inner-color: #6b6b6a;
+    -fx-background: @background-color;
+    -fx-focus-color: @focus-color;
+    -fx-faint-focus-color: @focus-color;
+    -fx-text-fill: @text-color;
+    -fx-text-base-color: @text-color;
+    -fx-text-inner-color: @text-color;
     -fx-border-radius: 0.7em;
     -fx-background-radius: 0.7em;
 }
@@ -36,13 +41,13 @@
 
 .button {
     -fx-background-color: linear-gradient(#fdfdfd, #f1f0ef);
-    -fx-border-color: #6b6b6a;
+    -fx-border-color: @text-color;
     -fx-border-radius: 0.7em;
     -fx-background-radius: 0.7em;
 }
 
 .button:hover {
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
 }
 
 .combo-box {
@@ -53,7 +58,7 @@
 }
 
 .combo-box:hover {
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
 }
 
 .combo-box .arrow-button {
@@ -61,21 +66,21 @@
 }
 
 .combo-box:hover .arrow-button {
-    -fx-color: #df5e1e;
+    -fx-color: @focus-color;
 }
 
 .combo-box-popup .list-view {
-    -fx-background-color: #e7e5e4, #e7e5e4;
+    -fx-background-color: @main-color, @main-color;
 }
 
 .combo-box .list-cell {
-    -fx-background: #e7e5e4;
-    -fx-background-color: #e7e5e4;
+    -fx-background: @main-color;
+    -fx-background-color: @main-color;
     -fx-background-radius: 0.3em 0 0 0.3em;
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover {
-    -fx-background-color: #df5e1e;
+    -fx-background-color: @focus-color;
 }
 
 .check-box {
@@ -91,11 +96,11 @@
 
 .check-box:hover .box {
     -fx-background-color: transparent;
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
 }
 .check-box:selected .box {
     -fx-background-color: linear-gradient(#d05420, #d77852);
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
 }
 
 .check-box:selected .mark {
@@ -104,19 +109,19 @@
 }
 
 .tab-header-area .tab-header-background {
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
     -fx-background-radius: 0;
 }
 
 .tab-header-area .tab:selected {
-    -fx-background-color: #df5e1e;
+    -fx-background-color: @focus-color;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
 
 .tab-header-area .tab {
     -fx-background-radius: 0.7em 0.7em 0 0;
-    -fx-background-color: #f2f1f0;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-background-opacity: 0;
     -fx-border-radius: 0;
@@ -127,41 +132,41 @@
 }
 
 .list-view {
-    -fx-background-color: #f2f1f0;
+    -fx-background-color: @background-color;
     -fx-border-color: #bdc3c7;
 }
 
 .list-cell {
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
 .list-cell:even {
-    -fx-background-color: #f2f1f0;
+    -fx-background-color: @background-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
 .list-cell:filled:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #df5e1e;
+    -fx-background-color: @focus-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
 .text-field {
     -fx-border-radius: 0.3em;
     -fx-background-radius: 0.3em;
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
     -fx-border-color: transparent;
     -fx-text-fill: -fx-text-base-color;
-    -fx-focus-color: #df5e1e;
+    -fx-focus-color: @focus-color;
 }
 
 .text-field:focused {
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
 .text-field:hover {
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
@@ -201,7 +206,7 @@
 }
 
 .scroll-bar .thumb:hover, .scroll-bar .thumb:pressed {
-    -fx-background-color: #df5e1e;
+    -fx-background-color: @focus-color;
     -fx-border-color: transparent;
 }
 
@@ -215,18 +220,18 @@
 }
 
 .increment-arrow:hover, .decrement-arrow:hover {
-    -fx-background-color: #df5e1e;
+    -fx-background-color: @focus-color;
 }
 
 .progress-bar > .track {
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
 }
 
 .progress-bar > .bar {
-    -fx-background-color: #df5e1e;
+    -fx-background-color: @focus-color;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
@@ -297,7 +302,7 @@
 #menuPane > .tab-header-area .tab:selected {
     -fx-border-width: 0.3em;
     -fx-border-style: hidden hidden solid hidden;
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
@@ -314,7 +319,7 @@
 /************************* left ************************/
 /*******************************************************/
 .leftPane {
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
     -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 0 0 0.83em 0;
@@ -323,12 +328,12 @@
 
 .leftPaneScrollbar {
     -fx-border-width: 0;
-    -fx-background-color:#e7e5e4;
+    -fx-background-color:@main-color;
     -fx-min-width: 15em;
 }
 
 .leftPaneScrollbar > .viewport {
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
 }
 
 .leftPaneScrollbar .scroll-bar:vertical {
@@ -379,7 +384,7 @@
     -fx-background-color:transparent;
     -fx-border-color:transparent;
     -fx-cursor: hand;
-    -fx-text-fill: #6b6b6a;
+    -fx-text-fill: @text-color;
     -fx-txt-font-family: "Roboto Light";
     -fx-border-radius: 0;
     -fx-background-radius: 0;
@@ -404,10 +409,10 @@
 .searchBar {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #f2f1f0;
+    -fx-background-color: @background-color;
     -fx-border-color: transparent;
     -fx-text-fill: -fx-text-base-color;
-    -fx-focus-color: #df5e1e;
+    -fx-focus-color: @focus-color;
 }
 
 .searchBar:focused {
@@ -416,7 +421,7 @@
 }
 
 .searchBar:hover {
-    -fx-border-color: #df5e1e;
+    -fx-border-color: @focus-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
@@ -488,7 +493,7 @@
 /********************** description ********************/
 .descriptionTitle {
     -fx-font-family: "Roboto light";
-    -fx-text-fill: #df5e1e;
+    -fx-text-fill: @focus-color;
     -fx-font-size: 1.3em;
 }
 
@@ -511,7 +516,7 @@
 /*******************************************************/
 .rightPane .miniatureList {
     -fx-pref-width: 53.5em;
-    -fx-background-color: #f2f1f0;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-border-style: none;
     -fx-padding: 0.5em;
@@ -548,20 +553,20 @@
     -fx-wrap-text: true;
     -fx-alignment: center;
     -fx-text-alignment: center;
-    -fx-text-fill: #6b6b6a;
+    -fx-text-fill: @text-color;
 }
 
 /*******************************************************/
 /***************** installation wizard *****************/
 /*******************************************************/
 #presentationBackground {
-    -fx-background-color: #f2f1f0;
+    -fx-background-color: @background-color;
     -fx-padding: 0.83em;
 }
 
 #presentationScrollPane {
-    -fx-background: #f2f1f0;
-    -fx-border-color: #f2f1f0;
+    -fx-background: @background-color;
+    -fx-border-color: @background-color;
 }
 
 #presentationTextTitle {
@@ -595,8 +600,8 @@
 }
 
 #stepScrollPane {
-    -fx-background: #f2f1f0;
-    -fx-border-color: #f2f1f0;
+    -fx-background: @background-color;
+    -fx-border-color: @background-color;
 }
 
 #stepText {
@@ -629,7 +634,7 @@
 .consoleCommandType {
     -fx-border-radius: 0.7em;
     -fx-background-radius: 0;
-    -fx-background-color: #e7e5e4;
+    -fx-background-color: @main-color;
     -fx-border-color: transparent;
     -fx-text-fill: -fx-text-base-color;
 }
@@ -637,8 +642,8 @@
 .consoleCommandType:focused {
     -fx-border-radius: 0.7em;
     -fx-background-radius: 0;
-    -fx-background-color: #e7e5e4;
-    -fx-border-color: #df5e1e;
+    -fx-background-color: @main-color;
+    -fx-border-color: @focus-color;
     -fx-text-fill: -fx-text-base-color;
 }
 
@@ -687,7 +692,7 @@
     -fx-font-size: 1.4em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-    -fx-fill: #df5e1e;
+    -fx-fill: @focus-color;
 }
 
 .captionTitle {
