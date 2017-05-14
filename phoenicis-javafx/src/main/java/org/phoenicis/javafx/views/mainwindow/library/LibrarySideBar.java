@@ -113,8 +113,8 @@ public class LibrarySideBar extends LeftSideBar {
 
         this.shortcutGroup.setTitle(shortcut.getName());
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, this.shortcutGroup, new LeftSpacer(),
-                this.advancedToolsGroup);
+        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, this.shortcutGroup,
+                new LeftSpacer(), this.advancedToolsGroup);
     }
 
     /**
@@ -148,8 +148,6 @@ public class LibrarySideBar extends LeftSideBar {
         this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
     }
-
-
 
     /**
      * This method is responsible for creating the "All" categories toggle button.

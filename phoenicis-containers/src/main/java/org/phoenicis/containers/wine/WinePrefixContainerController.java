@@ -136,18 +136,18 @@ public class WinePrefixContainerController {
 
         List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
         for (ShortcutCategoryDTO shortcutCategoryDTO : categories) {
-                for (ShortcutDTO shortcutDTO : shortcutCategoryDTO.getShortcuts()) {
-                        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-                        interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
-                                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                        final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                                        shortcutReader.callMember("of", shortcutDTO);
-                                        final String container = (String) shortcutReader.callMember("container");
-                                        if (container.equals(winePrefix.getName())) {
-                                                shortcutManager.deleteShortcut(shortcutDTO);
-                                        }
-                                }, errorCallback), errorCallback);
-                }
+            for (ShortcutDTO shortcutDTO : shortcutCategoryDTO.getShortcuts()) {
+                final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+                interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
+                        ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                            final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                            shortcutReader.callMember("of", shortcutDTO);
+                            final String container = (String) shortcutReader.callMember("container");
+                            if (container.equals(winePrefix.getName())) {
+                                shortcutManager.deleteShortcut(shortcutDTO);
+                            }
+                        }, errorCallback), errorCallback);
+            }
         }
     }
 

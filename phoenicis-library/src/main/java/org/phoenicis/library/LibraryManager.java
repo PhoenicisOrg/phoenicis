@@ -62,7 +62,7 @@ public class LibraryManager {
                 ShortcutDTO shortcut = fetchShortcutDTO(shortcutDirectoryFile, file);
                 String categoryName = shortcut.getCategory();
                 if (!categoryMap.containsKey(categoryName)) {
-                   categoryMap.put(categoryName, new ArrayList<>());
+                    categoryMap.put(categoryName, new ArrayList<>());
                 }
                 categoryMap.get(categoryName).add(shortcut);
             }
@@ -71,7 +71,8 @@ public class LibraryManager {
         List<ShortcutCategoryDTO> shortcuts = new ArrayList<>();
         for (String categoryName : categoryMap.keySet()) {
             categoryMap.get(categoryName).sort(ShortcutDTO.nameComparator());
-            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withName(categoryName).withShortcuts(categoryMap.get(categoryName)).build();
+            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withName(categoryName)
+                    .withShortcuts(categoryMap.get(categoryName)).build();
             shortcuts.add(category);
         }
 
@@ -106,8 +107,8 @@ public class LibraryManager {
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
-            final String category = categoryFile.exists()
-                    ? IOUtils.toString(new FileInputStream(categoryFile), "UTF-8") : "default";
+            final String category = categoryFile.exists() ? IOUtils.toString(new FileInputStream(categoryFile), "UTF-8")
+                    : "default";
 
             final String description = descriptionFile.exists()
                     ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
