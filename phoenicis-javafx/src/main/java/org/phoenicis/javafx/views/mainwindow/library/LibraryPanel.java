@@ -30,41 +30,37 @@ import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
-
 final class LibraryPanel extends VBox {
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
+    private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
 
     public LibraryPanel(ShortcutDTO shortcutDTO) {
         super();
         this.setPadding(new Insets(10));
 
-        final GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("grid");
-
-        gridPane.add(new Label(translate("Name:")), 0, 0);
+        final VBox vBox = new VBox();
         Label name = new Label(shortcutDTO.getName());
+        name.getStyleClass().add("descriptionTitle");
         name.setWrapText(true);
-        gridPane.add(name, 1, 0);
 
-        Label descriptionLabel = new Label(translate("Description:"));
-        GridPane.setValignment(descriptionLabel, VPos.TOP);
-        gridPane.add(descriptionLabel, 0, 1);
         Label description = new Label(shortcutDTO.getDescription());
         description.setWrapText(true);
-        gridPane.add(description, 1, 1);
+
+        final GridPane gridPane = new GridPane();
+        gridPane.getStyleClass().add("grid");
 
         try {
             JSONObject jsonObject = new JSONObject(shortcutDTO.getScript());
 
             for (int i = 0; i < jsonObject.names().length(); i++) {
-                String key = (String) jsonObject.names().getString(i);
+                String key = jsonObject.names().getString(i);
                 Label keyLabel = new Label(key + ":");
+                keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
-                gridPane.add(keyLabel, 0, 3 + i);
+                gridPane.add(keyLabel, 0, i);
                 Label valueLabel = new Label(jsonObject.getString(key));
                 valueLabel.setWrapText(true);
-                gridPane.add(valueLabel, 1, 3 + i);
+                gridPane.add(valueLabel, 1, i);
             }
 
         } catch (JSONException e) {
@@ -74,6 +70,7 @@ final class LibraryPanel extends VBox {
         gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
                 new ColumnConstraintsWithPercentage(70));
 
-        getChildren().addAll(gridPane);
+        vBox.getChildren().addAll(name, description, gridPane);
+        this.getChildren().addAll(vBox);
     }
 }
