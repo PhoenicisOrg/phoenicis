@@ -107,8 +107,11 @@ public class LibraryManager {
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
-            final String category = categoryFile.exists() ? IOUtils.toString(new FileInputStream(categoryFile), "UTF-8")
-                    : "default";
+            String category = "default";
+            if (categoryFile.exists()) {
+                category = IOUtils.toString(new FileInputStream(categoryFile), "UTF-8");
+                category = category.replace("\n", "");
+            }
 
             final String description = descriptionFile.exists()
                     ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
