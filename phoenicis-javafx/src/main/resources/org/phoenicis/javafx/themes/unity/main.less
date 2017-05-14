@@ -36,7 +36,7 @@
 }
 
 .text {
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
 }
 
 .button {
@@ -138,17 +138,17 @@
 
 .list-cell {
     -fx-background-color: @main-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .list-cell:even {
     -fx-background-color: @background-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .list-cell:filled:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: @focus-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .text-field {
@@ -156,18 +156,18 @@
     -fx-background-radius: 0.3em;
     -fx-background-color: @main-color;
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
     -fx-focus-color: @focus-color;
 }
 
 .text-field:focused {
     -fx-border-color: @focus-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .text-field:hover {
     -fx-border-color: @focus-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .scroll-bar:horizontal {
@@ -411,18 +411,18 @@
     -fx-background-radius: 0;
     -fx-background-color: @background-color;
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
     -fx-focus-color: @focus-color;
 }
 
 .searchBar:focused {
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .searchBar:hover {
     -fx-border-color: @focus-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .searchCleanButton {
@@ -442,7 +442,7 @@
 }
 
 .rightPane > .viewport {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
 }
 
@@ -457,7 +457,7 @@
 /************************* apps ************************/
 /*******************************************************/
 .appPresentation {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
 }
 
 .appPresentation > * {
@@ -466,7 +466,7 @@
 }
 
 .appPanelMiniaturesPane {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-padding: 1em;
 }
 
@@ -486,7 +486,7 @@
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
 }
 
@@ -571,26 +571,26 @@
 
 #presentationTextTitle {
     -fx-font-weight: bold;
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
     -fx-font-size: 1.3em;
 }
 
 #presentationText {
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
 }
 
 /************************ step *************************/
 #panelForTopheader {
     -fx-padding: 2.5em;
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-border-color: transparent;
 }
 
 #header {
-    -fx-border-color: -fx-focus-color;
+    -fx-border-color: @focus-color;
     -fx-border-style: solid;
     -fx-border-width: 0 0 0.1em 0;
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
 }
 
 #footer {
@@ -605,7 +605,7 @@
 }
 
 #stepText {
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
     -fx-font-size: 1.1em;
 }
 
@@ -628,7 +628,7 @@
 }
 
 .console, console .viewport {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
 }
 
 .consoleCommandType {
@@ -636,7 +636,7 @@
     -fx-background-radius: 0;
     -fx-background-color: @main-color;
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .consoleCommandType:focused {
@@ -644,7 +644,7 @@
     -fx-background-radius: 0;
     -fx-background-color: @main-color;
     -fx-border-color: @focus-color;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .consoleText {
@@ -653,7 +653,7 @@
 }
 
 .consoleText.normal {
-    -fx-fill: -fx-text-base-color;
+    -fx-fill: @text-color;
 }
 
 .consoleText.default {
@@ -681,7 +681,7 @@
 .wineToolCaption {
     -fx-font-size: 1em;
     -fx-pref-width: 8em;
-    -fx-fill: -fx-text-base-color;
+    -fx-fill: @text-color;
 }
 
 /*******************************************************/
