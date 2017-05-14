@@ -184,7 +184,7 @@ public class WinePrefixContainerDTO extends ContainerDTO {
             return this;
         }
 
-        public WinePrefixContainerDTO build() {
+        public ContainerDTO build() {
             return new WinePrefixContainerDTO(this);
         }
     }

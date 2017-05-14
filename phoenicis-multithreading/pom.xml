@@ -29,6 +29,10 @@
 
     <artifactId>phoenicis-multithreading</artifactId>
 
+    <properties>
+        <project.settings>${project.basedir}/../settings</project.settings>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>

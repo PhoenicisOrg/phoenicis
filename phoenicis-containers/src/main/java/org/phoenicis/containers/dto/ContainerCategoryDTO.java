@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.engines.dto;
+package org.phoenicis.containers.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -29,19 +29,19 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Represents a category of application
+ * Represents a category of container
  */
-@JsonDeserialize(builder = EngineCategoryDTO.Builder.class)
-public class EngineCategoryDTO {
+@JsonDeserialize(builder = ContainerCategoryDTO.Builder.class)
+public class ContainerCategoryDTO {
     private final String name;
     private final String description;
-    private final List<EngineSubCategoryDTO> subCategories;
+    private final List<ContainerDTO> containers;
     private URI icon;
 
-    private EngineCategoryDTO(Builder builder) {
+    private ContainerCategoryDTO(Builder builder) {
         this.name = builder.name;
         this.description = builder.description;
-        this.subCategories = Collections.unmodifiableList(builder.subCategories);
+        this.containers = Collections.unmodifiableList(builder.containers);
         this.icon = builder.icon;
     }
 
@@ -53,15 +53,15 @@ public class EngineCategoryDTO {
         return description;
     }
 
-    public List<EngineSubCategoryDTO> getSubCategories() {
-        return subCategories;
+    public List<ContainerDTO> getContainers() {
+        return containers;
     }
 
     public URI getIcon() {
         return icon;
     }
 
-    public static Comparator<EngineCategoryDTO> nameComparator() {
+    public static Comparator<ContainerDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
@@ -69,16 +69,16 @@ public class EngineCategoryDTO {
     public static class Builder {
         private String name;
         private String description;
-        private List<EngineSubCategoryDTO> subCategories = new ArrayList<>();
+        private List<ContainerDTO> containers = new ArrayList<>();
         private URI icon;
 
         public Builder() {
             // Default constructor
         }
 
-        public Builder(EngineCategoryDTO categoryDTO) {
+        public Builder(ContainerCategoryDTO categoryDTO) {
             this.withName(categoryDTO.getName()).withDescription(categoryDTO.getDescription())
-                    .withSubCategories(categoryDTO.getSubCategories()).withIcon(categoryDTO.getIcon());
+                    .withContainers(categoryDTO.getContainers()).withIcon(categoryDTO.getIcon());
         }
 
         public Builder withName(String name) {
@@ -91,8 +91,8 @@ public class EngineCategoryDTO {
             return this;
         }
 
-        public Builder withSubCategories(List<EngineSubCategoryDTO> subCategories) {
-            this.subCategories = subCategories;
+        public Builder withContainers(List<ContainerDTO> containers) {
+            this.containers = containers;
             return this;
         }
 
@@ -101,8 +101,8 @@ public class EngineCategoryDTO {
             return this;
         }
 
-        public EngineCategoryDTO build() {
-            return new EngineCategoryDTO(this);
+        public ContainerCategoryDTO build() {
+            return new ContainerCategoryDTO(this);
         }
     }
 

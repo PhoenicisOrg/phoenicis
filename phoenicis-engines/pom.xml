@@ -29,6 +29,10 @@
 
     <artifactId>phoenicis-engines</artifactId>
 
+    <properties>
+        <project.settings>${project.basedir}/../settings</project.settings>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.phoenicis</groupId>
