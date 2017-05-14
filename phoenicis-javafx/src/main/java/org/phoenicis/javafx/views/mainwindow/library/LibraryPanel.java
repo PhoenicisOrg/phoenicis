@@ -59,7 +59,7 @@ final class LibraryPanel extends VBox {
 
             for (int i = 0; i < jsonObject.names().length(); i++) {
                 String key = (String) jsonObject.names().getString(i);
-                Label keyLabel = new Label(key);
+                Label keyLabel = new Label(key + ":");
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 gridPane.add(keyLabel, 0, 3 + i);
                 Label valueLabel = new Label(jsonObject.getString(key));
