@@ -19,7 +19,7 @@ public class ListElementListCell<E extends Node> extends ListCell<E> {
         if (!empty && item != null) {
             setGraphic(item);
         } else {
-            setGraphic(new DummyElement());
+            setGraphic(new DummyListElement());
         }
     }
 }

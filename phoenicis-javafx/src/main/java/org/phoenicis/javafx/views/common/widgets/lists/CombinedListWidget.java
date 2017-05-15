@@ -20,21 +20,43 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Created by marc on 15.05.17.
+ * A {@link ListWidget} fusing all other {@link ListWidget}s.
+ * Using this {@link ListWidget} enables an easy swapping of the other {@link ListWidget}s at runtime.
+ *
+ * @author marc
+ * @since 15.05.17
  */
 public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
+    /**
+     * A set of all currently selected items/entries
+     */
     private Set<ListWidgetEntry<E>> selectedItems;
 
+    /**
+     * A list of all currently visible items
+     */
     private ObservableList<E> items;
 
+    /**
+     * A list of all mapped items
+     */
     private MappedList<ListWidgetEntry<E>, E> mappedItems;
 
     private IconsListWidget<E> iconsList;
     private CompactListWidget<E> compactList;
     private DetailsListWidget<E> detailsList;
 
+    /**
+     * The currently shown {@link ListWidget}
+     */
     private ListWidget<ListWidgetEntry<E>> currentList;
 
+    /**
+     * Constructor
+     *
+     * @param converter         A converter function, that takes an object of type <code>E</code> and returns a {@link ListWidgetEntry} for it
+     * @param setOnMouseClicked An event listener function to be called when an entry has been selected/clicked
+     */
     public CombinedListWidget(Function<E, ListWidgetEntry<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
@@ -62,6 +84,10 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
         this.showList(ListWidgetType.ICONS_LIST);
     }
 
+    /**
+     * Shows the list of the given <code>type</code>
+     * @param type The type of list to be shown in this list widget
+     */
     public void showList(ListWidgetType type) {
         switch (type) {
             case ICONS_LIST:
@@ -84,6 +110,9 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
         this.updateSelection();
     }
 
+    /**
+     * Updates/refreshes the selection of the the currently visible {@link ListWidget}
+     */
     private void updateSelection() {
         this.currentList.deselectAll();
         this.selectedItems.forEach(currentList::select);
