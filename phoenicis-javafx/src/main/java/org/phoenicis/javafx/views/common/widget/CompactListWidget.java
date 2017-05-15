@@ -3,11 +3,9 @@ package org.phoenicis.javafx.views.common.widget;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.CacheHint;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.phoenicis.apps.dto.ApplicationDTO;
@@ -20,26 +18,25 @@ import java.util.function.Function;
 /**
  * Created by marc on 14.05.17.
  */
-public class IconListWidget<E> extends ListView<IconListWidget.Element<E>> {
-    private Element<E> selectedItem;
+public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
+        implements ListWidget<ListWidgetEntry<E>> {
+    private ObservableList<ListWidgetEntry<E>> items;
+    private MappedList<Element<E>, ListWidgetEntry<E>> mappedElements;
 
-    private ObservableList<E> items;
-    private MappedList<Element<E>, E> mappedElements;
-
-    public IconListWidget(Function<E, Element> converter, BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
+    public CompactListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
         this.setPrefWidth(0);
         this.setPrefHeight(0);
         this.getStyleClass().add("iconListWidget");
-        this.setCellFactory(param -> new ElementListCell<E>());
+        this.setCellFactory(param -> new ElementListCell());
 
         this.items = FXCollections.observableArrayList();
-        this.mappedElements = new MappedList<Element<E>, E>(items, value -> {
-            Element newElement = converter.apply(value);
+        this.mappedElements = new MappedList<Element<E>, ListWidgetEntry<E>>(items, value -> {
+            Element<E> newElement = new Element<E>(value);
 
             newElement.setOnMouseClicked(event -> {
-                setOnMouseClicked.accept(newElement, event);
+                setOnMouseClicked.accept(value.getItem(), event);
             });
 
             return newElement;
@@ -48,11 +45,26 @@ public class IconListWidget<E> extends ListView<IconListWidget.Element<E>> {
         Bindings.bindContent(super.getItems(), this.mappedElements);
     }
 
-    public void bind(ObservableList<E> items) {
+    public void bind(ObservableList<ListWidgetEntry<E>> items) {
         Bindings.bindContent(this.items, items);
     }
 
-    public static class ElementListCell<E> extends ListCell<Element<E>> {
+    @Override
+    public void deselectAll() {
+        this.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    public void select(ListWidgetEntry<E> item) {
+        this.getSelectionModel().select(this.items.indexOf(item));
+    }
+
+    @Override
+    public ListWidgetEntry<E> getSelectedItem() {
+        return this.items.get(this.getSelectionModel().getSelectedIndex());
+    }
+
+    private class ElementListCell<E> extends ListCell<Element<E>> {
         public ElementListCell() {
             super();
 
@@ -70,7 +82,7 @@ public class IconListWidget<E> extends ListView<IconListWidget.Element<E>> {
         }
     }
 
-    public static class DummyElement<E> extends VBox {
+    private class DummyElement<E> extends VBox {
         public DummyElement() {
             super();
 
@@ -78,7 +90,7 @@ public class IconListWidget<E> extends ListView<IconListWidget.Element<E>> {
         }
     }
 
-    public static class Element<E> extends GridPane {
+    class Element<E> extends GridPane {
         private E element;
         private URI iconPath;
         private String title;
@@ -87,12 +99,12 @@ public class IconListWidget<E> extends ListView<IconListWidget.Element<E>> {
 
         private Label titleLabel;
 
-        public Element(E element, String title, URI iconPath) {
+        public Element(ListWidgetEntry<E> item) {
             super();
 
-            this.element = element;
-            this.title = title;
-            this.iconPath = iconPath;
+            this.element = item.getItem();
+            this.title = item.getTitle();
+            this.iconPath = item.getIconUri();
 
             this.getStyleClass().add("iconListCell");
 
@@ -107,10 +119,6 @@ public class IconListWidget<E> extends ListView<IconListWidget.Element<E>> {
             this.add(titleLabel, 1, 0);
 
             GridPane.setHgrow(titleLabel, Priority.ALWAYS);
-        }
-
-        public static Element<ApplicationDTO> create(ApplicationDTO application) {
-            return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().get(0));
         }
 
         public E getElement() {

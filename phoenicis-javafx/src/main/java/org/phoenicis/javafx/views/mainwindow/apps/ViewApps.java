@@ -20,23 +20,21 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.IconListWidget;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widget.CompactListWidget;
+import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
@@ -51,7 +49,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private ApplicationSideBar sideBar;
 
-    private final IconListWidget<ApplicationDTO> availableApps;
+    private final CombinedListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter<ApplicationDTO> filter;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> {
@@ -70,9 +68,9 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        this.sideBar = new ApplicationSideBar();
-        this.availableApps = new IconListWidget<ApplicationDTO>(IconListWidget.Element::create,
-                (element, event) -> showAppDetails(element.getElement(), settingsManager));
+        this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
+                (element, event) -> showAppDetails(element, settingsManager));
+        this.sideBar = new ApplicationSideBar(availableApps);
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();

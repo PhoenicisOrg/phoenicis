@@ -18,8 +18,6 @@
 
 package org.phoenicis.javafx.views.common.widget;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 import java.net.URI;
@@ -32,9 +30,9 @@ public class StaticMiniature extends Region {
 
     static {
         try {
-            DEFAULT_MINIATURE = MiniatureListWidget.class.getResource("defaultMiniature.png").toURI();
-            WINE_MINIATURE = MiniatureListWidget.class.getResource("wineMiniature.png").toURI();
-            CONTAINER_MINIATURE = MiniatureListWidget.class.getResource("containerMiniature.png").toURI();
+            DEFAULT_MINIATURE = IconsListWidget.class.getResource("defaultMiniature.png").toURI();
+            WINE_MINIATURE = IconsListWidget.class.getResource("wineMiniature.png").toURI();
+            CONTAINER_MINIATURE = IconsListWidget.class.getResource("containerMiniature.png").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

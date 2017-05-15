@@ -47,84 +47,67 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public final class MiniatureListWidget<E> extends ScrollPane {
-    private final Pane content;
+public final class IconsListWidget<E> extends ScrollPane implements ListWidget<ListWidgetEntry<E>> {
+    private final FlowPane content;
+
     private Element selectedItem;
 
-    private ObservableList<E> items;
+    private ObservableList<ListWidgetEntry<E>> items;
     private ObservableList<Element<E>> mappedElements;
 
-    private MiniatureListWidget(Pane content, Function<E, Element> converter,
-            BiConsumer<Element<E>, MouseEvent> setOnMouseClicked) {
-        super(content);
+    public IconsListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
+        super();
 
-        this.content = content;
+        this.getStyleClass().add("rightPane");
+
         this.items = FXCollections.observableArrayList();
-        this.mappedElements = new MappedList<Element<E>, E>(items, value -> {
-            Element newElement = converter.apply(value);
+        this.mappedElements = new MappedList<Element<E>, ListWidgetEntry<E>>(items, value -> {
+            Element newElement = new Element(value);
 
             newElement.setOnMouseClicked(event -> {
-                unselectAll();
-                setOnMouseClicked.accept(newElement, event);
-                select(newElement);
+                setOnMouseClicked.accept(value.getItem(), event);
             });
 
             return newElement;
         });
 
-        Bindings.bindContent(content.getChildren(), this.mappedElements);
-
-        this.getStyleClass().add("rightPane");
-
+        this.content = new FlowPane();
         this.content.getStyleClass().addAll("miniatureList");
 
-        this.getChildren().add(this.content);
+        this.content.setPrefHeight(0);
+        this.content.setPrefWidth(0);
+
+        this.content.prefWidthProperty().bind(this.widthProperty());
+
+        this.setContent(this.content);
+
+        Bindings.bindContent(content.getChildren(), this.mappedElements);
 
         this.setCache(true);
         this.setCacheHint(CacheHint.QUALITY);
-
-        this.content.prefWidthProperty().bind(this.widthProperty());
         this.setHbarPolicy(ScrollBarPolicy.NEVER);
     }
 
-    /**
-     * Creates a new @class MiniatureListWidget of type @type <T>.
-     *
-     * @param converter         A converter function that converts values of type @type T to Element
-     * @param setOnMouseClicked A mouse listener function, that is called whenever a user clicks on an element.
-     *                          This listener function receives the element, which has been clicked, and the event as parameters
-     * @param <T>               The type of items to be added to this MiniatureListWidget
-     * @return
-     */
-    public static <T> MiniatureListWidget<T> create(Function<T, Element> converter,
-            BiConsumer<Element<T>, MouseEvent> setOnMouseClicked) {
-        return new MiniatureListWidget<T>(new FlowPane(), converter, setOnMouseClicked);
+    @Override
+    public void bind(ObservableList<ListWidgetEntry<E>> list) {
+        Bindings.bindContent(this.items, list);
     }
 
-    public ObservableList<E> getItems() {
-        return this.items;
-    }
-
-    public void setItems(List<E> items) {
-        this.items.setAll(items);
-    }
-
-    public List<Element<E>> getElements() {
-        return this.mappedElements;
-    }
-
-    public void unselectAll() {
-        getElements().forEach(element -> element.getStyleClass().remove("selected"));
+    @Override
+    public void deselectAll() {
+        this.mappedElements.forEach(element -> element.getStyleClass().remove("selected"));
         this.selectedItem = null;
     }
 
-    public void select(Element selectedItem) {
-        selectedItem.getStyleClass().add("selected");
-        this.selectedItem = selectedItem;
+    @Override
+    public void select(ListWidgetEntry<E> selectedItem) {
+        this.selectedItem = this.mappedElements.get(this.items.indexOf(selectedItem));
+        this.selectedItem.getStyleClass().add("selected");
     }
 
-    public Element getSelectedItem() {
-        return selectedItem;
+    @Override
+    public ListWidgetEntry<E> getSelectedItem() {
+        return this.items.get(this.mappedElements.indexOf(selectedItem));
     }
 
     public static class Element<E> extends VBox {
@@ -132,14 +115,18 @@ public final class MiniatureListWidget<E> extends ScrollPane {
 
         private final E value;
 
-        public Element(E value, String elementName, Node miniature) {
+        private final StaticMiniature miniature;
+
+        public Element(ListWidgetEntry<E> item) {
             super();
+
+            this.value = item.getItem();
+            this.elementName = item.getTitle();
+            this.miniature = new StaticMiniature(item.getIconUri());
 
             this.getStyleClass().add("miniatureListElement");
 
             this.setAlignment(Pos.CENTER);
-            this.elementName = elementName;
-            this.value = value;
 
             this.widthProperty().addListener((observable, oldValue, newValue) -> {
                 final Rectangle clip = new Rectangle(this.getWidth(), this.getHeight());
@@ -159,42 +146,6 @@ public final class MiniatureListWidget<E> extends ScrollPane {
 
             final Tooltip tooltip = new Tooltip(elementName);
             Tooltip.install(miniature, tooltip);
-        }
-
-        public Element(String appsItem, Node miniature) {
-            this(null, appsItem, miniature);
-        }
-
-        public Element(String elementName) {
-            this(elementName, new StaticMiniature());
-        }
-
-        public static Element<ApplicationDTO> create(ApplicationDTO application) {
-            return new Element<ApplicationDTO>(application, application.getName(), application.getMiniatures().isEmpty()
-                    ? new StaticMiniature() : new StaticMiniature(application.getMiniatures().get(0)));
-        }
-
-        public static Element<ContainerDTO> create(ContainerDTO container) {
-            return new Element<ContainerDTO>(container, container.getName(),
-                    new StaticMiniature(StaticMiniature.CONTAINER_MINIATURE));
-        }
-
-        public static Element<ShortcutDTO> create(ShortcutDTO shortcut) {
-            return new Element<ShortcutDTO>(shortcut, shortcut.getName(), shortcut.getMiniature() == null
-                    ? new StaticMiniature() : new StaticMiniature(shortcut.getMiniature()));
-        }
-
-        public static Element<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-            Element<EngineVersionDTO> result = new Element<EngineVersionDTO>(engineVersion, engineVersion.getVersion(),
-                    new StaticMiniature(StaticMiniature.WINE_MINIATURE));
-
-            if (!installed) {
-                ColorAdjust grayscale = new ColorAdjust();
-                grayscale.setSaturation(-1);
-                result.setEffect(grayscale);
-            }
-
-            return result;
         }
 
         public E getValue() {

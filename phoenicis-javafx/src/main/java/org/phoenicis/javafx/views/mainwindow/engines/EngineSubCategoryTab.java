@@ -10,7 +10,9 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widget.IconsListWidget;
+import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,7 +22,7 @@ import java.util.function.Consumer;
 
 /**
  * This class represents an engine sub category tab in the tabpane inside the "Engines" section tab.
- * It contains a MiniatureListWidget showing a filtered subset of engine versions belonging to the engine sub category.
+ * It contains a IconsListWidget showing a filtered subset of engine versions belonging to the engine sub category.
  *
  * @author marc
  * @since 22.04.17
@@ -31,7 +33,7 @@ public class EngineSubCategoryTab extends Tab {
 
     private String enginesPath;
 
-    private MiniatureListWidget<EngineVersionDTO> engineVersionsView;
+    private CombinedListWidget<EngineVersionDTO> engineVersionsView;
 
     private ObservableList<EngineVersionDTO> engineVersions;
     private SortedList<EngineVersionDTO> sortedEngineVersions;
@@ -71,13 +73,13 @@ public class EngineSubCategoryTab extends Tab {
      * This method populates the engines version miniature list widget and binds the filtered engine versions list to it.
      */
     private void populate() {
-        this.engineVersionsView = MiniatureListWidget.create(
-                engineVersionDTO -> MiniatureListWidget.Element
+        this.engineVersionsView = new CombinedListWidget<>(
+                engineVersionDTO -> ListWidgetEntry
                         .create(engineVersionDTO,
                                 Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(),
                                         engineSubCategory.getName(), engineVersionDTO.getVersion()))),
                 (engineItem, event) -> {
-                    EngineVersionDTO engineVersionDTO = engineItem.getValue();
+                    EngineVersionDTO engineVersionDTO = engineItem;
 
                     Map<String, String> userData = new HashMap<>();
                     userData.put("Mono", engineVersionDTO.getMonoFile());
@@ -90,7 +92,7 @@ public class EngineSubCategoryTab extends Tab {
                     onSelectEngine.accept(engineDTO);
                 });
 
-        Bindings.bindContent(this.engineVersionsView.getItems(), this.filteredEngineVersions);
+        this.engineVersionsView.bind(filteredEngineVersions);
     }
 
     /**

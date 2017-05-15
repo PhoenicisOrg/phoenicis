@@ -27,7 +27,9 @@ import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widget.IconsListWidget;
+import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 
 import java.util.Comparator;
@@ -40,7 +42,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
     private Consumer<ContainerDTO> onSelectContainer = (container) -> {
     };
 
-    private final MiniatureListWidget<ContainerDTO> availableContainers;
+    private final CombinedListWidget<ContainerDTO> availableContainers;
 
     private ObservableList<ContainerCategoryDTO> categories;
     private SortedList<ContainerCategoryDTO> sortedCategories;
@@ -53,8 +55,8 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
 
         this.sideBar = new ContainerSideBar();
 
-        this.availableContainers = MiniatureListWidget.create(MiniatureListWidget.Element::create,
-                (element, event) -> showContainerDetails(element.getValue()));
+        this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
+                (element, event) -> showContainerDetails(element));
 
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));
@@ -66,7 +68,8 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         this.sideBar.setOnApplyFilter(this::applyFilter);
 
         this.sideBar.bindCategories(this.sortedCategories);
-        Bindings.bindContent(this.availableContainers.getItems(), this.sortedContainers);
+
+        this.availableContainers.bind(sortedContainers);
 
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> showAvailableContainers());

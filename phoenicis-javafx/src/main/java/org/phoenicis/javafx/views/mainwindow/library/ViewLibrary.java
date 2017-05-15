@@ -18,10 +18,15 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widget.IconsListWidget;
+import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
@@ -38,7 +43,9 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
     private LibrarySideBar sideBar;
 
-    private MiniatureListWidget<ShortcutDTO> applicationListWidget;
+    private ObservableList<ShortcutDTO> shortcuts;
+
+    private CombinedListWidget<ShortcutDTO> applicationListWidget;
 
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {
@@ -53,9 +60,13 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
+        this.shortcuts = FXCollections.observableArrayList();
+
         this.sideBar = new LibrarySideBar(applicationName);
 
         this.drawContent();
+
+        this.applicationListWidget.bind(shortcuts);
 
         this.setSideBar(sideBar);
         this.setCenter(libraryTabs);
@@ -82,11 +93,11 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     public void populate(List<ShortcutDTO> shortcutDTOs) {
-        applicationListWidget.setItems(shortcutDTOs);
+        this.shortcuts.setAll(shortcutDTOs);
 
         applicationListWidget.setOnMouseClicked(event -> {
             sideBar.hideShortcut();
-            applicationListWidget.unselectAll();
+            applicationListWidget.deselectAll();
             onShortcutSelected.accept(null);
             event.consume();
         });
@@ -101,22 +112,21 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         installedApplication.setText(translate("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
-        applicationListWidget = MiniatureListWidget.create(MiniatureListWidget.Element::create,
-                (selectedItem, event) -> {
-                    ShortcutDTO shortcutDTO = selectedItem.getValue();
+        applicationListWidget = new CombinedListWidget<ShortcutDTO>(ListWidgetEntry::create, (selectedItem, event) -> {
+            ShortcutDTO shortcutDTO = selectedItem;
 
-                    applicationListWidget.unselectAll();
-                    applicationListWidget.select(selectedItem);
-                    onShortcutSelected.accept(shortcutDTO);
+            applicationListWidget.deselectAll();
+            applicationListWidget.select(selectedItem);
+            onShortcutSelected.accept(shortcutDTO);
 
-                    sideBar.showShortcut(shortcutDTO);
+            sideBar.showShortcut(shortcutDTO);
 
-                    if (event.getClickCount() == 2) {
-                        onShortcutDoubleClicked.accept(shortcutDTO);
-                    }
+            if (event.getClickCount() == 2) {
+                onShortcutDoubleClicked.accept(shortcutDTO);
+            }
 
-                    event.consume();
-                });
+            event.consume();
+        });
 
         installedApplication.setContent(applicationListWidget);
     }
