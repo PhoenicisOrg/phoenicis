@@ -25,8 +25,15 @@ public class ListWidgetEntry<E> {
     private Optional<List<String>> additionalInformation;
     private Optional<List<String>> detailedInformation;
 
+    private boolean enabled;
+
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-            Optional<List<String>> additionalInformation, Optional<List<String>> detailedInformation) {
+                           Optional<List<String>> additionalInformation, Optional<List<String>> detailedInformation) {
+        this(item, iconUri, defaultIconUri, title, additionalInformation, detailedInformation, true);
+    }
+
+    public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
+            Optional<List<String>> additionalInformation, Optional<List<String>> detailedInformation, boolean enabled) {
         super();
 
         this.item = item;
@@ -37,6 +44,8 @@ public class ListWidgetEntry<E> {
         this.title = title;
         this.additionalInformation = additionalInformation;
         this.detailedInformation = detailedInformation;
+
+        this.enabled = enabled;
     }
 
     public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
@@ -60,17 +69,9 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-        ListWidgetEntry<EngineVersionDTO> result = new ListWidgetEntry<EngineVersionDTO>(engineVersion,
+        return new ListWidgetEntry<EngineVersionDTO>(engineVersion,
                 Optional.empty(), StaticMiniature.WINE_MINIATURE, engineVersion.getVersion(), Optional.empty(),
-                Optional.empty());
-
-        //        if (!installed) {
-        //            ColorAdjust grayscale = new ColorAdjust();
-        //            grayscale.setSaturation(-1);
-        //            result.setEffect(grayscale);
-        //        }
-
-        return result;
+                Optional.empty(), installed);
     }
 
     public E getItem() {
@@ -91,5 +92,9 @@ public class ListWidgetEntry<E> {
 
     public Optional<List<String>> getDetailedInformation() {
         return this.detailedInformation;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
     }
 }

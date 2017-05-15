@@ -157,6 +157,12 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
 
             final Tooltip tooltip = new Tooltip(elementName);
             Tooltip.install(miniature, tooltip);
+
+            if (!item.isEnabled()) {
+                ColorAdjust grayscale = new ColorAdjust();
+                grayscale.setSaturation(-1);
+                this.setEffect(grayscale);
+            }
         }
 
         public E getValue() {
