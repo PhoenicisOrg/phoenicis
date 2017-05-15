@@ -15,12 +15,27 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
- * Created by marc on 14.05.17.
+ * A {@link ListWidget} for a compact list containing a small miniature image, a title and a set of additional information for each list entry.
+ *
+ * @author marc
+ * @since 14.05.17
  */
 public class CompactListWidget<E> extends ListView<CompactListElement<E>> implements ListWidget<ListWidgetEntry<E>> {
+    /**
+     * A list containing all {@link ListWidgetEntry} objects to be shown inside this {@link ListWidget}
+     */
     private ObservableList<ListWidgetEntry<E>> items;
+
+    /**
+     * A list containing all mapped {@link CompactListElement} objects to the <code>items</code>
+     */
     private MappedList<CompactListElement<E>, ListWidgetEntry<E>> mappedElements;
 
+    /**
+     * Constructor
+     *
+     * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
+     */
     public CompactListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
@@ -45,6 +60,7 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
         Bindings.bindContent(super.getItems(), this.mappedElements);
     }
 
+    @Override
     public void bind(ObservableList<ListWidgetEntry<E>> items) {
         Bindings.bindContent(this.items, items);
     }

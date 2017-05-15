@@ -7,23 +7,40 @@ import javafx.scene.layout.Region;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by marc on 15.05.17.
+ * A list element for a {@link CompactListWidget}
+ *
+ * @author marc
+ * @since 15.05.17
  */
 public class CompactListElement<E> extends GridPane {
-    private E element;
+    /**
+     * The item this element contains
+     */
+    private ListWidgetEntry<E> item;
 
+    /**
+     * The miniature image to be shown inside this element
+     */
     private Region icon;
+
+    /**
+     * The title label inside this element
+     */
     private Label titleLabel;
 
+    /**
+     * Constructor
+     *
+     * @param item The item for which a CompactListElement should be created
+     */
     public CompactListElement(ListWidgetEntry<E> item) {
         super();
 
-        this.element = item.getItem();
+        this.item = item;
 
         this.getStyleClass().add("iconListCell");
 
@@ -57,7 +74,11 @@ public class CompactListElement<E> extends GridPane {
         this.getColumnConstraints().setAll(constraints);
     }
 
+    /**
+     * Returns the item belonging to this CompactListElement
+     * @return The item belonging to this CompactListElement
+     */
     public E getElement() {
-        return element;
+        return item.getItem();
     }
 }

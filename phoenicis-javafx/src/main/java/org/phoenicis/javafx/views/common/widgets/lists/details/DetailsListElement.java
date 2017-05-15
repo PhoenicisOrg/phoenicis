@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.common.widgets.lists.details;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
@@ -11,14 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by marc on 15.05.17.
+ * A list element for a {@link DetailsListWidget}
+ *
+ * @author marc
+ * @since 15.05.17
  */
 public class DetailsListElement<E> extends GridPane {
+    /**
+     * The item this element contains
+     */
     private ListWidgetEntry<E> item;
 
-    private Region icon;
+    /**
+     * The title label inside this element
+     */
     private Label titleLabel;
 
+    /**
+     * Constructor
+     *
+     * @param item The item for which a DetailsListElement should be created
+     */
     public DetailsListElement(ListWidgetEntry<E> item) {
         super();
 
@@ -60,6 +72,10 @@ public class DetailsListElement<E> extends GridPane {
         this.getColumnConstraints().setAll(constraints);
     }
 
+    /**
+     * Returns the item belonging to this DetailsListElement
+     * @return The item belonging to this DetailsListElement
+     */
     public E getElement() {
         return item.getItem();
     }

@@ -15,12 +15,27 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 /**
- * Created by marc on 15.05.17.
+ * A {@link ListWidget} for a details list containing a title and a set of additional information for each list entry.
+ *
+ * @author marc
+ * @since 15.05.17
  */
 public class DetailsListWidget<E> extends ListView<DetailsListElement<E>> implements ListWidget<ListWidgetEntry<E>> {
+    /**
+     * A list containing all {@link ListWidgetEntry} objects to be shown inside this {@link ListWidget}
+     */
     private ObservableList<ListWidgetEntry<E>> items;
+
+    /**
+     * A list containing all mapped {@link DetailsListElement} objects to the <code>items</code>
+     */
     private MappedList<DetailsListElement<E>, ListWidgetEntry<E>> mappedElements;
 
+    /**
+     * Constructor
+     *
+     * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
+     */
     public DetailsListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
@@ -45,6 +60,7 @@ public class DetailsListWidget<E> extends ListView<DetailsListElement<E>> implem
         Bindings.bindContent(super.getItems(), this.mappedElements);
     }
 
+    @Override
     public void bind(ObservableList<ListWidgetEntry<E>> items) {
         Bindings.bindContent(this.items, items);
     }

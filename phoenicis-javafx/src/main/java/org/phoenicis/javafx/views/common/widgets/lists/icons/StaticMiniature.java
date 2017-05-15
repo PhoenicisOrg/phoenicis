@@ -24,6 +24,9 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * A static miniature shown inside a {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+ */
 public class StaticMiniature extends Region {
     public static URI DEFAULT_MINIATURE;
     public static URI WINE_MINIATURE;
@@ -39,6 +42,11 @@ public class StaticMiniature extends Region {
         }
     }
 
+    /**
+     * Constructor
+     *
+     * @param miniatureImageUri An uri to the miniature image inside this StaticMiniature
+     */
     public StaticMiniature(URI miniatureImageUri) {
         super();
 
