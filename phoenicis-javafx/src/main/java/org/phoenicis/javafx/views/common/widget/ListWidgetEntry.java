@@ -1,13 +1,10 @@
 package org.phoenicis.javafx.views.common.widget;
 
-import javafx.scene.effect.ColorAdjust;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainerSideBar;
 import org.phoenicis.library.dto.ShortcutDTO;
 
-import javax.swing.text.html.Option;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -22,18 +19,18 @@ public class ListWidgetEntry<E> {
     private Optional<URI> iconUri;
 
     private String title;
-    private Optional<List<String>> additionalInformation;
-    private Optional<List<String>> detailedInformation;
+    private Optional<List<AdditionalListWidgetInformation>> additionalInformation;
+    private Optional<List<AdditionalListWidgetInformation>> detailedInformation;
 
     private boolean enabled;
 
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-                           Optional<List<String>> additionalInformation, Optional<List<String>> detailedInformation) {
+                           Optional<List<AdditionalListWidgetInformation>> additionalInformation, Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
         this(item, iconUri, defaultIconUri, title, additionalInformation, detailedInformation, true);
     }
 
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-            Optional<List<String>> additionalInformation, Optional<List<String>> detailedInformation, boolean enabled) {
+                           Optional<List<AdditionalListWidgetInformation>> additionalInformation, Optional<List<AdditionalListWidgetInformation>> detailedInformation, boolean enabled) {
         super();
 
         this.item = item;
@@ -86,11 +83,11 @@ public class ListWidgetEntry<E> {
         return this.title;
     }
 
-    public Optional<List<String>> getAdditionalInformation() {
+    public Optional<List<AdditionalListWidgetInformation>> getAdditionalInformation() {
         return this.additionalInformation;
     }
 
-    public Optional<List<String>> getDetailedInformation() {
+    public Optional<List<AdditionalListWidgetInformation>> getDetailedInformation() {
         return this.detailedInformation;
     }
 

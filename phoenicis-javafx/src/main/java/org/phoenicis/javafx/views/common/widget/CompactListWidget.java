@@ -9,10 +9,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.phoenicis.apps.dto.ApplicationDTO;
+import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.MappedList;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -113,6 +116,7 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
 
             this.getStyleClass().add("iconListCell");
 
+
             this.icon = new Region();
             this.icon.getStyleClass().add("iconListMiniatureImage");
             this.icon.setStyle(String.format("-fx-background-image: url(\"%s\");", iconPath.toString()));
@@ -120,10 +124,22 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
             this.titleLabel = new Label(title);
             this.titleLabel.setWrapText(true);
 
+            List<ColumnConstraints> constraints = new ArrayList<>();
+
             this.add(icon, 0, 0);
             this.add(titleLabel, 1, 0);
 
-            GridPane.setHgrow(titleLabel, Priority.ALWAYS);
+            item.getAdditionalInformation().ifPresent(additionInformations -> additionInformations.forEach(information -> {
+                constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
+
+                Label informationLabel = new Label(information.getContent());
+                informationLabel.setWrapText(true);
+
+                this.add(informationLabel, this.getChildren().size(),0);
+            }));
+
+
+            this.getColumnConstraints().setAll(constraints);
         }
 
         public E getElement() {
