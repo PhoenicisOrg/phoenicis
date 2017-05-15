@@ -12,8 +12,10 @@ import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.javafx.views.common.MappedList;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by marc on 14.05.17.
@@ -36,7 +38,9 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
             Element<E> newElement = new Element<E>(value);
 
             newElement.setOnMouseClicked(event -> {
+                this.deselectAll();
                 setOnMouseClicked.accept(value.getItem(), event);
+                this.select(value);
             });
 
             return newElement;
@@ -60,8 +64,9 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
     }
 
     @Override
-    public ListWidgetEntry<E> getSelectedItem() {
-        return this.items.get(this.getSelectionModel().getSelectedIndex());
+    public Collection<ListWidgetEntry<E>> getSelectedItems() {
+        return this.getSelectionModel().getSelectedIndices().stream().map(index -> items.get(index))
+                .collect(Collectors.toList());
     }
 
     private class ElementListCell<E> extends ListCell<Element<E>> {

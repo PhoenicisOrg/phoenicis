@@ -43,14 +43,15 @@ import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.io.ByteArrayInputStream;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class IconsListWidget<E> extends ScrollPane implements ListWidget<ListWidgetEntry<E>> {
     private final FlowPane content;
 
-    private Element selectedItem;
+    private Set<Element<E>> selectedItems;
 
     private ObservableList<ListWidgetEntry<E>> items;
     private ObservableList<Element<E>> mappedElements;
@@ -60,12 +61,16 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
 
         this.getStyleClass().add("rightPane");
 
+        this.selectedItems = new HashSet<>();
+
         this.items = FXCollections.observableArrayList();
         this.mappedElements = new MappedList<Element<E>, ListWidgetEntry<E>>(items, value -> {
             Element newElement = new Element(value);
 
             newElement.setOnMouseClicked(event -> {
+                this.deselectAll();
                 setOnMouseClicked.accept(value.getItem(), event);
+                this.select(value);
             });
 
             return newElement;
@@ -95,19 +100,25 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
 
     @Override
     public void deselectAll() {
-        this.mappedElements.forEach(element -> element.getStyleClass().remove("selected"));
-        this.selectedItem = null;
+        this.selectedItems.forEach(element -> element.getStyleClass().remove("selected"));
+        this.selectedItems.clear();
     }
 
     @Override
     public void select(ListWidgetEntry<E> selectedItem) {
-        this.selectedItem = this.mappedElements.get(this.items.indexOf(selectedItem));
-        this.selectedItem.getStyleClass().add("selected");
+        Element<E> item = this.mappedElements.get(this.items.indexOf(selectedItem));
+
+        if (!item.getStyleClass().contains("selected")) {
+            item.getStyleClass().add("selected");
+        }
+
+        this.selectedItems.add(item);
     }
 
     @Override
-    public ListWidgetEntry<E> getSelectedItem() {
-        return this.items.get(this.mappedElements.indexOf(selectedItem));
+    public Collection<ListWidgetEntry<E>> getSelectedItems() {
+        return this.selectedItems.stream().map(index -> items.get(mappedElements.indexOf(index)))
+                .collect(Collectors.toList());
     }
 
     public static class Element<E> extends VBox {

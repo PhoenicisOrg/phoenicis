@@ -10,13 +10,19 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.views.common.MappedList;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by marc on 15.05.17.
  */
 public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
+    private Set<ListWidgetEntry<E>> selectedItems;
+
     private ObservableList<E> items;
 
     private MappedList<ListWidgetEntry<E>, E> mappedItems;
@@ -32,6 +38,7 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
         this.setPrefHeight(0);
         this.setPrefWidth(0);
 
+        this.selectedItems = new HashSet<>();
         this.items = FXCollections.observableArrayList();
         this.mappedItems = new MappedList<>(items, converter);
 
@@ -65,6 +72,13 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
         this.getChildren().setAll((Node) this.currentList);
 
         VBox.setVgrow((Node) this.currentList, Priority.ALWAYS);
+
+        this.updateSelection();
+    }
+
+    private void updateSelection() {
+        this.currentList.deselectAll();
+        this.selectedItems.forEach(currentList::select);
     }
 
     @Override
@@ -74,20 +88,18 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
 
     @Override
     public void deselectAll() {
-        this.iconsList.deselectAll();
-        this.compactList.deselectAll();
+        this.selectedItems.clear();
+        this.updateSelection();
     }
 
     @Override
     public void select(E item) {
-        ListWidgetEntry<E> entry = mappedItems.get(items.indexOf(item));
-
-        this.iconsList.select(entry);
-        this.compactList.select(entry);
+        this.selectedItems.add(mappedItems.get(items.indexOf(item)));
+        this.updateSelection();
     }
 
     @Override
-    public E getSelectedItem() {
-        return this.currentList.getSelectedItem().getItem();
+    public Collection<E> getSelectedItems() {
+        return this.selectedItems.stream().map(ListWidgetEntry::getItem).collect(Collectors.toList());
     }
 }
