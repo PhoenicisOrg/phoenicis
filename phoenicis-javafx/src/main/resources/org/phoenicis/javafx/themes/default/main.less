@@ -310,6 +310,29 @@
     -fx-text-alignment: center;
 }
 
+.iconListWidget {
+    .iconListCell {
+        @cellHeight: 6em;
+
+        -fx-hgap: 0.5em;
+        -fx-pref-height: @cellHeight;
+
+        .iconListMiniatureImage {
+            @miniatureWidth: 8em;
+
+            -fx-background-size: stretch;
+            -fx-background-repeat: no-repeat;
+            -fx-background-position: center;
+            -fx-min-width: @miniatureWidth;
+            -fx-pref-width: @miniatureWidth;
+            -fx-max-width: @miniatureWidth;
+            -fx-min-height: @cellHeight;
+            -fx-pref-height: @cellHeight;
+            -fx-max-height: @cellHeight;
+        }
+    }
+}
+
 /*******************************************************/
 /***************** installation wizard *****************/
 /*******************************************************/
