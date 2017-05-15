@@ -6,6 +6,7 @@ import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +26,14 @@ public class ListWidgetEntry<E> {
     private boolean enabled;
 
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-                           Optional<List<AdditionalListWidgetInformation>> additionalInformation, Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
+            Optional<List<AdditionalListWidgetInformation>> additionalInformation,
+            Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
         this(item, iconUri, defaultIconUri, title, additionalInformation, detailedInformation, true);
     }
 
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-                           Optional<List<AdditionalListWidgetInformation>> additionalInformation, Optional<List<AdditionalListWidgetInformation>> detailedInformation, boolean enabled) {
+            Optional<List<AdditionalListWidgetInformation>> additionalInformation,
+            Optional<List<AdditionalListWidgetInformation>> detailedInformation, boolean enabled) {
         super();
 
         this.item = item;
@@ -52,7 +55,8 @@ public class ListWidgetEntry<E> {
         }
 
         return new ListWidgetEntry<ApplicationDTO>(application, iconPath, StaticMiniature.DEFAULT_MINIATURE,
-                application.getName(), Optional.empty(), Optional.empty());
+                application.getName(), Optional.empty(),
+                Optional.of(Arrays.asList(new AdditionalListWidgetInformation(application.getDescription(), 50))));
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
@@ -66,9 +70,8 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-        return new ListWidgetEntry<EngineVersionDTO>(engineVersion,
-                Optional.empty(), StaticMiniature.WINE_MINIATURE, engineVersion.getVersion(), Optional.empty(),
-                Optional.empty(), installed);
+        return new ListWidgetEntry<EngineVersionDTO>(engineVersion, Optional.empty(), StaticMiniature.WINE_MINIATURE,
+                engineVersion.getVersion(), Optional.empty(), Optional.empty(), installed);
     }
 
     public E getItem() {

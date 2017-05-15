@@ -310,7 +310,7 @@
     -fx-text-alignment: center;
 }
 
-.iconListWidget {
+.compactListWidget {
     .iconListCell {
         @cellHeight: 6em;
 
@@ -329,6 +329,20 @@
             -fx-min-height: @cellHeight;
             -fx-pref-height: @cellHeight;
             -fx-max-height: @cellHeight;
+        }
+
+        .information {
+            -fx-max-height: @cellHeight;
+        }
+    }
+}
+
+.detailsListWidget {
+    .iconListCell {
+        -fx-hgap: 0.5em;
+
+        .information {
+            -fx-max-height: 3em;
         }
     }
 }

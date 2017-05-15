@@ -7,33 +7,33 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import org.phoenicis.apps.dto.ApplicationDTO;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.MappedList;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Created by marc on 14.05.17.
+ * Created by marc on 15.05.17.
  */
-public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
+public class DetailsListWidget<E> extends ListView<DetailsListWidget.Element>
         implements ListWidget<ListWidgetEntry<E>> {
     private ObservableList<ListWidgetEntry<E>> items;
     private MappedList<Element<E>, ListWidgetEntry<E>> mappedElements;
 
-    public CompactListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
+    public DetailsListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
         this.setPrefWidth(0);
         this.setPrefHeight(0);
-        this.getStyleClass().add("compactListWidget");
+        this.getStyleClass().add("detailsListWidget");
         this.setCellFactory(param -> new ElementListCell());
 
         this.items = FXCollections.observableArrayList();
@@ -85,12 +85,12 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
             if (!empty && item != null) {
                 setGraphic(item);
             } else {
-                setGraphic(new DummyElement<E>());
+                setGraphic(new DummyElement());
             }
         }
     }
 
-    private class DummyElement<E> extends VBox {
+    private class DummyElement extends VBox {
         public DummyElement() {
             super();
 
@@ -100,7 +100,7 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
 
     public class Element<E> extends GridPane {
         private E element;
-        private URI iconPath;
+
         private String title;
 
         private Region icon;
@@ -112,26 +112,30 @@ public class CompactListWidget<E> extends ListView<CompactListWidget.Element>
 
             this.element = item.getItem();
             this.title = item.getTitle();
-            this.iconPath = item.getIconUri();
 
             this.getStyleClass().add("iconListCell");
-
-            this.icon = new Region();
-            this.icon.getStyleClass().add("iconListMiniatureImage");
-            this.icon.setStyle(String.format("-fx-background-image: url(\"%s\");", iconPath.toString()));
 
             this.titleLabel = new Label(title);
             this.titleLabel.setWrapText(true);
             this.titleLabel.getStyleClass().add("information");
 
             List<ColumnConstraints> constraints = new ArrayList<>();
-            constraints.add(new ColumnConstraints());
-            constraints.add(new ColumnConstraintsWithPercentage(40));
+            constraints.add(new ColumnConstraintsWithPercentage(30));
 
-            this.add(icon, 0, 0);
-            this.add(titleLabel, 1, 0);
+            this.add(titleLabel, 0, 0);
 
             item.getAdditionalInformation()
+                    .ifPresent(additionInformations -> additionInformations.forEach(information -> {
+                        constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
+
+                        Label informationLabel = new Label(information.getContent());
+                        informationLabel.setWrapText(true);
+                        informationLabel.getStyleClass().add("information");
+
+                        this.add(informationLabel, this.getChildren().size(), 0);
+                    }));
+
+            item.getDetailedInformation()
                     .ifPresent(additionInformations -> additionInformations.forEach(information -> {
                         constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
 

@@ -29,6 +29,7 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
 
     private IconsListWidget<E> iconsList;
     private CompactListWidget<E> compactList;
+    private DetailsListWidget<E> detailsList;
 
     private ListWidget<ListWidgetEntry<E>> currentList;
 
@@ -50,9 +51,11 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
 
         this.iconsList = new IconsListWidget<>(proxy);
         this.compactList = new CompactListWidget<>(proxy);
+        this.detailsList = new DetailsListWidget<>(proxy);
 
         this.iconsList.bind(mappedItems);
         this.compactList.bind(mappedItems);
+        this.detailsList.bind(mappedItems);
 
         this.showList(ListWidgetType.ICONS_LIST);
     }
@@ -64,6 +67,9 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
                 break;
             case COMPACT_LIST:
                 this.currentList = compactList;
+                break;
+            case DETAILS_LIST:
+                this.currentList = detailsList;
                 break;
             default:
                 this.currentList = iconsList;

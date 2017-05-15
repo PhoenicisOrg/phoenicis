@@ -12,13 +12,18 @@ import javax.swing.*;
  * Created by marc on 15.05.17.
  */
 public class LeftListWidgetChooser<E> extends HBox {
+    private CombinedListWidget<E> listWidget;
+
     private ToggleGroup toggleGroup;
 
     private ToggleButton iconsListButton;
     private ToggleButton compactListButton;
+    private ToggleButton detailsListButton;
 
     public LeftListWidgetChooser(CombinedListWidget<E> listWidget) {
         super();
+
+        this.listWidget = listWidget;
 
         this.getStyleClass().add("listChooser");
 
@@ -34,8 +39,15 @@ public class LeftListWidgetChooser<E> extends HBox {
         this.compactListButton.getStyleClass().addAll("listIcon", "compactList");
         this.compactListButton.setOnAction(event -> listWidget.showList(ListWidgetType.COMPACT_LIST));
 
+        this.detailsListButton = new ToggleButton();
+        this.detailsListButton.setToggleGroup(toggleGroup);
+        this.detailsListButton.getStyleClass().addAll("listIcon", "detailsList");
+        this.detailsListButton.setOnAction(event -> listWidget.showList(ListWidgetType.DETAILS_LIST));
+
         this.iconsListButton.setSelected(true);
 
-        this.getChildren().setAll(iconsListButton, compactListButton);
+        this.getChildren().setAll(iconsListButton, compactListButton, detailsListButton);
+
+        this.listWidget.showList(ListWidgetType.ICONS_LIST);
     }
 }
