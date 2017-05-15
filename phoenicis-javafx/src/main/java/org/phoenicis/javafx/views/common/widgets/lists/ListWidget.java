@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.widget;
+package org.phoenicis.javafx.views.common.widgets.lists;
 
 import javafx.collections.ObservableList;
 

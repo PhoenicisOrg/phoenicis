@@ -16,36 +16,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.common.widget;
+package org.phoenicis.javafx.views.common.widgets.lists.icons;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.MappedList;
-import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.icons.StaticMiniature;
 
-import java.io.ByteArrayInputStream;
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class IconsListWidget<E> extends ScrollPane implements ListWidget<ListWidgetEntry<E>> {
@@ -122,21 +116,14 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
     }
 
     public static class Element<E> extends VBox {
-        private final String elementName;
-
-        private final E value;
-
-        private final StaticMiniature miniature;
+        private ListWidgetEntry<E> item;
 
         public Element(ListWidgetEntry<E> item) {
             super();
 
-            this.value = item.getItem();
-            this.elementName = item.getTitle();
-            this.miniature = new StaticMiniature(item.getIconUri());
+            this.item = item;
 
             this.getStyleClass().add("miniatureListElement");
-
             this.setAlignment(Pos.CENTER);
 
             this.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -149,13 +136,15 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
                 this.setClip(clip);
             });
 
-            final Label label = new Label(elementName);
+            final Label label = new Label(item.getTitle());
             label.getStyleClass().add("miniatureText");
+
+            StaticMiniature miniature = new StaticMiniature(item.getIconUri());
 
             this.getChildren().add(miniature);
             this.getChildren().add(label);
 
-            final Tooltip tooltip = new Tooltip(elementName);
+            final Tooltip tooltip = new Tooltip(item.getTitle());
             Tooltip.install(miniature, tooltip);
 
             if (!item.isEnabled()) {
@@ -166,11 +155,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
         }
 
         public E getValue() {
-            return this.value;
-        }
-
-        public String getName() {
-            return elementName;
+            return this.item.getItem();
         }
 
         @Override
@@ -187,7 +172,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
 
             EqualsBuilder builder = new EqualsBuilder();
 
-            builder.append(value, that.value);
+            builder.append(item, that.item);
 
             return builder.isEquals();
         }
@@ -196,7 +181,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
         public int hashCode() {
             HashCodeBuilder builder = new HashCodeBuilder();
 
-            builder.append(value);
+            builder.append(item);
 
             return builder.toHashCode();
         }

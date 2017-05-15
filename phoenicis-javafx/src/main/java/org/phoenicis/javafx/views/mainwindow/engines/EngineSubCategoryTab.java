@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -10,9 +9,8 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widget.IconsListWidget;
-import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

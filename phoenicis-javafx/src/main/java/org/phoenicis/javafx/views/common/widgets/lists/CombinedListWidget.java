@@ -1,14 +1,16 @@
-package org.phoenicis.javafx.views.common.widget;
+package org.phoenicis.javafx.views.common.widgets.lists;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.views.common.MappedList;
+import org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListWidget;
 
 import java.util.Collection;
 import java.util.HashSet;

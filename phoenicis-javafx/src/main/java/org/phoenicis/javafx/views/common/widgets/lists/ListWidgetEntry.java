@@ -1,8 +1,9 @@
-package org.phoenicis.javafx.views.common.widget;
+package org.phoenicis.javafx.views.common.widgets.lists;
 
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.common.widgets.lists.icons.StaticMiniature;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.net.URI;

@@ -8,11 +8,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;

@@ -19,7 +19,6 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -27,9 +26,8 @@ import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widget.IconsListWidget;
-import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 
 import java.util.Comparator;

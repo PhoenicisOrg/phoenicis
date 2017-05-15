@@ -18,15 +18,13 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widget.IconsListWidget;
-import org.phoenicis.javafx.views.common.widget.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;

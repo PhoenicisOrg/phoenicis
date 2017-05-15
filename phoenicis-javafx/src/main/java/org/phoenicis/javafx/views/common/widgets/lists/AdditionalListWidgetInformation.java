@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.widget;
+package org.phoenicis.javafx.views.common.widgets.lists;
 
 /**
  * Created by marc on 15.05.17.

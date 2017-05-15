@@ -3,10 +3,8 @@ package org.phoenicis.javafx.views.mainwindow.ui;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-import org.phoenicis.javafx.views.common.widget.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widget.ListWidgetType;
-
-import javax.swing.*;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
 
 /**
  * Created by marc on 15.05.17.
