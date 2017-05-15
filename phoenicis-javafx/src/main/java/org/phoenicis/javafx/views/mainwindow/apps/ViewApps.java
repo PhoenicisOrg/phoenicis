@@ -27,12 +27,15 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widget.IconListWidget;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.settings.SettingsManager;
@@ -48,7 +51,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private ApplicationSideBar sideBar;
 
-    private final MiniatureListWidget<ApplicationDTO> availableApps;
+    private final IconListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter<ApplicationDTO> filter;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> {
@@ -68,8 +71,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         super("Apps", themeManager);
 
         this.sideBar = new ApplicationSideBar();
-        this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create,
-                (element, event) -> showAppDetails(element.getValue(), settingsManager));
+        this.availableApps = new IconListWidget<ApplicationDTO>(IconListWidget.Element::create,
+                (element, event) -> showAppDetails(element.getElement(), settingsManager));
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();
@@ -88,7 +91,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
         // create the bindings between the visual components and the observable lists
         this.sideBar.bindCategories(this.sortedCategories);
-        Bindings.bindContent(this.availableApps.getItems(), this.sortedApplications);
+        this.availableApps.bind(this.sortedApplications);
 
         // set the filter event consumers
         this.sideBar.setOnFilterTextEnter(this::processFilterText);
