@@ -18,16 +18,25 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -38,7 +47,15 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
     private LibrarySideBar sideBar;
 
-    private MiniatureListWidget<ShortcutDTO> applicationListWidget;
+    private MiniatureListWidget<ShortcutDTO> availableShortcuts;
+    private final ShortcutFilter<ShortcutDTO> filter;
+
+    private ObservableList<ShortcutCategoryDTO> categories;
+    private SortedList<ShortcutCategoryDTO> sortedCategories;
+
+    private ObservableList<ShortcutDTO> shortcuts;
+    private FilteredList<ShortcutDTO> filteredShortcuts;
+    private SortedList<ShortcutDTO> sortedShortcuts;
 
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {
@@ -53,12 +70,59 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
+        availableShortcuts = MiniatureListWidget.create(MiniatureListWidget.Element::create, (selectedItem, event) -> {
+            ShortcutDTO shortcutDTO = selectedItem.getValue();
+
+            availableShortcuts.unselectAll();
+            availableShortcuts.select(selectedItem);
+            onShortcutSelected.accept(shortcutDTO);
+
+            sideBar.showShortcut(shortcutDTO);
+
+            if (event.getClickCount() == 2) {
+                onShortcutDoubleClicked.accept(shortcutDTO);
+            }
+
+            event.consume();
+        });
+
+        // initialising the category lists
+        this.categories = FXCollections.observableArrayList();
+        this.sortedCategories = this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
+
+        // initialising the shortcut lists
+        this.shortcuts = new ExpandedList<ShortcutDTO, ShortcutCategoryDTO>(this.sortedCategories,
+                ShortcutCategoryDTO::getShortcuts);
+        this.filteredShortcuts = new FilteredList<ShortcutDTO>(this.shortcuts);
+        this.sortedShortcuts = this.filteredShortcuts.sorted(Comparator.comparing(ShortcutDTO::getName));
+
+        this.filter = new ShortcutFilter<ShortcutDTO>(filteredShortcuts,
+                (filterText, shortcut) -> shortcut.getName().toLowerCase().contains(filterText));
+
+        availableShortcuts.setOnMouseClicked(event -> {
+            sideBar.hideShortcut();
+            availableShortcuts.unselectAll();
+            onShortcutSelected.accept(null);
+            event.consume();
+        });
+
         this.sideBar = new LibrarySideBar(applicationName);
+        this.sideBar.bindCategories(this.sortedCategories);
+        Bindings.bindContent(this.availableShortcuts.getItems(), this.sortedShortcuts);
+
+        // set the category selection consumers
+        this.sideBar.setOnCategorySelection(category -> {
+            filter.setFilters(category.getShortcuts()::contains);
+            showAvailableShortcuts();
+        });
+        this.sideBar.setOnAllCategorySelection(() -> {
+            filter.clearFilters();
+            showAvailableShortcuts();
+        });
 
         this.drawContent();
 
         this.setSideBar(sideBar);
-        this.setCenter(libraryTabs);
     }
 
     public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {
@@ -81,14 +145,21 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.sideBar.setOnShortcutRun(onShortcutRun);
     }
 
-    public void populate(List<ShortcutDTO> shortcutDTOs) {
-        applicationListWidget.setItems(shortcutDTOs);
+    /**
+     * Show available apps panel
+     */
+    public void showAvailableShortcuts() {
+        this.closeDetailsView();
+        drawContent();
+    }
 
-        applicationListWidget.setOnMouseClicked(event -> {
-            sideBar.hideShortcut();
-            applicationListWidget.unselectAll();
-            onShortcutSelected.accept(null);
-            event.consume();
+    public void populate(List<ShortcutCategoryDTO> categories) {
+        Platform.runLater(() -> {
+            this.categories.setAll(categories);
+            this.filter.clearAll();
+            this.sideBar.selectAllCategories();
+
+            this.showAvailableShortcuts();
         });
     }
 
@@ -101,24 +172,9 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         installedApplication.setText(translate("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
-        applicationListWidget = MiniatureListWidget.create(MiniatureListWidget.Element::create,
-                (selectedItem, event) -> {
-                    ShortcutDTO shortcutDTO = selectedItem.getValue();
+        installedApplication.setContent(availableShortcuts);
 
-                    applicationListWidget.unselectAll();
-                    applicationListWidget.select(selectedItem);
-                    onShortcutSelected.accept(shortcutDTO);
-
-                    sideBar.showShortcut(shortcutDTO);
-
-                    if (event.getClickCount() == 2) {
-                        onShortcutDoubleClicked.accept(shortcutDTO);
-                    }
-
-                    event.consume();
-                });
-
-        installedApplication.setContent(applicationListWidget);
+        this.setCenter(libraryTabs);
     }
 
     public void createNewTab(Tab tab) {

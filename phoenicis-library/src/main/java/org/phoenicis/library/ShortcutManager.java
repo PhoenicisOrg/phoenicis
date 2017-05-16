@@ -50,6 +50,7 @@ public class ShortcutManager {
         final String baseName = shortcutDTO.getName();
         final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
+        final File categoryFile = new File(shortcutDirectoryFile, baseName + ".category");
         final File scriptFile = new File(shortcutDirectoryFile, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectoryFile, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectoryFile, baseName + ".miniature");
@@ -61,6 +62,9 @@ public class ShortcutManager {
 
         try {
             FileUtils.writeStringToFile(scriptFile, shortcutDTO.getScript(), ENCODING);
+            if (shortcutDTO.getCategory() != null) {
+                FileUtils.writeStringToFile(categoryFile, shortcutDTO.getCategory(), ENCODING);
+            }
             if (shortcutDTO.getDescription() != null) {
                 FileUtils.writeStringToFile(descriptionFile, shortcutDTO.getDescription(), ENCODING);
             }
@@ -105,10 +109,15 @@ public class ShortcutManager {
         final String baseName = shortcutDTO.getName();
         final File shortcutDirectory = new File(this.shortcutDirectory);
 
+        final File categoryFile = new File(shortcutDirectory, baseName + ".category");
         final File scriptFile = new File(shortcutDirectory, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
+
+        if (categoryFile.exists()) {
+            categoryFile.delete();
+        }
 
         if (scriptFile.exists()) {
             scriptFile.delete();
