@@ -1,8 +1,11 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
-import javafx.scene.layout.VBox;
+import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.io.File;
@@ -37,6 +40,9 @@ public class LibrarySideBar extends LeftSideBar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
+    // the toggleable categories
+    private LeftToggleGroup<ShortcutCategoryDTO> categoryView;
+
     // consumer called after a text has been entered in the search box
     private Consumer<String> onSearch;
 
@@ -55,6 +61,10 @@ public class LibrarySideBar extends LeftSideBar {
 
     // the current selected shortcut
     private ShortcutDTO shortcut;
+
+    // consumers called after a category selection has been made
+    private Runnable onAllCategorySelection;
+    private Consumer<ShortcutCategoryDTO> onCategorySelection;
 
     // consumers called when a shortcut should be run, stopped or uninstalled
     private Consumer<ShortcutDTO> onShortcutRun;
@@ -77,9 +87,17 @@ public class LibrarySideBar extends LeftSideBar {
 
         this.populateSearchBar();
         this.populateShortcut();
+        this.populateCategories();
         this.populateAdvancedTools();
 
         this.hideShortcut();
+    }
+
+    /**
+     * This method selects the "All" application category
+     */
+    public void selectAllCategories() {
+        this.categoryView.selectAll();
     }
 
     /**
@@ -95,8 +113,8 @@ public class LibrarySideBar extends LeftSideBar {
 
         this.shortcutGroup.setTitle(shortcut.getName());
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.shortcutGroup, new LeftSpacer(),
-                this.advancedToolsGroup);
+        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, this.shortcutGroup,
+                new LeftSpacer(), this.advancedToolsGroup);
     }
 
     /**
@@ -106,7 +124,16 @@ public class LibrarySideBar extends LeftSideBar {
     public void hideShortcut() {
         this.shortcut = null;
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.advancedToolsGroup);
+        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, this.advancedToolsGroup);
+    }
+
+    /**
+     * This method binds the given category list <code>categories</code> to the categories toggle group.
+     *
+     * @param categories The to be bound category list
+     */
+    public void bindCategories(ObservableList<ShortcutCategoryDTO> categories) {
+        Bindings.bindContent(categoryView.getElements(), categories);
     }
 
     /**
@@ -115,6 +142,41 @@ public class LibrarySideBar extends LeftSideBar {
     private void populateSearchBar() {
         this.searchBar = new SearchBox(onSearch, () -> {
         });
+    }
+
+    private void populateCategories() {
+        this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton,
+                this::createCategoryToggleButton);
+    }
+
+    /**
+     * This method is responsible for creating the "All" categories toggle button.
+     *
+     * @return The newly created "All" categories toggle button
+     */
+    private ToggleButton createAllCategoriesToggleButton() {
+        final LeftToggleButton allCategoryButton = new LeftToggleButton("All");
+
+        allCategoryButton.setSelected(true);
+        allCategoryButton.setId("allButton");
+        allCategoryButton.setOnMouseClicked(event -> onAllCategorySelection.run());
+
+        return allCategoryButton;
+    }
+
+    /**
+     * This method is responsible for creating a toggle button for a given category.
+     *
+     * @param category The category for which a toggle button should be created
+     * @return The newly created toggle button
+     */
+    private ToggleButton createCategoryToggleButton(ShortcutCategoryDTO category) {
+        final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+
+        categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
+        categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
+
+        return categoryButton;
     }
 
     /**
@@ -173,6 +235,24 @@ public class LibrarySideBar extends LeftSideBar {
      */
     public void setOnSearch(Consumer<String> onSearch) {
         this.onSearch = onSearch;
+    }
+
+    /**
+     * This method sets the consumer, that is called after a category has been selected
+     *
+     * @param onAllCategorySelection The new consumer to be used
+     */
+    public void setOnAllCategorySelection(Runnable onAllCategorySelection) {
+        this.onAllCategorySelection = onAllCategorySelection;
+    }
+
+    /**
+     * This method sets the consumer, that is called after the "All" categories toggle button has been selected
+     *
+     * @param onCategorySelection The new consumer to be used
+     */
+    public void setOnCategorySelection(Consumer<ShortcutCategoryDTO> onCategorySelection) {
+        this.onCategorySelection = onCategorySelection;
     }
 
     /**

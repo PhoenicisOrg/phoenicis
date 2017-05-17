@@ -18,16 +18,17 @@
 
 package org.phoenicis.javafx.controller.library;
 
-import org.phoenicis.library.LibraryManager;
-import org.phoenicis.library.ShortcutManager;
-import org.phoenicis.library.ShortcutRunner;
-import org.phoenicis.library.dto.ShortcutDTO;
+import javafx.application.Platform;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
+import org.phoenicis.library.LibraryManager;
+import org.phoenicis.library.ShortcutManager;
+import org.phoenicis.library.ShortcutRunner;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
+import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import javafx.application.Platform;
 
 import java.util.Collections;
 import java.util.List;
@@ -93,8 +94,8 @@ public class LibraryController {
     }
 
     private void updateLibrary() {
-        final List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
-        final List<ShortcutDTO> shortcutsCorrespondingToKeywords = shortcuts.stream()
+        final List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
+        final List<ShortcutCategoryDTO> shortcutsCorrespondingToKeywords = categories.stream()
                 .filter(shortcutDTO -> shortcutDTO.getName().toLowerCase().contains(keywords.toLowerCase().trim()))
                 .collect(Collectors.toList());
 

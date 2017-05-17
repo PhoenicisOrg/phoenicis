@@ -16,6 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+@background-color: #3c3f41;
+@text-color: #FFFFFF;
+
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
@@ -45,7 +48,7 @@
     -fx-vpos: center;
     -fx-font-family: "Maven Pro";
     -fx-font-size: 1.8em;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: @text-color;
 }
 
 /*******************************************************/
@@ -71,7 +74,7 @@
     -fx-alignment: CENTER;
     -fx-padding: 0 0 -0.4em 0;
     -fx-text-font-family: "Roboto Light";
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: @text-color;
     -fx-font-size: 1.2em;
     -fx-cursor: hand;
 }
@@ -97,7 +100,7 @@
 /************************* left ************************/
 /*******************************************************/
 .leftPane {
-    -fx-background-color: #3c3f41;
+    -fx-background-color: @background-color;
     -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
@@ -106,12 +109,12 @@
 
 .leftPaneScrollbar {
     -fx-border-width: 0;
-    -fx-background-color: #3c3f41;
+    -fx-background-color: @background-color;
     -fx-min-width: 15em;
 }
 
 .leftPaneScrollbar > .viewport {
-    -fx-background-color: #3c3f41;
+    -fx-background-color: @background-color;
 }
 
 .leftPaneScrollbar .scroll-bar:vertical {
@@ -126,7 +129,7 @@
 }
 
 .leftPaneScrollbar .scroll-bar:vertical .track {
-    -fx-background-color: #3c3f41;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-background-radius: 1em;
     -fx-pref-width: 0.4em;
@@ -154,13 +157,13 @@
     -fx-font-size: 1.1em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: @text-color;
 }
 
 .leftButton {
     -fx-background-color:transparent;
     -fx-cursor: hand;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: @text-color;
     -fx-txt-font-family: "Roboto Light";
     -fx-label-padding: 0.2em 0 0.2em 2.2em;
     -fx-background-size: 2em;
@@ -175,7 +178,7 @@
 }
 
 .leftPaneCheckBox .text {
-    -fx-fill: #FFFFFF;
+    -fx-fill: @text-color;
 }
 
 .searchCleanButton {
@@ -196,7 +199,7 @@
 }
 
 .rightPane > .viewport {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: @text-color;
     -fx-border-width: 0;
 }
 
@@ -211,7 +214,7 @@
 /************************* apps ************************/
 /*******************************************************/
 .appPresentation {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: @text-color;
 }
 
 .appPresentation > * {
@@ -270,7 +273,7 @@
 /*******************************************************/
 .rightPane .miniatureList {
     -fx-pref-width: 53.5em;
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: @text-color;
     -fx-border-width: 0;
     -fx-border-style: none;
     -fx-padding: 0.5em;
@@ -342,7 +345,7 @@
     -fx-border-color: #CCCCCC;
     -fx-border-style: solid;
     -fx-border-width: 0 0 0.1em 0;
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: @text-color;
 }
 
 #footer {
@@ -375,7 +378,7 @@
 }
 
 .console, .console .viewport {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: @text-color;
 }
 
 .consoleCommandType {

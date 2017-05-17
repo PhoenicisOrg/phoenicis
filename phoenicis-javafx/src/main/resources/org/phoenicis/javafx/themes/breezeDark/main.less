@@ -15,22 +15,28 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+ 
+@background-color: #232629;
+@main-color: #31363b;
+@focus-color: #3daee9;
+@text-color: #eff0f1;
+@inactive-text-color: #bdc3c7;
 
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
 * {
-    -fx-background: #232629;
-    -fx-focus-color: #3daee9;
-    -fx-faint-focus-color: #3daee9;
-    -fx-text-fill: #eff0f1;
-    -fx-text-base-color: #eff0f1;
-    -fx-text-inner-color: #eff0f1;
+    -fx-background: @background-color;
+    -fx-focus-color: @focus-color;
+    -fx-faint-focus-color: @focus-color;
+    -fx-text-fill: @text-color;
+    -fx-text-base-color: @text-color;
+    -fx-text-inner-color: @text-color;
     -fx-border-radius: 0;
 }
 
 .text {
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
 }
 
 .button {
@@ -39,100 +45,100 @@
 }
 
 .button:hover {
-    -fx-border-color: #3daee9;
+    -fx-border-color: @focus-color;
 }
 
 .combo-box {
-    -fx-color: #bdc3c7;
+    -fx-color: @inactive-text-color;
     -fx-background-color: transparent;
-    -fx-border-color: #bdc3c7;
+    -fx-border-color: @inactive-text-color;
 }
 
 .combo-box:hover {
-    -fx-border-color: #3daee9;
+    -fx-border-color: @focus-color;
 }
 
 .combo-box:hover .arrow-button {
-    -fx-color: #3daee9;
+    -fx-color: @focus-color;
 }
 
 .combo-box-popup .list-view {
-    -fx-background-color: #31363b, #31363b;
+    -fx-background-color: @main-color, @main-color;
 }
 
 .combo-box .list-cell {
-    -fx-background: #31363b;
-    -fx-background-color: #31363b;
+    -fx-background: @main-color;
+    -fx-background-color: @main-color;
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
 }
 
 .check-box .box {
     -fx-background-color: transparent;
-    -fx-border-color: #bdc3c7;
+    -fx-border-color: @inactive-text-color;
 }
 
 .check-box:hover .box {
     -fx-background-color: transparent;
-    -fx-border-color: #3daee9;
+    -fx-border-color: @focus-color;
 }
 
 .check-box:selected .mark {
-    -fx-color: #3daee9;
-    -fx-background-color: #3daee9;
+    -fx-color: @focus-color;
+    -fx-background-color: @focus-color;
 }
 
 .tab-header-area .tab-header-background {
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
 }
 
 .tab-header-area .tab:selected {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
 
 .tab-header-area .tab {
     -fx-background-radius: 0;
-    -fx-background-color: #232629;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-background-opacity: 0;
 }
 
 .list-view {
-    -fx-background-color: #232629;
-    -fx-border-color: #bdc3c7;
+    -fx-background-color: @background-color;
+    -fx-border-color: @inactive-text-color;
 }
 
 .list-cell {
-    -fx-background-color: #31363b;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-background-color: @main-color;
+    -fx-text-fill: @text-color;
 }
 
 .list-cell:even {
-    -fx-background-color: #232629;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-background-color: @background-color;
+    -fx-text-fill: @text-color;
 }
 
 .list-cell:filled:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #3daee9;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-background-color: @focus-color;
+    -fx-text-fill: @text-color;
 }
 
 .text-field {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
-    -fx-focus-color: #3daee9;
+    -fx-text-fill: @text-color;
+    -fx-focus-color: @focus-color;
 }
 
 .text-field:hover {
-    -fx-border-color: #3daee9;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-border-color: @focus-color;
+    -fx-text-fill: @text-color;
 }
 
 .scroll-bar:horizontal {
@@ -171,7 +177,7 @@
 }
 
 .scroll-bar .thumb:hover, .scroll-bar .thumb:pressed {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
     -fx-border-color: transparent;
 }
 
@@ -181,22 +187,22 @@
 }
 
 .increment-arrow, .decrement-arrow {
-    -fx-background-color: #bdc3c7;
+    -fx-background-color: @inactive-text-color;
 }
 
 .increment-arrow:hover, .decrement-arrow:hover {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
 }
 
 .progress-bar > .track {
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
 }
 
 .progress-bar > .bar {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
@@ -259,14 +265,14 @@
 }
 
 #menuPane > .tab-header-area .tab-header-background {
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
     -fx-pref-height: 3em;
 }
 
 #menuPane > .tab-header-area .tab:selected {
     -fx-border-width: 0.3em;
     -fx-border-style: hidden hidden solid hidden;
-    -fx-border-color: #3daee9;
+    -fx-border-color: @focus-color;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
@@ -283,7 +289,7 @@
 /************************* left ************************/
 /*******************************************************/
 .leftPane {
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
     -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
@@ -292,12 +298,12 @@
 
 .leftPaneScrollbar {
     -fx-border-width: 0;
-    -fx-background-color:#31363b;
+    -fx-background-color:@main-color;
     -fx-min-width: 15em;
 }
 
 .leftPaneScrollbar > .viewport {
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
 }
 
 .leftPaneScrollbar .scroll-bar:vertical {
@@ -340,13 +346,13 @@
     -fx-font-size: 1.2em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-    -fx-fill: #bdc3c7;
+    -fx-fill: @inactive-text-color;
 }
 
 .leftButton {
     -fx-background-color:transparent;
     -fx-cursor: hand;
-    -fx-text-fill: #eff0f1;
+    -fx-text-fill: @text-color;
     -fx-txt-font-family: "Roboto Light";
     -fx-label-padding: 0.2em 0 0.2em 2.2em;
     -fx-background-size: 2em;
@@ -355,7 +361,7 @@
 }
 
 .leftButton:hover, .leftButton:selected {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
     -fx-background-insets: 0, 1, 2;
     -fx-background-radius: 0;
 }
@@ -363,15 +369,15 @@
 .searchBar {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #232629;
+    -fx-background-color: @background-color;
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
-    -fx-focus-color: #3daee9;
+    -fx-text-fill: @text-color;
+    -fx-focus-color: @focus-color;
 }
 
 .searchBar:hover {
-    -fx-border-color: #3daee9;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-border-color: @focus-color;
+    -fx-text-fill: @text-color;
 }
 
 .searchCleanButton {
@@ -391,7 +397,7 @@
 }
 
 .rightPane > .viewport {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
 }
 
@@ -406,7 +412,7 @@
 /************************* apps ************************/
 /*******************************************************/
 .appPresentation {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
 }
 
 .appPresentation > * {
@@ -415,7 +421,7 @@
 }
 
 .appPanelMiniaturesPane {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-padding: 1em;
 }
 
@@ -435,14 +441,14 @@
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
 }
 
 /********************** description ********************/
 .descriptionTitle {
     -fx-font-family: "Roboto light";
-    -fx-text-fill: #3daee9;
+    -fx-text-fill: @focus-color;
     -fx-font-size: 1.3em;
 }
 
@@ -462,7 +468,7 @@
 /*******************************************************/
 .rightPane .miniatureList {
     -fx-pref-width: 53.5em;
-    -fx-background-color: #232629;
+    -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-border-style: none;
     -fx-padding: 0.5em;
@@ -484,7 +490,7 @@
 }
 
 .miniatureListElement.selected {
-    -fx-background-color: #3daee9;
+    -fx-background-color: @focus-color;
 }
 
 .miniatureImage {
@@ -502,59 +508,59 @@
     -fx-wrap-text: true;
     -fx-alignment: center;
     -fx-text-alignment: center;
-    -fx-text-fill: #eff0f1;
+    -fx-text-fill: @text-color;
 }
 
 /*******************************************************/
 /***************** installation wizard *****************/
 /*******************************************************/
 #presentationBackground {
-    -fx-background-color: #232629;
+    -fx-background-color: @background-color;
     -fx-padding: 0.8em;
 }
 
 #presentationScrollPane {
-    -fx-background: #232629;
-    -fx-border-color: #232629;
+    -fx-background: @background-color;
+    -fx-border-color: @background-color;
 }
 
 #presentationTextTitle {
     -fx-font-weight: bold;
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
     -fx-font-size: 1.3em;
 }
 
 #presentationText {
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
 }
 
 /************************ step *************************/
 #panelForTopheader {
     -fx-padding: 2.5em;
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
     -fx-border-color: transparent;
 }
 
 #header {
-    -fx-border-color: -fx-focus-color;
+    -fx-border-color: @focus-color;
     -fx-border-style: solid;
     -fx-border-width: 0 0 0.1em 0;
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
 }
 
 #footer {
-    -fx-border-color: #bdc3c7;
+    -fx-border-color: @inactive-text-color;
     -fx-border-style: solid hidden hidden hidden;
     -fx-border-width: 0.2em;
 }
 
 #stepScrollPane {
-    -fx-background: #232629;
-    -fx-border-color: #232629;
+    -fx-background: @background-color;
+    -fx-border-color: @background-color;
 }
 
 #stepText {
-    -fx-fill: -fx-text-fill;
+    -fx-fill: @text-color;
     -fx-font-size: 1.1em;
 }
 
@@ -577,23 +583,23 @@
 }
 
 .console, console .viewport {
-    -fx-background-color: -fx-background;
+    -fx-background-color: @background-color;
 }
 
 .consoleCommandType {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #31363b;
+    -fx-background-color: @main-color;
     -fx-border-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: @text-color;
 }
 
 .consoleCommandType:focused {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
-    -fx-background-color: #31363b;
-    -fx-border-color: #3daee9;
-    -fx-text-fill: -fx-text-base-color;
+    -fx-background-color: @main-color;
+    -fx-border-color: @focus-color;
+    -fx-text-fill: @text-color;
 }
 
 .consoleText {
@@ -602,11 +608,11 @@
 }
 
 .consoleText.normal {
-    -fx-fill: -fx-text-base-color;
+    -fx-fill: @text-color;
 }
 
 .consoleText.default {
-    -fx-fill: #bdc3c7;
+    -fx-fill: @inactive-text-color;
 }
 
 .consoleText.error {
@@ -628,7 +634,7 @@
 .wineToolCaption {
     -fx-font-size: 1em;
     -fx-pref-width: 8em;
-    -fx-fill: -fx-text-base-color;
+    -fx-fill: @text-color;
 }
 
 /*******************************************************/
@@ -639,12 +645,12 @@
     -fx-font-size: 1.4em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
-    -fx-fill: #3daee9;
+    -fx-fill: @focus-color;
 }
 
 .captionTitle {
     -fx-font-weight: bold;
-    -fx-fill: #bdc3c7;
+    -fx-fill: @inactive-text-color;
 }
 
 .boldLabel {
