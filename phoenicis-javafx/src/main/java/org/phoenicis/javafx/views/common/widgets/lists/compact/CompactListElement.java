@@ -43,7 +43,8 @@ public class CompactListElement<E> extends GridPane {
      * @param title                 The title which is shown inside this CompactListElement
      * @param additionalInformation An optional list of additional information to be shown inside this CompactListElement
      */
-    public CompactListElement(E item, URI miniatureUri, String title, Optional<List<AdditionalListWidgetInformation>> additionalInformation) {
+    public CompactListElement(E item, URI miniatureUri, String title,
+            Optional<List<AdditionalListWidgetInformation>> additionalInformation) {
         super();
 
         this.item = item;
@@ -81,7 +82,8 @@ public class CompactListElement<E> extends GridPane {
     }
 
     public static <T> CompactListElement<T> create(ListWidgetEntry<T> item) {
-        return new CompactListElement<>(item.getItem(), item.getIconUri(), item.getTitle(), item.getAdditionalInformation());
+        return new CompactListElement<>(item.getItem(), item.getIconUri(), item.getTitle(),
+                item.getAdditionalInformation());
     }
 
     /**

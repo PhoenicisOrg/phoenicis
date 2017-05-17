@@ -36,7 +36,9 @@ public class DetailsListElement<E> extends GridPane {
      * @param additionalInformation An optional list of additional information to be shown inside this DetailsListElement
      * @param detailedInformation   An optional list of additional detailed information to be shown inside this DetailsListElement
      */
-    public DetailsListElement(E item, String title, Optional<List<AdditionalListWidgetInformation>> additionalInformation, Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
+    public DetailsListElement(E item, String title,
+            Optional<List<AdditionalListWidgetInformation>> additionalInformation,
+            Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
         super();
 
         this.item = item;
@@ -78,7 +80,8 @@ public class DetailsListElement<E> extends GridPane {
     }
 
     public static <T> DetailsListElement<T> create(ListWidgetEntry<T> item) {
-        return new DetailsListElement<>(item.getItem(), item.getTitle(), item.getAdditionalInformation(), item.getDetailedInformation());
+        return new DetailsListElement<>(item.getItem(), item.getTitle(), item.getAdditionalInformation(),
+                item.getDetailedInformation());
     }
 
     /**

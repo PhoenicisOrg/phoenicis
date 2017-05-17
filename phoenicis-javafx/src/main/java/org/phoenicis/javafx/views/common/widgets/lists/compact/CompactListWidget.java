@@ -37,7 +37,8 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
      * @param converter         A converter function used to convert a value of input type <code>E</code> to {@link CompactListElement}
      * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
      */
-    public CompactListWidget(Function<E, CompactListElement<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
+    public CompactListWidget(Function<E, CompactListElement<E>> converter,
+            BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
         this.setPrefWidth(0);
