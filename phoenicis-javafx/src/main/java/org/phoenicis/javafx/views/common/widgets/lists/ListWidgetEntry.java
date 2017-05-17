@@ -7,7 +7,6 @@ import org.phoenicis.javafx.views.common.widgets.lists.icons.StaticMiniature;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,12 +59,12 @@ public class ListWidgetEntry<E> {
      * Constructor.
      * This constructor assumes that the entry is enabled
      *
-     * @param item The item from which the entry should be created
-     * @param iconUri An optional uri to a miniature to this entry
-     * @param defaultIconUri An uri to a fallback miniature
-     * @param title The title to this entry
+     * @param item                  The item from which the entry should be created
+     * @param iconUri               An optional uri to a miniature to this entry
+     * @param defaultIconUri        An uri to a fallback miniature
+     * @param title                 The title to this entry
      * @param additionalInformation An optional list of additional information to this entry
-     * @param detailedInformation An optional list of additional detailed information to this entry
+     * @param detailedInformation   An optional list of additional detailed information to this entry
      */
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
             Optional<List<AdditionalListWidgetInformation>> additionalInformation,
@@ -76,13 +75,13 @@ public class ListWidgetEntry<E> {
     /**
      * Constructor
      *
-     * @param item The item from which the entry should be created
-     * @param iconUri An optional uri to a miniature to this entry
-     * @param defaultIconUri An uri to a fallback miniature
-     * @param title The title to this entry
+     * @param item                  The item from which the entry should be created
+     * @param iconUri               An optional uri to a miniature to this entry
+     * @param defaultIconUri        An uri to a fallback miniature
+     * @param title                 The title to this entry
      * @param additionalInformation An optional list of additional information to this entry
-     * @param detailedInformation An optional list of additional detailed information to this entry
-     * @param enabled True if this entry is enabled
+     * @param detailedInformation   An optional list of additional detailed information to this entry
+     * @param enabled               True if this entry is enabled
      */
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
             Optional<List<AdditionalListWidgetInformation>> additionalInformation,
@@ -108,8 +107,7 @@ public class ListWidgetEntry<E> {
         }
 
         return new ListWidgetEntry<ApplicationDTO>(application, iconPath, StaticMiniature.DEFAULT_MINIATURE,
-                application.getName(), Optional.empty(),
-                Optional.of(Arrays.asList(new AdditionalListWidgetInformation(application.getDescription(), 50))));
+                application.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
@@ -129,6 +127,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * Returns the item belonging to this entry
+     *
      * @return The item belonging to this entry
      */
     public E getItem() {
@@ -137,6 +136,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * Returns an uri to a miniature icon for this entry
+     *
      * @return An uri to a miniature icon for this entry
      */
     public URI getIconUri() {
@@ -145,6 +145,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * Returns the title for this entry
+     *
      * @return The title for this entry
      */
     public String getTitle() {
@@ -153,6 +154,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * Returns the additional information for this entry
+     *
      * @return The additional information for this entry
      */
     public Optional<List<AdditionalListWidgetInformation>> getAdditionalInformation() {
@@ -161,6 +163,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * Returns the additional detailed information for this entry
+     *
      * @return The additional detailed information for this entry
      */
     public Optional<List<AdditionalListWidgetInformation>> getDetailedInformation() {
@@ -169,6 +172,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * Returns if this entry is enabled
+     *
      * @return True if this entry is enabled, false otherwise
      */
     public boolean isEnabled() {
