@@ -20,7 +20,6 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -33,7 +32,8 @@ import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
@@ -48,7 +48,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private ApplicationSideBar sideBar;
 
-    private final MiniatureListWidget<ApplicationDTO> availableApps;
+    private final CombinedListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter<ApplicationDTO> filter;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> {
@@ -67,9 +67,9 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
         super("Apps", themeManager);
 
-        this.sideBar = new ApplicationSideBar();
-        this.availableApps = MiniatureListWidget.create(MiniatureListWidget.Element::create,
-                (element, event) -> showAppDetails(element.getValue(), settingsManager));
+        this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
+                (element, event) -> showAppDetails(element, settingsManager));
+        this.sideBar = new ApplicationSideBar(availableApps);
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();
@@ -88,7 +88,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
         // create the bindings between the visual components and the observable lists
         this.sideBar.bindCategories(this.sortedCategories);
-        Bindings.bindContent(this.availableApps.getItems(), this.sortedApplications);
+        this.availableApps.bind(this.sortedApplications);
 
         // set the filter event consumers
         this.sideBar.setOnFilterTextEnter(this::processFilterText);

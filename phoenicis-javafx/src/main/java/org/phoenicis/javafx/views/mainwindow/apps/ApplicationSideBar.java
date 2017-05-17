@@ -2,10 +2,16 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
@@ -32,6 +38,10 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @since 21.04.17
  */
 public class ApplicationSideBar extends LeftSideBar {
+    private CombinedListWidget<ApplicationDTO> combinedListWidget;
+
+    private BorderPane borderPane;
+
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
 
@@ -45,6 +55,8 @@ public class ApplicationSideBar extends LeftSideBar {
     private CheckBox noCdNeededCheck;
     private CheckBox commercialCheck;
 
+    private LeftListWidgetChooser<ApplicationDTO> listWidgetChooser;
+
     // consumers called when an action inside the searchBar has been performed (a filter text was entered or the filter has been cleared)
     private Consumer<String> onFilterTextEnter;
     private Runnable onFilterClear;
@@ -53,13 +65,29 @@ public class ApplicationSideBar extends LeftSideBar {
     private Runnable onAllCategorySelection;
     private Consumer<CategoryDTO> onCategorySelection;
 
-    public ApplicationSideBar() {
+    public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget) {
+        super();
+
+        this.combinedListWidget = combinedListWidget;
+
         this.populateSearchBar();
         this.populateCategories();
         this.populateFilters();
+        this.populateListWidgetChooser();
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(),
-                this.filterGroup);
+        this.borderPane = new BorderPane();
+        this.borderPane.setPrefHeight(0);
+
+        this.borderPane.setTop(this.searchBar);
+
+        VBox center = new VBox(new LeftSpacer(), this.categoryView, new LeftSpacer(), this.filterGroup);
+
+        this.borderPane.setCenter(center);
+        this.borderPane.setBottom(this.listWidgetChooser);
+
+        this.getChildren().setAll(this.borderPane);
+
+        VBox.setVgrow(borderPane, Priority.ALWAYS);
     }
 
     /**
@@ -93,6 +121,12 @@ public class ApplicationSideBar extends LeftSideBar {
         this.commercialCheck = new LeftCheckBox(translate("Commercial"));
 
         this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
+    }
+
+    private void populateListWidgetChooser() {
+        this.listWidgetChooser = new LeftListWidgetChooser<>(combinedListWidget);
+        this.listWidgetChooser.setPadding(new Insets(5));
+        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
     }
 
     /**

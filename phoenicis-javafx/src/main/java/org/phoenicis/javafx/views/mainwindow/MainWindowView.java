@@ -42,12 +42,13 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
 
         this.themeManager = themeManager;
 
+        this.content = new BorderPane();
+        this.content.getStyleClass().add("mainWindowScene");
+
         this.populateSidebarContainer();
         this.populateFailurePanel();
         this.populateWaitPanel();
 
-        this.content = new BorderPane();
-        this.content.getStyleClass().add("mainWindowScene");
         this.content.setLeft(leftContent);
         this.content.setCenter(waitPanel);
 
@@ -56,10 +57,12 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
 
     private void populateSidebarContainer() {
         this.leftContent = new ScrollPane();
+        this.leftContent.getStyleClass().add("leftPaneScrollbar");
+        this.leftContent.setFitToHeight(true);
         this.leftContent.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.leftContent.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        this.leftContent.setBorder(Border.EMPTY);
-        this.leftContent.getStyleClass().add("leftPaneScrollbar");
+        //this.leftContent.setBorder(Border.EMPTY);
+
     }
 
     private void populateWaitPanel() {

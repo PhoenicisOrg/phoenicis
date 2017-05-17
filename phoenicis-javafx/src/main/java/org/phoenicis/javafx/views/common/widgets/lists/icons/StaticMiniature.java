@@ -16,15 +16,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.common.widget;
+package org.phoenicis.javafx.views.common.widgets.lists.icons;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * A static miniature shown inside a {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+ */
 public class StaticMiniature extends Region {
     public static URI DEFAULT_MINIATURE;
     public static URI WINE_MINIATURE;
@@ -32,22 +34,23 @@ public class StaticMiniature extends Region {
 
     static {
         try {
-            DEFAULT_MINIATURE = MiniatureListWidget.class.getResource("defaultMiniature.png").toURI();
-            WINE_MINIATURE = MiniatureListWidget.class.getResource("wineMiniature.png").toURI();
-            CONTAINER_MINIATURE = MiniatureListWidget.class.getResource("containerMiniature.png").toURI();
+            DEFAULT_MINIATURE = ListWidget.class.getResource("defaultMiniature.png").toURI();
+            WINE_MINIATURE = ListWidget.class.getResource("wineMiniature.png").toURI();
+            CONTAINER_MINIATURE = ListWidget.class.getResource("containerMiniature.png").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Constructor
+     *
+     * @param miniatureImageUri An uri to the miniature image inside this StaticMiniature
+     */
     public StaticMiniature(URI miniatureImageUri) {
         super();
 
         this.getStyleClass().add("miniatureImage");
         this.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureImageUri.toString()));
-    }
-
-    public StaticMiniature() {
-        this(DEFAULT_MINIATURE);
     }
 }

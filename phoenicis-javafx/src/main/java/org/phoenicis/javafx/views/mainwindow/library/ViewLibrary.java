@@ -19,7 +19,6 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -28,7 +27,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widget.MiniatureListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -47,7 +47,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
     private LibrarySideBar sideBar;
 
-    private MiniatureListWidget<ShortcutDTO> availableShortcuts;
+    private CombinedListWidget<ShortcutDTO> availableShortcuts;
     private final ShortcutFilter<ShortcutDTO> filter;
 
     private ObservableList<ShortcutCategoryDTO> categories;
@@ -70,10 +70,10 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         super("Library", themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        availableShortcuts = MiniatureListWidget.create(MiniatureListWidget.Element::create, (selectedItem, event) -> {
-            ShortcutDTO shortcutDTO = selectedItem.getValue();
+        availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
+            ShortcutDTO shortcutDTO = selectedItem;
 
-            availableShortcuts.unselectAll();
+            availableShortcuts.deselectAll();
             availableShortcuts.select(selectedItem);
             onShortcutSelected.accept(shortcutDTO);
 
@@ -101,14 +101,15 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
         availableShortcuts.setOnMouseClicked(event -> {
             sideBar.hideShortcut();
-            availableShortcuts.unselectAll();
+            availableShortcuts.deselectAll();
             onShortcutSelected.accept(null);
             event.consume();
         });
 
         this.sideBar = new LibrarySideBar(applicationName);
         this.sideBar.bindCategories(this.sortedCategories);
-        Bindings.bindContent(this.availableShortcuts.getItems(), this.sortedShortcuts);
+
+        this.availableShortcuts.bind(sortedShortcuts);
 
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
