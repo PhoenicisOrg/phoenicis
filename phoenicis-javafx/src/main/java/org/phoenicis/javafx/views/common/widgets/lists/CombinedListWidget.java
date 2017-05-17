@@ -7,9 +7,11 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import org.phoenicis.javafx.views.common.MappedList;
+import org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListWidget;
 
 import java.util.Collection;
@@ -17,7 +19,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * A {@link ListWidget} fusing all other {@link ListWidget}s.
@@ -30,17 +31,12 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
     /**
      * A set of all currently selected items/entries
      */
-    private Set<ListWidgetEntry<E>> selectedItems;
+    private Set<E> selectedItems;
 
     /**
      * A list of all currently visible items
      */
     private ObservableList<E> items;
-
-    /**
-     * A list of all mapped items
-     */
-    private MappedList<ListWidgetEntry<E>, E> mappedItems;
 
     private IconsListWidget<E> iconsList;
     private CompactListWidget<E> compactList;
@@ -49,7 +45,7 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
     /**
      * The currently shown {@link ListWidget}
      */
-    private ListWidget<ListWidgetEntry<E>> currentList;
+    private ListWidget<E> currentList;
 
     /**
      * Constructor
@@ -65,7 +61,6 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
 
         this.selectedItems = new HashSet<>();
         this.items = FXCollections.observableArrayList();
-        this.mappedItems = new MappedList<>(items, converter);
 
         BiConsumer<E, MouseEvent> proxy = (element, event) -> {
             this.deselectAll();
@@ -73,13 +68,13 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
             this.select(element);
         };
 
-        this.iconsList = new IconsListWidget<>(proxy);
-        this.compactList = new CompactListWidget<>(proxy);
-        this.detailsList = new DetailsListWidget<>(proxy);
+        this.iconsList = new IconsListWidget<>(item -> IconsListElement.create(converter.apply(item)), proxy);
+        this.compactList = new CompactListWidget<>(item -> CompactListElement.create(converter.apply(item)), proxy);
+        this.detailsList = new DetailsListWidget<>(item -> DetailsListElement.create(converter.apply(item)), proxy);
 
-        this.iconsList.bind(mappedItems);
-        this.compactList.bind(mappedItems);
-        this.detailsList.bind(mappedItems);
+        this.iconsList.bind(items);
+        this.compactList.bind(items);
+        this.detailsList.bind(items);
 
         this.showList(ListWidgetType.ICONS_LIST);
     }
@@ -131,12 +126,12 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
 
     @Override
     public void select(E item) {
-        this.selectedItems.add(mappedItems.get(items.indexOf(item)));
+        this.selectedItems.add(item);
         this.updateSelection();
     }
 
     @Override
     public Collection<E> getSelectedItems() {
-        return this.selectedItems.stream().map(ListWidgetEntry::getItem).collect(Collectors.toList());
+        return this.selectedItems;
     }
 }

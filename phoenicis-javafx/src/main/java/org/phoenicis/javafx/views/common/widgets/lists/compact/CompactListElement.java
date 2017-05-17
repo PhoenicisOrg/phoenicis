@@ -5,10 +5,13 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
+import org.phoenicis.javafx.views.common.widgets.lists.AdditionalListWidgetInformation;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A list element for a {@link CompactListWidget}
@@ -20,7 +23,7 @@ public class CompactListElement<E> extends GridPane {
     /**
      * The item this element contains
      */
-    private ListWidgetEntry<E> item;
+    private E item;
 
     /**
      * The miniature image to be shown inside this element
@@ -35,9 +38,12 @@ public class CompactListElement<E> extends GridPane {
     /**
      * Constructor
      *
-     * @param item The item for which a CompactListElement should be created
+     * @param item                  The item for which a CompactListElement should be created
+     * @param miniatureUri          An uri to the miniature which is shown inside this CompactListElement
+     * @param title                 The title which is shown inside this CompactListElement
+     * @param additionalInformation An optional list of additional information to be shown inside this CompactListElement
      */
-    public CompactListElement(ListWidgetEntry<E> item) {
+    public CompactListElement(E item, URI miniatureUri, String title, Optional<List<AdditionalListWidgetInformation>> additionalInformation) {
         super();
 
         this.item = item;
@@ -46,9 +52,9 @@ public class CompactListElement<E> extends GridPane {
 
         this.icon = new Region();
         this.icon.getStyleClass().add("iconListMiniatureImage");
-        this.icon.setStyle(String.format("-fx-background-image: url(\"%s\");", item.getIconUri().toString()));
+        this.icon.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureUri.toString()));
 
-        this.titleLabel = new Label(item.getTitle());
+        this.titleLabel = new Label(title);
         this.titleLabel.setWrapText(true);
         this.titleLabel.getStyleClass().add("information");
 
@@ -59,7 +65,7 @@ public class CompactListElement<E> extends GridPane {
         this.add(icon, 0, 0);
         this.add(titleLabel, 1, 0);
 
-        item.getAdditionalInformation().ifPresent(additionInformations -> additionInformations.forEach(information -> {
+        additionalInformation.ifPresent(additionInformations -> additionInformations.forEach(information -> {
             constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
 
             Label informationLabel = new Label(information.getContent());
@@ -74,11 +80,16 @@ public class CompactListElement<E> extends GridPane {
         this.getColumnConstraints().setAll(constraints);
     }
 
+    public static <T> CompactListElement<T> create(ListWidgetEntry<T> item) {
+        return new CompactListElement<>(item.getItem(), item.getIconUri(), item.getTitle(), item.getAdditionalInformation());
+    }
+
     /**
      * Returns the item belonging to this CompactListElement
+     *
      * @return The item belonging to this CompactListElement
      */
     public E getElement() {
-        return item.getItem();
+        return this.item;
     }
 }

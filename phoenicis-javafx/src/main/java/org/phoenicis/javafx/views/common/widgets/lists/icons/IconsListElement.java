@@ -10,6 +10,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
+import java.net.URI;
+
 /**
  * A list element for a {@link IconsListWidget}
  *
@@ -20,14 +22,17 @@ public class IconsListElement<E> extends VBox {
     /**
      * The item this element contains
      */
-    private ListWidgetEntry<E> item;
+    private E item;
 
     /**
      * Constructor
      *
-     * @param item The item for which a IconsListElement should be created
+     * @param item         The item for which a IconsListElement should be created
+     * @param miniatureUri An uri to the miniature which is shown inside this IconsListElement
+     * @param title        The title which is shown inside this IconsListElement
+     * @param enabled      True if this element should be shown as enabled, false otherwise
      */
-    public IconsListElement(ListWidgetEntry<E> item) {
+    public IconsListElement(E item, URI miniatureUri, String title, boolean enabled) {
         super();
 
         this.item = item;
@@ -45,30 +50,38 @@ public class IconsListElement<E> extends VBox {
             this.setClip(clip);
         });
 
-        final Label label = new Label(item.getTitle());
+        final Label label = new Label(title);
         label.getStyleClass().add("miniatureText");
 
-        StaticMiniature miniature = new StaticMiniature(item.getIconUri());
+        StaticMiniature miniature = new StaticMiniature(miniatureUri);
 
         this.getChildren().add(miniature);
         this.getChildren().add(label);
 
-        final Tooltip tooltip = new Tooltip(item.getTitle());
+        final Tooltip tooltip = new Tooltip(title);
         Tooltip.install(miniature, tooltip);
 
-        if (!item.isEnabled()) {
+        /*
+         * set a gray filter for this element if it is not enabled
+         */
+        if (!enabled) {
             ColorAdjust grayscale = new ColorAdjust();
             grayscale.setSaturation(-1);
             this.setEffect(grayscale);
         }
     }
 
+    public static <T> IconsListElement<T> create(ListWidgetEntry<T> item) {
+        return new IconsListElement<>(item.getItem(), item.getIconUri(), item.getTitle(), item.isEnabled());
+    }
+
     /**
      * Returns the item belonging to this IconsListElement
+     *
      * @return The item belonging to this IconsListElement
      */
     public E getElement() {
-        return this.item.getItem();
+        return this.item;
     }
 
     @Override

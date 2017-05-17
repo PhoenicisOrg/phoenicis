@@ -4,10 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
+import org.phoenicis.javafx.views.common.widgets.lists.AdditionalListWidgetInformation;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A list element for a {@link DetailsListWidget}
@@ -19,7 +21,7 @@ public class DetailsListElement<E> extends GridPane {
     /**
      * The item this element contains
      */
-    private ListWidgetEntry<E> item;
+    private E item;
 
     /**
      * The title label inside this element
@@ -29,16 +31,19 @@ public class DetailsListElement<E> extends GridPane {
     /**
      * Constructor
      *
-     * @param item The item for which a DetailsListElement should be created
+     * @param item                  The item for which a DetailsListElement should be created
+     * @param title                 The title which is shown inside this DetailsListElement
+     * @param additionalInformation An optional list of additional information to be shown inside this DetailsListElement
+     * @param detailedInformation   An optional list of additional detailed information to be shown inside this DetailsListElement
      */
-    public DetailsListElement(ListWidgetEntry<E> item) {
+    public DetailsListElement(E item, String title, Optional<List<AdditionalListWidgetInformation>> additionalInformation, Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
         super();
 
         this.item = item;
 
         this.getStyleClass().add("iconListCell");
 
-        this.titleLabel = new Label(item.getTitle());
+        this.titleLabel = new Label(title);
         this.titleLabel.setWrapText(true);
         this.titleLabel.getStyleClass().add("information");
 
@@ -47,7 +52,7 @@ public class DetailsListElement<E> extends GridPane {
 
         this.add(titleLabel, 0, 0);
 
-        item.getAdditionalInformation().ifPresent(additionInformations -> additionInformations.forEach(information -> {
+        additionalInformation.ifPresent(additionInformations -> additionInformations.forEach(information -> {
             constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
 
             Label informationLabel = new Label(information.getContent());
@@ -57,7 +62,7 @@ public class DetailsListElement<E> extends GridPane {
             this.add(informationLabel, this.getChildren().size(), 0);
         }));
 
-        item.getDetailedInformation().ifPresent(additionInformations -> additionInformations.forEach(information -> {
+        detailedInformation.ifPresent(additionInformations -> additionInformations.forEach(information -> {
             constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
 
             Label informationLabel = new Label(information.getContent());
@@ -72,11 +77,16 @@ public class DetailsListElement<E> extends GridPane {
         this.getColumnConstraints().setAll(constraints);
     }
 
+    public static <T> DetailsListElement<T> create(ListWidgetEntry<T> item) {
+        return new DetailsListElement<>(item.getItem(), item.getTitle(), item.getAdditionalInformation(), item.getDetailedInformation());
+    }
+
     /**
      * Returns the item belonging to this DetailsListElement
+     *
      * @return The item belonging to this DetailsListElement
      */
     public E getElement() {
-        return item.getItem();
+        return item;
     }
 }

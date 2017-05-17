@@ -8,10 +8,10 @@ import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
 import java.util.Collection;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -20,23 +20,24 @@ import java.util.stream.Collectors;
  * @author marc
  * @since 14.05.17
  */
-public class CompactListWidget<E> extends ListView<CompactListElement<E>> implements ListWidget<ListWidgetEntry<E>> {
+public class CompactListWidget<E> extends ListView<CompactListElement<E>> implements ListWidget<E> {
     /**
-     * A list containing all {@link ListWidgetEntry} objects to be shown inside this {@link ListWidget}
+     * A list containing all items to be shown inside this {@link ListWidget}
      */
-    private ObservableList<ListWidgetEntry<E>> items;
+    private ObservableList<E> items;
 
     /**
      * A list containing all mapped {@link CompactListElement} objects to the <code>items</code>
      */
-    private MappedList<CompactListElement<E>, ListWidgetEntry<E>> mappedElements;
+    private MappedList<CompactListElement<E>, E> mappedElements;
 
     /**
      * Constructor
      *
+     * @param converter         A converter function used to convert a value of input type <code>E</code> to {@link CompactListElement}
      * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
      */
-    public CompactListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
+    public CompactListWidget(Function<E, CompactListElement<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
         this.setPrefWidth(0);
@@ -45,12 +46,12 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
         this.setCellFactory(param -> new ListElementListCell<CompactListElement<E>>());
 
         this.items = FXCollections.observableArrayList();
-        this.mappedElements = new MappedList<CompactListElement<E>, ListWidgetEntry<E>>(items, value -> {
-            CompactListElement<E> newElement = new CompactListElement<E>(value);
+        this.mappedElements = new MappedList<>(items, value -> {
+            CompactListElement<E> newElement = converter.apply(value);
 
             newElement.setOnMouseClicked(event -> {
                 this.deselectAll();
-                setOnMouseClicked.accept(value.getItem(), event);
+                setOnMouseClicked.accept(value, event);
                 this.select(value);
             });
 
@@ -61,7 +62,7 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
     }
 
     @Override
-    public void bind(ObservableList<ListWidgetEntry<E>> items) {
+    public void bind(ObservableList<E> items) {
         Bindings.bindContent(this.items, items);
     }
 
@@ -71,12 +72,12 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
     }
 
     @Override
-    public void select(ListWidgetEntry<E> item) {
+    public void select(E item) {
         this.getSelectionModel().select(this.items.indexOf(item));
     }
 
     @Override
-    public Collection<ListWidgetEntry<E>> getSelectedItems() {
+    public Collection<E> getSelectedItems() {
         return this.getSelectionModel().getSelectedIndices().stream().map(index -> items.get(index))
                 .collect(Collectors.toList());
     }

@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +42,7 @@ import java.util.stream.Collectors;
  * @author marc
  * @since 15.05.17
  */
-public final class IconsListWidget<E> extends ScrollPane implements ListWidget<ListWidgetEntry<E>> {
+public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E> {
     /**
      * The container of this IconsListWidget that contains the content of this list widget
      */
@@ -53,9 +54,9 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
     private Set<IconsListElement<E>> selectedItems;
 
     /**
-     * A list containing all {@link ListWidgetEntry} objects to be shown inside this {@link ListWidget}
+     * A list containing all items to be shown inside this {@link ListWidget}
      */
-    private ObservableList<ListWidgetEntry<E>> items;
+    private ObservableList<E> items;
 
     /**
      * A list containing all mapped {@link IconsListElement} objects to the <code>items</code>
@@ -65,9 +66,10 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
     /**
      * Constructor
      *
+     * @param converter         A converter function used to convert a value of input type <code>E</code> to {@link IconsListElement}
      * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
      */
-    public IconsListWidget(BiConsumer<E, MouseEvent> setOnMouseClicked) {
+    public IconsListWidget(Function<E, IconsListElement<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
         this.getStyleClass().add("rightPane");
@@ -75,12 +77,12 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
         this.selectedItems = new HashSet<>();
 
         this.items = FXCollections.observableArrayList();
-        this.mappedElements = new MappedList<IconsListElement<E>, ListWidgetEntry<E>>(items, value -> {
-            IconsListElement newElement = new IconsListElement(value);
+        this.mappedElements = new MappedList<>(items, value -> {
+            IconsListElement<E> newElement = converter.apply(value);
 
             newElement.setOnMouseClicked(event -> {
                 this.deselectAll();
-                setOnMouseClicked.accept(value.getItem(), event);
+                setOnMouseClicked.accept(value, event);
                 this.select(value);
             });
 
@@ -105,7 +107,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
     }
 
     @Override
-    public void bind(ObservableList<ListWidgetEntry<E>> list) {
+    public void bind(ObservableList<E> list) {
         Bindings.bindContent(this.items, list);
     }
 
@@ -116,7 +118,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
     }
 
     @Override
-    public void select(ListWidgetEntry<E> selectedItem) {
+    public void select(E selectedItem) {
         IconsListElement<E> item = this.mappedElements.get(this.items.indexOf(selectedItem));
 
         if (!item.getStyleClass().contains("selected")) {
@@ -127,7 +129,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<L
     }
 
     @Override
-    public Collection<ListWidgetEntry<E>> getSelectedItems() {
+    public Collection<E> getSelectedItems() {
         return this.selectedItems.stream().map(index -> items.get(mappedElements.indexOf(index)))
                 .collect(Collectors.toList());
     }
