@@ -23,7 +23,7 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
-import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.files.FileUtilities;
@@ -133,19 +133,21 @@ public class WinePrefixContainerController {
             errorCallback.accept(e);
         }
 
-        List<ShortcutDTO> shortcuts = libraryManager.fetchShortcuts();
-        for (ShortcutDTO shortcutDTO : shortcuts) {
-            final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-            interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
-                    ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                        final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                        shortcutReader.callMember("of", shortcutDTO);
-                        final String container = (String) shortcutReader.callMember("container");
-                        if (container.equals(winePrefix.getName())) {
-                            shortcutManager.deleteShortcut(shortcutDTO);
-                        }
-                    }, errorCallback), errorCallback);
-        }
+        List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
+        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
+                .forEach(shortcutDTO -> {
+                    final InteractiveScriptSession interactiveScriptSession = scriptInterpreter
+                            .createInteractiveSession();
+                    interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
+                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                                shortcutReader.callMember("of", shortcutDTO);
+                                final String container = (String) shortcutReader.callMember("container");
+                                if (container.equals(winePrefix.getName())) {
+                                    shortcutManager.deleteShortcut(shortcutDTO);
+                                }
+                            }, errorCallback), errorCallback);
+                });
     }
 
     public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
