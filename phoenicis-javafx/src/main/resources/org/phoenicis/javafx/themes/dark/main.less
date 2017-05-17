@@ -311,6 +311,80 @@
     -fx-text-alignment: center;
 }
 
+.compactListWidget {
+    -fx-border-width: 0;
+    -fx-border-style: none;
+
+    .iconListCell {
+        @cellHeight: 6em;
+
+        -fx-hgap: 0.5em;
+        -fx-pref-height: @cellHeight;
+
+        .iconListMiniatureImage {
+            @miniatureWidth: 8em;
+
+            -fx-background-size: stretch;
+            -fx-background-repeat: no-repeat;
+            -fx-background-position: center;
+            -fx-min-width: @miniatureWidth;
+            -fx-pref-width: @miniatureWidth;
+            -fx-max-width: @miniatureWidth;
+            -fx-min-height: @cellHeight;
+            -fx-pref-height: @cellHeight;
+            -fx-max-height: @cellHeight;
+        }
+
+        .information {
+            -fx-max-height: @cellHeight;
+        }
+    }
+}
+
+.detailsListWidget {
+    -fx-border-width: 0;
+    -fx-border-style: none;
+
+    .iconListCell {
+        -fx-hgap: 0.5em;
+
+        .information {
+            -fx-max-height: 3em;
+        }
+    }
+}
+
+.listChooser {
+    -fx-spacing: 0.1em;
+    -fx-padding: 0;
+
+    .listIcon {
+        -fx-pref-width: 2.5em;
+        -fx-pref-height: 2.5em;
+        -fx-content-display: graphic-only;
+        -fx-background-size: contain;
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: center;
+    }
+
+    .listIcon:selected {
+        -fx-border-radius: 0.25em;
+        -fx-border-color: blue;
+    }
+
+    .compactList {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-compact-symbolic.png');
+    }
+
+    .detailsList {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-details-symbolic.png');
+    }
+
+    .iconsList {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-icons-symbolic.png');
+    }
+}
+
 /*******************************************************/
 /***************** installation wizard *****************/
 /*******************************************************/
