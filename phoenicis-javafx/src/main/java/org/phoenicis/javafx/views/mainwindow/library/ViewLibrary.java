@@ -106,7 +106,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
             event.consume();
         });
 
-        this.sideBar = new LibrarySideBar(applicationName);
+        this.sideBar = new LibrarySideBar(applicationName, availableShortcuts);
         this.sideBar.bindCategories(this.sortedCategories);
 
         this.availableShortcuts.bind(sortedShortcuts);

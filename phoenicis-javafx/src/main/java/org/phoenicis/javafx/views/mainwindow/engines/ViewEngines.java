@@ -29,8 +29,10 @@ import javafx.util.Duration;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
+import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 
 import java.util.List;
@@ -49,6 +51,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
 
     private ObservableList<EngineSubCategoryDTO> engineSubCategories;
     private MappedList<EngineSubCategoryTab, EngineSubCategoryDTO> mappedSubCategoryTabs;
+    private MappedList<CombinedListWidget<EngineVersionDTO>, EngineSubCategoryTab> mappedListWidgets;
 
     private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {
     };
@@ -60,8 +63,6 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
     public ViewEngines(ThemeManager themeManager, String enginesPath) {
         super("Engines", themeManager);
 
-        this.sideBar = new EngineSideBar();
-
         this.engineCategories = FXCollections.observableArrayList();
         this.engineSubCategories = FXCollections.observableArrayList();
         this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories, engineSubCategory -> {
@@ -71,6 +72,9 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
 
             return result;
         });
+        this.mappedListWidgets = new MappedList<>(mappedSubCategoryTabs, tab -> tab.getEngineVersionsView());
+
+        this.sideBar = new EngineSideBar(mappedListWidgets);
 
         this.sideBar.setOnCategorySelection(this::selectCategory);
         this.sideBar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()

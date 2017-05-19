@@ -32,7 +32,7 @@ public class SettingsSideBar extends LeftSideBar {
 
         this.populate();
 
-        this.getChildren().addAll(this.settingsItems);
+        this.setCenter(this.settingsItems);
     }
 
     /**

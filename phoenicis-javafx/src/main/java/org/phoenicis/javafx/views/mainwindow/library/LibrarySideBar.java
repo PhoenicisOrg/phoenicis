@@ -2,8 +2,10 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -40,6 +42,9 @@ public class LibrarySideBar extends LeftSideBar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
+    // container for the center content of this sidebar
+    private LeftScrollPane centerContent;
+
     // the toggleable categories
     private LeftToggleGroup<ShortcutCategoryDTO> categoryView;
 
@@ -58,6 +63,9 @@ public class LibrarySideBar extends LeftSideBar {
 
     private LeftButton runScript;
     private LeftButton runConsole;
+
+    // widget to switch between the different list widgets in the center view
+    private LeftListWidgetChooser<ShortcutDTO> listWidgetChooser;
 
     // the current selected shortcut
     private ShortcutDTO shortcut;
@@ -78,9 +86,10 @@ public class LibrarySideBar extends LeftSideBar {
     /**
      * Constructor
      *
-     * @param applicationName The name of this application (normally "PlayOnLinux")
+     * @param applicationName    The name of this application (normally "PlayOnLinux")
+     * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public LibrarySideBar(String applicationName) {
+    public LibrarySideBar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts) {
         super();
 
         this.applicationName = applicationName;
@@ -89,8 +98,13 @@ public class LibrarySideBar extends LeftSideBar {
         this.populateShortcut();
         this.populateCategories();
         this.populateAdvancedTools();
+        this.populateListWidgetChooser(availableShortcuts);
 
-        this.hideShortcut();
+        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.advancedToolsGroup);
+
+        this.setTop(searchBar);
+        this.setCenter(centerContent);
+        this.setBottom(listWidgetChooser);
     }
 
     /**
@@ -113,8 +127,8 @@ public class LibrarySideBar extends LeftSideBar {
 
         this.shortcutGroup.setTitle(shortcut.getName());
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, this.shortcutGroup,
-                new LeftSpacer(), this.advancedToolsGroup);
+        this.centerContent.setAll(this.categoryView, new LeftSpacer(), this.shortcutGroup, new LeftSpacer(),
+                this.advancedToolsGroup);
     }
 
     /**
@@ -124,7 +138,7 @@ public class LibrarySideBar extends LeftSideBar {
     public void hideShortcut() {
         this.shortcut = null;
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, this.advancedToolsGroup);
+        this.centerContent.setAll(this.categoryView, new LeftSpacer(), this.advancedToolsGroup);
     }
 
     /**
@@ -147,6 +161,16 @@ public class LibrarySideBar extends LeftSideBar {
     private void populateCategories() {
         this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
+    }
+
+    /**
+     * This method populates the list widget choose
+     *
+     * @param availableShortcuts The managed CombinedListWidget
+     */
+    private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
+        this.listWidgetChooser = new LeftListWidgetChooser<>(availableShortcuts);
+        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
     }
 
     /**

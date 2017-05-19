@@ -2,8 +2,11 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
+import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
@@ -30,8 +33,14 @@ public class ContainerSideBar extends LeftSideBar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
+    // container for the center content of this sidebar
+    private LeftScrollPane centerContent;
+
     // a button group containing a button for each installed container
     private LeftToggleGroup<ContainerCategoryDTO> categoryView;
+
+    // widget to switch between the different list widgets in the center view
+    private LeftListWidgetChooser<ContainerDTO> listWidgetChooser;
 
     // consumer called when a search term is entered
     private Consumer<String> onApplyFilter;
@@ -43,14 +52,21 @@ public class ContainerSideBar extends LeftSideBar {
 
     /**
      * Constructor
+     *
+     * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public ContainerSideBar() {
+    public ContainerSideBar(CombinedListWidget<ContainerDTO> availableContainers) {
         super();
 
         this.populateSearchBar();
         this.populateCategories();
+        this.populateListWidgetChooser(availableContainers);
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView);
+        this.centerContent = new LeftScrollPane(categoryView);
+
+        this.setTop(searchBar);
+        this.setCenter(centerContent);
+        this.setBottom(listWidgetChooser);
     }
 
     /**
@@ -83,6 +99,16 @@ public class ContainerSideBar extends LeftSideBar {
     private void populateCategories() {
         this.categoryView = LeftToggleGroup.create(translate("Containers"), this::createAllCategoriesToggleButton,
                 this::createContainerToggleButton);
+    }
+
+    /**
+     * This method populates the list widget choose
+     *
+     * @param availableContainers The managed CombinedListWidget
+     */
+    private void populateListWidgetChooser(CombinedListWidget<ContainerDTO> availableContainers) {
+        this.listWidgetChooser = new LeftListWidgetChooser<>(availableContainers);
+        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
     }
 
     /**

@@ -51,10 +51,9 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
     public ViewContainers(ThemeManager themeManager) {
         super("Containers", themeManager);
 
-        this.sideBar = new ContainerSideBar();
-
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));
+        this.sideBar = new ContainerSideBar(availableContainers);
 
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));
