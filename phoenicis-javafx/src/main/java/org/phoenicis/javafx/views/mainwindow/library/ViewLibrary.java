@@ -76,6 +76,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
             availableShortcuts.deselectAll();
             availableShortcuts.select(selectedItem);
             onShortcutSelected.accept(shortcutDTO);
+            showShortcutDetails(shortcutDTO);
 
             sideBar.showShortcut(shortcutDTO);
 
@@ -176,6 +177,12 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         installedApplication.setContent(availableShortcuts);
 
         this.setCenter(libraryTabs);
+    }
+
+    private void showShortcutDetails(ShortcutDTO shortcutDTO) {
+        final LibraryPanel libraryPanel = new LibraryPanel(shortcutDTO);
+        libraryPanel.setMaxWidth(400);
+        this.showDetailsView(libraryPanel);
     }
 
     public void createNewTab(Tab tab) {
