@@ -2,12 +2,15 @@ package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.VBox;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
+import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
@@ -35,6 +38,9 @@ public class EngineSideBar extends LeftSideBar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
+    // container for the center content of this sidebar
+    private LeftScrollPane centerContent;
+
     // the button group containing a button for all engine categories
     private LeftToggleGroup<EngineCategoryDTO> categoryView;
 
@@ -43,6 +49,9 @@ public class EngineSideBar extends LeftSideBar {
 
     private CheckBox installedCheck;
     private CheckBox notInstalledCheck;
+
+    // widget to switch between the different list widgets in the center view
+    private LeftListWidgetChooser<EngineVersionDTO> listWidgetChooser;
 
     // consumers called when an action inside the search bar has been performed
     private Consumer<String> onApplySearchTerm;
@@ -57,16 +66,22 @@ public class EngineSideBar extends LeftSideBar {
 
     /**
      * Constructor
+     *
+     * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public EngineSideBar() {
+    public EngineSideBar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
         super();
 
         this.populateSearchBar();
         this.populateEngineCategories();
         this.populateInstallationFilters();
+        this.populateListWidgetChooser(enginesVersionListWidgets);
 
-        this.getChildren().setAll(this.searchBar, new LeftSpacer(), this.categoryView, new LeftSpacer(),
-                this.installationFilterGroup);
+        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.installationFilterGroup);
+
+        this.setTop(searchBar);
+        this.setCenter(centerContent);
+        this.setBottom(listWidgetChooser);
     }
 
     /**
@@ -108,6 +123,16 @@ public class EngineSideBar extends LeftSideBar {
                 .addListener((observableValue, oldValue, newValue) -> onApplyUninstalledFilter.accept(newValue));
 
         this.installationFilterGroup = new LeftGroup(installedCheck, notInstalledCheck);
+    }
+
+    /**
+     * This method populates the list widget choose
+     *
+     * @param enginesVersionListWidgets The managed CombinedListWidgets
+     */
+    private void populateListWidgetChooser(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
+        this.listWidgetChooser = new LeftListWidgetChooser<>(enginesVersionListWidgets);
+        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
     }
 
     /**

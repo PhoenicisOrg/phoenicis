@@ -2,13 +2,9 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -38,12 +34,11 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @since 21.04.17
  */
 public class ApplicationSideBar extends LeftSideBar {
-    private CombinedListWidget<ApplicationDTO> combinedListWidget;
-
-    private BorderPane borderPane;
-
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
+
+    // container for the center content of this sidebar
+    private LeftScrollPane centerContent;
 
     // the toggleable categories
     private LeftToggleGroup<CategoryDTO> categoryView;
@@ -55,6 +50,7 @@ public class ApplicationSideBar extends LeftSideBar {
     private CheckBox noCdNeededCheck;
     private CheckBox commercialCheck;
 
+    // widget to switch between the different list widgets in the center view
     private LeftListWidgetChooser<ApplicationDTO> listWidgetChooser;
 
     // consumers called when an action inside the searchBar has been performed (a filter text was entered or the filter has been cleared)
@@ -65,29 +61,24 @@ public class ApplicationSideBar extends LeftSideBar {
     private Runnable onAllCategorySelection;
     private Consumer<CategoryDTO> onCategorySelection;
 
+    /**
+     * Constructor
+     *
+     * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
+     */
     public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget) {
         super();
-
-        this.combinedListWidget = combinedListWidget;
 
         this.populateSearchBar();
         this.populateCategories();
         this.populateFilters();
-        this.populateListWidgetChooser();
+        this.populateListWidgetChooser(combinedListWidget);
 
-        this.borderPane = new BorderPane();
-        this.borderPane.setPrefHeight(0);
+        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.filterGroup);
 
-        this.borderPane.setTop(this.searchBar);
-
-        VBox center = new VBox(new LeftSpacer(), this.categoryView, new LeftSpacer(), this.filterGroup);
-
-        this.borderPane.setCenter(center);
-        this.borderPane.setBottom(this.listWidgetChooser);
-
-        this.getChildren().setAll(this.borderPane);
-
-        VBox.setVgrow(borderPane, Priority.ALWAYS);
+        this.setTop(this.searchBar);
+        this.setCenter(this.centerContent);
+        this.setBottom(this.listWidgetChooser);
     }
 
     /**
@@ -123,9 +114,13 @@ public class ApplicationSideBar extends LeftSideBar {
         this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
     }
 
-    private void populateListWidgetChooser() {
+    /**
+     * This method populates the list widget choose
+     *
+     * @param combinedListWidget The managed CombinedListWidget
+     */
+    private void populateListWidgetChooser(CombinedListWidget<ApplicationDTO> combinedListWidget) {
         this.listWidgetChooser = new LeftListWidgetChooser<>(combinedListWidget);
-        this.listWidgetChooser.setPadding(new Insets(5));
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
     }
 

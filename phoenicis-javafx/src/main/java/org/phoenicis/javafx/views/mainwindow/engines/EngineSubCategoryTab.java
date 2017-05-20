@@ -134,4 +134,8 @@ public class EngineSubCategoryTab extends Tab {
         this.enginesFilter.setSearchTerm(searchTerm);
         this.filteredEngineVersions.setPredicate(enginesFilter::test);
     }
+
+    public CombinedListWidget<EngineVersionDTO> getEngineVersionsView() {
+        return engineVersionsView;
+    }
 }

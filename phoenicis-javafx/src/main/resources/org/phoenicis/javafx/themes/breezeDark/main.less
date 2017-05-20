@@ -293,96 +293,96 @@
     -fx-min-width: 15em;
     -fx-pref-width: 15em;
     -fx-padding: 1em;
-    -fx-spacing: 0.4em;
-}
 
-.leftPaneScrollbar {
-    -fx-border-width: 0;
-    -fx-background-color:@main-color;
-    -fx-min-width: 15em;
-}
+    .leftPaneScrollbar {
+        -fx-border-width: 0;
+        -fx-background-color: @main-color;
+        -fx-min-width: 15em;
+        -fx-padding: 0.8em 1em 0.8em 1em;
+    }
 
-.leftPaneScrollbar > .viewport {
-    -fx-background-color: @main-color;
-}
+    .leftPaneScrollbar > .viewport {
+        -fx-background-color: @main-color;
+    }
 
-.leftPaneScrollbar .scroll-bar:vertical {
-    -fx-max-width: 0.4em;
-    -fx-pref-width: 0.4em;
-}
+    .leftPaneScrollbar .scroll-bar:vertical {
+        -fx-max-width: 0.4em;
+        -fx-pref-width: 0.4em;
+    }
 
-.leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
-    -fx-pref-height: 0;
-    -fx-font-size: 0;
-    -fx-opacity: 0;
-}
+    .leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
+        -fx-pref-height: 0;
+        -fx-font-size: 0;
+        -fx-opacity: 0;
+    }
 
-.leftPaneScrollbar .scroll-bar:vertical .track {
-    -fx-background-color: #3c3f41;
-    -fx-border-width: 0;
-    -fx-background-radius: 1em;
-    -fx-pref-width: 0.4em;
-    -fx-max-width: 0.4em;
-}
+    .leftPaneScrollbar .scroll-bar:vertical .track {
+        -fx-background-color: #3c3f41;
+        -fx-border-width: 0;
+        -fx-background-radius: 1em;
+        -fx-pref-width: 0.4em;
+        -fx-max-width: 0.4em;
+    }
 
-.leftPaneScrollbar .scroll-bar:vertical .thumb {
-    -fx-background-color:derive(black,70%);
-    -fx-background-insets: 0, 0, 0;
-    -fx-background-radius: 0em;
-    -fx-pref-width: 0.3em;
-    -fx-max-width: 0.3em;
-}
+    .leftPaneScrollbar .scroll-bar:vertical .thumb {
+        -fx-background-color: derive(black, 70%);
+        -fx-background-insets: 0, 0, 0;
+        -fx-background-radius: 0em;
+        -fx-pref-width: 0.3em;
+        -fx-max-width: 0.3em;
+    }
 
-.leftPaneInside {
-    -fx-spacing: 0.4em;
-}
+    .leftPaneInside {
+        -fx-spacing: 0.4em;
+    }
 
-.leftSpacer {
-    -fx-pref-height: 0.8em;
-}
+    .leftSpacer {
+        -fx-pref-height: 0.8em;
+    }
 
-.leftBarTitle {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 1.2em;
-    -fx-alignment: baseline-left;
-    -fx-translate-y: -0.1em;
-    -fx-fill: @inactive-text-color;
-}
+    .leftBarTitle {
+        -fx-font-family: "Roboto Regular";
+        -fx-font-size: 1.2em;
+        -fx-alignment: baseline-left;
+        -fx-translate-y: -0.1em;
+        -fx-fill: @inactive-text-color;
+    }
 
-.leftButton {
-    -fx-background-color:transparent;
-    -fx-cursor: hand;
-    -fx-text-fill: @text-color;
-    -fx-txt-font-family: "Roboto Light";
-    -fx-label-padding: 0.2em 0 0.2em 2.2em;
-    -fx-background-size: 2em;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
-}
+    .leftButton {
+        -fx-background-color: transparent;
+        -fx-cursor: hand;
+        -fx-text-fill: @text-color;
+        -fx-txt-font-family: "Roboto Light";
+        -fx-label-padding: 0.2em 0 0.2em 2.2em;
+        -fx-background-size: 2em;
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: left;
+    }
 
-.leftButton:hover, .leftButton:selected {
-    -fx-background-color: @focus-color;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0;
-}
+    .leftButton:hover, .leftButton:selected {
+        -fx-background-color: @focus-color;
+        -fx-background-insets: 0, 1, 2;
+        -fx-background-radius: 0;
+    }
 
-.searchBar {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: @background-color;
-    -fx-border-color: transparent;
-    -fx-text-fill: @text-color;
-    -fx-focus-color: @focus-color;
-}
+    .searchBar {
+        -fx-border-radius: 0;
+        -fx-background-radius: 0;
+        -fx-background-color: @background-color;
+        -fx-border-color: transparent;
+        -fx-text-fill: @text-color;
+        -fx-focus-color: @focus-color;
+    }
 
-.searchBar:hover {
-    -fx-border-color: @focus-color;
-    -fx-text-fill: @text-color;
-}
+    .searchBar:hover {
+        -fx-border-color: @focus-color;
+        -fx-text-fill: @text-color;
+    }
 
-.searchCleanButton {
-	-fx-background-color: transparent;
-	-fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
+    .searchCleanButton {
+        -fx-background-color: transparent;
+        -fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
+    }
 }
 
 /*******************************************************/
