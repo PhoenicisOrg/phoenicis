@@ -20,8 +20,10 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,13 +32,26 @@ import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.Consumer;
+
+import static org.phoenicis.configuration.localisation.Localisation.translate;
+
 final class LibraryPanel extends VBox {
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
 
-    public LibraryPanel(ShortcutDTO shortcutDTO) {
+    // consumers called when a shortcut should be run, stopped or uninstalled
+    private Consumer<ShortcutDTO> onShortcutRun;
+    private Consumer<ShortcutDTO> onShortcutStop;
+    private Consumer<ShortcutDTO> onShortcutUninstall;
+
+    public LibraryPanel() {
         super();
         this.setPadding(new Insets(10));
+    }
+
+    public void setShortcutDTO(ShortcutDTO shortcutDTO) {
+        this.getChildren().clear();
 
         final VBox vBox = new VBox();
         Label name = new Label(shortcutDTO.getName());
@@ -70,7 +85,51 @@ final class LibraryPanel extends VBox {
         gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
                 new ColumnConstraintsWithPercentage(70));
 
-        vBox.getChildren().addAll(name, description, gridPane);
+        Button runButton = new Button(translate("Run"));
+        runButton.getStyleClass().addAll("buttonWithIcon", "runButton");
+        runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
+
+        Button stopButton = new Button(translate("Close"));
+        stopButton.getStyleClass().addAll("buttonWithIcon", "stopButton");
+        stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
+
+        Button uninstallButton = new Button(translate("Uninstall"));
+        uninstallButton.getStyleClass().addAll("buttonWithIcon", "uninstallButton");
+        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
+
+        Region spacer = new Region();
+        spacer.setPrefHeight(40);
+
+        vBox.getChildren().addAll(name, description, gridPane, spacer, runButton, stopButton, uninstallButton);
+
         this.getChildren().addAll(vBox);
     }
+
+    /**
+     * This method updates the consumer, that is called when the "Run" button for the currently selected shortcut has been clicked.
+     *
+     * @param onShortcutRun The new consumer to be called
+     */
+    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
+        this.onShortcutRun = onShortcutRun;
+    }
+
+    /**
+     * This method updates the consumer, that is called when the "Stop" button for the currently selected shortcut has been clicked.
+     *
+     * @param onShortcutStop The new consumer to be called
+     */
+    public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
+        this.onShortcutStop = onShortcutStop;
+    }
+
+    /**
+     * This method updates the consumer, that is called when the "Uninstall" button for the currently selected shortcut has been clicked.
+     *
+     * @param onShortcutUninstall The new consumer to be called
+     */
+    public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
+        this.onShortcutUninstall = onShortcutUninstall;
+    }
+
 }

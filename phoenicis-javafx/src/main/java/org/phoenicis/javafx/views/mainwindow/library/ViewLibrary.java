@@ -46,6 +46,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
 
     private LibrarySideBar sideBar;
+    private LibraryPanel libraryPanel;
 
     private CombinedListWidget<ShortcutDTO> availableShortcuts;
     private final ShortcutFilter<ShortcutDTO> filter;
@@ -78,8 +79,6 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
             onShortcutSelected.accept(shortcutDTO);
             showShortcutDetails(shortcutDTO);
 
-            sideBar.showShortcut(shortcutDTO);
-
             if (event.getClickCount() == 2) {
                 onShortcutDoubleClicked.accept(shortcutDTO);
             }
@@ -101,7 +100,6 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
                 (filterText, shortcut) -> shortcut.getName().toLowerCase().contains(filterText));
 
         availableShortcuts.setOnMouseClicked(event -> {
-            sideBar.hideShortcut();
             availableShortcuts.deselectAll();
             onShortcutSelected.accept(null);
             event.consume();
@@ -109,6 +107,8 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
         this.sideBar = new LibrarySideBar(applicationName, availableShortcuts);
         this.sideBar.bindCategories(this.sortedCategories);
+
+        this.libraryPanel = new LibraryPanel();
 
         this.availableShortcuts.bind(sortedShortcuts);
 
@@ -127,16 +127,12 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.setSideBar(sideBar);
     }
 
-    public void setOnShortcutSelected(Consumer<ShortcutDTO> onShortcutSelected) {
-        this.onShortcutSelected = onShortcutSelected;
-    }
-
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
         this.onShortcutDoubleClicked = onShortcutDoubleClicked;
     }
 
     public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
-        this.sideBar.setOnShortcutStop(onShortcutStop);
+        this.libraryPanel.setOnShortcutStop(onShortcutStop);
     }
 
     public void setOnSearch(Consumer<String> onSearch) {
@@ -144,7 +140,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
-        this.sideBar.setOnShortcutRun(onShortcutRun);
+        this.libraryPanel.setOnShortcutRun(onShortcutRun);
     }
 
     /**
@@ -180,8 +176,8 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
-        final LibraryPanel libraryPanel = new LibraryPanel(shortcutDTO);
-        libraryPanel.setMaxWidth(400);
+        this.libraryPanel.setShortcutDTO(shortcutDTO);
+        this.libraryPanel.setMaxWidth(400);
         this.showDetailsView(libraryPanel);
     }
 
@@ -204,7 +200,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
-        this.sideBar.setOnShortcutUninstall(onShortcutUninstall);
+        this.libraryPanel.setOnShortcutUninstall(onShortcutUninstall);
     }
 
     public void setOnScriptRun(Consumer<File> onScriptRun) {

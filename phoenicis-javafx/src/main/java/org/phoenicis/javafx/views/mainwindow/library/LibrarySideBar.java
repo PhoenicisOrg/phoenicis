@@ -51,13 +51,6 @@ public class LibrarySideBar extends LeftSideBar {
     // consumer called after a text has been entered in the search box
     private Consumer<String> onSearch;
 
-    // the shortcut group, containing the run, stop and uninstall buttons
-    private LeftGroup shortcutGroup;
-
-    private LeftButton runButton;
-    private LeftButton stopButton;
-    private LeftButton uninstallButton;
-
     // the advanced tools group, containing the run script and run console buttons
     private LeftGroup advancedToolsGroup;
 
@@ -67,17 +60,9 @@ public class LibrarySideBar extends LeftSideBar {
     // widget to switch between the different list widgets in the center view
     private LeftListWidgetChooser<ShortcutDTO> listWidgetChooser;
 
-    // the current selected shortcut
-    private ShortcutDTO shortcut;
-
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
     private Consumer<ShortcutCategoryDTO> onCategorySelection;
-
-    // consumers called when a shortcut should be run, stopped or uninstalled
-    private Consumer<ShortcutDTO> onShortcutRun;
-    private Consumer<ShortcutDTO> onShortcutStop;
-    private Consumer<ShortcutDTO> onShortcutUninstall;
 
     // consumers called when a script should be run or a console be opened
     private Consumer<File> onScriptRun;
@@ -112,33 +97,6 @@ public class LibrarySideBar extends LeftSideBar {
      */
     public void selectAllCategories() {
         this.categoryView.selectAll();
-    }
-
-    /**
-     * This method sets the to be shown shortcut (including its name).
-     * Afterwards it updates the sidebar view to show the searchbar, the shortcut related buttons (run, stop and uninstall) and
-     * the advanced tool buttons (run a script and open a console).
-     * If a shortcut is already shown the shortcut information will be updated to reflect the new shortcut.
-     *
-     * @param shortcut The new shortcut to be shown to the user
-     */
-    public void showShortcut(ShortcutDTO shortcut) {
-        this.shortcut = shortcut;
-
-        this.shortcutGroup.setTitle(shortcut.getName());
-
-        this.centerContent.setAll(this.categoryView, new LeftSpacer(), this.shortcutGroup, new LeftSpacer(),
-                this.advancedToolsGroup);
-    }
-
-    /**
-     * This method hides the currently shown shortcut.
-     * If no shortcut is currently shown, this method does nothing.
-     */
-    public void hideShortcut() {
-        this.shortcut = null;
-
-        this.centerContent.setAll(this.categoryView, new LeftSpacer(), this.advancedToolsGroup);
     }
 
     /**
@@ -207,23 +165,6 @@ public class LibrarySideBar extends LeftSideBar {
      * This method populates the shortcut button group.
      */
     private void populateShortcut() {
-        this.runButton = new LeftButton(translate("Run"));
-        this.runButton.getStyleClass().add("runButton");
-
-        this.stopButton = new LeftButton(translate("Close"));
-        this.stopButton.getStyleClass().add("stopButton");
-
-        this.uninstallButton = new LeftButton(translate("Uninstall"));
-        this.uninstallButton.getStyleClass().add("uninstallButton");
-
-        this.runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
-        this.stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcut));
-        this.uninstallButton.setOnMouseClicked(event -> {
-            onShortcutUninstall.accept(shortcut);
-            hideShortcut();
-        });
-
-        this.shortcutGroup = new LeftGroup("Unknown application", runButton, stopButton, uninstallButton);
     }
 
     /**
@@ -277,33 +218,6 @@ public class LibrarySideBar extends LeftSideBar {
      */
     public void setOnCategorySelection(Consumer<ShortcutCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
-    }
-
-    /**
-     * This method updates the consumer, that is called when the "Run" button for the currently selected shortcut has been clicked.
-     *
-     * @param onShortcutRun The new consumer to be called
-     */
-    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
-        this.onShortcutRun = onShortcutRun;
-    }
-
-    /**
-     * This method updates the consumer, that is called when the "Stop" button for the currently selected shortcut has been clicked.
-     *
-     * @param onShortcutStop The new consumer to be called
-     */
-    public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
-        this.onShortcutStop = onShortcutStop;
-    }
-
-    /**
-     * This method updates the consumer, that is called when the "Uninstall" button for the currently selected shortcut has been clicked.
-     *
-     * @param onShortcutUninstall The new consumer to be called
-     */
-    public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
-        this.onShortcutUninstall = onShortcutUninstall;
     }
 
     /**
