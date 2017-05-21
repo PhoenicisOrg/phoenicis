@@ -45,6 +45,10 @@ public class IconsListElement<E> extends VBox {
         this.selected.set(selected);
     }
 
+    public boolean isSelected() {
+        return this.selected.get();
+    }
+
     /**
      * The item this element contains
      */
