@@ -26,12 +26,18 @@ import org.phoenicis.apps.repository.Repository;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import static org.junit.Assert.assertEquals;
 
 public class ClasspathRepositoryTest {
     private final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-    private final Repository repository = new ClasspathRepository("/org/phoenicis/apps/repositoryTest",
+    private final Repository repository = new ClasspathRepository(new URI("/org/phoenicis/apps/repositoryTest"),
             resourceResolver, new ObjectMapper());
+
+    public ClasspathRepositoryTest() throws URISyntaxException {
+    }
 
     @Test
     public void fetchInstallableApplications_numberOfCategories() {

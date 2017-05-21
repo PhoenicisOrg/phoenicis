@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,12 +41,12 @@ public class GitRepository implements Repository {
 
     private final FileUtilities fileUtilities;
 
-    private final String gitRepositoryURL;
+    private final URL gitRepositoryURL;
     private final LocalRepository.Factory localRepositoryFactory;
 
     private final File gitRepositoryLocation;
 
-    public GitRepository(String gitRepositoryURL, String cacheDirectoryPath,
+    public GitRepository(URL gitRepositoryURL, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
         this.fileUtilities = fileUtilities;
         this.gitRepositoryURL = gitRepositoryURL;
@@ -85,8 +87,8 @@ public class GitRepository implements Repository {
                 LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.gitRepositoryURL,
                         gitRepositoryLocation.getAbsolutePath()));
 
-                gitRepository = Git.cloneRepository().setURI(this.gitRepositoryURL).setDirectory(gitRepositoryLocation)
-                        .call();
+                gitRepository = Git.cloneRepository().setURI(this.gitRepositoryURL.toExternalForm())
+                        .setDirectory(gitRepositoryLocation).call();
             }
             /*
              * otherwise open the folder and pull the newest updates from the
@@ -107,13 +109,14 @@ public class GitRepository implements Repository {
             // close repository to free resources
             gitRepository.close();
 
-            result = localRepositoryFactory
-                    .createInstance(gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL)
+            result = localRepositoryFactory.createInstance(this.gitRepositoryLocation, this.gitRepositoryURL.toURI())
                     .fetchInstallableApplications();
         } catch (RepositoryNotFoundException | GitAPIException e) {
             LOGGER.error(String.format("Folder '%s' is no git-repository", gitRepositoryLocation.getAbsolutePath()), e);
         } catch (IOException e) {
-            LOGGER.error(String.format("An unknown error occured.", e));
+            LOGGER.error(String.format("An unknown error occured", e));
+        } catch (URISyntaxException e) {
+            LOGGER.error(String.format("The given repository URL is no valid URI", e));
         }
 
         return result;
