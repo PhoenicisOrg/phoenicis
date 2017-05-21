@@ -600,32 +600,40 @@
 }
 
 .listChooser {
-    -fx-spacing: 0.1em;
+    -fx-spacing: 0.2em;
     -fx-padding: 0;
 
     .listIcon {
-        -fx-pref-width: 2.5em;
-        -fx-pref-height: 2.5em;
+        -fx-pref-width: 2em;
+        -fx-pref-height: 2em;
         -fx-content-display: graphic-only;
         -fx-background-size: contain;
         -fx-background-repeat: no-repeat;
         -fx-background-position: center;
-    }
-
-    .listIcon:selected {
-        -fx-border-radius: 0.25em;
-        -fx-border-color: blue;
+        -fx-background-color: transparent;
     }
 
     .compactList {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-compact.png');
+    }
+
+    .compactList:selected {
         -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-compact-selected.png');
     }
 
     .detailsList {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-details.png');
+    }
+
+    .detailsList:selected {
         -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-details-selected.png');
     }
 
     .iconsList {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-icons.png');
+    }
+
+    .iconsList:selected {
         -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-icons-selected.png');
     }
 }
