@@ -26,31 +26,39 @@ import javafx.scene.layout.VBox;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-final class LibraryPanel extends VBox {
+final class LibraryPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
+
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
 
-    public LibraryPanel(ShortcutDTO shortcutDTO) {
+    private ShortcutDTO shortcut;
+
+    public LibraryPanel(ShortcutDTO shortcut) {
         super();
-        this.setPadding(new Insets(10));
 
+        this.shortcut = shortcut;
+
+        this.setTitle(shortcut.getName());
+
+        this.populateContent();
+    }
+
+    private void populateContent() {
         final VBox vBox = new VBox();
-        Label name = new Label(shortcutDTO.getName());
-        name.getStyleClass().add("descriptionTitle");
-        name.setWrapText(true);
 
-        Label description = new Label(shortcutDTO.getDescription());
+        Label description = new Label(shortcut.getDescription());
         description.setWrapText(true);
 
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("grid");
 
         try {
-            JSONObject jsonObject = new JSONObject(shortcutDTO.getScript());
+            JSONObject jsonObject = new JSONObject(shortcut.getScript());
 
             for (int i = 0; i < jsonObject.names().length(); i++) {
                 String key = jsonObject.names().getString(i);
@@ -70,7 +78,8 @@ final class LibraryPanel extends VBox {
         gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
                 new ColumnConstraintsWithPercentage(70));
 
-        vBox.getChildren().addAll(name, description, gridPane);
-        this.getChildren().addAll(vBox);
+        vBox.getChildren().addAll(description, gridPane);
+
+        this.setCenter(vBox);
     }
 }

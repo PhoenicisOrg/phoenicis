@@ -149,6 +149,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
 
     private void showEngineDetails(EngineDTO engineDTO) {
         currentEnginePanel = new EnginePanel(engineDTO);
+        currentEnginePanel.setOnClose(this::closeDetailsView);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
         this.showDetailsView(currentEnginePanel);

@@ -25,6 +25,7 @@ import javafx.scene.layout.*;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,25 +34,27 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.translate;
 
-final class EnginePanel extends VBox {
+final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
     private final EngineDTO engineDTO;
     private Node progress;
 
-    private Consumer<EngineDTO> onEngineInstall = (engine) -> {
-    };
-    private Consumer<EngineDTO> onEngineDelete = (engine) -> {
-    };
+    private Consumer<EngineDTO> onEngineInstall;
+    private Consumer<EngineDTO> onEngineDelete;
 
     public EnginePanel(EngineDTO engineDTO) {
         super();
 
         this.engineDTO = engineDTO;
 
-        getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
+        this.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
 
+        this.populateContent();
+    }
+
+    private void populateContent() {
         final GridPane informationContentPane = new GridPane();
         informationContentPane.getStyleClass().add("grid");
 
@@ -104,13 +107,12 @@ final class EnginePanel extends VBox {
         progressSpacer.setPrefHeight(30);
         VBox.setVgrow(progressSpacer, Priority.NEVER);
 
-        getChildren().addAll(informationContentPane, spacer, buttonBox, progressSpacer);
+        this.setCenter(new VBox(informationContentPane, spacer, buttonBox, progressSpacer));
     }
 
     public void showProgress(VBox progressUi) {
-        getChildren().remove(progress);
         progress = progressUi;
-        getChildren().add(progress);
+        this.setCenter(progress);
     }
 
     public void setOnEngineInstall(Consumer<EngineDTO> onEngineInstall) {
