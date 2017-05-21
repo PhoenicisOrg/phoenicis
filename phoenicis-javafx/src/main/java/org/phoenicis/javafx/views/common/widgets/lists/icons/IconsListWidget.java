@@ -27,7 +27,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -113,7 +112,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E
 
     @Override
     public void deselectAll() {
-        this.selectedItems.forEach(element -> element.getStyleClass().remove("selected"));
+        this.selectedItems.forEach(element -> element.setSelected(false));
         this.selectedItems.clear();
     }
 
@@ -121,9 +120,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E
     public void select(E selectedItem) {
         IconsListElement<E> item = this.mappedElements.get(this.items.indexOf(selectedItem));
 
-        if (!item.getStyleClass().contains("selected")) {
-            item.getStyleClass().add("selected");
-        }
+        item.setSelected(true);
 
         this.selectedItems.add(item);
     }

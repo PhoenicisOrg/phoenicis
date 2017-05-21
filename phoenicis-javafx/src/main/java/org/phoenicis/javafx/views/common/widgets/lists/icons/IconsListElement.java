@@ -1,5 +1,8 @@
 package org.phoenicis.javafx.views.common.widgets.lists.icons;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.BooleanPropertyBase;
+import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -19,6 +22,29 @@ import java.net.URI;
  * @since 15.05.17
  */
 public class IconsListElement<E> extends VBox {
+
+    private static PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
+
+    BooleanProperty selected = new BooleanPropertyBase(false) {
+        public void invalidated() {
+            pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, get());
+        }
+
+        @Override
+        public Object getBean() {
+            return IconsListElement.this;
+        }
+
+        @Override
+        public String getName() {
+            return "selected";
+        }
+    };
+
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
+    }
+
     /**
      * The item this element contains
      */
