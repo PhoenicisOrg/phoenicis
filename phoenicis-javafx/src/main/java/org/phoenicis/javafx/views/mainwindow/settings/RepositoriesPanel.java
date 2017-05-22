@@ -28,7 +28,7 @@ public class RepositoriesPanel extends StackPane {
     private SettingsManager settingsManager;
     private RepositoryManager repositoryManager;
 
-    private VBox vBox = new VBox();
+    private VBox vBox;
     private Text title;
 
     private GridPane repositoryGrid;
@@ -65,6 +65,8 @@ public class RepositoriesPanel extends StackPane {
         this.repositories = FXCollections.observableArrayList(settingsManager.getRepository().split(";"));
 
         this.getStyleClass().add("containerConfigurationPane");
+
+        this.vBox = new VBox();
 
         this.populateRepositoryGrid();
         this.populateRepositoryLegend();
