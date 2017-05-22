@@ -21,22 +21,18 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.ranges.Range;
 
-import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.function.Consumer;
@@ -105,7 +101,7 @@ final class AppPanel extends VBox {
         for (URI miniatureUri : applicationDTO.getMiniatures()) {
             Region image = new Region();
             image.getStyleClass().add("appMiniature");
-            image.setStyle(String.format("-fx-background-image: url('%s');", miniatureUri.toString()));
+            image.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureUri.toString()));
 
             image.prefHeightProperty().bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
             image.prefWidthProperty().bind(image.prefHeightProperty().multiply(1.5));
