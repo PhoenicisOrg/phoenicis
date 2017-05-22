@@ -70,23 +70,24 @@ public class RepositoriesPanel extends StackPane {
         this.populateRepositoryLegend();
         this.populateRepositoryRefresh();
 
+        VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
+
         this.initializeRefreshCallback();
 
         this.vBox.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
-        this.getChildren().setAll(this.vBox);
 
         // overlay which is shown when repository is refreshed
         ProgressIndicator progressIndicator = new ProgressIndicator();
         this.overlay = new VBox(progressIndicator);
         this.overlay.setAlignment(Pos.CENTER);
 
-        VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
+        this.getChildren().setAll(this.overlay, this.vBox);
     }
 
     private void initializeRefreshCallback() {
         repositoryManager.addCallbacks(categories -> {
             Platform.runLater(() -> {
-                this.getChildren().remove(this.overlay);
+                this.overlay.toBack();
                 this.vBox.setDisable(false);
             });
         }, error -> {
@@ -183,7 +184,7 @@ public class RepositoriesPanel extends StackPane {
         this.refreshRepositoriesButton = new Button("Refresh Repositories");
         this.refreshRepositoriesButton.setOnAction(event -> {
             this.vBox.setDisable(true);
-            this.getChildren().add(this.overlay);
+            this.overlay.toFront();
             repositoryManager.triggerRepositoryChange();
         });
 
