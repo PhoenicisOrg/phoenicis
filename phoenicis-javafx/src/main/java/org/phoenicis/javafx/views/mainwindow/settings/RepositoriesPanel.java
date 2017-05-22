@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -23,10 +24,11 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @author marc
  * @since 23.04.17
  */
-public class RepositoriesPanel extends VBox {
+public class RepositoriesPanel extends StackPane {
     private SettingsManager settingsManager;
     private RepositoryManager repositoryManager;
 
+    VBox vBox = new VBox();
     private Text title;
 
     private GridPane repositoryGrid;
@@ -44,6 +46,8 @@ public class RepositoriesPanel extends VBox {
 
     private Label refreshRepositoriesLabel;
     private Button refreshRepositoriesButton;
+
+    VBox overlay;
 
     private ObservableList<String> repositories;
 
@@ -68,7 +72,13 @@ public class RepositoriesPanel extends VBox {
 
         this.initializeRefreshCallback();
 
-        this.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
+        this.vBox.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
+        this.getChildren().setAll(this.vBox);
+
+        // overlay which is shown when repository is refreshed
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        this.overlay = new VBox(progressIndicator);
+        this.overlay.setAlignment(Pos.CENTER);
 
         VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
     }
@@ -76,8 +86,8 @@ public class RepositoriesPanel extends VBox {
     private void initializeRefreshCallback() {
         repositoryManager.addCallbacks(categories -> {
             Platform.runLater(() -> {
-                refreshRepositoriesButton.getStyleClass().remove("refreshIcon");
-                refreshRepositoriesButton.setDisable(false);
+                this.getChildren().remove(this.overlay);
+                this.vBox.setDisable(false);
             });
         }, error -> {
         });
@@ -171,10 +181,9 @@ public class RepositoriesPanel extends VBox {
         this.refreshRepositoriesLabel.setWrapText(true);
 
         this.refreshRepositoriesButton = new Button("Refresh Repositories");
-        this.refreshRepositoriesButton.getStyleClass().add("buttonWithIcon");
         this.refreshRepositoriesButton.setOnAction(event -> {
-            refreshRepositoriesButton.getStyleClass().add("refreshIcon");
-            refreshRepositoriesButton.setDisable(true);
+            this.vBox.setDisable(true);
+            this.getChildren().add(this.overlay);
             repositoryManager.triggerRepositoryChange();
         });
 
