@@ -28,7 +28,7 @@ public class RepositoriesPanel extends StackPane {
     private SettingsManager settingsManager;
     private RepositoryManager repositoryManager;
 
-    VBox vBox = new VBox();
+    private VBox vBox = new VBox();
     private Text title;
 
     private GridPane repositoryGrid;
@@ -47,7 +47,7 @@ public class RepositoriesPanel extends StackPane {
     private Label refreshRepositoriesLabel;
     private Button refreshRepositoriesButton;
 
-    VBox overlay;
+    private VBox overlay;
 
     private ObservableList<String> repositories;
 
