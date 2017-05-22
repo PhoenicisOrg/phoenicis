@@ -43,25 +43,25 @@ public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
-    private final String repositoryDirectory;
+
+    private final File repositoryDirectory;
     private final ObjectMapper objectMapper;
 
-    private final String repositorySource;
+    private final URI repositorySource;
 
-    private LocalRepository(String repositoryDirectory, String repositorySource, ObjectMapper objectMapper) {
+    private LocalRepository(File repositoryDirectory, URI repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
         this.repositorySource = repositorySource;
     }
 
-    private LocalRepository(String repositoryDirectory, ObjectMapper objectMapper) {
-        this(repositoryDirectory, repositoryDirectory, objectMapper);
+    private LocalRepository(File repositoryDirectory, ObjectMapper objectMapper) {
+        this(repositoryDirectory, repositoryDirectory.toURI(), objectMapper);
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final File repositoryDirectoryFile = new File(repositoryDirectory);
-        final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
+        final File[] categoryDirectories = repositoryDirectory.listFiles();
 
         if (categoryDirectories == null) {
             return Collections.emptyList();
@@ -84,11 +84,7 @@ public class LocalRepository implements Repository {
 
                 final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
                 if (categoryIconFile.exists()) {
-                    try {
-                        categoryDTOBuilder.withIcon(new URI("file:///" + categoryIconFile.getAbsolutePath()));
-                    } catch (URISyntaxException e) {
-                        LOGGER.warn("Invalid icon path", e);
-                    }
+                    categoryDTOBuilder.withIcon(categoryIconFile.toURI());
                 }
 
                 CategoryDTO category = categoryDTOBuilder.build();
@@ -276,11 +272,11 @@ public class LocalRepository implements Repository {
             this.objectMapper = objectMapper;
         }
 
-        public LocalRepository createInstance(String path) {
+        public LocalRepository createInstance(File path) {
             return new LocalRepository(path, objectMapper);
         }
 
-        public LocalRepository createInstance(String path, String source) {
+        public LocalRepository createInstance(File path, URI source) {
             return new LocalRepository(path, source, objectMapper);
         }
     }
