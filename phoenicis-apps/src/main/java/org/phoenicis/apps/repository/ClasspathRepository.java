@@ -40,11 +40,12 @@ import java.util.stream.Collectors;
 
 public class ClasspathRepository implements Repository {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathRepository.class);
-    private final URI packagePath;
+    private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
     private final ObjectMapper objectMapper;
 
-    public ClasspathRepository(URI packagePath, ResourcePatternResolver resourceResolver, ObjectMapper objectMapper) {
+    public ClasspathRepository(String packagePath, ResourcePatternResolver resourceResolver,
+            ObjectMapper objectMapper) {
         this.packagePath = packagePath;
         this.resourceResolver = resourceResolver;
         this.objectMapper = objectMapper;
@@ -54,7 +55,7 @@ public class ClasspathRepository implements Repository {
     public List<CategoryDTO> fetchInstallableApplications() {
         try {
             final List<CategoryDTO> categoryDTOs = new ArrayList<>();
-            Resource[] resources = resourceResolver.getResources(packagePath.toString() + "/*");
+            Resource[] resources = resourceResolver.getResources(packagePath + "/*");
             for (Resource resource : resources) {
                 final CategoryDTO category = buildCategory(resource.getFilename());
                 if (!category.getApplications().isEmpty()) {
@@ -70,13 +71,13 @@ public class ClasspathRepository implements Repository {
     }
 
     private CategoryDTO buildCategory(String categoryFileName) throws IOException {
-        final String jsonCategoryFile = packagePath.toString() + "/" + categoryFileName + "/category.json";
+        final String jsonCategoryFile = packagePath + "/" + categoryFileName + "/category.json";
         final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile),
                 CategoryDTO.class);
 
         try {
             return new CategoryDTO.Builder(categoryDTO)
-                    .withIcon(new URI(packagePath.toString() + "/" + categoryFileName + "/icon.png"))
+                    .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png"))
                     .withApplications(buildApplications(categoryFileName)).build();
         } catch (URISyntaxException e) {
             LOGGER.warn("Invalid icon path", e);
@@ -85,7 +86,7 @@ public class ClasspathRepository implements Repository {
     }
 
     private List<ApplicationDTO> buildApplications(String categoryFileName) throws IOException {
-        final String categoryScanClassPath = packagePath.toString() + "/" + categoryFileName;
+        final String categoryScanClassPath = packagePath + "/" + categoryFileName;
         Resource[] resources = resourceResolver.getResources(categoryScanClassPath + "/*");
         final List<ApplicationDTO> applicationDTOS = new ArrayList<>();
 
@@ -104,7 +105,7 @@ public class ClasspathRepository implements Repository {
     }
 
     private ApplicationDTO buildApplication(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationJsonFile = packagePath.toString() + "/" + categoryFileName + "/" + applicationFileName
+        final String applicationJsonFile = packagePath + "/" + categoryFileName + "/" + applicationFileName
                 + "/application.json";
         final ApplicationDTO applicationDTO = objectMapper
                 .readValue(getClass().getResourceAsStream(applicationJsonFile), ApplicationDTO.class);
@@ -115,12 +116,12 @@ public class ClasspathRepository implements Repository {
     }
 
     private List<URI> buildMiniatures(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationScanClassPath = packagePath.toString() + "/" + categoryFileName + "/"
-                + applicationFileName + "/miniatures/";
+        final String applicationScanClassPath = packagePath + "/" + categoryFileName + "/" + applicationFileName
+                + "/miniatures/";
         Resource[] resources = resourceResolver.getResources(applicationScanClassPath + "/*");
 
         return Arrays.stream(resources).map(resource -> {
-            final String resourceFile = packagePath.toString() + "/" + categoryFileName + "/" + applicationFileName
+            final String resourceFile = packagePath + "/" + categoryFileName + "/" + applicationFileName
                     + "/miniatures/" + resource.getFilename();
 
             try {
@@ -132,8 +133,7 @@ public class ClasspathRepository implements Repository {
     }
 
     private List<ScriptDTO> buildScripts(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationScanClassPath = packagePath.toString() + "/" + categoryFileName + "/"
-                + applicationFileName;
+        final String applicationScanClassPath = packagePath + "/" + categoryFileName + "/" + applicationFileName;
         Resource[] resources = resourceResolver.getResources(applicationScanClassPath + "/*");
         final List<ScriptDTO> scriptDTOs = new ArrayList<>();
 
@@ -153,11 +153,11 @@ public class ClasspathRepository implements Repository {
 
     private ScriptDTO buildScript(String categoryFileName, String applicationFileName, String scriptFileName)
             throws IOException {
-        final String scriptJsonFile = packagePath.toString() + "/" + categoryFileName + "/" + applicationFileName + "/"
+        final String scriptJsonFile = packagePath + "/" + categoryFileName + "/" + applicationFileName + "/"
                 + scriptFileName + "/script.json";
         final InputStream scriptJsonInputStream = getClass().getResourceAsStream(scriptJsonFile);
-        final InputStream scriptFile = getClass().getResourceAsStream(packagePath.toString() + "/" + categoryFileName
-                + "/" + applicationFileName + "/" + scriptFileName + "/script.js");
+        final InputStream scriptFile = getClass().getResourceAsStream(
+                packagePath + "/" + categoryFileName + "/" + applicationFileName + "/" + scriptFileName + "/script.js");
 
         if (scriptJsonInputStream == null) {
             return null;
@@ -209,7 +209,7 @@ public class ClasspathRepository implements Repository {
             this.resourceResolver = resourceResolver;
         }
 
-        public ClasspathRepository createInstance(URI packagePath) {
+        public ClasspathRepository createInstance(String packagePath) {
             return new ClasspathRepository(packagePath, resourceResolver, objectMapper);
         }
     }

@@ -156,7 +156,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
                 case "file":
                     return localRepositoryFactory.createInstance(new File(repositoryPath));
                 case "classpath":
-                    return classPathRepositoryFactory.createInstance(new URI(repositoryPath));
+                    return classPathRepositoryFactory.createInstance(new URI(repositoryPath).getPath());
                 default:
                     LOGGER.warn("Unsupported repository type: " + repositoryType);
                     return new NullRepository();
