@@ -41,13 +41,13 @@ public abstract class DetailsView extends BorderPane {
     private void populateHeader() {
         this.titleLabel = new Label();
         this.titleLabel.getStyleClass().add("descriptionTitle");
-        this.titleLabel.setAlignment(Pos.TOP_LEFT);
+        this.titleLabel.setAlignment(Pos.CENTER_LEFT);
         this.titleLabel.setWrapText(true);
 
         this.closeButton = new Button();
         this.closeButton.getStyleClass().add("closeIcon");
         this.closeButton.setOnAction(event -> onClose.run());
-        this.closeButton.setAlignment(Pos.TOP_RIGHT);
+        this.closeButton.setAlignment(Pos.CENTER_RIGHT);
 
         Region filler = new Region();
 
