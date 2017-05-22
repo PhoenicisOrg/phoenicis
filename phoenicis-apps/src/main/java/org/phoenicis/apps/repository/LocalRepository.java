@@ -44,25 +44,24 @@ public class LocalRepository implements Repository {
 
     private static final String CATEGORY_ICON_NAME = "icon.png";
 
-    private final URI repositoryDirectory;
+    private final File repositoryDirectory;
     private final ObjectMapper objectMapper;
 
     private final URI repositorySource;
 
-    private LocalRepository(URI repositoryDirectory, URI repositorySource, ObjectMapper objectMapper) {
+    private LocalRepository(File repositoryDirectory, URI repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
         this.objectMapper = objectMapper;
         this.repositorySource = repositorySource;
     }
 
-    private LocalRepository(URI repositoryDirectory, ObjectMapper objectMapper) {
-        this(repositoryDirectory, repositoryDirectory, objectMapper);
+    private LocalRepository(File repositoryDirectory, ObjectMapper objectMapper) {
+        this(repositoryDirectory, repositoryDirectory.toURI(), objectMapper);
     }
 
     @Override
     public List<CategoryDTO> fetchInstallableApplications() {
-        final File repositoryDirectoryFile = new File(repositoryDirectory);
-        final File[] categoryDirectories = repositoryDirectoryFile.listFiles();
+        final File[] categoryDirectories = repositoryDirectory.listFiles();
 
         if (categoryDirectories == null) {
             return Collections.emptyList();
@@ -274,18 +273,10 @@ public class LocalRepository implements Repository {
         }
 
         public LocalRepository createInstance(File path) {
-            return this.createInstance(path.toURI());
-        }
-
-        public LocalRepository createInstance(URI path) {
             return new LocalRepository(path, objectMapper);
         }
 
         public LocalRepository createInstance(File path, URI source) {
-            return this.createInstance(path.toURI(), source);
-        }
-
-        public LocalRepository createInstance(URI path, URI source) {
             return new LocalRepository(path, source, objectMapper);
         }
     }

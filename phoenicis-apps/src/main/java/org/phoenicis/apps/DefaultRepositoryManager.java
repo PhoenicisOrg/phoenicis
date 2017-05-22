@@ -152,7 +152,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
             switch (repositoryType) {
                 case "git":
-                    return new GitRepository(new URL(repositoryPath), cacheDirectoryPath, localRepositoryFactory, fileUtilities);
+                    return new GitRepository(new URI(repositoryPath), cacheDirectoryPath, localRepositoryFactory, fileUtilities);
                 case "file":
                     return localRepositoryFactory.createInstance(new File(repositoryPath));
                 case "classpath":
@@ -163,9 +163,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
             }
         } catch (URISyntaxException e) {
             LOGGER.warn("Invalid repository uri syntax: " + repositoryUrl, e);
-            return new NullRepository();
-        } catch (MalformedURLException e) {
-            LOGGER.warn("Malformed repository url: " + repositoryUrl, e);
             return new NullRepository();
         }
     }
