@@ -25,7 +25,10 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
+
+import javax.xml.soap.Detail;
 
 public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
     protected final ThemeManager themeManager;

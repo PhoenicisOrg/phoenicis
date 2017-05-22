@@ -142,6 +142,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
+        appPanel.setOnClose(this::closeDetailsView);
         appPanel.setMaxWidth(400);
         this.showDetailsView(appPanel);
     }
