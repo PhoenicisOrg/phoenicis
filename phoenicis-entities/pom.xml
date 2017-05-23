@@ -31,7 +31,7 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
-        <project.po>${project.basedir}/../po</project.po>
+        <project.po>${project.basedir}/../i18n</project.po>
     </properties>
 
 

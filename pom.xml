@@ -48,7 +48,7 @@
 
 	<properties>
 		<project.settings>${project.basedir}/settings</project.settings>
-		<project.po>${project.basedir}/po</project.po>
+		<project.po>${project.basedir}/i18n</project.po>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.bouncycastle.version>1.46</org.bouncycastle.version>
 		<sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
