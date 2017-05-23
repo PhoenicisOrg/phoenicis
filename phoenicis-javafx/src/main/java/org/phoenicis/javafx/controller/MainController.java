@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.phoenicis.javafx.controller.apps.AppsController;

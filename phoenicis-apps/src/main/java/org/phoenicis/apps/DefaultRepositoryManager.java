@@ -152,7 +152,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
             switch (repositoryType) {
                 case "git":
-                    return new GitRepository(new URI(repositoryPath), cacheDirectoryPath, localRepositoryFactory, fileUtilities);
+                    return new GitRepository(new URI(repositoryPath), cacheDirectoryPath, localRepositoryFactory,
+                            fileUtilities);
                 case "file":
                     return localRepositoryFactory.createInstance(new File(repositoryPath));
                 case "classpath":

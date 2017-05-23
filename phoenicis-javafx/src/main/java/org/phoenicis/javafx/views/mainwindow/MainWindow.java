@@ -76,7 +76,7 @@ public class MainWindow extends Stage {
 
         tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
 
-        scene = new PhoenicisScene(tabPane, themeManager, settingsManager);
+        this.scene = new PhoenicisScene(tabPane, themeManager, settingsManager);
 
         this.getIcons().add(new Image(
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));

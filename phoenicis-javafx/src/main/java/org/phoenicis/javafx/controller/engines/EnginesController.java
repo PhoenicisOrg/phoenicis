@@ -127,14 +127,6 @@ public class EnginesController {
             Files.write(temp, css.getBytes());
             String defaultEngineIconsCss = temp.toUri().toString();
             themeManager.setDefaultEngineIconsCss(defaultEngineIconsCss);
-
-            // apply current theme again to fix hierarchy
-            final String shortName = themeManager.getCurrentTheme().getShortName();
-            final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-            final URL style = this.getClass().getResource(url);
-            this.viewEngines.getTabPane().getScene().getStylesheets().clear();
-            this.viewEngines.getTabPane().getScene().getStylesheets().addAll(themeManager.getDefaultCategoryIconsCss(),
-                    defaultEngineIconsCss, style.toExternalForm());
         } catch (IOException e) {
             LOGGER.warn("Could not set default engine icons.", e);
         }

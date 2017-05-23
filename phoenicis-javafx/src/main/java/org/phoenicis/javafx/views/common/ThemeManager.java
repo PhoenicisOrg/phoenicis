@@ -1,95 +1,97 @@
 package org.phoenicis.javafx.views.common;
 
-public class ThemeManager {
-    private Theme currentTheme;
-    private final String themeUrl = "/org/phoenicis/javafx/themes";
-    private String defaultCategoryIconsCss = "";
-    private String defaultEngineIconsCss = "";
+import javafx.collections.ObservableList;
+import org.phoenicis.javafx.views.common.themes.Theme;
+import org.phoenicis.javafx.views.common.themes.Themes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public ThemeManager() {
-        currentTheme = Theme.DEFAULT;
+import java.util.Optional;
+
+public class ThemeManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ThemeManager.class);
+
+    /**
+     * The currently selected theme
+     */
+    private Theme currentTheme;
+
+    /**
+     * A list of urls to the activated stylesheets
+     */
+    private Optional<PhoenicisScene> scene;
+
+    private Optional<String> defaultCategoryIconsCss;
+    private Optional<String> defaultEngineIconsCss;
+
+    public ThemeManager(Theme currentTheme) {
+        this.scene = Optional.empty();
+        this.defaultCategoryIconsCss = Optional.empty();
+        this.defaultEngineIconsCss = Optional.empty();
+
+        this.setCurrentTheme(currentTheme);
     }
 
-    public ThemeManager(Theme theme) {
-        currentTheme = theme;
+    public void setScene(PhoenicisScene scene) {
+        this.scene = Optional.of(scene);
+
+        this.refreshTheme();
     }
 
     public Theme getCurrentTheme() {
-        return currentTheme;
+        return this.currentTheme;
     }
 
     public void setCurrentTheme(Theme theme) {
-        currentTheme = theme;
+        LOGGER.info(String.format("Setting theme to '%s'", theme.getName()));
+
+        this.currentTheme = theme;
+
+        this.refreshTheme();
     }
 
-    /**
-     * checks if a theme resource exists
-     * 
-     * @param resource
-     *            theme resource
-     * @return
-     */
-    public boolean resourceExists(String resource) {
-        return getClass().getResourceAsStream(
-                String.format("%s/%s/%s", themeUrl, currentTheme.getShortName(), resource)) != null;
-    }
+    public void refreshTheme() {
+        LOGGER.info("Refreshing currently shown theme");
 
-    /**
-     * returns the full resource URL for a given theme resource
-     * 
-     * @param resource
-     *            theme resource
-     * @return full resource URL, falls back to default if resource does not
-     *         exist in theme
-     */
-    public String getResourceUrl(String resource) {
-        // check if theme contains resource
-        if (resourceExists(resource)) {
-            return String.format("%s/%s/%s", themeUrl, currentTheme.getShortName(), resource);
-        } else {
-            return String.format("%s/%s/%s", themeUrl, Theme.DEFAULT.getShortName(), resource);
-        }
+        this.scene.ifPresent(scene -> {
+            ObservableList<String> stylesheets = scene.getStylesheets();
+
+            stylesheets.clear();
+            defaultCategoryIconsCss.ifPresent(stylesheets::add);
+            defaultEngineIconsCss.ifPresent(stylesheets::add);
+
+            LOGGER.info(String.format("Loading default theme at '%s'", Themes.DEFAULT.getResourceUrl("main.css")));
+            stylesheets.add(Themes.DEFAULT.getResourceUrl("main.css"));
+
+            if (!currentTheme.equals(Themes.DEFAULT)) {
+                LOGGER.info(String.format("Loading '%s' theme at '%s'", currentTheme.getName(),
+                        currentTheme.getResourceUrl("main.css")));
+                stylesheets.add(currentTheme.getResourceUrl("main.css"));
+            }
+        });
     }
 
     /**
      * sets the path of the CSS file containing the default category icons from
      * the repository
-     * 
-     * @param defaultCategoryIconsCss
-     *            path of the default category icons from the repository
+     *
+     * @param defaultCategoryIconsCss path of the default category icons from the repository
      */
     public void setDefaultCategoryIconsCss(String defaultCategoryIconsCss) {
-        this.defaultCategoryIconsCss = defaultCategoryIconsCss;
-    }
+        this.defaultCategoryIconsCss = Optional.of(defaultCategoryIconsCss);
 
-    /**
-     * returns the path of the CSS file containing the default category icons
-     * from the repository
-     * 
-     * @return path of the default category icons from the repository
-     */
-    public String getDefaultCategoryIconsCss() {
-        return defaultCategoryIconsCss;
+        this.refreshTheme();
     }
 
     /**
      * sets the path of the CSS file containing the default engine icons from
      * the repository
-     * 
-     * @param defaultEngineIconsCss
-     *            path of the default engine icons from the repository
+     *
+     * @param defaultEngineIconsCss path of the default engine icons from the repository
      */
     public void setDefaultEngineIconsCss(String defaultEngineIconsCss) {
-        this.defaultEngineIconsCss = defaultEngineIconsCss;
-    }
+        this.defaultEngineIconsCss = Optional.of(defaultEngineIconsCss);
 
-    /**
-     * returns the CSS file containing the default engine icons from the
-     * repository
-     * 
-     * @return default engine icons from the repository
-     */
-    public String getDefaultEngineIconsCss() {
-        return defaultEngineIconsCss;
+        this.refreshTheme();
     }
 }

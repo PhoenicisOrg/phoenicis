@@ -112,14 +112,6 @@ public class AppsController {
             Files.write(temp, css.getBytes());
             String defaultCategoryIconsCss = temp.toUri().toString();
             themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-
-            // apply current theme again to fix hierarchy
-            final String shortName = themeManager.getCurrentTheme().getShortName();
-            final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-            final URL style = this.getClass().getResource(url);
-            this.view.getTabPane().getScene().getStylesheets().clear();
-            this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss,
-                    themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
         } catch (IOException e) {
             LOGGER.warn("Could not set default category icons.", e);
         }
