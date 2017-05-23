@@ -1,0 +1,286 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-23 19:15+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/main/java/org/phoenicis/javafx/controller/MainController.java:72
+msgid "Are you sure you want to close all "
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:87
+msgid "Repositories Settings"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:92
+msgid "Repository:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:158
+msgid ""
+"The value in front of each repository is its priority. The higher the "
+"priority is, the more important the scripts inside the repository are."
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:170
+msgid ""
+"Fetch updates for the repositories to retrieve the newest script versions"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:65
+msgid "User Interface Settings"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:73
+msgid "Theme:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:88
+msgid "Select, if you want to view the source repository of the scripts"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:92
+msgid "Scale the user interface."
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:62
+msgid "About"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:69
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:104
+msgid "Name:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:72
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:58
+msgid "Version:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:75
+msgid "Git Revision:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:87
+msgid "Build Timestamp:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:94
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:96
+msgid "Information"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:109
+msgid "Path:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:114
+msgid "Wine version:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:119
+msgid "Wine architecture:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:124
+msgid "Wine distribution:"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:164
+msgid "Display"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:166
+msgid "Display settings"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:180
+msgid "GLSL support"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:189
+msgid "Direct Draw Renderer"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:198
+msgid "Video memory size"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:207
+msgid "Offscreen rendering mode"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:216
+msgid "Render target lock mode"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:225
+msgid "Multisampling"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:234
+msgid "Strict Draw Ordering"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:243
+msgid "Always Offscreen"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:267
+msgid "Input"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:269
+msgid "Input settings"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:280
+msgid "Mouse Warp Override"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:295
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:297
+msgid "Wine tools"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:306
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:307
+msgid "Configure Wine"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:310
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:312
+msgid "Registry Editor"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:315
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:317
+msgid "Windows reboot"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:319
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:321
+msgid "Repair virtual drive"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:324
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:325
+msgid "Command prompt"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:328
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:329
+msgid "Task manager"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:331
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:333
+msgid "Kill processes"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:335
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:337
+msgid "Wine uninstaller"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:351
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:353
+msgid "Tools"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:361
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerPanel.java:363
+msgid "Open a terminal"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerSideBar.java:100
+msgid "Containers"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:162
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:105
+msgid "Categories"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:210
+msgid "Run"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:213
+msgid "Close"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:216
+msgid "Uninstall"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:233
+msgid "Run a script"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:70
+msgid "Library"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:174
+msgid "My applications"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:41
+msgid ""
+"Connecting to ${application.name} failed.\n"
+"Please check your connection and try again."
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:45
+msgid "Retry"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:110
+msgid "Testing"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:111
+msgid "No CD needed"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:112
+msgid "Commercial"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
+msgid "Console"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EngineSideBar.java:108
+msgid "Engines"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EngineSideBar.java:115
+msgid "Installed"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EngineSideBar.java:120
+msgid "Not installed"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
+msgid "I agree"
+msgstr ""
+
+#: src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:91
+msgid "Allowed files"
+msgstr ""
