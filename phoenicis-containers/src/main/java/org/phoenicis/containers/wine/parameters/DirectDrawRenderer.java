@@ -20,10 +20,10 @@ package org.phoenicis.containers.wine.parameters;
 
 import org.phoenicis.win32.registry.*;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public enum DirectDrawRenderer implements RegistryParameter {
-    DEFAULT(translate("Default"), ""), GDI("GDI", "gdi"), OPENGL("OpenGL", "opengl");
+    DEFAULT(tr("Default"), ""), GDI("GDI", "gdi"), OPENGL("OpenGL", "opengl");
 
     private final String translatedName;
     private final String registryValue;

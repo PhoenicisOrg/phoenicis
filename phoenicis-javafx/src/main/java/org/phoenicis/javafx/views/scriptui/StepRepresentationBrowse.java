@@ -29,7 +29,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class StepRepresentationBrowse extends AbstractStepRepresentationWithHeader {
     private final File browseDirectory;
@@ -87,8 +87,8 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
         dragTarget.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
             if (extensions != null) {
-                fileChooser.setSelectedExtensionFilter(
-                        new FileChooser.ExtensionFilter(translate("Allowed files"), extensions));
+                fileChooser
+                        .setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Allowed files"), extensions));
             }
             fileChooser.setInitialDirectory(browseDirectory);
 

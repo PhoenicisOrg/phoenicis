@@ -13,7 +13,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.*;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * An instance of this class represents the left sidebar of the engines tab view.
@@ -105,19 +105,19 @@ public class EngineSideBar extends LeftSideBar {
      * This method populates the button group showing all known engine categories
      */
     private void populateEngineCategories() {
-        this.categoryView = LeftToggleGroup.create(translate("Engines"), this::createCategoryToggleButton);
+        this.categoryView = LeftToggleGroup.create(tr("Engines"), this::createCategoryToggleButton);
     }
 
     /**
      * This method populates the button group containing buttons to filter for installed and not installed engines
      */
     private void populateInstallationFilters() {
-        this.installedCheck = new LeftCheckBox(translate("Installed"));
+        this.installedCheck = new LeftCheckBox(tr("Installed"));
         this.installedCheck.setSelected(true);
         this.installedCheck.selectedProperty()
                 .addListener((observableValue, oldValue, newValue) -> onApplyInstalledFilter.accept(newValue));
 
-        this.notInstalledCheck = new LeftCheckBox(translate("Not installed"));
+        this.notInstalledCheck = new LeftCheckBox(tr("Not installed"));
         this.notInstalledCheck.setSelected(true);
         this.notInstalledCheck.selectedProperty()
                 .addListener((observableValue, oldValue, newValue) -> onApplyUninstalledFilter.accept(newValue));

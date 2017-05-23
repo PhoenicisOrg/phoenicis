@@ -23,7 +23,6 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.*;
-import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -46,7 +45,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
@@ -92,9 +91,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
 
     @Override
     Tab drawInformationTab(WinePrefixContainerDTO container, List<EngineVersionDTO> engineVersions) {
-        final Tab informationTab = new Tab(translate("Information"));
+        final Tab informationTab = new Tab(tr("Information"));
         final VBox informationPane = new VBox();
-        final Text title = new TextWithStyle(translate("Information"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Information"), TITLE_CSS_CLASS);
 
         informationPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         informationPane.getChildren().add(title);
@@ -102,27 +101,27 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         final GridPane informationContentPane = new GridPane();
         informationContentPane.getStyleClass().add("grid");
 
-        informationContentPane.add(new TextWithStyle(translate("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        informationContentPane.add(new TextWithStyle(tr("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         Label name = new Label(container.getName());
         name.setWrapText(true);
         informationContentPane.add(name, 1, 0);
 
-        informationContentPane.add(new TextWithStyle(translate("Path:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
+        informationContentPane.add(new TextWithStyle(tr("Path:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         Label path = new Label(container.getPath());
         path.setWrapText(true);
         informationContentPane.add(path, 1, 1);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        informationContentPane.add(new TextWithStyle(tr("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         Label version = new Label(container.getVersion());
         version.setWrapText(true);
         informationContentPane.add(version, 1, 2);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        informationContentPane.add(new TextWithStyle(tr("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         Label architecture = new Label(container.getArchitecture());
         architecture.setWrapText(true);
         informationContentPane.add(architecture, 1, 3);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
+        informationContentPane.add(new TextWithStyle(tr("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         Label distribution = new Label(container.getDistribution());
         distribution.setWrapText(true);
         informationContentPane.add(distribution, 1, 4);
@@ -162,9 +161,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     }
 
     private Tab drawDisplayTab(WinePrefixContainerDTO winePrefixContainerDTO) {
-        final Tab displayTab = new Tab(translate("Display"));
+        final Tab displayTab = new Tab(tr("Display"));
         final VBox displayPane = new VBox();
-        final Text title = new TextWithStyle(translate("Display settings"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Display settings"), TITLE_CSS_CLASS);
 
         displayPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         displayPane.getChildren().add(title);
@@ -178,7 +177,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         glslComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(glslComboBox, UseGLSL.class);
-        displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        displayContentPane.add(new TextWithStyle(tr("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
 
         final ComboBox<DirectDrawRenderer> directDrawRendererComboBox = new ComboBox<>();
@@ -187,7 +186,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         directDrawRendererComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(directDrawRendererComboBox, DirectDrawRenderer.class);
-        displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
+        displayContentPane.add(new TextWithStyle(tr("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         displayContentPane.add(directDrawRendererComboBox, 1, 1);
 
         final ComboBox<VideoMemorySize> videoMemorySizeComboBox = new ComboBox<>();
@@ -196,7 +195,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         videoMemorySizeComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItemsVideoMemorySize(videoMemorySizeComboBox);
-        displayContentPane.add(new TextWithStyle(translate("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        displayContentPane.add(new TextWithStyle(tr("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         displayContentPane.add(videoMemorySizeComboBox, 1, 2);
 
         final ComboBox<OffscreenRenderingMode> offscreenRenderingModeComboBox = new ComboBox<>();
@@ -205,7 +204,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         offscreenRenderingModeComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(offscreenRenderingModeComboBox, OffscreenRenderingMode.class);
-        displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        displayContentPane.add(new TextWithStyle(tr("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         displayContentPane.add(offscreenRenderingModeComboBox, 1, 3);
 
         final ComboBox<RenderTargetModeLock> renderTargetModeLockComboBox = new ComboBox<>();
@@ -214,7 +213,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         renderTargetModeLockComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(renderTargetModeLockComboBox, RenderTargetModeLock.class);
-        displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
+        displayContentPane.add(new TextWithStyle(tr("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         displayContentPane.add(renderTargetModeLockComboBox, 1, 4);
 
         final ComboBox<Multisampling> multisamplingComboBox = new ComboBox<>();
@@ -223,7 +222,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         multisamplingComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(multisamplingComboBox, Multisampling.class);
-        displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
+        displayContentPane.add(new TextWithStyle(tr("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
         final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
@@ -232,7 +231,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         strictDrawOrderingComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
-        displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
+        displayContentPane.add(new TextWithStyle(tr("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
         final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
@@ -241,7 +240,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         alwaysOffscreenComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSetting(winePrefixContainerDTO, newValue));
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
-        displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
+        displayContentPane.add(new TextWithStyle(tr("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
 
         Region spacer = new Region();
@@ -265,9 +264,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     }
 
     private Tab drawInputTab(WinePrefixContainerDTO containerEntity) {
-        final Tab inputTab = new Tab(translate("Input"));
+        final Tab inputTab = new Tab(tr("Input"));
         final VBox inputPane = new VBox();
-        final Text title = new TextWithStyle(translate("Input settings"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Input settings"), TITLE_CSS_CLASS);
 
         inputPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         inputPane.getChildren().add(title);
@@ -278,7 +277,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         final ComboBox<MouseWarpOverride> mouseWarpOverrideComboBox = new ComboBox<>();
         mouseWarpOverrideComboBox.setValue(containerEntity.getMouseWarpOverride());
         addItems(mouseWarpOverrideComboBox, MouseWarpOverride.class);
-        inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        inputContentPane.add(new TextWithStyle(tr("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         inputContentPane.add(mouseWarpOverrideComboBox, 1, 0);
 
         inputContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
@@ -293,9 +292,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     }
 
     private Tab drawWineToolsTab(WinePrefixContainerDTO containerEntity) {
-        final Tab toolsTab = new Tab(translate("Wine tools"));
+        final Tab toolsTab = new Tab(tr("Wine tools"));
         final VBox toolsPane = new VBox();
-        final Text title = new TextWithStyle(translate("Wine tools"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Wine tools"), TITLE_CSS_CLASS);
 
         toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         toolsPane.getChildren().add(title);
@@ -304,39 +303,38 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         toolsContentPane.getStyleClass().add("grid");
 
         toolsContentPane.add(
-                wineToolButton(translate("Configure Wine"), "winecfg.png", e -> this.onWineCfg.accept(containerEntity)),
-                0, 0);
-        toolsContentPane.add(wineToolCaption(translate("Configure Wine")), 0, 1);
+                wineToolButton(tr("Configure Wine"), "winecfg.png", e -> this.onWineCfg.accept(containerEntity)), 0, 0);
+        toolsContentPane.add(wineToolCaption(tr("Configure Wine")), 0, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Registry Editor"), "regedit.png",
-                e -> this.onRegedit.accept(containerEntity)), 1, 0);
-        toolsContentPane.add(wineToolCaption(translate("Registry Editor")), 1, 1);
+        toolsContentPane.add(
+                wineToolButton(tr("Registry Editor"), "regedit.png", e -> this.onRegedit.accept(containerEntity)), 1,
+                0);
+        toolsContentPane.add(wineToolCaption(tr("Registry Editor")), 1, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Windows reboot"), "rebootPrefix.png",
-                e -> this.onWineboot.accept(containerEntity)), 2, 0);
-        toolsContentPane.add(wineToolCaption(translate("Windows reboot")), 2, 1);
+        toolsContentPane.add(
+                wineToolButton(tr("Windows reboot"), "rebootPrefix.png", e -> this.onWineboot.accept(containerEntity)),
+                2, 0);
+        toolsContentPane.add(wineToolCaption(tr("Windows reboot")), 2, 1);
 
-        toolsContentPane.add(wineToolButton(translate("Repair virtual drive"), "repair.png",
+        toolsContentPane.add(wineToolButton(tr("Repair virtual drive"), "repair.png",
                 e -> this.onWinebootRepair.accept(containerEntity)), 3, 0);
-        toolsContentPane.add(wineToolCaption(translate("Repair virtual drive")), 3, 1);
+        toolsContentPane.add(wineToolCaption(tr("Repair virtual drive")), 3, 1);
 
         toolsContentPane.add(
-                wineToolButton(translate("Command prompt"), "cmd.png", e -> this.onWineConsole.accept(containerEntity)),
-                0, 3);
-        toolsContentPane.add(wineToolCaption(translate("Command prompt")), 0, 4);
+                wineToolButton(tr("Command prompt"), "cmd.png", e -> this.onWineConsole.accept(containerEntity)), 0, 3);
+        toolsContentPane.add(wineToolCaption(tr("Command prompt")), 0, 4);
 
         toolsContentPane.add(
-                wineToolButton(translate("Task manager"), "taskmgr.png", e -> this.onTaskMgr.accept(containerEntity)),
-                1, 3);
-        toolsContentPane.add(wineToolCaption(translate("Task manager")), 1, 4);
+                wineToolButton(tr("Task manager"), "taskmgr.png", e -> this.onTaskMgr.accept(containerEntity)), 1, 3);
+        toolsContentPane.add(wineToolCaption(tr("Task manager")), 1, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Kill processes"), "killProcesses.png",
+        toolsContentPane.add(wineToolButton(tr("Kill processes"), "killProcesses.png",
                 e -> this.onKillProcess.accept(containerEntity), false), 2, 3);
-        toolsContentPane.add(wineToolCaption(translate("Kill processes")), 2, 4);
+        toolsContentPane.add(wineToolCaption(tr("Kill processes")), 2, 4);
 
-        toolsContentPane.add(wineToolButton(translate("Wine uninstaller"), "uninstaller.png",
+        toolsContentPane.add(wineToolButton(tr("Wine uninstaller"), "uninstaller.png",
                 e -> this.onUninstaller.accept(containerEntity)), 3, 3);
-        toolsContentPane.add(wineToolCaption(translate("Wine uninstaller")), 3, 4);
+        toolsContentPane.add(wineToolCaption(tr("Wine uninstaller")), 3, 4);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 
@@ -350,9 +348,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     }
 
     private Tab drawToolsTab(WinePrefixContainerDTO containerEntity) {
-        final Tab toolsTab = new Tab(translate("Tools"));
+        final Tab toolsTab = new Tab(tr("Tools"));
         final VBox toolsPane = new VBox();
-        final Text title = new TextWithStyle(translate("Tools"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Tools"), TITLE_CSS_CLASS);
 
         toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         toolsPane.getChildren().add(title);
@@ -360,9 +358,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        toolsContentPane.add(wineToolButton(translate("Open a terminal"), "cmd.png",
+        toolsContentPane.add(wineToolButton(tr("Open a terminal"), "cmd.png",
                 e -> this.onOpenTerminalInWinePrefix.accept(containerEntity)), 0, 0);
-        toolsContentPane.add(wineToolCaption(translate("Open a terminal")), 0, 1);
+        toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 

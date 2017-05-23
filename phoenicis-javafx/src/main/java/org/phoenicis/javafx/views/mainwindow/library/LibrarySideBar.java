@@ -13,7 +13,7 @@ import org.phoenicis.library.dto.ShortcutDTO;
 import java.io.File;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * An instance of this class represents the left sidebar of the library tab view.
@@ -159,7 +159,7 @@ public class LibrarySideBar extends LeftSideBar {
     }
 
     private void populateCategories() {
-        this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton,
+        this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
     }
 
@@ -207,13 +207,13 @@ public class LibrarySideBar extends LeftSideBar {
      * This method populates the shortcut button group.
      */
     private void populateShortcut() {
-        this.runButton = new LeftButton(translate("Run"));
+        this.runButton = new LeftButton(tr("Run"));
         this.runButton.getStyleClass().add("runButton");
 
-        this.stopButton = new LeftButton(translate("Close"));
+        this.stopButton = new LeftButton(tr("Close"));
         this.stopButton.getStyleClass().add("stopButton");
 
-        this.uninstallButton = new LeftButton(translate("Uninstall"));
+        this.uninstallButton = new LeftButton(tr("Uninstall"));
         this.uninstallButton.getStyleClass().add("uninstallButton");
 
         this.runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcut));
@@ -230,10 +230,10 @@ public class LibrarySideBar extends LeftSideBar {
      * This method populates the advanced tools button group.
      */
     private void populateAdvancedTools() {
-        this.runScript = new LeftButton(translate("Run a script"));
+        this.runScript = new LeftButton(tr("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");
 
-        this.runConsole = new LeftButton(translate(String.format("%s console", applicationName)));
+        this.runConsole = new LeftButton(tr(String.format("%s console", applicationName)));
         this.runConsole.getStyleClass().add("consoleButton");
 
         this.runScript.setOnMouseClicked(event -> {

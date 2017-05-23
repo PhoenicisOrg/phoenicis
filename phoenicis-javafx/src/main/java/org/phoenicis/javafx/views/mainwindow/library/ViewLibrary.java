@@ -40,7 +40,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
@@ -67,7 +67,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     };
 
     public ViewLibrary(String applicationName, ThemeManager themeManager) {
-        super("Library", themeManager);
+        super(tr("Library"), themeManager);
         this.getStyleClass().add("mainWindowScene");
 
         availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
@@ -171,7 +171,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
         final Tab installedApplication = new Tab();
         installedApplication.setClosable(false);
-        installedApplication.setText(translate("My applications"));
+        installedApplication.setText(tr("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
         installedApplication.setContent(availableShortcuts);

@@ -20,11 +20,11 @@ package org.phoenicis.containers.wine.parameters;
 
 import org.phoenicis.win32.registry.*;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public enum MouseWarpOverride implements RegistryParameter {
-    DEFAULT(translate("Default"), ""), DISABLED(translate("Disabled"), "disabled"), ENABLED(translate("Enabled"),
-            "enabled"), FORCE(translate("Force"), "force");
+    DEFAULT(tr("Default"), ""), DISABLED(tr("Disabled"), "disabled"), ENABLED(tr("Enabled"),
+            "enabled"), FORCE(tr("Force"), "force");
 
     private final String translatedName;
     private final String registryValue;

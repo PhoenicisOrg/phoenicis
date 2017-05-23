@@ -19,15 +19,15 @@
 package org.phoenicis.configuration.localisation;
 
 /**
- * Interface to translate UI strings to different languages.
+ * Interface to tr UI strings to different languages.
  */
 public interface LanguageBundle {
     /**
-     * Try to translate the given message in with this bundle in the default
+     * Try to tr the given message in with this bundle in the default
      * context.
      * 
      * @param toTranslate
-     *            The string to translate.
+     *            The string to tr.
      * @return The translated string or <code>toTranslate</code> if this string
      *         could not be translated with this bundle. Never null.
      * @throws NullPointerException
@@ -36,12 +36,12 @@ public interface LanguageBundle {
     String translate(String toTranslate);
 
     /**
-     * Try to translate the given message in the given context with this bundle.
+     * Try to tr the given message in the given context with this bundle.
      * 
      * @param toTranslate
-     *            The string to translate.
+     *            The string to tr.
      * @param context
-     *            The context ID in which to translate this string. May be null.
+     *            The context ID in which to tr this string. May be null.
      * @return The translated string or <code>toTranslate</code> if this string
      *         could not be translated with this bundle. Never null.
      * @throws NullPointerException

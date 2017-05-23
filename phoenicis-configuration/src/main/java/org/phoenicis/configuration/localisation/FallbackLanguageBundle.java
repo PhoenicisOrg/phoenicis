@@ -21,7 +21,7 @@ package org.phoenicis.configuration.localisation;
 import com.google.common.base.Preconditions;
 
 /**
- * LanguageBundle that doesn't translate at all.
+ * LanguageBundle that doesn't tr at all.
  */
 public class FallbackLanguageBundle implements LanguageBundle {
     private static final FallbackLanguageBundle INSTANCE = new FallbackLanguageBundle();

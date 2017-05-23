@@ -15,7 +15,7 @@ import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * This class represents the "Repositories" settings category
@@ -84,12 +84,12 @@ public class RepositoriesPanel extends VBox {
     }
 
     private void populateRepositoryGrid() {
-        this.title = new TextWithStyle(translate("Repositories Settings"), "title");
+        this.title = new TextWithStyle(tr("Repositories Settings"), "title");
 
         this.repositoryGrid = new GridPane();
         this.repositoryGrid.getStyleClass().add("grid");
 
-        this.repositoryText = new TextWithStyle(translate("Repository:"), "captionTitle");
+        this.repositoryText = new TextWithStyle(tr("Repository:"), "captionTitle");
 
         this.repositoryLayout = new VBox();
         this.repositoryLayout.setSpacing(5);
@@ -154,7 +154,7 @@ public class RepositoriesPanel extends VBox {
     }
 
     private void populateRepositoryLegend() {
-        this.priorityHint = new Label(translate(
+        this.priorityHint = new Label(tr(
                 "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
         this.priorityHint.setWrapText(true);
         this.priorityHint.setPadding(new Insets(10));
@@ -167,7 +167,7 @@ public class RepositoriesPanel extends VBox {
         this.refreshLayout.setVgap(10);
 
         this.refreshRepositoriesLabel = new Label(
-                translate("Fetch updates for the repositories to retrieve the newest script versions"));
+                tr("Fetch updates for the repositories to retrieve the newest script versions"));
         this.refreshRepositoriesLabel.setWrapText(true);
 
         this.refreshRepositoriesButton = new Button("Refresh Repositories");

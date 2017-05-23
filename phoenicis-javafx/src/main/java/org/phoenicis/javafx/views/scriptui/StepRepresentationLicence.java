@@ -22,7 +22,7 @@ import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class StepRepresentationLicence extends StepRepresentationMessage {
     private final String licenceText;
@@ -48,7 +48,7 @@ public class StepRepresentationLicence extends StepRepresentationMessage {
         licenceWidget.setMaxHeight(308);
         licenceWidget.setEditable(false);
 
-        CheckBox confirmWidget = new CheckBox(translate("I agree"));
+        CheckBox confirmWidget = new CheckBox(tr("I agree"));
         confirmWidget.setOnAction(event -> {
             isAgree = !isAgree;
             confirmWidget.setSelected(isAgree);
