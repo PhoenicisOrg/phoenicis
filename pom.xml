@@ -208,7 +208,7 @@
 				<groupId>com.googlecode.gettext-commons</groupId>
 				<artifactId>gettext-maven-plugin</artifactId>
 				<version>1.2.4</version>
-				<executions>
+				<!--executions>
 					<execution>
 						<id>convert-po-class</id>
 						<phase>compile</phase>
@@ -216,7 +216,7 @@
 							<goal>dist</goal>
 						</goals>
 					</execution>
-				</executions>
+				</executions-->
 				<configuration>
 					<poDirectory>${project.po}</poDirectory>
 					<sourceDirectory>${project.basedir}</sourceDirectory>
