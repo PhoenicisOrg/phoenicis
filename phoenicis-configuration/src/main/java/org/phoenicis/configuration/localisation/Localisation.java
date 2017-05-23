@@ -21,8 +21,6 @@ package org.phoenicis.configuration.localisation;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
-import java.util.Locale;
-
 public final class Localisation {
     // This is a static class
     private Localisation() {
@@ -31,7 +29,6 @@ public final class Localisation {
 
     private static I18n getI18n() {
         I18n getI18n = I18nFactory.getI18n(Localisation.class, "Messages");
-        getI18n.setLocale(Locale.GERMAN);
         return getI18n;
     }
 
