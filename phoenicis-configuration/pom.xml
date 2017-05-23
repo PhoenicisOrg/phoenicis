@@ -31,6 +31,7 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
+        <project.po>${project.basedir}/../po</project.po>
     </properties>
 
     <dependencies>
@@ -56,6 +57,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>21.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.gettext-commons</groupId>
+            <artifactId>gettext-commons</artifactId>
+            <version>0.9.8</version>
         </dependency>
 
     </dependencies>
