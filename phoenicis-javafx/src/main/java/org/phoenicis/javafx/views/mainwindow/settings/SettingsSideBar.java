@@ -2,8 +2,8 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
@@ -22,7 +22,7 @@ public class SettingsSideBar extends LeftSideBar {
     private LeftToggleGroup<SettingsSideBarItem> settingsItems;
 
     // consumer called when a settings toggle button has been clicked
-    private Consumer<VBox> onSelectSettingsItem;
+    private Consumer<Node> onSelectSettingsItem;
 
     /**
      * Constructor
@@ -78,7 +78,7 @@ public class SettingsSideBar extends LeftSideBar {
      *
      * @param onSelectSettingsItem The new consumer to be called
      */
-    public void setOnSelectSettingsItem(Consumer<VBox> onSelectSettingsItem) {
+    public void setOnSelectSettingsItem(Consumer<Node> onSelectSettingsItem) {
         this.onSelectSettingsItem = onSelectSettingsItem;
     }
 
@@ -87,7 +87,7 @@ public class SettingsSideBar extends LeftSideBar {
      */
     public static class SettingsSideBarItem {
         // the corresponding panel for this settings category
-        private final VBox panel;
+        private final Node panel;
         // the css class containing the icon for this settings category
         private final String iconClass;
         // the displayed name of this settings category
@@ -100,13 +100,13 @@ public class SettingsSideBar extends LeftSideBar {
          * @param iconClass The css class containing the icon for this settings category
          * @param name      The displayed name of this settings category
          */
-        public SettingsSideBarItem(VBox panel, String iconClass, String name) {
+        public SettingsSideBarItem(Node panel, String iconClass, String name) {
             this.panel = panel;
             this.iconClass = iconClass;
             this.name = name;
         }
 
-        public VBox getPanel() {
+        public Node getPanel() {
             return panel;
         }
 
