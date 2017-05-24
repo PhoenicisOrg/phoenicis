@@ -1,5 +1,9 @@
 package org.phoenicis.javafx.views.common;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.views.common.themes.Theme;
 import org.phoenicis.javafx.views.common.themes.Themes;
@@ -19,23 +23,47 @@ public class ThemeManager {
     /**
      * A list of urls to the activated stylesheets
      */
-    private Optional<PhoenicisScene> scene;
+    private ObservableList<String> stylesheets;
+
+    /**
+     * The stylesheet to be used inside the {@link org.phoenicis.javafx.views.mainwindow.apps.AppPanel}
+     */
+    private StringProperty webEngineStylesheet;
 
     private Optional<String> defaultCategoryIconsCss;
     private Optional<String> defaultEngineIconsCss;
 
+    /**
+     * Constructor
+     *
+     * @param currentTheme The current theme
+     */
     public ThemeManager(Theme currentTheme) {
-        this.scene = Optional.empty();
+        this.stylesheets = FXCollections.observableArrayList();
+        this.webEngineStylesheet = new SimpleStringProperty();
+
         this.defaultCategoryIconsCss = Optional.empty();
         this.defaultEngineIconsCss = Optional.empty();
 
         this.setCurrentTheme(currentTheme);
     }
 
-    public void setScene(PhoenicisScene scene) {
-        this.scene = Optional.of(scene);
+    /**
+     * Binds this ThemeManager to the given ObservableList
+     *
+     * @param destination The to be managed observable list with stylesheet locations
+     */
+    public void bindStylesheets(ObservableList<String> destination) {
+        Bindings.bindContent(destination, this.stylesheets);
+    }
 
-        this.refreshTheme();
+    /**
+     * Binds this ThemeManager to the given StringProperty
+     *
+     * @param destination The to be managed stylesheet location
+     */
+    public void bindWebEngineStylesheet(StringProperty destination) {
+        destination.bind(this.webEngineStylesheet);
     }
 
     public Theme getCurrentTheme() {
@@ -48,27 +76,6 @@ public class ThemeManager {
         this.currentTheme = theme;
 
         this.refreshTheme();
-    }
-
-    public void refreshTheme() {
-        LOGGER.info("Refreshing currently shown theme");
-
-        this.scene.ifPresent(scene -> {
-            ObservableList<String> stylesheets = scene.getStylesheets();
-
-            stylesheets.clear();
-            defaultCategoryIconsCss.ifPresent(stylesheets::add);
-            defaultEngineIconsCss.ifPresent(stylesheets::add);
-
-            LOGGER.info(String.format("Loading default theme at '%s'", Themes.DEFAULT.getResourceUrl("main.css")));
-            stylesheets.add(Themes.DEFAULT.getResourceUrl("main.css"));
-
-            if (!currentTheme.equals(Themes.DEFAULT)) {
-                LOGGER.info(String.format("Loading '%s' theme at '%s'", currentTheme.getName(),
-                        currentTheme.getResourceUrl("main.css")));
-                stylesheets.add(currentTheme.getResourceUrl("main.css"));
-            }
-        });
     }
 
     /**
@@ -93,5 +100,26 @@ public class ThemeManager {
         this.defaultEngineIconsCss = Optional.of(defaultEngineIconsCss);
 
         this.refreshTheme();
+    }
+
+    public void refreshTheme() {
+        LOGGER.info("Refreshing currently shown theme");
+
+        stylesheets.clear();
+        defaultCategoryIconsCss.ifPresent(stylesheets::add);
+        defaultEngineIconsCss.ifPresent(stylesheets::add);
+
+        LOGGER.info(String.format("Loading default theme at '%s'", Themes.DEFAULT.getResourceUrl("main.css")));
+        stylesheets.add(Themes.DEFAULT.getResourceUrl("main.css").toString());
+
+        if (!currentTheme.equals(Themes.DEFAULT)) {
+            LOGGER.info(String.format("Loading '%s' theme at '%s'", currentTheme.getName(),
+                    currentTheme.getResourceUrl("main.css")));
+            stylesheets.add(currentTheme.getResourceUrl("main.css").toString());
+        }
+
+        LOGGER.info(
+                String.format("Loading WebView stylesheet at '%s'", currentTheme.getResourceUrl("description.css")));
+        webEngineStylesheet.set(currentTheme.getResourceUrl("description.css").toString());
     }
 }

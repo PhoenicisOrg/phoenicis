@@ -67,9 +67,8 @@ final class AppPanel extends DetailsView {
         VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getEngine().loadContent("<body>" + application.getDescription() + "</body>");
 
-        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css",
-                themeManager.getCurrentTheme().getShortName()));
-        appDescription.getEngine().setUserStyleSheetLocation(style.toString());
+        themeManager.bindWebEngineStylesheet(appDescription.getEngine().userStyleSheetLocationProperty());
+
         Label installers = new Label("Installers");
         installers.getStyleClass().add("descriptionTitle");
 

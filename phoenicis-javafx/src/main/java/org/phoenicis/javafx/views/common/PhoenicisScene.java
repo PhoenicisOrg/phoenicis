@@ -28,7 +28,8 @@ public class PhoenicisScene extends Scene {
     public PhoenicisScene(Parent parent, ThemeManager themeManager, SettingsManager settingsManager) {
         super(parent);
 
-        themeManager.setScene(this);
+        themeManager.bindStylesheets(this.getStylesheets());
+
         this.getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", settingsManager.getScale()));
     }
 }

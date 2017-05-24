@@ -3,6 +3,7 @@ package org.phoenicis.javafx.views.common.themes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
@@ -28,11 +29,19 @@ public class ClasspathTheme extends Theme {
         this.classpathToTheme = classpathToTheme;
     }
 
-    public String getResourceUrl(String resource) {
+    public URI getResourceUrl(String resource) {
+        String resourcePath;
         if (this.classpathToTheme.endsWith("/")) {
-            return classpathToTheme + resource;
+            resourcePath = classpathToTheme + resource;
         } else {
-            return classpathToTheme + "/" + resource;
+            resourcePath = classpathToTheme + "/" + resource;
+        }
+
+        try {
+            return getClass().getResource(resourcePath).toURI();
+        } catch (URISyntaxException e) {
+            LOGGER.error(String.format("Couldn't find resource '%s'", resourcePath), e);
+            return null;
         }
     }
 

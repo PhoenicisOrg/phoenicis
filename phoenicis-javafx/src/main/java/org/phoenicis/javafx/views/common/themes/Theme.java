@@ -42,5 +42,5 @@ public abstract class Theme {
         return this.shortName;
     }
 
-    public abstract String getResourceUrl(String resource);
+    public abstract URI getResourceUrl(String resource);
 }
