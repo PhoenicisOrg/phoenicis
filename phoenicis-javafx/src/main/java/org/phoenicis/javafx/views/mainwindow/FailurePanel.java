@@ -43,10 +43,8 @@ public class FailurePanel extends VBox {
                 "Connecting to ${application.name} failed.\n" + "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
-        final String iconPath = "/icons/mainwindow/refresh.png";
         retryButton = new Button(translate("Retry"));
-        retryButton.getStyleClass().add("retryButton");
-        retryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(iconPath) + "');");
+        retryButton.getStyleClass().addAll("retryButton", "refreshIcon");
 
         this.getChildren().addAll(failureNotificationLbl, retryButton);
     }

@@ -25,31 +25,11 @@ import org.phoenicis.settings.SettingsManager;
 import java.net.URL;
 
 public class PhoenicisScene extends Scene {
-    private Theme theme;
-
     public PhoenicisScene(Parent parent, ThemeManager themeManager, SettingsManager settingsManager) {
         super(parent);
 
-        this.theme = themeManager.getCurrentTheme();
-        applyTheme();
+        themeManager.bindStylesheets(this.getStylesheets());
 
         this.getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", settingsManager.getScale()));
-    }
-
-    private void applyTheme() {
-        final URL style = PhoenicisScene.class.getResource(themePath());
-
-        if (style != null) {
-            this.getStylesheets().add(style.toExternalForm());
-        } else {
-            final String message = String.format("Theme %s is not found!", theme);
-            final IllegalStateException exception = new IllegalStateException(message);
-            new ErrorMessage(message, exception);
-            throw exception;
-        }
-    }
-
-    private String themePath() {
-        return String.format("/org/phoenicis/javafx/themes/%s/main.css", theme.getShortName());
     }
 }
