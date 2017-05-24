@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 
 /**
- * A theme for POL 5
+ * A theme for Phoenicis
  *
  * @author marc
  * @since 23.05.17

@@ -7,7 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * A theme located inside the classpath of POL 5
+ * A theme located inside the classpath of Phoenicis
  *
  * @author marc
  * @since 23.05.17
