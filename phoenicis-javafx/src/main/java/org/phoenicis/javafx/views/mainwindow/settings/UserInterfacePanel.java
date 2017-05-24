@@ -10,11 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.themes.Theme;
+import org.phoenicis.javafx.views.common.themes.Themes;
 import org.phoenicis.settings.SettingsManager;
-
-import java.net.URL;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -73,8 +72,8 @@ public class UserInterfacePanel extends VBox {
         this.themeTitle = new TextWithStyle(tr("Theme:"), "captionTitle");
 
         this.themes = new ComboBox<>();
-        this.themes.getItems().setAll(Theme.values());
-        this.themes.setValue(Theme.fromShortName(settingsManager.getTheme()));
+        this.themes.getItems().setAll(Themes.all());
+        this.themes.setValue(Themes.fromShortName(settingsManager.getTheme()).orElse(Themes.DEFAULT));
         this.themes.setOnAction(event -> {
             this.handleThemeChange();
             this.save();
@@ -107,14 +106,7 @@ public class UserInterfacePanel extends VBox {
     }
 
     private void handleThemeChange() {
-        final Theme theme = themes.getSelectionModel().getSelectedItem();
-        themeManager.setCurrentTheme(theme);
-        final String shortName = theme.getShortName();
-        final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-        final URL style = this.getClass().getResource(url);
-
-        getScene().getStylesheets().setAll(themeManager.getDefaultCategoryIconsCss(),
-                themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
+        themeManager.setCurrentTheme(themes.getSelectionModel().getSelectedItem());
     }
 
     private void save() {

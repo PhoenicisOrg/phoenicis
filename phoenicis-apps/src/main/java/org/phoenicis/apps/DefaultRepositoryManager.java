@@ -1,5 +1,6 @@
 package org.phoenicis.apps;
 
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -9,13 +10,16 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -119,26 +123,47 @@ public class DefaultRepositoryManager implements RepositoryManager {
         }
     }
 
+    /**
+     * This method extracts the type of a given repository path string.
+     * The type is prepended to the repository path and separated by a <code>+</code> or <code>:</code>
+     *
+     * @param repositoryUrl The repository path string containing the repository type
+     * @return The extracted repository type
+     */
+    private String extractRepositoryType(String repositoryUrl) {
+        String result = null;
+
+        Pattern pattern = Pattern.compile("^([^\\+:]+)(\\+|:)");
+        Matcher matcher = pattern.matcher(repositoryUrl);
+
+        if (matcher.find()) {
+            result = matcher.group(1);
+        }
+
+        return result;
+    }
+
     private Repository toRepository(String repositoryUrl) {
         LOGGER.info("Converting: " + repositoryUrl + " to Repository");
-        try {
-            final URI url = new URI(repositoryUrl);
-            final String scheme = url.getScheme().split("\\+")[0];
 
-            switch (scheme) {
+        try {
+            String repositoryType = extractRepositoryType(repositoryUrl);
+            String repositoryPath = repositoryUrl.substring(repositoryType.length() + 1);
+
+            switch (repositoryType) {
                 case "git":
-                    return new GitRepository(repositoryUrl.replace("git+", ""), cacheDirectoryPath,
-                            localRepositoryFactory, fileUtilities);
+                    return new GitRepository(new URI(repositoryPath), cacheDirectoryPath, localRepositoryFactory,
+                            fileUtilities);
                 case "file":
-                    return localRepositoryFactory.createInstance(url.getRawPath());
+                    return localRepositoryFactory.createInstance(new File(repositoryPath));
                 case "classpath":
-                    return classPathRepositoryFactory.createInstance(url.getPath());
+                    return classPathRepositoryFactory.createInstance(new URI(repositoryPath).getPath());
                 default:
-                    LOGGER.warn("Unsupported URL: " + repositoryUrl);
+                    LOGGER.warn("Unsupported repository type: " + repositoryType);
                     return new NullRepository();
             }
         } catch (URISyntaxException e) {
-            LOGGER.warn("Cannot parse URL: " + repositoryUrl, e);
+            LOGGER.warn("Invalid repository uri syntax: " + repositoryUrl, e);
             return new NullRepository();
         }
     }

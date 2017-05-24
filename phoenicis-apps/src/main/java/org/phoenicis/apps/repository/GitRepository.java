@@ -31,6 +31,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,22 +42,22 @@ public class GitRepository implements Repository {
 
     private final FileUtilities fileUtilities;
 
-    private final String gitRepositoryURL;
+    private final URI gitRepositoryUri;
     private final LocalRepository.Factory localRepositoryFactory;
 
     private final File gitRepositoryLocation;
 
-    public GitRepository(String gitRepositoryURL, String cacheDirectoryPath,
+    public GitRepository(URI gitRepositoryUri, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
         this.fileUtilities = fileUtilities;
-        this.gitRepositoryURL = gitRepositoryURL;
+        this.gitRepositoryUri = gitRepositoryUri;
         this.localRepositoryFactory = localRepositoryFactory;
-        this.gitRepositoryLocation = new File(cacheDirectoryPath + "/git" + gitRepositoryURL.hashCode());
+        this.gitRepositoryLocation = new File(cacheDirectoryPath + "/git" + gitRepositoryUri.hashCode());
     }
 
     @Override
     public synchronized List<CategoryDTO> fetchInstallableApplications() {
-        LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.gitRepositoryURL,
+        LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.gitRepositoryUri,
                 gitRepositoryLocation.getAbsolutePath()));
 
         boolean folderExists = gitRepositoryLocation.exists();
@@ -62,11 +65,11 @@ public class GitRepository implements Repository {
         // check that the repository folder exists
         if (!folderExists) {
             LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'",
-                    gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL));
+                    gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryUri));
 
             if (!gitRepositoryLocation.mkdirs()) {
                 LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'",
-                        this.gitRepositoryURL, gitRepositoryLocation.getAbsolutePath()));
+                        this.gitRepositoryUri, gitRepositoryLocation.getAbsolutePath()));
 
                 return Collections.emptyList();
             }
@@ -82,23 +85,23 @@ public class GitRepository implements Repository {
              * repository now
              */
             if (!folderExists) {
-                LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.gitRepositoryURL,
+                LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.gitRepositoryUri,
                         gitRepositoryLocation.getAbsolutePath()));
 
-                gitRepository = Git.cloneRepository().setURI(this.gitRepositoryURL).setDirectory(gitRepositoryLocation)
-                        .call();
+                gitRepository = Git.cloneRepository().setURI(this.gitRepositoryUri.toString())
+                        .setDirectory(gitRepositoryLocation).call();
             }
             /*
              * otherwise open the folder and pull the newest updates from the
              * repository
              */
             else {
-                LOGGER.info(String.format("Opening git-repository '%s' at '%s'", this.gitRepositoryURL,
+                LOGGER.info(String.format("Opening git-repository '%s' at '%s'", this.gitRepositoryUri,
                         gitRepositoryLocation.getAbsolutePath()));
 
                 gitRepository = Git.open(gitRepositoryLocation);
 
-                LOGGER.info(String.format("Pulling new commits from git-repository '%s' to '%s'", this.gitRepositoryURL,
+                LOGGER.info(String.format("Pulling new commits from git-repository '%s' to '%s'", this.gitRepositoryUri,
                         gitRepositoryLocation.getAbsolutePath()));
 
                 gitRepository.pull().call();
@@ -107,13 +110,12 @@ public class GitRepository implements Repository {
             // close repository to free resources
             gitRepository.close();
 
-            result = localRepositoryFactory
-                    .createInstance(gitRepositoryLocation.getAbsolutePath(), this.gitRepositoryURL)
+            result = localRepositoryFactory.createInstance(this.gitRepositoryLocation, this.gitRepositoryUri)
                     .fetchInstallableApplications();
         } catch (RepositoryNotFoundException | GitAPIException e) {
             LOGGER.error(String.format("Folder '%s' is no git-repository", gitRepositoryLocation.getAbsolutePath()), e);
         } catch (IOException e) {
-            LOGGER.error(String.format("An unknown error occured.", e));
+            LOGGER.error(String.format("An unknown error occured", e));
         }
 
         return result;
@@ -124,7 +126,7 @@ public class GitRepository implements Repository {
         try {
             fileUtilities.remove(this.gitRepositoryLocation);
 
-            LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.gitRepositoryURL,
+            LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.gitRepositoryUri,
                     gitRepositoryLocation.getAbsolutePath()));
         } catch (IOException e) {
             LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'",
@@ -134,7 +136,7 @@ public class GitRepository implements Repository {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("gitRepositoryURL", gitRepositoryURL)
+        return new ToStringBuilder(this).append("gitRepositoryUri", gitRepositoryUri)
                 .append("gitRepositoryLocation", gitRepositoryLocation).toString();
     }
 
@@ -152,7 +154,7 @@ public class GitRepository implements Repository {
 
         EqualsBuilder builder = new EqualsBuilder();
 
-        builder.append(gitRepositoryURL, that.gitRepositoryURL);
+        builder.append(gitRepositoryUri, that.gitRepositoryUri);
         builder.append(gitRepositoryLocation, that.gitRepositoryLocation);
 
         return builder.isEquals();
@@ -162,7 +164,7 @@ public class GitRepository implements Repository {
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder();
 
-        builder.append(gitRepositoryURL);
+        builder.append(gitRepositoryUri);
         builder.append(gitRepositoryLocation);
 
         return builder.toHashCode();

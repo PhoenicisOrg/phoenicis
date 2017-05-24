@@ -21,6 +21,8 @@ package org.phoenicis.javafx.views.mainwindow;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -41,10 +43,8 @@ public class FailurePanel extends VBox {
                 tr("Connecting to ${application.name} failed.\n" + "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
-        final String iconPath = "/icons/mainwindow/refresh.png";
         retryButton = new Button(tr("Retry"));
-        retryButton.getStyleClass().add("retryButton");
-        retryButton.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(iconPath) + "');");
+        retryButton.getStyleClass().addAll("retryButton", "refreshIcon");
 
         this.getChildren().addAll(failureNotificationLbl, retryButton);
     }

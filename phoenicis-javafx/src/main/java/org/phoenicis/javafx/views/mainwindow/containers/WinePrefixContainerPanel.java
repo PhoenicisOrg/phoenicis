@@ -18,24 +18,28 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import com.sun.javafx.collections.ImmutableObservableList;
+import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.collections.FXCollections;
-import javafx.scene.control.*;
+import javafx.collections.ObservableList;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.*;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
-import com.sun.javafx.collections.ImmutableObservableList;
-import com.sun.javafx.collections.ObservableListWrapper;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import org.phoenicis.javafx.views.common.ThemeManager;
 
 import java.util.ArrayList;
@@ -302,38 +306,103 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        toolsContentPane.add(
-                wineToolButton(tr("Configure Wine"), "winecfg.png", e -> this.onWineCfg.accept(containerEntity)), 0, 0);
+        Button configureWine = new Button(tr("Configure Wine"));
+        configureWine.getStyleClass().addAll("wineToolButton", "configureWine");
+        configureWine.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onWineCfg.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(configureWine, HPos.CENTER);
+
+        Button registryEditor = new Button(tr("Registry Editor"));
+        registryEditor.getStyleClass().addAll("wineToolButton", "registryEditor");
+        registryEditor.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onRegedit.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(registryEditor, HPos.CENTER);
+
+        Button rebootWindows = new Button(tr("Windows reboot"));
+        rebootWindows.getStyleClass().addAll("wineToolButton", "rebootWindows");
+        rebootWindows.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onWineboot.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(rebootWindows, HPos.CENTER);
+
+        Button repairVirtualDrive = new Button(tr("Repair virtual drive"));
+        repairVirtualDrive.getStyleClass().addAll("wineToolButton", "repairVirtualDrive");
+        repairVirtualDrive.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onWinebootRepair.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(repairVirtualDrive, HPos.CENTER);
+
+        Button commandPrompt = new Button(tr("Command prompt"));
+        commandPrompt.getStyleClass().addAll("wineToolButton", "commandPrompt");
+        commandPrompt.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onWineConsole.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(commandPrompt, HPos.CENTER);
+
+        Button taskManager = new Button(tr("Task manager"));
+        taskManager.getStyleClass().addAll("wineToolButton", "taskManager");
+        taskManager.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onTaskMgr.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(taskManager, HPos.CENTER);
+
+        Button killProcesses = new Button(tr("Kill processes"));
+        killProcesses.getStyleClass().addAll("wineToolButton", "killProcesses");
+        killProcesses.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onKillProcess.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(killProcesses, HPos.CENTER);
+
+        Button uninstallWine = new Button(tr("Wine uninstaller"));
+        uninstallWine.getStyleClass().addAll("wineToolButton", "uninstallWine");
+        uninstallWine.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onUninstaller.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(uninstallWine, HPos.CENTER);
+
+        this.lockableElements.addAll(Arrays.asList(configureWine, registryEditor, rebootWindows, repairVirtualDrive,
+                commandPrompt, taskManager, uninstallWine));
+
+        toolsContentPane.add(configureWine, 0, 0);
         toolsContentPane.add(wineToolCaption(tr("Configure Wine")), 0, 1);
 
-        toolsContentPane.add(
-                wineToolButton(tr("Registry Editor"), "regedit.png", e -> this.onRegedit.accept(containerEntity)), 1,
-                0);
+        toolsContentPane.add(registryEditor, 1, 0);
         toolsContentPane.add(wineToolCaption(tr("Registry Editor")), 1, 1);
 
-        toolsContentPane.add(
-                wineToolButton(tr("Windows reboot"), "rebootPrefix.png", e -> this.onWineboot.accept(containerEntity)),
-                2, 0);
+        toolsContentPane.add(rebootWindows, 2, 0);
         toolsContentPane.add(wineToolCaption(tr("Windows reboot")), 2, 1);
 
-        toolsContentPane.add(wineToolButton(tr("Repair virtual drive"), "repair.png",
-                e -> this.onWinebootRepair.accept(containerEntity)), 3, 0);
+        toolsContentPane.add(repairVirtualDrive, 3, 0);
         toolsContentPane.add(wineToolCaption(tr("Repair virtual drive")), 3, 1);
 
-        toolsContentPane.add(
-                wineToolButton(tr("Command prompt"), "cmd.png", e -> this.onWineConsole.accept(containerEntity)), 0, 3);
+        toolsContentPane.add(commandPrompt, 0, 3);
         toolsContentPane.add(wineToolCaption(tr("Command prompt")), 0, 4);
 
-        toolsContentPane.add(
-                wineToolButton(tr("Task manager"), "taskmgr.png", e -> this.onTaskMgr.accept(containerEntity)), 1, 3);
+        toolsContentPane.add(taskManager, 1, 3);
         toolsContentPane.add(wineToolCaption(tr("Task manager")), 1, 4);
 
-        toolsContentPane.add(wineToolButton(tr("Kill processes"), "killProcesses.png",
-                e -> this.onKillProcess.accept(containerEntity), false), 2, 3);
+        toolsContentPane.add(killProcesses, 2, 3);
         toolsContentPane.add(wineToolCaption(tr("Kill processes")), 2, 4);
 
-        toolsContentPane.add(wineToolButton(tr("Wine uninstaller"), "uninstaller.png",
-                e -> this.onUninstaller.accept(containerEntity)), 3, 3);
+        toolsContentPane.add(uninstallWine, 3, 3);
         toolsContentPane.add(wineToolCaption(tr("Wine uninstaller")), 3, 4);
 
         toolsPane.getChildren().addAll(toolsContentPane);
@@ -358,8 +427,18 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        toolsContentPane.add(wineToolButton(tr("Open a terminal"), "cmd.png",
-                e -> this.onOpenTerminalInWinePrefix.accept(containerEntity)), 0, 0);
+        Button openTerminal = new Button(tr("Open a terminal"));
+        openTerminal.getStyleClass().addAll("wineToolButton", "openTerminal");
+        openTerminal.setOnMouseClicked(e -> {
+            this.lockAll();
+            this.onOpenTerminalInWinePrefix.accept(containerEntity);
+        });
+
+        GridPane.setHalignment(openTerminal, HPos.CENTER);
+
+        this.lockableElements.add(openTerminal);
+
+        toolsContentPane.add(openTerminal, 0, 0);
         toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
@@ -379,29 +458,6 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         GridPane.setValignment(text, VPos.CENTER);
         lockableElements.add(text);
         return text;
-    }
-
-    private Button wineToolButton(String caption, String icon, EventHandler<? super MouseEvent> eventHandler) {
-        return wineToolButton(caption, icon, eventHandler, true);
-    }
-
-    private Button wineToolButton(String caption, String icon, EventHandler<? super MouseEvent> eventHandler,
-            boolean lockable) {
-        final Button button = new Button(caption);
-        button.getStyleClass().add("wineToolButton");
-        final String iconResource = "icons/mainwindow/containers/" + icon;
-        button.setStyle("-fx-background-image: url('" + themeManager.getResourceUrl(iconResource) + "');");
-        button.setOnMouseClicked(event -> {
-            lockAll();
-            eventHandler.handle(event);
-        });
-
-        if (lockable) {
-            lockableElements.add(button);
-        }
-        GridPane.setHalignment(button, HPos.CENTER);
-
-        return button;
     }
 
     public void unlockAll() {

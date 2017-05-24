@@ -181,6 +181,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
         final LibraryPanel libraryPanel = new LibraryPanel(shortcutDTO);
+        libraryPanel.setOnClose(this::closeDetailsView);
         libraryPanel.setMaxWidth(400);
         this.showDetailsView(libraryPanel);
     }

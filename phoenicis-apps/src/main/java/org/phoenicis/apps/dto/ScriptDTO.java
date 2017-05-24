@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.phoenicis.entities.OperatingSystem;
 
+import java.net.URI;
 import java.util.Comparator;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import java.util.List;
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO {
     private final String scriptName;
-    private final String scriptSource;
+    private final URI scriptSource;
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
@@ -51,7 +52,7 @@ public class ScriptDTO {
         return scriptName;
     }
 
-    public String getScriptSource() {
+    public URI getScriptSource() {
         return scriptSource;
     }
 
@@ -82,7 +83,7 @@ public class ScriptDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String scriptName;
-        private String scriptSource;
+        private URI scriptSource;
         private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
@@ -110,7 +111,7 @@ public class ScriptDTO {
             return this;
         }
 
-        public Builder withScriptSource(String scriptSource) {
+        public Builder withScriptSource(URI scriptSource) {
             this.scriptSource = scriptSource;
             return this;
         }

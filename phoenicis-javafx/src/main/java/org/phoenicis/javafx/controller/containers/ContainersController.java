@@ -109,6 +109,8 @@ public class ContainersController {
                                     });
                 });
 
+                panel.setOnClose(viewContainers::closeDetailsView);
+
                 Platform.runLater(() -> viewContainers.showDetailsView(panel));
             });
         });
