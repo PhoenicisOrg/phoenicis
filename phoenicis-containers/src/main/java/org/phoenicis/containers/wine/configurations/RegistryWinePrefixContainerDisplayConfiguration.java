@@ -222,7 +222,7 @@ public class RegistryWinePrefixContainerDisplayConfiguration implements WinePref
                 .getChild(SOFTWARE, WINE, DIRECT3D, VIDEO_MEMORY_SIZE);
         if (registryChild instanceof RegistryValue) {
             try {
-                int videoMemorySize = Integer.valueOf(((RegistryValue<?>) registryChild).getText());
+                int videoMemorySize = Integer.parseInt(((RegistryValue<?>) registryChild).getText());
                 return new VideoMemorySize(false, videoMemorySize);
             } catch (NumberFormatException e) {
                 return new VideoMemorySize(true, 0);
