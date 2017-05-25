@@ -42,7 +42,7 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
 
         textField = new TextField();
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.trim().equals("")) {
+            if ("".equals(newValue.trim())) {
                 setNextButtonEnabled(false);
             } else {
                 setNextButtonEnabled(true);
