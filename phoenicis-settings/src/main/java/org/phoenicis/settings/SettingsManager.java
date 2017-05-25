@@ -81,7 +81,7 @@ public class SettingsManager {
         try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
             DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
             persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
