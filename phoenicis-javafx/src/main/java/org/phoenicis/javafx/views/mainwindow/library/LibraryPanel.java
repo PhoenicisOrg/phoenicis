@@ -62,7 +62,8 @@ final class LibraryPanel extends DetailsView {
         gridPane.getStyleClass().add("grid");
 
         try {
-            System.out.println(shortcut.getScript());
+            LOGGER.info("Reading shortcut: {}", shortcut.getScript());
+
             final Map<String, String> shortcutProperties =
                     objectMapper.readValue(shortcut.getScript(), new TypeReference<Map<String, String>>() {});
 

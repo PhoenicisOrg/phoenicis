@@ -68,17 +68,16 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.objectMapper = objectMapper;
 
         availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
-            final ShortcutDTO shortcutDTO = selectedItem;
 
             availableShortcuts.deselectAll();
             availableShortcuts.select(selectedItem);
-            onShortcutSelected.accept(shortcutDTO);
-            showShortcutDetails(shortcutDTO);
+            onShortcutSelected.accept(selectedItem);
+            showShortcutDetails(selectedItem);
 
-            sideBar.showShortcut(shortcutDTO);
+            sideBar.showShortcut(selectedItem);
 
             if (event.getClickCount() == 2) {
-                onShortcutDoubleClicked.accept(shortcutDTO);
+                onShortcutDoubleClicked.accept(selectedItem);
             }
 
             event.consume();
