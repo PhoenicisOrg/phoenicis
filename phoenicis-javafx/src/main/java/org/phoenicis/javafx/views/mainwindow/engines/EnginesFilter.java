@@ -66,8 +66,8 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @return True if the engine version is installed, false otherwise
      */
     private boolean isInstalled(EngineVersionDTO engineVersionDTO) {
-        return Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(),
-                engineVersionDTO.getVersion()));
+        return Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(),
+                engineVersionDTO.getVersion()).toFile().exists();
     }
 
     @Override
