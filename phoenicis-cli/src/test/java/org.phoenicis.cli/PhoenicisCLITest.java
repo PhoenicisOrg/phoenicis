@@ -18,24 +18,20 @@
 
 package org.phoenicis.cli;
 
-import com.github.jankroken.commandline.CommandLineParser;
-import com.github.jankroken.commandline.OptionStyle;
+import com.github.jankroken.commandline.domain.InvalidCommandLineException;
+import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
+public class PhoenicisCLITest {
+    private final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
 
-public class PhoenicisCLI {
-    public static void main(String[] args) {
-        final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
-        phoenicisCLI.run(args);
+    @Test(expected = InvalidCommandLineException.class)
+    public void testRunCliInvalidArguments_exceptionThrown() {
+        phoenicisCLI.run(new String[] { "invalid", "arguments" });
     }
 
-    void run(String[] args) {
-        try {
-            final CLIController arguments = CommandLineParser.parse(CLIController.class, args, OptionStyle.SIMPLE);
-
-            arguments.close();
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    public void testBlankScript_noException() {
+        System.setProperty("application.repository.configuration", "classpath:///org/phoenicis/cli/testRepository");
+        phoenicisCLI.run(new String[] { "-install", "Graphics", "Photofiltre", "Online" });
     }
 }

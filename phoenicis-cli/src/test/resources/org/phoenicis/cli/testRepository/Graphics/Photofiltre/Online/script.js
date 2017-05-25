@@ -16,26 +16,4 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.cli;
-
-import com.github.jankroken.commandline.CommandLineParser;
-import com.github.jankroken.commandline.OptionStyle;
-
-import java.lang.reflect.InvocationTargetException;
-
-public class PhoenicisCLI {
-    public static void main(String[] args) {
-        final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
-        phoenicisCLI.run(args);
-    }
-
-    void run(String[] args) {
-        try {
-            final CLIController arguments = CommandLineParser.parse(CLIController.class, args, OptionStyle.SIMPLE);
-
-            arguments.close();
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
+print("Test script");
