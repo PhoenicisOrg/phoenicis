@@ -45,6 +45,7 @@
                     </argLine>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>biz.gabrys.maven.plugins</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
@@ -60,6 +61,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -166,4 +176,5 @@
         </dependency>
 
     </dependencies>
+
 </project>
