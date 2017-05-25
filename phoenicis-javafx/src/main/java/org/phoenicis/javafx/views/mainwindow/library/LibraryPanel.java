@@ -18,30 +18,34 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
-import javafx.geometry.Insets;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.Map;
+
 final class LibraryPanel extends DetailsView {
+    private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
 
-    private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
+    private final ShortcutDTO shortcut;
+    private final ObjectMapper objectMapper;
 
-    private ShortcutDTO shortcut;
-
-    public LibraryPanel(ShortcutDTO shortcut) {
+    public LibraryPanel(ShortcutDTO shortcut,
+                        ObjectMapper objectMapper) {
         super();
 
         this.shortcut = shortcut;
+        this.objectMapper = objectMapper;
 
         this.setTitle(shortcut.getName());
 
@@ -58,20 +62,25 @@ final class LibraryPanel extends DetailsView {
         gridPane.getStyleClass().add("grid");
 
         try {
-            JSONObject jsonObject = new JSONObject(shortcut.getScript());
+            System.out.println(shortcut.getScript());
+            final Map<String, String> shortcutProperties =
+                    objectMapper.readValue(shortcut.getScript(), new TypeReference<Map<String, String>>() {});
 
-            for (int i = 0; i < jsonObject.names().length(); i++) {
-                String key = jsonObject.names().getString(i);
-                Label keyLabel = new Label(key + ":");
+            int i = 0;
+            for(String shortcutKey: shortcutProperties.keySet()) {
+                final Label keyLabel = new Label(shortcutKey + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 gridPane.add(keyLabel, 0, i);
-                Label valueLabel = new Label(jsonObject.getString(key));
+
+                final Label valueLabel = new Label(shortcutProperties.get(shortcutKey));
                 valueLabel.setWrapText(true);
                 gridPane.add(valueLabel, 1, i);
+
+                i++;
             }
 
-        } catch (JSONException e) {
+        } catch (IOException e) {
             LOGGER.warn("Could not parse shortcut script JSON", e);
         }
 
