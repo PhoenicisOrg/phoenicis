@@ -64,6 +64,7 @@ public class CliUiConfiguration implements UiConfiguration {
     }
 
     @Override
+    @Bean
     public ProgressUiFactory progressUiFactory() {
         return title -> new ProgressUiCliImplementation(title, true, true);
     }
