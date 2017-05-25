@@ -23,6 +23,7 @@ import org.springframework.util.DefaultPropertiesPersister;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class SettingsManager {
@@ -78,12 +79,10 @@ public class SettingsManager {
 
     public void save() {
         Settings settings = load();
-        try {
-            File file = new File(settingsFileName);
-            OutputStream outputStream = new FileOutputStream(file);
+        try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
             DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
             persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
