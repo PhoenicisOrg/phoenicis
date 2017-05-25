@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.TextField;
 
@@ -42,7 +43,7 @@ public class StepRepresentationTextBox extends StepRepresentationMessage {
 
         textField = new TextField();
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ("".equals(newValue.trim())) {
+            if (StringUtils.isBlank(newValue.trim())) {
                 setNextButtonEnabled(false);
             } else {
                 setNextButtonEnabled(true);
