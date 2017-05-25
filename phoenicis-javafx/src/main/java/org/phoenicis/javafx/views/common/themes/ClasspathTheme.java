@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 public class ClasspathTheme extends Theme {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathTheme.class);
 
-    private String classpathToTheme;
+    private final String classpathToTheme;
 
     /**
      * Constructor

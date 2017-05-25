@@ -83,4 +83,11 @@ public class BackgroundRepository implements Repository {
 
         return builder.toHashCode();
     }
+
+    public static class Factory {
+        public BackgroundRepository createInstance(Repository delegatedRepository,
+                                                   ExecutorService executorService) {
+            return new BackgroundRepository(delegatedRepository, executorService);
+        }
+    }
 }

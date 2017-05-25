@@ -63,7 +63,7 @@ public interface Repository {
     default CategoryDTO getCategory(List<String> path) {
         final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().stream()
                 .filter(category -> path.get(0).equals(category.getName())).findFirst();
-        return categoryDTO.isPresent() ? categoryDTO.get() : null;
+        return categoryDTO.orElse(null);
     }
 
     default ApplicationDTO getApplication(List<String> path) {
@@ -74,6 +74,6 @@ public interface Repository {
 
         final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
                 .filter(application -> path.get(1).equals(application.getName())).findFirst();
-        return applicationDTO.isPresent() ? applicationDTO.get() : null;
+        return applicationDTO.orElse(null);
     }
 }
