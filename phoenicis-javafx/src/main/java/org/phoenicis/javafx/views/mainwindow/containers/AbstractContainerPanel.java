@@ -29,20 +29,12 @@ import java.util.List;
 
 abstract class AbstractContainerPanel<T> extends DetailsView {
     protected final ThemeManager themeManager;
-    private final TabPane tabPane;
+    protected final TabPane tabPane;
 
     AbstractContainerPanel(T containerEntity, ThemeManager themeManager, List<EngineVersionDTO> engineVersions) {
         this.themeManager = themeManager;
         this.tabPane = new TabPane();
 
-        this.tabPane.getTabs().add(drawInformationTab(containerEntity, engineVersions));
-
         this.setCenter(tabPane);
-    }
-
-    abstract Tab drawInformationTab(T container, List<EngineVersionDTO> engineVersions);
-
-    public List<Tab> getTabs() {
-        return tabPane.getTabs();
     }
 }
