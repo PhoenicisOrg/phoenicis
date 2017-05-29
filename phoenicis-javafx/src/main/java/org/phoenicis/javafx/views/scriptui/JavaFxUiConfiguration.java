@@ -50,6 +50,7 @@ public class JavaFxUiConfiguration implements UiConfiguration {
         return title -> {
             final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                     toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
+            viewsConfigurationLibrary.viewLibrary().closeDetailsView();
             viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
             setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
             return setupWindow;
