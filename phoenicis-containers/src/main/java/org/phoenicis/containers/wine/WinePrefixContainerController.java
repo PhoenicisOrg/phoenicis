@@ -150,6 +150,21 @@ public class WinePrefixContainerController {
                 });
     }
 
+    public void createShortcut(WinePrefixContainerDTO winePrefix, String name, String executable, Runnable doneCallback,
+            Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Wine\"]);",
+                ignored -> interactiveScriptSession.eval("new WineShortcut()", output -> {
+                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
+                    wine.callMember("name", name);
+                    wine.callMember("search", executable);
+                    wine.callMember("prefix", winePrefix.getName());
+                    wine.callMember("create");
+                    doneCallback.run();
+                }, errorCallback), errorCallback);
+    }
+
     public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
         final Map<String, String> environment = new HashMap<>();
         environment.put("WINEPREFIX", winePrefixContainerDTO.getPath());
