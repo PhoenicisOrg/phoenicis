@@ -72,7 +72,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.add(openTerminal, 0, 0);
         toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
-        Button createShortcut = new Button(tr("Create shortcut"));
+        Button createShortcut = new Button();
         createShortcut.getStyleClass().addAll("wineToolButton", "openTerminal");
         createShortcut.setOnMouseClicked(event -> {
             this.lockAll();
