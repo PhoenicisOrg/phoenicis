@@ -72,7 +72,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.add(openTerminal, 0, 0);
         toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
-        Button runExecutable = new Button(tr("Open a terminal"));
+        Button runExecutable = new Button();
         runExecutable.getStyleClass().addAll("wineToolButton", "runExecutable");
         runExecutable.setOnMouseClicked(event -> {
             this.lockAll();
