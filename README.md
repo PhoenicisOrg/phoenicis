@@ -11,4 +11,4 @@ To keep code easier to maintain, please import the project specifics format and 
 	
 ## Continous integration
 * [Jenkins](http://www.playonlinux.org:8080)
-* [SonarQube](http://www.phoenicis.org:9000)
+* [SonarQube](http://www.playonlinux.org:9000/)
