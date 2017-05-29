@@ -16,33 +16,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.interpreter;
+package org.phoenicis.repository.dto;
 
-import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.ScriptDTO;
+import java.util.Comparator;
 
-import java.util.Arrays;
-import java.util.List;
+public class ResourceDTO {
+    private final String name;
+    private final byte[] content;
 
-public class ScriptFetcher {
-    private final RepositoryManager repositoryManager;
-
-    public ScriptFetcher(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+    public ResourceDTO(String name, byte[] content) {
+        this.name = name;
+        this.content = content;
     }
 
-    public String getScript(List<String> path) {
-        final ScriptDTO script = repositoryManager.getScript(path);
-
-        if (script == null) {
-            throw new ScriptException("Script not found: " + path);
-        }
-
-        return script.getScript();
+    public String getName() {
+        return name;
     }
 
-    public String getScript(String... path) {
-        return getScript(Arrays.asList(path));
+    public byte[] getContent() {
+        return content;
     }
 
+    public static Comparator<ResourceDTO> nameComparator() {
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
 }

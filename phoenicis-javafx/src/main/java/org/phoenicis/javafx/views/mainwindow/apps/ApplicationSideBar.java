@@ -5,8 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 

@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.views;
 
-import org.phoenicis.apps.AppsConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
@@ -70,7 +70,7 @@ public class ViewsConfiguration {
     private SettingsConfiguration settingsConfiguration;
 
     @Autowired
-    private AppsConfiguration appsConfiguration;
+    private RepositoryConfiguration repositoryConfiguration;
 
     @Autowired
     private ControllerConfiguration controllerConfiguration;
@@ -94,7 +94,7 @@ public class ViewsConfiguration {
     public ViewSettings viewSettings() {
         return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion,
                 applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener(),
-                settingsConfiguration.settingsManager(), appsConfiguration.repositoryManager());
+                settingsConfiguration.settingsManager(), repositoryConfiguration.repositoryManager());
     }
 
     @Bean

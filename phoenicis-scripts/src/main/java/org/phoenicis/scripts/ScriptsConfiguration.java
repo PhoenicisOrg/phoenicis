@@ -18,7 +18,7 @@
 
 package org.phoenicis.scripts;
 
-import org.phoenicis.apps.AppsConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.interpreter.BackgroundScriptInterpreter;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
@@ -39,7 +39,7 @@ public class ScriptsConfiguration {
     private WizardConfiguration wizardConfiguration;
 
     @Autowired
-    private AppsConfiguration appsConfiguration;
+    private RepositoryConfiguration repositoryConfiguration;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -55,7 +55,7 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptFetcher scriptFetcher() {
-        return new ScriptFetcher(appsConfiguration.repositoryManager());
+        return new ScriptFetcher(repositoryConfiguration.repositoryManager());
     }
 
     @Bean
