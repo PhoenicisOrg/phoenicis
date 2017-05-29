@@ -1,6 +1,5 @@
 package org.phoenicis.apps;
 
-import org.apache.commons.lang.StringUtils;
 import org.phoenicis.apps.dto.ApplicationDTO;
 import org.phoenicis.apps.dto.CategoryDTO;
 import org.phoenicis.apps.dto.ScriptDTO;
@@ -11,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +42,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
     public DefaultRepositoryManager(ExecutorService executorService, boolean enforceUncompatibleOperatingSystems,
             ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities,
-            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
+            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
+            BackgroundRepository.Factory backgroundRepositoryFactory) {
         super();
 
         this.localRepositoryFactory = localRepositoryFactory;
@@ -51,13 +51,13 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.cacheDirectoryPath = cacheDirectoryPath;
         this.fileUtilities = fileUtilities;
 
-        this.callbacks = new ArrayList<CallbackPair>();
+        this.callbacks = new ArrayList<>();
 
         this.multipleRepository = new MultipleRepository();
         this.filterRepository = new FilterRepository(multipleRepository, toolsConfiguration.operatingSystemFetcher(),
                 enforceUncompatibleOperatingSystems);
         this.cachedRepository = new CachedRepository(filterRepository);
-        this.backgroundRepository = new BackgroundRepository(cachedRepository, executorService);
+        this.backgroundRepository = backgroundRepositoryFactory.createInstance(cachedRepository, executorService);
     }
 
     @Override

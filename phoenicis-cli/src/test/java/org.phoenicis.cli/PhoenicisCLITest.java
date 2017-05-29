@@ -16,25 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.mainwindow.containers;
+package org.phoenicis.cli;
 
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
-import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
+import com.github.jankroken.commandline.domain.InvalidCommandLineException;
+import org.junit.Test;
 
-import java.util.List;
+public class PhoenicisCLITest {
+    private final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
 
-abstract class AbstractContainerPanel<T> extends DetailsView {
-    protected final ThemeManager themeManager;
-    protected final TabPane tabPane;
+    @Test(expected = InvalidCommandLineException.class)
+    public void testRunCliInvalidArguments_exceptionThrown() {
+        phoenicisCLI.run(new String[] { "invalid", "arguments" });
+    }
 
-    AbstractContainerPanel(T containerEntity, ThemeManager themeManager, List<EngineVersionDTO> engineVersions) {
-        this.themeManager = themeManager;
-        this.tabPane = new TabPane();
-
-        this.setCenter(tabPane);
+    @Test
+    public void testBlankScript_noException() {
+        System.setProperty("application.repository.configuration", "classpath:///org/phoenicis/cli/testRepository");
+        phoenicisCLI.run(new String[] { "-install", "Graphics", "Photofiltre", "Online" });
     }
 }
