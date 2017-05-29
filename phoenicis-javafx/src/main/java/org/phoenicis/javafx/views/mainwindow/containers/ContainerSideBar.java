@@ -11,7 +11,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * An instance of this class represents the left sidebar of the container tab view.
@@ -97,7 +97,7 @@ public class ContainerSideBar extends LeftSideBar {
      * This method populates the button group showing all installed containers
      */
     private void populateCategories() {
-        this.categoryView = LeftToggleGroup.create(translate("Containers"), this::createAllCategoriesToggleButton,
+        this.categoryView = LeftToggleGroup.create(tr("Containers"), this::createAllCategoriesToggleButton,
                 this::createContainerToggleButton);
     }
 

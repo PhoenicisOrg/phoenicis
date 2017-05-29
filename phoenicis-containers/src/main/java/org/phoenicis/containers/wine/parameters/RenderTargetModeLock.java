@@ -20,10 +20,10 @@ package org.phoenicis.containers.wine.parameters;
 
 import org.phoenicis.win32.registry.*;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public enum RenderTargetModeLock implements RegistryParameter {
-    DEFAULT(translate("Default"), ""), DISABLED(translate("Disabled"), "disabled"), READDRAW("readdraw",
+    DEFAULT(tr("Default"), ""), DISABLED(tr("Disabled"), "disabled"), READDRAW("readdraw",
             "readdraw"), READTEX("readtext", "readtext");
 
     private final String translatedName;

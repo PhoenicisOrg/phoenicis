@@ -20,8 +20,8 @@ package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.apps.RepositoryManager;
-import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -112,14 +112,6 @@ public class AppsController {
             Files.write(temp, css.getBytes());
             String defaultCategoryIconsCss = temp.toUri().toString();
             themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-
-            // apply current theme again to fix hierarchy
-            final String shortName = themeManager.getCurrentTheme().getShortName();
-            final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-            final URL style = this.getClass().getResource(url);
-            this.view.getTabPane().getScene().getStylesheets().clear();
-            this.view.getTabPane().getScene().getStylesheets().addAll(defaultCategoryIconsCss,
-                    themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
         } catch (IOException e) {
             LOGGER.warn("Could not set default category icons.", e);
         }

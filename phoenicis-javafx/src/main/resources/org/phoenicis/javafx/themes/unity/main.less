@@ -251,22 +251,6 @@
 }
 
 /*******************************************************/
-/************************ logo *************************/
-/*******************************************************/
-#logo {
-    -fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left center;
-}
-
-#logoText {
-    -fx-vpos: center;
-    -fx-font-family: "Maven Pro";
-    -fx-font-size: 1.8em;
-}
-
-/*******************************************************/
 /************************ menu *************************/
 /*******************************************************/
 #menuPane {
@@ -378,7 +362,7 @@
     }
 
     .leftButton {
-        -fx-padding: 0 0.83em 0 0.83em;
+        -fx-pref-height: 2.2em;
         -fx-background-color: transparent;
         -fx-border-color: transparent;
         -fx-cursor: hand;
@@ -386,10 +370,10 @@
         -fx-txt-font-family: "Roboto Light";
         -fx-border-radius: 0;
         -fx-background-radius: 0;
-        -fx-label-padding: 0.2em 0 0.2em 2.2em;;
+        -fx-label-padding: 0 0 0 3.03em;;
         -fx-background-size: 2em;
         -fx-background-repeat: no-repeat;
-        -fx-background-position: left;
+        -fx-background-position: 0.83em 0.1em;
     }
 
     .leftButton:hover {
@@ -425,6 +409,7 @@
 
     .searchCleanButton {
         -fx-background-color: transparent;
+        -fx-border-color:transparent;
         -fx-graphic: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/edit-clear.png');
     }
 }
@@ -534,7 +519,10 @@
 
 .miniatureListElement:hover {
     -fx-background-color: rgba(223, 94, 30, 0.7);
-    -fx-background-opacity: 0.4;
+}
+
+.miniatureListElement:selected {
+    -fx-background-color: rgba(223, 94, 30, 1);
 }
 
 .miniatureImage {
@@ -599,33 +587,18 @@
 }
 
 .listChooser {
-    -fx-spacing: 0.1em;
+    -fx-translate-x: 0.83em;
+    -fx-spacing: 0.2em;
     -fx-padding: 0;
 
     .listIcon {
-        -fx-pref-width: 2.5em;
-        -fx-pref-height: 2.5em;
+        -fx-pref-width: 2em;
+        -fx-pref-height: 2em;
         -fx-content-display: graphic-only;
         -fx-background-size: contain;
         -fx-background-repeat: no-repeat;
         -fx-background-position: center;
-    }
-
-    .listIcon:selected {
-        -fx-border-radius: 0.25em;
-        -fx-border-color: blue;
-    }
-
-    .compactList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-compact-selected.png');
-    }
-
-    .detailsList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-details-selected.png');
-    }
-
-    .iconsList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-icons-selected.png');
+        -fx-background-color: transparent;
     }
 }
 
@@ -787,73 +760,4 @@
     -fx-background-size: 2em;
     -fx-background-repeat: no-repeat;
     -fx-background-position: left;
-}
-
-/*******************************************************/
-/************************ icons ************************/
-/*******************************************************/
-/************************ util *************************/
-.refreshIcon {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/refresh.png');
-}
-
-/************************ apps *************************/
-#allButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/all.png');
-}
-
-#otherButton {
-  -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/apps/other.png');
-}
-
-/********************* containers **********************/
-.containerButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/containers/container.png');
-}
-
-/*********************** engines ***********************/
-#wineButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/engines/wine.png');
-}
-
-/*********************** library ***********************/
-.runButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/play.png');
-}
-
-.stopButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/stop.png');
-}
-
-.uninstallButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/remove.png');
-}
-
-.scriptButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/script.png');
-}
-
-.consoleButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/console.png');
-}
-
-/*********************** settings **********************/
-.userInterfaceButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/settings/userInterface.png');
-}
-
-.repositoriesButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/settings/repository.png');
-}
-
-.settingsButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/settings/settings.png');
-}
-
-.networkButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/settings/network.png');
-}
-
-.aboutButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/settings/about.png');
 }

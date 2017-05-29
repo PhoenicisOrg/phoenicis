@@ -18,12 +18,12 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.repository.Repository;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.apps.repository.TeeRepository;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.repositoryTypes.TeeRepository;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;

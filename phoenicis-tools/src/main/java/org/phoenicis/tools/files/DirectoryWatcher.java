@@ -46,7 +46,7 @@ abstract class DirectoryWatcher<T> implements AutoCloseable {
     }
 
     private static void validate(Path observedDirectory) {
-        if (!Files.isDirectory(observedDirectory)) {
+        if (!observedDirectory.toFile().isDirectory()) {
             throw new IllegalStateException(
                     String.format("The file %s is not a valid directory", observedDirectory.toString()));
         }

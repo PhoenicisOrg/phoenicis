@@ -29,7 +29,7 @@ import javafx.scene.text.TextFlow;
 
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ConsoleTab extends Tab {
     private final CommandHistory commandHistory = new CommandHistory();
@@ -43,7 +43,7 @@ public class ConsoleTab extends Tab {
     public ConsoleTab() {
         final BorderPane content = new BorderPane();
 
-        this.setText(translate("Console"));
+        this.setText(tr("Console"));
         this.setContent(content);
 
         command.getStyleClass().add("consoleCommandType");

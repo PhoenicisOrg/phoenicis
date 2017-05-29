@@ -4,7 +4,6 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.function.Predicate;
 
@@ -66,8 +65,8 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @return True if the engine version is installed, false otherwise
      */
     private boolean isInstalled(EngineVersionDTO engineVersionDTO) {
-        return Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(),
-                engineVersionDTO.getVersion()));
+        return Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(),
+                engineVersionDTO.getVersion()).toFile().exists();
     }
 
     @Override

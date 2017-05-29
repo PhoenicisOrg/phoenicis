@@ -408,6 +408,18 @@
     -fx-background-position: left;
 }
 
+.detailsPane {
+    .closeIcon {
+        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/window-close.png');
+        -fx-background-size: contain;
+        -fx-background-repeat: no-repeat;
+        -fx-background-position: center;
+        -fx-background-color: transparent;
+        -fx-pref-width: 1.5em;
+        -fx-pref-height: 1.5em;
+    }
+}
+
 /*******************************************************/
 /************************* apps ************************/
 /*******************************************************/
@@ -489,7 +501,7 @@
     -fx-background-color: #284150;
 }
 
-.miniatureListElement.selected {
+.miniatureListElement:selected {
     -fx-background-color: @focus-color;
 }
 
@@ -555,33 +567,34 @@
 }
 
 .listChooser {
-    -fx-spacing: 0.1em;
+    -fx-spacing: 0.2em;
     -fx-padding: 0;
 
     .listIcon {
-        -fx-pref-width: 2.5em;
-        -fx-pref-height: 2.5em;
+        -fx-pref-width: 2em;
+        -fx-pref-height: 2em;
         -fx-content-display: graphic-only;
         -fx-background-size: contain;
         -fx-background-repeat: no-repeat;
         -fx-background-position: center;
+        -fx-background-color: transparent;
     }
 
     .listIcon:selected {
-        -fx-border-radius: 0.25em;
-        -fx-border-color: blue;
+        -fx-border-radius: 0;
+        -fx-border-color: @focus-color;
     }
 
     .compactList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-compact-symbolic.png');
+        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-compact.png');
     }
 
     .detailsList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-details-symbolic.png');
+        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-details.png');
     }
 
     .iconsList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/view-list-icons-symbolic.png');
+        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-icons.png');
     }
 }
 
@@ -746,11 +759,6 @@
 /*******************************************************/
 /************************ icons ************************/
 /*******************************************************/
-
-/************************ util *************************/
-.refreshIcon {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/refresh.png');
-}
 
 /************************ apps *************************/
 #allButton {

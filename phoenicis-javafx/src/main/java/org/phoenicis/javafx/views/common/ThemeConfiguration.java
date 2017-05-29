@@ -18,8 +18,7 @@
 
 package org.phoenicis.javafx.views.common;
 
-import org.phoenicis.javafx.views.common.Theme;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.themes.Themes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +30,6 @@ public class ThemeConfiguration {
 
     @Bean
     public ThemeManager themeManager() {
-        return new ThemeManager(Theme.fromShortName(theme));
+        return new ThemeManager(Themes.fromShortName(theme).orElse(Themes.DEFAULT));
     }
 }

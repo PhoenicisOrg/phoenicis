@@ -27,9 +27,9 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -142,6 +142,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
         final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
+        appPanel.setOnClose(this::closeDetailsView);
         appPanel.setMaxWidth(400);
         this.showDetailsView(appPanel);
     }

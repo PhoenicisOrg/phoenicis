@@ -5,17 +5,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import org.phoenicis.apps.RepositoryManager;
+import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * This class represents the "Repositories" settings category
@@ -23,10 +24,11 @@ import static org.phoenicis.configuration.localisation.Localisation.translate;
  * @author marc
  * @since 23.04.17
  */
-public class RepositoriesPanel extends VBox {
+public class RepositoriesPanel extends StackPane {
     private SettingsManager settingsManager;
     private RepositoryManager repositoryManager;
 
+    private VBox vBox;
     private Text title;
 
     private GridPane repositoryGrid;
@@ -45,6 +47,8 @@ public class RepositoriesPanel extends VBox {
     private Label refreshRepositoriesLabel;
     private Button refreshRepositoriesButton;
 
+    private VBox overlay;
+
     private ObservableList<String> repositories;
 
     /**
@@ -62,34 +66,43 @@ public class RepositoriesPanel extends VBox {
 
         this.getStyleClass().add("containerConfigurationPane");
 
+        this.vBox = new VBox();
+
         this.populateRepositoryGrid();
         this.populateRepositoryLegend();
         this.populateRepositoryRefresh();
 
+        VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
+
         this.initializeRefreshCallback();
 
-        this.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
+        this.vBox.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
 
-        VBox.setVgrow(repositoryGrid, Priority.ALWAYS);
+        // overlay which is shown when repository is refreshed
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        this.overlay = new VBox(progressIndicator);
+        this.overlay.setAlignment(Pos.CENTER);
+
+        this.getChildren().setAll(this.overlay, this.vBox);
     }
 
     private void initializeRefreshCallback() {
         repositoryManager.addCallbacks(categories -> {
             Platform.runLater(() -> {
-                refreshRepositoriesButton.getStyleClass().remove("refreshIcon");
-                refreshRepositoriesButton.setDisable(false);
+                this.overlay.toBack();
+                this.vBox.setDisable(false);
             });
         }, error -> {
         });
     }
 
     private void populateRepositoryGrid() {
-        this.title = new TextWithStyle(translate("Repositories Settings"), "title");
+        this.title = new TextWithStyle(tr("Repositories Settings"), "title");
 
         this.repositoryGrid = new GridPane();
         this.repositoryGrid.getStyleClass().add("grid");
 
-        this.repositoryText = new TextWithStyle(translate("Repository:"), "captionTitle");
+        this.repositoryText = new TextWithStyle(tr("Repository:"), "captionTitle");
 
         this.repositoryLayout = new VBox();
         this.repositoryLayout.setSpacing(5);
@@ -154,7 +167,7 @@ public class RepositoriesPanel extends VBox {
     }
 
     private void populateRepositoryLegend() {
-        this.priorityHint = new Label(translate(
+        this.priorityHint = new Label(tr(
                 "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."));
         this.priorityHint.setWrapText(true);
         this.priorityHint.setPadding(new Insets(10));
@@ -167,14 +180,13 @@ public class RepositoriesPanel extends VBox {
         this.refreshLayout.setVgap(10);
 
         this.refreshRepositoriesLabel = new Label(
-                translate("Fetch updates for the repositories to retrieve the newest script versions"));
+                tr("Fetch updates for the repositories to retrieve the newest script versions"));
         this.refreshRepositoriesLabel.setWrapText(true);
 
         this.refreshRepositoriesButton = new Button("Refresh Repositories");
-        this.refreshRepositoriesButton.getStyleClass().add("buttonWithIcon");
         this.refreshRepositoriesButton.setOnAction(event -> {
-            refreshRepositoriesButton.getStyleClass().add("refreshIcon");
-            refreshRepositoriesButton.setDisable(true);
+            this.vBox.setDisable(true);
+            this.overlay.toFront();
             repositoryManager.triggerRepositoryChange();
         });
 

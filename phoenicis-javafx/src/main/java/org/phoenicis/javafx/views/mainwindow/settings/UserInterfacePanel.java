@@ -10,13 +10,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.javafx.views.common.Theme;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.themes.Theme;
+import org.phoenicis.javafx.views.common.themes.Themes;
 import org.phoenicis.settings.SettingsManager;
 
-import java.net.URL;
-
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * This class represents the "User Interface" settings category
@@ -62,7 +61,7 @@ public class UserInterfacePanel extends VBox {
     }
 
     private void populate() {
-        this.title = new TextWithStyle(translate("User Interface Settings"), "title");
+        this.title = new TextWithStyle(tr("User Interface Settings"), "title");
 
         this.themeGrid = new GridPane();
         this.themeGrid.getStyleClass().add("grid");
@@ -70,11 +69,11 @@ public class UserInterfacePanel extends VBox {
         this.themeGrid.setVgap(10);
 
         // Change Theme
-        this.themeTitle = new TextWithStyle(translate("Theme:"), "captionTitle");
+        this.themeTitle = new TextWithStyle(tr("Theme:"), "captionTitle");
 
         this.themes = new ComboBox<>();
-        this.themes.getItems().setAll(Theme.values());
-        this.themes.setValue(Theme.fromShortName(settingsManager.getTheme()));
+        this.themes.getItems().setAll(Themes.all());
+        this.themes.setValue(Themes.fromShortName(settingsManager.getTheme()).orElse(Themes.DEFAULT));
         this.themes.setOnAction(event -> {
             this.handleThemeChange();
             this.save();
@@ -85,12 +84,11 @@ public class UserInterfacePanel extends VBox {
         this.showScriptSource.setSelected(settingsManager.isViewScriptSource());
         this.showScriptSource.setOnAction(event -> this.save());
 
-        this.showScriptDescription = new Label(
-                translate("Select, if you want to view the source repository of the scripts"));
+        this.showScriptDescription = new Label(tr("Select, if you want to view the source repository of the scripts"));
 
         // Scale UI
         this.scale = new Slider(8, 16, settingsManager.getScale());
-        this.scaleDescription = new Label(translate("Scale the user interface."));
+        this.scaleDescription = new Label(tr("Scale the user interface."));
         this.scale.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             this.pause.setOnFinished(event -> {
                 getScene().getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", newValue));
@@ -108,14 +106,7 @@ public class UserInterfacePanel extends VBox {
     }
 
     private void handleThemeChange() {
-        final Theme theme = themes.getSelectionModel().getSelectedItem();
-        themeManager.setCurrentTheme(theme);
-        final String shortName = theme.getShortName();
-        final String url = String.format("/org/phoenicis/javafx/themes/%s/main.css", shortName);
-        final URL style = this.getClass().getResource(url);
-
-        getScene().getStylesheets().setAll(themeManager.getDefaultCategoryIconsCss(),
-                themeManager.getDefaultEngineIconsCss(), style.toExternalForm());
+        themeManager.setCurrentTheme(themes.getSelectionModel().getSelectedItem());
     }
 
     private void save() {

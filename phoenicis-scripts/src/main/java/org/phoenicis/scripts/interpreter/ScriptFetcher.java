@@ -18,8 +18,8 @@
 
 package org.phoenicis.scripts.interpreter;
 
-import org.phoenicis.apps.RepositoryManager;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.util.Arrays;
 import java.util.List;

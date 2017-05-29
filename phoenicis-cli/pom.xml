@@ -31,6 +31,7 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
+        <project.po>${project.basedir}/../i18n</project.po>
     </properties>
 
     <dependencies>
@@ -42,7 +43,7 @@
 
         <dependency>
             <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-apps</artifactId>
+            <artifactId>phoenicis-repository</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -108,11 +109,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.9.1</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>

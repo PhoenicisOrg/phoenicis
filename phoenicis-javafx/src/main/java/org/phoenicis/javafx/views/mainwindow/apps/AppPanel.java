@@ -18,53 +18,57 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.ranges.Range;
 
-import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.function.Consumer;
 
-final class AppPanel extends VBox {
+final class AppPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
 
-    public void setOnScriptInstall(Consumer<ScriptDTO> onScriptInstall) {
-        this.onScriptInstall = onScriptInstall;
+    private final ApplicationDTO application;
+    private final ThemeManager themeManager;
+    private final SettingsManager settingsManager;
+
+    private Consumer<ScriptDTO> onScriptInstall;
+
+    public AppPanel(ApplicationDTO application, ThemeManager themeManager, SettingsManager settingsManager) {
+        super();
+
+        this.application = application;
+        this.themeManager = themeManager;
+        this.settingsManager = settingsManager;
+
+        this.setTitle(application.getName());
+
+        this.getStyleClass().addAll("appPresentation");
+
+        this.populateCenter();
     }
 
-    private Consumer<ScriptDTO> onScriptInstall = (script) -> {
-    };
-
-    public AppPanel(ApplicationDTO applicationDTO, ThemeManager themeManager, SettingsManager settingsManager) {
-        super();
-        this.getStyleClass().addAll("rightPane", "appPresentation");
-        this.setPadding(new Insets(10));
-
+    private void populateCenter() {
         final VBox descriptionWidget = new VBox();
-        Label appName = new Label(applicationDTO.getName());
-        appName.getStyleClass().add("descriptionTitle");
+
         WebView appDescription = new WebView();
         VBox.setVgrow(appDescription, Priority.ALWAYS);
-        appDescription.getEngine().loadContent("<body>" + applicationDTO.getDescription() + "</body>");
-        final URL style = getClass().getResource(String.format("/org/phoenicis/javafx/themes/%s/description.css",
-                themeManager.getCurrentTheme().getShortName()));
-        appDescription.getEngine().setUserStyleSheetLocation(style.toString());
+        appDescription.getEngine().loadContent("<body>" + application.getDescription() + "</body>");
+
+        themeManager.bindWebEngineStylesheet(appDescription.getEngine().userStyleSheetLocationProperty());
+
         Label installers = new Label("Installers");
         installers.getStyleClass().add("descriptionTitle");
 
@@ -74,7 +78,7 @@ final class AppPanel extends VBox {
         ColumnConstraints column2 = new ColumnConstraints(100);
         grid.getColumnConstraints().addAll(column1, column2);
         int row = 0;
-        for (ScriptDTO script : applicationDTO.getScripts()) {
+        for (ScriptDTO script : application.getScripts()) {
             Label scriptName = new Label(script.getScriptName());
             if (settingsManager.isViewScriptSource()) {
                 final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
@@ -94,7 +98,7 @@ final class AppPanel extends VBox {
             row++;
         }
 
-        descriptionWidget.getChildren().addAll(appName, appDescription, installers, grid);
+        descriptionWidget.getChildren().addAll(appDescription, installers, grid);
 
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
@@ -102,10 +106,10 @@ final class AppPanel extends VBox {
         final ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
         miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
-        for (URI miniatureUri : applicationDTO.getMiniatures()) {
+        for (URI miniatureUri : application.getMiniatures()) {
             Region image = new Region();
             image.getStyleClass().add("appMiniature");
-            image.setStyle(String.format("-fx-background-image: url('%s');", miniatureUri.toString()));
+            image.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureUri.toString()));
 
             image.prefHeightProperty().bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
             image.prefWidthProperty().bind(image.prefHeightProperty().multiply(1.5));
@@ -113,6 +117,11 @@ final class AppPanel extends VBox {
             miniaturesPane.getChildren().add(image);
         }
 
-        getChildren().addAll(descriptionWidget, miniaturesPaneWrapper);
+        this.setCenter(new VBox(descriptionWidget, miniaturesPaneWrapper));
     }
+
+    public void setOnScriptInstall(Consumer<ScriptDTO> onScriptInstall) {
+        this.onScriptInstall = onScriptInstall;
+    }
+
 }

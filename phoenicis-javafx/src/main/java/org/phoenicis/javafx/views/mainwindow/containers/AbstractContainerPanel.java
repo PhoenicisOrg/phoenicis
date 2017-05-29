@@ -23,27 +23,18 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 
 import java.util.List;
 
-abstract class AbstractContainerPanel<T> extends VBox {
+abstract class AbstractContainerPanel<T> extends DetailsView {
     protected final ThemeManager themeManager;
-    private final TabPane tabPane;
+    protected final TabPane tabPane;
 
     AbstractContainerPanel(T containerEntity, ThemeManager themeManager, List<EngineVersionDTO> engineVersions) {
         this.themeManager = themeManager;
         this.tabPane = new TabPane();
 
-        this.getChildren().add(tabPane);
-
-        this.getStyleClass().add("rightPane");
-        this.tabPane.getTabs().add(drawInformationTab(containerEntity, engineVersions));
+        this.setCenter(tabPane);
     }
-
-    abstract Tab drawInformationTab(T container, List<EngineVersionDTO> engineVersions);
-
-    public List<Tab> getTabs() {
-        return tabPane.getTabs();
-    }
-
 }

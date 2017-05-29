@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,24 +33,22 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ViewLibrary extends MainWindowView<LibrarySideBar> {
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewLibrary.class);
+    private final ShortcutFilter<ShortcutDTO> filter;
+    private final ObjectMapper objectMapper;
 
     private LibrarySideBar sideBar;
     private LibraryPanel libraryPanel;
 
     private CombinedListWidget<ShortcutDTO> availableShortcuts;
-    private final ShortcutFilter<ShortcutDTO> filter;
 
     private ObservableList<ShortcutCategoryDTO> categories;
     private SortedList<ShortcutCategoryDTO> sortedCategories;
@@ -67,20 +66,20 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
     };
 
-    public ViewLibrary(String applicationName, ThemeManager themeManager) {
-        super("Library", themeManager);
+    public ViewLibrary(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper) {
+        super(tr("Library"), themeManager);
         this.getStyleClass().add("mainWindowScene");
+        this.objectMapper = objectMapper;
 
         availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
-            ShortcutDTO shortcutDTO = selectedItem;
 
             availableShortcuts.deselectAll();
             availableShortcuts.select(selectedItem);
-            onShortcutSelected.accept(shortcutDTO);
-            showShortcutDetails(shortcutDTO);
+            onShortcutSelected.accept(selectedItem);
+            showShortcutDetails(selectedItem);
 
             if (event.getClickCount() == 2) {
-                onShortcutDoubleClicked.accept(shortcutDTO);
+                onShortcutDoubleClicked.accept(selectedItem);
             }
 
             event.consume();
@@ -108,7 +107,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.sideBar = new LibrarySideBar(applicationName, availableShortcuts);
         this.sideBar.bindCategories(this.sortedCategories);
 
-        this.libraryPanel = new LibraryPanel();
+        this.libraryPanel = new LibraryPanel(objectMapper);
 
         this.availableShortcuts.bind(sortedShortcuts);
 
@@ -167,7 +166,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
         final Tab installedApplication = new Tab();
         installedApplication.setClosable(false);
-        installedApplication.setText(translate("My applications"));
+        installedApplication.setText(tr("My applications"));
         libraryTabs.getTabs().add(installedApplication);
 
         installedApplication.setContent(availableShortcuts);
@@ -176,8 +175,9 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
-        this.libraryPanel.setShortcutDTO(shortcutDTO);
-        this.libraryPanel.setMaxWidth(400);
+        libraryPanel.setOnClose(this::closeDetailsView);
+        libraryPanel.setShortcutDTO(shortcutDTO);
+        libraryPanel.setMaxWidth(400);
         this.showDetailsView(libraryPanel);
     }
 

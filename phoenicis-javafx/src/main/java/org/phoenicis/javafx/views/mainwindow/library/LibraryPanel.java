@@ -18,45 +18,47 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
-import javafx.geometry.Insets;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-final class LibraryPanel extends VBox {
+final class LibraryPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
+
+    private final ObjectMapper objectMapper;
 
     // consumers called when a shortcut should be run, stopped or uninstalled
     private Consumer<ShortcutDTO> onShortcutRun;
     private Consumer<ShortcutDTO> onShortcutStop;
     private Consumer<ShortcutDTO> onShortcutUninstall;
 
-    public LibraryPanel() {
+    public LibraryPanel(ObjectMapper objectMapper) {
         super();
-        this.setPadding(new Insets(10));
+        this.objectMapper = objectMapper;
     }
 
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
-        this.getChildren().clear();
+        this.setTitle(shortcutDTO.getName());
 
+        this.getChildren().clear();
         final VBox vBox = new VBox();
-        Label name = new Label(shortcutDTO.getName());
-        name.getStyleClass().add("descriptionTitle");
-        name.setWrapText(true);
 
         Label description = new Label(shortcutDTO.getDescription());
         description.setWrapText(true);
@@ -65,44 +67,51 @@ final class LibraryPanel extends VBox {
         gridPane.getStyleClass().add("grid");
 
         try {
-            JSONObject jsonObject = new JSONObject(shortcutDTO.getScript());
+            LOGGER.info("Reading shortcut: {}", shortcutDTO.getScript());
 
-            for (int i = 0; i < jsonObject.names().length(); i++) {
-                String key = jsonObject.names().getString(i);
-                Label keyLabel = new Label(key + ":");
+            final Map<String, String> shortcutProperties = objectMapper.readValue(shortcutDTO.getScript(),
+                    new TypeReference<Map<String, String>>() {
+                    });
+
+            int i = 0;
+            for (String shortcutKey : shortcutProperties.keySet()) {
+                final Label keyLabel = new Label(shortcutKey + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 gridPane.add(keyLabel, 0, i);
-                Label valueLabel = new Label(jsonObject.getString(key));
+
+                final Label valueLabel = new Label(shortcutProperties.get(shortcutKey));
                 valueLabel.setWrapText(true);
                 gridPane.add(valueLabel, 1, i);
+
+                i++;
             }
 
-        } catch (JSONException e) {
+        } catch (IOException e) {
             LOGGER.warn("Could not parse shortcut script JSON", e);
         }
 
         gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
                 new ColumnConstraintsWithPercentage(70));
 
-        Button runButton = new Button(translate("Run"));
+        Button runButton = new Button(tr("Run"));
         runButton.getStyleClass().addAll("buttonWithIcon", "runButton");
         runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
 
-        Button stopButton = new Button(translate("Close"));
+        Button stopButton = new Button(tr("Close"));
         stopButton.getStyleClass().addAll("buttonWithIcon", "stopButton");
         stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
 
-        Button uninstallButton = new Button(translate("Uninstall"));
+        Button uninstallButton = new Button(tr("Uninstall"));
         uninstallButton.getStyleClass().addAll("buttonWithIcon", "uninstallButton");
         uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
 
         Region spacer = new Region();
         spacer.setPrefHeight(40);
 
-        vBox.getChildren().addAll(name, description, gridPane, spacer, runButton, stopButton, uninstallButton);
+        vBox.getChildren().addAll(description, gridPane, spacer, runButton, stopButton, uninstallButton);
 
-        this.getChildren().addAll(vBox);
+        this.setCenter(vBox);
     }
 
     /**

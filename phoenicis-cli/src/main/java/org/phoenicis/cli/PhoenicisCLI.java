@@ -29,7 +29,7 @@ public class PhoenicisCLI {
         phoenicisCLI.run(args);
     }
 
-    private void run(String[] args) {
+    void run(String[] args) {
         try {
             final CLIController arguments = CommandLineParser.parse(CLIController.class, args, OptionStyle.SIMPLE);
 
