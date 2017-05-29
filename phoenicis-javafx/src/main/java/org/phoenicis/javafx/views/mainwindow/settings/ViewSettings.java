@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.apps.RepositoryManager;
+import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.MessagePanel;

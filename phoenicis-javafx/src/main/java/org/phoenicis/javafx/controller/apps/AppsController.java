@@ -20,8 +20,8 @@ package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.apps.RepositoryManager;
-import org.phoenicis.apps.dto.CategoryDTO;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;

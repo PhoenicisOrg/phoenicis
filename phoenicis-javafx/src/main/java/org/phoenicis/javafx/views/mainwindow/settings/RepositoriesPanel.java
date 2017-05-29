@@ -10,7 +10,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import org.phoenicis.apps.RepositoryManager;
+import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.settings.SettingsManager;
 

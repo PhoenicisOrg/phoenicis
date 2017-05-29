@@ -18,10 +18,10 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.apps.repository.Repository;
-import org.phoenicis.apps.dto.ApplicationDTO;
-import org.phoenicis.apps.dto.CategoryDTO;
-import org.phoenicis.apps.dto.ScriptDTO;
+import org.phoenicis.repository.repository.Repository;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.springframework.context.ApplicationContext;

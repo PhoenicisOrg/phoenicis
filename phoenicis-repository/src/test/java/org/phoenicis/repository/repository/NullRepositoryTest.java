@@ -16,33 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.interpreter;
+package org.phoenicis.repository.repository;
 
-import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.junit.Test;
+import org.phoenicis.repository.repository.NullRepository;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
-public class ScriptFetcher {
-    private final RepositoryManager repositoryManager;
-
-    public ScriptFetcher(RepositoryManager repositoryManager) {
-        this.repositoryManager = repositoryManager;
+public class NullRepositoryTest {
+    @Test
+    public void testNullRepositoryTest() {
+        assertEquals(0, new NullRepository().fetchInstallableApplications().size());
     }
-
-    public String getScript(List<String> path) {
-        final ScriptDTO script = repositoryManager.getScript(path);
-
-        if (script == null) {
-            throw new ScriptException("Script not found: " + path);
-        }
-
-        return script.getScript();
-    }
-
-    public String getScript(String... path) {
-        return getScript(Arrays.asList(path));
-    }
-
 }
