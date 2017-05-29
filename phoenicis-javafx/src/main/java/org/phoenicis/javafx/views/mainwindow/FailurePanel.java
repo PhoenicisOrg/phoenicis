@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import org.phoenicis.javafx.views.common.ThemeManager;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class FailurePanel extends VBox {
     private final Button retryButton;
@@ -39,11 +39,11 @@ public class FailurePanel extends VBox {
         this.setAlignment(Pos.CENTER);
 
         Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(translate(
-                "Connecting to ${application.name} failed.\n" + "Please check your connection and try again."));
+        failureNotificationLbl.setText(
+                tr("Connecting to ${application.name} failed.\n" + "Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
-        retryButton = new Button(translate("Retry"));
+        retryButton = new Button(tr("Retry"));
         retryButton.getStyleClass().addAll("retryButton", "refreshIcon");
 
         this.getChildren().addAll(failureNotificationLbl, retryButton);

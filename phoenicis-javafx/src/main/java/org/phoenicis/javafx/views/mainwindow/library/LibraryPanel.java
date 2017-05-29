@@ -40,8 +40,7 @@ final class LibraryPanel extends DetailsView {
     private final ShortcutDTO shortcut;
     private final ObjectMapper objectMapper;
 
-    public LibraryPanel(ShortcutDTO shortcut,
-                        ObjectMapper objectMapper) {
+    public LibraryPanel(ShortcutDTO shortcut, ObjectMapper objectMapper) {
         super();
 
         this.shortcut = shortcut;
@@ -64,11 +63,12 @@ final class LibraryPanel extends DetailsView {
         try {
             LOGGER.info("Reading shortcut: {}", shortcut.getScript());
 
-            final Map<String, String> shortcutProperties =
-                    objectMapper.readValue(shortcut.getScript(), new TypeReference<Map<String, String>>() {});
+            final Map<String, String> shortcutProperties = objectMapper.readValue(shortcut.getScript(),
+                    new TypeReference<Map<String, String>>() {
+                    });
 
             int i = 0;
-            for(String shortcutKey: shortcutProperties.keySet()) {
+            for (String shortcutKey : shortcutProperties.keySet()) {
                 final Label keyLabel = new Label(shortcutKey + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);

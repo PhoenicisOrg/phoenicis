@@ -54,15 +54,9 @@ public class AppsConfiguration {
     @Bean
     public RepositoryManager repositoryManager() {
         RepositoryManager repositoryManager = new DefaultRepositoryManager(
-                multithreadingConfiguration.appsExecutorService(),
-                enforceUncompatibleOperatingSystems,
-                toolsConfiguration,
-                cacheDirectoryPath,
-                fileUtilities,
-                localRepositoryFactory(),
-                classPathRepositoryFactory(),
-                backgroundRepositoryFactory()
-        );
+                multithreadingConfiguration.appsExecutorService(), enforceUncompatibleOperatingSystems,
+                toolsConfiguration, cacheDirectoryPath, fileUtilities, localRepositoryFactory(),
+                classPathRepositoryFactory(), backgroundRepositoryFactory());
 
         // set initial repositories
         repositoryManager.addRepositories(this.repositoryConfiguration.split(";"));

@@ -85,8 +85,7 @@ public class BackgroundRepository implements Repository {
     }
 
     public static class Factory {
-        public BackgroundRepository createInstance(Repository delegatedRepository,
-                                                   ExecutorService executorService) {
+        public BackgroundRepository createInstance(Repository delegatedRepository, ExecutorService executorService) {
             return new BackgroundRepository(delegatedRepository, executorService);
         }
     }

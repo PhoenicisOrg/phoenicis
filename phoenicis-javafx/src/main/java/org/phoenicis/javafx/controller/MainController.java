@@ -32,7 +32,7 @@ import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
     private final MainWindow mainWindow;
@@ -69,7 +69,7 @@ public class MainController {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(this.mainWindow);
             alert.setTitle(applicationName);
-            alert.setHeaderText(translate("Are you sure you want to close all " + applicationName + " windows?"));
+            alert.setHeaderText(tr("Are you sure you want to close all " + applicationName + " windows?"));
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Platform.exit();

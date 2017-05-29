@@ -11,7 +11,7 @@ import org.phoenicis.tools.system.opener.Opener;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * This class represents the "About" settings category
@@ -59,20 +59,20 @@ public class AboutPanel extends VBox {
     }
 
     private void populate() {
-        this.title = new TextWithStyle(translate("About"), "title");
+        this.title = new TextWithStyle(tr("About"), "title");
 
         this.aboutGrid = new GridPane();
         this.aboutGrid.getStyleClass().add("grid");
         this.aboutGrid.setHgap(20);
         this.aboutGrid.setVgap(10);
 
-        this.nameDescription = new TextWithStyle(translate("Name:"), "captionTitle");
+        this.nameDescription = new TextWithStyle(tr("Name:"), "captionTitle");
         this.nameLabel = new Label(buildInformation.getApplicationName());
 
-        this.versionDescription = new TextWithStyle(translate("Version:"), "captionTitle");
+        this.versionDescription = new TextWithStyle(tr("Version:"), "captionTitle");
         this.versionLabel = new Label(buildInformation.getApplicationVersion());
 
-        this.gitRevisionDescription = new TextWithStyle(translate("Git Revision:"), "captionTitle");
+        this.gitRevisionDescription = new TextWithStyle(tr("Git Revision:"), "captionTitle");
         this.gitRevisionHyperlink = new Hyperlink(buildInformation.getApplicationGitRevision());
         this.gitRevisionHyperlink.setOnAction(event -> {
             try {
@@ -84,7 +84,7 @@ public class AboutPanel extends VBox {
             }
         });
 
-        this.buildTimestampDescription = new TextWithStyle(translate("Build Timestamp:"), "captionTitle");
+        this.buildTimestampDescription = new TextWithStyle(tr("Build Timestamp:"), "captionTitle");
         this.buildTimestampLabel = new Label(buildInformation.getApplicationBuildTimestamp());
 
         this.aboutGrid.add(nameDescription, 0, 0);

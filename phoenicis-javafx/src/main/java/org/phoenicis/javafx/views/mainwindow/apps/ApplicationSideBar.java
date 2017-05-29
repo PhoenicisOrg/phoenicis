@@ -12,7 +12,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.*;
 
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * An instance of this class represents the left sidebar of the apps tab view.
@@ -102,14 +102,14 @@ public class ApplicationSideBar extends LeftSideBar {
     }
 
     private void populateCategories() {
-        this.categoryView = LeftToggleGroup.create(translate("Categories"), this::createAllCategoriesToggleButton,
+        this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
     }
 
     private void populateFilters() {
-        this.testingCheck = new LeftCheckBox(translate("Testing"));
-        this.noCdNeededCheck = new LeftCheckBox(translate("No CD needed"));
-        this.commercialCheck = new LeftCheckBox(translate("Commercial"));
+        this.testingCheck = new LeftCheckBox(tr("Testing"));
+        this.noCdNeededCheck = new LeftCheckBox(tr("No CD needed"));
+        this.commercialCheck = new LeftCheckBox(tr("Commercial"));
 
         this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
     }

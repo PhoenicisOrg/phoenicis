@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.common;
 
-import org.phoenicis.javafx.views.common.themes.Theme;
 import org.phoenicis.javafx.views.common.themes.Themes;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

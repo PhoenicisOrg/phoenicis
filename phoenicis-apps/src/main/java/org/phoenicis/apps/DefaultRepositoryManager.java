@@ -40,12 +40,10 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
     private List<CallbackPair> callbacks;
 
-    public DefaultRepositoryManager(ExecutorService executorService,
-                                    boolean enforceUncompatibleOperatingSystems,
-                                    ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities,
-                                    LocalRepository.Factory localRepositoryFactory,
-                                    ClasspathRepository.Factory classPathRepositoryFactory,
-                                    BackgroundRepository.Factory backgroundRepositoryFactory) {
+    public DefaultRepositoryManager(ExecutorService executorService, boolean enforceUncompatibleOperatingSystems,
+            ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities,
+            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
+            BackgroundRepository.Factory backgroundRepositoryFactory) {
         super();
 
         this.localRepositoryFactory = localRepositoryFactory;

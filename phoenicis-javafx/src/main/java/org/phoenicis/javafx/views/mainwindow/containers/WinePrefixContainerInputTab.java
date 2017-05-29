@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Created by marc on 27.05.17.
@@ -32,7 +32,7 @@ public class WinePrefixContainerInputTab extends Tab {
     private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerInputTab(WinePrefixContainerDTO container) {
-        super(translate("Input"));
+        super(tr("Input"));
 
         this.container = container;
 
@@ -43,7 +43,7 @@ public class WinePrefixContainerInputTab extends Tab {
 
     private void populate() {
         final VBox inputPane = new VBox();
-        final Text title = new TextWithStyle(translate("Input settings"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Input settings"), TITLE_CSS_CLASS);
 
         inputPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         inputPane.getChildren().add(title);
@@ -54,7 +54,7 @@ public class WinePrefixContainerInputTab extends Tab {
         final ComboBox<MouseWarpOverride> mouseWarpOverrideComboBox = new ComboBox<>();
         mouseWarpOverrideComboBox.setValue(container.getMouseWarpOverride());
         addItems(mouseWarpOverrideComboBox, MouseWarpOverride.class);
-        inputContentPane.add(new TextWithStyle(translate("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        inputContentPane.add(new TextWithStyle(tr("Mouse Warp Override"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         inputContentPane.add(mouseWarpOverrideComboBox, 1, 0);
 
         inputContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
@@ -66,7 +66,6 @@ public class WinePrefixContainerInputTab extends Tab {
 
         lockableElements.add(mouseWarpOverrideComboBox);
     }
-
 
     private <T extends Enum> void addItems(ComboBox<T> comboBox, Class<T> clazz) {
         final List<T> possibleValues = new ArrayList<>(EnumSet.allOf(clazz));

@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
@@ -58,7 +58,7 @@ final class EnginePanel extends DetailsView {
         final GridPane informationContentPane = new GridPane();
         informationContentPane.getStyleClass().add("grid");
 
-        informationContentPane.add(new TextWithStyle(translate("Version:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        informationContentPane.add(new TextWithStyle(tr("Version:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         Label name = new Label(engineDTO.getVersion());
         name.setWrapText(true);
         informationContentPane.add(name, 1, 0);

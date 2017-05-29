@@ -16,7 +16,7 @@ import org.phoenicis.javafx.views.common.TextWithStyle;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Created by marc on 27.05.17.
@@ -31,8 +31,9 @@ public class WinePrefixContainerToolsTab extends Tab {
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public WinePrefixContainerToolsTab(WinePrefixContainerDTO container, WinePrefixContainerController winePrefixContainerController) {
-        super(translate("Tools"));
+    public WinePrefixContainerToolsTab(WinePrefixContainerDTO container,
+            WinePrefixContainerController winePrefixContainerController) {
+        super(tr("Tools"));
 
         this.container = container;
         this.winePrefixContainerController = winePrefixContainerController;
@@ -44,7 +45,7 @@ public class WinePrefixContainerToolsTab extends Tab {
 
     private void populate() {
         final VBox toolsPane = new VBox();
-        final Text title = new TextWithStyle(translate("Tools"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Tools"), TITLE_CSS_CLASS);
 
         toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         toolsPane.getChildren().add(title);
@@ -52,7 +53,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         final GridPane toolsContentPane = new GridPane();
         toolsContentPane.getStyleClass().add("grid");
 
-        Button openTerminal = new Button(translate("Open a terminal"));
+        Button openTerminal = new Button(tr("Open a terminal"));
         openTerminal.getStyleClass().addAll("wineToolButton", "openTerminal");
         openTerminal.setOnMouseClicked(e -> {
             this.lockAll();
@@ -65,7 +66,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         this.lockableElements.add(openTerminal);
 
         toolsContentPane.add(openTerminal, 0, 0);
-        toolsContentPane.add(wineToolCaption(translate("Open a terminal")), 0, 1);
+        toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 

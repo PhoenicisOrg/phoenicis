@@ -60,7 +60,8 @@ public class ContainersController {
                         (WinePrefixContainerDTO) containerDTO, viewContainers.getThemeManager(),
                         engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                                 .flatMap(subCategory -> subCategory.getPackages().stream())
-                                .collect(Collectors.toList()), winePrefixContainerController);
+                                .collect(Collectors.toList()),
+                        winePrefixContainerController);
 
                 panel.setOnDeletePrefix(winePrefixDTO -> {
                     new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container",

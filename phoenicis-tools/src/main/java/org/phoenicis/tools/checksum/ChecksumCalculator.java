@@ -30,11 +30,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
-    private static final String WAIT_MESSAGE = translate("Please wait while we are verifying the file...");
+    private static final String WAIT_MESSAGE = tr("Please wait while we are verifying the file...");
 
     public String calculate(String fileToCheck, String algorithm, Consumer<ProgressEntity> onChange)
             throws IOException {

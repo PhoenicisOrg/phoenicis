@@ -18,7 +18,7 @@ import org.phoenicis.javafx.views.common.TextWithStyle;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Created by marc on 27.05.17.
@@ -34,7 +34,7 @@ public class WinePrefixContainerInformationTab extends Tab {
     private Consumer<WinePrefixContainerDTO> onDeletePrefix;
 
     public WinePrefixContainerInformationTab(WinePrefixContainerDTO container, List<EngineVersionDTO> engineVersions) {
-        super(translate("Information"));
+        super(tr("Information"));
 
         this.container = container;
         this.engineVersions = engineVersions;
@@ -46,7 +46,7 @@ public class WinePrefixContainerInformationTab extends Tab {
 
     private void populate() {
         final VBox informationPane = new VBox();
-        final Text title = new TextWithStyle(translate("Information"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Information"), TITLE_CSS_CLASS);
 
         informationPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         informationPane.getChildren().add(title);
@@ -54,27 +54,27 @@ public class WinePrefixContainerInformationTab extends Tab {
         final GridPane informationContentPane = new GridPane();
         informationContentPane.getStyleClass().add("grid");
 
-        informationContentPane.add(new TextWithStyle(translate("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        informationContentPane.add(new TextWithStyle(tr("Name:"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         Label name = new Label(container.getName());
         name.setWrapText(true);
         informationContentPane.add(name, 1, 0);
 
-        informationContentPane.add(new TextWithStyle(translate("Path:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
+        informationContentPane.add(new TextWithStyle(tr("Path:"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         Label path = new Label(container.getPath());
         path.setWrapText(true);
         informationContentPane.add(path, 1, 1);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        informationContentPane.add(new TextWithStyle(tr("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         Label version = new Label(container.getVersion());
         version.setWrapText(true);
         informationContentPane.add(version, 1, 2);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        informationContentPane.add(new TextWithStyle(tr("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         Label architecture = new Label(container.getArchitecture());
         architecture.setWrapText(true);
         informationContentPane.add(architecture, 1, 3);
 
-        informationContentPane.add(new TextWithStyle(translate("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
+        informationContentPane.add(new TextWithStyle(tr("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         Label distribution = new Label(container.getDistribution());
         distribution.setWrapText(true);
         informationContentPane.add(distribution, 1, 4);

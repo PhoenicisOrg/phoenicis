@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
     private final ThemeManager themeManager;
@@ -56,7 +56,7 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
 
         this.wizardTitle = title;
 
-        this.setText(translate(title));
+        this.setText(tr(title));
         this.setContent(root);
 
         this.loadImages();

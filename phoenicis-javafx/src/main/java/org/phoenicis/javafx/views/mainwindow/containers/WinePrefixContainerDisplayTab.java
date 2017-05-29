@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.translate;
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Created by marc on 27.05.17.
@@ -38,8 +38,9 @@ public class WinePrefixContainerDisplayTab extends Tab {
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public WinePrefixContainerDisplayTab(WinePrefixContainerDTO container, WinePrefixContainerController winePrefixContainerController) {
-        super(translate("Display"));
+    public WinePrefixContainerDisplayTab(WinePrefixContainerDTO container,
+            WinePrefixContainerController winePrefixContainerController) {
+        super(tr("Display"));
 
         this.container = container;
         this.winePrefixContainerController = winePrefixContainerController;
@@ -51,7 +52,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
 
     private void populate() {
         final VBox displayPane = new VBox();
-        final Text title = new TextWithStyle(translate("Display settings"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Display settings"), TITLE_CSS_CLASS);
 
         displayPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         displayPane.getChildren().add(title);
@@ -62,10 +63,9 @@ public class WinePrefixContainerDisplayTab extends Tab {
         final ComboBox<UseGLSL> glslComboBox = new ComboBox<>();
         glslComboBox.setMaxWidth(Double.MAX_VALUE);
         glslComboBox.setValue(container.getUseGlslValue());
-        glslComboBox.valueProperty()
-                .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
+        glslComboBox.valueProperty().addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(glslComboBox, UseGLSL.class);
-        displayContentPane.add(new TextWithStyle(translate("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
+        displayContentPane.add(new TextWithStyle(tr("GLSL support"), CAPTION_TITLE_CSS_CLASS), 0, 0);
         displayContentPane.add(glslComboBox, 1, 0);
 
         final ComboBox<DirectDrawRenderer> directDrawRendererComboBox = new ComboBox<>();
@@ -74,7 +74,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         directDrawRendererComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(directDrawRendererComboBox, DirectDrawRenderer.class);
-        displayContentPane.add(new TextWithStyle(translate("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
+        displayContentPane.add(new TextWithStyle(tr("Direct Draw Renderer"), CAPTION_TITLE_CSS_CLASS), 0, 1);
         displayContentPane.add(directDrawRendererComboBox, 1, 1);
 
         final ComboBox<VideoMemorySize> videoMemorySizeComboBox = new ComboBox<>();
@@ -83,7 +83,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         videoMemorySizeComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItemsVideoMemorySize(videoMemorySizeComboBox);
-        displayContentPane.add(new TextWithStyle(translate("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        displayContentPane.add(new TextWithStyle(tr("Video memory size"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         displayContentPane.add(videoMemorySizeComboBox, 1, 2);
 
         final ComboBox<OffscreenRenderingMode> offscreenRenderingModeComboBox = new ComboBox<>();
@@ -92,7 +92,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         offscreenRenderingModeComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(offscreenRenderingModeComboBox, OffscreenRenderingMode.class);
-        displayContentPane.add(new TextWithStyle(translate("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        displayContentPane.add(new TextWithStyle(tr("Offscreen rendering mode"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         displayContentPane.add(offscreenRenderingModeComboBox, 1, 3);
 
         final ComboBox<RenderTargetModeLock> renderTargetModeLockComboBox = new ComboBox<>();
@@ -101,7 +101,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         renderTargetModeLockComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(renderTargetModeLockComboBox, RenderTargetModeLock.class);
-        displayContentPane.add(new TextWithStyle(translate("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
+        displayContentPane.add(new TextWithStyle(tr("Render target lock mode"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         displayContentPane.add(renderTargetModeLockComboBox, 1, 4);
 
         final ComboBox<Multisampling> multisamplingComboBox = new ComboBox<>();
@@ -110,7 +110,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         multisamplingComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(multisamplingComboBox, Multisampling.class);
-        displayContentPane.add(new TextWithStyle(translate("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
+        displayContentPane.add(new TextWithStyle(tr("Multisampling"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         displayContentPane.add(multisamplingComboBox, 1, 5);
 
         final ComboBox<StrictDrawOrdering> strictDrawOrderingComboBox = new ComboBox<>();
@@ -119,7 +119,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         strictDrawOrderingComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(strictDrawOrderingComboBox, StrictDrawOrdering.class);
-        displayContentPane.add(new TextWithStyle(translate("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
+        displayContentPane.add(new TextWithStyle(tr("Strict Draw Ordering"), CAPTION_TITLE_CSS_CLASS), 0, 6);
         displayContentPane.add(strictDrawOrderingComboBox, 1, 6);
 
         final ComboBox<AlwaysOffscreen> alwaysOffscreenComboBox = new ComboBox<>();
@@ -128,7 +128,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
         alwaysOffscreenComboBox.valueProperty()
                 .addListener((observable, oldValue, newValue) -> this.changeSettings(newValue));
         addItems(alwaysOffscreenComboBox, AlwaysOffscreen.class);
-        displayContentPane.add(new TextWithStyle(translate("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
+        displayContentPane.add(new TextWithStyle(tr("Always Offscreen"), CAPTION_TITLE_CSS_CLASS), 0, 7);
         displayContentPane.add(alwaysOffscreenComboBox, 1, 7);
 
         Region spacer = new Region();

@@ -35,10 +35,12 @@ public class ContainerPanelFactory<T extends AbstractContainerPanel<C>, C extend
         this.entityClazz = entityClazz;
     }
 
-    public T createContainerPanel(C containerDTO, ThemeManager themeManager, List<EngineVersionDTO> engineVersions, WinePrefixContainerController winePrefixContainerController) {
+    public T createContainerPanel(C containerDTO, ThemeManager themeManager, List<EngineVersionDTO> engineVersions,
+            WinePrefixContainerController winePrefixContainerController) {
         try {
-            return this.clazz.getConstructor(entityClazz, ThemeManager.class, List.class, WinePrefixContainerController.class).newInstance(containerDTO,
-                    themeManager, engineVersions, winePrefixContainerController);
+            return this.clazz
+                    .getConstructor(entityClazz, ThemeManager.class, List.class, WinePrefixContainerController.class)
+                    .newInstance(containerDTO, themeManager, engineVersions, winePrefixContainerController);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException
                 | NoSuchMethodException e) {
             throw new IllegalStateException(e);
