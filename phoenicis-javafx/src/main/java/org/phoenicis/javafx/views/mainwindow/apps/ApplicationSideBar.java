@@ -34,6 +34,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 21.04.17
  */
 public class ApplicationSideBar extends LeftSideBar {
+    private final ApplicationFilter filter;
+
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
 
@@ -48,6 +50,8 @@ public class ApplicationSideBar extends LeftSideBar {
 
     private CheckBox testingCheck;
     private CheckBox noCdNeededCheck;
+
+    private CheckBox freeCheck;
     private CheckBox commercialCheck;
 
     // widget to switch between the different list widgets in the center view
@@ -66,8 +70,10 @@ public class ApplicationSideBar extends LeftSideBar {
      *
      * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget) {
+    public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter) {
         super();
+
+        this.filter = filter;
 
         this.populateSearchBar();
         this.populateCategories();
@@ -108,10 +114,20 @@ public class ApplicationSideBar extends LeftSideBar {
 
     private void populateFilters() {
         this.testingCheck = new LeftCheckBox(tr("Testing"));
-        this.noCdNeededCheck = new LeftCheckBox(tr("No CD needed"));
-        this.commercialCheck = new LeftCheckBox(tr("Commercial"));
+        this.testingCheck.selectedProperty().bindBidirectional(filter.containTestingApplicationsProperty());
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
+        this.noCdNeededCheck = new LeftCheckBox(tr("No CD needed"));
+        this.noCdNeededCheck.selectedProperty().bindBidirectional(filter.containNoCDApplicationsProperty());
+
+        this.freeCheck = new LeftCheckBox(tr("Free"));
+        this.freeCheck.selectedProperty().bindBidirectional(filter.containFreeApplicationsProperty());
+        this.freeCheck.setSelected(true);
+
+        this.commercialCheck = new LeftCheckBox(tr("Commercial"));
+        this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
+        this.commercialCheck.setSelected(true);
+
+        this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, freeCheck, commercialCheck);
     }
 
     /**

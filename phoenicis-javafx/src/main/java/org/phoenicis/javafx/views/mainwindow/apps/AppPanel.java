@@ -18,40 +18,44 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.net.URL;
 import java.util.function.Consumer;
 
 final class AppPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
 
     private final ApplicationDTO application;
+
     private final ThemeManager themeManager;
     private final SettingsManager settingsManager;
 
     private Consumer<ScriptDTO> onScriptInstall;
 
-    public AppPanel(ApplicationDTO application, ThemeManager themeManager, SettingsManager settingsManager) {
+    private FilteredList<ScriptDTO> filteredScripts;
+
+    public AppPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager, SettingsManager settingsManager) {
         super();
 
         this.application = application;
         this.themeManager = themeManager;
         this.settingsManager = settingsManager;
+
+        this.filteredScripts = new FilteredList<ScriptDTO>(FXCollections.observableArrayList(application.getScripts()));
+        this.filteredScripts.predicateProperty().bind(filter.scriptFilterProperty());
 
         this.setTitle(application.getName());
 
@@ -61,10 +65,7 @@ final class AppPanel extends DetailsView {
     }
 
     private void populateCenter() {
-        final VBox descriptionWidget = new VBox();
-
         WebView appDescription = new WebView();
-        VBox.setVgrow(appDescription, Priority.ALWAYS);
         appDescription.getEngine().loadContent("<body>" + application.getDescription() + "</body>");
 
         themeManager.bindWebEngineStylesheet(appDescription.getEngine().userStyleSheetLocationProperty());
@@ -72,33 +73,44 @@ final class AppPanel extends DetailsView {
         Label installers = new Label("Installers");
         installers.getStyleClass().add("descriptionTitle");
 
-        GridPane grid = new GridPane();
-        ColumnConstraints column1 = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-        column1.setHgrow(Priority.ALWAYS);
-        ColumnConstraints column2 = new ColumnConstraints(100);
-        grid.getColumnConstraints().addAll(column1, column2);
-        int row = 0;
-        for (ScriptDTO script : application.getScripts()) {
-            Label scriptName = new Label(script.getScriptName());
-            if (settingsManager.isViewScriptSource()) {
-                final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
-                Tooltip.install(scriptName, tooltip);
-            }
+        ListView<ScriptDTO> scriptList = new ListView<>(filteredScripts);
+        scriptList.setPrefHeight(0);
+        scriptList.setMinHeight(100);
+        scriptList.setCellFactory(value -> new ListCell<ScriptDTO>() {
+            @Override
+            public void updateItem(ScriptDTO script, boolean empty) {
+                super.updateItem(script, empty);
 
-            Button installButton = new Button("Install");
-            installButton.setOnMouseClicked(evt -> {
-                try {
-                    onScriptInstall.accept(script);
-                } catch (IllegalArgumentException e) {
-                    LOGGER.error("Failed to get script", e);
-                    new ErrorMessage("Error while trying to download the installer", e).show();
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Label scriptName = new Label(script.getScriptName());
+                    if (settingsManager.isViewScriptSource()) {
+                        final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
+                        Tooltip.install(scriptName, tooltip);
+                    }
+
+                    Button installButton = new Button("Install");
+                    installButton.setOnMouseClicked(evt -> {
+                        try {
+                            onScriptInstall.accept(script);
+                        } catch (IllegalArgumentException e) {
+                            LOGGER.error("Failed to get script", e);
+                            new ErrorMessage("Error while trying to download the installer", e).show();
+                        }
+                    });
+
+                    GridPane container = new GridPane();
+
+                    container.add(scriptName, 0, 0);
+                    container.add(installButton, 1, 0);
+
+                    GridPane.setHgrow(scriptName, Priority.ALWAYS);
+
+                    setGraphic(container);
                 }
-            });
-            grid.addRow(row, scriptName, installButton);
-            row++;
-        }
-
-        descriptionWidget.getChildren().addAll(appDescription, installers, grid);
+            }
+        });
 
         final HBox miniaturesPane = new HBox();
         miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
@@ -117,7 +129,11 @@ final class AppPanel extends DetailsView {
             miniaturesPane.getChildren().add(image);
         }
 
-        this.setCenter(new VBox(descriptionWidget, miniaturesPaneWrapper));
+        VBox center = new VBox(appDescription, installers, scriptList, miniaturesPaneWrapper);
+
+        VBox.setVgrow(appDescription, Priority.ALWAYS);
+
+        this.setCenter(center);
     }
 
     public void setOnScriptInstall(Consumer<ScriptDTO> onScriptInstall) {

@@ -49,7 +49,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private ApplicationSideBar sideBar;
 
     private final CombinedListWidget<ApplicationDTO> availableApps;
-    private final ApplicationFilter<ApplicationDTO> filter;
+    private final ApplicationFilter filter;
 
     private Consumer<ScriptDTO> onSelectScript = (script) -> {
     };
@@ -69,7 +69,6 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
         this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
                 (element, event) -> showAppDetails(element, settingsManager));
-        this.sideBar = new ApplicationSideBar(availableApps);
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();
@@ -83,8 +82,10 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
-        this.filter = new ApplicationFilter<ApplicationDTO>(filteredApplications,
+        this.filter = new ApplicationFilter(filteredApplications,
                 (filterText, application) -> application.getName().toLowerCase().contains(filterText));
+
+        this.sideBar = new ApplicationSideBar(availableApps, filter);
 
         // create the bindings between the visual components and the observable lists
         this.sideBar.bindCategories(this.sortedCategories);
@@ -96,11 +97,11 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
-            filter.setFilters(category.getApplications()::contains);
+            filter.setFilterCategory(category);
             showAvailableApps();
         });
         this.sideBar.setOnAllCategorySelection(() -> {
-            filter.clearFilters();
+            filter.setFilterCategory(null);
             showAvailableApps();
         });
 
@@ -140,7 +141,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     }
 
     private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
-        final AppPanel appPanel = new AppPanel(application, themeManager, settingsManager);
+        final AppPanel appPanel = new AppPanel(application, filter, themeManager, settingsManager);
         appPanel.setOnScriptInstall(this::installScript);
         appPanel.setOnClose(this::closeDetailsView);
         appPanel.setMaxWidth(400);
