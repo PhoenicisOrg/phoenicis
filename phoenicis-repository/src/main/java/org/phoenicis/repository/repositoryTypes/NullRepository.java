@@ -16,16 +16,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repository;
+package org.phoenicis.repository.repositoryTypes;
 
-import org.junit.Test;
-import org.phoenicis.repository.repository.NullRepository;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.repository.dto.CategoryDTO;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Collections;
+import java.util.List;
 
-public class NullRepositoryTest {
-    @Test
-    public void testNullRepositoryTest() {
-        assertEquals(0, new NullRepository().fetchInstallableApplications().size());
+public class NullRepository implements Repository {
+    @Override
+    public List<CategoryDTO> fetchInstallableApplications() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        return builder.toHashCode();
     }
 }

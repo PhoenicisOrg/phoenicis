@@ -19,9 +19,9 @@
 package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.phoenicis.repository.repository.BackgroundRepository;
-import org.phoenicis.repository.repository.ClasspathRepository;
-import org.phoenicis.repository.repository.LocalRepository;
+import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
+import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
+import org.phoenicis.repository.repositoryTypes.LocalRepository;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;

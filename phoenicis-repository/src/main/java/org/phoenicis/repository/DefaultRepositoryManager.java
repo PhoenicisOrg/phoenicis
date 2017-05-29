@@ -3,7 +3,7 @@ package org.phoenicis.repository;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.repository.repository.*;
+import org.phoenicis.repository.repositoryTypes.*;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;

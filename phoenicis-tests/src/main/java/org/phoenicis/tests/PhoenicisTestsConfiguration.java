@@ -19,8 +19,8 @@
 package org.phoenicis.tests;
 
 import org.phoenicis.repository.RepositoryConfiguration;
-import org.phoenicis.repository.repository.NullRepository;
-import org.phoenicis.repository.repository.Repository;
+import org.phoenicis.repository.repositoryTypes.NullRepository;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;

@@ -16,18 +16,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repository;
+package org.phoenicis.repository.repositoryTypes;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.repository.dto.CategoryDTO;
 
-import java.util.Collections;
 import java.util.List;
 
-public class NullRepository implements Repository {
+public class CachedRepository implements Repository {
+    private final Repository repository;
+    private List<CategoryDTO> cache;
+
+    public CachedRepository(Repository repository) {
+        this.repository = repository;
+    }
+
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return Collections.emptyList();
+    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+        if (cache == null) {
+            cache = repository.fetchInstallableApplications();
+        }
+
+        return cache;
+    }
+
+    @Override
+    public void onDelete() {
+        this.repository.onDelete();
+    }
+
+    public void clearCache() {
+        this.cache = null;
     }
 
     @Override
@@ -40,12 +60,20 @@ public class NullRepository implements Repository {
             return false;
         }
 
-        return true;
+        CachedRepository that = (CachedRepository) o;
+
+        EqualsBuilder builder = new EqualsBuilder();
+
+        builder.append(repository, that.repository);
+
+        return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder();
+
+        builder.append(repository);
 
         return builder.toHashCode();
     }

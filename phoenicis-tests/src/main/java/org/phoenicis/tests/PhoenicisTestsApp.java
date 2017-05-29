@@ -18,7 +18,7 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.repository.repository.Repository;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;

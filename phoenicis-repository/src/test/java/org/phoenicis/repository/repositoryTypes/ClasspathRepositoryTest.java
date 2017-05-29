@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repository;
+package org.phoenicis.repository.repositoryTypes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ClasspathRepositoryTest {
     private final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-    private final Repository repository = new ClasspathRepository("/org/phoenicis/apps/repositoryTest",
+    private final Repository repository = new ClasspathRepository("/org/phoenicis/repository/repositoryTest",
             resourceResolver, new ObjectMapper());
 
     @Test

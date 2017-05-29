@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.phoenicis.repository.repository;
+package org.phoenicis.repository.repositoryTypes;
 
 import java.net.URI;
 import java.nio.ByteBuffer;
