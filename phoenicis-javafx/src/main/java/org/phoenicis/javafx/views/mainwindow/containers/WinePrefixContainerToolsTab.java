@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -8,11 +9,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
+import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +71,27 @@ public class WinePrefixContainerToolsTab extends Tab {
 
         toolsContentPane.add(openTerminal, 0, 0);
         toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
+
+        Button createShortcut = new Button();
+        createShortcut.getStyleClass().addAll("wineToolButton", "openTerminal");
+        createShortcut.setOnMouseClicked(event -> {
+            this.lockAll();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(tr("Choose executable"));
+            File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
+            if (file != null) {
+                winePrefixContainerController.createShortcut(container, file.getName(), file.getName(), this::unlockAll,
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+            }
+            this.unlockAll();
+        });
+
+        GridPane.setHalignment(createShortcut, HPos.CENTER);
+
+        this.lockableElements.add(createShortcut);
+
+        toolsContentPane.add(createShortcut, 1, 0);
+        toolsContentPane.add(wineToolCaption(tr("Create shortcut")), 1, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 
