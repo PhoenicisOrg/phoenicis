@@ -93,6 +93,26 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.add(createShortcut, 1, 0);
         toolsContentPane.add(wineToolCaption(tr("Create shortcut")), 1, 1);
 
+        Button runExecutable = new Button();
+        runExecutable.getStyleClass().addAll("wineToolButton", "runExecutable");
+        runExecutable.setOnMouseClicked(event -> {
+            this.lockAll();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(tr("Choose executable"));
+            File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
+            if (file != null) {
+                winePrefixContainerController.runInPrefix(container, file.getAbsolutePath(), this::unlockAll,
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+            }
+        });
+
+        GridPane.setHalignment(runExecutable, HPos.CENTER);
+
+        this.lockableElements.add(runExecutable);
+
+        toolsContentPane.add(runExecutable, 2, 0);
+        toolsContentPane.add(wineToolCaption(tr("Run executable")), 2, 1);
+
         toolsPane.getChildren().addAll(toolsContentPane);
 
         toolsContentPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(25),
