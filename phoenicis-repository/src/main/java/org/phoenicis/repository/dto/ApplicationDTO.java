@@ -22,10 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents an application
@@ -70,6 +67,27 @@ public class ApplicationDTO {
 
     public List<ScriptDTO> getScripts() {
         return scripts;
+    }
+
+    /**
+     * Returns the main miniature belonging to this {@link ApplicationDTO}.
+     * The main miniature is the miniature with the file name <code>main.png</code>.
+     * If no such miniature exists the first miniature of this {@link ApplicationDTO} is returned.
+     * If this {@link ApplicationDTO} contains no miniatures {@link Optional#empty()} is returned.
+     *
+     * @return An optional with the found URI, or {@link Optional#empty()} if no miniature exists
+     */
+    public Optional<URI> getMainMiniature() {
+        Optional<URI> result = this.miniatures.stream().filter(uri -> uri.getPath().endsWith("main.png")).findFirst();
+
+        /*
+         * Fallback in case no main miniature has been selected but the list contains at least one other miniature
+         */
+        if (!result.isPresent()) {
+            result = this.miniatures.stream().findFirst();
+        }
+
+        return result;
     }
 
     public static Comparator<ApplicationDTO> nameComparator() {

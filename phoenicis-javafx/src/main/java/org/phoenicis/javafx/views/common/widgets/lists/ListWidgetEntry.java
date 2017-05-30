@@ -101,12 +101,7 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
-        Optional<URI> iconPath = Optional.empty();
-        if (!application.getMiniatures().isEmpty()) {
-            iconPath = Optional.of(application.getMiniatures().get(0));
-        }
-
-        return new ListWidgetEntry<ApplicationDTO>(application, iconPath, StaticMiniature.DEFAULT_MINIATURE,
+        return new ListWidgetEntry<ApplicationDTO>(application, application.getMainMiniature(), StaticMiniature.DEFAULT_MINIATURE,
                 application.getName(), Optional.empty(), Optional.empty());
     }
 
