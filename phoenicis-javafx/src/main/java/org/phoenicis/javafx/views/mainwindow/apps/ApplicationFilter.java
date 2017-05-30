@@ -24,7 +24,6 @@ public class ApplicationFilter {
     private StringProperty filterText;
     private Optional<CategoryDTO> filterCategory;
 
-    private BooleanProperty containFreeApplications;
     private BooleanProperty containCommercialApplications;
 
     private BooleanProperty containNoCDApplications;
@@ -44,9 +43,6 @@ public class ApplicationFilter {
 
         this.filterText = new SimpleStringProperty("");
         this.filterCategory = Optional.empty();
-
-        this.containFreeApplications = new SimpleBooleanProperty();
-        this.containFreeApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
 
         this.containCommercialApplications = new SimpleBooleanProperty();
         this.containCommercialApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
@@ -86,10 +82,6 @@ public class ApplicationFilter {
         this.filterCategory = Optional.ofNullable(category);
 
         this.fire();
-    }
-
-    public BooleanProperty containFreeApplicationsProperty() {
-        return this.containFreeApplications;
     }
 
     public BooleanProperty containCommercialApplicationsProperty() {
@@ -140,13 +132,6 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "free" is not selected don't show free games
-         */
-        if (!containFreeApplications.getValue()) {
-            result &= application.getScripts().stream().anyMatch(script -> !script.isFree());
-        }
-
-        /*
          * If "commercial" is not selected don't show commercial games
          */
         if (!containCommercialApplications.getValue()) {
@@ -179,13 +164,6 @@ public class ApplicationFilter {
      */
     public boolean filter(ScriptDTO script) {
         boolean result = true;
-
-        /*
-         * If "free" is not selected don't show free games
-         */
-        if (!containFreeApplications.getValue()) {
-            result &= !script.isFree();
-        }
 
         /*
          * If "commercial" is not selected don't show commercial games

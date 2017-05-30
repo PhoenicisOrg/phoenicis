@@ -50,8 +50,6 @@ public class ApplicationSideBar extends LeftSideBar {
 
     private CheckBox testingCheck;
     private CheckBox noCdNeededCheck;
-
-    private CheckBox freeCheck;
     private CheckBox commercialCheck;
 
     // widget to switch between the different list widgets in the center view
@@ -119,15 +117,11 @@ public class ApplicationSideBar extends LeftSideBar {
         this.noCdNeededCheck = new LeftCheckBox(tr("No CD needed"));
         this.noCdNeededCheck.selectedProperty().bindBidirectional(filter.containNoCDApplicationsProperty());
 
-        this.freeCheck = new LeftCheckBox(tr("Free"));
-        this.freeCheck.selectedProperty().bindBidirectional(filter.containFreeApplicationsProperty());
-        this.freeCheck.setSelected(true);
-
         this.commercialCheck = new LeftCheckBox(tr("Commercial"));
         this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
         this.commercialCheck.setSelected(true);
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, freeCheck, commercialCheck);
+        this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
     }
 
     /**
