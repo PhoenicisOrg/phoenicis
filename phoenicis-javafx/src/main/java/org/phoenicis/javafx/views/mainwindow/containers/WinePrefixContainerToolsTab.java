@@ -83,7 +83,6 @@ public class WinePrefixContainerToolsTab extends Tab {
                 winePrefixContainerController.runInPrefix(container, file.getAbsolutePath(), this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             }
-            this.unlockAll();
         });
 
         GridPane.setHalignment(runExecutable, HPos.CENTER);
