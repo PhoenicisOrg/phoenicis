@@ -18,6 +18,7 @@
 
 package org.phoenicis.repository.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -77,6 +78,7 @@ public class ApplicationDTO {
      *
      * @return An optional with the found URI, or {@link Optional#empty()} if no miniature exists
      */
+    @JsonIgnore
     public Optional<URI> getMainMiniature() {
         Optional<URI> result = this.miniatures.stream().filter(uri -> uri.getPath().endsWith("main.png")).findFirst();
 
