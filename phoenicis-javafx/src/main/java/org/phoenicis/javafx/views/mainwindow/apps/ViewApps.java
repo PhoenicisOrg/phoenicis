@@ -51,8 +51,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final CombinedListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter filter;
 
-    private Consumer<ScriptDTO> onSelectScript = (script) -> {
-    };
+    private Consumer<ScriptDTO> onSelectScript;
 
     private ObservableList<CategoryDTO> categories;
     private FilteredList<CategoryDTO> installableCategories;
@@ -70,6 +69,9 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
                 (element, event) -> showAppDetails(element, settingsManager));
 
+        this.filter = new ApplicationFilter(
+                (filterText, application) -> application.getName().toLowerCase().contains(filterText));
+
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();
         this.installableCategories = this.categories
@@ -80,10 +82,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories,
                 CategoryDTO::getApplications);
         this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
+        this.filteredApplications.predicateProperty().bind(filter.applicationFilterProperty());
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
-
-        this.filter = new ApplicationFilter(filteredApplications,
-                (filterText, application) -> application.getName().toLowerCase().contains(filterText));
 
         this.sideBar = new ApplicationSideBar(availableApps, filter);
 

@@ -18,9 +18,13 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -35,26 +39,81 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.util.function.Consumer;
 
+/**
+ * The {@link DetailsView} for the "Apps" tab.
+ * This view contains the information about a selected application and its scripts.
+ *
+ * @since 30.05.17
+ */
 final class AppPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
 
+    /**
+     * The application to be shown inside this {@link AppPanel}
+     */
     private final ApplicationDTO application;
 
     private final ThemeManager themeManager;
     private final SettingsManager settingsManager;
 
-    private Consumer<ScriptDTO> onScriptInstall;
-
+    /**
+     * The list of shown scripts belonging to the <code>application</code> shown inside this {@link AppPanel}.
+     * These scripts are filtered using the settings the user made inside {@link ApplicationSideBar}
+     */
     private FilteredList<ScriptDTO> filteredScripts;
 
-    public AppPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager, SettingsManager settingsManager) {
+    /**
+     * The container for the content inside this {@link AppPanel}
+     */
+    private VBox center;
+
+    /**
+     * A {@link WebView} containing the description for the <code>application</code>
+     */
+    private WebView appDescription;
+
+    /**
+     * A label with the "Installer" section header
+     */
+    private Label installers;
+
+    /**
+     * A grid containing all scripts and their corresponding install buttons
+     */
+    private GridPane scriptGrid;
+
+    /**
+     * A container for the miniatures for the <code>application</code>
+     */
+    private HBox miniaturesPane;
+
+    /**
+     * A scroll pane wrapping <code>miniaturesPane</code>
+     */
+    private ScrollPane miniaturesPaneWrapper;
+
+    /**
+     * An event consumer function, to called whenever an "install" button for a script has been clicked.
+     */
+    private Consumer<ScriptDTO> onScriptInstall;
+
+    /**
+     * Constructor
+     *
+     * @param application     The application to be shown inside this {@link AppPanel}
+     * @param filter          The filter to be used for filtering the shown scripts for the <code>application</code>
+     * @param themeManager    The theme manager
+     * @param settingsManager The settings manager
+     */
+    public AppPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager,
+            SettingsManager settingsManager) {
         super();
 
         this.application = application;
         this.themeManager = themeManager;
         this.settingsManager = settingsManager;
 
-        this.filteredScripts = new FilteredList<ScriptDTO>(FXCollections.observableArrayList(application.getScripts()));
+        this.filteredScripts = new FilteredList<>(FXCollections.observableArrayList(application.getScripts()));
         this.filteredScripts.predicateProperty().bind(filter.scriptFilterProperty());
 
         this.setTitle(application.getName());
@@ -65,58 +124,24 @@ final class AppPanel extends DetailsView {
     }
 
     private void populateCenter() {
-        WebView appDescription = new WebView();
-        appDescription.getEngine().loadContent("<body>" + application.getDescription() + "</body>");
+        this.appDescription = new WebView();
+        this.appDescription.getEngine().loadContent("<body>" + application.getDescription() + "</body>");
 
         themeManager.bindWebEngineStylesheet(appDescription.getEngine().userStyleSheetLocationProperty());
 
-        Label installers = new Label("Installers");
-        installers.getStyleClass().add("descriptionTitle");
+        this.installers = new Label("Installers");
+        this.installers.getStyleClass().add("descriptionTitle");
 
-        ListView<ScriptDTO> scriptList = new ListView<>(filteredScripts);
-        scriptList.setPrefHeight(0);
-        scriptList.setMinHeight(100);
-        scriptList.setCellFactory(value -> new ListCell<ScriptDTO>() {
-            @Override
-            public void updateItem(ScriptDTO script, boolean empty) {
-                super.updateItem(script, empty);
+        this.scriptGrid = new GridPane();
 
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    Label scriptName = new Label(script.getScriptName());
-                    if (settingsManager.isViewScriptSource()) {
-                        final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
-                        Tooltip.install(scriptName, tooltip);
-                    }
+        filteredScripts.addListener((InvalidationListener) change -> this.refreshScripts());
+        this.refreshScripts();
 
-                    Button installButton = new Button("Install");
-                    installButton.setOnMouseClicked(evt -> {
-                        try {
-                            onScriptInstall.accept(script);
-                        } catch (IllegalArgumentException e) {
-                            LOGGER.error("Failed to get script", e);
-                            new ErrorMessage("Error while trying to download the installer", e).show();
-                        }
-                    });
+        this.miniaturesPane = new HBox();
+        this.miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
 
-                    GridPane container = new GridPane();
-
-                    container.add(scriptName, 0, 0);
-                    container.add(installButton, 1, 0);
-
-                    GridPane.setHgrow(scriptName, Priority.ALWAYS);
-
-                    setGraphic(container);
-                }
-            }
-        });
-
-        final HBox miniaturesPane = new HBox();
-        miniaturesPane.getStyleClass().add("appPanelMiniaturesPane");
-
-        final ScrollPane miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
-        miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
+        this.miniaturesPaneWrapper = new ScrollPane(miniaturesPane);
+        this.miniaturesPaneWrapper.getStyleClass().add("appPanelMiniaturesPaneWrapper");
 
         for (URI miniatureUri : application.getMiniatures()) {
             Region image = new Region();
@@ -129,15 +154,52 @@ final class AppPanel extends DetailsView {
             miniaturesPane.getChildren().add(image);
         }
 
-        VBox center = new VBox(appDescription, installers, scriptList, miniaturesPaneWrapper);
+        this.center = new VBox(appDescription, installers, scriptGrid, miniaturesPaneWrapper);
 
         VBox.setVgrow(appDescription, Priority.ALWAYS);
 
         this.setCenter(center);
     }
 
+    /**
+     * Refreshes the shown scripts.
+     * When this method is called it begins by clearing the <code>scriptGrid</code>.
+     * Afterwards this method refills it.
+     */
+    private void refreshScripts() {
+        scriptGrid.getChildren().clear();
+
+        for (int i = 0; i < filteredScripts.size(); i++) {
+            ScriptDTO script = filteredScripts.get(i);
+
+            Label scriptName = new Label(script.getScriptName());
+            if (settingsManager.isViewScriptSource()) {
+                final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
+                Tooltip.install(scriptName, tooltip);
+            }
+
+            Button installButton = new Button("Install");
+            installButton.setOnMouseClicked(evt -> {
+                try {
+                    onScriptInstall.accept(script);
+                } catch (IllegalArgumentException e) {
+                    LOGGER.error("Failed to get script", e);
+                    new ErrorMessage("Error while trying to download the installer", e).show();
+                }
+            });
+
+            scriptGrid.addRow(i, scriptName, installButton);
+
+            GridPane.setHgrow(scriptName, Priority.ALWAYS);
+        }
+    }
+
+    /**
+     * Updates the event consumer, which is called when an install button for a script has been clicked
+     *
+     * @param onScriptInstall The new event consumer
+     */
     public void setOnScriptInstall(Consumer<ScriptDTO> onScriptInstall) {
         this.onScriptInstall = onScriptInstall;
     }
-
 }
