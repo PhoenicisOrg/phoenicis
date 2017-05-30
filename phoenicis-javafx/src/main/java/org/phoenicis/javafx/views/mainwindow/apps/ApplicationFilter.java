@@ -1,69 +1,192 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.beans.property.*;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 
+import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * Created by marc on 29.03.17.
+ * A filter implementation for the "Apps" tab.
+ *
+ * @author marc
+ * @since 29.03.17
  */
-public class ApplicationFilter<E> {
+public class ApplicationFilter {
+    private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
+
+    private final ObjectProperty<Predicate<ApplicationDTO>> applicationFilter;
+    private final ObjectProperty<Predicate<ScriptDTO>> scriptFilter;
+
     private StringProperty filterText;
+    private Optional<CategoryDTO> filterCategory;
 
-    private BiPredicate<String, E> filterTextMatcher;
+    private BooleanProperty containCommercialApplications;
 
-    private ObservableList<Predicate<E>> filters;
+    private BooleanProperty containNoCDApplications;
 
-    public ApplicationFilter(FilteredList<E> filteredList, BiPredicate<String, E> filterTextMatcher) {
+    private BooleanProperty containTestingApplications;
+
+    /**
+     * Constructor
+     *
+     * @param filterTextMatcher The matcher function for the filter text
+     */
+    public ApplicationFilter(BiPredicate<String, ApplicationDTO> filterTextMatcher) {
         this.filterTextMatcher = filterTextMatcher;
 
-        this.filterText = new SimpleStringProperty("");
-        this.filters = FXCollections.observableArrayList();
+        this.applicationFilter = new SimpleObjectProperty<>(this::filter);
+        this.scriptFilter = new SimpleObjectProperty<>(this::filter);
 
-        this.filterText.addListener((observableValue, oldValue, newValue) -> filteredList.setPredicate(this::filter));
-        this.filters.addListener(
-                (ListChangeListener<? super Predicate<E>>) change -> filteredList.setPredicate(this::filter));
+        this.filterText = new SimpleStringProperty("");
+        this.filterCategory = Optional.empty();
+
+        this.containCommercialApplications = new SimpleBooleanProperty();
+        this.containCommercialApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+
+        this.containNoCDApplications = new SimpleBooleanProperty();
+        this.containNoCDApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+
+        this.containTestingApplications = new SimpleBooleanProperty();
+        this.containTestingApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
     }
 
+    /**
+     * Triggers a filter update
+     */
+    public void fire() {
+        applicationFilter.setValue(this::filter);
+        scriptFilter.setValue(this::filter);
+    }
+
+    /**
+     * Sets the filter text inside the filter and triggers a filter update
+     *
+     * @param filterText The new entered filter text
+     */
     public void setFilterText(String filterText) {
         this.filterText.setValue(filterText);
+
+        this.fire();
     }
 
-    public void addFilter(Predicate<E> filter) {
-        this.filters.add(filter);
+    /**
+     * Sets the selected category inside the filter and triggers a filter update
+     *
+     * @param category The new selected category, or null if no/all category has been selected
+     */
+    public void setFilterCategory(CategoryDTO category) {
+        this.filterCategory = Optional.ofNullable(category);
+
+        this.fire();
     }
 
-    public void setFilters(Predicate<E>... filters) {
-        this.filters.setAll(filters);
+    public BooleanProperty containCommercialApplicationsProperty() {
+        return this.containCommercialApplications;
     }
 
+    public BooleanProperty containNoCDApplicationsProperty() {
+        return this.containNoCDApplications;
+    }
+
+    public BooleanProperty containTestingApplicationsProperty() {
+        return this.containTestingApplications;
+    }
+
+    public ObjectProperty<Predicate<ApplicationDTO>> applicationFilterProperty() {
+        return this.applicationFilter;
+    }
+
+    public ObjectProperty<Predicate<ScriptDTO>> scriptFilterProperty() {
+        return this.scriptFilter;
+    }
+
+    /**
+     * Clears the <code>filterText</code> and the <code>filterCategory</code>.
+     * Afterwards a filter update gets triggered
+     */
     public void clearAll() {
         this.filterText.setValue("");
-        this.filters.clear();
+        this.filterCategory = Optional.empty();
+
+        this.fire();
     }
 
-    public void clearFilters() {
-        this.filters.clear();
+    /**
+     * Filter function for {@link ApplicationDTO} objects
+     *
+     * @param application The application which should checked
+     * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
+     */
+    public boolean filter(ApplicationDTO application) {
+        boolean result = true;
+
+        /*
+         * If a category has been selected by the user, show only applications that belong to the selected category
+         */
+        if (filterCategory.isPresent()) {
+            result &= filterCategory.get().getApplications().contains(application);
+        }
+
+        /*
+         * If "commercial" is not selected don't show commercial games
+         */
+        if (!containCommercialApplications.getValue()) {
+            result &= application.getScripts().stream().anyMatch(script -> script.isFree());
+        }
+
+        /*
+         * If "No CD required" is selected show't show games that require a CD
+         */
+        if (containNoCDApplications.getValue()) {
+            result &= application.getScripts().stream().anyMatch(script -> !script.isRequiresNoCD());
+        }
+
+        /*
+         * If "Testing" is not selected don't show games that are currently in a testing stage
+         */
+        if (!containTestingApplications.getValue()) {
+            result &= application.getScripts().stream()
+                    .anyMatch(script -> script.getTestingOperatingSystems().isEmpty());
+        }
+
+        return result && filterTextMatcher.test(filterText.getValue(), application);
     }
 
-    public boolean filter(E value) {
-        boolean result = false;
+    /**
+     * Filter function for {@link ScriptDTO} objects
+     *
+     * @param script The script which should be checked
+     * @return True if the given <code>script</code> fulfills the filter conditions, false otherwise
+     */
+    public boolean filter(ScriptDTO script) {
+        boolean result = true;
 
-        if (filters.isEmpty()) {
-            result = true;
+        /*
+         * If "commercial" is not selected don't show commercial games
+         */
+        if (!containCommercialApplications.getValue()) {
+            result &= script.isFree();
         }
 
-        for (Predicate<E> filter : filters) {
-            result |= filter.test(value);
+        /*
+         * If "No CD required" is selected show't show games that require a CD
+         */
+        if (containNoCDApplications.getValue()) {
+            result &= !script.isRequiresNoCD();
         }
 
-        return result && filterTextMatcher.test(filterText.getValue(), value);
+        /*
+         * If "Testing" is not selected don't show games that are currently in a testing stage
+         */
+        if (!containTestingApplications.getValue()) {
+            result &= script.getTestingOperatingSystems().isEmpty();
+        }
+
+        return result;
     }
 
 }

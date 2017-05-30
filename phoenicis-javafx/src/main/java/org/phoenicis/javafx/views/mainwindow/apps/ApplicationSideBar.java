@@ -34,6 +34,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 21.04.17
  */
 public class ApplicationSideBar extends LeftSideBar {
+    private final ApplicationFilter filter;
+
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
 
@@ -66,8 +68,10 @@ public class ApplicationSideBar extends LeftSideBar {
      *
      * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget) {
+    public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter) {
         super();
+
+        this.filter = filter;
 
         this.populateSearchBar();
         this.populateCategories();
@@ -108,8 +112,14 @@ public class ApplicationSideBar extends LeftSideBar {
 
     private void populateFilters() {
         this.testingCheck = new LeftCheckBox(tr("Testing"));
+        this.testingCheck.selectedProperty().bindBidirectional(filter.containTestingApplicationsProperty());
+
         this.noCdNeededCheck = new LeftCheckBox(tr("No CD needed"));
+        this.noCdNeededCheck.selectedProperty().bindBidirectional(filter.containNoCDApplicationsProperty());
+
         this.commercialCheck = new LeftCheckBox(tr("Commercial"));
+        this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
+        this.commercialCheck.setSelected(true);
 
         this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
     }
