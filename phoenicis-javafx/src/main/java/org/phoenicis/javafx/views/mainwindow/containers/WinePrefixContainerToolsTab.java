@@ -72,6 +72,27 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.add(openTerminal, 0, 0);
         toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
+        Button createShortcut = new Button();
+        createShortcut.getStyleClass().addAll("wineToolButton", "openTerminal");
+        createShortcut.setOnMouseClicked(event -> {
+            this.lockAll();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(tr("Choose executable"));
+            File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
+            if (file != null) {
+                winePrefixContainerController.createShortcut(container, file.getName(), file.getName(), this::unlockAll,
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+            }
+            this.unlockAll();
+        });
+
+        GridPane.setHalignment(createShortcut, HPos.CENTER);
+
+        this.lockableElements.add(createShortcut);
+
+        toolsContentPane.add(createShortcut, 1, 0);
+        toolsContentPane.add(wineToolCaption(tr("Create shortcut")), 1, 1);
+
         Button runExecutable = new Button();
         runExecutable.getStyleClass().addAll("wineToolButton", "runExecutable");
         runExecutable.setOnMouseClicked(event -> {
@@ -89,8 +110,8 @@ public class WinePrefixContainerToolsTab extends Tab {
 
         this.lockableElements.add(runExecutable);
 
-        toolsContentPane.add(runExecutable, 1, 0);
-        toolsContentPane.add(wineToolCaption(tr("Run executable")), 1, 1);
+        toolsContentPane.add(runExecutable, 2, 0);
+        toolsContentPane.add(wineToolCaption(tr("Run executable")), 2, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 
