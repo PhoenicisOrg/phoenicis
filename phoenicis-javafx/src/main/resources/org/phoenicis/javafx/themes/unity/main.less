@@ -127,8 +127,8 @@
     -fx-border-radius: 0;
 }
 
-.tab-header-area .tab:selected .tab-label {
-    -fx-text-fill: white;
+.tab-header-area .tab:selected .tab-label .text {
+    -fx-fill: white;
 }
 
 .list-view {
@@ -385,7 +385,10 @@
         -fx-border-color: transparent;
         -fx-background-insets: 0, 1, 2;
         -fx-background-radius: 0;
-        -fx-text-fill: white;
+
+        .text {
+            -fx-fill: white;
+        }
     }
 
     .searchBar {
