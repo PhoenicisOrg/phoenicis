@@ -21,8 +21,10 @@ package org.phoenicis.javafx.views.mainwindow.library;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
@@ -32,38 +34,42 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.function.Consumer;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 final class LibraryPanel extends DetailsView {
-    private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
+    private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
 
-    private final ShortcutDTO shortcut;
     private final ObjectMapper objectMapper;
 
-    public LibraryPanel(ShortcutDTO shortcut, ObjectMapper objectMapper) {
+    // consumers called when a shortcut should be run, stopped or uninstalled
+    private Consumer<ShortcutDTO> onShortcutRun;
+    private Consumer<ShortcutDTO> onShortcutStop;
+    private Consumer<ShortcutDTO> onShortcutUninstall;
+
+    public LibraryPanel(ObjectMapper objectMapper) {
         super();
-
-        this.shortcut = shortcut;
         this.objectMapper = objectMapper;
-
-        this.setTitle(shortcut.getName());
-
-        this.populateContent();
     }
 
-    private void populateContent() {
+    public void setShortcutDTO(ShortcutDTO shortcutDTO) {
+        this.setTitle(shortcutDTO.getName());
+
+        this.getChildren().clear();
         final VBox vBox = new VBox();
 
-        Label description = new Label(shortcut.getDescription());
+        Label description = new Label(shortcutDTO.getDescription());
         description.setWrapText(true);
 
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("grid");
 
         try {
-            LOGGER.info("Reading shortcut: {}", shortcut.getScript());
+            LOGGER.info("Reading shortcut: {}", shortcutDTO.getScript());
 
-            final Map<String, String> shortcutProperties = objectMapper.readValue(shortcut.getScript(),
+            final Map<String, String> shortcutProperties = objectMapper.readValue(shortcutDTO.getScript(),
                     new TypeReference<Map<String, String>>() {
                     });
 
@@ -88,8 +94,51 @@ final class LibraryPanel extends DetailsView {
         gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
                 new ColumnConstraintsWithPercentage(70));
 
-        vBox.getChildren().addAll(description, gridPane);
+        Button runButton = new Button(tr("Run"));
+        runButton.getStyleClass().addAll("buttonWithIcon", "runButton");
+        runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
+
+        Button stopButton = new Button(tr("Close"));
+        stopButton.getStyleClass().addAll("buttonWithIcon", "stopButton");
+        stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
+
+        Button uninstallButton = new Button(tr("Uninstall"));
+        uninstallButton.getStyleClass().addAll("buttonWithIcon", "uninstallButton");
+        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
+
+        Region spacer = new Region();
+        spacer.setPrefHeight(40);
+
+        vBox.getChildren().addAll(description, gridPane, spacer, runButton, stopButton, uninstallButton);
 
         this.setCenter(vBox);
     }
+
+    /**
+     * This method updates the consumer, that is called when the "Run" button for the currently selected shortcut has been clicked.
+     *
+     * @param onShortcutRun The new consumer to be called
+     */
+    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
+        this.onShortcutRun = onShortcutRun;
+    }
+
+    /**
+     * This method updates the consumer, that is called when the "Stop" button for the currently selected shortcut has been clicked.
+     *
+     * @param onShortcutStop The new consumer to be called
+     */
+    public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
+        this.onShortcutStop = onShortcutStop;
+    }
+
+    /**
+     * This method updates the consumer, that is called when the "Uninstall" button for the currently selected shortcut has been clicked.
+     *
+     * @param onShortcutUninstall The new consumer to be called
+     */
+    public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
+        this.onShortcutUninstall = onShortcutUninstall;
+    }
+
 }
