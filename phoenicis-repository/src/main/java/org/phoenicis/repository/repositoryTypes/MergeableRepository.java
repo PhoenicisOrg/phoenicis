@@ -1,28 +1,24 @@
 /**
- * 
+ *
  */
 package org.phoenicis.repository.repositoryTypes;
 
-import java.net.URI;
-import java.nio.ByteBuffer;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.function.Function;
-
+import org.apache.commons.codec.digest.DigestUtils;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ResourceDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.*;
+import java.util.function.Function;
 
 public abstract class MergeableRepository implements Repository {
+    private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MergeableRepository.class);
+
     /**
      * This method merges multiple application sources into a single list of
      * category dtos. For this it receives a map, containing a binding between
@@ -32,16 +28,14 @@ public abstract class MergeableRepository implements Repository {
      * application source over an earlier one. This means, that if two
      * application sources contain the same script, the script from the later
      * application source is taken.
-     * 
-     * @param categoriesMap
-     *            A map containing a binding between the application sources and
-     *            their category dtos
-     * @param repositories
-     *            A list containing all application sources in the order in
-     *            which they should be merged
+     *
+     * @param categoriesMap A map containing a binding between the application sources and
+     *                      their category dtos
+     * @param repositories  A list containing all application sources in the order in
+     *                      which they should be merged
      * @return A list containing category dtos of the merged application
-     *         sources. If no application sources were given, an empty list is
-     *         returned
+     * sources. If no application sources were given, an empty list is
+     * returned
      */
     protected List<CategoryDTO> mergeRepositories(Map<Repository, List<CategoryDTO>> categoriesMap,
             List<Repository> repositories) {
@@ -107,12 +101,46 @@ public abstract class MergeableRepository implements Repository {
         final List<ResourceDTO> resources = mergeListOfDtos(leftApplication.getResources(),
                 rightApplication.getResources(), ResourceDTO::getName, ResourceDTO.nameComparator());
 
-        final Set<URI> mergeMiniaturesSet = new HashSet<URI>(leftApplication.getMiniatures());
-        mergeMiniaturesSet.addAll(rightApplication.getMiniatures());
+        final List<URI> mergeMiniatures = mergeMiniatures(leftApplication.getMiniatures(),
+                rightApplication.getMiniatures());
 
         return new ApplicationDTO.Builder().withName(leftApplication.getName()).withResources(resources)
                 .withScripts(scripts).withDescription(leftApplication.getDescription())
-                .withIcon(leftApplication.getIcon()).withMiniatures(new ArrayList<>(mergeMiniaturesSet)).build();
+                .withIcon(leftApplication.getIcon()).withMiniatures(mergeMiniatures).build();
+    }
+
+    /**
+     * Takes two lists of {@link URI}s leading to miniature images and merges them into a single list.
+     * During the merging all duplicates are removed, while the miniatures inside <code>leftMiniatures</code> have a higher priority
+     *
+     * @param leftMiniatures  The first list of miniature {@link URI}s
+     * @param rightMiniatures The first list of miniature {@link URI}s
+     * @return A list containing the merged miniature {@link URI}s from both <code>leftMiniatures</code> and <code>rightMiniatures</code>
+     */
+    protected List<URI> mergeMiniatures(List<URI> leftMiniatures, List<URI> rightMiniatures) {
+        HashMap<String, URI> mergedMiniatures = new HashMap<>();
+
+        /*
+         * Concatenate the both lists with the left list in front of the right one
+         */
+        List<URI> miniatures = new ArrayList<>(leftMiniatures);
+        miniatures.addAll(rightMiniatures);
+
+        /*
+         * Remove duplicates
+         */
+        for (URI miniatureUri : miniatures) {
+            try (InputStream inputStream = miniatureUri.toURL().openStream()) {
+                String checksum = DigestUtils.md5Hex(inputStream);
+                if (!mergedMiniatures.containsKey(checksum)) {
+                    mergedMiniatures.put(checksum, miniatureUri);
+                }
+            } catch (IOException e) {
+                LOGGER.error(String.format("Couldn't merge miniatures at %s", miniatureUri.toString()), e);
+            }
+        }
+
+        return new ArrayList<>(mergedMiniatures.values());
     }
 
     protected <T> List<T> mergeListOfDtos(List<T> leftList, List<T> rightList, Function<T, String> nameSupplier,
