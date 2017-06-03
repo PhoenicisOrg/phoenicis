@@ -20,12 +20,11 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -94,22 +93,27 @@ final class LibraryPanel extends DetailsView {
         gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
                 new ColumnConstraintsWithPercentage(70));
 
-        Button runButton = new Button(tr("Run"));
-        runButton.getStyleClass().addAll("buttonWithIcon", "runButton");
-        runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
-
-        Button stopButton = new Button(tr("Close"));
-        stopButton.getStyleClass().addAll("buttonWithIcon", "stopButton");
-        stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
-
-        Button uninstallButton = new Button(tr("Uninstall"));
-        uninstallButton.getStyleClass().addAll("buttonWithIcon", "uninstallButton");
-        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
-
         Region spacer = new Region();
         spacer.setPrefHeight(40);
 
-        vBox.getChildren().addAll(description, gridPane, spacer, runButton, stopButton, uninstallButton);
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+
+        Button runButton = new Button(tr("Run"));
+        runButton.getStyleClass().addAll("shortcutButton", "runButton");
+        runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
+
+        Button stopButton = new Button(tr("Close"));
+        stopButton.getStyleClass().addAll("shortcutButton", "stopButton");
+        stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
+
+        Button uninstallButton = new Button(tr("Uninstall"));
+        uninstallButton.getStyleClass().addAll("shortcutButton", "uninstallButton");
+        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
+
+        buttons.getChildren().addAll(runButton, stopButton, uninstallButton);
+
+        vBox.getChildren().addAll(description, gridPane, spacer, buttons);
 
         this.setCenter(vBox);
     }
