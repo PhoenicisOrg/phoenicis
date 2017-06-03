@@ -101,8 +101,8 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
-        return new ListWidgetEntry<>(application, application.getMainMiniature(),
-                StaticMiniature.DEFAULT_MINIATURE, application.getName(), Optional.empty(), Optional.empty());
+        return new ListWidgetEntry<>(application, application.getMainMiniature(), StaticMiniature.DEFAULT_MINIATURE,
+                application.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
