@@ -152,8 +152,7 @@ public class DTOContractTest {
         assertEquals(dto, serialized);
     }
 
-    private Object newDTOInstance(Class<?> clazz)
-            throws ReflectiveOperationException, URISyntaxException {
+    private Object newDTOInstance(Class<?> clazz) throws ReflectiveOperationException, URISyntaxException {
         final Optional<Constructor<?>> builderConstructor = getConstructorHavingJsonBuilder(clazz);
         final Optional<Constructor<?>> simpleConstructor = getConstructorAnnotatedWithJsonCreator(clazz);
 
@@ -166,7 +165,8 @@ public class DTOContractTest {
         }
     }
 
-    private Object createInstanceFromSimpleConstructor(Constructor<?> simpleConstructor) throws ReflectiveOperationException, URISyntaxException {
+    private Object createInstanceFromSimpleConstructor(Constructor<?> simpleConstructor)
+            throws ReflectiveOperationException, URISyntaxException {
         final List<Object> parameterValues = new ArrayList<>();
 
         for (Class<?> constructorParameterType : simpleConstructor.getParameterTypes()) {
@@ -176,7 +176,8 @@ public class DTOContractTest {
         return simpleConstructor.newInstance(parameterValues.toArray());
     }
 
-    private Object createInstanceFromBuilderConstructor(Constructor<?> builderConstructor) throws ReflectiveOperationException, URISyntaxException {
+    private Object createInstanceFromBuilderConstructor(Constructor<?> builderConstructor)
+            throws ReflectiveOperationException, URISyntaxException {
         final Class<?> builder = builderConstructor.getParameterTypes()[0];
         final Object builderInstance = builder.newInstance();
 
@@ -191,7 +192,6 @@ public class DTOContractTest {
 
     private Object createInstanceOfParameter(Class<?> constructorParameterType, int maxDepth)
             throws ReflectiveOperationException, URISyntaxException {
-
 
         if (constructorParameterType == byte.class || constructorParameterType == Byte.class) {
             return 0x42;
