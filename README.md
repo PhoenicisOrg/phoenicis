@@ -1,6 +1,10 @@
 # Phoenicis and PlayOnMac 5
 This is the Phoenicis and PlayOnMac 5 repository.
 
+## Community
+* Forums : http://www.playonlinux.com/en/forums.html
+* Slack : https://join.slack.com/phoenicis-org/shared_invite/MTkzMTMwMjM3MjcxLTE0OTY1MTQzNzktY2IzOTE2NmE3NA
+
 ## Scripts
 * Please make your pull request on this repository: https://github.com/PlayOnLinux/Scripts to add scripts
 
