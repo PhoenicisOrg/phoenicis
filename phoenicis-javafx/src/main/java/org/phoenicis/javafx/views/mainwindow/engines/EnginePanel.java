@@ -75,23 +75,23 @@ final class EnginePanel extends DetailsView {
         informationContentPane.setHgap(20);
         informationContentPane.setVgap(10);
 
-        Button installButton = new Button("Install");
+        Button installButton = new Button(tr("Install"));
         installButton.setOnMouseClicked(evt -> {
             try {
                 onEngineInstall.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
-                new ErrorMessage("Error while trying to install the engine", e).show();
+                new ErrorMessage(tr("Error while trying to install the engine"), e).show();
             }
         });
 
-        Button deleteButton = new Button("Delete");
+        Button deleteButton = new Button(tr("Delete"));
         deleteButton.setOnMouseClicked(evt -> {
             try {
                 onEngineDelete.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
-                new ErrorMessage("Error while trying to delete the engine", e).show();
+                new ErrorMessage(tr("Error while trying to delete the engine"), e).show();
             }
         });
 

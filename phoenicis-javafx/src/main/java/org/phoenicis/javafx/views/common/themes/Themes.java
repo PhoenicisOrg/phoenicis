@@ -3,16 +3,19 @@ package org.phoenicis.javafx.views.common.themes;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * Created by marc on 23.05.17.
  */
 public class Themes {
-    public static final Theme DEFAULT = new ClasspathTheme("Default theme", "default",
+    public static final Theme DEFAULT = new ClasspathTheme(tr("Default theme"), "default",
             "/org/phoenicis/javafx/themes/default/");
-    public static final Theme DARK = new ClasspathTheme("Dark theme", "dark", "/org/phoenicis/javafx/themes/dark/");
-    public static final Theme BREEZE_DARK = new ClasspathTheme("Breeze Dark theme", "breezeDark",
+    public static final Theme DARK = new ClasspathTheme(tr("Dark theme"), "dark", "/org/phoenicis/javafx/themes/dark/");
+    public static final Theme BREEZE_DARK = new ClasspathTheme(tr("Breeze Dark theme"), "breezeDark",
             "/org/phoenicis/javafx/themes/breezeDark/");
-    public static final Theme UNITY = new ClasspathTheme("Unity theme", "unity", "/org/phoenicis/javafx/themes/unity/");
+    public static final Theme UNITY = new ClasspathTheme(tr("Unity theme"), "unity",
+            "/org/phoenicis/javafx/themes/unity/");
 
     public static Theme[] all() {
         return new Theme[] { DEFAULT, DARK, BREEZE_DARK, UNITY };

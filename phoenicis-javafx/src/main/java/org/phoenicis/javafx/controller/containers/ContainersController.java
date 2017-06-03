@@ -65,12 +65,11 @@ public class ContainersController {
 
                 panel.setOnDeletePrefix(winePrefixDTO -> {
                     new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container",
-                            "Are you sure you want to delete the " + winePrefixDTO.getName() + " container?")
-                                    .ask(() -> {
-                                        winePrefixContainerController.deletePrefix(winePrefixDTO,
-                                                e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-                                        loadContainers();
-                                    });
+                            "Are you sure you want to delete the {0} container?" + winePrefixDTO.getName()).ask(() -> {
+                                winePrefixContainerController.deletePrefix(winePrefixDTO,
+                                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                                loadContainers();
+                            });
                 });
 
                 panel.setOnClose(viewContainers::closeDetailsView);

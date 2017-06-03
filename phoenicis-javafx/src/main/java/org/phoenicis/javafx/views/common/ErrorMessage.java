@@ -27,13 +27,15 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class ErrorMessage {
     private final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
     private final Alert alert;
 
     public ErrorMessage(String message, Exception exception) {
         alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
+        alert.setTitle(tr("Error"));
         alert.setHeaderText(message);
 
         if (exception != null) {
@@ -43,7 +45,7 @@ public class ErrorMessage {
 
             final String exceptionText = ExceptionUtils.getFullStackTrace(exception);
 
-            Label label = new Label("The exception stacktrace was:");
+            Label label = new Label(tr("The exception stacktrace was:"));
 
             TextArea textArea = new TextArea(exceptionText);
             textArea.setEditable(false);

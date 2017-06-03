@@ -100,7 +100,7 @@ public class WinePrefixContainerInformationTab extends Tab {
         changeEngineComboBox.getSelectionModel().select(engineVersions.stream()
                 .filter(engineVersion -> engineVersion.getVersion().equals(container.getVersion())).findFirst().get());
 
-        Button deleteButton = new Button("Delete container");
+        Button deleteButton = new Button(tr("Delete container"));
         deleteButton.setOnMouseClicked(event -> this.onDeletePrefix.accept(container));
 
         informationPane.getChildren().addAll(informationContentPane, spacer, changeEngineComboBox, deleteButton);

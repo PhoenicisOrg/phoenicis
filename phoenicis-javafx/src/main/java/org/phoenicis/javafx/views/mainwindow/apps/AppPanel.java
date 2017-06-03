@@ -39,6 +39,8 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * The {@link DetailsView} for the "Apps" tab.
  * This view contains the information about a selected application and its scripts.
@@ -129,7 +131,7 @@ final class AppPanel extends DetailsView {
 
         themeManager.bindWebEngineStylesheet(appDescription.getEngine().userStyleSheetLocationProperty());
 
-        this.installers = new Label("Installers");
+        this.installers = new Label(tr("Installers"));
         this.installers.getStyleClass().add("descriptionTitle");
 
         this.scriptGrid = new GridPane();
@@ -174,17 +176,17 @@ final class AppPanel extends DetailsView {
 
             Label scriptName = new Label(script.getScriptName());
             if (settingsManager.isViewScriptSource()) {
-                final Tooltip tooltip = new Tooltip(String.format("Source: %s", script.getScriptSource()));
+                final Tooltip tooltip = new Tooltip(tr("Source: {0}", script.getScriptSource()));
                 Tooltip.install(scriptName, tooltip);
             }
 
-            Button installButton = new Button("Install");
+            Button installButton = new Button(tr("Install"));
             installButton.setOnMouseClicked(evt -> {
                 try {
                     onScriptInstall.accept(script);
                 } catch (IllegalArgumentException e) {
                     LOGGER.error("Failed to get script", e);
-                    new ErrorMessage("Error while trying to download the installer", e).show();
+                    new ErrorMessage(tr("Error while trying to download the installer"), e).show();
                 }
             });
 

@@ -121,13 +121,13 @@ public class RepositoriesPanel extends StackPane {
         this.repositoryButtonLayout.setSpacing(5);
 
         this.addButton = new Button();
-        this.addButton.setText("Add");
+        this.addButton.setText(tr("Add"));
         this.addButton.setOnAction((ActionEvent event) -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.initOwner(getScene().getWindow());
-            dialog.setTitle("Add repository");
-            dialog.setHeaderText("Add repository");
-            dialog.setContentText("Please add the new repository:");
+            dialog.setTitle(tr("Add repository"));
+            dialog.setHeaderText(tr("Add repository"));
+            dialog.setContentText(tr("Please add the new repository:"));
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(newRepository -> {
@@ -140,7 +140,7 @@ public class RepositoriesPanel extends StackPane {
         });
 
         this.removeButton = new Button();
-        this.removeButton.setText("Remove");
+        this.removeButton.setText(tr("Remove"));
         this.removeButton.setOnAction((ActionEvent event) -> {
             String[] toRemove = repositoryListView.getSelectionModel().getSelectedItems().toArray(new String[0]);
 
@@ -183,7 +183,7 @@ public class RepositoriesPanel extends StackPane {
                 tr("Fetch updates for the repositories to retrieve the newest script versions"));
         this.refreshRepositoriesLabel.setWrapText(true);
 
-        this.refreshRepositoriesButton = new Button("Refresh Repositories");
+        this.refreshRepositoriesButton = new Button(tr("Refresh Repositories"));
         this.refreshRepositoriesButton.setOnAction(event -> {
             this.vBox.setDisable(true);
             this.overlay.toFront();

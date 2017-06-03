@@ -27,6 +27,8 @@ import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class ViewSettings extends MainWindowView<SettingsSideBar> {
     private final String applicationName;
     private final String applicationVersion;
@@ -46,7 +48,7 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
     public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
             SettingsManager settingsManager, RepositoryManager repositoryManager) {
-        super("Settings", themeManager);
+        super(tr("Settings"), themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;
         this.applicationGitRevision = applicationGitRevision;
@@ -73,13 +75,13 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
 
         this.settingsItems = FXCollections.observableArrayList(
                 new SettingsSideBar.SettingsSideBarItem(new UserInterfacePanel(settingsManager, themeManager),
-                        "userInterfaceButton", "User Interface"),
+                        "userInterfaceButton", tr("User Interface")),
                 new SettingsSideBar.SettingsSideBarItem(new RepositoriesPanel(settingsManager, repositoryManager),
-                        "repositoriesButton", "Repositories"),
+                        "repositoriesButton", tr("Repositories")),
                 new SettingsSideBar.SettingsSideBarItem(new FileAssociationsPanel(), "settingsButton",
-                        "File Associations"),
-                new SettingsSideBar.SettingsSideBarItem(new NetworkPanel(), "networkButton", "Network"),
+                        tr("File Associations")),
+                new SettingsSideBar.SettingsSideBarItem(new NetworkPanel(), "networkButton", tr("Network")),
                 new SettingsSideBar.SettingsSideBarItem(new AboutPanel(buildInformation, opener), "aboutButton",
-                        "About"));
+                        tr("About")));
     }
 }
