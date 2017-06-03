@@ -1,10 +1,10 @@
 package org.phoenicis.javafx.views.common.widgets.lists;
 
-import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.widgets.lists.icons.StaticMiniature;
 import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.net.URI;
 import java.util.List;
@@ -101,22 +101,22 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
-        return new ListWidgetEntry<ApplicationDTO>(application, application.getMainMiniature(), StaticMiniature.DEFAULT_MINIATURE,
-                application.getName(), Optional.empty(), Optional.empty());
+        return new ListWidgetEntry<>(application, application.getMainMiniature(),
+                StaticMiniature.DEFAULT_MINIATURE, application.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
-        return new ListWidgetEntry<ContainerDTO>(container, Optional.empty(), StaticMiniature.CONTAINER_MINIATURE,
+        return new ListWidgetEntry<>(container, Optional.empty(), StaticMiniature.CONTAINER_MINIATURE,
                 container.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<ShortcutDTO> create(ShortcutDTO shortcut) {
-        return new ListWidgetEntry<ShortcutDTO>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
+        return new ListWidgetEntry<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
                 StaticMiniature.DEFAULT_MINIATURE, shortcut.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-        return new ListWidgetEntry<EngineVersionDTO>(engineVersion, Optional.empty(), StaticMiniature.WINE_MINIATURE,
+        return new ListWidgetEntry<>(engineVersion, Optional.empty(), StaticMiniature.WINE_MINIATURE,
                 engineVersion.getVersion(), Optional.empty(), Optional.empty(), installed);
     }
 
