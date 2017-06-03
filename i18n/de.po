@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-03 16:47+0200\n"
-"PO-Revision-Date: 2017-06-03 16:48+0200\n"
+"PO-Revision-Date: 2017-06-03 18:13+0200\n"
 "Last-Translator: Plata <plata@phoenicis.org>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -38,7 +38,7 @@ msgstr "Sind Sie sicher, dass Sie {0} deinstallieren möchten?"
 
 #: src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:86
 msgid "Error while running script"
-msgstr "Fehler beim Ausführen des Scripts"
+msgstr "Fehler beim Ausführen des Skripts"
 
 #: src/main/java/org/phoenicis/javafx/controller/MainController.java:72
 #, java-format
@@ -116,17 +116,17 @@ msgid ""
 "priority is, the more important the scripts inside the repository are."
 msgstr ""
 "Die Zahl vor jedem Repository gibt dessen Priorität an. Je höher die "
-"Priorität ist, desto wichtiger sind die Scripts in diesem Repository."
+"Priorität ist, desto wichtiger sind die Skripts in diesem Repository."
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:183
 msgid ""
 "Fetch updates for the repositories to retrieve the newest script versions"
 msgstr ""
-"Repository-Updates herunterladen um die neuesten Script Versionen zu erhalten"
+"Repository-Updates herunterladen um die neuesten Skript Versionen zu erhalten"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:186
 msgid "Refresh Repositories"
-msgstr "Repositories auffrischen"
+msgstr "Repositories aktualisieren"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:64
 msgid "User Interface Settings"
@@ -138,7 +138,7 @@ msgstr "Erscheinungsbild:"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
 msgid "Select, if you want to view the source repository of the scripts"
-msgstr "Auswählen, um das Script Repository anzuzeigen"
+msgstr "Auswählen, um das Skript Repository anzuzeigen"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:91
 msgid "Scale the user interface."
@@ -316,7 +316,7 @@ msgstr ""
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:86
 msgid "Video memory size"
-msgstr ""
+msgstr "Videospeichergröße"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:95
 msgid "Offscreen rendering mode"
@@ -332,11 +332,11 @@ msgstr ""
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:122
 msgid "Strict Draw Ordering"
-msgstr ""
+msgstr "Feste Darstellungsreihenfolge"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:131
 msgid "Always Offscreen"
-msgstr ""
+msgstr "Immer offscreen"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:119
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:109
@@ -345,7 +345,7 @@ msgstr "Kategorien"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:167
 msgid "Run a script"
-msgstr "Script ausführen"
+msgstr "Skript ausführen"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:170
 #, java-format
@@ -354,7 +354,7 @@ msgstr "{0}-Konsole"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:175
 msgid "Open a script"
-msgstr "Script öffnen"
+msgstr "Skript öffnen"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySideBar.java:186
 msgid "Advanced tools"
@@ -410,7 +410,7 @@ msgstr "Kommerziell"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/AppPanel.java:134
 msgid "Installers"
-msgstr "Scripts"
+msgstr "Installationsskripts"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/AppPanel.java:179
 #, java-format
@@ -424,7 +424,7 @@ msgstr "Installieren"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/AppPanel.java:189
 msgid "Error while trying to download the installer"
-msgstr "Fehler beim Herunterladen des Scripts"
+msgstr "Fehler beim Herunterladen des Skripts"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
