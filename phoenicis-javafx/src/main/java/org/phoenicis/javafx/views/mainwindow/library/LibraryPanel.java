@@ -24,7 +24,11 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -68,18 +72,18 @@ final class LibraryPanel extends DetailsView {
         try {
             LOGGER.info("Reading shortcut: {}", shortcutDTO.getScript());
 
-            final Map<String, String> shortcutProperties = objectMapper.readValue(shortcutDTO.getScript(),
-                    new TypeReference<Map<String, String>>() {
+            final Map<String, Object> shortcutProperties = objectMapper.readValue(shortcutDTO.getScript(),
+                    new TypeReference<Map<String, Object>>() {
                     });
 
             int i = 0;
             for (String shortcutKey : shortcutProperties.keySet()) {
-                final Label keyLabel = new Label(shortcutKey + ":");
+                final Label keyLabel = new Label(tr(unCamelize(shortcutKey)) + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 gridPane.add(keyLabel, 0, i);
 
-                final Label valueLabel = new Label(shortcutProperties.get(shortcutKey));
+                final Label valueLabel = new Label(shortcutProperties.get(shortcutKey).toString());
                 valueLabel.setWrapText(true);
                 gridPane.add(valueLabel, 1, i);
 
@@ -116,6 +120,10 @@ final class LibraryPanel extends DetailsView {
         vBox.getChildren().addAll(description, gridPane, spacer, buttons);
 
         this.setCenter(vBox);
+    }
+
+    private String unCamelize(String s) {
+        return StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(s), ' '));
     }
 
     /**
