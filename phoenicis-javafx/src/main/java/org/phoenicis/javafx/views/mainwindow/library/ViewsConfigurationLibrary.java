@@ -39,11 +39,8 @@ public class ViewsConfigurationLibrary {
 
     @Bean
     public ViewLibrary viewLibrary() {
-        return new ViewLibrary(
-                applicationName,
-                themeConfiguration.themeManager(),
-                phoenicisGlobalConfiguration.objectMapper()
-        );
+        return new ViewLibrary(applicationName, themeConfiguration.themeManager(),
+                phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean
