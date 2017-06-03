@@ -10,6 +10,8 @@ import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
 
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * An instance of this class represents the sidebar inside the settings tab view.
  * This sidebar contains a toggle button group used to select the different types of settings.
@@ -39,7 +41,7 @@ public class SettingsSideBar extends LeftSideBar {
      * This method populates the toggle button group containing a toggle button for each settings panel
      */
     private void populate() {
-        this.settingsItems = LeftToggleGroup.create("Settings", this::createSettingsToggleButton);
+        this.settingsItems = LeftToggleGroup.create(tr("Settings"), this::createSettingsToggleButton);
     }
 
     /**

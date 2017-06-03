@@ -34,6 +34,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class ViewContainers extends MainWindowView<ContainerSideBar> {
     private ContainerSideBar sideBar;
 
@@ -49,7 +51,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
     private SortedList<ContainerDTO> sortedContainers;
 
     public ViewContainers(ThemeManager themeManager) {
-        super("Containers", themeManager);
+        super(tr("Containers"), themeManager);
 
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));

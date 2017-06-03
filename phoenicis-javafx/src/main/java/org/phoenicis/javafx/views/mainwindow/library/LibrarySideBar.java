@@ -167,12 +167,12 @@ public class LibrarySideBar extends LeftSideBar {
         this.runScript = new LeftButton(tr("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");
 
-        this.runConsole = new LeftButton(tr(String.format("%s console", applicationName)));
+        this.runConsole = new LeftButton(tr("{0} console", applicationName));
         this.runConsole.getStyleClass().add("consoleButton");
 
         this.runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open a script");
+            fileChooser.setTitle(tr("Open a script"));
 
             // TODO: use correct owner window
             final File scriptToRun = fileChooser.showOpenDialog(null);
@@ -183,7 +183,7 @@ public class LibrarySideBar extends LeftSideBar {
         });
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new LeftGroup("Advanced tools", runScript, runConsole);
+        this.advancedToolsGroup = new LeftGroup(tr("Advanced tools"), runScript, runConsole);
     }
 
     /**

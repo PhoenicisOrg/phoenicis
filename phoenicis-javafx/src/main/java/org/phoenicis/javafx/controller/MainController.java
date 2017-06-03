@@ -69,7 +69,7 @@ public class MainController {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(this.mainWindow);
             alert.setTitle(applicationName);
-            alert.setHeaderText(tr("Are you sure you want to close all " + applicationName + " windows?"));
+            alert.setHeaderText(tr("Are you sure you want to close all {0} windows?", applicationName));
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Platform.exit();

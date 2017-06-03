@@ -20,7 +20,6 @@ package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.apache.commons.lang.StringUtils;
 import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
@@ -36,11 +35,12 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Consumer;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
@@ -57,15 +57,15 @@ public class EnginesController {
         this.themeManager = themeManager;
 
         this.viewEngines.setOnInstallEngine(engineDTO -> {
-            new ConfirmMessage("Install " + engineDTO.getVersion(),
-                    "Are you sure you want to install " + engineDTO.getVersion() + "?").ask(() -> {
+            new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
+                    tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
                         installEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
                     });
         });
 
         this.viewEngines.setOnDeleteEngine(engineDTO -> {
-            new ConfirmMessage("Delete " + engineDTO.getVersion(),
-                    "Are you sure you want to delete " + engineDTO.getVersion() + "?").ask(() -> {
+            new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
+                    tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
                         deleteEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
                     });
         });

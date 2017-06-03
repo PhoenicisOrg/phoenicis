@@ -43,6 +43,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
 
@@ -64,7 +66,7 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
     public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
-        super("Apps", themeManager);
+        super(tr("Apps"), themeManager);
 
         this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
                 (element, event) -> showAppDetails(element, settingsManager));

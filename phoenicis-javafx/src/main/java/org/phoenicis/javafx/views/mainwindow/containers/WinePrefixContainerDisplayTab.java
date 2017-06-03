@@ -146,7 +146,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
     private void changeSettings(RegistryParameter newValue) {
         this.lockAll();
         winePrefixContainerController.changeSetting(container, newValue, this::unlockAll,
-                e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                e -> Platform.runLater(() -> new ErrorMessage(tr("Error"), e).show()));
     }
 
     private <T extends Enum> void addItems(ComboBox<T> comboBox, Class<T> clazz) {

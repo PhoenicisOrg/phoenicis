@@ -34,6 +34,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class LibraryController {
     private final ViewLibrary viewLibrary;
     private final ConsoleController consoleController;
@@ -65,12 +67,12 @@ public class LibraryController {
 
         this.viewLibrary.setOnShortcutRun(this::runShortcut);
         this.viewLibrary.setOnShortcutDoubleClicked(this::runShortcut);
-        this.viewLibrary
-                .setOnShortcutStop(shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage("Error", e)));
+        this.viewLibrary.setOnShortcutStop(
+                shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage(tr("Error"), e)));
 
         this.viewLibrary.setOnShortcutUninstall(shortcutDTO -> {
-            new ConfirmMessage("Uninstall " + shortcutDTO.getName(),
-                    "Are you sure you want to uninstall " + shortcutDTO.getName() + "?")
+            new ConfirmMessage(tr("Uninstall {0}", shortcutDTO.getName()),
+                    tr("Are you sure you want to uninstall {0}?", shortcutDTO.getName()))
                             .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO,
                                     e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e)));
         });
@@ -81,12 +83,12 @@ public class LibraryController {
 
         this.viewLibrary.setOnScriptRun(file -> {
             scriptInterpreter.runScript(file,
-                    e -> Platform.runLater(() -> new ErrorMessage("Error while running script", e)));
+                    e -> Platform.runLater(() -> new ErrorMessage(tr("Error while running script"), e)));
         });
     }
 
     private void runShortcut(ShortcutDTO shortcutDTO) {
-        shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage("Error", e));
+        shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage(tr("Error"), e));
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
