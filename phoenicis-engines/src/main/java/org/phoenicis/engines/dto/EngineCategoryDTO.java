@@ -20,6 +20,8 @@ package org.phoenicis.engines.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.net.URI;
@@ -63,6 +65,28 @@ public class EngineCategoryDTO {
 
     public static Comparator<EngineCategoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        EngineCategoryDTO that = (EngineCategoryDTO) o;
+
+        return new EqualsBuilder().append(name, that.name).append(description, that.description)
+                .append(subCategories, that.subCategories).append(icon, that.icon).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(name).append(description).append(subCategories).append(icon)
+                .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
