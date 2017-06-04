@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.util.*;
 
 /**
- * Represents a category of application
+ * Represents a repository
  */
 @JsonDeserialize(builder = RepositoryDTO.Builder.class)
 public class RepositoryDTO {
