@@ -25,7 +25,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * A toggle group containing all categories contained in his/her repositories including an "All" category.
  * </li>
  * <li>
- * A filter group, containing filters to be used to remove testing, no cd needed and
+ * A filter group, containing filters to be used to remove testing, requires patch and
  * commercial applications from the shown applications
  * </li>
  * </ul>
@@ -49,7 +49,7 @@ public class ApplicationSideBar extends LeftSideBar {
     private LeftGroup filterGroup;
 
     private CheckBox testingCheck;
-    private CheckBox noCdNeededCheck;
+    private CheckBox requiresPatchCheck;
     private CheckBox commercialCheck;
 
     // widget to switch between the different list widgets in the center view
@@ -114,14 +114,14 @@ public class ApplicationSideBar extends LeftSideBar {
         this.testingCheck = new LeftCheckBox(tr("Testing"));
         this.testingCheck.selectedProperty().bindBidirectional(filter.containTestingApplicationsProperty());
 
-        this.noCdNeededCheck = new LeftCheckBox(tr("No CD needed"));
-        this.noCdNeededCheck.selectedProperty().bindBidirectional(filter.containNoCDApplicationsProperty());
+        this.requiresPatchCheck = new LeftCheckBox(tr("Requires patch"));
+        this.requiresPatchCheck.selectedProperty().bindBidirectional(filter.containRequiresPatchApplicationsProperty());
 
         this.commercialCheck = new LeftCheckBox(tr("Commercial"));
         this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
         this.commercialCheck.setSelected(true);
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, noCdNeededCheck, commercialCheck);
+        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck);
     }
 
     /**

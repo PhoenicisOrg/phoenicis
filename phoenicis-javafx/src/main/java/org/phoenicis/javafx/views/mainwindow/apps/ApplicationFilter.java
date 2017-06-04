@@ -26,7 +26,7 @@ public class ApplicationFilter {
 
     private BooleanProperty containCommercialApplications;
 
-    private BooleanProperty containNoCDApplications;
+    private BooleanProperty containRequiresPatchApplications;
 
     private BooleanProperty containTestingApplications;
 
@@ -47,8 +47,8 @@ public class ApplicationFilter {
         this.containCommercialApplications = new SimpleBooleanProperty();
         this.containCommercialApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
 
-        this.containNoCDApplications = new SimpleBooleanProperty();
-        this.containNoCDApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+        this.containRequiresPatchApplications = new SimpleBooleanProperty();
+        this.containRequiresPatchApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
 
         this.containTestingApplications = new SimpleBooleanProperty();
         this.containTestingApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
@@ -88,8 +88,8 @@ public class ApplicationFilter {
         return this.containCommercialApplications;
     }
 
-    public BooleanProperty containNoCDApplicationsProperty() {
-        return this.containNoCDApplications;
+    public BooleanProperty containRequiresPatchApplicationsProperty() {
+        return this.containRequiresPatchApplications;
     }
 
     public BooleanProperty containTestingApplicationsProperty() {
@@ -139,10 +139,10 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "No CD required" is selected show't show games that require a CD
+         * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
          */
-        if (containNoCDApplications.getValue()) {
-            result &= application.getScripts().stream().anyMatch(script -> !script.isRequiresNoCD());
+        if (containRequiresPatchApplications.getValue()) {
+            result &= application.getScripts().stream().anyMatch(script -> !script.requiresPatch());
         }
 
         /*
@@ -173,10 +173,10 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "No CD required" is selected show't show games that require a CD
+         * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
          */
-        if (containNoCDApplications.getValue()) {
-            result &= !script.isRequiresNoCD();
+        if (containRequiresPatchApplications.getValue()) {
+            result &= !script.requiresPatch();
         }
 
         /*

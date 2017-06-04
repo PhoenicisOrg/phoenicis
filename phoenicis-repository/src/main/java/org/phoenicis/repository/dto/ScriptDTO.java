@@ -35,7 +35,7 @@ public class ScriptDTO {
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
-    private final Boolean requiresNoCD;
+    private final Boolean requiresPatch;
     private final String script;
 
     private ScriptDTO(Builder builder) {
@@ -44,7 +44,7 @@ public class ScriptDTO {
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
-        this.requiresNoCD = builder.requiresNoCD;
+        this.requiresPatch = builder.requiresPatch;
         this.script = builder.script;
     }
 
@@ -64,8 +64,8 @@ public class ScriptDTO {
         return free;
     }
 
-    public Boolean isRequiresNoCD() {
-        return requiresNoCD;
+    public Boolean requiresPatch() {
+        return requiresPatch;
     }
 
     public List<OperatingSystem> getTestingOperatingSystems() {
@@ -87,7 +87,7 @@ public class ScriptDTO {
         private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
-        private Boolean requiresNoCD;
+        private Boolean requiresPatch;
         private String script;
 
         public Builder() {
@@ -98,7 +98,7 @@ public class ScriptDTO {
             this.withScriptName(scriptDTO.getScriptName()).withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
                     .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems()).withFree(scriptDTO.isFree())
-                    .withRequiresNoCD(scriptDTO.requiresNoCD);
+                    .withRequiresPatch(scriptDTO.requiresPatch);
         }
 
         public Builder withScriptName(String name) {
@@ -131,8 +131,8 @@ public class ScriptDTO {
             return this;
         }
 
-        public Builder withRequiresNoCD(Boolean requiresNoCD) {
-            this.requiresNoCD = requiresNoCD;
+        public Builder withRequiresPatch(Boolean requiresPatch) {
+            this.requiresPatch = requiresPatch;
             return this;
         }
 
