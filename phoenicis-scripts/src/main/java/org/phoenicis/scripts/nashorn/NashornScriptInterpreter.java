@@ -21,6 +21,7 @@ package org.phoenicis.scripts.nashorn;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class NashornScriptInterpreter implements ScriptInterpreter {
@@ -32,8 +33,9 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
 
     @Override
     public void runScript(String scriptContent, Consumer<Exception> errorCallback) {
+        final String language = Locale.getDefault().getLanguage();
         final String i18nextInit = "i18next.init({                                                                     "
-                + "  lng: 'de',                                                                                        "
+                + String.format("  lng: '%s',                                                             ", language)
                 + "  debug: true,                                                                                      "
                 + "  resources: {                                                                                      "
                 + "    en: {                                                                                           "
