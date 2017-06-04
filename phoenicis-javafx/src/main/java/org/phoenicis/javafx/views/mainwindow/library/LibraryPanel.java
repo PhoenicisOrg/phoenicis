@@ -47,6 +47,12 @@ final class LibraryPanel extends DetailsView {
 
     private final ObjectMapper objectMapper;
 
+    private Label description;
+    private GridPane gridPane;
+    private Button runButton;
+    private Button stopButton;
+    private Button uninstallButton;
+
     // consumers called when a shortcut should be run, stopped or uninstalled
     private Consumer<ShortcutDTO> onShortcutRun;
     private Consumer<ShortcutDTO> onShortcutStop;
@@ -55,19 +61,45 @@ final class LibraryPanel extends DetailsView {
     public LibraryPanel(ObjectMapper objectMapper) {
         super();
         this.objectMapper = objectMapper;
+
+        final VBox vBox = new VBox();
+
+        this.description = new Label();
+        this.description.setWrapText(true);
+
+        this.gridPane = new GridPane();
+        this.gridPane.getStyleClass().add("grid");
+        this.gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
+                new ColumnConstraintsWithPercentage(70));
+
+        Region spacer = new Region();
+        spacer.setPrefHeight(40);
+
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER);
+
+        this.runButton = new Button(tr("Run"));
+        this.runButton.getStyleClass().addAll("shortcutButton", "runButton");
+
+        this.stopButton = new Button(tr("Close"));
+        this.stopButton.getStyleClass().addAll("shortcutButton", "stopButton");
+
+        this.uninstallButton = new Button(tr("Uninstall"));
+        this.uninstallButton.getStyleClass().addAll("shortcutButton", "uninstallButton");
+
+        buttons.getChildren().addAll(this.runButton, this.stopButton, this.uninstallButton);
+
+        vBox.getChildren().addAll(this.description, this.gridPane, spacer, buttons);
+
+        this.setCenter(vBox);
     }
 
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
         this.setTitle(shortcutDTO.getName());
 
-        this.getChildren().clear();
-        final VBox vBox = new VBox();
+        this.description.setText(shortcutDTO.getDescription());
 
-        Label description = new Label(shortcutDTO.getDescription());
-        description.setWrapText(true);
-
-        final GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("grid");
+        this.gridPane.getChildren().clear();
 
         try {
             LOGGER.info("Reading shortcut: {}", shortcutDTO.getScript());
@@ -81,11 +113,11 @@ final class LibraryPanel extends DetailsView {
                 final Label keyLabel = new Label(tr(unCamelize(shortcutKey)) + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
-                gridPane.add(keyLabel, 0, i);
+                this.gridPane.add(keyLabel, 0, i);
 
                 final Label valueLabel = new Label(shortcutProperties.get(shortcutKey).toString());
                 valueLabel.setWrapText(true);
-                gridPane.add(valueLabel, 1, i);
+                this.gridPane.add(valueLabel, 1, i);
 
                 i++;
             }
@@ -94,32 +126,9 @@ final class LibraryPanel extends DetailsView {
             LOGGER.warn("Could not parse shortcut script JSON", e);
         }
 
-        gridPane.getColumnConstraints().addAll(new ColumnConstraintsWithPercentage(30),
-                new ColumnConstraintsWithPercentage(70));
-
-        Region spacer = new Region();
-        spacer.setPrefHeight(40);
-
-        HBox buttons = new HBox();
-        buttons.setAlignment(Pos.CENTER);
-
-        Button runButton = new Button(tr("Run"));
-        runButton.getStyleClass().addAll("shortcutButton", "runButton");
-        runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
-
-        Button stopButton = new Button(tr("Close"));
-        stopButton.getStyleClass().addAll("shortcutButton", "stopButton");
-        stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
-
-        Button uninstallButton = new Button(tr("Uninstall"));
-        uninstallButton.getStyleClass().addAll("shortcutButton", "uninstallButton");
-        uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
-
-        buttons.getChildren().addAll(runButton, stopButton, uninstallButton);
-
-        vBox.getChildren().addAll(description, gridPane, spacer, buttons);
-
-        this.setCenter(vBox);
+        this.runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
+        this.stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
+        this.uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
     }
 
     private String unCamelize(String s) {
