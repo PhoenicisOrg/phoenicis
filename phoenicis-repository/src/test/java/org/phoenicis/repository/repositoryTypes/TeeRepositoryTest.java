@@ -21,8 +21,7 @@ package org.phoenicis.repository.repositoryTypes;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
-import org.phoenicis.repository.repositoryTypes.Repository;
-import org.phoenicis.repository.repositoryTypes.TeeRepository;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,45 +31,61 @@ import static org.junit.Assert.assertEquals;
 public class TeeRepositoryTest {
     @Test
     public void testFetchInstallableApplications_onlyCategoriesNoCollapse_numberOfResultIsCorrect() {
-        final Repository leftSource = () -> Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
-                new CategoryDTO.Builder().withName("Category 2").build());
+        final Repository leftSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
+                        new CategoryDTO.Builder().withName("Category 2").build()))
+                .build();
 
-        final Repository rightSource = () -> Arrays.asList(new CategoryDTO.Builder().withName("Category 3").build(),
-                new CategoryDTO.Builder().withName("Category 4").build(),
-                new CategoryDTO.Builder().withName("Category 5").build());
+        final Repository rightSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Arrays.asList(new CategoryDTO.Builder().withName("Category 3").build(),
+                        new CategoryDTO.Builder().withName("Category 4").build(),
+                        new CategoryDTO.Builder().withName("Category 5").build()))
+                .build();
 
         final Repository teeSource = new TeeRepository(leftSource, rightSource);
-        assertEquals(5, teeSource.fetchInstallableApplications().size());
+        assertEquals(5, teeSource.fetchInstallableApplications().getCategories().size());
     }
 
     @Test
     public void testFetchInstallableApplications_onlyCategoriesCollapse_numberOfResultIsCorrect() {
-        final Repository leftSource = () -> Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
-                new CategoryDTO.Builder().withName("Category 2").build());
+        final Repository leftSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
+                        new CategoryDTO.Builder().withName("Category 2").build()))
+                .build();
 
-        final Repository rightSource = () -> Arrays.asList(new CategoryDTO.Builder().withName("Category 2").build(),
-                new CategoryDTO.Builder().withName("Category 4").build(),
-                new CategoryDTO.Builder().withName("Category 5").build());
+        final Repository rightSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Arrays.asList(new CategoryDTO.Builder().withName("Category 2").build(),
+                        new CategoryDTO.Builder().withName("Category 4").build(),
+                        new CategoryDTO.Builder().withName("Category 5").build()))
+                .build();
 
         final Repository teeSource = new TeeRepository(leftSource, rightSource);
-        assertEquals(4, teeSource.fetchInstallableApplications().size());
+        assertEquals(4, teeSource.fetchInstallableApplications().getCategories().size());
     }
 
     @Test
     public void testFetchInstallableApplications_categoriesAndAppsCollapse_numberOfResultIsCorrect() {
-        final Repository leftSource = () -> Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
-                new CategoryDTO.Builder().withName("Category 2")
-                        .withApplications(Arrays.asList(new ApplicationDTO.Builder().withName("Application 1").build(),
-                                new ApplicationDTO.Builder().withName("Application 2").build()))
-                        .build());
+        final Repository leftSource = () -> new RepositoryDTO.Builder()
+                .withCategories(
+                        Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
+                                new CategoryDTO.Builder().withName("Category 2")
+                                        .withApplications(Arrays.asList(
+                                                new ApplicationDTO.Builder().withName("Application 1").build(),
+                                                new ApplicationDTO.Builder().withName("Application 2").build()))
+                                        .build()))
+                .build();
 
-        final Repository rightSource = () -> Arrays.asList(
-                new CategoryDTO.Builder().withName("Category 2")
-                        .withApplications(Arrays.asList(new ApplicationDTO.Builder().withName("Application 1").build(),
-                                new ApplicationDTO.Builder().withName("Application 3").build()))
-                        .build(),
-                new CategoryDTO.Builder().withName("Category 4").build(),
-                new CategoryDTO.Builder().withName("Category 5").build());
+        final Repository rightSource = () -> new RepositoryDTO.Builder()
+                .withCategories(
+                        Arrays.asList(
+                                new CategoryDTO.Builder().withName("Category 2")
+                                        .withApplications(Arrays.asList(
+                                                new ApplicationDTO.Builder().withName("Application 1").build(),
+                                                new ApplicationDTO.Builder().withName("Application 3").build()))
+                                        .build(),
+                                new CategoryDTO.Builder().withName("Category 4").build(),
+                                new CategoryDTO.Builder().withName("Category 5").build()))
+                .build();
 
         final Repository teeSource = new TeeRepository(leftSource, rightSource);
         assertEquals(3, teeSource.getCategory(Collections.singletonList("Category 2")).getApplications().size());

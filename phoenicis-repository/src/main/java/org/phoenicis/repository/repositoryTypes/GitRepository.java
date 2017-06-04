@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +32,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
 
 public class GitRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
@@ -56,7 +52,7 @@ public class GitRepository implements Repository {
     }
 
     @Override
-    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+    public synchronized RepositoryDTO fetchInstallableApplications() {
         LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.gitRepositoryUri,
                 gitRepositoryLocation.getAbsolutePath()));
 
@@ -71,11 +67,11 @@ public class GitRepository implements Repository {
                 LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'",
                         this.gitRepositoryUri, gitRepositoryLocation.getAbsolutePath()));
 
-                return Collections.emptyList();
+                return null;
             }
         }
 
-        List<CategoryDTO> result = Collections.emptyList();
+        RepositoryDTO result = null;
 
         try {
             Git gitRepository = null;

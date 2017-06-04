@@ -20,10 +20,9 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -43,11 +42,11 @@ public class TeeRepository extends MergeableRepository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        final Map<Repository, List<CategoryDTO>> categoriesMap = Arrays.asList(leftRepository, rightRepository).stream()
+    public RepositoryDTO fetchInstallableApplications() {
+        final Map<Repository, RepositoryDTO> repositoriesMap = Arrays.asList(leftRepository, rightRepository).stream()
                 .collect(Collectors.toMap(source -> source, Repository::fetchInstallableApplications));
 
-        return mergeRepositories(categoriesMap, Arrays.asList(leftRepository, rightRepository));
+        return mergeRepositories(repositoriesMap, Arrays.asList(leftRepository, rightRepository));
     }
 
     @Override
