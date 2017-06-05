@@ -18,14 +18,14 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.apache.commons.io.IOUtils;
 import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.repository.repositoryTypes.TeeRepository;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.apache.commons.io.IOUtils;
+import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.repositoryTypes.TeeRepository;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -39,20 +39,14 @@ public class MockedRepository extends TeeRepository {
     private static class MockRepository implements Repository {
         @Override
         public RepositoryDTO fetchInstallableApplications() {
-            return new RepositoryDTO.Builder()
-                    .withCategories(
-                            Collections.singletonList(
-                                    new CategoryDTO.Builder()
-                                            .withApplications(Arrays.asList(new ApplicationDTO.Builder().withName(
-                                                    "Engines")
-                                                    .withScripts(Arrays.asList(new ScriptDTO.Builder()
-                                                            .withScriptName("Wine")
-                                                            .withCompatibleOperatingSystems(Arrays.asList(
-                                                                    OperatingSystem.LINUX, OperatingSystem.MACOSX))
-                                                            .withScript(wineScript()).build()))
-                                                    .build()))
-                                            .withName("Functions").build()))
-                    .build();
+            final ScriptDTO scriptDTO = new ScriptDTO.Builder().withScriptName("Wine")
+                    .withCompatibleOperatingSystems(Arrays.asList(OperatingSystem.LINUX, OperatingSystem.MACOSX))
+                    .withScript(wineScript()).build();
+            final ApplicationDTO applicationDTO = new ApplicationDTO.Builder().withName("Engines")
+                    .withScripts(Arrays.asList(scriptDTO)).build();
+            final CategoryDTO categoryDTO = new CategoryDTO.Builder().withApplications(Arrays.asList(applicationDTO))
+                    .withName("Functions").build();
+            return new RepositoryDTO.Builder().withCategories(Collections.singletonList(categoryDTO)).build();
         }
 
         private String wineScript() {
