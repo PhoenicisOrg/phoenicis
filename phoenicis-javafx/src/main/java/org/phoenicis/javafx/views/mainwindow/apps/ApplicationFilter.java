@@ -142,7 +142,7 @@ public class ApplicationFilter {
          * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
          */
         if (containRequiresPatchApplications.getValue()) {
-            result &= application.getScripts().stream().anyMatch(script -> !script.requiresPatch());
+            result &= application.getScripts().stream().anyMatch(script -> !script.isRequiresPatch());
         }
 
         /*
@@ -176,7 +176,7 @@ public class ApplicationFilter {
          * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
          */
         if (containRequiresPatchApplications.getValue()) {
-            result &= !script.requiresPatch();
+            result &= !script.isRequiresPatch();
         }
 
         /*

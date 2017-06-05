@@ -66,7 +66,7 @@ public class ScriptDTO {
         return free;
     }
 
-    public Boolean requiresPatch() {
+    public Boolean isRequiresPatch() {
         return requiresPatch;
     }
 
