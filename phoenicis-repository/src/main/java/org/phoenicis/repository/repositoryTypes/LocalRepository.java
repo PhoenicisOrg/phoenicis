@@ -72,11 +72,14 @@ public class LocalRepository implements Repository {
         final File i18nDirectory = new File(repositoryDirectory, "i18n");
         if (i18nDirectory.exists()) {
             final File[] translationFiles = i18nDirectory.listFiles((dir, name) -> name.endsWith(".json"));
-            HashMap<String, String> translations = new HashMap<>();
+            Set<TranslationDTO> translations = new HashSet<>();
             for (File translation : translationFiles) {
                 try {
+                    final String language = translation.getName();
                     final String content = new String(Files.readAllBytes(translation.toPath()));
-                    translations.put(translation.getName(), content);
+                    final TranslationDTO.Builder translationDTOBuilder = new TranslationDTO.Builder()
+                            .withLanguage(language).withJson(content);
+                    translations.add(translationDTOBuilder.build());
                 } catch (IOException e) {
                     LOGGER.error("Could not read translation json", e);
                 }
