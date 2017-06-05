@@ -20,6 +20,8 @@ package org.phoenicis.repository.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.util.*;
@@ -51,6 +53,27 @@ public class RepositoryDTO {
         return categories;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        RepositoryDTO that = (RepositoryDTO) o;
+
+        return new EqualsBuilder().append(name, that.name).append(categories, that.categories)
+                .append(translations, that.translations).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(name).append(categories).append(translations).toHashCode();
+    }
+
     public static Comparator<RepositoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
@@ -66,7 +89,8 @@ public class RepositoryDTO {
         }
 
         public Builder(RepositoryDTO repositoryDTO) {
-            this.withName(repositoryDTO.getName()).withCategories(repositoryDTO.getCategories());
+            this.withName(repositoryDTO.getName()).withCategories(repositoryDTO.getCategories())
+                    .withTranslations(repositoryDTO.getTranslations());
         }
 
         public Builder withName(String name) {
