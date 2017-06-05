@@ -21,7 +21,7 @@ package org.phoenicis.repository.repositoryTypes;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,7 @@ public class MultipleRepository extends MergeableRepository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
         LOGGER.info(String.format("Fetching applications for: %s", this.toString()));
 
         /*
@@ -50,10 +50,10 @@ public class MultipleRepository extends MergeableRepository {
          * list and its application source, to preserve the order in the
          * reduction step
          */
-        final Map<Repository, List<CategoryDTO>> categoriesMap = this.repositories.stream().parallel()
+        final Map<Repository, RepositoryDTO> repositoriesMap = this.repositories.stream().parallel()
                 .collect(Collectors.toConcurrentMap(source -> source, Repository::fetchInstallableApplications));
 
-        return mergeRepositories(categoriesMap, repositories);
+        return mergeRepositories(repositoriesMap, repositories);
     }
 
     @Override

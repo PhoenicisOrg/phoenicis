@@ -22,6 +22,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
@@ -46,11 +47,12 @@ public class FilterRepository implements Repository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
-        final List<CategoryDTO> categories = repository.fetchInstallableApplications();
+        final RepositoryDTO repositoryDTO = repository.fetchInstallableApplications();
+        final List<CategoryDTO> categories = repositoryDTO.getCategories();
 
-        return categories.stream().map(category -> {
+        final List<CategoryDTO> filteredCategories = categories.stream().map(category -> {
             final List<ApplicationDTO> applications = new ArrayList<>();
             for (ApplicationDTO application : category.getApplications()) {
                 List<ScriptDTO> scripts = application.getScripts();
@@ -67,6 +69,8 @@ public class FilterRepository implements Repository {
 
             return new CategoryDTO.Builder(category).withApplications(applications).build();
         }).filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
+        return new RepositoryDTO.Builder().withName(repositoryDTO.getName()).withCategories(filteredCategories)
+                .withTranslations(repositoryDTO.getTranslations()).build();
     }
 
     @Override

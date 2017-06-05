@@ -24,10 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ResourceDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +32,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,15 +57,37 @@ public class LocalRepository implements Repository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
+
         final File[] categoryDirectories = repositoryDirectory.listFiles();
 
         if (categoryDirectories == null) {
-            return Collections.emptyList();
+            return new RepositoryDTO.Builder().build();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);
-        return fetchCategories(categoryDirectories);
+        final RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder()
+                .withName(repositoryDirectory.getName()).withCategories(fetchCategories(categoryDirectories));
+
+        final File i18nDirectory = new File(repositoryDirectory, "i18n");
+        if (i18nDirectory.exists()) {
+            final File[] translationFiles = i18nDirectory.listFiles((dir, name) -> name.endsWith(".json"));
+            Set<TranslationDTO> translations = new HashSet<>();
+            for (File translation : translationFiles) {
+                try {
+                    final String language = translation.getName();
+                    final String content = new String(Files.readAllBytes(translation.toPath()));
+                    final TranslationDTO.Builder translationDTOBuilder = new TranslationDTO.Builder()
+                            .withLanguage(language).withJson(content);
+                    translations.add(translationDTOBuilder.build());
+                } catch (IOException e) {
+                    LOGGER.error("Could not read translation json", e);
+                }
+            }
+            repositoryDTOBuilder.withTranslations(translations);
+        }
+
+        return repositoryDTOBuilder.build();
     }
 
     private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {

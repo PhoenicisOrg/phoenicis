@@ -20,8 +20,7 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
-import org.phoenicis.repository.repositoryTypes.MultipleRepository;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.Collections;
 
@@ -31,21 +30,24 @@ public class MultipleRepositoryTest {
     @Test
     public void testWithEmptyList_emptySetIsReturned() {
         final MultipleRepository multipleRepository = new MultipleRepository();
-        assertEquals(0, multipleRepository.fetchInstallableApplications().size());
+        assertEquals(null, multipleRepository.fetchInstallableApplications());
     }
 
     @Test
     public void testWithThreeSources_threeResults() {
-        final Repository firstSource = () -> Collections
-                .singletonList(new CategoryDTO.Builder().withName("Category 1").build());
+        final Repository firstSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withName("Category 1").build()))
+                .build();
 
-        final Repository secondSource = () -> Collections
-                .singletonList(new CategoryDTO.Builder().withName("Category 2").build());
+        final Repository secondSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withName("Category 2").build()))
+                .build();
 
-        final Repository thirdSource = () -> Collections
-                .singletonList(new CategoryDTO.Builder().withName("Category 3").build());
+        final Repository thirdSource = () -> new RepositoryDTO.Builder()
+                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withName("Category 3").build()))
+                .build();
 
         final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);
-        assertEquals(3, multipleRepository.fetchInstallableApplications().size());
+        assertEquals(3, multipleRepository.fetchInstallableApplications().getCategories().size());
     }
 }

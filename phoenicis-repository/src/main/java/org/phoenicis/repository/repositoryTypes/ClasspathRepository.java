@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class ClasspathRepository implements Repository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
         try {
             final List<CategoryDTO> categoryDTOs = new ArrayList<>();
             Resource[] resources = resourceResolver.getResources(packagePath + "/*");
@@ -64,10 +65,13 @@ public class ClasspathRepository implements Repository {
                 }
             }
             Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
-            return categoryDTOs;
+
+            final RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder()
+                    .withName("classpath repository").withCategories(categoryDTOs);
+            return repositoryDTOBuilder.build();
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
-            return Collections.emptyList();
+            return new RepositoryDTO.Builder().build();
         }
     }
 
