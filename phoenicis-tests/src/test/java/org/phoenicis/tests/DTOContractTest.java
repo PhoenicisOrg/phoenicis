@@ -241,6 +241,10 @@ public class DTOContractTest {
             return Collections.emptyList();
         }
 
+        if (constructorParameterType == Map.class) {
+            return Collections.emptyMap();
+        }
+
         if (constructorParameterType == URI.class) {
             return new URI("http://www.test.uri");
         }

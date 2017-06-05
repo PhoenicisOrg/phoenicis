@@ -4,10 +4,7 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ResourceDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -29,20 +26,30 @@ public abstract class MergeableRepository implements Repository {
      * application sources contain the same script, the script from the later
      * application source is taken.
      *
-     * @param categoriesMap A map containing a binding between the application sources and
-     *                      their category dtos
+     * @param repositoriesMap A map containing a binding between the application sources and
+     *                      their repository DTO
      * @param repositories  A list containing all application sources in the order in
      *                      which they should be merged
      * @return A list containing category dtos of the merged application
      * sources. If no application sources were given, an empty list is
      * returned
      */
-    protected List<CategoryDTO> mergeRepositories(Map<Repository, List<CategoryDTO>> categoriesMap,
+    protected RepositoryDTO mergeRepositories(Map<Repository, RepositoryDTO> repositoriesMap,
             List<Repository> repositories) {
         int numberOfRepositories = repositories.size();
 
         if (numberOfRepositories == 0) {
-            return Collections.emptyList();
+            return null;
+        }
+
+        RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder().withName("merged repository");
+
+        Map<Repository, List<CategoryDTO>> categoriesMap = new HashMap<>();
+        for (Repository repository : repositoriesMap.keySet()) {
+            RepositoryDTO repositoryDTO = repositoriesMap.get(repository);
+            //TODO: merge translations
+            repositoryDTOBuilder.withTranslations(repositoryDTO.getTranslations());
+            categoriesMap.put(repository, repositoryDTO.getCategories());
         }
 
         /*
@@ -67,7 +74,10 @@ public abstract class MergeableRepository implements Repository {
             }
         }
 
-        return new ArrayList<>(mergedCategories.values());
+        RepositoryDTO mergedRepositoryDTO = repositoryDTOBuilder
+                .withCategories(new ArrayList<>(mergedCategories.values())).build();
+
+        return mergedRepositoryDTO;
 
     }
 

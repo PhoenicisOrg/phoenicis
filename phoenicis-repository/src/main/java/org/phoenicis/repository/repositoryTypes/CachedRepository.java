@@ -20,20 +20,18 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.repository.dto.CategoryDTO;
-
-import java.util.List;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 public class CachedRepository implements Repository {
     private final Repository repository;
-    private List<CategoryDTO> cache;
+    private RepositoryDTO cache;
 
     public CachedRepository(Repository repository) {
         this.repository = repository;
     }
 
     @Override
-    public synchronized List<CategoryDTO> fetchInstallableApplications() {
+    public synchronized RepositoryDTO fetchInstallableApplications() {
         if (cache == null) {
             cache = repository.fetchInstallableApplications();
         }

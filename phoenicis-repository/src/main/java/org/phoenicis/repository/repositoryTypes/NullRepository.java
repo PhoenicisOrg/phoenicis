@@ -19,15 +19,12 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.repository.dto.CategoryDTO;
-
-import java.util.Collections;
-import java.util.List;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 public class NullRepository implements Repository {
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
-        return Collections.emptyList();
+    public RepositoryDTO fetchInstallableApplications() {
+        return new RepositoryDTO.Builder().build();
     }
 
     @Override

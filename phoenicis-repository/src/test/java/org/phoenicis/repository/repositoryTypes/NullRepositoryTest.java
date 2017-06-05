@@ -19,13 +19,13 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import org.junit.Test;
-import org.phoenicis.repository.repositoryTypes.NullRepository;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import static org.junit.Assert.assertEquals;
 
 public class NullRepositoryTest {
     @Test
     public void testNullRepositoryTest() {
-        assertEquals(0, new NullRepository().fetchInstallableApplications().size());
+        assertEquals(new RepositoryDTO.Builder().build(), new NullRepository().fetchInstallableApplications());
     }
 }
