@@ -20,7 +20,7 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class BackgroundRepository implements Repository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
         throw new UnsupportedOperationException("The background apps manager is asynchronous");
     }
 
@@ -47,7 +47,7 @@ public class BackgroundRepository implements Repository {
     }
 
     @Override
-    public void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
+    public void fetchInstallableApplications(Consumer<RepositoryDTO> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedRepository.fetchInstallableApplications(callback, errorCallback));
     }
 

@@ -60,12 +60,12 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptInterpreter scriptInterpreter() {
-        return new BackgroundScriptInterpreter(nashornInterprpeter(),
+        return new BackgroundScriptInterpreter(nashornInterpreter(),
                 multithreadingConfiguration.scriptExecutorService());
     }
 
     @Bean
-    ScriptInterpreter nashornInterprpeter() {
+    ScriptInterpreter nashornInterpreter() {
         return new NashornScriptInterpreter(scriptEngineFactory());
     }
 }

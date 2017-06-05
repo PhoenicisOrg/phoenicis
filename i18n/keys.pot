@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-03 16:47+0200\n"
+"POT-Creation-Date: 2017-06-04 12:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,15 +363,15 @@ msgstr ""
 msgid "My applications"
 msgstr ""
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:102
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:106
 msgid "Run"
 msgstr ""
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:106
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:110
 msgid "Close"
 msgstr ""
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:110
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:114
 msgid "Uninstall"
 msgstr ""
 
@@ -394,7 +394,7 @@ msgid "Testing"
 msgstr ""
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:117
-msgid "No CD needed"
+msgid "Requires patch"
 msgstr ""
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSideBar.java:120

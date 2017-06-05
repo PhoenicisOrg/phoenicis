@@ -24,6 +24,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -52,7 +54,7 @@ public class ClasspathRepository implements Repository {
     }
 
     @Override
-    public List<CategoryDTO> fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
         try {
             final List<CategoryDTO> categoryDTOs = new ArrayList<>();
             Resource[] resources = resourceResolver.getResources(packagePath + "/*");
@@ -63,10 +65,13 @@ public class ClasspathRepository implements Repository {
                 }
             }
             Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
-            return categoryDTOs;
+
+            final RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder()
+                    .withName("classpath repository").withCategories(categoryDTOs);
+            return repositoryDTOBuilder.build();
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
-            return Collections.emptyList();
+            return new RepositoryDTO.Builder().build();
         }
     }
 
@@ -105,10 +110,14 @@ public class ClasspathRepository implements Repository {
     }
 
     private ApplicationDTO buildApplication(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationJsonFile = packagePath + "/" + categoryFileName + "/" + applicationFileName
-                + "/application.json";
+        final String applicationDirectory = packagePath + "/" + categoryFileName + "/" + applicationFileName;
+        final String language = Locale.getDefault().getLanguage();
+        File applicationJson = new File(applicationDirectory, String.format("application_%s.json", language));
+        if (!applicationJson.exists()) {
+            applicationJson = new File(applicationDirectory, "application.json");
+        }
         final ApplicationDTO applicationDTO = objectMapper
-                .readValue(getClass().getResourceAsStream(applicationJsonFile), ApplicationDTO.class);
+                .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
 
         return new ApplicationDTO.Builder(applicationDTO)
                 .withScripts(buildScripts(categoryFileName, applicationFileName))

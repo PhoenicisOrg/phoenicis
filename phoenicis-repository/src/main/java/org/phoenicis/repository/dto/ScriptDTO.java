@@ -21,6 +21,8 @@ package org.phoenicis.repository.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.entities.OperatingSystem;
 
 import java.net.URI;
@@ -35,7 +37,7 @@ public class ScriptDTO {
     private final List<OperatingSystem> compatibleOperatingSystems;
     private final List<OperatingSystem> testingOperatingSystems;
     private final Boolean free;
-    private final Boolean requiresNoCD;
+    private final Boolean requiresPatch;
     private final String script;
 
     private ScriptDTO(Builder builder) {
@@ -44,7 +46,7 @@ public class ScriptDTO {
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
         this.free = builder.free;
-        this.requiresNoCD = builder.requiresNoCD;
+        this.requiresPatch = builder.requiresPatch;
         this.script = builder.script;
     }
 
@@ -64,8 +66,8 @@ public class ScriptDTO {
         return free;
     }
 
-    public Boolean isRequiresNoCD() {
-        return requiresNoCD;
+    public Boolean isRequiresPatch() {
+        return requiresPatch;
     }
 
     public List<OperatingSystem> getTestingOperatingSystems() {
@@ -80,6 +82,30 @@ public class ScriptDTO {
         return (o1, o2) -> o1.getScriptName().compareToIgnoreCase(o2.getScriptName());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ScriptDTO scriptDTO = (ScriptDTO) o;
+
+        return new EqualsBuilder().append(scriptName, scriptDTO.scriptName).append(scriptSource, scriptDTO.scriptSource)
+                .append(compatibleOperatingSystems, scriptDTO.compatibleOperatingSystems)
+                .append(testingOperatingSystems, scriptDTO.testingOperatingSystems).append(free, scriptDTO.free)
+                .append(requiresPatch, scriptDTO.requiresPatch).append(script, scriptDTO.script).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(scriptName).append(scriptSource).append(compatibleOperatingSystems)
+                .append(testingOperatingSystems).append(free).append(requiresPatch).append(script).toHashCode();
+    }
+
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String scriptName;
@@ -87,7 +113,7 @@ public class ScriptDTO {
         private List<OperatingSystem> compatibleOperatingSystems;
         private List<OperatingSystem> testingOperatingSystems;
         private Boolean free;
-        private Boolean requiresNoCD;
+        private Boolean requiresPatch;
         private String script;
 
         public Builder() {
@@ -98,7 +124,7 @@ public class ScriptDTO {
             this.withScriptName(scriptDTO.getScriptName()).withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
                     .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems()).withFree(scriptDTO.isFree())
-                    .withRequiresNoCD(scriptDTO.requiresNoCD);
+                    .withRequiresPatch(scriptDTO.requiresPatch);
         }
 
         public Builder withScriptName(String name) {
@@ -131,8 +157,8 @@ public class ScriptDTO {
             return this;
         }
 
-        public Builder withRequiresNoCD(Boolean requiresNoCD) {
-            this.requiresNoCD = requiresNoCD;
+        public Builder withRequiresPatch(Boolean requiresPatch) {
+            this.requiresPatch = requiresPatch;
             return this;
         }
 
