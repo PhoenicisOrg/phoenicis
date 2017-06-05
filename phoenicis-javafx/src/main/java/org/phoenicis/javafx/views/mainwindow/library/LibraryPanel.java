@@ -63,7 +63,7 @@ final class LibraryPanel extends DetailsView {
         this.getChildren().clear();
         final VBox vBox = new VBox();
 
-        Label description = new Label(shortcutDTO.getDescription());
+        final Label description = new Label(shortcutDTO.getDescription());
         description.setWrapText(true);
 
         final GridPane gridPane = new GridPane();
