@@ -19,6 +19,7 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -75,7 +76,7 @@ public class LocalRepository implements Repository {
             Set<TranslationDTO> translations = new HashSet<>();
             for (File translation : translationFiles) {
                 try {
-                    final String language = translation.getName();
+                    final String language = FilenameUtils.removeExtension(translation.getName());
                     final String content = new String(Files.readAllBytes(translation.toPath()));
                     final TranslationDTO.Builder translationDTOBuilder = new TranslationDTO.Builder()
                             .withLanguage(language).withJson(content);
