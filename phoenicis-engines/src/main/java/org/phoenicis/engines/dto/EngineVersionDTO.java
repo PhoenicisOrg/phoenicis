@@ -20,6 +20,8 @@ package org.phoenicis.engines.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonDeserialize(builder = EngineVersionDTO.Builder.class)
@@ -87,6 +89,30 @@ public class EngineVersionDTO {
         return new ToStringBuilder(EngineVersionDTO.class).append("version", version).append("url", url)
                 .append("sha1sum", sha1sum).append("geckoUrl", geckoUrl).append("geckoMd5", geckoMd5)
                 .append("monoUrl", monoUrl).append("monoMd5", monoMd5).toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        EngineVersionDTO that = (EngineVersionDTO) o;
+
+        return new EqualsBuilder().append(version, that.version).append(url, that.url).append(sha1sum, that.sha1sum)
+                .append(geckoUrl, that.geckoUrl).append(geckoMd5, that.geckoMd5).append(monoUrl, that.monoUrl)
+                .append(monoMd5, that.monoMd5).append(monoFile, that.monoFile).append(geckoFile, that.geckoFile)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(version).append(url).append(sha1sum).append(geckoUrl).append(geckoMd5)
+                .append(monoUrl).append(monoMd5).append(monoFile).append(geckoFile).toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

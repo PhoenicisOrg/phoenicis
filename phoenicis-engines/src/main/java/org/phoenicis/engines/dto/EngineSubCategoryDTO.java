@@ -20,6 +20,8 @@ package org.phoenicis.engines.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.tools.version.Version;
 import org.phoenicis.tools.version.VersionComparator;
@@ -60,5 +62,26 @@ public class EngineSubCategoryDTO {
 
     public static Comparator<EngineVersionDTO> comparator() {
         return (o1, o2) -> new VersionComparator().compare(new Version(o1.getVersion()), new Version(o2.getVersion()));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        EngineSubCategoryDTO that = (EngineSubCategoryDTO) o;
+
+        return new EqualsBuilder().append(name, that.name).append(description, that.description)
+                .append(packages, that.packages).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(name).append(description).append(packages).toHashCode();
     }
 }
