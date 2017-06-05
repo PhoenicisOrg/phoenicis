@@ -20,23 +20,23 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public interface Repository {
-    List<CategoryDTO> fetchInstallableApplications();
+    RepositoryDTO fetchInstallableApplications();
 
     default void onDelete() {
         // do nothing
     }
 
-    default void fetchInstallableApplications(Consumer<List<CategoryDTO>> callback, Consumer<Exception> errorCallback) {
+    default void fetchInstallableApplications(Consumer<RepositoryDTO> callback, Consumer<Exception> errorCallback) {
         try {
-            callback.accept(Collections.unmodifiableList(fetchInstallableApplications()));
+            callback.accept(fetchInstallableApplications());
         } catch (Exception e) {
             errorCallback.accept(e);
         }
@@ -61,7 +61,7 @@ public interface Repository {
     }
 
     default CategoryDTO getCategory(List<String> path) {
-        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().stream()
+        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().getCategories().stream()
                 .filter(category -> path.get(0).equals(category.getName())).findFirst();
         return categoryDTO.orElse(null);
     }

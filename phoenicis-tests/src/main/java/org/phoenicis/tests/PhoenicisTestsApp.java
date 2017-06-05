@@ -48,8 +48,8 @@ public class PhoenicisTestsApp {
             final Repository repository = applicationContext.getBean("mockedRepository", Repository.class);
             this.applicationContext = applicationContext;
 
-            repository.fetchInstallableApplications(categoryDTOS -> {
-                categoryDTOS.forEach(this::testCategory);
+            repository.fetchInstallableApplications(repositoryDTO -> {
+                repositoryDTO.getCategories().forEach(this::testCategory);
             }, e -> {
                 throw new IllegalStateException(e);
             });

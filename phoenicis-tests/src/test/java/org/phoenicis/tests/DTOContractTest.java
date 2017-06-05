@@ -186,7 +186,7 @@ public class DTOContractTest {
                 final Object result = method.invoke(builderInstance,
                         createInstanceOfParameter(method.getParameterTypes()[0], DEFAULT_MAX_DEPTH));
 
-                if(result != builderInstance) {
+                if (result != builderInstance) {
                     throw new IllegalStateException("*with methods should return the current instance");
                 }
             }
@@ -239,6 +239,10 @@ public class DTOContractTest {
 
         if (constructorParameterType == List.class) {
             return Collections.emptyList();
+        }
+
+        if (constructorParameterType == Map.class) {
+            return Collections.emptyMap();
         }
 
         if (constructorParameterType == URI.class) {
