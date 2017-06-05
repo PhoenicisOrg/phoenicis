@@ -21,6 +21,8 @@ package org.phoenicis.repository.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.net.URI;
 import java.util.*;
@@ -94,6 +96,29 @@ public class ApplicationDTO {
 
     public static Comparator<ApplicationDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ApplicationDTO that = (ApplicationDTO) o;
+
+        return new EqualsBuilder().append(name, that.name).append(description, that.description).append(icon, that.icon)
+                .append(miniatures, that.miniatures).append(scripts, that.scripts).append(resources, that.resources)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(name).append(description).append(icon).append(miniatures)
+                .append(scripts).append(resources).toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
