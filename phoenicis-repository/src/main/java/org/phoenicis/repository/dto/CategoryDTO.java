@@ -20,6 +20,8 @@ package org.phoenicis.repository.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.net.URI;
@@ -47,6 +49,27 @@ public class CategoryDTO {
 
     public URI getIcon() {
         return icon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CategoryDTO that = (CategoryDTO) o;
+
+        return new EqualsBuilder().append(type, that.type).append(name, that.name)
+                .append(applications, that.applications).append(icon, that.icon).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(type).append(name).append(applications).append(icon).toHashCode();
     }
 
     public enum CategoryType {

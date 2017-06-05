@@ -20,6 +20,8 @@ package org.phoenicis.library.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.net.URI;
@@ -63,6 +65,27 @@ public class ShortcutCategoryDTO {
 
     public static Comparator<ShortcutCategoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ShortcutCategoryDTO that = (ShortcutCategoryDTO) o;
+
+        return new EqualsBuilder().append(name, that.name).append(description, that.description)
+                .append(shortcuts, that.shortcuts).append(icon, that.icon).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(name).append(description).append(shortcuts).append(icon).toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
