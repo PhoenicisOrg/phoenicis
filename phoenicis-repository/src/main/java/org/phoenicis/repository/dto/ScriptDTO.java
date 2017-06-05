@@ -21,6 +21,8 @@ package org.phoenicis.repository.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.entities.OperatingSystem;
 
 import java.net.URI;
@@ -78,6 +80,30 @@ public class ScriptDTO {
 
     public static Comparator<ScriptDTO> nameComparator() {
         return (o1, o2) -> o1.getScriptName().compareToIgnoreCase(o2.getScriptName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ScriptDTO scriptDTO = (ScriptDTO) o;
+
+        return new EqualsBuilder().append(scriptName, scriptDTO.scriptName).append(scriptSource, scriptDTO.scriptSource)
+                .append(compatibleOperatingSystems, scriptDTO.compatibleOperatingSystems)
+                .append(testingOperatingSystems, scriptDTO.testingOperatingSystems).append(free, scriptDTO.free)
+                .append(requiresNoCD, scriptDTO.requiresNoCD).append(script, scriptDTO.script).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(scriptName).append(scriptSource).append(compatibleOperatingSystems)
+                .append(testingOperatingSystems).append(free).append(requiresNoCD).append(script).toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
