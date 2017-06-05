@@ -67,7 +67,7 @@ public class GitRepository implements Repository {
                 LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'",
                         this.gitRepositoryUri, gitRepositoryLocation.getAbsolutePath()));
 
-                return null;
+                return new RepositoryDTO.Builder().build();
             }
         }
 

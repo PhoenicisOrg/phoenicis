@@ -62,7 +62,7 @@ public class LocalRepository implements Repository {
         final File[] categoryDirectories = repositoryDirectory.listFiles();
 
         if (categoryDirectories == null) {
-            return null;
+            return new RepositoryDTO.Builder().build();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);

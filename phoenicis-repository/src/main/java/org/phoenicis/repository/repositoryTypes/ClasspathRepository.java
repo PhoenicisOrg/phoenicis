@@ -70,7 +70,7 @@ public class ClasspathRepository implements Repository {
             return repositoryDTOBuilder.build();
         } catch (IOException e) {
             LOGGER.warn("Error while reading resource directory", e);
-            return null;
+            return new RepositoryDTO.Builder().build();
         }
     }
 

@@ -24,7 +24,7 @@ import org.phoenicis.repository.dto.RepositoryDTO;
 public class NullRepository implements Repository {
     @Override
     public RepositoryDTO fetchInstallableApplications() {
-        return null;
+        return new RepositoryDTO.Builder().build();
     }
 
     @Override
