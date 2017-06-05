@@ -18,23 +18,52 @@
 
 package org.phoenicis.scripts.nashorn;
 
+import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TranslationDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class NashornScriptInterpreter implements ScriptInterpreter {
     private final NashornEngineFactory nashornEngineFactory;
+    private Set<TranslationDTO> translations = Collections.emptySet();
 
     public NashornScriptInterpreter(NashornEngineFactory nashornEngineFactory) {
         this.nashornEngineFactory = nashornEngineFactory;
     }
 
     @Override
+    public void setRepository(RepositoryDTO repositoryDTO) {
+        this.translations = repositoryDTO.getTranslations();
+    }
+
+    @Override
     public void runScript(String scriptContent, Consumer<Exception> errorCallback) {
         final String language = Locale.getDefault().getLanguage();
+        StringBuilder translationsBuilder = new StringBuilder();
+        for (TranslationDTO translationDTO : this.translations) {
+            translationsBuilder.append(translationDTO.getLanguage());
+            translationsBuilder.append(":{");
+            translationsBuilder.append("translation:");
+            translationsBuilder.append(translationDTO.getJson());
+            translationsBuilder.append("},");
+        }
         final String i18nextInit = "i18next.init({                                                                     "
+                + String.format("  lng: '%s',                                                             ", language)
+                + "  debug: true,                                                                                      "
+                + "  resources: {                                                                                      "
+                + translationsBuilder.toString()
+                + "  }                                                                                                 "
+                + "}, function(err, t) {                                                                               "
+                + "    if (err) {                                                                                      "
+                + "        print('Could not load translation', err);                                                   "
+                + "    }                                                                                               "
+                + "});                                                                                                 ";
+        /*final String i18nextInit = "i18next.init({                                                                     "
                 + String.format("  lng: '%s',                                                             ", language)
                 + "  debug: true,                                                                                      "
                 + "  resources: {                                                                                      "
@@ -53,7 +82,7 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
                 + "    if (err) {                                                                                      "
                 + "        print('Could not load translation', err);                                                   "
                 + "    }                                                                                               "
-                + "});                                                                                                 ";
+                + "});                                                                                                 ";*/
         final String scriptContenti18n = "include([\"Functions\", \"i18n\", \"i18next\"]);" + i18nextInit
                 + scriptContent;
         nashornEngineFactory.createEngine().eval(scriptContenti18n, errorCallback);
