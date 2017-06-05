@@ -125,8 +125,13 @@ public class LocalRepository implements Repository {
 
         for (File applicationDirectory : applicationDirectories) {
             if (applicationDirectory.isDirectory()) {
+                final String language = Locale.getDefault().getLanguage();
+                File applicationJson = new File(applicationDirectory, String.format("application_%s.json", language));
+                if (!applicationJson.exists()) {
+                    applicationJson = new File(applicationDirectory, "application.json");
+                }
                 final ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(
-                        unSerializeApplication(new File(applicationDirectory, "application.json")));
+                        unSerializeApplication(applicationJson));
 
                 if (StringUtils.isBlank(applicationDTOBuilder.getName())) {
                     applicationDTOBuilder.withName(applicationDirectory.getName());

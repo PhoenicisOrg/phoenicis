@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -109,10 +110,14 @@ public class ClasspathRepository implements Repository {
     }
 
     private ApplicationDTO buildApplication(String categoryFileName, String applicationFileName) throws IOException {
-        final String applicationJsonFile = packagePath + "/" + categoryFileName + "/" + applicationFileName
-                + "/application.json";
+        final String applicationDirectory = packagePath + "/" + categoryFileName + "/" + applicationFileName;
+        final String language = Locale.getDefault().getLanguage();
+        File applicationJson = new File(applicationDirectory, String.format("application_%s.json", language));
+        if (!applicationJson.exists()) {
+            applicationJson = new File(applicationDirectory, "application.json");
+        }
         final ApplicationDTO applicationDTO = objectMapper
-                .readValue(getClass().getResourceAsStream(applicationJsonFile), ApplicationDTO.class);
+                .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
 
         return new ApplicationDTO.Builder(applicationDTO)
                 .withScripts(buildScripts(categoryFileName, applicationFileName))
