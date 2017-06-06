@@ -19,19 +19,17 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.apache.commons.lang.StringUtils;
-import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -95,7 +93,7 @@ public class AppsController {
         try {
             StringBuilder cssBuilder = new StringBuilder();
             for (CategoryDTO category : categoryDTOS) {
-                cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
+                cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
                 URI categoryIcon = category.getIcon();
                 if (categoryIcon == null) {
                     cssBuilder
