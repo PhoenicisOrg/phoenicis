@@ -63,26 +63,6 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
                 + "        print('Could not load translation', err);                                                   "
                 + "    }                                                                                               "
                 + "});                                                                                                 ";
-        /*final String i18nextInit = "i18next.init({                                                                     "
-                + String.format("  lng: '%s',                                                             ", language)
-                + "  debug: true,                                                                                      "
-                + "  resources: {                                                                                      "
-                + "    en: {                                                                                           "
-                + "      translation: {                                                                                "
-                + "        \"Please enter the name of your application\": \"Please enter the name of your application.\""
-                + "      }                                                                                             "
-                + "    },                                                                                              "
-                + "    de: {                                                                                           "
-                + "      translation: {                                                                                "
-                + "        \"Please enter the name of your application\": \"Bitte geben Sie den Namen Ihrer Anwendung ein.\""
-                + "      }                                                                                             "
-                + "    }                                                                                               "
-                + "  }                                                                                                 "
-                + "}, function(err, t) {                                                                               "
-                + "    if (err) {                                                                                      "
-                + "        print('Could not load translation', err);                                                   "
-                + "    }                                                                                               "
-                + "});                                                                                                 ";*/
         final String scriptContenti18n = "include([\"Functions\", \"i18n\", \"i18next\"]);" + i18nextInit
                 + scriptContent;
         nashornEngineFactory.createEngine().eval(scriptContenti18n, errorCallback);
