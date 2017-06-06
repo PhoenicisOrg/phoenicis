@@ -19,7 +19,12 @@
 package org.phoenicis.cli;
 
 import com.github.jankroken.commandline.domain.InvalidCommandLineException;
+import com.google.common.io.Files;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 public class PhoenicisCLITest {
     private final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
@@ -30,8 +35,14 @@ public class PhoenicisCLITest {
     }
 
     @Test
-    public void testBlankScript_noException() {
-        System.setProperty("application.repository.configuration", "classpath:///org/phoenicis/cli/testRepository");
+    public void testBlankScript_noException() throws IOException {
+        File tempRepositoryListFile = File.createTempFile("repositories", ".json");
+        tempRepositoryListFile.deleteOnExit();
+
+        Files.write("[{\"type\":\"classpath\",\"packagePath\":\"/org/phoenicis/cli/testRepository\"}]",
+                tempRepositoryListFile, Charset.defaultCharset());
+
+        System.setProperty("application.repository.list", tempRepositoryListFile.getPath());
         phoenicisCLI.run(new String[] { "-install", "Graphics", "Photofiltre", "Online" });
     }
 }

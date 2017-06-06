@@ -10,16 +10,11 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -125,51 +120,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
                     repositoryDTO -> this.callbacks.forEach(
                             callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO.getCategories())),
                     exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
-        }
-    }
-
-    /**
-     * This method extracts the type of a given repository path string.
-     * The type is prepended to the repository path and separated by a <code>+</code> or <code>:</code>
-     *
-     * @param repositoryUrl The repository path string containing the repository type
-     * @return The extracted repository type
-     */
-    private String extractRepositoryType(String repositoryUrl) {
-        String result = null;
-
-        Pattern pattern = Pattern.compile("^([^\\+:]+)(\\+|:)");
-        Matcher matcher = pattern.matcher(repositoryUrl);
-
-        if (matcher.find()) {
-            result = matcher.group(1);
-        }
-
-        return result;
-    }
-
-    private Repository toRepository(String repositoryUrl) {
-        LOGGER.info("Converting: " + repositoryUrl + " to Repository");
-
-        try {
-            String repositoryType = extractRepositoryType(repositoryUrl);
-            String repositoryPath = repositoryUrl.substring(repositoryType.length() + 1);
-
-            switch (repositoryType) {
-                case "git":
-                    return new GitRepository(new URI(repositoryPath), cacheDirectoryPath, localRepositoryFactory,
-                            fileUtilities);
-                case "file":
-                    return localRepositoryFactory.createInstance(new File(repositoryPath));
-                case "classpath":
-                    return classPathRepositoryFactory.createInstance(new URI(repositoryPath).getPath());
-                default:
-                    LOGGER.warn("Unsupported repository type: " + repositoryType);
-                    return new NullRepository();
-            }
-        } catch (URISyntaxException e) {
-            LOGGER.warn("Invalid repository uri syntax: " + repositoryUrl, e);
-            return new NullRepository();
         }
     }
 

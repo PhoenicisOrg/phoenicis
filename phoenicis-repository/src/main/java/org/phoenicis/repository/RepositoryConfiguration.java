@@ -80,15 +80,6 @@ public class RepositoryConfiguration {
         return repositoryManager;
     }
 
-    public void saveRepositories(ObjectMapper objectMapper,
-            List<RepositoryLocation<? extends Repository>> repositoryLocations) {
-        try {
-            objectMapper.writeValue(new File(repositoryListPath), repositoryLocations);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations(ObjectMapper objectMapper) {
         List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
 
