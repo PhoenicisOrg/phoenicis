@@ -2,7 +2,9 @@ package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.repositoryTypes.Repository;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -46,7 +48,7 @@ public interface RepositoryManager {
      * @param repositoryUrl The repository url belonging to the repository that should be moved to @param toIndex
      * @param toIndex       The index, to which the repository should be moved
      */
-    void moveRepository(String repositoryUrl, int toIndex);
+    void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex);
 
     /**
      * This method adds a number of given repositories to this manager. This is done by inserting the repositories at the given position.
@@ -55,7 +57,7 @@ public interface RepositoryManager {
      * @param index          The start position, where the repositories should be added
      * @param repositoryUrls An array containing the urls to the to be added repositories
      */
-    void addRepositories(int index, String... repositoryUrls);
+    void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls);
 
     /**
      * This method adds a number of given repositories to this manager. This is done by appending the repositories at the end, which makes them the lowest priority.
@@ -63,7 +65,7 @@ public interface RepositoryManager {
      *
      * @param repositoryUrls An array containing the urls to the to be added repositories
      */
-    void addRepositories(String... repositoryUrls);
+    void addRepositories(RepositoryLocation<? extends Repository>... repositoryUrls);
 
     /**
      * This method removes the repositories belonging to the given array of repository urls from this manager.
@@ -71,7 +73,7 @@ public interface RepositoryManager {
      *
      * @param repositoryUrls An array containing the urls of the to be removed repositories.
      */
-    void removeRepositories(String... repositoryUrls);
+    void removeRepositories(RepositoryLocation<? extends Repository>... repositoryUrls);
 
     /**
      * This method will fetch a new list of {@link org.phoenicis.repository.dto.CategoryDTO}s from the managed repositories.

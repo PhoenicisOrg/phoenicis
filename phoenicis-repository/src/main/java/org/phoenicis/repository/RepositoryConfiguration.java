@@ -18,11 +18,18 @@
 
 package org.phoenicis.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.dto.ClasspathRepositoryLocation;
+import org.phoenicis.repository.dto.GitRepositoryLocation;
+import org.phoenicis.repository.dto.LocalRepositoryLocation;
+import org.phoenicis.repository.dto.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
 import org.phoenicis.repository.repositoryTypes.LocalRepository;
-import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +38,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class RepositoryConfiguration {
-    @Value("${application.repository.configuration}")
-    private String repositoryConfiguration;
-
     @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
     private boolean enforceUncompatibleOperatingSystems;
 
     @Value("${application.user.cache}")
     private String cacheDirectoryPath;
+
+    @Value("${application.repository.list}")
+    private String repositoryListPath;
 
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
@@ -59,9 +74,47 @@ public class RepositoryConfiguration {
                 classPathRepositoryFactory(), backgroundRepositoryFactory());
 
         // set initial repositories
-        repositoryManager.addRepositories(this.repositoryConfiguration.split(";"));
+        repositoryManager
+                .addRepositories(this.loadRepositoryLocations(objectMapper()).toArray(new RepositoryLocation[0]));
 
         return repositoryManager;
+    }
+
+    public void saveRepositories(ObjectMapper objectMapper,
+            List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        try {
+            objectMapper.writeValue(new File(repositoryListPath), repositoryLocations);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations(ObjectMapper objectMapper) {
+        List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
+
+        File repositoryListFile = new File(repositoryListPath);
+
+        if (repositoryListFile.exists()) {
+            try {
+                result = objectMapper.readValue(new File(repositoryListPath),
+                        TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                result.add(new GitRepositoryLocation.Builder()
+                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI()).build());
+                result.add(new GitRepositoryLocation.Builder()
+                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI()).build());
+                result.add(
+                        new ClasspathRepositoryLocation.Builder().withPackagePath("/org/phoenicis/repository").build());
+            } catch (URISyntaxException | MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
     @Bean
@@ -80,7 +133,7 @@ public class RepositoryConfiguration {
     }
 
     @Bean
-    ObjectMapper objectMapper() {
+    public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 

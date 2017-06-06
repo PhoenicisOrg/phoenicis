@@ -2,6 +2,7 @@ package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.repositoryTypes.*;
 import org.phoenicis.tools.ToolsConfiguration;
@@ -76,17 +77,19 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void moveRepository(String repositoryUrl, int toIndex) {
+    public void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex) {
         LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
-        this.multipleRepository.moveRepository(toRepository(repositoryUrl), toIndex);
+        this.multipleRepository.moveRepository(repositoryUrl.createRepository(cacheDirectoryPath,
+                localRepositoryFactory, classPathRepositoryFactory, fileUtilities), toIndex);
         this.triggerRepositoryChange();
     }
 
     @Override
-    public void addRepositories(int index, String... repositoryUrls) {
+    public void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
-            Repository repository = toRepository(repositoryUrls[repositoryUrlIndex]);
+            Repository repository = repositoryUrls[repositoryUrlIndex].createRepository(cacheDirectoryPath,
+                    localRepositoryFactory, classPathRepositoryFactory, fileUtilities);
 
             this.multipleRepository.addRepository(index + repositoryUrlIndex, repository);
         }
@@ -94,15 +97,17 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addRepositories(String... repositoryUrls) {
+    public void addRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         this.addRepositories(this.multipleRepository.size(), repositoryUrls);
     }
 
     @Override
-    public void removeRepositories(String... repositoryUrls) {
+    public void removeRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 
-        List<Repository> toDeleteRepositories = Arrays.stream(repositoryUrls).map(this::toRepository)
+        List<Repository> toDeleteRepositories = Arrays
+                .stream(repositoryUrls).map(location -> location.createRepository(cacheDirectoryPath,
+                        localRepositoryFactory, classPathRepositoryFactory, fileUtilities))
                 .collect(Collectors.toList());
         toDeleteRepositories.forEach(this.multipleRepository::removeRepository);
 
