@@ -32,6 +32,8 @@ import org.phoenicis.repository.repositoryTypes.LocalRepository;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -48,6 +50,8 @@ import java.util.List;
 
 @Configuration
 public class RepositoryConfiguration {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryConfiguration.class);
+
     @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
     private boolean enforceUncompatibleOperatingSystems;
 
@@ -75,22 +79,30 @@ public class RepositoryConfiguration {
 
         // set initial repositories
         repositoryManager
-                .addRepositories(this.loadRepositoryLocations(objectMapper()).toArray(new RepositoryLocation[0]));
+                .addRepositories(this.loadRepositoryLocations().toArray(new RepositoryLocation[0]));
 
         return repositoryManager;
     }
 
-    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations(ObjectMapper objectMapper) {
+    public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        try {
+            this.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
+        } catch (IOException e) {
+            LOGGER.error("Couldn't save repository location list", e);
+        }
+    }
+
+    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
         List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
 
         File repositoryListFile = new File(repositoryListPath);
 
         if (repositoryListFile.exists()) {
             try {
-                result = objectMapper.readValue(new File(repositoryListPath),
+                result = this.objectMapper().readValue(new File(repositoryListPath),
                         TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("Couldn't load repository location list", e);
             }
         } else {
             try {
@@ -101,7 +113,7 @@ public class RepositoryConfiguration {
                 result.add(
                         new ClasspathRepositoryLocation.Builder().withPackagePath("/org/phoenicis/repository").build());
             } catch (URISyntaxException | MalformedURLException e) {
-                e.printStackTrace();
+                LOGGER.error("Couldn't create default repository location list", e);
             }
         }
 
@@ -124,7 +136,7 @@ public class RepositoryConfiguration {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 

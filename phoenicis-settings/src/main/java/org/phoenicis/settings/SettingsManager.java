@@ -18,11 +18,7 @@
 
 package org.phoenicis.settings;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.phoenicis.repository.RepositoryConfiguration;
-import org.phoenicis.repository.dto.ClasspathRepositoryLocation;
-import org.phoenicis.repository.dto.GitRepositoryLocation;
 import org.phoenicis.repository.dto.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +29,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsManager {
@@ -48,9 +40,6 @@ public class SettingsManager {
 
     @Value("${application.viewsource}")
     private boolean viewScriptSource;
-
-    @Value("${application.repository.list}")
-    private String repositoryListPath;
 
     @Autowired
     private RepositoryConfiguration repositoryConfiguration;
@@ -106,38 +95,10 @@ public class SettingsManager {
     }
 
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
-        try {
-            repositoryConfiguration.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        repositoryConfiguration.saveRepositories(repositoryLocations);
     }
 
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
-        List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
-
-        File repositoryListFile = new File(repositoryListPath);
-
-        if (repositoryListFile.exists()) {
-            try {
-                result = repositoryConfiguration.objectMapper().readValue(new File(repositoryListPath),
-                        TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI()).build());
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI()).build());
-                result.add(
-                        new ClasspathRepositoryLocation.Builder().withPackagePath("/org/phoenicis/repository").build());
-            } catch (URISyntaxException | MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return result;
+        return repositoryConfiguration.loadRepositoryLocations();
     }
 }
