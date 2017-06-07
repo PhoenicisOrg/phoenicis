@@ -10,9 +10,7 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -28,6 +26,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
     private final String cacheDirectoryPath;
 
     private final FileUtilities fileUtilities;
+
+    private Map<RepositoryLocation<? extends Repository>, Repository> repositoryMap;
 
     private MultipleRepository multipleRepository;
     private FilterRepository filterRepository;
@@ -47,6 +47,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.cacheDirectoryPath = cacheDirectoryPath;
         this.fileUtilities = fileUtilities;
 
+        this.repositoryMap = new HashMap<>();
         this.callbacks = new ArrayList<>();
 
         this.multipleRepository = new MultipleRepository();
@@ -74,20 +75,25 @@ public class DefaultRepositoryManager implements RepositoryManager {
     @Override
     public void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex) {
         LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
-        this.multipleRepository.moveRepository(repositoryUrl.createRepository(cacheDirectoryPath,
-                localRepositoryFactory, classPathRepositoryFactory, fileUtilities), toIndex);
+
+        this.multipleRepository.moveRepository(this.repositoryMap.get(repositoryUrl), toIndex);
+
         this.triggerRepositoryChange();
     }
 
     @Override
     public void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
+
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
             Repository repository = repositoryUrls[repositoryUrlIndex].createRepository(cacheDirectoryPath,
                     localRepositoryFactory, classPathRepositoryFactory, fileUtilities);
 
+            this.repositoryMap.put(repositoryUrls[repositoryUrlIndex], repository);
+
             this.multipleRepository.addRepository(index + repositoryUrlIndex, repository);
         }
+
         this.triggerRepositoryChange();
     }
 
@@ -100,15 +106,17 @@ public class DefaultRepositoryManager implements RepositoryManager {
     public void removeRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 
-        List<Repository> toDeleteRepositories = Arrays
-                .stream(repositoryUrls).map(location -> location.createRepository(cacheDirectoryPath,
-                        localRepositoryFactory, classPathRepositoryFactory, fileUtilities))
-                .collect(Collectors.toList());
-        toDeleteRepositories.forEach(this.multipleRepository::removeRepository);
+        for (RepositoryLocation<? extends Repository> repositoryLocation : repositoryUrls) {
+            Repository deletedRepository = this.repositoryMap.remove(repositoryLocation);
+
+            // remove repository from repository collection
+            this.multipleRepository.removeRepository(deletedRepository);
+
+            // do eventual cleanup work
+            deletedRepository.onDelete();
+        }
 
         this.triggerRepositoryChange();
-
-        toDeleteRepositories.forEach(Repository::onDelete);
     }
 
     @Override
