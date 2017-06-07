@@ -78,8 +78,7 @@ public class RepositoryConfiguration {
                 classPathRepositoryFactory(), backgroundRepositoryFactory());
 
         // set initial repositories
-        repositoryManager
-                .addRepositories(this.loadRepositoryLocations().toArray(new RepositoryLocation[0]));
+        repositoryManager.addRepositories(this.loadRepositoryLocations().toArray(new RepositoryLocation[0]));
 
         return repositoryManager;
     }
