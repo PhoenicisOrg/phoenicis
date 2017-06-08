@@ -37,12 +37,14 @@ import java.util.List;
 public class CategoryDTO {
     private final CategoryType type;
     private final String name;
+    private final String id;
     private final List<ApplicationDTO> applications;
     private final URI icon;
 
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
         this.name = builder.name;
+        this.id = builder.id;
         this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
     }
@@ -63,13 +65,14 @@ public class CategoryDTO {
 
         CategoryDTO that = (CategoryDTO) o;
 
-        return new EqualsBuilder().append(type, that.type).append(name, that.name)
+        return new EqualsBuilder().append(type, that.type).append(name, that.name).append(id, that.id)
                 .append(applications, that.applications).append(icon, that.icon).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(type).append(name).append(applications).append(icon).toHashCode();
+        return new HashCodeBuilder(17, 37).append(type).append(name).append(id).append(applications).append(icon)
+                .toHashCode();
     }
 
     public enum CategoryType {
@@ -84,6 +87,10 @@ public class CategoryDTO {
         return name;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public List<ApplicationDTO> getApplications() {
         return applications;
     }
@@ -96,6 +103,7 @@ public class CategoryDTO {
     public static class Builder {
         private CategoryType type;
         private String name;
+        private String id;
         private List<ApplicationDTO> applications = new ArrayList<>();
         private URI icon;
 
@@ -104,8 +112,9 @@ public class CategoryDTO {
         }
 
         public Builder(CategoryDTO categoryDTO) {
-            this.withName(categoryDTO.getName()).withApplications(categoryDTO.getApplications())
-                    .withIcon(categoryDTO.getIcon()).withType(categoryDTO.getType());
+            this.withName(categoryDTO.getName()).withId(categoryDTO.getId())
+                    .withApplications(categoryDTO.getApplications()).withIcon(categoryDTO.getIcon())
+                    .withType(categoryDTO.getType());
         }
 
         public Builder withType(CategoryType type) {
@@ -115,6 +124,11 @@ public class CategoryDTO {
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 

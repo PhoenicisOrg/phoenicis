@@ -95,10 +95,14 @@ public class LocalRepository implements Repository {
 
         for (File categoryDirectory : categoryDirectories) {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
-                final File categoryFile = new File(categoryDirectory, "category.json");
+                final String language = Locale.getDefault().getLanguage();
+                File categoryJson = new File(categoryDirectory, String.format("category_%s.json", language));
+                if (!categoryJson.exists()) {
+                    categoryJson = new File(categoryDirectory, "category.json");
+                }
 
                 final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(
-                        unSerializeCategory(categoryFile)).withName(categoryDirectory.getName())
+                        unSerializeCategory(categoryJson)).withId(categoryDirectory.getName())
                                 .withApplications(fetchApplications(categoryDirectory));
 
                 final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
