@@ -74,7 +74,7 @@ public class TranslationDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String language;
-        private Properties properties;
+        private Properties properties = new Properties();
 
         public Builder() {
             // Default constructor

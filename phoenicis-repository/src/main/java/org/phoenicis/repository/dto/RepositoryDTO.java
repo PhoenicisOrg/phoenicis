@@ -82,7 +82,7 @@ public class RepositoryDTO {
     public static class Builder {
         private String name;
         private List<CategoryDTO> categories = new ArrayList<>();
-        private TranslationDTO translations;
+        private TranslationDTO translations = new TranslationDTO.Builder().build();
 
         public Builder() {
             // Default constructor

@@ -4,6 +4,8 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.phoenicis.configuration.localisation.Localisation;
+import org.phoenicis.configuration.localisation.PropertiesResourceBundle;
 import org.phoenicis.repository.dto.*;
 import org.slf4j.LoggerFactory;
 
@@ -44,13 +46,16 @@ public abstract class MergeableRepository implements Repository {
 
         RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder().withName("merged repository");
 
+        Properties translationProperties = new Properties();
         Map<Repository, List<CategoryDTO>> categoriesMap = new HashMap<>();
         for (Repository repository : repositoriesMap.keySet()) {
             RepositoryDTO repositoryDTO = repositoriesMap.get(repository);
-            //TODO: merge translations
-            repositoryDTOBuilder.withTranslations(repositoryDTO.getTranslations());
+            translationProperties.putAll(repositoryDTO.getTranslations().getProperties());
             categoriesMap.put(repository, repositoryDTO.getCategories());
         }
+        repositoryDTOBuilder.withTranslations(new TranslationDTO.Builder()
+                .withLanguage(Locale.getDefault().getLanguage()).withProperties(translationProperties).build());
+        Localisation.setAdditionalTranslations(new PropertiesResourceBundle(translationProperties));
 
         /*
          * Take the first application source, from behind, as the default one
