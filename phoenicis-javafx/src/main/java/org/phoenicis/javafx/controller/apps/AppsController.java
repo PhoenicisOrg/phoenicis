@@ -53,7 +53,6 @@ public class AppsController {
         this.themeManager = themeManager;
 
         this.repositoryManager.addCallbacks(this::populateView, e -> view.showFailure());
-        this.repositoryManager.addCallbacks(scriptInterpreter::setRepository, e -> view.showFailure());
     }
 
     public void loadApps() {

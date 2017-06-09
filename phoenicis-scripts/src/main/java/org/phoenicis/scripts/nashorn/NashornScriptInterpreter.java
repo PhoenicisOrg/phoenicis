@@ -18,26 +18,16 @@
 
 package org.phoenicis.scripts.nashorn;
 
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.TranslationDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
-import java.util.Collections;
-import java.util.Set;
 import java.util.function.Consumer;
 
 public class NashornScriptInterpreter implements ScriptInterpreter {
     private final NashornEngineFactory nashornEngineFactory;
-    private Set<TranslationDTO> translations = Collections.emptySet();
 
     public NashornScriptInterpreter(NashornEngineFactory nashornEngineFactory) {
         this.nashornEngineFactory = nashornEngineFactory;
-    }
-
-    @Override
-    public void setRepository(RepositoryDTO repositoryDTO) {
-        this.translations = repositoryDTO.getTranslations();
     }
 
     @Override

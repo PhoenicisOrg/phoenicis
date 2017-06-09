@@ -19,7 +19,6 @@
 package org.phoenicis.scripts.interpreter;
 
 import org.apache.commons.io.IOUtils;
-import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +36,4 @@ public interface ScriptInterpreter {
     }
 
     InteractiveScriptSession createInteractiveSession();
-
-    void setRepository(RepositoryDTO repositoryDTO);
 }

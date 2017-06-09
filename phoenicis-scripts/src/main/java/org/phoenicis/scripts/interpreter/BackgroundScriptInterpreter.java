@@ -18,8 +18,6 @@
 
 package org.phoenicis.scripts.interpreter;
 
-import org.phoenicis.repository.dto.RepositoryDTO;
-
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -44,10 +42,5 @@ public class BackgroundScriptInterpreter implements ScriptInterpreter {
         return (evaluation, responseCallback, errorCallback) -> {
             executorService.execute(() -> interactiveScriptSession.eval(evaluation, responseCallback, errorCallback));
         };
-    }
-
-    @Override
-    public void setRepository(RepositoryDTO repositoryDTO) {
-        delegated.setRepository(repositoryDTO);
     }
 }
