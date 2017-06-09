@@ -33,15 +33,15 @@ import java.util.*;
 public class RepositoryDTO {
     private final String name;
     private final List<CategoryDTO> categories;
-    private final Set<TranslationDTO> translations;
+    private final TranslationDTO translations;
 
     private RepositoryDTO(Builder builder) {
         this.name = builder.name;
         this.categories = Collections.unmodifiableList(builder.categories);
-        this.translations = Collections.unmodifiableSet(builder.translations);
+        this.translations = builder.translations;
     }
 
-    public Set<TranslationDTO> getTranslations() {
+    public TranslationDTO getTranslations() {
         return translations;
     }
 
@@ -82,7 +82,7 @@ public class RepositoryDTO {
     public static class Builder {
         private String name;
         private List<CategoryDTO> categories = new ArrayList<>();
-        private Set<TranslationDTO> translations = new HashSet<>();
+        private TranslationDTO translations;
 
         public Builder() {
             // Default constructor
@@ -107,7 +107,7 @@ public class RepositoryDTO {
             return new RepositoryDTO(this);
         }
 
-        public Builder withTranslations(Set<TranslationDTO> translations) {
+        public Builder withTranslations(TranslationDTO translations) {
             this.translations = translations;
             return this;
         }

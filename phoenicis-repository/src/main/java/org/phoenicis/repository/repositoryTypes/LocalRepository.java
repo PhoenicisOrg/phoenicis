@@ -19,7 +19,6 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -73,23 +72,20 @@ public class LocalRepository implements Repository {
 
         final File i18nDirectory = new File(repositoryDirectory, "i18n");
         if (i18nDirectory.exists()) {
-            final File[] translationFiles = i18nDirectory.listFiles((dir, name) -> name.endsWith(".properties"));
-            Set<TranslationDTO> translations = new HashSet<>();
+            final File[] translationFiles = i18nDirectory
+                    .listFiles((dir, name) -> name.endsWith(Locale.getDefault().getLanguage() + ".properties"));
             Properties mergedProperties = new Properties();
             for (File translationFile : translationFiles) {
                 try {
-                    final String language = FilenameUtils.removeExtension(translationFile.getName());
                     Properties langProperties = new Properties();
                     langProperties.load(new FileInputStream(translationFile));
                     mergedProperties.putAll(langProperties);
-                    final TranslationDTO.Builder translationDTOBuilder = new TranslationDTO.Builder()
-                            .withLanguage(language).withProperties(langProperties);
-                    translations.add(translationDTOBuilder.build());
                 } catch (IOException e) {
                     LOGGER.error("Could not read translation properties", e);
                 }
             }
-            repositoryDTOBuilder.withTranslations(translations);
+            repositoryDTOBuilder.withTranslations(new TranslationDTO.Builder()
+                    .withLanguage(Locale.getDefault().getLanguage()).withProperties(mergedProperties).build());
             Localisation.setAdditionalTranslations(new PropertiesResourceBundle(mergedProperties));
         }
 
