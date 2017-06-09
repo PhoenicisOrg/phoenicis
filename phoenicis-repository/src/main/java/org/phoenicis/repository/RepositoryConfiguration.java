@@ -18,14 +18,12 @@
 
 package org.phoenicis.repository;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
-import org.phoenicis.repository.dto.ClasspathRepositoryLocation;
-import org.phoenicis.repository.dto.GitRepositoryLocation;
-import org.phoenicis.repository.dto.LocalRepositoryLocation;
-import org.phoenicis.repository.dto.RepositoryLocation;
+import org.phoenicis.repository.location.ClasspathRepositoryLocation;
+import org.phoenicis.repository.location.GitRepositoryLocation;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
 import org.phoenicis.repository.repositoryTypes.LocalRepository;
@@ -109,8 +107,7 @@ public class RepositoryConfiguration {
                         .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI()).build());
                 result.add(new GitRepositoryLocation.Builder()
                         .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI()).build());
-                result.add(
-                        new ClasspathRepositoryLocation.Builder().withPackagePath("/org/phoenicis/repository").build());
+                result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
             } catch (URISyntaxException | MalformedURLException e) {
                 LOGGER.error("Couldn't create default repository location list", e);
             }

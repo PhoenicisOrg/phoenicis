@@ -1,4 +1,4 @@
-package org.phoenicis.repository.dto;
+package org.phoenicis.repository.location;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -13,12 +13,23 @@ import org.phoenicis.tools.files.FileUtilities;
 import java.net.URI;
 
 /**
- * Created by marc on 06.06.17.
+ * Location information for a repository located inside a git repository
+ *
+ * @author marc
+ * @since 06.06.17
  */
 @JsonDeserialize(builder = GitRepositoryLocation.Builder.class)
 public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
+    /**
+     * The uri belonging to the location of the git repository
+     */
     private final URI gitRepositoryUri;
 
+    /**
+     * Constructor
+     *
+     * @param builder The builder object, containing the values for this {@link GitRepositoryLocation}
+     */
     public GitRepositoryLocation(Builder builder) {
         super("git");
 

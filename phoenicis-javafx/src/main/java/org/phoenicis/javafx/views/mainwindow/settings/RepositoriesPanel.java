@@ -12,7 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
-import org.phoenicis.repository.dto.RepositoryLocation;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.settings.SettingsManager;
 
@@ -132,13 +132,16 @@ public class RepositoriesPanel extends StackPane {
             dialog.setContentText(tr("Please add the new repository:"));
 
             Optional<String> result = dialog.showAndWait();
-            //            result.ifPresent(newRepository -> {
-            //                repositories.add(0, newRepository);
+            /*
+             * TODO: replace by new GUI dialog (#776 and #857)
+             */
+            //result.ifPresent(newRepository -> {
+            //    repositories.add(0, newRepository);
             //
-            //                this.save();
+            //    this.save();
             //
-            //                repositoryManager.addRepositories(0, newRepository);
-            //            });
+            //    repositoryManager.addRepositories(0, newRepository);
+            //});
         });
 
         this.removeButton = new Button();

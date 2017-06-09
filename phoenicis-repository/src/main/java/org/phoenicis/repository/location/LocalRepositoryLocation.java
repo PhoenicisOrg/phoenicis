@@ -1,5 +1,7 @@
-package org.phoenicis.repository.dto;
+package org.phoenicis.repository.location;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -12,16 +14,28 @@ import org.phoenicis.tools.files.FileUtilities;
 import java.io.File;
 
 /**
- * Created by marc on 06.06.17.
+ * Location information for a repository located inside the local file system
+ *
+ * @author marc
+ * @since 06.06.17
  */
-@JsonDeserialize(builder = LocalRepositoryLocation.Builder.class)
+@JsonDeserialize
 public class LocalRepositoryLocation extends RepositoryLocation<LocalRepository> {
+    /**
+     * The path to the repository folder
+     */
     private final File repositoryLocation;
 
-    public LocalRepositoryLocation(Builder builder) {
+    /**
+     * Constructor
+     *
+     * @param repositoryLocation The path to the folder containing the repository
+     */
+    @JsonCreator
+    public LocalRepositoryLocation(@JsonProperty("repositoryLocation") File repositoryLocation) {
         super("local");
 
-        this.repositoryLocation = builder.repositoryLocation;
+        this.repositoryLocation = repositoryLocation;
     }
 
     @Override
@@ -62,27 +76,5 @@ public class LocalRepositoryLocation extends RepositoryLocation<LocalRepository>
     @Override
     public String toDisplayString() {
         return String.format("file:%s", repositoryLocation.toString());
-    }
-
-    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
-    public static class Builder {
-        private File repositoryLocation;
-
-        public Builder() {
-            // Default constructor
-        }
-
-        public Builder(LocalRepositoryLocation location) {
-            this.withRepositoryLocation(location.getRepositoryLocation());
-        }
-
-        public Builder withRepositoryLocation(File location) {
-            this.repositoryLocation = location;
-            return this;
-        }
-
-        public LocalRepositoryLocation build() {
-            return new LocalRepositoryLocation(this);
-        }
     }
 }

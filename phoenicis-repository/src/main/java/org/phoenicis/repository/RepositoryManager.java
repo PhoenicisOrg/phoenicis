@@ -2,7 +2,7 @@ package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.RepositoryLocation;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.repositoryTypes.Repository;
 

@@ -1,5 +1,7 @@
-package org.phoenicis.repository.dto;
+package org.phoenicis.repository.location;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -9,19 +11,29 @@ import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
 import org.phoenicis.repository.repositoryTypes.LocalRepository;
 import org.phoenicis.tools.files.FileUtilities;
 
-import java.io.File;
-
 /**
- * Created by marc on 06.06.17.
+ * Location information for a repository located inside the classpath of Phoenicis
+ *
+ * @author marc
+ * @since 06.06.17
  */
-@JsonDeserialize(builder = ClasspathRepositoryLocation.Builder.class)
+@JsonDeserialize
 public class ClasspathRepositoryLocation extends RepositoryLocation<ClasspathRepository> {
+    /**
+     * The path to the package containing the classpath repository content
+     */
     private final String packagePath;
 
-    public ClasspathRepositoryLocation(Builder builder) {
+    /**
+     * Constructor
+     *
+     * @param packagePath The path to the package containing the classpath repository content
+     */
+    @JsonCreator
+    public ClasspathRepositoryLocation(@JsonProperty("packagePath") String packagePath) {
         super("classpath");
 
-        this.packagePath = builder.packagePath;
+        this.packagePath = packagePath;
     }
 
     @Override
@@ -63,27 +75,5 @@ public class ClasspathRepositoryLocation extends RepositoryLocation<ClasspathRep
     @Override
     public String toDisplayString() {
         return String.format("classpath://%s", packagePath);
-    }
-
-    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
-    public static class Builder {
-        private String packagePath;
-
-        public Builder() {
-            // Default constructor
-        }
-
-        public Builder(ClasspathRepositoryLocation location) {
-            this.withPackagePath(location.getPackagePath());
-        }
-
-        public Builder withPackagePath(String packagePath) {
-            this.packagePath = packagePath;
-            return this;
-        }
-
-        public ClasspathRepositoryLocation build() {
-            return new ClasspathRepositoryLocation(this);
-        }
     }
 }

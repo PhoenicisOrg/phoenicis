@@ -19,7 +19,7 @@
 package org.phoenicis.settings;
 
 import org.phoenicis.repository.RepositoryConfiguration;
-import org.phoenicis.repository.dto.RepositoryLocation;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
