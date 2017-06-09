@@ -32,19 +32,19 @@ import java.util.*;
 @JsonDeserialize(builder = TranslationDTO.Builder.class)
 public class TranslationDTO {
     private final String language;
-    private final String json;
+    private final Properties properties;
 
     private TranslationDTO(Builder builder) {
         this.language = builder.language;
-        this.json = builder.json;
+        this.properties = builder.properties;
     }
 
     public String getLanguage() {
         return language;
     }
 
-    public String getJson() {
-        return json;
+    public Properties getProperties() {
+        return properties;
     }
 
     @Override
@@ -59,12 +59,12 @@ public class TranslationDTO {
 
         TranslationDTO that = (TranslationDTO) o;
 
-        return new EqualsBuilder().append(language, that.language).append(json, that.json).isEquals();
+        return new EqualsBuilder().append(language, that.language).append(properties, that.properties).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(language).append(json).toHashCode();
+        return new HashCodeBuilder(17, 37).append(language).append(properties).toHashCode();
     }
 
     public static Comparator<TranslationDTO> nameComparator() {
@@ -74,14 +74,14 @@ public class TranslationDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String language;
-        private String json;
+        private Properties properties;
 
         public Builder() {
             // Default constructor
         }
 
         public Builder(TranslationDTO repositoryDTO) {
-            this.withLanguage(repositoryDTO.getLanguage()).withJson(repositoryDTO.getJson());
+            this.withLanguage(repositoryDTO.getLanguage()).withProperties(repositoryDTO.getProperties());
         }
 
         public Builder withLanguage(String language) {
@@ -89,8 +89,8 @@ public class TranslationDTO {
             return this;
         }
 
-        public Builder withJson(String json) {
-            this.json = json;
+        public Builder withProperties(Properties properties) {
+            this.properties = properties;
             return this;
         }
 

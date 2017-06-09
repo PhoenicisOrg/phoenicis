@@ -21,15 +21,26 @@ package org.phoenicis.configuration.localisation;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
+import java.util.ResourceBundle;
+
 public final class Localisation {
+    private static I18n i18n = null;
+
     // This is a static class
     private Localisation() {
 
     }
 
     private static I18n getI18n() {
-        I18n getI18n = I18nFactory.getI18n(Localisation.class, "Messages");
-        return getI18n;
+        // init only once
+        if (i18n == null) {
+            i18n = I18nFactory.getI18n(Localisation.class, "Messages");
+        }
+        return i18n;
+    }
+
+    public static void setAdditionalTranslations(ResourceBundle resourceBundle) {
+        getI18n().setResources(resourceBundle);
     }
 
     public static String tr(String str) {
