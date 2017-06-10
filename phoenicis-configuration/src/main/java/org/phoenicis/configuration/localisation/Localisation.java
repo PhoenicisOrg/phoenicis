@@ -39,6 +39,13 @@ public final class Localisation {
         return i18n;
     }
 
+    /**
+     * add a ResourceBundle containing additional translations for the localisation
+     * - typically used to add translations for the scripts
+     * - only one additional ResourceBundle can be set at a time (calling the method again will override the old ResourceBundle)
+     *
+     * @param resourceBundle
+     */
     public static void setAdditionalTranslations(ResourceBundle resourceBundle) {
         getI18n().setResources(resourceBundle);
     }
