@@ -45,11 +45,11 @@ public abstract class MergeableRepository implements Repository {
         RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder().withName("merged repository");
 
         Map<Repository, List<CategoryDTO>> categoriesMap = new HashMap<>();
-        for (Repository repository : repositoriesMap.keySet()) {
-            RepositoryDTO repositoryDTO = repositoriesMap.get(repository);
+        for (Map.Entry<Repository, RepositoryDTO> entry : repositoriesMap.entrySet()) {
+            RepositoryDTO repositoryDTO = entry.getValue();
             //TODO: merge translations
             repositoryDTOBuilder.withTranslations(repositoryDTO.getTranslations());
-            categoriesMap.put(repository, repositoryDTO.getCategories());
+            categoriesMap.put(entry.getKey(), repositoryDTO.getCategories());
         }
 
         /*
@@ -63,13 +63,13 @@ public abstract class MergeableRepository implements Repository {
 
             final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getName);
 
-            for (String categoryName : otherCategoriesMap.keySet()) {
-                final CategoryDTO category = otherCategoriesMap.get(categoryName);
+            for (Map.Entry<String, CategoryDTO> entry : otherCategoriesMap.entrySet()) {
+                final CategoryDTO category = entry.getValue();
 
-                if (mergedCategories.containsKey(categoryName)) {
-                    mergedCategories.put(categoryName, mergeCategories(mergedCategories.get(categoryName), category));
+                if (mergedCategories.containsKey(entry.getKey())) {
+                    mergedCategories.put(entry.getKey(), mergeCategories(mergedCategories.get(entry.getKey()), category));
                 } else {
-                    mergedCategories.put(categoryName, category);
+                    mergedCategories.put(entry.getKey(), category);
                 }
             }
         }
@@ -89,13 +89,13 @@ public abstract class MergeableRepository implements Repository {
 
         final SortedMap<String, ApplicationDTO> mergedApps = new TreeMap<>(rightApplications);
 
-        for (String applicationName : leftApplications.keySet()) {
-            final ApplicationDTO application = leftApplications.get(applicationName);
+        for (Map.Entry<String, ApplicationDTO> entry : leftApplications.entrySet()) {
+            final ApplicationDTO application = entry.getValue();
 
-            if (mergedApps.containsKey(applicationName)) {
-                mergedApps.put(applicationName, mergeApplications(mergedApps.get(applicationName), application));
+            if (mergedApps.containsKey(entry.getKey())) {
+                mergedApps.put(entry.getKey(), mergeApplications(mergedApps.get(entry.getKey()), application));
             } else {
-                mergedApps.put(applicationName, application);
+                mergedApps.put(entry.getKey(), application);
             }
         }
 
@@ -160,11 +160,11 @@ public abstract class MergeableRepository implements Repository {
 
         final SortedMap<String, T> merged = new TreeMap<>(left);
 
-        for (String name : right.keySet()) {
-            final T dto = right.get(name);
+        for (Map.Entry<String, T> entry : right.entrySet()) {
+            final T dto = entry.getValue();
 
-            if (!merged.containsKey(name)) {
-                merged.put(name, dto);
+            if (!merged.containsKey(entry.getKey())) {
+                merged.put(entry.getKey(), dto);
             }
         }
 
