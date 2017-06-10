@@ -32,9 +32,9 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
 
     @Override
     public void runScript(String scriptContent, Consumer<Exception> errorCallback) {
-        final String scriptContenti18n = "var tr = Packages.org.phoenicis.configuration.localisation.Localisation.tr;"
-                + scriptContent;
-        nashornEngineFactory.createEngine().eval(scriptContenti18n, errorCallback);
+        final NashornEngine engine = nashornEngineFactory.createEngine();
+        engine.eval("var tr = Packages.org.phoenicis.configuration.localisation.Localisation.tr;", errorCallback);
+        engine.eval(scriptContent, errorCallback);
     }
 
     @Override
