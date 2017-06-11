@@ -60,19 +60,19 @@ public class LibraryManager {
         for (File file : directoryContent) {
             if ("shortcut".equals(FilenameUtils.getExtension(file.getName()))) {
                 ShortcutDTO shortcut = fetchShortcutDTO(shortcutDirectoryFile, file);
-                String categoryName = shortcut.getCategory();
-                if (!categoryMap.containsKey(categoryName)) {
-                    categoryMap.put(categoryName, new ArrayList<>());
+                String categoryId = shortcut.getCategory();
+                if (!categoryMap.containsKey(categoryId)) {
+                    categoryMap.put(categoryId, new ArrayList<>());
                 }
-                categoryMap.get(categoryName).add(shortcut);
+                categoryMap.get(categoryId).add(shortcut);
             }
         }
 
         List<ShortcutCategoryDTO> shortcuts = new ArrayList<>();
-        for (String categoryName : categoryMap.keySet()) {
-            categoryMap.get(categoryName).sort(ShortcutDTO.nameComparator());
-            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withName(categoryName)
-                    .withShortcuts(categoryMap.get(categoryName)).build();
+        for (String categoryId : categoryMap.keySet()) {
+            categoryMap.get(categoryId).sort(ShortcutDTO.nameComparator());
+            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withId(categoryId).withName(categoryId)
+                    .withShortcuts(categoryMap.get(categoryId)).build();
             shortcuts.add(category);
         }
 

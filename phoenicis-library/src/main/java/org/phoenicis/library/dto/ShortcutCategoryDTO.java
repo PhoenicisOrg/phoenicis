@@ -30,21 +30,29 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * Represents a category of application
  */
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
 public class ShortcutCategoryDTO {
+    private final String id;
     private final String name;
     private final String description;
     private final List<ShortcutDTO> shortcuts;
     private URI icon;
 
     private ShortcutCategoryDTO(Builder builder) {
-        this.name = builder.name;
+        this.id = builder.id;
+        this.name = builder.name.isEmpty() ? builder.id : tr(builder.name);
         this.description = builder.description;
         this.shortcuts = Collections.unmodifiableList(builder.shortcuts);
         this.icon = builder.icon;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -79,19 +87,21 @@ public class ShortcutCategoryDTO {
 
         ShortcutCategoryDTO that = (ShortcutCategoryDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(description, that.description)
+        return new EqualsBuilder().append(id, that.id).append(name, that.name).append(description, that.description)
                 .append(shortcuts, that.shortcuts).append(icon, that.icon).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(description).append(shortcuts).append(icon).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(shortcuts).append(icon)
+                .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private String name;
-        private String description;
+        private String id = "";
+        private String name = "";
+        private String description = "";
         private List<ShortcutDTO> shortcuts = new ArrayList<>();
         private URI icon;
 
@@ -100,8 +110,14 @@ public class ShortcutCategoryDTO {
         }
 
         public Builder(ShortcutCategoryDTO categoryDTO) {
-            this.withName(categoryDTO.getName()).withDescription(categoryDTO.getDescription())
-                    .withShortcuts(categoryDTO.getShortcuts()).withIcon(categoryDTO.getIcon());
+            this.withId(categoryDTO.getId()).withName(categoryDTO.getName())
+                    .withDescription(categoryDTO.getDescription()).withShortcuts(categoryDTO.getShortcuts())
+                    .withIcon(categoryDTO.getIcon());
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withName(String name) {
