@@ -134,7 +134,7 @@ public class LocalRepository implements Repository {
                         unSerializeApplication(applicationJson));
 
                 if (StringUtils.isBlank(applicationDTOBuilder.getName())) {
-                    applicationDTOBuilder.withName(applicationDirectory.getName());
+                    applicationDTOBuilder.withId(applicationDirectory.getName());
                 }
 
                 final File miniaturesDirectory = new File(applicationDirectory, "miniatures");

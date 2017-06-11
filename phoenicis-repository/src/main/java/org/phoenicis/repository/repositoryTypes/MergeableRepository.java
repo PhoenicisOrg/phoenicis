@@ -88,19 +88,19 @@ public abstract class MergeableRepository implements Repository {
 
     protected CategoryDTO mergeCategories(CategoryDTO leftCategory, CategoryDTO rightCategory) {
         final Map<String, ApplicationDTO> leftApplications = createSortedMap(leftCategory.getApplications(),
-                ApplicationDTO::getName);
+                ApplicationDTO::getId);
         final Map<String, ApplicationDTO> rightApplications = createSortedMap(rightCategory.getApplications(),
-                ApplicationDTO::getName);
+                ApplicationDTO::getId);
 
         final SortedMap<String, ApplicationDTO> mergedApps = new TreeMap<>(rightApplications);
 
-        for (String applicationName : leftApplications.keySet()) {
-            final ApplicationDTO application = leftApplications.get(applicationName);
+        for (String applicationId : leftApplications.keySet()) {
+            final ApplicationDTO application = leftApplications.get(applicationId);
 
-            if (mergedApps.containsKey(applicationName)) {
-                mergedApps.put(applicationName, mergeApplications(mergedApps.get(applicationName), application));
+            if (mergedApps.containsKey(applicationId)) {
+                mergedApps.put(applicationId, mergeApplications(mergedApps.get(applicationId), application));
             } else {
-                mergedApps.put(applicationName, application);
+                mergedApps.put(applicationId, application);
             }
         }
 
@@ -119,8 +119,8 @@ public abstract class MergeableRepository implements Repository {
         final List<URI> mergeMiniatures = mergeMiniatures(leftApplication.getMiniatures(),
                 rightApplication.getMiniatures());
 
-        return new ApplicationDTO.Builder().withName(leftApplication.getName()).withResources(resources)
-                .withScripts(scripts).withDescription(leftApplication.getDescription())
+        return new ApplicationDTO.Builder().withId(leftApplication.getId()).withName(leftApplication.getName())
+                .withResources(resources).withScripts(scripts).withDescription(leftApplication.getDescription())
                 .withIcon(leftApplication.getIcon()).withMiniatures(mergeMiniatures).build();
     }
 

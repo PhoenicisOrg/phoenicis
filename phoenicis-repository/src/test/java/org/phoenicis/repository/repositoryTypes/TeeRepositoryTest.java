@@ -70,15 +70,15 @@ public class TeeRepositoryTest {
                         Arrays.asList(new CategoryDTO.Builder().withId("Category 1").build(),
                                 new CategoryDTO.Builder().withId("Category 2")
                                         .withApplications(Arrays.asList(
-                                                new ApplicationDTO.Builder().withName("Application 1").build(),
-                                                new ApplicationDTO.Builder().withName("Application 2").build()))
+                                                new ApplicationDTO.Builder().withId("Application 1").build(),
+                                                new ApplicationDTO.Builder().withId("Application 2").build()))
                                         .build()))
                 .build();
 
         final Repository rightSource = () -> new RepositoryDTO.Builder().withCategories(Arrays.asList(
                 new CategoryDTO.Builder().withId("Category 2")
-                        .withApplications(Arrays.asList(new ApplicationDTO.Builder().withName("Application 1").build(),
-                                new ApplicationDTO.Builder().withName("Application 3").build()))
+                        .withApplications(Arrays.asList(new ApplicationDTO.Builder().withId("Application 1").build(),
+                                new ApplicationDTO.Builder().withId("Application 3").build()))
                         .build(),
                 new CategoryDTO.Builder().withId("Category 4").build(),
                 new CategoryDTO.Builder().withId("Category 5").build())).build();

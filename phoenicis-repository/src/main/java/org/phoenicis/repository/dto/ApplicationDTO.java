@@ -32,6 +32,7 @@ import java.util.*;
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 public class ApplicationDTO {
+    private final String id;
     private final String name;
     private final String description;
     private final URI icon;
@@ -40,7 +41,8 @@ public class ApplicationDTO {
     private final List<ResourceDTO> resources;
 
     private ApplicationDTO(Builder builder) {
-        name = builder.name;
+        id = builder.id;
+        this.name = builder.name.isEmpty() ? builder.id : builder.name;
         description = builder.description;
         icon = builder.icon;
         miniatures = builder.miniatures;
@@ -58,6 +60,10 @@ public class ApplicationDTO {
 
     public List<URI> getMiniatures() {
         return miniatures;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -110,20 +116,21 @@ public class ApplicationDTO {
 
         ApplicationDTO that = (ApplicationDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(description, that.description).append(icon, that.icon)
-                .append(miniatures, that.miniatures).append(scripts, that.scripts).append(resources, that.resources)
-                .isEquals();
+        return new EqualsBuilder().append(id, that.id).append(name, that.name).append(description, that.description)
+                .append(icon, that.icon).append(miniatures, that.miniatures).append(scripts, that.scripts)
+                .append(resources, that.resources).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(description).append(icon).append(miniatures)
+        return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(icon).append(miniatures)
                 .append(scripts).append(resources).toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private String name;
+        private String id = "";
+        private String name = "";
         private String description;
         private URI icon;
         private List<URI> miniatures = new ArrayList<>();
@@ -135,12 +142,18 @@ public class ApplicationDTO {
         }
 
         public Builder(ApplicationDTO applicationDTO) {
+            this.id = applicationDTO.id;
             this.name = applicationDTO.name;
             this.description = applicationDTO.description;
             this.icon = applicationDTO.icon;
             this.miniatures = applicationDTO.miniatures;
             this.scripts = applicationDTO.scripts;
             this.resources = applicationDTO.resources;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withName(String name) {

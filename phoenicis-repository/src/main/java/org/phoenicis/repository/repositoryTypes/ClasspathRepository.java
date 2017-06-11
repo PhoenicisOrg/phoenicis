@@ -123,7 +123,7 @@ public class ClasspathRepository implements Repository {
         final ApplicationDTO applicationDTO = objectMapper
                 .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
 
-        return new ApplicationDTO.Builder(applicationDTO)
+        return new ApplicationDTO.Builder(applicationDTO).withId(applicationFileName)
                 .withScripts(buildScripts(categoryFileName, applicationFileName))
                 .withMiniatures(buildMiniatures(categoryFileName, applicationFileName)).build();
     }
