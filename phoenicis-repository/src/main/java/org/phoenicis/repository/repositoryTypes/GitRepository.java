@@ -72,7 +72,7 @@ public class GitRepository implements Repository {
         }
 
         RepositoryDTO result = null;
-		Git gitRepository = null;
+        Git gitRepository = null;
 
         try {       
             /*
@@ -110,10 +110,10 @@ public class GitRepository implements Repository {
             LOGGER.error(String.format("An unknown error occured", e));
         } finally {
             // close repository to free resources
-            if(gitRepository != null){
-				gitRepository.close();
-			}
-		}
+            if (gitRepository != null) {
+                gitRepository.close();
+            }
+        }
 
         return result;
     }
