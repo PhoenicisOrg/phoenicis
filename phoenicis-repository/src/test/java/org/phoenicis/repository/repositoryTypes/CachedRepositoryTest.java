@@ -38,8 +38,8 @@ public class CachedRepositoryTest {
                         .thenReturn(
                                 new RepositoryDTO.Builder()
                                         .withCategories(
-                                                Arrays.asList(new CategoryDTO.Builder().withName("Category 1").build(),
-                                                        new CategoryDTO.Builder().withName("Category 2").build()))
+                                                Arrays.asList(new CategoryDTO.Builder().withId("Category 1").build(),
+                                                        new CategoryDTO.Builder().withId("Category 2").build()))
                                         .build());
 
         final Repository cachedSource = new CachedRepository(repository);

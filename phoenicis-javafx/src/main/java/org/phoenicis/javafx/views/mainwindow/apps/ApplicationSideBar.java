@@ -158,7 +158,7 @@ public class ApplicationSideBar extends LeftSideBar {
     private ToggleButton createCategoryToggleButton(CategoryDTO category) {
         final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
+        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
 
         return categoryButton;

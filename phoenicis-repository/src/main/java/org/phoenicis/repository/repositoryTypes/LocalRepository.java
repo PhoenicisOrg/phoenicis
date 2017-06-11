@@ -97,19 +97,21 @@ public class LocalRepository implements Repository {
 
         for (File categoryDirectory : categoryDirectories) {
             if (categoryDirectory.isDirectory() && !categoryDirectory.getName().startsWith(".")) {
-                final File categoryFile = new File(categoryDirectory, "category.json");
+                final File categoryJson = new File(categoryDirectory, "category.json");
 
-                final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(
-                        unSerializeCategory(categoryFile)).withName(categoryDirectory.getName())
-                                .withApplications(fetchApplications(categoryDirectory));
+                if (categoryJson.exists()) {
+                    final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(
+                            unSerializeCategory(categoryJson)).withId(categoryDirectory.getName())
+                                    .withApplications(fetchApplications(categoryDirectory));
 
-                final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
-                if (categoryIconFile.exists()) {
-                    categoryDTOBuilder.withIcon(categoryIconFile.toURI());
+                    final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
+                    if (categoryIconFile.exists()) {
+                        categoryDTOBuilder.withIcon(categoryIconFile.toURI());
+                    }
+
+                    CategoryDTO category = categoryDTOBuilder.build();
+                    results.add(category);
                 }
-
-                CategoryDTO category = categoryDTOBuilder.build();
-                results.add(category);
             }
         }
 

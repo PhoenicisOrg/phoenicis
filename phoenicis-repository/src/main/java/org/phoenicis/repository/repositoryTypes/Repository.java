@@ -62,7 +62,7 @@ public interface Repository {
 
     default CategoryDTO getCategory(List<String> path) {
         final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().getCategories().stream()
-                .filter(category -> path.get(0).equals(category.getName())).findFirst();
+                .filter(category -> path.get(0).equals(category.getId())).findFirst();
         return categoryDTO.orElse(null);
     }
 

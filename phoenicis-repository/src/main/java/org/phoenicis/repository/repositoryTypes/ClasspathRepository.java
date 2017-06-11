@@ -84,12 +84,12 @@ public class ClasspathRepository implements Repository {
 
             try {
                 return new CategoryDTO.Builder(categoryDTO)
-                        .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png"))
+                        .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png")).withId(categoryFileName)
                         .withApplications(buildApplications(categoryFileName)).build();
             } catch (URISyntaxException e) {
                 LOGGER.warn("Invalid icon path", e);
-                return new CategoryDTO.Builder(categoryDTO).withApplications(buildApplications(categoryFileName))
-                        .build();
+                return new CategoryDTO.Builder(categoryDTO).withId(categoryFileName)
+                        .withApplications(buildApplications(categoryFileName)).build();
             }
         } else {
             LOGGER.debug(String.format("category.json %s for classpath repository does not exist", jsonCategoryPath));
