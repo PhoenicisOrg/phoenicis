@@ -49,7 +49,7 @@ public abstract class MergeableRepository implements Repository {
         Properties translationProperties = new Properties();
         Map<Repository, List<CategoryDTO>> categoriesMap = new HashMap<>();
 
-        for (Repository repository : repositoriesMap.keySet()) {
+        for (Map.Entry<Repository, RepositoryDTO> entry : repositoriesMap.entrySet()) {
             RepositoryDTO repositoryDTO = entry.getValue();
             translationProperties.putAll(repositoryDTO.getTranslations().getProperties());
             categoriesMap.put(entry.getKey(), repositoryDTO.getCategories());
