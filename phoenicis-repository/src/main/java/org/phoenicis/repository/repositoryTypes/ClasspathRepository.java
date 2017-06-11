@@ -118,11 +118,8 @@ public class ClasspathRepository implements Repository {
 
     private ApplicationDTO buildApplication(String categoryFileName, String applicationFileName) throws IOException {
         final String applicationDirectory = packagePath + "/" + categoryFileName + "/" + applicationFileName;
-        final String language = Locale.getDefault().getLanguage();
-        File applicationJson = new File(applicationDirectory, String.format("application_%s.json", language));
-        if (!applicationJson.exists()) {
-            applicationJson = new File(applicationDirectory, "application.json");
-        }
+        File applicationJson = new File(applicationDirectory, "application.json");
+
         final ApplicationDTO applicationDTO = objectMapper
                 .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
 
