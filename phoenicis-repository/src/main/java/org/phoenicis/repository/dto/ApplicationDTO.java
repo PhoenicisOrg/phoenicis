@@ -27,6 +27,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.net.URI;
 import java.util.*;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * Represents an application
  */
@@ -42,8 +44,8 @@ public class ApplicationDTO {
 
     private ApplicationDTO(Builder builder) {
         id = builder.id;
-        this.name = builder.name.isEmpty() ? builder.id : builder.name;
-        description = builder.description;
+        this.name = builder.name.isEmpty() ? builder.id : tr(builder.name);
+        description = tr(builder.description);
         icon = builder.icon;
         miniatures = builder.miniatures;
         scripts = builder.scripts;
@@ -131,7 +133,7 @@ public class ApplicationDTO {
     public static class Builder {
         private String id = "";
         private String name = "";
-        private String description;
+        private String description = "";
         private URI icon;
         private List<URI> miniatures = new ArrayList<>();
         private List<ScriptDTO> scripts = new ArrayList<>();
