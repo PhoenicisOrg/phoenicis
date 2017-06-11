@@ -19,6 +19,7 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -26,7 +27,6 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.apache.commons.compress.utils.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -76,17 +77,23 @@ public class ClasspathRepository implements Repository {
     }
 
     private CategoryDTO buildCategory(String categoryFileName) throws IOException {
-        final String jsonCategoryFile = packagePath + "/" + categoryFileName + "/category.json";
-        final CategoryDTO categoryDTO = objectMapper.readValue(getClass().getResourceAsStream(jsonCategoryFile),
-                CategoryDTO.class);
+        final String jsonCategoryPath = packagePath + "/" + categoryFileName + "/category.json";
+        final URL jsonCategoryFile = getClass().getResource(jsonCategoryPath);
+        if (jsonCategoryFile != null) {
+            final CategoryDTO categoryDTO = objectMapper.readValue(jsonCategoryFile, CategoryDTO.class);
 
-        try {
-            return new CategoryDTO.Builder(categoryDTO)
-                    .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png"))
-                    .withApplications(buildApplications(categoryFileName)).build();
-        } catch (URISyntaxException e) {
-            LOGGER.warn("Invalid icon path", e);
-            return new CategoryDTO.Builder(categoryDTO).withApplications(buildApplications(categoryFileName)).build();
+            try {
+                return new CategoryDTO.Builder(categoryDTO)
+                        .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png"))
+                        .withApplications(buildApplications(categoryFileName)).build();
+            } catch (URISyntaxException e) {
+                LOGGER.warn("Invalid icon path", e);
+                return new CategoryDTO.Builder(categoryDTO).withApplications(buildApplications(categoryFileName))
+                        .build();
+            }
+        } else {
+            LOGGER.debug(String.format("category.json %s for classpath repository does not exist", jsonCategoryPath));
+            return new CategoryDTO.Builder().build();
         }
     }
 

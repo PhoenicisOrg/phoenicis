@@ -1,7 +1,7 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.repositoryTypes.Repository;
@@ -19,10 +19,10 @@ public interface RepositoryManager {
     /**
      * This method adds a corresponding pair of callbacks to this repository manager
      *
-     * @param onRepositoryChange The callback that should be called with the new CategoryDTOs when the repository change succeeded
+     * @param onRepositoryChange The callback that should be called with the new RepositoryDTO when the repository change succeeded
      * @param onError            The callback that should be called when the repository change failed
      */
-    void addCallbacks(Consumer<List<CategoryDTO>> onRepositoryChange, Consumer<Exception> onError);
+    void addCallbacks(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError);
 
     /**
      * This method returns the {@link org.phoenicis.repository.dto.ApplicationDTO}, which can be found at the given path.

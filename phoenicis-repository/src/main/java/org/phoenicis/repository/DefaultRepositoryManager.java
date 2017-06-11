@@ -1,7 +1,7 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.repositoryTypes.*;
@@ -57,7 +57,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addCallbacks(Consumer<List<CategoryDTO>> onRepositoryChange, Consumer<Exception> onError) {
+    public void addCallbacks(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError) {
         this.callbacks.add(new CallbackPair(onRepositoryChange, onError));
     }
 
@@ -124,23 +124,23 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
         if (!this.callbacks.isEmpty()) {
             this.backgroundRepository.fetchInstallableApplications(
-                    repositoryDTO -> this.callbacks.forEach(
-                            callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO.getCategories())),
+                    repositoryDTO -> this.callbacks
+                            .forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO)),
                     exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
     }
 
     private class CallbackPair {
-        private Consumer<List<CategoryDTO>> onRepositoryChange;
+        private Consumer<RepositoryDTO> onRepositoryChange;
 
         private Consumer<Exception> onError;
 
-        public CallbackPair(Consumer<List<CategoryDTO>> onRepositoryChange, Consumer<Exception> onError) {
+        public CallbackPair(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError) {
             this.onRepositoryChange = onRepositoryChange;
             this.onError = onError;
         }
 
-        public Consumer<List<CategoryDTO>> getOnRepositoryChange() {
+        public Consumer<RepositoryDTO> getOnRepositoryChange() {
             return this.onRepositoryChange;
         }
 
