@@ -18,6 +18,10 @@
 
 package org.phoenicis.settings;
 
+import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.repository.location.RepositoryLocation;
+import org.phoenicis.repository.repositoryTypes.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DefaultPropertiesPersister;
 
@@ -25,6 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 public class SettingsManager {
     @Value("${application.theme}")
@@ -36,8 +41,8 @@ public class SettingsManager {
     @Value("${application.viewsource}")
     private boolean viewScriptSource;
 
-    @Value("${application.repository.configuration}")
-    private String repository;
+    @Autowired
+    private RepositoryConfiguration repositoryConfiguration;
 
     private String settingsFileName = "config.properties";
 
@@ -69,14 +74,6 @@ public class SettingsManager {
         this.viewScriptSource = viewScriptSource;
     }
 
-    public String getRepository() {
-        return repository;
-    }
-
-    public void setRepository(String repository) {
-        this.repository = repository;
-    }
-
     public void save() {
         Settings settings = load();
         try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
@@ -89,10 +86,19 @@ public class SettingsManager {
 
     private Settings load() {
         Settings settings = new Settings();
+
         settings.set(Setting.THEME, theme);
         settings.set(Setting.SCALE, scale);
         settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
-        settings.set(Setting.REPOSITORY, repository);
+
         return settings;
+    }
+
+    public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        repositoryConfiguration.saveRepositories(repositoryLocations);
+    }
+
+    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
+        return repositoryConfiguration.loadRepositoryLocations();
     }
 }

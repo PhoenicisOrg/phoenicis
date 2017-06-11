@@ -86,6 +86,10 @@ public class NashornEngineFactory {
             }
         }, this::throwException);
 
+        // provide translation functions as "tr"
+        nashornEngine.eval("var tr = Packages.org.phoenicis.configuration.localisation.Localisation.tr;",
+                this::throwException);
+
         return nashornEngine;
     }
 

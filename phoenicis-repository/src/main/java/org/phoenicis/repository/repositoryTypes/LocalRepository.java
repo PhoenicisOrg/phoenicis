@@ -24,6 +24,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.phoenicis.configuration.localisation.Localisation;
+import org.phoenicis.configuration.localisation.PropertiesResourceBundle;
 import org.phoenicis.repository.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,20 +72,21 @@ public class LocalRepository implements Repository {
 
         final File i18nDirectory = new File(repositoryDirectory, "i18n");
         if (i18nDirectory.exists()) {
-            final File[] translationFiles = i18nDirectory.listFiles((dir, name) -> name.endsWith(".json"));
-            Set<TranslationDTO> translations = new HashSet<>();
-            for (File translation : translationFiles) {
+            final File[] translationFiles = i18nDirectory
+                    .listFiles((dir, name) -> name.endsWith(Locale.getDefault().getLanguage() + ".properties"));
+            Properties mergedProperties = new Properties();
+            for (File translationFile : translationFiles) {
                 try {
-                    final String language = translation.getName();
-                    final String content = new String(Files.readAllBytes(translation.toPath()));
-                    final TranslationDTO.Builder translationDTOBuilder = new TranslationDTO.Builder()
-                            .withLanguage(language).withJson(content);
-                    translations.add(translationDTOBuilder.build());
+                    Properties langProperties = new Properties();
+                    langProperties.load(new FileInputStream(translationFile));
+                    mergedProperties.putAll(langProperties);
                 } catch (IOException e) {
-                    LOGGER.error("Could not read translation json", e);
+                    LOGGER.error("Could not read translation properties", e);
                 }
             }
-            repositoryDTOBuilder.withTranslations(translations);
+            repositoryDTOBuilder.withTranslations(new TranslationDTO.Builder()
+                    .withLanguage(Locale.getDefault().getLanguage()).withProperties(mergedProperties).build());
+            Localisation.setAdditionalTranslations(new PropertiesResourceBundle(mergedProperties));
         }
 
         return repositoryDTOBuilder.build();
