@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LibraryManager {
     private final String shortcutDirectory;
@@ -69,10 +70,10 @@ public class LibraryManager {
         }
 
         List<ShortcutCategoryDTO> shortcuts = new ArrayList<>();
-        for (String categoryName : categoryMap.keySet()) {
-            categoryMap.get(categoryName).sort(ShortcutDTO.nameComparator());
-            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withName(categoryName)
-                    .withShortcuts(categoryMap.get(categoryName)).build();
+        for (Map.Entry<String, List<ShortcutDTO>> entry : categoryMap.entrySet()) {
+            entry.getValue().sort(ShortcutDTO.nameComparator());
+            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withName(entry.getKey())
+                    .withShortcuts(entry.getValue()).build();
             shortcuts.add(category);
         }
 
