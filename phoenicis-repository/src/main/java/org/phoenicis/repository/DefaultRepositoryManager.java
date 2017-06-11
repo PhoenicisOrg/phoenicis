@@ -2,6 +2,7 @@ package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.repositoryTypes.*;
 import org.phoenicis.tools.ToolsConfiguration;
@@ -9,17 +10,9 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Created by marc on 31.03.17.
@@ -32,6 +25,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
     private final String cacheDirectoryPath;
 
     private final FileUtilities fileUtilities;
+
+    private Map<RepositoryLocation<? extends Repository>, Repository> repositoryMap;
 
     private MultipleRepository multipleRepository;
     private FilterRepository filterRepository;
@@ -51,6 +46,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.cacheDirectoryPath = cacheDirectoryPath;
         this.fileUtilities = fileUtilities;
 
+        this.repositoryMap = new HashMap<>();
         this.callbacks = new ArrayList<>();
 
         this.multipleRepository = new MultipleRepository();
@@ -76,39 +72,50 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void moveRepository(String repositoryUrl, int toIndex) {
+    public void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex) {
         LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
-        this.multipleRepository.moveRepository(toRepository(repositoryUrl), toIndex);
+
+        this.multipleRepository.moveRepository(this.repositoryMap.get(repositoryUrl), toIndex);
+
         this.triggerRepositoryChange();
     }
 
     @Override
-    public void addRepositories(int index, String... repositoryUrls) {
+    public void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
+
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
-            Repository repository = toRepository(repositoryUrls[repositoryUrlIndex]);
+            Repository repository = repositoryUrls[repositoryUrlIndex].createRepository(cacheDirectoryPath,
+                    localRepositoryFactory, classPathRepositoryFactory, fileUtilities);
+
+            this.repositoryMap.put(repositoryUrls[repositoryUrlIndex], repository);
 
             this.multipleRepository.addRepository(index + repositoryUrlIndex, repository);
         }
+
         this.triggerRepositoryChange();
     }
 
     @Override
-    public void addRepositories(String... repositoryUrls) {
+    public void addRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         this.addRepositories(this.multipleRepository.size(), repositoryUrls);
     }
 
     @Override
-    public void removeRepositories(String... repositoryUrls) {
+    public void removeRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 
-        List<Repository> toDeleteRepositories = Arrays.stream(repositoryUrls).map(this::toRepository)
-                .collect(Collectors.toList());
-        toDeleteRepositories.forEach(this.multipleRepository::removeRepository);
+        for (RepositoryLocation<? extends Repository> repositoryLocation : repositoryUrls) {
+            Repository deletedRepository = this.repositoryMap.remove(repositoryLocation);
+
+            // remove repository from repository collection
+            this.multipleRepository.removeRepository(deletedRepository);
+
+            // do eventual cleanup work
+            deletedRepository.onDelete();
+        }
 
         this.triggerRepositoryChange();
-
-        toDeleteRepositories.forEach(Repository::onDelete);
     }
 
     @Override
@@ -120,51 +127,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
                     repositoryDTO -> this.callbacks
                             .forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO)),
                     exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
-        }
-    }
-
-    /**
-     * This method extracts the type of a given repository path string.
-     * The type is prepended to the repository path and separated by a <code>+</code> or <code>:</code>
-     *
-     * @param repositoryUrl The repository path string containing the repository type
-     * @return The extracted repository type
-     */
-    private String extractRepositoryType(String repositoryUrl) {
-        String result = null;
-
-        Pattern pattern = Pattern.compile("^([^\\+:]+)(\\+|:)");
-        Matcher matcher = pattern.matcher(repositoryUrl);
-
-        if (matcher.find()) {
-            result = matcher.group(1);
-        }
-
-        return result;
-    }
-
-    private Repository toRepository(String repositoryUrl) {
-        LOGGER.info("Converting: " + repositoryUrl + " to Repository");
-
-        try {
-            String repositoryType = extractRepositoryType(repositoryUrl);
-            String repositoryPath = repositoryUrl.substring(repositoryType.length() + 1);
-
-            switch (repositoryType) {
-                case "git":
-                    return new GitRepository(new URI(repositoryPath), cacheDirectoryPath, localRepositoryFactory,
-                            fileUtilities);
-                case "file":
-                    return localRepositoryFactory.createInstance(new File(repositoryPath));
-                case "classpath":
-                    return classPathRepositoryFactory.createInstance(new URI(repositoryPath).getPath());
-                default:
-                    LOGGER.warn("Unsupported repository type: " + repositoryType);
-                    return new NullRepository();
-            }
-        } catch (URISyntaxException e) {
-            LOGGER.warn("Invalid repository uri syntax: " + repositoryUrl, e);
-            return new NullRepository();
         }
     }
 
