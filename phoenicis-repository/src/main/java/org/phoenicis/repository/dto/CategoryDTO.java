@@ -30,6 +30,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * Represents a category of application
  */
@@ -43,7 +45,7 @@ public class CategoryDTO {
 
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
-        this.name = builder.name.isEmpty() ? builder.id : builder.name;
+        this.name = builder.name.isEmpty() ? builder.id : tr(builder.name);
         this.id = builder.id;
         this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
