@@ -72,10 +72,9 @@ public class GitRepository implements Repository {
         }
 
         RepositoryDTO result = null;
+        Git gitRepository = null;
 
-        try {
-            Git gitRepository = null;
-
+        try {       
             /*
              * if the repository folder previously didn't exist, clone the
              * repository now
@@ -103,15 +102,17 @@ public class GitRepository implements Repository {
                 gitRepository.pull().call();
             }
 
-            // close repository to free resources
-            gitRepository.close();
-
             result = localRepositoryFactory.createInstance(this.gitRepositoryLocation, this.gitRepositoryUri)
                     .fetchInstallableApplications();
         } catch (RepositoryNotFoundException | GitAPIException e) {
             LOGGER.error(String.format("Folder '%s' is no git-repository", gitRepositoryLocation.getAbsolutePath()), e);
         } catch (IOException e) {
             LOGGER.error(String.format("An unknown error occured", e));
+        } finally {
+            // close repository to free resources
+            if (gitRepository != null) {
+                gitRepository.close();
+            }
         }
 
         return result;
