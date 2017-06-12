@@ -73,7 +73,8 @@ public abstract class MergeableRepository implements Repository {
                 final CategoryDTO category = entry.getValue();
 
                 if (mergedCategories.containsKey(entry.getKey())) {
-                    mergedCategories.put(entry.getKey(), mergeCategories(mergedCategories.get(entry.getKey()), category));
+                    mergedCategories.put(entry.getKey(),
+                            mergeCategories(mergedCategories.get(entry.getKey()), category));
                 } else {
                     mergedCategories.put(entry.getKey(), category);
                 }
