@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
+import org.phoenicis.repository.location.RepositoryLocation;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
@@ -35,7 +37,7 @@ public class RepositoriesPanel extends StackPane {
 
     private Text repositoryText;
     private VBox repositoryLayout;
-    private ListView<String> repositoryListView;
+    private ListView<RepositoryLocation<? extends Repository>> repositoryListView;
     private HBox repositoryButtonLayout;
     private Button addButton;
     private Button removeButton;
@@ -49,7 +51,7 @@ public class RepositoriesPanel extends StackPane {
 
     private VBox overlay;
 
-    private ObservableList<String> repositories;
+    private ObservableList<RepositoryLocation<? extends Repository>> repositories;
 
     /**
      * Constructor
@@ -62,7 +64,7 @@ public class RepositoriesPanel extends StackPane {
 
         this.settingsManager = settingsManager;
         this.repositoryManager = repositoryManager;
-        this.repositories = FXCollections.observableArrayList(settingsManager.getRepository().split(";"));
+        this.repositories = FXCollections.observableArrayList(settingsManager.loadRepositoryLocations());
 
         this.getStyleClass().add("containerConfigurationPane");
 
@@ -130,19 +132,23 @@ public class RepositoriesPanel extends StackPane {
             dialog.setContentText(tr("Please add the new repository:"));
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(newRepository -> {
-                repositories.add(0, newRepository);
-
-                this.save();
-
-                repositoryManager.addRepositories(0, newRepository);
-            });
+            /*
+             * TODO: replace by new GUI dialog (#776 and #857)
+             */
+            //result.ifPresent(newRepository -> {
+            //    repositories.add(0, newRepository);
+            //
+            //    this.save();
+            //
+            //    repositoryManager.addRepositories(0, newRepository);
+            //});
         });
 
         this.removeButton = new Button();
         this.removeButton.setText(tr("Remove"));
         this.removeButton.setOnAction((ActionEvent event) -> {
-            String[] toRemove = repositoryListView.getSelectionModel().getSelectedItems().toArray(new String[0]);
+            RepositoryLocation<? extends Repository>[] toRemove = repositoryListView.getSelectionModel()
+                    .getSelectedItems().toArray(new RepositoryLocation[0]);
 
             repositories.removeAll(toRemove);
 
@@ -197,12 +203,6 @@ public class RepositoriesPanel extends StackPane {
     }
 
     private void save() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String repository : repositories) {
-            stringBuilder.append(repository).append(";");
-        }
-        settingsManager.setRepository(stringBuilder.toString());
-
-        settingsManager.save();
+        settingsManager.saveRepositories(repositories);
     }
 }

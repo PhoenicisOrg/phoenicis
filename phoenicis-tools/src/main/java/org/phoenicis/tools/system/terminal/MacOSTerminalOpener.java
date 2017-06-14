@@ -52,9 +52,8 @@ class MacOSTerminalOpener implements TerminalOpener {
         scriptBuilder.append("cd \"").append(workingDirectory).append("\" \n")
                 .append("[ -e \"$HOME/.profile\" ] && rcFile=\"~/.profile\" || rcFile=\"/etc/profile\"\n");
 
-        for (String environmentVariable : environmentVariables.keySet()) {
-            scriptBuilder.append(String.format("export %s=\"%s\"%n", environmentVariable,
-                    environmentVariables.get(environmentVariable)));
+        for (Map.Entry<String, String> entry : environmentVariables.entrySet()) {
+            scriptBuilder.append(String.format("export %s=\"%s\"%n", entry.getKey(), entry.getValue()));
         }
         return scriptBuilder.append("exec bash -c \"clear;printf '\\e[3J';bash --rcfile $rcFile\"").toString();
     }

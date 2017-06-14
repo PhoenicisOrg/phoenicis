@@ -19,28 +19,45 @@
 package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.location.ClasspathRepositoryLocation;
+import org.phoenicis.repository.location.GitRepositoryLocation;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
 import org.phoenicis.repository.repositoryTypes.LocalRepository;
-import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 public class RepositoryConfiguration {
-    @Value("${application.repository.configuration}")
-    private String repositoryConfiguration;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryConfiguration.class);
 
     @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
     private boolean enforceUncompatibleOperatingSystems;
 
     @Value("${application.user.cache}")
     private String cacheDirectoryPath;
+
+    @Value("${application.repository.list}")
+    private String repositoryListPath;
 
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
@@ -59,9 +76,44 @@ public class RepositoryConfiguration {
                 classPathRepositoryFactory(), backgroundRepositoryFactory());
 
         // set initial repositories
-        repositoryManager.addRepositories(this.repositoryConfiguration.split(";"));
+        repositoryManager.addRepositories(this.loadRepositoryLocations().toArray(new RepositoryLocation[0]));
 
         return repositoryManager;
+    }
+
+    public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        try {
+            this.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
+        } catch (IOException e) {
+            LOGGER.error("Couldn't save repository location list", e);
+        }
+    }
+
+    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
+        List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
+
+        File repositoryListFile = new File(repositoryListPath);
+
+        if (repositoryListFile.exists()) {
+            try {
+                result = this.objectMapper().readValue(new File(repositoryListPath),
+                        TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
+            } catch (IOException e) {
+                LOGGER.error("Couldn't load repository location list", e);
+            }
+        } else {
+            try {
+                result.add(new GitRepositoryLocation.Builder()
+                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI()).build());
+                result.add(new GitRepositoryLocation.Builder()
+                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI()).build());
+                result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
+            } catch (URISyntaxException | MalformedURLException e) {
+                LOGGER.error("Couldn't create default repository location list", e);
+            }
+        }
+
+        return result;
     }
 
     @Bean

@@ -109,13 +109,13 @@ final class LibraryPanel extends DetailsView {
                     });
 
             int i = 0;
-            for (String shortcutKey : shortcutProperties.keySet()) {
-                final Label keyLabel = new Label(tr(unCamelize(shortcutKey)) + ":");
+            for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
+                final Label keyLabel = new Label(tr(unCamelize(entry.getKey())) + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 this.gridPane.add(keyLabel, 0, i);
 
-                final Label valueLabel = new Label(shortcutProperties.get(shortcutKey).toString());
+                final Label valueLabel = new Label(entry.getValue().toString());
                 valueLabel.setWrapText(true);
                 this.gridPane.add(valueLabel, 1, i);
 
