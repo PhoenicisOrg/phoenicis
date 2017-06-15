@@ -7,8 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.DirectoryChooser;
-import org.controlsfx.dialog.Wizard;
-import org.controlsfx.dialog.WizardPane;
 import org.phoenicis.repository.location.ClasspathRepositoryLocation;
 import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.phoenicis.repository.location.LocalRepositoryLocation;
@@ -20,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -27,39 +26,31 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * A dialog for the addition of a new repository to Phoenicis.
  * This dialog contains a wizard with two steps:
  * <ol>
- *     <li>a selection step, to select the correct repository type</li>
- *     <li>a details step, to input specific repository type related information</li>
+ * <li>a selection step, to select the correct repository type</li>
+ * <li>a details step, to input specific repository type related information</li>
  * </ol>
  *
  * @author marc
  * @since 12.06.17
  */
-public class AddRepositoryDialog extends Wizard {
+public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Repository>> {
     /**
      * A list containing all possible repository types to be added with this dialog
      */
     private ObservableList<String> repositoryChoices;
 
     /**
-     * The wizard repository type selection step
-     */
-    private WizardPane repositoryTypeSelection;
-
-    /**
      * The choice box containing, which repository type the user wants to add
      */
-    private ChoiceBox<String> choiceBox;
-
-    /**
-     * The wizard repository details step
-     */
-    private WizardPane repositoryDetailsSelection;
+    private ComboBox<String> choiceBox;
 
     /**
      * The result value of this wizard.
      * This wizard is {@link Optional#empty()} until the user completed the wizard
      */
-    private Optional<RepositoryLocation<? extends Repository>> resultRepository;
+    private Supplier<Optional<RepositoryLocation<? extends Repository>>> resultSupplier;
+
+    private ButtonType finishButtonType;
 
     /**
      * Constructor
@@ -69,41 +60,46 @@ public class AddRepositoryDialog extends Wizard {
 
         this.repositoryChoices = FXCollections.observableArrayList("Local Repository", "Git Repository",
                 "Classpath Repository");
-        this.resultRepository = Optional.empty();
+        this.resultSupplier = () -> Optional.empty();
 
+        this.finishButtonType = new ButtonType("Finish", ButtonBar.ButtonData.OK_DONE);
         this.setTitle(tr("Add a new Repository"));
 
-        this.repositoryTypeSelection = new WizardPane();
+        this.setResizable(true);
+        this.getDialogPane().setPrefSize(550, 200);
 
-        this.repositoryDetailsSelection = new WizardPane() {
-            @Override
-            public void onEnteringPage(Wizard wizard) {
-                switch (choiceBox.getSelectionModel().getSelectedItem()) {
-                    case "Local Repository":
-                        populateLocalRepositoryDetailsPage();
-                        break;
-                    case "Git Repository":
-                        populateGitRepositoryDetailsPage();
-                        break;
-                    case "Classpath Repository":
-                        populateClasspathRepositoryDetailsPage();
-                        break;
-                    default:
-                }
+        this.setResultConverter(dialogButton -> {
+            if (dialogButton == finishButtonType) {
+                return resultSupplier.get().orElse(null);
             }
-        };
+            return null;
+        });
 
+        this.getDialogPane().getButtonTypes().setAll(ButtonType.CANCEL);
         this.populateTypePage();
-
-        this.setFlow(new LinearFlow(repositoryTypeSelection, repositoryDetailsSelection));
     }
 
     /**
      * Populates the repository selection step
      */
     private void populateTypePage() {
-        choiceBox = new ChoiceBox<>(repositoryChoices);
-        choiceBox.getSelectionModel().selectFirst();
+        choiceBox = new ComboBox<>(repositoryChoices);
+        choiceBox.setPromptText(tr("Please select the repository type you want to add"));
+        choiceBox.setOnAction(event -> {
+            switch (choiceBox.getSelectionModel().getSelectedItem()) {
+                case "Local Repository":
+                    populateLocalRepositoryDetailsPage();
+                    break;
+                case "Git Repository":
+                    populateGitRepositoryDetailsPage();
+                    break;
+                case "Classpath Repository":
+                    populateClasspathRepositoryDetailsPage();
+                    break;
+                default:
+            }
+            this.getDialogPane().getButtonTypes().setAll(finishButtonType, ButtonType.CANCEL);
+        });
 
         Label choiceBoxLabel = new Label(tr("Repository type:"));
         choiceBoxLabel.setLabelFor(choiceBox);
@@ -111,8 +107,8 @@ public class AddRepositoryDialog extends Wizard {
         HBox content = new HBox(choiceBoxLabel, choiceBox);
         HBox.setHgrow(choiceBox, Priority.ALWAYS);
 
-        repositoryTypeSelection.setHeaderText(tr("Choose the repository type"));
-        repositoryTypeSelection.setContent(content);
+        this.setHeaderText(tr("Choose the repository type"));
+        this.getDialogPane().setContent(content);
     }
 
     /**
@@ -133,13 +129,10 @@ public class AddRepositoryDialog extends Wizard {
         HBox content = new HBox(pathField, openBrowser);
         HBox.setHgrow(pathField, Priority.ALWAYS);
 
-        Button finishButton = (Button) repositoryDetailsSelection.lookupButton(ButtonType.FINISH);
-        finishButton.setOnAction(event -> {
-            resultRepository = Optional.of(new LocalRepositoryLocation(new File(pathField.getText())));
-        });
+        resultSupplier = () -> Optional.of(new LocalRepositoryLocation(new File(pathField.getText())));
 
-        repositoryDetailsSelection.setHeaderText(tr("Choose the location of your local repository"));
-        repositoryDetailsSelection.setContent(content);
+        this.setHeaderText(tr("Choose the location of your local repository"));
+        this.getDialogPane().setContent(content);
     }
 
     /**
@@ -161,18 +154,18 @@ public class AddRepositoryDialog extends Wizard {
         grid.add(branchLabel, 0, 1);
         grid.add(branchField, 1, 1);
 
-        Button finishButton = (Button) repositoryDetailsSelection.lookupButton(ButtonType.FINISH);
-        finishButton.setOnAction(event -> {
+        resultSupplier = () -> {
             try {
-                resultRepository = Optional.of(new GitRepositoryLocation.Builder()
+                return Optional.of(new GitRepositoryLocation.Builder()
                         .withGitRepositoryUri(new URL(urlField.getText()).toURI()).build());
             } catch (MalformedURLException | URISyntaxException e) {
                 e.printStackTrace();
+                return Optional.empty();
             }
-        });
+        };
 
-        repositoryDetailsSelection.setHeaderText("Choose the location of your git repository");
-        repositoryDetailsSelection.setContent(grid);
+        this.setHeaderText("Choose the location of your git repository");
+        this.getDialogPane().setContent(grid);
     }
 
     /**
@@ -187,21 +180,9 @@ public class AddRepositoryDialog extends Wizard {
         HBox content = new HBox(classpathLabel, classpathField);
         HBox.setHgrow(classpathField, Priority.ALWAYS);
 
-        Button finishButton = (Button) repositoryDetailsSelection.lookupButton(ButtonType.FINISH);
-        finishButton.setOnAction(event -> {
-            resultRepository = Optional.of(new ClasspathRepositoryLocation(classpathField.getText()));
-        });
+        resultSupplier = () -> Optional.of(new ClasspathRepositoryLocation(classpathField.getText()));
 
-        repositoryDetailsSelection.setHeaderText(tr("Choose the location of your classpath repository"));
-        repositoryDetailsSelection.setContent(content);
-    }
-
-    /**
-     * Returns the resulting {@link RepositoryLocation} of this wizard
-     * @return The resulting {@link RepositoryLocation} of this wizard,
-     * or {@link Optional#empty()}, if the wizard has not been completed
-     */
-    public Optional<RepositoryLocation<? extends Repository>> getResultRepository() {
-        return resultRepository;
+        this.setHeaderText(tr("Choose the location of your classpath repository"));
+        this.getDialogPane().setContent(content);
     }
 }

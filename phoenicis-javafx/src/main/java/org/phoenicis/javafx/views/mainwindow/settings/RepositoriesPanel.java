@@ -127,9 +127,9 @@ public class RepositoriesPanel extends StackPane {
         this.addButton.setOnAction((ActionEvent event) -> {
             AddRepositoryDialog dialog = new AddRepositoryDialog();
 
-            Optional<ButtonType> successResult = dialog.showAndWait();
+            Optional<RepositoryLocation<? extends Repository>> successResult = dialog.showAndWait();
 
-            dialog.getResultRepository().ifPresent(repositoryLocation -> {
+            successResult.ifPresent(repositoryLocation -> {
                 repositories.add(repositoryLocation);
 
                 this.save();
