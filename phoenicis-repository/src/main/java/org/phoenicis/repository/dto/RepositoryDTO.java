@@ -83,10 +83,12 @@ public class RepositoryDTO implements Translatable {
     }
 
     @Override
-    public void translate() {
+    public RepositoryDTO translate() {
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (CategoryDTO categoryDTO : this.categories) {
-            categoryDTO.translate();
+            categoryDTOS.add(categoryDTO.translate());
         }
+        return new RepositoryDTO.Builder(this).withCategories(categoryDTOS).build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

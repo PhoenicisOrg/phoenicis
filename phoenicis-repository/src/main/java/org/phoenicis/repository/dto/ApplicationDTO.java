@@ -36,8 +36,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 public class ApplicationDTO implements Translatable {
     private final String id;
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private final URI icon;
     private final List<URI> miniatures;
     private final List<ScriptDTO> scripts;
@@ -131,9 +131,8 @@ public class ApplicationDTO implements Translatable {
     }
 
     @Override
-    public void translate() {
-        this.name = tr(this.name);
-        this.description = tr(this.description);
+    public ApplicationDTO translate() {
+        return new ApplicationDTO.Builder(this).withName(tr(this.name)).withDescription(tr(this.description)).build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

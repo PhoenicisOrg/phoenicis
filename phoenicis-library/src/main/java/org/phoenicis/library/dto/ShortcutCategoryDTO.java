@@ -39,8 +39,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
 public class ShortcutCategoryDTO implements Translatable {
     private final String id;
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private final List<ShortcutDTO> shortcuts;
     private URI icon;
 
@@ -99,9 +99,9 @@ public class ShortcutCategoryDTO implements Translatable {
     }
 
     @Override
-    public void translate() {
-        this.name = tr(this.name);
-        this.description = tr(this.description);
+    public ShortcutCategoryDTO translate() {
+        return new ShortcutCategoryDTO.Builder(this).withName(tr(this.name)).withDescription(tr(this.description))
+                .build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

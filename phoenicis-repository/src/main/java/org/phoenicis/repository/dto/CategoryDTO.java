@@ -40,7 +40,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class CategoryDTO implements Translatable {
     private final CategoryType type;
     private final String id;
-    private String name;
+    private final String name;
     private final List<ApplicationDTO> applications;
     private final URI icon;
 
@@ -103,12 +103,12 @@ public class CategoryDTO implements Translatable {
     }
 
     @Override
-    public void translate() {
-        this.name = tr(this.name);
-
+    public CategoryDTO translate() {
+        List<ApplicationDTO> applicationDTOS = new ArrayList();
         for (ApplicationDTO applicationDTO : this.applications) {
-            applicationDTO.translate();
+            applicationDTOS.add(applicationDTO.translate());
         }
+        return new CategoryDTO.Builder(this).withName(tr(this.name)).withApplications(applicationDTOS).build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

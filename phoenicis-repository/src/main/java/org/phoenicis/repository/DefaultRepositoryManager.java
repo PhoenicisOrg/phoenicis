@@ -126,8 +126,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
         if (!this.callbacks.isEmpty()) {
             this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
-                tr(repositoryDTO);
-                this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO));
+                this.callbacks.forEach(
+                        callbackPair -> callbackPair.getOnRepositoryChange().accept((RepositoryDTO) tr(repositoryDTO)));
             }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
     }

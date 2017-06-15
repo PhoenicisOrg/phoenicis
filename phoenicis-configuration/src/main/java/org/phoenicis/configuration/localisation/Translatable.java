@@ -5,5 +5,5 @@ public interface Translatable {
     /**
      * translate the object
      */
-    void translate();
+    Translatable translate();
 }
