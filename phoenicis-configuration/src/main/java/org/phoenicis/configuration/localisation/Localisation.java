@@ -74,6 +74,11 @@ public final class Localisation {
         return getI18n().tr(text, objects);
     }
 
+    /**
+     * translate Translatable object
+     * @param translatable Translatable object
+     * @return translated object
+     */
     public static Translatable tr(Translatable translatable) {
         return translatable.translate();
     }
