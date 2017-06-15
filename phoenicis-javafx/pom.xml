@@ -175,7 +175,6 @@
             <artifactId>phoenicis-settings</artifactId>
             <version>${project.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>

@@ -10,8 +10,8 @@ import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.TextWithStyle;
+import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.settings.SettingsManager;
@@ -56,7 +56,7 @@ public class RepositoriesPanel extends StackPane {
     /**
      * Constructor
      *
-     * @param settingsManager The settings manager
+     * @param settingsManager   The settings manager
      * @param repositoryManager The repository manager
      */
     public RepositoriesPanel(SettingsManager settingsManager, RepositoryManager repositoryManager) {
@@ -125,23 +125,17 @@ public class RepositoriesPanel extends StackPane {
         this.addButton = new Button();
         this.addButton.setText(tr("Add"));
         this.addButton.setOnAction((ActionEvent event) -> {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.initOwner(getScene().getWindow());
-            dialog.setTitle(tr("Add repository"));
-            dialog.setHeaderText(tr("Add repository"));
-            dialog.setContentText(tr("Please add the new repository:"));
+            AddRepositoryDialog dialog = new AddRepositoryDialog();
 
-            Optional<String> result = dialog.showAndWait();
-            /*
-             * TODO: replace by new GUI dialog (#776 and #857)
-             */
-            //result.ifPresent(newRepository -> {
-            //    repositories.add(0, newRepository);
-            //
-            //    this.save();
-            //
-            //    repositoryManager.addRepositories(0, newRepository);
-            //});
+            Optional<RepositoryLocation<? extends Repository>> successResult = dialog.showAndWait();
+
+            successResult.ifPresent(repositoryLocation -> {
+                repositories.add(repositoryLocation);
+
+                this.save();
+
+                repositoryManager.addRepositories(0, repositoryLocation);
+            });
         });
 
         this.removeButton = new Button();

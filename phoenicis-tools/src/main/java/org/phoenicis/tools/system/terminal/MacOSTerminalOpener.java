@@ -53,8 +53,7 @@ class MacOSTerminalOpener implements TerminalOpener {
                 .append("[ -e \"$HOME/.profile\" ] && rcFile=\"~/.profile\" || rcFile=\"/etc/profile\"\n");
 
         for (Map.Entry<String, String> entry : environmentVariables.entrySet()) {
-            scriptBuilder.append(String.format("export %s=\"%s\"%n", entry.getKey(),
-                    entry.getValue()));
+            scriptBuilder.append(String.format("export %s=\"%s\"%n", entry.getKey(), entry.getValue()));
         }
         return scriptBuilder.append("exec bash -c \"clear;printf '\\e[3J';bash --rcfile $rcFile\"").toString();
     }

@@ -74,7 +74,7 @@ public class GitRepository implements Repository {
         RepositoryDTO result = null;
         Git gitRepository = null;
 
-        try {       
+        try {
             /*
              * if the repository folder previously didn't exist, clone the
              * repository now
