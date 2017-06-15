@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.phoenicis.configuration.localisation.Translatable;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -36,17 +37,17 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Represents a category of application
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
-public class CategoryDTO {
+public class CategoryDTO implements Translatable {
     private final CategoryType type;
-    private final String name;
     private final String id;
+    private String name;
     private final List<ApplicationDTO> applications;
     private final URI icon;
 
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
-        this.name = builder.name.isEmpty() ? builder.id : tr(builder.name);
         this.id = builder.id;
+        this.name = builder.name.isEmpty() ? builder.id : builder.name;
         this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
     }
@@ -67,13 +68,13 @@ public class CategoryDTO {
 
         CategoryDTO that = (CategoryDTO) o;
 
-        return new EqualsBuilder().append(type, that.type).append(name, that.name).append(id, that.id)
+        return new EqualsBuilder().append(type, that.type).append(id, that.id).append(name, that.name)
                 .append(applications, that.applications).append(icon, that.icon).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(type).append(name).append(id).append(applications).append(icon)
+        return new HashCodeBuilder(17, 37).append(type).append(id).append(name).append(applications).append(icon)
                 .toHashCode();
     }
 
@@ -85,12 +86,12 @@ public class CategoryDTO {
         return type;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<ApplicationDTO> getApplications() {
@@ -101,11 +102,20 @@ public class CategoryDTO {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
+    @Override
+    public void translate() {
+        this.name = tr(this.name);
+
+        for (ApplicationDTO applicationDTO : this.applications) {
+            applicationDTO.translate();
+        }
+    }
+
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private CategoryType type;
-        private String name = "";
         private String id = "";
+        private String name = "";
         private List<ApplicationDTO> applications = new ArrayList<>();
         private URI icon;
 
@@ -114,7 +124,7 @@ public class CategoryDTO {
         }
 
         public Builder(CategoryDTO categoryDTO) {
-            this.withName(categoryDTO.getName()).withId(categoryDTO.getId())
+            this.withId(categoryDTO.getId()).withName(categoryDTO.getName())
                     .withApplications(categoryDTO.getApplications()).withIcon(categoryDTO.getIcon())
                     .withType(categoryDTO.getType());
         }
@@ -124,13 +134,13 @@ public class CategoryDTO {
             return this;
         }
 
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder withId(String id) {
-            this.id = id;
+        public Builder withName(String name) {
+            this.name = name;
             return this;
         }
 

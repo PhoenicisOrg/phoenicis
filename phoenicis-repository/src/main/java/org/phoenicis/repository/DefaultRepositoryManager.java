@@ -14,6 +14,8 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 /**
  * Created by marc on 31.03.17.
  */
@@ -123,10 +125,10 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.cachedRepository.clearCache();
 
         if (!this.callbacks.isEmpty()) {
-            this.backgroundRepository.fetchInstallableApplications(
-                    repositoryDTO -> this.callbacks
-                            .forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO)),
-                    exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
+            this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
+                tr(repositoryDTO);
+                this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO));
+            }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
     }
 

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.configuration.localisation.Translatable;
 
 import java.net.URI;
 import java.util.*;
@@ -33,10 +34,10 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Represents an application
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
-public class ApplicationDTO {
+public class ApplicationDTO implements Translatable {
     private final String id;
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
     private final URI icon;
     private final List<URI> miniatures;
     private final List<ScriptDTO> scripts;
@@ -44,8 +45,8 @@ public class ApplicationDTO {
 
     private ApplicationDTO(Builder builder) {
         id = builder.id;
-        this.name = builder.name.isEmpty() ? builder.id : tr(builder.name);
-        description = tr(builder.description);
+        this.name = builder.name.isEmpty() ? builder.id : builder.name;
+        description = builder.description;
         icon = builder.icon;
         miniatures = builder.miniatures;
         scripts = builder.scripts;
@@ -127,6 +128,12 @@ public class ApplicationDTO {
     public int hashCode() {
         return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(icon).append(miniatures)
                 .append(scripts).append(resources).toHashCode();
+    }
+
+    @Override
+    public void translate() {
+        this.name = tr(this.name);
+        this.description = tr(this.description);
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.phoenicis.configuration.localisation.Translatable;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -36,16 +37,16 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Represents a category of application
  */
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
-public class ShortcutCategoryDTO {
+public class ShortcutCategoryDTO implements Translatable {
     private final String id;
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
     private final List<ShortcutDTO> shortcuts;
     private URI icon;
 
     private ShortcutCategoryDTO(Builder builder) {
         this.id = builder.id;
-        this.name = builder.name.isEmpty() ? builder.id : tr(builder.name);
+        this.name = builder.name.isEmpty() ? builder.id : builder.name;
         this.description = builder.description;
         this.shortcuts = Collections.unmodifiableList(builder.shortcuts);
         this.icon = builder.icon;
@@ -95,6 +96,12 @@ public class ShortcutCategoryDTO {
     public int hashCode() {
         return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(shortcuts).append(icon)
                 .toHashCode();
+    }
+
+    @Override
+    public void translate() {
+        this.name = tr(this.name);
+        this.description = tr(this.description);
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
