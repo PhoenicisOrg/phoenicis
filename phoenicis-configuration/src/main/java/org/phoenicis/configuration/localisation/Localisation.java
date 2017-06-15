@@ -75,7 +75,7 @@ public final class Localisation {
     }
 
     /**
-     * translate Translatable object
+     * Translates the given Translatable object, by creating a new instance of it with its corresponding translations
      * @param translatable Translatable object
      * @return translated object
      */
