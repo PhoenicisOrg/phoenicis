@@ -12,6 +12,8 @@ import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.phoenicis.repository.location.LocalRepositoryLocation;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -34,6 +36,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 12.06.17
  */
 public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Repository>> {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AddRepositoryDialog.class);
+
     /**
      * A list containing all possible repository types to be added with this dialog
      */
@@ -156,10 +160,11 @@ public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Rep
 
         resultSupplier = () -> {
             try {
-                return Optional.of(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL(urlField.getText()).toURI()).build());
+                return Optional.of(
+                        new GitRepositoryLocation.Builder().withGitRepositoryUri(new URL(urlField.getText()).toURI())
+                                .withBranch(branchField.getText()).build());
             } catch (MalformedURLException | URISyntaxException e) {
-                e.printStackTrace();
+                LOGGER.error(String.format("The given url '%s' is no valid URI or URL", urlField.getText()), e);
                 return Optional.empty();
             }
         };
