@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.application.Platform;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -33,6 +34,12 @@ public class LeftListWidgetChooser<E> extends HBox {
         this.getStyleClass().add("listChooser");
 
         this.toggleGroup = new ToggleGroup();
+        // prevent unselecting all buttons
+        this.toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if ((newValue == null)) {
+                Platform.runLater(() -> this.toggleGroup.selectToggle(oldValue));
+            }
+        });
 
         this.iconsListButton = new ToggleButton();
         this.iconsListButton.setToggleGroup(toggleGroup);
