@@ -44,13 +44,13 @@ public class ApplicationDTO implements Translatable {
     private final List<ResourceDTO> resources;
 
     private ApplicationDTO(Builder builder) {
-        id = builder.id;
-        this.name = builder.name.isEmpty() ? builder.id : builder.name;
-        description = builder.description;
-        icon = builder.icon;
-        miniatures = builder.miniatures;
-        scripts = builder.scripts;
-        resources = builder.resources;
+        this.id = builder.id;
+        this.name = builder.name == null ? builder.id : builder.name;
+        this.description = builder.description;
+        this.icon = builder.icon;
+        this.miniatures = builder.miniatures;
+        this.scripts = builder.scripts;
+        this.resources = builder.resources;
     }
 
     public List<ResourceDTO> getResources() {
@@ -137,9 +137,9 @@ public class ApplicationDTO implements Translatable {
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private String id = "";
-        private String name = "";
-        private String description = "";
+        private String id;
+        private String name;
+        private String description;
         private URI icon;
         private List<URI> miniatures = new ArrayList<>();
         private List<ScriptDTO> scripts = new ArrayList<>();

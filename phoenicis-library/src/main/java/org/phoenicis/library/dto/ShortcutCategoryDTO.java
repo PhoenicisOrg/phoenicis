@@ -46,7 +46,7 @@ public class ShortcutCategoryDTO implements Translatable {
 
     private ShortcutCategoryDTO(Builder builder) {
         this.id = builder.id;
-        this.name = builder.name.isEmpty() ? builder.id : builder.name;
+        this.name = builder.name == null ? builder.id : builder.name;
         this.description = builder.description;
         this.shortcuts = Collections.unmodifiableList(builder.shortcuts);
         this.icon = builder.icon;
@@ -106,9 +106,9 @@ public class ShortcutCategoryDTO implements Translatable {
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
-        private String id = "";
-        private String name = "";
-        private String description = "";
+        private String id;
+        private String name;
+        private String description;
         private List<ShortcutDTO> shortcuts = new ArrayList<>();
         private URI icon;
 

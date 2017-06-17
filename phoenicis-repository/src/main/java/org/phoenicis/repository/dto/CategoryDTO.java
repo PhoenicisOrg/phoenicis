@@ -47,7 +47,7 @@ public class CategoryDTO implements Translatable {
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
         this.id = builder.id;
-        this.name = builder.name.isEmpty() ? builder.id : builder.name;
+        this.name = builder.name == null ? builder.id : builder.name;
         this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
     }
@@ -114,8 +114,8 @@ public class CategoryDTO implements Translatable {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private CategoryType type;
-        private String id = "";
-        private String name = "";
+        private String id;
+        private String name;
         private List<ApplicationDTO> applications = new ArrayList<>();
         private URI icon;
 
