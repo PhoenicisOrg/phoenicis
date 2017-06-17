@@ -26,6 +26,11 @@ public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
     private final URI gitRepositoryUri;
 
     /**
+     * The branch in which the repository is located
+     */
+    private final String branch;
+
+    /**
      * Constructor
      *
      * @param builder The builder object, containing the values for this {@link GitRepositoryLocation}
@@ -34,16 +39,21 @@ public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
         super("git");
 
         this.gitRepositoryUri = builder.gitRepositoryUri;
+        this.branch = builder.branch;
     }
 
     @Override
     public GitRepository createRepository(String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory,
             ClasspathRepository.Factory classPathRepositoryFactory, FileUtilities fileUtilities) {
-        return new GitRepository(gitRepositoryUri, cacheDirectoryPath, localRepositoryFactory, fileUtilities);
+        return new GitRepository(gitRepositoryUri, branch, cacheDirectoryPath, localRepositoryFactory, fileUtilities);
     }
 
     public URI getGitRepositoryUri() {
         return gitRepositoryUri;
+    }
+
+    public String getBranch() {
+        return branch;
     }
 
     @Override
@@ -58,27 +68,30 @@ public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
 
         GitRepositoryLocation that = (GitRepositoryLocation) o;
 
-        return new EqualsBuilder().append(gitRepositoryUri, that.gitRepositoryUri).isEquals();
+        return new EqualsBuilder().append(gitRepositoryUri, that.gitRepositoryUri).append(branch, that.branch)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(gitRepositoryUri).toHashCode();
+        return new HashCodeBuilder().append(gitRepositoryUri).append(branch).toHashCode();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append(gitRepositoryUri).toString();
+        return new ToStringBuilder(this).append(gitRepositoryUri).append(branch).toString();
     }
 
     @Override
     public String toDisplayString() {
-        return String.format("git+%s", gitRepositoryUri.toString());
+        return String.format("git+%s:%s", gitRepositoryUri.toString(), branch);
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private URI gitRepositoryUri;
+
+        private String branch;
 
         public Builder() {
             // Default constructor
@@ -86,10 +99,16 @@ public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
 
         public Builder(GitRepositoryLocation location) {
             this.withGitRepositoryUri(location.getGitRepositoryUri());
+            this.withBranch(location.getBranch());
         }
 
         public Builder withGitRepositoryUri(URI gitRepositoryUri) {
             this.gitRepositoryUri = gitRepositoryUri;
+            return this;
+        }
+
+        public Builder withBranch(String branch) {
+            this.branch = branch;
             return this;
         }
 
