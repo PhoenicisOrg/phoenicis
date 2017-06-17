@@ -128,6 +128,21 @@ public final class Localisation {
         return translatable;
     }
 
+    /**
+     * Tells if a class is translatable or not
+     * @param clazz The class to test
+     * @return A boolean
+     */
+    public static boolean isTranslatable(Class<?> clazz) {
+        for (Annotation annotation : clazz.getAnnotations()) {
+            if (annotation.annotationType() == Translatable.class) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static List<?> trList(List<?> translatable) {
         return translatable.stream().map(Localisation::tr).collect(Collectors.toList());
     }
@@ -187,16 +202,6 @@ public final class Localisation {
 
     private static <T> Method findSuitableGetter(T object, Parameter parameter) throws ReflectiveOperationException {
         return object.getClass().getMethod(localisationHelper.getterNameFromParameter(parameter));
-    }
-
-    public static boolean isTranslatable(Class<?> clazz) {
-        for (Annotation annotation : clazz.getAnnotations()) {
-            if (annotation.annotationType() == Translatable.class) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private static Optional<Constructor<?>> findTranslateCreator(Class<?> clazz) {
