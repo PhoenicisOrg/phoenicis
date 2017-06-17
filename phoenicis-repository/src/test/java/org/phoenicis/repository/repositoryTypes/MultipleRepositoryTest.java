@@ -36,15 +36,15 @@ public class MultipleRepositoryTest {
     @Test
     public void testWithThreeSources_threeResults() {
         final Repository firstSource = () -> new RepositoryDTO.Builder()
-                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withName("Category 1").build()))
+                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withId("Category 1").build()))
                 .build();
 
         final Repository secondSource = () -> new RepositoryDTO.Builder()
-                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withName("Category 2").build()))
+                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withId("Category 2").build()))
                 .build();
 
         final Repository thirdSource = () -> new RepositoryDTO.Builder()
-                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withName("Category 3").build()))
+                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withId("Category 3").build()))
                 .build();
 
         final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);

@@ -154,7 +154,7 @@ public class LibrarySideBar extends LeftSideBar {
     private ToggleButton createCategoryToggleButton(ShortcutCategoryDTO category) {
         final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
+        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
 
         return categoryButton;

@@ -43,9 +43,8 @@ public class MockedRepository extends TeeRepository {
                     .withCategories(
                             Collections.singletonList(
                                     new CategoryDTO.Builder()
-                                            .withApplications(Arrays.asList(new ApplicationDTO.Builder().withName(
-                                                    "Engines")
-                                                    .withScripts(Arrays.asList(new ScriptDTO.Builder()
+                                            .withApplications(Arrays.asList(new ApplicationDTO.Builder()
+                                                    .withId("Engines").withScripts(Arrays.asList(new ScriptDTO.Builder()
                                                             .withScriptName("Wine")
                                                             .withCompatibleOperatingSystems(Arrays.asList(
                                                                     OperatingSystem.LINUX, OperatingSystem.MACOSX))

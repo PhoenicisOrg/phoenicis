@@ -62,12 +62,12 @@ public abstract class MergeableRepository implements Repository {
          * Take the first application source, from behind, as the default one
          */
         final Map<String, CategoryDTO> mergedCategories = createSortedMap(
-                categoriesMap.get(repositories.get(numberOfRepositories - 1)), CategoryDTO::getName);
+                categoriesMap.get(repositories.get(numberOfRepositories - 1)), CategoryDTO::getId);
 
         for (int otherRepositoryIndex = numberOfRepositories - 2; otherRepositoryIndex >= 0; otherRepositoryIndex--) {
             final List<CategoryDTO> otherCategories = categoriesMap.get(repositories.get(otherRepositoryIndex));
 
-            final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getName);
+            final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getId);
 
             for (Map.Entry<String, CategoryDTO> entry : otherCategoriesMap.entrySet()) {
                 final CategoryDTO category = entry.getValue();
@@ -90,9 +90,9 @@ public abstract class MergeableRepository implements Repository {
 
     protected CategoryDTO mergeCategories(CategoryDTO leftCategory, CategoryDTO rightCategory) {
         final Map<String, ApplicationDTO> leftApplications = createSortedMap(leftCategory.getApplications(),
-                ApplicationDTO::getName);
+                ApplicationDTO::getId);
         final Map<String, ApplicationDTO> rightApplications = createSortedMap(rightCategory.getApplications(),
-                ApplicationDTO::getName);
+                ApplicationDTO::getId);
 
         final SortedMap<String, ApplicationDTO> mergedApps = new TreeMap<>(rightApplications);
 
@@ -109,7 +109,7 @@ public abstract class MergeableRepository implements Repository {
         final List<ApplicationDTO> applications = new ArrayList<>(mergedApps.values());
         applications.sort(ApplicationDTO.nameComparator());
         return new CategoryDTO.Builder().withApplications(applications).withType(leftCategory.getType())
-                .withIcon(leftCategory.getIcon()).withName(leftCategory.getName()).build();
+                .withIcon(leftCategory.getIcon()).withId(leftCategory.getId()).withName(leftCategory.getName()).build();
     }
 
     protected ApplicationDTO mergeApplications(ApplicationDTO leftApplication, ApplicationDTO rightApplication) {
@@ -121,8 +121,8 @@ public abstract class MergeableRepository implements Repository {
         final List<URI> mergeMiniatures = mergeMiniatures(leftApplication.getMiniatures(),
                 rightApplication.getMiniatures());
 
-        return new ApplicationDTO.Builder().withName(leftApplication.getName()).withResources(resources)
-                .withScripts(scripts).withDescription(leftApplication.getDescription())
+        return new ApplicationDTO.Builder().withId(leftApplication.getId()).withName(leftApplication.getName())
+                .withResources(resources).withScripts(scripts).withDescription(leftApplication.getDescription())
                 .withIcon(leftApplication.getIcon()).withMiniatures(mergeMiniatures).build();
     }
 

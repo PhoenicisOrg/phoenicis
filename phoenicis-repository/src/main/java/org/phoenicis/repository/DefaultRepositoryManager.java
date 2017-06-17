@@ -2,8 +2,8 @@ package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.*;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Created by marc on 31.03.17.
@@ -123,10 +125,9 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.cachedRepository.clearCache();
 
         if (!this.callbacks.isEmpty()) {
-            this.backgroundRepository.fetchInstallableApplications(
-                    repositoryDTO -> this.callbacks
-                            .forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(repositoryDTO)),
-                    exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
+            this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
+                this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));
+            }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
     }
 

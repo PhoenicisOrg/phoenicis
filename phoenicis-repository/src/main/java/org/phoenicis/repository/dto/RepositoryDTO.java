@@ -23,14 +23,18 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.phoenicis.configuration.localisation.Translatable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Represents a repository
  */
 @JsonDeserialize(builder = RepositoryDTO.Builder.class)
-public class RepositoryDTO {
+public class RepositoryDTO implements Translatable<RepositoryDTO> {
     private final String name;
     private final List<CategoryDTO> categories;
     private final TranslationDTO translations;
@@ -76,6 +80,15 @@ public class RepositoryDTO {
 
     public static Comparator<RepositoryDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
+
+    @Override
+    public RepositoryDTO translate() {
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        for (CategoryDTO categoryDTO : this.categories) {
+            categoryDTOS.add(categoryDTO.translate());
+        }
+        return new RepositoryDTO.Builder(this).withCategories(categoryDTOS).build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

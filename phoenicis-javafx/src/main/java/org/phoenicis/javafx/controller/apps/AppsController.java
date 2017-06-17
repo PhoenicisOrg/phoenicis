@@ -95,7 +95,7 @@ public class AppsController {
         try {
             StringBuilder cssBuilder = new StringBuilder();
             for (CategoryDTO category : categoryDTOS) {
-                cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
+                cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
                 URI categoryIcon = category.getIcon();
                 if (categoryIcon == null) {
                     cssBuilder

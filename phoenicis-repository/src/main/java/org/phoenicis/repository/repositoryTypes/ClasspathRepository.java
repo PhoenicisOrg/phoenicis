@@ -84,12 +84,12 @@ public class ClasspathRepository implements Repository {
 
             try {
                 return new CategoryDTO.Builder(categoryDTO)
-                        .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png"))
+                        .withIcon(new URI(packagePath + "/" + categoryFileName + "/icon.png")).withId(categoryFileName)
                         .withApplications(buildApplications(categoryFileName)).build();
             } catch (URISyntaxException e) {
                 LOGGER.warn("Invalid icon path", e);
-                return new CategoryDTO.Builder(categoryDTO).withApplications(buildApplications(categoryFileName))
-                        .build();
+                return new CategoryDTO.Builder(categoryDTO).withId(categoryFileName)
+                        .withApplications(buildApplications(categoryFileName)).build();
             }
         } else {
             LOGGER.debug(String.format("category.json %s for classpath repository does not exist", jsonCategoryPath));
@@ -118,15 +118,12 @@ public class ClasspathRepository implements Repository {
 
     private ApplicationDTO buildApplication(String categoryFileName, String applicationFileName) throws IOException {
         final String applicationDirectory = packagePath + "/" + categoryFileName + "/" + applicationFileName;
-        final String language = Locale.getDefault().getLanguage();
-        File applicationJson = new File(applicationDirectory, String.format("application_%s.json", language));
-        if (!applicationJson.exists()) {
-            applicationJson = new File(applicationDirectory, "application.json");
-        }
+        File applicationJson = new File(applicationDirectory, "application.json");
+
         final ApplicationDTO applicationDTO = objectMapper
                 .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
 
-        return new ApplicationDTO.Builder(applicationDTO)
+        return new ApplicationDTO.Builder(applicationDTO).withId(applicationFileName)
                 .withScripts(buildScripts(categoryFileName, applicationFileName))
                 .withMiniatures(buildMiniatures(categoryFileName, applicationFileName)).build();
     }

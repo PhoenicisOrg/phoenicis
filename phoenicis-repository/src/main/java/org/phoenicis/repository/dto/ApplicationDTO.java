@@ -23,15 +23,19 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.configuration.localisation.Translatable;
 
 import java.net.URI;
 import java.util.*;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Represents an application
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
-public class ApplicationDTO {
+public class ApplicationDTO implements Translatable<ApplicationDTO> {
+    private final String id;
     private final String name;
     private final String description;
     private final URI icon;
@@ -40,12 +44,13 @@ public class ApplicationDTO {
     private final List<ResourceDTO> resources;
 
     private ApplicationDTO(Builder builder) {
-        name = builder.name;
-        description = builder.description;
-        icon = builder.icon;
-        miniatures = builder.miniatures;
-        scripts = builder.scripts;
-        resources = builder.resources;
+        this.id = builder.id;
+        this.name = builder.name == null ? builder.id : builder.name;
+        this.description = builder.description;
+        this.icon = builder.icon;
+        this.miniatures = builder.miniatures;
+        this.scripts = builder.scripts;
+        this.resources = builder.resources;
     }
 
     public List<ResourceDTO> getResources() {
@@ -58,6 +63,10 @@ public class ApplicationDTO {
 
     public List<URI> getMiniatures() {
         return miniatures;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -110,19 +119,25 @@ public class ApplicationDTO {
 
         ApplicationDTO that = (ApplicationDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(description, that.description).append(icon, that.icon)
-                .append(miniatures, that.miniatures).append(scripts, that.scripts).append(resources, that.resources)
-                .isEquals();
+        return new EqualsBuilder().append(id, that.id).append(name, that.name).append(description, that.description)
+                .append(icon, that.icon).append(miniatures, that.miniatures).append(scripts, that.scripts)
+                .append(resources, that.resources).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(description).append(icon).append(miniatures)
+        return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(icon).append(miniatures)
                 .append(scripts).append(resources).toHashCode();
+    }
+
+    @Override
+    public ApplicationDTO translate() {
+        return new ApplicationDTO.Builder(this).withName(tr(this.name)).withDescription(tr(this.description)).build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
+        private String id;
         private String name;
         private String description;
         private URI icon;
@@ -135,12 +150,18 @@ public class ApplicationDTO {
         }
 
         public Builder(ApplicationDTO applicationDTO) {
+            this.id = applicationDTO.id;
             this.name = applicationDTO.name;
             this.description = applicationDTO.description;
             this.icon = applicationDTO.icon;
             this.miniatures = applicationDTO.miniatures;
             this.scripts = applicationDTO.scripts;
             this.resources = applicationDTO.resources;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withName(String name) {
