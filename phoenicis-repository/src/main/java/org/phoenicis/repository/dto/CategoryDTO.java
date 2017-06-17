@@ -120,6 +120,11 @@ public class CategoryDTO {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> Automatic translation of any object
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     @TranslatableBuilder
     public static class Builder {
@@ -168,13 +173,6 @@ public class CategoryDTO {
             return new CategoryDTO(this);
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
     }
 
     @Override

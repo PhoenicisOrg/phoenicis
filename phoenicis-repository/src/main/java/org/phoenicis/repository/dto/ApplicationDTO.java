@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.phoenicis.configuration.localisation.Translate;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.phoenicis.configuration.localisation.Translate;
@@ -38,7 +40,11 @@ import java.util.*;
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 @Translatable
 public class ApplicationDTO {
+<<<<<<< HEAD
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationDTO.class);
+=======
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationDTO.class)
+>>>>>>> Automatic translation of any object
     private final String id;
     private final String name;
     private final String description;

@@ -53,7 +53,7 @@ public final class Localisation {
      * - typically used to add translations for the scripts
      * - only one additional ResourceBundle can be set at a time (calling the method again will override the old ResourceBundle)
      *
-     * @param resourceBundle
+     * @param resourceBundle Resource bundle
      */
     public static void setAdditionalTranslations(ResourceBundle resourceBundle) {
         getI18n().setResources(resourceBundle);
@@ -203,6 +203,7 @@ public final class Localisation {
     private static <T> Method findSuitableGetter(T object, Parameter parameter) throws ReflectiveOperationException {
         return object.getClass().getMethod(localisationHelper.getterNameFromParameter(parameter));
     }
+
 
     private static Optional<Constructor<?>> findTranslateCreator(Class<?> clazz) {
         for (Constructor<?> constructor : clazz.getConstructors()) {
