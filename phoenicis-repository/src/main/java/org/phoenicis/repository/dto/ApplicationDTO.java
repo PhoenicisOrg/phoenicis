@@ -26,19 +26,19 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.phoenicis.configuration.localisation.Translate;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
 
 import java.net.URI;
 import java.util.*;
-
-import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * Represents an application
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
-public class ApplicationDTO implements Translatable<ApplicationDTO> {
+@Translatable
+public class ApplicationDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationDTO.class);
-
     private final String id;
     private final String name;
     private final String description;
@@ -68,6 +68,10 @@ public class ApplicationDTO implements Translatable<ApplicationDTO> {
         this.resources = builder.resources;
     }
 
+    public static Comparator<ApplicationDTO> nameComparator() {
+        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
+
     public List<ResourceDTO> getResources() {
         return resources;
     }
@@ -84,10 +88,12 @@ public class ApplicationDTO implements Translatable<ApplicationDTO> {
         return id;
     }
 
+    @Translate
     public String getName() {
         return name;
     }
 
+    @Translate
     public String getDescription() {
         return description;
     }
@@ -118,10 +124,6 @@ public class ApplicationDTO implements Translatable<ApplicationDTO> {
         return result;
     }
 
-    public static Comparator<ApplicationDTO> nameComparator() {
-        return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -145,12 +147,8 @@ public class ApplicationDTO implements Translatable<ApplicationDTO> {
                 .append(scripts).append(resources).toHashCode();
     }
 
-    @Override
-    public ApplicationDTO translate() {
-        return new ApplicationDTO.Builder(this).withName(tr(this.name)).withDescription(tr(this.description)).build();
-    }
-
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+    @TranslatableBuilder
     public static class Builder {
         private String id;
         private String name;

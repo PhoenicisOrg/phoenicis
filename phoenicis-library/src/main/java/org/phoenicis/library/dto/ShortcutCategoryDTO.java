@@ -24,6 +24,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
+import org.phoenicis.configuration.localisation.Translate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +35,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.tr;
-
 /**
  * Represents a category of application
  */
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
-public class ShortcutCategoryDTO implements Translatable<ShortcutCategoryDTO> {
+@Translatable
+public class ShortcutCategoryDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutCategoryDTO.class);
-
     private final String id;
     private final String name;
     private final String description;
@@ -71,10 +71,12 @@ public class ShortcutCategoryDTO implements Translatable<ShortcutCategoryDTO> {
         return id;
     }
 
+    @Translate
     public String getName() {
         return name;
     }
 
+    @Translate
     public String getDescription() {
         return description;
     }
@@ -113,13 +115,8 @@ public class ShortcutCategoryDTO implements Translatable<ShortcutCategoryDTO> {
                 .toHashCode();
     }
 
-    @Override
-    public ShortcutCategoryDTO translate() {
-        return new ShortcutCategoryDTO.Builder(this).withName(tr(this.name)).withDescription(tr(this.description))
-                .build();
-    }
-
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+    @TranslatableBuilder
     public static class Builder {
         private String id;
         private String name;

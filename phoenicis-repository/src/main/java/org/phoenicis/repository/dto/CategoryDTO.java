@@ -24,6 +24,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
+import org.phoenicis.configuration.localisation.Translate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +35,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.phoenicis.configuration.localisation.Localisation.tr;
-
 /**
  * Represents a category of application
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
-public class CategoryDTO implements Translatable<CategoryDTO> {
+@Translatable
+public class CategoryDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDTO.class);
-
     private final CategoryType type;
     private final String id;
     private final String name;
@@ -106,10 +106,12 @@ public class CategoryDTO implements Translatable<CategoryDTO> {
         return id;
     }
 
+    @Translate
     public String getName() {
         return name;
     }
 
+    @Translate
     public List<ApplicationDTO> getApplications() {
         return applications;
     }
@@ -118,16 +120,8 @@ public class CategoryDTO implements Translatable<CategoryDTO> {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
-    @Override
-    public CategoryDTO translate() {
-        List<ApplicationDTO> applicationDTOS = new ArrayList();
-        for (ApplicationDTO applicationDTO : this.applications) {
-            applicationDTOS.add(applicationDTO.translate());
-        }
-        return new CategoryDTO.Builder(this).withName(tr(this.name)).withApplications(applicationDTOS).build();
-    }
-
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+    @TranslatableBuilder
     public static class Builder {
         private CategoryType type;
         private String id;

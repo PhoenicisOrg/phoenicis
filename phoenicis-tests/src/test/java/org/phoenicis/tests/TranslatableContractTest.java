@@ -1,35 +1,14 @@
-/*
- * Copyright (C) 2015-2017 PÂRIS Quentin
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
-
 package org.phoenicis.tests;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
+import org.phoenicis.configuration.localisation.TranslatableCreator;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -40,27 +19,28 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
+import static org.phoenicis.configuration.localisation.Localisation.isTranslatable;
 
 @RunWith(Parameterized.class)
-public class DTOContractTest {
+public class TranslatableContractTest {
     private final static int DEFAULT_MAX_DEPTH = 5;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private DTOContainer<?> DTOContainer;
+    private TranslatableContainer<?> translatableContainer;
 
-    public DTOContractTest(DTOContainer<?> DTOContainer) {
-        this.DTOContainer = DTOContainer;
+    public TranslatableContractTest(TranslatableContainer<?> translatableContainer) {
+        this.translatableContainer = translatableContainer;
     }
 
     @Parameterized.Parameters(name = "{0}")
-    public static Collection<DTOContainer<?>> data() throws ClassNotFoundException {
-        return findAllDTOs();
+    public static Collection<TranslatableContainer<?>> data() throws ClassNotFoundException {
+        return findAllTranslatables();
     }
 
-    private static Optional<Constructor<?>> getConstructorAnnotatedWithJsonCreator(Class<?> clazz) {
+    private static Optional<Constructor<?>> getTranslationConstructor(Class<?> clazz) {
         for (Constructor<?> constructor : clazz.getConstructors()) {
             for (Annotation annotation : constructor.getAnnotations()) {
-                if (annotation.annotationType() == JsonCreator.class) {
+                if (annotation.annotationType() == TranslatableCreator.class) {
                     return Optional.of(constructor);
                 }
             }
@@ -68,7 +48,7 @@ public class DTOContractTest {
         return Optional.empty();
     }
 
-    private static Optional<Constructor<?>> getConstructorHavingJsonBuilder(Class<?> clazz) {
+    private static Optional<Constructor<?>> getTranslationBuilder(Class<?> clazz) {
         for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
             final List<Class<?>> parameterTypes = Arrays.stream(constructor.getParameterTypes())
                     .filter(s -> s.getName().contains("Builder")).collect(Collectors.toList());
@@ -77,7 +57,7 @@ public class DTOContractTest {
                 final Annotation[] annotations = parameterTypes.get(0).getAnnotations();
 
                 for (Annotation annotation : annotations) {
-                    if (annotation.annotationType() == JsonPOJOBuilder.class) {
+                    if (annotation.annotationType() == TranslatableBuilder.class) {
                         return Optional.of(constructor);
                     }
                 }
@@ -86,8 +66,8 @@ public class DTOContractTest {
         return Optional.empty();
     }
 
-    private static List<DTOContainer<?>> findAllDTOs() throws ClassNotFoundException {
-        final List<DTOContainer<?>> fondJsonCreatorClasses = new ArrayList<>();
+    private static List<TranslatableContainer<?>> findAllTranslatables() throws ClassNotFoundException {
+        final List<TranslatableContainer<?>> foundClasses = new ArrayList<>();
 
         final ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(
                 true);
@@ -99,65 +79,39 @@ public class DTOContractTest {
 
         for (String className : classNames) {
             final Class<?> clazz = Class.forName(className);
-            if (isJsonClass(clazz)) {
-                fondJsonCreatorClasses.add(new DTOContainer<>(clazz));
+            if (isTranslatable(clazz)) {
+                foundClasses.add(new TranslatableContainer<>(clazz));
             }
         }
 
-        return fondJsonCreatorClasses;
-    }
-
-    private static boolean isJsonClass(Class<?> clazz) {
-        return getConstructorAnnotatedWithJsonCreator(clazz).isPresent()
-                || getConstructorHavingJsonBuilder(clazz).isPresent();
+        return foundClasses;
     }
 
     @Test
     public void testConstructor() throws ReflectiveOperationException, URISyntaxException {
-        final Object dto = newDTOInstance(DTOContainer.getClazz());
-        assertNotNull(dto);
+        final Object translatable = newTranslatableInstance(translatableContainer.getClazz());
+        assertNotNull(translatable);
     }
 
     @Test
     public void testHashCodes() throws ReflectiveOperationException, URISyntaxException {
-        final Object dto1 = newDTOInstance(DTOContainer.getClazz());
-        final Object dto2 = newDTOInstance(DTOContainer.getClazz());
-        assertEquals(dto1, dto2);
-        assertEquals(dto1.hashCode(), dto2.hashCode());
+        final Object translatable1 = newTranslatableInstance(translatableContainer.getClazz());
+        final Object translatable2 = newTranslatableInstance(translatableContainer.getClazz());
+        assertEquals(translatable1, translatable2);
+        assertEquals(translatable1.hashCode(), translatable2.hashCode());
     }
 
     @Test
     public void testEqualsTrivialCases() throws ReflectiveOperationException, URISyntaxException {
-        final Object dto = newDTOInstance(DTOContainer.getClazz());
-        assertTrue(dto.equals(dto));
-        assertFalse(dto.equals(null));
-        assertFalse(dto.equals(new Object()));
+        final Object translatable = newTranslatableInstance(translatableContainer.getClazz());
+        assertTrue(translatable.equals(translatable));
+        assertFalse(translatable.equals(null));
+        assertFalse(translatable.equals(new Object()));
     }
 
-    @Test
-    public void testSerialize() throws ReflectiveOperationException, JsonProcessingException, URISyntaxException {
-        final Object dto = newDTOInstance(DTOContainer.getClazz());
-        final String json = objectMapper.writeValueAsString(dto);
-        assertTrue(json.startsWith("{"));
-        assertTrue(json.endsWith("}"));
-    }
-
-    @Test
-    public void testDeserialize() throws ReflectiveOperationException, IOException, URISyntaxException {
-        final Object dto = newDTOInstance(DTOContainer.getClazz());
-        final String json = objectMapper.writeValueAsString(dto);
-
-        final ObjectMapper alternativeObjectMapper = new ObjectMapper();
-        alternativeObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        final Object serialized = alternativeObjectMapper.readValue(json, DTOContainer.getClazz());
-
-        assertEquals(dto, serialized);
-    }
-
-    private Object newDTOInstance(Class<?> clazz) throws ReflectiveOperationException, URISyntaxException {
-        final Optional<Constructor<?>> builderConstructor = getConstructorHavingJsonBuilder(clazz);
-        final Optional<Constructor<?>> simpleConstructor = getConstructorAnnotatedWithJsonCreator(clazz);
+    private Object newTranslatableInstance(Class<?> clazz) throws ReflectiveOperationException, URISyntaxException {
+        final Optional<Constructor<?>> builderConstructor = getTranslationBuilder(clazz);
+        final Optional<Constructor<?>> simpleConstructor = getTranslationConstructor(clazz);
 
         if (simpleConstructor.isPresent()) {
             return createInstanceFromSimpleConstructor(simpleConstructor.get());
@@ -252,11 +206,11 @@ public class DTOContractTest {
             return new URI("http://www.test.uri");
         }
 
-        if (isJsonClass(constructorParameterType)) {
+        if (isTranslatable(constructorParameterType)) {
             if (maxDepth == 0) {
                 return null;
             }
-            return newDTOInstance(constructorParameterType);
+            return newTranslatableInstance(constructorParameterType);
         }
 
         return null;
@@ -268,10 +222,10 @@ public class DTOContractTest {
      *
      * @param <C> The class the
      */
-    private static class DTOContainer<C> {
+    private static class TranslatableContainer<C> {
         private final Class<C> clazz;
 
-        private DTOContainer(Class<C> clazz) {
+        private TranslatableContainer(Class<C> clazz) {
             this.clazz = clazz;
         }
 
