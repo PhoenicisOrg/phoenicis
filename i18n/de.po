@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-04 12:28+0200\n"
-"PO-Revision-Date: 2017-06-04 12:28+0200\n"
+"POT-Creation-Date: 2017-06-17 15:56+0200\n"
+"PO-Revision-Date: 2017-06-17 16:04+0200\n"
 "Last-Translator: Plata <plata@phoenicis.org>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -85,28 +85,19 @@ msgstr "Breeze Dunkel"
 msgid "Unity theme"
 msgstr "Unity"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:100
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:102
 msgid "Repositories Settings"
 msgstr "Repository Einstellungen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:105
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:107
 msgid "Repository:"
 msgstr "Repository:"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:124
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:126
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:128
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:129
-msgid "Add repository"
-msgstr "Repository hinzufügen:"
-
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:130
-msgid "Please add the new repository:"
-msgstr "Bitte das neue Repository eintragen:"
-
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:143
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:142
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -171,6 +162,38 @@ msgstr "Zeitstempel des Builds:"
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/ViewSettings.java:51
 msgid "Settings"
 msgstr "Einstellungen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:70
+msgid "Add a new Repository"
+msgstr "Repository hinzufügen:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:91
+msgid "Please select the repository type you want to add"
+msgstr "Bitte wählen Sie den Repositorytyp, der hinzugefügt werden soll"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:108
+msgid "Repository type:"
+msgstr "Repositorytyp:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:114
+msgid "Choose the repository type"
+msgstr "Repositorytyp wählen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:124
+msgid "Open directory chooser"
+msgstr "Ordnerauswahldialog öffnen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:138
+msgid "Choose the location of your local repository"
+msgstr "Ordner für Ihr lokales Repository auswählen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:182
+msgid "Classpath:"
+msgstr "Classpath:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:190
+msgid "Choose the location of your classpath repository"
+msgstr "Pfad für Ihr Classpath-Repository auswählen"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/ViewSettings.java:78
 msgid "User Interface"
@@ -312,7 +335,7 @@ msgstr "GLSL Unterstützung"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:77
 msgid "Direct Draw Renderer"
-msgstr ""
+msgstr "Direct Draw Renderer"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:86
 msgid "Video memory size"
@@ -328,7 +351,7 @@ msgstr ""
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:113
 msgid "Multisampling"
-msgstr ""
+msgstr "Multisampling"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:122
 msgid "Strict Draw Ordering"
@@ -368,15 +391,15 @@ msgstr "Bibliothek"
 msgid "My applications"
 msgstr "Meine Anwendungen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:106
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:81
 msgid "Run"
 msgstr "Starten"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:110
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:84
 msgid "Close"
 msgstr "Schließen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:114
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:87
 msgid "Uninstall"
 msgstr "Deinstallieren"
 
@@ -458,9 +481,21 @@ msgstr "Fehler beim Löschen der Engine"
 msgid "I agree"
 msgstr "Ich stimme zu"
 
+#: src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
+msgid "Please click here, or drag a file to me."
+msgstr "Bitte hier klicken oder Datei per drag and drop auswählen."
+
 #: src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:91
 msgid "Allowed files"
 msgstr "Erlaubte Dateien"
+
+#: src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:107
+msgid "Next"
+msgstr "Weiter"
 
 #, fuzzy
 #~ msgid "Default"
