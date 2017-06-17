@@ -34,6 +34,8 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 // TODO: Fix this class using CSS and containers instead of static sizes
 abstract class AbstractStepRepresentation {
     private final Message<?> messageWaitingForResponse;
@@ -99,10 +101,10 @@ abstract class AbstractStepRepresentation {
         footer.setId("footer");
         getParent().getRoot().setBottom(footer);
 
-        Button cancelButton = new Button("Cancel");
+        Button cancelButton = new Button(tr("Cancel"));
         cancelButton.setPrefSize(70, 28);
 
-        nextButton = new Button("Next");
+        nextButton = new Button(tr("Next"));
         nextButton.setPrefSize(70, 28);
 
         footer.getChildren().addAll(cancelButton, nextButton);
