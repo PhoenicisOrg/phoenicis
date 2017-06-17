@@ -1,9 +1,9 @@
 package org.phoenicis.configuration.localisation;
 
-public interface Translatable {
+public interface Translatable<E extends Translatable<?>> {
 
     /**
      * translate the object
      */
-    Translatable translate();
+    E translate();
 }

@@ -37,7 +37,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Represents a category of application
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
-public class CategoryDTO implements Translatable {
+public class CategoryDTO implements Translatable<CategoryDTO> {
     private final CategoryType type;
     private final String id;
     private final String name;

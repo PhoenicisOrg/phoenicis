@@ -37,7 +37,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Represents a category of application
  */
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
-public class ShortcutCategoryDTO implements Translatable {
+public class ShortcutCategoryDTO implements Translatable<ShortcutCategoryDTO> {
     private final String id;
     private final String name;
     private final String description;

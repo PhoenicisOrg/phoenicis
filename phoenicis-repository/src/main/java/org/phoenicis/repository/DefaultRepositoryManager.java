@@ -2,8 +2,8 @@ package org.phoenicis.repository;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.*;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
@@ -126,8 +126,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
         if (!this.callbacks.isEmpty()) {
             this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
-                this.callbacks.forEach(
-                        callbackPair -> callbackPair.getOnRepositoryChange().accept((RepositoryDTO) tr(repositoryDTO)));
+                this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));
             }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
     }

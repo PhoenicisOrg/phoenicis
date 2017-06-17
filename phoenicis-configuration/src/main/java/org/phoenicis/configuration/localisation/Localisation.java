@@ -79,7 +79,7 @@ public final class Localisation {
      * @param translatable Translatable object
      * @return translated object
      */
-    public static Translatable tr(Translatable translatable) {
+    public static <T extends Translatable<?>> T tr(Translatable<T> translatable) {
         return translatable.translate();
     }
 

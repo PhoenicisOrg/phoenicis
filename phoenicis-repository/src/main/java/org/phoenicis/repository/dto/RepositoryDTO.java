@@ -34,7 +34,7 @@ import java.util.List;
  * Represents a repository
  */
 @JsonDeserialize(builder = RepositoryDTO.Builder.class)
-public class RepositoryDTO implements Translatable {
+public class RepositoryDTO implements Translatable<RepositoryDTO> {
     private final String name;
     private final List<CategoryDTO> categories;
     private final TranslationDTO translations;

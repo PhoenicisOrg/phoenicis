@@ -34,7 +34,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Represents an application
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
-public class ApplicationDTO implements Translatable {
+public class ApplicationDTO implements Translatable<ApplicationDTO> {
     private final String id;
     private final String name;
     private final String description;
