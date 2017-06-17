@@ -51,27 +51,27 @@ public final class Localisation {
     }
 
     public static String tr(String text) {
-        return text == null ? "" : getI18n().tr(text);
+        return text == null ? null : getI18n().tr(text);
     }
 
     public static String tr(String text, Object o1) {
-        return text == null ? "" : getI18n().tr(text, o1);
+        return text == null ? null : getI18n().tr(text, o1);
     }
 
     public static String tr(String text, Object o1, Object o2) {
-        return text == null ? "" : getI18n().tr(text, o1, o2);
+        return text == null ? null : getI18n().tr(text, o1, o2);
     }
 
     public static String tr(String text, Object o1, Object o2, Object o3) {
-        return text == null ? "" : getI18n().tr(text, o1, o2, o3);
+        return text == null ? null : getI18n().tr(text, o1, o2, o3);
     }
 
     public static String tr(String text, Object o1, Object o2, Object o3, Object o4) {
-        return text == null ? "" : getI18n().tr(text, o1, o2, o3, o4);
+        return text == null ? null : getI18n().tr(text, o1, o2, o3, o4);
     }
 
     public static String tr(String text, Object[] objects) {
-        return text == null ? "" : getI18n().tr(text, objects);
+        return text == null ? null : getI18n().tr(text, objects);
     }
 
     /**
