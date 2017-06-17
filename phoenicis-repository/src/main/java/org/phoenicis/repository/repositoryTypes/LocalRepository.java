@@ -101,8 +101,15 @@ public class LocalRepository implements Repository {
 
                 if (categoryJson.exists()) {
                     final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(
-                            unSerializeCategory(categoryJson)).withId(categoryDirectory.getName())
-                                    .withApplications(fetchApplications(categoryDirectory));
+                            unSerializeCategory(categoryJson)).withApplications(fetchApplications(categoryDirectory));
+
+                    if (StringUtils.isBlank(categoryDTOBuilder.getId())) {
+                        if (!StringUtils.isBlank(categoryDTOBuilder.getName())) {
+                            categoryDTOBuilder.withId(categoryDTOBuilder.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                        } else {
+                            categoryDTOBuilder.withId(categoryDirectory.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                        }
+                    }
 
                     final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
                     if (categoryIconFile.exists()) {
@@ -133,8 +140,12 @@ public class LocalRepository implements Repository {
                 final ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(
                         unSerializeApplication(applicationJson));
 
-                if (StringUtils.isBlank(applicationDTOBuilder.getName())) {
-                    applicationDTOBuilder.withId(applicationDirectory.getName());
+                if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
+                    if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
+                        applicationDTOBuilder.withId(applicationDTOBuilder.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                    } else {
+                        applicationDTOBuilder.withId(applicationDirectory.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                    }
                 }
 
                 final File miniaturesDirectory = new File(applicationDirectory, "miniatures");

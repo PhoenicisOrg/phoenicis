@@ -157,6 +157,14 @@ public class CategoryDTO implements Translatable<CategoryDTO> {
         public CategoryDTO build() {
             return new CategoryDTO(this);
         }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 
     @Override
