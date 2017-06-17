@@ -130,15 +130,15 @@ public class UiSetupWizardImplementation implements SetupWizard {
     @Override
     public Void presentation(String programName, String programEditor, String applicationHomepage,
             String scriptorName) {
-        final String htmlToShow = String.format(
-                tr("<body>" + "This wizard will help you install \"%1$s\" on your computer.<br><br>"
-                        + "This program was created by: %2$s<br><br>"
-                        + "For more information about this program, visit:<br><a href=\"%3$s\">%3$s</a><br><br>"
-                        + "This installation program is provided by: %4$s<br><br>"
-                        + "<br><br>%1$s will be installed in: %5$s<br><br>"
-                        + "%6$s is not responsible for anything that might happen as a result of using"
-                        + " these scripts.<br><br>Click Next to start" + "</body>"),
-                programName, programEditor, applicationHomepage, scriptorName, applicationUserRoot, applicationName);
+        final String htmlToShow = "<body>" + tr("This wizard will help you install {0} on your computer", programName)
+                + ".<br><br>" + tr("This program was created by: {0}", programEditor) + "<br><br>"
+                + String.format("For more information about this program, visit:<br><a href=\"%1$s\">%1$s</a><br><br>",
+                        applicationHomepage)
+                + tr("This installation program is provided by: {0}", scriptorName) + "<br><br>" + "<br><br>"
+                + tr("{0} will be installed in: {1}", programName, applicationUserRoot) + "<br><br>"
+                + tr("{0} is not responsible for anything that might happen as a result of using these scripts.",
+                        applicationName)
+                + "<br><br>" + tr("Click \"Next\" to start.") + "</body>";
         return messageSender.runAndWait(message -> setupUi.showHtmlPresentationStep(message, htmlToShow));
     }
 

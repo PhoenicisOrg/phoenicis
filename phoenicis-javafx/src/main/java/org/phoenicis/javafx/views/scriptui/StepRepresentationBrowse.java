@@ -55,7 +55,7 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
 
     private Node dragPane() {
         final Text textLabel = new Text(textToShow);
-        final Text dragLabel = new Text("Please click here, or drag a file to me.");
+        final Text dragLabel = new Text(tr("Please click here, or drag a file to me."));
         textLabel.getStyleClass().add("boldLabel");
         dragLabel.getStyleClass().addAll("normalLabel");
 
