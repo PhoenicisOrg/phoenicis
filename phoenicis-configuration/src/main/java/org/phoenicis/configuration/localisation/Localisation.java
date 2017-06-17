@@ -209,7 +209,6 @@ public final class Localisation {
         return object.getClass().getMethod(localisationHelper.getterNameFromParameter(parameter));
     }
 
-
     private static Optional<Constructor<?>> findTranslateCreator(Class<?> clazz) {
         for (Constructor<?> constructor : clazz.getConstructors()) {
             for (Annotation annotation : constructor.getAnnotations()) {
