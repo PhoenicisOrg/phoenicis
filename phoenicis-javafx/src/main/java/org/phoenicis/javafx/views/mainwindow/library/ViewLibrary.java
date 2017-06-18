@@ -47,6 +47,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
     private LibrarySideBar sideBar;
     private LibraryPanel libraryPanel;
+    private final Tab installedApplicationsTab;
 
     private CombinedListWidget<ShortcutDTO> availableShortcuts;
 
@@ -98,18 +99,14 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.filter = new ShortcutFilter<ShortcutDTO>(filteredShortcuts,
                 (filterText, shortcut) -> shortcut.getName().toLowerCase().contains(filterText));
 
-        availableShortcuts.setOnMouseClicked(event -> {
-            availableShortcuts.deselectAll();
-            onShortcutSelected.accept(null);
+        this.availableShortcuts.setOnMouseClicked(event -> {
+            this.availableShortcuts.deselectAll();
+            this.onShortcutSelected.accept(null);
             event.consume();
         });
 
         this.sideBar = new LibrarySideBar(applicationName, availableShortcuts);
         this.sideBar.bindCategories(this.sortedCategories);
-
-        this.libraryPanel = new LibraryPanel(objectMapper);
-
-        this.availableShortcuts.bind(sortedShortcuts);
 
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
@@ -121,9 +118,22 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
             showAvailableShortcuts();
         });
 
-        this.drawContent();
-
         this.setSideBar(sideBar);
+
+        this.availableShortcuts.bind(sortedShortcuts);
+
+        this.libraryTabs = new TabPane();
+        this.libraryTabs.getStyleClass().add("rightPane");
+
+        this.installedApplicationsTab = new Tab();
+        this.installedApplicationsTab.setClosable(false);
+        this.installedApplicationsTab.setText(tr("My applications"));
+        this.installedApplicationsTab.setContent(availableShortcuts);
+        this.libraryTabs.getTabs().add(this.installedApplicationsTab);
+
+        this.setCenter(this.libraryTabs);
+
+        this.libraryPanel = new LibraryPanel(objectMapper);
     }
 
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
@@ -147,7 +157,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
      */
     public void showAvailableShortcuts() {
         this.closeDetailsView();
-        drawContent();
+        this.installedApplicationsTab.setContent(availableShortcuts);
     }
 
     public void populate(List<ShortcutCategoryDTO> categories) {
@@ -158,20 +168,6 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
             this.showAvailableShortcuts();
         });
-    }
-
-    private void drawContent() {
-        libraryTabs = new TabPane();
-        libraryTabs.getStyleClass().add("rightPane");
-
-        final Tab installedApplication = new Tab();
-        installedApplication.setClosable(false);
-        installedApplication.setText(tr("My applications"));
-        libraryTabs.getTabs().add(installedApplication);
-
-        installedApplication.setContent(availableShortcuts);
-
-        this.setCenter(libraryTabs);
     }
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
