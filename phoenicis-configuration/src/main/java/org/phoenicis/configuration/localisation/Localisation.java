@@ -143,11 +143,11 @@ public final class Localisation {
         return false;
     }
 
-    private static List<?> trList(List<?> translatable) {
+    private static <T> List<T> trList(List<T> translatable) {
         return translatable.stream().map(Localisation::tr).collect(Collectors.toList());
     }
 
-    private static Set<?> trSet(Set<?> translatable) {
+    private static <T> Set<T> trSet(Set<T> translatable) {
         return translatable.stream().map(Localisation::tr).collect(Collectors.toSet());
     }
 
