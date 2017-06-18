@@ -180,7 +180,7 @@ public final class Localisation {
             if (method.getName().startsWith("with")) {
 
                 final Method getter = translatable.getClass()
-                        .getMethod(localisationHelper.getterNameFromBuilderParameter(method));
+                        .getMethod(localisationHelper.getterNameFromBuilderMethod(method));
                 final Object getterResult = getter.invoke(translatable);
 
                 if (shouldBeTranslated(getter)) {

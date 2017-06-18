@@ -5,8 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-public class LocalisationHelper {
-    public String getterNameFromParameter(Parameter parameter) {
+class LocalisationHelper {
+    /**
+     * Given a parameter name annotated with either {@link ParameterName} or {@link JsonProperty},
+     * returns the name of a corresponding getter
+     * @param parameter The parameter
+     * @return The name of a corresponding getter
+     */
+    String getterNameFromParameter(Parameter parameter) {
         final String getterPrefix;
         if (parameter.getType() == Boolean.class || parameter.getType() == boolean.class) {
             getterPrefix = "is";
@@ -16,8 +22,13 @@ public class LocalisationHelper {
         return getterPrefix + toCamelCase(fetchParameterName(parameter));
     }
 
-    public String getterNameFromBuilderParameter(Method method) {
-
+    /**
+     * Given a builder method having a name starting by "with"
+     * returns the name of a corresponding getter
+     * @param method The method
+     * @return The name of a corresponding getter
+     */
+    String getterNameFromBuilderMethod(Method method) {
         final String getterPrefix;
         if (method.getReturnType() == Boolean.class || method.getReturnType() == boolean.class) {
             getterPrefix = "is";
