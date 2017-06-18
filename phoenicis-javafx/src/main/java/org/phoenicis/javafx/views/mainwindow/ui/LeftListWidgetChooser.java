@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -34,30 +35,35 @@ public class LeftListWidgetChooser<E> extends HBox {
         this.getStyleClass().add("listChooser");
 
         this.toggleGroup = new ToggleGroup();
+
         // prevent unselecting all buttons
-        this.toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if ((newValue == null)) {
-                Platform.runLater(() -> this.toggleGroup.selectToggle(oldValue));
+        EventHandler filter = (EventHandler<ActionEvent>) actionEvent -> {
+            ToggleButton source = (ToggleButton) actionEvent.getSource();
+            if (source.getToggleGroup() == null || !source.isSelected()) {
+                source.fire();
             }
-        });
+        };
 
         this.iconsListButton = new ToggleButton();
         this.iconsListButton.setToggleGroup(toggleGroup);
         this.iconsListButton.getStyleClass().addAll("listIcon", "iconsList");
         this.iconsListButton
                 .setOnAction(event -> listWidgets.forEach(widget -> widget.showList(ListWidgetType.ICONS_LIST)));
+        this.iconsListButton.addEventFilter(ActionEvent.ANY, filter);
 
         this.compactListButton = new ToggleButton();
         this.compactListButton.setToggleGroup(toggleGroup);
         this.compactListButton.getStyleClass().addAll("listIcon", "compactList");
         this.compactListButton
                 .setOnAction(event -> listWidgets.forEach(widget -> widget.showList(ListWidgetType.COMPACT_LIST)));
+        this.compactListButton.addEventFilter(ActionEvent.ANY, filter);
 
         this.detailsListButton = new ToggleButton();
         this.detailsListButton.setToggleGroup(toggleGroup);
         this.detailsListButton.getStyleClass().addAll("listIcon", "detailsList");
         this.detailsListButton
                 .setOnAction(event -> listWidgets.forEach(widget -> widget.showList(ListWidgetType.DETAILS_LIST)));
+        this.detailsListButton.addEventFilter(ActionEvent.ANY, filter);
 
         this.iconsListButton.setSelected(true);
 
