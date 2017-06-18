@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.*;
@@ -35,6 +37,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 public class ApplicationDTO implements Translatable<ApplicationDTO> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationDTO.class);
+
     private final String id;
     private final String name;
     private final String description;
@@ -44,7 +48,18 @@ public class ApplicationDTO implements Translatable<ApplicationDTO> {
     private final List<ResourceDTO> resources;
 
     private ApplicationDTO(Builder builder) {
-        this.id = builder.id;
+        if (builder.id != null) {
+            if (builder.id.matches("^[a-zA-Z0-9]+$")) {
+                this.id = builder.id;
+            } else {
+                LOGGER.warn(String.format("Application ID (%s) contains invalid characters, will remove them.",
+                        builder.id));
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9]", "");
+            }
+        } else {
+            this.id = null;
+        }
+
         this.name = builder.name == null ? builder.id : builder.name;
         this.description = builder.description;
         this.icon = builder.icon;

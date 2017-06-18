@@ -84,7 +84,7 @@ public class TeeRepositoryTest {
                 new CategoryDTO.Builder().withId("Category 5").build())).build();
 
         final Repository teeSource = new TeeRepository(leftSource, rightSource);
-        assertEquals(3, teeSource.getCategory(Collections.singletonList("Category 2")).getApplications().size());
+        assertEquals(3, teeSource.getCategory(Collections.singletonList("Category2")).getApplications().size());
     }
 
 }

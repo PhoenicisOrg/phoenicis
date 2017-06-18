@@ -24,6 +24,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
 public class ShortcutCategoryDTO implements Translatable<ShortcutCategoryDTO> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutCategoryDTO.class);
+
     private final String id;
     private final String name;
     private final String description;
@@ -45,7 +49,18 @@ public class ShortcutCategoryDTO implements Translatable<ShortcutCategoryDTO> {
     private URI icon;
 
     private ShortcutCategoryDTO(Builder builder) {
-        this.id = builder.id;
+        if (builder.id != null) {
+            if (builder.id.matches("^[a-zA-Z0-9]+$")) {
+                this.id = builder.id;
+            } else {
+                LOGGER.warn(String.format("Shortcut category ID (%s) contains invalid characters, will remove them.",
+                        builder.id));
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9]", "");
+            }
+        } else {
+            this.id = null;
+        }
+
         this.name = builder.name == null ? builder.id : builder.name;
         this.description = builder.description;
         this.shortcuts = Collections.unmodifiableList(builder.shortcuts);

@@ -24,6 +24,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
 public class CategoryDTO implements Translatable<CategoryDTO> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDTO.class);
+
     private final CategoryType type;
     private final String id;
     private final String name;
@@ -46,7 +50,19 @@ public class CategoryDTO implements Translatable<CategoryDTO> {
 
     private CategoryDTO(Builder builder) {
         this.type = builder.type;
-        this.id = builder.id;
+
+        if (builder.id != null) {
+            if (builder.id.matches("^[a-zA-Z0-9]+$")) {
+                this.id = builder.id;
+            } else {
+                LOGGER.warn(
+                        String.format("Category ID (%s) contains invalid characters, will remove them.", builder.id));
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9]", "");
+            }
+        } else {
+            this.id = null;
+        }
+
         this.name = builder.name == null ? builder.id : builder.name;
         this.applications = Collections.unmodifiableList(builder.applications);
         this.icon = builder.icon;
