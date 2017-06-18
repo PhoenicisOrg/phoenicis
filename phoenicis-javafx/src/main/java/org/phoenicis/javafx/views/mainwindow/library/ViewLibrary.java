@@ -47,7 +47,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
 
     private LibrarySideBar sideBar;
     private LibraryPanel libraryPanel;
-    private final Tab installedApplication;
+    private final Tab installedApplicationsTab;
 
     private CombinedListWidget<ShortcutDTO> availableShortcuts;
 
@@ -125,11 +125,11 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.libraryTabs = new TabPane();
         this.libraryTabs.getStyleClass().add("rightPane");
 
-        this.installedApplication = new Tab();
-        this.installedApplication.setClosable(false);
-        this.installedApplication.setText(tr("My applications"));
-        this.installedApplication.setContent(availableShortcuts);
-        this.libraryTabs.getTabs().add(this.installedApplication);
+        this.installedApplicationsTab = new Tab();
+        this.installedApplicationsTab.setClosable(false);
+        this.installedApplicationsTab.setText(tr("My applications"));
+        this.installedApplicationsTab.setContent(availableShortcuts);
+        this.libraryTabs.getTabs().add(this.installedApplicationsTab);
 
         this.setCenter(this.libraryTabs);
 
@@ -157,7 +157,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
      */
     public void showAvailableShortcuts() {
         this.closeDetailsView();
-        this.installedApplication.setContent(availableShortcuts);
+        this.installedApplicationsTab.setContent(availableShortcuts);
     }
 
     public void populate(List<ShortcutCategoryDTO> categories) {
