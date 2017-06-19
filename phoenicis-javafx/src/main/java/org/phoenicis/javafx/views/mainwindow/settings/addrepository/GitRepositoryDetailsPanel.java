@@ -14,15 +14,27 @@ import java.net.URL;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * Created by marc on 19.06.17.
+ * A {@link RepositoryDetailsPanel} used to specify the details of a {@link GitRepositoryLocation}.
+ *
+ * @author marc
+ * @since 19.06.17
  */
 public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitRepositoryLocation> {
     private final static Logger LOGGER = LoggerFactory.getLogger(GitRepositoryDetailsPanel.class);
 
+    /**
+     * The url to the git repository
+     */
     private TextField urlField;
 
+    /**
+     * The branch, which contains the Phoenicis repository
+     */
     private TextField branchField;
 
+    /**
+     * Constructor
+     */
     public GitRepositoryDetailsPanel() {
         super();
 

@@ -38,12 +38,15 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Repository>> {
     private final static Logger LOGGER = LoggerFactory.getLogger(AddRepositoryDialog.class);
 
+    /**
+     * The repository type selection step
+     */
     private ChooseRepositoryTypePanel chooseRepositoryTypePanel;
 
+    /**
+     * The repository details selection step
+     */
     private RepositoryDetailsPanel<? extends RepositoryLocation<? extends Repository>> repositoryDetailsPanel;
-
-    private ButtonType finishButtonType;
-
     /**
      * Constructor
      */
@@ -66,7 +69,7 @@ public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Rep
         this.setHeaderText(chooseRepositoryTypePanel.getHeader());
 
         this.setResultConverter(dialogButton -> {
-            if (dialogButton == finishButtonType && repositoryDetailsPanel != null) {
+            if (dialogButton.getButtonData() == ButtonBar.ButtonData.FINISH && repositoryDetailsPanel != null) {
                 return repositoryDetailsPanel.createRepositoryLocation();
             }
             return null;

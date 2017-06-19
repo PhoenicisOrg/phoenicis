@@ -14,13 +14,25 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * Created by marc on 19.06.17.
+ * A {@link RepositoryDetailsPanel} used to specify the details of a {@link LocalRepositoryLocation}.
+ *
+ * @author marc
+ * @since 19.06.17
  */
 public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRepositoryLocation> {
+    /**
+     * The path leading to the repository
+     */
     private TextField pathField;
 
+    /**
+     * A button opening a {@link DirectoryChooser} used to select the path leading to the repository through a GUI
+     */
     private Button openBrowser;
 
+    /**
+     * Constructor
+     */
     public LocalRepositoryDetailsPanel() {
         super();
 
@@ -48,6 +60,7 @@ public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRep
         this.setCenter(content);
     }
 
+    @Override
     public String getHeader() {
         return tr("Choose the location of your local repository");
     }

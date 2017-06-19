@@ -11,11 +11,20 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * Created by marc on 19.06.17.
+ * A {@link RepositoryDetailsPanel} used to specify the details of a {@link ClasspathRepositoryLocation}.
+ *
+ * @author marc
+ * @since 19.06.17
  */
 public class ClasspathRepositoryDetailsPanel extends RepositoryDetailsPanel<ClasspathRepositoryLocation> {
+    /**
+     * The classpath to the repository location
+     */
     private TextField classpathField;
 
+    /**
+     * Constructor
+     */
     public ClasspathRepositoryDetailsPanel() {
         super();
 
