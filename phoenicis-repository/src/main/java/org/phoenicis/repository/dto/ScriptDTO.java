@@ -165,9 +165,5 @@ public class ScriptDTO {
         public ScriptDTO build() {
             return new ScriptDTO(this);
         }
-
-        public String getScriptName() {
-            return scriptName;
-        }
     }
 }

@@ -100,14 +100,15 @@ public class LocalRepository implements Repository {
                 final File categoryJson = new File(categoryDirectory, "category.json");
 
                 if (categoryJson.exists()) {
-                    final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(
-                            unSerializeCategory(categoryJson)).withApplications(fetchApplications(categoryDirectory));
+                    final CategoryDTO jsonCategoryDTO = unSerializeCategory(categoryJson);
+                    final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(jsonCategoryDTO)
+                            .withApplications(fetchApplications(categoryDirectory));
 
-                    if (StringUtils.isBlank(categoryDTOBuilder.getId())) {
-                        if (!StringUtils.isBlank(categoryDTOBuilder.getName())) {
-                            categoryDTOBuilder.withId(categoryDTOBuilder.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                    if (StringUtils.isBlank(jsonCategoryDTO.getId())) {
+                        if (!StringUtils.isBlank(jsonCategoryDTO.getName())) {
+                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
                         } else {
-                            categoryDTOBuilder.withId(categoryDirectory.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
                         }
                     }
 
@@ -116,13 +117,13 @@ public class LocalRepository implements Repository {
                         categoryDTOBuilder.withIcon(categoryIconFile.toURI());
                     }
 
-                    CategoryDTO category = categoryDTOBuilder.build();
+                    final CategoryDTO category = categoryDTOBuilder.build();
                     results.add(category);
                 }
             }
         }
 
-        Collections.sort(results, Comparator.comparing(CategoryDTO::getName));
+        results.sort(Comparator.comparing(CategoryDTO::getName));
         return results;
     }
 
@@ -213,12 +214,12 @@ public class LocalRepository implements Repository {
         for (File scriptDirectory : scriptDirectories) {
             if (scriptDirectory.isDirectory() && !"miniatures".equals(scriptDirectory.getName())
                     && !"resources".equals(scriptDirectory.getName())) {
-                final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
-                        unSerializeScript(new File(scriptDirectory, "script.json")));
+                final ScriptDTO scriptDTOFromJsonFile = unSerializeScript(new File(scriptDirectory, "script.json"));
+                final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(scriptDTOFromJsonFile);
 
                 scriptDTOBuilder.withScriptSource(repositorySource);
 
-                if (StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
+                if (StringUtils.isBlank(scriptDTOFromJsonFile.getScriptName())) {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
 

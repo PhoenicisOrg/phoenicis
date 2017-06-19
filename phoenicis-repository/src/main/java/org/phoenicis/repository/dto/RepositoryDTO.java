@@ -24,6 +24,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
+import org.phoenicis.configuration.localisation.Translate;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +36,8 @@ import java.util.List;
  * Represents a repository
  */
 @JsonDeserialize(builder = RepositoryDTO.Builder.class)
-public class RepositoryDTO implements Translatable<RepositoryDTO> {
+@Translatable
+public class RepositoryDTO {
     private final String name;
     private final List<CategoryDTO> categories;
     private final TranslationDTO translations;
@@ -53,6 +56,7 @@ public class RepositoryDTO implements Translatable<RepositoryDTO> {
         return name;
     }
 
+    @Translate
     public List<CategoryDTO> getCategories() {
         return categories;
     }
@@ -82,16 +86,8 @@ public class RepositoryDTO implements Translatable<RepositoryDTO> {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
-    @Override
-    public RepositoryDTO translate() {
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
-        for (CategoryDTO categoryDTO : this.categories) {
-            categoryDTOS.add(categoryDTO.translate());
-        }
-        return new RepositoryDTO.Builder(this).withCategories(categoryDTOS).build();
-    }
-
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+    @TranslatableBuilder
     public static class Builder {
         private String name;
         private List<CategoryDTO> categories = new ArrayList<>();

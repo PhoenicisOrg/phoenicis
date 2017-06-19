@@ -1,14 +1,20 @@
 package org.phoenicis.configuration.localisation;
 
-/**
- * interface for objects which can be translated via tr()
- * e.g. implemented by the DTOs to translate application name and description
- * @param <E>
- */
-public interface Translatable<E extends Translatable<?>> {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    /**
-     * translate the object
-     */
-    E translate();
+/**
+ * Tells Phoenicis localisation module that the annotated class can be translated.
+ * This requires:
+ * <ul>
+ *     <li>{@link TranslatableCreator} or {@link TranslatableBuilder}</li>
+ *     <li>At least one getter to be annotated with {@link Translate}</li>
+ * </ul>
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Translatable {
+
 }
