@@ -15,12 +15,7 @@ public enum RepositoryType {
     /**
      * {@link org.phoenicis.repository.location.LocalRepositoryLocation} repository type
      */
-    LOCAL {
-        @Override
-        public String toString() {
-            return tr("Local repository");
-        }
-
+    LOCAL(tr("Local repository")) {
         @Override
         public RepositoryDetailsPanel<? extends RepositoryLocation<? extends Repository>> getRepositoryDetailsPanel() {
             return new LocalRepositoryDetailsPanel();
@@ -30,12 +25,7 @@ public enum RepositoryType {
     /**
      * {@link org.phoenicis.repository.location.GitRepositoryLocation} repository type
      */
-    GIT {
-        @Override
-        public String toString() {
-            return tr("Git repository");
-        }
-
+    GIT(tr("Git repository")) {
         @Override
         public RepositoryDetailsPanel<? extends RepositoryLocation<? extends Repository>> getRepositoryDetailsPanel() {
             return new GitRepositoryDetailsPanel();
@@ -45,12 +35,7 @@ public enum RepositoryType {
     /**
      * {@link org.phoenicis.repository.location.ClasspathRepositoryLocation} repository type
      */
-    CLASSPATH {
-        @Override
-        public String toString() {
-            return tr("Classpath repository");
-        }
-
+    CLASSPATH(tr("Classpath repository")) {
         @Override
         public RepositoryDetailsPanel<? extends RepositoryLocation<? extends Repository>> getRepositoryDetailsPanel() {
             return new ClasspathRepositoryDetailsPanel();
@@ -58,11 +43,22 @@ public enum RepositoryType {
     };
 
     /**
-     * Returns the translated name of the repository type
-     *
-     * @return The translated name of the repository type
+     * The translated name of the repository type
      */
-    public abstract String toString();
+    private String label;
+
+    /**
+     * Constructor
+     *
+     * @param label The translated name of the repository type
+     */
+    RepositoryType(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 
     /**
      * Creates a new {@link RepositoryDetailsPanel} for the repository type

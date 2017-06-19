@@ -7,7 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.util.StringConverter;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -51,7 +53,22 @@ public class ChooseRepositoryTypePanel extends BorderPane {
     private void populate() {
         choiceBox = new ComboBox<>(repositoryChoices);
         choiceBox.setPromptText(tr("Please select the repository type you want to add"));
-        choiceBox.setOnAction(event -> onRepositoryTypeSelection.accept(choiceBox.getSelectionModel().getSelectedItem()));
+
+        choiceBox.setConverter(new StringConverter<RepositoryType>() {
+            @Override
+            public String toString(RepositoryType repositoryType) {
+                return repositoryType.getLabel();
+            }
+
+            @Override
+            public RepositoryType fromString(String string) {
+                return Arrays.stream(RepositoryType.values()).filter(type -> type.getLabel().equals(string)).findAny()
+                        .orElse(null);
+            }
+        });
+
+        choiceBox.setOnAction(
+                event -> onRepositoryTypeSelection.accept(choiceBox.getSelectionModel().getSelectedItem()));
 
         Label choiceBoxLabel = new Label(tr("Repository type:"));
         choiceBoxLabel.setLabelFor(choiceBox);

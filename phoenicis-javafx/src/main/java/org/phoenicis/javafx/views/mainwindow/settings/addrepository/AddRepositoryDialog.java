@@ -47,6 +47,7 @@ public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Rep
      * The repository details selection step
      */
     private RepositoryDetailsPanel<? extends RepositoryLocation<? extends Repository>> repositoryDetailsPanel;
+
     /**
      * Constructor
      */
