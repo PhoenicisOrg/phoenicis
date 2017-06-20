@@ -39,8 +39,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ViewContainers extends MainWindowView<ContainerSideBar> {
     private ContainerSideBar sideBar;
 
-    private Consumer<ContainerDTO> onSelectContainer = (container) -> {
-    };
+    private Consumer<ContainerDTO> onSelectContainer;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
 
@@ -71,22 +70,14 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         this.availableContainers.bind(sortedContainers);
 
         // set the category selection consumers
-        this.sideBar.setOnCategorySelection(category -> showAvailableContainers());
-        this.sideBar.setOnAllCategorySelection(this::showAvailableContainers);
+        this.sideBar.setOnCategorySelection(category -> closeDetailsView());
+        this.sideBar.setOnAllCategorySelection(this::closeDetailsView);
 
         this.setSideBar(sideBar);
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
         this.onSelectContainer = onSelectContainer;
-    }
-
-    /**
-     * Show available containers panel
-     */
-    public void showAvailableContainers() {
-        this.closeDetailsView();
-        setCenter(availableContainers);
     }
 
     /**
@@ -100,7 +91,8 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
 
             this.sideBar.selectAllCategories();
 
-            this.showAvailableContainers();
+            this.closeDetailsView();
+            this.setCenter(availableContainers);
         });
     }
 

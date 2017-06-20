@@ -111,11 +111,11 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
             filter.setFilters(category.getShortcuts()::contains);
-            showAvailableShortcuts();
+            this.closeDetailsView();
         });
         this.sideBar.setOnAllCategorySelection(() -> {
             filter.clearFilters();
-            showAvailableShortcuts();
+            this.closeDetailsView();
         });
 
         this.setSideBar(sideBar);
@@ -152,21 +152,14 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         this.libraryPanel.setOnShortcutRun(onShortcutRun);
     }
 
-    /**
-     * Show available apps panel
-     */
-    public void showAvailableShortcuts() {
-        this.closeDetailsView();
-        this.installedApplicationsTab.setContent(availableShortcuts);
-    }
-
     public void populate(List<ShortcutCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
             this.filter.clearAll();
             this.sideBar.selectAllCategories();
 
-            this.showAvailableShortcuts();
+            this.closeDetailsView();
+            this.installedApplicationsTab.setContent(availableShortcuts);
         });
     }
 

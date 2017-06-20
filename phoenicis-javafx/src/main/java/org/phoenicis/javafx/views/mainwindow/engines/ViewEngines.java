@@ -129,17 +129,14 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
                 this.sideBar.selectFirstEngineCategory();
             }
 
-            this.showAvailableEngines();
+            this.closeDetailsView();
+            this.setCenter(availableEngines);
         });
     }
 
     public void populateEngines(EngineCategoryDTO category) {
         this.selectedCategory = category;
         this.engineSubCategories.setAll(category.getSubCategories());
-    }
-
-    public void showAvailableEngines() {
-        setCenter(availableEngines);
     }
 
     private void selectCategory(EngineCategoryDTO category) {
@@ -152,6 +149,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         currentEnginePanel.setOnClose(this::closeDetailsView);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
+
         this.showDetailsView(currentEnginePanel);
     }
 

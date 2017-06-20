@@ -100,27 +100,18 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         // set the category selection consumers
         this.sideBar.setOnCategorySelection(category -> {
             filter.setFilterCategory(category);
-            showAvailableApps();
+            this.closeDetailsView();
         });
         this.sideBar.setOnAllCategorySelection(() -> {
             filter.setFilterCategory(null);
-            showAvailableApps();
+            this.closeDetailsView();
         });
 
         this.setSideBar(sideBar);
-        this.showWait();
     }
 
     public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
         this.onSelectScript = onSelectScript;
-    }
-
-    /**
-     * Show available apps panel
-     */
-    public void showAvailableApps() {
-        this.closeDetailsView();
-        setCenter(availableApps);
     }
 
     /**
@@ -134,7 +125,8 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
             this.filter.clearAll();
             this.sideBar.selectAllCategories();
 
-            this.showAvailableApps();
+            this.closeDetailsView();
+            this.setCenter(availableApps);
         });
     }
 
@@ -156,7 +148,6 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private void clearFilterText() {
         this.filter.setFilterText("");
-        this.showAvailableApps();
     }
 
     private void processFilterText(String filterText) {
@@ -171,7 +162,5 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         });
 
         this.pause.playFromStart();
-
-        this.showAvailableApps();
     }
 }
