@@ -44,6 +44,15 @@ public class LocalisationTest {
             I18n.class
     })
     @Test
+    public synchronized void testTrWithNull() {
+        assertEquals(null, tr(null));
+    }
+
+    @PrepareForTest({
+            I18nFactory.class,
+            I18n.class
+    })
+    @Test
     public synchronized void testSimpleTranslatableObject() {
         final SimpleTranslatableObject translatableObject =
                 new SimpleTranslatableObject("input", "input");
@@ -111,12 +120,6 @@ public class LocalisationTest {
         final CollectionsOfTranslatableObject translatedObject = tr(collectionsOfTranslatableObject);
         assertEquals(Arrays.asList("input", "input"), translatedObject.getItemNotToBeTranslated());
         assertEquals(Arrays.asList("output", "output"), translatedObject.getItemToBeTranslated());
-
-
     }
-
-
-
-
 
 }
