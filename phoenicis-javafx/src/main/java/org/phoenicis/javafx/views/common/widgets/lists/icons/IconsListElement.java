@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -67,7 +68,7 @@ public class IconsListElement<E> extends VBox {
 
         this.item = item;
 
-        this.getStyleClass().add("miniatureListElement");
+        this.getStyleClass().add("iconListCell");
         this.setAlignment(Pos.CENTER);
 
         this.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -80,13 +81,14 @@ public class IconsListElement<E> extends VBox {
             this.setClip(clip);
         });
 
+        final Region miniature = new Region();
+        miniature.getStyleClass().add("iconListMiniatureImage");
+        miniature.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureUri.toString()));
+
         final Label label = new Label(title);
-        label.getStyleClass().add("miniatureText");
+        label.getStyleClass().add("iconListMiniatureLabel");
 
-        StaticMiniature miniature = new StaticMiniature(miniatureUri);
-
-        this.getChildren().add(miniature);
-        this.getChildren().add(label);
+        this.getChildren().setAll(miniature, label);
 
         final Tooltip tooltip = new Tooltip(title);
         Tooltip.install(miniature, tooltip);
@@ -97,7 +99,7 @@ public class IconsListElement<E> extends VBox {
         if (!enabled) {
             ColorAdjust grayscale = new ColorAdjust();
             grayscale.setSaturation(-1);
-            this.setEffect(grayscale);
+            miniature.setEffect(grayscale);
         }
     }
 

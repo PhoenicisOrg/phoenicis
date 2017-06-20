@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.common.widgets.lists.icons;
+package org.phoenicis.javafx.views.common.widgets.lists;
 
 import javafx.scene.layout.Region;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
@@ -27,7 +27,7 @@ import java.net.URISyntaxException;
 /**
  * A static miniature shown inside a {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
  */
-public class StaticMiniature extends Region {
+public class StaticMiniature {
     public static URI DEFAULT_MINIATURE;
     public static URI WINE_MINIATURE;
     public static URI CONTAINER_MINIATURE;
@@ -45,12 +45,9 @@ public class StaticMiniature extends Region {
     /**
      * Constructor
      *
-     * @param miniatureImageUri An uri to the miniature image inside this StaticMiniature
+     * Prevents initialization
      */
-    public StaticMiniature(URI miniatureImageUri) {
-        super();
+    private StaticMiniature() {
 
-        this.getStyleClass().add("miniatureImage");
-        this.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureImageUri.toString()));
     }
 }

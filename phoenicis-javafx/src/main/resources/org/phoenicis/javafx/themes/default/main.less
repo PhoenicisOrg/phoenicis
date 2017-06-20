@@ -290,48 +290,64 @@
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
-.rightPane .miniatureList {
+.iconListWidget {
   -fx-pref-width: 53.5em;
   -fx-background-color: #FFFFFF;
   -fx-border-width: 0;
   -fx-border-style: none;
   -fx-padding: 0.5em;
-}
 
-.miniatureListElement {
-  -fx-pref-width: 12em;
-  -fx-pref-height: 9em;
-  -fx-font-family: "Roboto Light";
-  -fx-alignment: top-center;
-  -fx-spacing: 0.3em;
-  -fx-padding: 0.5em;
-  -fx-cursor: hand;
-  -fx-background-radius: 0.8em;
-}
+  .iconListCell {
+    -fx-pref-width: 12em;
+    -fx-pref-height: 11em;
 
-.miniatureListElement:hover {
-  -fx-background-color: #EFEFEF;
-}
+    -fx-alignment: center;
+    -fx-spacing: 0.3em;
+    -fx-padding: 0.5em;
+    -fx-cursor: hand;
+    -fx-background-radius: 0.8em;
 
-.miniatureListElement:selected {
-  -fx-background-color: #EAEAEA;
-}
+    &:hover {
+      -fx-background-color: #EFEFEF;
+    }
 
-.miniatureImage {
-  -fx-border-radius: 0.4em;
-  -fx-background-radius: 0.4em;
-  -fx-background-size: contain;
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: center;
-  -fx-pref-width: 15em;
-  -fx-pref-height: 12em;
-}
+    &:selected {
+      -fx-background-color: #EAEAEA;
+    }
 
-.miniatureText {
-  -fx-font-size: 0.90em;
-  -fx-wrap-text: true;
-  -fx-alignment: center;
-  -fx-text-alignment: center;
+    .iconListMiniatureImage {
+      /*
+       * Screen resolution: 4:3
+       */
+      @miniatureWidth: 10em;
+      @miniatureHeight: 7.5em;
+
+      -fx-min-width: @miniatureWidth;
+      -fx-pref-width: @miniatureWidth;
+      -fx-max-width: @miniatureWidth;
+      -fx-min-height: @miniatureHeight;
+      -fx-pref-height: @miniatureHeight;
+      -fx-max-height: @miniatureHeight;
+
+      -fx-border-radius: 0.4em;
+      -fx-background-radius: 0.4em;
+      -fx-background-size: contain;
+      -fx-background-repeat: no-repeat;
+      -fx-background-position: center;
+    }
+
+    .iconListMiniatureLabel {
+      -fx-pref-width: 11em;
+      -fx-pref-height: 1.8em;
+
+      -fx-alignment: center;
+
+      -fx-font-size: 0.90em;
+      -fx-font-family: "Roboto Light";
+      -fx-wrap-text: true;
+      -fx-text-alignment: center;
+    }
+  }
 }
 
 .compactListWidget {

@@ -478,90 +478,36 @@
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
-.rightPane .miniatureList {
-    -fx-pref-width: 53.5em;
+.iconListWidget {
     -fx-background-color: @background-color;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-padding: 0.5em;
-}
-
-.miniatureListElement {
-    -fx-pref-width: 12em;
-    -fx-pref-height: 9em;
-    -fx-font-family: "Roboto Light";
-    -fx-alignment: top-center;
-    -fx-spacing: 0.3em;
-    -fx-padding: 0.5em;
-    -fx-cursor: hand;
-    -fx-background-radius: 0em;
-}
-
-.miniatureListElement:hover {
-    -fx-background-color: #284150;
-}
-
-.miniatureListElement:selected {
-    -fx-background-color: @focus-color;
-}
-
-.miniatureImage {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-pref-width: 15em;
-    -fx-pref-height: 12em;
-}
-
-.miniatureText {
-    -fx-font-size: 1em;
-    -fx-wrap-text: true;
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-    -fx-text-fill: @text-color;
-}
-
-.compactListWidget {
-    -fx-border-width: 0;
-    -fx-border-style: none;
 
     .iconListCell {
-        @cellHeight: 6em;
+        -fx-background-radius: 0em;
 
-        -fx-hgap: 0.5em;
-        -fx-pref-height: @cellHeight;
+        &:hover {
+            -fx-background-color: #284150;
+        }
+
+        &:selected {
+            -fx-background-color: @focus-color;
+        }
 
         .iconListMiniatureImage {
-            @miniatureWidth: 8em;
-
-            -fx-background-size: stretch;
-            -fx-background-repeat: no-repeat;
-            -fx-background-position: center;
-            -fx-min-width: @miniatureWidth;
-            -fx-pref-width: @miniatureWidth;
-            -fx-max-width: @miniatureWidth;
-            -fx-min-height: @cellHeight;
-            -fx-pref-height: @cellHeight;
-            -fx-max-height: @cellHeight;
+            -fx-border-radius: 0em;
+            -fx-background-radius: 0em;
         }
 
-        .information {
-            -fx-max-height: @cellHeight;
-        }
-    }
-}
+        .iconListMiniatureLabel {
+            -fx-pref-width: 11em;
+            -fx-pref-height: 2em;
 
-.detailsListWidget {
-    -fx-border-width: 0;
-    -fx-border-style: none;
+            -fx-alignment: center;
 
-    .iconListCell {
-        -fx-hgap: 0.5em;
-
-        .information {
-            -fx-max-height: 3em;
+            -fx-font-size: 1em;
+            -fx-font-family: "Roboto Light";
+            -fx-wrap-text: true;
+            -fx-text-alignment: center;
+            -fx-text-fill: @text-color;
         }
     }
 }
