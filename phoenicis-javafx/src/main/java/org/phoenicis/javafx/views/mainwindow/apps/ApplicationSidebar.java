@@ -33,7 +33,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 21.04.17
  */
-public class ApplicationSideBar extends LeftSideBar {
+public class ApplicationSidebar extends LeftSidebar {
     private final ApplicationFilter filter;
 
     // the search bar user for application filtering/searching
@@ -68,7 +68,7 @@ public class ApplicationSideBar extends LeftSideBar {
      *
      * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public ApplicationSideBar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter) {
+    public ApplicationSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter) {
         super();
 
         this.filter = filter;

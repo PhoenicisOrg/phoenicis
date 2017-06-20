@@ -26,9 +26,9 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public abstract class LeftSideBar extends BorderPane {
+public abstract class LeftSidebar extends BorderPane {
 
-    public LeftSideBar() {
+    public LeftSidebar() {
         super();
 
         this.getStyleClass().add("leftPane");

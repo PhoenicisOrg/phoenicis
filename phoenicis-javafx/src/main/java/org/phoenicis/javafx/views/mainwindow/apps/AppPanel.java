@@ -60,7 +60,7 @@ final class AppPanel extends DetailsView {
 
     /**
      * The list of shown scripts belonging to the <code>application</code> shown inside this {@link AppPanel}.
-     * These scripts are filtered using the settings the user made inside {@link ApplicationSideBar}
+     * These scripts are filtered using the settings the user made inside {@link ApplicationSidebar}
      */
     private FilteredList<ScriptDTO> filteredScripts;
 

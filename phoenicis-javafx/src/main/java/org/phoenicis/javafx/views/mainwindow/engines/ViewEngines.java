@@ -38,9 +38,7 @@ import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ViewEngines extends MainWindowView<EngineSideBar> {
-    private EngineSideBar sideBar;
-
+public class ViewEngines extends MainWindowView<EngineSidebar> {
     private TabPane availableEngines;
 
     private EnginePanel currentEnginePanel;
@@ -74,26 +72,25 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
         });
         this.mappedListWidgets = new MappedList<>(mappedSubCategoryTabs, tab -> tab.getEngineVersionsView());
 
-        this.sideBar = new EngineSideBar(mappedListWidgets);
+        this.sidebar = new EngineSidebar(mappedListWidgets);
 
-        this.sideBar.setOnCategorySelection(this::selectCategory);
-        this.sideBar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()
+        this.sidebar.setOnCategorySelection(this::selectCategory);
+        this.sidebar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()
                 .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForInstalled(newValue)));
-        this.sideBar.setOnApplyUninstalledFilter(newValue -> availableEngines.getTabs()
+        this.sidebar.setOnApplyUninstalledFilter(newValue -> availableEngines.getTabs()
                 .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForNotInstalled(newValue)));
-        this.sideBar.setOnSearchTermClear(() -> availableEngines.getTabs()
+        this.sidebar.setOnSearchTermClear(() -> availableEngines.getTabs()
                 .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForSearchTerm("")));
-        this.sideBar.setOnApplySearchTerm(this::processFilterText);
+        this.sidebar.setOnApplySearchTerm(this::processFilterText);
 
-        this.sideBar.bindEngineCategories(engineCategories);
+        this.sidebar.bindEngineCategories(engineCategories);
 
         this.initFailure();
         this.initWineVersions();
 
         Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
 
-        this.setSideBar(sideBar);
-        this.showWait();
+        this.initializeSidebar();
     }
 
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
@@ -126,7 +123,7 @@ public class ViewEngines extends MainWindowView<EngineSideBar> {
             this.engineCategories.setAll(engineCategoryDTOS);
 
             if (!engineCategoryDTOS.isEmpty()) {
-                this.sideBar.selectFirstEngineCategory();
+                this.sidebar.selectFirstEngineCategory();
             }
 
             this.closeDetailsView();

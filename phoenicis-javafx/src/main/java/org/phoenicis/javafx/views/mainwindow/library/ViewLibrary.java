@@ -41,11 +41,10 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewLibrary extends MainWindowView<LibrarySideBar> {
+public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private final ShortcutFilter<ShortcutDTO> filter;
     private final ObjectMapper objectMapper;
 
-    private LibrarySideBar sideBar;
     private LibraryPanel libraryPanel;
     private final Tab installedApplicationsTab;
 
@@ -105,20 +104,20 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
             event.consume();
         });
 
-        this.sideBar = new LibrarySideBar(applicationName, availableShortcuts);
-        this.sideBar.bindCategories(this.sortedCategories);
+        this.sidebar = new LibrarySidebar(applicationName, availableShortcuts);
+        this.sidebar.bindCategories(this.sortedCategories);
 
         // set the category selection consumers
-        this.sideBar.setOnCategorySelection(category -> {
+        this.sidebar.setOnCategorySelection(category -> {
             filter.setFilters(category.getShortcuts()::contains);
             this.closeDetailsView();
         });
-        this.sideBar.setOnAllCategorySelection(() -> {
+        this.sidebar.setOnAllCategorySelection(() -> {
             filter.clearFilters();
             this.closeDetailsView();
         });
 
-        this.setSideBar(sideBar);
+        this.initializeSidebar();
 
         this.availableShortcuts.bind(sortedShortcuts);
 
@@ -145,7 +144,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     public void setOnSearch(Consumer<String> onSearch) {
-        this.sideBar.setOnSearch(onSearch);
+        this.sidebar.setOnSearch(onSearch);
     }
 
     public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
@@ -156,7 +155,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
             this.filter.clearAll();
-            this.sideBar.selectAllCategories();
+            this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
             this.installedApplicationsTab.setContent(availableShortcuts);
@@ -185,7 +184,7 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     public void setOnOpenConsole(Runnable onOpenConsole) {
-        this.sideBar.setOnOpenConsole(onOpenConsole);
+        this.sidebar.setOnOpenConsole(onOpenConsole);
     }
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
@@ -193,6 +192,6 @@ public class ViewLibrary extends MainWindowView<LibrarySideBar> {
     }
 
     public void setOnScriptRun(Consumer<File> onScriptRun) {
-        this.sideBar.setOnScriptRun(onScriptRun);
+        this.sidebar.setOnScriptRun(onScriptRun);
     }
 }

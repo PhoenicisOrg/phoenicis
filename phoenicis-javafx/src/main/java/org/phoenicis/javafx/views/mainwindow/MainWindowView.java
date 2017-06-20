@@ -19,23 +19,18 @@
 package org.phoenicis.javafx.views.mainwindow;
 
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftSidebar;
 
-import javax.xml.soap.Detail;
-
-public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
+public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
     protected final ThemeManager themeManager;
 
     private final BorderPane content;
 
-    private SideBar leftContent;
+    protected Sidebar sidebar;
 
     private HBox waitPanel;
     private FailurePanel failurePanel;
@@ -64,9 +59,14 @@ public class MainWindowView<SideBar extends LeftSideBar> extends Tab {
         this.failurePanel = new FailurePanel(themeManager);
     }
 
-    protected void setSideBar(SideBar sideBar) {
-        this.leftContent = sideBar;
-        this.content.setLeft(sideBar);
+    protected void initializeSidebar() {
+        this.content.setLeft(sidebar);
+    }
+
+    protected void setSidebar(Sidebar sidebar) {
+        this.sidebar = sidebar;
+
+        this.initializeSidebar();
     }
 
     public void setCenter(Node nodeToShow) {

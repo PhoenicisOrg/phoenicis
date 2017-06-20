@@ -36,9 +36,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewContainers extends MainWindowView<ContainerSideBar> {
-    private ContainerSideBar sideBar;
-
+public class ViewContainers extends MainWindowView<ContainerSidebar> {
     private Consumer<ContainerDTO> onSelectContainer;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
@@ -54,7 +52,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
 
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));
-        this.sideBar = new ContainerSideBar(availableContainers);
+        this.sidebar = new ContainerSidebar(availableContainers);
 
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));
@@ -63,17 +61,17 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
                 ContainerCategoryDTO::getContainers);
         this.sortedContainers = this.containers.sorted(Comparator.comparing(ContainerDTO::getName));
 
-        this.sideBar.setOnApplyFilter(this::applyFilter);
+        this.sidebar.setOnApplyFilter(this::applyFilter);
 
-        this.sideBar.bindCategories(this.sortedCategories);
+        this.sidebar.bindCategories(this.sortedCategories);
 
         this.availableContainers.bind(sortedContainers);
 
         // set the category selection consumers
-        this.sideBar.setOnCategorySelection(category -> closeDetailsView());
-        this.sideBar.setOnAllCategorySelection(this::closeDetailsView);
+        this.sidebar.setOnCategorySelection(category -> closeDetailsView());
+        this.sidebar.setOnAllCategorySelection(this::closeDetailsView);
 
-        this.setSideBar(sideBar);
+        this.initializeSidebar();
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
@@ -89,7 +87,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
 
-            this.sideBar.selectAllCategories();
+            this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
             this.setCenter(availableContainers);

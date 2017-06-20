@@ -34,7 +34,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 22.04.17
  */
-public class EngineSideBar extends LeftSideBar {
+public class EngineSidebar extends LeftSidebar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
@@ -69,7 +69,7 @@ public class EngineSideBar extends LeftSideBar {
      *
      * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public EngineSideBar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
+    public EngineSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
         super();
 
         this.populateSearchBar();

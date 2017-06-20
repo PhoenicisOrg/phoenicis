@@ -23,13 +23,12 @@ import javafx.collections.ObservableList;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.MessagePanel;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewSettings extends MainWindowView<SettingsSideBar> {
+public class ViewSettings extends MainWindowView<SettingsSidebar> {
     private final String applicationName;
     private final String applicationVersion;
     private final String applicationGitRevision;
@@ -39,11 +38,7 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
     private SettingsManager settingsManager;
     private RepositoryManager repositoryManager;
 
-    private SettingsSideBar sideBar;
-
-    private MessagePanel selectSettingsPanel;
-
-    private ObservableList<SettingsSideBar.SettingsSideBarItem> settingsItems;
+    private ObservableList<SettingsSidebar.SettingsSidebarItem> settingsItems;
 
     public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
@@ -59,14 +54,15 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
 
         this.initializeSettingsItems();
 
-        this.sideBar = new SettingsSideBar();
+        this.sidebar = new SettingsSidebar();
 
-        this.sideBar.setOnSelectSettingsItem(this::setCenter);
+        this.sidebar.setOnSelectSettingsItem(this::setCenter);
 
-        this.sideBar.bindSettingsItems(this.settingsItems);
+        this.sidebar.bindSettingsItems(this.settingsItems);
 
-        this.setSideBar(sideBar);
-        this.sideBar.selectFirstSettingsCategory();
+        this.sidebar.selectFirstSettingsCategory();
+
+        this.initializeSidebar();
     }
 
     private void initializeSettingsItems() {
@@ -74,14 +70,14 @@ public class ViewSettings extends MainWindowView<SettingsSideBar> {
                 applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSideBar.SettingsSideBarItem(new UserInterfacePanel(settingsManager, themeManager),
+                new SettingsSidebar.SettingsSidebarItem(new UserInterfacePanel(settingsManager, themeManager),
                         "userInterfaceButton", tr("User Interface")),
-                new SettingsSideBar.SettingsSideBarItem(new RepositoriesPanel(settingsManager, repositoryManager),
+                new SettingsSidebar.SettingsSidebarItem(new RepositoriesPanel(settingsManager, repositoryManager),
                         "repositoriesButton", tr("Repositories")),
-                new SettingsSideBar.SettingsSideBarItem(new FileAssociationsPanel(), "settingsButton",
+                new SettingsSidebar.SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
-                new SettingsSideBar.SettingsSideBarItem(new NetworkPanel(), "networkButton", tr("Network")),
-                new SettingsSideBar.SettingsSideBarItem(new AboutPanel(buildInformation, opener), "aboutButton",
+                new SettingsSidebar.SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
+                new SettingsSidebar.SettingsSidebarItem(new AboutPanel(buildInformation, opener), "aboutButton",
                         tr("About")));
     }
 }
