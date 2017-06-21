@@ -20,6 +20,7 @@ package org.phoenicis.containers.wine;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;

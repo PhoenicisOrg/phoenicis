@@ -33,7 +33,6 @@ public class NashornEngineFactory {
         final NashornEngine nashornEngine = new NashornEngine(new ScriptEngineManager().getEngineByName("nashorn"));
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(nashornEngine));
-
         return nashornEngine;
     }
 }
