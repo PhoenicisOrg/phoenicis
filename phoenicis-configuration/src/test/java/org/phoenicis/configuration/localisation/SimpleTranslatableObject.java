@@ -7,7 +7,7 @@ public class SimpleTranslatableObject {
 
     @TranslatableCreator
     public SimpleTranslatableObject(@ParameterName("itemToBeTranslated") String itemToBeTranslated,
-                                    @ParameterName("itemNotToBeTranslated") String itemNotToBeTranslated) {
+            @ParameterName("itemNotToBeTranslated") String itemNotToBeTranslated) {
         this.itemToBeTranslated = itemToBeTranslated;
         this.itemNotToBeTranslated = itemNotToBeTranslated;
     }

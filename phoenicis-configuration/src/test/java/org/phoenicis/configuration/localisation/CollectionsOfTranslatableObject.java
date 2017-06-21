@@ -9,7 +9,7 @@ public class CollectionsOfTranslatableObject {
 
     @TranslatableCreator
     public CollectionsOfTranslatableObject(@ParameterName("itemToBeTranslated") List<String> itemToBeTranslated,
-                                           @ParameterName("itemNotToBeTranslated") List<String> itemNotToBeTranslated) {
+            @ParameterName("itemNotToBeTranslated") List<String> itemNotToBeTranslated) {
         this.itemToBeTranslated = itemToBeTranslated;
         this.itemNotToBeTranslated = itemNotToBeTranslated;
     }

@@ -4,7 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSideBar;
+import org.phoenicis.javafx.views.mainwindow.ui.LeftSidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
 
@@ -19,9 +19,9 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 23.04.17
  */
-public class SettingsSideBar extends LeftSideBar {
+public class SettingsSidebar extends LeftSidebar {
     // the toggle button group containing the buttons used to navigate to the different setting panels
-    private LeftToggleGroup<SettingsSideBarItem> settingsItems;
+    private LeftToggleGroup<SettingsSidebarItem> settingsItems;
 
     // consumer called when a settings toggle button has been clicked
     private Consumer<Node> onSelectSettingsItem;
@@ -29,7 +29,7 @@ public class SettingsSideBar extends LeftSideBar {
     /**
      * Constructor
      */
-    public SettingsSideBar() {
+    public SettingsSidebar() {
         super();
 
         this.populate();
@@ -50,7 +50,7 @@ public class SettingsSideBar extends LeftSideBar {
      * @param item The settings panel together with its displayed name and icon css class
      * @return The created toggle button
      */
-    private ToggleButton createSettingsToggleButton(SettingsSideBarItem item) {
+    private ToggleButton createSettingsToggleButton(SettingsSidebarItem item) {
         ToggleButton toggleButton = new LeftToggleButton(item.getName());
 
         toggleButton.getStyleClass().add(item.getIconClass());
@@ -64,7 +64,7 @@ public class SettingsSideBar extends LeftSideBar {
      *
      * @param items The settings toggle buttons
      */
-    public void bindSettingsItems(ObservableList<SettingsSideBarItem> items) {
+    public void bindSettingsItems(ObservableList<SettingsSidebarItem> items) {
         Bindings.bindContent(this.settingsItems.getElements(), items);
     }
 
@@ -87,7 +87,7 @@ public class SettingsSideBar extends LeftSideBar {
     /**
      * This class contains all needed information to display and manage a settings panel
      */
-    public static class SettingsSideBarItem {
+    public static class SettingsSidebarItem {
         // the corresponding panel for this settings category
         private final Node panel;
         // the css class containing the icon for this settings category
@@ -102,7 +102,7 @@ public class SettingsSideBar extends LeftSideBar {
          * @param iconClass The css class containing the icon for this settings category
          * @param name      The displayed name of this settings category
          */
-        public SettingsSideBarItem(Node panel, String iconClass, String name) {
+        public SettingsSidebarItem(Node panel, String iconClass, String name) {
             this.panel = panel;
             this.iconClass = iconClass;
             this.name = name;

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-17 15:56+0200\n"
-"PO-Revision-Date: 2017-06-17 16:04+0200\n"
+"POT-Creation-Date: 2017-06-21 20:30+0200\n"
+"PO-Revision-Date: 2017-06-21 20:30+0200\n"
 "Last-Translator: Plata <plata@phoenicis.org>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -85,23 +85,23 @@ msgstr "Breeze Dunkel"
 msgid "Unity theme"
 msgstr "Unity"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:102
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:103
 msgid "Repositories Settings"
 msgstr "Repository Einstellungen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:107
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:108
 msgid "Repository:"
 msgstr "Repository:"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:126
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:127
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:142
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:143
 msgid "Remove"
 msgstr "Entfernen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:171
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:172
 msgid ""
 "The value in front of each repository is its priority. The higher the "
 "priority is, the more important the scripts inside the repository are."
@@ -109,13 +109,13 @@ msgstr ""
 "Die Zahl vor jedem Repository gibt dessen Priorität an. Je höher die "
 "Priorität ist, desto wichtiger sind die Skripts in diesem Repository."
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:183
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:184
 msgid ""
 "Fetch updates for the repositories to retrieve the newest script versions"
 msgstr ""
 "Repository-Updates herunterladen um die neuesten Skript Versionen zu erhalten"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:186
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:187
 msgid "Refresh Repositories"
 msgstr "Repositories aktualisieren"
 
@@ -163,37 +163,61 @@ msgstr "Zeitstempel des Builds:"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:70
-msgid "Add a new Repository"
-msgstr "Repository hinzufügen:"
-
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:91
-msgid "Please select the repository type you want to add"
-msgstr "Bitte wählen Sie den Repositorytyp, der hinzugefügt werden soll"
-
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:108
-msgid "Repository type:"
-msgstr "Repositorytyp:"
-
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:114
-msgid "Choose the repository type"
-msgstr "Repositorytyp wählen"
-
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:124
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:48
 msgid "Open directory chooser"
 msgstr "Ordnerauswahldialog öffnen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:138
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:65
 msgid "Choose the location of your local repository"
 msgstr "Ordner für Ihr lokales Repository auswählen"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:182
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
+msgid "Git-Url:"
+msgstr "Git-Url:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:53
+msgid "Branch:"
+msgstr "Branch:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:68
+msgid "Choose the location of your git repository"
+msgstr "Ordner für Ihr Git Repository auswählen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
+msgid "Local repository"
+msgstr "Lokales Repository:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:28
+msgid "Git repository"
+msgstr "Git Repository:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:38
+msgid "Classpath repository"
+msgstr "Classpath Repository"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:40
 msgid "Classpath:"
 msgstr "Classpath:"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AddRepositoryDialog.java:190
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:51
 msgid "Choose the location of your classpath repository"
 msgstr "Pfad für Ihr Classpath-Repository auswählen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:55
+msgid "Please select the repository type you want to add"
+msgstr "Bitte wählen Sie den Repositorytyp, der hinzugefügt werden soll"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
+msgid "Repository type:"
+msgstr "Repositorytyp:"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:88
+msgid "Choose the repository type"
+msgstr "Repositorytyp wählen"
+
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:59
+msgid "Add a new Repository"
+msgstr "Repository hinzufügen:"
 
 #: src/main/java/org/phoenicis/javafx/views/mainwindow/settings/ViewSettings.java:78
 msgid "User Interface"
@@ -383,11 +407,11 @@ msgstr "Skript öffnen"
 msgid "Advanced tools"
 msgstr "Erweiterte Werkzeuge"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:70
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:71
 msgid "Library"
 msgstr "Bibliothek"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:169
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:130
 msgid "My applications"
 msgstr "Meine Anwendungen"
 
@@ -403,15 +427,15 @@ msgstr "Schließen"
 msgid "Uninstall"
 msgstr "Deinstallieren"
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:43
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:41
 msgid ""
-"Connecting to ${application.name} failed.\n"
+"Connecting to the repository failed.\n"
 "Please check your connection and try again."
 msgstr ""
-"Verbindung mit ${application.name} fehlgeschlagen.\n"
+"Verbindung mit dem Repository fehlgeschlagen.\n"
 "Bitte überprüfen Sie Ihre Verbindung und versuchen es nochmal."
 
-#: src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:46
+#: src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:44
 msgid "Retry"
 msgstr "Wiederholen"
 
@@ -500,6 +524,10 @@ msgstr "Weiter"
 #, fuzzy
 #~ msgid "Default"
 #~ msgstr "Standard"
+
+#, fuzzy
+#~ msgid "input"
+#~ msgstr "Eingabe"
 
 #~ msgid "No CD needed"
 #~ msgstr "benötigt Patch"

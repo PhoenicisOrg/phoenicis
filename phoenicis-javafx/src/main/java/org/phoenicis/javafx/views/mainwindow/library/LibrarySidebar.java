@@ -35,7 +35,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 15.04.17
  */
-public class LibrarySideBar extends LeftSideBar {
+public class LibrarySidebar extends LeftSidebar {
     // the name of this application
     private final String applicationName;
 
@@ -74,7 +74,7 @@ public class LibrarySideBar extends LeftSideBar {
      * @param applicationName    The name of this application (normally "PlayOnLinux")
      * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public LibrarySideBar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts) {
+    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts) {
         super();
 
         this.applicationName = applicationName;
