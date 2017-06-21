@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
+/**
+ * Injects Include() function into a Script Engine
+ */
 public class IncludeInjector implements EngineInjector {
     private final ScriptFetcher scriptFetcher;
 

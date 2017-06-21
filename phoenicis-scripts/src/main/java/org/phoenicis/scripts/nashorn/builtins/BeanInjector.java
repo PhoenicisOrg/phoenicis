@@ -7,6 +7,9 @@ import org.springframework.context.ApplicationContext;
 import java.lang.annotation.Annotation;
 import java.util.function.Function;
 
+/**
+ * Injects Bean() function into a Script Engine
+ */
 public class BeanInjector implements EngineInjector {
     private final ApplicationContext applicationContext;
 
