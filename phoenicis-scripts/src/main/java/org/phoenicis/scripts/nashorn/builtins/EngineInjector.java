@@ -21,5 +21,4 @@ public interface EngineInjector {
     default void throwException(Exception parentException) {
         throw new org.phoenicis.scripts.interpreter.ScriptException(parentException);
     }
-
 }
