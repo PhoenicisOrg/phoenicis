@@ -21,8 +21,6 @@ package org.phoenicis.javafx.views.mainwindow;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -39,8 +37,8 @@ public class FailurePanel extends VBox {
         this.setAlignment(Pos.CENTER);
 
         Label failureNotificationLbl = new Label();
-        failureNotificationLbl.setText(
-                tr("Connecting to ${application.name} failed.\n" + "Please check your connection and try again."));
+        failureNotificationLbl
+                .setText(tr("Connecting to the repository failed.\n Please check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
         retryButton = new Button(tr("Retry"));

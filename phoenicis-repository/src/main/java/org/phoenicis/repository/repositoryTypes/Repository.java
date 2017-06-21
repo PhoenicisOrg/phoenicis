@@ -38,6 +38,7 @@ public interface Repository {
         try {
             callback.accept(fetchInstallableApplications());
         } catch (Exception e) {
+            e.printStackTrace();
             errorCallback.accept(e);
         }
     }
