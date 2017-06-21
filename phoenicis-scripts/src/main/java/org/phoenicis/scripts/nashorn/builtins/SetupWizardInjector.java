@@ -6,9 +6,6 @@ import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 
 import java.util.function.Function;
 
-/**
- * Injects SetupWizard() function into a script engine
- */
 public class SetupWizardInjector implements EngineInjector {
     private final UiSetupWizardFactory uiSetupWizardFactory;
 
@@ -17,7 +14,7 @@ public class SetupWizardInjector implements EngineInjector {
     }
 
     @Override
-    public void injectInto(NashornEngine nashornEngine) {
+    public void inject(NashornEngine nashornEngine) {
         nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
             final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());

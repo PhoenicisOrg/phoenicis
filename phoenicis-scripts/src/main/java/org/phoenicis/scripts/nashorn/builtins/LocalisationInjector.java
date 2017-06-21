@@ -1,13 +1,13 @@
 package org.phoenicis.scripts.nashorn.builtins;
+
+import org.phoenicis.configuration.localisation.Localisation;
 import org.phoenicis.scripts.nashorn.NashornEngine;
 
-/**
- * Injects tr() function into a Script Engine
- */
+import java.util.function.Consumer;
+
 public class LocalisationInjector implements EngineInjector {
     @Override
-    public void injectInto(NashornEngine nashornEngine) {
-        nashornEngine.eval("var tr = Packages.org.phoenicis.configuration.localisation.Localisation.tr;",
-                this::throwException);
+    public void inject(NashornEngine nashornEngine) {
+        nashornEngine.put("tr", (Consumer<Object>) Localisation::tr, this::throwException);
     }
 }

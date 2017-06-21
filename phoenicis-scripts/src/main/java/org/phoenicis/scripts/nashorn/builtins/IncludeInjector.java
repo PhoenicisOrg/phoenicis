@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-/**
- * Injects Include() function into a Script Engine
- */
 public class IncludeInjector implements EngineInjector {
     private final ScriptFetcher scriptFetcher;
 
@@ -22,7 +19,7 @@ public class IncludeInjector implements EngineInjector {
     }
 
     @Override
-    public void injectInto(NashornEngine nashornEngine) {
+    public void inject(NashornEngine nashornEngine) {
         final Set<List<String>> includedScripts = new HashSet<>();
 
         nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {
