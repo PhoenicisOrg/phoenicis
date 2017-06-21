@@ -11,5 +11,4 @@ public interface EngineInjector {
     default void throwException(Exception e) {
         throw new org.phoenicis.scripts.interpreter.ScriptException(e);
     }
-
 }
