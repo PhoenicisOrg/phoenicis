@@ -7,7 +7,7 @@ public class TreeTranslatableObject {
 
     @TranslatableCreator
     public TreeTranslatableObject(@ParameterName("itemToBeTranslated") SimpleTranslatableObject itemToBeTranslated,
-                                  @ParameterName("itemNotToBeTranslated") SimpleTranslatableObject itemNotToBeTranslated) {
+            @ParameterName("itemNotToBeTranslated") SimpleTranslatableObject itemNotToBeTranslated) {
         this.itemToBeTranslated = itemToBeTranslated;
         this.itemNotToBeTranslated = itemNotToBeTranslated;
     }

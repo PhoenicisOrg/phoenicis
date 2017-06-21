@@ -89,6 +89,10 @@ public final class Localisation {
      * @return translated object
      */
     public static <T> T tr(T translatable) {
+        if (translatable == null) {
+            return null;
+        }
+
         if (translatable instanceof String) {
             @SuppressWarnings("unchecked")
             final T translateResult = (T) trString(translatable.toString());
