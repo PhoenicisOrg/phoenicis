@@ -6,6 +6,9 @@ import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 
 import java.util.function.Function;
 
+/**
+ * Injects SetupWizard() function into a script engine
+ */
 public class SetupWizardInjector implements EngineInjector {
     private final UiSetupWizardFactory uiSetupWizardFactory;
 

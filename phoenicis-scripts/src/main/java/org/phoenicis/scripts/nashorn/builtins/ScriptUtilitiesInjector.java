@@ -4,6 +4,9 @@ import org.phoenicis.scripts.nashorn.NashornEngine;
 
 import java.io.InputStreamReader;
 
+/**
+ * Includes utils.js
+ */
 public class ScriptUtilitiesInjector implements EngineInjector {
     @Override
     public void inject(NashornEngine nashornEngine) {
