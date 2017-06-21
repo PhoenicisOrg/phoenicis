@@ -36,11 +36,11 @@ public class LocalisationTest {
         assertEquals("output", tr("input"));
     }
 
-    /*@PrepareForTest({ I18nFactory.class, I18n.class })
+    @PrepareForTest({ I18nFactory.class, I18n.class })
     @Test
     public synchronized void testTrWithNull() {
         assertEquals(null, tr(null));
-    }*/
+    }
 
     @PrepareForTest({ I18nFactory.class, I18n.class })
     @Test

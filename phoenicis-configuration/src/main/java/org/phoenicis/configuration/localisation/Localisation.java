@@ -90,7 +90,7 @@ public final class Localisation {
      */
     public static <T> T tr(T translatable) {
         if (translatable == null) {
-            //  return null;
+            return null;
         }
 
         if (translatable instanceof String) {
