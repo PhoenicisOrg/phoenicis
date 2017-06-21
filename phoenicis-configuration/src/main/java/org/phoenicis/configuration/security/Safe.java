@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
  * Annotates a bean as safe.
  * If a bean is not safe, it cannot be executed from the Javascript context
  */
-
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Safe {
