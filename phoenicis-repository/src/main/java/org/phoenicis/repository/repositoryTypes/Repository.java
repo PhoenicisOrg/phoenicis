@@ -22,12 +22,16 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public interface Repository {
+    Logger LOGGER = LoggerFactory.getLogger(Repository.class);
+
     RepositoryDTO fetchInstallableApplications();
 
     default void onDelete() {
@@ -38,7 +42,7 @@ public interface Repository {
         try {
             callback.accept(fetchInstallableApplications());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Fetching installable applications failed!", e);
             errorCallback.accept(e);
         }
     }
