@@ -18,9 +18,11 @@
 
 package org.phoenicis.configuration;
 
+import org.phoenicis.configuration.security.Safe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
+@Safe
 public class PropertyReader {
     @Autowired
     private ApplicationContext applicationContext;
