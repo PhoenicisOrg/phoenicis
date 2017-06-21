@@ -34,6 +34,7 @@ public class NashornEngineFactory {
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(nashornEngine));
 
+
         return nashornEngine;
     }
 }
