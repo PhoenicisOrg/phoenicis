@@ -1,5 +1,4 @@
 package org.phoenicis.scripts.nashorn.builtins;
-
 import org.phoenicis.scripts.nashorn.NashornEngine;
 
 public class LocalisationInjector implements EngineInjector {
