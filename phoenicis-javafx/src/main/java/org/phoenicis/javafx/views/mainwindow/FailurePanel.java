@@ -38,7 +38,7 @@ public class FailurePanel extends VBox {
 
         Label failureNotificationLbl = new Label();
         failureNotificationLbl
-                .setText(tr("Connecting to the repository failed.\n Please check your connection and try again."));
+                .setText(tr("Connecting to the repository failed.\nPlease check your connection and try again."));
         failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
 
         retryButton = new Button(tr("Retry"));
