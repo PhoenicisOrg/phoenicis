@@ -40,6 +40,11 @@ public class CachedRepository implements Repository {
     }
 
     @Override
+    public boolean isSafe() {
+        return repository.isSafe();
+    }
+
+    @Override
     public void onDelete() {
         this.repository.onDelete();
     }

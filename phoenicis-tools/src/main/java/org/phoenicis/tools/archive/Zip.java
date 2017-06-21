@@ -19,12 +19,13 @@
 package org.phoenicis.tools.archive;
 
 import com.google.common.io.CountingInputStream;
-import org.phoenicis.entities.ProgressEntity;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
+import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.entities.ProgressEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Safe
 public class Zip {
     private static final String ZIP_ERROR_MESSAGE = "Unable to open input stream";
     private final Logger LOGGER = LoggerFactory.getLogger(Zip.class);

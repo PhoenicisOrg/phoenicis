@@ -18,6 +18,8 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
+@Safe
 public class DirectoryWatcherFiles extends DirectoryWatcher<List<File>> {
     public DirectoryWatcherFiles(ExecutorService executorService, Path observedDirectory) {
         super(executorService, observedDirectory);

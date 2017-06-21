@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-class NashornEngine {
+public class NashornEngine {
     private final ScriptEngine scriptEngine;
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
@@ -32,7 +32,7 @@ class NashornEngine {
         this.scriptEngine = scriptEngine;
     }
 
-    void eval(InputStreamReader inputStreamReader, Consumer<Exception> errorCallback) {
+    public void eval(InputStreamReader inputStreamReader, Consumer<Exception> errorCallback) {
         try {
             this.scriptEngine.eval(inputStreamReader);
         } catch (Exception e) {
@@ -40,7 +40,7 @@ class NashornEngine {
         }
     }
 
-    void eval(String script, Consumer<Exception> errorCallback) {
+    public void eval(String script, Consumer<Exception> errorCallback) {
         try {
             this.scriptEngine.eval(script);
         } catch (Exception e) {
@@ -68,7 +68,7 @@ class NashornEngine {
         errorCallback.accept(e);
     }
 
-    void put(String name, Object object, Consumer<Exception> errorCallback) {
+    public void put(String name, Object object, Consumer<Exception> errorCallback) {
         try {
             this.scriptEngine.put(name, object);
         } catch (Exception e) {
@@ -76,7 +76,7 @@ class NashornEngine {
         }
     }
 
-    void addErrorHandler(Consumer<Exception> errorHandler) {
+    public void addErrorHandler(Consumer<Exception> errorHandler) {
         errorHandlers.add(errorHandler);
     }
 

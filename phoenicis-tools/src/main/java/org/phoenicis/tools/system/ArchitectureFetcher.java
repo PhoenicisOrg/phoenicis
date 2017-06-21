@@ -18,9 +18,11 @@
 
 package org.phoenicis.tools.system;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.Architecture;
 import org.phoenicis.entities.OperatingSystem;
 
+@Safe
 public class ArchitectureFetcher {
     private final OperatingSystemFetcher operatingSystemFetcher;
 

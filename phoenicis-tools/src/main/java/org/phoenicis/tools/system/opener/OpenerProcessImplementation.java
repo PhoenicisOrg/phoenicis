@@ -18,9 +18,12 @@
 
 package org.phoenicis.tools.system.opener;
 
+import org.phoenicis.configuration.security.Safe;
+
 import java.io.IOException;
 import java.util.Arrays;
 
+@Safe
 public class OpenerProcessImplementation implements Opener {
     private final String commandName;
 

@@ -34,7 +34,7 @@ public class MultipleRepository extends MergeableRepository {
     private List<Repository> repositories;
 
     public MultipleRepository(Repository... repositories) {
-        this.repositories = new ArrayList<Repository>(Arrays.asList(repositories));
+        this.repositories = new ArrayList<>(Arrays.asList(repositories));
     }
 
     public MultipleRepository(List<Repository> repositories) {

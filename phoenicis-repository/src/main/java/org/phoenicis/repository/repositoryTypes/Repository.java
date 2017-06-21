@@ -34,6 +34,10 @@ public interface Repository {
 
     RepositoryDTO fetchInstallableApplications();
 
+    default boolean isSafe() {
+        return false;
+    }
+
     default void onDelete() {
         // do nothing
     }

@@ -19,9 +19,11 @@
 package org.phoenicis.tools.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.configuration.security.Safe;
 
 import java.io.File;
 
+@Safe
 public class CompatibleConfigFileFormatFactory {
     private final ObjectMapper objectMapper;
 

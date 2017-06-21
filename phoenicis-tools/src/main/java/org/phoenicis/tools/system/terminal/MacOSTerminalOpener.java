@@ -19,12 +19,14 @@
 package org.phoenicis.tools.system.terminal;
 
 import org.apache.commons.io.IOUtils;
+import org.phoenicis.configuration.security.Safe;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
+@Safe
 class MacOSTerminalOpener implements TerminalOpener {
     @Override
     public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {

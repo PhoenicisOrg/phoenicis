@@ -38,7 +38,10 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClasspathRepository implements Repository {
@@ -65,7 +68,7 @@ public class ClasspathRepository implements Repository {
                     categoryDTOs.add(category);
                 }
             }
-            Collections.sort(categoryDTOs, Comparator.comparing(CategoryDTO::getName));
+            categoryDTOs.sort(Comparator.comparing(CategoryDTO::getName));
 
             final RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder()
                     .withName("classpath repository").withCategories(categoryDTOs);
@@ -74,6 +77,11 @@ public class ClasspathRepository implements Repository {
             LOGGER.warn("Error while reading resource directory", e);
             return new RepositoryDTO.Builder().build();
         }
+    }
+
+    @Override
+    public boolean isSafe() {
+        return true;
     }
 
     private CategoryDTO buildCategory(String categoryFileName) throws IOException {
@@ -112,7 +120,7 @@ public class ClasspathRepository implements Repository {
             }
         }
 
-        Collections.sort(applicationDTOS, Comparator.comparing(ApplicationDTO::getName));
+        applicationDTOS.sort(Comparator.comparing(ApplicationDTO::getName));
         return applicationDTOS;
     }
 
@@ -159,7 +167,7 @@ public class ClasspathRepository implements Repository {
             }
         }
 
-        Collections.sort(scriptDTOs, Comparator.comparing(ScriptDTO::getScriptName));
+        scriptDTOs.sort(Comparator.comparing(ScriptDTO::getScriptName));
 
         return scriptDTOs;
     }
@@ -195,18 +203,15 @@ public class ClasspathRepository implements Repository {
             return false;
         }
 
-        ClasspathRepository that = (ClasspathRepository) o;
-
-        EqualsBuilder builder = new EqualsBuilder();
-
+        final ClasspathRepository that = (ClasspathRepository) o;
+        final EqualsBuilder builder = new EqualsBuilder();
         builder.append(packagePath, that.packagePath);
-
         return builder.isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
+        final HashCodeBuilder builder = new HashCodeBuilder();
 
         builder.append(packagePath);
 

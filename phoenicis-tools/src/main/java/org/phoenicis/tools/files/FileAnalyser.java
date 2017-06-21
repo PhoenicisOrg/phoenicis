@@ -20,6 +20,7 @@ package org.phoenicis.tools.files;
 
 import net.sf.jmimemagic.*;
 import org.apache.commons.io.FileUtils;
+import org.phoenicis.configuration.security.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Safe
 public class FileAnalyser {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileAnalyser.class);
 

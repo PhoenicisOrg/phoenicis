@@ -18,6 +18,7 @@
 
 package org.phoenicis.tools.http;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.ProgressEntity;
 import org.phoenicis.entities.ProgressState;
 import org.phoenicis.tools.files.FileSizeUtilities;
@@ -28,6 +29,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.function.Consumer;
 
+@Safe
 public class Downloader {
     private static final String EXCEPTION_ITEM_DOWNLOAD_FAILED = "Download of %s has failed";
     private static final int BLOCK_SIZE = 1024;

@@ -18,6 +18,7 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Safe
 public class FileSearcher extends FilesManipulator {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileSearcher.class);
 

@@ -18,11 +18,12 @@
 
 package org.phoenicis.library;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.apache.commons.io.FileUtils;
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Safe
 public class ShortcutManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutManager.class);
     private static final String ENCODING = "UTF-8";

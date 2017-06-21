@@ -21,6 +21,7 @@ package org.phoenicis.tools.config;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.configuration.security.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,7 @@ import java.util.Map.Entry;
  * Represents a Phoenicis config file. The class is able to read POLv4 format,
  * but it will store everything in v5 format (json)
  */
+@Safe
 public class CompatibleConfigFileFormat implements ConfigFile {
     private final Logger LOGGER = LoggerFactory.getLogger(CompatibleConfigFileFormat.class);
     private final File configFile;

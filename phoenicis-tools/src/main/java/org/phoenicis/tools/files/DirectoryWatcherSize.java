@@ -18,11 +18,14 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 
+@Safe
 public class DirectoryWatcherSize extends DirectoryWatcher<Long> {
     public DirectoryWatcherSize(ExecutorService executorService, Path observedDirectory) {
         super(executorService, observedDirectory);

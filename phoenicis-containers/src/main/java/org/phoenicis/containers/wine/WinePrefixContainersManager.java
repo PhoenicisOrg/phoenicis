@@ -20,6 +20,7 @@ package org.phoenicis.containers.wine;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -43,6 +44,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@Safe
 public class WinePrefixContainersManager implements ContainersManager {
     private final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainersManager.class);
     @Value("${application.user.wineprefix}")

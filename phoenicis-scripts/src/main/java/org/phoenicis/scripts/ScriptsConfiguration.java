@@ -18,19 +18,22 @@
 
 package org.phoenicis.scripts;
 
-import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.scripts.interpreter.BackgroundScriptInterpreter;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.scripts.nashorn.NashornEngineFactory;
 import org.phoenicis.scripts.nashorn.NashornScriptInterpreter;
+import org.phoenicis.scripts.nashorn.builtins.*;
 import org.phoenicis.scripts.wizard.WizardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import java.util.Arrays;
 
 @Configuration
 @Import(WizardConfiguration.class)
@@ -49,8 +52,14 @@ public class ScriptsConfiguration {
 
     @Bean
     public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(wizardConfiguration.setupWizardFactory(),
-                wizardConfiguration.progressWizardFactory(), scriptFetcher());
+        return new NashornEngineFactory(Arrays.asList(
+                new ScriptUtilitiesInjector(),
+                new BeanInjector(applicationContext),
+                new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
+                new ProgressUiInjector(wizardConfiguration.progressWizardFactory()),
+                new IncludeInjector(scriptFetcher()),
+                new LocalisationInjector()
+        ));
     }
 
     @Bean

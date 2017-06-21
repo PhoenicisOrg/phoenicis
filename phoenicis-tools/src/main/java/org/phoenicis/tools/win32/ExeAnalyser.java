@@ -18,6 +18,7 @@
 
 package org.phoenicis.tools.win32;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.win32.pe.PEFile;
 import org.phoenicis.win32.pe.PEReader;
 
@@ -26,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Safe
 public class ExeAnalyser {
     private final PEReader peReader;
 

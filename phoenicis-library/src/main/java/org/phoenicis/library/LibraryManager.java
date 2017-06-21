@@ -20,6 +20,7 @@ package org.phoenicis.library;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.multithreading.functional.NullRunnable;
@@ -30,14 +31,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+@Safe
 public class LibraryManager {
     private final String shortcutDirectory;
     private Runnable onUpdate = new NullRunnable();

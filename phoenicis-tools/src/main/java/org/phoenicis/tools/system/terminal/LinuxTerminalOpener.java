@@ -18,8 +18,11 @@
 
 package org.phoenicis.tools.system.terminal;
 
+import org.phoenicis.configuration.security.Safe;
+
 import java.util.Map;
 
+@Safe
 class LinuxTerminalOpener implements TerminalOpener {
     @Override
     public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {
