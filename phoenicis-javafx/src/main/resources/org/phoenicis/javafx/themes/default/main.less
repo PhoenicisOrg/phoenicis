@@ -339,12 +339,19 @@
     }
 
     .iconListMiniatureLabel {
-      -fx-pref-width: 11em;
-      -fx-pref-height: 1.8em;
+      @labelWidth: 11em;
+      @labelHeight: 2.2em;
+
+      -fx-min-width: @labelWidth;
+      -fx-pref-width: @labelWidth;
+      -fx-max-width: @labelWidth;
+      -fx-min-height: @labelHeight;
+      -fx-pref-height: @labelHeight;
+      -fx-max-height: @labelHeight;
 
       -fx-alignment: center;
 
-      -fx-font-size: 0.90em;
+      -fx-font-size: 0.9em;
       -fx-font-family: "Roboto Light";
       -fx-wrap-text: true;
       -fx-text-alignment: center;
