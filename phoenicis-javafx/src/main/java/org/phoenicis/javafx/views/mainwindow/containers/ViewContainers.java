@@ -36,11 +36,8 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewContainers extends MainWindowView<ContainerSideBar> {
-    private ContainerSideBar sideBar;
-
-    private Consumer<ContainerDTO> onSelectContainer = (container) -> {
-    };
+public class ViewContainers extends MainWindowView<ContainerSidebar> {
+    private Consumer<ContainerDTO> onSelectContainer;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
 
@@ -55,7 +52,7 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
 
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));
-        this.sideBar = new ContainerSideBar(availableContainers);
+        this.sidebar = new ContainerSidebar(availableContainers);
 
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));
@@ -64,29 +61,21 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
                 ContainerCategoryDTO::getContainers);
         this.sortedContainers = this.containers.sorted(Comparator.comparing(ContainerDTO::getName));
 
-        this.sideBar.setOnApplyFilter(this::applyFilter);
+        this.sidebar.setOnApplyFilter(this::applyFilter);
 
-        this.sideBar.bindCategories(this.sortedCategories);
+        this.sidebar.bindCategories(this.sortedCategories);
 
         this.availableContainers.bind(sortedContainers);
 
         // set the category selection consumers
-        this.sideBar.setOnCategorySelection(category -> showAvailableContainers());
-        this.sideBar.setOnAllCategorySelection(this::showAvailableContainers);
+        this.sidebar.setOnCategorySelection(category -> closeDetailsView());
+        this.sidebar.setOnAllCategorySelection(this::closeDetailsView);
 
-        this.setSideBar(sideBar);
+        this.initializeSidebar();
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
         this.onSelectContainer = onSelectContainer;
-    }
-
-    /**
-     * Show available containers panel
-     */
-    public void showAvailableContainers() {
-        this.closeDetailsView();
-        setCenter(availableContainers);
     }
 
     /**
@@ -98,9 +87,10 @@ public class ViewContainers extends MainWindowView<ContainerSideBar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
 
-            this.sideBar.selectAllCategories();
+            this.sidebar.selectAllCategories();
 
-            this.showAvailableContainers();
+            this.closeDetailsView();
+            this.setCenter(availableContainers);
         });
     }
 

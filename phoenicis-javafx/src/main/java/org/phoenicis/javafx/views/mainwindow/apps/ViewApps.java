@@ -45,10 +45,8 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewApps extends MainWindowView<ApplicationSideBar> {
+public class ViewApps extends MainWindowView<ApplicationSidebar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
-
-    private ApplicationSideBar sideBar;
 
     private final CombinedListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter filter;
@@ -87,40 +85,31 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         this.filteredApplications.predicateProperty().bind(filter.applicationFilterProperty());
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
-        this.sideBar = new ApplicationSideBar(availableApps, filter);
+        this.sidebar = new ApplicationSidebar(availableApps, filter);
 
         // create the bindings between the visual components and the observable lists
-        this.sideBar.bindCategories(this.sortedCategories);
+        this.sidebar.bindCategories(this.sortedCategories);
         this.availableApps.bind(this.sortedApplications);
 
         // set the filter event consumers
-        this.sideBar.setOnFilterTextEnter(this::processFilterText);
-        this.sideBar.setOnFilterClear(this::clearFilterText);
+        this.sidebar.setOnFilterTextEnter(this::processFilterText);
+        this.sidebar.setOnFilterClear(this::clearFilterText);
 
         // set the category selection consumers
-        this.sideBar.setOnCategorySelection(category -> {
+        this.sidebar.setOnCategorySelection(category -> {
             filter.setFilterCategory(category);
-            showAvailableApps();
+            this.closeDetailsView();
         });
-        this.sideBar.setOnAllCategorySelection(() -> {
+        this.sidebar.setOnAllCategorySelection(() -> {
             filter.setFilterCategory(null);
-            showAvailableApps();
+            this.closeDetailsView();
         });
 
-        this.setSideBar(sideBar);
-        this.showWait();
+        this.initializeSidebar();
     }
 
     public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
         this.onSelectScript = onSelectScript;
-    }
-
-    /**
-     * Show available apps panel
-     */
-    public void showAvailableApps() {
-        this.closeDetailsView();
-        setCenter(availableApps);
     }
 
     /**
@@ -132,9 +121,10 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
             this.filter.clearAll();
-            this.sideBar.selectAllCategories();
+            this.sidebar.selectAllCategories();
 
-            this.showAvailableApps();
+            this.closeDetailsView();
+            this.setCenter(availableApps);
         });
     }
 
@@ -156,7 +146,6 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
 
     private void clearFilterText() {
         this.filter.setFilterText("");
-        this.showAvailableApps();
     }
 
     private void processFilterText(String filterText) {
@@ -171,7 +160,5 @@ public class ViewApps extends MainWindowView<ApplicationSideBar> {
         });
 
         this.pause.playFromStart();
-
-        this.showAvailableApps();
     }
 }

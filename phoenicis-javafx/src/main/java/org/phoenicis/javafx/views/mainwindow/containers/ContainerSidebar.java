@@ -29,7 +29,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 22.04.17
  */
-public class ContainerSideBar extends LeftSideBar {
+public class ContainerSidebar extends LeftSidebar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
@@ -55,7 +55,7 @@ public class ContainerSideBar extends LeftSideBar {
      *
      * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
      */
-    public ContainerSideBar(CombinedListWidget<ContainerDTO> availableContainers) {
+    public ContainerSidebar(CombinedListWidget<ContainerDTO> availableContainers) {
         super();
 
         this.populateSearchBar();
