@@ -5,7 +5,6 @@ import org.phoenicis.scripts.wizard.UiProgressWizardFactory;
 import org.phoenicis.scripts.wizard.UiProgressWizardImplementation;
 
 import java.util.function.Function;
-
 /**
  * Injects EngineProgressUi() function into a Script Engine
  */

@@ -8,12 +8,14 @@ import org.phoenicis.scripts.nashorn.NashornEngine;
 public interface EngineInjector {
     /**
      * Injects component into a nashorn engine
+     *
      * @param nashornEngine The engine to be injected in
      */
     void injectInto(NashornEngine nashornEngine);
 
     /**
      * Throws a ScriptException error (can be use as a lambda)
+     *
      * @param parentException Parent exception
      */
     default void throwException(Exception parentException) {
