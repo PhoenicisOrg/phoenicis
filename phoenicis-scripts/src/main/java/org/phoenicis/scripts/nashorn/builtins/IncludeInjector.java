@@ -22,7 +22,7 @@ public class IncludeInjector implements EngineInjector {
     }
 
     @Override
-    public void inject(NashornEngine nashornEngine) {
+    public void injectInto(NashornEngine nashornEngine) {
         final Set<List<String>> includedScripts = new HashSet<>();
 
         nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {

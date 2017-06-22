@@ -34,6 +34,11 @@ public interface Repository {
 
     RepositoryDTO fetchInstallableApplications();
 
+    /**
+     * A safe repository contains scripts that is not constraint by the @Safe annotation
+     * TODO: Implement this behaviour
+     * @return true if the repository is safe
+     */
     default boolean isSafe() {
         return false;
     }
