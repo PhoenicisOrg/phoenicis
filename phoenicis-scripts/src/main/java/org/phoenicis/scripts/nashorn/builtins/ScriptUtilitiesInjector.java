@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
  */
 public class ScriptUtilitiesInjector implements EngineInjector {
     @Override
-    public void inject(NashornEngine nashornEngine) {
+    public void injectInto(NashornEngine nashornEngine) {
         nashornEngine.eval(new InputStreamReader(getClass().getResourceAsStream("utils.js")), this::throwException);
     }
 }

@@ -18,7 +18,7 @@ public class BeanInjector implements EngineInjector {
     }
 
     @Override
-    public void inject(NashornEngine nashornEngine) {
+    public void injectInto(NashornEngine nashornEngine) {
         nashornEngine.put("Bean", (Function<String, Object>) this::fetchBean,
                 this::throwException);
     }

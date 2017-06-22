@@ -17,7 +17,7 @@ public class ProgressUiInjector implements EngineInjector {
     }
 
     @Override
-    public void inject(NashornEngine nashornEngine) {
+    public void injectInto(NashornEngine nashornEngine) {
         nashornEngine.put("EngineProgressUi", (Function<String, UiProgressWizardImplementation>) (name) -> {
             final UiProgressWizardImplementation uiProgressWizardImplementation = uiProgressWizardFactory.create(name);
             nashornEngine.addErrorHandler(e -> uiProgressWizardImplementation.close());
