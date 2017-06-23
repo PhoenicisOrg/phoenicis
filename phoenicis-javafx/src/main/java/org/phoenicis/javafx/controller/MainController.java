@@ -77,6 +77,7 @@ public class MainController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 this.settingsManager.setWindowHeight(this.mainWindow.getHeight());
                 this.settingsManager.setWindowWidth(this.mainWindow.getWidth());
+                this.settingsManager.setWindowMaximized(this.mainWindow.isMaximized());
                 this.settingsManager.save();
                 Platform.exit();
                 onClose.run();

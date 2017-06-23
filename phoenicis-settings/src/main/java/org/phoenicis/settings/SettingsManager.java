@@ -47,6 +47,9 @@ public class SettingsManager {
     @Value("${application.windowHeight}")
     private double windowHeight;
 
+    @Value("${application.windowMaximized}")
+    private boolean windowMaximized;
+
     @Autowired
     private RepositoryConfiguration repositoryConfiguration;
 
@@ -74,6 +77,7 @@ public class SettingsManager {
         settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
         settings.set(Setting.WINDOW_HEIGHT, this.windowHeight);
         settings.set(Setting.WINDOW_WIDTH, this.windowWidth);
+        settings.set(Setting.WINDOW_MAXIMIZED, String.valueOf(this.windowMaximized));
 
         return settings;
     }
@@ -124,5 +128,13 @@ public class SettingsManager {
 
     public double getWindowHeight() {
         return windowHeight;
+    }
+
+    public void setWindowMaximized(boolean windowMaximized) {
+        this.windowMaximized = windowMaximized;
+    }
+
+    public boolean isWindowMaximized() {
+        return windowMaximized;
     }
 }
