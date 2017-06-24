@@ -36,6 +36,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
     private final MainWindow mainWindow;
+    private final SettingsManager settingsManager;
 
     private String applicationName;
 
@@ -49,6 +50,8 @@ public class MainController {
         this.mainWindow = new MainWindow(applicationName, libraryController.getView(), appsController.getView(),
                 enginesController.getView(), containersController.getView(), settingsController.getView(), themeManager,
                 settingsManager);
+
+        this.settingsManager = settingsManager;
 
         libraryController.setOnTabOpened(mainWindow::showLibrary);
 
@@ -72,6 +75,10 @@ public class MainController {
             alert.setHeaderText(tr("Are you sure you want to close all {0} windows?", applicationName));
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                this.settingsManager.setWindowHeight(this.mainWindow.getHeight());
+                this.settingsManager.setWindowWidth(this.mainWindow.getWidth());
+                this.settingsManager.setWindowMaximized(this.mainWindow.isMaximized());
+                this.settingsManager.save();
                 Platform.exit();
                 onClose.run();
             } else {

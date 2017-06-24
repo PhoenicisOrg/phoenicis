@@ -41,6 +41,15 @@ public class SettingsManager {
     @Value("${application.viewsource}")
     private boolean viewScriptSource;
 
+    @Value("${application.windowWidth}")
+    private double windowWidth;
+
+    @Value("${application.windowHeight}")
+    private double windowHeight;
+
+    @Value("${application.windowMaximized}")
+    private boolean windowMaximized;
+
     @Autowired
     private RepositoryConfiguration repositoryConfiguration;
 
@@ -48,6 +57,29 @@ public class SettingsManager {
 
     public SettingsManager(String settingsFileName) {
         this.settingsFileName = settingsFileName;
+    }
+
+    public void save() {
+        Settings settings = load();
+        try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
+            DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
+            persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Settings load() {
+        Settings settings = new Settings();
+
+        settings.set(Setting.THEME, theme);
+        settings.set(Setting.SCALE, scale);
+        settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
+        settings.set(Setting.WINDOW_HEIGHT, this.windowHeight);
+        settings.set(Setting.WINDOW_WIDTH, this.windowWidth);
+        settings.set(Setting.WINDOW_MAXIMIZED, String.valueOf(this.windowMaximized));
+
+        return settings;
     }
 
     public String getTheme() {
@@ -74,31 +106,35 @@ public class SettingsManager {
         this.viewScriptSource = viewScriptSource;
     }
 
-    public void save() {
-        Settings settings = load();
-        try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
-            DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
-            persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Settings load() {
-        Settings settings = new Settings();
-
-        settings.set(Setting.THEME, theme);
-        settings.set(Setting.SCALE, scale);
-        settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
-
-        return settings;
-    }
-
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
         repositoryConfiguration.saveRepositories(repositoryLocations);
     }
 
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
         return repositoryConfiguration.loadRepositoryLocations();
+    }
+
+    public void setWindowWidth(double windowWidth) {
+        this.windowWidth = windowWidth;
+    }
+
+    public double getWindowWidth() {
+        return windowWidth;
+    }
+
+    public void setWindowHeight(double windowHeight) {
+        this.windowHeight = windowHeight;
+    }
+
+    public double getWindowHeight() {
+        return windowHeight;
+    }
+
+    public void setWindowMaximized(boolean windowMaximized) {
+        this.windowMaximized = windowMaximized;
+    }
+
+    public boolean isWindowMaximized() {
+        return windowMaximized;
     }
 }

@@ -82,6 +82,9 @@ public class MainWindow extends Stage {
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
         this.setResizable(true);
+        this.setHeight(settingsManager.getWindowHeight());
+        this.setWidth(settingsManager.getWindowWidth());
+        this.setMaximized(settingsManager.isWindowMaximized());
         this.setScene(scene);
         this.setTitle(applicationName);
         this.show();
