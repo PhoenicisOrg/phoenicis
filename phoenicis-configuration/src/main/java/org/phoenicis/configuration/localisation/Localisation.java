@@ -55,7 +55,8 @@ public final class Localisation {
      *
      * @param resourceBundle Resource bundle
      */
-    public static void setAdditionalTranslations(ResourceBundle resourceBundle) {
+    public static void setAdditionalTranslations(PropertiesResourceBundle resourceBundle) {
+        resourceBundle.setParent(getI18n().getResources());
         getI18n().setResources(resourceBundle);
     }
 
