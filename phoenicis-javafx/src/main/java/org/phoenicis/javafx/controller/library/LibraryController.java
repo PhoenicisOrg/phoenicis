@@ -56,7 +56,6 @@ public class LibraryController {
         this.shortcutRunner = shortcutRunner;
         this.shortcutManager = shortcutManager;
         this.scriptInterpreter = scriptInterpreter;
-        this.viewLibrary.populate(libraryManager.fetchShortcuts());
 
         libraryManager.setOnUpdate(this::updateLibrary);
 
@@ -95,7 +94,7 @@ public class LibraryController {
         this.viewLibrary.setOnTabOpened(onTabOpened);
     }
 
-    private void updateLibrary() {
+    public void updateLibrary() {
         final List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
         final List<ShortcutCategoryDTO> shortcutsCorrespondingToKeywords = categories.stream()
                 .filter(shortcutDTO -> shortcutDTO.getName().toLowerCase().contains(keywords.toLowerCase().trim()))
