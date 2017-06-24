@@ -28,6 +28,8 @@ import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.Collections;
@@ -43,12 +45,13 @@ public class LibraryController {
     private final ShortcutRunner shortcutRunner;
     private final ShortcutManager shortcutManager;
     private final ScriptInterpreter scriptInterpreter;
+    private final RepositoryManager repositoryManager;
 
     private String keywords = "";
 
     public LibraryController(ViewLibrary viewLibrary, ConsoleController consoleController,
             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
-            ScriptInterpreter scriptInterpreter) {
+            ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
         this.consoleController = consoleController;
 
         this.viewLibrary = viewLibrary;
@@ -56,6 +59,10 @@ public class LibraryController {
         this.shortcutRunner = shortcutRunner;
         this.shortcutManager = shortcutManager;
         this.scriptInterpreter = scriptInterpreter;
+
+        this.repositoryManager = repositoryManager;
+        this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
+        });
 
         libraryManager.setOnUpdate(this::updateLibrary);
 
@@ -92,6 +99,14 @@ public class LibraryController {
 
     public void setOnTabOpened(Runnable onTabOpened) {
         this.viewLibrary.setOnTabOpened(onTabOpened);
+    }
+
+    /**
+     * update library with translations from repository
+     * @param repositoryDTO
+     */
+    public void updateLibrary(RepositoryDTO repositoryDTO) {
+        this.updateLibrary();
     }
 
     public void updateLibrary() {

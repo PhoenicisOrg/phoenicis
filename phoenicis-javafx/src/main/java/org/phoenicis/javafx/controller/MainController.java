@@ -58,7 +58,6 @@ public class MainController {
         appsController.setOnAppLoaded(() -> {
             enginesController.loadEngines();
             containersController.loadContainers();
-            libraryController.updateLibrary();
         });
 
         appsController.loadApps();

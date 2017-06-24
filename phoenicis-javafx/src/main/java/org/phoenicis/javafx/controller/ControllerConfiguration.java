@@ -92,7 +92,8 @@ public class ControllerConfiguration {
     public LibraryController libraryController() {
         return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(),
                 libraryConfiguration.libraryManager(), libraryConfiguration.shortcutRunner(),
-                libraryConfiguration.shortcutManager(), scriptsConfiguration.scriptInterpreter());
+                libraryConfiguration.shortcutManager(), scriptsConfiguration.scriptInterpreter(),
+                repositoryConfiguration.repositoryManager());
     }
 
     @Bean
