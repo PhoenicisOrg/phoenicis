@@ -132,8 +132,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
             String scriptorName) {
         final String htmlToShow = "<body>" + tr("This wizard will help you install {0} on your computer", programName)
                 + ".<br><br>" + tr("This program was created by: {0}", programEditor) + "<br><br>"
-                + String.format("For more information about this program, visit:<br><a href=\"%1$s\">%1$s</a><br><br>",
-                        applicationHomepage)
+                + tr("For more information about this program, visit:")
+                + String.format("<br><a href=\"%1$s\">%1$s</a><br><br>", applicationHomepage)
                 + tr("This installation program is provided by: {0}", scriptorName) + "<br><br>" + "<br><br>"
                 + tr("{0} will be installed in: {1}", programName, applicationUserRoot) + "<br><br>"
                 + tr("{0} is not responsible for anything that might happen as a result of using these scripts.",

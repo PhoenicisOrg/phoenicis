@@ -270,7 +270,7 @@ Wine.prototype.programFiles = function () {
  */
 Wine.prototype.wait = function (message) {
     if (this._wizard) {
-        this._wizard.wait(typeof message !== 'undefined' ? message : "Please wait...");
+        this._wizard.wait(typeof message !== 'undefined' ? message : "Please wait ...");
     }
 
     return this._silentWait();

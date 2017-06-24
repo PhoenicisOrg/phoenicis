@@ -48,7 +48,6 @@
 
     <properties>
         <project.settings>${project.basedir}/settings</project.settings>
-        <project.po>${project.basedir}/i18n</project.po>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
         <sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
@@ -209,28 +208,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-	    <plugin>
-		<groupId>com.googlecode.gettext-commons</groupId>
-		<artifactId>gettext-maven-plugin</artifactId>
-		<version>1.2.4</version>
-		<executions>
-			<execution>
-				<id>convert-po-class</id>
-				<phase>compile</phase>
-				<goals>
-					<goal>dist</goal>
-				</goals>
-			</execution>
-		</executions>
-		<configuration>
-			<poDirectory>${project.po}</poDirectory>
-			<sourceDirectory>${project.basedir}</sourceDirectory>
-			<targetBundle>org.phoenicis.Messages</targetBundle>
-			<outputFormat>properties</outputFormat>
-		</configuration>
-	    </plugin>
         </plugins>
     </build>
 </project>
