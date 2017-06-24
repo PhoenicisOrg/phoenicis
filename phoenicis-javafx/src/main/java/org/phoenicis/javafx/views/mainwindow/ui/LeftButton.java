@@ -29,7 +29,7 @@ public class LeftButton extends Button {
         super(name);
         this.name = name;
         this.getStyleClass().add("leftButton");
-        this.setPrefWidth(Double.MAX_VALUE);
+        this.setMaxWidth(Double.MAX_VALUE);
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(2));
     }
