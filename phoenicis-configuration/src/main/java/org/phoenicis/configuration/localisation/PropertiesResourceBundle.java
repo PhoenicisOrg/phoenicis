@@ -21,4 +21,9 @@ public class PropertiesResourceBundle extends ResourceBundle {
     public Enumeration<String> getKeys() {
         return this.properties != null ? (Enumeration<String>) this.properties.propertyNames() : this.parent.getKeys();
     }
+
+    @Override
+    public void setParent(ResourceBundle parent) {
+        this.parent = parent;
+    }
 }
