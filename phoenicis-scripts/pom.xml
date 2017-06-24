@@ -31,7 +31,6 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
-        <project.po>${project.basedir}/../i18n</project.po>
     </properties>
 
     <dependencies>

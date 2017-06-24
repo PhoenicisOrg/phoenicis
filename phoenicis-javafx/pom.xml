@@ -30,7 +30,6 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
-        <project.po>${project.basedir}/../i18n</project.po>
         <testfx.version>4.0.6-alpha</testfx.version>
     </properties>
 

@@ -31,7 +31,6 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
-        <project.po>${project.basedir}/../i18n</project.po>
     </properties>
 
     <dependencies>
@@ -102,6 +101,29 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.googlecode.gettext-commons</groupId>
+                <artifactId>gettext-maven-plugin</artifactId>
+                <version>1.2.4</version>
+                <executions>
+                    <execution>
+                        <id>gettext</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>merge</goal>
+                            <goal>dist</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <poDirectory>${project.basedir}/../i18n</poDirectory>
+                    <sourceDirectory>${project.basedir}/../</sourceDirectory>
+                    <targetBundle>org.phoenicis.Messages</targetBundle>
+                    <outputFormat>properties</outputFormat>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
