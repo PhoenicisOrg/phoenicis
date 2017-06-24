@@ -71,7 +71,7 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E
     public IconsListWidget(Function<E, IconsListElement<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
-        this.getStyleClass().add("rightPane");
+        this.getStyleClass().add("iconListWidget");
 
         this.selectedItems = new HashSet<>();
 
@@ -89,7 +89,6 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E
         });
 
         this.content = new FlowPane();
-        this.content.getStyleClass().addAll("miniatureList");
 
         this.content.setPrefHeight(0);
         this.content.setPrefWidth(0);
