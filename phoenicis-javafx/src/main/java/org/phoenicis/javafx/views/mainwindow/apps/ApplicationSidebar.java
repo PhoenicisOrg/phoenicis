@@ -140,7 +140,7 @@ public class ApplicationSidebar extends LeftSidebar {
      * @return The newly created "All" categories toggle button
      */
     private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton("All");
+        final LeftToggleButton allCategoryButton = new LeftToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
