@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class LibraryManager {
     private final String shortcutDirectory;
     private Runnable onUpdate = new NullRunnable();
@@ -74,7 +76,7 @@ public class LibraryManager {
             entry.getValue().sort(ShortcutDTO.nameComparator());
             ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withId(entry.getKey())
                     .withName(entry.getKey()).withShortcuts(entry.getValue()).build();
-            shortcuts.add(category);
+            shortcuts.add(tr(category));
         }
 
         return shortcuts;
