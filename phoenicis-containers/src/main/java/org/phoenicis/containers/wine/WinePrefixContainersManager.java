@@ -18,36 +18,50 @@
 
 package org.phoenicis.containers.wine;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.configurations.WinePrefixContainerDisplayConfiguration;
 import org.phoenicis.containers.wine.configurations.WinePrefixContainerInputConfiguration;
+import org.phoenicis.library.LibraryManager;
+import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class WinePrefixContainersManager implements ContainersManager {
+    private final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainersManager.class);
     @Value("${application.user.wineprefix}")
     private String winePrefixPath;
 
     private final CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory;
     private final WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration;
     private final WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration;
+    private final LibraryManager libraryManager;
+    private ObjectMapper objectMapper;
 
     public WinePrefixContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
             WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
-            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration) {
+            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration, LibraryManager libraryManager,
+            ObjectMapper objectMapper) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
         this.winePrefixContainerDisplayConfiguration = winePrefixContainerDisplayConfiguration;
         this.winePrefixContainerInputConfiguration = winePrefixContainerInputConfiguration;
+        this.libraryManager = libraryManager;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -66,9 +80,28 @@ public class WinePrefixContainersManager implements ContainersManager {
                 final ConfigFile configFile = compatibleConfigFileFormatFactory
                         .open(new File(winePrefix, "phoenicis.cfg"));
                 final File userRegistryFile = new File(winePrefix, "user.reg");
+                final String winePrefixPath = winePrefix.getAbsolutePath();
+                final String winePrefixName = winePrefixPath.substring(winePrefixPath.lastIndexOf('/') + 1);
+
+                // find shortcuts which use this container
+                List<ShortcutDTO> shortcutDTOS = new ArrayList<>();
+                libraryManager.fetchShortcuts().forEach(shortcutCategoryDTO -> {
+                    shortcutCategoryDTO.getShortcuts().forEach(shortcutDTO -> {
+                        try {
+                            final Map<String, Object> shortcutProperties = objectMapper
+                                    .readValue(shortcutDTO.getScript(), new TypeReference<Map<String, Object>>() {
+                                    });
+                            if (shortcutProperties.get("winePrefix").equals(winePrefixName)) {
+                                shortcutDTOS.add(shortcutDTO);
+                            }
+                        } catch (IOException e) {
+                            LOGGER.warn("Could not parse shortcut script JSON", e);
+                        }
+                    });
+                });
 
                 containers.add(new WinePrefixContainerDTO.Builder().withName(winePrefix.getName())
-                        .withPath(winePrefix.getAbsolutePath())
+                        .withPath(winePrefixPath).withInstalledShortcuts(shortcutDTOS)
                         .withArchitecture(configFile.readValue("wineArchitecture", ""))
                         .withDistribution(configFile.readValue("wineDistribution", ""))
                         .withVersion(configFile.readValue("wineVersion", ""))

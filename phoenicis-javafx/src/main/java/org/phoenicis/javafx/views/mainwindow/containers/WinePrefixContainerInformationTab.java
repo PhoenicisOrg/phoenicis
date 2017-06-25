@@ -17,6 +17,7 @@ import org.phoenicis.javafx.views.common.TextWithStyle;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -64,20 +65,26 @@ public class WinePrefixContainerInformationTab extends Tab {
         path.setWrapText(true);
         informationContentPane.add(path, 1, 1);
 
-        informationContentPane.add(new TextWithStyle(tr("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        informationContentPane.add(new TextWithStyle(tr("Installed shortcuts:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
+        Label installedShortcuts = new Label(container.getInstalledShortcuts().stream()
+                .map(shortcutDTO -> shortcutDTO.getName()).collect(Collectors.joining("; ")));
+        installedShortcuts.setWrapText(true);
+        informationContentPane.add(installedShortcuts, 1, 2);
+
+        informationContentPane.add(new TextWithStyle(tr("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         Label version = new Label(container.getVersion());
         version.setWrapText(true);
-        informationContentPane.add(version, 1, 2);
+        informationContentPane.add(version, 1, 3);
 
-        informationContentPane.add(new TextWithStyle(tr("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
+        informationContentPane.add(new TextWithStyle(tr("Wine architecture:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
         Label architecture = new Label(container.getArchitecture());
         architecture.setWrapText(true);
-        informationContentPane.add(architecture, 1, 3);
+        informationContentPane.add(architecture, 1, 4);
 
-        informationContentPane.add(new TextWithStyle(tr("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 4);
+        informationContentPane.add(new TextWithStyle(tr("Wine distribution:"), CAPTION_TITLE_CSS_CLASS), 0, 5);
         Label distribution = new Label(container.getDistribution());
         distribution.setWrapText(true);
-        informationContentPane.add(distribution, 1, 4);
+        informationContentPane.add(distribution, 1, 5);
 
         Region spacer = new Region();
         spacer.setPrefHeight(20);
