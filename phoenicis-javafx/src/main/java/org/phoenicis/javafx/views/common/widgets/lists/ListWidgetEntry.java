@@ -117,8 +117,6 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
-        Optional<URI> shortcutMiniature = Optional.empty();
-
         final List<BufferedImage> miniatures = new ArrayList<>();
         // do not use too many segments (cannot recognize the miniature if the segment is too small)
         final int maxSegments = 4;
@@ -135,8 +133,8 @@ public class ListWidgetEntry<E> {
             }
         }
 
-        BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
-        shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
+        final BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
+        final Optional<URI> shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
 
         return new ListWidgetEntry<>(container, shortcutMiniature, StaticMiniature.CONTAINER_MINIATURE,
                 container.getName(), Optional.empty(), Optional.empty());
