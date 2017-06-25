@@ -16,6 +16,10 @@ public class SearchBox extends AnchorPane {
     private Button clearButton;
 
     public SearchBox(Consumer<String> onSearch, Runnable onClear) {
+        super();
+
+        this.getStyleClass().add("searchBox");
+
         this.searchField = new TextField();
 
         this.searchField.getStyleClass().add("searchBar");

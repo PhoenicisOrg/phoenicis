@@ -241,62 +241,27 @@
     -fx-background-radius: 0.7em;
 }
 
-
-/*******************************************************/
-/****************** main window scene ******************/
-/*******************************************************/
-.mainWindowScene {
-    -fx-min-height: 35.2em;
-    -fx-fit-to-height: true;
-}
-
 /*******************************************************/
 /************************ menu *************************/
 /*******************************************************/
 #menuPane {
     -fx-tab-min-width: 7.5em;
-    -fx-padding: -0.9em 0 0 0;
-    -fx-spacing: 0;
-    -fx-pref-height: 43.3em;
-}
-
-#menuPane > .tab-header-area .tab {
-    -fx-border-width: 0.3em;
-    -fx-border-color: transparent;
-    -fx-border-style: hidden hidden solid hidden;
-    -fx-background-color: transparent;
-    -fx-background-opacity: 0;
-    -fx-pref-height: 3.5em;
 }
 
 #menuPane > .tab-header-area .tab-label {
-    -fx-alignment: CENTER;
-    -fx-padding: 0 0 -0.4em 0;
-    -fx-text-font-family: "Roboto Light";
     -fx-text-fill: #b4b1a9;
-    -fx-font-size: 1.2em;
-    -fx-cursor: hand;
 }
 
 #menuPane > .tab-header-area .tab-header-background {
     -fx-background-color: #3c3b37;
-    -fx-pref-height: 3em;
 }
 
 #menuPane > .tab-header-area .tab:selected {
-    -fx-border-width: 0.3em;
-    -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: @focus-color;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
 }
 
 #menuPane > .tab-header-area .tab:selected .focus-indicator {
     -fx-border-style: hidden hidden hidden hidden;
-}
-
-#menuPane > .tab-header-area .tab:disabled {
-    -fx-opacity: 1;
 }
 
 /*******************************************************/
@@ -307,7 +272,6 @@
     -fx-padding: 0 0 0.83em 0;
 
     .leftPaneScrollbar {
-        -fx-border-width: 0;
         -fx-background-color: @main-color;
     }
 
@@ -315,76 +279,43 @@
         -fx-background-color: @main-color;
     }
 
-    .leftPaneScrollbar .scroll-bar:vertical {
-        -fx-max-width: 0.4em;
-        -fx-pref-width: 0.4em;
-    }
-
-    .leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
-        -fx-pref-height: 0;
-        -fx-font-size: 0;
-        -fx-opacity: 0;
-    }
-
     .leftPaneScrollbar .scroll-bar:vertical .track {
         -fx-background-color: #3c3f41;
-        -fx-border-width: 0;
         -fx-background-radius: 1em;
-        -fx-pref-width: 0.4em;
-        -fx-max-width: 0.4em;
     }
 
     .leftPaneScrollbar .scroll-bar:vertical .thumb {
         -fx-background-color: derive(black, 70%);
-        -fx-background-insets: 0, 0, 0;
         -fx-background-radius: 0em;
-        -fx-pref-width: 0.3em;
-        -fx-max-width: 0.3em;
-    }
-
-    .leftPaneInside {
-        -fx-spacing: 0.4em;
-    }
-
-    .leftSpacer {
-        -fx-pref-height: 0;
     }
 
     .leftBarTitle {
         -fx-padding: 0.83em 0.83em 0.4em 0.83em;
-        -fx-font-family: "Roboto Regular";
         -fx-font-size: 1.2em;
-        -fx-alignment: baseline-left;
         -fx-fill: #3c3b37;
     }
 
     .leftButton {
         -fx-pref-height: 2.2em;
-        -fx-background-color: transparent;
         -fx-border-color: transparent;
-        -fx-cursor: hand;
         -fx-text-fill: @text-color;
-        -fx-txt-font-family: "Roboto Light";
         -fx-border-radius: 0;
         -fx-background-radius: 0;
         -fx-label-padding: 0 0 0 3.03em;;
-        -fx-background-size: 2em;
-        -fx-background-repeat: no-repeat;
         -fx-background-position: 0.83em 0.1em;
-    }
 
-    .leftButton:hover {
-        -fx-border-color: transparent;
-    }
+        &:hover {
+            -fx-border-color: transparent;
+        }
 
-    .leftButton:selected {
-        -fx-background-color: linear-gradient(#ea6e3c, #f68152);
-        -fx-border-color: transparent;
-        -fx-background-insets: 0, 1, 2;
-        -fx-background-radius: 0;
+        &:selected {
+            -fx-background-color: linear-gradient(#ea6e3c, #f68152);
+            -fx-border-color: transparent;
+            -fx-background-radius: 0;
 
-        .text {
-            -fx-fill: white;
+            .text {
+                -fx-fill: white;
+            }
         }
     }
 
@@ -395,22 +326,20 @@
         -fx-border-color: transparent;
         -fx-text-fill: @text-color;
         -fx-focus-color: @focus-color;
-    }
 
-    .searchBar:focused {
-        -fx-border-color: transparent;
-        -fx-text-fill: @text-color;
-    }
+        &:focused {
+            -fx-border-color: transparent;
+            -fx-text-fill: @text-color;
+        }
 
-    .searchBar:hover {
-        -fx-border-color: @focus-color;
-        -fx-text-fill: @text-color;
-    }
+        &:hover {
+            -fx-border-color: @focus-color;
+            -fx-text-fill: @text-color;
+        }
 
-    .searchCleanButton {
-        -fx-background-color: transparent;
-        -fx-border-color:transparent;
-        -fx-graphic: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/edit-clear.png');
+        .searchCleanButton {
+            -fx-border-color: transparent;
+        }
     }
 }
 
