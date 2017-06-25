@@ -41,6 +41,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class WinePrefixContainersManager implements ContainersManager {
     private final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainersManager.class);
@@ -84,21 +85,19 @@ public class WinePrefixContainersManager implements ContainersManager {
                 final String winePrefixName = winePrefixPath.substring(winePrefixPath.lastIndexOf('/') + 1);
 
                 // find shortcuts which use this container
-                List<ShortcutDTO> shortcutDTOS = new ArrayList<>();
-                libraryManager.fetchShortcuts().forEach(shortcutCategoryDTO -> {
-                    shortcutCategoryDTO.getShortcuts().forEach(shortcutDTO -> {
-                        try {
-                            final Map<String, Object> shortcutProperties = objectMapper
-                                    .readValue(shortcutDTO.getScript(), new TypeReference<Map<String, Object>>() {
-                                    });
-                            if (shortcutProperties.get("winePrefix").equals(winePrefixName)) {
-                                shortcutDTOS.add(shortcutDTO);
+                List<ShortcutDTO> shortcutDTOS = libraryManager.fetchShortcuts().stream()
+                        .flatMap(shortcutCategory -> shortcutCategory.getShortcuts().stream()).filter(shortcut -> {
+                            boolean toAdd = false;
+                            try {
+                                final Map<String, Object> shortcutProperties = objectMapper
+                                        .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
+                                        });
+                                toAdd = shortcutProperties.get("winePrefix").equals(winePrefixName);
+                            } catch (IOException e) {
+                                LOGGER.warn("Could not parse shortcut script JSON", e);
                             }
-                        } catch (IOException e) {
-                            LOGGER.warn("Could not parse shortcut script JSON", e);
-                        }
-                    });
-                });
+                            return toAdd;
+                        }).collect(Collectors.toList());
 
                 containers.add(new WinePrefixContainerDTO.Builder().withName(winePrefix.getName())
                         .withPath(winePrefixPath).withInstalledShortcuts(shortcutDTOS)
