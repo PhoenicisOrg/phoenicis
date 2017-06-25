@@ -136,20 +136,7 @@ public class ListWidgetEntry<E> {
         }
 
         BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
-
-        if (segmentedMiniature != null) {
-            try {
-                final Path temp = Files.createTempFile(container.getName(), ".png").toAbsolutePath();
-                final File tempFile = temp.toFile();
-                tempFile.deleteOnExit();
-                ImageIO.write(segmentedMiniature, "png", tempFile);
-                shortcutMiniature = Optional.of(temp.toUri());
-            } catch (IOException e) {
-                LOGGER.warn(
-                        String.format("Could not create container miniature for container \"%s\"", container.getName()),
-                        e);
-            }
-        }
+        shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
 
         return new ListWidgetEntry<>(container, shortcutMiniature, StaticMiniature.CONTAINER_MINIATURE,
                 container.getName(), Optional.empty(), Optional.empty());
@@ -247,5 +234,26 @@ public class ListWidgetEntry<E> {
             return result;
         }
         return null;
+    }
+
+    /**
+     * saves bufferedImage to a temporary file
+     * @param bufferedImage
+     * @param name
+     * @return URI to the saved file
+     */
+    private static Optional<URI> saveBufferedImage(BufferedImage bufferedImage, String name) {
+        if (bufferedImage != null) {
+            try {
+                final Path temp = Files.createTempFile(name, ".png").toAbsolutePath();
+                final File tempFile = temp.toFile();
+                tempFile.deleteOnExit();
+                ImageIO.write(bufferedImage, "png", tempFile);
+                return Optional.of(temp.toUri());
+            } catch (IOException e) {
+                LOGGER.warn(String.format("Could not create container miniature for container \"%s\"", name), e);
+            }
+        }
+        return Optional.empty();
     }
 }
