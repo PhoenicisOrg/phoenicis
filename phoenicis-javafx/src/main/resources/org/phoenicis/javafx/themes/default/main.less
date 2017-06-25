@@ -55,7 +55,7 @@
 /*******************************************************/
 #menuPane {
   -fx-tab-min-width: 7em;
-  -fx-padding: -0.9 0 0 0;
+  -fx-padding: -0.9em 0 0 0;
   -fx-spacing: 0;
   -fx-pref-height: 43.3em;
 }
@@ -164,17 +164,20 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: left;
     -fx-max-width: Infinity;
+
+
+    &:hover, &:selected {
+      -fx-background-color: #D3D3D3;
+      -fx-background-insets: 0, 1, 2;
+      -fx-background-radius: 3, 2, 1;
+    }
   }
 
-  .leftButton:hover, .leftButton:selected {
-    -fx-background-color: #D3D3D3;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 3, 2, 1;
-  }
-
-  .searchCleanButton {
-    -fx-background-color: transparent;
-    -fx-graphic: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/edit-clear.png');
+  .searchBox {
+    .searchCleanButton {
+      -fx-background-color: transparent;
+      -fx-graphic: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/general/edit-clear.png');
+    }
   }
 }
 
@@ -271,7 +274,7 @@
 .descriptionTitle {
   -fx-font-family: "Roboto light";
   -fx-text-fill: #428bca;
-  -fx-font-size: 16;
+  -fx-font-size: 1.3em;
 }
 
 /*******************************************************/

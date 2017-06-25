@@ -15,7 +15,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 @background-color: #232629;
 @main-color: #31363b;
 @focus-color: #3daee9;
@@ -212,77 +212,23 @@
     -fx-background-radius: 0;
 }
 
-
-/*******************************************************/
-/****************** main window scene ******************/
-/*******************************************************/
-.mainWindowScene {
-    -fx-min-height: 35.2em;
-    -fx-fit-to-height: true;
-}
-
-/*******************************************************/
-/************************ logo *************************/
-/*******************************************************/
-#logo {
-    -fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left center;
-}
-
-#logoText {
-    -fx-vpos: center;
-    -fx-font-family: "Maven Pro";
-    -fx-font-size: 1.8em;
-}
-
 /*******************************************************/
 /************************ menu *************************/
 /*******************************************************/
 #menuPane {
     -fx-tab-min-width: 7.5em;
-    -fx-padding: -0.9em 0 0 0;
-    -fx-spacing: 0;
-    -fx-pref-height: 43.3em;
-}
-
-#menuPane > .tab-header-area .tab {
-    -fx-border-width: 0.3em;
-    -fx-border-color: transparent;
-    -fx-border-style: hidden hidden solid hidden;
-    -fx-background-color: transparent;
-    -fx-background-opacity: 0;
-    -fx-pref-height: 3.5em;
-}
-
-#menuPane > .tab-header-area .tab-label {
-    -fx-alignment: CENTER;
-    -fx-padding: 0 0 -0.4em 0;
-    -fx-text-font-family: "Roboto Light";
-    -fx-font-size: 1.2em;
-    -fx-cursor: hand;
 }
 
 #menuPane > .tab-header-area .tab-header-background {
     -fx-background-color: @main-color;
-    -fx-pref-height: 3em;
 }
 
 #menuPane > .tab-header-area .tab:selected {
-    -fx-border-width: 0.3em;
-    -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: @focus-color;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
 }
 
 #menuPane > .tab-header-area .tab:selected .focus-indicator {
     -fx-border-style: hidden hidden hidden hidden;
-}
-
-#menuPane > .tab-header-area .tab:disabled {
-    -fx-opacity: 1;
 }
 
 /*******************************************************/
@@ -290,10 +236,8 @@
 /*******************************************************/
 .leftPane {
     -fx-background-color: @main-color;
-    -fx-padding: 1em;
 
     .leftPaneScrollbar {
-        -fx-border-width: 0;
         -fx-background-color: @main-color;
     }
 
@@ -301,107 +245,56 @@
         -fx-background-color: @main-color;
     }
 
-    .leftPaneScrollbar .scroll-bar:vertical {
-        -fx-max-width: 0.4em;
-        -fx-pref-width: 0.4em;
-    }
-
-    .leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
-        -fx-pref-height: 0;
-        -fx-font-size: 0;
-        -fx-opacity: 0;
-    }
-
     .leftPaneScrollbar .scroll-bar:vertical .track {
         -fx-background-color: #3c3f41;
-        -fx-border-width: 0;
         -fx-background-radius: 1em;
-        -fx-pref-width: 0.4em;
-        -fx-max-width: 0.4em;
     }
 
     .leftPaneScrollbar .scroll-bar:vertical .thumb {
         -fx-background-color: derive(black, 70%);
-        -fx-background-insets: 0, 0, 0;
         -fx-background-radius: 0em;
-        -fx-pref-width: 0.3em;
-        -fx-max-width: 0.3em;
-    }
-
-    .leftPaneInside {
-        -fx-spacing: 0.4em;
-    }
-
-    .leftSpacer {
-        -fx-pref-height: 0.8em;
     }
 
     .leftBarTitle {
-        -fx-font-family: "Roboto Regular";
         -fx-font-size: 1.2em;
-        -fx-alignment: baseline-left;
-        -fx-translate-y: -0.1em;
         -fx-fill: @inactive-text-color;
     }
 
     .leftButton {
-        -fx-background-color: transparent;
-        -fx-cursor: hand;
         -fx-text-fill: @text-color;
-        -fx-txt-font-family: "Roboto Light";
-        -fx-label-padding: 0.2em 0 0.2em 2.2em;
-        -fx-background-size: 2em;
-        -fx-background-repeat: no-repeat;
-        -fx-background-position: left;
+
+        &:hover, &:selected {
+            -fx-background-color: @focus-color;
+            -fx-background-radius: 0;
+        }
     }
 
-    .leftButton:hover, .leftButton:selected {
-        -fx-background-color: @focus-color;
-        -fx-background-insets: 0, 1, 2;
-        -fx-background-radius: 0;
-    }
+    .searchBox {
+        .searchBar {
+            -fx-border-radius: 0;
+            -fx-background-radius: 0;
+            -fx-background-color: @background-color;
+            -fx-border-color: transparent;
+            -fx-text-fill: @text-color;
+            -fx-focus-color: @focus-color;
 
-    .searchBar {
-        -fx-border-radius: 0;
-        -fx-background-radius: 0;
-        -fx-background-color: @background-color;
-        -fx-border-color: transparent;
-        -fx-text-fill: @text-color;
-        -fx-focus-color: @focus-color;
-    }
+            &:hover {
+                -fx-border-color: @focus-color;
+                -fx-text-fill: @text-color;
+            }
+        }
 
-    .searchBar:hover {
-        -fx-border-color: @focus-color;
-        -fx-text-fill: @text-color;
-    }
-
-    .searchCleanButton {
-        -fx-background-color: transparent;
-        -fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
+        .searchCleanButton {
+            -fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
+        }
     }
 }
 
 /*******************************************************/
 /************************ right ************************/
 /*******************************************************/
-.rightPane {
-    -fx-pref-width: 55em;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-focus-traversable: false;
-    -fx-background-color: transparent;
-}
-
 .rightPane > .viewport {
     -fx-background-color: @background-color;
-    -fx-border-width: 0;
-}
-
-.retryButton {
-    -fx-label-padding: 0.2em 0 0.2em 0.5em;
-    -fx-background-size: 1.3em;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
 }
 
 .detailsPane {
@@ -417,50 +310,23 @@
     -fx-background-color: @background-color;
 }
 
-.appPresentation > * {
-    -fx-padding: 0.5em;
-    -fx-spacing: 0.5em;
-}
-
 .appPanelMiniaturesPane {
     -fx-background-color: @background-color;
     -fx-padding: 1em;
 }
 
-.appMiniature {
-    -fx-background-size: contain;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left center;
-}
-
-.appPanelMiniaturesPaneWrapper {
-    -fx-padding: 0em;
-    -fx-border-width: 0;
-    -fx-border-style: none;
-    -fx-focus-traversable: false;
-    -fx-background-color: transparent;
-    -fx-min-height: 12em;
-}
-
 .appPanelMiniaturesPaneWrapper > .viewport {
     -fx-background-color: @background-color;
-    -fx-border-width: 0;
 }
 
 /********************** description ********************/
 .descriptionTitle {
-    -fx-font-family: "Roboto light";
     -fx-text-fill: @focus-color;
-    -fx-font-size: 1.3em;
 }
 
 /*******************************************************/
 /********************** containers *********************/
 /*******************************************************/
-.containerConfigurationPane {
-    -fx-padding: 1em;
-}
-
 .containerConfigurationPane > .grid {
     -fx-padding: 1em;
 }
@@ -544,9 +410,7 @@
 }
 
 #presentationTextTitle {
-    -fx-font-weight: bold;
     -fx-fill: @text-color;
-    -fx-font-size: 1.3em;
 }
 
 #presentationText {
@@ -555,15 +419,12 @@
 
 /************************ step *************************/
 #panelForTopheader {
-    -fx-padding: 2.5em;
     -fx-background-color: @background-color;
     -fx-border-color: transparent;
 }
 
 #header {
     -fx-border-color: @focus-color;
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 0.1em 0;
     -fx-background-color: @background-color;
 }
 
@@ -583,31 +444,14 @@
     -fx-font-size: 1.1em;
 }
 
-.dragAndDropBox {
-    -fx-background-color: #F6F6F6;
-    -fx-text-alignment: center;
-    -fx-alignment: center;
-    -fx-border-style: dashed;
-    -fx-border-color: #CCC;
-    -fx-border-width: 0.5em;
-}
-
 /*******************************************************/
 /*********************** console ***********************/
 /*******************************************************/
-.console {
-    -fx-pref-width: 60em;
-    -fx-padding: 0.5em;
-    -fx-font-family: "Lucida Console";
-}
-
 .console, console .viewport {
     -fx-background-color: @background-color;
 }
 
 .consoleCommandType {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
     -fx-background-color: @main-color;
     -fx-border-color: transparent;
     -fx-text-fill: @text-color;
@@ -641,18 +485,8 @@
 /*******************************************************/
 /********************** wine tools *********************/
 /*******************************************************/
-.wineToolButton {
-    -fx-pref-width: 8em;
-    -fx-pref-height: 8em;
-    -fx-content-display: graphic-only;
-    -fx-background-size: 4em;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-
 .wineToolCaption {
     -fx-font-size: 1em;
-    -fx-pref-width: 8em;
     -fx-fill: @text-color;
 }
 
@@ -660,33 +494,11 @@
 /************************* misc ************************/
 /*******************************************************/
 .title {
-    -fx-font-family: "Roboto Regular";
-    -fx-font-size: 1.4em;
-    -fx-alignment: baseline-left;
-    -fx-translate-y: -0.1em;
     -fx-fill: @focus-color;
 }
 
 .captionTitle {
-    -fx-font-weight: bold;
-    -fx-font-family: "Roboto Bold";
     -fx-fill: @inactive-text-color;
-}
-
-.boldLabel {
-    -fx-font-family: "Roboto Bold";
-}
-
-.normalLabel {
-    -fx-font-family: "Roboto Light";
-}
-
-.buttonWithIcon {
-    -fx-background-color:transparent;
-    -fx-label-padding: 0.2em 0 0.2em 2.2em;
-    -fx-background-size: 2em;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: left;
 }
 
 /*******************************************************/
