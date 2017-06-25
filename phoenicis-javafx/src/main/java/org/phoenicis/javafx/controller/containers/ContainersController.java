@@ -32,6 +32,8 @@ import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel
 
 import java.util.stream.Collectors;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class ContainersController {
     private final ViewContainers viewContainers;
     private final ContainersManager containersManager;
@@ -64,12 +66,13 @@ public class ContainersController {
                         winePrefixContainerController);
 
                 panel.setOnDeletePrefix(winePrefixDTO -> {
-                    new ConfirmMessage("Delete " + winePrefixDTO.getName() + " container",
-                            "Are you sure you want to delete the {0} container?" + winePrefixDTO.getName()).ask(() -> {
-                                winePrefixContainerController.deletePrefix(winePrefixDTO,
-                                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-                                loadContainers();
-                            });
+                    new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
+                            tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
+                                    .ask(() -> {
+                                        winePrefixContainerController.deletePrefix(winePrefixDTO,
+                                                e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                                        loadContainers();
+                                    });
                 });
 
                 panel.setOnClose(viewContainers::closeDetailsView);
