@@ -119,7 +119,6 @@ public class ListWidgetEntry<E> {
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
         Optional<URI> shortcutMiniature = Optional.empty();
 
-        // create a miniature by composing the miniatures of the shortcuts using this container
         final List<BufferedImage> miniatures = new ArrayList<>();
         // do not use too many segments (cannot recognize the miniature if the segment is too small)
         final int maxSegments = 4;
@@ -136,30 +135,14 @@ public class ListWidgetEntry<E> {
             }
         }
 
-        if (!miniatures.isEmpty()) {
-            // assumption: all miniatures have the same dimensions
-            final int width = miniatures.get(0).getWidth();
-            final int height = miniatures.get(0).getHeight();
+        BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
 
-            BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            final int numberOfSegments = miniatures.size();
-            final int segmentWidth = width / numberOfSegments;
-            // get segments from the miniatures (part around the center)
-            final int offset = (width - segmentWidth) / 2;
-            final List<BufferedImage> segments = new ArrayList<>();
-            miniatures.forEach(
-                    miniature -> segments.add(miniature.getSubimage(offset, 0, offset + segmentWidth, height)));
-            // compose the segments
-            Graphics2D graphics = result.createGraphics();
-            for (int i = 0; i < segments.size(); i++) {
-                graphics.drawImage(segments.get(i), 0 + i * segmentWidth, 0, null);
-            }
-
+        if (segmentedMiniature != null) {
             try {
                 final Path temp = Files.createTempFile(container.getName(), ".png").toAbsolutePath();
                 final File tempFile = temp.toFile();
                 tempFile.deleteOnExit();
-                ImageIO.write(result, "png", tempFile);
+                ImageIO.write(segmentedMiniature, "png", tempFile);
                 shortcutMiniature = Optional.of(temp.toUri());
             } catch (IOException e) {
                 LOGGER.warn(
@@ -234,5 +217,35 @@ public class ListWidgetEntry<E> {
      */
     public boolean isEnabled() {
         return this.enabled;
+    }
+
+    /**
+     * create a miniature by composing segments of miniatures
+     * @param miniatures
+     * @return created miniature
+     */
+    private static BufferedImage createSegmentedMiniature(List<BufferedImage> miniatures) {
+        if (!miniatures.isEmpty()) {
+            // assumption: all miniatures have the same dimensions
+            final int width = miniatures.get(0).getWidth();
+            final int height = miniatures.get(0).getHeight();
+
+            BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            final int numberOfSegments = miniatures.size();
+            final int segmentWidth = width / numberOfSegments;
+            // get segments from the miniatures (part around the center)
+            final int offset = (width - segmentWidth) / 2;
+            final List<BufferedImage> segments = new ArrayList<>();
+            miniatures.forEach(
+                    miniature -> segments.add(miniature.getSubimage(offset, 0, offset + segmentWidth, height)));
+            // compose the segments
+            Graphics2D graphics = result.createGraphics();
+            for (int i = 0; i < segments.size(); i++) {
+                graphics.drawImage(segments.get(i), 0 + i * segmentWidth, 0, null);
+            }
+
+            return result;
+        }
+        return null;
     }
 }
