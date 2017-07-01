@@ -18,17 +18,22 @@
 
 package org.phoenicis.containers.dto;
 
+import org.phoenicis.library.dto.ShortcutDTO;
+
 import java.util.Comparator;
+import java.util.List;
 
 public class ContainerDTO {
     private final String name;
     private final String path;
     private final ContainerType type;
+    private final List<ShortcutDTO> installedShortcuts;
 
-    public ContainerDTO(String name, String path, ContainerType type) {
+    public ContainerDTO(String name, String path, ContainerType type, List<ShortcutDTO> installedShortcuts) {
         this.name = name;
         this.path = path;
         this.type = type;
+        this.installedShortcuts = installedShortcuts;
     }
 
     public String getName() {
@@ -41,6 +46,10 @@ public class ContainerDTO {
 
     public String getPath() {
         return path;
+    }
+
+    public List<ShortcutDTO> getInstalledShortcuts() {
+        return installedShortcuts;
     }
 
     public static Comparator<ContainerDTO> nameComparator() {

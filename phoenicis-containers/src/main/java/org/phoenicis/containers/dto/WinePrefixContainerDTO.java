@@ -19,6 +19,9 @@
 package org.phoenicis.containers.dto;
 
 import org.phoenicis.containers.wine.parameters.*;
+import org.phoenicis.library.dto.ShortcutDTO;
+
+import java.util.List;
 
 public class WinePrefixContainerDTO extends ContainerDTO {
     private final String architecture;
@@ -35,7 +38,7 @@ public class WinePrefixContainerDTO extends ContainerDTO {
     private final MouseWarpOverride mouseWarpOverride;
 
     private WinePrefixContainerDTO(Builder builder) {
-        super(builder.name, builder.path, ContainerType.WINEPREFIX);
+        super(builder.name, builder.path, ContainerType.WINEPREFIX, builder.installedShortcuts);
         this.architecture = builder.architecture;
         this.distribution = builder.distribution;
         this.version = builder.version;
@@ -113,6 +116,7 @@ public class WinePrefixContainerDTO extends ContainerDTO {
         private StrictDrawOrdering strictDrawOrdering;
         private RenderTargetModeLock renderTargetModeLock;
         private MouseWarpOverride mouseWarpOverride;
+        private List<ShortcutDTO> installedShortcuts;
 
         public Builder withName(String name) {
             this.name = name;
@@ -121,6 +125,11 @@ public class WinePrefixContainerDTO extends ContainerDTO {
 
         public Builder withPath(String path) {
             this.path = path;
+            return this;
+        }
+
+        public Builder withInstalledShortcuts(List<ShortcutDTO> installedShortcuts) {
+            this.installedShortcuts = installedShortcuts;
             return this;
         }
 

@@ -4,8 +4,18 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +26,8 @@ import java.util.Optional;
  * @since 15.05.17
  */
 public class ListWidgetEntry<E> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ListWidgetEntry.class);
+
     /**
      * The object to which the other information belongs
      */
@@ -105,7 +117,26 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
-        return new ListWidgetEntry<>(container, Optional.empty(), StaticMiniature.CONTAINER_MINIATURE,
+        final List<BufferedImage> miniatures = new ArrayList<>();
+        // do not use too many segments (cannot recognize the miniature if the segment is too small)
+        final int maxSegments = 4;
+        int currentSegment = 0;
+        for (ShortcutDTO shortcutDTO : container.getInstalledShortcuts()) {
+            if (currentSegment >= maxSegments) {
+                break;
+            }
+            try {
+                miniatures.add(ImageIO.read(shortcutDTO.getMiniature().toURL()));
+                currentSegment++;
+            } catch (IOException e) {
+                LOGGER.warn(String.format("Could not read miniature for shortcut \"%s\"", shortcutDTO.getName()), e);
+            }
+        }
+
+        final BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
+        final Optional<URI> shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
+
+        return new ListWidgetEntry<>(container, shortcutMiniature, StaticMiniature.CONTAINER_MINIATURE,
                 container.getName(), Optional.empty(), Optional.empty());
     }
 
@@ -171,5 +202,56 @@ public class ListWidgetEntry<E> {
      */
     public boolean isEnabled() {
         return this.enabled;
+    }
+
+    /**
+     * create a miniature by composing segments of miniatures
+     * @param miniatures
+     * @return created miniature
+     */
+    private static BufferedImage createSegmentedMiniature(List<BufferedImage> miniatures) {
+        if (!miniatures.isEmpty()) {
+            // assumption: all miniatures have the same dimensions
+            final int width = miniatures.get(0).getWidth();
+            final int height = miniatures.get(0).getHeight();
+
+            BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            final int numberOfSegments = miniatures.size();
+            final int segmentWidth = width / numberOfSegments;
+            // get segments from the miniatures (part around the center)
+            final int offset = (width - segmentWidth) / 2;
+            final List<BufferedImage> segments = new ArrayList<>();
+            miniatures.forEach(
+                    miniature -> segments.add(miniature.getSubimage(offset, 0, offset + segmentWidth, height)));
+            // compose the segments
+            Graphics2D graphics = result.createGraphics();
+            for (int i = 0; i < segments.size(); i++) {
+                graphics.drawImage(segments.get(i), 0 + i * segmentWidth, 0, null);
+            }
+
+            return result;
+        }
+        return null;
+    }
+
+    /**
+     * saves bufferedImage to a temporary file
+     * @param bufferedImage
+     * @param name
+     * @return URI to the saved file
+     */
+    private static Optional<URI> saveBufferedImage(BufferedImage bufferedImage, String name) {
+        if (bufferedImage != null) {
+            try {
+                final Path temp = Files.createTempFile(name, ".png").toAbsolutePath();
+                final File tempFile = temp.toFile();
+                tempFile.deleteOnExit();
+                ImageIO.write(bufferedImage, "png", tempFile);
+                return Optional.of(temp.toUri());
+            } catch (IOException e) {
+                LOGGER.warn(String.format("Could not create container miniature for container \"%s\"", name), e);
+            }
+        }
+        return Optional.empty();
     }
 }

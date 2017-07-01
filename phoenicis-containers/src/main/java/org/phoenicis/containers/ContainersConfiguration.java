@@ -18,6 +18,7 @@
 
 package org.phoenicis.containers;
 
+import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.containers.wine.WinePrefixContainersManager;
 import org.phoenicis.containers.wine.configurations.*;
@@ -48,13 +49,17 @@ public class ContainersConfiguration {
     @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
+    @Autowired
+    private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
+
     @Value("${application.user.engines}")
     private String enginesPath;
 
     @Bean
     public ContainersManager containersManager() {
         return new WinePrefixContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
-                winePrefixDisplayConfiguration(), winePrefixInputConfiguration());
+                winePrefixDisplayConfiguration(), winePrefixInputConfiguration(), libraryConfiguration.libraryManager(),
+                phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean
