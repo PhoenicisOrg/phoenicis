@@ -52,14 +52,10 @@ public class ScriptsConfiguration {
 
     @Bean
     public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(Arrays.asList(
-                new ScriptUtilitiesInjector(),
-                new BeanInjector(applicationContext),
-                new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
+        return new NashornEngineFactory(Arrays.asList(new ScriptUtilitiesInjector(),
+                new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
                 new ProgressUiInjector(wizardConfiguration.progressWizardFactory()),
-                new IncludeInjector(scriptFetcher()),
-                new LocalisationInjector()
-        ));
+                new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
 
     @Bean

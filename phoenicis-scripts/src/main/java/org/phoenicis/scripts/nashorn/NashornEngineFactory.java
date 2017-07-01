@@ -25,6 +25,7 @@ import java.util.List;
 
 public class NashornEngineFactory {
     private final List<EngineInjector> engineInjectors;
+
     public NashornEngineFactory(List<EngineInjector> engineInjectors) {
         this.engineInjectors = engineInjectors;
     }

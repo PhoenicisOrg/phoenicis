@@ -1,4 +1,5 @@
 package org.phoenicis.scripts.nashorn.builtins;
+
 import org.phoenicis.scripts.nashorn.NashornEngine;
 
 /**

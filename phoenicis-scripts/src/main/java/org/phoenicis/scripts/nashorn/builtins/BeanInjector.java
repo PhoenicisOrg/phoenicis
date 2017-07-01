@@ -19,8 +19,7 @@ public class BeanInjector implements EngineInjector {
 
     @Override
     public void injectInto(NashornEngine nashornEngine) {
-        nashornEngine.put("Bean", (Function<String, Object>) this::fetchBean,
-                this::throwException);
+        nashornEngine.put("Bean", (Function<String, Object>) this::fetchBean, this::throwException);
     }
 
     private Object fetchBean(String beanName) {
@@ -28,11 +27,12 @@ public class BeanInjector implements EngineInjector {
         final Class<?> beanClass = bean.getClass();
 
         for (Annotation annotation : beanClass.getAnnotations()) {
-            if(annotation.annotationType() == Safe.class) {
+            if (annotation.annotationType() == Safe.class) {
                 return bean;
             }
         }
 
-        throw new IllegalAccessError(String.format("You are not allowed to instanciate %s (of class %s) from a script.", beanName, beanClass.getName()));
+        throw new IllegalAccessError(String.format("You are not allowed to instanciate %s (of class %s) from a script.",
+                beanName, beanClass.getName()));
     }
 }
