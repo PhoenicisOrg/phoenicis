@@ -20,6 +20,7 @@ package org.phoenicis.tools.files;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.io.FileUtils;
+import org.phoenicis.configuration.security.Safe;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
@@ -32,6 +33,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@Safe
 public class FileUtilities extends FilesManipulator {
     @Value("${application.user.tmp}")
     private String tmpDirectory;

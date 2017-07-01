@@ -20,6 +20,7 @@ package org.phoenicis.engines;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Safe
 public class EnginesSource {
     private static final Logger LOGGER = LoggerFactory.getLogger(EnginesSource.class);
     private final ScriptInterpreter scriptInterpreter;

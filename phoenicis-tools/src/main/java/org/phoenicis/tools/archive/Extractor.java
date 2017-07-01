@@ -18,6 +18,7 @@
 
 package org.phoenicis.tools.archive;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.ProgressEntity;
 import org.phoenicis.tools.files.FileAnalyser;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Safe
 public class Extractor {
     private final Logger LOGGER = LoggerFactory.getLogger(Tar.class);
     private final FileAnalyser fileAnalyser;

@@ -18,6 +18,9 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
+
+@Safe
 public class FileSizeUtilities {
     public String humanReadableByteCount(long bytes, boolean si) {
         int unit = si ? 1000 : 1024;

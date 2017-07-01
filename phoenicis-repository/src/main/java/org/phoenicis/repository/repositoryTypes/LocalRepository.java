@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
 
 public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
-
     private static final String CATEGORY_ICON_NAME = "icon.png";
 
     private final File repositoryDirectory;

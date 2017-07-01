@@ -18,11 +18,13 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.ProgressEntity;
 
 import java.io.*;
 import java.util.function.Consumer;
 
+@Safe
 public class FileCopier {
     private static final int BLOCK_SIZE = 1024;
 

@@ -20,11 +20,11 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.ArrayList;
@@ -44,6 +44,11 @@ public class FilterRepository implements Repository {
         this.repository = repository;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.enforceIncompatibleOperatingSystems = enforceIncompatibleOperatingSystems;
+    }
+
+    @Override
+    public boolean isSafe() {
+        return repository.isSafe();
     }
 
     @Override

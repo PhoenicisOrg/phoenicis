@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.function.Function;
 
-public abstract class MergeableRepository implements Repository {
+abstract class MergeableRepository implements Repository {
     private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MergeableRepository.class);
 
     /**

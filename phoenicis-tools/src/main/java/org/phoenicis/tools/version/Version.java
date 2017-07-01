@@ -21,10 +21,12 @@ package org.phoenicis.tools.version;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.configuration.security.Safe;
 
 /**
  * Represents a version
  */
+@Safe
 public class Version {
     private final int bigNumber;
     private final int intermediateNumber;

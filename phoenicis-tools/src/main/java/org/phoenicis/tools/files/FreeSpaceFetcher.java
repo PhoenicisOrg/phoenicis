@@ -18,8 +18,11 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
+
 import java.io.File;
 
+@Safe
 public final class FreeSpaceFetcher {
     private static final long KILOBYTE = 1024L;
 

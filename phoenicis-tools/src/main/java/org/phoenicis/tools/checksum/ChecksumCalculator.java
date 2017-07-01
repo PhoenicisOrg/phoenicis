@@ -18,9 +18,10 @@
 
 package org.phoenicis.tools.checksum;
 
-import org.phoenicis.entities.ProgressEntity;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
+import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.entities.ProgressEntity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +33,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+@Safe
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
     private static final String WAIT_MESSAGE = tr("Please wait while we are verifying the file ...");

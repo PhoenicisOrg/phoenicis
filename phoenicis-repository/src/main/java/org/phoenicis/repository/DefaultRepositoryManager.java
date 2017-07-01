@@ -1,5 +1,6 @@
 package org.phoenicis.repository;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -19,6 +20,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 /**
  * Created by marc on 31.03.17.
  */
+@Safe
 public class DefaultRepositoryManager implements RepositoryManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRepositoryManager.class);
 

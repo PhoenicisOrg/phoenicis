@@ -19,8 +19,6 @@
 package org.phoenicis.tools.archive;
 
 import com.google.common.io.CountingInputStream;
-import org.phoenicis.entities.ProgressEntity;
-import org.phoenicis.tools.files.FileUtilities;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -28,6 +26,9 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
+import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.entities.ProgressEntity;
+import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +43,7 @@ import java.util.zip.GZIPInputStream;
 /**
  * Tar extraction utilities
  */
+@Safe
 public class Tar {
     private static final String TAR_ERROR_MESSAGE = "Unable to open input stream";
     private final Logger LOGGER = LoggerFactory.getLogger(Tar.class);

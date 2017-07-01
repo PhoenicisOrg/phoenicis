@@ -18,12 +18,14 @@
 
 package org.phoenicis.tools.files;
 
+import org.phoenicis.configuration.security.Safe;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 
 import static java.lang.String.format;
 
+@Safe
 class FilesManipulator {
     @Value("${application.user.root}")
     private String userRoot;

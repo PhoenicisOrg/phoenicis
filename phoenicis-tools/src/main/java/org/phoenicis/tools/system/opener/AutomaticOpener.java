@@ -18,8 +18,10 @@
 
 package org.phoenicis.tools.system.opener;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
+@Safe
 public class AutomaticOpener implements Opener {
     private final Opener delegatedOpener;
 

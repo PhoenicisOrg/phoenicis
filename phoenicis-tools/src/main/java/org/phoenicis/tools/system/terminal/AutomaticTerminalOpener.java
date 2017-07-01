@@ -18,10 +18,12 @@
 
 package org.phoenicis.tools.system.terminal;
 
+import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.Map;
 
+@Safe
 public class AutomaticTerminalOpener implements TerminalOpener {
     private final TerminalOpener terminalOpener;
 
