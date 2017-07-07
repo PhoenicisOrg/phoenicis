@@ -102,10 +102,8 @@ abstract class AbstractStepRepresentation {
         getParent().getRoot().setBottom(footer);
 
         Button cancelButton = new Button(tr("Cancel"));
-        cancelButton.setPrefSize(70, 28);
 
         nextButton = new Button(tr("Next"));
-        nextButton.setPrefSize(70, 28);
 
         footer.getChildren().addAll(cancelButton, nextButton);
 
