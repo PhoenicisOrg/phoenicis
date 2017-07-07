@@ -24,10 +24,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
@@ -75,19 +72,28 @@ final class LibraryPanel extends DetailsView {
         Region spacer = new Region();
         spacer.setPrefHeight(40);
 
-        HBox buttons = new HBox();
+        GridPane buttons = new GridPane();
         buttons.setAlignment(Pos.CENTER);
+
+        ColumnConstraints runColumn = new ColumnConstraints();
+        runColumn.setPercentWidth(30);
+        ColumnConstraints stopColumn = new ColumnConstraints();
+        stopColumn.setPercentWidth(30);
+        ColumnConstraints uninstallColumn = new ColumnConstraints();
+        uninstallColumn.setPercentWidth(30);
+        buttons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn);
 
         this.runButton = new Button(tr("Run"));
         this.runButton.getStyleClass().addAll("shortcutButton", "runButton");
+        buttons.add(this.runButton, 0, 0);
 
         this.stopButton = new Button(tr("Close"));
         this.stopButton.getStyleClass().addAll("shortcutButton", "stopButton");
+        buttons.add(this.stopButton, 1, 0);
 
         this.uninstallButton = new Button(tr("Uninstall"));
         this.uninstallButton.getStyleClass().addAll("shortcutButton", "uninstallButton");
-
-        buttons.getChildren().addAll(this.runButton, this.stopButton, this.uninstallButton);
+        buttons.add(this.uninstallButton, 2, 0);
 
         vBox.getChildren().addAll(this.description, this.gridPane, spacer, buttons);
 
