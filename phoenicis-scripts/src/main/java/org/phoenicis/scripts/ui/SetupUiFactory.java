@@ -20,5 +20,10 @@ package org.phoenicis.scripts.ui;
 
 @FunctionalInterface
 public interface SetupUiFactory {
+    /**
+     * creates a setup UI to install an application
+     * @param title title of the setup UI
+     * @return
+     */
     SetupUi createSetupWindow(String title);
 }

@@ -19,6 +19,12 @@
 package org.phoenicis.scripts.ui;
 
 public interface UiQuestionFactory {
+    /**
+     * creates a question UI (yes/no decision)
+     * @param questionText question
+     * @param yesCallback called when user selects "yes"
+     * @param noCallback called when user selects "no"
+     */
     void create(String questionText, Runnable yesCallback, Runnable noCallback);
 
     default void create(String questionText, Runnable yesCallback) {

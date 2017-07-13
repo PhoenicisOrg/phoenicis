@@ -20,5 +20,11 @@ package org.phoenicis.scripts.ui;
 
 @FunctionalInterface
 public interface ProgressUiFactory {
+
+    /**
+     * creates a progress UI (e.g. a progress bar)
+     * @param title title of the progress UI
+     * @return
+     */
     ProgressUi create(String title);
 }
