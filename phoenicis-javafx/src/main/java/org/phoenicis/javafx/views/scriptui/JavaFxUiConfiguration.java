@@ -18,10 +18,8 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import javafx.application.Platform;
 import org.phoenicis.javafx.UiMessageSenderJavaFXImplementation;
 import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.scripts.ui.*;
@@ -29,6 +27,8 @@ import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 @Configuration
 public class JavaFxUiConfiguration implements UiConfiguration {
@@ -47,14 +47,8 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public SetupUiFactory setupUiFactory() {
-        return title -> {
-            final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
-                    toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager());
-            viewsConfigurationLibrary.viewLibrary().closeDetailsView();
-            viewsConfigurationLibrary.viewLibrary().createNewTab(setupWindow);
-            setupWindow.setOnShouldClose(() -> viewsConfigurationLibrary.viewLibrary().closeTab(setupWindow));
-            return setupWindow;
-        };
+        return new SetupUiFactoryJavaFX(toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager(),
+                viewsConfigurationLibrary.viewLibrary());
     }
 
     @Override
@@ -66,18 +60,12 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
-        return (text, yesCallback, noCallback) -> Platform
-                .runLater(() -> new ConfirmMessage("Question", text).ask(yesCallback, noCallback));
+        return new UiQuestionFactoryJavaFX(tr("Question"));
     }
 
     @Override
     @Bean
     public ProgressUiFactory progressUiFactory() {
-        return title -> {
-            final ProgressUiJavaFXImplementation progressUi = new ProgressUiJavaFXImplementation();
-            viewsConfiguration.viewEngines().showProgress(progressUi);
-            progressUi.setOnShouldClose(() -> viewsConfiguration.viewEngines().showWineVersions());
-            return progressUi;
-        };
+        return new ProgressUiFactoryJavaFX(viewsConfiguration);
     }
 }
