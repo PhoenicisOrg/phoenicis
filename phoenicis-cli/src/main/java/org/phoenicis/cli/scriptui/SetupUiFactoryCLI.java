@@ -18,33 +18,19 @@
 
 package org.phoenicis.cli.scriptui;
 
-import org.phoenicis.scripts.ui.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.scripts.ui.SetupUi;
+import org.phoenicis.scripts.ui.SetupUiFactory;
 
-@Configuration
-public class CliUiConfiguration implements UiConfiguration {
-    @Override
-    @Bean
-    public SetupUiFactory setupUiFactory() {
-        return new SetupUiFactoryCLI();
+@Safe
+public class SetupUiFactoryCLI implements SetupUiFactory {
+
+    public SetupUiFactoryCLI() {
+        super();
     }
 
     @Override
-    @Bean
-    public UiMessageSender uiMessageSender() {
-        return new CliMessageSender();
-    }
-
-    @Override
-    @Bean
-    public UiQuestionFactory uiQuestionFactory() {
-        return new UiQuestionFactoryCLI();
-    }
-
-    @Override
-    @Bean
-    public ProgressUiFactory progressUiFactory() {
-        return new ProgressUiFactoryCLI();
+    public SetupUi createSetupWindow(String title) {
+        return new SetupUiCliImplementation(title, true, true);
     }
 }
