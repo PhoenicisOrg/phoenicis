@@ -16,19 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.ui;
+package org.phoenicis.javafx.views.scriptui;
 
-public interface UiQuestionFactory {
-    /**
-     * creates a question UI (yes/no decision)
-     * @param questionText question
-     * @param yesCallback called when user selects "yes"
-     * @param noCallback called when user selects "no"
-     */
-    void create(String questionText, Runnable yesCallback, Runnable noCallback);
+import javafx.application.Platform;
+import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.javafx.views.common.ConfirmMessage;
+import org.phoenicis.scripts.ui.UiQuestionFactory;
 
-    default void create(String questionText, Runnable yesCallback) {
-        create(questionText, yesCallback, () -> {
-        });
+@Safe
+public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
+    private final String wizardTitle;
+
+    public UiQuestionFactoryJavaFX(String title) {
+        super();
+        this.wizardTitle = title;
+    }
+
+    @Override
+    public void create(String questionText, Runnable yesCallback, Runnable noCallback) {
+        Platform.runLater(() -> new ConfirmMessage(this.wizardTitle, questionText).ask(yesCallback, noCallback));
     }
 }

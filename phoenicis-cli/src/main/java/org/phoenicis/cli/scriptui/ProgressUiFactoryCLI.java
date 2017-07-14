@@ -16,19 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.ui;
+package org.phoenicis.cli.scriptui;
 
-public interface UiQuestionFactory {
-    /**
-     * creates a question UI (yes/no decision)
-     * @param questionText question
-     * @param yesCallback called when user selects "yes"
-     * @param noCallback called when user selects "no"
-     */
-    void create(String questionText, Runnable yesCallback, Runnable noCallback);
+import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.scripts.ui.ProgressUi;
+import org.phoenicis.scripts.ui.ProgressUiFactory;
 
-    default void create(String questionText, Runnable yesCallback) {
-        create(questionText, yesCallback, () -> {
-        });
+@Safe
+public class ProgressUiFactoryCLI implements ProgressUiFactory {
+
+    public ProgressUiFactoryCLI() {
+        super();
+    }
+
+    @Override
+    public ProgressUi create(String title) {
+        return new ProgressUiCliImplementation(title, true, true);
     }
 }

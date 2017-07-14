@@ -22,14 +22,12 @@ import org.phoenicis.scripts.ui.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Scanner;
-
 @Configuration
 public class CliUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public SetupUiFactory setupUiFactory() {
-        return title -> new SetupUiCliImplementation(title, true, true);
+        return new SetupUiFactoryCLI();
     }
 
     @Override
@@ -41,31 +39,12 @@ public class CliUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
-        return (questionText, yesCallback, noCallback) -> {
-            String answer = "";
-
-            while (!"yes".equals(answer) && !"no".equals(answer)) {
-                System.out.println(questionText);
-                System.out.print("Please enter: [yes, no] ");
-
-                Scanner input = new Scanner(System.in);
-                answer = input.nextLine();
-
-                switch (answer) {
-                    case "yes":
-                        yesCallback.run();
-                        break;
-                    case "no":
-                        noCallback.run();
-                        break;
-                }
-            }
-        };
+        return new UiQuestionFactoryCLI();
     }
 
     @Override
     @Bean
     public ProgressUiFactory progressUiFactory() {
-        return title -> new ProgressUiCliImplementation(title, true, true);
+        return new ProgressUiFactoryCLI();
     }
 }
