@@ -95,23 +95,19 @@ public class FilterRepository implements Repository {
 
         FilterRepository that = (FilterRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(enforceIncompatibleOperatingSystems, that.enforceIncompatibleOperatingSystems);
-        builder.append(repository, that.repository);
-        builder.append(operatingSystemFetcher, that.operatingSystemFetcher);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(enforceIncompatibleOperatingSystems, that.enforceIncompatibleOperatingSystems)
+                .append(repository, that.repository)
+                .append(operatingSystemFetcher, that.operatingSystemFetcher)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(enforceIncompatibleOperatingSystems);
-        builder.append(repository);
-        builder.append(enforceIncompatibleOperatingSystems);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(enforceIncompatibleOperatingSystems)
+                .append(repository)
+                .append(enforceIncompatibleOperatingSystems)
+                .toHashCode();
     }
 }

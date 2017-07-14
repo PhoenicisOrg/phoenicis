@@ -40,17 +40,22 @@ public class MockedRepository extends TeeRepository {
         @Override
         public RepositoryDTO fetchInstallableApplications() {
             return new RepositoryDTO.Builder()
-                    .withCategories(
-                            Collections.singletonList(
-                                    new CategoryDTO.Builder()
-                                            .withApplications(Arrays.asList(new ApplicationDTO.Builder()
-                                                    .withId("Engines").withScripts(Arrays.asList(new ScriptDTO.Builder()
-                                                            .withScriptName("Wine")
-                                                            .withCompatibleOperatingSystems(Arrays.asList(
-                                                                    OperatingSystem.LINUX, OperatingSystem.MACOSX))
-                                                            .withScript(wineScript()).build()))
+                    .withCategories(Collections.singletonList(
+                            new CategoryDTO.Builder()
+                                    .withApplications(Arrays.asList(
+                                            new ApplicationDTO.Builder()
+                                                    .withId("Engines")
+                                                    .withScripts(Arrays.asList(
+                                                            new ScriptDTO.Builder()
+                                                                    .withScriptName("Wine")
+                                                                    .withCompatibleOperatingSystems(Arrays.asList(
+                                                                            OperatingSystem.LINUX,
+                                                                            OperatingSystem.MACOSX))
+                                                                    .withScript(wineScript())
+                                                                    .build()))
                                                     .build()))
-                                            .withName("Functions").build()))
+                                    .withName("Functions")
+                                    .build()))
                     .build();
         }
 

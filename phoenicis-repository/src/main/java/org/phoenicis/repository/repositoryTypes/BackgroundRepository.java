@@ -68,20 +68,16 @@ public class BackgroundRepository implements Repository {
 
         BackgroundRepository that = (BackgroundRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(delegatedRepository, that.delegatedRepository);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(delegatedRepository, that.delegatedRepository)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(delegatedRepository);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(delegatedRepository)
+                .toHashCode();
     }
 
     public static class Factory {

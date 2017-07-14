@@ -65,19 +65,15 @@ public class CachedRepository implements Repository {
 
         CachedRepository that = (CachedRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(repository, that.repository);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(repository, that.repository)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(repository);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(repository)
+                .toHashCode();
     }
 }

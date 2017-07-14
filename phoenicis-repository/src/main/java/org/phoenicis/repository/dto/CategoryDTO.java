@@ -84,13 +84,23 @@ public class CategoryDTO {
 
         CategoryDTO that = (CategoryDTO) o;
 
-        return new EqualsBuilder().append(type, that.type).append(id, that.id).append(name, that.name)
-                .append(applications, that.applications).append(icon, that.icon).isEquals();
+        return new EqualsBuilder()
+                .append(type, that.type)
+                .append(id, that.id)
+                .append(name, that.name)
+                .append(applications, that.applications)
+                .append(icon, that.icon)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(type).append(id).append(name).append(applications).append(icon)
+        return new HashCodeBuilder(17, 37)
+                .append(type)
+                .append(id)
+                .append(name)
+                .append(applications)
+                .append(icon)
                 .toHashCode();
     }
 

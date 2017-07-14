@@ -59,12 +59,18 @@ public class TranslationDTO {
 
         TranslationDTO that = (TranslationDTO) o;
 
-        return new EqualsBuilder().append(language, that.language).append(properties, that.properties).isEquals();
+        return new EqualsBuilder()
+                .append(language, that.language)
+                .append(properties, that.properties)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(language).append(properties).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(language)
+                .append(properties)
+                .toHashCode();
     }
 
     public static Comparator<TranslationDTO> nameComparator() {

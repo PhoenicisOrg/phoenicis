@@ -76,12 +76,19 @@ public class EngineSubCategoryDTO {
 
         EngineSubCategoryDTO that = (EngineSubCategoryDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(description, that.description)
-                .append(packages, that.packages).isEquals();
+        return new EqualsBuilder()
+                .append(name, that.name)
+                .append(description, that.description)
+                .append(packages, that.packages)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(description).append(packages).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(description)
+                .append(packages)
+                .toHashCode();
     }
 }

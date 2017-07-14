@@ -128,19 +128,15 @@ public class IconsListElement<E> extends VBox {
 
         IconsListElement<?> that = (IconsListElement<?>) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(item, that.item);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(item, that.item)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(item);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(item)
+                .toHashCode();
     }
 }

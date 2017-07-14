@@ -73,13 +73,20 @@ public class RepositoryDTO {
 
         RepositoryDTO that = (RepositoryDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(categories, that.categories)
-                .append(translations, that.translations).isEquals();
+        return new EqualsBuilder()
+                .append(name, that.name)
+                .append(categories, that.categories)
+                .append(translations, that.translations)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(categories).append(translations).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(categories)
+                .append(translations)
+                .toHashCode();
     }
 
     public static Comparator<RepositoryDTO> nameComparator() {

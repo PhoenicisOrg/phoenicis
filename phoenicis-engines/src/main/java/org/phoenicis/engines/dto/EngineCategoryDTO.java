@@ -79,13 +79,21 @@ public class EngineCategoryDTO {
 
         EngineCategoryDTO that = (EngineCategoryDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(description, that.description)
-                .append(subCategories, that.subCategories).append(icon, that.icon).isEquals();
+        return new EqualsBuilder()
+                .append(name, that.name)
+                .append(description, that.description)
+                .append(subCategories, that.subCategories)
+                .append(icon, that.icon)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(description).append(subCategories).append(icon)
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(description)
+                .append(subCategories)
+                .append(icon)
                 .toHashCode();
     }
 

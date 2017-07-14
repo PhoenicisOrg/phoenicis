@@ -105,13 +105,23 @@ public class ShortcutCategoryDTO {
 
         ShortcutCategoryDTO that = (ShortcutCategoryDTO) o;
 
-        return new EqualsBuilder().append(id, that.id).append(name, that.name).append(description, that.description)
-                .append(shortcuts, that.shortcuts).append(icon, that.icon).isEquals();
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(name, that.name)
+                .append(description, that.description)
+                .append(shortcuts, that.shortcuts)
+                .append(icon, that.icon)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(shortcuts).append(icon)
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(name)
+                .append(description)
+                .append(shortcuts)
+                .append(icon)
                 .toHashCode();
     }
 

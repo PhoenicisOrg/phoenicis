@@ -68,13 +68,18 @@ public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
 
         GitRepositoryLocation that = (GitRepositoryLocation) o;
 
-        return new EqualsBuilder().append(gitRepositoryUri, that.gitRepositoryUri).append(branch, that.branch)
+        return new EqualsBuilder()
+                .append(gitRepositoryUri, that.gitRepositoryUri)
+                .append(branch, that.branch)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(gitRepositoryUri).append(branch).toHashCode();
+        return new HashCodeBuilder()
+                .append(gitRepositoryUri)
+                .append(branch)
+                .toHashCode();
     }
 
     @Override

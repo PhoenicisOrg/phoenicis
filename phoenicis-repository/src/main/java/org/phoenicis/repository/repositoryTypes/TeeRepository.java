@@ -67,21 +67,17 @@ public class TeeRepository extends MergeableRepository {
 
         TeeRepository that = (TeeRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(leftRepository, that.leftRepository);
-        builder.append(rightRepository, that.rightRepository);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(leftRepository, that.leftRepository)
+                .append(rightRepository, that.rightRepository)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(leftRepository);
-        builder.append(rightRepository);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(leftRepository)
+                .append(rightRepository)
+                .toHashCode();
     }
 }

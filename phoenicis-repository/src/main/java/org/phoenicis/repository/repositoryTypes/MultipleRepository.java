@@ -100,19 +100,15 @@ public class MultipleRepository extends MergeableRepository {
 
         MultipleRepository that = (MultipleRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(repositories, that.repositories);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(repositories, that.repositories)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(repositories);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(repositories)
+                .toHashCode();
     }
 }
