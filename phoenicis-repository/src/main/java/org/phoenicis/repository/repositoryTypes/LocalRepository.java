@@ -284,20 +284,16 @@ public class LocalRepository implements Repository {
 
         LocalRepository that = (LocalRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(repositoryDirectory, that.repositoryDirectory);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(repositoryDirectory, that.repositoryDirectory)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(repositoryDirectory);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(repositoryDirectory)
+                .toHashCode();
     }
 
     public static class Factory {

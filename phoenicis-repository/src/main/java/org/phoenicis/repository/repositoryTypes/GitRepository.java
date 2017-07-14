@@ -161,23 +161,19 @@ public class GitRepository implements Repository {
 
         GitRepository that = (GitRepository) o;
 
-        EqualsBuilder builder = new EqualsBuilder();
-
-        builder.append(repositoryUri, that.repositoryUri);
-        builder.append(localFolder, that.localFolder);
-        builder.append(branch, that.branch);
-
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(repositoryUri, that.repositoryUri)
+                .append(localFolder, that.localFolder)
+                .append(branch, that.branch)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(repositoryUri);
-        builder.append(localFolder);
-        builder.append(branch);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(repositoryUri)
+                .append(localFolder)
+                .append(branch)
+                .toHashCode();
     }
 }

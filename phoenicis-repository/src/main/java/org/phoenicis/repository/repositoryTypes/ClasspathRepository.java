@@ -204,18 +204,16 @@ public class ClasspathRepository implements Repository {
         }
 
         final ClasspathRepository that = (ClasspathRepository) o;
-        final EqualsBuilder builder = new EqualsBuilder();
-        builder.append(packagePath, that.packagePath);
-        return builder.isEquals();
+        return new EqualsBuilder()
+                .append(packagePath, that.packagePath)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        final HashCodeBuilder builder = new HashCodeBuilder();
-
-        builder.append(packagePath);
-
-        return builder.toHashCode();
+        return new HashCodeBuilder()
+                .append(packagePath)
+                .toHashCode();
     }
 
     public static class Factory {

@@ -103,16 +103,32 @@ public class EngineVersionDTO {
 
         EngineVersionDTO that = (EngineVersionDTO) o;
 
-        return new EqualsBuilder().append(version, that.version).append(url, that.url).append(sha1sum, that.sha1sum)
-                .append(geckoUrl, that.geckoUrl).append(geckoMd5, that.geckoMd5).append(monoUrl, that.monoUrl)
-                .append(monoMd5, that.monoMd5).append(monoFile, that.monoFile).append(geckoFile, that.geckoFile)
+        return new EqualsBuilder()
+                .append(version, that.version)
+                .append(url, that.url)
+                .append(sha1sum, that.sha1sum)
+                .append(geckoUrl, that.geckoUrl)
+                .append(geckoMd5, that.geckoMd5)
+                .append(monoUrl, that.monoUrl)
+                .append(monoMd5, that.monoMd5)
+                .append(monoFile, that.monoFile)
+                .append(geckoFile, that.geckoFile)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(version).append(url).append(sha1sum).append(geckoUrl).append(geckoMd5)
-                .append(monoUrl).append(monoMd5).append(monoFile).append(geckoFile).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(version)
+                .append(url)
+                .append(sha1sum)
+                .append(geckoUrl)
+                .append(geckoMd5)
+                .append(monoUrl)
+                .append(monoMd5)
+                .append(monoFile)
+                .append(geckoFile)
+                .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

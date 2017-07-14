@@ -74,13 +74,21 @@ public class EngineDTO {
 
         EngineDTO engineDTO = (EngineDTO) o;
 
-        return new EqualsBuilder().append(category, engineDTO.category).append(subCategory, engineDTO.subCategory)
-                .append(version, engineDTO.version).append(userData, engineDTO.userData).isEquals();
+        return new EqualsBuilder()
+                .append(category, engineDTO.category)
+                .append(subCategory, engineDTO.subCategory)
+                .append(version, engineDTO.version)
+                .append(userData, engineDTO.userData)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(category).append(subCategory).append(version).append(userData)
+        return new HashCodeBuilder(17, 37)
+                .append(category)
+                .append(subCategory)
+                .append(version)
+                .append(userData)
                 .toHashCode();
     }
 

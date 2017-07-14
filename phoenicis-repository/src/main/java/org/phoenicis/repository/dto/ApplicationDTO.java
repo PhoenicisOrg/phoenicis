@@ -136,15 +136,28 @@ public class ApplicationDTO {
 
         ApplicationDTO that = (ApplicationDTO) o;
 
-        return new EqualsBuilder().append(id, that.id).append(name, that.name).append(description, that.description)
-                .append(icon, that.icon).append(miniatures, that.miniatures).append(scripts, that.scripts)
-                .append(resources, that.resources).isEquals();
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(name, that.name)
+                .append(description, that.description)
+                .append(icon, that.icon)
+                .append(miniatures, that.miniatures)
+                .append(scripts, that.scripts)
+                .append(resources, that.resources)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(description).append(icon).append(miniatures)
-                .append(scripts).append(resources).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(name)
+                .append(description)
+                .append(icon)
+                .append(miniatures)
+                .append(scripts)
+                .append(resources)
+                .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

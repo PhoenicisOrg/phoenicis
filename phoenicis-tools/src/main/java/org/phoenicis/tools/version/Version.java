@@ -95,9 +95,12 @@ public class Version {
 
         Version version = (Version) o;
 
-        return new EqualsBuilder().append(bigNumber, version.bigNumber)
-                .append(intermediateNumber, version.intermediateNumber).append(lowNumber, version.lowNumber)
-                .append(customName, version.customName).isEquals();
+        return new EqualsBuilder()
+                .append(bigNumber, version.bigNumber)
+                .append(intermediateNumber, version.intermediateNumber)
+                .append(lowNumber, version.lowNumber)
+                .append(customName, version.customName)
+                .isEquals();
     }
 
     @Override

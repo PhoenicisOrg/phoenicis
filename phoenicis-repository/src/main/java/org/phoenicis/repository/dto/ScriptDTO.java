@@ -94,16 +94,27 @@ public class ScriptDTO {
 
         ScriptDTO scriptDTO = (ScriptDTO) o;
 
-        return new EqualsBuilder().append(scriptName, scriptDTO.scriptName).append(scriptSource, scriptDTO.scriptSource)
+        return new EqualsBuilder()
+                .append(scriptName, scriptDTO.scriptName)
+                .append(scriptSource, scriptDTO.scriptSource)
                 .append(compatibleOperatingSystems, scriptDTO.compatibleOperatingSystems)
-                .append(testingOperatingSystems, scriptDTO.testingOperatingSystems).append(free, scriptDTO.free)
-                .append(requiresPatch, scriptDTO.requiresPatch).append(script, scriptDTO.script).isEquals();
+                .append(testingOperatingSystems, scriptDTO.testingOperatingSystems)
+                .append(free, scriptDTO.free)
+                .append(requiresPatch, scriptDTO.requiresPatch)
+                .append(script, scriptDTO.script)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(scriptName).append(scriptSource).append(compatibleOperatingSystems)
-                .append(testingOperatingSystems).append(free).append(requiresPatch).append(script).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(scriptName)
+                .append(scriptSource)
+                .append(compatibleOperatingSystems)
+                .append(testingOperatingSystems)
+                .append(free).append(requiresPatch)
+                .append(script)
+                .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

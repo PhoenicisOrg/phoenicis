@@ -84,15 +84,26 @@ public class ShortcutDTO {
 
         ShortcutDTO that = (ShortcutDTO) o;
 
-        return new EqualsBuilder().append(name, that.name).append(category, that.category)
-                .append(description, that.description).append(icon, that.icon).append(miniature, that.miniature)
-                .append(script, that.script).isEquals();
+        return new EqualsBuilder()
+                .append(name, that.name)
+                .append(category, that.category)
+                .append(description, that.description)
+                .append(icon, that.icon)
+                .append(miniature, that.miniature)
+                .append(script, that.script)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(category).append(description).append(icon)
-                .append(miniature).append(script).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(category)
+                .append(description)
+                .append(icon)
+                .append(miniature)
+                .append(script)
+                .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

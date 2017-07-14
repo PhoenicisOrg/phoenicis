@@ -3,7 +3,6 @@ package org.phoenicis.repository.location;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -59,12 +58,16 @@ public class ClasspathRepositoryLocation extends RepositoryLocation<ClasspathRep
 
         ClasspathRepositoryLocation that = (ClasspathRepositoryLocation) o;
 
-        return new EqualsBuilder().append(packagePath, that.packagePath).isEquals();
+        return new EqualsBuilder()
+                .append(packagePath, that.packagePath)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(packagePath).toHashCode();
+        return new HashCodeBuilder()
+                .append(packagePath)
+                .toHashCode();
     }
 
     @Override

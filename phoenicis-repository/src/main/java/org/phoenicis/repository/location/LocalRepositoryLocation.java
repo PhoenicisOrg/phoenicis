@@ -59,12 +59,16 @@ public class LocalRepositoryLocation extends RepositoryLocation<LocalRepository>
 
         LocalRepositoryLocation that = (LocalRepositoryLocation) o;
 
-        return new EqualsBuilder().append(repositoryLocation, that.repositoryLocation).isEquals();
+        return new EqualsBuilder()
+                .append(repositoryLocation, that.repositoryLocation)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(repositoryLocation).toHashCode();
+        return new HashCodeBuilder()
+                .append(repositoryLocation)
+                .toHashCode();
     }
 
     @Override

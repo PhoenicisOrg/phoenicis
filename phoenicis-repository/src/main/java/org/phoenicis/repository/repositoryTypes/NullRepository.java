@@ -42,8 +42,6 @@ public class NullRepository implements Repository {
 
     @Override
     public int hashCode() {
-        HashCodeBuilder builder = new HashCodeBuilder();
-
-        return builder.toHashCode();
+        return new HashCodeBuilder().toHashCode();
     }
 }
