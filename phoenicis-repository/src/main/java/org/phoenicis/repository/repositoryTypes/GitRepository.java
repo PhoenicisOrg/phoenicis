@@ -58,7 +58,7 @@ public class GitRepository implements Repository {
     }
 
     private File createRepositoryLocation(String cacheDirectoryPath) {
-        int hashcode = new HashCodeBuilder().append(repositoryUri).append(branch).toHashCode();
+        int hashcode = new HashCodeBuilder().append(this.repositoryUri).append(this.branch).toHashCode();
 
         return new File(cacheDirectoryPath + "/git" + hashcode);
     }
@@ -66,18 +66,19 @@ public class GitRepository implements Repository {
     @Override
     public synchronized RepositoryDTO fetchInstallableApplications() {
         LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.repositoryUri,
-                localFolder.getAbsolutePath()));
+                this.localFolder.getAbsolutePath()));
 
-        boolean folderExists = localFolder.exists();
+        boolean folderExists = this.localFolder.exists();
 
         // check that the repository folder exists
         if (!folderExists) {
-            LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'", localFolder.getAbsolutePath(),
+            LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'",
+                    this.localFolder.getAbsolutePath(),
                     this.repositoryUri));
 
-            if (!localFolder.mkdirs()) {
+            if (!this.localFolder.mkdirs()) {
                 LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                        this.localFolder.getAbsolutePath()));
 
                 return new RepositoryDTO.Builder().build();
             }
@@ -93,10 +94,11 @@ public class GitRepository implements Repository {
              */
             if (!folderExists) {
                 LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                        this.localFolder.getAbsolutePath()));
 
-                gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString()).setDirectory(localFolder)
-                        .setBranch(branch).call();
+                gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
+                        .setDirectory(this.localFolder)
+                        .setBranch(this.branch).call();
             }
             /*
              * otherwise open the folder and pull the newest updates from the
@@ -104,12 +106,12 @@ public class GitRepository implements Repository {
              */
             else {
                 LOGGER.info(String.format("Opening git-repository '%s' at '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                        this.localFolder.getAbsolutePath()));
 
                 gitRepository = Git.open(localFolder);
 
                 LOGGER.info(String.format("Pulling new commits from git-repository '%s' to '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                        this.localFolder.getAbsolutePath()));
 
                 gitRepository.pull().call();
             }
@@ -117,7 +119,7 @@ public class GitRepository implements Repository {
             result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
                     .fetchInstallableApplications();
         } catch (RepositoryNotFoundException | GitAPIException e) {
-            LOGGER.error(String.format("Folder '%s' is no git-repository", localFolder.getAbsolutePath()), e);
+            LOGGER.error(String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
         } catch (IOException e) {
             LOGGER.error("An unknown error occured", e);
         } finally {
@@ -136,17 +138,19 @@ public class GitRepository implements Repository {
             fileUtilities.remove(this.localFolder);
 
             LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.repositoryUri,
-                    localFolder.getAbsolutePath()));
+                    this.localFolder.getAbsolutePath()));
         } catch (IOException e) {
-            LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'", localFolder.getAbsolutePath()),
+            LOGGER.error(
+                    String.format("Couldn't delete local git-repository at: '%s'", this.localFolder.getAbsolutePath()),
                     e);
         }
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("repositoryUri", repositoryUri).append("localFolder", localFolder)
-                .append("branch", branch).toString();
+        return new ToStringBuilder(this).append("repositoryUri", this.repositoryUri)
+                .append("localFolder", this.localFolder)
+                .append("branch", this.branch).toString();
     }
 
     @Override
@@ -162,18 +166,18 @@ public class GitRepository implements Repository {
         GitRepository that = (GitRepository) o;
 
         return new EqualsBuilder()
-                .append(repositoryUri, that.repositoryUri)
-                .append(localFolder, that.localFolder)
-                .append(branch, that.branch)
+                .append(this.repositoryUri, that.repositoryUri)
+                .append(this.localFolder, that.localFolder)
+                .append(this.branch, that.branch)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(repositoryUri)
-                .append(localFolder)
-                .append(branch)
+                .append(this.repositoryUri)
+                .append(this.localFolder)
+                .append(this.branch)
                 .toHashCode();
     }
 }
