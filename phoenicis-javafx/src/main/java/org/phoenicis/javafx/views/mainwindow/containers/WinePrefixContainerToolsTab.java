@@ -70,9 +70,8 @@ public class WinePrefixContainerToolsTab extends Tab {
         this.lockableElements.add(openTerminal);
 
         toolsContentPane.add(openTerminal, 0, 0);
-        toolsContentPane.add(wineToolCaption(tr("Open a terminal")), 0, 1);
 
-        Button createShortcut = new Button();
+        Button createShortcut = new Button(tr("Create shortcut"));
         createShortcut.getStyleClass().addAll("wineToolButton", "openTerminal");
         createShortcut.setOnMouseClicked(event -> {
             this.lockAll();
@@ -91,9 +90,8 @@ public class WinePrefixContainerToolsTab extends Tab {
         this.lockableElements.add(createShortcut);
 
         toolsContentPane.add(createShortcut, 1, 0);
-        toolsContentPane.add(wineToolCaption(tr("Create shortcut")), 1, 1);
 
-        Button runExecutable = new Button();
+        Button runExecutable = new Button(tr("Run executable"));
         runExecutable.getStyleClass().addAll("wineToolButton", "runExecutable");
         runExecutable.setOnMouseClicked(event -> {
             this.lockAll();
@@ -111,7 +109,6 @@ public class WinePrefixContainerToolsTab extends Tab {
         this.lockableElements.add(runExecutable);
 
         toolsContentPane.add(runExecutable, 2, 0);
-        toolsContentPane.add(wineToolCaption(tr("Run executable")), 2, 1);
 
         toolsPane.getChildren().addAll(toolsContentPane);
 
