@@ -20,7 +20,6 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
@@ -58,26 +57,23 @@ public class GitRepository implements Repository {
     }
 
     private File createRepositoryLocation(String cacheDirectoryPath) {
-        int hashcode = new HashCodeBuilder().append(repositoryUri).append(branch).toHashCode();
+        int hashcode = new HashCodeBuilder().append(this.repositoryUri).append(this.branch).toHashCode();
 
         return new File(cacheDirectoryPath + "/git" + hashcode);
     }
 
     @Override
     public synchronized RepositoryDTO fetchInstallableApplications() {
-        LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.repositoryUri,
-                localFolder.getAbsolutePath()));
+        LOGGER.info("Begin fetching process of " + this);
 
-        boolean folderExists = localFolder.exists();
+        boolean folderExists = this.localFolder.exists();
 
         // check that the repository folder exists
         if (!folderExists) {
-            LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'", localFolder.getAbsolutePath(),
-                    this.repositoryUri));
+            LOGGER.info("Creating local folder for " + this);
 
-            if (!localFolder.mkdirs()) {
-                LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+            if (!this.localFolder.mkdirs()) {
+                LOGGER.error("Couldn't create local folder for " + this);
 
                 return new RepositoryDTO.Builder().build();
             }
@@ -92,24 +88,22 @@ public class GitRepository implements Repository {
              * repository now and checkout the correct branch
              */
             if (!folderExists) {
-                LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                LOGGER.info("Cloning " + this);
 
-                gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString()).setDirectory(localFolder)
-                        .setBranch(branch).call();
+                gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
+                        .setDirectory(this.localFolder)
+                        .setBranch(this.branch).call();
             }
             /*
              * otherwise open the folder and pull the newest updates from the
              * repository
              */
             else {
-                LOGGER.info(String.format("Opening git-repository '%s' at '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                LOGGER.info("Opening " + this);
 
                 gitRepository = Git.open(localFolder);
 
-                LOGGER.info(String.format("Pulling new commits from git-repository '%s' to '%s'", this.repositoryUri,
-                        localFolder.getAbsolutePath()));
+                LOGGER.info("Pulling new commits from " + this);
 
                 gitRepository.pull().call();
             }
@@ -117,9 +111,9 @@ public class GitRepository implements Repository {
             result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
                     .fetchInstallableApplications();
         } catch (RepositoryNotFoundException | GitAPIException e) {
-            LOGGER.error(String.format("Folder '%s' is no git-repository", localFolder.getAbsolutePath()), e);
+            LOGGER.error(String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
         } catch (IOException e) {
-            LOGGER.error("An unknown error occured", e);
+            LOGGER.error("An unknown error occurred", e);
         } finally {
             // close repository to free resources
             if (gitRepository != null) {
@@ -135,18 +129,16 @@ public class GitRepository implements Repository {
         try {
             fileUtilities.remove(this.localFolder);
 
-            LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.repositoryUri,
-                    localFolder.getAbsolutePath()));
+            LOGGER.info("Deleted " + this);
         } catch (IOException e) {
-            LOGGER.error(String.format("Couldn't delete local git-repository at: '%s'", localFolder.getAbsolutePath()),
-                    e);
+            LOGGER.error(String.format("Couldn't delete " + this), e);
         }
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("repositoryUri", repositoryUri).append("localFolder", localFolder)
-                .append("branch", branch).toString();
+        return String.format("git-repository %s, local folder: %s, branch: %s", this.repositoryUri,
+                this.localFolder.getAbsolutePath(), this.branch);
     }
 
     @Override
@@ -162,18 +154,18 @@ public class GitRepository implements Repository {
         GitRepository that = (GitRepository) o;
 
         return new EqualsBuilder()
-                .append(repositoryUri, that.repositoryUri)
-                .append(localFolder, that.localFolder)
-                .append(branch, that.branch)
+                .append(this.repositoryUri, that.repositoryUri)
+                .append(this.localFolder, that.localFolder)
+                .append(this.branch, that.branch)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(repositoryUri)
-                .append(localFolder)
-                .append(branch)
+                .append(this.repositoryUri)
+                .append(this.localFolder)
+                .append(this.branch)
                 .toHashCode();
     }
 }
