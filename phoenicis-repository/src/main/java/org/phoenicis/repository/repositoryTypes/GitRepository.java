@@ -119,7 +119,7 @@ public class GitRepository implements Repository {
         } catch (RepositoryNotFoundException | GitAPIException e) {
             LOGGER.error(String.format("Folder '%s' is no git-repository", localFolder.getAbsolutePath()), e);
         } catch (IOException e) {
-            LOGGER.error("An unknown error occured", e);
+            LOGGER.error("An unknown error occurred", e);
         } finally {
             // close repository to free resources
             if (gitRepository != null) {
