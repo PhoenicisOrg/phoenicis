@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -9,7 +8,6 @@ import javafx.stage.DirectoryChooser;
 import org.phoenicis.repository.location.LocalRepositoryLocation;
 
 import java.io.File;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -55,6 +53,7 @@ public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRep
         });
 
         HBox content = new HBox(pathField, openBrowser);
+        content.setId("addLocalRepository");
         HBox.setHgrow(pathField, Priority.ALWAYS);
 
         this.setCenter(content);

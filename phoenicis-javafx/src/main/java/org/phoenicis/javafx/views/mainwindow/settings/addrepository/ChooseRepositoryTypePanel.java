@@ -74,6 +74,7 @@ public class ChooseRepositoryTypePanel extends BorderPane {
         choiceBoxLabel.setLabelFor(choiceBox);
 
         HBox content = new HBox(choiceBoxLabel, choiceBox);
+        content.setId("repositoryTypeSelection");
         HBox.setHgrow(choiceBox, Priority.ALWAYS);
 
         this.setCenter(content);

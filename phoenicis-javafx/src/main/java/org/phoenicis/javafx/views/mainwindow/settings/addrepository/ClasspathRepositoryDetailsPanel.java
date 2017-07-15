@@ -6,8 +6,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import org.phoenicis.repository.location.ClasspathRepositoryLocation;
 
-import java.util.Optional;
-
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
@@ -41,6 +39,7 @@ public class ClasspathRepositoryDetailsPanel extends RepositoryDetailsPanel<Clas
         classpathLabel.setLabelFor(classpathField);
 
         HBox content = new HBox(classpathLabel, classpathField);
+        content.setId("addClasspathRepository");
         HBox.setHgrow(classpathField, Priority.ALWAYS);
 
         this.setCenter(content);
