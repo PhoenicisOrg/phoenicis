@@ -2,6 +2,7 @@ package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -74,6 +75,8 @@ public class ChooseRepositoryTypePanel extends BorderPane {
         choiceBoxLabel.setLabelFor(choiceBox);
 
         HBox content = new HBox(choiceBoxLabel, choiceBox);
+        content.setAlignment(Pos.CENTER_LEFT);
+        content.setSpacing(10);
         HBox.setHgrow(choiceBox, Priority.ALWAYS);
 
         this.setCenter(content);
