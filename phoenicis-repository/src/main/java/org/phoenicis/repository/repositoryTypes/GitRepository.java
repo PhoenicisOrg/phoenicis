@@ -20,7 +20,6 @@ package org.phoenicis.repository.repositoryTypes;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
@@ -65,20 +64,16 @@ public class GitRepository implements Repository {
 
     @Override
     public synchronized RepositoryDTO fetchInstallableApplications() {
-        LOGGER.info(String.format("Begin fetching process of git-repository '%s' in '%s'", this.repositoryUri,
-                this.localFolder.getAbsolutePath()));
+        LOGGER.info("Begin fetching process of git-repository " + this);
 
         boolean folderExists = this.localFolder.exists();
 
         // check that the repository folder exists
         if (!folderExists) {
-            LOGGER.info(String.format("Creating new folder '%s' for git-repository '%s'",
-                    this.localFolder.getAbsolutePath(),
-                    this.repositoryUri));
+            LOGGER.info("Creating local folder for git-repository " + this);
 
             if (!this.localFolder.mkdirs()) {
-                LOGGER.error(String.format("Couldn't create folder for git repository '%s' at '%s'", this.repositoryUri,
-                        this.localFolder.getAbsolutePath()));
+                LOGGER.error("Couldn't create local folder for git-repository " + this);
 
                 return new RepositoryDTO.Builder().build();
             }
@@ -93,8 +88,7 @@ public class GitRepository implements Repository {
              * repository now and checkout the correct branch
              */
             if (!folderExists) {
-                LOGGER.info(String.format("Cloning git-repository '%s' to '%s'", this.repositoryUri,
-                        this.localFolder.getAbsolutePath()));
+                LOGGER.info("Cloning git-repository " + this);
 
                 gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
                         .setDirectory(this.localFolder)
@@ -105,13 +99,11 @@ public class GitRepository implements Repository {
              * repository
              */
             else {
-                LOGGER.info(String.format("Opening git-repository '%s' at '%s'", this.repositoryUri,
-                        this.localFolder.getAbsolutePath()));
+                LOGGER.info("Opening git-repository " + this);
 
                 gitRepository = Git.open(localFolder);
 
-                LOGGER.info(String.format("Pulling new commits from git-repository '%s' to '%s'", this.repositoryUri,
-                        this.localFolder.getAbsolutePath()));
+                LOGGER.info("Pulling new commits from git-repository " + this);
 
                 gitRepository.pull().call();
             }
@@ -137,20 +129,16 @@ public class GitRepository implements Repository {
         try {
             fileUtilities.remove(this.localFolder);
 
-            LOGGER.info(String.format("Deleted git-repository '%s' at '%s'", this.repositoryUri,
-                    this.localFolder.getAbsolutePath()));
+            LOGGER.info("Deleted git-repository " + this);
         } catch (IOException e) {
-            LOGGER.error(
-                    String.format("Couldn't delete local git-repository at: '%s'", this.localFolder.getAbsolutePath()),
-                    e);
+            LOGGER.error(String.format("Couldn't delete git-repository " + this), e);
         }
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("repositoryUri", this.repositoryUri)
-                .append("localFolder", this.localFolder)
-                .append("branch", this.branch).toString();
+        return String.format("%s, local folder: %s, branch: %s", this.repositoryUri,
+                this.localFolder.getAbsolutePath(), this.branch);
     }
 
     @Override
