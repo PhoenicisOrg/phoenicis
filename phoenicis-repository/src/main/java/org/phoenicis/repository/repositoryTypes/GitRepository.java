@@ -64,16 +64,16 @@ public class GitRepository implements Repository {
 
     @Override
     public synchronized RepositoryDTO fetchInstallableApplications() {
-        LOGGER.info("Begin fetching process of git-repository " + this);
+        LOGGER.info("Begin fetching process of " + this);
 
         boolean folderExists = this.localFolder.exists();
 
         // check that the repository folder exists
         if (!folderExists) {
-            LOGGER.info("Creating local folder for git-repository " + this);
+            LOGGER.info("Creating local folder for " + this);
 
             if (!this.localFolder.mkdirs()) {
-                LOGGER.error("Couldn't create local folder for git-repository " + this);
+                LOGGER.error("Couldn't create local folder for " + this);
 
                 return new RepositoryDTO.Builder().build();
             }
@@ -88,7 +88,7 @@ public class GitRepository implements Repository {
              * repository now and checkout the correct branch
              */
             if (!folderExists) {
-                LOGGER.info("Cloning git-repository " + this);
+                LOGGER.info("Cloning " + this);
 
                 gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
                         .setDirectory(this.localFolder)
@@ -99,11 +99,11 @@ public class GitRepository implements Repository {
              * repository
              */
             else {
-                LOGGER.info("Opening git-repository " + this);
+                LOGGER.info("Opening " + this);
 
                 gitRepository = Git.open(localFolder);
 
-                LOGGER.info("Pulling new commits from git-repository " + this);
+                LOGGER.info("Pulling new commits from " + this);
 
                 gitRepository.pull().call();
             }
@@ -129,15 +129,15 @@ public class GitRepository implements Repository {
         try {
             fileUtilities.remove(this.localFolder);
 
-            LOGGER.info("Deleted git-repository " + this);
+            LOGGER.info("Deleted " + this);
         } catch (IOException e) {
-            LOGGER.error(String.format("Couldn't delete git-repository " + this), e);
+            LOGGER.error(String.format("Couldn't delete " + this), e);
         }
     }
 
     @Override
     public String toString() {
-        return String.format("%s, local folder: %s, branch: %s", this.repositoryUri,
+        return String.format("git-repository %s, local folder: %s, branch: %s", this.repositoryUri,
                 this.localFolder.getAbsolutePath(), this.branch);
     }
 
