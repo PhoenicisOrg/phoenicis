@@ -49,7 +49,7 @@ public class EnginesSource {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         List<EngineCategoryDTO> engines = new ArrayList<>();
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Wine\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine().getAvailableVersions()", output -> {
                     EngineCategoryDTO wine = new EngineCategoryDTO.Builder().withName("Wine").withDescription("Wine")
                             .withSubCategories(unSerialize(output)).build();
