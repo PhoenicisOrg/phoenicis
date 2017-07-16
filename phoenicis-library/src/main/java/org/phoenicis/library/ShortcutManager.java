@@ -99,7 +99,7 @@ public class ShortcutManager {
     public void uninstallFromShortcut(ShortcutDTO shortcutDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Shortcuts\", \"Reader\"]);",
+        interactiveScriptSession.eval("include([\"Wine\", \"Shortcuts\", \"Reader\"]);",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                     final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
                     shortcutReader.callMember("of", shortcutDTO);
