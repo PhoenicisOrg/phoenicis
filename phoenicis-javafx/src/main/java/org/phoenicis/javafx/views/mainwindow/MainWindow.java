@@ -18,13 +18,8 @@
 
 package org.phoenicis.javafx.views.mainwindow;
 
-import javafx.scene.Cursor;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
@@ -61,20 +56,7 @@ public class MainWindow extends Stage {
         tabPane.setId("menuPane");
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab logoTab = new Tab();
-        HBox logoLayout = new HBox();
-        Region logo = new Region();
-        logo.setId("logo");
-        logo.setCursor(Cursor.DEFAULT);
-        Label logoText = new Label(applicationName.toLowerCase());
-        logoText.setId("logoText");
-        logoText.setCursor(Cursor.DEFAULT);
-        logo.prefWidthProperty().bind(logoText.heightProperty());
-        logoLayout.getChildren().addAll(logo, logoText);
-        logoTab.setGraphic(logoLayout);
-        logoTab.setDisable(true);
-
-        tabPane.getTabs().addAll(logoTab, library, apps, containers, engines, settings);
+        tabPane.getTabs().addAll(library, apps, containers, engines, settings);
 
         this.scene = new PhoenicisScene(tabPane, themeManager, settingsManager);
 
