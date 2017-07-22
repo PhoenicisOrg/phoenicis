@@ -49,7 +49,7 @@ public class PhoenicisTestsApp {
             this.applicationContext = applicationContext;
 
             repository.fetchInstallableApplications(repositoryDTO -> {
-                repositoryDTO.getCategories().forEach(this::testCategory);
+                repositoryDTO.getTypes().get(0).getCategories().forEach(this::testCategory);
             }, e -> {
                 throw new IllegalStateException(e);
             });

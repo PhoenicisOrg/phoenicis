@@ -18,13 +18,10 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.*;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.repository.repositoryTypes.TeeRepository;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -40,21 +37,26 @@ public class MockedRepository extends TeeRepository {
         @Override
         public RepositoryDTO fetchInstallableApplications() {
             return new RepositoryDTO.Builder()
-                    .withCategories(Collections.singletonList(
-                            new CategoryDTO.Builder()
-                                    .withApplications(Arrays.asList(
-                                            new ApplicationDTO.Builder()
-                                                    .withId("Engines")
-                                                    .withScripts(Arrays.asList(
-                                                            new ScriptDTO.Builder()
-                                                                    .withScriptName("Wine")
-                                                                    .withCompatibleOperatingSystems(Arrays.asList(
-                                                                            OperatingSystem.LINUX,
-                                                                            OperatingSystem.MACOSX))
-                                                                    .withScript(wineScript())
+                    .withTypes(Collections.singletonList(
+                            new TypeDTO.Builder()
+                                    .withId("Type 1")
+                                    .withCategories(Collections.singletonList(
+                                            new CategoryDTO.Builder()
+                                                    .withApplications(Arrays.asList(
+                                                            new ApplicationDTO.Builder()
+                                                                    .withId("Engines")
+                                                                    .withScripts(Arrays.asList(
+                                                                            new ScriptDTO.Builder()
+                                                                                    .withScriptName("Wine")
+                                                                                    .withCompatibleOperatingSystems(
+                                                                                            Arrays.asList(
+                                                                                                    OperatingSystem.LINUX,
+                                                                                                    OperatingSystem.MACOSX))
+                                                                                    .withScript(wineScript())
+                                                                                    .build()))
                                                                     .build()))
+                                                    .withName("Functions")
                                                     .build()))
-                                    .withName("Functions")
                                     .build()))
                     .build();
         }
