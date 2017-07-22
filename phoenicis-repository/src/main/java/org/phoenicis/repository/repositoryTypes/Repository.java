@@ -53,12 +53,22 @@ public interface Repository {
         }
     }
 
+    /**
+     * fetches the TypeDTO for a given path (e.g. ["Applications"])
+     * @param path path in the JS namespace
+     * @return TypeDTO
+     */
     default TypeDTO getType(List<String> path) {
         final Optional<TypeDTO> typeDTO = fetchInstallableApplications().getTypes().stream()
                 .filter(type -> path.get(0).equals(type.getId())).findFirst();
         return typeDTO.orElse(null);
     }
 
+    /**
+     * fetches the CategoryDTO for a given path (e.g. ["Applications", "Development"])
+     * @param path path in the JS namespace
+     * @return CategoryDTO
+     */
     default CategoryDTO getCategory(List<String> path) {
         final TypeDTO typeDTO = getType(path);
         if (typeDTO == null) {
@@ -70,6 +80,11 @@ public interface Repository {
         return categoryDTO.orElse(null);
     }
 
+    /**
+     * fetches the ApplicationDTO for a given path (e.g. ["Applications", "Development", "Notepad++"])
+     * @param path path in the JS namespace
+     * @return ApplicationDTO
+     */
     default ApplicationDTO getApplication(List<String> path) {
         final CategoryDTO categoryDTO = getCategory(path);
         if (categoryDTO == null) {
@@ -81,6 +96,11 @@ public interface Repository {
         return applicationDTO.orElse(null);
     }
 
+    /**
+     * fetches the ScriptDTO for a given path (e.g. ["Applications", "Development", "Notepad++", "Online"])
+     * @param path path in the JS namespace
+     * @return ScriptDTO
+     */
     default ScriptDTO getScript(List<String> path) {
         final ApplicationDTO applicationDTO = getApplication(path);
 

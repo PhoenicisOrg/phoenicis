@@ -36,7 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Represents a repository type
+ * Represents a repository type (e.g. engines, applications ...)
  */
 @JsonDeserialize(builder = TypeDTO.Builder.class)
 @Translatable
@@ -53,7 +53,7 @@ public class TypeDTO {
                 this.id = builder.id;
             } else {
                 LOGGER.warn(
-                        String.format("Category ID (%s) contains invalid characters, will remove them.", builder.id));
+                        String.format("Type ID (%s) contains invalid characters, will remove them.", builder.id));
                 this.id = builder.id.replaceAll("[^a-zA-Z0-9]", "");
             }
         } else {
