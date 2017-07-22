@@ -47,12 +47,12 @@ abstract class MergeableRepository implements Repository {
         RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder().withName("merged repository");
 
         Properties translationProperties = new Properties();
-        Map<Repository, List<CategoryDTO>> categoriesMap = new HashMap<>();
+        Map<Repository, List<TypeDTO>> typesMap = new HashMap<>();
 
         for (Map.Entry<Repository, RepositoryDTO> entry : repositoriesMap.entrySet()) {
             RepositoryDTO repositoryDTO = entry.getValue();
             translationProperties.putAll(repositoryDTO.getTranslations().getProperties());
-            categoriesMap.put(entry.getKey(), repositoryDTO.getCategories());
+            typesMap.put(entry.getKey(), repositoryDTO.getTypes());
         }
         repositoryDTOBuilder.withTranslations(new TranslationDTO.Builder()
                 .withLanguage(Locale.getDefault().getLanguage()).withProperties(translationProperties).build());
@@ -61,31 +61,55 @@ abstract class MergeableRepository implements Repository {
         /*
          * Take the first application source, from behind, as the default one
          */
-        final Map<String, CategoryDTO> mergedCategories = createSortedMap(
-                categoriesMap.get(repositories.get(numberOfRepositories - 1)), CategoryDTO::getId);
+        final Map<String, TypeDTO> mergedTypes = createSortedMap(
+                typesMap.get(repositories.get(numberOfRepositories - 1)), TypeDTO::getId);
 
         for (int otherRepositoryIndex = numberOfRepositories - 2; otherRepositoryIndex >= 0; otherRepositoryIndex--) {
-            final List<CategoryDTO> otherCategories = categoriesMap.get(repositories.get(otherRepositoryIndex));
+            final List<TypeDTO> otherTypes = typesMap.get(repositories.get(otherRepositoryIndex));
 
-            final Map<String, CategoryDTO> otherCategoriesMap = createSortedMap(otherCategories, CategoryDTO::getId);
+            final Map<String, TypeDTO> otherTypesMap = createSortedMap(otherTypes, TypeDTO::getId);
 
-            for (Map.Entry<String, CategoryDTO> entry : otherCategoriesMap.entrySet()) {
-                final CategoryDTO category = entry.getValue();
+            for (Map.Entry<String, TypeDTO> entry : otherTypesMap.entrySet()) {
+                final TypeDTO type = entry.getValue();
 
-                if (mergedCategories.containsKey(entry.getKey())) {
-                    mergedCategories.put(entry.getKey(),
-                            mergeCategories(mergedCategories.get(entry.getKey()), category));
+                if (mergedTypes.containsKey(entry.getKey())) {
+                    mergedTypes.put(entry.getKey(),
+                            mergeTypes(mergedTypes.get(entry.getKey()), type));
                 } else {
-                    mergedCategories.put(entry.getKey(), category);
+                    mergedTypes.put(entry.getKey(), type);
                 }
             }
         }
 
         RepositoryDTO mergedRepositoryDTO = repositoryDTOBuilder
-                .withCategories(new ArrayList<>(mergedCategories.values())).build();
+                .withTypes(new ArrayList<>(mergedTypes.values())).build();
 
         return mergedRepositoryDTO;
 
+    }
+
+    protected TypeDTO mergeTypes(TypeDTO leftCategory, TypeDTO rightCategory) {
+        final Map<String, CategoryDTO> leftCategories = createSortedMap(leftCategory.getCategories(),
+                CategoryDTO::getId);
+        final Map<String, CategoryDTO> rightCategories = createSortedMap(rightCategory.getCategories(),
+                CategoryDTO::getId);
+
+        final SortedMap<String, CategoryDTO> mergedCategories = new TreeMap<>(rightCategories);
+
+        for (Map.Entry<String, CategoryDTO> entry : leftCategories.entrySet()) {
+            final CategoryDTO category = entry.getValue();
+
+            if (mergedCategories.containsKey(entry.getKey())) {
+                mergedCategories.put(entry.getKey(), mergeCategories(mergedCategories.get(entry.getKey()), category));
+            } else {
+                mergedCategories.put(entry.getKey(), category);
+            }
+        }
+
+        final List<CategoryDTO> categories = new ArrayList<>(mergedCategories.values());
+        categories.sort(CategoryDTO.nameComparator());
+        return new TypeDTO.Builder().withCategories(categories).withIcon(leftCategory.getIcon())
+                .withId(leftCategory.getId()).withName(leftCategory.getName()).build();
     }
 
     protected CategoryDTO mergeCategories(CategoryDTO leftCategory, CategoryDTO rightCategory) {

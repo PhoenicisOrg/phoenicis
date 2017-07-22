@@ -78,11 +78,13 @@ public class CLIController implements AutoCloseable {
     @ShortSwitch("i")
     @AllAvailableArguments
     public void installApp(List<String> arguments) {
-        final String categoryName = arguments.get(0);
-        final String appName = arguments.get(1);
-        final String scriptName = arguments.get(2);
+        final String typeName = arguments.get(0);
+        final String categoryName = arguments.get(1);
+        final String appName = arguments.get(2);
+        final String scriptName = arguments.get(3);
 
-        final ScriptDTO scriptDTO = repositoryManager.getScript(Arrays.asList(categoryName, appName, scriptName));
+        final ScriptDTO scriptDTO = repositoryManager
+                .getScript(Arrays.asList(typeName, categoryName, appName, scriptName));
         scriptInterpreter.runScript(scriptDTO.getScript(), Throwable::printStackTrace);
     }
 

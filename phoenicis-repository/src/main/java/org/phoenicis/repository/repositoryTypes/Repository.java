@@ -18,10 +18,7 @@
 
 package org.phoenicis.repository.repositoryTypes;
 
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,27 +53,20 @@ public interface Repository {
         }
     }
 
-    default ScriptDTO getScript(List<String> path) {
-        final ApplicationDTO applicationDTO = getApplication(path);
-
-        if (applicationDTO != null) {
-            for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                if (path.get(2).equals(scriptDTO.getScriptName())) {
-                    return scriptDTO;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
-        callback.accept(getScript(path));
+    default TypeDTO getType(List<String> path) {
+        final Optional<TypeDTO> typeDTO = fetchInstallableApplications().getTypes().stream()
+                .filter(type -> path.get(0).equals(type.getId())).findFirst();
+        return typeDTO.orElse(null);
     }
 
     default CategoryDTO getCategory(List<String> path) {
-        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().getCategories().stream()
-                .filter(category -> path.get(0).equals(category.getId())).findFirst();
+        final TypeDTO typeDTO = getType(path);
+        if (typeDTO == null) {
+            return null;
+        }
+
+        final Optional<CategoryDTO> categoryDTO = typeDTO.getCategories().stream()
+                .filter(category -> path.get(1).equals(category.getId())).findFirst();
         return categoryDTO.orElse(null);
     }
 
@@ -87,7 +77,25 @@ public interface Repository {
         }
 
         final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
-                .filter(application -> path.get(1).equals(application.getName())).findFirst();
+                .filter(application -> path.get(2).equals(application.getName())).findFirst();
         return applicationDTO.orElse(null);
+    }
+
+    default ScriptDTO getScript(List<String> path) {
+        final ApplicationDTO applicationDTO = getApplication(path);
+
+        if (applicationDTO != null) {
+            for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
+                if (path.get(3).equals(scriptDTO.getScriptName())) {
+                    return scriptDTO;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
+        callback.accept(getScript(path));
     }
 }
