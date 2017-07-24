@@ -27,7 +27,7 @@ msgstr "Cet assistant va vous aider à installer {0} sur votre ordinateur"
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:134
 #, java-format
 msgid "This program was created by: {0}"
-msgstr "Ce programme a été créé par: {0}"
+msgstr "Ce programme a été créé par : {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:135
 msgid "For more information about this program, visit:"
@@ -36,12 +36,12 @@ msgstr "Pour plus d'information à propos de ce programme, rendez-vous sur:"
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:137
 #, java-format
 msgid "This installation program is provided by: {0}"
-msgstr "Cet installeur est fourni par: {0}"
+msgstr "Cet installeur est fourni par : {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:138
 #, java-format
 msgid "{0} will be installed in: {1}"
-msgstr "{0} sera installé dans: {1}"
+msgstr "{0} sera installé dans : {1}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:139
 #, java-format
@@ -54,7 +54,7 @@ msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:141
 msgid "Click \"Next\" to start."
-msgstr "Cliquer sur 'Suivant\" pour commencer."
+msgstr "Cliquer sur "Suivant\" pour commencer."
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Please wait while we are verifying the file ..."
@@ -109,7 +109,7 @@ msgstr "Erreur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:48
 msgid "The exception stacktrace was:"
-msgstr "L'erreur dans la trace de la pile était:"
+msgstr "L'erreur dans la trace de la pile était :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
@@ -165,7 +165,7 @@ msgstr "Exécuter un script"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:170
 #, java-format
 msgid "{0} console"
-msgstr "{0} console"
+msgstr "Console {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:175
 msgid "Open a script"
@@ -217,27 +217,27 @@ msgstr "Information"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:58
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:69
 msgid "Name:"
-msgstr "Nom:"
+msgstr "Nom :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:63
 msgid "Path:"
-msgstr "Chemin:"
+msgstr "Chemin :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:68
 msgid "Installed shortcuts:"
-msgstr "Raccourcis installés:"
+msgstr "Raccourcis installés :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:74
 msgid "Wine version:"
-msgstr "Version de wine:"
+msgstr "Version de wine :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:79
 msgid "Wine architecture:"
-msgstr "Architecture de wine:"
+msgstr "Architecture de wine :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:84
 msgid "Wine distribution:"
-msgstr "Distribution de wine:"
+msgstr "Distribution de wine :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:110
 msgid "Delete container"
@@ -340,7 +340,7 @@ msgstr "Non installé"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:61
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:72
 msgid "Version:"
-msgstr "Version:"
+msgstr "Version :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:78
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/AppPanel.java:183
@@ -366,7 +366,7 @@ msgstr "Installeurs"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/AppPanel.java:179
 #, java-format
 msgid "Source: {0}"
-msgstr "Source: {0}"
+msgstr "Source : {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/AppPanel.java:189
 msgid "Error while trying to download the installer"
@@ -420,7 +420,7 @@ msgstr "Paramètres de l'interface"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:72
 msgid "Theme:"
-msgstr "Thème:"
+msgstr "Thème :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
 msgid "Select, if you want to view the source repository of the scripts"
@@ -436,7 +436,7 @@ msgstr "Paramètres des dépôts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:108
 msgid "Repository:"
-msgstr "Dépôt:"
+msgstr "Dépôt :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:127
 msgid "Add"
@@ -467,19 +467,19 @@ msgstr "Rafraîchir la liste des dépôts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:75
 msgid "Git Revision:"
-msgstr "Git Revision:"
+msgstr "Git Revision :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:87
 msgid "Build Timestamp:"
-msgstr "Construire le Timestamp:"
+msgstr "Construire le Timestamp :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
 msgid "Git-Url:"
-msgstr "Git-Url:"
+msgstr "Git-Url :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:53
 msgid "Branch:"
-msgstr "Branche:"
+msgstr "Branche :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:69
 msgid "Choose the location of your git repository"
@@ -491,7 +491,7 @@ msgstr "Ajouter un nouveau dépôt"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:38
 msgid "Classpath:"
-msgstr "Classpath:"
+msgstr "Classpath :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:50
 msgid "Choose the location of your classpath repository"
@@ -511,7 +511,7 @@ msgstr "Veuillez sélectionner le type de dépôt que vous voulez ajouter"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
 msgid "Repository type:"
-msgstr "Type de dépôt:"
+msgstr "Type de dépôt :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
 msgid "Choose the repository type"
