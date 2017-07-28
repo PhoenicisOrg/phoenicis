@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
@@ -16,6 +17,8 @@ import java.util.function.Predicate;
  * @since 29.03.17
  */
 public class ApplicationFilter {
+    private final OperatingSystemFetcher operatingSystemFetcher;
+
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
     private final ObjectProperty<Predicate<ApplicationDTO>> applicationFilter;
@@ -30,12 +33,15 @@ public class ApplicationFilter {
 
     private BooleanProperty containTestingApplications;
 
+    private BooleanProperty containAllOSCompatibleApplications;
+
     /**
      * Constructor
      *
      * @param filterTextMatcher The matcher function for the filter text
      */
-    public ApplicationFilter(BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher, BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+        this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
         this.applicationFilter = new SimpleObjectProperty<>(this::filter);
@@ -52,6 +58,9 @@ public class ApplicationFilter {
 
         this.containTestingApplications = new SimpleBooleanProperty();
         this.containTestingApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+
+        this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
+        this.containAllOSCompatibleApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
     }
 
     /**
@@ -94,6 +103,10 @@ public class ApplicationFilter {
 
     public BooleanProperty containTestingApplicationsProperty() {
         return this.containTestingApplications;
+    }
+
+    public BooleanProperty containAllOSCompatibleApplications() {
+        return this.containAllOSCompatibleApplications;
     }
 
     public ObjectProperty<Predicate<ApplicationDTO>> applicationFilterProperty() {
@@ -153,6 +166,14 @@ public class ApplicationFilter {
                     .anyMatch(script -> script.getTestingOperatingSystems().isEmpty());
         }
 
+        /*
+         * If "Show all Operating Systems" is not select, show only applications that fit to the used operating system
+         */
+        if (!containAllOSCompatibleApplications.getValue()) {
+            result &= application.getScripts().stream()
+                    .anyMatch(script -> script.getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem()));
+        }
+
         return result && filterTextMatcher.test(filterText.getValue(), application);
     }
 
@@ -184,6 +205,13 @@ public class ApplicationFilter {
          */
         if (!containTestingApplications.getValue()) {
             result &= script.getTestingOperatingSystems().isEmpty();
+        }
+
+        /*
+         * If "Show all Operating Systems" is not select, show only applications that fit to the used operating system
+         */
+        if (!containAllOSCompatibleApplications.getValue()) {
+            result &= script.getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem());
         }
 
         return result;

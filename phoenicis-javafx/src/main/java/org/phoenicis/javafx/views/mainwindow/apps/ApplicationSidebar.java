@@ -51,6 +51,7 @@ public class ApplicationSidebar extends LeftSidebar {
     private CheckBox testingCheck;
     private CheckBox requiresPatchCheck;
     private CheckBox commercialCheck;
+    private CheckBox operatingSystemCheck;
 
     // widget to switch between the different list widgets in the center view
     private LeftListWidgetChooser<ApplicationDTO> listWidgetChooser;
@@ -121,7 +122,11 @@ public class ApplicationSidebar extends LeftSidebar {
         this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
         this.commercialCheck.setSelected(true);
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck);
+        this.operatingSystemCheck = new LeftCheckBox(tr("Show all Operating Systems"));
+        this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
+        this.operatingSystemCheck.setSelected(false);
+
+        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck, operatingSystemCheck);
     }
 
     /**

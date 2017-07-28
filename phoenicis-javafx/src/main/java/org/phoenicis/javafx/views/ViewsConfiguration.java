@@ -77,7 +77,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewApps viewApps() {
-        return new ViewApps(themeConfiguration.themeManager(), settingsConfiguration.settingsManager());
+        return new ViewApps(themeConfiguration.themeManager(), settingsConfiguration.settingsManager(), toolsConfiguration);
     }
 
     @Bean
