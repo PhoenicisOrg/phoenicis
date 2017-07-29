@@ -56,7 +56,6 @@ public class MainController {
         libraryController.setOnTabOpened(mainWindow::showLibrary);
 
         appsController.setOnAppLoaded(() -> {
-            enginesController.loadEngines();
             containersController.loadContainers();
         });
 
