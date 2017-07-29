@@ -29,7 +29,10 @@ import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
+import org.phoenicis.repository.dto.CategoryDTO;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -57,7 +60,9 @@ public class ContainersController {
         });
 
         viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
-            enginesSource.fetchAvailableEngines(engineCategoryDTOS -> {
+            List<CategoryDTO> categoryDTOS = Collections
+                    .singletonList(new CategoryDTO.Builder().withName("Wine").build());
+            enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
                 final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
                         (WinePrefixContainerDTO) containerDTO, viewContainers.getThemeManager(),
                         engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
