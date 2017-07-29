@@ -21,7 +21,6 @@ package org.phoenicis.javafx.controller.engines;
 import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.engines.EnginesSource;
-import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
@@ -94,8 +93,9 @@ public class EnginesController {
                     categoryDTOS = typeDTO.getCategories();
                 }
             }
+            setDefaultEngineIcons(categoryDTOS);
             enginesSource.fetchAvailableEngines(categoryDTOS,
-                    versions -> Platform.runLater(() -> populateView(versions)));
+                    versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
         });
     }
 
@@ -123,15 +123,10 @@ public class EnginesController {
                 }, errorCallback), errorCallback);
     }
 
-    private void populateView(List<EngineCategoryDTO> engineCategoryDTOS) {
-        setDefaultEngineIcons(engineCategoryDTOS);
-        this.viewEngines.populate(engineCategoryDTOS);
-    }
-
-    private void setDefaultEngineIcons(List<EngineCategoryDTO> engineCategoryDTOS) {
+    private void setDefaultEngineIcons(List<CategoryDTO> categoryDTOS) {
         try {
             StringBuilder cssBuilder = new StringBuilder();
-            for (EngineCategoryDTO category : engineCategoryDTOS) {
+            for (CategoryDTO category : categoryDTOS) {
                 cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
                 URI categoryIcon = category.getIcon();
                 if (categoryIcon == null) {
