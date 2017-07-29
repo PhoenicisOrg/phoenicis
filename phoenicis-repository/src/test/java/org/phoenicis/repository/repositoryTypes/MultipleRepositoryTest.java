@@ -21,6 +21,7 @@ package org.phoenicis.repository.repositoryTypes;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TypeDTO;
 
 import java.util.Collections;
 
@@ -35,19 +36,30 @@ public class MultipleRepositoryTest {
 
     @Test
     public void testWithThreeSources_threeResults() {
-        final Repository firstSource = () -> new RepositoryDTO.Builder()
-                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withId("Category 1").build()))
+        final Repository firstSource = () -> new RepositoryDTO.Builder().withTypes(Collections.singletonList(
+                new TypeDTO.Builder()
+                        .withId("Type 1")
+                        .withCategories(Collections.singletonList(
+                                new CategoryDTO.Builder().withId("Category 1").build()))
+                        .build()))
                 .build();
 
-        final Repository secondSource = () -> new RepositoryDTO.Builder()
-                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withId("Category 2").build()))
+        final Repository secondSource = () -> new RepositoryDTO.Builder().withTypes(Collections.singletonList(
+                new TypeDTO.Builder()
+                        .withId("Type 1")
+                        .withCategories(Collections.singletonList(
+                                new CategoryDTO.Builder().withId("Category 2").build()))
+                        .build()))
                 .build();
 
-        final Repository thirdSource = () -> new RepositoryDTO.Builder()
-                .withCategories(Collections.singletonList(new CategoryDTO.Builder().withId("Category 3").build()))
+        final Repository thirdSource = () -> new RepositoryDTO.Builder().withTypes(Collections.singletonList(
+                new TypeDTO.Builder().withId("Type 1")
+                        .withCategories(Collections.singletonList(
+                                new CategoryDTO.Builder().withId("Category 3").build()))
+                        .build()))
                 .build();
 
         final MultipleRepository multipleRepository = new MultipleRepository(firstSource, secondSource, thirdSource);
-        assertEquals(3, multipleRepository.fetchInstallableApplications().getCategories().size());
+        assertEquals(3, multipleRepository.fetchInstallableApplications().getTypes().get(0).getCategories().size());
     }
 }

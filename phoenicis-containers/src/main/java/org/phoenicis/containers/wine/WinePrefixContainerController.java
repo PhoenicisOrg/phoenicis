@@ -69,7 +69,7 @@ public class WinePrefixContainerController {
         // FIXME
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Wine\", \"Engine\", \"Object\"]);",
+        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", winePrefix.getName());
@@ -83,7 +83,7 @@ public class WinePrefixContainerController {
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Wine\", \"Engine\", \"Object\"]);",
+        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", winePrefix.getName());
@@ -100,7 +100,7 @@ public class WinePrefixContainerController {
         LOGGER.info("Updating registry for prefix: " + winePrefix.getPath());
         LOGGER.info(registryPatch);
 
-        interactiveScriptSession.eval("include([\"Wine\", \"Engine\", \"Object\"]);",
+        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", winePrefix.getName());
@@ -115,7 +115,7 @@ public class WinePrefixContainerController {
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Wine\", \"Engine\", \"Object\"]);",
+        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", winePrefix.getName());
@@ -138,7 +138,7 @@ public class WinePrefixContainerController {
                 .forEach(shortcutDTO -> {
                     final InteractiveScriptSession interactiveScriptSession = scriptInterpreter
                             .createInteractiveSession();
-                    interactiveScriptSession.eval("include([\"Wine\", \"Shortcuts\", \"Reader\"]);",
+                    interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Shortcuts\", \"Reader\"]);",
                             ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                                 final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
                                 shortcutReader.callMember("of", shortcutDTO);
@@ -162,7 +162,7 @@ public class WinePrefixContainerController {
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Wine\", \"Shortcuts\", \"Wine\"]);",
+        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Shortcuts\", \"Wine\"]);",
                 ignored -> interactiveScriptSession.eval("new WineShortcut()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("name", name);

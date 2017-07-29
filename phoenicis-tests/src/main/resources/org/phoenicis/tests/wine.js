@@ -16,9 +16,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-include(["Functions", "Filesystem", "Files"]);
-include(["Functions", "Filesystem", "Extract"]);
-include(["Functions", "Net", "Download"]);
+include(["Utils", "Functions", "Filesystem", "Files"]);
+include(["Utils", "Functions", "Filesystem", "Extract"]);
+include(["Utils", "Functions", "Net", "Download"]);
 
 LATEST_STABLE_VERSION = "1.8.6";
 

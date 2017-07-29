@@ -18,10 +18,7 @@
 
 package org.phoenicis.repository.repositoryTypes;
 
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,12 +53,60 @@ public interface Repository {
         }
     }
 
+    /**
+     * fetches the TypeDTO for a given path (e.g. ["Applications"])
+     * @param path path in the JS namespace
+     * @return TypeDTO
+     */
+    default TypeDTO getType(List<String> path) {
+        final Optional<TypeDTO> typeDTO = fetchInstallableApplications().getTypes().stream()
+                .filter(type -> path.get(0).equals(type.getId())).findFirst();
+        return typeDTO.orElse(null);
+    }
+
+    /**
+     * fetches the CategoryDTO for a given path (e.g. ["Applications", "Development"])
+     * @param path path in the JS namespace
+     * @return CategoryDTO
+     */
+    default CategoryDTO getCategory(List<String> path) {
+        final TypeDTO typeDTO = getType(path);
+        if (typeDTO == null) {
+            return null;
+        }
+
+        final Optional<CategoryDTO> categoryDTO = typeDTO.getCategories().stream()
+                .filter(category -> path.get(1).equals(category.getId())).findFirst();
+        return categoryDTO.orElse(null);
+    }
+
+    /**
+     * fetches the ApplicationDTO for a given path (e.g. ["Applications", "Development", "Notepad++"])
+     * @param path path in the JS namespace
+     * @return ApplicationDTO
+     */
+    default ApplicationDTO getApplication(List<String> path) {
+        final CategoryDTO categoryDTO = getCategory(path);
+        if (categoryDTO == null) {
+            return null;
+        }
+
+        final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
+                .filter(application -> path.get(2).equals(application.getName())).findFirst();
+        return applicationDTO.orElse(null);
+    }
+
+    /**
+     * fetches the ScriptDTO for a given path (e.g. ["Applications", "Development", "Notepad++", "Online"])
+     * @param path path in the JS namespace
+     * @return ScriptDTO
+     */
     default ScriptDTO getScript(List<String> path) {
         final ApplicationDTO applicationDTO = getApplication(path);
 
         if (applicationDTO != null) {
             for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                if (path.get(2).equals(scriptDTO.getScriptName())) {
+                if (path.get(3).equals(scriptDTO.getScriptName())) {
                     return scriptDTO;
                 }
             }
@@ -72,22 +117,5 @@ public interface Repository {
 
     default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
         callback.accept(getScript(path));
-    }
-
-    default CategoryDTO getCategory(List<String> path) {
-        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().getCategories().stream()
-                .filter(category -> path.get(0).equals(category.getId())).findFirst();
-        return categoryDTO.orElse(null);
-    }
-
-    default ApplicationDTO getApplication(List<String> path) {
-        final CategoryDTO categoryDTO = getCategory(path);
-        if (categoryDTO == null) {
-            return null;
-        }
-
-        final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
-                .filter(application -> path.get(1).equals(application.getName())).findFirst();
-        return applicationDTO.orElse(null);
     }
 }

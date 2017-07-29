@@ -24,41 +24,49 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
-import org.phoenicis.configuration.localisation.Translate;
 import org.phoenicis.configuration.localisation.TranslatableBuilder;
+import org.phoenicis.configuration.localisation.Translate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Represents a repository
+ * Represents a repository type (e.g. engines, applications ...)
  */
-@JsonDeserialize(builder = RepositoryDTO.Builder.class)
+@JsonDeserialize(builder = TypeDTO.Builder.class)
 @Translatable
-public class RepositoryDTO {
+public class TypeDTO {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TypeDTO.class);
+    private final String id;
     private final String name;
-    private final List<TypeDTO> types;
-    private final TranslationDTO translations;
+    private final List<CategoryDTO> categories;
+    private final URI icon;
 
-    private RepositoryDTO(Builder builder) {
-        this.name = builder.name;
-        this.types = Collections.unmodifiableList(builder.types);
-        this.translations = builder.translations;
+    private TypeDTO(Builder builder) {
+        if (builder.id != null) {
+            if (builder.id.matches("^[a-zA-Z0-9]+$")) {
+                this.id = builder.id;
+            } else {
+                LOGGER.warn(
+                        String.format("Type ID (%s) contains invalid characters, will remove them.", builder.id));
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9]", "");
+            }
+        } else {
+            this.id = null;
+        }
+
+        this.name = builder.name == null ? builder.id : builder.name;
+        this.categories = Collections.unmodifiableList(builder.categories);
+        this.icon = builder.icon;
     }
 
-    public TranslationDTO getTranslations() {
-        return translations;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Translate
-    public List<TypeDTO> getTypes() {
-        return types;
+    public URI getIcon() {
+        return icon;
     }
 
     @Override
@@ -71,42 +79,68 @@ public class RepositoryDTO {
             return false;
         }
 
-        RepositoryDTO that = (RepositoryDTO) o;
+        TypeDTO that = (TypeDTO) o;
 
         return new EqualsBuilder()
+                .append(id, that.id)
                 .append(name, that.name)
-                .append(types, that.types)
-                .append(translations, that.translations)
+                .append(categories, that.categories)
+                .append(icon, that.icon)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(id)
                 .append(name)
-                .append(types)
-                .append(translations)
+                .append(categories)
+                .append(icon)
                 .toHashCode();
     }
 
-    public static Comparator<RepositoryDTO> nameComparator() {
+    public enum CategoryType {
+        INSTALLERS, FUNCTIONS
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Translate
+    public String getName() {
+        return name;
+    }
+
+    @Translate
+    public List<CategoryDTO> getCategories() {
+        return categories;
+    }
+
+    public static Comparator<TypeDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     @TranslatableBuilder
     public static class Builder {
+        private String id;
         private String name;
-        private List<TypeDTO> types = new ArrayList<>();
-        private TranslationDTO translations = new TranslationDTO.Builder().build();
+        private List<CategoryDTO> categories = new ArrayList<>();
+        private URI icon;
 
         public Builder() {
             // Default constructor
         }
 
-        public Builder(RepositoryDTO repositoryDTO) {
-            this.withName(repositoryDTO.getName()).withTypes(repositoryDTO.getTypes())
-                    .withTranslations(repositoryDTO.getTranslations());
+        public Builder(TypeDTO categoryDTO) {
+            this.withId(categoryDTO.getId()).withName(categoryDTO.getName())
+                    .withCategories(categoryDTO.getCategories()).withIcon(categoryDTO.getIcon());
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withName(String name) {
@@ -114,19 +148,20 @@ public class RepositoryDTO {
             return this;
         }
 
-        public Builder withTypes(List<TypeDTO> types) {
-            this.types = types;
+        public Builder withCategories(List<CategoryDTO> categories) {
+            this.categories = categories;
             return this;
         }
 
-        public RepositoryDTO build() {
-            return new RepositoryDTO(this);
-        }
-
-        public Builder withTranslations(TranslationDTO translations) {
-            this.translations = translations;
+        public Builder withIcon(URI iconPath) {
+            this.icon = iconPath;
             return this;
         }
+
+        public TypeDTO build() {
+            return new TypeDTO(this);
+        }
+
     }
 
     @Override

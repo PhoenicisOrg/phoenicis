@@ -21,10 +21,7 @@ package org.phoenicis.repository.repositoryTypes;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.ArrayList;
@@ -55,26 +52,29 @@ public class FilterRepository implements Repository {
     public RepositoryDTO fetchInstallableApplications() {
         final OperatingSystem currentOperatingSystem = operatingSystemFetcher.fetchCurrentOperationSystem();
         final RepositoryDTO repositoryDTO = repository.fetchInstallableApplications();
-        final List<CategoryDTO> categories = repositoryDTO.getCategories();
-
-        final List<CategoryDTO> filteredCategories = categories.stream().map(category -> {
-            final List<ApplicationDTO> applications = new ArrayList<>();
-            for (ApplicationDTO application : category.getApplications()) {
-                List<ScriptDTO> scripts = application.getScripts();
-                if (!enforceIncompatibleOperatingSystems) {
-                    scripts = application.getScripts().stream()
-                            .filter(script -> script.getCompatibleOperatingSystems() == null
-                                    || script.getCompatibleOperatingSystems().contains(currentOperatingSystem))
-                            .collect(Collectors.toList());
+        final List<TypeDTO> types = repositoryDTO.getTypes();
+        final List<TypeDTO> filteredTypes = types.stream().map(type -> {
+            final List<CategoryDTO> categories = type.getCategories();
+            final List<CategoryDTO> filteredCategories = categories.stream().map(category -> {
+                final List<ApplicationDTO> applications = new ArrayList<>();
+                for (ApplicationDTO application : category.getApplications()) {
+                    List<ScriptDTO> scripts = application.getScripts();
+                    if (!enforceIncompatibleOperatingSystems) {
+                        scripts = application.getScripts().stream()
+                                .filter(script -> script.getCompatibleOperatingSystems() == null
+                                        || script.getCompatibleOperatingSystems().contains(currentOperatingSystem))
+                                .collect(Collectors.toList());
+                    }
+                    if (!scripts.isEmpty()) {
+                        applications.add(new ApplicationDTO.Builder(application).withScripts(scripts).build());
+                    }
                 }
-                if (!scripts.isEmpty()) {
-                    applications.add(new ApplicationDTO.Builder(application).withScripts(scripts).build());
-                }
-            }
 
-            return new CategoryDTO.Builder(category).withApplications(applications).build();
-        }).filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
-        return new RepositoryDTO.Builder().withName(repositoryDTO.getName()).withCategories(filteredCategories)
+                return new CategoryDTO.Builder(category).withApplications(applications).build();
+            }).filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
+            return new TypeDTO.Builder(type).withCategories(filteredCategories).build();
+        }).filter(type -> !type.getCategories().isEmpty()).collect(Collectors.toList());
+        return new RepositoryDTO.Builder().withName(repositoryDTO.getName()).withTypes(filteredTypes)
                 .withTranslations(repositoryDTO.getTranslations()).build();
     }
 

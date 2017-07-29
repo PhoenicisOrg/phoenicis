@@ -22,8 +22,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TypeDTO;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -37,16 +39,23 @@ public class CachedRepositoryTest {
                 .fetchInstallableApplications())
                         .thenReturn(
                                 new RepositoryDTO.Builder()
-                                        .withCategories(
-                                                Arrays.asList(new CategoryDTO.Builder().withId("Category 1").build(),
-                                                        new CategoryDTO.Builder().withId("Category 2").build()))
+                                        .withTypes(Collections.singletonList(
+                                                new TypeDTO.Builder()
+                                                        .withId("Type 1")
+                                                        .withCategories(
+                                                                Arrays.asList(
+                                                                        new CategoryDTO.Builder().withId("Category 1")
+                                                                                .build(),
+                                                                        new CategoryDTO.Builder().withId("Category 2")
+                                                                                .build()))
+                                                        .build()))
                                         .build());
 
         final Repository cachedSource = new CachedRepository(repository);
         cachedSource.fetchInstallableApplications();
-        assertEquals(2, cachedSource.fetchInstallableApplications().getCategories().size());
+        assertEquals(2, cachedSource.fetchInstallableApplications().getTypes().get(0).getCategories().size());
         cachedSource.fetchInstallableApplications();
-        assertEquals(2, cachedSource.fetchInstallableApplications().getCategories().size());
+        assertEquals(2, cachedSource.fetchInstallableApplications().getTypes().get(0).getCategories().size());
 
         verify(repository, times(1)).fetchInstallableApplications();
     }

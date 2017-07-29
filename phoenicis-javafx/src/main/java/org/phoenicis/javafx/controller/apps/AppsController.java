@@ -85,7 +85,7 @@ public class AppsController {
 
     private void populateView(RepositoryDTO repositoryDTO) {
         Platform.runLater(() -> {
-            List<CategoryDTO> categoryDTOS = repositoryDTO.getCategories();
+            List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
             setDefaultCategoryIcons(categoryDTOS);
             this.view.populate(categoryDTOS);
         });
