@@ -21,6 +21,7 @@ public class ApplicationFilter {
 
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
+    private final ObjectProperty<Predicate<CategoryDTO>> categoryFilter;
     private final ObjectProperty<Predicate<ApplicationDTO>> applicationFilter;
     private final ObjectProperty<Predicate<ScriptDTO>> scriptFilter;
 
@@ -45,6 +46,7 @@ public class ApplicationFilter {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
+        this.categoryFilter = new SimpleObjectProperty<>(this::filter);
         this.applicationFilter = new SimpleObjectProperty<>(this::filter);
         this.scriptFilter = new SimpleObjectProperty<>(this::filter);
 
@@ -68,6 +70,7 @@ public class ApplicationFilter {
      * Triggers a filter update
      */
     public void fire() {
+        categoryFilter.setValue(this::filter);
         applicationFilter.setValue(this::filter);
         scriptFilter.setValue(this::filter);
     }
@@ -110,6 +113,10 @@ public class ApplicationFilter {
         return this.containAllOSCompatibleApplications;
     }
 
+    public ObjectProperty<Predicate<CategoryDTO>> categoryFilterProperty() {
+        return this.categoryFilter;
+    }
+
     public ObjectProperty<Predicate<ApplicationDTO>> applicationFilterProperty() {
         return this.applicationFilter;
     }
@@ -127,6 +134,53 @@ public class ApplicationFilter {
         this.filterCategory = Optional.empty();
 
         this.fire();
+    }
+
+    /**
+     * Filter function for {@link CategoryDTO} objects
+     *
+     * @param category The category which should be checked
+     * @return True if the given <code>category</code> fulfills the filter condition, false otherwise
+     */
+    public boolean filter(CategoryDTO category) {
+        boolean result = true;
+
+        /*
+         * If "commercial" is not selected don't show commercial games
+         */
+        if (!containCommercialApplications.getValue()) {
+            result &= category.getApplications().stream()
+                    .anyMatch(application -> application.getScripts().stream().anyMatch(script -> script.isFree()));
+        }
+
+        /*
+         * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
+         */
+        if (containRequiresPatchApplications.getValue()) {
+            result &= category.getApplications().stream().anyMatch(
+                    application -> application.getScripts().stream().anyMatch(script -> !script.isRequiresPatch()));
+        }
+
+        /*
+         * If "Testing" is not selected don't show games that are currently in a testing stage
+         */
+        if (!containTestingApplications.getValue()) {
+            result &= category.getApplications().stream().anyMatch(application -> application.getScripts().stream()
+                    .anyMatch(script -> script.getTestingOperatingSystems().isEmpty()));
+        }
+
+        /*
+         * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
+         */
+        if (!containAllOSCompatibleApplications.getValue()) {
+            result &= category.getApplications().stream()
+                    .anyMatch(application -> application.getScripts().stream()
+                            .anyMatch(script -> script.getCompatibleOperatingSystems()
+                                    .contains(operatingSystemFetcher.fetchCurrentOperationSystem())));
+        }
+
+        return result && category.getApplications().stream()
+                .anyMatch(application -> filterTextMatcher.test(filterText.getValue(), application));
     }
 
     /**
