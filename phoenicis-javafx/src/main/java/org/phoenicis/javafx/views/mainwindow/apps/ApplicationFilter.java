@@ -147,7 +147,7 @@ public class ApplicationFilter {
         boolean result = true;
 
         /*
-         * If "commercial" is not selected don't show commercial games
+         * If "commercial" is not selected, don't show commercial games
          */
         if (!containCommercialApplications.getValue()) {
             result &= category.getApplications().stream()
@@ -155,7 +155,7 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
+         * If "Requires patch" is selected, show show games that require a patch to run (e.g. no CD)
          */
         if (containRequiresPatchApplications.getValue()) {
             result &= category.getApplications().stream().anyMatch(
@@ -163,7 +163,7 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Testing" is not selected don't show games that are currently in a testing stage
+         * If "Testing" is not selected, don't show games that are currently in a testing stage
          */
         if (!containTestingApplications.getValue()) {
             result &= category.getApplications().stream().anyMatch(application -> application.getScripts().stream()
@@ -171,7 +171,7 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
+         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
             result &= category.getApplications().stream()
@@ -224,7 +224,7 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
+         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
             result &= application.getScripts().stream()
@@ -267,7 +267,7 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
+         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
             result &= !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()) && script
