@@ -18,10 +18,7 @@
 
 package org.phoenicis.repository.repositoryTypes;
 
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,38 +53,89 @@ public interface Repository {
         }
     }
 
-    default ScriptDTO getScript(List<String> path) {
-        final ApplicationDTO applicationDTO = getApplication(path);
+    /**
+     * fetches the TypeDTO for a given path (e.g. ["Applications"])
+     * @param path path in the JS namespace
+     * @return TypeDTO
+     */
+    default TypeDTO getType(List<String> path) {
+        final String wantedId = path.get(0);
+        final Optional<TypeDTO> typeDTO = fetchInstallableApplications().getTypes().stream()
+                .filter(type -> wantedId.equals(type.getId())).findFirst();
 
-        if (applicationDTO != null) {
-            for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                if (path.get(2).equals(scriptDTO.getScriptName())) {
-                    return scriptDTO;
-                }
-            }
+        if (!typeDTO.isPresent()) {
+            LOGGER.error(String.format("Could not find TypeDTO with ID \"%s\"", wantedId));
         }
 
-        return null;
+        return typeDTO.orElse(null);
     }
 
-    default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
-        callback.accept(getScript(path));
-    }
-
+    /**
+     * fetches the CategoryDTO for a given path (e.g. ["Applications", "Development"])
+     * @param path path in the JS namespace
+     * @return CategoryDTO
+     */
     default CategoryDTO getCategory(List<String> path) {
-        final Optional<CategoryDTO> categoryDTO = fetchInstallableApplications().getCategories().stream()
-                .filter(category -> path.get(0).equals(category.getId())).findFirst();
+        final String wantedId = path.get(1);
+        final TypeDTO typeDTO = getType(path);
+        if (typeDTO == null) {
+            return null;
+        }
+
+        final Optional<CategoryDTO> categoryDTO = typeDTO.getCategories().stream()
+                .filter(category -> wantedId.equals(category.getId())).findFirst();
+
+        if (!categoryDTO.isPresent()) {
+            LOGGER.error(String.format("Could not find CategoryDTO with ID \"%s\"", wantedId));
+        }
+
         return categoryDTO.orElse(null);
     }
 
+    /**
+     * fetches the ApplicationDTO for a given path (e.g. ["Applications", "Development", "Notepad++"])
+     * @param path path in the JS namespace
+     * @return ApplicationDTO
+     */
     default ApplicationDTO getApplication(List<String> path) {
+        final String wantedName = path.get(2);
         final CategoryDTO categoryDTO = getCategory(path);
         if (categoryDTO == null) {
             return null;
         }
 
         final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
-                .filter(application -> path.get(1).equals(application.getName())).findFirst();
+                .filter(application -> wantedName.equals(application.getName())).findFirst();
+
+        if (!applicationDTO.isPresent()) {
+            LOGGER.error(String.format("Could not find ApplicationDTO with name \"%s\"", wantedName));
+        }
+
         return applicationDTO.orElse(null);
+    }
+
+    /**
+     * fetches the ScriptDTO for a given path (e.g. ["Applications", "Development", "Notepad++", "Online"])
+     * @param path path in the JS namespace
+     * @return ScriptDTO
+     */
+    default ScriptDTO getScript(List<String> path) {
+        final String wantedName = path.get(3);
+        final ApplicationDTO applicationDTO = getApplication(path);
+
+        if (applicationDTO != null) {
+            for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
+                if (wantedName.equals(scriptDTO.getScriptName())) {
+                    return scriptDTO;
+                }
+            }
+        }
+
+        LOGGER.error(String.format("Could not find ScriptDTO with name \"%s\"", wantedName));
+        return null;
+    }
+
+    default void getScript(List<String> path, Consumer<ScriptDTO> callback, Consumer<Exception> errorCallback) {
+        callback.accept(getScript(path));
     }
 }

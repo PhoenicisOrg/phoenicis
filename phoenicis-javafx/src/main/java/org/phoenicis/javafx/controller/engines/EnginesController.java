@@ -21,13 +21,16 @@ package org.phoenicis.javafx.controller.engines;
 import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.engines.EnginesSource;
-import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TypeDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
@@ -37,6 +40,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -45,16 +49,22 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ViewEngines viewEngines;
+    private final RepositoryManager repositoryManager;
     private final EnginesSource enginesSource;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
 
-    public EnginesController(ViewEngines viewEngines, EnginesSource enginesSource, ScriptInterpreter scriptInterpreter,
+    public EnginesController(ViewEngines viewEngines, RepositoryManager repositoryManager, EnginesSource enginesSource,
+            ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
         this.viewEngines = viewEngines;
+        this.repositoryManager = repositoryManager;
         this.enginesSource = enginesSource;
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
+
+        this.repositoryManager.addCallbacks(this::populateView,
+                e -> Platform.runLater(() -> viewEngines.showFailure()));
 
         this.viewEngines.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
@@ -75,14 +85,25 @@ public class EnginesController {
         return viewEngines;
     }
 
-    public void loadEngines() {
-        enginesSource.fetchAvailableEngines(versions -> Platform.runLater(() -> populateView(versions)));
+    private void populateView(RepositoryDTO repositoryDTO) {
+        Platform.runLater(() -> {
+            List<CategoryDTO> categoryDTOS = new ArrayList<>();
+            for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
+                if (typeDTO.getName().equals("Engines")) {
+                    categoryDTOS = typeDTO.getCategories();
+                }
+            }
+            setDefaultEngineIcons(categoryDTOS);
+            enginesSource.fetchAvailableEngines(categoryDTOS,
+                    versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
+        });
     }
 
     private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+        interactiveScriptSession.eval(
+                "include([\"Engines\", \"" + engineDTO.getCategory() + "\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("install", engineDTO.getCategory(), engineDTO.getSubCategory(),
@@ -93,7 +114,8 @@ public class EnginesController {
     private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Functions\", \"Engines\", \"" + engineDTO.getCategory() + "\"]);",
+        interactiveScriptSession.eval(
+                "include([\"Engines\", \"" + engineDTO.getCategory() + "\", \"Engine\", \"Object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("delete", engineDTO.getCategory(), engineDTO.getSubCategory(),
@@ -101,15 +123,10 @@ public class EnginesController {
                 }, errorCallback), errorCallback);
     }
 
-    private void populateView(List<EngineCategoryDTO> engineCategoryDTOS) {
-        setDefaultEngineIcons(engineCategoryDTOS);
-        this.viewEngines.populate(engineCategoryDTOS);
-    }
-
-    private void setDefaultEngineIcons(List<EngineCategoryDTO> engineCategoryDTOS) {
+    private void setDefaultEngineIcons(List<CategoryDTO> categoryDTOS) {
         try {
             StringBuilder cssBuilder = new StringBuilder();
-            for (EngineCategoryDTO category : engineCategoryDTOS) {
+            for (CategoryDTO category : categoryDTOS) {
                 cssBuilder.append("#" + category.getName().toLowerCase() + "Button{\n");
                 URI categoryIcon = category.getIcon();
                 if (categoryIcon == null) {

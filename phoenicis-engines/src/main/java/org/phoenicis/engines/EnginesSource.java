@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
@@ -45,17 +46,22 @@ public class EnginesSource {
         this.objectMapper = objectMapper;
     }
 
-    public void fetchAvailableEngines(Consumer<List<EngineCategoryDTO>> callback) {
+    public void fetchAvailableEngines(List<CategoryDTO> categoryDTOS, Consumer<List<EngineCategoryDTO>> callback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         List<EngineCategoryDTO> engines = new ArrayList<>();
-        interactiveScriptSession.eval("include([\"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine().getAvailableVersions()", output -> {
-                    EngineCategoryDTO wine = new EngineCategoryDTO.Builder().withName("Wine").withDescription("Wine")
-                            .withSubCategories(unSerialize(output)).build();
-                    engines.add(wine);
-                    callback.accept(engines);
-                }, this::throwError), this::throwError);
+        for (CategoryDTO categoryDTO : categoryDTOS) {
+            final String engineName = categoryDTO.getName();
+            interactiveScriptSession.eval("include([\"Engines\", \"" + engineName + "\", \"Engine\", \"Object\"]);",
+                    ignored -> interactiveScriptSession.eval("new " + engineName + "().getAvailableVersions()",
+                            output -> {
+                                EngineCategoryDTO wine = new EngineCategoryDTO.Builder().withName(engineName)
+                                        .withDescription(engineName).withSubCategories(unSerialize(output)).build();
+                                engines.add(wine);
+                                callback.accept(engines);
+                            }, this::throwError),
+                    this::throwError);
+        }
 
     }
 

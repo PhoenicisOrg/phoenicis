@@ -39,7 +39,8 @@ import java.util.stream.Collectors;
 
 public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
-    private static final String CATEGORY_ICON_NAME = "icon.png";
+    // file name of the icon for a type or category
+    private static final String ICON_NAME = "icon.png";
 
     private final File repositoryDirectory;
     private final ObjectMapper objectMapper;
@@ -59,15 +60,15 @@ public class LocalRepository implements Repository {
     @Override
     public RepositoryDTO fetchInstallableApplications() {
 
-        final File[] categoryDirectories = repositoryDirectory.listFiles();
+        final File[] typeDirectories = repositoryDirectory.listFiles();
 
-        if (categoryDirectories == null) {
+        if (typeDirectories == null) {
             return new RepositoryDTO.Builder().build();
         }
 
         LOGGER.info("Reading directory : " + repositoryDirectory);
         final RepositoryDTO.Builder repositoryDTOBuilder = new RepositoryDTO.Builder()
-                .withName(repositoryDirectory.getName()).withCategories(fetchCategories(categoryDirectories));
+                .withName(repositoryDirectory.getName()).withTypes(fetchTypes(typeDirectories));
 
         final File i18nDirectory = new File(repositoryDirectory, "i18n");
         if (i18nDirectory.exists()) {
@@ -91,7 +92,47 @@ public class LocalRepository implements Repository {
         return repositoryDTOBuilder.build();
     }
 
-    private List<CategoryDTO> fetchCategories(File[] categoryDirectories) {
+    private List<TypeDTO> fetchTypes(File[] typeDirectories) {
+        final List<TypeDTO> results = new ArrayList<>();
+
+        for (File typeDirectory : typeDirectories) {
+            if (typeDirectory.isDirectory() && !typeDirectory.getName().startsWith(".")) {
+                final File typeJson = new File(typeDirectory, "type.json");
+
+                if (typeJson.exists()) {
+                    final TypeDTO jsonTypeDTO = unSerializeType(typeJson);
+                    final TypeDTO.Builder typeDTOBuilder = new TypeDTO.Builder(jsonTypeDTO)
+                            .withCategories(fetchCategories(typeDirectory));
+
+                    if (StringUtils.isBlank(jsonTypeDTO.getId())) {
+                        if (!StringUtils.isBlank(jsonTypeDTO.getName())) {
+                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                        } else {
+                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                        }
+                    }
+
+                    final File typeIconFile = new File(typeDirectory, ICON_NAME);
+                    if (typeIconFile.exists()) {
+                        typeDTOBuilder.withIcon(typeIconFile.toURI());
+                    }
+
+                    final TypeDTO type = typeDTOBuilder.build();
+                    results.add(type);
+                }
+            }
+        }
+
+        results.sort(Comparator.comparing(TypeDTO::getName));
+        return results;
+    }
+
+    private List<CategoryDTO> fetchCategories(File typeDirectory) {
+        final File[] categoryDirectories = typeDirectory.listFiles();
+        if (categoryDirectories == null) {
+            return Collections.emptyList();
+        }
+
         final List<CategoryDTO> results = new ArrayList<>();
 
         for (File categoryDirectory : categoryDirectories) {
@@ -111,7 +152,7 @@ public class LocalRepository implements Repository {
                         }
                     }
 
-                    final File categoryIconFile = new File(categoryDirectory, CATEGORY_ICON_NAME);
+                    final File categoryIconFile = new File(categoryDirectory, ICON_NAME);
                     if (categoryIconFile.exists()) {
                         categoryDTOBuilder.withIcon(categoryIconFile.toURI());
                     }
@@ -237,6 +278,15 @@ public class LocalRepository implements Repository {
         }
 
         return results;
+    }
+
+    private TypeDTO unSerializeType(File jsonFile) {
+        try {
+            return objectMapper.readValue(jsonFile, TypeDTO.class);
+        } catch (IOException e) {
+            LOGGER.debug("JSON file not found", e);
+            return new TypeDTO.Builder().build();
+        }
     }
 
     private CategoryDTO unSerializeCategory(File jsonFile) {

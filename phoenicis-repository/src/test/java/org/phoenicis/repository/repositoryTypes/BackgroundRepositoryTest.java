@@ -21,8 +21,10 @@ package org.phoenicis.repository.repositoryTypes;
 import org.junit.Test;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TypeDTO;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 
 import static org.mockito.Matchers.any;
@@ -32,8 +34,10 @@ public class BackgroundRepositoryTest {
     private final ExecutorService mockExecutor = mock(ExecutorService.class);
     private final Repository mockRepository = mock(Repository.class);
     private final BackgroundRepository backgroundRepository = new BackgroundRepository(mockRepository, mockExecutor);
-    private RepositoryDTO mockResults = new RepositoryDTO.Builder()
-            .withCategories(Arrays.asList(mock(CategoryDTO.class), mock(CategoryDTO.class))).build();
+    private RepositoryDTO mockResults = new RepositoryDTO.Builder().withTypes(Collections.singletonList(
+            new TypeDTO.Builder().withId("Type 1")
+                    .withCategories(Arrays.asList(mock(CategoryDTO.class), mock(CategoryDTO.class))).build()))
+            .build();
 
     @Test
     public void testFetchInstallableApplications_taskIsPassed() {
