@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
@@ -150,8 +151,7 @@ public class ApplicationFilter {
          */
         if (!containTestingApplications.getValue()) {
             result &= application.getScripts().stream()
-                    .anyMatch(script -> script.getTestingOperatingSystems() == null
-                            || script.getTestingOperatingSystems().isEmpty());
+                    .anyMatch(script -> CollectionUtils.isEmpty(script.getTestingOperatingSystems()));
         }
 
         return result && filterTextMatcher.test(filterText.getValue(), application);
@@ -184,7 +184,7 @@ public class ApplicationFilter {
          * If "Testing" is not selected, don't show games that are currently in a testing stage
          */
         if (!containTestingApplications.getValue()) {
-            result &= script.getTestingOperatingSystems() == null || script.getTestingOperatingSystems().isEmpty();
+            result &= CollectionUtils.isEmpty(script.getTestingOperatingSystems());
         }
 
         return result;
