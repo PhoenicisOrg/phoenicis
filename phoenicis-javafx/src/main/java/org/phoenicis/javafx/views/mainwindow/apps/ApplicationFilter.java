@@ -144,45 +144,10 @@ public class ApplicationFilter {
      * @return True if the given <code>category</code> fulfills the filter condition, false otherwise
      */
     public boolean filter(CategoryDTO category) {
-        boolean result = true;
-
         /*
-         * If "commercial" is not selected, don't show commercial games
+         * A category can be shown, if it contains at least one visible application
          */
-        if (!containCommercialApplications.getValue()) {
-            result &= category.getApplications().stream()
-                    .anyMatch(application -> application.getScripts().stream().anyMatch(script -> script.isFree()));
-        }
-
-        /*
-         * If "Requires patch" is selected, show show games that require a patch to run (e.g. no CD)
-         */
-        if (containRequiresPatchApplications.getValue()) {
-            result &= category.getApplications().stream().anyMatch(
-                    application -> application.getScripts().stream().anyMatch(script -> !script.isRequiresPatch()));
-        }
-
-        /*
-         * If "Testing" is not selected, don't show games that are currently in a testing stage
-         */
-        if (!containTestingApplications.getValue()) {
-            result &= category.getApplications().stream().anyMatch(application -> application.getScripts().stream()
-                    .anyMatch(script -> CollectionUtils.isEmpty(script.getTestingOperatingSystems())));
-        }
-
-        /*
-         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
-         */
-        if (!containAllOSCompatibleApplications.getValue()) {
-            result &= category.getApplications().stream()
-                    .anyMatch(application -> application.getScripts().stream()
-                            .filter(script -> !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()))
-                            .anyMatch(script -> script.getCompatibleOperatingSystems()
-                                    .contains(operatingSystemFetcher.fetchCurrentOperationSystem())));
-        }
-
-        return result && category.getApplications().stream()
-                .anyMatch(application -> filterTextMatcher.test(filterText.getValue(), application));
+        return category.getApplications().stream().anyMatch(application -> filter(application));
     }
 
     /**
@@ -192,48 +157,11 @@ public class ApplicationFilter {
      * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
      */
     public boolean filter(ApplicationDTO application) {
-        boolean result = true;
-
         /*
-         * If a category has been selected by the user, show only applications that belong to the selected category
+         * An application can be shown, if it contains at least one visible script and its text matches the filter text
          */
-        if (filterCategory.isPresent()) {
-            result &= filterCategory.get().getApplications().contains(application);
-        }
-
-        /*
-         * If "commercial" is not selected, don't show commercial games
-         */
-        if (!containCommercialApplications.getValue()) {
-            result &= application.getScripts().stream().anyMatch(script -> script.isFree());
-        }
-
-        /*
-         * If "Requires patch" is selected, show games that require a patch to run (e.g. no CD)
-         */
-        if (containRequiresPatchApplications.getValue()) {
-            result &= application.getScripts().stream().anyMatch(script -> !script.isRequiresPatch());
-        }
-
-        /*
-         * If "Testing" is not selected, don't show games that are currently in a testing stage
-         */
-        if (!containTestingApplications.getValue()) {
-            result &= application.getScripts().stream()
-                    .anyMatch(script -> CollectionUtils.isEmpty(script.getTestingOperatingSystems()));
-        }
-
-        /*
-         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
-         */
-        if (!containAllOSCompatibleApplications.getValue()) {
-            result &= application.getScripts().stream()
-                    .filter(script -> !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()))
-                    .anyMatch(script -> script.getCompatibleOperatingSystems()
-                            .contains(operatingSystemFetcher.fetchCurrentOperationSystem()));
-        }
-
-        return result && filterTextMatcher.test(filterText.getValue(), application);
+        return application.getScripts().stream().anyMatch(script -> filter(script))
+                && filterTextMatcher.test(filterText.getValue(), application);
     }
 
     /**
@@ -270,8 +198,10 @@ public class ApplicationFilter {
          * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
-            result &= !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()) && script
-                    .getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem());
+            result &= Optional.ofNullable(script.getCompatibleOperatingSystems())
+                    .map(compatibleOperatingSystems -> compatibleOperatingSystems
+                            .contains(operatingSystemFetcher.fetchCurrentOperationSystem()))
+                    .orElse(false);
         }
 
         return result;
