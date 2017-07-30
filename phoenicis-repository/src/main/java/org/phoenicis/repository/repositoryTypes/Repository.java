@@ -59,8 +59,14 @@ public interface Repository {
      * @return TypeDTO
      */
     default TypeDTO getType(List<String> path) {
+        final String wantedId = path.get(0);
         final Optional<TypeDTO> typeDTO = fetchInstallableApplications().getTypes().stream()
-                .filter(type -> path.get(0).equals(type.getId())).findFirst();
+                .filter(type -> wantedId.equals(type.getId())).findFirst();
+
+        if (!typeDTO.isPresent()) {
+            LOGGER.error(String.format("Could not find TypeDTO with ID \"%s\"", wantedId));
+        }
+
         return typeDTO.orElse(null);
     }
 
@@ -70,13 +76,19 @@ public interface Repository {
      * @return CategoryDTO
      */
     default CategoryDTO getCategory(List<String> path) {
+        final String wantedId = path.get(1);
         final TypeDTO typeDTO = getType(path);
         if (typeDTO == null) {
             return null;
         }
 
         final Optional<CategoryDTO> categoryDTO = typeDTO.getCategories().stream()
-                .filter(category -> path.get(1).equals(category.getId())).findFirst();
+                .filter(category -> wantedId.equals(category.getId())).findFirst();
+
+        if (!categoryDTO.isPresent()) {
+            LOGGER.error(String.format("Could not find CategoryDTO with ID \"%s\"", wantedId));
+        }
+
         return categoryDTO.orElse(null);
     }
 
@@ -86,13 +98,19 @@ public interface Repository {
      * @return ApplicationDTO
      */
     default ApplicationDTO getApplication(List<String> path) {
+        final String wantedName = path.get(2);
         final CategoryDTO categoryDTO = getCategory(path);
         if (categoryDTO == null) {
             return null;
         }
 
         final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
-                .filter(application -> path.get(2).equals(application.getName())).findFirst();
+                .filter(application -> wantedName.equals(application.getName())).findFirst();
+
+        if (!applicationDTO.isPresent()) {
+            LOGGER.error(String.format("Could not find ApplicationDTO with name \"%s\"", wantedName));
+        }
+
         return applicationDTO.orElse(null);
     }
 
@@ -102,16 +120,18 @@ public interface Repository {
      * @return ScriptDTO
      */
     default ScriptDTO getScript(List<String> path) {
+        final String wantedName = path.get(3);
         final ApplicationDTO applicationDTO = getApplication(path);
 
         if (applicationDTO != null) {
             for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                if (path.get(3).equals(scriptDTO.getScriptName())) {
+                if (wantedName.equals(scriptDTO.getScriptName())) {
                     return scriptDTO;
                 }
             }
         }
 
+        LOGGER.error(String.format("Could not find ScriptDTO with name \"%s\"", wantedName));
         return null;
     }
 
