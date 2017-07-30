@@ -176,6 +176,7 @@ public class ApplicationFilter {
         if (!containAllOSCompatibleApplications.getValue()) {
             result &= category.getApplications().stream()
                     .anyMatch(application -> application.getScripts().stream()
+                            .filter(script -> !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()))
                             .anyMatch(script -> script.getCompatibleOperatingSystems()
                                     .contains(operatingSystemFetcher.fetchCurrentOperationSystem())));
         }
@@ -227,6 +228,7 @@ public class ApplicationFilter {
          */
         if (!containAllOSCompatibleApplications.getValue()) {
             result &= application.getScripts().stream()
+                    .filter(script -> !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()))
                     .anyMatch(script -> script.getCompatibleOperatingSystems()
                             .contains(operatingSystemFetcher.fetchCurrentOperationSystem()));
         }
@@ -268,8 +270,8 @@ public class ApplicationFilter {
          * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
-            result &= script.getCompatibleOperatingSystems()
-                    .contains(operatingSystemFetcher.fetchCurrentOperationSystem());
+            result &= !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()) && script
+                    .getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem());
         }
 
         return result;
