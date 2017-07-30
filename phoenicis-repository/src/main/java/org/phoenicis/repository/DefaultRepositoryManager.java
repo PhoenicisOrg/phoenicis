@@ -33,7 +33,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
     private Map<RepositoryLocation<? extends Repository>, Repository> repositoryMap;
 
     private MultipleRepository multipleRepository;
-    private FilterRepository filterRepository;
     private CachedRepository cachedRepository;
     private BackgroundRepository backgroundRepository;
 
@@ -54,9 +53,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.callbacks = new ArrayList<>();
 
         this.multipleRepository = new MultipleRepository();
-        this.filterRepository = new FilterRepository(multipleRepository, toolsConfiguration.operatingSystemFetcher(),
-                enforceUncompatibleOperatingSystems);
-        this.cachedRepository = new CachedRepository(filterRepository);
+        this.cachedRepository = new CachedRepository(multipleRepository);
         this.backgroundRepository = backgroundRepositoryFactory.createInstance(cachedRepository, executorService);
     }
 

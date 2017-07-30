@@ -36,6 +36,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.settings.SettingsManager;
+import org.phoenicis.tools.ToolsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,13 +64,13 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
-    public ViewApps(ThemeManager themeManager, SettingsManager settingsManager) {
+    public ViewApps(ThemeManager themeManager, SettingsManager settingsManager, ToolsConfiguration toolsConfiguration) {
         super(tr("Apps"), themeManager);
 
         this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
                 (element, event) -> showAppDetails(element, settingsManager));
 
-        this.filter = new ApplicationFilter(
+        this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
                 (filterText, application) -> application.getName().toLowerCase().contains(filterText));
 
         // initialising the category lists

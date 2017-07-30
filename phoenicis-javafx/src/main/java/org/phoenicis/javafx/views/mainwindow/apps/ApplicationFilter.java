@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
@@ -17,8 +18,11 @@ import java.util.function.Predicate;
  * @since 29.03.17
  */
 public class ApplicationFilter {
+    private final OperatingSystemFetcher operatingSystemFetcher;
+
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
+    private final ObjectProperty<Predicate<CategoryDTO>> categoryFilter;
     private final ObjectProperty<Predicate<ApplicationDTO>> applicationFilter;
     private final ObjectProperty<Predicate<ScriptDTO>> scriptFilter;
 
@@ -31,14 +35,19 @@ public class ApplicationFilter {
 
     private BooleanProperty containTestingApplications;
 
+    private BooleanProperty containAllOSCompatibleApplications;
+
     /**
      * Constructor
      *
      * @param filterTextMatcher The matcher function for the filter text
      */
-    public ApplicationFilter(BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
+            BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+        this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
+        this.categoryFilter = new SimpleObjectProperty<>(this::filter);
         this.applicationFilter = new SimpleObjectProperty<>(this::filter);
         this.scriptFilter = new SimpleObjectProperty<>(this::filter);
 
@@ -53,12 +62,16 @@ public class ApplicationFilter {
 
         this.containTestingApplications = new SimpleBooleanProperty();
         this.containTestingApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+
+        this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
+        this.containAllOSCompatibleApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
     }
 
     /**
      * Triggers a filter update
      */
     public void fire() {
+        categoryFilter.setValue(this::filter);
         applicationFilter.setValue(this::filter);
         scriptFilter.setValue(this::filter);
     }
@@ -97,6 +110,14 @@ public class ApplicationFilter {
         return this.containTestingApplications;
     }
 
+    public BooleanProperty containAllOSCompatibleApplications() {
+        return this.containAllOSCompatibleApplications;
+    }
+
+    public ObjectProperty<Predicate<CategoryDTO>> categoryFilterProperty() {
+        return this.categoryFilter;
+    }
+
     public ObjectProperty<Predicate<ApplicationDTO>> applicationFilterProperty() {
         return this.applicationFilter;
     }
@@ -114,6 +135,54 @@ public class ApplicationFilter {
         this.filterCategory = Optional.empty();
 
         this.fire();
+    }
+
+    /**
+     * Filter function for {@link CategoryDTO} objects
+     *
+     * @param category The category which should be checked
+     * @return True if the given <code>category</code> fulfills the filter condition, false otherwise
+     */
+    public boolean filter(CategoryDTO category) {
+        boolean result = true;
+
+        /*
+         * If "commercial" is not selected, don't show commercial games
+         */
+        if (!containCommercialApplications.getValue()) {
+            result &= category.getApplications().stream()
+                    .anyMatch(application -> application.getScripts().stream().anyMatch(script -> script.isFree()));
+        }
+
+        /*
+         * If "Requires patch" is selected, show show games that require a patch to run (e.g. no CD)
+         */
+        if (containRequiresPatchApplications.getValue()) {
+            result &= category.getApplications().stream().anyMatch(
+                    application -> application.getScripts().stream().anyMatch(script -> !script.isRequiresPatch()));
+        }
+
+        /*
+         * If "Testing" is not selected, don't show games that are currently in a testing stage
+         */
+        if (!containTestingApplications.getValue()) {
+            result &= category.getApplications().stream().anyMatch(application -> application.getScripts().stream()
+                    .anyMatch(script -> CollectionUtils.isEmpty(script.getTestingOperatingSystems())));
+        }
+
+        /*
+         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
+         */
+        if (!containAllOSCompatibleApplications.getValue()) {
+            result &= category.getApplications().stream()
+                    .anyMatch(application -> application.getScripts().stream()
+                            .filter(script -> !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()))
+                            .anyMatch(script -> script.getCompatibleOperatingSystems()
+                                    .contains(operatingSystemFetcher.fetchCurrentOperationSystem())));
+        }
+
+        return result && category.getApplications().stream()
+                .anyMatch(application -> filterTextMatcher.test(filterText.getValue(), application));
     }
 
     /**
@@ -154,6 +223,16 @@ public class ApplicationFilter {
                     .anyMatch(script -> CollectionUtils.isEmpty(script.getTestingOperatingSystems()));
         }
 
+        /*
+         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
+         */
+        if (!containAllOSCompatibleApplications.getValue()) {
+            result &= application.getScripts().stream()
+                    .filter(script -> !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()))
+                    .anyMatch(script -> script.getCompatibleOperatingSystems()
+                            .contains(operatingSystemFetcher.fetchCurrentOperationSystem()));
+        }
+
         return result && filterTextMatcher.test(filterText.getValue(), application);
     }
 
@@ -185,6 +264,14 @@ public class ApplicationFilter {
          */
         if (!containTestingApplications.getValue()) {
             result &= CollectionUtils.isEmpty(script.getTestingOperatingSystems());
+        }
+
+        /*
+         * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
+         */
+        if (!containAllOSCompatibleApplications.getValue()) {
+            result &= !CollectionUtils.isEmpty(script.getCompatibleOperatingSystems()) && script
+                    .getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem());
         }
 
         return result;

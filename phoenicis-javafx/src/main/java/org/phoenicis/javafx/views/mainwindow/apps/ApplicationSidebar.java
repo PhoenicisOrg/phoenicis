@@ -1,7 +1,9 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
@@ -42,6 +44,8 @@ public class ApplicationSidebar extends LeftSidebar {
     // container for the center content of this sidebar
     private LeftScrollPane centerContent;
 
+    private ObservableList<CategoryDTO> categories;
+    private FilteredList<CategoryDTO> filteredCategories;
     // the toggleable categories
     private LeftToggleGroup<CategoryDTO> categoryView;
 
@@ -51,6 +55,7 @@ public class ApplicationSidebar extends LeftSidebar {
     private CheckBox testingCheck;
     private CheckBox requiresPatchCheck;
     private CheckBox commercialCheck;
+    private CheckBox operatingSystemCheck;
 
     // widget to switch between the different list widgets in the center view
     private LeftListWidgetChooser<ApplicationDTO> listWidgetChooser;
@@ -98,7 +103,7 @@ public class ApplicationSidebar extends LeftSidebar {
      * @param categories The to be bound category list
      */
     public void bindCategories(ObservableList<CategoryDTO> categories) {
-        Bindings.bindContent(categoryView.getElements(), categories);
+        Bindings.bindContent(this.categories, categories);
     }
 
     private void populateSearchBar() {
@@ -106,8 +111,14 @@ public class ApplicationSidebar extends LeftSidebar {
     }
 
     private void populateCategories() {
+        this.categories = FXCollections.observableArrayList();
+        this.filteredCategories = new FilteredList<CategoryDTO>(categories);
+        this.filteredCategories.predicateProperty().bind(filter.categoryFilterProperty());
+
         this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
+
+        Bindings.bindContent(categoryView.getElements(), filteredCategories);
     }
 
     private void populateFilters() {
@@ -121,7 +132,12 @@ public class ApplicationSidebar extends LeftSidebar {
         this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
         this.commercialCheck.setSelected(true);
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck);
+        this.operatingSystemCheck = new LeftCheckBox(tr("All Operating Systems"));
+        this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
+        this.operatingSystemCheck.setSelected(false);
+
+        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
+                operatingSystemCheck);
     }
 
     /**
