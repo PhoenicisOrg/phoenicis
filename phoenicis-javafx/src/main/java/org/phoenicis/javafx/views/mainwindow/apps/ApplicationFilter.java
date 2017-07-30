@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
@@ -132,25 +133,25 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "commercial" is not selected don't show commercial games
+         * If "commercial" is not selected, don't show commercial games
          */
         if (!containCommercialApplications.getValue()) {
             result &= application.getScripts().stream().anyMatch(script -> script.isFree());
         }
 
         /*
-         * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
+         * If "Requires patch" is selected, show games that require a patch to run (e.g. no CD)
          */
         if (containRequiresPatchApplications.getValue()) {
             result &= application.getScripts().stream().anyMatch(script -> !script.isRequiresPatch());
         }
 
         /*
-         * If "Testing" is not selected don't show games that are currently in a testing stage
+         * If "Testing" is not selected, don't show games that are currently in a testing stage
          */
         if (!containTestingApplications.getValue()) {
             result &= application.getScripts().stream()
-                    .anyMatch(script -> script.getTestingOperatingSystems().isEmpty());
+                    .anyMatch(script -> CollectionUtils.isEmpty(script.getTestingOperatingSystems()));
         }
 
         return result && filterTextMatcher.test(filterText.getValue(), application);
@@ -166,24 +167,24 @@ public class ApplicationFilter {
         boolean result = true;
 
         /*
-         * If "commercial" is not selected don't show commercial games
+         * If "commercial" is not selected, don't show commercial games
          */
         if (!containCommercialApplications.getValue()) {
             result &= script.isFree();
         }
 
         /*
-         * If "Requires patch" is selected show show games that require a patch to run (e.g. no CD)
+         * If "Requires patch" is selected, show show games that require a patch to run (e.g. no CD)
          */
         if (containRequiresPatchApplications.getValue()) {
             result &= !script.isRequiresPatch();
         }
 
         /*
-         * If "Testing" is not selected don't show games that are currently in a testing stage
+         * If "Testing" is not selected, don't show games that are currently in a testing stage
          */
         if (!containTestingApplications.getValue()) {
-            result &= script.getTestingOperatingSystems().isEmpty();
+            result &= CollectionUtils.isEmpty(script.getTestingOperatingSystems());
         }
 
         return result;
