@@ -40,7 +40,8 @@ public class ApplicationFilter {
      *
      * @param filterTextMatcher The matcher function for the filter text
      */
-    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher, BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
+            BiPredicate<String, ApplicationDTO> filterTextMatcher) {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
@@ -167,11 +168,12 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Show all Operating Systems" is not select, show only applications that fit to the used operating system
+         * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
             result &= application.getScripts().stream()
-                    .anyMatch(script -> script.getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem()));
+                    .anyMatch(script -> script.getCompatibleOperatingSystems()
+                            .contains(operatingSystemFetcher.fetchCurrentOperationSystem()));
         }
 
         return result && filterTextMatcher.test(filterText.getValue(), application);
@@ -208,10 +210,11 @@ public class ApplicationFilter {
         }
 
         /*
-         * If "Show all Operating Systems" is not select, show only applications that fit to the used operating system
+         * If "Show all Operating Systems" is not selected, show only applications that fit to the used operating system
          */
         if (!containAllOSCompatibleApplications.getValue()) {
-            result &= script.getCompatibleOperatingSystems().contains(operatingSystemFetcher.fetchCurrentOperationSystem());
+            result &= script.getCompatibleOperatingSystems()
+                    .contains(operatingSystemFetcher.fetchCurrentOperationSystem());
         }
 
         return result;

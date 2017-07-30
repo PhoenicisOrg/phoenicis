@@ -122,11 +122,12 @@ public class ApplicationSidebar extends LeftSidebar {
         this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
         this.commercialCheck.setSelected(true);
 
-        this.operatingSystemCheck = new LeftCheckBox(tr("Show all Operating Systems"));
+        this.operatingSystemCheck = new LeftCheckBox(tr("All Operating Systems"));
         this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
         this.operatingSystemCheck.setSelected(false);
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck, operatingSystemCheck);
+        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
+                operatingSystemCheck);
     }
 
     /**
