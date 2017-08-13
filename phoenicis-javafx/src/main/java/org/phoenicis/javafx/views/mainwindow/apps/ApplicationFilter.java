@@ -43,7 +43,7 @@ public class ApplicationFilter {
      * @param filterTextMatcher The matcher function for the filter text
      */
     public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
-                             BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+            BiPredicate<String, ApplicationDTO> filterTextMatcher) {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
@@ -175,7 +175,8 @@ public class ApplicationFilter {
          * - it contains at least one visible script
          * - its text matches the filter text
          */
-        return (ignoreFilterCategoryTest || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
+        return (ignoreFilterCategoryTest
+                || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
                 && application.getScripts().stream().anyMatch(script -> filter(script))
                 && filterTextMatcher.test(filterText.getValue(), application);
     }
