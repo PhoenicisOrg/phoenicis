@@ -43,7 +43,7 @@ public class ApplicationFilter {
      * @param filterTextMatcher The matcher function for the filter text
      */
     public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
-            BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+                             BiPredicate<String, ApplicationDTO> filterTextMatcher) {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
@@ -147,20 +147,36 @@ public class ApplicationFilter {
         /*
          * A category can be shown, if it contains at least one visible application
          */
-        return category.getApplications().stream().anyMatch(application -> filter(application));
+        return category.getApplications().stream().anyMatch(application -> filter(application, true));
     }
 
     /**
-     * Filter function for {@link ApplicationDTO} objects
+     * Filter function for {@link ApplicationDTO} objects.
+     * This method call {@link #filter(ApplicationDTO, boolean)} with <code>ignoreFilterCategoryTest = false</code>.
      *
      * @param application The application which should checked
      * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
      */
     public boolean filter(ApplicationDTO application) {
+        return filter(application, false);
+    }
+
+    /**
+     * Filter function for {@link ApplicationDTO} objects
+     *
+     * @param application              The application which should checked
+     * @param ignoreFilterCategoryTest True if an optional filter category should be ignored, false otherwise
+     * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
+     */
+    private boolean filter(ApplicationDTO application, boolean ignoreFilterCategoryTest) {
         /*
-         * An application can be shown, if it contains at least one visible script and its text matches the filter text
+         * An application can be shown, if:
+         * - it belongs to the filter category, if such a category is set
+         * - it contains at least one visible script
+         * - its text matches the filter text
          */
-        return application.getScripts().stream().anyMatch(script -> filter(script))
+        return (ignoreFilterCategoryTest || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
+                && application.getScripts().stream().anyMatch(script -> filter(script))
                 && filterTextMatcher.test(filterText.getValue(), application);
     }
 
