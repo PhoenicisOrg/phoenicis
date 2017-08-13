@@ -73,6 +73,6 @@ public class MainWindow extends Stage {
     }
 
     public void showLibrary() {
-        tabPane.getSelectionModel().select(1);
+        tabPane.getSelectionModel().select(0);
     }
 }
