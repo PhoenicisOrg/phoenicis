@@ -32,6 +32,9 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class SettingsManager {
+    @Value("${tools.terminal}")
+    private String terminal;
+
     @Value("${application.theme}")
     private String theme;
 
@@ -72,6 +75,7 @@ public class SettingsManager {
     private Settings load() {
         Settings settings = new Settings();
 
+        settings.set(Setting.TERMINAL, terminal);
         settings.set(Setting.THEME, theme);
         settings.set(Setting.SCALE, scale);
         settings.set(Setting.VIEW_SOURCE, String.valueOf(viewScriptSource));
@@ -80,6 +84,14 @@ public class SettingsManager {
         settings.set(Setting.WINDOW_MAXIMIZED, String.valueOf(this.windowMaximized));
 
         return settings;
+    }
+
+    public String getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
     }
 
     public String getTheme() {

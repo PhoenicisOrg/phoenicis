@@ -19,9 +19,9 @@
 package org.phoenicis.settings;
 
 public enum Setting {
-    THEME("application.theme"), SCALE("application.scale"), VIEW_SOURCE("application.viewsource"), WINDOW_HEIGHT(
-            "application.windowHeight"), WINDOW_WIDTH(
-                    "application.windowWidth"), WINDOW_MAXIMIZED("application.windowMaximized");
+    TERMINAL("tools.terminal"), THEME("application.theme"), SCALE("application.scale"), VIEW_SOURCE(
+            "application.viewsource"), WINDOW_HEIGHT("application.windowHeight"), WINDOW_WIDTH(
+                    "application.windowWidth"), WINDOW_MAXIMIZED("application.windowMaximized"),;
 
     private final String propertyName;
 

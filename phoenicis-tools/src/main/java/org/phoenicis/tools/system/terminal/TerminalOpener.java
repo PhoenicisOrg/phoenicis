@@ -19,7 +19,10 @@
 package org.phoenicis.tools.system.terminal;
 
 import java.util.Map;
+import java.util.Optional;
 
 public interface TerminalOpener {
     void openTerminal(String workingDirectory, Map<String, String> environmentVariables);
+
+    void setTerminalCommand(Optional<String> terminalCommand);
 }

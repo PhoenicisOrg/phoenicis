@@ -26,6 +26,7 @@ import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.files.FileUtilities;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.phoenicis.tools.system.terminal.TerminalOpener;
@@ -50,10 +51,18 @@ public class WinePrefixContainerController {
     private final LibraryManager libraryManager;
     private final ShortcutManager shortcutManager;
     private final FileUtilities fileUtilities;
+    private final SettingsManager settingsManager;
 
-    public WinePrefixContainerController(ScriptInterpreter scriptInterpreter, TerminalOpener terminalOpener,
-            String wineEnginesPath, OperatingSystemFetcher operatingSystemFetcher, RegistryWriter registryWriter,
-            LibraryManager libraryManager, ShortcutManager shortcutManager, FileUtilities fileUtilities) {
+    public WinePrefixContainerController(
+            ScriptInterpreter scriptInterpreter,
+            TerminalOpener terminalOpener,
+            String wineEnginesPath,
+            OperatingSystemFetcher operatingSystemFetcher,
+            RegistryWriter registryWriter,
+            LibraryManager libraryManager,
+            ShortcutManager shortcutManager,
+            FileUtilities fileUtilities,
+            SettingsManager settingsManager) {
         this.scriptInterpreter = scriptInterpreter;
         this.terminalOpener = terminalOpener;
         this.wineEnginesPath = wineEnginesPath;
@@ -62,6 +71,7 @@ public class WinePrefixContainerController {
         this.libraryManager = libraryManager;
         this.shortcutManager = shortcutManager;
         this.fileUtilities = fileUtilities;
+        this.settingsManager = settingsManager;
     }
 
     public void repairPrefix(WinePrefixContainerDTO winePrefix, Runnable doneCallback,

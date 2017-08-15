@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 @Safe
 class MacOSTerminalOpener implements TerminalOpener {
@@ -58,5 +59,10 @@ class MacOSTerminalOpener implements TerminalOpener {
             scriptBuilder.append(String.format("export %s=\"%s\"%n", entry.getKey(), entry.getValue()));
         }
         return scriptBuilder.append("exec bash -c \"clear;printf '\\e[3J';bash --rcfile $rcFile\"").toString();
+    }
+
+    @Override
+    public void setTerminalCommand(Optional<String> terminalCommand) {
+        // currently unused
     }
 }

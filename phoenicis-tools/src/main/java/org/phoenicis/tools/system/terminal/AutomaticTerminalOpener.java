@@ -22,13 +22,16 @@ import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Safe
 public class AutomaticTerminalOpener implements TerminalOpener {
     private final TerminalOpener terminalOpener;
 
-    public AutomaticTerminalOpener(TerminalOpenerFactory terminalOpenerFactory,
-            OperatingSystemFetcher operatingSystemFetcher) {
+    public AutomaticTerminalOpener(
+            TerminalOpenerFactory terminalOpenerFactory,
+            OperatingSystemFetcher operatingSystemFetcher,
+            Optional<String> terminalCommand) {
         switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
             case LINUX:
                 terminalOpener = terminalOpenerFactory.createInstance(LinuxTerminalOpener.class);
@@ -38,14 +41,30 @@ public class AutomaticTerminalOpener implements TerminalOpener {
                 break;
             case FREEBSD:
             default:
-                terminalOpener = (workingDirectory, environment) -> {
-                    throw new UnsupportedOperationException();
+                terminalOpener = new TerminalOpener() {
+                    @Override
+                    public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    public void setTerminalCommand(Optional<String> terminalCommand) {
+                        throw new UnsupportedOperationException();
+                    }
                 };
+        }
+        if (terminalCommand.isPresent()) {
+            terminalOpener.setTerminalCommand(terminalCommand);
         }
     }
 
     @Override
     public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {
         terminalOpener.openTerminal(workingDirectory, environmentVariables);
+    }
+
+    @Override
+    public void setTerminalCommand(Optional<String> terminalCommand) {
+        // currently unused
     }
 }

@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -44,7 +45,7 @@ public class AutomaticTerminalOpenerTest {
     public void openTerminal_testOSX() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.MACOSX);
         final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
-                mockOperatingSystemFetcher);
+                mockOperatingSystemFetcher, Optional.empty());
 
         final Map<String, String> map = new HashMap<>();
         automaticTerminalOpener.openTerminal("workingDirectory", map);
@@ -57,7 +58,7 @@ public class AutomaticTerminalOpenerTest {
     public void openTerminal_testLinux() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.LINUX);
         final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
-                mockOperatingSystemFetcher);
+                mockOperatingSystemFetcher, Optional.empty());
 
         final Map<String, String> map = new HashMap<>();
         automaticTerminalOpener.openTerminal("workingDirectory", map);

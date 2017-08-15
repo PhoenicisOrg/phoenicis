@@ -21,14 +21,21 @@ package org.phoenicis.tools.system;
 import org.phoenicis.tools.system.terminal.AutomaticTerminalOpener;
 import org.phoenicis.tools.system.terminal.TerminalOpener;
 import org.phoenicis.tools.system.terminal.TerminalOpenerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Optional;
+
 @Configuration
 public class SystemConfiguration {
+    @Value("${tools.terminal}")
+    private String terminalCommand;
+
     @Bean
     public TerminalOpener terminalOpener() {
-        return new AutomaticTerminalOpener(terminalOpenerFactory(), operatingSystemFetcher());
+        return new AutomaticTerminalOpener(terminalOpenerFactory(), operatingSystemFetcher(),
+                Optional.of(terminalCommand));
     }
 
     @Bean
