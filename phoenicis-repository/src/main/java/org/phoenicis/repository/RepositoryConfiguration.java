@@ -109,10 +109,10 @@ public class RepositoryConfiguration {
         } else {
             try {
                 result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI())
+                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/Scripts").toURI())
                         .withBranch("master").build());
                 result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI())
+                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/Oldwares").toURI())
                         .withBranch("master").build());
                 result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
             } catch (URISyntaxException | MalformedURLException e) {
