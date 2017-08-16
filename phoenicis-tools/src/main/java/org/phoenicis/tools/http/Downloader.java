@@ -78,6 +78,26 @@ public class Downloader {
         return outputStream.toByteArray();
     }
 
+    public boolean isUpdateAvailable(String filePath, String url) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return true;
+        }
+        try {
+            URLConnection connection = new URL(url).openConnection();
+            connection.connect();
+            long fileLastModified = file.lastModified();
+            long urlLastModified = connection.getLastModified();
+            if (fileLastModified == 0 || urlLastModified == 0) {
+                // we know nothing
+                return true;
+            }
+            return file.lastModified() <= connection.getLastModified();
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+    }
+
     private void get(URL url, OutputStream outputStream, Consumer<ProgressEntity> onChange) {
         try {
             URLConnection connection = url.openConnection();
