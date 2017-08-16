@@ -32,7 +32,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class SettingsManager {
-    @Value("${tools.terminal}")
+    @Value("${tools.linux-terminal}")
     private String terminal;
 
     @Value("${application.theme}")

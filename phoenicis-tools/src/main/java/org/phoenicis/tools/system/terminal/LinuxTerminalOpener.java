@@ -32,6 +32,14 @@ class LinuxTerminalOpener implements TerminalOpener {
 
     private Optional<String> terminalCommand;
 
+    public LinuxTerminalOpener() {
+        this(Optional.empty());
+    }
+
+    public LinuxTerminalOpener(Optional<String> terminalCommand) {
+        this.terminalCommand = terminalCommand;
+    }
+
     @Override
     public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {
         try {
@@ -61,10 +69,5 @@ class LinuxTerminalOpener implements TerminalOpener {
             scriptBuilder.append(String.format("export %s=\"%s\"\n", entry.getKey(), entry.getValue()));
         }
         return scriptBuilder.append("exec $SHELL").toString();
-    }
-
-    @Override
-    public void setTerminalCommand(Optional<String> terminalCommand) {
-        this.terminalCommand = terminalCommand;
     }
 }

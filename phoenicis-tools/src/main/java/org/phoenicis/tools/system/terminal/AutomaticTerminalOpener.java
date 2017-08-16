@@ -31,40 +31,30 @@ public class AutomaticTerminalOpener implements TerminalOpener {
     public AutomaticTerminalOpener(
             TerminalOpenerFactory terminalOpenerFactory,
             OperatingSystemFetcher operatingSystemFetcher,
-            Optional<String> terminalCommand) {
+            Optional<String> linuxTerminalCommand) {
         switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
             case LINUX:
-                terminalOpener = terminalOpenerFactory.createInstance(LinuxTerminalOpener.class);
+                terminalOpener = terminalOpenerFactory.createInstance(LinuxTerminalOpener.class, linuxTerminalCommand);
                 break;
             case MACOSX:
                 terminalOpener = terminalOpenerFactory.createInstance(MacOSTerminalOpener.class);
                 break;
             case FREEBSD:
             default:
-                terminalOpener = new TerminalOpener() {
-                    @Override
-                    public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public void setTerminalCommand(Optional<String> terminalCommand) {
-                        throw new UnsupportedOperationException();
-                    }
+                terminalOpener = (workingDirectory, environmentVariables) -> {
+                    throw new UnsupportedOperationException();
                 };
         }
-        if (terminalCommand.isPresent()) {
-            terminalOpener.setTerminalCommand(terminalCommand);
-        }
+    }
+
+    public AutomaticTerminalOpener(
+            TerminalOpenerFactory terminalOpenerFactory,
+            OperatingSystemFetcher operatingSystemFetcher) {
+        this(terminalOpenerFactory, operatingSystemFetcher, Optional.empty());
     }
 
     @Override
     public void openTerminal(String workingDirectory, Map<String, String> environmentVariables) {
         terminalOpener.openTerminal(workingDirectory, environmentVariables);
-    }
-
-    @Override
-    public void setTerminalCommand(Optional<String> terminalCommand) {
-        // currently unused
     }
 }

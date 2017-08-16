@@ -18,10 +18,10 @@
 
 package org.phoenicis.tools.system.terminal;
 
-import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.phoenicis.entities.OperatingSystem;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,8 @@ public class AutomaticTerminalOpenerTest {
 
     @Before
     public void setUp() {
-        when(mockTerminalOpenerFactory.createInstance(LinuxTerminalOpener.class)).thenReturn(mockLinuxTerminalOpener);
+        when(mockTerminalOpenerFactory.createInstance(LinuxTerminalOpener.class, Optional.empty()))
+                .thenReturn(mockLinuxTerminalOpener);
         when(mockTerminalOpenerFactory.createInstance(MacOSTerminalOpener.class)).thenReturn(mockMacTerminalOpener);
     }
 
@@ -45,7 +46,7 @@ public class AutomaticTerminalOpenerTest {
     public void openTerminal_testOSX() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.MACOSX);
         final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
-                mockOperatingSystemFetcher, Optional.empty());
+                mockOperatingSystemFetcher);
 
         final Map<String, String> map = new HashMap<>();
         automaticTerminalOpener.openTerminal("workingDirectory", map);
@@ -58,7 +59,7 @@ public class AutomaticTerminalOpenerTest {
     public void openTerminal_testLinux() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.LINUX);
         final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
-                mockOperatingSystemFetcher, Optional.empty());
+                mockOperatingSystemFetcher);
 
         final Map<String, String> map = new HashMap<>();
         automaticTerminalOpener.openTerminal("workingDirectory", map);

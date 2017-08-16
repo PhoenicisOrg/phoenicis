@@ -18,12 +18,27 @@
 
 package org.phoenicis.tools.system.terminal;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
+
 public class TerminalOpenerFactory {
-    TerminalOpener createInstance(Class<? extends TerminalOpener> clazz) {
+    TerminalOpener createInstance(Class<? extends TerminalOpener> clazz, Optional<String> terminalCommand) {
         try {
-            return clazz.newInstance();
+            if (terminalCommand.isPresent()) {
+                try {
+                    return clazz.getDeclaredConstructor(Optional.class).newInstance(terminalCommand);
+                } catch (InvocationTargetException | NoSuchMethodException e) {
+                    return clazz.newInstance();
+                }
+            } else {
+                return clazz.newInstance();
+            }
         } catch (InstantiationException | IllegalAccessException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    TerminalOpener createInstance(Class<? extends TerminalOpener> clazz) {
+        return createInstance(clazz, Optional.empty());
     }
 }

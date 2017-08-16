@@ -29,13 +29,13 @@ import java.util.Optional;
 
 @Configuration
 public class SystemConfiguration {
-    @Value("${tools.terminal}")
-    private String terminalCommand;
+    @Value("${tools.linux-terminal}")
+    private String linuxTerminalCommand;
 
     @Bean
     public TerminalOpener terminalOpener() {
         return new AutomaticTerminalOpener(terminalOpenerFactory(), operatingSystemFetcher(),
-                Optional.of(terminalCommand));
+                Optional.of(linuxTerminalCommand));
     }
 
     @Bean
