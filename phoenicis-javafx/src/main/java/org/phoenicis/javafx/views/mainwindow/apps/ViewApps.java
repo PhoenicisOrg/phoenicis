@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -119,8 +120,11 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
      * @param categories CategoryDTO
      */
     public void populate(List<CategoryDTO> categories) {
+        List<CategoryDTO> filteredCategories = categories.stream()
+                .filter(category -> !category.getApplications().isEmpty()).collect(Collectors.toList());
+
         Platform.runLater(() -> {
-            this.categories.setAll(categories);
+            this.categories.setAll(filteredCategories);
             this.filter.clearAll();
             this.sidebar.selectAllCategories();
 
