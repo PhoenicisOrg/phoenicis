@@ -45,7 +45,7 @@ public class ApplicationSidebar extends LeftSidebar {
     private LeftScrollPane centerContent;
 
     private ObservableList<CategoryDTO> categories;
-    private FilteredList<CategoryDTO> filteredCategories;
+
     // the toggleable categories
     private LeftToggleGroup<CategoryDTO> categoryView;
 
@@ -112,13 +112,11 @@ public class ApplicationSidebar extends LeftSidebar {
 
     private void populateCategories() {
         this.categories = FXCollections.observableArrayList();
-        this.filteredCategories = new FilteredList<CategoryDTO>(categories);
-        this.filteredCategories.predicateProperty().bind(filter.categoryFilterProperty());
 
         this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
 
-        Bindings.bindContent(categoryView.getElements(), filteredCategories);
+        Bindings.bindContent(categoryView.getElements(), categories);
     }
 
     private void populateFilters() {
