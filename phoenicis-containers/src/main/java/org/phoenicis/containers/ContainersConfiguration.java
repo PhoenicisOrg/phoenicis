@@ -20,7 +20,7 @@ package org.phoenicis.containers;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
-import org.phoenicis.containers.wine.WinePrefixContainersManager;
+import org.phoenicis.containers.wine.GenericContainersManager;
 import org.phoenicis.containers.wine.configurations.*;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
@@ -57,7 +57,7 @@ public class ContainersConfiguration {
 
     @Bean
     public ContainersManager containersManager() {
-        return new WinePrefixContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
+        return new GenericContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
                 winePrefixDisplayConfiguration(), winePrefixInputConfiguration(), libraryConfiguration.libraryManager(),
                 phoenicisGlobalConfiguration.objectMapper());
     }
