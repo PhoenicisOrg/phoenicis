@@ -29,7 +29,7 @@ LATEST_STABLE_VERSION = "1.8.6";
 function Wine() {
     this._wineWebServiceUrl = Bean("propertyReader").getProperty("webservice.wine.url");
     this._wineEnginesDirectory = Bean("propertyReader").getProperty("application.user.engines") + "/wine";
-    this._winePrefixesDirectory = Bean("propertyReader").getProperty("application.user.wineprefix");
+    this._winePrefixesDirectory = Bean("propertyReader").getProperty("application.user.containers") + "/wineprefix";
     this._configFactory = Bean("compatibleConfigFileFormatFactory");
     this._OperatingSystemFetcher = Bean("operatingSystemFetcher");
     this._wineDebug = "-all";
