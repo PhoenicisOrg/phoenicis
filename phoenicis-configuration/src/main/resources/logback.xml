@@ -3,13 +3,13 @@
         <file>${user.home}/.Phoenicis/phoenicis.log</file>
         <append>false</append>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger \(l.%line\) - %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%-5level] %logger - %msg%n</pattern>
+            <pattern>[%-5level] %logger \(l.%line\) - %msg%n</pattern>
         </encoder>
     </appender>
 
