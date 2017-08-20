@@ -1,8 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
-import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
@@ -10,7 +8,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.StringConverter;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -90,14 +87,16 @@ public class WinePrefixContainerInformationTab extends Tab {
         spacer.setPrefHeight(20);
         VBox.setVgrow(spacer, Priority.NEVER);
 
-        ComboBox<EngineVersionDTO> changeEngineComboBox = new ComboBox<EngineVersionDTO>(
+        // changing engine does not work currently
+        // disabled combobox to avoid confusion of users
+        /*ComboBox<EngineVersionDTO> changeEngineComboBox = new ComboBox<EngineVersionDTO>(
                 FXCollections.observableList(engineVersions));
         changeEngineComboBox.setConverter(new StringConverter<EngineVersionDTO>() {
             @Override
             public String toString(EngineVersionDTO object) {
                 return object.getVersion();
             }
-
+        
             @Override
             public EngineVersionDTO fromString(String string) {
                 return engineVersions.stream().filter(engineVersion -> engineVersion.getVersion().equals(string))
@@ -105,12 +104,12 @@ public class WinePrefixContainerInformationTab extends Tab {
             }
         });
         changeEngineComboBox.getSelectionModel().select(engineVersions.stream()
-                .filter(engineVersion -> engineVersion.getVersion().equals(container.getVersion())).findFirst().get());
+                .filter(engineVersion -> engineVersion.getVersion().equals(container.getVersion())).findFirst().get());*/
 
         Button deleteButton = new Button(tr("Delete container"));
         deleteButton.setOnMouseClicked(event -> this.onDeletePrefix.accept(container));
 
-        informationPane.getChildren().addAll(informationContentPane, spacer, changeEngineComboBox, deleteButton);
+        informationPane.getChildren().addAll(informationContentPane, spacer, /*changeEngineComboBox,*/ deleteButton);
         this.setContent(informationPane);
     }
 
