@@ -25,10 +25,10 @@ import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
-import org.phoenicis.javafx.controller.settings.SettingsController;
+import org.phoenicis.javafx.controller.settings.JavaFxSettingsController;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindow;
-import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;
 
@@ -36,22 +36,24 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
     private final MainWindow mainWindow;
-    private final SettingsManager settingsManager;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
     private String applicationName;
 
     public MainController(String applicationName, LibraryController libraryController, AppsController appsController,
             EnginesController enginesController, ContainersController containersController,
-            SettingsController settingsController, ThemeManager themeManager, SettingsManager settingsManager) {
+            JavaFxSettingsController javaFxSettingsController, ThemeManager themeManager,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.applicationName = applicationName;
 
         this.mainWindow = new MainWindow(applicationName, libraryController.getView(), appsController.getView(),
-                enginesController.getView(), containersController.getView(), settingsController.getView(), themeManager,
-                settingsManager);
+                enginesController.getView(), containersController.getView(), javaFxSettingsController.getView(),
+                themeManager,
+                javaFxSettingsManager);
 
-        this.settingsManager = settingsManager;
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         libraryController.setOnTabOpened(mainWindow::showLibrary);
 
@@ -74,10 +76,10 @@ public class MainController {
             alert.setHeaderText(tr("Are you sure you want to close all {0} windows?", applicationName));
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                this.settingsManager.setWindowHeight(this.mainWindow.getHeight());
-                this.settingsManager.setWindowWidth(this.mainWindow.getWidth());
-                this.settingsManager.setWindowMaximized(this.mainWindow.isMaximized());
-                this.settingsManager.save();
+                this.javaFxSettingsManager.setWindowHeight(this.mainWindow.getHeight());
+                this.javaFxSettingsManager.setWindowWidth(this.mainWindow.getWidth());
+                this.javaFxSettingsManager.setWindowMaximized(this.mainWindow.isMaximized());
+                this.javaFxSettingsManager.save();
                 Platform.exit();
                 onClose.run();
             } else {

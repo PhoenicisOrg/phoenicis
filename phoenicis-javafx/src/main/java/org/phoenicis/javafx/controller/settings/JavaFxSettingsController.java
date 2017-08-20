@@ -16,18 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.common;
+package org.phoenicis.javafx.controller.settings;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
 
-public class PhoenicisScene extends Scene {
-    public PhoenicisScene(Parent parent, ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
-        super(parent);
+public class JavaFxSettingsController {
+    private final ViewSettings view;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
-        themeManager.bindStylesheets(this.getStylesheets());
+    public JavaFxSettingsController(ViewSettings view, JavaFxSettingsManager javaFxSettingsManager) {
+        this.view = view;
+        this.javaFxSettingsManager = javaFxSettingsManager;
+    }
 
-        this.getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", javaFxSettingsManager.getScale()));
+    public ViewSettings getView() {
+        return view;
     }
 }

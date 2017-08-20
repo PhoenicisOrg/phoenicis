@@ -27,12 +27,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.settings.SettingsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +56,7 @@ final class AppPanel extends DetailsView {
     private final ApplicationDTO application;
 
     private final ThemeManager themeManager;
-    private final SettingsManager settingsManager;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
     /**
      * The list of shown scripts belonging to the <code>application</code> shown inside this {@link AppPanel}.
@@ -101,19 +101,18 @@ final class AppPanel extends DetailsView {
 
     /**
      * Constructor
-     *
-     * @param application     The application to be shown inside this {@link AppPanel}
+     *  @param application     The application to be shown inside this {@link AppPanel}
      * @param filter          The filter to be used for filtering the shown scripts for the <code>application</code>
      * @param themeManager    The theme manager
-     * @param settingsManager The settings manager
+     * @param javaFxSettingsManager The settings manager
      */
     public AppPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager,
-            SettingsManager settingsManager) {
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.application = application;
         this.themeManager = themeManager;
-        this.settingsManager = settingsManager;
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.filteredScripts = new FilteredList<>(FXCollections.observableArrayList(application.getScripts()));
         this.filteredScripts.predicateProperty().bind(filter.scriptFilterProperty());
@@ -175,7 +174,7 @@ final class AppPanel extends DetailsView {
             ScriptDTO script = filteredScripts.get(i);
 
             Label scriptName = new Label(script.getScriptName());
-            if (settingsManager.isViewScriptSource()) {
+            if (javaFxSettingsManager.isViewScriptSource()) {
                 final Tooltip tooltip = new Tooltip(tr("Source: {0}", script.getScriptSource()));
                 Tooltip.install(scriptName, tooltip);
             }
