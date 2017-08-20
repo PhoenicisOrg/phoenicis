@@ -64,7 +64,6 @@ public class ContainersController {
             // enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
             final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
-                    viewContainers.getThemeManager(),
                     new ArrayList<>(),
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                     .flatMap(subCategory -> subCategory.getPackages().stream())
