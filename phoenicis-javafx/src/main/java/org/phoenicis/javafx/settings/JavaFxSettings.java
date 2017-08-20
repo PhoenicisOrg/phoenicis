@@ -16,21 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.settings;
+package org.phoenicis.javafx.settings;
 
-public enum Setting {
-    THEME("application.theme"), SCALE("application.scale"), VIEW_SOURCE("application.viewsource"), WINDOW_HEIGHT(
-            "application.windowHeight"), WINDOW_WIDTH(
-                    "application.windowWidth"), WINDOW_MAXIMIZED("application.windowMaximized");
+import java.util.Properties;
 
-    private final String propertyName;
+public class JavaFxSettings {
+    private Properties properties = new Properties();
 
-    Setting(String propertyName) {
-        this.propertyName = propertyName;
+    public String get(JavaFxSetting javaFxSetting) {
+        return properties.getProperty(javaFxSetting.toString());
     }
 
-    @Override
-    public String toString() {
-        return this.propertyName;
+    public void set(JavaFxSetting javaFxSetting, String value) {
+        properties.setProperty(javaFxSetting.toString(), value);
+    }
+
+    public void set(JavaFxSetting javaFxSetting, double value) {
+        properties.setProperty(javaFxSetting.toString(), String.valueOf(value));
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 }
