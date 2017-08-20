@@ -79,7 +79,14 @@ public class RepositoriesPanel extends StackPane {
 
         this.initializeRefreshCallback();
 
-        this.vBox.getChildren().setAll(title, repositoryGrid, priorityHint, refreshLayout);
+        // restore default
+        ToggleButton restoreDefault = new ToggleButton(tr("Restore defaults (requires restart)"));
+        restoreDefault.setOnAction(event -> {
+            this.settingsManager.restoreDefaultRepositories();
+        });
+
+        this.vBox.getChildren().setAll(this.title, this.repositoryGrid, this.priorityHint, this.refreshLayout,
+                restoreDefault);
 
         // overlay which is shown when repository is refreshed
         ProgressIndicator progressIndicator = new ProgressIndicator();
