@@ -26,6 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * manages JavaFX settings
+ */
 public class JavaFxSettingsManager {
     @Value("${application.theme}")
     private String theme;
@@ -47,10 +50,17 @@ public class JavaFxSettingsManager {
 
     private String settingsFileName = "javafx.properties";
 
+    /**
+     * constructor
+     * @param settingsFileName settings file
+     */
     public JavaFxSettingsManager(String settingsFileName) {
         this.settingsFileName = settingsFileName;
     }
 
+    /**
+     * saves settings to settings file
+     */
     public void save() {
         JavaFxSettings javaFxSettings = load();
         try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
@@ -61,6 +71,10 @@ public class JavaFxSettingsManager {
         }
     }
 
+    /**
+     * loads settings from settings file
+     * @return
+     */
     private JavaFxSettings load() {
         JavaFxSettings javaFxSettings = new JavaFxSettings();
 
