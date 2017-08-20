@@ -18,16 +18,15 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 
 import java.util.List;
 
-abstract class AbstractContainerPanel<T> extends DetailsView {
+abstract class AbstractContainerPanel<T extends ContainerDTO> extends DetailsView {
     protected final ThemeManager themeManager;
     protected final TabPane tabPane;
 
@@ -35,6 +34,7 @@ abstract class AbstractContainerPanel<T> extends DetailsView {
         this.themeManager = themeManager;
         this.tabPane = new TabPane();
 
+        this.setTitle(containerEntity.getName());
         this.setCenter(tabPane);
     }
 }
