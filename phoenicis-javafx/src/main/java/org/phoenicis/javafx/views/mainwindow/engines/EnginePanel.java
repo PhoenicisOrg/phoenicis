@@ -36,7 +36,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
-    private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
     private final EngineDTO engineDTO;
     private Node progress;
@@ -103,7 +102,6 @@ final class EnginePanel extends DetailsView {
         VBox.setVgrow(progressSpacer, Priority.NEVER);
 
         final VBox content = new VBox(informationContentPane, spacer, buttonBox, progressSpacer);
-        content.getStyleClass().addAll(CONFIGURATION_PANE_CSS_CLASS);
         this.setCenter(content);
     }
 
