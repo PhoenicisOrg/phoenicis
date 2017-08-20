@@ -72,9 +72,6 @@ final class EnginePanel extends DetailsView {
             rowIdx++;
         }
 
-        informationContentPane.setHgap(20);
-        informationContentPane.setVgap(10);
-
         Button installButton = new Button(tr("Install"));
         installButton.setOnMouseClicked(evt -> {
             try {
@@ -96,15 +93,15 @@ final class EnginePanel extends DetailsView {
         });
 
         Region spacer = new Region();
-        spacer.setPrefHeight(30);
+        spacer.getStyleClass().add("engineSpacer");
         VBox.setVgrow(spacer, Priority.NEVER);
 
         HBox buttonBox = new HBox();
-        buttonBox.setSpacing(10);
+        buttonBox.getStyleClass().add("engineButtons");
         buttonBox.getChildren().addAll(installButton, deleteButton);
 
         Region progressSpacer = new Region();
-        progressSpacer.setPrefHeight(30);
+        progressSpacer.getStyleClass().add("engineSpacer");
         VBox.setVgrow(progressSpacer, Priority.NEVER);
 
         this.setCenter(new VBox(informationContentPane, spacer, buttonBox, progressSpacer));
