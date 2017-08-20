@@ -18,21 +18,16 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 
 import java.util.List;
 
 abstract class AbstractContainerPanel<T> extends DetailsView {
-    protected final ThemeManager themeManager;
     protected final TabPane tabPane;
 
-    AbstractContainerPanel(T containerEntity, ThemeManager themeManager, List<EngineVersionDTO> engineVersions) {
-        this.themeManager = themeManager;
+    AbstractContainerPanel(T containerEntity, List<EngineVersionDTO> engineVersions) {
         this.tabPane = new TabPane();
 
         this.setCenter(tabPane);
