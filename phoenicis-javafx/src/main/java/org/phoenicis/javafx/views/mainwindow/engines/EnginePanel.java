@@ -101,8 +101,7 @@ final class EnginePanel extends DetailsView {
         progressSpacer.getStyleClass().add("engineSpacer");
         VBox.setVgrow(progressSpacer, Priority.NEVER);
 
-        final VBox content = new VBox(informationContentPane, spacer, buttonBox, progressSpacer);
-        this.setCenter(content);
+        this.setCenter(new VBox(informationContentPane, spacer, buttonBox, progressSpacer));
     }
 
     public void showProgress(VBox progressUi) {
