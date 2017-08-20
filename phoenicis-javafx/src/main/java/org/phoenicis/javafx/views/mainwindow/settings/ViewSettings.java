@@ -20,9 +20,10 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
@@ -36,13 +37,15 @@ public class ViewSettings extends MainWindowView<SettingsSidebar> {
     private final Opener opener;
 
     private SettingsManager settingsManager;
+    private JavaFxSettingsManager javaFxSettingsManager;
     private RepositoryManager repositoryManager;
 
     private ObservableList<SettingsSidebar.SettingsSidebarItem> settingsItems;
 
     public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-            SettingsManager settingsManager, RepositoryManager repositoryManager) {
+            SettingsManager settingsManager,
+            JavaFxSettingsManager javaFxSettingsManager, RepositoryManager repositoryManager) {
         super(tr("Settings"), themeManager);
         this.applicationName = applicationName;
         this.applicationVersion = applicationVersion;
@@ -50,6 +53,7 @@ public class ViewSettings extends MainWindowView<SettingsSidebar> {
         this.applicationBuildTimestamp = applicationBuildTimestamp;
         this.opener = opener;
         this.settingsManager = settingsManager;
+        this.javaFxSettingsManager = javaFxSettingsManager;
         this.repositoryManager = repositoryManager;
 
         this.initializeSettingsItems();
@@ -70,7 +74,7 @@ public class ViewSettings extends MainWindowView<SettingsSidebar> {
                 applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSidebar.SettingsSidebarItem(new UserInterfacePanel(settingsManager, themeManager),
+                new SettingsSidebar.SettingsSidebarItem(new UserInterfacePanel(javaFxSettingsManager, themeManager),
                         "userInterfaceButton", tr("User Interface")),
                 new SettingsSidebar.SettingsSidebarItem(new RepositoriesPanel(settingsManager, repositoryManager),
                         "repositoriesButton", tr("Repositories")),

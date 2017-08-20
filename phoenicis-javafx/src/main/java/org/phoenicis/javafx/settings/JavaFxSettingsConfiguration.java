@@ -16,19 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.settings;
+package org.phoenicis.javafx.settings;
 
-public enum Setting {
-    TERMINAL("tools.linux-terminal");
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-    private final String propertyName;
+@Configuration
+@PropertySource("classpath:javafx.properties")
+@PropertySource(value = "file:${application.user.root}/javafx.properties", ignoreResourceNotFound = true)
+public class JavaFxSettingsConfiguration {
 
-    Setting(String propertyName) {
-        this.propertyName = propertyName;
-    }
+    @Value("${application.user.root}/javafx.properties")
+    private String settingsFileName;
 
-    @Override
-    public String toString() {
-        return this.propertyName;
+    @Bean
+    public JavaFxSettingsManager javaFxSettingsManager() {
+        return new JavaFxSettingsManager(settingsFileName);
     }
 }

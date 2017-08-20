@@ -16,19 +16,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.settings;
+package org.phoenicis.javafx.controller.settings;
 
-public enum Setting {
-    TERMINAL("tools.linux-terminal");
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
 
-    private final String propertyName;
+public class JavaFxSettingsController {
+    private final ViewSettings view;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
-    Setting(String propertyName) {
-        this.propertyName = propertyName;
+    public JavaFxSettingsController(ViewSettings view, JavaFxSettingsManager javaFxSettingsManager) {
+        this.view = view;
+        this.javaFxSettingsManager = javaFxSettingsManager;
     }
 
-    @Override
-    public String toString() {
-        return this.propertyName;
+    public ViewSettings getView() {
+        return view;
     }
 }

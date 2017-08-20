@@ -22,6 +22,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
@@ -29,7 +30,6 @@ import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
-import org.phoenicis.settings.SettingsManager;
 
 public class MainWindow extends Stage {
     private final ViewLibrary library;
@@ -43,7 +43,7 @@ public class MainWindow extends Stage {
 
     public MainWindow(String applicationName, ViewLibrary library, ViewApps apps, ViewEngines engines,
             ViewContainers containers, ViewSettings settings, ThemeManager themeManager,
-            SettingsManager settingsManager) {
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.library = library;
@@ -58,21 +58,21 @@ public class MainWindow extends Stage {
 
         tabPane.getTabs().addAll(library, apps, containers, engines, settings);
 
-        this.scene = new PhoenicisScene(tabPane, themeManager, settingsManager);
+        this.scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
 
         this.getIcons().add(new Image(
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
         this.setResizable(true);
-        this.setHeight(settingsManager.getWindowHeight());
-        this.setWidth(settingsManager.getWindowWidth());
-        this.setMaximized(settingsManager.isWindowMaximized());
+        this.setHeight(javaFxSettingsManager.getWindowHeight());
+        this.setWidth(javaFxSettingsManager.getWindowWidth());
+        this.setMaximized(javaFxSettingsManager.isWindowMaximized());
         this.setScene(scene);
         this.setTitle(applicationName);
         this.show();
     }
 
     public void showLibrary() {
-        tabPane.getSelectionModel().select(1);
+        tabPane.getSelectionModel().select(0);
     }
 }

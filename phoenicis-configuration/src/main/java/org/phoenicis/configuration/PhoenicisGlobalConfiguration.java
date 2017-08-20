@@ -25,6 +25,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
+@PropertySource("classpath:phoenicis.properties")
 @PropertySource("classpath:${os.name}.properties")
 @PropertySource(value = "file:${application.user.settings}", ignoreResourceNotFound = true)
 public class PhoenicisGlobalConfiguration {

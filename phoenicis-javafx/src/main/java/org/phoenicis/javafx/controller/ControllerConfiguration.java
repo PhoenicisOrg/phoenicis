@@ -18,10 +18,6 @@
 
 package org.phoenicis.javafx.controller;
 
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
-import org.phoenicis.library.LibraryConfiguration;
-import org.phoenicis.settings.SettingsConfiguration;
-import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.containers.ContainersConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.apps.AppsController;
@@ -29,8 +25,12 @@ import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
-import org.phoenicis.javafx.controller.settings.SettingsController;
+import org.phoenicis.javafx.controller.settings.JavaFxSettingsController;
+import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
+import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.library.LibraryConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,13 +65,13 @@ public class ControllerConfiguration {
     private ContainersConfiguration containersConfiguration;
 
     @Autowired
-    private SettingsConfiguration settingsConfiguration;
+    private JavaFxSettingsConfiguration javaFxSettingsConfiguration;
 
     @Bean
     public MainController mainController() {
         return new MainController(applicationName, libraryController(), appsController(), enginesController(),
                 containersController(), settingsController(), themeConfiguration.themeManager(),
-                settingsConfiguration.settingsManager());
+                javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
     @Bean
@@ -109,8 +109,9 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public SettingsController settingsController() {
-        return new SettingsController(viewsConfiguration.viewSettings(), settingsConfiguration.settingsManager());
+    public JavaFxSettingsController settingsController() {
+        return new JavaFxSettingsController(viewsConfiguration.viewSettings(),
+                javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
 }

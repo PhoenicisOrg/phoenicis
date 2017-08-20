@@ -34,6 +34,7 @@ import org.phoenicis.tools.config.ConfigFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +46,10 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Safe
-public class WinePrefixContainersManager implements ContainersManager {
-    private final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainersManager.class);
-    @Value("${application.user.wineprefix}")
-    private String winePrefixPath;
+public class GenericContainersManager implements ContainersManager {
+    private final Logger LOGGER = LoggerFactory.getLogger(GenericContainersManager.class);
+    @Value("${application.user.containers}")
+    private String containersPath;
 
     private final CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory;
     private final WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration;
@@ -56,7 +57,7 @@ public class WinePrefixContainersManager implements ContainersManager {
     private final LibraryManager libraryManager;
     private ObjectMapper objectMapper;
 
-    public WinePrefixContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
+    public GenericContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
             WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
             WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration, LibraryManager libraryManager,
             ObjectMapper objectMapper) {
@@ -69,22 +70,45 @@ public class WinePrefixContainersManager implements ContainersManager {
 
     @Override
     public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        final File winePrefixesFile = new File(winePrefixPath);
-        winePrefixesFile.mkdirs();
+        final File containersFile = new File(containersPath);
+        containersFile.mkdirs();
 
-        final File[] winePrefixes = winePrefixesFile.listFiles();
+        final File[] engineDirectories = containersFile.listFiles();
 
-        if (winePrefixes == null) {
+        if (engineDirectories == null) {
             callback.accept(Collections.emptyList());
         } else {
             final List<ContainerCategoryDTO> containerCategories = new ArrayList<>();
-            final List<ContainerDTO> containers = new ArrayList<>();
-            for (File winePrefix : winePrefixes) {
+            for (File engineDirectory : engineDirectories) {
+                final List<ContainerDTO> containers = fetchContainers(engineDirectory);
+
+                if (!CollectionUtils.isEmpty(containers)) {
+                    containerCategories.add(new ContainerCategoryDTO.Builder().withName(engineDirectory.getName())
+                            .withContainers(containers).build());
+                }
+            }
+
+            callback.accept(containerCategories);
+        }
+    }
+
+    /**
+     * fetches all containers in a given directory
+     * @param directory
+     * @return found containers
+     */
+    private List<ContainerDTO> fetchContainers(File directory) {
+        final List<ContainerDTO> containers = new ArrayList<>();
+
+        final File[] containerDirectories = directory.listFiles();
+
+        if (containerDirectories != null) {
+            for (File containerDirectory : containerDirectories) {
                 final ConfigFile configFile = compatibleConfigFileFormatFactory
-                        .open(new File(winePrefix, "phoenicis.cfg"));
-                final File userRegistryFile = new File(winePrefix, "user.reg");
-                final String winePrefixPath = winePrefix.getAbsolutePath();
-                final String winePrefixName = winePrefixPath.substring(winePrefixPath.lastIndexOf('/') + 1);
+                        .open(new File(containerDirectory, "phoenicis.cfg"));
+                final File userRegistryFile = new File(containerDirectory, "user.reg");
+                final String containerPath = containerDirectory.getAbsolutePath();
+                final String containerName = containerPath.substring(containerPath.lastIndexOf('/') + 1);
 
                 // find shortcuts which use this container
                 List<ShortcutDTO> shortcutDTOS = libraryManager.fetchShortcuts().stream()
@@ -94,44 +118,42 @@ public class WinePrefixContainersManager implements ContainersManager {
                                 final Map<String, Object> shortcutProperties = objectMapper
                                         .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
                                         });
-                                toAdd = shortcutProperties.get("winePrefix").equals(winePrefixName);
+                                toAdd = shortcutProperties.get("winePrefix").equals(containerName);
                             } catch (IOException e) {
                                 LOGGER.warn("Could not parse shortcut script JSON", e);
                             }
                             return toAdd;
                         }).collect(Collectors.toList());
 
-                containers.add(new WinePrefixContainerDTO.Builder().withName(winePrefix.getName())
-                        .withPath(winePrefixPath).withInstalledShortcuts(shortcutDTOS)
-                        .withArchitecture(configFile.readValue("wineArchitecture", ""))
-                        .withDistribution(configFile.readValue("wineDistribution", ""))
-                        .withVersion(configFile.readValue("wineVersion", ""))
-                        .withGlslValue(winePrefixContainerDisplayConfiguration.getGLSL(userRegistryFile))
-                        .withDirectDrawRenderer(
-                                winePrefixContainerDisplayConfiguration.getDirectDrawRenderer(userRegistryFile))
-                        .withVideoMemorySize(
-                                winePrefixContainerDisplayConfiguration.getVideoMemorySize(userRegistryFile))
-                        .withOffscreenRenderingMode(
-                                winePrefixContainerDisplayConfiguration.getOffscreenRenderingMode(userRegistryFile))
-                        .withMultisampling(winePrefixContainerDisplayConfiguration.getMultisampling(userRegistryFile))
-                        .withAlwaysOffscreen(
-                                winePrefixContainerDisplayConfiguration.getAlwaysOffscreen(userRegistryFile))
-                        .withStrictDrawOrdering(
-                                winePrefixContainerDisplayConfiguration.getStrictDrawOrdering(userRegistryFile))
-                        .withRenderTargetModeLock(
-                                winePrefixContainerDisplayConfiguration.getRenderTargetModeLock(userRegistryFile))
-                        .withMouseWarpOverride(
-                                winePrefixContainerInputConfiguration.getMouseWarpOverride(userRegistryFile))
-                        .build());
+                if (directory.getName().equals("wineprefix")) {
+                    containers.add(new WinePrefixContainerDTO.Builder().withName(containerDirectory.getName())
+                            .withPath(containerPath).withInstalledShortcuts(shortcutDTOS)
+                            .withArchitecture(configFile.readValue("wineArchitecture", ""))
+                            .withDistribution(configFile.readValue("wineDistribution", ""))
+                            .withVersion(configFile.readValue("wineVersion", ""))
+                            .withGlslValue(winePrefixContainerDisplayConfiguration.getGLSL(userRegistryFile))
+                            .withDirectDrawRenderer(
+                                    winePrefixContainerDisplayConfiguration.getDirectDrawRenderer(userRegistryFile))
+                            .withVideoMemorySize(
+                                    winePrefixContainerDisplayConfiguration.getVideoMemorySize(userRegistryFile))
+                            .withOffscreenRenderingMode(
+                                    winePrefixContainerDisplayConfiguration.getOffscreenRenderingMode(userRegistryFile))
+                            .withMultisampling(
+                                    winePrefixContainerDisplayConfiguration.getMultisampling(userRegistryFile))
+                            .withAlwaysOffscreen(
+                                    winePrefixContainerDisplayConfiguration.getAlwaysOffscreen(userRegistryFile))
+                            .withStrictDrawOrdering(
+                                    winePrefixContainerDisplayConfiguration.getStrictDrawOrdering(userRegistryFile))
+                            .withRenderTargetModeLock(
+                                    winePrefixContainerDisplayConfiguration.getRenderTargetModeLock(userRegistryFile))
+                            .withMouseWarpOverride(
+                                    winePrefixContainerInputConfiguration.getMouseWarpOverride(userRegistryFile))
+                            .build());
+                }
             }
-
             containers.sort(ContainerDTO.nameComparator());
-
-            containerCategories
-                    .add(new ContainerCategoryDTO.Builder().withName("Wine").withContainers(containers).build());
-
-            callback.accept(containerCategories);
         }
+        return containers;
     }
 
 }

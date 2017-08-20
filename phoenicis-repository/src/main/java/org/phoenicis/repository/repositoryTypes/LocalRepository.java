@@ -177,9 +177,14 @@ public class LocalRepository implements Repository {
 
         for (File applicationDirectory : applicationDirectories) {
             if (applicationDirectory.isDirectory()) {
-                File applicationJson = new File(applicationDirectory, "application.json");
-                final ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(
-                        unSerializeApplication(applicationJson));
+                final ApplicationDTO.Builder applicationDTOBuilder;
+                final File applicationJson = new File(applicationDirectory, "application.json");
+                if (applicationJson.exists()) {
+                    applicationDTOBuilder = new ApplicationDTO.Builder(
+                            unSerializeApplication(applicationJson));
+                } else {
+                    applicationDTOBuilder = new ApplicationDTO.Builder();
+                }
 
                 if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
                     if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
@@ -254,14 +259,21 @@ public class LocalRepository implements Repository {
         for (File scriptDirectory : scriptDirectories) {
             if (scriptDirectory.isDirectory() && !"miniatures".equals(scriptDirectory.getName())
                     && !"resources".equals(scriptDirectory.getName())) {
-                final ScriptDTO scriptDTOFromJsonFile = unSerializeScript(new File(scriptDirectory, "script.json"));
-                final ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(scriptDTOFromJsonFile);
+                final ScriptDTO.Builder scriptDTOBuilder;
+                final File scriptJson = new File(scriptDirectory, "script.json");
+                if (scriptJson.exists()) {
+                    final ScriptDTO scriptDTOFromJsonFile = unSerializeScript(scriptJson);
+                    scriptDTOBuilder = new ScriptDTO.Builder(scriptDTOFromJsonFile);
 
-                scriptDTOBuilder.withScriptSource(repositorySource);
-
-                if (StringUtils.isBlank(scriptDTOFromJsonFile.getScriptName())) {
+                    if (StringUtils.isBlank(scriptDTOFromJsonFile.getScriptName())) {
+                        scriptDTOBuilder.withScriptName(scriptDirectory.getName());
+                    }
+                } else {
+                    scriptDTOBuilder = new ScriptDTO.Builder();
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
+
+                scriptDTOBuilder.withScriptSource(repositorySource);
 
                 final File scriptFile = new File(scriptDirectory, "script.js");
 

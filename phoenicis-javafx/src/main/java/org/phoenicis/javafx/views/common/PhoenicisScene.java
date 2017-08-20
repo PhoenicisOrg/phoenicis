@@ -20,16 +20,14 @@ package org.phoenicis.javafx.views.common;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import org.phoenicis.settings.SettingsManager;
-
-import java.net.URL;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 
 public class PhoenicisScene extends Scene {
-    public PhoenicisScene(Parent parent, ThemeManager themeManager, SettingsManager settingsManager) {
+    public PhoenicisScene(Parent parent, ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(parent);
 
         themeManager.bindStylesheets(this.getStylesheets());
 
-        this.getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", settingsManager.getScale()));
+        this.getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", javaFxSettingsManager.getScale()));
     }
 }
