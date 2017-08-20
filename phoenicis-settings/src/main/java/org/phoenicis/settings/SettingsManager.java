@@ -36,6 +36,13 @@ public class SettingsManager {
         this.settingsFileName = settingsFileName;
     }
 
+    /**
+     * restores the default repositories
+     */
+    public void restoreDefaultRepositories() {
+        repositoryConfiguration.restoreDefault();
+    }
+
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
         repositoryConfiguration.saveRepositories(repositoryLocations);
     }

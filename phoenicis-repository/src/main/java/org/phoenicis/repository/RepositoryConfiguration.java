@@ -123,6 +123,13 @@ public class RepositoryConfiguration {
         return result;
     }
 
+    /**
+     * restores the default settings
+     */
+    public void restoreDefault() {
+        new File(repositoryListPath).deleteOnExit();
+    }
+
     @Bean
     ClasspathRepository.Factory classPathRepositoryFactory() {
         return new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver());
