@@ -119,8 +119,6 @@ final class AppPanel extends DetailsView {
 
         this.setTitle(application.getName());
 
-        this.getStyleClass().addAll("appPresentation");
-
         this.populateCenter();
     }
 
@@ -156,6 +154,7 @@ final class AppPanel extends DetailsView {
         }
 
         this.center = new VBox(appDescription, installers, scriptGrid, miniaturesPaneWrapper);
+        center.getStyleClass().add("appPresentation");
 
         VBox.setVgrow(appDescription, Priority.ALWAYS);
 

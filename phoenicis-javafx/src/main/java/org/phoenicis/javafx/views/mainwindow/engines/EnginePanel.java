@@ -49,8 +49,6 @@ final class EnginePanel extends DetailsView {
 
         this.engineDTO = engineDTO;
 
-        this.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
-
         this.populateContent();
     }
 
@@ -104,7 +102,9 @@ final class EnginePanel extends DetailsView {
         progressSpacer.getStyleClass().add("engineSpacer");
         VBox.setVgrow(progressSpacer, Priority.NEVER);
 
-        this.setCenter(new VBox(informationContentPane, spacer, buttonBox, progressSpacer));
+        final VBox content = new VBox(informationContentPane, spacer, buttonBox, progressSpacer);
+        content.getStyleClass().addAll(CONFIGURATION_PANE_CSS_CLASS);
+        this.setCenter(content);
     }
 
     public void showProgress(VBox progressUi) {
