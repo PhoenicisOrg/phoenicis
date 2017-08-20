@@ -36,7 +36,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
-    private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
     private final EngineDTO engineDTO;
     private Node progress;
@@ -48,8 +47,6 @@ final class EnginePanel extends DetailsView {
         super();
 
         this.engineDTO = engineDTO;
-
-        this.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
 
         this.populateContent();
     }

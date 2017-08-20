@@ -119,8 +119,6 @@ final class AppPanel extends DetailsView {
 
         this.setTitle(application.getName());
 
-        this.getStyleClass().addAll("appPresentation");
-
         this.populateCenter();
     }
 
