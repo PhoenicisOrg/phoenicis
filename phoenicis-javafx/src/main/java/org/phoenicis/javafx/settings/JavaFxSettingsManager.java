@@ -88,6 +88,13 @@ public class JavaFxSettingsManager {
         return javaFxSettings;
     }
 
+    /**
+     * restores the default settings
+     */
+    public void restoreDefault() {
+        new File(settingsFileName).deleteOnExit();
+    }
+
     public String getTheme() {
         return theme;
     }

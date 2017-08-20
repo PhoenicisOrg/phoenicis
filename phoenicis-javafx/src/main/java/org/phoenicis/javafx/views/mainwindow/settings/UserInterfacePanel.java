@@ -1,10 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.animation.PauseTransition;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -96,23 +93,30 @@ public class UserInterfacePanel extends VBox {
             this.pause.playFromStart();
         });
 
+        // restore default
+        ToggleButton restoreDefault = new ToggleButton(tr("Restore defaults (requires restart)"));
+        restoreDefault.setOnAction(event -> {
+            this.javaFxSettingsManager.restoreDefault();
+        });
+
         this.themeGrid.add(themeTitle, 0, 0);
         this.themeGrid.add(themes, 1, 0);
         this.themeGrid.add(showScriptSource, 0, 1);
         this.themeGrid.add(showScriptDescription, 1, 1);
         this.themeGrid.add(scale, 0, 2);
         this.themeGrid.add(scaleDescription, 1, 2);
+        this.themeGrid.add(restoreDefault, 0, 3);
     }
 
     private void handleThemeChange() {
-        themeManager.setCurrentTheme(themes.getSelectionModel().getSelectedItem());
+        this.themeManager.setCurrentTheme(this.themes.getSelectionModel().getSelectedItem());
     }
 
     private void save() {
-        javaFxSettingsManager.setTheme(themes.getSelectionModel().getSelectedItem().getShortName());
-        javaFxSettingsManager.setScale(scale.getValue());
-        javaFxSettingsManager.setViewScriptSource(showScriptSource.isSelected());
+        this.javaFxSettingsManager.setTheme(themes.getSelectionModel().getSelectedItem().getShortName());
+        this.javaFxSettingsManager.setScale(scale.getValue());
+        this.javaFxSettingsManager.setViewScriptSource(showScriptSource.isSelected());
 
-        javaFxSettingsManager.save();
+        this.javaFxSettingsManager.save();
     }
 }
