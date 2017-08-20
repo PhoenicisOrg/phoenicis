@@ -18,9 +18,9 @@
 
 package org.phoenicis.javafx.views;
 
-import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
+import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
@@ -31,6 +31,7 @@ import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,9 @@ public class ViewsConfiguration {
     private SettingsConfiguration settingsConfiguration;
 
     @Autowired
+    private JavaFxSettingsConfiguration javaFxSettingsConfiguration;
+
+    @Autowired
     private RepositoryConfiguration repositoryConfiguration;
 
     @Autowired
@@ -77,7 +81,7 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewApps viewApps() {
-        return new ViewApps(themeConfiguration.themeManager(), settingsConfiguration.settingsManager(),
+        return new ViewApps(themeConfiguration.themeManager(), javaFxSettingsConfiguration.javaFxSettingsManager(),
                 toolsConfiguration);
     }
 
@@ -93,9 +97,13 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion,
-                applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener(),
-                settingsConfiguration.settingsManager(), repositoryConfiguration.repositoryManager());
+        return new ViewSettings(themeConfiguration.themeManager(),
+                applicationName, applicationVersion,
+                applicationGitRevision, applicationBuildTimestamp,
+                toolsConfiguration.opener(),
+                settingsConfiguration.settingsManager(),
+                javaFxSettingsConfiguration.javaFxSettingsManager(),
+                repositoryConfiguration.repositoryManager());
     }
 
     @Bean

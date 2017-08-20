@@ -27,15 +27,15 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.settings.SettingsManager;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,11 +65,12 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
-    public ViewApps(ThemeManager themeManager, SettingsManager settingsManager, ToolsConfiguration toolsConfiguration) {
+    public ViewApps(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
+            ToolsConfiguration toolsConfiguration) {
         super(tr("Apps"), themeManager);
 
         this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
-                (element, event) -> showAppDetails(element, settingsManager));
+                (element, event) -> showAppDetails(element, javaFxSettingsManager));
 
         this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
                 (filterText, application) -> application.getName().toLowerCase().contains(filterText));
@@ -137,8 +138,8 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
         getFailurePanel().getRetryButton().setOnMouseClicked(event);
     }
 
-    private void showAppDetails(ApplicationDTO application, SettingsManager settingsManager) {
-        final AppPanel appPanel = new AppPanel(application, filter, themeManager, settingsManager);
+    private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
+        final AppPanel appPanel = new AppPanel(application, filter, themeManager, javaFxSettingsManager);
         appPanel.setOnScriptInstall(this::installScript);
         appPanel.setOnClose(this::closeDetailsView);
         appPanel.setMaxWidth(400);

@@ -29,11 +29,8 @@ import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
-import org.phoenicis.repository.dto.CategoryDTO;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -60,30 +57,34 @@ public class ContainersController {
         });
 
         viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
-            List<CategoryDTO> categoryDTOS = Collections
-                    .singletonList(new CategoryDTO.Builder().withName("Wine").build());
-            enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
-                final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
-                        (WinePrefixContainerDTO) containerDTO, viewContainers.getThemeManager(),
-                        engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
-                                .flatMap(subCategory -> subCategory.getPackages().stream())
-                                .collect(Collectors.toList()),
-                        winePrefixContainerController);
+            // disabled fetching of available engines
+            // changing engine does not work currently
+            // querying Wine webservice causes performance issues on systems with slow internet connection
+            // List<CategoryDTO> categoryDTOS = Collections.singletonList(new CategoryDTO.Builder().withName("Wine").build());
+            // enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
+            final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
+                    (WinePrefixContainerDTO) containerDTO,
+                    viewContainers.getThemeManager(),
+                    new ArrayList<>(),
+                    /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
+                    .flatMap(subCategory -> subCategory.getPackages().stream())
+                    .collect(Collectors.toList()),*/
+                    winePrefixContainerController);
 
-                panel.setOnDeletePrefix(winePrefixDTO -> {
-                    new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
-                            tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
-                                    .ask(() -> {
-                                        winePrefixContainerController.deletePrefix(winePrefixDTO,
-                                                e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-                                        loadContainers();
-                                    });
-                });
-
-                panel.setOnClose(viewContainers::closeDetailsView);
-
-                Platform.runLater(() -> viewContainers.showDetailsView(panel));
+            panel.setOnDeletePrefix(winePrefixDTO -> {
+                new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
+                        tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
+                                .ask(() -> {
+                                    winePrefixContainerController.deletePrefix(winePrefixDTO,
+                                            e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                                    loadContainers();
+                                });
             });
+
+            panel.setOnClose(viewContainers::closeDetailsView);
+
+            Platform.runLater(() -> viewContainers.showDetailsView(panel));
+            //});
         });
     }
 

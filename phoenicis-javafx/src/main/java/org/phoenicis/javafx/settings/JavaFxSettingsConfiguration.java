@@ -16,26 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.settings;
+package org.phoenicis.javafx.settings;
 
-import java.util.Properties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-public class Settings {
-    private Properties properties = new Properties();
+@Configuration
+@PropertySource("classpath:javafx.properties")
+@PropertySource(value = "file:${application.user.root}/javafx.properties", ignoreResourceNotFound = true)
+public class JavaFxSettingsConfiguration {
 
-    public String get(Setting setting) {
-        return properties.getProperty(setting.toString());
-    }
+    @Value("${application.user.root}/javafx.properties")
+    private String settingsFileName;
 
-    public void set(Setting setting, String value) {
-        properties.setProperty(setting.toString(), value);
-    }
-
-    public void set(Setting setting, double value) {
-        properties.setProperty(setting.toString(), String.valueOf(value));
-    }
-
-    public Properties getProperties() {
-        return properties;
+    @Bean
+    public JavaFxSettingsManager javaFxSettingsManager() {
+        return new JavaFxSettingsManager(settingsFileName);
     }
 }
