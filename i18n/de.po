@@ -588,8 +588,7 @@ msgstr "Bitte warten Sie während wir die Datei überprüfen ..."
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:133
 #, java-format
 msgid "This wizard will help you install {0} on your computer"
-msgstr ""
-"Dieser Assistent wird Ihnen helfen, {0} auf Ihrem Computer zu installieren"
+msgstr "Dieser Assistent wird Ihnen helfen, {0} auf Ihrem Computer zu installieren"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:134
 #, java-format
