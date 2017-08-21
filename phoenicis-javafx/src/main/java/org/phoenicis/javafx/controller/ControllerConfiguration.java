@@ -25,7 +25,7 @@ import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
-import org.phoenicis.javafx.controller.settings.JavaFxSettingsController;
+import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
@@ -69,8 +69,13 @@ public class ControllerConfiguration {
 
     @Bean
     public MainController mainController() {
-        return new MainController(applicationName, libraryController(), appsController(), enginesController(),
-                containersController(), settingsController(), themeConfiguration.themeManager(),
+        return new MainController(applicationName,
+                libraryController(),
+                appsController(),
+                enginesController(),
+                containersController(),
+                settingsController(),
+                themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
@@ -109,8 +114,8 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public JavaFxSettingsController settingsController() {
-        return new JavaFxSettingsController(viewsConfiguration.viewSettings(),
+    public SettingsController settingsController() {
+        return new SettingsController(viewsConfiguration.viewSettings(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 

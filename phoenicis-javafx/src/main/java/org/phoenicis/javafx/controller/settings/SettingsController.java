@@ -21,11 +21,11 @@ package org.phoenicis.javafx.controller.settings;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
 
-public class JavaFxSettingsController {
+public class SettingsController {
     private final ViewSettings view;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
-    public JavaFxSettingsController(ViewSettings view, JavaFxSettingsManager javaFxSettingsManager) {
+    public SettingsController(ViewSettings view, JavaFxSettingsManager javaFxSettingsManager) {
         this.view = view;
         this.javaFxSettingsManager = javaFxSettingsManager;
     }
