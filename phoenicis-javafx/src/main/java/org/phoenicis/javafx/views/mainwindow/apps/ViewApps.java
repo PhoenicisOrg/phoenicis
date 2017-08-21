@@ -88,7 +88,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
         this.filteredApplications.predicateProperty().bind(filter.applicationFilterProperty());
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
-        this.sidebar = new ApplicationSidebar(availableApps, filter);
+        this.sidebar = new ApplicationSidebar(availableApps, filter, javaFxSettingsManager);
 
         // create the bindings between the visual components and the observable lists
         this.sidebar.bindCategories(this.sortedCategories);

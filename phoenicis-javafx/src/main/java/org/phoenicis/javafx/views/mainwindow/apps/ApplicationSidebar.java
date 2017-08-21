@@ -3,14 +3,14 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.function.Consumer;
 
@@ -37,6 +37,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class ApplicationSidebar extends LeftSidebar {
     private final ApplicationFilter filter;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
     // the search bar user for application filtering/searching
     private SearchBox searchBar;
@@ -72,11 +73,14 @@ public class ApplicationSidebar extends LeftSidebar {
      * Constructor
      *
      * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ApplicationSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter) {
+    public ApplicationSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.filter = filter;
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
         this.populateCategories();
@@ -146,6 +150,11 @@ public class ApplicationSidebar extends LeftSidebar {
     private void populateListWidgetChooser(CombinedListWidget<ApplicationDTO> combinedListWidget) {
         this.listWidgetChooser = new LeftListWidgetChooser<>(combinedListWidget);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
+        this.listWidgetChooser.choose(this.javaFxSettingsManager.getAppsListType());
+        this.listWidgetChooser.setOnChoose(type -> {
+            this.javaFxSettingsManager.setAppsListType(type);
+            this.javaFxSettingsManager.save();
+        });
     }
 
     /**

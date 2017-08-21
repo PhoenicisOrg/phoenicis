@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
@@ -68,16 +69,22 @@ public class LibrarySidebar extends LeftSidebar {
     private Consumer<File> onScriptRun;
     private Runnable onOpenConsole;
 
+    private final JavaFxSettingsManager javaFxSettingsManager;
+
     /**
      * Constructor
      *
      * @param applicationName    The name of this application (normally "PlayOnLinux")
      * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts) {
+    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.applicationName = applicationName;
+
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
         this.populateCategories();
@@ -128,6 +135,11 @@ public class LibrarySidebar extends LeftSidebar {
     private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
         this.listWidgetChooser = new LeftListWidgetChooser<>(availableShortcuts);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
+        this.listWidgetChooser.choose(this.javaFxSettingsManager.getLibraryListType());
+        this.listWidgetChooser.setOnChoose(type -> {
+            this.javaFxSettingsManager.setLibraryListType(type);
+            this.javaFxSettingsManager.save();
+        });
     }
 
     /**

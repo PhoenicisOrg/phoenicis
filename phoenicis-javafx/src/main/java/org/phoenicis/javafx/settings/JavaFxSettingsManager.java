@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.settings;
 
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DefaultPropertiesPersister;
 
@@ -47,6 +48,18 @@ public class JavaFxSettingsManager {
 
     @Value("${application.windowMaximized}")
     private boolean windowMaximized;
+
+    @Value("${application.appsListType}")
+    private ListWidgetType appsListType;
+
+    @Value("${application.containersListType}")
+    private ListWidgetType containersListType;
+
+    @Value("${application.enginesListType}")
+    private ListWidgetType enginesListType;
+
+    @Value("${application.libraryListType}")
+    private ListWidgetType libraryListType;
 
     private String settingsFileName = "javafx.properties";
 
@@ -84,6 +97,10 @@ public class JavaFxSettingsManager {
         javaFxSettings.set(JavaFxSetting.WINDOW_HEIGHT, this.windowHeight);
         javaFxSettings.set(JavaFxSetting.WINDOW_WIDTH, this.windowWidth);
         javaFxSettings.set(JavaFxSetting.WINDOW_MAXIMIZED, String.valueOf(this.windowMaximized));
+        javaFxSettings.set(JavaFxSetting.APPS_LIST_TYPE, String.valueOf(this.appsListType));
+        javaFxSettings.set(JavaFxSetting.CONTAINERS_LIST_TYPE, String.valueOf(this.containersListType));
+        javaFxSettings.set(JavaFxSetting.ENGINES_LIST_TYPE, String.valueOf(this.enginesListType));
+        javaFxSettings.set(JavaFxSetting.LIBRARY_LIST_TYPE, String.valueOf(this.libraryListType));
 
         return javaFxSettings;
     }
@@ -141,5 +158,37 @@ public class JavaFxSettingsManager {
 
     public boolean isWindowMaximized() {
         return windowMaximized;
+    }
+
+    public void setAppsListType(ListWidgetType appsListType) {
+        this.appsListType = appsListType;
+    }
+
+    public ListWidgetType getAppsListType() {
+        return this.appsListType;
+    }
+
+    public void setContainersListType(ListWidgetType containersListType) {
+        this.containersListType = containersListType;
+    }
+
+    public ListWidgetType getContainersListType() {
+        return this.containersListType;
+    }
+
+    public void setEnginesListType(ListWidgetType enginesListType) {
+        this.enginesListType = enginesListType;
+    }
+
+    public ListWidgetType getEnginesListType() {
+        return this.enginesListType;
+    }
+
+    public void setLibraryListType(ListWidgetType libraryListType) {
+        this.libraryListType = libraryListType;
+    }
+
+    public ListWidgetType getLibraryListType() {
+        return this.libraryListType;
     }
 }

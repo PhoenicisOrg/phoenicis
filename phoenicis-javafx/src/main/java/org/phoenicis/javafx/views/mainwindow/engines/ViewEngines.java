@@ -30,6 +30,7 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -58,7 +59,7 @@ public class ViewEngines extends MainWindowView<EngineSidebar> {
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
-    public ViewEngines(ThemeManager themeManager, String enginesPath) {
+    public ViewEngines(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
         super("Engines", themeManager);
 
         this.engineCategories = FXCollections.observableArrayList();
@@ -72,7 +73,7 @@ public class ViewEngines extends MainWindowView<EngineSidebar> {
         });
         this.mappedListWidgets = new MappedList<>(mappedSubCategoryTabs, tab -> tab.getEngineVersionsView());
 
-        this.sidebar = new EngineSidebar(mappedListWidgets);
+        this.sidebar = new EngineSidebar(mappedListWidgets, javaFxSettingsManager);
 
         this.sidebar.setOnCategorySelection(this::selectCategory);
         this.sidebar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()
