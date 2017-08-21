@@ -48,6 +48,18 @@
     -fx-border-color: @focus-color;
 }
 
+.toggle-button {
+    -fx-text-fill: @text-color;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+    &:hover, &:selected, &:selected:focused {
+        -fx-background-color: @focus-color;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+    }
+}
+
 .combo-box {
     -fx-color: @inactive-text-color;
     -fx-background-color: transparent;
