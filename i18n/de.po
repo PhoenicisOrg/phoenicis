@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-21 10:53+0200\n"
-"PO-Revision-Date: 2017-08-21 11:42+0200\n"
+"PO-Revision-Date: 2017-08-21 12:00+0200\n"
 "Last-Translator: Plata <plata@phoenicis.org>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -461,7 +461,7 @@ msgstr "Anwendungen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:123
 msgid "Testing"
-msgstr "in Testphase"
+msgstr "In Testphase"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:126
 msgid "Requires patch"
