@@ -51,6 +51,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         toolsPane.getChildren().add(title);
 
         final TilePane toolsContentPane = new TilePane();
+        toolsContentPane.setPrefColumns(3);
         toolsContentPane.getStyleClass().add("grid");
 
         Button configureWine = new Button(tr("Configure Wine"));
