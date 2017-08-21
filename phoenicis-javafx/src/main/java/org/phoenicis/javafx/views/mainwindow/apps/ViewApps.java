@@ -108,7 +108,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
             this.closeDetailsView();
         });
 
-        this.initializeSidebar();
+        this.setSidebar(this.sidebar);
     }
 
     public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {

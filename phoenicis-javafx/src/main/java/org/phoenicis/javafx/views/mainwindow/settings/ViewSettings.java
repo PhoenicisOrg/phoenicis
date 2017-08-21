@@ -66,7 +66,7 @@ public class ViewSettings extends MainWindowView<SettingsSidebar> {
 
         this.sidebar.selectFirstSettingsCategory();
 
-        this.initializeSidebar();
+        this.setSidebar(this.sidebar);
     }
 
     private void initializeSettingsItems() {

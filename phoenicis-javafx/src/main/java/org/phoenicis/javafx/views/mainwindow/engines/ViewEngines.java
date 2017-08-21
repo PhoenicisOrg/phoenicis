@@ -90,7 +90,7 @@ public class ViewEngines extends MainWindowView<EngineSidebar> {
 
         Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
 
-        this.initializeSidebar();
+        this.setSidebar(this.sidebar);
     }
 
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {

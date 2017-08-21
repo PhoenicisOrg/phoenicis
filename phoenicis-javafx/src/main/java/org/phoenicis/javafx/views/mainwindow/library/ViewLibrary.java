@@ -117,7 +117,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
             this.closeDetailsView();
         });
 
-        this.initializeSidebar();
+        this.setSidebar(this.sidebar);
 
         this.availableShortcuts.bind(sortedShortcuts);
 
