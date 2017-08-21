@@ -68,7 +68,7 @@ public class IconsListElement<E> extends VBox {
 
         this.item = item;
 
-        this.getStyleClass().add("iconListCell");
+        this.getStyleClass().add("iconListElement");
         this.setAlignment(Pos.CENTER);
 
         this.widthProperty().addListener((observable, oldValue, newValue) -> {

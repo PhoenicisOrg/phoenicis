@@ -16,6 +16,6 @@ public class DummyListElement extends VBox {
     public DummyListElement() {
         super();
 
-        this.getStyleClass().add("iconListCell");
+        this.getStyleClass().add("iconListElement");
     }
 }
