@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
@@ -64,13 +65,19 @@ public class EngineSidebar extends LeftSidebar {
     // consumer called when a category has been selected
     private Consumer<EngineCategoryDTO> onCategorySelection;
 
+    private final JavaFxSettingsManager javaFxSettingsManager;
+
     /**
      * Constructor
      *
      * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public EngineSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
+    public EngineSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
+
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
         this.populateEngineCategories();
@@ -133,6 +140,11 @@ public class EngineSidebar extends LeftSidebar {
     private void populateListWidgetChooser(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
         this.listWidgetChooser = new LeftListWidgetChooser<>(enginesVersionListWidgets);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
+        this.listWidgetChooser.choose(this.javaFxSettingsManager.getEnginesListType());
+        this.listWidgetChooser.setOnChoose(type -> {
+            this.javaFxSettingsManager.setEnginesListType(type);
+            this.javaFxSettingsManager.save();
+        });
     }
 
     /**

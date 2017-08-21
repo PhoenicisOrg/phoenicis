@@ -26,6 +26,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -66,7 +67,8 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
     };
 
-    public ViewLibrary(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper) {
+    public ViewLibrary(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Library"), themeManager);
         this.getStyleClass().add("mainWindowScene");
         this.objectMapper = objectMapper;
@@ -104,7 +106,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
             event.consume();
         });
 
-        this.sidebar = new LibrarySidebar(applicationName, availableShortcuts);
+        this.sidebar = new LibrarySidebar(applicationName, availableShortcuts, javaFxSettingsManager);
         this.sidebar.bindCategories(this.sortedCategories);
 
         // set the category selection consumers

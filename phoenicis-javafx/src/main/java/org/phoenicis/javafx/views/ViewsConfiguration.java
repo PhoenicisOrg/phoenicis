@@ -87,12 +87,14 @@ public class ViewsConfiguration {
 
     @Bean
     public ViewEngines viewEngines() {
-        return new ViewEngines(themeConfiguration.themeManager(), enginesPath);
+        return new ViewEngines(themeConfiguration.themeManager(), enginesPath,
+                javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
     @Bean
     public ViewContainers viewContainers() {
-        return new ViewContainers(themeConfiguration.themeManager());
+        return new ViewContainers(themeConfiguration.themeManager(),
+                javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
     @Bean

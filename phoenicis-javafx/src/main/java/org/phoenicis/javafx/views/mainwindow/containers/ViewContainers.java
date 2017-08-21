@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -47,12 +48,12 @@ public class ViewContainers extends MainWindowView<ContainerSidebar> {
     private ObservableList<ContainerDTO> containers;
     private SortedList<ContainerDTO> sortedContainers;
 
-    public ViewContainers(ThemeManager themeManager) {
+    public ViewContainers(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Containers"), themeManager);
 
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));
-        this.sidebar = new ContainerSidebar(availableContainers);
+        this.sidebar = new ContainerSidebar(availableContainers, javaFxSettingsManager);
 
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));

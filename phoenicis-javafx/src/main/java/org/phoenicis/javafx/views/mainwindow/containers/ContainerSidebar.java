@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
@@ -50,13 +51,18 @@ public class ContainerSidebar extends LeftSidebar {
     private Consumer<ContainerCategoryDTO> onCategorySelection = container -> {
     };
 
+    private final JavaFxSettingsManager javaFxSettingsManager;
+
     /**
      * Constructor
      *
      * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ContainerSidebar(CombinedListWidget<ContainerDTO> availableContainers) {
+    public ContainerSidebar(CombinedListWidget<ContainerDTO> availableContainers,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
         this.populateCategories();
@@ -109,6 +115,11 @@ public class ContainerSidebar extends LeftSidebar {
     private void populateListWidgetChooser(CombinedListWidget<ContainerDTO> availableContainers) {
         this.listWidgetChooser = new LeftListWidgetChooser<>(availableContainers);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
+        this.listWidgetChooser.choose(this.javaFxSettingsManager.getContainersListType());
+        this.listWidgetChooser.setOnChoose(type -> {
+            this.javaFxSettingsManager.setContainersListType(type);
+            this.javaFxSettingsManager.save();
+        });
     }
 
     /**
