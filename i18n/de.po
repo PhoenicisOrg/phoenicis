@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-21 10:53+0200\n"
-"PO-Revision-Date: 2017-08-21 10:56+0200\n"
+"PO-Revision-Date: 2017-08-21 11:42+0200\n"
 "Last-Translator: Plata <plata@phoenicis.org>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -200,11 +200,11 @@ msgstr "Ordner für Ihr Git Repository auswählen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
 msgid "Local repository"
-msgstr "Lokales Repository:"
+msgstr "Lokales Repository"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:28
 msgid "Git repository"
-msgstr "Git Repository:"
+msgstr "Git Repository"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:38
 msgid "Classpath repository"
@@ -232,7 +232,7 @@ msgstr "Repositorytyp wählen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:59
 msgid "Add a new Repository"
-msgstr "Repository hinzufügen:"
+msgstr "Repository hinzufügen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/ViewSettings.java:78
 msgid "User Interface"
