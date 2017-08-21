@@ -25,6 +25,21 @@ import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSidebar;
 
+/**
+ * The MainWindowView is the core component of the Phoenicis JavaFX GUI.
+ *
+ * It encloses common functionality (e.g. the library) inside a Tab which is presented in the main menu.
+ * Every MainWindowView is split into the basic components Sidebar, content and DetailsView.
+ *
+ * The Sidebar is shown on the left side. It shall allow a quick navigation in the categories which structure the content.
+ *
+ * The content is the main content which presents the functionality of this particular MainWindowView.
+ *
+ * The DetailsView is an optional panel on the right side which is opened to show details about currently selected items
+ * in the content.
+ *
+ * @param <Sidebar> Sidebar used by this MainWindowView
+ */
 public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
     protected final ThemeManager themeManager;
 
@@ -35,6 +50,11 @@ public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
     private HBox waitPanel;
     private FailurePanel failurePanel;
 
+    /**
+     * constructor
+     * @param text title which is shown in the tab
+     * @param themeManager
+     */
     public MainWindowView(String text, ThemeManager themeManager) {
         super(text);
 
@@ -59,44 +79,60 @@ public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
         this.failurePanel = new FailurePanel(themeManager);
     }
 
-    protected void initializeSidebar() {
-        this.content.setLeft(sidebar);
-    }
-
+    /**
+     * sets the Sidebar
+     * @param sidebar
+     */
     protected void setSidebar(Sidebar sidebar) {
         this.sidebar = sidebar;
-
-        this.initializeSidebar();
+        this.content.setLeft(this.sidebar);
     }
 
+    /**
+     * shows the given Node as content
+     * @param nodeToShow
+     */
     public void setCenter(Node nodeToShow) {
         closeDetailsView();
         this.content.setCenter(nodeToShow);
     }
 
+    /**
+     * shows the given Node in the details view
+     * @param nodeToShow
+     */
     public void showDetailsView(Node nodeToShow) {
         this.content.setRight(nodeToShow);
     }
 
+    /**
+     * closes the details view
+     */
     public void closeDetailsView() {
         this.content.setRight(null);
     }
 
+    /**
+     * shows the wait panel
+     */
     public void showWait() {
         closeDetailsView();
         setCenter(waitPanel);
     }
 
+    /**
+     * shows the failure panel
+     */
     public void showFailure() {
         closeDetailsView();
         setCenter(failurePanel);
     }
 
+    /**
+     * returns the failure panel which is shown in case of a failure
+     * @return failure panel
+     */
     public FailurePanel getFailurePanel() {
         return failurePanel;
-    }
-
-    public ThemeManager getThemeManager() {
-        return themeManager;
     }
 }

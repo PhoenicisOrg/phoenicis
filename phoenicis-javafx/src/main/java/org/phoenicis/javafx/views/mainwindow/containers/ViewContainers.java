@@ -72,7 +72,7 @@ public class ViewContainers extends MainWindowView<ContainerSidebar> {
         this.sidebar.setOnCategorySelection(category -> closeDetailsView());
         this.sidebar.setOnAllCategorySelection(this::closeDetailsView);
 
-        this.initializeSidebar();
+        this.setSidebar(this.sidebar);
     }
 
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
