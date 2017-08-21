@@ -52,6 +52,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsPane.getChildren().add(title);
 
         final TilePane toolsContentPane = new TilePane();
+        toolsContentPane.setPrefColumns(3);
         toolsContentPane.getStyleClass().add("grid");
 
         Button openTerminal = new Button(tr("Open a terminal"));
