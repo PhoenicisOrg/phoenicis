@@ -23,6 +23,7 @@ import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
+import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
@@ -74,6 +75,7 @@ public class ControllerConfiguration {
                 appsController(),
                 enginesController(),
                 containersController(),
+                installationsController(),
                 settingsController(),
                 themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
@@ -111,6 +113,11 @@ public class ControllerConfiguration {
     @Bean
     public ConsoleController consoleController() {
         return new ConsoleController(viewsConfiguration.consoleTabFactory(), scriptsConfiguration.scriptInterpreter());
+    }
+
+    @Bean
+    public InstallationsController installationsController() {
+        return new InstallationsController(viewsConfiguration.viewInstallations());
     }
 
     @Bean

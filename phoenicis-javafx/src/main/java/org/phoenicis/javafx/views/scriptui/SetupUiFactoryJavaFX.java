@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
+import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
 import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
@@ -30,23 +30,23 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
 
     private OperatingSystemFetcher operatingSystemFetcher;
     private ThemeManager themeManager;
-    private ViewLibrary viewLibrary;
+    private ViewInstallations viewInstallations;
 
     public SetupUiFactoryJavaFX(OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager,
-            ViewLibrary viewLibrary) {
+            ViewInstallations viewInstallations) {
         super();
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.themeManager = themeManager;
-        this.viewLibrary = viewLibrary;
+        this.viewInstallations = viewInstallations;
     }
 
     @Override
     public SetupUi createSetupWindow(String title) {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
-        this.viewLibrary.closeDetailsView();
-        this.viewLibrary.createNewTab(setupWindow);
-        setupWindow.setOnShouldClose(() -> this.viewLibrary.closeTab(setupWindow));
+        this.viewInstallations.closeDetailsView();
+        this.viewInstallations.createNewTab(setupWindow);
+        setupWindow.setOnShouldClose(() -> this.viewInstallations.closeTab(setupWindow));
         return setupWindow;
     }
 }

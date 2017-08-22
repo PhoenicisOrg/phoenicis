@@ -28,6 +28,7 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
+import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
 
@@ -41,8 +42,14 @@ public class MainWindow extends Stage {
 
     private TabPane tabPane;
 
-    public MainWindow(String applicationName, ViewLibrary library, ViewApps apps, ViewEngines engines,
-            ViewContainers containers, ViewSettings settings, ThemeManager themeManager,
+    public MainWindow(String applicationName,
+            ViewLibrary library,
+            ViewApps apps,
+            ViewEngines engines,
+            ViewContainers containers,
+            ViewInstallations installations,
+            ViewSettings settings,
+            ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
@@ -56,7 +63,7 @@ public class MainWindow extends Stage {
         tabPane.setId("menuPane");
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabPane.getTabs().addAll(library, apps, containers, engines, settings);
+        tabPane.getTabs().addAll(library, apps, containers, engines, installations, settings);
 
         this.scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
 
@@ -72,7 +79,7 @@ public class MainWindow extends Stage {
         this.show();
     }
 
-    public void showLibrary() {
-        tabPane.getSelectionModel().select(0);
+    public void showInstallations() {
+        tabPane.getSelectionModel().select(4);
     }
 }
