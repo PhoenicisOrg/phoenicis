@@ -135,10 +135,10 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
     }
 
     private void showInstallationDetails(InstallationDTO installationDTO) {
-        installationsPanel.setOnClose(this::closeDetailsView);
-        installationsPanel.setInstallationDTO(installationDTO);
-        installationsPanel.setMaxWidth(600);
-        this.showDetailsView(installationsPanel);
+        this.installationsPanel.setOnClose(this::closeDetailsView);
+        this.installationsPanel.setInstallationDTO(installationDTO);
+        this.installationsPanel.setMaxWidth(600);
+        this.showDetailsView(this.installationsPanel);
     }
 
     /**
@@ -147,8 +147,11 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
      */
     public void addInstallation(InstallationDTO installationDTO) {
         populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
-        Platform.runLater(() -> this.showInstallationDetails(installationDTO));
-        onInstallationAdded.run();
+        Platform.runLater(() -> {
+            this.activeInstallations.select(installationDTO);
+            this.showInstallationDetails(installationDTO);
+        });
+        this.onInstallationAdded.run();
     }
 
     /**
