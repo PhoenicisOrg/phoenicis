@@ -4,6 +4,8 @@ import org.phoenicis.scripts.nashorn.NashornEngine;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 
+import java.net.URI;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -19,9 +21,16 @@ public class SetupWizardInjector implements EngineInjector {
     @Override
     public void injectInto(NashornEngine nashornEngine) {
         nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
-            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
+            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name, null);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
             return uiSetupWizardImplementation;
         }, this::throwException);
+        nashornEngine.put("SetupWizardWithMiniature",
+                (BiFunction<String, URI, UiSetupWizardImplementation>) (name, miniature) -> {
+                    final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
+                            miniature);
+                    nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+                    return uiSetupWizardImplementation;
+                }, this::throwException);
     }
 }

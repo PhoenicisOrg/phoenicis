@@ -22,6 +22,8 @@ import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.scripts.ui.UiMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.net.URI;
+
 public class UiSetupWizardFactory {
     @Value("${user.home}")
     private String userHome;
@@ -40,9 +42,14 @@ public class UiSetupWizardFactory {
         this.setupUiFactory = setupUiFactory;
     }
 
-    public UiSetupWizardImplementation create(String title) {
+    public UiSetupWizardImplementation create(String title, URI miniature) {
         final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title,
-                uiMessageSender, setupUiFactory, userHome, applicationUserRoot, applicationName);
+                miniature,
+                uiMessageSender,
+                setupUiFactory,
+                userHome,
+                applicationUserRoot,
+                applicationName);
         uiSetupWizardImplementation.init();
         return uiSetupWizardImplementation;
     }

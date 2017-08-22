@@ -18,12 +18,15 @@
 
 package org.phoenicis.scripts.ui;
 
+import java.net.URI;
+
 @FunctionalInterface
 public interface SetupUiFactory {
     /**
      * creates a setup UI to install an application
      * @param title title of the setup UI
+     * @param miniature
      * @return
      */
-    SetupUi createSetupWindow(String title);
+    SetupUi createSetupWindow(String title, URI miniature);
 }

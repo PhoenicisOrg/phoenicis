@@ -22,6 +22,8 @@ import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 
+import java.net.URI;
+
 @Safe
 public class SetupUiFactoryCLI implements SetupUiFactory {
 
@@ -30,7 +32,7 @@ public class SetupUiFactoryCLI implements SetupUiFactory {
     }
 
     @Override
-    public SetupUi createSetupWindow(String title) {
+    public SetupUi createSetupWindow(String title, URI miniature) {
         return new SetupUiCliImplementation(title, true, true);
     }
 }
