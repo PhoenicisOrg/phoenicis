@@ -21,9 +21,12 @@ package org.phoenicis.javafx.views.scriptui;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
+
+import java.util.Date;
 
 @Safe
 public class SetupUiFactoryJavaFX implements SetupUiFactory {
@@ -45,8 +48,14 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
         this.viewInstallations.closeDetailsView();
-        this.viewInstallations.createNewTab(setupWindow);
-        setupWindow.setOnShouldClose(() -> this.viewInstallations.closeTab(setupWindow));
+        InstallationDTO installationDTO = new InstallationDTO.Builder()
+                .withCategory(InstallationDTO.InstallationType.APPS)
+                .withId(title + "_" + new Date().getTime())
+                .withName(title)
+                .withNode(setupWindow.getContent())
+                .build();
+        this.viewInstallations.addInstallation(installationDTO);
+        setupWindow.setOnShouldClose(() -> this.viewInstallations.removeInstallation(installationDTO));
         return setupWindow;
     }
 }

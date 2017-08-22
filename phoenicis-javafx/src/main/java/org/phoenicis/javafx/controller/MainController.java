@@ -66,7 +66,7 @@ public class MainController {
 
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        installationsController.setOnTabOpened(mainWindow::showInstallations);
+        installationsController.setOnInstallationAdded(mainWindow::showInstallations);
 
         appsController.setOnAppLoaded(() -> {
             containersController.loadContainers();

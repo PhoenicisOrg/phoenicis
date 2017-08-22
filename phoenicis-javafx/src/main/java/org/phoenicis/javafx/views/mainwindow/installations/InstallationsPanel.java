@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.installations;
 
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,41 +30,9 @@ final class InstallationsPanel extends DetailsView {
         super();
     }
 
-    /*public void setShortcutDTO(ShortcutDTO shortcutDTO) {
-        this.setTitle(shortcutDTO.getName());
-    
-        this.description.setText(shortcutDTO.getDescription());
-    
-        this.gridPane.getChildren().clear();
-    
-        try {
-            LOGGER.info("Reading shortcut: {}", shortcutDTO.getScript());
-    
-            final Map<String, Object> shortcutProperties = objectMapper.readValue(shortcutDTO.getScript(),
-                    new TypeReference<Map<String, Object>>() {
-                    });
-    
-            int i = 0;
-            for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
-                final Label keyLabel = new Label(tr(unCamelize(entry.getKey())) + ":");
-                keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
-                GridPane.setValignment(keyLabel, VPos.TOP);
-                this.gridPane.add(keyLabel, 0, i);
-    
-                final Label valueLabel = new Label(entry.getValue().toString());
-                valueLabel.setWrapText(true);
-                this.gridPane.add(valueLabel, 1, i);
-    
-                i++;
-            }
-    
-        } catch (IOException e) {
-            LOGGER.warn("Could not parse shortcut script JSON", e);
-        }
-    
-        this.runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
-        this.stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
-        this.uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
-    }*/
+    public void setInstallationDTO(InstallationDTO installationDTO) {
+        this.setTitle(installationDTO.getName());
+        this.setCenter(installationDTO.getNode());
+    }
 
 }

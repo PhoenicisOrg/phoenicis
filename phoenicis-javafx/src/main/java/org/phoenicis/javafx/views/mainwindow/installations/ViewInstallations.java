@@ -23,47 +23,40 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
-import org.phoenicis.javafx.views.mainwindow.library.ShortcutFilter;
-import org.phoenicis.library.dto.ShortcutCategoryDTO;
-import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 
-import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
-    private final ShortcutFilter<ShortcutDTO> filter;
+    private final InstallationsFilter<InstallationDTO> filter;
 
     private InstallationsPanel installationsPanel;
-    private final Tab installedApplicationsTab;
 
-    private CombinedListWidget<ShortcutDTO> availableShortcuts;
+    private CombinedListWidget<InstallationDTO> activeInstallations;
 
-    private ObservableList<ShortcutCategoryDTO> categories;
-    private SortedList<ShortcutCategoryDTO> sortedCategories;
+    private ObservableList<InstallationCategoryDTO> categories;
+    private SortedList<InstallationCategoryDTO> sortedCategories;
 
-    private ObservableList<ShortcutDTO> shortcuts;
-    private FilteredList<ShortcutDTO> filteredShortcuts;
-    private SortedList<ShortcutDTO> sortedShortcuts;
+    private ObservableList<InstallationDTO> installations;
+    private FilteredList<InstallationDTO> filteredInstallations;
+    private SortedList<InstallationDTO> sortedInstallations;
 
-    private TabPane libraryTabs;
-    private Runnable onTabOpened = () -> {
+    private Runnable onInstallationAdded = () -> {
     };
 
-    private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {
-    };
-    private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
+    private Consumer<InstallationDTO> onInstallationSelected = installation -> {
     };
 
     public ViewInstallations(ThemeManager themeManager,
@@ -71,107 +64,103 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         super(tr("Installations"), themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
+        activeInstallations = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
 
-            availableShortcuts.deselectAll();
-            availableShortcuts.select(selectedItem);
-            onShortcutSelected.accept(selectedItem);
-            showShortcutDetails(selectedItem);
+            activeInstallations.deselectAll();
+            activeInstallations.select(selectedItem);
+            onInstallationSelected.accept(selectedItem);
+            showInstallationDetails(selectedItem);
 
             event.consume();
         });
 
-        // initialising the category lists
+        // initialize the category lists
         this.categories = FXCollections.observableArrayList();
-        this.sortedCategories = this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
+        this.sortedCategories = this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName));
 
-        // initialising the shortcut lists
-        this.shortcuts = new ExpandedList<ShortcutDTO, ShortcutCategoryDTO>(this.sortedCategories,
-                ShortcutCategoryDTO::getShortcuts);
-        this.filteredShortcuts = new FilteredList<ShortcutDTO>(this.shortcuts);
-        this.sortedShortcuts = this.filteredShortcuts.sorted(Comparator.comparing(ShortcutDTO::getName));
+        // initialising the installations lists
+        this.installations = new ExpandedList<>(this.sortedCategories, InstallationCategoryDTO::getInstallations);
+        this.filteredInstallations = new FilteredList<>(this.installations);
+        this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
 
-        this.filter = new ShortcutFilter<ShortcutDTO>(filteredShortcuts,
-                (filterText, shortcut) -> shortcut.getName().toLowerCase().contains(filterText));
+        this.filter = new InstallationsFilter<>(filteredInstallations,
+                (filterText, installation) -> installation.getName().toLowerCase().contains(filterText));
 
-        this.availableShortcuts.setOnMouseClicked(event -> {
-            this.availableShortcuts.deselectAll();
-            this.onShortcutSelected.accept(null);
+        this.activeInstallations.setOnMouseClicked(event -> {
+            this.activeInstallations.deselectAll();
+            this.onInstallationSelected.accept(null);
             event.consume();
         });
 
-        this.sidebar = new InstallationsSidebar(availableShortcuts, javaFxSettingsManager);
+        this.sidebar = new InstallationsSidebar(activeInstallations, javaFxSettingsManager);
         this.sidebar.bindCategories(this.sortedCategories);
 
         // set the category selection consumers
         this.sidebar.setOnCategorySelection(category -> {
-            filter.setFilters(category.getShortcuts()::contains);
+            filter.setFilters(category.getInstallations()::contains);
             this.closeDetailsView();
         });
         this.sidebar.setOnAllCategorySelection(() -> {
             filter.clearFilters();
             this.closeDetailsView();
         });
+        this.sidebar.setOnSearch(searchKeyword -> {
+            final List<InstallationCategoryDTO> installationsCorrespondingToKeywords = this.categories.stream()
+                    .filter(installationDTO -> installationDTO.getName().toLowerCase()
+                            .contains(searchKeyword.toLowerCase().trim()))
+                    .collect(Collectors.toList());
+
+            Platform.runLater(() -> this.populate(installationsCorrespondingToKeywords));
+        });
 
         this.setSidebar(this.sidebar);
 
-        this.availableShortcuts.bind(sortedShortcuts);
+        this.activeInstallations.bind(sortedInstallations);
 
-        this.libraryTabs = new TabPane();
-        this.libraryTabs.getStyleClass().add("rightPane");
-
-        this.installedApplicationsTab = new Tab();
-        this.installedApplicationsTab.setClosable(false);
-        this.installedApplicationsTab.setText(tr("Overview"));
-        this.installedApplicationsTab.setContent(availableShortcuts);
-        this.libraryTabs.getTabs().add(this.installedApplicationsTab);
-
-        this.setCenter(this.libraryTabs);
+        this.setCenter(this.activeInstallations);
 
         this.installationsPanel = new InstallationsPanel();
+
     }
 
-    public void setOnSearch(Consumer<String> onSearch) {
-        this.sidebar.setOnSearch(onSearch);
-    }
-
-    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
-        //this.installationsPanel.setOnShortcutRun(onShortcutRun);
-    }
-
-    public void populate(List<ShortcutCategoryDTO> categories) {
+    private void populate(List<InstallationCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
             this.filter.clearAll();
             this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
-            this.installedApplicationsTab.setContent(availableShortcuts);
+            this.setCenter(activeInstallations);
         });
     }
 
-    private void showShortcutDetails(ShortcutDTO shortcutDTO) {
+    private void showInstallationDetails(InstallationDTO installationDTO) {
         installationsPanel.setOnClose(this::closeDetailsView);
-        //installationsPanel.setShortcutDTO(shortcutDTO);
-        installationsPanel.setMaxWidth(400);
+        installationsPanel.setInstallationDTO(installationDTO);
+        installationsPanel.setMaxWidth(600);
         this.showDetailsView(installationsPanel);
     }
 
-    public void createNewTab(Tab tab) {
-        libraryTabs.getTabs().add(tab);
-        libraryTabs.getSelectionModel().select(tab);
-        onTabOpened.run();
+    /**
+     * adds new installation
+     * @param installationDTO new installation
+     */
+    public void addInstallation(InstallationDTO installationDTO) {
+        populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
+        Platform.runLater(() -> this.showInstallationDetails(installationDTO));
+        onInstallationAdded.run();
     }
 
-    public void closeTab(Tab tab) {
-        libraryTabs.getTabs().remove(tab);
+    /**
+     * removes installation (if it exists)
+     * @param installationDTO installation to be removed
+     */
+    public void removeInstallation(InstallationDTO installationDTO) {
+        populate(new InstallationsUtils().removeInstallationFromList(this.categories, installationDTO));
     }
 
-    public void setOnTabOpened(Runnable onTabOpened) {
-        this.onTabOpened = onTabOpened;
+    public void setOnInstallationAdded(Runnable onInstallationAdded) {
+        this.onInstallationAdded = onInstallationAdded;
     }
 
-    public void setOnScriptRun(Consumer<File> onScriptRun) {
-        //this.sidebar.setOnScriptRun(onScriptRun);
-    }
 }

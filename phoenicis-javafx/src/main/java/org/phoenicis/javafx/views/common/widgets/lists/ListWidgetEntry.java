@@ -2,6 +2,7 @@ package org.phoenicis.javafx.views.common.widgets.lists;
 
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.slf4j.Logger;
@@ -158,6 +159,11 @@ public class ListWidgetEntry<E> {
     public static ListWidgetEntry<ShortcutDTO> create(ShortcutDTO shortcut) {
         return new ListWidgetEntry<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
                 DEFAULT_MINIATURE, shortcut.getName(), Optional.empty(), Optional.empty());
+    }
+
+    public static ListWidgetEntry<InstallationDTO> create(InstallationDTO installation) {
+        return new ListWidgetEntry<>(installation, Optional.ofNullable(installation.getMiniature()),
+                DEFAULT_MINIATURE, installation.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {

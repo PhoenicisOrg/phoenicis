@@ -27,8 +27,8 @@ public class InstallationsController {
         this.viewInstallations = viewInstallations;
     }
 
-    public void setOnTabOpened(Runnable onTabOpened) {
-        this.viewInstallations.setOnTabOpened(onTabOpened);
+    public void setOnInstallationAdded(Runnable onInstallationAdded) {
+        this.viewInstallations.setOnInstallationAdded(onInstallationAdded);
     }
 
     public ViewInstallations getView() {

@@ -6,9 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
-import org.phoenicis.library.dto.ShortcutCategoryDTO;
-import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.function.Consumer;
 
@@ -38,27 +38,28 @@ public class InstallationsSidebar extends LeftSidebar {
     private LeftScrollPane centerContent;
 
     // the toggleable categories
-    private LeftToggleGroup<ShortcutCategoryDTO> categoryView;
+    private LeftToggleGroup<InstallationCategoryDTO> categoryView;
 
     // consumer called after a text has been entered in the search box
-    private Consumer<String> onSearch;
+    private Consumer<String> onSearch = (searchKeyword) -> {
+    };
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<ShortcutDTO> listWidgetChooser;
+    private LeftListWidgetChooser<InstallationDTO> listWidgetChooser;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
-    private Consumer<ShortcutCategoryDTO> onCategorySelection;
+    private Consumer<InstallationCategoryDTO> onCategorySelection;
 
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     /**
      * Constructor
      *
-     * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param activeInstallations The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public InstallationsSidebar(CombinedListWidget<ShortcutDTO> availableShortcuts,
+    public InstallationsSidebar(CombinedListWidget<InstallationDTO> activeInstallations,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
@@ -66,7 +67,7 @@ public class InstallationsSidebar extends LeftSidebar {
 
         this.populateSearchBar();
         this.populateCategories();
-        this.populateListWidgetChooser(availableShortcuts);
+        this.populateListWidgetChooser(activeInstallations);
 
         this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer());
 
@@ -87,7 +88,7 @@ public class InstallationsSidebar extends LeftSidebar {
      *
      * @param categories The to be bound category list
      */
-    public void bindCategories(ObservableList<ShortcutCategoryDTO> categories) {
+    public void bindCategories(ObservableList<InstallationCategoryDTO> categories) {
         Bindings.bindContent(categoryView.getElements(), categories);
     }
 
@@ -105,16 +106,16 @@ public class InstallationsSidebar extends LeftSidebar {
     }
 
     /**
-     * This method populates the list widget choose
+     * This method populates the list widget chooser
      *
-     * @param availableShortcuts The managed CombinedListWidget
+     * @param activeInstallations The managed CombinedListWidget
      */
-    private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(availableShortcuts);
+    private void populateListWidgetChooser(CombinedListWidget<InstallationDTO> activeInstallations) {
+        this.listWidgetChooser = new LeftListWidgetChooser<>(activeInstallations);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
-        this.listWidgetChooser.choose(this.javaFxSettingsManager.getLibraryListType());
+        this.listWidgetChooser.choose(this.javaFxSettingsManager.getInstallationsListType());
         this.listWidgetChooser.setOnChoose(type -> {
-            this.javaFxSettingsManager.setLibraryListType(type);
+            this.javaFxSettingsManager.setInstallationsListType(type);
             this.javaFxSettingsManager.save();
         });
     }
@@ -140,7 +141,7 @@ public class InstallationsSidebar extends LeftSidebar {
      * @param category The category for which a toggle button should be created
      * @return The newly created toggle button
      */
-    private ToggleButton createCategoryToggleButton(ShortcutCategoryDTO category) {
+    private ToggleButton createCategoryToggleButton(InstallationCategoryDTO category) {
         final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
@@ -172,7 +173,7 @@ public class InstallationsSidebar extends LeftSidebar {
      *
      * @param onCategorySelection The new consumer to be used
      */
-    public void setOnCategorySelection(Consumer<ShortcutCategoryDTO> onCategorySelection) {
+    public void setOnCategorySelection(Consumer<InstallationCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
     }
 }
