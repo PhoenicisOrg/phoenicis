@@ -69,18 +69,16 @@ public class InstallationDTO {
      * type of the installation
      */
     public enum InstallationType {
-        APPS, ENGINES;
+        APPS("Apps"), ENGINES("Engines");
 
-        @Override
+        private String displayName;
+
+        InstallationType(String displayName) {
+            this.displayName = displayName;
+        }
+
         public String toString() {
-            switch (this) {
-                case APPS:
-                    return "Apps";
-                case ENGINES:
-                    return "Engines";
-                default:
-                    throw new IllegalArgumentException();
-            }
+            return this.displayName;
         }
     }
 
