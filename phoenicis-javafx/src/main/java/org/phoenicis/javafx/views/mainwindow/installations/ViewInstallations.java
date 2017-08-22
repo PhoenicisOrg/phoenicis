@@ -29,6 +29,7 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.SimpleFilter;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 
@@ -45,7 +46,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * This includes applications as well as engines.
  */
 public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
-    private final InstallationsFilter<InstallationDTO> filter;
+    private final SimpleFilter<InstallationDTO> filter;
 
     private InstallationsPanel installationsPanel;
 
@@ -93,7 +94,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         this.filteredInstallations = new FilteredList<>(this.installations);
         this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
 
-        this.filter = new InstallationsFilter<>(this.filteredInstallations,
+        this.filter = new SimpleFilter<>(this.filteredInstallations,
                 (filterText, installation) -> installation.getName().toLowerCase().contains(filterText));
 
         this.activeInstallations.setOnMouseClicked(event -> {

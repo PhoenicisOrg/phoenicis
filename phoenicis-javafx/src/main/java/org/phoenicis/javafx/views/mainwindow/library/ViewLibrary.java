@@ -32,6 +32,7 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.SimpleFilter;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
@@ -43,7 +44,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ViewLibrary extends MainWindowView<LibrarySidebar> {
-    private final ShortcutFilter<ShortcutDTO> filter;
+    private final SimpleFilter<ShortcutDTO> filter;
     private final ObjectMapper objectMapper;
 
     private LibraryPanel libraryPanel;
@@ -97,7 +98,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.filteredShortcuts = new FilteredList<ShortcutDTO>(this.shortcuts);
         this.sortedShortcuts = this.filteredShortcuts.sorted(Comparator.comparing(ShortcutDTO::getName));
 
-        this.filter = new ShortcutFilter<ShortcutDTO>(filteredShortcuts,
+        this.filter = new SimpleFilter<ShortcutDTO>(filteredShortcuts,
                 (filterText, shortcut) -> shortcut.getName().toLowerCase().contains(filterText));
 
         this.availableShortcuts.setOnMouseClicked(event -> {
