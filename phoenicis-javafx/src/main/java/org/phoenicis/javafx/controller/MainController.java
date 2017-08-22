@@ -25,7 +25,7 @@ import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
-import org.phoenicis.javafx.controller.settings.JavaFxSettingsController;
+import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.MainWindow;
@@ -40,16 +40,24 @@ public class MainController {
 
     private String applicationName;
 
-    public MainController(String applicationName, LibraryController libraryController, AppsController appsController,
-            EnginesController enginesController, ContainersController containersController,
-            JavaFxSettingsController javaFxSettingsController, ThemeManager themeManager,
+    public MainController(String applicationName,
+            LibraryController libraryController,
+            AppsController appsController,
+            EnginesController enginesController,
+            ContainersController containersController,
+            SettingsController settingsController,
+            ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.applicationName = applicationName;
 
-        this.mainWindow = new MainWindow(applicationName, libraryController.getView(), appsController.getView(),
-                enginesController.getView(), containersController.getView(), javaFxSettingsController.getView(),
+        this.mainWindow = new MainWindow(applicationName,
+                libraryController.getView(),
+                appsController.getView(),
+                enginesController.getView(),
+                containersController.getView(),
+                settingsController.getView(),
                 themeManager,
                 javaFxSettingsManager);
 
