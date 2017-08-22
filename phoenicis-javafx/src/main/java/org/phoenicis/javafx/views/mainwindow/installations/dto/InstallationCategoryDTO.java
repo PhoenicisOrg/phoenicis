@@ -36,7 +36,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Represents a category of application
+ * Represents a category of an installation (e.g. applications or engines)
  */
 @JsonDeserialize(builder = InstallationCategoryDTO.Builder.class)
 @Translatable

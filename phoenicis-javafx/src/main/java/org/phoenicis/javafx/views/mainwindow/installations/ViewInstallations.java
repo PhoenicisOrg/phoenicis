@@ -39,6 +39,11 @@ import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * The "Installations" tab shows the currently active installations.
+ *
+ * This includes applications as well as engines.
+ */
 public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
     private final InstallationsFilter<InstallationDTO> filter;
 
@@ -59,16 +64,21 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
     private Consumer<InstallationDTO> onInstallationSelected = installation -> {
     };
 
+    /**
+     * constructor
+     * @param themeManager
+     * @param javaFxSettingsManager
+     */
     public ViewInstallations(ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Installations"), themeManager);
         this.getStyleClass().add("mainWindowScene");
 
-        activeInstallations = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
+        this.activeInstallations = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
 
-            activeInstallations.deselectAll();
-            activeInstallations.select(selectedItem);
-            onInstallationSelected.accept(selectedItem);
+            this.activeInstallations.deselectAll();
+            this.activeInstallations.select(selectedItem);
+            this.onInstallationSelected.accept(selectedItem);
             showInstallationDetails(selectedItem);
 
             event.consume();
@@ -83,7 +93,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         this.filteredInstallations = new FilteredList<>(this.installations);
         this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
 
-        this.filter = new InstallationsFilter<>(filteredInstallations,
+        this.filter = new InstallationsFilter<>(this.filteredInstallations,
                 (filterText, installation) -> installation.getName().toLowerCase().contains(filterText));
 
         this.activeInstallations.setOnMouseClicked(event -> {
@@ -115,7 +125,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
 
         this.setSidebar(this.sidebar);
 
-        this.activeInstallations.bind(sortedInstallations);
+        this.activeInstallations.bind(this.sortedInstallations);
 
         this.setCenter(this.activeInstallations);
 
@@ -123,6 +133,10 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
 
     }
 
+    /**
+     * shows the given installations
+     * @param categories
+     */
     private void populate(List<InstallationCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
@@ -130,10 +144,14 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
             this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
-            this.setCenter(activeInstallations);
+            this.setCenter(this.activeInstallations);
         });
     }
 
+    /**
+     * shows details of the given installation
+     * @param installationDTO
+     */
     private void showInstallationDetails(InstallationDTO installationDTO) {
         this.installationsPanel.setOnClose(this::closeDetailsView);
         this.installationsPanel.setInstallationDTO(installationDTO);
@@ -162,6 +180,10 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         populate(new InstallationsUtils().removeInstallationFromList(this.categories, installationDTO));
     }
 
+    /**
+     * sets Runnable which is executed whenever a new installation is added
+     * @param onInstallationAdded
+     */
     public void setOnInstallationAdded(Runnable onInstallationAdded) {
         this.onInstallationAdded = onInstallationAdded;
     }

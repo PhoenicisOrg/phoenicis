@@ -29,6 +29,10 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.util.Comparator;
 
+/**
+ * Represents an installation
+ * e.g. of an app or an engine
+ */
 @JsonDeserialize(builder = InstallationDTO.Builder.class)
 public class InstallationDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstallationDTO.class);
@@ -61,16 +65,19 @@ public class InstallationDTO {
         node = builder.node;
     }
 
+    /**
+     * type of the installation
+     */
     public enum InstallationType {
-        APPS, WINE;
+        APPS, ENGINES;
 
         @Override
         public String toString() {
             switch (this) {
                 case APPS:
                     return "Apps";
-                case WINE:
-                    return "Wine";
+                case ENGINES:
+                    return "Engines";
                 default:
                     throw new IllegalArgumentException();
             }

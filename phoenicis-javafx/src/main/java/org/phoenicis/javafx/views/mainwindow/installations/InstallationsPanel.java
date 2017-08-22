@@ -23,13 +23,16 @@ import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * shows details for an installation
+ */
 final class InstallationsPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(InstallationsPanel.class);
 
-    public InstallationsPanel() {
-        super();
-    }
-
+    /**
+     * set installation which shall be shown in this details view
+     * @param installationDTO
+     */
     public void setInstallationDTO(InstallationDTO installationDTO) {
         this.setTitle(installationDTO.getName());
         this.setCenter(installationDTO.getNode());
