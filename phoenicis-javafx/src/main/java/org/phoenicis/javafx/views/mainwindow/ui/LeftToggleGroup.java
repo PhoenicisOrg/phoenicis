@@ -89,6 +89,9 @@ public class LeftToggleGroup<E> extends LeftGroup {
         Bindings.bindContent(this.toggleGroup.getToggles(), this.adhocToggleButtons);
         Bindings.bindContent(this.toggleButtonBox.getChildren(), this.adhocToggleButtons);
 
+        /*
+         * Ensure that one ToggleButton is always selected.
+         */
         this.adhocToggleButtons.addListener(new ListChangeListener<ToggleButton>() {
             @Override
             public void onChanged(Change<? extends ToggleButton> change) {
