@@ -99,6 +99,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
             this.closeDetailsView();
         });
         this.sidebar.setOnAllCategorySelection(() -> {
+            System.out.println("Dong!");
             filter.setFilterCategory(null);
             this.closeDetailsView();
         });

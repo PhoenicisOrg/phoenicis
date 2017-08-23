@@ -22,7 +22,8 @@ public class ApplicationFilter {
 
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
-    private final ObjectProperty<Predicate<CategoryDTO>> categoryFilter;
+    private Optional<Runnable> onCategoryFilterChanged;
+
     private final ObjectProperty<Predicate<ApplicationDTO>> applicationFilter;
     private final ObjectProperty<Predicate<ScriptDTO>> scriptFilter;
 
@@ -47,7 +48,6 @@ public class ApplicationFilter {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
-        this.categoryFilter = new SimpleObjectProperty<>(this::filter);
         this.applicationFilter = new SimpleObjectProperty<>(this::filter);
         this.scriptFilter = new SimpleObjectProperty<>(this::filter);
 
@@ -71,7 +71,7 @@ public class ApplicationFilter {
      * Triggers a filter update
      */
     public void fire() {
-        categoryFilter.setValue(this::filter);
+        onCategoryFilterChanged.ifPresent(Runnable::run);
         applicationFilter.setValue(this::filter);
         scriptFilter.setValue(this::filter);
     }
@@ -98,6 +98,11 @@ public class ApplicationFilter {
         this.fire();
     }
 
+    public void setOnCategoryFilterChanged(Runnable onCategoryFilterChanged) {
+        this.onCategoryFilterChanged = Optional.of(onCategoryFilterChanged);
+        this.onCategoryFilterChanged.ifPresent(Runnable::run);
+    }
+
     public BooleanProperty containCommercialApplicationsProperty() {
         return this.containCommercialApplications;
     }
@@ -112,10 +117,6 @@ public class ApplicationFilter {
 
     public BooleanProperty containAllOSCompatibleApplications() {
         return this.containAllOSCompatibleApplications;
-    }
-
-    public ObjectProperty<Predicate<CategoryDTO>> categoryFilterProperty() {
-        return this.categoryFilter;
     }
 
     public ObjectProperty<Predicate<ApplicationDTO>> applicationFilterProperty() {
