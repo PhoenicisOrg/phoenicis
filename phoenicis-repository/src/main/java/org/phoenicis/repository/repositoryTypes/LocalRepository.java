@@ -26,6 +26,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Localisation;
 import org.phoenicis.configuration.localisation.PropertiesResourceBundle;
+import org.phoenicis.repository.RepositoryException;
 import org.phoenicis.repository.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +60,11 @@ public class LocalRepository implements Repository {
 
     @Override
     public RepositoryDTO fetchInstallableApplications() {
+
+        if (!repositoryDirectory.exists()) {
+            throw new RepositoryException(
+                    String.format("Repository %s directory does not exist.", repositoryDirectory));
+        }
 
         final File[] typeDirectories = repositoryDirectory.listFiles();
 

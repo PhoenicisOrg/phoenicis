@@ -23,31 +23,50 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import org.phoenicis.javafx.views.common.ThemeManager;
+
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class FailurePanel extends VBox {
     private final Button retryButton;
+    final Label failureNotification;
+    final Label failureReason;
 
-    public FailurePanel(ThemeManager themeManager) {
+    public FailurePanel() {
         this.getStyleClass().add("rightPane");
 
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER);
 
-        Label failureNotificationLbl = new Label();
-        failureNotificationLbl
-                .setText(tr("Connecting to the repository failed.\nPlease check your connection and try again."));
-        failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
+        this.failureNotification = new Label();
+        this.failureNotification.setTextAlignment(TextAlignment.CENTER);
 
-        retryButton = new Button(tr("Retry"));
-        retryButton.getStyleClass().addAll("retryButton", "refreshIcon");
+        this.failureReason = new Label();
+        this.failureReason.setTextAlignment(TextAlignment.CENTER);
 
-        this.getChildren().addAll(failureNotificationLbl, retryButton);
+        this.retryButton = new Button(tr("Retry"));
+        this.retryButton.getStyleClass().addAll("retryButton", "refreshIcon");
+
+        this.getChildren().addAll(this.failureNotification, this.failureReason, this.retryButton);
+    }
+
+    /**
+     * sets the failure which is displayed
+     * @param notification notification text
+     * @param reason exception which caused the failure
+     */
+    public void setFailure(String notification, Optional<Exception> reason) {
+        this.failureNotification.setText(notification);
+        if (reason.isPresent()) {
+            this.failureReason.setText(tr("Reason: ") + reason.get().toString());
+        } else {
+            // reset
+            this.failureReason.setText("");
+        }
     }
 
     public Button getRetryButton() {
-        return retryButton;
+        return this.retryButton;
     }
 }

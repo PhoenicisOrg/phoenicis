@@ -74,9 +74,7 @@ public class GitRepository implements Repository {
             LOGGER.info("Creating local folder for " + this);
 
             if (!this.localFolder.mkdirs()) {
-                LOGGER.error("Couldn't create local folder for " + this);
-
-                return new RepositoryDTO.Builder().build();
+                throw new RepositoryException("Couldn't create local folder for " + this);
             }
         }
 
