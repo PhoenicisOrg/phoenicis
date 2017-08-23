@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -71,7 +72,7 @@ public class ApplicationFilter {
      * Triggers a filter update
      */
     public void fire() {
-        onCategoryFilterChanged.ifPresent(Runnable::run);
+        onCategoryFilterChanged.ifPresent(onCategoryFilterChanged -> Platform.runLater(() -> onCategoryFilterChanged.run()));
         applicationFilter.setValue(this::filter);
         scriptFilter.setValue(this::filter);
     }
