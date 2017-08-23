@@ -25,6 +25,8 @@ import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.LeftSidebar;
 
+import java.util.Optional;
+
 /**
  * The MainWindowView is the core component of the Phoenicis JavaFX GUI.
  *
@@ -76,7 +78,7 @@ public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
     }
 
     private void populateFailurePanel() {
-        this.failurePanel = new FailurePanel(themeManager);
+        this.failurePanel = new FailurePanel();
     }
 
     /**
@@ -117,15 +119,18 @@ public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
      */
     public void showWait() {
         closeDetailsView();
-        setCenter(waitPanel);
+        setCenter(this.waitPanel);
     }
 
     /**
      * shows the failure panel
+     * @param notification notification text
+     * @param reason exception which caused the failure
      */
-    public void showFailure() {
+    public void showFailure(String notification, Optional<Exception> reason) {
         closeDetailsView();
-        setCenter(failurePanel);
+        this.failurePanel.setFailure(notification, reason);
+        setCenter(this.failurePanel);
     }
 
     /**
