@@ -4,10 +4,14 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
 public class SearchBox extends AnchorPane {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchBox.class);
+
     private TextField searchField;
     private Button clearButton;
     private Consumer<String> onSearch;
@@ -18,6 +22,7 @@ public class SearchBox extends AnchorPane {
         if (onSearch != null) {
             this.onSearch = onSearch;
         } else {
+            LOGGER.error("Search behavior not set, will do nothing (default).");
             this.onSearch = (searchText) -> {
             };
         }
