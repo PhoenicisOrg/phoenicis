@@ -28,6 +28,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -63,8 +64,6 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
     private FilteredList<ApplicationDTO> filteredApplications;
     private SortedList<ApplicationDTO> sortedApplications;
 
-    private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-
     public ViewApps(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
             ToolsConfiguration toolsConfiguration) {
         super(tr("Apps"), themeManager);
@@ -93,10 +92,6 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
         // create the bindings between the visual components and the observable lists
         this.sidebar.bindCategories(this.sortedCategories);
         this.availableApps.bind(this.sortedApplications);
-
-        // set the filter event consumers
-        this.sidebar.setOnFilterTextEnter(this::processFilterText);
-        this.sidebar.setOnFilterClear(this::clearFilterText);
 
         // set the category selection consumers
         this.sidebar.setOnCategorySelection(category -> {
@@ -148,23 +143,5 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
 
     private void installScript(ScriptDTO scriptDTO) {
         this.onSelectScript.accept(scriptDTO);
-    }
-
-    private void clearFilterText() {
-        this.filter.setFilterText("");
-    }
-
-    private void processFilterText(String filterText) {
-        this.pause.setOnFinished(event -> {
-            String text = filterText.toLowerCase();
-
-            if (text != null && text.length() >= 3) {
-                filter.setFilterText(text);
-            } else {
-                filter.setFilterText("");
-            }
-        });
-
-        this.pause.playFromStart();
     }
 }
