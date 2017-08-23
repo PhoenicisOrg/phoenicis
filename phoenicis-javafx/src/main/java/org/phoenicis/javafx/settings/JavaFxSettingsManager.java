@@ -61,6 +61,9 @@ public class JavaFxSettingsManager {
     @Value("${application.libraryListType}")
     private ListWidgetType libraryListType;
 
+    @Value("${application.fuzzySearchRatio}")
+    private double fuzzySearchRatio;
+
     private String settingsFileName = "javafx.properties";
 
     /**
@@ -101,6 +104,7 @@ public class JavaFxSettingsManager {
         javaFxSettings.set(JavaFxSetting.CONTAINERS_LIST_TYPE, String.valueOf(this.containersListType));
         javaFxSettings.set(JavaFxSetting.ENGINES_LIST_TYPE, String.valueOf(this.enginesListType));
         javaFxSettings.set(JavaFxSetting.LIBRARY_LIST_TYPE, String.valueOf(this.libraryListType));
+        javaFxSettings.set(JavaFxSetting.FUZZY_SEARCH_RATIO, this.fuzzySearchRatio);
 
         return javaFxSettings;
     }
@@ -190,5 +194,13 @@ public class JavaFxSettingsManager {
 
     public ListWidgetType getLibraryListType() {
         return this.libraryListType;
+    }
+
+    public void setFuzzySearchRatio(double fuzzySearchRatio) {
+        this.fuzzySearchRatio = fuzzySearchRatio;
+    }
+
+    public double getFuzzySearchRatio() {
+        return this.fuzzySearchRatio;
     }
 }
