@@ -72,7 +72,8 @@ public class ApplicationFilter {
      * Triggers a filter update
      */
     public void fire() {
-        onCategoryFilterChanged.ifPresent(onCategoryFilterChanged -> Platform.runLater(() -> onCategoryFilterChanged.run()));
+        onCategoryFilterChanged
+                .ifPresent(onCategoryFilterChanged -> Platform.runLater(() -> onCategoryFilterChanged.run()));
         applicationFilter.setValue(this::filter);
         scriptFilter.setValue(this::filter);
     }
