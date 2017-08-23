@@ -79,7 +79,7 @@ public class ApplicationSidebar extends LeftSidebar {
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
     public ApplicationSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,
-                              JavaFxSettingsManager javaFxSettingsManager) {
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.filter = filter;

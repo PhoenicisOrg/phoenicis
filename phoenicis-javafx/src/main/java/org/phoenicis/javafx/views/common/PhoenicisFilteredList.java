@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.views.common;
 
-
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.TransformationList;
@@ -103,7 +102,7 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
     }
 
     private int getIndexToSourceIndex(int sourceIndex) {
-        return (int)this.filtered.subList(0, sourceIndex).stream().filter(value -> value).count();
+        return (int) this.filtered.subList(0, sourceIndex).stream().filter(value -> value).count();
     }
 
     private void permutate(ListChangeListener.Change<? extends E> c) {
