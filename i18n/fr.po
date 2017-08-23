@@ -2,14 +2,14 @@
 # Traductions françaises du paquet POL-POM.
 # Copyright (C) 2017 THE POL-POM'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the POL-POM package.
-# Février <fevrier.simon@gmail.com>, 2017.
+# ImperatorS79 <fevrier.simon@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 15:35+0200\n"
-"PO-Revision-Date: 2017-08-22 15:38+0200\n"
+"POT-Creation-Date: 2017-08-23 16:27+0200\n"
+"PO-Revision-Date: 2017-08-23 16:32+0200\n"
 "Last-Translator: ImperatorS79 <fevrier.simon@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_BE\n"
@@ -115,17 +115,13 @@ msgstr "L'erreur dans la trace de la pile était :"
 msgid "Console"
 msgstr "Console"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:41
-msgid ""
-"Connecting to the repository failed.\n"
-"Please check your connection and try again."
-msgstr ""
-"La connexion au dépôt a échoué.\n"
-"Veuillez vérifier votre connexion et réessayer."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:44
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:48
 msgid "Retry"
 msgstr "Réessayer"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:62
+msgid "Reason: "
+msgstr "Raison : "
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:86
 msgid "Run"
@@ -148,13 +144,13 @@ msgid "My applications"
 msgstr "Mes applications"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:126
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:120
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:122
 msgid "Categories"
 msgstr "Catégories"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:151
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerSidebar.java:131
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:166
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:168
 msgid "All"
 msgstr "Tous"
 
@@ -372,23 +368,23 @@ msgstr "Source : {0}"
 msgid "Error while trying to download the installer"
 msgstr "Une erreur est survenue lors du téléchargement de l'installeur"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:127
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:129
 msgid "Testing"
 msgstr "En test"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:130
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:132
 msgid "Requires patch"
 msgstr "Requiert un patch"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:133
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:135
 msgid "Commercial"
 msgstr "Commercial"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:137
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:139
 msgid "All Operating Systems"
 msgstr "Tous les OS"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ViewApps.java:70
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ViewApps.java:69
 msgid "Apps"
 msgstr "Apps"
 
@@ -552,35 +548,51 @@ msgstr "Êtes-vous sûr de vouloir désinstaller {0}?"
 msgid "Error while running script"
 msgstr "Une erreur est survenue pendant l'exécution du script"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:74
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:75
 #, java-format
 msgid "Delete {0} container"
 msgstr "Suppression du conteneur {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:75
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:76
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
 msgstr "Êtes-vous sûr de vouloir supprimer le conteneur {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:70
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:98
+msgid "Loading containers failed."
+msgstr "Le chargement des conteneurs a échoué."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:68
+msgid "Loading engines failed."
+msgstr "Le chargement des moteurs a échoué."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:71
 #, java-format
 msgid "Install {0}"
 msgstr "Installation de {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:72
 #, java-format
 msgid "Are you sure you want to install {0}?"
 msgstr "Êtes-vous sûr de vouloir installer {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:77
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:78
 #, java-format
 msgid "Delete {0}"
 msgstr "Suppression de {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:78
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:79
 #, java-format
 msgid "Are you sure you want to delete {0}"
 msgstr "Êtes-vous sûr de vouloir supprimer {0}"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:60
+msgid ""
+"Connecting to the repository failed.\n"
+"Please check your connection and try again."
+msgstr ""
+"La connexion au dépôt a échoué.\n"
+"Veuillez vérifier votre connexion et réessayer."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:84
 #, java-format
