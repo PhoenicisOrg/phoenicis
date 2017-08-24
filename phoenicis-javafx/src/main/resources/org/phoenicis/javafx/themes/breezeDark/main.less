@@ -139,7 +139,7 @@
     -fx-text-fill: @text-color;
 }
 
-.text-field {
+.text-field, .text-area {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
     -fx-background-color: @main-color;
@@ -148,9 +148,13 @@
     -fx-focus-color: @focus-color;
 }
 
-.text-field:hover {
+.text-field:hover, .text-area:hover {
     -fx-border-color: @focus-color;
     -fx-text-fill: @text-color;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
 }
 
 .scroll-bar:horizontal {

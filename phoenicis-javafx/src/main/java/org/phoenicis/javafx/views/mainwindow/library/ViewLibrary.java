@@ -193,6 +193,10 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.libraryPanel.setOnShortcutUninstall(onShortcutUninstall);
     }
 
+    public void setOnShortcutChanged(Consumer<ShortcutDTO> onShortcutChanged) {
+        this.libraryPanel.setOnShortcutChanged(onShortcutChanged);
+    }
+
     public void setOnScriptRun(Consumer<File> onScriptRun) {
         this.sidebar.setOnScriptRun(onScriptRun);
     }

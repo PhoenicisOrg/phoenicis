@@ -18,13 +18,18 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
@@ -50,10 +55,11 @@ final class LibraryPanel extends DetailsView {
     private Button stopButton;
     private Button uninstallButton;
 
-    // consumers called when a shortcut should be run, stopped or uninstalled
+    // consumers called when a shortcut should be run, stopped, uninstalled or changed
     private Consumer<ShortcutDTO> onShortcutRun;
     private Consumer<ShortcutDTO> onShortcutStop;
     private Consumer<ShortcutDTO> onShortcutUninstall;
+    private Consumer<ShortcutDTO> onShortcutChanged;
 
     public LibraryPanel(ObjectMapper objectMapper) {
         super();
@@ -121,8 +127,22 @@ final class LibraryPanel extends DetailsView {
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 this.gridPane.add(keyLabel, 0, i);
 
-                final Label valueLabel = new Label(entry.getValue().toString());
+                final TextArea valueLabel = new TextArea(entry.getValue().toString());
                 valueLabel.setWrapText(true);
+                valueLabel.setPrefRowCount(entry.getValue().toString().length() / 25);
+                valueLabel.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                    // if TextArea looses focus
+                    if (!newValue) {
+                        shortcutProperties.replace(entry.getKey(), valueLabel.getText());
+                        try {
+                            String json = new ObjectMapper().writeValueAsString(shortcutProperties);
+                            ShortcutDTO newShortcut = new ShortcutDTO.Builder(shortcutDTO).withScript(json).build();
+                            this.onShortcutChanged.accept(newShortcut);
+                        } catch (JsonProcessingException e) {
+                            LOGGER.error("Creating new shortcut String failed.", e);
+                        }
+                    }
+                });
                 this.gridPane.add(valueLabel, 1, i);
 
                 i++;
@@ -166,6 +186,15 @@ final class LibraryPanel extends DetailsView {
      */
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
         this.onShortcutUninstall = onShortcutUninstall;
+    }
+
+    /**
+     * This method updates the consumer, that is called when the shortcut has been changed.
+     *
+     * @param onShortcutChanged The new consumer to be called
+     */
+    public void setOnShortcutChanged(Consumer<ShortcutDTO> onShortcutChanged) {
+        this.onShortcutChanged = onShortcutChanged;
     }
 
 }
