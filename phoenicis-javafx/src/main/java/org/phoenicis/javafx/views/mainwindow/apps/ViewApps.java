@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,9 +25,8 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Duration;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
@@ -72,7 +70,8 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
                 (element, event) -> showAppDetails(element, javaFxSettingsManager));
 
         this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
-                (filterText, application) -> application.getName().toLowerCase().contains(filterText));
+                (filterText, application) -> FuzzySearch.partialRatio(application.getName().toLowerCase(),
+                        filterText) > javaFxSettingsManager.getFuzzySearchRatio());
 
         // initialising the category lists
         this.categories = FXCollections.observableArrayList();

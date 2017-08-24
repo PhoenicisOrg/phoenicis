@@ -23,7 +23,9 @@ public enum JavaFxSetting {
             "application.windowHeight"), WINDOW_WIDTH("application.windowWidth"), WINDOW_MAXIMIZED(
                     "application.windowMaximized"), APPS_LIST_TYPE("application.appsListType"), CONTAINERS_LIST_TYPE(
                             "application.containersListType"), ENGINES_LIST_TYPE(
-                                    "application.enginesListType"), LIBRARY_LIST_TYPE("application.libraryListType");
+                                    "application.enginesListType"), LIBRARY_LIST_TYPE(
+                                            "application.libraryListType"), FUZZY_SEARCH_RATIO(
+                                                    "application.fuzzySearchRatio");
 
     private final String propertyName;
 
