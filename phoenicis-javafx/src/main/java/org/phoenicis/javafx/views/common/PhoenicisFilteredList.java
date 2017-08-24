@@ -133,8 +133,10 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
             for (int i = from; i < to; ++i) {
                 perm[getIndexToSourceIndex(i)] = getIndexToSourceIndex(c.getPermutation(i));
 
-                filtered.set(i, clone.get(c.getPermutation(i)));
+                clone.set(i, filtered.get(c.getPermutation(i)));
             }
+
+            filtered = clone;
 
             nextPermutation(from, to, perm);
         }
