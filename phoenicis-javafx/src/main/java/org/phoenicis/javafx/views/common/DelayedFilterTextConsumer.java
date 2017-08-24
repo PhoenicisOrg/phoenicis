@@ -32,7 +32,7 @@ public class DelayedFilterTextConsumer implements Consumer<String> {
         this.pause.setOnFinished(event -> {
             String text = filterText.toLowerCase();
 
-            if (text != null && text.length() >= 3) {
+            if (text != null) {
                 internalTextConsumer.accept(text);
             } else {
                 internalTextConsumer.accept("");
