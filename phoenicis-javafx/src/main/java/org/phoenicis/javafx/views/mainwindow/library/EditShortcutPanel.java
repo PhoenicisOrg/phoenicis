@@ -21,12 +21,10 @@ package org.phoenicis.javafx.views.mainwindow.library;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -43,11 +41,14 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * a details view which allows to edit a shortcut
+ */
 final class EditShortcutPanel extends DetailsView {
     private final Logger LOGGER = LoggerFactory.getLogger(EditShortcutPanel.class);
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
 
-    ShortcutDTO editedShortcut;
+    private ShortcutDTO editedShortcut;
 
     private final ObjectMapper objectMapper;
 
@@ -58,6 +59,10 @@ final class EditShortcutPanel extends DetailsView {
     // consumer called when a shortcut should changed
     private Consumer<ShortcutDTO> onShortcutChanged;
 
+    /**
+     * constructor
+     * @param objectMapper mapper to show the content of the shortcut script
+     */
     public EditShortcutPanel(ObjectMapper objectMapper) {
         super();
         this.objectMapper = objectMapper;
@@ -75,17 +80,6 @@ final class EditShortcutPanel extends DetailsView {
         Region spacer = new Region();
         spacer.setPrefHeight(40);
 
-        GridPane buttons = new GridPane();
-        buttons.setAlignment(Pos.CENTER);
-
-        ColumnConstraints runColumn = new ColumnConstraints();
-        runColumn.setPercentWidth(30);
-        ColumnConstraints stopColumn = new ColumnConstraints();
-        stopColumn.setPercentWidth(30);
-        ColumnConstraints uninstallColumn = new ColumnConstraints();
-        uninstallColumn.setPercentWidth(30);
-        buttons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn);
-
         this.saveButton = new Button(tr("Save"));
 
         vBox.getChildren().addAll(this.description, this.gridPane, spacer, this.saveButton);
@@ -93,6 +87,10 @@ final class EditShortcutPanel extends DetailsView {
         this.setCenter(vBox);
     }
 
+    /**
+    * sets the shortcut which can be edited in this view
+     * @param shortcutDTO
+    */
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
         this.editedShortcut = shortcutDTO;
 
@@ -150,8 +148,7 @@ final class EditShortcutPanel extends DetailsView {
     }
 
     /**
-     * This method updates the consumer, that is called when the shortcut has been changed.
-     *
+     * updates the consumer that is called when the shortcut has been changed
      * @param onShortcutChanged The new consumer to be called
      */
     public void setOnShortcutChanged(Consumer<ShortcutDTO> onShortcutChanged) {
