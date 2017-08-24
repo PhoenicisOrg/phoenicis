@@ -8,6 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -47,6 +48,7 @@ public class ApplicationSidebar extends LeftSidebar {
     private LeftScrollPane centerContent;
 
     private ObservableList<CategoryDTO> categories;
+    private PhoenicisFilteredList<CategoryDTO> filteredCategories;
 
     // the toggleable categories
     private LeftToggleGroup<CategoryDTO> categoryView;
@@ -73,7 +75,7 @@ public class ApplicationSidebar extends LeftSidebar {
     /**
      * Constructor
      *
-     * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param combinedListWidget    The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
     public ApplicationSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,
@@ -118,11 +120,13 @@ public class ApplicationSidebar extends LeftSidebar {
 
     private void populateCategories() {
         this.categories = FXCollections.observableArrayList();
+        this.filteredCategories = new PhoenicisFilteredList<>(categories, filter::filter);
+        this.filter.setOnCategoryFilterChanged(filteredCategories::trigger);
 
         this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
 
-        Bindings.bindContent(categoryView.getElements(), categories);
+        Bindings.bindContent(categoryView.getElements(), filteredCategories);
     }
 
     private void populateFilters() {
@@ -169,7 +173,7 @@ public class ApplicationSidebar extends LeftSidebar {
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
-        allCategoryButton.setOnMouseClicked(event -> onAllCategorySelection.run());
+        allCategoryButton.setOnAction(event -> onAllCategorySelection.run());
 
         return allCategoryButton;
     }
@@ -184,7 +188,7 @@ public class ApplicationSidebar extends LeftSidebar {
         final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
-        categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
+        categoryButton.setOnAction(event -> onCategorySelection.accept(category));
 
         return categoryButton;
     }
