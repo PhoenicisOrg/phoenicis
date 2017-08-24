@@ -84,6 +84,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
 
             if (event.getButton() == MouseButton.PRIMARY) {
+                // select and show details
                 availableShortcuts.deselectAll();
                 availableShortcuts.select(selectedItem);
                 onShortcutSelected.accept(selectedItem);
@@ -93,6 +94,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
                     onShortcutDoubleClicked.accept(selectedItem);
                 }
             } else if (event.getButton() == MouseButton.SECONDARY) {
+                // show context menu
                 final ContextMenu contextMenu = new ContextMenu();
                 MenuItem edit = new MenuItem("Edit");
                 contextMenu.getItems().addAll(edit);
@@ -188,6 +190,10 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.showDetailsView(libraryPanel);
     }
 
+    /**
+     * shows a details view which allows to edit the given shortcut
+     * @param shortcutDTO
+     */
     private void showShortcutEdit(ShortcutDTO shortcutDTO) {
         this.editShortcutPanel.setOnClose(this::closeDetailsView);
         this.editShortcutPanel.setShortcutDTO(shortcutDTO);

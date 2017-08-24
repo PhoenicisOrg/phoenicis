@@ -118,7 +118,7 @@ final class EditShortcutPanel extends DetailsView {
                 valueLabel.setWrapText(true);
                 valueLabel.setPrefRowCount(entry.getValue().toString().length() / 25);
                 valueLabel.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                    // if TextArea looses focus
+                    // update shortcut if TextArea looses focus (doesn't save yet)
                     if (!newValue) {
                         shortcutProperties.replace(entry.getKey(), valueLabel.getText());
                         try {
