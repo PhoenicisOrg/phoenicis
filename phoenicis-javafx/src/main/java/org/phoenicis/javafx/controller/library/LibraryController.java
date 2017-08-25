@@ -83,6 +83,8 @@ public class LibraryController {
                                     e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e)));
         });
 
+        this.viewLibrary.setOnShortcutChanged(shortcutDTO -> this.shortcutManager.updateShortcut(shortcutDTO));
+
         this.viewLibrary.setOnOpenConsole(() -> {
             viewLibrary.createNewTab(consoleController.createConsole());
         });
