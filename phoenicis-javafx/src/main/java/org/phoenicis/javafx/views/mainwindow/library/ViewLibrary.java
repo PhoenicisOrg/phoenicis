@@ -184,9 +184,10 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     }
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
-        libraryPanel.setOnClose(this::closeDetailsView);
-        libraryPanel.setShortcutDTO(shortcutDTO);
-        libraryPanel.setMaxWidth(400);
+        this.libraryPanel.setOnClose(this::closeDetailsView);
+        this.libraryPanel.setShortcutDTO(shortcutDTO);
+        this.libraryPanel.setMaxWidth(400);
+        this.libraryPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(libraryPanel);
     }
 
@@ -198,6 +199,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.editShortcutPanel.setOnClose(this::closeDetailsView);
         this.editShortcutPanel.setShortcutDTO(shortcutDTO);
         this.editShortcutPanel.setMaxWidth(400);
+        this.editShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(this.editShortcutPanel);
     }
 

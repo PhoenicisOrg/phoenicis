@@ -144,6 +144,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
         appPanel.setOnScriptInstall(this::installScript);
         appPanel.setOnClose(this::closeDetailsView);
         appPanel.setMaxWidth(400);
+        appPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(appPanel);
     }
 
