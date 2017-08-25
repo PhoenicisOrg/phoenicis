@@ -26,7 +26,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-import org.eclipse.jgit.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -72,7 +72,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
 
         this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
                 (filterText, application) -> {
-                    if (!StringUtils.isEmptyOrNull(filterText)) {
+                    if (StringUtils.isNotEmpty(filterText)) {
                         return FuzzySearch.partialRatio(application.getName().toLowerCase(),
                                 filterText) > javaFxSettingsManager.getFuzzySearchRatio();
                     } else {
