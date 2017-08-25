@@ -87,6 +87,19 @@
     -fx-background-color: @focus-color;
 }
 
+.context-menu {
+  -fx-background-color: @background-color;
+  -fx-text-fill: @text-color;
+}
+
+.menu-item:hover {
+  -fx-background-color: @focus-color;
+}
+
+.menu-item .label {
+  -fx-text-fill: @text-color;
+}
+
 .check-box .box {
     -fx-background-color: transparent;
     -fx-border-color: @inactive-text-color;
@@ -139,7 +152,7 @@
     -fx-text-fill: @text-color;
 }
 
-.text-field {
+.text-field, .text-area {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
     -fx-background-color: @main-color;
@@ -148,9 +161,13 @@
     -fx-focus-color: @focus-color;
 }
 
-.text-field:hover {
+.text-field:hover, .text-area:hover {
     -fx-border-color: @focus-color;
     -fx-text-fill: @text-color;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
 }
 
 .scroll-bar:horizontal {

@@ -71,10 +71,16 @@ public class ShortcutManager {
                 FileUtils.writeStringToFile(descriptionFile, shortcutDTO.getDescription(), ENCODING);
             }
             if (shortcutDTO.getIcon() != null) {
-                FileUtils.copyFile(new File(shortcutDTO.getIcon()), iconFile);
+                File file = new File(shortcutDTO.getIcon());
+                if (file.exists()) {
+                    FileUtils.copyFile(file, iconFile);
+                }
             }
             if (shortcutDTO.getMiniature() != null) {
-                FileUtils.copyFile(new File(shortcutDTO.getMiniature()), miniatureFile);
+                File file = new File(shortcutDTO.getMiniature());
+                if (file.exists()) {
+                    FileUtils.copyFile(file, miniatureFile);
+                }
             }
         } catch (IOException e) {
             LOGGER.warn("Error while creating shortcut", e);
@@ -146,5 +152,10 @@ public class ShortcutManager {
         }
 
         libraryManager.refresh();
+    }
+
+    public void updateShortcut(ShortcutDTO shortcutDTO) {
+        deleteShortcut(shortcutDTO);
+        createShortcut(shortcutDTO);
     }
 }
