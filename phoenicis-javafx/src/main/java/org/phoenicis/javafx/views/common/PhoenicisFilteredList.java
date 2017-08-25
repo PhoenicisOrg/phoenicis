@@ -158,7 +158,7 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
             int internalIndex = getIndexToSourceIndex(index);
 
             if (filtered.remove(index)) {
-                nextRemove(internalIndex, getSource().get(index));
+                nextRemove(internalIndex, c.getRemoved().get(index - from));
             }
         }
 

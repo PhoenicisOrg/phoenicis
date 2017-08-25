@@ -107,6 +107,20 @@ public class PhoenicisFilteredListTest {
         assertEquals(2, (int)filteredList.get(1));
     }
 
+    @Test
+    public void testClear() {
+        ObservableList<Integer> observableList = FXCollections.observableArrayList(Arrays.asList(1, 2, 4, 3));
+        PhoenicisFilteredList<Integer> filteredList = new PhoenicisFilteredList<>(observableList, i -> i % 2 == 0);
+
+        assertEquals(2, filteredList.size());
+        assertEquals(2, (int)filteredList.get(0));
+        assertEquals(4, (int)filteredList.get(1));
+
+        observableList.clear();
+
+        assertEquals(0, filteredList.size());
+    }
+
     private int moduloResult = 0;
 
     @Test
