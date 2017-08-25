@@ -78,7 +78,7 @@ final class EditShortcutPanel extends DetailsView {
                 new ColumnConstraintsWithPercentage(70));
 
         Region spacer = new Region();
-        spacer.setPrefHeight(40);
+        spacer.getStyleClass().add("detailsButtonSpacer");
 
         this.saveButton = new Button(tr("Save"));
 
@@ -89,7 +89,7 @@ final class EditShortcutPanel extends DetailsView {
 
     /**
     * sets the shortcut which can be edited in this view
-     * @param shortcutDTO
+    * @param shortcutDTO
     */
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
         this.editedShortcut = shortcutDTO;
