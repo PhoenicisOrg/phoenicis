@@ -113,8 +113,8 @@ public class PhoenicisFilteredListTest {
         PhoenicisFilteredList<Integer> filteredList = new PhoenicisFilteredList<>(observableList, i -> i % 2 == 0);
 
         assertEquals(2, filteredList.size());
-        assertEquals(2, (int)filteredList.get(0));
-        assertEquals(4, (int)filteredList.get(1));
+        assertEquals(2, (int) filteredList.get(0));
+        assertEquals(4, (int) filteredList.get(1));
 
         observableList.clear();
 
