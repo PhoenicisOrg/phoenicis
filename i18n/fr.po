@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 16:27+0200\n"
-"PO-Revision-Date: 2017-08-23 16:32+0200\n"
+"POT-Creation-Date: 2017-08-26 14:51+0200\n"
+"PO-Revision-Date: 2017-08-26 14:55+0200\n"
 "Last-Translator: ImperatorS79 <fevrier.simon@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_BE\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.0.1\n"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:133
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:140
 #, java-format
 msgid "This wizard will help you install {0} on your computer"
 msgstr "Cet assistant va vous aider à installer {0} sur votre ordinateur"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:134
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:141
 #, java-format
 msgid "This program was created by: {0}"
 msgstr "Ce programme a été créé par : {0}"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:135
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:142
 msgid "For more information about this program, visit:"
 msgstr "Pour plus d'information à propos de ce programme, rendez-vous sur:"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:137
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:144
 #, java-format
 msgid "This installation program is provided by: {0}"
 msgstr "Cet installeur est fourni par : {0}"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:138
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:145
 #, java-format
 msgid "{0} will be installed in: {1}"
 msgstr "{0} sera installé dans : {1}"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:139
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:146
 #, java-format
 msgid ""
 "{0} is not responsible for anything that might happen as a result of using "
@@ -52,7 +52,7 @@ msgstr ""
 "{0} n'est pas responsable de ce qui pourrait se produire en utilisant ces "
 "scripts."
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:141
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:148
 msgid "Click \"Next\" to start."
 msgstr "Cliquer sur \"Suivant\" pour commencer."
 
@@ -103,7 +103,7 @@ msgstr "Thème Unity"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:38
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:149
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:77
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:97
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:99
 msgid "Error"
 msgstr "Erreur"
 
@@ -135,22 +135,40 @@ msgstr "Fermer"
 msgid "Uninstall"
 msgstr "Désinstaller"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:72
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:84
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:105
+msgid "Miniature:"
+msgstr "Miniature :"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:112
+msgid "Choose"
+msgstr "Choisissez"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
+msgid "Images"
+msgstr "Images"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:79
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:131
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:150
 msgid "My applications"
 msgstr "Mes applications"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:126
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:122
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:126
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:104
 msgid "Categories"
 msgstr "Catégories"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:151
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerSidebar.java:131
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:168
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:172
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:129
 msgid "All"
 msgstr "Tous"
 
@@ -368,25 +386,29 @@ msgstr "Source : {0}"
 msgid "Error while trying to download the installer"
 msgstr "Une erreur est survenue lors du téléchargement de l'installeur"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:129
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:133
 msgid "Testing"
 msgstr "En test"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:132
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:136
 msgid "Requires patch"
 msgstr "Requiert un patch"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:135
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:139
 msgid "Commercial"
 msgstr "Commercial"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:139
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:143
 msgid "All Operating Systems"
 msgstr "Tous les OS"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ViewApps.java:69
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ViewApps.java:68
 msgid "Apps"
 msgstr "Apps"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/ViewInstallations.java:75
+msgid "Installations"
+msgstr "Installations"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/ViewSettings.java:49
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsSidebar.java:44
@@ -544,7 +566,7 @@ msgstr "Désinstalle {0}"
 msgid "Are you sure you want to uninstall {0}?"
 msgstr "Êtes-vous sûr de vouloir désinstaller {0}?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:92
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:94
 msgid "Error while running script"
 msgstr "Une erreur est survenue pendant l'exécution du script"
 
@@ -594,7 +616,7 @@ msgstr ""
 "La connexion au dépôt a échoué.\n"
 "Veuillez vérifier votre connexion et réessayer."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:84
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:87
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
 msgstr "Êtes-vous sûr de vouloir fermer toutes les fenêtres {0}?"
