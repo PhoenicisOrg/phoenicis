@@ -23,6 +23,7 @@ import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 
 import java.net.URI;
+import java.util.Optional;
 
 /**
  * CLI implementation of the SetupUiFactory
@@ -44,7 +45,7 @@ public class SetupUiFactoryCLI implements SetupUiFactory {
      * @return created setup UI
      */
     @Override
-    public SetupUi createSetupWindow(String title, URI miniature) {
+    public SetupUi createSetupWindow(String title, Optional<URI> miniature) {
         return new SetupUiCliImplementation(title, true, true);
     }
 }

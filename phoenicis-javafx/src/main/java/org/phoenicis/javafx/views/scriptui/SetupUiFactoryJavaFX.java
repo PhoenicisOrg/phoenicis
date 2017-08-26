@@ -28,6 +28,7 @@ import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * JavaFX implementation of the SetupUiFactory
@@ -60,7 +61,7 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
      * @return setup window
      */
     @Override
-    public SetupUi createSetupWindow(String title, URI miniature) {
+    public SetupUi createSetupWindow(String title, Optional<URI> miniature) {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
         this.viewInstallations.closeDetailsView();
@@ -68,7 +69,7 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
                 .withCategory(InstallationDTO.InstallationType.APPS)
                 .withId(title + "_" + new Date().getTime())
                 .withName(title)
-                .withMiniature(miniature)
+                .withMiniature(miniature.orElse(null))
                 .withNode(setupWindow.getContent())
                 .build();
         this.viewInstallations.addInstallation(installationDTO);

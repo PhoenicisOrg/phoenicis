@@ -19,6 +19,7 @@
 package org.phoenicis.scripts.ui;
 
 import java.net.URI;
+import java.util.Optional;
 
 @FunctionalInterface
 public interface SetupUiFactory {
@@ -28,5 +29,5 @@ public interface SetupUiFactory {
      * @param miniature miniature of the setup UI (usually the miniature of the installed application)
      * @return created setup UI
      */
-    SetupUi createSetupWindow(String title, URI miniature);
+    SetupUi createSetupWindow(String title, Optional<URI> miniature);
 }

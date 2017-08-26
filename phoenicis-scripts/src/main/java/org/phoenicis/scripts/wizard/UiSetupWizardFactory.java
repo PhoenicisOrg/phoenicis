@@ -23,6 +23,7 @@ import org.phoenicis.scripts.ui.UiMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.net.URI;
+import java.util.Optional;
 
 public class UiSetupWizardFactory {
     @Value("${user.home}")
@@ -42,7 +43,7 @@ public class UiSetupWizardFactory {
         this.setupUiFactory = setupUiFactory;
     }
 
-    public UiSetupWizardImplementation create(String title, URI miniature) {
+    public UiSetupWizardImplementation create(String title, Optional<URI> miniature) {
         final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title,
                 miniature,
                 uiMessageSender,

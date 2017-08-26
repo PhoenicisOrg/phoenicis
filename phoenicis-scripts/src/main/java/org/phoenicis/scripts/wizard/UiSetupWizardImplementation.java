@@ -28,12 +28,13 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
-    private URI miniature;
+    private Optional<URI> miniature;
     private final UiMessageSender messageSender;
     private final SetupUiFactory setupUiFactory;
 
@@ -47,12 +48,12 @@ public class UiSetupWizardImplementation implements SetupWizard {
 
     /**
      * Create the setupUi
-     *
-     * @param title title of the setupUi
+     *  @param title title of the setupUi
+     * @param miniature
      * @param userHome
      */
     public UiSetupWizardImplementation(String title,
-            URI miniature,
+            Optional<URI> miniature,
             UiMessageSender messageSender,
             SetupUiFactory setupUiFactory,
             String userHome,
