@@ -34,6 +34,9 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
@@ -52,7 +55,10 @@ public class AppsController {
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(this::populateView, e -> Platform.runLater(() -> view.showFailure()));
+        this.repositoryManager.addCallbacks(this::populateView,
+                e -> Platform.runLater(() -> view.showFailure(
+                        tr("Connecting to the repository failed.\nPlease check your connection and try again."),
+                        Optional.of(e))));
     }
 
     public void loadApps() {

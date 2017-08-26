@@ -1,8 +1,11 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -85,6 +88,22 @@ public class LeftToggleGroup<E> extends LeftGroup {
 
         Bindings.bindContent(this.toggleGroup.getToggles(), this.adhocToggleButtons);
         Bindings.bindContent(this.toggleButtonBox.getChildren(), this.adhocToggleButtons);
+
+        /*
+         * Ensure that one ToggleButton is always selected.
+         */
+        this.adhocToggleButtons.addListener(new ListChangeListener<ToggleButton>() {
+            @Override
+            public void onChanged(Change<? extends ToggleButton> change) {
+                // the adhoc toggle buttons contain no selected button anymore
+                if (!adhocToggleButtons.stream().anyMatch(ToggleButton::isSelected)) {
+                    if (adhocToggleButtons.size() > 0) {
+                        // to solve this automatically select the first button
+                        adhocToggleButtons.get(0).fire();
+                    }
+                }
+            }
+        });
 
         this.getChildren().add(this.toggleButtonBox);
     }

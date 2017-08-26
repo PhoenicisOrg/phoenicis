@@ -31,6 +31,7 @@ import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -93,6 +94,8 @@ public class ContainersController {
 
     public void loadContainers() {
         this.viewContainers.showWait();
-        containersManager.fetchContainers(viewContainers::populate, e -> this.viewContainers.showFailure());
+        containersManager.fetchContainers(viewContainers::populate,
+                e -> this.viewContainers.showFailure(tr("Loading containers failed."), Optional
+                        .of(e)));
     }
 }

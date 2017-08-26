@@ -18,13 +18,16 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
@@ -38,24 +41,29 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-final class LibraryPanel extends DetailsView {
-    private final Logger LOGGER = LoggerFactory.getLogger(LibraryPanel.class);
+/**
+ * a details view which allows to edit a shortcut
+ */
+final class EditShortcutPanel extends DetailsView {
+    private final Logger LOGGER = LoggerFactory.getLogger(EditShortcutPanel.class);
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
+
+    private ShortcutDTO editedShortcut;
 
     private final ObjectMapper objectMapper;
 
     private Label description;
     private GridPane gridPane;
-    private Button runButton;
-    private Button stopButton;
-    private Button uninstallButton;
+    private Button saveButton;
 
-    // consumers called when a shortcut should be run, stopped or uninstalled
-    private Consumer<ShortcutDTO> onShortcutRun;
-    private Consumer<ShortcutDTO> onShortcutStop;
-    private Consumer<ShortcutDTO> onShortcutUninstall;
+    // consumer called when a shortcut should changed
+    private Consumer<ShortcutDTO> onShortcutChanged;
 
-    public LibraryPanel(ObjectMapper objectMapper) {
+    /**
+     * constructor
+     * @param objectMapper mapper to show the content of the shortcut script
+     */
+    public EditShortcutPanel(ObjectMapper objectMapper) {
         super();
         this.objectMapper = objectMapper;
 
@@ -72,35 +80,20 @@ final class LibraryPanel extends DetailsView {
         Region spacer = new Region();
         spacer.getStyleClass().add("detailsButtonSpacer");
 
-        GridPane buttons = new GridPane();
-        buttons.setAlignment(Pos.CENTER);
+        this.saveButton = new Button(tr("Save"));
 
-        ColumnConstraints runColumn = new ColumnConstraints();
-        runColumn.setPercentWidth(30);
-        ColumnConstraints stopColumn = new ColumnConstraints();
-        stopColumn.setPercentWidth(30);
-        ColumnConstraints uninstallColumn = new ColumnConstraints();
-        uninstallColumn.setPercentWidth(30);
-        buttons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn);
-
-        this.runButton = new Button(tr("Run"));
-        this.runButton.getStyleClass().addAll("shortcutButton", "runButton");
-        buttons.add(this.runButton, 0, 0);
-
-        this.stopButton = new Button(tr("Close"));
-        this.stopButton.getStyleClass().addAll("shortcutButton", "stopButton");
-        buttons.add(this.stopButton, 1, 0);
-
-        this.uninstallButton = new Button(tr("Uninstall"));
-        this.uninstallButton.getStyleClass().addAll("shortcutButton", "uninstallButton");
-        buttons.add(this.uninstallButton, 2, 0);
-
-        vBox.getChildren().addAll(this.description, this.gridPane, spacer, buttons);
+        vBox.getChildren().addAll(this.description, this.gridPane, spacer, this.saveButton);
 
         this.setCenter(vBox);
     }
 
+    /**
+    * sets the shortcut which can be edited in this view
+    * @param shortcutDTO
+    */
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
+        this.editedShortcut = shortcutDTO;
+
         this.setTitle(shortcutDTO.getName());
 
         this.description.setText(shortcutDTO.getDescription());
@@ -121,8 +114,21 @@ final class LibraryPanel extends DetailsView {
                 GridPane.setValignment(keyLabel, VPos.TOP);
                 this.gridPane.add(keyLabel, 0, i);
 
-                final Label valueLabel = new Label(entry.getValue().toString());
+                final TextArea valueLabel = new TextArea(entry.getValue().toString());
                 valueLabel.setWrapText(true);
+                valueLabel.setPrefRowCount(entry.getValue().toString().length() / 25);
+                valueLabel.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                    // update shortcut if TextArea looses focus (doesn't save yet)
+                    if (!newValue) {
+                        shortcutProperties.replace(entry.getKey(), valueLabel.getText());
+                        try {
+                            String json = new ObjectMapper().writeValueAsString(shortcutProperties);
+                            this.editedShortcut = new ShortcutDTO.Builder(shortcutDTO).withScript(json).build();
+                        } catch (JsonProcessingException e) {
+                            LOGGER.error("Creating new shortcut String failed.", e);
+                        }
+                    }
+                });
                 this.gridPane.add(valueLabel, 1, i);
 
                 i++;
@@ -132,9 +138,9 @@ final class LibraryPanel extends DetailsView {
             LOGGER.warn("Could not parse shortcut script JSON", e);
         }
 
-        this.runButton.setOnMouseClicked(event -> onShortcutRun.accept(shortcutDTO));
-        this.stopButton.setOnMouseClicked(event -> onShortcutStop.accept(shortcutDTO));
-        this.uninstallButton.setOnMouseClicked(event -> onShortcutUninstall.accept(shortcutDTO));
+        this.saveButton.setOnMouseClicked(event -> {
+            this.onShortcutChanged.accept(this.editedShortcut);
+        });
     }
 
     private String unCamelize(String s) {
@@ -142,30 +148,11 @@ final class LibraryPanel extends DetailsView {
     }
 
     /**
-     * This method updates the consumer, that is called when the "Run" button for the currently selected shortcut has been clicked.
-     *
-     * @param onShortcutRun The new consumer to be called
+     * updates the consumer that is called when the shortcut has been changed
+     * @param onShortcutChanged The new consumer to be called
      */
-    public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
-        this.onShortcutRun = onShortcutRun;
-    }
-
-    /**
-     * This method updates the consumer, that is called when the "Stop" button for the currently selected shortcut has been clicked.
-     *
-     * @param onShortcutStop The new consumer to be called
-     */
-    public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
-        this.onShortcutStop = onShortcutStop;
-    }
-
-    /**
-     * This method updates the consumer, that is called when the "Uninstall" button for the currently selected shortcut has been clicked.
-     *
-     * @param onShortcutUninstall The new consumer to be called
-     */
-    public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
-        this.onShortcutUninstall = onShortcutUninstall;
+    public void setOnShortcutChanged(Consumer<ShortcutDTO> onShortcutChanged) {
+        this.onShortcutChanged = onShortcutChanged;
     }
 
 }

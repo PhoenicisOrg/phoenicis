@@ -25,7 +25,8 @@ public enum JavaFxSetting {
                             "application.containersListType"), ENGINES_LIST_TYPE(
                                     "application.enginesListType"), INSTALLATIONS_LIST_TYPE(
                                             "application.installationsListType"), LIBRARY_LIST_TYPE(
-                                                    "application.libraryListType");
+                                                    "application.libraryListType"), FUZZY_SEARCH_RATIO(
+                                                            "application.fuzzySearchRatio");
 
     private final String propertyName;
 

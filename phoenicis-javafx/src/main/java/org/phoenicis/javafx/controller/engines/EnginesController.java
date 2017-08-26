@@ -42,6 +42,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -64,7 +65,7 @@ public class EnginesController {
         this.themeManager = themeManager;
 
         this.repositoryManager.addCallbacks(this::populateView,
-                e -> Platform.runLater(() -> viewEngines.showFailure()));
+                e -> Platform.runLater(() -> viewEngines.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
         this.viewEngines.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),

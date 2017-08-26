@@ -296,12 +296,11 @@
     }
 
     .leftButton {
-        -fx-pref-height: 2.2em;
         -fx-border-color: transparent;
         -fx-text-fill: @text-color;
         -fx-border-radius: 0;
         -fx-background-radius: 0;
-        -fx-label-padding: 0 0 0 3.03em;;
+        -fx-label-padding: 0 1.5em 0 3.03em;
         -fx-background-position: 0.83em 0.1em;
 
         &:hover {
@@ -317,6 +316,10 @@
                 -fx-fill: white;
             }
         }
+    }
+
+    .leftPaneCheckBox {
+        -fx-label-padding: 0 1.5em 0 0.4em;
     }
 
     .searchBar {
@@ -336,7 +339,9 @@
             -fx-border-color: @focus-color;
             -fx-text-fill: @text-color;
         }
+    }
 
+    .searchBox {
         .searchCleanButton {
             -fx-border-color: transparent;
         }

@@ -24,8 +24,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -48,6 +51,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private final ObjectMapper objectMapper;
 
     private LibraryPanel libraryPanel;
+    private EditShortcutPanel editShortcutPanel;
     private final Tab installedApplicationsTab;
 
     private CombinedListWidget<ShortcutDTO> availableShortcuts;
@@ -67,6 +71,8 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     };
     private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
     };
+    private Consumer<ShortcutDTO> onShortcutEdit = shortcut -> {
+    };
 
     public ViewLibrary(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper,
             JavaFxSettingsManager javaFxSettingsManager) {
@@ -74,15 +80,27 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.getStyleClass().add("mainWindowScene");
         this.objectMapper = objectMapper;
 
+        onShortcutEdit = shortcut -> showShortcutEdit(shortcut);
+
         availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
 
-            availableShortcuts.deselectAll();
-            availableShortcuts.select(selectedItem);
-            onShortcutSelected.accept(selectedItem);
-            showShortcutDetails(selectedItem);
+            if (event.getButton() == MouseButton.PRIMARY) {
+                // select and show details
+                availableShortcuts.deselectAll();
+                availableShortcuts.select(selectedItem);
+                onShortcutSelected.accept(selectedItem);
+                showShortcutDetails(selectedItem);
 
-            if (event.getClickCount() == 2) {
-                onShortcutDoubleClicked.accept(selectedItem);
+                if (event.getClickCount() == 2) {
+                    onShortcutDoubleClicked.accept(selectedItem);
+                }
+            } else if (event.getButton() == MouseButton.SECONDARY) {
+                // show context menu
+                final ContextMenu contextMenu = new ContextMenu();
+                MenuItem edit = new MenuItem("Edit");
+                contextMenu.getItems().addAll(edit);
+                edit.setOnAction(editEvent -> onShortcutEdit.accept(selectedItem));
+                contextMenu.show(availableShortcuts, event.getScreenX(), event.getScreenY());
             }
 
             event.consume();
@@ -136,6 +154,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.setCenter(this.libraryTabs);
 
         this.libraryPanel = new LibraryPanel(objectMapper);
+        this.editShortcutPanel = new EditShortcutPanel(objectMapper);
     }
 
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
@@ -166,10 +185,23 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     }
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
-        libraryPanel.setOnClose(this::closeDetailsView);
-        libraryPanel.setShortcutDTO(shortcutDTO);
-        libraryPanel.setMaxWidth(400);
+        this.libraryPanel.setOnClose(this::closeDetailsView);
+        this.libraryPanel.setShortcutDTO(shortcutDTO);
+        this.libraryPanel.setMaxWidth(400);
+        this.libraryPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(libraryPanel);
+    }
+
+    /**
+     * shows a details view which allows to edit the given shortcut
+     * @param shortcutDTO
+     */
+    private void showShortcutEdit(ShortcutDTO shortcutDTO) {
+        this.editShortcutPanel.setOnClose(this::closeDetailsView);
+        this.editShortcutPanel.setShortcutDTO(shortcutDTO);
+        this.editShortcutPanel.setMaxWidth(400);
+        this.editShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
+        this.showDetailsView(this.editShortcutPanel);
     }
 
     public void createNewTab(Tab tab) {
@@ -192,6 +224,10 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
         this.libraryPanel.setOnShortcutUninstall(onShortcutUninstall);
+    }
+
+    public void setOnShortcutChanged(Consumer<ShortcutDTO> onShortcutChanged) {
+        this.editShortcutPanel.setOnShortcutChanged(onShortcutChanged);
     }
 
     public void setOnScriptRun(Consumer<File> onScriptRun) {

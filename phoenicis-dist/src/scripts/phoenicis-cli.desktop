@@ -5,3 +5,4 @@ Exec=phoenicis-cli
 Icon=phoenicis
 Comment=Front-end for Wine
 Categories=Game;Wine;
+StartupNotify=true
