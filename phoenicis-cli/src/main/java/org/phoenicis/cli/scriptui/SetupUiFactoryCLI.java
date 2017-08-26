@@ -24,13 +24,25 @@ import org.phoenicis.scripts.ui.SetupUiFactory;
 
 import java.net.URI;
 
+/**
+ * CLI implementation of the SetupUiFactory
+ */
 @Safe
 public class SetupUiFactoryCLI implements SetupUiFactory {
 
+    /**
+     * constructor
+     */
     public SetupUiFactoryCLI() {
         super();
     }
 
+    /**
+     * creates a setup UI to install an application
+     * @param title title of the setup UI
+     * @param miniature miniature of the setup UI (usually the miniature of the installed application)
+     * @return created setup UI
+     */
     @Override
     public SetupUi createSetupWindow(String title, URI miniature) {
         return new SetupUiCliImplementation(title, true, true);

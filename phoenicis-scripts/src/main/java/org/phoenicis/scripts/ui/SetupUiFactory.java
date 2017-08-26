@@ -25,8 +25,8 @@ public interface SetupUiFactory {
     /**
      * creates a setup UI to install an application
      * @param title title of the setup UI
-     * @param miniature
-     * @return
+     * @param miniature miniature of the setup UI (usually the miniature of the installed application)
+     * @return created setup UI
      */
     SetupUi createSetupWindow(String title, URI miniature);
 }
