@@ -25,9 +25,9 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
@@ -35,6 +35,7 @@ import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -94,25 +95,51 @@ final class EditShortcutPanel extends DetailsView {
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
         this.editedShortcut = shortcutDTO;
 
-        this.setTitle(shortcutDTO.getName());
+        this.setTitle(this.editedShortcut.getName());
 
-        this.description.setText(shortcutDTO.getDescription());
+        this.description.setText(this.editedShortcut.getDescription());
 
         this.gridPane.getChildren().clear();
 
-        try {
-            LOGGER.info("Reading shortcut: {}", shortcutDTO.getScript());
+        // miniature
+        Label miniatureLabel = new Label(tr("Miniature:"));
+        miniatureLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
+        GridPane.setValignment(miniatureLabel, VPos.TOP);
+        this.gridPane.add(miniatureLabel, 0, 0);
 
-            final Map<String, Object> shortcutProperties = objectMapper.readValue(shortcutDTO.getScript(),
+        TextField miniaturePathField = new TextField(this.editedShortcut.getMiniature().getPath());
+
+        Button openBrowser = new Button(tr("Choose"));
+        openBrowser.setOnAction(event -> {
+            FileChooser chooser = new FileChooser();
+            chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Images"), "*.miniature, *.png"));
+            File defaultFile = new File(this.editedShortcut.getMiniature());
+            chooser.setInitialDirectory(defaultFile.getParentFile());
+
+            File newMiniature = chooser.showOpenDialog(null);
+            miniaturePathField.setText(newMiniature.toString());
+            this.editedShortcut = new ShortcutDTO.Builder(this.editedShortcut).withMiniature(newMiniature.toURI())
+                    .build();
+        });
+
+        HBox content = new HBox(miniaturePathField, openBrowser);
+        HBox.setHgrow(miniaturePathField, Priority.ALWAYS);
+        this.gridPane.add(content, 1, 0);
+
+        // shortcut script
+        try {
+            LOGGER.info("Reading shortcut: {}", this.editedShortcut.getScript());
+
+            final Map<String, Object> shortcutProperties = objectMapper.readValue(this.editedShortcut.getScript(),
                     new TypeReference<Map<String, Object>>() {
                     });
 
-            int i = 0;
+            int row = 1;
             for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
                 final Label keyLabel = new Label(tr(unCamelize(entry.getKey())) + ":");
                 keyLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
                 GridPane.setValignment(keyLabel, VPos.TOP);
-                this.gridPane.add(keyLabel, 0, i);
+                this.gridPane.add(keyLabel, 0, row);
 
                 final TextArea valueLabel = new TextArea(entry.getValue().toString());
                 valueLabel.setWrapText(true);
@@ -123,15 +150,15 @@ final class EditShortcutPanel extends DetailsView {
                         shortcutProperties.replace(entry.getKey(), valueLabel.getText());
                         try {
                             String json = new ObjectMapper().writeValueAsString(shortcutProperties);
-                            this.editedShortcut = new ShortcutDTO.Builder(shortcutDTO).withScript(json).build();
+                            this.editedShortcut = new ShortcutDTO.Builder(this.editedShortcut).withScript(json).build();
                         } catch (JsonProcessingException e) {
                             LOGGER.error("Creating new shortcut String failed.", e);
                         }
                     }
                 });
-                this.gridPane.add(valueLabel, 1, i);
+                this.gridPane.add(valueLabel, 1, row);
 
-                i++;
+                row++;
             }
 
         } catch (IOException e) {
