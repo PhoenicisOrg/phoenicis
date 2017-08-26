@@ -198,7 +198,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private void showShortcutEdit(ShortcutDTO shortcutDTO) {
         this.editShortcutPanel.setOnClose(this::closeDetailsView);
         this.editShortcutPanel.setShortcutDTO(shortcutDTO);
-        this.editShortcutPanel.setMaxWidth(400);
+        this.editShortcutPanel.setMaxWidth(600);
         this.editShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(this.editShortcutPanel);
     }
