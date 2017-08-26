@@ -28,7 +28,7 @@ class TestUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public SetupUiFactory setupUiFactory() {
-        return title -> new TestSetupUi();
+        return (title, miniature) -> new TestSetupUi();
     }
 
     @Override

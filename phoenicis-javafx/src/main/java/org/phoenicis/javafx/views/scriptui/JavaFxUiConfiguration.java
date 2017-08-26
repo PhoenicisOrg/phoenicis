@@ -48,7 +48,7 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Bean
     public SetupUiFactory setupUiFactory() {
         return new SetupUiFactoryJavaFX(toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager(),
-                viewsConfigurationLibrary.viewLibrary());
+                viewsConfiguration.viewInstallations());
     }
 
     @Override

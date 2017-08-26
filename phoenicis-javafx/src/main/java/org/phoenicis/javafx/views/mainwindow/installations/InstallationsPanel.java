@@ -16,35 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.cli.scriptui;
+package org.phoenicis.javafx.views.mainwindow.installations;
 
-import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.scripts.ui.SetupUi;
-import org.phoenicis.scripts.ui.SetupUiFactory;
-
-import java.net.URI;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * CLI implementation of the SetupUiFactory
+ * shows details for an installation
  */
-@Safe
-public class SetupUiFactoryCLI implements SetupUiFactory {
+final class InstallationsPanel extends DetailsView {
+    private final Logger LOGGER = LoggerFactory.getLogger(InstallationsPanel.class);
 
     /**
-     * constructor
+     * set installation which shall be shown in this details view
+     * @param installationDTO
      */
-    public SetupUiFactoryCLI() {
-        super();
+    public void setInstallationDTO(InstallationDTO installationDTO) {
+        this.setTitle(installationDTO.getName());
+        this.setCenter(installationDTO.getNode());
     }
 
-    /**
-     * creates a setup UI to install an application
-     * @param title title of the setup UI
-     * @param miniature miniature of the setup UI (usually the miniature of the installed application)
-     * @return created setup UI
-     */
-    @Override
-    public SetupUi createSetupWindow(String title, URI miniature) {
-        return new SetupUiCliImplementation(title, true, true);
-    }
 }

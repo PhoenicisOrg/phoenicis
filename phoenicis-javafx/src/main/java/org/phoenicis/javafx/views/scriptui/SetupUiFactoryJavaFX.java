@@ -20,33 +20,59 @@ package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
+import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
+import java.net.URI;
+import java.util.Date;
+
+/**
+ * JavaFX implementation of the SetupUiFactory
+ */
 @Safe
 public class SetupUiFactoryJavaFX implements SetupUiFactory {
 
     private OperatingSystemFetcher operatingSystemFetcher;
     private ThemeManager themeManager;
-    private ViewLibrary viewLibrary;
+    private ViewInstallations viewInstallations;
 
+    /**
+     * constructor
+     * @param operatingSystemFetcher
+     * @param themeManager
+     * @param viewInstallations
+     */
     public SetupUiFactoryJavaFX(OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager,
-            ViewLibrary viewLibrary) {
+            ViewInstallations viewInstallations) {
         super();
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.themeManager = themeManager;
-        this.viewLibrary = viewLibrary;
+        this.viewInstallations = viewInstallations;
     }
 
+    /**
+     * creates a setup UI to install an application
+     * @param title title of the setup UI
+     * @param miniature miniature which is shown in the "Installations" tab (usually the miniature of the installed application)
+     * @return setup window
+     */
     @Override
-    public SetupUi createSetupWindow(String title) {
+    public SetupUi createSetupWindow(String title, URI miniature) {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
-        this.viewLibrary.closeDetailsView();
-        this.viewLibrary.createNewTab(setupWindow);
-        setupWindow.setOnShouldClose(() -> this.viewLibrary.closeTab(setupWindow));
+        this.viewInstallations.closeDetailsView();
+        InstallationDTO installationDTO = new InstallationDTO.Builder()
+                .withCategory(InstallationDTO.InstallationType.APPS)
+                .withId(title + "_" + new Date().getTime())
+                .withName(title)
+                .withMiniature(miniature)
+                .withNode(setupWindow.getContent())
+                .build();
+        this.viewInstallations.addInstallation(installationDTO);
+        setupWindow.setOnShouldClose(() -> this.viewInstallations.removeInstallation(installationDTO));
         return setupWindow;
     }
 }

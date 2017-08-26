@@ -16,17 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.ui;
+package org.phoenicis.javafx.controller.installations;
 
-import java.net.URI;
+import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
 
-@FunctionalInterface
-public interface SetupUiFactory {
-    /**
-     * creates a setup UI to install an application
-     * @param title title of the setup UI
-     * @param miniature miniature of the setup UI (usually the miniature of the installed application)
-     * @return created setup UI
-     */
-    SetupUi createSetupWindow(String title, URI miniature);
+public class InstallationsController {
+    private final ViewInstallations viewInstallations;
+
+    public InstallationsController(ViewInstallations viewInstallations) {
+        this.viewInstallations = viewInstallations;
+    }
+
+    public void setOnInstallationAdded(Runnable onInstallationAdded) {
+        this.viewInstallations.setOnInstallationAdded(onInstallationAdded);
+    }
+
+    public ViewInstallations getView() {
+        return viewInstallations;
+    }
 }

@@ -18,21 +18,22 @@
 
 package org.phoenicis.scripts.wizard;
 
+import org.apache.commons.io.IOUtils;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.ui.*;
-import org.phoenicis.scripts.ui.SetupUi;
-import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URI;
 import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
+    private URI miniature;
     private final UiMessageSender messageSender;
     private final SetupUiFactory setupUiFactory;
 
@@ -50,9 +51,15 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * @param title title of the setupUi
      * @param userHome
      */
-    public UiSetupWizardImplementation(String title, UiMessageSender messageSender, SetupUiFactory setupUiFactory,
-            String userHome, String applicationUserRoot, String applicationName) {
+    public UiSetupWizardImplementation(String title,
+            URI miniature,
+            UiMessageSender messageSender,
+            SetupUiFactory setupUiFactory,
+            String userHome,
+            String applicationUserRoot,
+            String applicationName) {
         this.title = title;
+        this.miniature = miniature;
         this.messageSender = messageSender;
         this.setupUiFactory = setupUiFactory;
         this.userHome = userHome;
@@ -65,7 +72,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public void init() {
-        messageSender.run(() -> setupUi = setupUiFactory.createSetupWindow(title));
+        messageSender.run(() -> setupUi = setupUiFactory.createSetupWindow(title, miniature));
     }
 
     /**

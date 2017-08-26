@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
+import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -45,6 +46,7 @@ public class MainController {
             AppsController appsController,
             EnginesController enginesController,
             ContainersController containersController,
+            InstallationsController installationsController,
             SettingsController settingsController,
             ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
@@ -57,13 +59,14 @@ public class MainController {
                 appsController.getView(),
                 enginesController.getView(),
                 containersController.getView(),
+                installationsController.getView(),
                 settingsController.getView(),
                 themeManager,
                 javaFxSettingsManager);
 
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        libraryController.setOnTabOpened(mainWindow::showLibrary);
+        installationsController.setOnInstallationAdded(mainWindow::showInstallations);
 
         appsController.setOnAppLoaded(() -> {
             containersController.loadContainers();

@@ -58,6 +58,9 @@ public class JavaFxSettingsManager {
     @Value("${application.enginesListType}")
     private ListWidgetType enginesListType;
 
+    @Value("${application.installationsListType}")
+    private ListWidgetType installationsListType;
+
     @Value("${application.libraryListType}")
     private ListWidgetType libraryListType;
 
@@ -103,6 +106,7 @@ public class JavaFxSettingsManager {
         javaFxSettings.set(JavaFxSetting.APPS_LIST_TYPE, String.valueOf(this.appsListType));
         javaFxSettings.set(JavaFxSetting.CONTAINERS_LIST_TYPE, String.valueOf(this.containersListType));
         javaFxSettings.set(JavaFxSetting.ENGINES_LIST_TYPE, String.valueOf(this.enginesListType));
+        javaFxSettings.set(JavaFxSetting.INSTALLATIONS_LIST_TYPE, String.valueOf(this.libraryListType));
         javaFxSettings.set(JavaFxSetting.LIBRARY_LIST_TYPE, String.valueOf(this.libraryListType));
         javaFxSettings.set(JavaFxSetting.FUZZY_SEARCH_RATIO, this.fuzzySearchRatio);
 
@@ -186,6 +190,14 @@ public class JavaFxSettingsManager {
 
     public ListWidgetType getEnginesListType() {
         return this.enginesListType;
+    }
+
+    public void setInstallationsListType(ListWidgetType installationsListType) {
+        this.installationsListType = installationsListType;
+    }
+
+    public ListWidgetType getInstallationsListType() {
+        return this.installationsListType;
     }
 
     public void setLibraryListType(ListWidgetType libraryListType) {

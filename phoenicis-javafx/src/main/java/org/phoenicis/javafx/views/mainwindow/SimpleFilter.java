@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.mainwindow.library;
+package org.phoenicis.javafx.views.mainwindow;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,16 +11,22 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
- * Created by marc on 29.03.17.
+ * a simple filter which filters based on a given text
+ * @param <E>
  */
-public class ShortcutFilter<E> {
+public class SimpleFilter<E> {
     private StringProperty filterText;
 
     private BiPredicate<String, E> filterTextMatcher;
 
     private ObservableList<Predicate<E>> filters;
 
-    public ShortcutFilter(FilteredList<E> filteredList, BiPredicate<String, E> filterTextMatcher) {
+    /**
+     * constructor
+     * @param filteredList list which shall be filtered
+     * @param filterTextMatcher checks if the filter shall be applied
+     */
+    public SimpleFilter(FilteredList<E> filteredList, BiPredicate<String, E> filterTextMatcher) {
         this.filterTextMatcher = filterTextMatcher;
 
         this.filterText = new SimpleStringProperty("");
@@ -31,27 +37,50 @@ public class ShortcutFilter<E> {
                 (ListChangeListener<? super Predicate<E>>) change -> filteredList.setPredicate(this::filter));
     }
 
+    /**
+     * sets the text which is used to filter
+     * @param filterText
+     */
     public void setFilterText(String filterText) {
         this.filterText.setValue(filterText);
     }
 
+    /**
+     * adds a new filter
+     * @param filter
+     */
     public void addFilter(Predicate<E> filter) {
         this.filters.add(filter);
     }
 
+    /**
+     * sets the list of filters
+     * @param filters
+     */
     public void setFilters(Predicate<E>... filters) {
         this.filters.setAll(filters);
     }
 
+    /**
+     * clears the filter (e.g. resets the filter text)
+     */
     public void clearAll() {
         this.filterText.setValue("");
         this.filters.clear();
     }
 
+    /**
+     * clears only filters (not the filter text)
+     */
     public void clearFilters() {
         this.filters.clear();
     }
 
+    /**
+     * filter a given value
+     * @param value
+     * @return if filtered
+     */
     public boolean filter(E value) {
         boolean result = false;
 

@@ -28,6 +28,7 @@ import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
 import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
+import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
@@ -94,6 +95,12 @@ public class ViewsConfiguration {
     @Bean
     public ViewContainers viewContainers() {
         return new ViewContainers(themeConfiguration.themeManager(),
+                javaFxSettingsConfiguration.javaFxSettingsManager());
+    }
+
+    @Bean
+    public ViewInstallations viewInstallations() {
+        return new ViewInstallations(themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
