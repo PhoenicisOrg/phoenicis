@@ -28,12 +28,13 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
-    private URI miniature;
+    private Optional<URI> miniature;
     private final UiMessageSender messageSender;
     private final SetupUiFactory setupUiFactory;
 
@@ -46,13 +47,17 @@ public class UiSetupWizardImplementation implements SetupWizard {
     private final String applicationName;
 
     /**
-     * Create the setupUi
-     *
-     * @param title title of the setupUi
+     * constructor
+     * @param title wizard title
+     * @param miniature miniature for the setup wizard (usually miniature of the application which shall be installed)
+     * @param messageSender
+     * @param setupUiFactory
      * @param userHome
+     * @param applicationUserRoot
+     * @param applicationName Phoenicis PlayOnLinux/PlayOnMac
      */
     public UiSetupWizardImplementation(String title,
-            URI miniature,
+            Optional<URI> miniature,
             UiMessageSender messageSender,
             SetupUiFactory setupUiFactory,
             String userHome,

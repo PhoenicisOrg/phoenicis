@@ -23,6 +23,7 @@ import org.phoenicis.scripts.ui.UiMessageSender;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.net.URI;
+import java.util.Optional;
 
 public class UiSetupWizardFactory {
     @Value("${user.home}")
@@ -37,12 +38,23 @@ public class UiSetupWizardFactory {
     private final UiMessageSender uiMessageSender;
     private final SetupUiFactory setupUiFactory;
 
+    /**
+     * constructor
+     * @param uiMessageSender
+     * @param setupUiFactory
+     */
     public UiSetupWizardFactory(UiMessageSender uiMessageSender, SetupUiFactory setupUiFactory) {
         this.uiMessageSender = uiMessageSender;
         this.setupUiFactory = setupUiFactory;
     }
 
-    public UiSetupWizardImplementation create(String title, URI miniature) {
+    /**
+     * creates a setup wizard
+     * @param title title of the wizard
+     * @param miniature miniature of the setup wizard (usually the miniature of the installed application)
+     * @return created wizard
+     */
+    public UiSetupWizardImplementation create(String title, Optional<URI> miniature) {
         final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title,
                 miniature,
                 uiMessageSender,
