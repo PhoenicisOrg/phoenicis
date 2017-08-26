@@ -38,11 +38,22 @@ public class UiSetupWizardFactory {
     private final UiMessageSender uiMessageSender;
     private final SetupUiFactory setupUiFactory;
 
+    /**
+     * constructor
+     * @param uiMessageSender
+     * @param setupUiFactory
+     */
     public UiSetupWizardFactory(UiMessageSender uiMessageSender, SetupUiFactory setupUiFactory) {
         this.uiMessageSender = uiMessageSender;
         this.setupUiFactory = setupUiFactory;
     }
 
+    /**
+     * creates a setup wizard
+     * @param title title of the wizard
+     * @param miniature miniature of the setup wizard (usually the miniature of the installed application)
+     * @return created wizard
+     */
     public UiSetupWizardImplementation create(String title, Optional<URI> miniature) {
         final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title,
                 miniature,

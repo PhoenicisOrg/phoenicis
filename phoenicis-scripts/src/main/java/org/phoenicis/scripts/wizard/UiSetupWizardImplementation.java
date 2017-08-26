@@ -47,10 +47,14 @@ public class UiSetupWizardImplementation implements SetupWizard {
     private final String applicationName;
 
     /**
-     * Create the setupUi
-     *  @param title title of the setupUi
-     * @param miniature
+     * constructor
+     * @param title wizard title
+     * @param miniature miniature for the setup wizard (usually miniature of the application which shall be installed)
+     * @param messageSender
+     * @param setupUiFactory
      * @param userHome
+     * @param applicationUserRoot
+     * @param applicationName Phoenicis PlayOnLinux/PlayOnMac
      */
     public UiSetupWizardImplementation(String title,
             Optional<URI> miniature,
