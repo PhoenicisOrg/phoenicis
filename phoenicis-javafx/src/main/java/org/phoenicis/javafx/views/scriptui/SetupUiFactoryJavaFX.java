@@ -22,6 +22,7 @@ import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
+import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
@@ -58,15 +59,16 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
      * creates a setup UI to install an application
      * @param title title of the setup UI
      * @param miniature miniature which is shown in the "Installations" tab (usually the miniature of the installed application)
+     * @param installationType apps/engines
      * @return setup window
      */
     @Override
-    public SetupUi createSetupWindow(String title, Optional<URI> miniature) {
+    public SetupUi createSetupWindow(String title, Optional<URI> miniature, InstallationType installationType) {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
         this.viewInstallations.closeDetailsView();
         InstallationDTO installationDTO = new InstallationDTO.Builder()
-                .withCategory(InstallationDTO.InstallationType.APPS)
+                .withCategory(installationType)
                 .withId(title + "_" + new Date().getTime())
                 .withName(title)
                 .withMiniature(miniature.orElse(null))

@@ -18,6 +18,7 @@
 
 package org.phoenicis.scripts.wizard;
 
+import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.scripts.ui.UiMessageSender;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,11 +53,14 @@ public class UiSetupWizardFactory {
      * creates a setup wizard
      * @param title title of the wizard
      * @param miniature miniature of the setup wizard (usually the miniature of the installed application)
+     * @param installationType apps/engines
      * @return created wizard
      */
-    public UiSetupWizardImplementation create(String title, Optional<URI> miniature) {
+    public UiSetupWizardImplementation create(String title, Optional<URI> miniature,
+            InstallationType installationType) {
         final UiSetupWizardImplementation uiSetupWizardImplementation = new UiSetupWizardImplementation(title,
                 miniature,
+                installationType,
                 uiMessageSender,
                 setupUiFactory,
                 userHome,

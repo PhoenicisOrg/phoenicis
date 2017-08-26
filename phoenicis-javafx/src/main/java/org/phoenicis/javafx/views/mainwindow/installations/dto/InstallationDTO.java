@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import javafx.scene.Node;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.scripts.ui.InstallationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,23 +64,6 @@ public class InstallationDTO {
         description = builder.description;
         miniature = builder.miniature;
         node = builder.node;
-    }
-
-    /**
-     * type of the installation
-     */
-    public enum InstallationType {
-        APPS("Apps"), ENGINES("Engines");
-
-        private String displayName;
-
-        InstallationType(String displayName) {
-            this.displayName = displayName;
-        }
-
-        public String toString() {
-            return this.displayName;
-        }
     }
 
     public String getId() {

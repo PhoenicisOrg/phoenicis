@@ -1,6 +1,7 @@
 package org.phoenicis.scripts.nashorn.builtins;
 
 import org.phoenicis.scripts.nashorn.NashornEngine;
+import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 
@@ -23,14 +24,21 @@ public class SetupWizardInjector implements EngineInjector {
     public void injectInto(NashornEngine nashornEngine) {
         nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
             final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
-                    Optional.empty());
+                    Optional.empty(), InstallationType.APPS);
             nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
             return uiSetupWizardImplementation;
         }, this::throwException);
         nashornEngine.put("SetupWizardWithMiniature",
                 (BiFunction<String, Optional<URI>, UiSetupWizardImplementation>) (name, miniature) -> {
                     final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
-                            miniature);
+                            miniature, InstallationType.APPS);
+                    nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+                    return uiSetupWizardImplementation;
+                }, this::throwException);
+        nashornEngine.put("EngineProgressUi",
+                (Function<String, UiSetupWizardImplementation>) (name) -> {
+                    final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
+                            Optional.empty(), InstallationType.ENGINES);
                     nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
                     return uiSetupWizardImplementation;
                 }, this::throwException);

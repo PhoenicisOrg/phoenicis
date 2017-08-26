@@ -34,6 +34,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
+    private final InstallationType installationType;
     private Optional<URI> miniature;
     private final UiMessageSender messageSender;
     private final SetupUiFactory setupUiFactory;
@@ -50,14 +51,17 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * constructor
      * @param title wizard title
      * @param miniature miniature for the setup wizard (usually miniature of the application which shall be installed)
+     * @param installationType apps/engines
      * @param messageSender
      * @param setupUiFactory
      * @param userHome
      * @param applicationUserRoot
      * @param applicationName Phoenicis PlayOnLinux/PlayOnMac
      */
-    public UiSetupWizardImplementation(String title,
+    public UiSetupWizardImplementation(
+            String title,
             Optional<URI> miniature,
+            InstallationType installationType,
             UiMessageSender messageSender,
             SetupUiFactory setupUiFactory,
             String userHome,
@@ -65,6 +69,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
             String applicationName) {
         this.title = title;
         this.miniature = miniature;
+        this.installationType = installationType;
         this.messageSender = messageSender;
         this.setupUiFactory = setupUiFactory;
         this.userHome = userHome;
@@ -77,7 +82,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public void init() {
-        messageSender.run(() -> setupUi = setupUiFactory.createSetupWindow(title, miniature));
+        messageSender.run(
+                () -> setupUi = setupUiFactory.createSetupWindow(this.title, this.miniature, this.installationType));
     }
 
     /**

@@ -31,7 +31,4 @@ public interface UiConfiguration {
 
     @Bean
     UiQuestionFactory uiQuestionFactory();
-
-    @Bean
-    ProgressUiFactory progressUiFactory();
 }
