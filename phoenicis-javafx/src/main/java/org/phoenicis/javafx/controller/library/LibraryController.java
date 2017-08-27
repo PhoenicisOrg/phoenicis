@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller.library;
 
 import javafx.application.Platform;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -30,8 +31,11 @@ import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +43,9 @@ import java.util.stream.Collectors;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class LibraryController {
+    @Value("${application.user.containers}")
+    private String containersPath;
+
     private final ViewLibrary viewLibrary;
     private final ConsoleController consoleController;
     private final LibraryManager libraryManager;
@@ -71,6 +78,8 @@ public class LibraryController {
             this.updateLibrary();
         });
 
+        this.viewLibrary.setOnShortcutCreate(this::createShortcut);
+
         this.viewLibrary.setOnShortcutRun(this::runShortcut);
         this.viewLibrary.setOnShortcutDoubleClicked(this::runShortcut);
         this.viewLibrary.setOnShortcutStop(
@@ -95,8 +104,45 @@ public class LibraryController {
         });
     }
 
+    /**
+     * creates a shortcut for a given executable
+     * @param executable executable file (WineShortcut will search for this file in the given prefix)
+     */
+    private void createShortcut(File executable) {
+        // get container
+        // TODO: smarter way using container manager
+        final String executablePath = executable.getAbsolutePath();
+        final String pathInContainers = executablePath.replace(containersPath, "");
+        final String[] split = pathInContainers.split("/");
+        final String engineContainer = split[0];
+        final String engine = (Character.toUpperCase(engineContainer.charAt(0)) + engineContainer.substring(1))
+                .replace("prefix", "");
+        final String container = split[1];
+
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval("include([\"Engines\", \"" + engine + "\", \"Shortcuts\", \"" + engine + "\"]);",
+                ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
+                    final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
+                    shortcutObject.callMember("name", executable.getName());
+                    shortcutObject.callMember("search", executable.getName());
+                    shortcutObject.callMember("prefix", container);
+                    shortcutObject.callMember("create");
+                }, e -> this.showErrorMessage(e, tr("Error while creating shortcut"))),
+                e -> this.showErrorMessage(e, tr("Error while creating shortcut")));
+    }
+
     private void runShortcut(ShortcutDTO shortcutDTO) {
         shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage(tr("Error"), e));
+    }
+
+    /**
+     * shows an error message
+     * @param e exception that caused the error
+     * @param message error message
+     */
+    private void showErrorMessage(Exception e, String message) {
+        Platform.runLater(() -> new ErrorMessage(message, e));
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
