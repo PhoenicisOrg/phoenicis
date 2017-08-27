@@ -8,7 +8,6 @@ import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 import java.net.URI;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * Injects SetupWizard() function into a script engine
@@ -22,25 +21,22 @@ public class SetupWizardInjector implements EngineInjector {
 
     @Override
     public void injectInto(NashornEngine nashornEngine) {
-        nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
-            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
-                    Optional.empty(), InstallationType.APPS);
-            nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
-            return uiSetupWizardImplementation;
-        }, this::throwException);
-        nashornEngine.put("SetupWizardWithMiniature",
+        nashornEngine.put("SetupWizardApps",
                 (BiFunction<String, Optional<URI>, UiSetupWizardImplementation>) (name, miniature) -> {
                     final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
                             miniature, InstallationType.APPS);
                     nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
                     return uiSetupWizardImplementation;
-                }, this::throwException);
-        nashornEngine.put("EngineProgressUi",
-                (Function<String, UiSetupWizardImplementation>) (name) -> {
+                },
+                this::throwException);
+
+        nashornEngine.put("SetupWizardEngines",
+                (BiFunction<String, Optional<URI>, UiSetupWizardImplementation>) (name, miniature) -> {
                     final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
-                            Optional.empty(), InstallationType.ENGINES);
+                            miniature, InstallationType.ENGINES);
                     nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
                     return uiSetupWizardImplementation;
-                }, this::throwException);
+                },
+                this::throwException);
     }
 }
