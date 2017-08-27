@@ -18,6 +18,7 @@
 
 @background-color: #232629;
 @main-color: #31363b;
+@hover-color: #284150;
 @focus-color: #3daee9;
 @text-color: #eff0f1;
 @inactive-text-color: #bdc3c7;
@@ -361,6 +362,18 @@
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
+.listWidget {
+    .list-cell {
+        &:hover {
+          -fx-background-color: @hover-color;
+        }
+
+        &:selected {
+          -fx-background-color: @focus-color;
+        }
+    }
+}
+
 .iconListWidget {
   -fx-background-color: @background-color;
 
@@ -368,7 +381,7 @@
         -fx-background-radius: 0em;
 
         &:hover {
-            -fx-background-color: #284150;
+            -fx-background-color: @hover-color;
         }
 
         &:selected {

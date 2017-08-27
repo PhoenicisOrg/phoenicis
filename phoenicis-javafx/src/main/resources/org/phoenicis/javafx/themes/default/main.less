@@ -17,6 +17,8 @@
  */
 
 @background-color: #F0F0F0;
+@hover-color: #EFEFEF;
+@focus-color: #EAEAEA;
 
 /*******************************************************/
 /*********************** general ***********************/
@@ -287,6 +289,18 @@
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
+.listWidget {
+    .list-cell {
+        &:hover {
+          -fx-background-color: @hover-color;
+        }
+
+        &:selected {
+          -fx-background-color: @focus-color;
+        }
+    }
+}
+
 .iconListWidget {
   -fx-min-width: 15em;
   -fx-pref-width: 53.5em;
@@ -306,11 +320,11 @@
     -fx-background-radius: 0.8em;
 
     &:hover {
-      -fx-background-color: #EFEFEF;
+      -fx-background-color: @hover-color;
     }
 
     &:selected {
-      -fx-background-color: #EAEAEA;
+      -fx-background-color: @focus-color;
     }
 
     .iconListMiniatureImage {
