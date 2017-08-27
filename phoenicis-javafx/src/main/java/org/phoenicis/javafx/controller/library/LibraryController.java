@@ -47,8 +47,6 @@ public class LibraryController {
     private final ScriptInterpreter scriptInterpreter;
     private final RepositoryManager repositoryManager;
 
-    private String keywords = "";
-
     public LibraryController(ViewLibrary viewLibrary, ConsoleController consoleController,
             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
             ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
@@ -65,11 +63,6 @@ public class LibraryController {
         });
 
         libraryManager.setOnUpdate(this::updateLibrary);
-
-        this.viewLibrary.setOnSearch(searchKeyword -> {
-            keywords = searchKeyword;
-            this.updateLibrary();
-        });
 
         this.viewLibrary.setOnShortcutRun(this::runShortcut);
         this.viewLibrary.setOnShortcutDoubleClicked(this::runShortcut);
@@ -113,11 +106,8 @@ public class LibraryController {
 
     public void updateLibrary() {
         final List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
-        final List<ShortcutCategoryDTO> shortcutsCorrespondingToKeywords = categories.stream()
-                .filter(shortcutDTO -> shortcutDTO.getName().toLowerCase().contains(keywords.toLowerCase().trim()))
-                .collect(Collectors.toList());
 
-        Platform.runLater(() -> this.viewLibrary.populate(shortcutsCorrespondingToKeywords));
+        Platform.runLater(() -> this.viewLibrary.populate(categories));
     }
 
     public ViewLibrary getView() {

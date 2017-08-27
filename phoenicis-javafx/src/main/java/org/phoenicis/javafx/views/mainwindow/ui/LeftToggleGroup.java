@@ -159,7 +159,7 @@ public class LeftToggleGroup<E> extends LeftGroup {
      * If no such button exists this method does nothing
      */
     public void selectAll() {
-        this.allButton.ifPresent(button -> button.setSelected(true));
+        this.allButton.ifPresent(button -> button.fire());
     }
 
     /**
