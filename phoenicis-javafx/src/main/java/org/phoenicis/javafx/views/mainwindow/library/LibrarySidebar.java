@@ -66,6 +66,8 @@ public class LibrarySidebar extends LeftSidebar {
     private Consumer<ShortcutCategoryDTO> onCategorySelection;
 
     // consumers called when a script should be run or a console be opened
+    private Consumer<File> onShortcutCreate = executable -> {
+    };
     private Consumer<File> onScriptRun;
     private Runnable onOpenConsole;
 
@@ -176,12 +178,22 @@ public class LibrarySidebar extends LeftSidebar {
      * This method populates the advanced tools button group.
      */
     private void populateAdvancedTools() {
+        LeftButton createShortcut = new LeftButton(tr("Create shortcut"));
+        createShortcut.getStyleClass().add("openTerminal");
+        createShortcut.setOnMouseClicked(event -> {
+            final FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(tr("Open a script"));
+
+            // TODO: use correct owner window
+            final File executable = fileChooser.showOpenDialog(null);
+
+            if (executable != null) {
+                this.onShortcutCreate.accept(executable);
+            }
+        });
+
         this.runScript = new LeftButton(tr("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");
-
-        this.runConsole = new LeftButton(tr("{0} console", applicationName));
-        this.runConsole.getStyleClass().add("consoleButton");
-
         this.runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(tr("Open a script"));
@@ -193,9 +205,12 @@ public class LibrarySidebar extends LeftSidebar {
                 onScriptRun.accept(scriptToRun);
             }
         });
+
+        this.runConsole = new LeftButton(tr("{0} console", applicationName));
+        this.runConsole.getStyleClass().add("consoleButton");
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new LeftGroup(tr("Advanced tools"), runScript, runConsole);
+        this.advancedToolsGroup = new LeftGroup(tr("Advanced tools"), createShortcut, runScript, runConsole);
     }
 
     /**
@@ -223,6 +238,15 @@ public class LibrarySidebar extends LeftSidebar {
      */
     public void setOnCategorySelection(Consumer<ShortcutCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
+    }
+
+    /**
+     * This method updates the consumer, that is called when the "Create shortcut" button in the advanced tools section has been clicked.
+     *
+     * @param onShortcutCreate The new consumer to be called
+     */
+    public void setOnShortcutCreate(Consumer<File> onShortcutCreate) {
+        this.onShortcutCreate = onShortcutCreate;
     }
 
     /**
