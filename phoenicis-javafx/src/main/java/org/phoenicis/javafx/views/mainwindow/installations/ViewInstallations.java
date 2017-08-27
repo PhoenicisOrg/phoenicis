@@ -25,6 +25,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
@@ -56,7 +57,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
     private SortedList<InstallationCategoryDTO> sortedCategories;
 
     private ObservableList<InstallationDTO> installations;
-    private FilteredList<InstallationDTO> filteredInstallations;
+    private PhoenicisFilteredList<InstallationDTO> filteredInstallations;
     private SortedList<InstallationDTO> sortedInstallations;
 
     private Runnable onInstallationAdded = () -> {
@@ -88,12 +89,14 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName));
 
+        this.filter = new InstallationsFilter();
+
         // initialising the installations lists
         this.installations = new ExpandedList<>(this.sortedCategories, InstallationCategoryDTO::getInstallations);
-        this.filteredInstallations = new FilteredList<>(this.installations);
-        this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
+        this.filteredInstallations = new PhoenicisFilteredList<>(this.installations, filter::filter);
+        this.filter.addOnFilterChanged(filteredInstallations::trigger);
 
-        this.filter = new InstallationsFilter();
+        this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
 
         this.activeInstallations.setOnMouseClicked(event -> {
             this.activeInstallations.deselectAll();
@@ -121,7 +124,6 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         this.setCenter(this.activeInstallations);
 
         this.installationsPanel = new InstallationsPanel();
-
     }
 
     /**
