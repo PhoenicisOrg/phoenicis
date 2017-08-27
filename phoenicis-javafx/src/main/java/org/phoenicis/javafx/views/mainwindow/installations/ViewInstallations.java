@@ -46,7 +46,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * This includes applications as well as engines.
  */
 public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
-    private final SimpleFilter<InstallationDTO> filter;
+    private final InstallationsFilter filter;
 
     private InstallationsPanel installationsPanel;
 
@@ -70,8 +70,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
      * @param themeManager
      * @param javaFxSettingsManager
      */
-    public ViewInstallations(ThemeManager themeManager,
-            JavaFxSettingsManager javaFxSettingsManager) {
+    public ViewInstallations(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Installations"), themeManager);
         this.getStyleClass().add("mainWindowScene");
 
@@ -94,8 +93,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
         this.filteredInstallations = new FilteredList<>(this.installations);
         this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
 
-        this.filter = new SimpleFilter<>(this.filteredInstallations,
-                (filterText, installation) -> installation.getName().toLowerCase().contains(filterText));
+        this.filter = new InstallationsFilter();
 
         this.activeInstallations.setOnMouseClicked(event -> {
             this.activeInstallations.deselectAll();
@@ -103,25 +101,17 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
             event.consume();
         });
 
-        this.sidebar = new InstallationsSidebar(activeInstallations, javaFxSettingsManager);
+        this.sidebar = new InstallationsSidebar(activeInstallations, filter, javaFxSettingsManager);
         this.sidebar.bindCategories(this.sortedCategories);
 
         // set the category selection consumers
         this.sidebar.setOnCategorySelection(category -> {
-            filter.setFilters(category.getInstallations()::contains);
+            filter.setSelectedInstallationCategory(category);
             this.closeDetailsView();
         });
         this.sidebar.setOnAllCategorySelection(() -> {
-            filter.clearFilters();
+            filter.setSelectedInstallationCategory(null);
             this.closeDetailsView();
-        });
-        this.sidebar.setOnSearch(searchKeyword -> {
-            final List<InstallationCategoryDTO> installationsCorrespondingToKeywords = this.categories.stream()
-                    .filter(installationDTO -> installationDTO.getName().toLowerCase()
-                            .contains(searchKeyword.toLowerCase().trim()))
-                    .collect(Collectors.toList());
-
-            Platform.runLater(() -> this.populate(installationsCorrespondingToKeywords));
         });
 
         this.setSidebar(this.sidebar);
@@ -141,7 +131,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
     private void populate(List<InstallationCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
-            this.filter.clearAll();
+            this.filter.clear();
             this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
