@@ -21,7 +21,7 @@ public class SetupWizardInjector implements EngineInjector {
 
     @Override
     public void injectInto(NashornEngine nashornEngine) {
-        nashornEngine.eval("var InstallationType = Java.type(\"org.phoenicis.scripts.ui.InstallationType\")",
+        nashornEngine.eval("var InstallationType = Java.type(\"" + InstallationType.class.getCanonicalName() + "\")",
                 this::throwException);
         nashornEngine.put("SetupWizard",
                 (TriFunction<InstallationType, String, Optional<URI>, UiSetupWizardImplementation>) (installationType,
