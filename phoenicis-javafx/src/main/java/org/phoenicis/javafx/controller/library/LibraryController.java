@@ -128,12 +128,21 @@ public class LibraryController {
                     shortcutObject.callMember("search", executable.getName());
                     shortcutObject.callMember("prefix", container);
                     shortcutObject.callMember("create");
-                }, e -> Platform.runLater(() -> new ErrorMessage(tr("Error while creating shortcut"), e))),
-                e -> Platform.runLater(() -> new ErrorMessage(tr("Error while creating shortcut"), e)));
+                }, e -> this.showErrorMessage(e, tr("Error while creating shortcut"))),
+                e -> this.showErrorMessage(e, tr("Error while creating shortcut")));
     }
 
     private void runShortcut(ShortcutDTO shortcutDTO) {
         shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage(tr("Error"), e));
+    }
+
+    /**
+     * shows an error message
+     * @param e exception that caused the error
+     * @param message error message
+     */
+    private void showErrorMessage(Exception e, String message) {
+        Platform.runLater(() -> new ErrorMessage(message, e));
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
