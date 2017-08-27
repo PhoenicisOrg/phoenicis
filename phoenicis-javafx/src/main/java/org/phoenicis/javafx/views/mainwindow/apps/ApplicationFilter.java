@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import javafx.application.Platform;
 import javafx.beans.property.*;
 import org.phoenicis.javafx.views.AbstractFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -11,7 +10,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 /**
  * A filter implementation for the "Apps" tab.
@@ -24,7 +22,7 @@ public class ApplicationFilter extends AbstractFilter {
 
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
-    private StringProperty filterText;
+    private Optional<String> filterText;
     private Optional<CategoryDTO> filterCategory;
 
     private BooleanProperty containCommercialApplications;
@@ -47,7 +45,7 @@ public class ApplicationFilter extends AbstractFilter {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
-        this.filterText = new SimpleStringProperty("");
+        this.filterText = Optional.empty();
         this.filterCategory = Optional.empty();
 
         this.containCommercialApplications = new SimpleBooleanProperty();
@@ -69,7 +67,7 @@ public class ApplicationFilter extends AbstractFilter {
      * @param filterText The new entered filter text
      */
     public void setFilterText(String filterText) {
-        this.filterText.setValue(filterText);
+        this.filterText = Optional.ofNullable(filterText);
 
         this.triggerFilterChanged();
     }
@@ -106,7 +104,7 @@ public class ApplicationFilter extends AbstractFilter {
      * Afterwards a filter update gets triggered
      */
     public void clearAll() {
-        this.filterText.setValue("");
+        this.filterText = Optional.empty();
         this.filterCategory = Optional.empty();
 
         this.triggerFilterChanged();
@@ -153,7 +151,7 @@ public class ApplicationFilter extends AbstractFilter {
         return (ignoreFilterCategoryTest
                 || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
                 && application.getScripts().stream().anyMatch(script -> filter(script))
-                && filterTextMatcher.test(filterText.getValue(), application);
+                && filterText.map(filterText -> filterTextMatcher.test(filterText, application)).orElse(true);
     }
 
     /**
