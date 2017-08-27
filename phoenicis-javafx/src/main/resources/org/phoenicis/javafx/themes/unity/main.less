@@ -18,6 +18,7 @@
 
 @background-color: #f2f1f0;
 @main-color: #e7e5e4;
+@hover-color: rgba(223, 94, 30, 0.7);
 @focus-color: #df5e1e;
 @text-color: #6b6b6a;
 
@@ -399,11 +400,11 @@
 .listWidget {
     .list-cell {
         &:hover {
-            -fx-background-color: rgba(223, 94, 30, 0.7);
+            -fx-background-color: @hover-color;
         }
 
         &:selected {
-            -fx-background-color: rgba(223, 94, 30, 1);
+            -fx-background-color: @focus-color;
         }
     }
 }
@@ -413,11 +414,11 @@
         -fx-background-radius: 0.7em;
 
         &:hover {
-            -fx-background-color: rgba(223, 94, 30, 0.7);
+            -fx-background-color: @hover-color;
         }
 
         &:selected {
-            -fx-background-color: rgba(223, 94, 30, 1);
+            -fx-background-color: @focus-color;
         }
 
         .iconListMiniatureLabel {
