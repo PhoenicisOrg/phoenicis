@@ -29,6 +29,7 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
@@ -60,7 +61,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
     private SortedList<CategoryDTO> sortedCategories;
 
     private ObservableList<ApplicationDTO> applications;
-    private FilteredList<ApplicationDTO> filteredApplications;
+    private PhoenicisFilteredList<ApplicationDTO> filteredApplications;
     private SortedList<ApplicationDTO> sortedApplications;
 
     public ViewApps(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
@@ -89,8 +90,8 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
         // initialising the application lists
         this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories,
                 CategoryDTO::getApplications);
-        this.filteredApplications = new FilteredList<ApplicationDTO>(this.applications);
-        this.filteredApplications.predicateProperty().bind(filter.applicationFilterProperty());
+        this.filteredApplications = new PhoenicisFilteredList<ApplicationDTO>(this.applications, filter::filter);
+        filter.addOnFilterChanged(filteredApplications::trigger);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
         this.sidebar = new ApplicationSidebar(availableApps, filter, javaFxSettingsManager);
