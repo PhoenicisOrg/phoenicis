@@ -167,6 +167,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
     public void addInstallation(InstallationDTO installationDTO) {
         populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
         Platform.runLater(() -> {
+            this.activeInstallations.deselectAll();
             this.activeInstallations.select(installationDTO);
             this.showInstallationDetails(installationDTO);
         });

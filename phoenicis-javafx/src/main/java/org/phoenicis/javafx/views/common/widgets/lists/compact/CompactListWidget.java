@@ -43,7 +43,7 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
 
         this.setPrefWidth(0);
         this.setPrefHeight(0);
-        this.getStyleClass().add("compactListWidget");
+        this.getStyleClass().addAll("listWidget", "compactListWidget");
         this.setCellFactory(param -> new ListElementListCell<CompactListElement<E>>());
 
         this.items = FXCollections.observableArrayList();

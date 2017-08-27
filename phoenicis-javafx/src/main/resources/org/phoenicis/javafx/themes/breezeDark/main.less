@@ -361,6 +361,18 @@
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
+.listWidget {
+    .list-cell {
+        &:hover {
+          -fx-background-color: #284150;
+        }
+
+        &:selected {
+          -fx-background-color: @focus-color;
+        }
+    }
+}
+
 .iconListWidget {
   -fx-background-color: @background-color;
 
