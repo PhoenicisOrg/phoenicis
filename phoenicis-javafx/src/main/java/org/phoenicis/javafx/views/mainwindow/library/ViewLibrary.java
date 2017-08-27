@@ -67,7 +67,6 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private TabPane libraryTabs;
     private Runnable onTabOpened = () -> {
     };
-
     private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {
     };
     private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
@@ -218,6 +217,10 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
 
     public void setOnOpenConsole(Runnable onOpenConsole) {
         this.sidebar.setOnOpenConsole(onOpenConsole);
+    }
+
+    public void setOnShortcutCreate(Consumer<File> onShortcutCreate) {
+        this.sidebar.setOnShortcutCreate(onShortcutCreate);
     }
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
