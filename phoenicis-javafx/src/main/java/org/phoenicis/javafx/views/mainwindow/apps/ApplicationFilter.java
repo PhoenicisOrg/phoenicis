@@ -49,16 +49,20 @@ public class ApplicationFilter extends AbstractFilter {
         this.filterCategory = Optional.empty();
 
         this.containCommercialApplications = new SimpleBooleanProperty();
-        this.containCommercialApplications.addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+        this.containCommercialApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
 
         this.containRequiresPatchApplications = new SimpleBooleanProperty();
-        this.containRequiresPatchApplications.addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+        this.containRequiresPatchApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
 
         this.containTestingApplications = new SimpleBooleanProperty();
-        this.containTestingApplications.addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+        this.containTestingApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
 
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
-        this.containAllOSCompatibleApplications.addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+        this.containAllOSCompatibleApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
     }
 
     /**

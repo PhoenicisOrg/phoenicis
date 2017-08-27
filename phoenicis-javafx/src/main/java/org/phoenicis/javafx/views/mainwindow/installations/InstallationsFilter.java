@@ -79,7 +79,8 @@ public class InstallationsFilter extends AbstractFilter {
      * @return True if the installation category should be shown, false otherwise
      */
     public boolean filter(InstallationCategoryDTO installationCategory) {
-        return searchTerm.map(searchTerm -> installationCategory.getInstallations().stream().anyMatch(this::filter)).orElse(true);
+        return searchTerm.map(searchTerm -> installationCategory.getInstallations().stream().anyMatch(this::filter))
+                .orElse(true);
     }
 
     /**
@@ -88,7 +89,10 @@ public class InstallationsFilter extends AbstractFilter {
      * @return True if the installation should be shown, false otherwise
      */
     public boolean filter(InstallationDTO installation) {
-        return searchTerm.map(searchTerm -> installation.getName().toLowerCase().contains(searchTerm.toLowerCase())).orElse(true) &&
-                selectedInstallationCategory.map(selectedShortcutCategory -> selectedShortcutCategory.getInstallations().contains(installation)).orElse(true);
+        return searchTerm.map(searchTerm -> installation.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+                .orElse(true) &&
+                selectedInstallationCategory.map(
+                        selectedShortcutCategory -> selectedShortcutCategory.getInstallations().contains(installation))
+                        .orElse(true);
     }
 }

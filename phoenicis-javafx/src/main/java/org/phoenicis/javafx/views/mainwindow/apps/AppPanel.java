@@ -115,7 +115,8 @@ final class AppPanel extends DetailsView {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        this.filteredScripts = new PhoenicisFilteredList<>(FXCollections.observableArrayList(application.getScripts()), filter::filter);
+        this.filteredScripts = new PhoenicisFilteredList<>(FXCollections.observableArrayList(application.getScripts()),
+                filter::filter);
         filter.addOnFilterChanged(filteredScripts::trigger);
 
         this.setTitle(application.getName());

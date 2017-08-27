@@ -85,7 +85,8 @@ public class LibrarySidebar extends LeftSidebar {
      * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts, LibraryFilter filter,
+    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts,
+            LibraryFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 

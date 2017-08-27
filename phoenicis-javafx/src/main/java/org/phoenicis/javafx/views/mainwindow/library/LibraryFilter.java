@@ -79,7 +79,8 @@ public class LibraryFilter extends AbstractFilter {
      * @return True if the shortcut category should be shown, false otherwise
      */
     public boolean filter(ShortcutCategoryDTO shortcutCategory) {
-        return searchTerm.map(searchTerm -> shortcutCategory.getShortcuts().stream().anyMatch(this::filter)).orElse(true);
+        return searchTerm.map(searchTerm -> shortcutCategory.getShortcuts().stream().anyMatch(this::filter))
+                .orElse(true);
     }
 
     /**
@@ -88,7 +89,10 @@ public class LibraryFilter extends AbstractFilter {
      * @return True if the shortcut should be shown, false otherwise
      */
     public boolean filter(ShortcutDTO shortcut) {
-        return searchTerm.map(searchTerm -> shortcut.getName().toLowerCase().contains(searchTerm.toLowerCase())).orElse(true) &&
-                selectedShortcutCategory.map(selectedShortcutCategory -> selectedShortcutCategory.getShortcuts().contains(shortcut)).orElse(true);
+        return searchTerm.map(searchTerm -> shortcut.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+                .orElse(true) &&
+                selectedShortcutCategory
+                        .map(selectedShortcutCategory -> selectedShortcutCategory.getShortcuts().contains(shortcut))
+                        .orElse(true);
     }
 }
