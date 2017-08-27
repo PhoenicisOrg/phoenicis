@@ -41,10 +41,4 @@ public class CliUiConfiguration implements UiConfiguration {
     public UiQuestionFactory uiQuestionFactory() {
         return new UiQuestionFactoryCLI();
     }
-
-    @Override
-    @Bean
-    public ProgressUiFactory progressUiFactory() {
-        return new ProgressUiFactoryCLI();
-    }
 }

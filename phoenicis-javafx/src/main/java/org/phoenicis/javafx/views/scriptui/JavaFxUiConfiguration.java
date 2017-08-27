@@ -62,10 +62,4 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     public UiQuestionFactory uiQuestionFactory() {
         return new UiQuestionFactoryJavaFX(tr("Question"));
     }
-
-    @Override
-    @Bean
-    public ProgressUiFactory progressUiFactory() {
-        return new ProgressUiFactoryJavaFX(viewsConfiguration);
-    }
 }
