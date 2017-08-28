@@ -16,21 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.mainwindow;
+package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
-public class WaitPanel extends HBox {
-    public WaitPanel() {
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setPrefWidth(64);
-        progressIndicator.setPrefHeight(64);
-
+public class MessagePanel extends VBox {
+    public MessagePanel(String message) {
         this.getStyleClass().add("rightPane");
 
-        this.getChildren().add(progressIndicator);
+        this.setSpacing(10);
         this.setAlignment(Pos.CENTER);
+
+        Label failureNotificationLbl = new Label();
+        failureNotificationLbl.setText(message);
+        failureNotificationLbl.setTextAlignment(TextAlignment.CENTER);
+
+        this.getChildren().addAll(failureNotificationLbl);
     }
+
 }
