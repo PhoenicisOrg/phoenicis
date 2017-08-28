@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * An instance of this class represents the left sidebar of the apps tab view.
+ * An instance of this class represents the sidebar of the apps tab view.
  * This sidebar contains three items:
  * <ul>
  * <li>
@@ -37,7 +37,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 21.04.17
  */
-public class ApplicationSidebar extends LeftSidebar {
+public class ApplicationSidebar extends Sidebar {
     private final ApplicationFilter filter;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
@@ -45,16 +45,16 @@ public class ApplicationSidebar extends LeftSidebar {
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
-    private LeftScrollPane centerContent;
+    private SidebarScrollPane centerContent;
 
     private ObservableList<CategoryDTO> categories;
     private PhoenicisFilteredList<CategoryDTO> filteredCategories;
 
     // the toggleable categories
-    private LeftToggleGroup<CategoryDTO> categoryView;
+    private SidebarToggleGroup<CategoryDTO> categoryView;
 
     // the group containing the application filters (testing, noCdNeeded and commercial)
-    private LeftGroup filterGroup;
+    private SidebarGroup filterGroup;
 
     private CheckBox testingCheck;
     private CheckBox requiresPatchCheck;
@@ -62,7 +62,7 @@ public class ApplicationSidebar extends LeftSidebar {
     private CheckBox operatingSystemCheck;
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<ApplicationDTO> listWidgetChooser;
+    private ListWidgetChooser<ApplicationDTO> listWidgetChooser;
 
     // consumers called when an action inside the searchBar has been performed (a filter text was entered or the filter has been cleared)
     private Consumer<String> onFilterTextEnter;
@@ -90,7 +90,7 @@ public class ApplicationSidebar extends LeftSidebar {
         this.populateFilters();
         this.populateListWidgetChooser(combinedListWidget);
 
-        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.filterGroup);
+        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer(), this.filterGroup);
 
         this.setTop(this.searchBar);
         this.setCenter(this.centerContent);
@@ -123,28 +123,28 @@ public class ApplicationSidebar extends LeftSidebar {
         this.filteredCategories = new PhoenicisFilteredList<>(categories, filter::filter);
         this.filter.addOnFilterChanged(filteredCategories::trigger);
 
-        this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
+        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
 
         Bindings.bindContent(categoryView.getElements(), filteredCategories);
     }
 
     private void populateFilters() {
-        this.testingCheck = new LeftCheckBox(tr("Testing"));
+        this.testingCheck = new SidebarCheckBox(tr("Testing"));
         this.testingCheck.selectedProperty().bindBidirectional(filter.containTestingApplicationsProperty());
 
-        this.requiresPatchCheck = new LeftCheckBox(tr("Requires patch"));
+        this.requiresPatchCheck = new SidebarCheckBox(tr("Requires patch"));
         this.requiresPatchCheck.selectedProperty().bindBidirectional(filter.containRequiresPatchApplicationsProperty());
 
-        this.commercialCheck = new LeftCheckBox(tr("Commercial"));
+        this.commercialCheck = new SidebarCheckBox(tr("Commercial"));
         this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
         this.commercialCheck.setSelected(true);
 
-        this.operatingSystemCheck = new LeftCheckBox(tr("All Operating Systems"));
+        this.operatingSystemCheck = new SidebarCheckBox(tr("All Operating Systems"));
         this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
         this.operatingSystemCheck.setSelected(false);
 
-        this.filterGroup = new LeftGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
+        this.filterGroup = new SidebarGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
                 operatingSystemCheck);
     }
 
@@ -154,7 +154,7 @@ public class ApplicationSidebar extends LeftSidebar {
      * @param combinedListWidget The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ApplicationDTO> combinedListWidget) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(combinedListWidget);
+        this.listWidgetChooser = new ListWidgetChooser<>(combinedListWidget);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getAppsListType());
         this.listWidgetChooser.setOnChoose(type -> {
@@ -169,7 +169,7 @@ public class ApplicationSidebar extends LeftSidebar {
      * @return The newly created "All" categories toggle button
      */
     private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton(tr("All"));
+        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
@@ -185,7 +185,7 @@ public class ApplicationSidebar extends LeftSidebar {
      * @return The newly created toggle button
      */
     private ToggleButton createCategoryToggleButton(CategoryDTO category) {
-        final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnAction(event -> onCategorySelection.accept(category));

@@ -27,12 +27,12 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This class represents a group of visual objects shown in the left sidebar.
+ * This class represents a group of visual objects shown in the sidebar.
  * This group can have a title and other content consisting of multiple {@link Node}s.
  *
  * @since 26.04.17
  */
-public class LeftGroup extends VBox {
+public class SidebarGroup extends VBox {
     /**
      * The title of this group.
      * This title if optional.
@@ -47,7 +47,7 @@ public class LeftGroup extends VBox {
     /**
      * Constructor
      */
-    private LeftGroup() {
+    private SidebarGroup() {
         super();
 
         this.nodes = new ArrayList<>();
@@ -59,13 +59,13 @@ public class LeftGroup extends VBox {
      * @param title   The title string to be used for this group. If no title string is to be set null can be used.
      * @param content Zero or more nodes, which make up the content of this group.
      */
-    public LeftGroup(String title, Node... content) {
+    public SidebarGroup(String title, Node... content) {
         this();
 
         this.title = Optional.ofNullable(title);
         this.nodes.addAll(Arrays.asList(content));
 
-        this.getStyleClass().add("leftPaneInside");
+        this.getStyleClass().add("sidebarInside");
 
         this.refreshContent();
     }
@@ -75,7 +75,7 @@ public class LeftGroup extends VBox {
      *
      * @param content Zero or more nodes, which make up the content of this group.
      */
-    public LeftGroup(Node... content) {
+    public SidebarGroup(Node... content) {
         this(null, content);
     }
 
@@ -110,7 +110,7 @@ public class LeftGroup extends VBox {
         this.getChildren().clear();
 
         this.title.ifPresent(nameString -> {
-            this.getChildren().add(new LeftBarTitle(nameString));
+            this.getChildren().add(new SidebarTitle(nameString));
         });
 
         this.getChildren().addAll(this.nodes);

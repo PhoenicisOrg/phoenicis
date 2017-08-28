@@ -1,11 +1,9 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -18,16 +16,16 @@ import java.util.function.Supplier;
 
 /**
  * This class represents a group of toggle buttons in the sidebar.
- * This class must be used together with an {@link ObservableList}, containing the objects which are to be shown in this LeftToggleGroup.
- * For every object inside the {@link ObservableList} a {@link ToggleButton} is created, which is then shown inside this LeftToggleGroup.
+ * This class must be used together with an {@link ObservableList}, containing the objects which are to be shown in this SidebarToggleGroup.
+ * For every object inside the {@link ObservableList} a {@link ToggleButton} is created, which is then shown inside this SidebarToggleGroup.
  * For the creation of the {@link ToggleButton}s a converter function is used, which must be passed to the constructor of this class.
  *
  * @author marc
  * @since 28.03.17
  */
-public class LeftToggleGroup<E> extends LeftGroup {
+public class SidebarToggleGroup<E> extends SidebarGroup {
     /**
-     * The ToggleGroup to which all ToggleButtons in this LeftToggleGroup are added
+     * The ToggleGroup to which all ToggleButtons in this SidebarToggleGroup are added
      */
     private final ToggleGroup toggleGroup;
 
@@ -38,12 +36,12 @@ public class LeftToggleGroup<E> extends LeftGroup {
     private final Optional<ToggleButton> allButton;
 
     /**
-     * A {@link VBox} containing all shown {@link ToggleButton}s belonging to this LeftToggleGroup
+     * A {@link VBox} containing all shown {@link ToggleButton}s belonging to this SidebarToggleGroup
      */
     private final VBox toggleButtonBox;
 
     /**
-     * An {@link ObservableList} containing all objects for which a {@link ToggleButton} is to be shown in this LeftToggleGroup
+     * An {@link ObservableList} containing all objects for which a {@link ToggleButton} is to be shown in this SidebarToggleGroup
      */
     private final ObservableList<E> elements;
 
@@ -61,17 +59,17 @@ public class LeftToggleGroup<E> extends LeftGroup {
     /**
      * Constructor
      *
-     * @param name              The title of this LeftToggleGroup
+     * @param name              The title of this SidebarToggleGroup
      * @param allButtonSupplier A supplier function used to create the optional "all" ToggleButton. If no such button is needed null can be used
      * @param converter         A converter function used to convert the source objects to ToggleButtons
      */
-    private LeftToggleGroup(String name, Supplier<ToggleButton> allButtonSupplier,
+    private SidebarToggleGroup(String name, Supplier<ToggleButton> allButtonSupplier,
             Function<E, ? extends ToggleButton> converter) {
         super(name);
 
         this.toggleGroup = new ToggleGroup();
         this.toggleButtonBox = new VBox();
-        this.toggleButtonBox.getStyleClass().add("leftPaneInside");
+        this.toggleButtonBox.getStyleClass().add("sidebarInside");
 
         this.elements = FXCollections.observableArrayList();
         this.mappedToggleButtons = new MappedList<ToggleButton, E>(this.elements, value -> converter.apply(value));
@@ -111,42 +109,42 @@ public class LeftToggleGroup<E> extends LeftGroup {
     /**
      * Constructor
      *
-     * @param name      The title of this LeftToggleGroup
+     * @param name      The title of this SidebarToggleGroup
      * @param converter A converter function used to convert the source objects to ToggleButtons
      */
-    private LeftToggleGroup(String name, Function<E, ? extends ToggleButton> converter) {
+    private SidebarToggleGroup(String name, Function<E, ? extends ToggleButton> converter) {
         this(name, null, converter);
     }
 
     /**
-     * This method creates a new LeftToggleGroup without an "all" categories ToggleButton using the given arguments
+     * This method creates a new SidebarToggleGroup without an "all" categories ToggleButton using the given arguments
      *
-     * @param name      The title of the new LeftToggleGroup
-     * @param converter The converter function used by the new LeftToggleGroup to convert the source objects to ToggleButtons
-     * @param <T>       The type of the source objects in the new LeftToggleGroup
-     * @return The newly created LeftToggleGroup with the given arguments
+     * @param name      The title of the new SidebarToggleGroup
+     * @param converter The converter function used by the new SidebarToggleGroup to convert the source objects to ToggleButtons
+     * @param <T>       The type of the source objects in the new SidebarToggleGroup
+     * @return The newly created SidebarToggleGroup with the given arguments
      */
-    public static <T> LeftToggleGroup<T> create(String name, Function<T, ? extends ToggleButton> converter) {
-        return new LeftToggleGroup<T>(name, converter);
+    public static <T> SidebarToggleGroup<T> create(String name, Function<T, ? extends ToggleButton> converter) {
+        return new SidebarToggleGroup<T>(name, converter);
     }
 
     /**
-     * This method creates a new LeftToggleGroup using the given arguments
+     * This method creates a new SidebarToggleGroup using the given arguments
      *
-     * @param name              The title of the new LeftToggleGroup
+     * @param name              The title of the new SidebarToggleGroup
      * @param allButtonSupplier The suppliert function used to create the "all" categories ToggleButton
-     * @param converter         The converter function used by the new LeftToggleGroup to convert the source objects to ToggleButtons
-     * @param <T>               The type of the source objects in the new LeftToggleGroup
-     * @return The newly created LeftToggleGroup with the given arguments
+     * @param converter         The converter function used by the new SidebarToggleGroup to convert the source objects to ToggleButtons
+     * @param <T>               The type of the source objects in the new SidebarToggleGroup
+     * @return The newly created SidebarToggleGroup with the given arguments
      */
-    public static <T> LeftToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier,
+    public static <T> SidebarToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier,
             Function<T, ? extends ToggleButton> converter) {
-        return new LeftToggleGroup<T>(name, allButtonSupplier, converter);
+        return new SidebarToggleGroup<T>(name, allButtonSupplier, converter);
     }
 
     /**
      * This method returns the {@link ObservableList} containing the source objects used to create the shown {@link ToggleButton}s.
-     * This {@link ObservableList} can be used to bind another {@link ObservableList} to this LeftToggleGroup
+     * This {@link ObservableList} can be used to bind another {@link ObservableList} to this SidebarToggleGroup
      *
      * @return The used {@link ObservableList}
      */
@@ -155,7 +153,7 @@ public class LeftToggleGroup<E> extends LeftGroup {
     }
 
     /**
-     * This method selects the "all" categories {@link ToggleButton} inside this LeftToggleGroup.
+     * This method selects the "all" categories {@link ToggleButton} inside this SidebarToggleGroup.
      * If no such button exists this method does nothing
      */
     public void selectAll() {
@@ -163,12 +161,12 @@ public class LeftToggleGroup<E> extends LeftGroup {
     }
 
     /**
-     * This method selects the ToggleButton at a given position inside this LeftToggleGroup.
+     * This method selects the ToggleButton at a given position inside this SidebarToggleGroup.
      * For the position an optional "all" categories {@link ToggleButton} is ignored
      *
      * @param elementIndex The position of the to be selected {@link ToggleButton}
      * @throws IllegalArgumentException This exception is thrown, if the given position <code>elementIndex</code>
-     *                                  is outside the range of the elements contained in this LeftToggleGroup
+     *                                  is outside the range of the elements contained in this SidebarToggleGroup
      */
     public void select(int elementIndex) {
         if (elementIndex < 0 || elementIndex >= this.elements.size()) {
@@ -180,10 +178,10 @@ public class LeftToggleGroup<E> extends LeftGroup {
 
     /**
      * This method selects the ToggleButton belonging to a given element contained in the <code>elements</code> {@link ObservableList}
-     * inside this LeftToggleGroup.
+     * inside this SidebarToggleGroup.
      *
      * @param element The element, whose corresponding {@link javafx.scene.control.ToggleButton} is to be selected
-     * @throws IllegalArgumentException This exception is thrown, if the given <code>element</code> doesn't exist in this LeftToggleGroup
+     * @throws IllegalArgumentException This exception is thrown, if the given <code>element</code> doesn't exist in this SidebarToggleGroup
      */
     public void select(E element) {
         this.select(this.elements.indexOf(element));

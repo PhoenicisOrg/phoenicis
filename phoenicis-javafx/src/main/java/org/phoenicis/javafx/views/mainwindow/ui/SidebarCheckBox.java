@@ -20,10 +20,10 @@ package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.scene.control.CheckBox;
 
-public class LeftCheckBox extends CheckBox {
-    public LeftCheckBox(String name) {
+public class SidebarCheckBox extends CheckBox {
+    public SidebarCheckBox(String name) {
         super();
         this.setText(name);
-        this.getStyleClass().add("leftPaneCheckBox");
+        this.getStyleClass().add("sidebarCheckBox");
     }
 }

@@ -96,34 +96,34 @@
 }
 
 /*******************************************************/
-/************************* left ************************/
+/*********************** sidebar ***********************/
 /*******************************************************/
-.leftPane {
+.sidebar {
   -fx-background-color: @background-color;
   -fx-padding: 1em;
 
-  .leftPaneScrollbar {
+  .sidebarScrollbar {
     -fx-border-width: 0;
     -fx-background-color: @background-color;
     -fx-padding: 0.8em 0 0.8em 0;
   }
 
-  .leftPaneScrollbar > .viewport {
+  .sidebarScrollbar > .viewport {
     -fx-background-color: @background-color;
   }
 
-  .leftPaneScrollbar .scroll-bar:vertical {
+  .sidebarScrollbar .scroll-bar:vertical {
     -fx-max-width: 0.4em;
     -fx-pref-width: 0.4em;
   }
 
-  .leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
+  .sidebarScrollbar .increment-button, .sidebarScrollbar .decrement-button {
     -fx-pref-height: 0;
     -fx-font-size: 0;
     -fx-opacity: 0;
   }
 
-  .leftPaneScrollbar .scroll-bar:vertical .track {
+  .sidebarScrollbar .scroll-bar:vertical .track {
     -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-background-radius: 0em;
@@ -131,7 +131,7 @@
     -fx-max-width: 0.4em;
   }
 
-  .leftPaneScrollbar .scroll-bar:vertical .thumb {
+  .sidebarScrollbar .scroll-bar:vertical .thumb {
     -fx-background-color: derive(black, 90%);
     -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 1em;
@@ -139,22 +139,22 @@
     -fx-max-width: 0.3em;
   }
 
-  .leftPaneInside {
+  .sidebarInside {
     -fx-spacing: 0.4em;
   }
 
-  .leftSpacer {
+  .sidebarSpacer {
     -fx-pref-height: 0.8em;
   }
 
-  .leftBarTitle {
+  .sidebarTitle {
     -fx-font-family: "Roboto Regular";
     -fx-font-size: 1.1em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
   }
 
-  .leftButton {
+  .sidebarButton {
     -fx-min-height: 2.2em;
     -fx-background-color: transparent;
     -fx-cursor: hand;

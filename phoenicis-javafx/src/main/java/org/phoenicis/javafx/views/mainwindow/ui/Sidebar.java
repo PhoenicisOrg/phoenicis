@@ -18,20 +18,14 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 
-public abstract class LeftSidebar extends BorderPane {
+public abstract class Sidebar extends BorderPane {
 
-    public LeftSidebar() {
+    public Sidebar() {
         super();
 
-        this.getStyleClass().add("leftPane");
+        this.getStyleClass().add("sidebar");
         this.setPrefHeight(0);
     }
 }

@@ -20,10 +20,10 @@ package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.scene.control.Label;
 
-public class LeftBarTitle extends Label {
-    public LeftBarTitle(String defaultValue) {
+public class SidebarTitle extends Label {
+    public SidebarTitle(String defaultValue) {
         super(defaultValue);
-        this.getStyleClass().add("leftBarTitle");
+        this.getStyleClass().add("sidebarTitle");
         this.setWrapText(true);
     }
 }

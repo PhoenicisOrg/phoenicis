@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * An instance of this class represents the left sidebar of the library tab view.
+ * An instance of this class represents the sidebar of the library tab view.
  * This sidebar contains three items:
  * <ul>
  * <li>
@@ -39,7 +39,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 15.04.17
  */
-public class LibrarySidebar extends LeftSidebar {
+public class LibrarySidebar extends Sidebar {
     // the name of this application
     private final String applicationName;
 
@@ -49,22 +49,22 @@ public class LibrarySidebar extends LeftSidebar {
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
-    private LeftScrollPane centerContent;
+    private SidebarScrollPane centerContent;
 
     private ObservableList<ShortcutCategoryDTO> shortcutCategories;
     private PhoenicisFilteredList<ShortcutCategoryDTO> filteredShortcutCategories;
 
     // the toggleable categories
-    private LeftToggleGroup<ShortcutCategoryDTO> categoryView;
+    private SidebarToggleGroup<ShortcutCategoryDTO> categoryView;
 
     // the advanced tools group, containing the run script and run console buttons
-    private LeftGroup advancedToolsGroup;
+    private SidebarGroup advancedToolsGroup;
 
-    private LeftButton runScript;
-    private LeftButton runConsole;
+    private SidebarButton runScript;
+    private SidebarButton runConsole;
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<ShortcutDTO> listWidgetChooser;
+    private ListWidgetChooser<ShortcutDTO> listWidgetChooser;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
@@ -98,7 +98,7 @@ public class LibrarySidebar extends LeftSidebar {
         this.populateAdvancedTools();
         this.populateListWidgetChooser(availableShortcuts);
 
-        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.advancedToolsGroup);
+        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer(), this.advancedToolsGroup);
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
@@ -133,7 +133,7 @@ public class LibrarySidebar extends LeftSidebar {
         this.filteredShortcutCategories = new PhoenicisFilteredList<>(this.shortcutCategories, filter::filter);
         this.filter.addOnFilterChanged(filteredShortcutCategories::trigger);
 
-        this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
+        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
         Bindings.bindContent(categoryView.getElements(), filteredShortcutCategories);
     }
@@ -144,7 +144,7 @@ public class LibrarySidebar extends LeftSidebar {
      * @param availableShortcuts The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(availableShortcuts);
+        this.listWidgetChooser = new ListWidgetChooser<>(availableShortcuts);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getLibraryListType());
         this.listWidgetChooser.setOnChoose(type -> {
@@ -159,7 +159,7 @@ public class LibrarySidebar extends LeftSidebar {
      * @return The newly created "All" categories toggle button
      */
     private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton(tr("All"));
+        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
@@ -175,7 +175,7 @@ public class LibrarySidebar extends LeftSidebar {
      * @return The newly created toggle button
      */
     private ToggleButton createCategoryToggleButton(ShortcutCategoryDTO category) {
-        final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
@@ -187,11 +187,11 @@ public class LibrarySidebar extends LeftSidebar {
      * This method populates the advanced tools button group.
      */
     private void populateAdvancedTools() {
-        LeftButton createShortcut = new LeftButton(tr("Create shortcut"));
+        SidebarButton createShortcut = new SidebarButton(tr("Create shortcut"));
         createShortcut.getStyleClass().add("openTerminal");
         createShortcut.setOnMouseClicked(event -> onCreateShortcut.run());
 
-        this.runScript = new LeftButton(tr("Run a script"));
+        this.runScript = new SidebarButton(tr("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");
         this.runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
@@ -205,11 +205,11 @@ public class LibrarySidebar extends LeftSidebar {
             }
         });
 
-        this.runConsole = new LeftButton(tr("{0} console", applicationName));
+        this.runConsole = new SidebarButton(tr("{0} console", applicationName));
         this.runConsole.getStyleClass().add("consoleButton");
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new LeftGroup(tr("Advanced tools"), createShortcut, runScript, runConsole);
+        this.advancedToolsGroup = new SidebarGroup(tr("Advanced tools"), createShortcut, runScript, runConsole);
     }
 
     public void search(String searchTerm) {

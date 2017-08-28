@@ -23,7 +23,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSidebar;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 
 import java.util.Optional;
 
@@ -40,14 +40,14 @@ import java.util.Optional;
  * The DetailsView is an optional panel on the right side which is opened to show details about currently selected items
  * in the content.
  *
- * @param <Sidebar> Sidebar used by this MainWindowView
+ * @param <SpecificSidebar> Sidebar used by this MainWindowView
  */
-public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
+public class MainWindowView<SpecificSidebar extends Sidebar> extends Tab {
     protected final ThemeManager themeManager;
 
     private final BorderPane content;
 
-    protected Sidebar sidebar;
+    protected SpecificSidebar sidebar;
 
     private HBox waitPanel;
     private FailurePanel failurePanel;
@@ -85,7 +85,7 @@ public class MainWindowView<Sidebar extends LeftSidebar> extends Tab {
      * sets the Sidebar
      * @param sidebar
      */
-    protected void setSidebar(Sidebar sidebar) {
+    protected void setSidebar(SpecificSidebar sidebar) {
         this.sidebar = sidebar;
         this.content.setLeft(this.sidebar);
     }

@@ -25,7 +25,7 @@ import javafx.scene.control.ToggleButton;
 /**
  * This class represents a toggle button in the sidebar.
  */
-public class LeftToggleButton extends ToggleButton {
+public class SidebarToggleButton extends ToggleButton {
     /**
      * The text shown in the button
      */
@@ -36,16 +36,16 @@ public class LeftToggleButton extends ToggleButton {
      *
      * @param name The text to be shown in this toggle button
      */
-    public LeftToggleButton(String name) {
+    public SidebarToggleButton(String name) {
         super(name);
         this.name = name;
-        this.getStyleClass().add("leftButton");
+        this.getStyleClass().add("sidebarButton");
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(2));
     }
 
     /**
-     * This method is called whenever the {@link LeftToggleButton} has been clicked.
+     * This method is called whenever the {@link SidebarToggleButton} has been clicked.
      * It is overriden to ensure that the button only fires an event ({@link javafx.event.ActionEvent} or {@link javafx.scene.input.MouseEvent})
      * if it is either currently not selected or it isn't part of a {@link javafx.scene.control.ToggleGroup}.
      *
