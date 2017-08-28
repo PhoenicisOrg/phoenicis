@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.mainwindow;
+package org.phoenicis.javafx.views.common;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
