@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
  * @see javafx.collections.transformation.FilteredList
  * @author Marc Arndt
  */
-public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
+public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> {
     /**
      * A list containing a boolean for each element inside {@link TransformationList#getSource()}, describing if the element should be filtered or not
      */
@@ -46,24 +46,6 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
 
         this.filtered = source.stream().map(predicate::test).collect(Collectors.toList());
         this.predicate = predicate;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void sourceChanged(ListChangeListener.Change<? extends E> c) {
-        beginChange();
-        while (c.next()) {
-            if (c.wasPermutated()) {
-                permutate(c);
-            } else if (c.wasUpdated()) {
-                update(c);
-            } else {
-                addRemove(c);
-            }
-        }
-        endChange();
     }
 
     /**
@@ -122,7 +104,7 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
      *
      * @param c The change object to process
      */
-    private void permutate(ListChangeListener.Change<? extends E> c) {
+    protected void permute(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -147,7 +129,7 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
      *
      * @param c The change object to process
      */
-    private void addRemove(ListChangeListener.Change<? extends E> c) {
+    protected void addRemove(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -181,7 +163,7 @@ public class PhoenicisFilteredList<E> extends TransformationList<E, E> {
      *
      * @param c The change object to process
      */
-    private void update(ListChangeListener.Change<? extends E> c) {
+    protected void update(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
