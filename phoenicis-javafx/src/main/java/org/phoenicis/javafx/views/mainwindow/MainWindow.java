@@ -70,6 +70,9 @@ public class MainWindow extends Stage {
         this.getIcons().add(new Image(
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
 
+        // avoid 1x1 pixel window
+        this.setMinHeight(200);
+        this.setMinWidth(200);
         this.setResizable(true);
         this.setHeight(javaFxSettingsManager.getWindowHeight());
         this.setWidth(javaFxSettingsManager.getWindowWidth());
