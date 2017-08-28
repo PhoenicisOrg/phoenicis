@@ -2,7 +2,6 @@ package org.phoenicis.javafx.views.common.lists;
 
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.TransformationList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.stream.IntStream;
 /**
  * Created by marc on 01.04.17.
  */
-public class MappedList<E, F> extends TransformationList<E, F> {
+public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
     private final Function<? super F, ? extends E> mapper;
 
     private List<E> mappedValues;
@@ -46,7 +45,7 @@ public class MappedList<E, F> extends TransformationList<E, F> {
         return mappedValues.size();
     }
 
-    private void permutate(Change<? extends F> c) {
+    protected void permute(Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -63,7 +62,7 @@ public class MappedList<E, F> extends TransformationList<E, F> {
         }
     }
 
-    private void update(Change<? extends F> c) {
+    protected void update(Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -76,7 +75,7 @@ public class MappedList<E, F> extends TransformationList<E, F> {
         }
     }
 
-    private void addRemove(Change<? extends F> c) {
+    protected void addRemove(Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -89,20 +88,5 @@ public class MappedList<E, F> extends TransformationList<E, F> {
 
             nextAdd(index, index + 1);
         }
-    }
-
-    @Override
-    protected void sourceChanged(Change<? extends F> c) {
-        beginChange();
-        while (c.next()) {
-            if (c.wasPermutated()) {
-                permutate(c);
-            } else if (c.wasUpdated()) {
-                update(c);
-            } else {
-                addRemove(c);
-            }
-        }
-        endChange();
     }
 }

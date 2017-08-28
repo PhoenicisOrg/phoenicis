@@ -2,7 +2,6 @@ package org.phoenicis.javafx.views.common.lists;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.TransformationList;
 
 import java.util.stream.IntStream;
 
@@ -13,7 +12,7 @@ import java.util.stream.IntStream;
  * @author marc
  * @since 26.04.17
  */
-public class AdhocList<E> extends TransformationList<E, E> {
+public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
     /**
      * An array containing a number of objects that are prepended to the {@link ObservableList} <code>source</code>
      */
@@ -50,22 +49,7 @@ public class AdhocList<E> extends TransformationList<E, E> {
         return others.length + getSource().size();
     }
 
-    @Override
-    protected void sourceChanged(ListChangeListener.Change<? extends E> c) {
-        beginChange();
-        while (c.next()) {
-            if (c.wasPermutated()) {
-                permutate(c);
-            } else if (c.wasUpdated()) {
-                update(c);
-            } else {
-                addRemove(c);
-            }
-        }
-        endChange();
-    }
-
-    private void permutate(ListChangeListener.Change<? extends E> c) {
+    protected void permute(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -80,7 +64,7 @@ public class AdhocList<E> extends TransformationList<E, E> {
         }
     }
 
-    private void update(ListChangeListener.Change<? extends E> c) {
+    protected void update(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -91,7 +75,7 @@ public class AdhocList<E> extends TransformationList<E, E> {
         }
     }
 
-    private void addRemove(ListChangeListener.Change<? extends E> c) {
+    protected void addRemove(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
 

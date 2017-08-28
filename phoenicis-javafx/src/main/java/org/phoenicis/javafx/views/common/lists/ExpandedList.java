@@ -2,7 +2,6 @@ package org.phoenicis.javafx.views.common.lists;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.TransformationList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Created by marc on 01.04.17.
  */
-public class ExpandedList<E, F> extends TransformationList<E, F> {
+public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
     private final Function<? super F, List<? extends E>> expander;
 
     private List<List<? extends E>> expandedValues;
@@ -92,7 +91,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         return position;
     }
 
-    private void permutate(ListChangeListener.Change<? extends F> c) {
+    protected void permute(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -123,7 +122,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         }
     }
 
-    private void update(ListChangeListener.Change<? extends F> c) {
+    protected void update(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -163,7 +162,7 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
         }
     }
 
-    private void addRemove(ListChangeListener.Change<? extends F> c) {
+    protected void addRemove(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
@@ -182,20 +181,5 @@ public class ExpandedList<E, F> extends TransformationList<E, F> {
 
             nextAdd(lastOldIndex, lastOldIndex + newValues.size());
         }
-    }
-
-    @Override
-    protected void sourceChanged(ListChangeListener.Change<? extends F> c) {
-        beginChange();
-        while (c.next()) {
-            if (c.wasPermutated()) {
-                permutate(c);
-            } else if (c.wasUpdated()) {
-                update(c);
-            } else {
-                addRemove(c);
-            }
-        }
-        endChange();
     }
 }
