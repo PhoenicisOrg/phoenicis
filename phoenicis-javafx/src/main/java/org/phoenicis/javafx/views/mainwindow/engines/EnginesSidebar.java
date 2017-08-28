@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * An instance of this class represents the left sidebar of the engines tab view.
+ * An instance of this class represents the sidebar of the engines tab view.
  * This sidebar contains three items:
  * <ul>
  * <li>
@@ -35,24 +35,24 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 22.04.17
  */
-public class EngineSidebar extends LeftSidebar {
+public class EnginesSidebar extends Sidebar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
-    private LeftScrollPane centerContent;
+    private SidebarScrollPane centerContent;
 
     // the button group containing a button for all engine categories
-    private LeftToggleGroup<EngineCategoryDTO> categoryView;
+    private SidebarToggleGroup<EngineCategoryDTO> categoryView;
 
     // the button group containing a button to filter the engines for installed and uninstalled engines
-    private LeftGroup installationFilterGroup;
+    private SidebarGroup installationFilterGroup;
 
     private CheckBox installedCheck;
     private CheckBox notInstalledCheck;
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<EngineVersionDTO> listWidgetChooser;
+    private ListWidgetChooser<EngineVersionDTO> listWidgetChooser;
 
     // consumers called when an action inside the search bar has been performed
     private Consumer<String> onApplySearchTerm;
@@ -73,7 +73,7 @@ public class EngineSidebar extends LeftSidebar {
      * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public EngineSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets,
+    public EnginesSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
@@ -84,7 +84,8 @@ public class EngineSidebar extends LeftSidebar {
         this.populateInstallationFilters();
         this.populateListWidgetChooser(enginesVersionListWidgets);
 
-        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.installationFilterGroup);
+        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer(),
+                this.installationFilterGroup);
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
@@ -112,24 +113,24 @@ public class EngineSidebar extends LeftSidebar {
      * This method populates the button group showing all known engine categories
      */
     private void populateEngineCategories() {
-        this.categoryView = LeftToggleGroup.create(tr("Engines"), this::createCategoryToggleButton);
+        this.categoryView = SidebarToggleGroup.create(tr("Engines"), this::createCategoryToggleButton);
     }
 
     /**
      * This method populates the button group containing buttons to filter for installed and not installed engines
      */
     private void populateInstallationFilters() {
-        this.installedCheck = new LeftCheckBox(tr("Installed"));
+        this.installedCheck = new SidebarCheckBox(tr("Installed"));
         this.installedCheck.setSelected(true);
         this.installedCheck.selectedProperty()
                 .addListener((observableValue, oldValue, newValue) -> onApplyInstalledFilter.accept(newValue));
 
-        this.notInstalledCheck = new LeftCheckBox(tr("Not installed"));
+        this.notInstalledCheck = new SidebarCheckBox(tr("Not installed"));
         this.notInstalledCheck.setSelected(true);
         this.notInstalledCheck.selectedProperty()
                 .addListener((observableValue, oldValue, newValue) -> onApplyUninstalledFilter.accept(newValue));
 
-        this.installationFilterGroup = new LeftGroup(installedCheck, notInstalledCheck);
+        this.installationFilterGroup = new SidebarGroup(installedCheck, notInstalledCheck);
     }
 
     /**
@@ -138,7 +139,7 @@ public class EngineSidebar extends LeftSidebar {
      * @param enginesVersionListWidgets The managed CombinedListWidgets
      */
     private void populateListWidgetChooser(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(enginesVersionListWidgets);
+        this.listWidgetChooser = new ListWidgetChooser<>(enginesVersionListWidgets);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getEnginesListType());
         this.listWidgetChooser.setOnChoose(type -> {
@@ -154,7 +155,7 @@ public class EngineSidebar extends LeftSidebar {
      * @return The created toggle button
      */
     private ToggleButton createCategoryToggleButton(EngineCategoryDTO category) {
-        ToggleButton categoryButton = new LeftToggleButton(category.getName());
+        ToggleButton categoryButton = new SidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
         categoryButton.setOnAction(event -> onCategorySelection.accept(category));

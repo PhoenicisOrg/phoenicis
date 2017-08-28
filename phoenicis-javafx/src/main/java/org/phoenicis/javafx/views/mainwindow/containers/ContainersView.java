@@ -37,7 +37,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ContainersView extends MainWindowView<ContainerSidebar> {
+public class ContainersView extends MainWindowView<ContainersSidebar> {
     private Consumer<ContainerDTO> onSelectContainer;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
@@ -53,7 +53,7 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
 
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));
-        this.sidebar = new ContainerSidebar(availableContainers, javaFxSettingsManager);
+        this.sidebar = new ContainersSidebar(availableContainers, javaFxSettingsManager);
 
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));

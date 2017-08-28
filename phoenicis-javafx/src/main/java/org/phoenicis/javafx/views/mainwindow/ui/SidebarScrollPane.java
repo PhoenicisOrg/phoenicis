@@ -7,23 +7,23 @@ import javafx.scene.layout.VBox;
 /**
  * Created by marc on 19.05.17.
  */
-public class LeftScrollPane extends ScrollPane {
+public class SidebarScrollPane extends ScrollPane {
     private VBox content;
 
-    public LeftScrollPane(Node... nodes) {
+    public SidebarScrollPane(Node... nodes) {
         this();
 
         this.content.getChildren().setAll(nodes);
     }
 
-    public LeftScrollPane() {
+    public SidebarScrollPane() {
         super();
 
         this.content = new VBox();
 
         this.setContent(content);
 
-        this.getStyleClass().add("leftPaneScrollbar");
+        this.getStyleClass().add("sidebarScrollbar");
         this.setFitToHeight(true);
         this.setFitToWidth(true);
         this.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

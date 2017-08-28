@@ -18,8 +18,8 @@ import java.util.function.Consumer;
 /**
  * Created by marc on 15.05.17.
  */
-public class LeftListWidgetChooser<E> extends HBox {
-    private final Logger LOGGER = LoggerFactory.getLogger(LeftListWidgetChooser.class);
+public class ListWidgetChooser<E> extends HBox {
+    private final Logger LOGGER = LoggerFactory.getLogger(ListWidgetChooser.class);
 
     private List<CombinedListWidget<E>> listWidgets;
 
@@ -34,11 +34,11 @@ public class LeftListWidgetChooser<E> extends HBox {
      */
     private Optional<Consumer<ListWidgetType>> onChoose;
 
-    public LeftListWidgetChooser(CombinedListWidget<E> listWidget) {
+    public ListWidgetChooser(CombinedListWidget<E> listWidget) {
         this(Arrays.asList(listWidget));
     }
 
-    public LeftListWidgetChooser(List<CombinedListWidget<E>> listWidgets) {
+    public ListWidgetChooser(List<CombinedListWidget<E>> listWidgets) {
         super();
 
         this.listWidgets = listWidgets;

@@ -18,10 +18,22 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
-import javafx.scene.layout.Pane;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 
-public final class LeftSpacer extends Pane {
-    public LeftSpacer() {
-        this.getStyleClass().add("leftSpacer");
+public class SidebarButton extends Button {
+    private final String name;
+
+    public SidebarButton(String name) {
+        super(name);
+        this.name = name;
+        this.getStyleClass().add("sidebarButton");
+        this.setAlignment(Pos.CENTER_LEFT);
+        this.setPadding(new Insets(2));
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * An instance of this class represents the left sidebar of the container tab view.
+ * An instance of this class represents the sidebar of the container tab view.
  * This sidebar contains two items:
  * <ul>
  * <li>
@@ -30,18 +30,18 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 22.04.17
  */
-public class ContainerSidebar extends LeftSidebar {
+public class ContainersSidebar extends Sidebar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
-    private LeftScrollPane centerContent;
+    private SidebarScrollPane centerContent;
 
     // a button group containing a button for each installed container
-    private LeftToggleGroup<ContainerCategoryDTO> categoryView;
+    private SidebarToggleGroup<ContainerCategoryDTO> categoryView;
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<ContainerDTO> listWidgetChooser;
+    private ListWidgetChooser<ContainerDTO> listWidgetChooser;
 
     // consumer called when a search term is entered
     private Consumer<String> onApplyFilter;
@@ -59,7 +59,7 @@ public class ContainerSidebar extends LeftSidebar {
      * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ContainerSidebar(CombinedListWidget<ContainerDTO> availableContainers,
+    public ContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
         this.javaFxSettingsManager = javaFxSettingsManager;
@@ -68,7 +68,7 @@ public class ContainerSidebar extends LeftSidebar {
         this.populateCategories();
         this.populateListWidgetChooser(availableContainers);
 
-        this.centerContent = new LeftScrollPane(categoryView);
+        this.centerContent = new SidebarScrollPane(categoryView);
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
@@ -103,7 +103,7 @@ public class ContainerSidebar extends LeftSidebar {
      * This method populates the button group showing all installed containers
      */
     private void populateCategories() {
-        this.categoryView = LeftToggleGroup.create(tr("Containers"), this::createAllCategoriesToggleButton,
+        this.categoryView = SidebarToggleGroup.create(tr("Containers"), this::createAllCategoriesToggleButton,
                 this::createContainerToggleButton);
     }
 
@@ -113,7 +113,7 @@ public class ContainerSidebar extends LeftSidebar {
      * @param availableContainers The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ContainerDTO> availableContainers) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(availableContainers);
+        this.listWidgetChooser = new ListWidgetChooser<>(availableContainers);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getContainersListType());
         this.listWidgetChooser.setOnChoose(type -> {
@@ -128,7 +128,7 @@ public class ContainerSidebar extends LeftSidebar {
      * @return The newly created "All" categories toggle button
      */
     private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton(tr("All"));
+        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.getStyleClass().add("containerButton");
@@ -144,7 +144,7 @@ public class ContainerSidebar extends LeftSidebar {
      * @return The created toggle button
      */
     private ToggleButton createContainerToggleButton(ContainerCategoryDTO category) {
-        LeftToggleButton containerButton = new LeftToggleButton(category.getName());
+        SidebarToggleButton containerButton = new SidebarToggleButton(category.getName());
 
         containerButton.getStyleClass().add("containerButton");
         containerButton.setOnMouseClicked(event -> onCategorySelection.accept(category));

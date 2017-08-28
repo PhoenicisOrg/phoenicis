@@ -12,14 +12,13 @@ import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
-import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * An instance of this class represents the left sidebar of the installations tab view.
+ * An instance of this class represents the sidebar of the installations tab view.
  * This sidebar contains:
  * <ul>
  * <li>
@@ -33,7 +32,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 15.04.17
  */
-public class InstallationsSidebar extends LeftSidebar {
+public class InstallationsSidebar extends Sidebar {
 
     private final InstallationsFilter filter;
 
@@ -41,16 +40,16 @@ public class InstallationsSidebar extends LeftSidebar {
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
-    private LeftScrollPane centerContent;
+    private SidebarScrollPane centerContent;
 
     private ObservableList<InstallationCategoryDTO> installationCategories;
     private PhoenicisFilteredList<InstallationCategoryDTO> filteredinstallationCategories;
 
     // the toggleable categories
-    private LeftToggleGroup<InstallationCategoryDTO> categoryView;
+    private SidebarToggleGroup<InstallationCategoryDTO> categoryView;
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<InstallationDTO> listWidgetChooser;
+    private ListWidgetChooser<InstallationDTO> listWidgetChooser;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
@@ -75,7 +74,7 @@ public class InstallationsSidebar extends LeftSidebar {
         this.populateCategories();
         this.populateListWidgetChooser(activeInstallations);
 
-        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer());
+        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer());
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
@@ -110,7 +109,7 @@ public class InstallationsSidebar extends LeftSidebar {
         this.filteredinstallationCategories = new PhoenicisFilteredList<>(this.installationCategories, filter::filter);
         this.filter.addOnFilterChanged(filteredinstallationCategories::trigger);
 
-        this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
+        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
         Bindings.bindContent(categoryView.getElements(), filteredinstallationCategories);
     }
@@ -121,7 +120,7 @@ public class InstallationsSidebar extends LeftSidebar {
      * @param activeInstallations The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<InstallationDTO> activeInstallations) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(activeInstallations);
+        this.listWidgetChooser = new ListWidgetChooser<>(activeInstallations);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getInstallationsListType());
         this.listWidgetChooser.setOnChoose(type -> {
@@ -136,7 +135,7 @@ public class InstallationsSidebar extends LeftSidebar {
      * @return The newly created "All" categories toggle button
      */
     private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton(tr("All"));
+        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
@@ -152,7 +151,7 @@ public class InstallationsSidebar extends LeftSidebar {
      * @return The newly created toggle button
      */
     private ToggleButton createCategoryToggleButton(InstallationCategoryDTO category) {
-        final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
