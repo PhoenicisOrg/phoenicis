@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common;
+package org.phoenicis.javafx.views.common.lists;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
