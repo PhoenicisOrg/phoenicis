@@ -7,8 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import org.phoenicis.javafx.views.common.AdhocList;
-import org.phoenicis.javafx.views.common.MappedList;
+import org.phoenicis.javafx.views.common.lists.AdhocList;
+import org.phoenicis.javafx.views.common.lists.MappedList;
 
 import java.util.Optional;
 import java.util.function.Function;

@@ -8,7 +8,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
-import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;

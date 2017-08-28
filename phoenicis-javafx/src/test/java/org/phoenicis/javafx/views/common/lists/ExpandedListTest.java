@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common;
+package org.phoenicis.javafx.views.common.lists;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.junit.Test;
+import org.phoenicis.javafx.views.common.lists.ExpandedList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

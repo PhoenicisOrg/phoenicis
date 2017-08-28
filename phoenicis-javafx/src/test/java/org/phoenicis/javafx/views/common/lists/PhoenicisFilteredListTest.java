@@ -1,9 +1,10 @@
-package org.phoenicis.javafx.views.common;
+package org.phoenicis.javafx.views.common.lists;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import org.junit.Test;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 
 import java.util.Arrays;
 import java.util.Comparator;
