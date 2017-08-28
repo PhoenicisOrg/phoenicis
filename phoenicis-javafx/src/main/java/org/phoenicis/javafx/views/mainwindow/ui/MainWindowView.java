@@ -16,14 +16,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.javafx.views.mainwindow;
+package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 
 import java.util.Optional;
 

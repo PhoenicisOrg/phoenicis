@@ -34,7 +34,7 @@ import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.MappedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.List;
 import java.util.function.Consumer;
