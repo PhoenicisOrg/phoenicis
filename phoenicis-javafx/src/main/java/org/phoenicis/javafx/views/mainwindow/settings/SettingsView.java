@@ -22,7 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.MainWindowView;
+import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
