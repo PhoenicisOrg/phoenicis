@@ -18,11 +18,9 @@
 
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import javafx.css.PseudoClass;
 import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
@@ -60,6 +58,7 @@ final class CreateShortcutPanel extends DetailsView {
      * populates the panel
      */
     public void populate() {
+        final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
 
         final VBox vBox = new VBox();
 
@@ -75,7 +74,10 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(nameLabel, 0, 0);
 
         TextField name = new TextField();
+        name.getStyleClass().add("input");
         gridPane.add(name, 1, 0);
+
+        Tooltip nameErrorTooltip = new Tooltip(tr("Please specify a name!"));
 
         // category
         Label categoryLabel = new Label(tr("Category:"));
@@ -84,7 +86,10 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(categoryLabel, 0, 1);
 
         TextField category = new TextField();
+        category.getStyleClass().add("input");
         gridPane.add(category, 1, 1);
+
+        Tooltip categoryErrorTooltip = new Tooltip(tr("Please specify a category!"));
 
         // description
         Label descriptionLabel = new Label(tr("Description:"));
@@ -93,6 +98,7 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(descriptionLabel, 0, 2);
 
         TextArea description = new TextArea();
+        description.getStyleClass().add("input");
         gridPane.add(description, 1, 2);
 
         // miniature
@@ -102,6 +108,7 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(miniatureLabel, 0, 3);
 
         TextField miniature = new TextField();
+        miniature.getStyleClass().add("input");
 
         Button openMiniatureBrowser = new Button(tr("Choose"));
         openMiniatureBrowser.setOnAction(event -> {
@@ -116,6 +123,8 @@ final class CreateShortcutPanel extends DetailsView {
         HBox.setHgrow(miniature, Priority.ALWAYS);
         gridPane.add(miniatureHbox, 1, 3);
 
+        Tooltip miniatureErrorTooltip = new Tooltip(tr("Please specify a valid miniature!"));
+
         // executable
         Label executableLabel = new Label(tr("Executable:"));
         executableLabel.getStyleClass().add(CAPTION_TITLE_CSS_CLASS);
@@ -123,6 +132,7 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(executableLabel, 0, 4);
 
         TextField executable = new TextField();
+        executable.getStyleClass().add("input");
 
         Button openExecutableBrowser = new Button(tr("Choose"));
         openExecutableBrowser.setOnAction(event -> {
@@ -136,8 +146,7 @@ final class CreateShortcutPanel extends DetailsView {
         HBox.setHgrow(executable, Priority.ALWAYS);
         gridPane.add(executableHbox, 1, 4);
 
-        Label errorLabel = new Label();
-        errorLabel.setVisible(false);
+        Tooltip executableErrorTooltip = new Tooltip(tr("Please specify a valid executable!"));
 
         Region spacer = new Region();
         spacer.getStyleClass().add("detailsButtonSpacer");
@@ -145,13 +154,14 @@ final class CreateShortcutPanel extends DetailsView {
         Button createButton = new Button(tr("Create"));
         createButton.setOnMouseClicked(event -> {
             boolean error = false;
-            StringBuilder errorTextBuilder = new StringBuilder(tr("Cannot create new shortcut."));
             if (StringUtils.isEmpty(name.getText())) {
-                errorTextBuilder.append("\n" + tr("Please specify a name!"));
+                name.pseudoClassStateChanged(errorClass, true);
+                name.setTooltip(nameErrorTooltip);
                 error = true;
             }
             if (StringUtils.isEmpty(category.getText())) {
-                errorTextBuilder.append("\n" + tr("Please specify a category!"));
+                category.pseudoClassStateChanged(errorClass, true);
+                category.setTooltip(nameErrorTooltip);
                 error = true;
             }
             URI miniatureUri = null;
@@ -162,13 +172,15 @@ final class CreateShortcutPanel extends DetailsView {
                 if (miniatureFile.exists()) {
                     miniatureUri = miniatureFile.toURI();
                 } else {
-                    errorTextBuilder.append("\n" + tr("Please specify a valid miniature!"));
+                    miniature.pseudoClassStateChanged(errorClass, true);
+                    miniature.setTooltip(nameErrorTooltip);
                     error = true;
                 }
             }
             File executableFile = new File(executable.getText());
             if (!executableFile.exists()) {
-                errorTextBuilder.append("\n" + tr("Please specify a valid executable!"));
+                executable.pseudoClassStateChanged(errorClass, true);
+                executable.setTooltip(nameErrorTooltip);
                 error = true;
             }
             if (!error) {
@@ -176,13 +188,10 @@ final class CreateShortcutPanel extends DetailsView {
                         .withCategory(category.getText()).withDescription(description.getText())
                         .withMiniature(miniatureUri).withExecutable(executableFile).build();
                 this.onCreateShortcut.accept(newShortcut);
-            } else {
-                errorLabel.setText(errorTextBuilder.toString());
-                errorLabel.setVisible(true);
             }
         });
 
-        vBox.getChildren().addAll(gridPane, errorLabel, spacer, createButton);
+        vBox.getChildren().addAll(gridPane, spacer, createButton);
 
         this.setCenter(vBox);
     }
