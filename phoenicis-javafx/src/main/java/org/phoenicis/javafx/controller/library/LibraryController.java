@@ -28,6 +28,7 @@ import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
+import org.phoenicis.library.dto.ShortcutCreationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -35,7 +36,6 @@ import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,13 +105,13 @@ public class LibraryController {
     }
 
     /**
-     * creates a shortcut for a given executable
-     * @param executable executable file (WineShortcut will search for this file in the given prefix)
+     * creates a new shortcut
+     * @param shortcutCreationDTO DTO describing the new shortcut
      */
-    private void createShortcut(File executable) {
+    private void createShortcut(ShortcutCreationDTO shortcutCreationDTO) {
         // get container
         // TODO: smarter way using container manager
-        final String executablePath = executable.getAbsolutePath();
+        final String executablePath = shortcutCreationDTO.getExecutable().getAbsolutePath();
         final String pathInContainers = executablePath.replace(containersPath, "");
         final String[] split = pathInContainers.split("/");
         final String engineContainer = split[0];
@@ -124,8 +124,12 @@ public class LibraryController {
         interactiveScriptSession.eval("include([\"Engines\", \"" + engine + "\", \"Shortcuts\", \"" + engine + "\"]);",
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
                     final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
-                    shortcutObject.callMember("name", executable.getName());
-                    shortcutObject.callMember("search", executable.getName());
+                    shortcutObject.callMember("name", shortcutCreationDTO.getName());
+                    shortcutObject.callMember("category", shortcutCreationDTO.getCategory());
+                    shortcutObject.callMember("description", shortcutCreationDTO.getDescription());
+                    ;
+                    shortcutObject.callMember("miniature", shortcutCreationDTO.getMiniature());
+                    shortcutObject.callMember("search", shortcutCreationDTO.getExecutable().getName());
                     shortcutObject.callMember("prefix", container);
                     shortcutObject.callMember("create");
                 }, e -> this.showErrorMessage(e, tr("Error while creating shortcut"))),
