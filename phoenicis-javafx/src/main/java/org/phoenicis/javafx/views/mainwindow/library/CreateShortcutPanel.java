@@ -156,7 +156,7 @@ final class CreateShortcutPanel extends DetailsView {
             }
             if (StringUtils.isEmpty(category.getText())) {
                 category.pseudoClassStateChanged(errorClass, true);
-                category.setTooltip(nameErrorTooltip);
+                category.setTooltip(categoryErrorTooltip);
                 error = true;
             }
             URI miniatureUri = null;
@@ -168,14 +168,14 @@ final class CreateShortcutPanel extends DetailsView {
                     miniatureUri = miniatureFile.toURI();
                 } else {
                     miniature.pseudoClassStateChanged(errorClass, true);
-                    miniature.setTooltip(nameErrorTooltip);
+                    miniature.setTooltip(miniatureErrorTooltip);
                     error = true;
                 }
             }
             File executableFile = new File(executable.getText());
             if (!executableFile.exists()) {
                 executable.pseudoClassStateChanged(errorClass, true);
-                executable.setTooltip(nameErrorTooltip);
+                executable.setTooltip(executableErrorTooltip);
                 error = true;
             }
             if (!error) {
