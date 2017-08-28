@@ -37,7 +37,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewContainers extends MainWindowView<ContainerSidebar> {
+public class ContainersView extends MainWindowView<ContainerSidebar> {
     private Consumer<ContainerDTO> onSelectContainer;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
@@ -48,7 +48,7 @@ public class ViewContainers extends MainWindowView<ContainerSidebar> {
     private ObservableList<ContainerDTO> containers;
     private SortedList<ContainerDTO> sortedContainers;
 
-    public ViewContainers(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
+    public ContainersView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Containers"), themeManager);
 
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,

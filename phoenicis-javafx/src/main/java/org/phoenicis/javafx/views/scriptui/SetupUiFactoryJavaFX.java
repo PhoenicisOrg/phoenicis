@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
+import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.ui.SetupUi;
@@ -39,20 +39,20 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
 
     private OperatingSystemFetcher operatingSystemFetcher;
     private ThemeManager themeManager;
-    private ViewInstallations viewInstallations;
+    private InstallationsView installationsView;
 
     /**
      * constructor
      * @param operatingSystemFetcher
      * @param themeManager
-     * @param viewInstallations
+     * @param installationsView
      */
     public SetupUiFactoryJavaFX(OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager,
-            ViewInstallations viewInstallations) {
+            InstallationsView installationsView) {
         super();
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.themeManager = themeManager;
-        this.viewInstallations = viewInstallations;
+        this.installationsView = installationsView;
     }
 
     /**
@@ -66,7 +66,7 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
     public SetupUi createSetupWindow(String title, Optional<URI> miniature, InstallationType installationType) {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
-        this.viewInstallations.closeDetailsView();
+        this.installationsView.closeDetailsView();
         InstallationDTO installationDTO = new InstallationDTO.Builder()
                 .withCategory(installationType)
                 .withId(title + "_" + new Date().getTime())
@@ -74,8 +74,8 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
                 .withMiniature(miniature.orElse(null))
                 .withNode(setupWindow.getContent())
                 .build();
-        this.viewInstallations.addInstallation(installationDTO);
-        setupWindow.setOnShouldClose(() -> this.viewInstallations.removeInstallation(installationDTO));
+        this.installationsView.addInstallation(installationDTO);
+        setupWindow.setOnShouldClose(() -> this.installationsView.removeInstallation(installationDTO));
         return setupWindow;
     }
 }

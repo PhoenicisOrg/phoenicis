@@ -48,8 +48,8 @@ import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewApps extends MainWindowView<ApplicationSidebar> {
-    private final Logger LOGGER = LoggerFactory.getLogger(ViewApps.class);
+public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
+    private final Logger LOGGER = LoggerFactory.getLogger(ApplicationsView.class);
 
     private final CombinedListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter filter;
@@ -64,7 +64,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
     private PhoenicisFilteredList<ApplicationDTO> filteredApplications;
     private SortedList<ApplicationDTO> sortedApplications;
 
-    public ViewApps(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
+    public ApplicationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
             ToolsConfiguration toolsConfiguration) {
         super(tr("Apps"), themeManager);
 
@@ -94,7 +94,7 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
         filter.addOnFilterChanged(filteredApplications::trigger);
         this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
-        this.sidebar = new ApplicationSidebar(availableApps, filter, javaFxSettingsManager);
+        this.sidebar = new ApplicationsSidebar(availableApps, filter, javaFxSettingsManager);
 
         // create the bindings between the visual components and the observable lists
         this.sidebar.bindCategories(this.sortedCategories);
@@ -141,12 +141,13 @@ public class ViewApps extends MainWindowView<ApplicationSidebar> {
     }
 
     private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
-        final AppPanel appPanel = new AppPanel(application, filter, themeManager, javaFxSettingsManager);
-        appPanel.setOnScriptInstall(this::installScript);
-        appPanel.setOnClose(this::closeDetailsView);
-        appPanel.setMaxWidth(400);
-        appPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-        this.showDetailsView(appPanel);
+        final ApplicationPanel applicationPanel = new ApplicationPanel(application, filter, themeManager,
+                javaFxSettingsManager);
+        applicationPanel.setOnScriptInstall(this::installScript);
+        applicationPanel.setOnClose(this::closeDetailsView);
+        applicationPanel.setMaxWidth(400);
+        applicationPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
+        this.showDetailsView(applicationPanel);
     }
 
     private void installScript(ScriptDTO scriptDTO) {

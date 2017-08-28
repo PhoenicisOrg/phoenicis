@@ -18,20 +18,20 @@
 
 package org.phoenicis.javafx.controller.installations;
 
-import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
+import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 
 public class InstallationsController {
-    private final ViewInstallations viewInstallations;
+    private final InstallationsView installationsView;
 
-    public InstallationsController(ViewInstallations viewInstallations) {
-        this.viewInstallations = viewInstallations;
+    public InstallationsController(InstallationsView installationsView) {
+        this.installationsView = installationsView;
     }
 
     public void setOnInstallationAdded(Runnable onInstallationAdded) {
-        this.viewInstallations.setOnInstallationAdded(onInstallationAdded);
+        this.installationsView.setOnInstallationAdded(onInstallationAdded);
     }
 
-    public ViewInstallations getView() {
-        return viewInstallations;
+    public InstallationsView getView() {
+        return installationsView;
     }
 }

@@ -25,30 +25,30 @@ import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
-import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
-import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
-import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
-import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
-import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
+import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
+import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
+import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
+import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 
 public class MainWindow extends Stage {
-    private final ViewLibrary library;
-    private final ViewApps apps;
-    private final ViewEngines engines;
-    private final ViewContainers containers;
-    private final ViewSettings settings;
+    private final LibraryView library;
+    private final ApplicationsView apps;
+    private final EnginesView engines;
+    private final ContainersView containers;
+    private final SettingsView settings;
     private final PhoenicisScene scene;
 
     private TabPane tabPane;
 
     public MainWindow(String applicationName,
-            ViewLibrary library,
-            ViewApps apps,
-            ViewEngines engines,
-            ViewContainers containers,
-            ViewInstallations installations,
-            ViewSettings settings,
+            LibraryView library,
+            ApplicationsView apps,
+            EnginesView engines,
+            ContainersView containers,
+            InstallationsView installations,
+            SettingsView settings,
             ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();

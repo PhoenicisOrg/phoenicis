@@ -21,7 +21,7 @@ package org.phoenicis.javafx.controller.apps;
 import javafx.application.Platform;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -40,7 +40,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
-    private final ViewApps view;
+    private final ApplicationsView view;
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
@@ -48,7 +48,8 @@ public class AppsController {
     private Runnable onAppLoaded = () -> {
     };
 
-    public AppsController(ViewApps view, RepositoryManager repositoryManager, ScriptInterpreter scriptInterpreter,
+    public AppsController(ApplicationsView view, RepositoryManager repositoryManager,
+            ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
         this.view = view;
         this.repositoryManager = repositoryManager;
@@ -85,7 +86,7 @@ public class AppsController {
         this.onAppLoaded = onAppLoaded;
     }
 
-    public ViewApps getView() {
+    public ApplicationsView getView() {
         return view;
     }
 
