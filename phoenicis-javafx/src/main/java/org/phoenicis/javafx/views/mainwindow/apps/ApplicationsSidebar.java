@@ -37,7 +37,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 21.04.17
  */
-public class ApplicationSidebar extends Sidebar {
+public class ApplicationsSidebar extends Sidebar {
     private final ApplicationFilter filter;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
@@ -78,7 +78,7 @@ public class ApplicationSidebar extends Sidebar {
      * @param combinedListWidget    The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ApplicationSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,
+    public ApplicationsSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 

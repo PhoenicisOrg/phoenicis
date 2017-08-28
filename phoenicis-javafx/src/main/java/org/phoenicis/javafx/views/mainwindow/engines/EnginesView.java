@@ -39,7 +39,7 @@ import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ViewEngines extends MainWindowView<EngineSidebar> {
+public class EnginesView extends MainWindowView<EngineSidebar> {
     private TabPane availableEngines;
 
     private EnginePanel currentEnginePanel;
@@ -59,7 +59,7 @@ public class ViewEngines extends MainWindowView<EngineSidebar> {
 
     private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
 
-    public ViewEngines(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
+    public EnginesView(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
         super("Engines", themeManager);
 
         this.engineCategories = FXCollections.observableArrayList();

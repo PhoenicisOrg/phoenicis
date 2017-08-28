@@ -20,7 +20,6 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -48,11 +47,11 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  *
  * @since 30.05.17
  */
-final class AppPanel extends DetailsView {
-    private final Logger LOGGER = LoggerFactory.getLogger(AppPanel.class);
+final class ApplicationPanel extends DetailsView {
+    private final Logger LOGGER = LoggerFactory.getLogger(ApplicationPanel.class);
 
     /**
-     * The application to be shown inside this {@link AppPanel}
+     * The application to be shown inside this {@link ApplicationPanel}
      */
     private final ApplicationDTO application;
 
@@ -60,13 +59,13 @@ final class AppPanel extends DetailsView {
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     /**
-     * The list of shown scripts belonging to the <code>application</code> shown inside this {@link AppPanel}.
-     * These scripts are filtered using the settings the user made inside {@link ApplicationSidebar}
+     * The list of shown scripts belonging to the <code>application</code> shown inside this {@link ApplicationPanel}.
+     * These scripts are filtered using the settings the user made inside {@link ApplicationsSidebar}
      */
     private PhoenicisFilteredList<ScriptDTO> filteredScripts;
 
     /**
-     * The container for the content inside this {@link AppPanel}
+     * The container for the content inside this {@link ApplicationPanel}
      */
     private VBox center;
 
@@ -102,12 +101,12 @@ final class AppPanel extends DetailsView {
 
     /**
      * Constructor
-     *  @param application     The application to be shown inside this {@link AppPanel}
+     *  @param application     The application to be shown inside this {@link ApplicationPanel}
      * @param filter          The filter to be used for filtering the shown scripts for the <code>application</code>
      * @param themeManager    The theme manager
      * @param javaFxSettingsManager The settings manager
      */
-    public AppPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager,
+    public ApplicationPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 

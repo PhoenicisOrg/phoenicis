@@ -46,7 +46,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  *
  * This includes applications as well as engines.
  */
-public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
+public class InstallationsView extends MainWindowView<InstallationsSidebar> {
     private final InstallationsFilter filter;
 
     private InstallationsPanel installationsPanel;
@@ -71,7 +71,7 @@ public class ViewInstallations extends MainWindowView<InstallationsSidebar> {
      * @param themeManager
      * @param javaFxSettingsManager
      */
-    public ViewInstallations(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
+    public InstallationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Installations"), themeManager);
         this.getStyleClass().add("mainWindowScene");
 

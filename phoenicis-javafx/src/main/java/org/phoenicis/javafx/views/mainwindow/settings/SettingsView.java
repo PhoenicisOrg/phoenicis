@@ -29,7 +29,7 @@ import org.phoenicis.tools.system.opener.Opener;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewSettings extends MainWindowView<SettingsSidebar> {
+public class SettingsView extends MainWindowView<SettingsSidebar> {
     private final String applicationName;
     private final String applicationVersion;
     private final String applicationGitRevision;
@@ -42,7 +42,7 @@ public class ViewSettings extends MainWindowView<SettingsSidebar> {
 
     private ObservableList<SettingsSidebar.SettingsSidebarItem> settingsItems;
 
-    public ViewSettings(ThemeManager themeManager, String applicationName, String applicationVersion,
+    public SettingsView(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
             SettingsManager settingsManager,
             JavaFxSettingsManager javaFxSettingsManager, RepositoryManager repositoryManager) {

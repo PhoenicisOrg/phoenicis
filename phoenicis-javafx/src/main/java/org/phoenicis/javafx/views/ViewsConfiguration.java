@@ -22,16 +22,16 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
-import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
-import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
-import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
-import org.phoenicis.javafx.views.mainwindow.installations.ViewInstallations;
-import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
+import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
+import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
+import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
-import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
@@ -81,32 +81,33 @@ public class ViewsConfiguration {
     private ControllerConfiguration controllerConfiguration;
 
     @Bean
-    public ViewApps viewApps() {
-        return new ViewApps(themeConfiguration.themeManager(), javaFxSettingsConfiguration.javaFxSettingsManager(),
+    public ApplicationsView viewApps() {
+        return new ApplicationsView(themeConfiguration.themeManager(),
+                javaFxSettingsConfiguration.javaFxSettingsManager(),
                 toolsConfiguration);
     }
 
     @Bean
-    public ViewEngines viewEngines() {
-        return new ViewEngines(themeConfiguration.themeManager(), enginesPath,
+    public EnginesView viewEngines() {
+        return new EnginesView(themeConfiguration.themeManager(), enginesPath,
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
     @Bean
-    public ViewContainers viewContainers() {
-        return new ViewContainers(themeConfiguration.themeManager(),
+    public ContainersView viewContainers() {
+        return new ContainersView(themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
     @Bean
-    public ViewInstallations viewInstallations() {
-        return new ViewInstallations(themeConfiguration.themeManager(),
+    public InstallationsView viewInstallations() {
+        return new InstallationsView(themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
     @Bean
-    public ViewSettings viewSettings() {
-        return new ViewSettings(themeConfiguration.themeManager(),
+    public SettingsView viewSettings() {
+        return new SettingsView(themeConfiguration.themeManager(),
                 applicationName, applicationVersion,
                 applicationGitRevision, applicationBuildTimestamp,
                 toolsConfiguration.opener(),
@@ -116,7 +117,7 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public ViewLibrary viewLibrary() {
+    public LibraryView viewLibrary() {
         return viewsConfigurationLibrary.viewLibrary();
     }
 
