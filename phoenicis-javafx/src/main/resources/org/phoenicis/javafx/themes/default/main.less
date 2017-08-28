@@ -25,6 +25,10 @@
 /*******************************************************/
 .text-field {
   -fx-background-radius: 1em;
+
+  &:error {
+    -fx-text-box-border: #f31111;
+  }
 }
 
 /*******************************************************/
@@ -600,10 +604,6 @@
 
 .normalLabel {
   -fx-font-family: "Roboto Light";
-}
-
-.input:error {
-  -fx-background-color: #f31111;
 }
 
 .buttonWithIcon {

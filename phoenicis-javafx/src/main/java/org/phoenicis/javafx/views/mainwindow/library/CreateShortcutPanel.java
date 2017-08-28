@@ -74,7 +74,6 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(nameLabel, 0, 0);
 
         TextField name = new TextField();
-        name.getStyleClass().add("input");
         gridPane.add(name, 1, 0);
 
         Tooltip nameErrorTooltip = new Tooltip(tr("Please specify a name!"));
@@ -86,7 +85,6 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(categoryLabel, 0, 1);
 
         TextField category = new TextField();
-        category.getStyleClass().add("input");
         gridPane.add(category, 1, 1);
 
         Tooltip categoryErrorTooltip = new Tooltip(tr("Please specify a category!"));
@@ -98,7 +96,6 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(descriptionLabel, 0, 2);
 
         TextArea description = new TextArea();
-        description.getStyleClass().add("input");
         gridPane.add(description, 1, 2);
 
         // miniature
@@ -108,7 +105,6 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(miniatureLabel, 0, 3);
 
         TextField miniature = new TextField();
-        miniature.getStyleClass().add("input");
 
         Button openMiniatureBrowser = new Button(tr("Choose"));
         openMiniatureBrowser.setOnAction(event -> {
@@ -132,7 +128,6 @@ final class CreateShortcutPanel extends DetailsView {
         gridPane.add(executableLabel, 0, 4);
 
         TextField executable = new TextField();
-        executable.getStyleClass().add("input");
 
         Button openExecutableBrowser = new Button(tr("Choose"));
         openExecutableBrowser.setOnAction(event -> {
