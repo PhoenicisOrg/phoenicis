@@ -29,6 +29,7 @@ import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -62,7 +63,7 @@ final class AppPanel extends DetailsView {
      * The list of shown scripts belonging to the <code>application</code> shown inside this {@link AppPanel}.
      * These scripts are filtered using the settings the user made inside {@link ApplicationSidebar}
      */
-    private FilteredList<ScriptDTO> filteredScripts;
+    private PhoenicisFilteredList<ScriptDTO> filteredScripts;
 
     /**
      * The container for the content inside this {@link AppPanel}
@@ -114,8 +115,9 @@ final class AppPanel extends DetailsView {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        this.filteredScripts = new FilteredList<>(FXCollections.observableArrayList(application.getScripts()));
-        this.filteredScripts.predicateProperty().bind(filter.scriptFilterProperty());
+        this.filteredScripts = new PhoenicisFilteredList<>(FXCollections.observableArrayList(application.getScripts()),
+                filter::filter);
+        filter.addOnFilterChanged(filteredScripts::trigger);
 
         this.setTitle(application.getName());
 

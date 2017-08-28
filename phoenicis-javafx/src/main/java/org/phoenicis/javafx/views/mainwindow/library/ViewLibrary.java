@@ -31,6 +31,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ExpandedList;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
@@ -47,7 +48,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ViewLibrary extends MainWindowView<LibrarySidebar> {
-    private final SimpleFilter<ShortcutDTO> filter;
+    private final LibraryFilter filter;
     private final ObjectMapper objectMapper;
 
     private LibraryPanel libraryPanel;
@@ -60,7 +61,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private SortedList<ShortcutCategoryDTO> sortedCategories;
 
     private ObservableList<ShortcutDTO> shortcuts;
-    private FilteredList<ShortcutDTO> filteredShortcuts;
+    private PhoenicisFilteredList<ShortcutDTO> filteredShortcuts;
     private SortedList<ShortcutDTO> sortedShortcuts;
 
     private TabPane libraryTabs;
@@ -109,14 +110,15 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
 
+        this.filter = new LibraryFilter();
+
         // initialising the shortcut lists
         this.shortcuts = new ExpandedList<ShortcutDTO, ShortcutCategoryDTO>(this.sortedCategories,
                 ShortcutCategoryDTO::getShortcuts);
-        this.filteredShortcuts = new FilteredList<ShortcutDTO>(this.shortcuts);
-        this.sortedShortcuts = this.filteredShortcuts.sorted(Comparator.comparing(ShortcutDTO::getName));
+        this.filteredShortcuts = new PhoenicisFilteredList<ShortcutDTO>(this.shortcuts, filter::filter);
+        this.filter.addOnFilterChanged(filteredShortcuts::trigger);
 
-        this.filter = new SimpleFilter<ShortcutDTO>(filteredShortcuts,
-                (filterText, shortcut) -> shortcut.getName().toLowerCase().contains(filterText));
+        this.sortedShortcuts = this.filteredShortcuts.sorted(Comparator.comparing(ShortcutDTO::getName));
 
         this.availableShortcuts.setOnMouseClicked(event -> {
             this.availableShortcuts.deselectAll();
@@ -124,16 +126,16 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
             event.consume();
         });
 
-        this.sidebar = new LibrarySidebar(applicationName, availableShortcuts, javaFxSettingsManager);
+        this.sidebar = new LibrarySidebar(applicationName, availableShortcuts, filter, javaFxSettingsManager);
         this.sidebar.bindCategories(this.sortedCategories);
 
         // set the category selection consumers
         this.sidebar.setOnCategorySelection(category -> {
-            filter.setFilters(category.getShortcuts()::contains);
+            filter.setSelectedShortcutCategory(category);
             this.closeDetailsView();
         });
         this.sidebar.setOnAllCategorySelection(() -> {
-            filter.clearFilters();
+            filter.setSelectedShortcutCategory(null);
             this.closeDetailsView();
         });
 
@@ -164,10 +166,6 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.libraryPanel.setOnShortcutStop(onShortcutStop);
     }
 
-    public void setOnSearch(Consumer<String> onSearch) {
-        this.sidebar.setOnSearch(onSearch);
-    }
-
     public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
         this.libraryPanel.setOnShortcutRun(onShortcutRun);
     }
@@ -175,7 +173,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     public void populate(List<ShortcutCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
-            this.filter.clearAll();
+            this.filter.clear();
             this.sidebar.selectAllCategories();
 
             this.closeDetailsView();

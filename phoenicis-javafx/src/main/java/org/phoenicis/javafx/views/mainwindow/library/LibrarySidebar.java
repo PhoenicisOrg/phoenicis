@@ -1,11 +1,14 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
@@ -40,17 +43,19 @@ public class LibrarySidebar extends LeftSidebar {
     // the name of this application
     private final String applicationName;
 
+    private final LibraryFilter filter;
+
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
     private LeftScrollPane centerContent;
 
+    private ObservableList<ShortcutCategoryDTO> shortcutCategories;
+    private PhoenicisFilteredList<ShortcutCategoryDTO> filteredShortcutCategories;
+
     // the toggleable categories
     private LeftToggleGroup<ShortcutCategoryDTO> categoryView;
-
-    // consumer called after a text has been entered in the search box
-    private Consumer<String> onSearch;
 
     // the advanced tools group, containing the run script and run console buttons
     private LeftGroup advancedToolsGroup;
@@ -81,11 +86,12 @@ public class LibrarySidebar extends LeftSidebar {
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
     public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts,
+            LibraryFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.applicationName = applicationName;
-
+        this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
@@ -113,20 +119,24 @@ public class LibrarySidebar extends LeftSidebar {
      * @param categories The to be bound category list
      */
     public void bindCategories(ObservableList<ShortcutCategoryDTO> categories) {
-        Bindings.bindContent(categoryView.getElements(), categories);
+        Bindings.bindContent(shortcutCategories, categories);
     }
 
     /**
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(onSearch, () -> {
-        });
+        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
     }
 
     private void populateCategories() {
+        this.shortcutCategories = FXCollections.observableArrayList();
+        this.filteredShortcutCategories = new PhoenicisFilteredList<>(this.shortcutCategories, filter::filter);
+        this.filter.addOnFilterChanged(filteredShortcutCategories::trigger);
+
         this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
+        Bindings.bindContent(categoryView.getElements(), filteredShortcutCategories);
     }
 
     /**
@@ -213,13 +223,12 @@ public class LibrarySidebar extends LeftSidebar {
         this.advancedToolsGroup = new LeftGroup(tr("Advanced tools"), createShortcut, runScript, runConsole);
     }
 
-    /**
-     * This method updates the consumer, that is called when a search term has been entered.
-     *
-     * @param onSearch The new consumer to be called
-     */
-    public void setOnSearch(Consumer<String> onSearch) {
-        this.onSearch = onSearch;
+    public void search(String searchTerm) {
+        this.filter.setSearchTerm(searchTerm);
+    }
+
+    public void clearSearch() {
+        this.filter.clearSearchTerm();
     }
 
     /**

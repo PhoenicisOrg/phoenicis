@@ -1,14 +1,18 @@
 package org.phoenicis.javafx.views.mainwindow.installations;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
+import org.phoenicis.javafx.views.common.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
 import java.util.function.Consumer;
 
@@ -31,18 +35,19 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class InstallationsSidebar extends LeftSidebar {
 
+    private final InstallationsFilter filter;
+
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
     private LeftScrollPane centerContent;
 
+    private ObservableList<InstallationCategoryDTO> installationCategories;
+    private PhoenicisFilteredList<InstallationCategoryDTO> filteredinstallationCategories;
+
     // the toggleable categories
     private LeftToggleGroup<InstallationCategoryDTO> categoryView;
-
-    // consumer called after a text has been entered in the search box
-    private Consumer<String> onSearch = (searchKeyword) -> {
-    };
 
     // widget to switch between the different list widgets in the center view
     private LeftListWidgetChooser<InstallationDTO> listWidgetChooser;
@@ -59,10 +64,11 @@ public class InstallationsSidebar extends LeftSidebar {
      * @param activeInstallations The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public InstallationsSidebar(CombinedListWidget<InstallationDTO> activeInstallations,
+    public InstallationsSidebar(CombinedListWidget<InstallationDTO> activeInstallations, InstallationsFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
+        this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
@@ -89,20 +95,24 @@ public class InstallationsSidebar extends LeftSidebar {
      * @param categories The to be bound category list
      */
     public void bindCategories(ObservableList<InstallationCategoryDTO> categories) {
-        Bindings.bindContent(categoryView.getElements(), categories);
+        Bindings.bindContent(installationCategories, categories);
     }
 
     /**
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(onSearch, () -> {
-        });
+        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
     }
 
     private void populateCategories() {
+        this.installationCategories = FXCollections.observableArrayList();
+        this.filteredinstallationCategories = new PhoenicisFilteredList<>(this.installationCategories, filter::filter);
+        this.filter.addOnFilterChanged(filteredinstallationCategories::trigger);
+
         this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
+        Bindings.bindContent(categoryView.getElements(), filteredinstallationCategories);
     }
 
     /**
@@ -150,13 +160,12 @@ public class InstallationsSidebar extends LeftSidebar {
         return categoryButton;
     }
 
-    /**
-     * This method updates the consumer, that is called when a search term has been entered.
-     *
-     * @param onSearch The new consumer to be called
-     */
-    public void setOnSearch(Consumer<String> onSearch) {
-        this.onSearch = onSearch;
+    public void search(String searchTerm) {
+        this.filter.setSearchTerm(searchTerm);
+    }
+
+    public void clearSearch() {
+        this.filter.clearSearchTerm();
     }
 
     /**

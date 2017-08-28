@@ -121,7 +121,7 @@ public class ApplicationSidebar extends LeftSidebar {
     private void populateCategories() {
         this.categories = FXCollections.observableArrayList();
         this.filteredCategories = new PhoenicisFilteredList<>(categories, filter::filter);
-        this.filter.setOnCategoryFilterChanged(filteredCategories::trigger);
+        this.filter.addOnFilterChanged(filteredCategories::trigger);
 
         this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
