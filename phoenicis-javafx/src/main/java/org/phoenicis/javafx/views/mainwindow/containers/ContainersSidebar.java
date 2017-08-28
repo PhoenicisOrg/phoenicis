@@ -30,7 +30,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 22.04.17
  */
-public class ContainerSidebar extends Sidebar {
+public class ContainersSidebar extends Sidebar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
@@ -59,7 +59,7 @@ public class ContainerSidebar extends Sidebar {
      * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ContainerSidebar(CombinedListWidget<ContainerDTO> availableContainers,
+    public ContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
         this.javaFxSettingsManager = javaFxSettingsManager;

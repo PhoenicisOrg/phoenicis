@@ -39,7 +39,7 @@ import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EnginesView extends MainWindowView<EngineSidebar> {
+public class EnginesView extends MainWindowView<EnginesSidebar> {
     private TabPane availableEngines;
 
     private EnginePanel currentEnginePanel;
@@ -73,7 +73,7 @@ public class EnginesView extends MainWindowView<EngineSidebar> {
         });
         this.mappedListWidgets = new MappedList<>(mappedSubCategoryTabs, tab -> tab.getEngineVersionsView());
 
-        this.sidebar = new EngineSidebar(mappedListWidgets, javaFxSettingsManager);
+        this.sidebar = new EnginesSidebar(mappedListWidgets, javaFxSettingsManager);
 
         this.sidebar.setOnCategorySelection(this::selectCategory);
         this.sidebar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()

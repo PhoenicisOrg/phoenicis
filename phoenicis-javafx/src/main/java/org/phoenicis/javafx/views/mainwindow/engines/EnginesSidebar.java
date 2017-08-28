@@ -35,7 +35,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 22.04.17
  */
-public class EngineSidebar extends Sidebar {
+public class EnginesSidebar extends Sidebar {
     // the search bar used for filtering
     private SearchBox searchBar;
 
@@ -73,7 +73,7 @@ public class EngineSidebar extends Sidebar {
      * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public EngineSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets,
+    public EnginesSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
