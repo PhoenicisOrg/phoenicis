@@ -57,7 +57,7 @@ final class EditShortcutPanel extends DetailsView {
     private GridPane gridPane;
     private Button saveButton;
 
-    // consumer called when a shortcut should changed
+    // consumer called when a shortcut changed
     private Consumer<ShortcutDTO> onShortcutChanged;
 
     /**

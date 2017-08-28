@@ -71,8 +71,7 @@ public class LibrarySidebar extends LeftSidebar {
     private Consumer<ShortcutCategoryDTO> onCategorySelection;
 
     // consumers called when a script should be run or a console be opened
-    private Consumer<File> onShortcutCreate = executable -> {
-    };
+    private Runnable onCreateShortcut;
     private Consumer<File> onScriptRun;
     private Runnable onOpenConsole;
 
@@ -190,17 +189,7 @@ public class LibrarySidebar extends LeftSidebar {
     private void populateAdvancedTools() {
         LeftButton createShortcut = new LeftButton(tr("Create shortcut"));
         createShortcut.getStyleClass().add("openTerminal");
-        createShortcut.setOnMouseClicked(event -> {
-            final FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Open a script"));
-
-            // TODO: use correct owner window
-            final File executable = fileChooser.showOpenDialog(null);
-
-            if (executable != null) {
-                this.onShortcutCreate.accept(executable);
-            }
-        });
+        createShortcut.setOnMouseClicked(event -> onCreateShortcut.run());
 
         this.runScript = new LeftButton(tr("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");
@@ -250,12 +239,12 @@ public class LibrarySidebar extends LeftSidebar {
     }
 
     /**
-     * This method updates the consumer, that is called when the "Create shortcut" button in the advanced tools section has been clicked.
+     * This method updates the runnable, that is called when the "Create shortcut" button in the advanced tools section has been clicked.
      *
-     * @param onShortcutCreate The new consumer to be called
+     * @param onCreateShortcut The new runnable to be called
      */
-    public void setOnShortcutCreate(Consumer<File> onShortcutCreate) {
-        this.onShortcutCreate = onShortcutCreate;
+    public void setOnCreateShortcut(Runnable onCreateShortcut) {
+        this.onCreateShortcut = onCreateShortcut;
     }
 
     /**

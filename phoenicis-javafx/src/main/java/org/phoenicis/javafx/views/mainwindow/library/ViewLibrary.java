@@ -38,6 +38,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.SimpleFilter;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
+import org.phoenicis.library.dto.ShortcutCreationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.io.File;
@@ -52,6 +53,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private final ObjectMapper objectMapper;
 
     private LibraryPanel libraryPanel;
+    private CreateShortcutPanel createShortcutPanel;
     private EditShortcutPanel editShortcutPanel;
     private final Tab installedApplicationsTab;
 
@@ -138,6 +140,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
             filter.setSelectedShortcutCategory(null);
             this.closeDetailsView();
         });
+        this.sidebar.setOnCreateShortcut(this::showShortcutCreate);
 
         this.setSidebar(this.sidebar);
 
@@ -155,6 +158,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.setCenter(this.libraryTabs);
 
         this.libraryPanel = new LibraryPanel(objectMapper);
+        this.createShortcutPanel = new CreateShortcutPanel();
         this.editShortcutPanel = new EditShortcutPanel(objectMapper);
     }
 
@@ -190,6 +194,17 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     }
 
     /**
+     * shows a details view which allows to create a new shortcut
+     */
+    private void showShortcutCreate() {
+        this.createShortcutPanel.setOnClose(this::closeDetailsView);
+        this.createShortcutPanel.setMaxWidth(600);
+        this.createShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
+        this.createShortcutPanel.populate();
+        this.showDetailsView(this.createShortcutPanel);
+    }
+
+    /**
      * shows a details view which allows to edit the given shortcut
      * @param shortcutDTO
      */
@@ -219,8 +234,8 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
         this.sidebar.setOnOpenConsole(onOpenConsole);
     }
 
-    public void setOnShortcutCreate(Consumer<File> onShortcutCreate) {
-        this.sidebar.setOnShortcutCreate(onShortcutCreate);
+    public void setOnShortcutCreate(Consumer<ShortcutCreationDTO> onShortcutCreate) {
+        this.createShortcutPanel.setOnCreateShortcut(onShortcutCreate);
     }
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
