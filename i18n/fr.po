@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-26 14:51+0200\n"
-"PO-Revision-Date: 2017-08-26 14:55+0200\n"
+"POT-Creation-Date: 2017-08-28 10:28+0200\n"
+"PO-Revision-Date: 2017-08-28 10:31+0200\n"
 "Last-Translator: ImperatorS79 <fevrier.simon@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr_BE\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.0.1\n"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:140
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
 msgid "This wizard will help you install {0} on your computer"
 msgstr "Cet assistant va vous aider à installer {0} sur votre ordinateur"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:141
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
 msgid "This program was created by: {0}"
 msgstr "Ce programme a été créé par : {0}"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:142
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
 msgstr "Pour plus d'information à propos de ce programme, rendez-vous sur:"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:144
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
 #, java-format
 msgid "This installation program is provided by: {0}"
 msgstr "Cet installeur est fourni par : {0}"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:145
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:156
 #, java-format
 msgid "{0} will be installed in: {1}"
 msgstr "{0} sera installé dans : {1}"
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:146
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:157
 #, java-format
 msgid ""
 "{0} is not responsible for anything that might happen as a result of using "
@@ -52,7 +52,7 @@ msgstr ""
 "{0} n'est pas responsable de ce qui pourrait se produire en utilisant ces "
 "scripts."
 
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:148
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click \"Next\" to start."
 msgstr "Cliquer sur \"Suivant\" pour commencer."
 
@@ -102,8 +102,8 @@ msgstr "Thème Unity"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:38
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:149
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:77
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:99
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:86
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:136
 msgid "Error"
 msgstr "Erreur"
 
@@ -151,41 +151,47 @@ msgstr "Choisissez"
 msgid "Images"
 msgstr "Images"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:79
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:78
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:150
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/ViewLibrary.java:149
 msgid "My applications"
 msgstr "Mes applications"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:126
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:128
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:126
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:104
 msgid "Categories"
 msgstr "Catégories"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:151
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:153
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerSidebar.java:131
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationSidebar.java:172
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:129
 msgid "All"
 msgstr "Tous"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:179
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:181
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:70
+msgid "Create shortcut"
+msgstr "Créer un raccourci"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:185
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:199
+msgid "Open a script"
+msgstr "Ouvrir un script"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:195
 msgid "Run a script"
 msgstr "Exécuter un script"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:182
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:209
 #, java-format
 msgid "{0} console"
 msgstr "Console {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:187
-msgid "Open a script"
-msgstr "Ouvrir un script"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:198
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:213
 msgid "Advanced tools"
 msgstr "Outils avancés"
 
@@ -197,10 +203,6 @@ msgstr "Outils"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:58
 msgid "Open a terminal"
 msgstr "Ouvrir un terminal"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:70
-msgid "Create shortcut"
-msgstr "Créer un raccourci"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:75
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:93
@@ -556,19 +558,24 @@ msgstr "Dépôt git"
 msgid "Classpath repository"
 msgstr "Dépôt classpath"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:80
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:89
 #, java-format
 msgid "Uninstall {0}"
 msgstr "Désinstalle {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:81
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:90
 #, java-format
 msgid "Are you sure you want to uninstall {0}?"
 msgstr "Êtes-vous sûr de vouloir désinstaller {0}?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:94
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:103
 msgid "Error while running script"
 msgstr "Une erreur est survenue pendant l'exécution du script"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:131
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:132
+msgid "Error while creating shortcut"
+msgstr "Une erreur est survenue lors de la création du raccourci"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:75
 #, java-format
