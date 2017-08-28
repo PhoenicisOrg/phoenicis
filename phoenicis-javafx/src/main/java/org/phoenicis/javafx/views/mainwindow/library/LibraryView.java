@@ -48,7 +48,7 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ViewLibrary extends MainWindowView<LibrarySidebar> {
+public class LibraryView extends MainWindowView<LibrarySidebar> {
     private final LibraryFilter filter;
     private final ObjectMapper objectMapper;
 
@@ -76,7 +76,7 @@ public class ViewLibrary extends MainWindowView<LibrarySidebar> {
     private Consumer<ShortcutDTO> onShortcutEdit = shortcut -> {
     };
 
-    public ViewLibrary(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper,
+    public LibraryView(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper,
             JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Library"), themeManager);
         this.getStyleClass().add("mainWindowScene");

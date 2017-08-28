@@ -42,8 +42,8 @@ public class ViewsConfigurationLibrary {
     private JavaFxSettingsConfiguration javaFxSettingsConfiguration;
 
     @Bean
-    public ViewLibrary viewLibrary() {
-        return new ViewLibrary(applicationName,
+    public LibraryView viewLibrary() {
+        return new LibraryView(applicationName,
                 themeConfiguration.themeManager(),
                 phoenicisGlobalConfiguration.objectMapper(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());

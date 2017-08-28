@@ -19,18 +19,18 @@
 package org.phoenicis.javafx.controller.settings;
 
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 
 public class SettingsController {
-    private final ViewSettings view;
+    private final SettingsView view;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
-    public SettingsController(ViewSettings view, JavaFxSettingsManager javaFxSettingsManager) {
+    public SettingsController(SettingsView view, JavaFxSettingsManager javaFxSettingsManager) {
         this.view = view;
         this.javaFxSettingsManager = javaFxSettingsManager;
     }
 
-    public ViewSettings getView() {
+    public SettingsView getView() {
         return view;
     }
 }
