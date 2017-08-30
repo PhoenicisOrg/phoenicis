@@ -136,7 +136,7 @@ public class ShortcutManager {
             iconFile.delete();
         }
 
-        if (miniatureFile.delete()) {
+        if (miniatureFile.exists()) {
             miniatureFile.delete();
         }
 
@@ -191,10 +191,10 @@ public class ShortcutManager {
         createShortcut(shortcutDTO);
 
         // delete backups
-        if (iconBackup.delete()) {
+        if (iconBackup.exists()) {
             iconBackup.delete();
         }
-        if (miniatureBackup.delete()) {
+        if (miniatureBackup.exists()) {
             miniatureBackup.delete();
         }
     }
