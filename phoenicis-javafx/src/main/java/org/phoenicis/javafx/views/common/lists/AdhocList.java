@@ -60,7 +60,7 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
                 perm[i + others.length] = c.getPermutation(i) + others.length;
             }
 
-            nextPermutation(from, to, perm);
+            nextPermutation(others.length + from, others.length + to, perm);
         }
     }
 
