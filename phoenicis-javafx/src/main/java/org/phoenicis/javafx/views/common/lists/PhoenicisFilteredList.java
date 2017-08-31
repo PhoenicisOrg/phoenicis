@@ -1,199 +1,298 @@
 package org.phoenicis.javafx.views.common.lists;
 
+import com.sun.javafx.collections.NonIterableChange;
+import com.sun.javafx.collections.SortHelper;
+import javafx.beans.NamedArg;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.TransformationList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
  * A filtered observable list taking a {@link Predicate} to filter elements of a given input {@link ObservableList}.
- * This class differs from {@link javafx.collections.transformation.FilteredList} through the way it reacts on filter function changes.
- * {@link javafx.collections.transformation.FilteredList} marks the complete list as invalid and refilters it after the filter function has changes.
- * In comparison, this class only marks the elements as invalid, that were previously added and now aren't, or the other way.
+ * This class extends the functionality of {@link javafx.collections.transformation.FilteredList} with a trigger method.
+ * This trigger method can be used to recheck the all elements included in the source list to only marks the elements as invalid,
+ * that were previously added and now aren't, or the other way.
  *
  * @param <E> The type of the elements contained in the filtered list
- * @see javafx.collections.transformation.FilteredList
  * @author Marc Arndt
+ * @see javafx.collections.transformation.FilteredList
  */
 public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> {
+    private int[] filtered;
+    private int size;
+
+    private SortHelper helper;
+    private static final Predicate ALWAYS_TRUE = t -> true;
+
     /**
-     * A list containing a boolean for each element inside {@link TransformationList#getSource()}, describing if the element should be filtered or not
+     * Constructs a new FilteredList wrapper around the source list.
+     * The provided predicate will match the elements in the source list that will be visible.
+     * If the predicate is null, all elements will be matched and the list is equal to the source list.
+     * @param source the source list
+     * @param predicate the predicate to match the elements or null to match all elements.
      */
-    private List<Boolean> filtered;
+    public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source,
+            @NamedArg("predicate") Predicate<? super E> predicate) {
+        super(source);
+        filtered = new int[source.size() * 3 / 2 + 1];
+        if (predicate != null) {
+            setPredicate(predicate);
+        } else {
+            for (size = 0; size < source.size(); size++) {
+                filtered[size] = size;
+            }
+        }
+    }
+
+    /**
+     * Constructs a new FilteredList wrapper around the source list.
+     * This list has an "always true" predicate, containing all the elements
+     * of the source list.
+     * <p>
+     * This constructor might be useful if you want to bind {@link #predicateProperty()}
+     * of this list.
+     * @param source the source list
+     */
+    public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source) {
+        this(source, null);
+    }
 
     /**
      * The predicate that will match the elements that will be in this FilteredList.
      * Elements not matching the predicate will be filtered-out.
      * Null predicate means "always true" predicate, all elements will be matched.
      */
-    private Predicate<? super E> predicate;
+    private ObjectProperty<Predicate<? super E>> predicate;
 
-    /**
-     * Constructs a new FilteredList wrapper around the source list.
-     * The provided predicate will match the elements in the source list that will be visible.
-     * If the predicate is null, all elements will be matched and the list is equal to the source list.
-     *
-     * @param source    the source list
-     * @param predicate the predicate to match the elements
-     */
-    public PhoenicisFilteredList(ObservableList<E> source, Predicate<? super E> predicate) {
-        super(source);
+    public final ObjectProperty<Predicate<? super E>> predicateProperty() {
+        if (predicate == null) {
+            predicate = new ObjectPropertyBase<Predicate<? super E>>() {
+                @Override
+                protected void invalidated() {
+                    refilter();
+                }
 
-        this.filtered = source.stream().map(predicate::test).collect(Collectors.toList());
-        this.predicate = predicate;
+                @Override
+                public Object getBean() {
+                    return PhoenicisFilteredList.this;
+                }
+
+                @Override
+                public String getName() {
+                    return "predicate";
+                }
+
+            };
+        }
+        return predicate;
+    }
+
+    public final Predicate<? super E> getPredicate() {
+        return predicate == null ? null : predicate.get();
+    }
+
+    public final void setPredicate(Predicate<? super E> predicate) {
+        predicateProperty().set(predicate);
+    }
+
+    private Predicate<? super E> getPredicateImpl() {
+        if (getPredicate() != null) {
+            return getPredicate();
+        }
+        return ALWAYS_TRUE;
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the number of elements in this list.
+     *
+     * @return the number of elements in this list
      */
     @Override
     public int size() {
-        return this.filtered.stream().filter(value -> value).collect(Collectors.counting()).intValue();
+        return size;
     }
 
     /**
      * Returns the element at the specified position in this list.
      *
-     * @param index index of the element to return
+     * @param  index index of the element to return
      * @return the element at the specified position in this list
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
     public E get(int index) {
-        return getSource().get(getSourceIndex(index));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getSourceIndex(int index) {
-        if (index >= size()) {
+        if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
+        return getSource().get(filtered[index]);
+    }
 
-        int i = -1;
-        int count = -1;
-        while (count < index) {
-            if (filtered.get(++i)) {
-                count++;
-            }
+    @Override
+    public int getSourceIndex(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
         }
-
-        return i;
+        return filtered[index];
     }
 
-    /**
-     * Takes an index value from the source list and converts it to the index in this filtered list.
-     * This method will only return the correct result if the value at the source index position matches the filter predicate.
-     *
-     * @param sourceIndex The index in the source list
-     * @return The index in this filtered list
-     */
-    private int getIndexToSourceIndex(int sourceIndex) {
-        return (int) this.filtered.subList(0, sourceIndex).stream().filter(value -> value).count();
+    private SortHelper getSortHelper() {
+        if (helper == null) {
+            helper = new SortHelper();
+        }
+        return helper;
     }
 
-    /**
-     * Processes the permutation part inside the change object, i.e. two or more elements inside the source list are permutated.
-     *
-     * @param c The change object to process
-     */
+    private int findPosition(int p) {
+        if (filtered.length == 0) {
+            return 0;
+        }
+        if (p == 0) {
+            return 0;
+        }
+        int pos = Arrays.binarySearch(filtered, 0, size, p);
+        if (pos < 0) {
+            pos = ~pos;
+        }
+        return pos;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void ensureSize(int size) {
+        if (filtered.length < size) {
+            int[] replacement = new int[size * 3 / 2 + 1];
+            System.arraycopy(filtered, 0, replacement, 0, this.size);
+            filtered = replacement;
+        }
+    }
+
+    private void updateIndexes(int from, int delta) {
+        for (int i = from; i < size; ++i) {
+            filtered[i] += delta;
+        }
+    }
+
     protected void permute(ListChangeListener.Change<? extends E> c) {
-        int from = c.getFrom();
-        int to = c.getTo();
+        int from = findPosition(c.getFrom());
+        int to = findPosition(c.getTo());
 
         if (to > from) {
-            List<Boolean> clone = new ArrayList<>(filtered);
-            int[] perm = IntStream.range(0, size()).toArray();
-
             for (int i = from; i < to; ++i) {
-                perm[getIndexToSourceIndex(i)] = getIndexToSourceIndex(c.getPermutation(i));
-
-                clone.set(i, filtered.get(c.getPermutation(i)));
+                filtered[i] = c.getPermutation(filtered[i]);
             }
 
-            filtered = clone;
-
+            int[] perm = getSortHelper().sort(filtered, from, to);
             nextPermutation(from, to, perm);
         }
     }
 
-    /**
-     * Processes the add and remove part inside the change object.
-     *
-     * @param c The change object to process
-     */
     protected void addRemove(ListChangeListener.Change<? extends E> c) {
-        int from = c.getFrom();
-        int to = c.getTo();
+        Predicate<? super E> pred = getPredicateImpl();
+        ensureSize(getSource().size());
+        final int from = findPosition(c.getFrom());
+        final int to = findPosition(c.getFrom() + c.getRemovedSize());
 
-        /*
-         * Process all removals
-         */
-        for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
-            int internalIndex = getIndexToSourceIndex(index);
+        // Mark the nodes that are going to be removed
+        for (int i = from; i < to; ++i) {
+            nextRemove(from, c.getRemoved().get(filtered[i] - c.getFrom()));
+        }
 
-            if (filtered.remove(index)) {
-                nextRemove(internalIndex, c.getRemoved().get(index - from));
+        // Update indexes of the sublist following the last element that was removed
+        updateIndexes(to, c.getAddedSize() - c.getRemovedSize());
+
+        // Replace as many removed elements as possible
+        int fpos = from;
+        int pos = c.getFrom();
+
+        ListIterator<? extends E> it = getSource().listIterator(pos);
+        for (; fpos < to && it.nextIndex() < c.getTo();) {
+            if (pred.test(it.next())) {
+                filtered[fpos] = it.previousIndex();
+                nextAdd(fpos, fpos + 1);
+                ++fpos;
             }
         }
 
-        /*
-         * Process all additions
-         */
-        for (int index = from; index < from + c.getAddedSize(); index++) {
-            filtered.add(index, predicate.test(getSource().get(index)));
-
-            if (filtered.get(index)) {
-                int internalIndex = getIndexToSourceIndex(index);
-
-                nextAdd(internalIndex, internalIndex + 1);
+        if (fpos < to) {
+            // If there were more removed elements than added
+            System.arraycopy(filtered, to, filtered, fpos, size - to);
+            size -= to - fpos;
+        } else {
+            // Add the remaining elements
+            while (it.nextIndex() < c.getTo()) {
+                if (pred.test(it.next())) {
+                    System.arraycopy(filtered, fpos, filtered, fpos + 1, size - fpos);
+                    filtered[fpos] = it.previousIndex();
+                    nextAdd(fpos, fpos + 1);
+                    ++fpos;
+                    ++size;
+                }
+                ++pos;
             }
         }
     }
 
-    /**
-     * Processes the value updates inside the change object.
-     *
-     * @param c The change object to process
-     */
     protected void update(ListChangeListener.Change<? extends E> c) {
-        int from = c.getFrom();
-        int to = c.getTo();
-
-        if (to > from) {
-            for (int i = from; i < to; ++i) {
-                boolean oldFiltered = filtered.get(i);
-
-                filtered.set(i, predicate.test(getSource().get(i)));
-
-                /*
-                 * The value was previously contained inside the filtered list and the new value is still contained
-                 */
-                if (oldFiltered && filtered.get(i)) {
-                    nextUpdate(getIndexToSourceIndex(i));
+        Predicate<? super E> pred = getPredicateImpl();
+        ensureSize(getSource().size());
+        int sourceFrom = c.getFrom();
+        int sourceTo = c.getTo();
+        int filterFrom = findPosition(sourceFrom);
+        int filterTo = findPosition(sourceTo);
+        ListIterator<? extends E> it = getSource().listIterator(sourceFrom);
+        int pos = filterFrom;
+        while (pos < filterTo || sourceFrom < sourceTo) {
+            E el = it.next();
+            if (pos < size && filtered[pos] == sourceFrom) {
+                if (!pred.test(el)) {
+                    nextRemove(pos, el);
+                    System.arraycopy(filtered, pos + 1, filtered, pos, size - pos - 1);
+                    --size;
+                    --filterTo;
+                } else {
+                    nextUpdate(pos);
+                    ++pos;
                 }
-                /*
-                 * The value was previously contained inside the filtered list but the new value is not contained anymore
-                 */
-                else if (oldFiltered && !filtered.get(i)) {
-                    nextRemove(getIndexToSourceIndex(i), getSource().get(i));
-                }
-                /*
-                 * The value wasn't previously contained inside the filtered list but the new value is now contained
-                 */
-                else if (!oldFiltered && filtered.get(i)) {
-                    int internalIndex = getIndexToSourceIndex(i);
-
-                    nextAdd(internalIndex, internalIndex + 1);
+            } else {
+                if (pred.test(el)) {
+                    nextAdd(pos, pos + 1);
+                    System.arraycopy(filtered, pos, filtered, pos + 1, size - pos);
+                    filtered[pos] = sourceFrom;
+                    ++size;
+                    ++pos;
+                    ++filterTo;
                 }
             }
+            sourceFrom++;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void refilter() {
+        ensureSize(getSource().size());
+        List<E> removed = null;
+        if (hasListeners()) {
+            removed = new ArrayList<>(this);
+        }
+        size = 0;
+        int i = 0;
+        Predicate<? super E> pred = getPredicateImpl();
+        for (Iterator<? extends E> it = getSource().iterator(); it.hasNext();) {
+            final E next = it.next();
+            if (pred.test(next)) {
+                filtered[size++] = i;
+            }
+            ++i;
+        }
+        if (hasListeners()) {
+            fireChange(new NonIterableChange.GenericAddRemoveChange<>(0, size, removed, this));
         }
     }
 
@@ -203,32 +302,42 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
      * or the other way around, will a {@link javafx.collections.ListChangeListener.Change} event be triggered for the element.
      */
     public void trigger() {
+        Predicate<? super E> pred = getPredicateImpl();
+
         beginChange();
 
-        for (int index = getSource().size() - 1; index >= 0; index--) {
-            /*
-             * The element was contained before but not anymore
-             */
-            if (filtered.get(index) && !predicate.test(getSource().get(index))) {
-                filtered.set(index, false);
+        int sourceFrom = 0;
+        int sourceTo = getSource().size();
+        int filterFrom = findPosition(sourceFrom);
+        int filterTo = findPosition(sourceTo);
 
-                nextRemove(getIndexToSourceIndex(index), getSource().get(index));
+        ListIterator<? extends E> it = getSource().listIterator(sourceFrom);
+        int pos = filterFrom;
+        while (pos < filterTo || sourceFrom < sourceTo) {
+            E el = it.next();
+            if (pos < size && filtered[pos] == sourceFrom) {
+                if (!pred.test(el)) {
+                    nextRemove(pos, el);
+                    System.arraycopy(filtered, pos + 1, filtered, pos, size - pos - 1);
+                    --size;
+                    --filterTo;
+                } else {
+                    ++pos;
+                }
+            } else {
+                if (pred.test(el)) {
+                    nextAdd(pos, pos + 1);
+                    System.arraycopy(filtered, pos, filtered, pos + 1, size - pos);
+                    filtered[pos] = sourceFrom;
+                    ++size;
+                    ++pos;
+                    ++filterTo;
+                }
             }
-        }
-
-        for (int index = 0; index < getSource().size(); index++) {
-            /*
-             * The element wasn't contained before, but is now
-             */
-            if (!filtered.get(index) && predicate.test(getSource().get(index))) {
-                filtered.set(index, true);
-
-                int internalIndex = getIndexToSourceIndex(index);
-
-                nextAdd(internalIndex, internalIndex + 1);
-            }
+            sourceFrom++;
         }
 
         endChange();
     }
+
 }
