@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.function.Consumer;
 
 @Safe
@@ -135,7 +136,7 @@ public class ShortcutManager {
             iconFile.delete();
         }
 
-        if (miniatureFile.delete()) {
+        if (miniatureFile.exists()) {
             miniatureFile.delete();
         }
 
@@ -155,7 +156,46 @@ public class ShortcutManager {
     }
 
     public void updateShortcut(ShortcutDTO shortcutDTO) {
+        final String baseName = shortcutDTO.getName();
+        final File shortcutDirectory = new File(this.shortcutDirectory);
+
+        // backup icon if it didn't change (deleteShortcut will delete it -> icon lost after shortcut update)
+        final File iconFile = new File(shortcutDirectory, baseName + ".icon");
+        final File iconBackup = new File(shortcutDirectory, baseName + ".icon_backup");
+
+        final boolean keepIcon = shortcutDTO.getIcon().getPath().equals(iconFile.getPath());
+        if (keepIcon) {
+            try {
+                Files.move(iconFile.toPath(), iconBackup.toPath());
+                shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withIcon(iconBackup.toURI()).build();
+            } catch (IOException e) {
+                LOGGER.error("Could not backup icon.");
+            }
+        }
+
+        // backup miniature if it didn't change (deleteShortcut will delete it -> miniature lost after shortcut update)
+        final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
+        final File miniatureBackup = new File(shortcutDirectory, baseName + ".miniature_backup");
+
+        final boolean keepMiniature = shortcutDTO.getMiniature().getPath().equals(miniatureFile.getPath());
+        if (keepMiniature) {
+            try {
+                Files.move(miniatureFile.toPath(), miniatureBackup.toPath());
+                shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withMiniature(miniatureBackup.toURI()).build();
+            } catch (IOException e) {
+                LOGGER.error("Could not backup miniature.");
+            }
+        }
+
         deleteShortcut(shortcutDTO);
         createShortcut(shortcutDTO);
+
+        // delete backups
+        if (iconBackup.exists()) {
+            iconBackup.delete();
+        }
+        if (miniatureBackup.exists()) {
+            miniatureBackup.delete();
+        }
     }
 }
