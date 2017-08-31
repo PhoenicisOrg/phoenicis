@@ -48,11 +48,21 @@ import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * This view contains the available applications list.
+ * This component is made up of up to three components:
+ * <p>
+ * <ul>
+ * <li>A sidebar containing the categories of the applications and tools to filter the applications</li>
+ * <li>A list widget showing the available applications to the user</li>
+ * <li>An optional details view that contains the information and available scripts for a selected application</li>
+ * </ul>
+ */
 public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
     private final Logger LOGGER = LoggerFactory.getLogger(ApplicationsView.class);
 
-    private final CombinedListWidget<ApplicationDTO> availableApps;
     private final ApplicationFilter filter;
+    private final CombinedListWidget<ApplicationDTO> availableApps;
 
     private Consumer<ScriptDTO> onSelectScript;
 
@@ -61,9 +71,16 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
     private SortedList<CategoryDTO> sortedCategories;
 
     private ObservableList<ApplicationDTO> applications;
-    private PhoenicisFilteredList<ApplicationDTO> filteredApplications;
     private SortedList<ApplicationDTO> sortedApplications;
+    private PhoenicisFilteredList<ApplicationDTO> filteredApplications;
 
+    /**
+     * Constructor
+     *
+     * @param themeManager          The theme manager
+     * @param javaFxSettingsManager The javafx settings manager
+     * @param toolsConfiguration    The tools configuration
+     */
     public ApplicationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
             ToolsConfiguration toolsConfiguration) {
         super(tr("Apps"), themeManager);
@@ -81,24 +98,31 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                     }
                 });
 
-        // initialising the category lists
+        /*
+         * initialize the category lists by:
+         * 1. filtering by installer categories
+         * 2. sorting the remaining categories by their name
+         */
         this.categories = FXCollections.observableArrayList();
         this.installableCategories = this.categories
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
         this.sortedCategories = this.installableCategories.sorted(Comparator.comparing(CategoryDTO::getName));
 
-        // initialising the application lists
-        this.applications = new ExpandedList<ApplicationDTO, CategoryDTO>(this.installableCategories,
-                CategoryDTO::getApplications);
-        this.filteredApplications = new PhoenicisFilteredList<ApplicationDTO>(this.applications, filter::filter);
+        /*
+         * initialising the application lists by:
+         * 1. sorting the applications by their name
+         * 2. filtering them
+         */
+        this.applications = new ExpandedList<>(this.installableCategories, CategoryDTO::getApplications);
+        this.sortedApplications = this.applications.sorted(Comparator.comparing(ApplicationDTO::getName));
+        this.filteredApplications = new PhoenicisFilteredList<>(this.sortedApplications, filter::filter);
         filter.addOnFilterChanged(filteredApplications::trigger);
-        this.sortedApplications = this.filteredApplications.sorted(Comparator.comparing(ApplicationDTO::getName));
 
         this.sidebar = new ApplicationsSidebar(availableApps, filter, javaFxSettingsManager);
 
         // create the bindings between the visual components and the observable lists
         this.sidebar.bindCategories(this.sortedCategories);
-        this.availableApps.bind(this.sortedApplications);
+        this.availableApps.bind(this.filteredApplications);
 
         // set the category selection consumers
         this.sidebar.setOnCategorySelection(category -> {
@@ -111,10 +135,6 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         });
 
         this.setSidebar(this.sidebar);
-    }
-
-    public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
-        this.onSelectScript = onSelectScript;
     }
 
     /**
@@ -136,10 +156,25 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         });
     }
 
+    /**
+     * Sets the callback, which is called when a script has been selected
+     *
+     * @param onSelectScript The callback, which is called when a script has been selected
+     */
+    public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
+        this.onSelectScript = onSelectScript;
+    }
+
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
         getFailurePanel().getRetryButton().setOnMouseClicked(event);
     }
 
+    /**
+     * Displays the application details view on the right side for a given application.
+     *
+     * @param application           The application, whose details should be shown
+     * @param javaFxSettingsManager The javafx settings manager
+     */
     private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
         final ApplicationPanel applicationPanel = new ApplicationPanel(application, filter, themeManager,
                 javaFxSettingsManager);
@@ -150,6 +185,11 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         this.showDetailsView(applicationPanel);
     }
 
+    /**
+     * Starts the installation process for a given script
+     *
+     * @param scriptDTO The script to be installed
+     */
     private void installScript(ScriptDTO scriptDTO) {
         this.onSelectScript.accept(scriptDTO);
     }

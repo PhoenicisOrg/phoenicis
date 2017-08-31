@@ -95,6 +95,9 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         int from = c.getFrom();
         int to = c.getTo();
 
+        int expandedFrom = getFirstIndex(from);
+        int expandedTo = getLastIndexPlusOne(to - 1);
+
         if (to > from) {
             List<? extends E> beforePermutation = expandedValues.stream().flatMap(List::stream)
                     .collect(Collectors.toList());
@@ -118,7 +121,7 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
 
             int[] perm = beforePermutation.stream().mapToInt(afterPermutation::indexOf).toArray();
 
-            nextPermutation(from, to, perm);
+            nextPermutation(expandedFrom, expandedTo, perm);
         }
     }
 
