@@ -74,13 +74,15 @@ public class LibraryController {
         this.libraryView.setOnShortcutRun(this::runShortcut);
         this.libraryView.setOnShortcutDoubleClicked(this::runShortcut);
         this.libraryView.setOnShortcutStop(
-                shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> new ErrorMessage(tr("Error"), e)));
+                shortcutDTO -> shortcutRunner.stop(shortcutDTO,
+                        e -> new ErrorMessage(tr("Error"), e, this.libraryView)));
 
         this.libraryView.setOnShortcutUninstall(shortcutDTO -> {
             new ConfirmMessage(tr("Uninstall {0}", shortcutDTO.getName()),
                     tr("Are you sure you want to uninstall {0}?", shortcutDTO.getName()))
                             .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO,
-                                    e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e)));
+                                    e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e,
+                                            this.libraryView)));
         });
 
         this.libraryView.setOnShortcutChanged(shortcutDTO -> this.shortcutManager.updateShortcut(shortcutDTO));
@@ -91,7 +93,8 @@ public class LibraryController {
 
         this.libraryView.setOnScriptRun(file -> {
             scriptInterpreter.runScript(file,
-                    e -> Platform.runLater(() -> new ErrorMessage(tr("Error while running script"), e)));
+                    e -> Platform
+                            .runLater(() -> new ErrorMessage(tr("Error while running script"), e, this.libraryView)));
         });
     }
 
@@ -128,7 +131,8 @@ public class LibraryController {
     }
 
     private void runShortcut(ShortcutDTO shortcutDTO) {
-        shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> new ErrorMessage(tr("Error"), e));
+        shortcutRunner.run(shortcutDTO, Collections.emptyList(),
+                e -> new ErrorMessage(tr("Error"), e, this.libraryView));
     }
 
     /**
@@ -137,7 +141,7 @@ public class LibraryController {
      * @param message error message
      */
     private void showErrorMessage(Exception e, String message) {
-        Platform.runLater(() -> new ErrorMessage(message, e));
+        Platform.runLater(() -> new ErrorMessage(message, e, this.libraryView));
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
