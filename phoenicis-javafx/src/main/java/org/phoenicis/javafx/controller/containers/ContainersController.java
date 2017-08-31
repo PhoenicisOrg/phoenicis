@@ -76,7 +76,8 @@ public class ContainersController {
                         tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
                                 .ask(() -> {
                                     winePrefixContainerController.deletePrefix(winePrefixDTO,
-                                            e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                                            e -> Platform.runLater(
+                                                    () -> new ErrorMessage("Error", e, this.containersView).show()));
                                     loadContainers();
                                 });
             });

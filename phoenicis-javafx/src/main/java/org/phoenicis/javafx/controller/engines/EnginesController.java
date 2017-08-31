@@ -70,14 +70,16 @@ public class EnginesController {
         this.enginesView.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
-                        installEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        installEngine(engineDTO,
+                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
                     });
         });
 
         this.enginesView.setOnDeleteEngine(engineDTO -> {
             new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
-                        deleteEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        deleteEngine(engineDTO,
+                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
                     });
         });
     }

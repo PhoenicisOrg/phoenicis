@@ -23,31 +23,62 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.stage.Window;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * error message dialog
+ */
 public class ErrorMessage {
     private final Logger LOGGER = LoggerFactory.getLogger(ErrorMessage.class);
     private final Alert alert;
 
+    /**
+     * constructor
+     * @param message error message
+     * @param exception exception which caused the error
+     */
     public ErrorMessage(String message, Exception exception) {
-        alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(tr("Error"));
-        alert.setHeaderText(message);
+        this(message, exception, (Window) null);
+    }
+
+    /**
+     * constructor
+     * @param message error message
+     * @param exception exception which caused the error
+     * @param mainWindowView MainWindowView which shows the error message
+     */
+    public ErrorMessage(String message, Exception exception, MainWindowView mainWindowView) {
+        this(message, exception, mainWindowView.getContent().getScene().getWindow());
+    }
+
+    /**
+     * constructor
+     * @param message error message
+     * @param exception exception which caused the error
+     * @param owner owning window
+     */
+    public ErrorMessage(String message, Exception exception, Window owner) {
+        this.alert = new Alert(Alert.AlertType.ERROR);
+        this.alert.setTitle(tr("Error"));
+        this.alert.setHeaderText(message);
 
         if (exception != null) {
             LOGGER.error(ExceptionUtils.getStackTrace(exception));
 
-            alert.setContentText(exception.getMessage());
+            this.alert.setContentText(exception.getMessage());
 
             final String exceptionText = ExceptionUtils.getFullStackTrace(exception);
 
-            Label label = new Label(tr("The exception stacktrace was:"));
+            final Label label = new Label(tr("The exception stacktrace was:"));
 
-            TextArea textArea = new TextArea(exceptionText);
+            final TextArea textArea = new TextArea(exceptionText);
             textArea.setEditable(false);
             textArea.setWrapText(true);
 
@@ -56,16 +87,22 @@ public class ErrorMessage {
             GridPane.setVgrow(textArea, Priority.ALWAYS);
             GridPane.setHgrow(textArea, Priority.ALWAYS);
 
-            GridPane expContent = new GridPane();
+            final GridPane expContent = new GridPane();
             expContent.setMaxWidth(Double.MAX_VALUE);
             expContent.add(label, 0, 0);
             expContent.add(textArea, 0, 1);
-            alert.getDialogPane().setExpandableContent(expContent);
+            this.alert.getDialogPane().setExpandableContent(expContent);
         }
-        alert.showAndWait();
+        this.alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        this.alert.setResizable(true);
+        this.alert.initOwner(owner);
+        this.alert.showAndWait();
     }
 
+    /**
+     * shows the error message
+     */
     public void show() {
-        alert.show();
+        this.alert.show();
     }
 }
