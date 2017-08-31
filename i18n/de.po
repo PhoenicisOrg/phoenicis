@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: POL-POM 5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-28 13:49+0200\n"
-"PO-Revision-Date: 2017-08-28 13:54+0200\n"
+"POT-Creation-Date: 2017-08-31 11:12+0200\n"
+"PO-Revision-Date: 2017-08-31 11:13+0200\n"
 "Last-Translator: Plata <plata@phoenicis.org>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -72,6 +72,10 @@ msgstr ""
 "Verbindung mit dem Repository fehlgeschlagen.\n"
 "Bitte überprüfen Sie Ihre Verbindung und versuchen es nochmal."
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:78
+msgid "The script ended unexpectedly"
+msgstr "Das Skript wurde unerwartet beendet"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:68
 msgid "Loading engines failed."
 msgstr "Laden der Engines fehlgeschlagen."
@@ -116,7 +120,7 @@ msgstr "Breeze Dunkel"
 msgid "Unity theme"
 msgstr "Unity"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:75
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:72
 msgid "Installations"
 msgstr "Installationen"
 
@@ -435,6 +439,14 @@ msgstr "Feste Darstellungsreihenfolge"
 msgid "Always Offscreen"
 msgstr "Immer offscreen"
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:48
+msgid "Retry"
+msgstr "Wiederholen"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:62
+msgid "Reason: "
+msgstr "Ursache:"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:84
 msgid "Save"
 msgstr "Speichern"
@@ -504,11 +516,11 @@ msgstr "{0}-Konsole"
 msgid "Advanced tools"
 msgstr "Erweiterte Werkzeuge"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:81
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:79
 msgid "Library"
 msgstr "Bibliothek"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:154
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:152
 msgid "My applications"
 msgstr "Meine Anwendungen"
 
@@ -523,14 +535,6 @@ msgstr "Schließen"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:94
 msgid "Uninstall"
 msgstr "Deinstallieren"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:48
-msgid "Retry"
-msgstr "Wiederholen"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/FailurePanel.java:62
-msgid "Reason: "
-msgstr "Ursache:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:133
 msgid "Testing"
