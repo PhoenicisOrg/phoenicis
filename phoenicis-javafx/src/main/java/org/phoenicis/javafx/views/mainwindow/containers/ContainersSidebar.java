@@ -163,10 +163,18 @@ public class ContainersSidebar extends Sidebar {
         return containerButton;
     }
 
+    /**
+     * Filters the containers for a given search term
+     *
+     * @param searchTerm The keyword to search for
+     */
     public void search(String searchTerm) {
         this.filter.setSearchTerm(searchTerm);
     }
 
+    /**
+     * Clears the search term of the filter function
+     */
     public void clearSearch() {
         this.filter.clearSearchTerm();
     }
