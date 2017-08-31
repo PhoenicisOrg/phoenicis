@@ -75,7 +75,7 @@ public class AppsController {
                 scriptDTO -> scriptInterpreter.runScript(scriptDTO.getScript(), e -> Platform.runLater(() -> {
                     // no exception if installation is cancelled
                     if (!(e.getCause() instanceof InterruptedException)) {
-                        new ErrorMessage("The script ended unexpectedly", e);
+                        new ErrorMessage(tr("The script ended unexpectedly"), e);
                     }
                 })));
 
