@@ -18,12 +18,14 @@
 
 package org.phoenicis.javafx.views.common;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -92,9 +94,16 @@ public class ErrorMessage {
             expContent.add(label, 0, 0);
             expContent.add(textArea, 0, 1);
             this.alert.getDialogPane().setExpandableContent(expContent);
+
+            // fix content not resized if expanded content hidden again
+            this.alert.getDialogPane().expandedProperty().addListener(
+                    observable -> Platform.runLater(() -> {
+                        this.alert.getDialogPane().requestLayout();
+                        final Stage stage = (Stage) this.alert.getDialogPane().getScene().getWindow();
+                        stage.sizeToScene();
+                    }));
         }
         this.alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        this.alert.setResizable(true);
         this.alert.initOwner(owner);
         this.alert.showAndWait();
     }
