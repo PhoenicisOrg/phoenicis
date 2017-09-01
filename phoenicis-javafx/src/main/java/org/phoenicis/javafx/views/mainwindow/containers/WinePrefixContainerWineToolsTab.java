@@ -55,7 +55,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         toolsContentPane.getStyleClass().add("grid");
 
         Button configureWine = new Button(tr("Configure Wine"));
-        configureWine.getStyleClass().addAll("wineToolButton", "configureWine");
+        configureWine.getStyleClass().addAll("toolButton", "configureWine");
         configureWine.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.runTool(container, "ConfigureWine", this::unlockAll,
@@ -63,7 +63,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button registryEditor = new Button(tr("Registry Editor"));
-        registryEditor.getStyleClass().addAll("wineToolButton", "registryEditor");
+        registryEditor.getStyleClass().addAll("toolButton", "registryEditor");
         registryEditor.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.runTool(container, "WineRegistryEditor", this::unlockAll,
@@ -71,7 +71,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button rebootWindows = new Button(tr("Windows reboot"));
-        rebootWindows.getStyleClass().addAll("wineToolButton", "rebootWindows");
+        rebootWindows.getStyleClass().addAll("toolButton", "rebootWindows");
         rebootWindows.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.runInPrefix(container, "RebootWine", this::unlockAll,
@@ -79,7 +79,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button repairVirtualDrive = new Button(tr("Repair virtual drive"));
-        repairVirtualDrive.getStyleClass().addAll("wineToolButton", "repairVirtualDrive");
+        repairVirtualDrive.getStyleClass().addAll("toolButton", "repairVirtualDrive");
         repairVirtualDrive.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.repairPrefix(container, this::unlockAll,
@@ -87,7 +87,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button commandPrompt = new Button(tr("Command prompt"));
-        commandPrompt.getStyleClass().addAll("wineToolButton", "commandPrompt");
+        commandPrompt.getStyleClass().addAll("toolButton", "commandPrompt");
         commandPrompt.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.runTool(container, "WineConsole", this::unlockAll,
@@ -95,7 +95,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button taskManager = new Button(tr("Task manager"));
-        taskManager.getStyleClass().addAll("wineToolButton", "taskManager");
+        taskManager.getStyleClass().addAll("toolButton", "taskManager");
         taskManager.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.runTool(container, "WineTaskManager", this::unlockAll,
@@ -103,7 +103,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button killProcesses = new Button(tr("Kill processes"));
-        killProcesses.getStyleClass().addAll("wineToolButton", "killProcesses");
+        killProcesses.getStyleClass().addAll("toolButton", "killProcesses");
         killProcesses.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.killProcesses(container, this::unlockAll,
@@ -111,7 +111,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         });
 
         Button uninstallWine = new Button(tr("Wine uninstaller"));
-        uninstallWine.getStyleClass().addAll("wineToolButton", "uninstallWine");
+        uninstallWine.getStyleClass().addAll("toolButton", "uninstallWine");
         uninstallWine.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.runTool(container, "WineUninstaller", this::unlockAll,
