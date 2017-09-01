@@ -58,7 +58,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         configureWine.getStyleClass().addAll("wineToolButton", "configureWine");
         configureWine.setOnMouseClicked(event -> {
             this.lockAll();
-            winePrefixContainerController.runInPrefix(container, "winecfg", this::unlockAll,
+            winePrefixContainerController.runTool(container, "ConfigureWine", this::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
         });
 
@@ -66,7 +66,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         registryEditor.getStyleClass().addAll("wineToolButton", "registryEditor");
         registryEditor.setOnMouseClicked(event -> {
             this.lockAll();
-            winePrefixContainerController.runInPrefix(container, "regedit", this::unlockAll,
+            winePrefixContainerController.runTool(container, "WineRegistryEditor", this::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
         });
 
@@ -74,7 +74,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         rebootWindows.getStyleClass().addAll("wineToolButton", "rebootWindows");
         rebootWindows.setOnMouseClicked(event -> {
             this.lockAll();
-            winePrefixContainerController.runInPrefix(container, "wineboot", this::unlockAll,
+            winePrefixContainerController.runInPrefix(container, "RebootWine", this::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
         });
 
@@ -90,7 +90,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         commandPrompt.getStyleClass().addAll("wineToolButton", "commandPrompt");
         commandPrompt.setOnMouseClicked(event -> {
             this.lockAll();
-            winePrefixContainerController.runInPrefix(container, "wineconsole", this::unlockAll,
+            winePrefixContainerController.runTool(container, "WineConsole", this::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
         });
 
@@ -98,7 +98,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         taskManager.getStyleClass().addAll("wineToolButton", "taskManager");
         taskManager.setOnMouseClicked(event -> {
             this.lockAll();
-            winePrefixContainerController.runInPrefix(container, "taskmgr", this::unlockAll,
+            winePrefixContainerController.runTool(container, "WineTaskManager", this::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
         });
 
@@ -114,7 +114,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         uninstallWine.getStyleClass().addAll("wineToolButton", "uninstallWine");
         uninstallWine.setOnMouseClicked(event -> {
             this.lockAll();
-            winePrefixContainerController.runInPrefix(container, "uninstaller", this::unlockAll,
+            winePrefixContainerController.runTool(container, "WineUninstaller", this::unlockAll,
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
         });
 
