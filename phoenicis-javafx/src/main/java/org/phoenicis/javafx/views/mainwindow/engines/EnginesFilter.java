@@ -1,10 +1,14 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.AbstractFilter;
 
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -25,37 +29,75 @@ import java.util.function.Predicate;
  * @author marc
  * @since 23.04.17
  */
-public class EnginesFilter implements Predicate<EngineVersionDTO> {
-    private EngineCategoryDTO engineCategory;
-    private EngineSubCategoryDTO engineSubCategory;
+public class EnginesFilter extends AbstractFilter {
+    /**
+     * The path to the installed engines
+     */
     private String enginesPath;
 
     /**
-     * The search term entered into the search field
+     * The entered search term.
+     * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private String searchTerm = "";
+    private Optional<String> searchTerm;
 
     /**
      * Are installed engines searched
      */
-    private boolean showInstalled = true;
+    private BooleanProperty showInstalled;
 
     /**
      * Are not installed engines searched
      */
-    private boolean showNotInstalled = true;
+    private BooleanProperty showNotInstalled;
 
     /**
      * Constructor
      *
-     * @param engineSubCategory The engine sub category used for this filter
-     * @param enginesPath   The path to the installed engines
+     * @param enginesPath The path to the installed engines
      */
-    public EnginesFilter(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory, String enginesPath) {
+    public EnginesFilter(String enginesPath) {
         super();
-        this.engineCategory = engineCategory;
-        this.engineSubCategory = engineSubCategory;
+
         this.enginesPath = enginesPath;
+
+        this.searchTerm = Optional.empty();
+
+        this.showInstalled = new SimpleBooleanProperty();
+        this.showInstalled
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+
+        this.showNotInstalled = new SimpleBooleanProperty();
+        this.showNotInstalled
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+    }
+
+    public BooleanProperty showInstalledProperty() {
+        return this.showInstalled;
+    }
+
+    public BooleanProperty showNotInstalledProperty() {
+        return this.showNotInstalled;
+    }
+
+    /**
+     * Sets the search term to the given string.
+     *
+     * @param searchTerm The new search term
+     */
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = Optional.of(searchTerm);
+
+        this.triggerFilterChanged();
+    }
+
+    /**
+     * Clears the search term
+     */
+    public void clearSearchTerm() {
+        this.searchTerm = Optional.empty();
+
+        this.triggerFilterChanged();
     }
 
     /**
@@ -64,27 +106,45 @@ public class EnginesFilter implements Predicate<EngineVersionDTO> {
      * @param engineVersionDTO The engine version to be checked
      * @return True if the engine version is installed, false otherwise
      */
-    private boolean isInstalled(EngineVersionDTO engineVersionDTO) {
+    private boolean isInstalled(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory,
+            EngineVersionDTO engineVersionDTO) {
         return Paths.get(enginesPath, engineCategory.getName().toLowerCase(), engineSubCategory.getName(),
                 engineVersionDTO.getVersion()).toFile().exists();
     }
 
-    @Override
-    public boolean test(EngineVersionDTO engineVersion) {
-        return engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase())
-                && ((this.showInstalled && isInstalled(engineVersion))
-                        || (this.showNotInstalled && !isInstalled(engineVersion)));
+    /**
+     * Creates a new filter predicate for a {@link EngineCategoryDTO} and {@link EngineSubCategoryDTO}.
+     * This predicate then accepts a {@link EngineVersionDTO} object and returns true if the given object fulfills the filter predicate and false otherwise
+     *
+     * @param engineCategory    The engine category
+     * @param engineSubCategory The engine sub category
+     * @return A new filter predicate
+     */
+    public Predicate<EngineVersionDTO> createFilter(EngineCategoryDTO engineCategory,
+            EngineSubCategoryDTO engineSubCategory) {
+        return engineVersion -> {
+            final boolean containsSearchTerm = searchTerm
+                    .map(searchTerm -> engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase()))
+                    .orElse(true);
+            final boolean fulfillsShowInstalled = this.showInstalled.getValue()
+                    && isInstalled(engineCategory, engineSubCategory, engineVersion);
+            final boolean fulfillsShowNotInstalled = this.showNotInstalled.getValue()
+                    && !isInstalled(engineCategory, engineSubCategory, engineVersion);
+
+            return containsSearchTerm && (fulfillsShowInstalled || fulfillsShowNotInstalled);
+        };
     }
 
-    public void setSearchTerm(String searchTerm) {
-        this.searchTerm = searchTerm;
-    }
-
-    public void setShowInstalled(boolean showInstalled) {
-        this.showInstalled = showInstalled;
-    }
-
-    public void setShowNotInstalled(boolean showNotInstalled) {
-        this.showNotInstalled = showNotInstalled;
+    /**
+     * Checks if the given engine category fulfills this filter
+     *
+     * @param engineCategory The engine category
+     * @return True if the given engine category fulfills the filter, false, otherwise
+     */
+    public boolean filter(EngineCategoryDTO engineCategory) {
+        return searchTerm.map(
+                searchTerm -> engineCategory.getSubCategories().stream().anyMatch(engineSubCategory -> engineSubCategory
+                        .getPackages().stream().anyMatch(version -> version.getVersion().contains(searchTerm))))
+                .orElse(true);
     }
 }

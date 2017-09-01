@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
@@ -8,6 +9,8 @@ import javafx.scene.control.ToggleButton;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
@@ -36,11 +39,16 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 22.04.17
  */
 public class EnginesSidebar extends Sidebar {
+    private final EnginesFilter filter;
+
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
     private SidebarScrollPane centerContent;
+
+    private ObservableList<EngineCategoryDTO> engineCategories;
+    private PhoenicisFilteredList<EngineCategoryDTO> filteredEngineCategories;
 
     // the button group containing a button for all engine categories
     private SidebarToggleGroup<EngineCategoryDTO> categoryView;
@@ -54,14 +62,6 @@ public class EnginesSidebar extends Sidebar {
     // widget to switch between the different list widgets in the center view
     private ListWidgetChooser<EngineVersionDTO> listWidgetChooser;
 
-    // consumers called when an action inside the search bar has been performed
-    private Consumer<String> onApplySearchTerm;
-    private Runnable onSearchTermClear;
-
-    // consumers called when a filter in the installation filter group has been activated
-    private Consumer<Boolean> onApplyInstalledFilter;
-    private Consumer<Boolean> onApplyUninstalledFilter;
-
     // consumer called when a category has been selected
     private Consumer<EngineCategoryDTO> onCategorySelection;
 
@@ -71,12 +71,13 @@ public class EnginesSidebar extends Sidebar {
      * Constructor
      *
      * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
-     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
+     * @param javaFxSettingsManager     The settings manager for the JavaFX GUI
      */
-    public EnginesSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets,
+    public EnginesSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets, EnginesFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
+        this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
@@ -98,22 +99,26 @@ public class EnginesSidebar extends Sidebar {
      * @param engineCategories The list of engine categories
      */
     public void bindEngineCategories(ObservableList<EngineCategoryDTO> engineCategories) {
-        Bindings.bindContent(categoryView.getElements(), engineCategories);
+        Bindings.bindContent(this.engineCategories, engineCategories);
     }
 
     /**
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(filterText -> onApplySearchTerm.accept(filterText),
-                () -> onSearchTermClear.run());
+        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
     }
 
     /**
      * This method populates the button group showing all known engine categories
      */
     private void populateEngineCategories() {
+        this.engineCategories = FXCollections.observableArrayList();
+        this.filteredEngineCategories = new PhoenicisFilteredList<>(engineCategories, filter::filter);
+        this.filter.addOnFilterChanged(filteredEngineCategories::trigger);
+
         this.categoryView = SidebarToggleGroup.create(tr("Engines"), this::createCategoryToggleButton);
+        Bindings.bindContent(categoryView.getElements(), filteredEngineCategories);
     }
 
     /**
@@ -121,14 +126,12 @@ public class EnginesSidebar extends Sidebar {
      */
     private void populateInstallationFilters() {
         this.installedCheck = new SidebarCheckBox(tr("Installed"));
+        this.installedCheck.selectedProperty().bindBidirectional(filter.showInstalledProperty());
         this.installedCheck.setSelected(true);
-        this.installedCheck.selectedProperty()
-                .addListener((observableValue, oldValue, newValue) -> onApplyInstalledFilter.accept(newValue));
 
         this.notInstalledCheck = new SidebarCheckBox(tr("Not installed"));
+        this.notInstalledCheck.selectedProperty().bindBidirectional(filter.showNotInstalledProperty());
         this.notInstalledCheck.setSelected(true);
-        this.notInstalledCheck.selectedProperty()
-                .addListener((observableValue, oldValue, newValue) -> onApplyUninstalledFilter.accept(newValue));
 
         this.installationFilterGroup = new SidebarGroup(installedCheck, notInstalledCheck);
     }
@@ -164,6 +167,22 @@ public class EnginesSidebar extends Sidebar {
     }
 
     /**
+     * Filters the engines and engine categories for a given keyword
+     *
+     * @param searchTerm The keyword to search for
+     */
+    public void search(String searchTerm) {
+        this.filter.setSearchTerm(searchTerm);
+    }
+
+    /**
+     * Clears the keyword of the filter function
+     */
+    public void clearSearch() {
+        this.filter.clearSearchTerm();
+    }
+
+    /**
      * This method selects the button belonging to the first engine category in the engine category button group.
      * If no engine category exists, this method will throw an {@link IllegalArgumentException}.
      *
@@ -180,21 +199,5 @@ public class EnginesSidebar extends Sidebar {
      */
     public void setOnCategorySelection(Consumer<EngineCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
-    }
-
-    public void setOnApplySearchTerm(Consumer<String> onApplySearchTerm) {
-        this.onApplySearchTerm = onApplySearchTerm;
-    }
-
-    public void setOnSearchTermClear(Runnable onSearchTermClear) {
-        this.onSearchTermClear = onSearchTermClear;
-    }
-
-    public void setOnApplyInstalledFilter(Consumer<Boolean> onApplyInstalledFilter) {
-        this.onApplyInstalledFilter = onApplyInstalledFilter;
-    }
-
-    public void setOnApplyUninstalledFilter(Consumer<Boolean> onApplyUninstalledFilter) {
-        this.onApplyUninstalledFilter = onApplyUninstalledFilter;
     }
 }

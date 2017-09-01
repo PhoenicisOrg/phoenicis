@@ -18,21 +18,19 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.lists.MappedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.lists.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
@@ -40,6 +38,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class EnginesView extends MainWindowView<EnginesSidebar> {
+    private final EnginesFilter filter;
+
     private TabPane availableEngines;
 
     private EnginePanel currentEnginePanel;
@@ -57,15 +57,16 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {
     };
 
-    private PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-
     public EnginesView(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
         super("Engines", themeManager);
+
+        this.filter = new EnginesFilter(enginesPath);
 
         this.engineCategories = FXCollections.observableArrayList();
         this.engineSubCategories = FXCollections.observableArrayList();
         this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories, engineSubCategory -> {
-            EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath);
+            EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath,
+                    filter);
 
             result.setOnSelectEngine(this::showEngineDetails);
 
@@ -73,22 +74,14 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         });
         this.mappedListWidgets = new MappedList<>(mappedSubCategoryTabs, tab -> tab.getEngineVersionsView());
 
-        this.sidebar = new EnginesSidebar(mappedListWidgets, javaFxSettingsManager);
+        this.sidebar = new EnginesSidebar(mappedListWidgets, filter, javaFxSettingsManager);
 
         this.sidebar.setOnCategorySelection(this::selectCategory);
-        this.sidebar.setOnApplyInstalledFilter(newValue -> availableEngines.getTabs()
-                .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForInstalled(newValue)));
-        this.sidebar.setOnApplyUninstalledFilter(newValue -> availableEngines.getTabs()
-                .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForNotInstalled(newValue)));
-        this.sidebar.setOnSearchTermClear(() -> availableEngines.getTabs()
-                .forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForSearchTerm("")));
-        this.sidebar.setOnApplySearchTerm(this::processFilterText);
-
-        this.sidebar.bindEngineCategories(engineCategories);
 
         this.initFailure();
         this.initWineVersions();
 
+        this.sidebar.bindEngineCategories(engineCategories);
         Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
 
         this.setSidebar(this.sidebar);
@@ -149,16 +142,6 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
 
         this.showDetailsView(currentEnginePanel);
-    }
-
-    private void processFilterText(String filterText) {
-        this.pause.setOnFinished(event -> {
-            String text = filterText.toLowerCase();
-
-            availableEngines.getTabs().forEach(tab -> ((EngineSubCategoryTab) tab).setFilterForSearchTerm(text));
-        });
-
-        this.pause.playFromStart();
     }
 
     private void installEngine(EngineDTO engineDTO) {
