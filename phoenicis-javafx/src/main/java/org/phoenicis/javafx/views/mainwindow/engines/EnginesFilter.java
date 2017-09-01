@@ -42,6 +42,12 @@ public class EnginesFilter extends AbstractFilter {
     private Optional<String> searchTerm;
 
     /**
+     * The selected engine category.
+     * If no engine category has been selected, this value is {@link Optional#empty()}.
+     */
+    private Optional<EngineCategoryDTO> selectedEngineCategory;
+
+    /**
      * Are installed engines searched
      */
     private BooleanProperty showInstalled;
@@ -62,6 +68,7 @@ public class EnginesFilter extends AbstractFilter {
         this.enginesPath = enginesPath;
 
         this.searchTerm = Optional.empty();
+        this.selectedEngineCategory = Optional.empty();
 
         this.showInstalled = new SimpleBooleanProperty();
         this.showInstalled
@@ -96,6 +103,17 @@ public class EnginesFilter extends AbstractFilter {
      */
     public void clearSearchTerm() {
         this.searchTerm = Optional.empty();
+
+        this.triggerFilterChanged();
+    }
+
+    /**
+     * Sets the selected engine category
+     *
+     * @param engineCategory The selected engine category
+     */
+    public void setSelectedEngineCategory(EngineCategoryDTO engineCategory) {
+        this.selectedEngineCategory = Optional.ofNullable(engineCategory);
 
         this.triggerFilterChanged();
     }
@@ -139,12 +157,35 @@ public class EnginesFilter extends AbstractFilter {
      * Checks if the given engine category fulfills this filter
      *
      * @param engineCategory The engine category
-     * @return True if the given engine category fulfills the filter, false, otherwise
+     * @return True if the given engine category fulfills the filter, false otherwise
      */
     public boolean filter(EngineCategoryDTO engineCategory) {
         return searchTerm.map(
                 searchTerm -> engineCategory.getSubCategories().stream().anyMatch(engineSubCategory -> engineSubCategory
                         .getPackages().stream().anyMatch(version -> version.getVersion().contains(searchTerm))))
+                .orElse(true);
+    }
+
+    /**
+     * Checks whether a given engine sub category tab is empty or not
+     *
+     * @param engineSubCategoryTab The engine sub category tab
+     * @return True if the given engine sub category tab is not empty, false otherwise
+     */
+    private boolean isNotEmpty(EngineSubCategoryTab engineSubCategoryTab) {
+        return engineSubCategoryTab.getEngineSubCategory().getPackages().stream()
+                .anyMatch(engineSubCategoryTab.getFilterPredicate());
+    }
+
+    /**
+     * Checks if a given engine sub category tab fulfills this filter
+     *
+     * @param engineSubCategoryTab The engine sub category tab
+     * @return True if the given engine sub category tab fulfills the filter, false otherwise
+     */
+    public boolean filter(EngineSubCategoryTab engineSubCategoryTab) {
+        return isNotEmpty(engineSubCategoryTab) && this.selectedEngineCategory
+                .map(selectedEngineCategory -> selectedEngineCategory.equals(engineSubCategoryTab.getEngineCategory()))
                 .orElse(true);
     }
 }

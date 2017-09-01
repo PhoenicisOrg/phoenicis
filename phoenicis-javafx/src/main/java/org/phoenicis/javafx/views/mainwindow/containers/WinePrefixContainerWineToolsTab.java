@@ -87,7 +87,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
 
         for (EngineToolDTO tool : tools) {
             Button toolButton = new Button(tool.getName());
-            toolButton.getStyleClass().addAll("wineToolButton", tool.getMiniature());
+            toolButton.getStyleClass().addAll("toolButton", tool.getMiniature());
             toolButton.setOnMouseClicked(event -> {
                 this.lockAll();
                 winePrefixContainerController.runTool(container, tool.getId(), this::unlockAll,
@@ -98,7 +98,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         }
 
         Button repairVirtualDrive = new Button(tr("Repair virtual drive"));
-        repairVirtualDrive.getStyleClass().addAll("wineToolButton", "repairVirtualDrive");
+        repairVirtualDrive.getStyleClass().addAll("toolButton", "repairVirtualDrive");
         repairVirtualDrive.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.repairPrefix(container, this::unlockAll,
@@ -108,7 +108,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         toolsContentPane.getChildren().add(repairVirtualDrive);
 
         Button killProcesses = new Button(tr("Kill processes"));
-        killProcesses.getStyleClass().addAll("wineToolButton", "killProcesses");
+        killProcesses.getStyleClass().addAll("toolButton", "killProcesses");
         killProcesses.setOnMouseClicked(event -> {
             this.lockAll();
             winePrefixContainerController.killProcesses(container, this::unlockAll,

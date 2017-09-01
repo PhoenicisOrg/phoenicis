@@ -22,6 +22,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TabPane;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
@@ -29,12 +30,16 @@ import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.lists.ExpandedList;
 import org.phoenicis.javafx.views.common.lists.MappedList;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class EnginesView extends MainWindowView<EnginesSidebar> {
     private final EnginesFilter filter;
@@ -43,12 +48,12 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
     private EnginePanel currentEnginePanel;
 
-    private EngineCategoryDTO selectedCategory;
-
     private ObservableList<EngineCategoryDTO> engineCategories;
 
-    private ObservableList<EngineSubCategoryDTO> engineSubCategories;
-    private MappedList<EngineSubCategoryTab, EngineSubCategoryDTO> mappedSubCategoryTabs;
+    private ExpandedList<EngineSubCategoryTab, EngineCategoryDTO> engineSubCategoryTabs;
+    private SortedList<EngineSubCategoryTab> sortedEngineSubTabs;
+    private PhoenicisFilteredList<EngineSubCategoryTab> filteredEngineSubTabs;
+
     private MappedList<CombinedListWidget<EngineVersionDTO>, EngineSubCategoryTab> mappedListWidgets;
 
     private Consumer<EngineDTO> setOnInstallEngine = (engine) -> {
@@ -61,27 +66,41 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
         this.filter = new EnginesFilter(enginesPath);
 
+        /*
+         * initialize the engine categories list
+         */
         this.engineCategories = FXCollections.observableArrayList();
-        this.engineSubCategories = FXCollections.observableArrayList();
-        this.mappedSubCategoryTabs = new MappedList<>(engineSubCategories, engineSubCategory -> {
-            EngineSubCategoryTab result = new EngineSubCategoryTab(selectedCategory, engineSubCategory, enginesPath,
-                    filter);
 
-            result.setOnSelectEngine(this::showEngineDetails);
+        // initialize the engines sub category tabs
+        this.engineSubCategoryTabs = new ExpandedList<>(engineCategories,
+                engineCategory -> engineCategory.getSubCategories().stream()
+                        .map(engineSubCategory -> {
+                            EngineSubCategoryTab result = new EngineSubCategoryTab(engineCategory, engineSubCategory,
+                                    enginesPath,
+                                    filter);
 
-            return result;
-        });
-        this.mappedListWidgets = new MappedList<>(mappedSubCategoryTabs, tab -> tab.getEngineVersionsView());
+                            result.setOnSelectEngine(this::showEngineDetails);
+
+                            return result;
+                        }).collect(Collectors.toList()));
+        // sort the engine sub category tabs alphabetically
+        this.sortedEngineSubTabs = new SortedList<>(engineSubCategoryTabs,
+                Comparator.comparing(engineSubCategoryTab -> engineSubCategoryTab.getEngineSubCategory().getName()));
+        // filter the engine sub category tabs, so that only the visible tabs remain
+        this.filteredEngineSubTabs = new PhoenicisFilteredList<>(sortedEngineSubTabs, filter::filter);
+        this.filter.addOnFilterChanged(filteredEngineSubTabs::trigger);
+
+        this.mappedListWidgets = new MappedList<>(filteredEngineSubTabs, EngineSubCategoryTab::getEngineVersionsView);
 
         this.sidebar = new EnginesSidebar(mappedListWidgets, filter, javaFxSettingsManager);
 
-        this.sidebar.setOnCategorySelection(this::selectCategory);
+        this.sidebar.setOnCategorySelection(filter::setSelectedEngineCategory);
 
         this.initFailure();
         this.initWineVersions();
 
         this.sidebar.bindEngineCategories(engineCategories);
-        Bindings.bindContent(availableEngines.getTabs(), mappedSubCategoryTabs);
+        Bindings.bindContent(availableEngines.getTabs(), filteredEngineSubTabs);
 
         this.setSidebar(this.sidebar);
     }
@@ -122,16 +141,6 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
             this.closeDetailsView();
             this.setCenter(availableEngines);
         });
-    }
-
-    public void populateEngines(EngineCategoryDTO category) {
-        this.selectedCategory = category;
-        this.engineSubCategories.setAll(category.getSubCategories());
-    }
-
-    private void selectCategory(EngineCategoryDTO category) {
-        this.setCenter(availableEngines);
-        this.populateEngines(category);
     }
 
     private void showEngineDetails(EngineDTO engineDTO) {
