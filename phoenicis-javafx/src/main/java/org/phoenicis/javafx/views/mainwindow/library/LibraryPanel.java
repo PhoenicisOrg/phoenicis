@@ -70,7 +70,7 @@ final class LibraryPanel extends DetailsView {
                 new ColumnConstraintsWithPercentage(70));
 
         Region spacer = new Region();
-        spacer.setPrefHeight(40);
+        spacer.getStyleClass().add("detailsButtonSpacer");
 
         GridPane buttons = new GridPane();
         buttons.setAlignment(Pos.CENTER);

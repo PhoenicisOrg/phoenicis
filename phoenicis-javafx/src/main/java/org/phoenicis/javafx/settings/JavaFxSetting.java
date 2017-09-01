@@ -20,8 +20,13 @@ package org.phoenicis.javafx.settings;
 
 public enum JavaFxSetting {
     THEME("application.theme"), SCALE("application.scale"), VIEW_SOURCE("application.viewsource"), WINDOW_HEIGHT(
-            "application.windowHeight"), WINDOW_WIDTH(
-                    "application.windowWidth"), WINDOW_MAXIMIZED("application.windowMaximized");
+            "application.windowHeight"), WINDOW_WIDTH("application.windowWidth"), WINDOW_MAXIMIZED(
+                    "application.windowMaximized"), APPS_LIST_TYPE("application.appsListType"), CONTAINERS_LIST_TYPE(
+                            "application.containersListType"), ENGINES_LIST_TYPE(
+                                    "application.enginesListType"), INSTALLATIONS_LIST_TYPE(
+                                            "application.installationsListType"), LIBRARY_LIST_TYPE(
+                                                    "application.libraryListType"), FUZZY_SEARCH_RATIO(
+                                                            "application.fuzzySearchRatio");
 
     private final String propertyName;
 

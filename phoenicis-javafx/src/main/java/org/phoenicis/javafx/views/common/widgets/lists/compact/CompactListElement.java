@@ -49,10 +49,10 @@ public class CompactListElement<E> extends GridPane {
 
         this.item = item;
 
-        this.getStyleClass().add("iconListCell");
+        this.getStyleClass().add("compactListElement");
 
         this.icon = new Region();
-        this.icon.getStyleClass().add("iconListMiniatureImage");
+        this.icon.getStyleClass().add("compactListMiniatureImage");
         this.icon.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureUri.toString()));
 
         this.titleLabel = new Label(title);

@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -36,10 +35,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
-    private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
     private final EngineDTO engineDTO;
-    private Node progress;
 
     private Consumer<EngineDTO> onEngineInstall;
     private Consumer<EngineDTO> onEngineDelete;
@@ -48,8 +45,6 @@ final class EnginePanel extends DetailsView {
         super();
 
         this.engineDTO = engineDTO;
-
-        this.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
 
         this.populateContent();
     }
@@ -72,9 +67,6 @@ final class EnginePanel extends DetailsView {
             rowIdx++;
         }
 
-        informationContentPane.setHgap(20);
-        informationContentPane.setVgap(10);
-
         Button installButton = new Button(tr("Install"));
         installButton.setOnMouseClicked(evt -> {
             try {
@@ -96,23 +88,18 @@ final class EnginePanel extends DetailsView {
         });
 
         Region spacer = new Region();
-        spacer.setPrefHeight(30);
+        spacer.getStyleClass().add("engineSpacer");
         VBox.setVgrow(spacer, Priority.NEVER);
 
         HBox buttonBox = new HBox();
-        buttonBox.setSpacing(10);
+        buttonBox.getStyleClass().add("engineButtons");
         buttonBox.getChildren().addAll(installButton, deleteButton);
 
         Region progressSpacer = new Region();
-        progressSpacer.setPrefHeight(30);
+        progressSpacer.getStyleClass().add("engineSpacer");
         VBox.setVgrow(progressSpacer, Priority.NEVER);
 
         this.setCenter(new VBox(informationContentPane, spacer, buttonBox, progressSpacer));
-    }
-
-    public void showProgress(VBox progressUi) {
-        progress = progressUi;
-        this.setCenter(progress);
     }
 
     public void setOnEngineInstall(Consumer<EngineDTO> onEngineInstall) {
@@ -121,9 +108,5 @@ final class EnginePanel extends DetailsView {
 
     public void setOnEngineDelete(Consumer<EngineDTO> onEngineDelete) {
         this.onEngineDelete = onEngineDelete;
-    }
-
-    public EngineDTO getEngineDTO() {
-        return engineDTO;
     }
 }

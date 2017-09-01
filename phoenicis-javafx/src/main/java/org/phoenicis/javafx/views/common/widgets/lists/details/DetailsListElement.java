@@ -43,7 +43,7 @@ public class DetailsListElement<E> extends GridPane {
 
         this.item = item;
 
-        this.getStyleClass().add("iconListCell");
+        this.getStyleClass().add("detailsListElement");
 
         this.titleLabel = new Label(title);
         this.titleLabel.setWrapText(true);

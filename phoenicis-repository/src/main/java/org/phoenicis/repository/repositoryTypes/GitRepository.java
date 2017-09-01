@@ -23,6 +23,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.RepositoryNotFoundException;
+import org.phoenicis.repository.RepositoryException;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
@@ -73,9 +74,7 @@ public class GitRepository implements Repository {
             LOGGER.info("Creating local folder for " + this);
 
             if (!this.localFolder.mkdirs()) {
-                LOGGER.error("Couldn't create local folder for " + this);
-
-                return new RepositoryDTO.Builder().build();
+                throw new RepositoryException("Couldn't create local folder for " + this);
             }
         }
 
@@ -111,9 +110,10 @@ public class GitRepository implements Repository {
             result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
                     .fetchInstallableApplications();
         } catch (RepositoryNotFoundException | GitAPIException e) {
-            LOGGER.error(String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
+            throw new RepositoryException(
+                    String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
         } catch (IOException e) {
-            LOGGER.error("An unknown error occurred", e);
+            throw new RepositoryException("An unknown error occurred", e);
         } finally {
             // close repository to free resources
             if (gitRepository != null) {

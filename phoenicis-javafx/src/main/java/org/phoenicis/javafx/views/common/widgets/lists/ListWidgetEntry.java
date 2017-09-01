@@ -2,6 +2,7 @@ package org.phoenicis.javafx.views.common.widgets.lists;
 
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -27,6 +29,20 @@ import java.util.Optional;
  */
 public class ListWidgetEntry<E> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ListWidgetEntry.class);
+
+    private static URI DEFAULT_MINIATURE;
+    private static URI WINE_MINIATURE;
+    private static URI CONTAINER_MINIATURE;
+
+    static {
+        try {
+            DEFAULT_MINIATURE = ListWidget.class.getResource("defaultMiniature.png").toURI();
+            WINE_MINIATURE = ListWidget.class.getResource("wineMiniature.png").toURI();
+            CONTAINER_MINIATURE = ListWidget.class.getResource("containerMiniature.png").toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * The object to which the other information belongs
@@ -112,7 +128,7 @@ public class ListWidgetEntry<E> {
     }
 
     public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
-        return new ListWidgetEntry<>(application, application.getMainMiniature(), StaticMiniature.DEFAULT_MINIATURE,
+        return new ListWidgetEntry<>(application, application.getMainMiniature(), DEFAULT_MINIATURE,
                 application.getName(), Optional.empty(), Optional.empty());
     }
 
@@ -136,17 +152,22 @@ public class ListWidgetEntry<E> {
         final BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
         final Optional<URI> shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
 
-        return new ListWidgetEntry<>(container, shortcutMiniature, StaticMiniature.CONTAINER_MINIATURE,
+        return new ListWidgetEntry<>(container, shortcutMiniature, CONTAINER_MINIATURE,
                 container.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<ShortcutDTO> create(ShortcutDTO shortcut) {
         return new ListWidgetEntry<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
-                StaticMiniature.DEFAULT_MINIATURE, shortcut.getName(), Optional.empty(), Optional.empty());
+                DEFAULT_MINIATURE, shortcut.getName(), Optional.empty(), Optional.empty());
+    }
+
+    public static ListWidgetEntry<InstallationDTO> create(InstallationDTO installation) {
+        return new ListWidgetEntry<>(installation, Optional.ofNullable(installation.getMiniature()),
+                DEFAULT_MINIATURE, installation.getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-        return new ListWidgetEntry<>(engineVersion, Optional.empty(), StaticMiniature.WINE_MINIATURE,
+        return new ListWidgetEntry<>(engineVersion, Optional.empty(), WINE_MINIATURE,
                 engineVersion.getVersion(), Optional.empty(), Optional.empty(), installed);
     }
 

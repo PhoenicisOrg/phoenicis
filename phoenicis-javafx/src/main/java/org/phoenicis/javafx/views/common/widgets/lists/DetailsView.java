@@ -30,7 +30,7 @@ public abstract class DetailsView extends BorderPane {
     public DetailsView() {
         super();
 
-        this.getStyleClass().addAll("detailsPane", "rightPane");
+        this.getStyleClass().add("detailsPane");
 
         this.populateHeader();
     }

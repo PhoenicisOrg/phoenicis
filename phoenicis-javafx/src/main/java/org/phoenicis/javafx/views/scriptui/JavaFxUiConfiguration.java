@@ -48,7 +48,7 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Bean
     public SetupUiFactory setupUiFactory() {
         return new SetupUiFactoryJavaFX(toolsConfiguration.operatingSystemFetcher(), themeConfiguration.themeManager(),
-                viewsConfigurationLibrary.viewLibrary());
+                viewsConfiguration.viewInstallations());
     }
 
     @Override
@@ -61,11 +61,5 @@ public class JavaFxUiConfiguration implements UiConfiguration {
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
         return new UiQuestionFactoryJavaFX(tr("Question"));
-    }
-
-    @Override
-    @Bean
-    public ProgressUiFactory progressUiFactory() {
-        return new ProgressUiFactoryJavaFX(viewsConfiguration);
     }
 }

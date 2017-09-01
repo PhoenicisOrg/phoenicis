@@ -1,10 +1,14 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
@@ -16,7 +20,7 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * An instance of this class represents the left sidebar of the library tab view.
+ * An instance of this class represents the sidebar of the library tab view.
  * This sidebar contains three items:
  * <ul>
  * <li>
@@ -35,56 +39,66 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 15.04.17
  */
-public class LibrarySidebar extends LeftSidebar {
+public class LibrarySidebar extends Sidebar {
     // the name of this application
     private final String applicationName;
+
+    private final LibraryFilter filter;
 
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
-    private LeftScrollPane centerContent;
+    private SidebarScrollPane centerContent;
+
+    private ObservableList<ShortcutCategoryDTO> shortcutCategories;
+    private PhoenicisFilteredList<ShortcutCategoryDTO> filteredShortcutCategories;
 
     // the toggleable categories
-    private LeftToggleGroup<ShortcutCategoryDTO> categoryView;
-
-    // consumer called after a text has been entered in the search box
-    private Consumer<String> onSearch;
+    private SidebarToggleGroup<ShortcutCategoryDTO> categoryView;
 
     // the advanced tools group, containing the run script and run console buttons
-    private LeftGroup advancedToolsGroup;
+    private SidebarGroup advancedToolsGroup;
 
-    private LeftButton runScript;
-    private LeftButton runConsole;
+    private SidebarButton runScript;
+    private SidebarButton runConsole;
 
     // widget to switch between the different list widgets in the center view
-    private LeftListWidgetChooser<ShortcutDTO> listWidgetChooser;
+    private ListWidgetChooser<ShortcutDTO> listWidgetChooser;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
     private Consumer<ShortcutCategoryDTO> onCategorySelection;
 
     // consumers called when a script should be run or a console be opened
+    private Runnable onCreateShortcut;
     private Consumer<File> onScriptRun;
     private Runnable onOpenConsole;
+
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
     /**
      * Constructor
      *
      * @param applicationName    The name of this application (normally "PlayOnLinux")
      * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts) {
+    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts,
+            LibraryFilter filter,
+            JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
         this.applicationName = applicationName;
+        this.filter = filter;
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
         this.populateCategories();
         this.populateAdvancedTools();
         this.populateListWidgetChooser(availableShortcuts);
 
-        this.centerContent = new LeftScrollPane(this.categoryView, new LeftSpacer(), this.advancedToolsGroup);
+        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer(), this.advancedToolsGroup);
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
@@ -104,20 +118,24 @@ public class LibrarySidebar extends LeftSidebar {
      * @param categories The to be bound category list
      */
     public void bindCategories(ObservableList<ShortcutCategoryDTO> categories) {
-        Bindings.bindContent(categoryView.getElements(), categories);
+        Bindings.bindContent(shortcutCategories, categories);
     }
 
     /**
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(onSearch, () -> {
-        });
+        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
     }
 
     private void populateCategories() {
-        this.categoryView = LeftToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
+        this.shortcutCategories = FXCollections.observableArrayList();
+        this.filteredShortcutCategories = new PhoenicisFilteredList<>(this.shortcutCategories, filter::filter);
+        this.filter.addOnFilterChanged(filteredShortcutCategories::trigger);
+
+        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
                 this::createCategoryToggleButton);
+        Bindings.bindContent(categoryView.getElements(), filteredShortcutCategories);
     }
 
     /**
@@ -126,8 +144,13 @@ public class LibrarySidebar extends LeftSidebar {
      * @param availableShortcuts The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
-        this.listWidgetChooser = new LeftListWidgetChooser<>(availableShortcuts);
+        this.listWidgetChooser = new ListWidgetChooser<>(availableShortcuts);
         this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
+        this.listWidgetChooser.choose(this.javaFxSettingsManager.getLibraryListType());
+        this.listWidgetChooser.setOnChoose(type -> {
+            this.javaFxSettingsManager.setLibraryListType(type);
+            this.javaFxSettingsManager.save();
+        });
     }
 
     /**
@@ -136,7 +159,7 @@ public class LibrarySidebar extends LeftSidebar {
      * @return The newly created "All" categories toggle button
      */
     private ToggleButton createAllCategoriesToggleButton() {
-        final LeftToggleButton allCategoryButton = new LeftToggleButton(tr("All"));
+        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
@@ -152,7 +175,7 @@ public class LibrarySidebar extends LeftSidebar {
      * @return The newly created toggle button
      */
     private ToggleButton createCategoryToggleButton(ShortcutCategoryDTO category) {
-        final LeftToggleButton categoryButton = new LeftToggleButton(category.getName());
+        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
@@ -164,12 +187,12 @@ public class LibrarySidebar extends LeftSidebar {
      * This method populates the advanced tools button group.
      */
     private void populateAdvancedTools() {
-        this.runScript = new LeftButton(tr("Run a script"));
+        SidebarButton createShortcut = new SidebarButton(tr("Create shortcut"));
+        createShortcut.getStyleClass().add("openTerminal");
+        createShortcut.setOnMouseClicked(event -> onCreateShortcut.run());
+
+        this.runScript = new SidebarButton(tr("Run a script"));
         this.runScript.getStyleClass().add("scriptButton");
-
-        this.runConsole = new LeftButton(tr("{0} console", applicationName));
-        this.runConsole.getStyleClass().add("consoleButton");
-
         this.runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(tr("Open a script"));
@@ -181,18 +204,20 @@ public class LibrarySidebar extends LeftSidebar {
                 onScriptRun.accept(scriptToRun);
             }
         });
+
+        this.runConsole = new SidebarButton(tr("{0} console", applicationName));
+        this.runConsole.getStyleClass().add("consoleButton");
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new LeftGroup(tr("Advanced tools"), runScript, runConsole);
+        this.advancedToolsGroup = new SidebarGroup(tr("Advanced tools"), createShortcut, runScript, runConsole);
     }
 
-    /**
-     * This method updates the consumer, that is called when a search term has been entered.
-     *
-     * @param onSearch The new consumer to be called
-     */
-    public void setOnSearch(Consumer<String> onSearch) {
-        this.onSearch = onSearch;
+    public void search(String searchTerm) {
+        this.filter.setSearchTerm(searchTerm);
+    }
+
+    public void clearSearch() {
+        this.filter.clearSearchTerm();
     }
 
     /**
@@ -211,6 +236,15 @@ public class LibrarySidebar extends LeftSidebar {
      */
     public void setOnCategorySelection(Consumer<ShortcutCategoryDTO> onCategorySelection) {
         this.onCategorySelection = onCategorySelection;
+    }
+
+    /**
+     * This method updates the runnable, that is called when the "Create shortcut" button in the advanced tools section has been clicked.
+     *
+     * @param onCreateShortcut The new runnable to be called
+     */
+    public void setOnCreateShortcut(Runnable onCreateShortcut) {
+        this.onCreateShortcut = onCreateShortcut;
     }
 
     /**

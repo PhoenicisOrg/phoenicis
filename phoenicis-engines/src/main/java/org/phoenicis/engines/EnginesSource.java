@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Safe
@@ -49,20 +50,34 @@ public class EnginesSource {
     public void fetchAvailableEngines(List<CategoryDTO> categoryDTOS, Consumer<List<EngineCategoryDTO>> callback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        List<EngineCategoryDTO> engines = new ArrayList<>();
+        StringBuilder includesBuilder = new StringBuilder();
+        StringBuilder constructorsBuilder = new StringBuilder();
+        constructorsBuilder.append("function fetchEngines() {\n");
+        constructorsBuilder.append("var engines = [];\n");
         for (CategoryDTO categoryDTO : categoryDTOS) {
             final String engineName = categoryDTO.getName();
-            interactiveScriptSession.eval("include([\"Engines\", \"" + engineName + "\", \"Engine\", \"Object\"]);",
-                    ignored -> interactiveScriptSession.eval("new " + engineName + "().getAvailableVersions()",
-                            output -> {
-                                EngineCategoryDTO wine = new EngineCategoryDTO.Builder().withName(engineName)
-                                        .withDescription(engineName).withSubCategories(unSerialize(output)).build();
-                                engines.add(wine);
-                                callback.accept(engines);
-                            }, this::throwError),
-                    this::throwError);
+            includesBuilder.append("include([\"Engines\", \"" + engineName + "\", \"Engine\", \"Object\"]);\n");
+            constructorsBuilder
+                    .append("engines[\"" + engineName + "\"] = new " + engineName + "().getAvailableVersions();\n");
         }
-
+        constructorsBuilder.append("return engines;\n");
+        constructorsBuilder.append("}\n");
+        constructorsBuilder.append("fetchEngines();");
+        interactiveScriptSession.eval(includesBuilder.toString(),
+                ignored -> interactiveScriptSession.eval(constructorsBuilder.toString(),
+                        output -> {
+                            List<EngineCategoryDTO> engines = new ArrayList<>();
+                            for (Map.Entry<String, Object> entry : ((Map<String, Object>) output).entrySet()) {
+                                final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
+                                        .withName(entry.getKey())
+                                        .withDescription(entry.getKey())
+                                        .withSubCategories(unSerialize(entry.getValue()))
+                                        .build();
+                                engines.add(engineCategoryDTO);
+                            }
+                            callback.accept(engines);
+                        }, this::throwError),
+                this::throwError);
     }
 
     private List<EngineSubCategoryDTO> unSerialize(Object json) {

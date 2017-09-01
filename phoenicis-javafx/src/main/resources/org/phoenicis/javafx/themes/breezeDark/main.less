@@ -18,6 +18,7 @@
 
 @background-color: #232629;
 @main-color: #31363b;
+@hover-color: #284150;
 @focus-color: #3daee9;
 @text-color: #eff0f1;
 @inactive-text-color: #bdc3c7;
@@ -48,6 +49,18 @@
     -fx-border-color: @focus-color;
 }
 
+.toggle-button {
+    -fx-text-fill: @text-color;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+    &:hover, &:selected, &:selected:focused {
+        -fx-background-color: @focus-color;
+        -fx-background-insets: 0;
+        -fx-background-radius: 0;
+    }
+}
+
 .combo-box {
     -fx-color: @inactive-text-color;
     -fx-background-color: transparent;
@@ -73,6 +86,19 @@
 
 .combo-box-popup .list-view .list-cell:filled:hover {
     -fx-background-color: @focus-color;
+}
+
+.context-menu {
+  -fx-background-color: @background-color;
+  -fx-text-fill: @text-color;
+}
+
+.menu-item:hover {
+  -fx-background-color: @focus-color;
+}
+
+.menu-item .label {
+  -fx-text-fill: @text-color;
 }
 
 .check-box .box {
@@ -127,7 +153,7 @@
     -fx-text-fill: @text-color;
 }
 
-.text-field {
+.text-field, .text-area {
     -fx-border-radius: 0;
     -fx-background-radius: 0;
     -fx-background-color: @main-color;
@@ -136,9 +162,13 @@
     -fx-focus-color: @focus-color;
 }
 
-.text-field:hover {
+.text-field:hover, .text-area:hover {
     -fx-border-color: @focus-color;
     -fx-text-fill: @text-color;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
 }
 
 .scroll-bar:horizontal {
@@ -232,35 +262,35 @@
 }
 
 /*******************************************************/
-/************************* left ************************/
+/*********************** sidebar ***********************/
 /*******************************************************/
-.leftPane {
+.sidebar {
     -fx-background-color: @main-color;
 
-    .leftPaneScrollbar {
+    .sidebarScrollbar {
         -fx-background-color: @main-color;
     }
 
-    .leftPaneScrollbar > .viewport {
+    .sidebarScrollbar > .viewport {
         -fx-background-color: @main-color;
     }
 
-    .leftPaneScrollbar .scroll-bar:vertical .track {
+    .sidebarScrollbar .scroll-bar:vertical .track {
         -fx-background-color: #3c3f41;
         -fx-background-radius: 1em;
     }
 
-    .leftPaneScrollbar .scroll-bar:vertical .thumb {
+    .sidebarScrollbar .scroll-bar:vertical .thumb {
         -fx-background-color: derive(black, 70%);
         -fx-background-radius: 0em;
     }
 
-    .leftBarTitle {
+    .sidebarTitle {
         -fx-font-size: 1.2em;
         -fx-fill: @inactive-text-color;
     }
 
-    .leftButton {
+    .sidebarButton {
         -fx-text-fill: @text-color;
 
         &:hover, &:selected {
@@ -298,6 +328,8 @@
 }
 
 .detailsPane {
+    -fx-background-color: @background-color;
+
     .closeIcon {
         -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/window-close.png');
     }
@@ -306,10 +338,6 @@
 /*******************************************************/
 /************************* apps ************************/
 /*******************************************************/
-.appPresentation {
-    -fx-background-color: @background-color;
-}
-
 .appPanelMiniaturesPane {
     -fx-background-color: @background-color;
     -fx-padding: 1em;
@@ -334,14 +362,26 @@
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
+.listWidget {
+    .list-cell {
+        &:hover {
+          -fx-background-color: @hover-color;
+        }
+
+        &:selected {
+          -fx-background-color: @focus-color;
+        }
+    }
+}
+
 .iconListWidget {
   -fx-background-color: @background-color;
 
-    .iconListCell {
+    .iconListElement {
         -fx-background-radius: 0em;
 
         &:hover {
-            -fx-background-color: #284150;
+            -fx-background-color: @hover-color;
         }
 
         &:selected {
@@ -449,8 +489,12 @@
 /*******************************************************/
 /*********************** console ***********************/
 /*******************************************************/
-.console, console .viewport {
+.console {
     -fx-background-color: @background-color;
+
+     .viewport {
+        -fx-background-color: transparent;
+     }
 }
 
 .consoleCommandType {

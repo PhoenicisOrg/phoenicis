@@ -9,6 +9,7 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
@@ -17,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * This class represents an engine sub category tab in the tabpane inside the "Engines" section tab.
@@ -28,16 +30,15 @@ import java.util.function.Consumer;
 public class EngineSubCategoryTab extends Tab {
     private EngineCategoryDTO engineCategory;
     private EngineSubCategoryDTO engineSubCategory;
-
     private String enginesPath;
+
+    private Predicate<EngineVersionDTO> filterPredicate;
 
     private CombinedListWidget<EngineVersionDTO> engineVersionsView;
 
     private ObservableList<EngineVersionDTO> engineVersions;
     private SortedList<EngineVersionDTO> sortedEngineVersions;
-    private FilteredList<EngineVersionDTO> filteredEngineVersions;
-
-    private EnginesFilter enginesFilter;
+    private PhoenicisFilteredList<EngineVersionDTO> filteredEngineVersions;
 
     private Consumer<EngineDTO> onSelectEngine;
 
@@ -49,18 +50,20 @@ public class EngineSubCategoryTab extends Tab {
      * @param enginesPath   The path to the engines
      */
     public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory,
-            String enginesPath) {
+            String enginesPath, EnginesFilter filter) {
         super(engineSubCategory.getDescription());
 
         this.engineCategory = engineCategory;
         this.engineSubCategory = engineSubCategory;
         this.enginesPath = enginesPath;
 
-        this.enginesFilter = new EnginesFilter(engineCategory, engineSubCategory, enginesPath);
+        this.filterPredicate = filter.createFilter(engineCategory, engineSubCategory);
 
         this.engineVersions = FXCollections.observableArrayList(engineSubCategory.getPackages());
         this.sortedEngineVersions = engineVersions.sorted(EngineSubCategoryDTO.comparator().reversed());
-        this.filteredEngineVersions = sortedEngineVersions.filtered(enginesFilter);
+        this.filteredEngineVersions = new PhoenicisFilteredList<>(sortedEngineVersions, filterPredicate);
+        // TODO: when the sub category tab isn't needed anymore the filter changed trigger isn't removed
+        filter.addOnFilterChanged(filteredEngineVersions::trigger);
 
         this.populate();
 
@@ -102,40 +105,19 @@ public class EngineSubCategoryTab extends Tab {
         this.onSelectEngine = onSelectEngine;
     }
 
-    /**
-     * This method updates the filter value if installed engine versions are to be shown in this tab.
-     * This method also triggers an automatic update of the view.
-     *
-     * @param installed The new filter value for installed engine versions
-     */
-    public void setFilterForInstalled(boolean installed) {
-        this.enginesFilter.setShowInstalled(installed);
-        this.filteredEngineVersions.setPredicate(enginesFilter::test);
-    }
-
-    /**
-     * This method updates the filter value if not installed engine versions are to be shown in this tab.
-     * This method also triggers an automatic update of the view.
-     *
-     * @param notInstalled The new filter value for not installed engine versions
-     */
-    public void setFilterForNotInstalled(boolean notInstalled) {
-        this.enginesFilter.setShowNotInstalled(notInstalled);
-        this.filteredEngineVersions.setPredicate(enginesFilter::test);
-    }
-
-    /**
-     * This method updates the search term, which is used to filter for engine versions in this tab.
-     * This method also triggers an automatic update of this view.
-     *
-     * @param searchTerm The new search term to be used for filtering
-     */
-    public void setFilterForSearchTerm(String searchTerm) {
-        this.enginesFilter.setSearchTerm(searchTerm);
-        this.filteredEngineVersions.setPredicate(enginesFilter::test);
-    }
-
     public CombinedListWidget<EngineVersionDTO> getEngineVersionsView() {
         return engineVersionsView;
+    }
+
+    public EngineCategoryDTO getEngineCategory() {
+        return this.engineCategory;
+    }
+
+    public EngineSubCategoryDTO getEngineSubCategory() {
+        return this.engineSubCategory;
+    }
+
+    public Predicate<EngineVersionDTO> getFilterPredicate() {
+        return this.filterPredicate;
     }
 }

@@ -19,18 +19,35 @@
 package org.phoenicis.cli.scriptui;
 
 import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.ui.SetupUi;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 
+import java.net.URI;
+import java.util.Optional;
+
+/**
+ * CLI implementation of the SetupUiFactory
+ */
 @Safe
 public class SetupUiFactoryCLI implements SetupUiFactory {
 
+    /**
+     * constructor
+     */
     public SetupUiFactoryCLI() {
         super();
     }
 
+    /**
+     * creates a setup UI to install an application
+     * @param title title of the setup UI
+     * @param miniature miniature of the setup UI (usually the miniature of the installed application)
+     * @param installationType apps/engines
+     * @return created setup UI
+     */
     @Override
-    public SetupUi createSetupWindow(String title) {
+    public SetupUi createSetupWindow(String title, Optional<URI> miniature, InstallationType installationType) {
         return new SetupUiCliImplementation(title, true, true);
     }
 }

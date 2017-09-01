@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.settings;
 
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DefaultPropertiesPersister;
 
@@ -47,6 +48,24 @@ public class JavaFxSettingsManager {
 
     @Value("${application.windowMaximized}")
     private boolean windowMaximized;
+
+    @Value("${application.appsListType}")
+    private ListWidgetType appsListType;
+
+    @Value("${application.containersListType}")
+    private ListWidgetType containersListType;
+
+    @Value("${application.enginesListType}")
+    private ListWidgetType enginesListType;
+
+    @Value("${application.installationsListType}")
+    private ListWidgetType installationsListType;
+
+    @Value("${application.libraryListType}")
+    private ListWidgetType libraryListType;
+
+    @Value("${application.fuzzySearchRatio}")
+    private double fuzzySearchRatio;
 
     private String settingsFileName = "javafx.properties";
 
@@ -84,8 +103,21 @@ public class JavaFxSettingsManager {
         javaFxSettings.set(JavaFxSetting.WINDOW_HEIGHT, this.windowHeight);
         javaFxSettings.set(JavaFxSetting.WINDOW_WIDTH, this.windowWidth);
         javaFxSettings.set(JavaFxSetting.WINDOW_MAXIMIZED, String.valueOf(this.windowMaximized));
+        javaFxSettings.set(JavaFxSetting.APPS_LIST_TYPE, String.valueOf(this.appsListType));
+        javaFxSettings.set(JavaFxSetting.CONTAINERS_LIST_TYPE, String.valueOf(this.containersListType));
+        javaFxSettings.set(JavaFxSetting.ENGINES_LIST_TYPE, String.valueOf(this.enginesListType));
+        javaFxSettings.set(JavaFxSetting.INSTALLATIONS_LIST_TYPE, String.valueOf(this.libraryListType));
+        javaFxSettings.set(JavaFxSetting.LIBRARY_LIST_TYPE, String.valueOf(this.libraryListType));
+        javaFxSettings.set(JavaFxSetting.FUZZY_SEARCH_RATIO, this.fuzzySearchRatio);
 
         return javaFxSettings;
+    }
+
+    /**
+     * restores the default settings
+     */
+    public void restoreDefault() {
+        new File(settingsFileName).deleteOnExit();
     }
 
     public String getTheme() {
@@ -134,5 +166,53 @@ public class JavaFxSettingsManager {
 
     public boolean isWindowMaximized() {
         return windowMaximized;
+    }
+
+    public void setAppsListType(ListWidgetType appsListType) {
+        this.appsListType = appsListType;
+    }
+
+    public ListWidgetType getAppsListType() {
+        return this.appsListType;
+    }
+
+    public void setContainersListType(ListWidgetType containersListType) {
+        this.containersListType = containersListType;
+    }
+
+    public ListWidgetType getContainersListType() {
+        return this.containersListType;
+    }
+
+    public void setEnginesListType(ListWidgetType enginesListType) {
+        this.enginesListType = enginesListType;
+    }
+
+    public ListWidgetType getEnginesListType() {
+        return this.enginesListType;
+    }
+
+    public void setInstallationsListType(ListWidgetType installationsListType) {
+        this.installationsListType = installationsListType;
+    }
+
+    public ListWidgetType getInstallationsListType() {
+        return this.installationsListType;
+    }
+
+    public void setLibraryListType(ListWidgetType libraryListType) {
+        this.libraryListType = libraryListType;
+    }
+
+    public ListWidgetType getLibraryListType() {
+        return this.libraryListType;
+    }
+
+    public void setFuzzySearchRatio(double fuzzySearchRatio) {
+        this.fuzzySearchRatio = fuzzySearchRatio;
+    }
+
+    public double getFuzzySearchRatio() {
+        return this.fuzzySearchRatio;
     }
 }

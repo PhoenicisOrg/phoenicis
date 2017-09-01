@@ -5,7 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import org.phoenicis.javafx.views.common.MappedList;
+import org.phoenicis.javafx.views.common.lists.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
 
@@ -43,7 +43,7 @@ public class DetailsListWidget<E> extends ListView<DetailsListElement<E>> implem
 
         this.setPrefWidth(0);
         this.setPrefHeight(0);
-        this.getStyleClass().add("detailsListWidget");
+        this.getStyleClass().addAll("listWidget", "detailsListWidget");
         this.setCellFactory(param -> new ListElementListCell<DetailsListElement<E>>());
 
         this.items = FXCollections.observableArrayList();

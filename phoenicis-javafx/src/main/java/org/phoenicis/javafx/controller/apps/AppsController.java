@@ -21,7 +21,7 @@ package org.phoenicis.javafx.controller.apps;
 import javafx.application.Platform;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.apps.ViewApps;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -34,10 +34,13 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
-    private final ViewApps view;
+    private final ApplicationsView view;
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
@@ -45,14 +48,18 @@ public class AppsController {
     private Runnable onAppLoaded = () -> {
     };
 
-    public AppsController(ViewApps view, RepositoryManager repositoryManager, ScriptInterpreter scriptInterpreter,
+    public AppsController(ApplicationsView view, RepositoryManager repositoryManager,
+            ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
         this.view = view;
         this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(this::populateView, e -> Platform.runLater(() -> view.showFailure()));
+        this.repositoryManager.addCallbacks(this::populateView,
+                e -> Platform.runLater(() -> view.showFailure(
+                        tr("Connecting to the repository failed.\nPlease check your connection and try again."),
+                        Optional.of(e))));
     }
 
     public void loadApps() {
@@ -68,7 +75,7 @@ public class AppsController {
                 scriptDTO -> scriptInterpreter.runScript(scriptDTO.getScript(), e -> Platform.runLater(() -> {
                     // no exception if installation is cancelled
                     if (!(e.getCause() instanceof InterruptedException)) {
-                        new ErrorMessage("The script ended unexpectedly", e);
+                        new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
                     }
                 })));
 
@@ -79,7 +86,7 @@ public class AppsController {
         this.onAppLoaded = onAppLoaded;
     }
 
-    public ViewApps getView() {
+    public ApplicationsView getView() {
         return view;
     }
 

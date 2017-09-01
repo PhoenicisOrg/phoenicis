@@ -28,7 +28,7 @@ class TestUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public SetupUiFactory setupUiFactory() {
-        return title -> new TestSetupUi();
+        return (title, miniature, installationType) -> new TestSetupUi();
     }
 
     @Override
@@ -41,10 +41,5 @@ class TestUiConfiguration implements UiConfiguration {
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
         return (questionText, yesCallback, noCallback) -> yesCallback.run();
-    }
-
-    @Override
-    public ProgressUiFactory progressUiFactory() {
-        return title -> new TestProgressUi();
     }
 }

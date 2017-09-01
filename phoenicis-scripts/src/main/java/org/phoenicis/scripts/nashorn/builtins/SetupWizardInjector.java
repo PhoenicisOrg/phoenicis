@@ -1,10 +1,13 @@
 package org.phoenicis.scripts.nashorn.builtins;
 
+import org.phoenicis.scripts.TriFunction;
 import org.phoenicis.scripts.nashorn.NashornEngine;
+import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
 
-import java.util.function.Function;
+import java.net.URI;
+import java.util.Optional;
 
 /**
  * Injects SetupWizard() function into a script engine
@@ -18,10 +21,16 @@ public class SetupWizardInjector implements EngineInjector {
 
     @Override
     public void injectInto(NashornEngine nashornEngine) {
-        nashornEngine.put("SetupWizard", (Function<String, UiSetupWizardImplementation>) (name) -> {
-            final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name);
-            nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
-            return uiSetupWizardImplementation;
-        }, this::throwException);
+        nashornEngine.eval("var InstallationType = Java.type(\"" + InstallationType.class.getCanonicalName() + "\")",
+                this::throwException);
+        nashornEngine.put("SetupWizard",
+                (TriFunction<InstallationType, String, Optional<URI>, UiSetupWizardImplementation>) (installationType,
+                        name, miniature) -> {
+                    final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
+                            miniature, installationType);
+                    nashornEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+                    return uiSetupWizardImplementation;
+                },
+                this::throwException);
     }
 }

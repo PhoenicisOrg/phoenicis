@@ -54,7 +54,6 @@ public class ScriptsConfiguration {
     public NashornEngineFactory scriptEngineFactory() {
         return new NashornEngineFactory(Arrays.asList(new ScriptUtilitiesInjector(),
                 new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
-                new ProgressUiInjector(wizardConfiguration.progressWizardFactory()),
                 new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
 

@@ -17,12 +17,28 @@
  */
 
 @background-color: #F0F0F0;
+@hover-color: #EFEFEF;
+@focus-color: #EAEAEA;
 
 /*******************************************************/
 /*********************** general ***********************/
 /*******************************************************/
 .text-field {
   -fx-background-radius: 1em;
+
+  &:error {
+    -fx-text-box-border: #f31111;
+  }
+}
+
+/*******************************************************/
+/****************** Phoenicis general ******************/
+/*******************************************************/
+.grid {
+  -fx-padding: 0.5em;
+  -fx-hgap: 0.5em;
+  -fx-vgap: 0.5em;
+  -fx-spacing: 0.5em;
 }
 
 /*******************************************************/
@@ -80,34 +96,34 @@
 }
 
 /*******************************************************/
-/************************* left ************************/
+/*********************** sidebar ***********************/
 /*******************************************************/
-.leftPane {
+.sidebar {
   -fx-background-color: @background-color;
   -fx-padding: 1em;
 
-  .leftPaneScrollbar {
+  .sidebarScrollbar {
     -fx-border-width: 0;
     -fx-background-color: @background-color;
     -fx-padding: 0.8em 0 0.8em 0;
   }
 
-  .leftPaneScrollbar > .viewport {
+  .sidebarScrollbar > .viewport {
     -fx-background-color: @background-color;
   }
 
-  .leftPaneScrollbar .scroll-bar:vertical {
+  .sidebarScrollbar .scroll-bar:vertical {
     -fx-max-width: 0.4em;
     -fx-pref-width: 0.4em;
   }
 
-  .leftPaneScrollbar .increment-button, .leftPaneScrollbar .decrement-button {
+  .sidebarScrollbar .increment-button, .sidebarScrollbar .decrement-button {
     -fx-pref-height: 0;
     -fx-font-size: 0;
     -fx-opacity: 0;
   }
 
-  .leftPaneScrollbar .scroll-bar:vertical .track {
+  .sidebarScrollbar .scroll-bar:vertical .track {
     -fx-background-color: @background-color;
     -fx-border-width: 0;
     -fx-background-radius: 0em;
@@ -115,7 +131,7 @@
     -fx-max-width: 0.4em;
   }
 
-  .leftPaneScrollbar .scroll-bar:vertical .thumb {
+  .sidebarScrollbar .scroll-bar:vertical .thumb {
     -fx-background-color: derive(black, 90%);
     -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 1em;
@@ -123,22 +139,23 @@
     -fx-max-width: 0.3em;
   }
 
-  .leftPaneInside {
+  .sidebarInside {
     -fx-spacing: 0.4em;
   }
 
-  .leftSpacer {
+  .sidebarSpacer {
     -fx-pref-height: 0.8em;
   }
 
-  .leftBarTitle {
+  .sidebarTitle {
     -fx-font-family: "Roboto Regular";
     -fx-font-size: 1.1em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
   }
 
-  .leftButton {
+  .sidebarButton {
+    -fx-min-height: 2.2em;
     -fx-background-color: transparent;
     -fx-cursor: hand;
     -fx-txt-font-family: "Roboto Light";
@@ -168,6 +185,7 @@
 /************************ right ************************/
 /*******************************************************/
 .rightPane {
+  -fx-min-width: 15em;
   -fx-pref-width: 55em;
   -fx-border-width: 0;
   -fx-border-style: none;
@@ -189,6 +207,10 @@
 }
 
 .detailsPane {
+  -fx-background-color: #FFFFFF;
+  -fx-padding: 0.5em;
+  -fx-spacing: 0.5em;
+
   .closeIcon {
     -fx-pref-width: 1.5em;
     -fx-pref-height: 1.5em;
@@ -218,15 +240,6 @@
 /*******************************************************/
 /************************* apps ************************/
 /*******************************************************/
-.appPresentation {
-  -fx-background-color: #FFFFFF;
-}
-
-.appPresentation > * {
-  -fx-padding: 0.5em;
-  -fx-spacing: 0.5em;
-}
-
 .appPanelMiniaturesPane {
   -fx-background-color: #FAFAFA;
   -fx-padding: 0.5em;
@@ -260,30 +273,47 @@
 }
 
 /*******************************************************/
+/*********************** engines ***********************/
+/*******************************************************/
+.engineSpacer {
+  -fx-pref-height: 3em;
+}
+
+.engineButtons {
+  -fx-spacing: 1em;
+}
+
+/*******************************************************/
 /********************** containers *********************/
 /*******************************************************/
 .containerConfigurationPane {
   -fx-padding: 1em;
 }
 
-.grid {
-  -fx-padding: 0.5em;
-  -fx-hgap: 0.5em;
-  -fx-vgap: 0.5em;
-  -fx-spacing: 0.5em;
-}
-
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
+.listWidget {
+    .list-cell {
+        &:hover {
+          -fx-background-color: @hover-color;
+        }
+
+        &:selected {
+          -fx-background-color: @focus-color;
+        }
+    }
+}
+
 .iconListWidget {
+  -fx-min-width: 15em;
   -fx-pref-width: 53.5em;
   -fx-background-color: white;
   -fx-border-width: 0;
   -fx-border-style: none;
   -fx-padding: 0.5em;
 
-  .iconListCell {
+  .iconListElement {
     -fx-pref-width: 12em;
     -fx-pref-height: 11em;
 
@@ -294,11 +324,11 @@
     -fx-background-radius: 0.8em;
 
     &:hover {
-      -fx-background-color: #EFEFEF;
+      -fx-background-color: @hover-color;
     }
 
     &:selected {
-      -fx-background-color: #EAEAEA;
+      -fx-background-color: @focus-color;
     }
 
     .iconListMiniatureImage {
@@ -349,13 +379,13 @@
   -fx-border-width: 0;
   -fx-border-style: none;
 
-  .iconListCell {
+  .compactListElement {
     @cellHeight: 6em;
 
     -fx-hgap: 0.5em;
     -fx-pref-height: @cellHeight;
 
-    .iconListMiniatureImage {
+    .compactListMiniatureImage {
       @miniatureWidth: 8em;
 
       -fx-background-size: stretch;
@@ -379,7 +409,7 @@
   -fx-border-width: 0;
   -fx-border-style: none;
 
-  .iconListCell {
+  .detailsListElement {
     -fx-hgap: 0.5em;
 
     .information {
@@ -519,7 +549,7 @@
 /*******************************************************/
 /********************** wine tools *********************/
 /*******************************************************/
-.wineToolButton {
+.toolButton {
   -fx-pref-width: 12em;
   -fx-max-height: Infinity;
   -fx-background-size: 4em;
@@ -652,6 +682,10 @@
 }
 
 /*********************** library ***********************/
+.detailsButtonSpacer {
+  -fx-pref-height: 40;
+}
+
 .runButton {
   -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/play.png');
 }
@@ -670,6 +704,11 @@
 
 .consoleButton {
   -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/library/console.png');
+}
+
+/********************* installations ********************/
+#appsButton {
+  -fx-background-image: url('/org/phoenicis/javafx/themes/default/icons/mainwindow/installations/apps.png');
 }
 
 /*********************** settings **********************/

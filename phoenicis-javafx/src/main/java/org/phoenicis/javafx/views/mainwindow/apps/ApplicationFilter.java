@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.property.*;
+import org.phoenicis.javafx.views.AbstractFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -9,7 +10,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 /**
  * A filter implementation for the "Apps" tab.
@@ -17,16 +17,12 @@ import java.util.function.Predicate;
  * @author marc
  * @since 29.03.17
  */
-public class ApplicationFilter {
+public class ApplicationFilter extends AbstractFilter {
     private final OperatingSystemFetcher operatingSystemFetcher;
 
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
-    private final ObjectProperty<Predicate<CategoryDTO>> categoryFilter;
-    private final ObjectProperty<Predicate<ApplicationDTO>> applicationFilter;
-    private final ObjectProperty<Predicate<ScriptDTO>> scriptFilter;
-
-    private StringProperty filterText;
+    private Optional<String> filterText;
     private Optional<CategoryDTO> filterCategory;
 
     private BooleanProperty containCommercialApplications;
@@ -44,36 +40,29 @@ public class ApplicationFilter {
      */
     public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
             BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+        super();
+
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
-        this.categoryFilter = new SimpleObjectProperty<>(this::filter);
-        this.applicationFilter = new SimpleObjectProperty<>(this::filter);
-        this.scriptFilter = new SimpleObjectProperty<>(this::filter);
-
-        this.filterText = new SimpleStringProperty("");
+        this.filterText = Optional.empty();
         this.filterCategory = Optional.empty();
 
         this.containCommercialApplications = new SimpleBooleanProperty();
-        this.containCommercialApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+        this.containCommercialApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
 
         this.containRequiresPatchApplications = new SimpleBooleanProperty();
-        this.containRequiresPatchApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+        this.containRequiresPatchApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
 
         this.containTestingApplications = new SimpleBooleanProperty();
-        this.containTestingApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
+        this.containTestingApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
 
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
-        this.containAllOSCompatibleApplications.addListener((observableValue, oldValue, newValue) -> this.fire());
-    }
-
-    /**
-     * Triggers a filter update
-     */
-    public void fire() {
-        categoryFilter.setValue(this::filter);
-        applicationFilter.setValue(this::filter);
-        scriptFilter.setValue(this::filter);
+        this.containAllOSCompatibleApplications
+                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
     }
 
     /**
@@ -82,9 +71,9 @@ public class ApplicationFilter {
      * @param filterText The new entered filter text
      */
     public void setFilterText(String filterText) {
-        this.filterText.setValue(filterText);
+        this.filterText = Optional.ofNullable(filterText);
 
-        this.fire();
+        this.triggerFilterChanged();
     }
 
     /**
@@ -95,7 +84,7 @@ public class ApplicationFilter {
     public void setFilterCategory(CategoryDTO category) {
         this.filterCategory = Optional.ofNullable(category);
 
-        this.fire();
+        this.triggerFilterChanged();
     }
 
     public BooleanProperty containCommercialApplicationsProperty() {
@@ -114,27 +103,15 @@ public class ApplicationFilter {
         return this.containAllOSCompatibleApplications;
     }
 
-    public ObjectProperty<Predicate<CategoryDTO>> categoryFilterProperty() {
-        return this.categoryFilter;
-    }
-
-    public ObjectProperty<Predicate<ApplicationDTO>> applicationFilterProperty() {
-        return this.applicationFilter;
-    }
-
-    public ObjectProperty<Predicate<ScriptDTO>> scriptFilterProperty() {
-        return this.scriptFilter;
-    }
-
     /**
      * Clears the <code>filterText</code> and the <code>filterCategory</code>.
      * Afterwards a filter update gets triggered
      */
     public void clearAll() {
-        this.filterText.setValue("");
+        this.filterText = Optional.empty();
         this.filterCategory = Optional.empty();
 
-        this.fire();
+        this.triggerFilterChanged();
     }
 
     /**
@@ -178,7 +155,7 @@ public class ApplicationFilter {
         return (ignoreFilterCategoryTest
                 || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
                 && application.getScripts().stream().anyMatch(script -> filter(script))
-                && filterTextMatcher.test(filterText.getValue(), application);
+                && filterText.map(filterText -> filterTextMatcher.test(filterText, application)).orElse(true);
     }
 
     /**

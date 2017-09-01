@@ -26,7 +26,7 @@ import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
+import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -42,47 +42,50 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
-    private final ViewEngines viewEngines;
+    private final EnginesView enginesView;
     private final RepositoryManager repositoryManager;
     private final EnginesSource enginesSource;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
 
-    public EnginesController(ViewEngines viewEngines, RepositoryManager repositoryManager, EnginesSource enginesSource,
+    public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager, EnginesSource enginesSource,
             ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
-        this.viewEngines = viewEngines;
+        this.enginesView = enginesView;
         this.repositoryManager = repositoryManager;
         this.enginesSource = enginesSource;
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
         this.repositoryManager.addCallbacks(this::populateView,
-                e -> Platform.runLater(() -> viewEngines.showFailure()));
+                e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
-        this.viewEngines.setOnInstallEngine(engineDTO -> {
+        this.enginesView.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
-                        installEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        installEngine(engineDTO,
+                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
                     });
         });
 
-        this.viewEngines.setOnDeleteEngine(engineDTO -> {
+        this.enginesView.setOnDeleteEngine(engineDTO -> {
             new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
-                        deleteEngine(engineDTO, e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        deleteEngine(engineDTO,
+                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
                     });
         });
     }
 
-    public ViewEngines getView() {
-        return viewEngines;
+    public EnginesView getView() {
+        return enginesView;
     }
 
     private void populateView(RepositoryDTO repositoryDTO) {
@@ -95,7 +98,7 @@ public class EnginesController {
             }
             setDefaultEngineIcons(categoryDTOS);
             enginesSource.fetchAvailableEngines(categoryDTOS,
-                    versions -> Platform.runLater(() -> this.viewEngines.populate(versions)));
+                    versions -> Platform.runLater(() -> this.enginesView.populate(versions)));
         });
     }
 

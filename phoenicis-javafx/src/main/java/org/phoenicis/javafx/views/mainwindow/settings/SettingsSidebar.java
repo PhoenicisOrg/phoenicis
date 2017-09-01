@@ -4,9 +4,9 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftSidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.LeftToggleGroup;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleButton;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleGroup;
 
 import java.util.function.Consumer;
 
@@ -19,9 +19,9 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @author marc
  * @since 23.04.17
  */
-public class SettingsSidebar extends LeftSidebar {
+public class SettingsSidebar extends Sidebar {
     // the toggle button group containing the buttons used to navigate to the different setting panels
-    private LeftToggleGroup<SettingsSidebarItem> settingsItems;
+    private SidebarToggleGroup<SettingsSidebarItem> settingsItems;
 
     // consumer called when a settings toggle button has been clicked
     private Consumer<Node> onSelectSettingsItem;
@@ -41,7 +41,7 @@ public class SettingsSidebar extends LeftSidebar {
      * This method populates the toggle button group containing a toggle button for each settings panel
      */
     private void populate() {
-        this.settingsItems = LeftToggleGroup.create(tr("Settings"), this::createSettingsToggleButton);
+        this.settingsItems = SidebarToggleGroup.create(tr("Settings"), this::createSettingsToggleButton);
     }
 
     /**
@@ -51,7 +51,7 @@ public class SettingsSidebar extends LeftSidebar {
      * @return The created toggle button
      */
     private ToggleButton createSettingsToggleButton(SettingsSidebarItem item) {
-        ToggleButton toggleButton = new LeftToggleButton(item.getName());
+        ToggleButton toggleButton = new SidebarToggleButton(item.getName());
 
         toggleButton.getStyleClass().add(item.getIconClass());
         toggleButton.setOnAction(event -> onSelectSettingsItem.accept(item.getPanel()));

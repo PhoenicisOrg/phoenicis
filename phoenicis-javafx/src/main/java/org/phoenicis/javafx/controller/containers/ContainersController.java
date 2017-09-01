@@ -27,36 +27,37 @@ import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
-import org.phoenicis.javafx.views.mainwindow.containers.ViewContainers;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ContainersController {
-    private final ViewContainers viewContainers;
+    private final ContainersView containersView;
     private final ContainersManager containersManager;
     private final ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
     private final WinePrefixContainerController winePrefixContainerController;
     private final EnginesSource enginesSource;
 
-    public ContainersController(ViewContainers viewContainers, ContainersManager containersManager,
+    public ContainersController(ContainersView containersView, ContainersManager containersManager,
             ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
             WinePrefixContainerController winePrefixContainerController, EnginesSource enginesSource) {
-        this.viewContainers = viewContainers;
+        this.containersView = containersView;
         this.containersManager = containersManager;
         this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
         this.winePrefixContainerController = winePrefixContainerController;
         this.enginesSource = enginesSource;
 
-        viewContainers.setOnSelectionChanged(event -> {
-            if (viewContainers.isSelected()) {
+        containersView.setOnSelectionChanged(event -> {
+            if (containersView.isSelected()) {
                 loadContainers();
             }
         });
 
-        viewContainers.setOnSelectContainer((ContainerDTO containerDTO) -> {
+        containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
             // disabled fetching of available engines
             // changing engine does not work currently
             // querying Wine webservice causes performance issues on systems with slow internet connection
@@ -64,7 +65,6 @@ public class ContainersController {
             // enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
             final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
-                    viewContainers.getThemeManager(),
                     new ArrayList<>(),
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                     .flatMap(subCategory -> subCategory.getPackages().stream())
@@ -76,24 +76,27 @@ public class ContainersController {
                         tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
                                 .ask(() -> {
                                     winePrefixContainerController.deletePrefix(winePrefixDTO,
-                                            e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                                            e -> Platform.runLater(
+                                                    () -> new ErrorMessage("Error", e, this.containersView).show()));
                                     loadContainers();
                                 });
             });
 
-            panel.setOnClose(viewContainers::closeDetailsView);
+            panel.setOnClose(containersView::closeDetailsView);
 
-            Platform.runLater(() -> viewContainers.showDetailsView(panel));
+            Platform.runLater(() -> containersView.showDetailsView(panel));
             //});
         });
     }
 
-    public ViewContainers getView() {
-        return viewContainers;
+    public ContainersView getView() {
+        return containersView;
     }
 
     public void loadContainers() {
-        this.viewContainers.showWait();
-        containersManager.fetchContainers(viewContainers::populate, e -> this.viewContainers.showFailure());
+        this.containersView.showWait();
+        containersManager.fetchContainers(containersView::populate,
+                e -> this.containersView.showFailure(tr("Loading containers failed."), Optional
+                        .of(e)));
     }
 }

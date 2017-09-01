@@ -23,9 +23,10 @@ import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
+import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
-import org.phoenicis.javafx.controller.settings.JavaFxSettingsController;
+import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
@@ -69,8 +70,14 @@ public class ControllerConfiguration {
 
     @Bean
     public MainController mainController() {
-        return new MainController(applicationName, libraryController(), appsController(), enginesController(),
-                containersController(), settingsController(), themeConfiguration.themeManager(),
+        return new MainController(applicationName,
+                libraryController(),
+                appsController(),
+                enginesController(),
+                containersController(),
+                installationsController(),
+                settingsController(),
+                themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
@@ -79,13 +86,13 @@ public class ControllerConfiguration {
         return new ContainersController(viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.winePrefixContainerPanelFactory(),
-                containersConfiguration.winePrefixContainerController(), enginesConfiguration.wineVersionsFetcher());
+                containersConfiguration.winePrefixContainerController(), enginesConfiguration.enginesSource());
     }
 
     @Bean
     public EnginesController enginesController() {
         return new EnginesController(viewsConfiguration.viewEngines(), repositoryConfiguration.repositoryManager(),
-                enginesConfiguration.wineVersionsFetcher(),
+                enginesConfiguration.enginesSource(),
                 scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
     }
 
@@ -109,8 +116,13 @@ public class ControllerConfiguration {
     }
 
     @Bean
-    public JavaFxSettingsController settingsController() {
-        return new JavaFxSettingsController(viewsConfiguration.viewSettings(),
+    public InstallationsController installationsController() {
+        return new InstallationsController(viewsConfiguration.viewInstallations());
+    }
+
+    @Bean
+    public SettingsController settingsController() {
+        return new SettingsController(viewsConfiguration.viewSettings(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
