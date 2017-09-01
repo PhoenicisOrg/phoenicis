@@ -30,7 +30,7 @@ public class EnginesConfiguration {
     private ScriptsConfiguration scriptsConfiguration;
 
     @Bean
-    public EnginesSource wineVersionsFetcher() {
+    public EnginesSource enginesSource() {
         return new EnginesSource(scriptsConfiguration.scriptInterpreter(), new ObjectMapper());
     }
 }
