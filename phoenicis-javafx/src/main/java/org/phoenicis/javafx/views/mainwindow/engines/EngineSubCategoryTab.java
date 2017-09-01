@@ -32,6 +32,8 @@ public class EngineSubCategoryTab extends Tab {
     private EngineSubCategoryDTO engineSubCategory;
     private String enginesPath;
 
+    private Predicate<EngineVersionDTO> filterPredicate;
+
     private CombinedListWidget<EngineVersionDTO> engineVersionsView;
 
     private ObservableList<EngineVersionDTO> engineVersions;
@@ -55,10 +57,11 @@ public class EngineSubCategoryTab extends Tab {
         this.engineSubCategory = engineSubCategory;
         this.enginesPath = enginesPath;
 
+        this.filterPredicate = filter.createFilter(engineCategory, engineSubCategory);
+
         this.engineVersions = FXCollections.observableArrayList(engineSubCategory.getPackages());
         this.sortedEngineVersions = engineVersions.sorted(EngineSubCategoryDTO.comparator().reversed());
-        this.filteredEngineVersions = new PhoenicisFilteredList<>(sortedEngineVersions,
-                filter.createFilter(engineCategory, engineSubCategory));
+        this.filteredEngineVersions = new PhoenicisFilteredList<>(sortedEngineVersions, filterPredicate);
         // TODO: when the sub category tab isn't needed anymore the filter changed trigger isn't removed
         filter.addOnFilterChanged(filteredEngineVersions::trigger);
 
@@ -104,5 +107,17 @@ public class EngineSubCategoryTab extends Tab {
 
     public CombinedListWidget<EngineVersionDTO> getEngineVersionsView() {
         return engineVersionsView;
+    }
+
+    public EngineCategoryDTO getEngineCategory() {
+        return this.engineCategory;
+    }
+
+    public EngineSubCategoryDTO getEngineSubCategory() {
+        return this.engineSubCategory;
+    }
+
+    public Predicate<EngineVersionDTO> getFilterPredicate() {
+        return this.filterPredicate;
     }
 }
