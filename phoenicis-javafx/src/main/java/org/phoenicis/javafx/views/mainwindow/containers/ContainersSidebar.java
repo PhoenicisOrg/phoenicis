@@ -1,12 +1,15 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.*;
 
@@ -31,20 +34,22 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 22.04.17
  */
 public class ContainersSidebar extends Sidebar {
+    private final ContainersFilter filter;
+
     // the search bar used for filtering
     private SearchBox searchBar;
 
     // container for the center content of this sidebar
     private SidebarScrollPane centerContent;
 
+    private ObservableList<ContainerCategoryDTO> containerCategories;
+    private PhoenicisFilteredList<ContainerCategoryDTO> filteredContainerCategories;
+
     // a button group containing a button for each installed container
     private SidebarToggleGroup<ContainerCategoryDTO> categoryView;
 
     // widget to switch between the different list widgets in the center view
     private ListWidgetChooser<ContainerDTO> listWidgetChooser;
-
-    // consumer called when a search term is entered
-    private Consumer<String> onApplyFilter;
 
     // consumer called when a container is selected
     private Runnable onAllCategorySelection;
@@ -59,9 +64,11 @@ public class ContainersSidebar extends Sidebar {
      * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers,
+    public ContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers, ContainersFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
+
+        this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
         this.populateSearchBar();
@@ -88,23 +95,27 @@ public class ContainersSidebar extends Sidebar {
      * @param categories The list of container categories
      */
     public void bindCategories(ObservableList<ContainerCategoryDTO> categories) {
-        Bindings.bindContent(categoryView.getElements(), categories);
+        Bindings.bindContent(this.containerCategories, categories);
     }
 
     /**
      * This method populates the searchbar
      */
     private void populateSearchBar() {
-        this.searchBar = new SearchBox(text -> onApplyFilter.accept(text), () -> {
-        });
+        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
     }
 
     /**
      * This method populates the button group showing all installed containers
      */
     private void populateCategories() {
+        this.containerCategories = FXCollections.observableArrayList();
+        this.filteredContainerCategories = new PhoenicisFilteredList<>(this.containerCategories, filter::filter);
+        this.filter.addOnFilterChanged(filteredContainerCategories::trigger);
+
         this.categoryView = SidebarToggleGroup.create(tr("Containers"), this::createAllCategoriesToggleButton,
                 this::createContainerToggleButton);
+        Bindings.bindContent(categoryView.getElements(), filteredContainerCategories);
     }
 
     /**
@@ -153,12 +164,19 @@ public class ContainersSidebar extends Sidebar {
     }
 
     /**
-     * This method updates the consumer, that is called when a search term has been entered
+     * Filters the containers for a given search term
      *
-     * @param onApplyFilter The new consumer to be called
+     * @param searchTerm The keyword to search for
      */
-    public void setOnApplyFilter(Consumer<String> onApplyFilter) {
-        this.onApplyFilter = onApplyFilter;
+    public void search(String searchTerm) {
+        this.filter.setSearchTerm(searchTerm);
+    }
+
+    /**
+     * Clears the search term of the filter function
+     */
+    public void clearSearch() {
+        this.filter.clearSearchTerm();
     }
 
     /**

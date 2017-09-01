@@ -25,8 +25,9 @@ import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.lists.ExpandedList;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.lists.ExpandedList;
+import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -37,8 +38,18 @@ import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * The containers view is responsible for showing all installed containers.
+ * This view is partitioned in three sections:
+ *
+ * <ul>
+ *     <li>A sidebar, that allows the user to filter between the container categories</li>
+ *     <li>A list widget, which contains the installed containers</li>
+ *     <li>An optional details view showing details about the selected container in the list widget</li>
+ * </ul>
+ */
 public class ContainersView extends MainWindowView<ContainersSidebar> {
-    private Consumer<ContainerDTO> onSelectContainer;
+    private final ContainersFilter filter;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
 
@@ -47,36 +58,50 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
 
     private ObservableList<ContainerDTO> containers;
     private SortedList<ContainerDTO> sortedContainers;
+    private PhoenicisFilteredList<ContainerDTO> filteredContainers;
 
+    private Consumer<ContainerDTO> onSelectContainer;
+
+    /**
+     * Constructor
+     *
+     * @param themeManager          The theme manager
+     * @param javaFxSettingsManager The javafx settings manager
+     */
     public ContainersView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Containers"), themeManager);
 
+        this.filter = new ContainersFilter();
+
         this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
                 (element, event) -> showContainerDetails(element));
-        this.sidebar = new ContainersSidebar(availableContainers, javaFxSettingsManager);
+        this.sidebar = new ContainersSidebar(availableContainers, filter, javaFxSettingsManager);
 
+        /*
+         * initialize the container categories by sorting them
+         */
         this.categories = FXCollections.observableArrayList();
         this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));
 
-        this.containers = new ExpandedList<ContainerDTO, ContainerCategoryDTO>(this.sortedCategories,
-                ContainerCategoryDTO::getContainers);
+        /*
+         * initialize the container lists by:
+         * 1. sorting the containers by their name
+         * 2. filtering the containers
+         */
+        this.containers = new ExpandedList<>(this.sortedCategories, ContainerCategoryDTO::getContainers);
         this.sortedContainers = this.containers.sorted(Comparator.comparing(ContainerDTO::getName));
-
-        this.sidebar.setOnApplyFilter(this::applyFilter);
+        this.filteredContainers = new PhoenicisFilteredList<>(this.sortedContainers, filter::filter);
+        this.filter.addOnFilterChanged(filteredContainers::trigger);
 
         this.sidebar.bindCategories(this.sortedCategories);
 
-        this.availableContainers.bind(sortedContainers);
+        this.availableContainers.bind(this.filteredContainers);
 
         // set the category selection consumers
         this.sidebar.setOnCategorySelection(category -> closeDetailsView());
         this.sidebar.setOnAllCategorySelection(this::closeDetailsView);
 
         this.setSidebar(this.sidebar);
-    }
-
-    public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
-        this.onSelectContainer = onSelectContainer;
     }
 
     /**
@@ -95,12 +120,22 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         });
     }
 
+    /**
+     * Displays the details view for a given container.
+     *
+     * @param container The container, whose details should be shown.
+     */
     private void showContainerDetails(ContainerDTO container) {
         // TODO: separate details panel and controller
         this.onSelectContainer.accept(container);
     }
 
-    private void applyFilter(String searchText) {
-        // TODO: Do some filtering here
+    /**
+     * Sets the callback, which is called when a container has been selected
+     *
+     * @param onSelectContainer The callback to be called when a container has been selected
+     */
+    public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
+        this.onSelectContainer = onSelectContainer;
     }
 }
