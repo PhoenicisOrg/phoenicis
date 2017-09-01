@@ -23,7 +23,6 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
@@ -152,7 +151,4 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         this.setOnDeleteEngine.accept(engineDTO);
     }
 
-    public void showProgress(VBox progressUi) {
-        currentEnginePanel.showProgress(progressUi);
-    }
 }

@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.engines;
 
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -38,7 +37,6 @@ final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
     private final EngineDTO engineDTO;
-    private Node progress;
 
     private Consumer<EngineDTO> onEngineInstall;
     private Consumer<EngineDTO> onEngineDelete;
@@ -104,20 +102,11 @@ final class EnginePanel extends DetailsView {
         this.setCenter(new VBox(informationContentPane, spacer, buttonBox, progressSpacer));
     }
 
-    public void showProgress(VBox progressUi) {
-        progress = progressUi;
-        this.setCenter(progress);
-    }
-
     public void setOnEngineInstall(Consumer<EngineDTO> onEngineInstall) {
         this.onEngineInstall = onEngineInstall;
     }
 
     public void setOnEngineDelete(Consumer<EngineDTO> onEngineDelete) {
         this.onEngineDelete = onEngineDelete;
-    }
-
-    public EngineDTO getEngineDTO() {
-        return engineDTO;
     }
 }
