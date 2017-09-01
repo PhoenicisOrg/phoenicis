@@ -39,6 +39,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
 
         this.setClosable(false);
 
+        // TODO: fetch from repository or Javascript Wine object
         List<EngineToolDTO> tools = new ArrayList<>();
         tools.add(new EngineToolDTO.Builder()
                 .withId("ConfigureWine")
