@@ -56,7 +56,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.getStyleClass().add("grid");
 
         Button openTerminal = new Button(tr("Open a terminal"));
-        openTerminal.getStyleClass().addAll("wineToolButton", "openTerminal");
+        openTerminal.getStyleClass().addAll("toolButton", "openTerminal");
         openTerminal.setOnMouseClicked(e -> {
             this.lockAll();
             winePrefixContainerController.openTerminalInPrefix(container);
@@ -68,7 +68,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.getChildren().add(openTerminal);
 
         Button createShortcut = new Button(tr("Create shortcut"));
-        createShortcut.getStyleClass().addAll("wineToolButton", "openTerminal");
+        createShortcut.getStyleClass().addAll("toolButton", "openTerminal");
         createShortcut.setOnMouseClicked(event -> {
             this.lockAll();
             FileChooser fileChooser = new FileChooser();
@@ -86,7 +86,7 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.getChildren().add(createShortcut);
 
         Button runExecutable = new Button(tr("Run executable"));
-        runExecutable.getStyleClass().addAll("wineToolButton", "runExecutable");
+        runExecutable.getStyleClass().addAll("toolButton", "runExecutable");
         runExecutable.setOnMouseClicked(event -> {
             this.lockAll();
             FileChooser fileChooser = new FileChooser();
