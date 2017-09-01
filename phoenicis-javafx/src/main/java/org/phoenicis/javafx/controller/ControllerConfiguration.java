@@ -86,13 +86,13 @@ public class ControllerConfiguration {
         return new ContainersController(viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.winePrefixContainerPanelFactory(),
-                containersConfiguration.winePrefixContainerController(), enginesConfiguration.wineVersionsFetcher());
+                containersConfiguration.winePrefixContainerController(), enginesConfiguration.enginesSource());
     }
 
     @Bean
     public EnginesController enginesController() {
         return new EnginesController(viewsConfiguration.viewEngines(), repositoryConfiguration.repositoryManager(),
-                enginesConfiguration.wineVersionsFetcher(),
+                enginesConfiguration.enginesSource(),
                 scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
     }
 
