@@ -123,12 +123,15 @@ public class EnginesFilter extends AbstractFilter {
     public Predicate<EngineVersionDTO> createFilter(EngineCategoryDTO engineCategory,
             EngineSubCategoryDTO engineSubCategory) {
         return engineVersion -> {
-            return searchTerm
+            final boolean containsSearchTerm = searchTerm
                     .map(searchTerm -> engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase()))
-                    .orElse(true)
-                    && ((this.showInstalled.getValue() && isInstalled(engineCategory, engineSubCategory, engineVersion))
-                            || (this.showNotInstalled.getValue()
-                                    && !isInstalled(engineCategory, engineSubCategory, engineVersion)));
+                    .orElse(true);
+            final boolean fulfillsShowInstalled = this.showInstalled.getValue()
+                    && isInstalled(engineCategory, engineSubCategory, engineVersion);
+            final boolean fulfillsShowNotInstalled = this.showNotInstalled.getValue()
+                    && !isInstalled(engineCategory, engineSubCategory, engineVersion);
+
+            return containsSearchTerm && (fulfillsShowInstalled || fulfillsShowNotInstalled);
         };
     }
 
