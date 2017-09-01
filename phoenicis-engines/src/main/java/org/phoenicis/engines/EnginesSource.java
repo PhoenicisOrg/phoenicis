@@ -49,20 +49,22 @@ public class EnginesSource {
     public void fetchAvailableEngines(List<CategoryDTO> categoryDTOS, Consumer<List<EngineCategoryDTO>> callback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        List<EngineCategoryDTO> engines = new ArrayList<>();
+        List<EngineCategoryDTO> engines = Collections.synchronizedList(new ArrayList<>());
         for (CategoryDTO categoryDTO : categoryDTOS) {
             final String engineName = categoryDTO.getName();
             interactiveScriptSession.eval("include([\"Engines\", \"" + engineName + "\", \"Engine\", \"Object\"]);",
                     ignored -> interactiveScriptSession.eval("new " + engineName + "().getAvailableVersions()",
                             output -> {
-                                EngineCategoryDTO wine = new EngineCategoryDTO.Builder().withName(engineName)
-                                        .withDescription(engineName).withSubCategories(unSerialize(output)).build();
-                                engines.add(wine);
-                                callback.accept(engines);
+                                final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
+                                        .withName(engineName)
+                                        .withDescription(engineName)
+                                        .withSubCategories(unSerialize(output))
+                                        .build();
+                                engines.add(engineCategoryDTO);
                             }, this::throwError),
                     this::throwError);
         }
-
+        callback.accept(engines);
     }
 
     private List<EngineSubCategoryDTO> unSerialize(Object json) {
