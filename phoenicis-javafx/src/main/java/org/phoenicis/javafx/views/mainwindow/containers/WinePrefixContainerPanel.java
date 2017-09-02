@@ -20,6 +20,7 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 
 import java.util.List;
@@ -34,13 +35,15 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
 
     public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity,
             List<EngineVersionDTO> engineVersions,
+            EngineToolsManager engineToolsManager,
             WinePrefixContainerController winePrefixContainerController) {
         super(containerEntity, engineVersions);
 
         this.informationTab = new WinePrefixContainerInformationTab(containerEntity, engineVersions);
         this.displayTab = new WinePrefixContainerDisplayTab(containerEntity, winePrefixContainerController);
         this.inputTab = new WinePrefixContainerInputTab(containerEntity);
-        this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController);
+        this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController,
+                engineToolsManager);
         this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController);
 
         this.tabPane.getTabs().setAll(informationTab, displayTab, inputTab, wineToolsTab, toolsTab);

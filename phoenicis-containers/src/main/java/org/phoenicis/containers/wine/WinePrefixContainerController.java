@@ -125,25 +125,6 @@ public class WinePrefixContainerController {
                 }, errorCallback), errorCallback);
     }
 
-    /**
-     * runs a tool in a given prefix
-     * @param winePrefix
-     * @param toolName
-     * @param doneCallback
-     * @param errorCallback
-     */
-    public void runTool(WinePrefixContainerDTO winePrefix, String toolName, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Tools\", \"" + toolName + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
-                    final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
-                    toolObject.callMember("run", winePrefix.getName());
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
     public void deletePrefix(WinePrefixContainerDTO winePrefix, Consumer<Exception> errorCallback) {
         try {
             fileUtilities.remove(new File(winePrefix.getPath()));

@@ -38,7 +38,7 @@ public class WinePrefixContainerDTO extends ContainerDTO {
     private final MouseWarpOverride mouseWarpOverride;
 
     private WinePrefixContainerDTO(Builder builder) {
-        super(builder.name, builder.path, ContainerType.WINEPREFIX, builder.installedShortcuts);
+        super(builder.name, builder.path, ContainerType.WINEPREFIX, "Wine", builder.installedShortcuts);
         this.architecture = builder.architecture;
         this.distribution = builder.distribution;
         this.version = builder.version;
