@@ -64,34 +64,6 @@ public class WinePrefixContainerController {
         this.fileUtilities = fileUtilities;
     }
 
-    public void repairPrefix(WinePrefixContainerDTO winePrefix, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        // FIXME
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
-                    wine.callMember("run", "wineboot");
-                    wine.callMember("wait");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
-    public void killProcesses(WinePrefixContainerDTO winePrefix, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
-                    wine.callMember("kill");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
     public void changeSetting(WinePrefixContainerDTO winePrefix, RegistryParameter setting, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
