@@ -51,6 +51,9 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+/**
+ * ContainersManager which is agnostic of a specific engine
+ */
 @Safe
 public class GenericContainersManager implements ContainersManager {
     private final Logger LOGGER = LoggerFactory.getLogger(GenericContainersManager.class);

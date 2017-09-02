@@ -26,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * manages the containers
+ */
 public interface ContainersManager {
     Logger LOGGER = LoggerFactory.getLogger(ContainersManager.class);
 
