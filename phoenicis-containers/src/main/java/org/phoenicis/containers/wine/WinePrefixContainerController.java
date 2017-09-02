@@ -114,29 +114,6 @@ public class WinePrefixContainerController {
                 }, errorCallback), errorCallback);
     }
 
-    /**
-     * creates a shortcut for a given executable in a Wine prefix
-     * @param winePrefix the Wine prefix
-     * @param name name which is shown in the library
-     * @param executable filename of the executable (WineShortcut will search for this file in the given prefix)
-     * @param doneCallback callback executed after the shortcut has been created
-     * @param errorCallback callback executed if there is an error
-     */
-    public void createShortcut(WinePrefixContainerDTO winePrefix, String name, String executable, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Shortcuts\", \"Wine\"]);",
-                ignored -> interactiveScriptSession.eval("new WineShortcut()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("name", name);
-                    wine.callMember("search", executable);
-                    wine.callMember("prefix", winePrefix.getName());
-                    wine.callMember("create");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
     public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
         final Map<String, String> environment = new HashMap<>();
         environment.put("WINEPREFIX", winePrefixContainerDTO.getPath());

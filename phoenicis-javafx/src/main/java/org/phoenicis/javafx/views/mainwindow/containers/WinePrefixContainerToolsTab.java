@@ -67,24 +67,6 @@ public class WinePrefixContainerToolsTab extends Tab {
 
         toolsContentPane.getChildren().add(openTerminal);
 
-        Button createShortcut = new Button(tr("Create shortcut"));
-        createShortcut.getStyleClass().addAll("toolButton", "openTerminal");
-        createShortcut.setOnMouseClicked(event -> {
-            this.lockAll();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Choose executable"));
-            File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
-            if (file != null) {
-                winePrefixContainerController.createShortcut(container, file.getName(), file.getName(), this::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-            }
-            this.unlockAll();
-        });
-
-        this.lockableElements.add(createShortcut);
-
-        toolsContentPane.getChildren().add(createShortcut);
-
         Button runExecutable = new Button(tr("Run executable"));
         runExecutable.getStyleClass().addAll("toolButton", "runExecutable");
         runExecutable.setOnMouseClicked(event -> {
