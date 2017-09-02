@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.dto.EngineToolDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -27,15 +28,18 @@ public class WinePrefixContainerWineToolsTab extends Tab {
 
     private final WinePrefixContainerDTO container;
     private final WinePrefixContainerController winePrefixContainerController;
+    private EngineToolsManager engineToolsManager;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerWineToolsTab(WinePrefixContainerDTO container,
-            WinePrefixContainerController winePrefixContainerController) {
+            WinePrefixContainerController winePrefixContainerController,
+            EngineToolsManager engineToolsManager) {
         super(tr("Wine tools"));
 
         this.container = container;
         this.winePrefixContainerController = winePrefixContainerController;
+        this.engineToolsManager = engineToolsManager;
 
         this.setClosable(false);
 
@@ -91,7 +95,8 @@ public class WinePrefixContainerWineToolsTab extends Tab {
             toolButton.getStyleClass().addAll("toolButton", tool.getMiniature());
             toolButton.setOnMouseClicked(event -> {
                 this.lockAll();
-                winePrefixContainerController.runTool(container, tool.getId(), this::unlockAll,
+                this.engineToolsManager.runTool(container.getEngine(), container.getName(), tool.getId(),
+                        this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             });
             this.lockableElements.add(toolButton);

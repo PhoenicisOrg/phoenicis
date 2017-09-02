@@ -86,7 +86,9 @@ public class ControllerConfiguration {
         return new ContainersController(viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.winePrefixContainerPanelFactory(),
-                containersConfiguration.winePrefixContainerController(), enginesConfiguration.enginesSource());
+                containersConfiguration.winePrefixContainerController(),
+                enginesConfiguration.enginesSource(),
+                enginesConfiguration.engineToolsManager());
     }
 
     @Bean

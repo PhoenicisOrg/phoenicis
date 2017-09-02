@@ -27,12 +27,15 @@ public class ContainerDTO {
     private final String name;
     private final String path;
     private final ContainerType type;
+    private final String engine;
     private final List<ShortcutDTO> installedShortcuts;
 
-    public ContainerDTO(String name, String path, ContainerType type, List<ShortcutDTO> installedShortcuts) {
+    public ContainerDTO(String name, String path, ContainerType type, String engine,
+            List<ShortcutDTO> installedShortcuts) {
         this.name = name;
         this.path = path;
         this.type = type;
+        this.engine = engine;
         this.installedShortcuts = installedShortcuts;
     }
 
@@ -46,6 +49,10 @@ public class ContainerDTO {
 
     public String getPath() {
         return path;
+    }
+
+    public String getEngine() {
+        return engine;
     }
 
     public List<ShortcutDTO> getInstalledShortcuts() {
