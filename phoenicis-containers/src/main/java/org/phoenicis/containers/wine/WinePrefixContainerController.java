@@ -35,9 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class WinePrefixContainerController {
@@ -148,18 +146,5 @@ public class WinePrefixContainerController {
                                 }
                             }, errorCallback), errorCallback);
                 });
-    }
-
-    public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
-        final Map<String, String> environment = new HashMap<>();
-        environment.put("WINEPREFIX", winePrefixContainerDTO.getPath());
-        environment.put("PATH", fetchWineVersionPath(winePrefixContainerDTO) + "/bin/" + ":$PATH");
-        terminalOpener.openTerminal(winePrefixContainerDTO.getPath(), environment);
-    }
-
-    private String fetchWineVersionPath(WinePrefixContainerDTO winePrefixContainerDTO) {
-        return wineEnginesPath + "/" + winePrefixContainerDTO.getDistribution() + "-"
-                + operatingSystemFetcher.fetchCurrentOperationSystem().getWinePackage() + "-"
-                + winePrefixContainerDTO.getArchitecture() + "/" + winePrefixContainerDTO.getVersion();
     }
 }

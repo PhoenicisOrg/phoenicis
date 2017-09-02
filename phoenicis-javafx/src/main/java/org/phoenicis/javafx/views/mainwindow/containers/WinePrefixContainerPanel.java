@@ -44,7 +44,8 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         this.inputTab = new WinePrefixContainerInputTab(containerEntity);
         this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController,
                 engineToolsManager);
-        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController);
+        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController,
+                engineToolsManager);
 
         this.tabPane.getTabs().setAll(informationTab, displayTab, inputTab, wineToolsTab, toolsTab);
     }
