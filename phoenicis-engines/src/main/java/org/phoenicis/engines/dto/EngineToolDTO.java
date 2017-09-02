@@ -27,6 +27,9 @@ import org.phoenicis.configuration.localisation.Translatable;
 import org.phoenicis.configuration.localisation.TranslatableBuilder;
 import org.phoenicis.configuration.localisation.Translate;
 
+/**
+ * DTO to describe an engine tool which can be run from the "Engine tools" tab in "Containers"
+ */
 @JsonDeserialize(builder = EngineToolDTO.Builder.class)
 @Translatable
 public class EngineToolDTO {
