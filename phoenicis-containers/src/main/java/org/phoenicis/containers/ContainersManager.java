@@ -19,10 +19,27 @@
 package org.phoenicis.containers;
 
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
+import org.phoenicis.containers.dto.ContainerDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 public interface ContainersManager {
+    Logger LOGGER = LoggerFactory.getLogger(ContainersManager.class);
+
+    /**
+     * fetches the available containers
+     * @param callback
+     * @param errorCallback
+     */
     void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback);
+
+    /**
+     * deletes a container
+     * @param container
+     * @param errorCallback
+     */
+    void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback);
 }

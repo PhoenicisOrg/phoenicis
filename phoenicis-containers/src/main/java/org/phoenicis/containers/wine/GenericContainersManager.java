@@ -20,6 +20,7 @@ package org.phoenicis.containers.wine;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
@@ -28,9 +29,14 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.configurations.WinePrefixContainerDisplayConfiguration;
 import org.phoenicis.containers.wine.configurations.WinePrefixContainerInputConfiguration;
 import org.phoenicis.library.LibraryManager;
+import org.phoenicis.library.ShortcutManager;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;
+import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,16 +61,26 @@ public class GenericContainersManager implements ContainersManager {
     private final WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration;
     private final WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration;
     private final LibraryManager libraryManager;
+    private final ShortcutManager shortcutManager;
+    private final FileUtilities fileUtilities;
+    private final ScriptInterpreter scriptInterpreter;
     private ObjectMapper objectMapper;
 
     public GenericContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
             WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
-            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration, LibraryManager libraryManager,
+            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration,
+            LibraryManager libraryManager,
+            ShortcutManager shortcutManager,
+            FileUtilities fileUtilities,
+            ScriptInterpreter scriptInterpreter,
             ObjectMapper objectMapper) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
         this.winePrefixContainerDisplayConfiguration = winePrefixContainerDisplayConfiguration;
         this.winePrefixContainerInputConfiguration = winePrefixContainerInputConfiguration;
         this.libraryManager = libraryManager;
+        this.shortcutManager = shortcutManager;
+        this.fileUtilities = fileUtilities;
+        this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }
 
@@ -90,6 +106,33 @@ public class GenericContainersManager implements ContainersManager {
 
             callback.accept(containerCategories);
         }
+    }
+
+    @Override
+    public void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback) {
+        try {
+            this.fileUtilities.remove(new File(container.getPath()));
+        } catch (IOException e) {
+            LOGGER.error("Cannot delete container (" + container.getPath() + ")! Exception: " + e.toString());
+            errorCallback.accept(e);
+        }
+
+        List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
+        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
+                .forEach(shortcutDTO -> {
+                    final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
+                            .createInteractiveSession();
+                    interactiveScriptSession.eval(
+                            "include([\"Engines\", \"" + container.getEngine() + "\", \"Shortcuts\", \"Reader\"]);",
+                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                                shortcutReader.callMember("of", shortcutDTO);
+                                final String containerName = (String) shortcutReader.callMember("container");
+                                if (containerName.equals(container.getName())) {
+                                    this.shortcutManager.deleteShortcut(shortcutDTO);
+                                }
+                            }, errorCallback), errorCallback);
+                });
     }
 
     /**
