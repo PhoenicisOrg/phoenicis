@@ -68,6 +68,17 @@ public class GenericContainersManager implements ContainersManager {
     private final ScriptInterpreter scriptInterpreter;
     private ObjectMapper objectMapper;
 
+    /**
+     * constructor
+     * @param compatibleConfigFileFormatFactory
+     * @param winePrefixContainerDisplayConfiguration
+     * @param winePrefixContainerInputConfiguration
+     * @param libraryManager
+     * @param shortcutManager
+     * @param fileUtilities
+     * @param scriptInterpreter
+     * @param objectMapper
+     */
     public GenericContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
             WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
             WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration,
@@ -86,6 +97,11 @@ public class GenericContainersManager implements ContainersManager {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param callback
+     * @param errorCallback
+     */
     @Override
     public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
         final File containersFile = new File(containersPath);
@@ -110,6 +126,11 @@ public class GenericContainersManager implements ContainersManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param container
+     * @param errorCallback
+     */
     @Override
     public void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback) {
         try {
