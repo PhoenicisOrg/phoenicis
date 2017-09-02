@@ -19,6 +19,7 @@
 package org.phoenicis.containers.wine;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
 import org.phoenicis.library.LibraryManager;
@@ -111,14 +112,15 @@ public class WinePrefixContainerController {
                 }, errorCallback), errorCallback);
     }
 
-    public void runInPrefix(WinePrefixContainerDTO winePrefix, String command, Runnable doneCallback,
+    public void runInContainer(ContainerDTO container, String command, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
+        interactiveScriptSession.eval(
+                "include([\"Engines\", \"" + container.getEngine() + "\", \"Engine\", \"Object\"]);",
+                ignored -> interactiveScriptSession.eval("new " + container.getEngine() + "()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
+                    wine.callMember("prefix", container.getName());
                     wine.callMember("run", command);
                     wine.callMember("wait");
                     doneCallback.run();
