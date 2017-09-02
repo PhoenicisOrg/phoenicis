@@ -75,6 +75,16 @@ public class WinePrefixContainerWineToolsTab extends Tab {
                 .withName(tr("Wine uninstaller"))
                 .withMiniature("uninstallWine")
                 .build());
+        tools.add(new EngineToolDTO.Builder()
+                .withId("RepairWinePrefix")
+                .withName(tr("Repair virtual drive"))
+                .withMiniature("repairVirtualDrive")
+                .build());
+        tools.add(new EngineToolDTO.Builder()
+                .withId("KillWineProcesses")
+                .withName(tr("Kill processes"))
+                .withMiniature("killProcesses")
+                .build());
 
         this.populate(tools);
     }
@@ -102,25 +112,6 @@ public class WinePrefixContainerWineToolsTab extends Tab {
             this.lockableElements.add(toolButton);
             toolsContentPane.getChildren().add(toolButton);
         }
-
-        Button repairVirtualDrive = new Button(tr("Repair virtual drive"));
-        repairVirtualDrive.getStyleClass().addAll("toolButton", "repairVirtualDrive");
-        repairVirtualDrive.setOnMouseClicked(event -> {
-            this.lockAll();
-            winePrefixContainerController.repairPrefix(container, this::unlockAll,
-                    e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-        });
-        this.lockableElements.add(repairVirtualDrive);
-        toolsContentPane.getChildren().add(repairVirtualDrive);
-
-        Button killProcesses = new Button(tr("Kill processes"));
-        killProcesses.getStyleClass().addAll("toolButton", "killProcesses");
-        killProcesses.setOnMouseClicked(event -> {
-            this.lockAll();
-            winePrefixContainerController.killProcesses(container, this::unlockAll,
-                    e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-        });
-        toolsContentPane.getChildren().add(killProcesses);
 
         toolsPane.getChildren().add(toolsContentPane);
 
