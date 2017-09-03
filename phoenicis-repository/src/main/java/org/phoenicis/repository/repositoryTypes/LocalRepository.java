@@ -291,6 +291,14 @@ public class LocalRepository implements Repository {
                     }
                 }
 
+                final File iconFile = new File(scriptDirectory, "icon.png");
+
+                if (iconFile.exists()) {
+                    scriptDTOBuilder.withIcon(iconFile.toURI());
+                } else {
+                    LOGGER.debug("Icon not found");
+                }
+
                 results.add(scriptDTOBuilder.build());
             }
         }

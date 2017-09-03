@@ -266,8 +266,25 @@ public class ClasspathRepository implements Repository {
                 return null;
             }
 
+            URI icon = null;
+            final String iconResource = packagePath + "/" + typeFileName + "/" + categoryFileName + "/"
+                    + applicationFileName + "/" + scriptFileName + "/icon.png";
+
+            URL iconResourceURL = getClass().getResource(iconResource);
+            if (iconResourceURL != null) {
+                try {
+                    icon = iconResourceURL.toURI();
+                } catch (URISyntaxException e) {
+                    LOGGER.debug("Could not get URI of script icon.");
+                }
+            } else {
+                LOGGER.debug("Could not find script icon.");
+            }
+
             return new ScriptDTO.Builder(objectMapper.readValue(scriptJsonInputStream, ScriptDTO.class))
-                    .withScript(new String(IOUtils.toByteArray(scriptFile))).build();
+                    .withScript(new String(IOUtils.toByteArray(scriptFile)))
+                    .withIcon(icon)
+                    .build();
         } catch (IOException e) {
             throw new RepositoryException("Could not build script", e);
         }
