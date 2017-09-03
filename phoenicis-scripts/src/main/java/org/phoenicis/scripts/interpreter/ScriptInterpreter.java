@@ -22,14 +22,14 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public interface ScriptInterpreter {
-    void runScript(String scriptContent, Optional<Runnable> doneCallback, Consumer<Exception> errorCallback);
+    void runScript(String scriptContent, Runnable doneCallback, Consumer<Exception> errorCallback);
 
     default void runScript(String scriptContent, Consumer<Exception> errorCallback) {
-        runScript(scriptContent, Optional.empty(), errorCallback);
+        runScript(scriptContent, () -> {
+        }, errorCallback);
     }
 
     default void runScript(File scriptFile, Consumer<Exception> errorCallback) {
