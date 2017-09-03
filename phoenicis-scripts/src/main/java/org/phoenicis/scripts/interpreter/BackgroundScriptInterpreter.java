@@ -32,11 +32,6 @@ public class BackgroundScriptInterpreter implements ScriptInterpreter {
     }
 
     @Override
-    public void runScript(String scriptContent, Consumer<Exception> errorCallback) {
-        runScript(scriptContent, Optional.empty(), errorCallback);
-    }
-
-    @Override
     public void runScript(String scriptContent, Optional<Runnable> doneCallback,
             Consumer<Exception> errorCallback) {
         executorService.execute(() -> delegated.runScript(scriptContent, doneCallback, errorCallback));
