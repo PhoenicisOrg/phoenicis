@@ -89,8 +89,7 @@ public class ControllerConfiguration {
                 containersConfiguration.winePrefixContainerController(),
                 repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.enginesSource(),
-                enginesConfiguration.engineToolsManager(),
-                scriptsConfiguration.scriptInterpreter());
+                enginesConfiguration.engineToolsManager());
     }
 
     @Bean

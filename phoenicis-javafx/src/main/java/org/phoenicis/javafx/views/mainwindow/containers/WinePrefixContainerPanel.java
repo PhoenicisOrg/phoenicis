@@ -20,9 +20,9 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -36,7 +36,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
 
     public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity,
             List<EngineVersionDTO> engineVersions,
-            ScriptInterpreter scriptInterpreter,
+            EngineToolsManager engineToolsManager,
             ApplicationDTO engineTools,
             WinePrefixContainerController winePrefixContainerController) {
         super(containerEntity, engineVersions);
@@ -45,8 +45,9 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         this.displayTab = new WinePrefixContainerDisplayTab(containerEntity, winePrefixContainerController);
         this.inputTab = new WinePrefixContainerInputTab(containerEntity);
         this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController,
-                scriptInterpreter, engineTools);
-        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController);
+                engineToolsManager, engineTools);
+        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController,
+                engineToolsManager);
 
         this.tabPane.getTabs().setAll(informationTab, displayTab, inputTab, wineToolsTab, toolsTab);
     }

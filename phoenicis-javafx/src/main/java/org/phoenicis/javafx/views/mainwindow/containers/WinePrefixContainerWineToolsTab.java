@@ -9,11 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +29,18 @@ public class WinePrefixContainerWineToolsTab extends Tab {
 
     private final WinePrefixContainerDTO container;
     private final WinePrefixContainerController winePrefixContainerController;
-    private ScriptInterpreter scriptInterpreter;
+    private EngineToolsManager engineToolsManager;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerWineToolsTab(WinePrefixContainerDTO container,
-            WinePrefixContainerController winePrefixContainerController, ScriptInterpreter scriptInterpreter,
+            WinePrefixContainerController winePrefixContainerController, EngineToolsManager engineToolsManager,
             ApplicationDTO engineTools) {
         super(tr("Wine tools"));
 
         this.container = container;
         this.winePrefixContainerController = winePrefixContainerController;
-        this.scriptInterpreter = scriptInterpreter;
+        this.engineToolsManager = engineToolsManager;
 
         this.setClosable(false);
 
@@ -64,9 +64,9 @@ public class WinePrefixContainerWineToolsTab extends Tab {
             //toolButton.setStyle("-fx-background-image: url('" + tool.getIcon() + "');");
             toolButton.setOnMouseClicked(event -> {
                 this.lockAll();
-                this.scriptInterpreter.runScript(tool.getScript(),
+                this.engineToolsManager.runTool(container.getEngine(), container.getName(), tool.getScriptName(),
+                        this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-                //TODO: if finished this::unlockAll
             });
             this.lockableElements.add(toolButton);
             toolsContentPane.getChildren().add(toolButton);
