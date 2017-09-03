@@ -18,10 +18,12 @@
 
 package org.phoenicis.engines;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
+import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,27 @@ public class EngineToolsManager {
      */
     public EngineToolsManager(ScriptInterpreter scriptInterpreter) {
         this.scriptInterpreter = scriptInterpreter;
+    }
+
+    /**
+     * runs a tool in a given prefix
+     * @param engineName
+     * @param container
+     * @param toolName
+     * @param doneCallback
+     * @param errorCallback
+     */
+    public void runTool(String engineName, String container, String toolName, Runnable doneCallback,
+            Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval(
+                "include([\"Engines\", \"" + engineName + "\", \"Tools\", \"" + toolName + "\"]);",
+                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
+                    final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
+                    toolObject.callMember("run", container);
+                    doneCallback.run();
+                }, errorCallback), errorCallback);
     }
 
     /**
