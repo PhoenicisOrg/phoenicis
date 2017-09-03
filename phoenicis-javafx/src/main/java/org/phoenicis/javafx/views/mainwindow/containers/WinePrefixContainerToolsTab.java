@@ -10,7 +10,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
-import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
@@ -30,18 +29,15 @@ public class WinePrefixContainerToolsTab extends Tab {
 
     private final WinePrefixContainerDTO container;
     private final WinePrefixContainerController winePrefixContainerController;
-    private EngineToolsManager engineToolsManager;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerToolsTab(WinePrefixContainerDTO container,
-            WinePrefixContainerController winePrefixContainerController,
-            EngineToolsManager engineToolsManager) {
+            WinePrefixContainerController winePrefixContainerController) {
         super(tr("Tools"));
 
         this.container = container;
         this.winePrefixContainerController = winePrefixContainerController;
-        this.engineToolsManager = engineToolsManager;
 
         this.setClosable(false);
 

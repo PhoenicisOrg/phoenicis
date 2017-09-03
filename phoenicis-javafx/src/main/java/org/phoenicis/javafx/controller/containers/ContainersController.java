@@ -33,6 +33,7 @@ import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class ContainersController {
     private final RepositoryManager repositoryManager;
     private final EnginesSource enginesSource;
     private final EngineToolsManager engineToolsManager;
+    private final ScriptInterpreter scriptInterpreter;
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
@@ -57,7 +59,8 @@ public class ContainersController {
             WinePrefixContainerController winePrefixContainerController,
             RepositoryManager repositoryManager,
             EnginesSource enginesSource,
-            EngineToolsManager engineToolsManager) {
+            EngineToolsManager engineToolsManager,
+            ScriptInterpreter scriptInterpreter) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
@@ -65,6 +68,7 @@ public class ContainersController {
         this.enginesSource = enginesSource;
         this.repositoryManager = repositoryManager;
         this.engineToolsManager = engineToolsManager;
+        this.scriptInterpreter = scriptInterpreter;
 
         this.engineTools = new HashMap<>();
 
@@ -89,7 +93,7 @@ public class ContainersController {
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                     .flatMap(subCategory -> subCategory.getPackages().stream())
                     .collect(Collectors.toList()),*/
-                    engineToolsManager,
+                    this.scriptInterpreter,
                     engineTools.get("Wine"),
                     winePrefixContainerController);
 
