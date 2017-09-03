@@ -59,20 +59,6 @@ public class WinePrefixContainerToolsTab extends Tab {
         toolsContentPane.setPrefColumns(3);
         toolsContentPane.getStyleClass().add("grid");
 
-        Button openTerminal = new Button(tr("Open a terminal"));
-        openTerminal.getStyleClass().addAll("toolButton", "openTerminal");
-        openTerminal.setOnMouseClicked(ignored -> {
-            this.lockAll();
-            this.engineToolsManager.runTool(container.getEngine(), container.getName(), "WineTerminalOpener",
-                    this::unlockAll,
-                    e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-            this.unlockAll();
-        });
-
-        this.lockableElements.add(openTerminal);
-
-        toolsContentPane.getChildren().add(openTerminal);
-
         Button runExecutable = new Button(tr("Run executable"));
         runExecutable.getStyleClass().addAll("toolButton", "runExecutable");
         runExecutable.setOnMouseClicked(event -> {
