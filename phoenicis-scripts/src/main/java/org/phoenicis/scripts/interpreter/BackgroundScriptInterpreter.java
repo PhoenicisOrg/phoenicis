@@ -18,6 +18,7 @@
 
 package org.phoenicis.scripts.interpreter;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -32,7 +33,13 @@ public class BackgroundScriptInterpreter implements ScriptInterpreter {
 
     @Override
     public void runScript(String scriptContent, Consumer<Exception> errorCallback) {
-        executorService.execute(() -> delegated.runScript(scriptContent, errorCallback));
+        runScript(scriptContent, Optional.empty(), errorCallback);
+    }
+
+    @Override
+    public void runScript(String scriptContent, Optional<Runnable> doneCallback,
+            Consumer<Exception> errorCallback) {
+        executorService.execute(() -> delegated.runScript(scriptContent, doneCallback, errorCallback));
     }
 
     @Override

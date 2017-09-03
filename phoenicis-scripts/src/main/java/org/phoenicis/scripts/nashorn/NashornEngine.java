@@ -22,6 +22,7 @@ import javax.script.ScriptEngine;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class NashornEngine {
@@ -41,8 +42,13 @@ public class NashornEngine {
     }
 
     public void eval(String script, Consumer<Exception> errorCallback) {
+        eval(script, Optional.empty(), errorCallback);
+    }
+
+    public void eval(String script, Optional<Runnable> doneCallback, Consumer<Exception> errorCallback) {
         try {
             this.scriptEngine.eval(script);
+            doneCallback.ifPresent(Runnable::run);
         } catch (Exception e) {
             handleError(errorCallback, e);
         }
