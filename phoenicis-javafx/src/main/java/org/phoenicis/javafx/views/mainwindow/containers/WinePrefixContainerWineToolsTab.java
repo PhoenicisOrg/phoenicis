@@ -10,9 +10,10 @@ import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.engines.EngineToolsManager;
-import org.phoenicis.engines.dto.EngineToolDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,8 @@ public class WinePrefixContainerWineToolsTab extends Tab {
     private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerWineToolsTab(WinePrefixContainerDTO container,
-            WinePrefixContainerController winePrefixContainerController,
-            EngineToolsManager engineToolsManager) {
+            WinePrefixContainerController winePrefixContainerController, EngineToolsManager engineToolsManager,
+            ApplicationDTO engineTools) {
         super(tr("Wine tools"));
 
         this.container = container;
@@ -43,53 +44,10 @@ public class WinePrefixContainerWineToolsTab extends Tab {
 
         this.setClosable(false);
 
-        // TODO: fetch from repository or Javascript Wine object
-        List<EngineToolDTO> tools = new ArrayList<>();
-        tools.add(new EngineToolDTO.Builder()
-                .withId("ConfigureWine")
-                .withName(tr("Configure Wine"))
-                .withMiniature("configureWine")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("WineRegistryEditor")
-                .withName(tr("Registry Editor"))
-                .withMiniature("registryEditor")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("RebootWine")
-                .withName(tr("Windows reboot"))
-                .withMiniature("rebootWindows")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("WineConsole")
-                .withName(tr("Command prompt"))
-                .withMiniature("commandPrompt")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("WineTaskManager")
-                .withName(tr("Task manager"))
-                .withMiniature("taskManager")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("WineUninstaller")
-                .withName(tr("Wine uninstaller"))
-                .withMiniature("uninstallWine")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("RepairWinePrefix")
-                .withName(tr("Repair virtual drive"))
-                .withMiniature("repairVirtualDrive")
-                .build());
-        tools.add(new EngineToolDTO.Builder()
-                .withId("KillWineProcesses")
-                .withName(tr("Kill processes"))
-                .withMiniature("killProcesses")
-                .build());
-
-        this.populate(tools);
+        this.populate(engineTools);
     }
 
-    private void populate(List<EngineToolDTO> tools) {
+    private void populate(ApplicationDTO engineTools) {
         final VBox toolsPane = new VBox();
         final Text title = new TextWithStyle(tr("Wine tools"), TITLE_CSS_CLASS);
 
@@ -100,12 +58,13 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         toolsContentPane.setPrefColumns(3);
         toolsContentPane.getStyleClass().add("grid");
 
-        for (EngineToolDTO tool : tools) {
-            Button toolButton = new Button(tool.getName());
-            toolButton.getStyleClass().addAll("toolButton", tool.getMiniature());
+        for (ScriptDTO tool : engineTools.getScripts()) {
+            Button toolButton = new Button(tool.getScriptName());
+            toolButton.getStyleClass().addAll("toolButton");
+            //toolButton.setStyle("-fx-background-image: url('" + tool.getIcon() + "');");
             toolButton.setOnMouseClicked(event -> {
                 this.lockAll();
-                this.engineToolsManager.runTool(container.getEngine(), container.getName(), tool.getId(),
+                this.engineToolsManager.runTool(container.getEngine(), container.getName(), tool.getScriptName(),
                         this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             });

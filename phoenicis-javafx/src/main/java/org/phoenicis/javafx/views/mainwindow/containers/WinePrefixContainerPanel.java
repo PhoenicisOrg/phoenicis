@@ -22,6 +22,7 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -36,6 +37,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity,
             List<EngineVersionDTO> engineVersions,
             EngineToolsManager engineToolsManager,
+            ApplicationDTO engineTools,
             WinePrefixContainerController winePrefixContainerController) {
         super(containerEntity, engineVersions);
 
@@ -43,7 +45,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         this.displayTab = new WinePrefixContainerDisplayTab(containerEntity, winePrefixContainerController);
         this.inputTab = new WinePrefixContainerInputTab(containerEntity);
         this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController,
-                engineToolsManager);
+                engineToolsManager, engineTools);
         this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController,
                 engineToolsManager);
 

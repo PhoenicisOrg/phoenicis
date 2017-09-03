@@ -19,11 +19,19 @@
 package org.phoenicis.engines;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TypeDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -60,5 +68,29 @@ public class EngineToolsManager {
                     toolObject.callMember("run", container);
                     doneCallback.run();
                 }, errorCallback), errorCallback);
+    }
+
+    /**
+     * fetches the available engine tools
+     * @param repositoryDTO
+     * @param callback
+     */
+    public void fetchAvailableEngineTools(RepositoryDTO repositoryDTO, Consumer<Map<String, ApplicationDTO>> callback) {
+        Map<String, ApplicationDTO> tools = new HashMap<>();
+        // get engine CategoryDTOs
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
+            if (typeDTO.getName().equals("Engines")) {
+                categoryDTOS = typeDTO.getCategories();
+            }
+        }
+        for (CategoryDTO engine : categoryDTOS) {
+            for (ApplicationDTO applicationDTO : engine.getApplications()) {
+                if (applicationDTO.getId().equals("Tools")) {
+                    tools.put(engine.getId(), applicationDTO);
+                }
+            }
+        }
+        callback.accept(tools);
     }
 }
