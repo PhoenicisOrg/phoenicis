@@ -24,33 +24,20 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.tools.system.OperatingSystemFetcher;
-import org.phoenicis.tools.system.terminal.TerminalOpener;
 import org.phoenicis.win32.registry.RegistryWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class WinePrefixContainerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainerController.class);
     private final ScriptInterpreter scriptInterpreter;
-    private final TerminalOpener terminalOpener;
-    private final String wineEnginesPath;
-    private final OperatingSystemFetcher operatingSystemFetcher;
     private final RegistryWriter registryWriter;
 
     public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
-            TerminalOpener terminalOpener,
-            String wineEnginesPath,
-            OperatingSystemFetcher operatingSystemFetcher,
             RegistryWriter registryWriter) {
         this.scriptInterpreter = scriptInterpreter;
-        this.terminalOpener = terminalOpener;
-        this.wineEnginesPath = wineEnginesPath;
-        this.operatingSystemFetcher = operatingSystemFetcher;
         this.registryWriter = registryWriter;
     }
 

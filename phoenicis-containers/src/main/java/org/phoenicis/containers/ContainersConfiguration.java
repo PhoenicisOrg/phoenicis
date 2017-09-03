@@ -75,7 +75,6 @@ public class ContainersConfiguration {
     @Bean
     public WinePrefixContainerController winePrefixContainerController() {
         return new WinePrefixContainerController(scriptsConfiguration.scriptInterpreter(),
-                toolsConfiguration.terminalOpener(), enginesPath + "/wine", toolsConfiguration.operatingSystemFetcher(),
                 win32Configuration.registryWriter());
     }
 
