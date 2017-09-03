@@ -22,22 +22,15 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
-import org.phoenicis.library.LibraryManager;
-import org.phoenicis.library.ShortcutManager;
-import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.tools.files.FileUtilities;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.phoenicis.tools.system.terminal.TerminalOpener;
 import org.phoenicis.win32.registry.RegistryWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -48,21 +41,17 @@ public class WinePrefixContainerController {
     private final String wineEnginesPath;
     private final OperatingSystemFetcher operatingSystemFetcher;
     private final RegistryWriter registryWriter;
-    private final LibraryManager libraryManager;
-    private final ShortcutManager shortcutManager;
-    private final FileUtilities fileUtilities;
 
-    public WinePrefixContainerController(ScriptInterpreter scriptInterpreter, TerminalOpener terminalOpener,
-            String wineEnginesPath, OperatingSystemFetcher operatingSystemFetcher, RegistryWriter registryWriter,
-            LibraryManager libraryManager, ShortcutManager shortcutManager, FileUtilities fileUtilities) {
+    public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
+            TerminalOpener terminalOpener,
+            String wineEnginesPath,
+            OperatingSystemFetcher operatingSystemFetcher,
+            RegistryWriter registryWriter) {
         this.scriptInterpreter = scriptInterpreter;
         this.terminalOpener = terminalOpener;
         this.wineEnginesPath = wineEnginesPath;
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.registryWriter = registryWriter;
-        this.libraryManager = libraryManager;
-        this.shortcutManager = shortcutManager;
-        this.fileUtilities = fileUtilities;
     }
 
     public void changeSetting(WinePrefixContainerDTO winePrefix, RegistryParameter setting, Runnable doneCallback,
@@ -97,31 +86,6 @@ public class WinePrefixContainerController {
                     wine.callMember("wait");
                     doneCallback.run();
                 }, errorCallback), errorCallback);
-    }
-
-    public void deletePrefix(WinePrefixContainerDTO winePrefix, Consumer<Exception> errorCallback) {
-        try {
-            fileUtilities.remove(new File(winePrefix.getPath()));
-        } catch (IOException e) {
-            LOGGER.error("Cannot delete Wine prefix (" + winePrefix.getPath() + ")! Exception: " + e.toString());
-            errorCallback.accept(e);
-        }
-
-        List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
-        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
-                .forEach(shortcutDTO -> {
-                    final InteractiveScriptSession interactiveScriptSession = scriptInterpreter
-                            .createInteractiveSession();
-                    interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Shortcuts\", \"Reader\"]);",
-                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                                shortcutReader.callMember("of", shortcutDTO);
-                                final String container = (String) shortcutReader.callMember("container");
-                                if (container.equals(winePrefix.getName())) {
-                                    shortcutManager.deleteShortcut(shortcutDTO);
-                                }
-                            }, errorCallback), errorCallback);
-                });
     }
 
     public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
