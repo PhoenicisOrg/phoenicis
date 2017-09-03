@@ -32,6 +32,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO {
+    private final String id;
     private final String scriptName;
     private final URI scriptSource;
     private final List<OperatingSystem> compatibleOperatingSystems;
@@ -41,6 +42,7 @@ public class ScriptDTO {
     private final String script;
 
     private ScriptDTO(Builder builder) {
+        this.id = builder.id;
         this.scriptName = builder.scriptName;
         this.scriptSource = builder.scriptSource;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
@@ -48,6 +50,10 @@ public class ScriptDTO {
         this.free = builder.free;
         this.requiresPatch = builder.requiresPatch;
         this.script = builder.script;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getScriptName() {
@@ -95,6 +101,7 @@ public class ScriptDTO {
         ScriptDTO scriptDTO = (ScriptDTO) o;
 
         return new EqualsBuilder()
+                .append(id, scriptDTO.id)
                 .append(scriptName, scriptDTO.scriptName)
                 .append(scriptSource, scriptDTO.scriptSource)
                 .append(compatibleOperatingSystems, scriptDTO.compatibleOperatingSystems)
@@ -108,6 +115,7 @@ public class ScriptDTO {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(id)
                 .append(scriptName)
                 .append(scriptSource)
                 .append(compatibleOperatingSystems)
@@ -119,6 +127,7 @@ public class ScriptDTO {
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
+        private String id;
         private String scriptName;
         private URI scriptSource;
         private List<OperatingSystem> compatibleOperatingSystems;
@@ -132,10 +141,16 @@ public class ScriptDTO {
         }
 
         public Builder(ScriptDTO scriptDTO) {
-            this.withScriptName(scriptDTO.getScriptName()).withScript(scriptDTO.getScript())
+            this.withId(scriptDTO.getId())
+                    .withScriptName(scriptDTO.getScriptName()).withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
                     .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems()).withFree(scriptDTO.isFree())
                     .withRequiresPatch(scriptDTO.requiresPatch);
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withScriptName(String name) {
