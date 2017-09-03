@@ -81,7 +81,7 @@ public class WinePrefixContainerToolsTab extends Tab {
             fileChooser.setTitle(tr("Choose executable"));
             File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
             if (file != null) {
-                winePrefixContainerController.runInPrefix(container, file.getAbsolutePath(), this::unlockAll,
+                winePrefixContainerController.runInContainer(container, file.getAbsolutePath(), this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             }
         });

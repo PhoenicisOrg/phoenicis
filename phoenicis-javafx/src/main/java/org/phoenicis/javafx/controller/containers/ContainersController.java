@@ -80,7 +80,7 @@ public class ContainersController {
                 new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
                         tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
                                 .ask(() -> {
-                                    winePrefixContainerController.deletePrefix(winePrefixDTO,
+                                    containersManager.deleteContainer(winePrefixDTO,
                                             e -> Platform.runLater(
                                                     () -> new ErrorMessage("Error", e, this.containersView).show()));
                                     loadContainers();

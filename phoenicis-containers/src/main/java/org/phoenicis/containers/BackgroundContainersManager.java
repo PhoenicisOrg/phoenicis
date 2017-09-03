@@ -19,22 +19,46 @@
 package org.phoenicis.containers;
 
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
+import org.phoenicis.containers.dto.ContainerDTO;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
+/**
+ * ContainersManager which runs in the background
+ */
 class BackgroundContainersManager implements ContainersManager {
     private final ContainersManager delegatedContainersManager;
     private final ExecutorService executorService;
 
+    /**
+     * constructor
+     * @param delegatedContainersManager
+     * @param executorService
+     */
     BackgroundContainersManager(ContainersManager delegatedContainersManager, ExecutorService executorService) {
         this.delegatedContainersManager = delegatedContainersManager;
         this.executorService = executorService;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param callback
+     * @param errorCallback
+     */
     @Override
     public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
         executorService.submit(() -> delegatedContainersManager.fetchContainers(callback, errorCallback));
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param container
+     * @param errorCallback
+     */
+    @Override
+    public void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback) {
+        executorService.submit(() -> delegatedContainersManager.deleteContainer(container, errorCallback));
     }
 }
