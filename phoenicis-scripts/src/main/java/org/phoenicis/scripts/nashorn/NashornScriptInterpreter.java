@@ -21,7 +21,6 @@ package org.phoenicis.scripts.nashorn;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class NashornScriptInterpreter implements ScriptInterpreter {
