@@ -41,8 +41,14 @@ public class NashornEngine {
     }
 
     public void eval(String script, Consumer<Exception> errorCallback) {
+        eval(script, () -> {
+        }, errorCallback);
+    }
+
+    public void eval(String script, Runnable doneCallback, Consumer<Exception> errorCallback) {
         try {
             this.scriptEngine.eval(script);
+            doneCallback.run();
         } catch (Exception e) {
             handleError(errorCallback, e);
         }
