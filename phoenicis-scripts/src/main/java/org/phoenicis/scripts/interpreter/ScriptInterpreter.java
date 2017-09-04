@@ -25,7 +25,12 @@ import java.io.FileInputStream;
 import java.util.function.Consumer;
 
 public interface ScriptInterpreter {
-    void runScript(String scriptContent, Consumer<Exception> errorCallback);
+    void runScript(String scriptContent, Runnable doneCallback, Consumer<Exception> errorCallback);
+
+    default void runScript(String scriptContent, Consumer<Exception> errorCallback) {
+        runScript(scriptContent, () -> {
+        }, errorCallback);
+    }
 
     default void runScript(File scriptFile, Consumer<Exception> errorCallback) {
         try {

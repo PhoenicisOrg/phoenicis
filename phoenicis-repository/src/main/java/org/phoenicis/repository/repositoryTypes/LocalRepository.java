@@ -279,6 +279,8 @@ public class LocalRepository implements Repository {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
 
+                scriptDTOBuilder.withId(scriptDirectory.getName());
+
                 scriptDTOBuilder.withScriptSource(repositorySource);
 
                 final File scriptFile = new File(scriptDirectory, "script.js");

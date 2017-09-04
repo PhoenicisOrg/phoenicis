@@ -282,6 +282,7 @@ public class ClasspathRepository implements Repository {
             }
 
             return new ScriptDTO.Builder(objectMapper.readValue(scriptJsonInputStream, ScriptDTO.class))
+                    .withId(scriptFileName)
                     .withScript(new String(IOUtils.toByteArray(scriptFile)))
                     .withIcon(icon)
                     .build();
