@@ -20,12 +20,10 @@ package org.phoenicis.containers;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
-import org.phoenicis.containers.wine.GenericContainersManager;
 import org.phoenicis.containers.wine.configurations.*;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
-import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.win32.Win32Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +49,6 @@ public class ContainersConfiguration {
     private ScriptsConfiguration scriptsConfiguration;
 
     @Autowired
-    private SettingsConfiguration settingsConfiguration;
-
-    @Autowired
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
 
     @Value("${application.user.engines}")
@@ -62,7 +57,12 @@ public class ContainersConfiguration {
     @Bean
     public ContainersManager containersManager() {
         return new GenericContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
-                winePrefixDisplayConfiguration(), winePrefixInputConfiguration(), libraryConfiguration.libraryManager(),
+                winePrefixDisplayConfiguration(),
+                winePrefixInputConfiguration(),
+                libraryConfiguration.libraryManager(),
+                libraryConfiguration.shortcutManager(),
+                toolsConfiguration.fileUtilities(),
+                scriptsConfiguration.scriptInterpreter(),
                 phoenicisGlobalConfiguration.objectMapper());
     }
 
@@ -75,14 +75,7 @@ public class ContainersConfiguration {
     @Bean
     public WinePrefixContainerController winePrefixContainerController() {
         return new WinePrefixContainerController(scriptsConfiguration.scriptInterpreter(),
-                toolsConfiguration.terminalOpener(),
-                enginesPath + "/wine",
-                toolsConfiguration.operatingSystemFetcher(),
-                win32Configuration.registryWriter(),
-                libraryConfiguration.libraryManager(),
-                libraryConfiguration.shortcutManager(),
-                toolsConfiguration.fileUtilities(),
-                settingsConfiguration.settingsManager());
+                win32Configuration.registryWriter());
     }
 
     @Bean

@@ -33,4 +33,9 @@ public class EnginesConfiguration {
     public EnginesSource enginesSource() {
         return new EnginesSource(scriptsConfiguration.scriptInterpreter(), new ObjectMapper());
     }
+
+    @Bean
+    public EngineToolsManager engineToolsManager() {
+        return new EngineToolsManager(scriptsConfiguration.scriptInterpreter());
+    }
 }

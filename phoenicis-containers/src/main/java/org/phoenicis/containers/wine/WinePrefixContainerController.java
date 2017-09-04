@@ -19,87 +19,26 @@
 package org.phoenicis.containers.wine;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
-import org.phoenicis.library.LibraryManager;
-import org.phoenicis.library.ShortcutManager;
-import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.settings.SettingsManager;
-import org.phoenicis.tools.files.FileUtilities;
-import org.phoenicis.tools.system.OperatingSystemFetcher;
-import org.phoenicis.tools.system.terminal.TerminalOpener;
 import org.phoenicis.win32.registry.RegistryWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class WinePrefixContainerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainerController.class);
     private final ScriptInterpreter scriptInterpreter;
-    private final TerminalOpener terminalOpener;
-    private final String wineEnginesPath;
-    private final OperatingSystemFetcher operatingSystemFetcher;
     private final RegistryWriter registryWriter;
-    private final LibraryManager libraryManager;
-    private final ShortcutManager shortcutManager;
-    private final FileUtilities fileUtilities;
-    private final SettingsManager settingsManager;
 
-    public WinePrefixContainerController(
-            ScriptInterpreter scriptInterpreter,
-            TerminalOpener terminalOpener,
-            String wineEnginesPath,
-            OperatingSystemFetcher operatingSystemFetcher,
-            RegistryWriter registryWriter,
-            LibraryManager libraryManager,
-            ShortcutManager shortcutManager,
-            FileUtilities fileUtilities,
-            SettingsManager settingsManager) {
+    public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
+            RegistryWriter registryWriter) {
         this.scriptInterpreter = scriptInterpreter;
-        this.terminalOpener = terminalOpener;
-        this.wineEnginesPath = wineEnginesPath;
-        this.operatingSystemFetcher = operatingSystemFetcher;
         this.registryWriter = registryWriter;
-        this.libraryManager = libraryManager;
-        this.shortcutManager = shortcutManager;
-        this.fileUtilities = fileUtilities;
-        this.settingsManager = settingsManager;
-    }
-
-    public void repairPrefix(WinePrefixContainerDTO winePrefix, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        // FIXME
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
-                    wine.callMember("run", "wineboot");
-                    wine.callMember("wait");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
-    public void killProcesses(WinePrefixContainerDTO winePrefix, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
-                    wine.callMember("kill");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
     }
 
     public void changeSetting(WinePrefixContainerDTO winePrefix, RegistryParameter setting, Runnable doneCallback,
@@ -121,97 +60,18 @@ public class WinePrefixContainerController {
                 }, errorCallback), errorCallback);
     }
 
-    public void runInPrefix(WinePrefixContainerDTO winePrefix, String command, Runnable doneCallback,
+    public void runInContainer(ContainerDTO container, String command, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
+        interactiveScriptSession.eval(
+                "include([\"Engines\", \"" + container.getEngine() + "\", \"Engine\", \"Object\"]);",
+                ignored -> interactiveScriptSession.eval("new " + container.getEngine() + "()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
+                    wine.callMember("prefix", container.getName());
                     wine.callMember("run", command);
                     wine.callMember("wait");
                     doneCallback.run();
                 }, errorCallback), errorCallback);
-    }
-
-    /**
-     * runs a tool in a given prefix
-     * @param winePrefix
-     * @param toolName
-     * @param doneCallback
-     * @param errorCallback
-     */
-    public void runTool(WinePrefixContainerDTO winePrefix, String toolName, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Tools\", \"" + toolName + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
-                    final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
-                    toolObject.callMember("run", winePrefix.getName());
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
-    public void deletePrefix(WinePrefixContainerDTO winePrefix, Consumer<Exception> errorCallback) {
-        try {
-            fileUtilities.remove(new File(winePrefix.getPath()));
-        } catch (IOException e) {
-            LOGGER.error("Cannot delete Wine prefix (" + winePrefix.getPath() + ")! Exception: " + e.toString());
-            errorCallback.accept(e);
-        }
-
-        List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
-        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
-                .forEach(shortcutDTO -> {
-                    final InteractiveScriptSession interactiveScriptSession = scriptInterpreter
-                            .createInteractiveSession();
-                    interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Shortcuts\", \"Reader\"]);",
-                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                                shortcutReader.callMember("of", shortcutDTO);
-                                final String container = (String) shortcutReader.callMember("container");
-                                if (container.equals(winePrefix.getName())) {
-                                    shortcutManager.deleteShortcut(shortcutDTO);
-                                }
-                            }, errorCallback), errorCallback);
-                });
-    }
-
-    /**
-     * creates a shortcut for a given executable in a Wine prefix
-     * @param winePrefix the Wine prefix
-     * @param name name which is shown in the library
-     * @param executable filename of the executable (WineShortcut will search for this file in the given prefix)
-     * @param doneCallback callback executed after the shortcut has been created
-     * @param errorCallback callback executed if there is an error
-     */
-    public void createShortcut(WinePrefixContainerDTO winePrefix, String name, String executable, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Shortcuts\", \"Wine\"]);",
-                ignored -> interactiveScriptSession.eval("new WineShortcut()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("name", name);
-                    wine.callMember("search", executable);
-                    wine.callMember("prefix", winePrefix.getName());
-                    wine.callMember("create");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
-    }
-
-    public void openTerminalInPrefix(WinePrefixContainerDTO winePrefixContainerDTO) {
-        final Map<String, String> environment = new HashMap<>();
-        environment.put("WINEPREFIX", winePrefixContainerDTO.getPath());
-        environment.put("PATH", fetchWineVersionPath(winePrefixContainerDTO) + "/bin/" + ":$PATH");
-        terminalOpener.openTerminal(winePrefixContainerDTO.getPath(), environment);
-    }
-
-    private String fetchWineVersionPath(WinePrefixContainerDTO winePrefixContainerDTO) {
-        return wineEnginesPath + "/" + winePrefixContainerDTO.getDistribution() + "-"
-                + operatingSystemFetcher.fetchCurrentOperationSystem().getWinePackage() + "-"
-                + winePrefixContainerDTO.getArchitecture() + "/" + winePrefixContainerDTO.getVersion();
     }
 }

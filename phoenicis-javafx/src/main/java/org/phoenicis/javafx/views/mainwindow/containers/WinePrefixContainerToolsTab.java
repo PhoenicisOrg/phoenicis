@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
@@ -29,15 +30,18 @@ public class WinePrefixContainerToolsTab extends Tab {
 
     private final WinePrefixContainerDTO container;
     private final WinePrefixContainerController winePrefixContainerController;
+    private EngineToolsManager engineToolsManager;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
     public WinePrefixContainerToolsTab(WinePrefixContainerDTO container,
-            WinePrefixContainerController winePrefixContainerController) {
+            WinePrefixContainerController winePrefixContainerController,
+            EngineToolsManager engineToolsManager) {
         super(tr("Tools"));
 
         this.container = container;
         this.winePrefixContainerController = winePrefixContainerController;
+        this.engineToolsManager = engineToolsManager;
 
         this.setClosable(false);
 
@@ -57,33 +61,17 @@ public class WinePrefixContainerToolsTab extends Tab {
 
         Button openTerminal = new Button(tr("Open a terminal"));
         openTerminal.getStyleClass().addAll("toolButton", "openTerminal");
-        openTerminal.setOnMouseClicked(e -> {
+        openTerminal.setOnMouseClicked(ignored -> {
             this.lockAll();
-            winePrefixContainerController.openTerminalInPrefix(container);
+            this.engineToolsManager.runTool(container.getEngine(), container.getName(), "WineTerminalOpener",
+                    this::unlockAll,
+                    e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             this.unlockAll();
         });
 
         this.lockableElements.add(openTerminal);
 
         toolsContentPane.getChildren().add(openTerminal);
-
-        Button createShortcut = new Button(tr("Create shortcut"));
-        createShortcut.getStyleClass().addAll("toolButton", "openTerminal");
-        createShortcut.setOnMouseClicked(event -> {
-            this.lockAll();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Choose executable"));
-            File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
-            if (file != null) {
-                winePrefixContainerController.createShortcut(container, file.getName(), file.getName(), this::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
-            }
-            this.unlockAll();
-        });
-
-        this.lockableElements.add(createShortcut);
-
-        toolsContentPane.getChildren().add(createShortcut);
 
         Button runExecutable = new Button(tr("Run executable"));
         runExecutable.getStyleClass().addAll("toolButton", "runExecutable");
@@ -93,7 +81,7 @@ public class WinePrefixContainerToolsTab extends Tab {
             fileChooser.setTitle(tr("Choose executable"));
             File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
             if (file != null) {
-                winePrefixContainerController.runInPrefix(container, file.getAbsolutePath(), this::unlockAll,
+                winePrefixContainerController.runInContainer(container, file.getAbsolutePath(), this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             }
         });

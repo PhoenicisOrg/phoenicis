@@ -31,8 +31,8 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
     }
 
     @Override
-    public void runScript(String scriptContent, Consumer<Exception> errorCallback) {
-        nashornEngineFactory.createEngine().eval(scriptContent, errorCallback);
+    public void runScript(String scriptContent, Runnable doneCallback, Consumer<Exception> errorCallback) {
+        nashornEngineFactory.createEngine().eval(scriptContent, doneCallback, errorCallback);
     }
 
     @Override

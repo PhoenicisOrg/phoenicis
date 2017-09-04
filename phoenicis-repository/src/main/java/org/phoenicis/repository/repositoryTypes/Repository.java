@@ -120,18 +120,18 @@ public interface Repository {
      * @return ScriptDTO
      */
     default ScriptDTO getScript(List<String> path) {
-        final String wantedName = path.get(3);
+        final String wantedId = path.get(3);
         final ApplicationDTO applicationDTO = getApplication(path);
 
         if (applicationDTO != null) {
             for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                if (wantedName.equals(scriptDTO.getScriptName())) {
+                if (wantedId.equals(scriptDTO.getId())) {
                     return scriptDTO;
                 }
             }
         }
 
-        LOGGER.error(String.format("Could not find ScriptDTO with name \"%s\"", wantedName));
+        LOGGER.error(String.format("Could not find ScriptDTO with ID \"%s\"", wantedId));
         return null;
     }
 

@@ -23,6 +23,7 @@ import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -42,9 +43,12 @@ public class ContainersController {
     private final WinePrefixContainerController winePrefixContainerController;
     private final EnginesSource enginesSource;
 
-    public ContainersController(ContainersView containersView, ContainersManager containersManager,
+    public ContainersController(ContainersView containersView,
+            ContainersManager containersManager,
             ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
-            WinePrefixContainerController winePrefixContainerController, EnginesSource enginesSource) {
+            WinePrefixContainerController winePrefixContainerController,
+            EnginesSource enginesSource,
+            EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
@@ -69,13 +73,14 @@ public class ContainersController {
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                     .flatMap(subCategory -> subCategory.getPackages().stream())
                     .collect(Collectors.toList()),*/
+                    engineToolsManager,
                     winePrefixContainerController);
 
             panel.setOnDeletePrefix(winePrefixDTO -> {
                 new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
                         tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
                                 .ask(() -> {
-                                    winePrefixContainerController.deletePrefix(winePrefixDTO,
+                                    containersManager.deleteContainer(winePrefixDTO,
                                             e -> Platform.runLater(
                                                     () -> new ErrorMessage("Error", e, this.containersView).show()));
                                     loadContainers();

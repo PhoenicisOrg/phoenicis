@@ -279,6 +279,8 @@ public class LocalRepository implements Repository {
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
 
+                scriptDTOBuilder.withId(scriptDirectory.getName());
+
                 scriptDTOBuilder.withScriptSource(repositorySource);
 
                 final File scriptFile = new File(scriptDirectory, "script.js");
@@ -289,6 +291,14 @@ public class LocalRepository implements Repository {
                     } catch (IOException e) {
                         LOGGER.warn("Script not found", e);
                     }
+                }
+
+                final File iconFile = new File(scriptDirectory, "icon.png");
+
+                if (iconFile.exists()) {
+                    scriptDTOBuilder.withIcon(iconFile.toURI());
+                } else {
+                    LOGGER.debug("Icon not found");
                 }
 
                 results.add(scriptDTOBuilder.build());

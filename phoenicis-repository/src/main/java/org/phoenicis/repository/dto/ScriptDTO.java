@@ -32,6 +32,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO {
+    private final String id;
     private final String scriptName;
     private final URI scriptSource;
     private final List<OperatingSystem> compatibleOperatingSystems;
@@ -39,8 +40,10 @@ public class ScriptDTO {
     private final Boolean free;
     private final Boolean requiresPatch;
     private final String script;
+    private final URI icon;
 
     private ScriptDTO(Builder builder) {
+        this.id = builder.id;
         this.scriptName = builder.scriptName;
         this.scriptSource = builder.scriptSource;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
@@ -48,6 +51,11 @@ public class ScriptDTO {
         this.free = builder.free;
         this.requiresPatch = builder.requiresPatch;
         this.script = builder.script;
+        this.icon = builder.icon;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getScriptName() {
@@ -78,6 +86,10 @@ public class ScriptDTO {
         return script;
     }
 
+    public URI getIcon() {
+        return icon;
+    }
+
     public static Comparator<ScriptDTO> nameComparator() {
         return (o1, o2) -> o1.getScriptName().compareToIgnoreCase(o2.getScriptName());
     }
@@ -95,6 +107,7 @@ public class ScriptDTO {
         ScriptDTO scriptDTO = (ScriptDTO) o;
 
         return new EqualsBuilder()
+                .append(id, scriptDTO.id)
                 .append(scriptName, scriptDTO.scriptName)
                 .append(scriptSource, scriptDTO.scriptSource)
                 .append(compatibleOperatingSystems, scriptDTO.compatibleOperatingSystems)
@@ -102,23 +115,27 @@ public class ScriptDTO {
                 .append(free, scriptDTO.free)
                 .append(requiresPatch, scriptDTO.requiresPatch)
                 .append(script, scriptDTO.script)
+                .append(icon, scriptDTO.icon)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(id)
                 .append(scriptName)
                 .append(scriptSource)
                 .append(compatibleOperatingSystems)
                 .append(testingOperatingSystems)
                 .append(free).append(requiresPatch)
                 .append(script)
+                .append(icon)
                 .toHashCode();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
+        private String id;
         private String scriptName;
         private URI scriptSource;
         private List<OperatingSystem> compatibleOperatingSystems;
@@ -126,16 +143,26 @@ public class ScriptDTO {
         private Boolean free;
         private Boolean requiresPatch;
         private String script;
+        private URI icon;
 
         public Builder() {
             // Default constructor
         }
 
         public Builder(ScriptDTO scriptDTO) {
-            this.withScriptName(scriptDTO.getScriptName()).withScript(scriptDTO.getScript())
+            this.withId(scriptDTO.getId())
+                    .withScriptName(scriptDTO.getScriptName())
+                    .withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
-                    .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems()).withFree(scriptDTO.isFree())
-                    .withRequiresPatch(scriptDTO.requiresPatch);
+                    .withTestingOperatingSystems(scriptDTO.getTestingOperatingSystems())
+                    .withFree(scriptDTO.isFree())
+                    .withRequiresPatch(scriptDTO.requiresPatch)
+                    .withIcon(scriptDTO.getIcon());
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withScriptName(String name) {
@@ -170,6 +197,11 @@ public class ScriptDTO {
 
         public Builder withRequiresPatch(Boolean requiresPatch) {
             this.requiresPatch = requiresPatch;
+            return this;
+        }
+
+        public Builder withIcon(URI icon) {
+            this.icon = icon;
             return this;
         }
 
