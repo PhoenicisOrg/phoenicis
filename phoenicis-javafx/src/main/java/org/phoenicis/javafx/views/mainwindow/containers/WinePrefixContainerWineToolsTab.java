@@ -61,7 +61,7 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         for (ScriptDTO tool : engineTools.getScripts()) {
             Button toolButton = new Button(tool.getScriptName());
             toolButton.getStyleClass().addAll("toolButton");
-            //toolButton.setStyle("-fx-background-image: url('" + tool.getIcon() + "');");
+            toolButton.setStyle("-fx-background-image: url('" + tool.getIcon() + "');");
             toolButton.setOnMouseClicked(event -> {
                 this.lockAll();
                 this.engineToolsManager.runTool(container.getEngine(), container.getName(), tool.getId(),
