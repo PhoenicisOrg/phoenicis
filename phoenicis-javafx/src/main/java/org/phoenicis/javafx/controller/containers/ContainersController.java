@@ -30,8 +30,13 @@ import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -41,12 +46,16 @@ public class ContainersController {
     private final ContainersManager containersManager;
     private final ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
     private final WinePrefixContainerController winePrefixContainerController;
+    private final RepositoryManager repositoryManager;
     private final EnginesSource enginesSource;
+    private final EngineToolsManager engineToolsManager;
+    private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
             ContainersManager containersManager,
             ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
             WinePrefixContainerController winePrefixContainerController,
+            RepositoryManager repositoryManager,
             EnginesSource enginesSource,
             EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
@@ -54,6 +63,13 @@ public class ContainersController {
         this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
         this.winePrefixContainerController = winePrefixContainerController;
         this.enginesSource = enginesSource;
+        this.repositoryManager = repositoryManager;
+        this.engineToolsManager = engineToolsManager;
+
+        this.engineTools = new HashMap<>();
+
+        this.repositoryManager.addCallbacks(this::updateEngineTools,
+                e -> Platform.runLater(() -> new ErrorMessage(tr("Loading engines failed."), e, this.containersView)));
 
         containersView.setOnSelectionChanged(event -> {
             if (containersView.isSelected()) {
@@ -74,6 +90,7 @@ public class ContainersController {
                     .flatMap(subCategory -> subCategory.getPackages().stream())
                     .collect(Collectors.toList()),*/
                     engineToolsManager,
+                    engineTools.get("Wine"),
                     winePrefixContainerController);
 
             panel.setOnDeletePrefix(winePrefixDTO -> {
@@ -103,5 +120,10 @@ public class ContainersController {
         containersManager.fetchContainers(containersView::populate,
                 e -> this.containersView.showFailure(tr("Loading containers failed."), Optional
                         .of(e)));
+    }
+
+    private void updateEngineTools(RepositoryDTO repositoryDTO) {
+        engineToolsManager.fetchAvailableEngineTools(repositoryDTO,
+                engineTools -> Platform.runLater(() -> this.engineTools = engineTools));
     }
 }

@@ -87,6 +87,7 @@ public class ControllerConfiguration {
                 containersConfiguration.backgroundContainersManager(),
                 viewsConfiguration.winePrefixContainerPanelFactory(),
                 containersConfiguration.winePrefixContainerController(),
+                repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.enginesSource(),
                 enginesConfiguration.engineToolsManager());
     }
