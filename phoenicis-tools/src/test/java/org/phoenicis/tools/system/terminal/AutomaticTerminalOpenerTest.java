@@ -18,13 +18,14 @@
 
 package org.phoenicis.tools.system.terminal;
 
-import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.phoenicis.entities.OperatingSystem;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -36,7 +37,8 @@ public class AutomaticTerminalOpenerTest {
 
     @Before
     public void setUp() {
-        when(mockTerminalOpenerFactory.createInstance(LinuxTerminalOpener.class)).thenReturn(mockLinuxTerminalOpener);
+        when(mockTerminalOpenerFactory.createInstance(LinuxTerminalOpener.class, Optional.empty()))
+                .thenReturn(mockLinuxTerminalOpener);
         when(mockTerminalOpenerFactory.createInstance(MacOSTerminalOpener.class)).thenReturn(mockMacTerminalOpener);
     }
 

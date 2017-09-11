@@ -22,10 +22,18 @@ import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.DefaultPropertiesPersister;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 public class SettingsManager {
+    @Value("${tools.linux-terminal}")
+    private String terminal;
 
     @Autowired
     private RepositoryConfiguration repositoryConfiguration;
@@ -34,6 +42,32 @@ public class SettingsManager {
 
     public SettingsManager(String settingsFileName) {
         this.settingsFileName = settingsFileName;
+    }
+
+    public void save() {
+        Settings settings = load();
+        try (OutputStream outputStream = new FileOutputStream(new File(settingsFileName))) {
+            DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
+            persister.store(settings.getProperties(), outputStream, "Phoenicis User Settings");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Settings load() {
+        Settings settings = new Settings();
+
+        settings.set(Setting.TERMINAL, terminal);
+
+        return settings;
+    }
+
+    public String getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
     }
 
     /**

@@ -22,26 +22,35 @@ import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Safe
 public class AutomaticTerminalOpener implements TerminalOpener {
     private final TerminalOpener terminalOpener;
 
-    public AutomaticTerminalOpener(TerminalOpenerFactory terminalOpenerFactory,
-            OperatingSystemFetcher operatingSystemFetcher) {
+    public AutomaticTerminalOpener(
+            TerminalOpenerFactory terminalOpenerFactory,
+            OperatingSystemFetcher operatingSystemFetcher,
+            Optional<String> linuxTerminalCommand) {
         switch (operatingSystemFetcher.fetchCurrentOperationSystem()) {
             case LINUX:
-                terminalOpener = terminalOpenerFactory.createInstance(LinuxTerminalOpener.class);
+                terminalOpener = terminalOpenerFactory.createInstance(LinuxTerminalOpener.class, linuxTerminalCommand);
                 break;
             case MACOSX:
                 terminalOpener = terminalOpenerFactory.createInstance(MacOSTerminalOpener.class);
                 break;
             case FREEBSD:
             default:
-                terminalOpener = (workingDirectory, environment) -> {
+                terminalOpener = (workingDirectory, environmentVariables) -> {
                     throw new UnsupportedOperationException();
                 };
         }
+    }
+
+    public AutomaticTerminalOpener(
+            TerminalOpenerFactory terminalOpenerFactory,
+            OperatingSystemFetcher operatingSystemFetcher) {
+        this(terminalOpenerFactory, operatingSystemFetcher, Optional.empty());
     }
 
     @Override
