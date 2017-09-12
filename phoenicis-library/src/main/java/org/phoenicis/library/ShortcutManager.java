@@ -50,9 +50,10 @@ public class ShortcutManager {
     }
 
     public void createShortcut(ShortcutDTO shortcutDTO) {
-        final String baseName = shortcutDTO.getName();
+        final String baseName = shortcutDTO.getId();
         final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
+        final File nameFile = new File(shortcutDirectoryFile, baseName + ".name");
         final File categoryFile = new File(shortcutDirectoryFile, baseName + ".category");
         final File scriptFile = new File(shortcutDirectoryFile, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectoryFile, baseName + ".icon");
@@ -65,6 +66,9 @@ public class ShortcutManager {
 
         try {
             FileUtils.writeStringToFile(scriptFile, shortcutDTO.getScript(), ENCODING);
+            if (shortcutDTO.getName() != null) {
+                FileUtils.writeStringToFile(nameFile, shortcutDTO.getName(), ENCODING);
+            }
             if (shortcutDTO.getCategory() != null) {
                 FileUtils.writeStringToFile(categoryFile, shortcutDTO.getCategory(), ENCODING);
             }
@@ -115,14 +119,19 @@ public class ShortcutManager {
     }
 
     public void deleteShortcut(ShortcutDTO shortcutDTO) {
-        final String baseName = shortcutDTO.getName();
+        final String baseName = shortcutDTO.getId();
         final File shortcutDirectory = new File(this.shortcutDirectory);
 
+        final File nameFile = new File(shortcutDirectory, baseName + ".name");
         final File categoryFile = new File(shortcutDirectory, baseName + ".category");
         final File scriptFile = new File(shortcutDirectory, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
         final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
+
+        if (nameFile.exists()) {
+            nameFile.delete();
+        }
 
         if (categoryFile.exists()) {
             categoryFile.delete();

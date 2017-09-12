@@ -98,6 +98,7 @@ public class LibraryManager {
 
     private ShortcutDTO fetchShortcutDTO(File shortcutDirectory, File file) {
         final String baseName = FilenameUtils.getBaseName(file.getName());
+        final File nameFile = new File(shortcutDirectory, baseName + ".name");
         final File categoryFile = new File(shortcutDirectory, baseName + ".category");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
@@ -108,6 +109,12 @@ public class LibraryManager {
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
+            String name = baseName;
+            if (nameFile.exists()) {
+                name = IOUtils.toString(new FileInputStream(nameFile), "UTF-8");
+                name = name.replace("\n", "");
+            }
+
             String category = "Other";
             if (categoryFile.exists()) {
                 category = IOUtils.toString(new FileInputStream(categoryFile), "UTF-8");
@@ -117,9 +124,15 @@ public class LibraryManager {
             final String description = descriptionFile.exists()
                     ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
 
-            return new ShortcutDTO.Builder().withName(baseName).withCategory(category)
-                    .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8")).withIcon(icon)
-                    .withMiniature(miniature).withDescription(description).build();
+            return new ShortcutDTO.Builder()
+                    .withName(name)
+                    .withId(baseName)
+                    .withCategory(category)
+                    .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8"))
+                    .withIcon(icon)
+                    .withMiniature(miniature)
+                    .withDescription(description)
+                    .build();
         } catch (URISyntaxException e) {
             throw new IllegalStateException(e);
         } catch (FileNotFoundException e) {
