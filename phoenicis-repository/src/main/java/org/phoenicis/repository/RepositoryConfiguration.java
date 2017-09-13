@@ -18,8 +18,8 @@
 
 package org.phoenicis.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.location.ClasspathRepositoryLocation;
 import org.phoenicis.repository.location.GitRepositoryLocation;
@@ -66,6 +66,9 @@ public class RepositoryConfiguration {
     private ToolsConfiguration toolsConfiguration;
 
     @Autowired
+    private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
+
+    @Autowired
     private FileUtilities fileUtilities;
 
     @Bean
@@ -88,7 +91,7 @@ public class RepositoryConfiguration {
 
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
         try {
-            this.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
+            phoenicisGlobalConfiguration.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
         } catch (IOException e) {
             LOGGER.error("Couldn't save repository location list", e);
         }
@@ -101,7 +104,7 @@ public class RepositoryConfiguration {
 
         if (repositoryListFile.exists()) {
             try {
-                result = this.objectMapper().readValue(new File(repositoryListPath),
+                result = phoenicisGlobalConfiguration.objectMapper().readValue(new File(repositoryListPath),
                         TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
             } catch (IOException e) {
                 LOGGER.error("Couldn't load repository location list", e);
@@ -132,22 +135,18 @@ public class RepositoryConfiguration {
 
     @Bean
     ClasspathRepository.Factory classPathRepositoryFactory() {
-        return new ClasspathRepository.Factory(objectMapper(), new PathMatchingResourcePatternResolver());
+        return new ClasspathRepository.Factory(phoenicisGlobalConfiguration.objectMapper(),
+                new PathMatchingResourcePatternResolver());
     }
 
     @Bean
     LocalRepository.Factory localRepositoryFactory() {
-        return new LocalRepository.Factory(objectMapper());
+        return new LocalRepository.Factory(phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean
     BackgroundRepository.Factory backgroundRepositoryFactory() {
         return new BackgroundRepository.Factory();
-    }
-
-    @Bean
-    ObjectMapper objectMapper() {
-        return new ObjectMapper();
     }
 
 }
