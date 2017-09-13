@@ -18,16 +18,19 @@
 
 package org.phoenicis.library;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.multithreading.functional.NullRunnable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,11 +40,15 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 @Safe
 public class LibraryManager {
+    private final static Logger LOGGER = LoggerFactory.getLogger(LibraryManager.class);
+
     private final String shortcutDirectory;
+    private ObjectMapper objectMapper;
     private Runnable onUpdate = new NullRunnable();
 
-    public LibraryManager(String shortcutDirectory) {
+    public LibraryManager(String shortcutDirectory, ObjectMapper objectMapper) {
         this.shortcutDirectory = shortcutDirectory;
+        this.objectMapper = objectMapper;
     }
 
     public List<ShortcutCategoryDTO> fetchShortcuts() {
@@ -98,51 +105,54 @@ public class LibraryManager {
 
     private ShortcutDTO fetchShortcutDTO(File shortcutDirectory, File file) {
         final String baseName = FilenameUtils.getBaseName(file.getName());
-        final File nameFile = new File(shortcutDirectory, baseName + ".name");
-        final File categoryFile = new File(shortcutDirectory, baseName + ".category");
+        final File infoFile = new File(shortcutDirectory, baseName + ".info");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
-        final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
+
+        final ShortcutDTO.Builder shortcutDTOBuilder;
+        if (infoFile.exists()) {
+            final ShortcutDTO shortcutDTOFromJsonFile = unSerializeShortcut(infoFile);
+            shortcutDTOBuilder = new ShortcutDTO.Builder(shortcutDTOFromJsonFile);
+
+        } else {
+            shortcutDTOBuilder = new ShortcutDTO.Builder();
+            shortcutDTOBuilder.withName(baseName);
+        }
+
+        if (StringUtils.isBlank(shortcutDTOBuilder.getName())) {
+            shortcutDTOBuilder.withName(baseName);
+        }
+
+        if (StringUtils.isBlank(shortcutDTOBuilder.getCategory())) {
+            shortcutDTOBuilder.withCategory("Other");
+        }
 
         try {
             final URI icon = iconFile.exists() ? iconFile.toURI() : getClass().getResource("phoenicis.png").toURI();
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
-            String name = baseName;
-            if (nameFile.exists()) {
-                name = IOUtils.toString(new FileInputStream(nameFile), "UTF-8");
-                name = name.replace("\n", "");
-            }
-
-            String category = "Other";
-            if (categoryFile.exists()) {
-                category = IOUtils.toString(new FileInputStream(categoryFile), "UTF-8");
-                category = category.replace("\n", "");
-            }
-
-            final String description = descriptionFile.exists()
-                    ? IOUtils.toString(new FileInputStream(descriptionFile), "UTF-8") : "";
-
-            return new ShortcutDTO.Builder()
-                    .withName(name)
+            return shortcutDTOBuilder
                     .withId(baseName)
-                    .withCategory(category)
                     .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8"))
                     .withIcon(icon)
                     .withMiniature(miniature)
-                    .withDescription(description)
                     .build();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(e);
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException(e);
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
     public void refresh() {
         onUpdate.run();
+    }
+
+    private ShortcutDTO unSerializeShortcut(File jsonFile) {
+        try {
+            return this.objectMapper.readValue(jsonFile, ShortcutDTO.class);
+        } catch (IOException e) {
+            LOGGER.debug("JSON file not found");
+            return new ShortcutDTO.Builder().build();
+        }
     }
 }

@@ -192,7 +192,11 @@ public class ShortcutDTO {
         }
 
         public String getName() {
-            return name;
+            return this.name;
+        }
+
+        public String getCategory() {
+            return this.category;
         }
     }
 

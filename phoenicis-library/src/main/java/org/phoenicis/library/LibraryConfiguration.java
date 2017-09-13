@@ -18,6 +18,7 @@
 
 package org.phoenicis.library;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,13 +38,16 @@ public class LibraryConfiguration {
 
     @Bean
     public LibraryManager libraryManager() {
-        return new LibraryManager(shortcutDirectory);
+        return new LibraryManager(shortcutDirectory, new ObjectMapper());
     }
 
     @Bean
     public ShortcutManager shortcutManager() {
-        return new ShortcutManager(shortcutDirectory, desktopShortcutDirectory, libraryManager(),
-                scriptsConfiguration.scriptInterpreter());
+        return new ShortcutManager(shortcutDirectory,
+                desktopShortcutDirectory,
+                libraryManager(),
+                scriptsConfiguration.scriptInterpreter(),
+                new ObjectMapper());
     }
 
     @Bean
