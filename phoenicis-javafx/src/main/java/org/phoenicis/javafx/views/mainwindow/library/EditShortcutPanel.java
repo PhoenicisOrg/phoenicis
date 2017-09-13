@@ -95,9 +95,9 @@ final class EditShortcutPanel extends DetailsView {
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
         this.editedShortcut = shortcutDTO;
 
-        this.setTitle(this.editedShortcut.getName());
+        this.setTitle(this.editedShortcut.getInfo().getName());
 
-        this.description.setText(this.editedShortcut.getDescription());
+        this.description.setText(this.editedShortcut.getInfo().getDescription());
 
         this.gridPane.getChildren().clear();
 

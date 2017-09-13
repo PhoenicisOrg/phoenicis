@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.library.dto.ShortcutInfoDTO;
 import org.phoenicis.multithreading.functional.NullRunnable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,7 @@ public class LibraryManager {
         for (File file : directoryContent) {
             if ("shortcut".equals(FilenameUtils.getExtension(file.getName()))) {
                 ShortcutDTO shortcut = fetchShortcutDTO(shortcutDirectoryFile, file);
-                String categoryId = shortcut.getCategory();
+                String categoryId = shortcut.getInfo().getCategory();
                 if (!categoryMap.containsKey(categoryId)) {
                     categoryMap.put(categoryId, new ArrayList<>());
                 }
@@ -90,7 +91,7 @@ public class LibraryManager {
     public ShortcutDTO fetchShortcutsFromName(String name) {
         for (ShortcutCategoryDTO shortcutCategoryDTO : fetchShortcuts()) {
             for (ShortcutDTO shortcutDTO : shortcutCategoryDTO.getShortcuts()) {
-                if (name.equals(shortcutDTO.getName())) {
+                if (name.equals(shortcutDTO.getInfo().getName())) {
                     return shortcutDTO;
                 }
             }
@@ -109,31 +110,33 @@ public class LibraryManager {
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
 
-        final ShortcutDTO.Builder shortcutDTOBuilder;
+        final ShortcutInfoDTO.Builder shortcutInfoDTOBuilder;
         if (infoFile.exists()) {
-            final ShortcutDTO shortcutDTOFromJsonFile = unSerializeShortcut(infoFile);
-            shortcutDTOBuilder = new ShortcutDTO.Builder(shortcutDTOFromJsonFile);
+            final ShortcutInfoDTO shortcutInfoDTOFromJsonFile = unSerializeShortcutInfo(infoFile);
+            shortcutInfoDTOBuilder = new ShortcutInfoDTO.Builder(shortcutInfoDTOFromJsonFile);
 
         } else {
-            shortcutDTOBuilder = new ShortcutDTO.Builder();
-            shortcutDTOBuilder.withName(baseName);
+            shortcutInfoDTOBuilder = new ShortcutInfoDTO.Builder();
+            shortcutInfoDTOBuilder.withName(baseName);
         }
 
-        if (StringUtils.isBlank(shortcutDTOBuilder.getName())) {
-            shortcutDTOBuilder.withName(baseName);
+        if (StringUtils.isBlank(shortcutInfoDTOBuilder.getName())) {
+            shortcutInfoDTOBuilder.withName(baseName);
         }
 
-        if (StringUtils.isBlank(shortcutDTOBuilder.getCategory())) {
-            shortcutDTOBuilder.withCategory("Other");
+        if (StringUtils.isBlank(shortcutInfoDTOBuilder.getCategory())) {
+            shortcutInfoDTOBuilder.withCategory("Other");
         }
+        final ShortcutInfoDTO shortcutInfoDTO = shortcutInfoDTOBuilder.build();
 
         try {
             final URI icon = iconFile.exists() ? iconFile.toURI() : getClass().getResource("phoenicis.png").toURI();
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
-            return shortcutDTOBuilder
+            return new ShortcutDTO.Builder()
                     .withId(baseName)
+                    .withInfo(shortcutInfoDTO)
                     .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8"))
                     .withIcon(icon)
                     .withMiniature(miniature)
@@ -147,12 +150,12 @@ public class LibraryManager {
         onUpdate.run();
     }
 
-    private ShortcutDTO unSerializeShortcut(File jsonFile) {
+    private ShortcutInfoDTO unSerializeShortcutInfo(File jsonFile) {
         try {
-            return this.objectMapper.readValue(jsonFile, ShortcutDTO.class);
+            return this.objectMapper.readValue(jsonFile, ShortcutInfoDTO.class);
         } catch (IOException e) {
             LOGGER.debug("JSON file not found");
-            return new ShortcutDTO.Builder().build();
+            return new ShortcutInfoDTO.Builder().build();
         }
     }
 }

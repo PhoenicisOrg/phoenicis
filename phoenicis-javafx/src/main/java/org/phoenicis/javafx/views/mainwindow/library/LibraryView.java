@@ -118,7 +118,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.filteredShortcuts = new PhoenicisFilteredList<ShortcutDTO>(this.shortcuts, filter::filter);
         this.filter.addOnFilterChanged(filteredShortcuts::trigger);
 
-        this.sortedShortcuts = this.filteredShortcuts.sorted(Comparator.comparing(ShortcutDTO::getName));
+        this.sortedShortcuts = this.filteredShortcuts
+                .sorted(Comparator.comparing(shortcut -> shortcut.getInfo().getName()));
 
         this.availableShortcuts.setOnMouseClicked(event -> {
             this.availableShortcuts.deselectAll();

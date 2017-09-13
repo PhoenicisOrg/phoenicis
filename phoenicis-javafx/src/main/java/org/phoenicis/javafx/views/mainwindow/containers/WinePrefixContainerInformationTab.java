@@ -64,7 +64,7 @@ public class WinePrefixContainerInformationTab extends Tab {
 
         informationContentPane.add(new TextWithStyle(tr("Installed shortcuts:"), CAPTION_TITLE_CSS_CLASS), 0, 2);
         Label installedShortcuts = new Label(container.getInstalledShortcuts().stream()
-                .map(shortcutDTO -> shortcutDTO.getName()).collect(Collectors.joining("; ")));
+                .map(shortcutDTO -> shortcutDTO.getInfo().getName()).collect(Collectors.joining("; ")));
         installedShortcuts.setWrapText(true);
         informationContentPane.add(installedShortcuts, 1, 2);
 

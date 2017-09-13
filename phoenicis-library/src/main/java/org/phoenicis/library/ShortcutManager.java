@@ -23,6 +23,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.library.dto.ShortcutInfoDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
@@ -31,8 +32,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Safe
@@ -58,6 +57,8 @@ public class ShortcutManager {
     }
 
     public void createShortcut(ShortcutDTO shortcutDTO) {
+        final ShortcutInfoDTO shortcutInfo = shortcutDTO.getInfo();
+
         final String baseName = shortcutDTO.getId();
         final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
@@ -70,14 +71,8 @@ public class ShortcutManager {
             shortcutDirectoryFile.mkdirs();
         }
 
-        final Map<String, String> shortcutInfo = new HashMap<>();
-        shortcutInfo.put("name", shortcutDTO.getName());
-        shortcutInfo.put("category", shortcutDTO.getCategory());
-        shortcutInfo.put("description", shortcutDTO.getDescription());
-
         try {
-            String infoJson = this.objectMapper.writeValueAsString(shortcutInfo);
-            FileUtils.writeStringToFile(infoFile, infoJson, ENCODING);
+            this.objectMapper.writeValue(infoFile, shortcutInfo);
 
             FileUtils.writeStringToFile(scriptFile, shortcutDTO.getScript(), ENCODING);
 
@@ -103,9 +98,9 @@ public class ShortcutManager {
             final File desktopShortcutDirectoryFile = new File(this.desktopShortcutDirectory);
             final File desktopShortcutFile = new File(desktopShortcutDirectoryFile, baseName + ".desktop");
             try {
-                final String content = "[Desktop Entry]\n" + "Name=" + shortcutDTO.getName() + "\n"
+                final String content = "[Desktop Entry]\n" + "Name=" + shortcutInfo.getName() + "\n"
                         + "Type=Application\n" + "Icon=" + miniatureFile.getAbsolutePath() + "\n"
-                        + "Exec=phoenicis-cli -run \"" + shortcutDTO.getName() + "\"";
+                        + "Exec=phoenicis-cli -run \"" + shortcutInfo.getName() + "\"";
                 FileUtils.writeStringToFile(desktopShortcutFile, content, ENCODING);
             } catch (IOException e) {
                 LOGGER.warn("Error while creating .desktop", e);
@@ -161,7 +156,7 @@ public class ShortcutManager {
     }
 
     public void updateShortcut(ShortcutDTO shortcutDTO) {
-        final String baseName = shortcutDTO.getName();
+        final String baseName = shortcutDTO.getInfo().getName();
         final File shortcutDirectory = new File(this.shortcutDirectory);
 
         // backup icon if it didn't change (deleteShortcut will delete it -> icon lost after shortcut update)
