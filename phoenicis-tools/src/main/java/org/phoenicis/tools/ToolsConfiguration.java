@@ -18,7 +18,7 @@
 
 package org.phoenicis.tools;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.tools.archive.Extractor;
 import org.phoenicis.tools.archive.Tar;
 import org.phoenicis.tools.archive.Zip;
@@ -50,9 +50,12 @@ public class ToolsConfiguration {
     @Autowired
     private SystemConfiguration systemConfiguration;
 
+    @Autowired
+    private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
+
     @Bean
     public CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory() {
-        return new CompatibleConfigFileFormatFactory(new ObjectMapper());
+        return new CompatibleConfigFileFormatFactory(phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean

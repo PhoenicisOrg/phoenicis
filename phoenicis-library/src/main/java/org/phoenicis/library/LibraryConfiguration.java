@@ -18,6 +18,7 @@
 
 package org.phoenicis.library;
 
+import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,9 @@ public class LibraryConfiguration {
     @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
+    @Autowired
+    private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
+
     @Value("${application.user.shortcuts}")
     private String shortcutDirectory;
 
@@ -37,13 +41,16 @@ public class LibraryConfiguration {
 
     @Bean
     public LibraryManager libraryManager() {
-        return new LibraryManager(shortcutDirectory);
+        return new LibraryManager(shortcutDirectory, phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean
     public ShortcutManager shortcutManager() {
-        return new ShortcutManager(shortcutDirectory, desktopShortcutDirectory, libraryManager(),
-                scriptsConfiguration.scriptInterpreter());
+        return new ShortcutManager(shortcutDirectory,
+                desktopShortcutDirectory,
+                libraryManager(),
+                scriptsConfiguration.scriptInterpreter(),
+                phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean

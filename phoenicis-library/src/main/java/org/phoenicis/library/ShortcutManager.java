@@ -18,10 +18,12 @@
 
 package org.phoenicis.library;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.library.dto.ShortcutInfoDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
@@ -39,42 +41,41 @@ public class ShortcutManager {
     private final String shortcutDirectory;
     private final LibraryManager libraryManager;
     private final ScriptInterpreter scriptInterpreter;
+    private ObjectMapper objectMapper;
     private final String desktopShortcutDirectory;
 
-    ShortcutManager(String shortcutDirectory, String desktopShortcutDirectory, LibraryManager libraryManager,
-            ScriptInterpreter scriptInterpreter) {
+    ShortcutManager(String shortcutDirectory,
+            String desktopShortcutDirectory,
+            LibraryManager libraryManager,
+            ScriptInterpreter scriptInterpreter,
+            ObjectMapper objectMapper) {
         this.shortcutDirectory = shortcutDirectory;
         this.desktopShortcutDirectory = desktopShortcutDirectory;
         this.libraryManager = libraryManager;
         this.scriptInterpreter = scriptInterpreter;
+        this.objectMapper = objectMapper;
     }
 
     public void createShortcut(ShortcutDTO shortcutDTO) {
+        final ShortcutInfoDTO shortcutInfo = shortcutDTO.getInfo();
+
         final String baseName = shortcutDTO.getId();
         final File shortcutDirectoryFile = new File(this.shortcutDirectory);
 
-        final File nameFile = new File(shortcutDirectoryFile, baseName + ".name");
-        final File categoryFile = new File(shortcutDirectoryFile, baseName + ".category");
+        final File infoFile = new File(shortcutDirectoryFile, baseName + ".info");
         final File scriptFile = new File(shortcutDirectoryFile, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectoryFile, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectoryFile, baseName + ".miniature");
-        final File descriptionFile = new File(shortcutDirectoryFile, baseName + ".description");
 
         if (!shortcutDirectoryFile.exists()) {
             shortcutDirectoryFile.mkdirs();
         }
 
         try {
+            this.objectMapper.writeValue(infoFile, shortcutInfo);
+
             FileUtils.writeStringToFile(scriptFile, shortcutDTO.getScript(), ENCODING);
-            if (shortcutDTO.getName() != null) {
-                FileUtils.writeStringToFile(nameFile, shortcutDTO.getName(), ENCODING);
-            }
-            if (shortcutDTO.getCategory() != null) {
-                FileUtils.writeStringToFile(categoryFile, shortcutDTO.getCategory(), ENCODING);
-            }
-            if (shortcutDTO.getDescription() != null) {
-                FileUtils.writeStringToFile(descriptionFile, shortcutDTO.getDescription(), ENCODING);
-            }
+
             if (shortcutDTO.getIcon() != null) {
                 File file = new File(shortcutDTO.getIcon());
                 if (file.exists()) {
@@ -97,9 +98,9 @@ public class ShortcutManager {
             final File desktopShortcutDirectoryFile = new File(this.desktopShortcutDirectory);
             final File desktopShortcutFile = new File(desktopShortcutDirectoryFile, baseName + ".desktop");
             try {
-                final String content = "[Desktop Entry]\n" + "Name=" + shortcutDTO.getName() + "\n"
+                final String content = "[Desktop Entry]\n" + "Name=" + shortcutInfo.getName() + "\n"
                         + "Type=Application\n" + "Icon=" + miniatureFile.getAbsolutePath() + "\n"
-                        + "Exec=phoenicis-cli -run \"" + shortcutDTO.getName() + "\"";
+                        + "Exec=phoenicis-cli -run \"" + shortcutInfo.getName() + "\"";
                 FileUtils.writeStringToFile(desktopShortcutFile, content, ENCODING);
             } catch (IOException e) {
                 LOGGER.warn("Error while creating .desktop", e);
@@ -122,19 +123,13 @@ public class ShortcutManager {
         final String baseName = shortcutDTO.getId();
         final File shortcutDirectory = new File(this.shortcutDirectory);
 
-        final File nameFile = new File(shortcutDirectory, baseName + ".name");
-        final File categoryFile = new File(shortcutDirectory, baseName + ".category");
+        final File infoFile = new File(shortcutDirectory, baseName + ".info");
         final File scriptFile = new File(shortcutDirectory, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
-        final File descriptionFile = new File(shortcutDirectory, baseName + ".description");
 
-        if (nameFile.exists()) {
-            nameFile.delete();
-        }
-
-        if (categoryFile.exists()) {
-            categoryFile.delete();
+        if (infoFile.exists()) {
+            infoFile.delete();
         }
 
         if (scriptFile.exists()) {
@@ -149,10 +144,6 @@ public class ShortcutManager {
             miniatureFile.delete();
         }
 
-        if (descriptionFile.exists()) {
-            descriptionFile.delete();
-        }
-
         if (this.desktopShortcutDirectory != null) {
             final File desktopShortcutDirectoryFile = new File(this.desktopShortcutDirectory);
             final File desktopShortcutFile = new File(desktopShortcutDirectoryFile, baseName + ".desktop");
@@ -165,7 +156,7 @@ public class ShortcutManager {
     }
 
     public void updateShortcut(ShortcutDTO shortcutDTO) {
-        final String baseName = shortcutDTO.getName();
+        final String baseName = shortcutDTO.getInfo().getName();
         final File shortcutDirectory = new File(this.shortcutDirectory);
 
         // backup icon if it didn't change (deleteShortcut will delete it -> icon lost after shortcut update)

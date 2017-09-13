@@ -78,10 +78,11 @@ public class LibraryController {
                         e -> new ErrorMessage(tr("Error"), e, this.libraryView)));
 
         this.libraryView.setOnShortcutUninstall(shortcutDTO -> {
-            new ConfirmMessage(tr("Uninstall {0}", shortcutDTO.getName()),
-                    tr("Are you sure you want to uninstall {0}?", shortcutDTO.getName()))
+            final String shortcutName = shortcutDTO.getInfo().getName();
+            new ConfirmMessage(tr("Uninstall {0}", shortcutName),
+                    tr("Are you sure you want to uninstall {0}?", shortcutName))
                             .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO,
-                                    e -> new ErrorMessage("Error while uninstalling " + shortcutDTO.getName(), e,
+                                    e -> new ErrorMessage("Error while uninstalling " + shortcutName, e,
                                             this.libraryView)));
         });
 

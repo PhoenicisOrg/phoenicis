@@ -18,7 +18,7 @@
 
 package org.phoenicis.engines;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,9 +29,12 @@ public class EnginesConfiguration {
     @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
+    @Autowired
+    private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
+
     @Bean
     public EnginesSource enginesSource() {
-        return new EnginesSource(scriptsConfiguration.scriptInterpreter(), new ObjectMapper());
+        return new EnginesSource(scriptsConfiguration.scriptInterpreter(), phoenicisGlobalConfiguration.objectMapper());
     }
 
     @Bean

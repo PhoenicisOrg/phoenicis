@@ -101,9 +101,9 @@ final class LibraryPanel extends DetailsView {
     }
 
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
-        this.setTitle(shortcutDTO.getName());
+        this.setTitle(shortcutDTO.getInfo().getName());
 
-        this.description.setText(shortcutDTO.getDescription());
+        this.description.setText(shortcutDTO.getInfo().getDescription());
 
         this.gridPane.getChildren().clear();
 

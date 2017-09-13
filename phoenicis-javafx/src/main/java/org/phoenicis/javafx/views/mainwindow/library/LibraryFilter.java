@@ -89,7 +89,8 @@ public class LibraryFilter extends AbstractFilter {
      * @return True if the shortcut should be shown, false otherwise
      */
     public boolean filter(ShortcutDTO shortcut) {
-        return searchTerm.map(searchTerm -> shortcut.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+        return searchTerm
+                .map(searchTerm -> shortcut.getInfo().getName().toLowerCase().contains(searchTerm.toLowerCase()))
                 .orElse(true) &&
                 selectedShortcutCategory
                         .map(selectedShortcutCategory -> selectedShortcutCategory.getShortcuts().contains(shortcut))

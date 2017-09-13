@@ -145,7 +145,9 @@ public class ListWidgetEntry<E> {
                 miniatures.add(ImageIO.read(shortcutDTO.getMiniature().toURL()));
                 currentSegment++;
             } catch (IOException e) {
-                LOGGER.warn(String.format("Could not read miniature for shortcut \"%s\"", shortcutDTO.getName()), e);
+                LOGGER.warn(
+                        String.format("Could not read miniature for shortcut \"%s\"", shortcutDTO.getInfo().getName()),
+                        e);
             }
         }
 
@@ -158,7 +160,7 @@ public class ListWidgetEntry<E> {
 
     public static ListWidgetEntry<ShortcutDTO> create(ShortcutDTO shortcut) {
         return new ListWidgetEntry<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
-                DEFAULT_MINIATURE, shortcut.getName(), Optional.empty(), Optional.empty());
+                DEFAULT_MINIATURE, shortcut.getInfo().getName(), Optional.empty(), Optional.empty());
     }
 
     public static ListWidgetEntry<InstallationDTO> create(InstallationDTO installation) {
