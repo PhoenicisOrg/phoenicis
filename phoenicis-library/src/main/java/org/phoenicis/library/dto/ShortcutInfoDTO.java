@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 
+/**
+ * contains general information about a shortcut
+ */
 @JsonDeserialize(builder = ShortcutInfoDTO.Builder.class)
 public class ShortcutInfoDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutInfoDTO.class);
