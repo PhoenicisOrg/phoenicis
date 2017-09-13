@@ -22,13 +22,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Comparator;
 
 @JsonDeserialize(builder = ShortcutDTO.Builder.class)
 public class ShortcutDTO {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutDTO.class);
     private final String name;
+    private final String id;
     private final String category;
     private final String description;
     private final URI icon;
@@ -36,6 +40,18 @@ public class ShortcutDTO {
     private final String script;
 
     private ShortcutDTO(Builder builder) {
+        if (builder.id != null) {
+            if (builder.id.matches("^[a-zA-Z0-9 ]+$")) {
+                this.id = builder.id;
+            } else {
+                LOGGER.warn(String.format("Shortcut ID (%s) contains invalid characters, will remove them.",
+                        builder.id));
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9 ]", "");
+            }
+        } else {
+            this.id = null;
+        }
+
         name = builder.name;
         category = builder.category;
         description = builder.description;
@@ -54,6 +70,10 @@ public class ShortcutDTO {
 
     public String getName() {
         return name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getCategory() {
@@ -86,6 +106,7 @@ public class ShortcutDTO {
 
         return new EqualsBuilder()
                 .append(name, that.name)
+                .append(id, that.id)
                 .append(category, that.category)
                 .append(description, that.description)
                 .append(icon, that.icon)
@@ -97,6 +118,7 @@ public class ShortcutDTO {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(id)
                 .append(name)
                 .append(category)
                 .append(description)
@@ -109,6 +131,7 @@ public class ShortcutDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
         private String name;
+        private String id;
         private String category;
         private String description;
         private URI icon;
@@ -120,6 +143,7 @@ public class ShortcutDTO {
         }
 
         public Builder(ShortcutDTO shortcutDTO) {
+            this.id = shortcutDTO.id;
             this.name = shortcutDTO.name;
             this.category = shortcutDTO.category;
             this.description = shortcutDTO.description;
@@ -130,6 +154,11 @@ public class ShortcutDTO {
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 
