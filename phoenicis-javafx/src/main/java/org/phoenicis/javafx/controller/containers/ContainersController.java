@@ -90,7 +90,7 @@ public class ContainersController {
                     .flatMap(subCategory -> subCategory.getPackages().stream())
                     .collect(Collectors.toList()),*/
                     engineToolsManager,
-                    Optional.of(engineTools.get("Wine")),
+                    Optional.ofNullable(engineTools.get("Wine")),
                     winePrefixContainerController);
 
             panel.setOnDeletePrefix(winePrefixDTO -> {
