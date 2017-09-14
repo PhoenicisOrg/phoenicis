@@ -26,6 +26,7 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Optional;
 
 public class ContainerPanelFactory<T extends AbstractContainerPanel<C>, C extends ContainerDTO> {
     private final Class<T> clazz;
@@ -39,11 +40,11 @@ public class ContainerPanelFactory<T extends AbstractContainerPanel<C>, C extend
     public T createContainerPanel(C containerDTO,
             List<EngineVersionDTO> engineVersions,
             EngineToolsManager engineToolsManager,
-            ApplicationDTO engineTools,
+            Optional<ApplicationDTO> engineTools,
             WinePrefixContainerController winePrefixContainerController) {
         try {
             return this.clazz
-                    .getConstructor(entityClazz, List.class, EngineToolsManager.class, ApplicationDTO.class,
+                    .getConstructor(entityClazz, List.class, EngineToolsManager.class, Optional.class,
                             WinePrefixContainerController.class)
                     .newInstance(containerDTO, engineVersions, engineToolsManager, engineTools,
                             winePrefixContainerController);
