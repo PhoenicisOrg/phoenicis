@@ -26,7 +26,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TabPane;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
-import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -40,6 +39,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class EnginesView extends MainWindowView<EnginesSidebar> {
     private final EnginesFilter filter;
@@ -62,7 +63,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
     };
 
     public EnginesView(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
-        super("Engines", themeManager);
+        super(tr("Engines"), themeManager);
 
         this.filter = new EnginesFilter(enginesPath);
 
