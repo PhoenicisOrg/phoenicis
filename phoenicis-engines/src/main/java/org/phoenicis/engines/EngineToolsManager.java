@@ -80,7 +80,7 @@ public class EngineToolsManager {
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
-            if (typeDTO.getName().equals("Engines")) {
+            if (typeDTO.getId().equals("Engines")) {
                 categoryDTOS = typeDTO.getCategories();
             }
         }

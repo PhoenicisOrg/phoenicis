@@ -51,6 +51,10 @@ public class WinePrefixContainerWineToolsTab extends Tab {
         final VBox toolsPane = new VBox();
         final Text title = new TextWithStyle(tr("Wine tools"), TITLE_CSS_CLASS);
 
+        if (engineTools == null) {
+            return;
+        }
+
         toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         toolsPane.getChildren().add(title);
 
