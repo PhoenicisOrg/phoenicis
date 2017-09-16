@@ -72,12 +72,29 @@ public class AppsController {
         });
 
         this.view.setOnSelectScript(
-                scriptDTO -> scriptInterpreter.runScript(scriptDTO.getScript(), e -> Platform.runLater(() -> {
-                    // no exception if installation is cancelled
-                    if (!(e.getCause() instanceof InterruptedException)) {
-                        new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
-                    }
-                })));
+                scriptDTO -> {
+                    final StringBuilder environmentBuilder = new StringBuilder();
+                    environmentBuilder.append("TYPE_ID=\"");
+                    environmentBuilder.append(scriptDTO.getTypeId());
+                    environmentBuilder.append("\";\n");
+                    environmentBuilder.append("CATEGORY_ID=\"");
+                    environmentBuilder.append(scriptDTO.getCategoryId());
+                    environmentBuilder.append("\";\n");
+                    environmentBuilder.append("APPLICATION_ID=\"");
+                    environmentBuilder.append(scriptDTO.getApplicationId());
+                    environmentBuilder.append("\";\n");
+                    environmentBuilder.append("SCRIPT_ID=\"");
+                    environmentBuilder.append(scriptDTO.getId());
+                    environmentBuilder.append("\";\n");
+                    final String environment = environmentBuilder.toString();
+                    final String execute = environment + scriptDTO.getScript();
+                    scriptInterpreter.runScript(execute, e -> Platform.runLater(() -> {
+                        // no exception if installation is cancelled
+                        if (!(e.getCause() instanceof InterruptedException)) {
+                            new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
+                        }
+                    }));
+                });
 
         onAppLoaded.run();
     }
