@@ -162,6 +162,9 @@ public class TypeDTO {
             return new TypeDTO(this);
         }
 
+        public String getId() {
+            return this.id;
+        }
     }
 
     @Override

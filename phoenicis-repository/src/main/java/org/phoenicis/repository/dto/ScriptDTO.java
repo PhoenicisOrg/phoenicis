@@ -32,6 +32,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 public class ScriptDTO {
+    private final String typeId;
+    private final String categoryId;
+    private final String applicationId;
     private final String id;
     private final String scriptName;
     private final URI scriptSource;
@@ -43,6 +46,9 @@ public class ScriptDTO {
     private final URI icon;
 
     private ScriptDTO(Builder builder) {
+        this.typeId = builder.typeId;
+        this.categoryId = builder.categoryId;
+        this.applicationId = builder.applicationId;
         this.id = builder.id;
         this.scriptName = builder.scriptName;
         this.scriptSource = builder.scriptSource;
@@ -52,6 +58,18 @@ public class ScriptDTO {
         this.requiresPatch = builder.requiresPatch;
         this.script = builder.script;
         this.icon = builder.icon;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
     }
 
     public String getId() {
@@ -107,6 +125,9 @@ public class ScriptDTO {
         ScriptDTO scriptDTO = (ScriptDTO) o;
 
         return new EqualsBuilder()
+                .append(typeId, scriptDTO.typeId)
+                .append(categoryId, scriptDTO.categoryId)
+                .append(applicationId, scriptDTO.applicationId)
                 .append(id, scriptDTO.id)
                 .append(scriptName, scriptDTO.scriptName)
                 .append(scriptSource, scriptDTO.scriptSource)
@@ -122,6 +143,9 @@ public class ScriptDTO {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(typeId)
+                .append(categoryId)
+                .append(applicationId)
                 .append(id)
                 .append(scriptName)
                 .append(scriptSource)
@@ -135,6 +159,9 @@ public class ScriptDTO {
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     public static class Builder {
+        private String typeId;
+        private String categoryId;
+        private String applicationId;
         private String id;
         private String scriptName;
         private URI scriptSource;
@@ -150,7 +177,10 @@ public class ScriptDTO {
         }
 
         public Builder(ScriptDTO scriptDTO) {
-            this.withId(scriptDTO.getId())
+            this.withTypeId(scriptDTO.getTypeId())
+                    .withCategoryId(scriptDTO.getCategoryId())
+                    .withApplicationId(scriptDTO.getApplicationId())
+                    .withId(scriptDTO.getId())
                     .withScriptName(scriptDTO.getScriptName())
                     .withScript(scriptDTO.getScript())
                     .withCompatibleOperatingSystems(scriptDTO.getCompatibleOperatingSystems())
@@ -158,6 +188,21 @@ public class ScriptDTO {
                     .withFree(scriptDTO.isFree())
                     .withRequiresPatch(scriptDTO.requiresPatch)
                     .withIcon(scriptDTO.getIcon());
+        }
+
+        public Builder withTypeId(String typeId) {
+            this.typeId = typeId;
+            return this;
+        }
+
+        public Builder withCategoryId(String categoryId) {
+            this.categoryId = categoryId;
+            return this;
+        }
+
+        public Builder withApplicationId(String applicationId) {
+            this.applicationId = applicationId;
+            return this;
         }
 
         public Builder withId(String id) {
@@ -208,5 +253,6 @@ public class ScriptDTO {
         public ScriptDTO build() {
             return new ScriptDTO(this);
         }
+
     }
 }
