@@ -98,17 +98,17 @@ public interface Repository {
      * @return ApplicationDTO
      */
     default ApplicationDTO getApplication(List<String> path) {
-        final String wantedName = path.get(2);
+        final String wantedId = path.get(2);
         final CategoryDTO categoryDTO = getCategory(path);
         if (categoryDTO == null) {
             return null;
         }
 
         final Optional<ApplicationDTO> applicationDTO = categoryDTO.getApplications().stream()
-                .filter(application -> wantedName.equals(application.getName())).findFirst();
+                .filter(application -> wantedId.equals(application.getId())).findFirst();
 
         if (!applicationDTO.isPresent()) {
-            LOGGER.error(String.format("Could not find ApplicationDTO with name \"%s\"", wantedName));
+            LOGGER.error(String.format("Could not find ApplicationDTO with ID \"%s\"", wantedId));
         }
 
         return applicationDTO.orElse(null);
