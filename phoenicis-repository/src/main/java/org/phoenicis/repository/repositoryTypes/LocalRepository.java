@@ -107,8 +107,7 @@ public class LocalRepository implements Repository {
 
                 if (typeJson.exists()) {
                     final TypeDTO jsonTypeDTO = unSerializeType(typeJson);
-                    final TypeDTO.Builder typeDTOBuilder = new TypeDTO.Builder(jsonTypeDTO)
-                            .withCategories(fetchCategories(typeDirectory));
+                    final TypeDTO.Builder typeDTOBuilder = new TypeDTO.Builder(jsonTypeDTO);
 
                     if (StringUtils.isBlank(jsonTypeDTO.getId())) {
                         if (!StringUtils.isBlank(jsonTypeDTO.getName())) {
@@ -123,6 +122,8 @@ public class LocalRepository implements Repository {
                         typeDTOBuilder.withIcon(typeIconFile.toURI());
                     }
 
+                    typeDTOBuilder.withCategories(fetchCategories(typeDTOBuilder.getId(), typeDirectory));
+
                     final TypeDTO type = typeDTOBuilder.build();
                     results.add(type);
                 }
@@ -133,7 +134,7 @@ public class LocalRepository implements Repository {
         return results;
     }
 
-    private List<CategoryDTO> fetchCategories(File typeDirectory) {
+    private List<CategoryDTO> fetchCategories(String typeId, File typeDirectory) {
         final File[] categoryDirectories = typeDirectory.listFiles();
         if (categoryDirectories == null) {
             return Collections.emptyList();
@@ -147,8 +148,9 @@ public class LocalRepository implements Repository {
 
                 if (categoryJson.exists()) {
                     final CategoryDTO jsonCategoryDTO = unSerializeCategory(categoryJson);
-                    final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(jsonCategoryDTO)
-                            .withApplications(fetchApplications(categoryDirectory));
+                    final CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(jsonCategoryDTO);
+
+                    categoryDTOBuilder.withTypeId(typeId);
 
                     if (StringUtils.isBlank(jsonCategoryDTO.getId())) {
                         if (!StringUtils.isBlank(jsonCategoryDTO.getName())) {
@@ -163,6 +165,9 @@ public class LocalRepository implements Repository {
                         categoryDTOBuilder.withIcon(categoryIconFile.toURI());
                     }
 
+                    categoryDTOBuilder.withApplications(fetchApplications(categoryDTOBuilder.getTypeId(),
+                            categoryDTOBuilder.getId(), categoryDirectory));
+
                     final CategoryDTO category = categoryDTOBuilder.build();
                     results.add(category);
                 }
@@ -173,7 +178,7 @@ public class LocalRepository implements Repository {
         return results;
     }
 
-    private List<ApplicationDTO> fetchApplications(File categoryDirectory) {
+    private List<ApplicationDTO> fetchApplications(String typeId, String categoryId, File categoryDirectory) {
         final File[] applicationDirectories = categoryDirectory.listFiles();
         if (applicationDirectories == null) {
             return Collections.emptyList();
@@ -191,6 +196,9 @@ public class LocalRepository implements Repository {
                 } else {
                     applicationDTOBuilder = new ApplicationDTO.Builder();
                 }
+
+                applicationDTOBuilder.withTypeId(typeId)
+                        .withCategoryId(categoryId);
 
                 if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
                     if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
@@ -210,8 +218,9 @@ public class LocalRepository implements Repository {
                     }
                 }
 
-                applicationDTOBuilder.withScripts(fetchScripts(applicationDirectory));
-                applicationDTOBuilder.withResources(fetchResources(applicationDirectory));
+                applicationDTOBuilder.withScripts(fetchScripts(applicationDTOBuilder.getTypeId(),
+                        applicationDTOBuilder.getCategoryId(), applicationDTOBuilder.getId(), applicationDirectory))
+                        .withResources(fetchResources(applicationDirectory));
 
                 ApplicationDTO app = applicationDTOBuilder.build();
                 results.add(app);
@@ -254,7 +263,8 @@ public class LocalRepository implements Repository {
         return results;
     }
 
-    private List<ScriptDTO> fetchScripts(File applicationDirectory) {
+    private List<ScriptDTO> fetchScripts(String typeId, String categoryId, String applicationId,
+            File applicationDirectory) {
         final File[] scriptDirectories = applicationDirectory.listFiles();
         if (scriptDirectories == null) {
             return Collections.emptyList();
@@ -278,10 +288,11 @@ public class LocalRepository implements Repository {
                     scriptDTOBuilder = new ScriptDTO.Builder();
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
-
-                scriptDTOBuilder.withId(scriptDirectory.getName());
-
-                scriptDTOBuilder.withScriptSource(repositorySource);
+                scriptDTOBuilder.withTypeId(typeId)
+                        .withCategoryId(categoryId)
+                        .withApplicationId(applicationId)
+                        .withId(scriptDirectory.getName())
+                        .withScriptSource(repositorySource);
 
                 final File scriptFile = new File(scriptDirectory, "script.js");
 
