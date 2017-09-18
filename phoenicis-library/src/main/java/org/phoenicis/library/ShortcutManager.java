@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.util.function.Consumer;
 
@@ -162,28 +163,34 @@ public class ShortcutManager {
         // backup icon if it didn't change (deleteShortcut will delete it -> icon lost after shortcut update)
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
         final File iconBackup = new File(shortcutDirectory, baseName + ".icon_backup");
+        final URI shortcutIcon = shortcutDTO.getIcon();
 
-        final boolean keepIcon = shortcutDTO.getIcon().getPath().equals(iconFile.getPath());
-        if (keepIcon) {
-            try {
-                Files.move(iconFile.toPath(), iconBackup.toPath());
-                shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withIcon(iconBackup.toURI()).build();
-            } catch (IOException e) {
-                LOGGER.error("Could not backup icon.");
+        if (shortcutIcon != null) {
+            final boolean keepIcon = shortcutIcon.getPath().equals(iconFile.getPath());
+            if (keepIcon) {
+                try {
+                    Files.move(iconFile.toPath(), iconBackup.toPath());
+                    shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withIcon(iconBackup.toURI()).build();
+                } catch (IOException e) {
+                    LOGGER.error("Could not backup icon.");
+                }
             }
         }
 
         // backup miniature if it didn't change (deleteShortcut will delete it -> miniature lost after shortcut update)
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
         final File miniatureBackup = new File(shortcutDirectory, baseName + ".miniature_backup");
+        final URI shortcutMiniature = shortcutDTO.getMiniature();
 
-        final boolean keepMiniature = shortcutDTO.getMiniature().getPath().equals(miniatureFile.getPath());
-        if (keepMiniature) {
-            try {
-                Files.move(miniatureFile.toPath(), miniatureBackup.toPath());
-                shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withMiniature(miniatureBackup.toURI()).build();
-            } catch (IOException e) {
-                LOGGER.error("Could not backup miniature.");
+        if (shortcutMiniature != null) {
+            final boolean keepMiniature = shortcutMiniature.getPath().equals(miniatureFile.getPath());
+            if (keepMiniature) {
+                try {
+                    Files.move(miniatureFile.toPath(), miniatureBackup.toPath());
+                    shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withMiniature(miniatureBackup.toURI()).build();
+                } catch (IOException e) {
+                    LOGGER.error("Could not backup miniature.");
+                }
             }
         }
 
