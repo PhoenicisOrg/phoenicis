@@ -172,7 +172,7 @@ public class ShortcutManager {
                     Files.move(iconFile.toPath(), iconBackup.toPath());
                     shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withIcon(iconBackup.toURI()).build();
                 } catch (IOException e) {
-                    LOGGER.error("Could not backup icon.");
+                    LOGGER.error("Could not backup icon.", e);
                 }
             }
         }
@@ -189,7 +189,7 @@ public class ShortcutManager {
                     Files.move(miniatureFile.toPath(), miniatureBackup.toPath());
                     shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withMiniature(miniatureBackup.toURI()).build();
                 } catch (IOException e) {
-                    LOGGER.error("Could not backup miniature.");
+                    LOGGER.error("Could not backup miniature.", e);
                 }
             }
         }
