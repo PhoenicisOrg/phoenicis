@@ -165,7 +165,7 @@ public class ShortcutManager {
         final File iconBackup = new File(shortcutDirectory, baseName + ".icon_backup");
         final URI shortcutIcon = shortcutDTO.getIcon();
 
-        if (shortcutIcon != null) {
+        if (shortcutIcon != null && shortcutIcon.getPath() != null) {
             final boolean keepIcon = shortcutIcon.getPath().equals(iconFile.getPath());
             if (keepIcon) {
                 try {
@@ -182,7 +182,7 @@ public class ShortcutManager {
         final File miniatureBackup = new File(shortcutDirectory, baseName + ".miniature_backup");
         final URI shortcutMiniature = shortcutDTO.getMiniature();
 
-        if (shortcutMiniature != null) {
+        if (shortcutMiniature != null && shortcutMiniature.getPath() != null) {
             final boolean keepMiniature = shortcutMiniature.getPath().equals(miniatureFile.getPath());
             if (keepMiniature) {
                 try {
