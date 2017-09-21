@@ -89,7 +89,7 @@ public class ShortcutManager {
                     FileUtils.copyFile(file, miniatureFile);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | IllegalArgumentException e) {
             LOGGER.warn("Error while creating shortcut", e);
         } finally {
             libraryManager.refresh();
