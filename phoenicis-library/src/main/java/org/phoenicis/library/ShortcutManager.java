@@ -77,19 +77,27 @@ public class ShortcutManager {
 
             FileUtils.writeStringToFile(scriptFile, shortcutDTO.getScript(), ENCODING);
 
-            if (shortcutDTO.getIcon() != null) {
-                File file = new File(shortcutDTO.getIcon());
-                if (file.exists()) {
-                    FileUtils.copyFile(file, iconFile);
+            try {
+                if (shortcutDTO.getIcon() != null) {
+                    File file = new File(shortcutDTO.getIcon());
+                    if (file.exists()) {
+                        FileUtils.copyFile(file, iconFile);
+                    }
                 }
+            } catch (IOException | IllegalArgumentException e) {
+                LOGGER.warn("Error while creating shortcut icon", e);
             }
-            if (shortcutDTO.getMiniature() != null) {
-                File file = new File(shortcutDTO.getMiniature());
-                if (file.exists()) {
-                    FileUtils.copyFile(file, miniatureFile);
+            try {
+                if (shortcutDTO.getMiniature() != null) {
+                    File file = new File(shortcutDTO.getMiniature());
+                    if (file.exists()) {
+                        FileUtils.copyFile(file, miniatureFile);
+                    }
                 }
+            } catch (IOException | IllegalArgumentException e) {
+                LOGGER.warn("Error while creating miniature", e);
             }
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException e) {
             LOGGER.warn("Error while creating shortcut", e);
         } finally {
             libraryManager.refresh();
