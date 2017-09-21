@@ -157,7 +157,7 @@ public class ShortcutManager {
     }
 
     public void updateShortcut(ShortcutDTO shortcutDTO) {
-        final String baseName = shortcutDTO.getInfo().getName();
+        final String baseName = shortcutDTO.getId();
         final File shortcutDirectory = new File(this.shortcutDirectory);
 
         // backup icon if it didn't change (deleteShortcut will delete it -> icon lost after shortcut update)
