@@ -77,17 +77,25 @@ public class ShortcutManager {
 
             FileUtils.writeStringToFile(scriptFile, shortcutDTO.getScript(), ENCODING);
 
-            if (shortcutDTO.getIcon() != null) {
-                File file = new File(shortcutDTO.getIcon());
-                if (file.exists()) {
-                    FileUtils.copyFile(file, iconFile);
+            try {
+                if (shortcutDTO.getIcon() != null) {
+                    File file = new File(shortcutDTO.getIcon());
+                    if (file.exists()) {
+                        FileUtils.copyFile(file, iconFile);
+                    }
                 }
+            } catch (IOException | IllegalArgumentException e) {
+                LOGGER.warn("Error while creating shortcut icon", e);
             }
-            if (shortcutDTO.getMiniature() != null) {
-                File file = new File(shortcutDTO.getMiniature());
-                if (file.exists()) {
-                    FileUtils.copyFile(file, miniatureFile);
+            try {
+                if (shortcutDTO.getMiniature() != null) {
+                    File file = new File(shortcutDTO.getMiniature());
+                    if (file.exists()) {
+                        FileUtils.copyFile(file, miniatureFile);
+                    }
                 }
+            } catch (IOException | IllegalArgumentException e) {
+                LOGGER.warn("Error while creating miniature", e);
             }
         } catch (IOException e) {
             LOGGER.warn("Error while creating shortcut", e);
@@ -165,7 +173,7 @@ public class ShortcutManager {
         final File iconBackup = new File(shortcutDirectory, baseName + ".icon_backup");
         final URI shortcutIcon = shortcutDTO.getIcon();
 
-        if (shortcutIcon != null) {
+        if (shortcutIcon != null && shortcutIcon.getPath() != null) {
             final boolean keepIcon = shortcutIcon.getPath().equals(iconFile.getPath());
             if (keepIcon) {
                 try {
@@ -182,7 +190,7 @@ public class ShortcutManager {
         final File miniatureBackup = new File(shortcutDirectory, baseName + ".miniature_backup");
         final URI shortcutMiniature = shortcutDTO.getMiniature();
 
-        if (shortcutMiniature != null) {
+        if (shortcutMiniature != null && shortcutMiniature.getPath() != null) {
             final boolean keepMiniature = shortcutMiniature.getPath().equals(miniatureFile.getPath());
             if (keepMiniature) {
                 try {
