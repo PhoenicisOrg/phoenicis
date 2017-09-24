@@ -98,6 +98,7 @@ public class ApplicationDTO {
         return description;
     }
 
+    @Translate
     public List<ScriptDTO> getScripts() {
         return scripts;
     }

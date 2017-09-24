@@ -23,6 +23,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.phoenicis.configuration.localisation.Translatable;
+import org.phoenicis.configuration.localisation.TranslatableBuilder;
+import org.phoenicis.configuration.localisation.Translate;
 import org.phoenicis.entities.OperatingSystem;
 
 import java.net.URI;
@@ -31,6 +34,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
+@Translatable
 public class ScriptDTO {
     private final String id;
     private final String scriptName;
@@ -58,6 +62,7 @@ public class ScriptDTO {
         return id;
     }
 
+    @Translate
     public String getScriptName() {
         return scriptName;
     }
@@ -134,6 +139,7 @@ public class ScriptDTO {
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
+    @TranslatableBuilder
     public static class Builder {
         private String id;
         private String scriptName;

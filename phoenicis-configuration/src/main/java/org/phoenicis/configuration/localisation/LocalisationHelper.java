@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 
 class LocalisationHelper {
     /**
@@ -30,7 +31,8 @@ class LocalisationHelper {
      */
     String getterNameFromBuilderMethod(Method method) {
         final String getterPrefix;
-        if (method.getReturnType() == Boolean.class || method.getReturnType() == boolean.class) {
+        if (Arrays.stream(method.getParameterTypes())
+                .anyMatch(clazz -> clazz == Boolean.class || clazz == boolean.class)) {
             getterPrefix = "is";
         } else {
             getterPrefix = "get";
