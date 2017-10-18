@@ -19,7 +19,7 @@
 package org.phoenicis.settings;
 
 public enum Setting {
-    TERMINAL("tools.linux-terminal");
+    TERMINAL("${tools.linux-terminal:}");
 
     private final String propertyName;
 

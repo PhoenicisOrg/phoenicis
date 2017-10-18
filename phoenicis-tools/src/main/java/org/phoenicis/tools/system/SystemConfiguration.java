@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @Configuration
 public class SystemConfiguration {
-    @Value("${tools.linux-terminal}")
+    @Value("${tools.linux-terminal:}")
     private String linuxTerminalCommand;
 
     @Bean
