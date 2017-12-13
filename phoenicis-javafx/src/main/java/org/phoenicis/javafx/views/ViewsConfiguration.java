@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views;
 
-import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
@@ -31,6 +30,7 @@ import org.phoenicis.javafx.views.mainwindow.engines.ViewEngines;
 import org.phoenicis.javafx.views.mainwindow.library.ViewLibrary;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.ViewSettings;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +94,7 @@ public class ViewsConfiguration {
     public ViewSettings viewSettings() {
         return new ViewSettings(themeConfiguration.themeManager(), applicationName, applicationVersion,
                 applicationGitRevision, applicationBuildTimestamp, toolsConfiguration.opener(),
-                settingsConfiguration.settingsManager(), repositoryConfiguration.repositoryManager());
+                settingsConfiguration.settingsManager(), repositoryConfiguration.repositoryManager(), repositoryConfiguration.filesystemJsonRepositoryLocationLoader());
     }
 
     @Bean

@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.mainwindow.settings.addrepository.AddRepositoryDialog;
+import org.phoenicis.repository.RepositoryLocationLoader;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
@@ -60,12 +61,14 @@ public class RepositoriesPanel extends StackPane {
      * @param settingsManager   The settings manager
      * @param repositoryManager The repository manager
      */
-    public RepositoriesPanel(SettingsManager settingsManager, RepositoryManager repositoryManager) {
+    public RepositoriesPanel(SettingsManager settingsManager,
+                             RepositoryLocationLoader repositoryLocationLoader,
+                             RepositoryManager repositoryManager) {
         super();
 
         this.settingsManager = settingsManager;
         this.repositoryManager = repositoryManager;
-        this.repositories = FXCollections.observableArrayList(settingsManager.loadRepositoryLocations());
+        this.repositories = FXCollections.observableArrayList(repositoryLocationLoader.loadRepositoryLocations());
 
         this.getStyleClass().add("containerConfigurationPane");
 

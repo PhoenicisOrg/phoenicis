@@ -19,10 +19,7 @@
 package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
-import org.phoenicis.repository.location.ClasspathRepositoryLocation;
-import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
@@ -34,16 +31,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -56,6 +50,9 @@ public class RepositoryConfiguration {
     @Value("${application.user.cache}")
     private String cacheDirectoryPath;
 
+    @Value("${application.repository.loader}")
+    private String applicationRepositoryLoader;
+
     @Value("${application.repository.list}")
     private String repositoryListPath;
 
@@ -66,7 +63,21 @@ public class RepositoryConfiguration {
     private ToolsConfiguration toolsConfiguration;
 
     @Autowired
+    /* FIXME: This is not configration, this should not be injected here */
     private FileUtilities fileUtilities;
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @Bean
+    public RepositoryLocationLoader dynamicLocationLoader() {
+        return new DynamicRepositoryLocationLoader(applicationContext, applicationRepositoryLoader);
+    }
+
+    @Bean
+    public RepositoryLocationLoader filesystemJsonRepositoryLocationLoader() {
+        return new FilesystemJsonRepositoryLocationLoader(repositoryListPath, objectMapper());
+    }
 
     @Bean
     public RepositoryManager repositoryManager() {
@@ -76,11 +87,13 @@ public class RepositoryConfiguration {
                 classPathRepositoryFactory(), backgroundRepositoryFactory());
 
         // set initial repositories
-        repositoryManager.addRepositories(this.loadRepositoryLocations().toArray(new RepositoryLocation[0]));
+        // FIXME : Configuration should not contain code
+        repositoryManager.addRepositories(dynamicLocationLoader().loadRepositoryLocations().toArray(new RepositoryLocation[0]));
 
         return repositoryManager;
     }
 
+    /* FIXME: Configuration should not contain code */
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
         try {
             this.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
@@ -89,34 +102,6 @@ public class RepositoryConfiguration {
         }
     }
 
-    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
-        List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
-
-        File repositoryListFile = new File(repositoryListPath);
-
-        if (repositoryListFile.exists()) {
-            try {
-                result = this.objectMapper().readValue(new File(repositoryListPath),
-                        TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
-            } catch (IOException e) {
-                LOGGER.error("Couldn't load repository location list", e);
-            }
-        } else {
-            try {
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI())
-                        .withBranch("master").build());
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI())
-                        .withBranch("master").build());
-                result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
-            } catch (URISyntaxException | MalformedURLException e) {
-                LOGGER.error("Couldn't create default repository location list", e);
-            }
-        }
-
-        return result;
-    }
 
     @Bean
     ClasspathRepository.Factory classPathRepositoryFactory() {

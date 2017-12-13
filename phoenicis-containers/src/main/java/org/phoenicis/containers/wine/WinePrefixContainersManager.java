@@ -57,9 +57,9 @@ public class WinePrefixContainersManager implements ContainersManager {
     private ObjectMapper objectMapper;
 
     public WinePrefixContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
-                                       WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
-                                       WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration, LibraryManager libraryManager,
-                                       ObjectMapper objectMapper) {
+            WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
+            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration, LibraryManager libraryManager,
+            ObjectMapper objectMapper) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
         this.winePrefixContainerDisplayConfiguration = winePrefixContainerDisplayConfiguration;
         this.winePrefixContainerInputConfiguration = winePrefixContainerInputConfiguration;

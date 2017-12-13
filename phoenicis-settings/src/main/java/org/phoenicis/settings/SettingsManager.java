@@ -110,10 +110,6 @@ public class SettingsManager {
         repositoryConfiguration.saveRepositories(repositoryLocations);
     }
 
-    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
-        return repositoryConfiguration.loadRepositoryLocations();
-    }
-
     public void setWindowWidth(double windowWidth) {
         this.windowWidth = windowWidth;
     }
