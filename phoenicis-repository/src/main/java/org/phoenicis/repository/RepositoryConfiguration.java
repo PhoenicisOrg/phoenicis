@@ -114,9 +114,6 @@ public class RepositoryConfiguration {
                 result.add(new GitRepositoryLocation.Builder()
                         .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/Scripts").toURI())
                         .withBranch("master").build());
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/Oldwares").toURI())
-                        .withBranch("master").build());
                 result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
             } catch (URISyntaxException | MalformedURLException e) {
                 LOGGER.error("Couldn't create default repository location list", e);
