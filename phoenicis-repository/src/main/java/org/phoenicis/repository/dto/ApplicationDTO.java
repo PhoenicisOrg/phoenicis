@@ -39,6 +39,8 @@ import java.util.*;
 @Translatable
 public class ApplicationDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationDTO.class);
+    private final String typeId;
+    private final String categoryId;
     private final String id;
     private final String name;
     private final String description;
@@ -48,6 +50,8 @@ public class ApplicationDTO {
     private final List<ResourceDTO> resources;
 
     private ApplicationDTO(Builder builder) {
+        this.typeId = builder.typeId;
+        this.categoryId = builder.categoryId;
         if (builder.id != null) {
             if (builder.id.matches("^[a-zA-Z0-9]+$")) {
                 this.id = builder.id;
@@ -70,6 +74,14 @@ public class ApplicationDTO {
 
     public static Comparator<ApplicationDTO> nameComparator() {
         return (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName());
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
     }
 
     public List<ResourceDTO> getResources() {
@@ -128,6 +140,8 @@ public class ApplicationDTO {
         ApplicationDTO that = (ApplicationDTO) o;
 
         return new EqualsBuilder()
+                .append(typeId, that.typeId)
+                .append(categoryId, that.categoryId)
                 .append(id, that.id)
                 .append(name, that.name)
                 .append(description, that.description)
@@ -141,6 +155,8 @@ public class ApplicationDTO {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(typeId)
+                .append(categoryId)
                 .append(id)
                 .append(name)
                 .append(description)
@@ -154,6 +170,8 @@ public class ApplicationDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     @TranslatableBuilder
     public static class Builder {
+        private String typeId;
+        private String categoryId;
         private String id;
         private String name;
         private String description;
@@ -167,6 +185,8 @@ public class ApplicationDTO {
         }
 
         public Builder(ApplicationDTO applicationDTO) {
+            this.typeId = applicationDTO.typeId;
+            this.categoryId = applicationDTO.categoryId;
             this.id = applicationDTO.id;
             this.name = applicationDTO.name;
             this.description = applicationDTO.description;
@@ -174,6 +194,16 @@ public class ApplicationDTO {
             this.miniatures = applicationDTO.miniatures;
             this.scripts = applicationDTO.scripts;
             this.resources = applicationDTO.resources;
+        }
+
+        public Builder withTypeId(String typeId) {
+            this.typeId = typeId;
+            return this;
+        }
+
+        public Builder withCategoryId(String categoryId) {
+            this.categoryId = categoryId;
+            return this;
         }
 
         public Builder withId(String id) {
@@ -213,6 +243,14 @@ public class ApplicationDTO {
 
         public ApplicationDTO build() {
             return new ApplicationDTO(this);
+        }
+
+        public String getTypeId() {
+            return typeId;
+        }
+
+        public String getCategoryId() {
+            return categoryId;
         }
 
         public String getId() {

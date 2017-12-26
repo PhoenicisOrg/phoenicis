@@ -42,6 +42,7 @@ import java.util.List;
 @Translatable
 public class CategoryDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDTO.class);
+    private final String typeId;
     private final CategoryType type;
     private final String id;
     private final String name;
@@ -49,6 +50,7 @@ public class CategoryDTO {
     private final URI icon;
 
     private CategoryDTO(Builder builder) {
+        this.typeId = builder.typeId;
         this.type = builder.type;
 
         if (builder.id != null) {
@@ -85,6 +87,7 @@ public class CategoryDTO {
         CategoryDTO that = (CategoryDTO) o;
 
         return new EqualsBuilder()
+                .append(typeId, that.typeId)
                 .append(type, that.type)
                 .append(id, that.id)
                 .append(name, that.name)
@@ -96,6 +99,7 @@ public class CategoryDTO {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
+                .append(typeId)
                 .append(type)
                 .append(id)
                 .append(name)
@@ -106,6 +110,10 @@ public class CategoryDTO {
 
     public enum CategoryType {
         INSTALLERS, FUNCTIONS
+    }
+
+    public String getTypeId() {
+        return typeId;
     }
 
     public CategoryType getType() {
@@ -133,6 +141,7 @@ public class CategoryDTO {
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
     @TranslatableBuilder
     public static class Builder {
+        private String typeId;
         private CategoryType type;
         private String id;
         private String name;
@@ -144,9 +153,17 @@ public class CategoryDTO {
         }
 
         public Builder(CategoryDTO categoryDTO) {
-            this.withId(categoryDTO.getId()).withName(categoryDTO.getName())
-                    .withApplications(categoryDTO.getApplications()).withIcon(categoryDTO.getIcon())
+            this.withTypeId(categoryDTO.getTypeId())
+                    .withId(categoryDTO.getId())
+                    .withName(categoryDTO.getName())
+                    .withApplications(categoryDTO.getApplications())
+                    .withIcon(categoryDTO.getIcon())
                     .withType(categoryDTO.getType());
+        }
+
+        public Builder withTypeId(String typeId) {
+            this.typeId = typeId;
+            return this;
         }
 
         public Builder withType(CategoryType type) {
@@ -178,6 +195,13 @@ public class CategoryDTO {
             return new CategoryDTO(this);
         }
 
+        public String getTypeId() {
+            return this.typeId;
+        }
+
+        public String getId() {
+            return id;
+        }
     }
 
     @Override

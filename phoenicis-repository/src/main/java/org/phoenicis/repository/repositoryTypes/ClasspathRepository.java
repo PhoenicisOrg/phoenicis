@@ -89,15 +89,15 @@ public class ClasspathRepository implements Repository {
             if (jsonTypeFile != null) {
                 final TypeDTO typeDTO = objectMapper.readValue(jsonTypeFile, TypeDTO.class);
 
+                TypeDTO.Builder typeDTOBuilder = new TypeDTO.Builder(typeDTO)
+                        .withId(typeFileName);
+                typeDTOBuilder.withCategories(buildCategories(typeDTOBuilder.getId(), typeFileName)).build();
                 try {
-                    return new TypeDTO.Builder(typeDTO)
-                            .withIcon(new URI(packagePath + "/" + typeFileName + "/icon.png")).withId(typeFileName)
-                            .withCategories(buildCategories(typeFileName)).build();
+                    typeDTOBuilder.withIcon(new URI(packagePath + "/" + typeFileName + "/icon.png"));
                 } catch (URISyntaxException e) {
                     LOGGER.warn("Invalid icon path", e);
-                    return new TypeDTO.Builder(typeDTO).withId(typeFileName)
-                            .withCategories(buildCategories(typeFileName)).build();
                 }
+                return typeDTOBuilder.build();
             } else {
                 LOGGER.debug(String.format("type.json %s for classpath repository does not exist", jsonTypePath));
                 return new TypeDTO.Builder().build();
@@ -107,7 +107,7 @@ public class ClasspathRepository implements Repository {
         }
     }
 
-    private List<CategoryDTO> buildCategories(String typeFileName) throws RepositoryException {
+    private List<CategoryDTO> buildCategories(String typeId, String typeFileName) throws RepositoryException {
         try {
             final String categoryScanClassPath = packagePath + "/" + typeFileName;
             Resource[] resources = resourceResolver.getResources(categoryScanClassPath + "/*");
@@ -116,7 +116,7 @@ public class ClasspathRepository implements Repository {
             for (Resource resource : resources) {
                 final String fileName = resource.getFilename();
                 if (!"icon.png".equals(fileName) && !"category.json".equals(fileName)) {
-                    final CategoryDTO category = buildCategory(typeFileName, fileName);
+                    final CategoryDTO category = buildCategory(typeId, typeFileName, fileName);
                     if (!category.getApplications().isEmpty()) {
                         categoryDTOS.add(category);
                     }
@@ -130,7 +130,8 @@ public class ClasspathRepository implements Repository {
         }
     }
 
-    private CategoryDTO buildCategory(String typeFileName, String categoryFileName) throws RepositoryException {
+    private CategoryDTO buildCategory(String typeId, String typeFileName, String categoryFileName)
+            throws RepositoryException {
         try {
             final String jsonCategoryPath = packagePath + "/" + typeFileName + "/" + categoryFileName
                     + "/category.json";
@@ -138,17 +139,18 @@ public class ClasspathRepository implements Repository {
             if (jsonCategoryFile != null) {
                 final CategoryDTO categoryDTO = objectMapper.readValue(jsonCategoryFile, CategoryDTO.class);
 
+                CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(categoryDTO)
+                        .withTypeId(typeId)
+                        .withId(categoryFileName);
+                categoryDTOBuilder.withApplications(buildApplications(categoryDTOBuilder.getTypeId(),
+                        categoryDTOBuilder.getId(), typeFileName, categoryFileName));
                 try {
-                    return new CategoryDTO.Builder(categoryDTO)
-                            .withIcon(new URI(packagePath + "/" + typeFileName + "/" + categoryFileName + "/icon.png"))
-                            .withId(categoryFileName)
-                            .withApplications(buildApplications(typeFileName, categoryFileName))
-                            .build();
+                    categoryDTOBuilder
+                            .withIcon(new URI(packagePath + "/" + typeFileName + "/" + categoryFileName + "/icon.png"));
                 } catch (URISyntaxException e) {
                     LOGGER.warn("Invalid icon path", e);
-                    return new CategoryDTO.Builder(categoryDTO).withId(categoryFileName)
-                            .withApplications(buildApplications(typeFileName, categoryFileName)).build();
                 }
+                return categoryDTOBuilder.build();
             } else {
                 LOGGER.debug(String.format("category.json %s for classpath repository does not exist",
                         jsonCategoryPath));
@@ -159,7 +161,8 @@ public class ClasspathRepository implements Repository {
         }
     }
 
-    private List<ApplicationDTO> buildApplications(String typeFileName, String categoryFileName)
+    private List<ApplicationDTO> buildApplications(String typeId, String categoryId, String typeFileName,
+            String categoryFileName)
             throws RepositoryException {
         try {
             final String categoryScanClassPath = packagePath + "/" + typeFileName + "/" + categoryFileName;
@@ -169,7 +172,8 @@ public class ClasspathRepository implements Repository {
             for (Resource resource : resources) {
                 final String fileName = resource.getFilename();
                 if (!"icon.png".equals(fileName) && !"category.json".equals(fileName)) {
-                    final ApplicationDTO application = buildApplication(typeFileName, categoryFileName, fileName);
+                    final ApplicationDTO application = buildApplication(typeId, categoryId, typeFileName,
+                            categoryFileName, fileName);
                     if (!application.getScripts().isEmpty()) {
                         applicationDTOS.add(application);
                     }
@@ -183,7 +187,8 @@ public class ClasspathRepository implements Repository {
         }
     }
 
-    private ApplicationDTO buildApplication(String typeFileName, String categoryFileName, String applicationFileName)
+    private ApplicationDTO buildApplication(String typeId, String categoryId, String typeFileName,
+            String categoryFileName, String applicationFileName)
             throws RepositoryException {
         try {
             final String applicationDirectory = packagePath + "/" + typeFileName + "/" + categoryFileName + "/"
@@ -193,9 +198,16 @@ public class ClasspathRepository implements Repository {
             final ApplicationDTO applicationDTO = objectMapper
                     .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
 
-            return new ApplicationDTO.Builder(applicationDTO).withId(applicationFileName)
-                    .withScripts(buildScripts(typeFileName, categoryFileName, applicationFileName))
-                    .withMiniatures(buildMiniatures(typeFileName, categoryFileName, applicationFileName)).build();
+            ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(applicationDTO)
+                    .withTypeId(typeId)
+                    .withCategoryId(categoryId)
+                    .withId(applicationFileName);
+
+            applicationDTOBuilder
+                    .withScripts(buildScripts(applicationDTOBuilder.getTypeId(), applicationDTOBuilder.getCategoryId(),
+                            applicationDTOBuilder.getId(), typeFileName, categoryFileName, applicationFileName))
+                    .withMiniatures(buildMiniatures(typeFileName, categoryFileName, applicationFileName));
+            return applicationDTOBuilder.build();
         } catch (IOException e) {
             throw new RepositoryException("Could not build application", e);
         }
@@ -225,7 +237,8 @@ public class ClasspathRepository implements Repository {
         }
     }
 
-    private List<ScriptDTO> buildScripts(String typeFileName, String categoryFileName, String applicationFileName)
+    private List<ScriptDTO> buildScripts(String typeId, String categoryId, String applicationId, String typeFileName,
+            String categoryFileName, String applicationFileName)
             throws RepositoryException {
         try {
             final String applicationScanClassPath = packagePath + "/" + typeFileName + "/" + categoryFileName + "/"
@@ -237,7 +250,8 @@ public class ClasspathRepository implements Repository {
                 final String fileName = resource.getFilename();
                 if (!"resources".equals(fileName) && !"miniatures".equals(fileName)
                         && !"application.json".equals(fileName)) {
-                    final ScriptDTO script = buildScript(typeFileName, categoryFileName, applicationFileName, fileName);
+                    final ScriptDTO script = buildScript(typeId, categoryId, applicationId, typeFileName,
+                            categoryFileName, applicationFileName, fileName);
                     scriptDTOs.add(script);
                 }
             }
@@ -250,7 +264,8 @@ public class ClasspathRepository implements Repository {
         }
     }
 
-    private ScriptDTO buildScript(String typeFileName, String categoryFileName, String applicationFileName,
+    private ScriptDTO buildScript(String typeId, String categoryId, String applicationId, String typeFileName,
+            String categoryFileName, String applicationFileName,
             String scriptFileName)
             throws RepositoryException {
         try {
@@ -282,6 +297,9 @@ public class ClasspathRepository implements Repository {
             }
 
             return new ScriptDTO.Builder(objectMapper.readValue(scriptJsonInputStream, ScriptDTO.class))
+                    .withTypeId(typeId)
+                    .withCategoryId(categoryId)
+                    .withApplicationId(applicationId)
                     .withId(scriptFileName)
                     .withScript(new String(IOUtils.toByteArray(scriptFile)))
                     .withIcon(icon)

@@ -108,8 +108,12 @@ abstract class MergeableRepository implements Repository {
 
         final List<CategoryDTO> categories = new ArrayList<>(mergedCategories.values());
         categories.sort(CategoryDTO.nameComparator());
-        return new TypeDTO.Builder().withCategories(categories).withIcon(leftCategory.getIcon())
-                .withId(leftCategory.getId()).withName(leftCategory.getName()).build();
+        return new TypeDTO.Builder()
+                .withId(leftCategory.getId())
+                .withName(leftCategory.getName())
+                .withCategories(categories)
+                .withIcon(leftCategory.getIcon())
+                .build();
     }
 
     protected CategoryDTO mergeCategories(CategoryDTO leftCategory, CategoryDTO rightCategory) {
@@ -132,8 +136,14 @@ abstract class MergeableRepository implements Repository {
 
         final List<ApplicationDTO> applications = new ArrayList<>(mergedApps.values());
         applications.sort(ApplicationDTO.nameComparator());
-        return new CategoryDTO.Builder().withApplications(applications).withType(leftCategory.getType())
-                .withIcon(leftCategory.getIcon()).withId(leftCategory.getId()).withName(leftCategory.getName()).build();
+        return new CategoryDTO.Builder()
+                .withTypeId(leftCategory.getTypeId())
+                .withId(leftCategory.getId())
+                .withName(leftCategory.getName())
+                .withApplications(applications)
+                .withType(leftCategory.getType())
+                .withIcon(leftCategory.getIcon())
+                .build();
     }
 
     protected ApplicationDTO mergeApplications(ApplicationDTO leftApplication, ApplicationDTO rightApplication) {
@@ -145,9 +155,16 @@ abstract class MergeableRepository implements Repository {
         final List<URI> mergeMiniatures = mergeMiniatures(leftApplication.getMiniatures(),
                 rightApplication.getMiniatures());
 
-        return new ApplicationDTO.Builder().withId(leftApplication.getId()).withName(leftApplication.getName())
-                .withResources(resources).withScripts(scripts).withDescription(leftApplication.getDescription())
-                .withIcon(leftApplication.getIcon()).withMiniatures(mergeMiniatures).build();
+        return new ApplicationDTO.Builder()
+                .withCategoryId(leftApplication.getCategoryId())
+                .withId(leftApplication.getId())
+                .withName(leftApplication.getName())
+                .withResources(resources)
+                .withScripts(scripts)
+                .withDescription(leftApplication.getDescription())
+                .withIcon(leftApplication.getIcon())
+                .withMiniatures(mergeMiniatures)
+                .build();
     }
 
     /**
