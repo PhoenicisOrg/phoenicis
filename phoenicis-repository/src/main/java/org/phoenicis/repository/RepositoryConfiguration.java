@@ -68,6 +68,9 @@ public class RepositoryConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Value("${application.repository.location.loader.name:filesystemLocationLoader}")
+    private String repositoryLocationLoaderName;
+
     @Bean
     public RepositoryManager repositoryManager() {
         RepositoryManager repositoryManager = new DefaultRepositoryManager(
@@ -88,7 +91,7 @@ public class RepositoryConfiguration {
 
     @Bean
     public RepositoryLocationLoader repositoryLocationLoader() {
-        return new DynamicRepositoryLocationLoader(applicationContext, "filesystemLocationLoader");
+        return new DynamicRepositoryLocationLoader(applicationContext, repositoryLocationLoaderName);
     }
 
     @Bean
