@@ -10,7 +10,11 @@ public class DynamicRepositoryLocationLoader implements RepositoryLocationLoader
     private final RepositoryLocationLoader delegated;
 
     public DynamicRepositoryLocationLoader(ApplicationContext applicationContext, String beanName) {
-        this.delegated = applicationContext.getBean(beanName, RepositoryLocationLoader.class);
+        this(applicationContext.getBean(beanName, RepositoryLocationLoader.class));
+    }
+
+    public DynamicRepositoryLocationLoader(RepositoryLocationLoader repositoryLocationLoader) {
+        this.delegated = repositoryLocationLoader;
     }
 
     @Override
