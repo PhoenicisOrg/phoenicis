@@ -82,6 +82,6 @@ public class SettingsManager {
     }
 
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
-        return repositoryConfiguration.loadRepositoryLocations();
+        return repositoryConfiguration.repositoryLocationLoader().loadRepositoryLocations();
     }
 }
