@@ -18,11 +18,8 @@
 
 package org.phoenicis.repository;
 
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
-import org.phoenicis.repository.location.ClasspathRepositoryLocation;
-import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
@@ -34,16 +31,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -71,6 +65,9 @@ public class RepositoryConfiguration {
     @Autowired
     private FileUtilities fileUtilities;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Bean
     public RepositoryManager repositoryManager() {
         RepositoryManager repositoryManager = new DefaultRepositoryManager(
@@ -84,9 +81,20 @@ public class RepositoryConfiguration {
                 backgroundRepositoryFactory());
 
         // set initial repositories
-        repositoryManager.addRepositories(this.loadRepositoryLocations().toArray(new RepositoryLocation[0]));
+        repositoryManager.addRepositories(this.repositoryLocationLoader().loadRepositoryLocations().toArray(new RepositoryLocation[0]));
 
         return repositoryManager;
+    }
+
+    @Bean
+    public RepositoryLocationLoader repositoryLocationLoader() {
+        return new DynamicRepositoryLocationLoader(applicationContext, "filesystemLocationLoader");
+    }
+
+    @Bean
+    public RepositoryLocationLoader filesystemLocationLoader() {
+        return new FilesystemJsonRepositoryLocationLoader(repositoryListPath,
+                phoenicisGlobalConfiguration.objectMapper());
     }
 
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
@@ -95,32 +103,6 @@ public class RepositoryConfiguration {
         } catch (IOException e) {
             LOGGER.error("Couldn't save repository location list", e);
         }
-    }
-
-    public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
-        List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
-
-        File repositoryListFile = new File(repositoryListPath);
-
-        if (repositoryListFile.exists()) {
-            try {
-                result = phoenicisGlobalConfiguration.objectMapper().readValue(new File(repositoryListPath),
-                        TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
-            } catch (IOException e) {
-                LOGGER.error("Couldn't load repository location list", e);
-            }
-        } else {
-            try {
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/Scripts").toURI())
-                        .withBranch("master").build());
-                result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
-            } catch (URISyntaxException | MalformedURLException e) {
-                LOGGER.error("Couldn't create default repository location list", e);
-            }
-        }
-
-        return result;
     }
 
     /**
