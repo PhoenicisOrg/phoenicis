@@ -17,4 +17,9 @@ public class DynamicRepositoryLocationLoader implements RepositoryLocationLoader
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
         return delegated.loadRepositoryLocations();
     }
+
+    @Override
+    public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        delegated.saveRepositories(repositoryLocations);
+    }
 }

@@ -78,7 +78,7 @@ public class SettingsManager {
     }
 
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
-        repositoryConfiguration.saveRepositories(repositoryLocations);
+        repositoryConfiguration.repositoryLocationLoader().saveRepositories(repositoryLocations);
     }
 
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {

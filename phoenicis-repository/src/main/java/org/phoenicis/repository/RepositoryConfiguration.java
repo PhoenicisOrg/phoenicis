@@ -84,7 +84,7 @@ public class RepositoryConfiguration {
                 backgroundRepositoryFactory());
 
         // set initial repositories
-        repositoryManager.addRepositories(this.repositoryLocationLoader().loadRepositoryLocations().toArray(new RepositoryLocation[0]));
+        repositoryManager.addRepositories();
 
         return repositoryManager;
     }
@@ -98,14 +98,6 @@ public class RepositoryConfiguration {
     public RepositoryLocationLoader filesystemLocationLoader() {
         return new FilesystemJsonRepositoryLocationLoader(repositoryListPath,
                 phoenicisGlobalConfiguration.objectMapper());
-    }
-
-    public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
-        try {
-            phoenicisGlobalConfiguration.objectMapper().writeValue(new File(repositoryListPath), repositoryLocations);
-        } catch (IOException e) {
-            LOGGER.error("Couldn't save repository location list", e);
-        }
     }
 
     /**

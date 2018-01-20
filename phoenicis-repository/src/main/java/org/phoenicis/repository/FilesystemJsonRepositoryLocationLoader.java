@@ -57,4 +57,14 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
 
         return result;
     }
+
+    @Override
+    public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        try {
+            objectMapper.writeValue(new File(repositoryListPath), repositoryLocations);
+        } catch (IOException e) {
+            LOGGER.error("Couldn't save repository location list", e);
+        }
+    }
+
 }
