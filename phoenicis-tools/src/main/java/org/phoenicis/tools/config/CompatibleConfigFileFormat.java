@@ -82,10 +82,12 @@ public class CompatibleConfigFileFormat implements ConfigFile {
             }
             return results;
         } catch (JsonParseException | JsonMappingException e) {
-            LOGGER.debug("The file does not seems to be a JSON format. Trying legacy Phoenicis config file", e);
+            LOGGER.debug("The file does not seems to be a JSON format. Trying legacy Phoenicis config file.", e);
             return getLegacyMap();
         } catch (IOException e) {
-            LOGGER.debug("Error while reading the file. Will assume that the config file is EMPTY", e);
+            LOGGER.debug(String.format(
+                    "Couldn't read the config file %s. Will assume that the config file is empty. This can happen e.g. if a new container is just being created.",
+                    configFile.getAbsolutePath()));
             return new HashMap<>();
         }
     }
