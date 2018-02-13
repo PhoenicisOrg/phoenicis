@@ -44,10 +44,7 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
         } else {
             try {
                 result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI())
-                        .withBranch("master").build());
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Oldwares").toURI())
+                        .withGitRepositoryUri(new URL("https://github.com/PlayOnLinux/Scripts").toURI()) //FIXME Change to use PhoenicisOrg instead if PlayOnLinux ?
                         .withBranch("master").build());
                 result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
             } catch (URISyntaxException | MalformedURLException e) {
