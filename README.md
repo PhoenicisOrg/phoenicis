@@ -15,4 +15,4 @@ To keep code easier to maintain, please import the project specifics format and 
 	
 ## Continous integration
 * [Travis CI](https://travis-ci.org/PhoenicisOrg/POL-POM-5)
-* [SonarQube](http://www.playonlinux.org:9000/dashboard?id=org.phoenicis%3Aphoenicis)
+* [Codacy](https://app.codacy.com/app/PhoenicisOrg/POL-POM-5/dashboard)
