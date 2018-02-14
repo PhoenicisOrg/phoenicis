@@ -1,4 +1,4 @@
-# Phoenicis and PlayOnMac 5
+# Phoenicis PlayOnLinux and PlayOnMac 5
 This is the Phoenicis PlayOnLinux and PlayOnMac 5 repository.
 
 ## Community
