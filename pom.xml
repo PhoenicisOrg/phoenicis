@@ -209,6 +209,23 @@
                     </execution>
                 </executions>
             </plugin>
+	    <plugin>
+	        <groupId>com.gemnasium</groupId>
+	        <artifactId>gemnasium-maven-plugin</artifactId>
+	        <version>0.3.0</version>
+	        <configuration>
+		    <apiKey>b9e3506100cbfca23947334601ee5007</apiKey>
+		    <projectSlug>github.com/PhoenicisOrg/POL-POM-5</projectSlug>
+	        </configuration>		    
+		<executions>
+		    <execution>
+		        <phase>verify</phase>
+		        <goals>
+			    <goal>send-dependencies</goal>
+		        </goals>
+		    </execution>
+		</executions>
+	    </plugin>
         </plugins>
     </build>
 </project>
