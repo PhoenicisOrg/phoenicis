@@ -1,5 +1,3 @@
-language: java
-
 sudo: false
 addons:
   apt:
@@ -9,15 +7,20 @@ addons:
 
 matrix:
   include:
-    - jdk: oraclejdk8
+    - language: java
+      jdk: oraclejdk8
       os: linux
-    - jdk: oraclejdk9
+    - language: java
+      jdk: oraclejdk9
       os: linux
-    - jdk: openjdk8
+    - language: java
+      jdk: openjdk8
       os: linux
-    - jdk: openjdk9
+    - language: java
+      jdk: openjdk9
       os: linux
-    - os: osx
+    - language: java
+      os: osx
 
 jobs:
   include:
