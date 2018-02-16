@@ -85,7 +85,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
     public void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
 
-  for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
+        for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
             Repository repository = repositoryUrls[repositoryUrlIndex].createRepository(cacheDirectoryPath,
                     localRepositoryFactory, classPathRepositoryFactory, fileUtilities);
 
