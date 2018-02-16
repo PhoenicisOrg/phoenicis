@@ -5,7 +5,12 @@ sudo: false
 
 os:
 - linux
-- osx
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java9-installer
 
 jdk:
 - oraclejdk8
@@ -17,22 +22,6 @@ env:
 
 matrix:
   include:
-  - jdk: oraclejdk8
-    os: linux
-    addons:
-      apt:
-        packages:
-          - oracle-java8-installer
-  - jdk: oraclejdk9
-    os: linux
-    addons:
-      apt:
-        packages:
-          - oracle-java9-installer
-  - jdk: openjdk8
-    os: linux
-  - jdk: openjdk9
-    os: linux
   - os: osx
 
 jobs:
