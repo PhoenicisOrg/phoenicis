@@ -1,11 +1,17 @@
 language: java
 
+dist: trusty
 sudo: false
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-      - oracle-java9-installer
+
+os:
+- linux
+- osx
+
+jdk:
+- oraclejdk8
+- oraclejdk9
+- openjdk8
+- openjdk9
 
 env:
 
@@ -13,8 +19,16 @@ matrix:
   include:
   - jdk: oraclejdk8
     os: linux
+    addons:
+      apt:
+        packages:
+          - oracle-java8-installer
   - jdk: oraclejdk9
     os: linux
+    addons:
+      apt:
+        packages:
+          - oracle-java9-installer
   - jdk: openjdk8
     os: linux
   - jdk: openjdk9
