@@ -3,3 +3,8 @@ language: java
 os:
   - linux
   - osx
+
+jobs:
+  include:
+    - stage: Check format
+      script: ./check_formatted.sh
