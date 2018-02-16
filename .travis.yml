@@ -1,8 +1,23 @@
 language: java
 
-os:
-  - linux
-  - osx
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      - oracle-java9-installer
+
+matrix:
+  include:
+    - jdk: oraclejdk8
+      os: linux
+    - jdk: oraclejdk9
+      os: linux
+    - jdk: openjdk8
+      os: linux
+    - jdk: openjdk9
+      os: linux
+    - os: osx
 
 jobs:
   include:
