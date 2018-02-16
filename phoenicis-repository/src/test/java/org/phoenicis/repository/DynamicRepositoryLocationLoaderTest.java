@@ -15,14 +15,14 @@ import static org.mockito.Mockito.when;
 
 public class DynamicRepositoryLocationLoaderTest {
     private final RepositoryLocationLoader mockDelegated = mock(RepositoryLocationLoader.class);
-    private final DynamicRepositoryLocationLoader dynamicRepositoryLocationLoader = new DynamicRepositoryLocationLoader(mockDelegated);
+    private final DynamicRepositoryLocationLoader dynamicRepositoryLocationLoader = new DynamicRepositoryLocationLoader(
+            mockDelegated);
 
     @Test
     public void loadRepositoryLocations() {
         final List<RepositoryLocation<? extends Repository>> mockRepositoriesToBeLoaded = Arrays.asList(
                 mock(RepositoryLocation.class),
-                mock(RepositoryLocation.class)
-        );
+                mock(RepositoryLocation.class));
 
         when(mockDelegated.loadRepositoryLocations()).thenReturn(mockRepositoriesToBeLoaded);
         assertSame(mockRepositoriesToBeLoaded, dynamicRepositoryLocationLoader.loadRepositoryLocations());
@@ -34,8 +34,7 @@ public class DynamicRepositoryLocationLoaderTest {
     public void saveRepositories() {
         final List<RepositoryLocation<? extends Repository>> mockRepositoriesToBeSaved = Arrays.asList(
                 mock(RepositoryLocation.class),
-                mock(RepositoryLocation.class)
-        );
+                mock(RepositoryLocation.class));
 
         mockDelegated.saveRepositories(mockRepositoriesToBeSaved);
 
