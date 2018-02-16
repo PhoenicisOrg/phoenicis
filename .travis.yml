@@ -3,3 +3,5 @@ language: java
 os:
   - linux
   - osx
+
+after_success: ./check_formatted.sh
