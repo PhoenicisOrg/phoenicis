@@ -16,13 +16,13 @@ jdk:
 - oraclejdk8
 - oraclejdk9
 - openjdk8
-- openjdk9
 
 env:
 
 matrix:
   include:
-  - os: osx
+  - language: java
+    os: osx
 
 jobs:
   include:
