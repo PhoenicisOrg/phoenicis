@@ -35,6 +35,10 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
         return index - others.length;
     }
 
+    public int getViewIndex(int index) {
+        return index + others.length;
+    }
+
     @Override
     public E get(int index) {
         if (index < others.length) {

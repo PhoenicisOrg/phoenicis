@@ -32,6 +32,10 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         return index;
     }
 
+    public int getViewIndex(int index) {
+        return index;
+    }
+
     @Override
     public E get(int index) {
         if (index >= size()) {

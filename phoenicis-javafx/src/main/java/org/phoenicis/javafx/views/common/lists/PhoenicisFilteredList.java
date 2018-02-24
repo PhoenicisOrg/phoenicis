@@ -143,6 +143,13 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
         return filtered[index];
     }
 
+    /**
+     * Taken from: https://github.com/teamfx/openjfx-9-dev-rt/blob/master/modules/javafx.base/src/main/java/javafx/collections/transformation/FilteredList.java
+     */
+    public int getViewIndex(int index) {
+        return Arrays.binarySearch(filtered, 0, size, index);
+    }
+
     private SortHelper getSortHelper() {
         if (helper == null) {
             helper = new SortHelper();

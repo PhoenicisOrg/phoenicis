@@ -44,6 +44,16 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         return sourceIndex;
     }
 
+    /**
+     * Finds the index of the first element in the source list at the given index position
+     *
+     * @param index The index in the source list
+     * @return The index of the first element of the source index in this list
+     */
+    public int getViewIndex(int index) {
+        return getFirstIndex(index);
+    }
+
     @Override
     public E get(int index) {
         if (index < 0 || index >= size()) {
