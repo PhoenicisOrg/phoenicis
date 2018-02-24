@@ -8,22 +8,19 @@ import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.TransformationList;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * A filtered observable list taking a {@link Predicate} to filter elements of a given input {@link ObservableList}.
- * This class extends the functionality of {@link javafx.collections.transformation.FilteredList} with a trigger method.
+ * This class is based on the implementation of {@link FilteredList}, included in javafx, and extends its functionality with a trigger method.
  * This trigger method can be used to recheck the all elements included in the source list to only marks the elements as invalid,
  * that were previously added and now aren't, or the other way.
  *
  * @param <E> The type of the elements contained in the filtered list
  * @author Marc Arndt
- * @see javafx.collections.transformation.FilteredList
+ * @see FilteredList
  */
 public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> {
     private int[] filtered;
