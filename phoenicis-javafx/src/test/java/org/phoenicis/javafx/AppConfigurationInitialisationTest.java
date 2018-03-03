@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException;
 public class AppConfigurationInitialisationTest {
 
     @Before
-    public void setup() {
+    public void initialize() {
         System.setProperty("testfx.headless", "false");
     }
 

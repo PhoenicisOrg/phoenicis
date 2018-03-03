@@ -33,7 +33,8 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
      * Constructs a new FilteredList wrapper around the source list.
      * The provided predicate will match the elements in the source list that will be visible.
      * If the predicate is null, all elements will be matched and the list is equal to the source list.
-     * @param source the source list
+     *
+     * @param source    the source list
      * @param predicate the predicate to match the elements or null to match all elements.
      */
     public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source,
@@ -56,6 +57,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
      * <p>
      * This constructor might be useful if you want to bind {@link #predicateProperty()}
      * of this list.
+     *
      * @param source the source list
      */
     public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source) {
@@ -120,7 +122,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     /**
      * Returns the element at the specified position in this list.
      *
-     * @param  index index of the element to return
+     * @param index index of the element to return
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
@@ -142,6 +144,8 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
 
     /**
      * Taken from: https://github.com/teamfx/openjfx-9-dev-rt/blob/master/modules/javafx.base/src/main/java/javafx/collections/transformation/FilteredList.java
+     *
+     * @apiNote This method is required to make Phoenicis compile with Java 9
      */
     public int getViewIndex(int index) {
         return Arrays.binarySearch(filtered, 0, size, index);

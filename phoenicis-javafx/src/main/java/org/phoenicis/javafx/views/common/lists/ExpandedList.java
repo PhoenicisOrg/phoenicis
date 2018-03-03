@@ -49,6 +49,7 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
      *
      * @param index The index in the source list
      * @return The index of the first element of the source index in this list
+     * @apiNote This method is required to make Phoenicis compile with Java 9
      */
     public int getViewIndex(int index) {
         return getFirstIndex(index);
