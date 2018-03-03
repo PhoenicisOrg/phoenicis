@@ -7,6 +7,10 @@ addons:
       - oracle-java8-installer
       - oracle-java9-installer
 
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 matrix:
   include:
     # The normal tests
