@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-16 10:04+0100\n"
-"PO-Revision-Date: 2018-03-03 05:18-0500\n"
+"PO-Revision-Date: 2018-03-03 05:32-0500\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -19,11 +19,11 @@ msgstr ""
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
 msgid "input"
-msgstr ""
+msgstr "entrée"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Please wait while we are verifying the file ..."
-msgstr ""
+msgstr "Veuillez patienter pendant que nous vérifions le fichier ..."
 
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:26
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/StrictDrawOrdering.java:26
@@ -33,7 +33,7 @@ msgstr ""
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/AlwaysOffscreen.java:26
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/RenderTargetModeLock.java:26
 msgid "Default"
-msgstr ""
+msgstr "Défaut"
 
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:26
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/StrictDrawOrdering.java:26
@@ -42,7 +42,7 @@ msgstr ""
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/AlwaysOffscreen.java:26
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/RenderTargetModeLock.java:26
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivée"
 
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:26
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/StrictDrawOrdering.java:26
@@ -50,118 +50,119 @@ msgstr ""
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/UseGLSL.java:26
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/AlwaysOffscreen.java:26
 msgid "Enabled"
-msgstr ""
+msgstr "Activée"
 
 #: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:27
 msgid "Force"
-msgstr ""
+msgstr "Forcer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:78
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:136
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:149
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:82
 #, java-format
 msgid "Uninstall {0}"
-msgstr ""
+msgstr "Désinstalle {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:83
 #, java-format
 msgid "Are you sure you want to uninstall {0}?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir désinstaller {0}?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:98
 msgid "Error while running script"
-msgstr ""
+msgstr "Une erreur est survenue pendant l'exécution du script"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:130
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:131
 msgid "Error while creating shortcut"
-msgstr ""
+msgstr "Une erreur est survenue lors de la création du raccourci"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:68
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:72
 msgid "Loading engines failed."
-msgstr ""
+msgstr "Le chargement des moteurs a échoué."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:71
 #, java-format
 msgid "Install {0}"
-msgstr ""
+msgstr "Installation de {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:72
 #, java-format
 msgid "Are you sure you want to install {0}?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir installer {0} ?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:79
 #, java-format
 msgid "Delete {0}"
-msgstr ""
+msgstr "Suppression de {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:80
 #, java-format
 msgid "Are you sure you want to delete {0}"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir supprimer {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:61
 msgid "Connecting to the repository failed.\n"
 "Please check your connection and try again."
-msgstr ""
+msgstr "La connexion au dépôt a échoué.\n"
+"Veuillez vérifier votre connexion et réessayer."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:94
 msgid "The script ended unexpectedly"
-msgstr ""
+msgstr "Le script s'est terminé de façon inattendue"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:97
 #, java-format
 msgid "Delete {0} container"
-msgstr ""
+msgstr "Suppression du conteneur {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:98
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir supprimer le conteneur {0} ?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:121
 msgid "Loading containers failed."
-msgstr ""
+msgstr "Le chargement des conteneurs a échoué."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:87
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir fermer toutes les fenêtres {0}?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:81
 msgid "The exception stacktrace was:"
-msgstr ""
+msgstr "L'erreur dans la trace de la pile était :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Default theme"
-msgstr ""
+msgstr "Thème par défaut"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:14
 msgid "Dark theme"
-msgstr ""
+msgstr "Thème sombre"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:15
 msgid "Breeze Dark theme"
-msgstr ""
+msgstr "Thème sombre Breeze"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:17
 msgid "Unity theme"
-msgstr ""
+msgstr "Thème Unity"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:106
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/JavaFxUiConfiguration.java:63
 msgid "Question"
@@ -169,76 +170,76 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
 msgid "Please click here, or drag a file to me."
-msgstr ""
+msgstr "Veuillez cliquer ici, ou glisser un fichier sur moi."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:91
 msgid "Allowed files"
-msgstr ""
+msgstr "Fichiers autorisés"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
 msgid "I agree"
-msgstr ""
+msgstr "J'accepte"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:48
 msgid "Retry"
-msgstr ""
+msgstr "Réessayer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:62
 msgid "Reason: "
-msgstr ""
+msgstr "Raison : "
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:86
 msgid "Run"
-msgstr ""
+msgstr "Exécuter"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:90
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:94
 msgid "Uninstall"
-msgstr ""
+msgstr "Désinstaller"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:79
 msgid "Library"
-msgstr ""
+msgstr "Bibliothèque"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:153
 msgid "My applications"
-msgstr ""
+msgstr "Mes applications"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:69
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:55
 msgid "Name:"
-msgstr ""
+msgstr "Nom :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:79
 msgid "Please specify a name!"
-msgstr ""
+msgstr "Veuillez spécifier un nom !"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:82
 msgid "Category:"
-msgstr ""
+msgstr "Catégories :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:90
 msgid "Please specify a category!"
-msgstr ""
+msgstr "Veuillez spécifier un catégorie !"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:93
 msgid "Description:"
-msgstr ""
+msgstr "Description :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:102
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:105
 msgid "Miniature:"
-msgstr ""
+msgstr "Miniature :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:109
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:132
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:112
 msgid "Choose"
-msgstr ""
+msgstr "Choisissez"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:112
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
@@ -247,231 +248,231 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:122
 msgid "Please specify a valid miniature!"
-msgstr ""
+msgstr "Veuillez spécifier une miniature valide !"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:125
 msgid "Executable:"
-msgstr ""
+msgstr "Executable :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:144
 msgid "Please specify a valid executable!"
-msgstr ""
+msgstr "Veuillez spécifier un exécutable valide !"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:149
 msgid "Create"
-msgstr ""
+msgstr "Créer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:136
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:112
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:126
 msgid "Categories"
-msgstr ""
+msgstr "Catégories"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:162
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:138
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:172
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersSidebar.java:142
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:190
 msgid "Create shortcut"
-msgstr ""
+msgstr "Créer un raccourci"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:194
 msgid "Run a script"
-msgstr ""
+msgstr "Exécuter un script"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:198
 msgid "Open a script"
-msgstr ""
+msgstr "Ouvrir un script"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:208
 #, java-format
 msgid "{0} console"
-msgstr ""
+msgstr "Console {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:212
 msgid "Advanced tools"
-msgstr ""
+msgstr "Outils avancés"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:84
 msgid "Save"
-msgstr ""
+msgstr "Sauvegarder"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:60
 msgid "User Interface Settings"
-msgstr ""
+msgstr "Paramètres de l'interface"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:68
 msgid "Theme:"
-msgstr ""
+msgstr "Thème :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:83
 msgid "Select, if you want to view the source repository of the scripts"
-msgstr ""
+msgstr "À sélectionner si vous voulez voir le dépôt source des scripts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
 msgid "Scale the user interface."
-msgstr ""
+msgstr "Mettre à l'échelle l'interface."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:97
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:83
 msgid "Restore defaults (requires restart)"
-msgstr ""
+msgstr "Restaurer les paramètres par défaut (nécessite un redémarrage)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:62
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:85
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:56
 msgid "Version:"
-msgstr ""
+msgstr "Version :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:75
 msgid "Git Revision:"
-msgstr ""
+msgstr "Git Revision :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:87
 msgid "Build Timestamp:"
-msgstr ""
+msgstr "Construire le Timestamp :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:55
 msgid "Please select the repository type you want to add"
-msgstr ""
+msgstr "Veuillez sélectionner le type de dépôt que vous voulez ajouter"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
 msgid "Repository type:"
-msgstr ""
+msgstr "Type de dépôt :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
 msgid "Choose the repository type"
-msgstr ""
+msgstr "Choisissez le type de dépôt"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:59
 msgid "Add a new Repository"
-msgstr ""
+msgstr "Ajouter un nouveau dépôt"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:38
 msgid "Classpath:"
-msgstr ""
+msgstr "Classpath :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:50
 msgid "Choose the location of your classpath repository"
-msgstr ""
+msgstr "Choisissez l'emplacement de votre dépôt classpath"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
 msgid "Local repository"
-msgstr ""
+msgstr "Dépôt local"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:28
 msgid "Git repository"
-msgstr ""
+msgstr "Dépôt git"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:38
 msgid "Classpath repository"
-msgstr ""
+msgstr "Dépôt classpath"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
 msgid "Git-Url:"
-msgstr ""
+msgstr "Git-Url :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:53
 msgid "Branch:"
-msgstr ""
+msgstr "Branche :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:69
 msgid "Choose the location of your git repository"
-msgstr ""
+msgstr "Choisissez l'emplacement de votre dépôt git"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
 msgid "Open directory chooser"
-msgstr ""
+msgstr "Ouvrir le sélecteur de répertoire"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
 msgid "Choose the location of your local repository"
-msgstr ""
+msgstr "Choisissez l'emplacement de votre dépôt local"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:110
 msgid "Repositories Settings"
-msgstr ""
+msgstr "Paramètres des dépôts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:115
 msgid "Repository:"
-msgstr ""
+msgstr "Dépôt :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:134
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:151
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:180
 msgid "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."
-msgstr ""
+msgstr "La valeur devant chaque dépôt est sa priorité. Plus la priorité est haute, plus les scripts à l'intérieur du dépôt sont importants."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
 msgid "Fetch updates for the repositories to retrieve the newest script versions"
-msgstr ""
+msgstr "Récupérer les mises à jour des dépôts pour récupérer les nouvelles versions des scripts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
 msgid "Refresh Repositories"
-msgstr ""
+msgstr "Rafraîchir la liste des dépôts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsSidebar.java:44
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:49
 msgid "Settings"
-msgstr ""
+msgstr "Paramètres"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:78
 msgid "User Interface"
-msgstr ""
+msgstr "Interface"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:80
 msgid "Repositories"
-msgstr ""
+msgstr "Dépôts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:82
 msgid "File Associations"
-msgstr ""
+msgstr "Associations de fichier"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:83
 msgid "Network"
-msgstr ""
+msgstr "Réseau"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:70
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:181
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:76
 msgid "Error while trying to install the engine"
-msgstr ""
+msgstr "Une erreur est survenue pendant l'installation du moteur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:80
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:86
 msgid "Error while trying to delete the engine"
-msgstr ""
+msgstr "Une erreur est survenue pendant la suppression du moteur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:66
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:120
 msgid "Engines"
-msgstr ""
+msgstr "Moteurs"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:128
 msgid "Installed"
-msgstr ""
+msgstr "Installé"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:132
 msgid "Not installed"
-msgstr ""
+msgstr "Non installé"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
@@ -487,24 +488,24 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:132
 msgid "Installers"
-msgstr ""
+msgstr "Installeurs"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:177
 #, java-format
 msgid "Source: {0}"
-msgstr ""
+msgstr "Source : {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:187
 msgid "Error while trying to download the installer"
-msgstr ""
+msgstr "Une erreur est survenue lors du téléchargement de l'installeur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:133
 msgid "Testing"
-msgstr ""
+msgstr "En test"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:136
 msgid "Requires patch"
-msgstr ""
+msgstr "Requiert un patch"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:139
 msgid "Commercial"
@@ -512,20 +513,20 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:143
 msgid "All Operating Systems"
-msgstr ""
+msgstr "Tous les OS"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersView.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersSidebar.java:116
 msgid "Containers"
-msgstr ""
+msgstr "Conteneurs"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInputTab.java:35
 msgid "Input"
-msgstr ""
+msgstr "Entrée"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInputTab.java:46
 msgid "Input settings"
-msgstr ""
+msgstr "Paramètres d'entrée"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInputTab.java:57
 msgid "Mouse Warp Override"
@@ -538,73 +539,73 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:60
 msgid "Path:"
-msgstr ""
+msgstr "Chemin :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:65
 msgid "Installed shortcuts:"
-msgstr ""
+msgstr "Raccourcis installés :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:71
 msgid "Wine version:"
-msgstr ""
+msgstr "Version de wine :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:76
 msgid "Wine architecture:"
-msgstr ""
+msgstr "Architecture de wine :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:81
 msgid "Wine distribution:"
-msgstr ""
+msgstr "Distribution de wine :"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:109
 msgid "Delete container"
-msgstr ""
+msgstr "Supprimer le conteneur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerWineToolsTab.java:39
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerWineToolsTab.java:52
 msgid "Wine tools"
-msgstr ""
+msgstr "Outils wine"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:40
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:53
 msgid "Tools"
-msgstr ""
+msgstr "Outils"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:62
 msgid "Run executable"
-msgstr ""
+msgstr "Exécuter"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerToolsTab.java:67
 msgid "Choose executable"
-msgstr ""
+msgstr "Choisir l'exécutable"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:43
 msgid "Display"
-msgstr ""
+msgstr "Afficher"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:55
 msgid "Display settings"
-msgstr ""
+msgstr "Paramètres d'affichage"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:68
 msgid "GLSL support"
-msgstr ""
+msgstr "Prise en charge du GLSL"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:77
 msgid "Direct Draw Renderer"
-msgstr ""
+msgstr "Rendu Direct Draw"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:86
 msgid "Video memory size"
-msgstr ""
+msgstr "Taille de la mémoire vidéo"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:95
 msgid "Offscreen rendering mode"
-msgstr ""
+msgstr "Mode de rendu offscreen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:104
 msgid "Render target lock mode"
-msgstr ""
+msgstr "Verrouillage du mode de cible de rendu"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:113
 msgid "Multisampling"
@@ -612,42 +613,42 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:122
 msgid "Strict Draw Ordering"
-msgstr ""
+msgstr "Ordonnancement Strict Draw"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:131
 msgid "Always Offscreen"
-msgstr ""
+msgstr "Toujours Offscreen"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
 msgid "This wizard will help you install {0} on your computer"
-msgstr ""
+msgstr "Cet assistant va vous aider à installer {0} sur votre ordinateur"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
 msgid "This program was created by: {0}"
-msgstr ""
+msgstr "Ce programme a été créé par : {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
-msgstr ""
+msgstr "Pour plus d'information à propos de ce programme, rendez-vous sur:"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
 #, java-format
 msgid "This installation program is provided by: {0}"
-msgstr ""
+msgstr "Cet installeur est fourni par : {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:156
 #, java-format
 msgid "{0} will be installed in: {1}"
-msgstr ""
+msgstr "{0} sera installé dans : {1}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:157
 #, java-format
 msgid "{0} is not responsible for anything that might happen as a result of using these scripts."
-msgstr ""
+msgstr "{0} n'est pas responsable de ce qui pourrait se produire en utilisant ces scripts."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click \"Next\" to start."
-msgstr ""
+msgstr "Cliquer sur \"Suivant\" pour commencer."
 
