@@ -1,23 +1,20 @@
-# German translations for POL-POM package
-# German translation for POL-POM.
-# Copyright (C) 2017 THE POL-POM'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the POL-POM package.
-# Plata <plata@phoenicis.org>, 2017.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: POL-POM 5\n"
+"Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-16 10:04+0100\n"
-"PO-Revision-Date: 2017-08-31 11:13+0200\n"
-"Last-Translator: Plata <plata@phoenicis.org>\n"
+"PO-Revision-Date: 2018-03-03 06:30-0500\n"
+"Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: German\n"
-"Language: de\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: phoenicis\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: /master/i18n/keys.pot\n"
 
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
@@ -111,11 +108,9 @@ msgid "Are you sure you want to delete {0}"
 msgstr "Sind Sie sicher, dass Sie alle {0} löschen möchten?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:61
-msgid ""
-"Connecting to the repository failed.\n"
+msgid "Connecting to the repository failed.\n"
 "Please check your connection and try again."
-msgstr ""
-"Verbindung mit dem Repository fehlgeschlagen.\n"
+msgstr "Verbindung mit dem Repository fehlgeschlagen.\n"
 "Bitte überprüfen Sie Ihre Verbindung und versuchen es nochmal."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:94
@@ -257,7 +252,7 @@ msgstr "Bitte ein gültiges Bild angeben!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:125
 msgid "Executable:"
-msgstr "Executable:"
+msgstr "Ausführbare Datei:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:144
 msgid "Please specify a valid executable!"
@@ -417,18 +412,12 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:180
-msgid ""
-"The value in front of each repository is its priority. The higher the "
-"priority is, the more important the scripts inside the repository are."
-msgstr ""
-"Die Zahl vor jedem Repository gibt dessen Priorität an. Je höher die "
-"Priorität ist, desto wichtiger sind die Skripts in diesem Repository."
+msgid "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."
+msgstr "Die Zahl vor jedem Repository gibt dessen Priorität an. Je höher die Priorität ist, desto wichtiger sind die Skripts in diesem Repository."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
-msgid ""
-"Fetch updates for the repositories to retrieve the newest script versions"
-msgstr ""
-"Repository-Updates herunterladen um die neuesten Skript Versionen zu erhalten"
+msgid "Fetch updates for the repositories to retrieve the newest script versions"
+msgstr "Repository-Updates herunterladen um die neuesten Skript Versionen zu erhalten"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
 msgid "Refresh Repositories"
@@ -541,7 +530,7 @@ msgstr "Eingabeeinstellungen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInputTab.java:57
 msgid "Mouse Warp Override"
-msgstr ""
+msgstr "Mouse Warp Override"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:35
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:47
@@ -612,11 +601,11 @@ msgstr "Videospeichergröße"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:95
 msgid "Offscreen rendering mode"
-msgstr ""
+msgstr "Offscreen rendering mode"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:104
 msgid "Render target lock mode"
-msgstr ""
+msgstr "Render target lock mode"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerDisplayTab.java:113
 msgid "Multisampling"
@@ -633,8 +622,7 @@ msgstr "Immer offscreen"
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
 msgid "This wizard will help you install {0} on your computer"
-msgstr ""
-"Dieser Assistent wird Ihnen helfen, {0} auf Ihrem Computer zu installieren"
+msgstr "Dieser Assistent wird Ihnen helfen, {0} auf Ihrem Computer zu installieren"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
@@ -657,13 +645,10 @@ msgstr "{0} wird installiert in {1}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:157
 #, java-format
-msgid ""
-"{0} is not responsible for anything that might happen as a result of using "
-"these scripts."
-msgstr ""
-"{0} ist nicht verantwortlich für irgendetwas, das durch die Nutzung dieser "
-"Skripts passieren könnte."
+msgid "{0} is not responsible for anything that might happen as a result of using these scripts."
+msgstr "{0} ist nicht verantwortlich für irgendetwas, das durch die Nutzung dieser Skripts passieren könnte."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click \"Next\" to start."
 msgstr "Klicken Sie \"Weiter\" um zu beginnen."
+
