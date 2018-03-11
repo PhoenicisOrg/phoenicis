@@ -1,6 +1,7 @@
 # Phoenicis PlayOnLinux and PlayOnMac 5
 This is the Phoenicis PlayOnLinux and PlayOnMac 5 repository.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9d389a10d98f4d1baa299ce4e268df9d)](https://app.codacy.com/app/PhoenicisOrg/POL-POM-5?utm_source=github.com&utm_medium=referral&utm_content=PhoenicisOrg/POL-POM-5&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/PhoenicisOrg/POL-POM-5.svg?branch=master)](https://travis-ci.org/PhoenicisOrg/POL-POM-5)
 ------------
 
