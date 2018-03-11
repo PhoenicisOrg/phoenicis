@@ -1,6 +1,9 @@
 # Phoenicis PlayOnLinux and PlayOnMac 5
 This is the Phoenicis PlayOnLinux and PlayOnMac 5 repository.
 
+[![Build Status](https://travis-ci.org/PhoenicisOrg/POL-POM-5.svg?branch=master)](https://travis-ci.org/PhoenicisOrg/POL-POM-5)
+------------
+
 ## Community
 * Forums : http://www.playonlinux.com/en/forums.html
 * Slack : https://join.slack.com/phoenicis-org/shared_invite/MTkzMTMwMjM3MjcxLTE0OTY1MTQzNzktY2IzOTE2NmE3NA
