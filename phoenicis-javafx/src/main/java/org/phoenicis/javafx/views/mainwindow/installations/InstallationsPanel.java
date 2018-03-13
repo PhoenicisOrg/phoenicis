@@ -20,14 +20,11 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * shows details for an installation
  */
 final class InstallationsPanel extends DetailsView {
-    private final Logger LOGGER = LoggerFactory.getLogger(InstallationsPanel.class);
 
     /**
      * set installation which shall be shown in this details view

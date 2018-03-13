@@ -24,11 +24,8 @@ import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
 import org.phoenicis.repository.repositoryTypes.LocalRepository;
-import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -37,13 +34,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 @Configuration
 public class RepositoryConfiguration {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryConfiguration.class);
-
     @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
     private boolean enforceUncompatibleOperatingSystems;
 
@@ -74,10 +67,7 @@ public class RepositoryConfiguration {
     @Bean
     public RepositoryManager repositoryManager() {
         RepositoryManager repositoryManager = new DefaultRepositoryManager(
-                multithreadingConfiguration.appsExecutorService(),
-                enforceUncompatibleOperatingSystems,
-                toolsConfiguration,
-                cacheDirectoryPath,
+                multithreadingConfiguration.appsExecutorService(), cacheDirectoryPath,
                 fileUtilities,
                 localRepositoryFactory(),
                 classPathRepositoryFactory(),

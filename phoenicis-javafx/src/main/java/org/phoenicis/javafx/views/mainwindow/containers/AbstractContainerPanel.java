@@ -20,15 +20,12 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 
 import javafx.scene.control.TabPane;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
-
-import java.util.List;
 
 abstract class AbstractContainerPanel<T extends ContainerDTO> extends DetailsView {
     protected final TabPane tabPane;
 
-    AbstractContainerPanel(T containerEntity, List<EngineVersionDTO> engineVersions) {
+    AbstractContainerPanel(T containerEntity) {
         this.tabPane = new TabPane();
 
         this.setTitle(containerEntity.getName());

@@ -25,8 +25,6 @@ import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +36,6 @@ import java.util.function.Consumer;
  * manages the engine tools
  */
 public class EngineToolsManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EngineToolsManager.class);
     private final ScriptInterpreter scriptInterpreter;
 
     /**

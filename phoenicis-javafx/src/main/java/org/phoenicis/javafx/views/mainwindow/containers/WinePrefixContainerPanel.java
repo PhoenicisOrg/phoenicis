@@ -40,7 +40,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
             EngineToolsManager engineToolsManager,
             Optional<ApplicationDTO> engineTools,
             WinePrefixContainerController winePrefixContainerController) {
-        super(containerEntity, engineVersions);
+        super(containerEntity);
 
         this.informationTab = new WinePrefixContainerInformationTab(containerEntity, engineVersions);
         this.tabPane.getTabs().add(this.informationTab);
@@ -49,12 +49,11 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
         this.inputTab = new WinePrefixContainerInputTab(containerEntity);
         this.tabPane.getTabs().add(this.inputTab);
         if (engineTools.isPresent()) {
-            this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController,
-                    engineToolsManager, engineTools.get());
+            this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, engineToolsManager,
+                    engineTools.get());
             this.tabPane.getTabs().add(this.wineToolsTab);
         }
-        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController,
-                engineToolsManager);
+        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController);
         this.tabPane.getTabs().add(this.toolsTab);
     }
 

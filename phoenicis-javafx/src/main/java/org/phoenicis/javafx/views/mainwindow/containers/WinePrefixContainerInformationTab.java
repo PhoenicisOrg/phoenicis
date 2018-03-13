@@ -27,7 +27,6 @@ public class WinePrefixContainerInformationTab extends Tab {
     private static final String TITLE_CSS_CLASS = "title";
 
     private final WinePrefixContainerDTO container;
-    private final List<EngineVersionDTO> engineVersions;
 
     private Consumer<WinePrefixContainerDTO> onDeletePrefix;
 
@@ -35,7 +34,6 @@ public class WinePrefixContainerInformationTab extends Tab {
         super(tr("Information"));
 
         this.container = container;
-        this.engineVersions = engineVersions;
 
         this.setClosable(false);
 

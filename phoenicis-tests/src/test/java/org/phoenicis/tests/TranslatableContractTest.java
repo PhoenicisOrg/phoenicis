@@ -1,6 +1,5 @@
 package org.phoenicis.tests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -24,7 +23,6 @@ import static org.phoenicis.configuration.localisation.Localisation.isTranslatab
 @RunWith(Parameterized.class)
 public class TranslatableContractTest {
     private final static int DEFAULT_MAX_DEPTH = 5;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private TranslatableContainer<?> translatableContainer;
 

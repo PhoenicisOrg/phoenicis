@@ -24,7 +24,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
-import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

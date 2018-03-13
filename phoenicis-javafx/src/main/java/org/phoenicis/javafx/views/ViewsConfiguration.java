@@ -19,7 +19,6 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
@@ -76,9 +75,6 @@ public class ViewsConfiguration {
 
     @Autowired
     private RepositoryConfiguration repositoryConfiguration;
-
-    @Autowired
-    private ControllerConfiguration controllerConfiguration;
 
     @Bean
     public ApplicationsView viewApps() {

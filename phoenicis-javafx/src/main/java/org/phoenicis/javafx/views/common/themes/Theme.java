@@ -1,8 +1,5 @@
 package org.phoenicis.javafx.views.common.themes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.URI;
 
 /**
@@ -12,7 +9,6 @@ import java.net.URI;
  * @since 23.05.17
  */
 public abstract class Theme {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Theme.class);
 
     /**
      * The name of this theme

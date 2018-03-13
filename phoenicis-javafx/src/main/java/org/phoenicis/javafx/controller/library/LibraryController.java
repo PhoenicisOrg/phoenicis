@@ -46,7 +46,6 @@ public class LibraryController {
     private String containersPath;
 
     private final LibraryView libraryView;
-    private final ConsoleController consoleController;
     private final LibraryManager libraryManager;
     private final ShortcutRunner shortcutRunner;
     private final ShortcutManager shortcutManager;
@@ -56,8 +55,6 @@ public class LibraryController {
     public LibraryController(LibraryView libraryView, ConsoleController consoleController,
             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
             ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
-        this.consoleController = consoleController;
-
         this.libraryView = libraryView;
         this.libraryManager = libraryManager;
         this.shortcutRunner = shortcutRunner;

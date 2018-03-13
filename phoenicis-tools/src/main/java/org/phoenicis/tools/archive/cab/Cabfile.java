@@ -19,8 +19,6 @@
 package org.phoenicis.tools.archive.cab;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class Cabfile {
     private final InputStream archiveStream;
@@ -108,66 +106,5 @@ public class Cabfile {
 
     private void jumpTo(long offset) throws IOException {
         this.skipBytes(offset - readBytes);
-    }
-
-    public static void main(String[] args) throws IOException {
-        File tahoma32 = new File("/Users/tinou/Downloads/arial32.exe");
-        Cabfile cabfile = new Cabfile(tahoma32);
-        int offset = cabfile.findCabOffset();
-        //System.out.println(offset);
-        CFHeader header = cabfile.getHeader();
-
-        Collection<CFFolder> cfFolders = new ArrayList<>();
-        for (int i = 0; i < header.getNumberOfFolders(); i++) {
-            CFFolder cfFolder = cabfile.getFolder();
-            cfFolders.add(cfFolder);
-            //System.out.println(cfFolder);
-        }
-
-        cabfile.jumpTo(header.coffFiles[0]);
-
-        Collection<CFFile> cfiles = new ArrayList<>();
-        for (int i = 0; i < header.getNumberOfFiles(); i++) {
-            CFFile cfile = cabfile.getFile();
-            cfiles.add(cfile);
-            //System.out.println(cfile);
-        }
-
-        CFData cfData = cabfile.getData(CompressionType.NONE);
-        //System.out.println(cfData);
-        //System.out.println(Hex.encodeHexString(cfData.ab));
-
-        CFData cfData2 = cabfile.getData(CompressionType.NONE);
-        //System.out.println(cfData2);
-        //System.out.println(Hex.encodeHexString(cfData2.ab));
-
-        /*
-        for(CFFile cfFile: cfiles) {
-            if("fontinst.inf".equals(cfFile.getFilename())) {
-                CFFolder cfFolder = cfFolders.get((int) cfFile.getFolderIndex());
-        
-        
-                long dataIndex = cfFolder.getOffsetStartData() + cfFile.getOffsetStartDataInsideFolder();
-        
-                System.out.println("Index: ");
-                System.out.println(dataIndex);
-        
-                cabfile.jumpTo(dataIndex);
-        
-        
-                CFData cfData = cabfile.getData();
-        
-        
-                cfFolder.dump();
-                System.out.println(cfFile);
-                System.out.println(cfData);
-        
-                File test = new File("/tmp/test");
-                FileOutputStream stream = new FileOutputStream(test);
-        
-                stream.write(cfData.ab);
-                System.out.println(Arrays.toString(cfData.ab));
-            }
-        } */
     }
 }

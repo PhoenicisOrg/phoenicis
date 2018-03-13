@@ -22,8 +22,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 
@@ -32,7 +30,6 @@ import java.util.Comparator;
  */
 @JsonDeserialize(builder = ShortcutInfoDTO.Builder.class)
 public class ShortcutInfoDTO {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutInfoDTO.class);
     private final String name;
     private final String category;
     private final String description;

@@ -6,7 +6,6 @@ import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.*;
-import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +37,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
     private List<CallbackPair> callbacks;
 
-    public DefaultRepositoryManager(ExecutorService executorService, boolean enforceUncompatibleOperatingSystems,
-            ToolsConfiguration toolsConfiguration, String cacheDirectoryPath, FileUtilities fileUtilities,
+    public DefaultRepositoryManager(ExecutorService executorService, String cacheDirectoryPath,
+            FileUtilities fileUtilities,
             LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
             BackgroundRepository.Factory backgroundRepositoryFactory) {
         super();

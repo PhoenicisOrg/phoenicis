@@ -19,7 +19,6 @@
 package org.phoenicis.repository.repositoryTypes;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
@@ -34,7 +33,7 @@ public class CachedRepositoryTest {
 
     @Test
     public void testFetchInstallableApplications() throws Exception {
-        Repository repository = Mockito.mock(Repository.class);
+        Repository repository = mock(Repository.class);
         when(repository
                 .fetchInstallableApplications())
                         .thenReturn(
