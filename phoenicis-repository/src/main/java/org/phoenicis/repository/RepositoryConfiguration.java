@@ -24,7 +24,6 @@ import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.BackgroundRepository;
 import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
 import org.phoenicis.repository.repositoryTypes.LocalRepository;
-import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.tools.files.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,9 +36,6 @@ import java.io.File;
 
 @Configuration
 public class RepositoryConfiguration {
-    @Value("${application.repository.forceIncompatibleOperatingSystems:false}")
-    private boolean enforceUncompatibleOperatingSystems;
-
     @Value("${application.user.cache}")
     private String cacheDirectoryPath;
 
@@ -48,9 +44,6 @@ public class RepositoryConfiguration {
 
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
-
-    @Autowired
-    private ToolsConfiguration toolsConfiguration;
 
     @Autowired
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;

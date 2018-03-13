@@ -42,7 +42,7 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
             WinePrefixContainerController winePrefixContainerController) {
         super(containerEntity);
 
-        this.informationTab = new WinePrefixContainerInformationTab(containerEntity, engineVersions);
+        this.informationTab = new WinePrefixContainerInformationTab(containerEntity);
         this.tabPane.getTabs().add(this.informationTab);
         this.displayTab = new WinePrefixContainerDisplayTab(containerEntity, winePrefixContainerController);
         this.tabPane.getTabs().add(this.displayTab);
