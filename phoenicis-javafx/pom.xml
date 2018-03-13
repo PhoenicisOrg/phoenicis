@@ -74,6 +74,10 @@
         </plugins>
     </build>
 
+    <!--
+        to allow the usage of two different monocle versions for java 8 and 9 two maven profiles are needed,
+        see also https://github.com/TestFX/TestFX/issues/433#issuecomment-348047200 for more details
+    -->
     <profiles>
         <profile>
             <id>jdk9</id>
