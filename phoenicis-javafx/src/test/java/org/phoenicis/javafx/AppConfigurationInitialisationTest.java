@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package org.phoenicis.javafx;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testfx.api.FxToolkit;
@@ -11,15 +10,11 @@ import org.testfx.api.FxToolkit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * @author marc
+ * A test for to check that the JavaFX application can be correctly started
  *
+ * @author marc
  */
 public class AppConfigurationInitialisationTest {
-
-    @Before
-    public void initialize() {
-        System.setProperty("testfx.headless", "false");
-    }
 
     @Test
     public void testAppConfigurationInitialisation() throws TimeoutException {

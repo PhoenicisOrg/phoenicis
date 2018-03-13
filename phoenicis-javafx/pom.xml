@@ -30,7 +30,7 @@
 
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
-        <testfx.version>4.0.6-alpha</testfx.version>
+        <testfx.version>4.0.12-alpha</testfx.version>
     </properties>
 
     <build>
@@ -73,6 +73,75 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>jdk9</id>
+            <activation>
+                <jdk>9</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>testfx-core</artifactId>
+                    <version>${testfx.version}</version>
+                    <scope>test</scope>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.testfx</groupId>
+                            <artifactId>testfx-internal-java8</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>testfx-internal-java9</artifactId>
+                    <version>${testfx.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-9+181</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>testfx-core</artifactId>
+                    <version>${testfx.version}</version>
+                    <scope>test</scope>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.testfx</groupId>
+                            <artifactId>testfx-internal-java9</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>testfx-internal-java8</artifactId>
+                    <version>${testfx.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>8u76-b04</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
