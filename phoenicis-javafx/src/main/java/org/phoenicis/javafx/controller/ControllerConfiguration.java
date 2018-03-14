@@ -88,7 +88,6 @@ public class ControllerConfiguration {
                 viewsConfiguration.winePrefixContainerPanelFactory(),
                 containersConfiguration.winePrefixContainerController(),
                 repositoryConfiguration.repositoryManager(),
-                enginesConfiguration.enginesSource(),
                 enginesConfiguration.engineToolsManager());
     }
 
@@ -125,8 +124,7 @@ public class ControllerConfiguration {
 
     @Bean
     public SettingsController settingsController() {
-        return new SettingsController(viewsConfiguration.viewSettings(),
-                javaFxSettingsConfiguration.javaFxSettingsManager());
+        return new SettingsController(viewsConfiguration.viewSettings());
     }
 
 }

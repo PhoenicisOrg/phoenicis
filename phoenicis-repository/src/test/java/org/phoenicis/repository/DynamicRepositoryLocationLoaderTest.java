@@ -4,14 +4,11 @@ import org.junit.Test;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class DynamicRepositoryLocationLoaderTest {
     private final RepositoryLocationLoader mockDelegated = mock(RepositoryLocationLoader.class);

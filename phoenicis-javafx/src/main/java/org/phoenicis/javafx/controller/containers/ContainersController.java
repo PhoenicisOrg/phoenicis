@@ -24,7 +24,6 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.engines.EngineToolsManager;
-import org.phoenicis.engines.EnginesSource;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
@@ -45,9 +44,7 @@ public class ContainersController {
     private final ContainersView containersView;
     private final ContainersManager containersManager;
     private final ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
-    private final WinePrefixContainerController winePrefixContainerController;
     private final RepositoryManager repositoryManager;
-    private final EnginesSource enginesSource;
     private final EngineToolsManager engineToolsManager;
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
@@ -56,13 +53,10 @@ public class ContainersController {
             ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
             WinePrefixContainerController winePrefixContainerController,
             RepositoryManager repositoryManager,
-            EnginesSource enginesSource,
             EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
-        this.winePrefixContainerController = winePrefixContainerController;
-        this.enginesSource = enginesSource;
         this.repositoryManager = repositoryManager;
         this.engineToolsManager = engineToolsManager;
 

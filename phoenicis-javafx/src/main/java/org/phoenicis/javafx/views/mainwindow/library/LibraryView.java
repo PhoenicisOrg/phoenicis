@@ -48,7 +48,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class LibraryView extends MainWindowView<LibrarySidebar> {
     private final LibraryFilter filter;
-    private final ObjectMapper objectMapper;
 
     private LibraryPanel libraryPanel;
     private CreateShortcutPanel createShortcutPanel;
@@ -78,7 +77,6 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
             JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Library"), themeManager);
         this.getStyleClass().add("mainWindowScene");
-        this.objectMapper = objectMapper;
 
         onShortcutEdit = shortcut -> showShortcutEdit(shortcut);
 

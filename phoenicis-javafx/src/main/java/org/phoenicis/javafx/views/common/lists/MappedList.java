@@ -88,7 +88,6 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
 
     protected void addRemove(Change<? extends F> c) {
         int from = c.getFrom();
-        int to = c.getTo();
 
         for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
             nextRemove(index, mappedValues.remove(index));

@@ -88,7 +88,6 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
 
     protected void addRemove(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
-        int to = c.getTo();
 
         nextRemove(from + others.length, c.getRemoved());
         nextAdd(from + others.length, from + c.getAddedSize() + others.length);

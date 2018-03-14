@@ -21,8 +21,10 @@ package org.phoenicis.javafx.views.scriptui;
 import org.phoenicis.javafx.UiMessageSenderJavaFXImplementation;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
-import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
-import org.phoenicis.scripts.ui.*;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.UiConfiguration;
+import org.phoenicis.scripts.ui.UiMessageSender;
+import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,9 +36,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class JavaFxUiConfiguration implements UiConfiguration {
     @Autowired
     private ViewsConfiguration viewsConfiguration;
-
-    @Autowired
-    private ViewsConfigurationLibrary viewsConfigurationLibrary;
 
     @Autowired
     private ToolsConfiguration toolsConfiguration;

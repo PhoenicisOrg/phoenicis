@@ -9,10 +9,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -27,15 +25,13 @@ public class WinePrefixContainerInformationTab extends Tab {
     private static final String TITLE_CSS_CLASS = "title";
 
     private final WinePrefixContainerDTO container;
-    private final List<EngineVersionDTO> engineVersions;
 
     private Consumer<WinePrefixContainerDTO> onDeletePrefix;
 
-    public WinePrefixContainerInformationTab(WinePrefixContainerDTO container, List<EngineVersionDTO> engineVersions) {
+    public WinePrefixContainerInformationTab(WinePrefixContainerDTO container) {
         super(tr("Information"));
 
         this.container = container;
-        this.engineVersions = engineVersions;
 
         this.setClosable(false);
 

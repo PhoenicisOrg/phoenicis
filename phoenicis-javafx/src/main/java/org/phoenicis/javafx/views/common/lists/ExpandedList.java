@@ -115,13 +115,6 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
             List<List<? extends E>> valuesClone = new ArrayList<List<? extends E>>(expandedValues);
 
             for (int i = from; i < to; ++i) {
-                int firstOldIndex = getFirstIndex(i);
-                int lastOldIndexPlusOne = getLastIndexPlusOne(i);
-
-                int firstNewIndex = getFirstIndex(c.getPermutation(i));
-
-                int numberOfElements = lastOldIndexPlusOne - firstOldIndex;
-
                 valuesClone.set(i, expandedValues.get(c.getPermutation(i)));
             }
 
@@ -143,7 +136,6 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         if (to > from) {
             for (int i = from; i < to; ++i) {
                 int firstOldIndex = getFirstIndex(i);
-                int lastOldIndexPlusOne = getLastIndexPlusOne(i);
 
                 List<? extends E> oldValues = expandedValues.get(i);
 
@@ -178,7 +170,6 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
 
     protected void addRemove(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
-        int to = c.getTo();
 
         for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
             int firstOldIndex = getFirstIndex(index);

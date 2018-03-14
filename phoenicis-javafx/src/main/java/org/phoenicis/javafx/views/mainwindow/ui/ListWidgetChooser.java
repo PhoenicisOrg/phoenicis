@@ -21,8 +21,6 @@ import java.util.function.Consumer;
 public class ListWidgetChooser<E> extends HBox {
     private final Logger LOGGER = LoggerFactory.getLogger(ListWidgetChooser.class);
 
-    private List<CombinedListWidget<E>> listWidgets;
-
     private ToggleGroup toggleGroup;
 
     private ToggleButton iconsListButton;
@@ -40,8 +38,6 @@ public class ListWidgetChooser<E> extends HBox {
 
     public ListWidgetChooser(List<CombinedListWidget<E>> listWidgets) {
         super();
-
-        this.listWidgets = listWidgets;
 
         this.getStyleClass().add("listChooser");
 

@@ -18,12 +18,9 @@
 
 package org.phoenicis.containers.wine.parameters;
 
-import org.phoenicis.win32.registry.RegistryWriter;
 import org.junit.Test;
 
 public class UseGLSLTest extends AbstractRegistryParameterTest<UseGLSL> {
-    private final RegistryWriter registryWriter = new RegistryWriter();
-
     @Test
     public void testGenerateRegFile_enabledGLSL() {
         testStringValue(UseGLSL.ENABLED, "enabled");

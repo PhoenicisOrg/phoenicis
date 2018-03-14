@@ -18,23 +18,18 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.repository.repositoryTypes.Repository;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PhoenicisTestsApp {
     private ApplicationContext applicationContext;
-    private List<String> workingScripts = new ArrayList<>();
-    private List<String> failingScripts = new ArrayList<>();
 
     public static void main(String[] args) {
         final PhoenicisTestsApp phoenicisTestsApp = new PhoenicisTestsApp();

@@ -50,7 +50,6 @@ abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresen
      * Draw the header at the top of the window
      */
     private void drawHeader() {
-        final String title = this.getParentWizardTitle(); // FIXME: use this variable to draw the title of the window
         Pane header = new Pane();
         header.setId("header");
         header.setPrefSize(722, 65);

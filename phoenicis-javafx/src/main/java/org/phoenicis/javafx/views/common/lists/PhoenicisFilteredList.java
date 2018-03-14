@@ -7,7 +7,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -122,7 +121,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     /**
      * Returns the element at the specified position in this list.
      *
-     * @param index index of the element to return
+     * @param  index index of the element to return
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */

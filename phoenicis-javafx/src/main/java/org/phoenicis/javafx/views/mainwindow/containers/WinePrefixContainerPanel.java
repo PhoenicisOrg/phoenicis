@@ -21,10 +21,8 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.WinePrefixContainerController;
 import org.phoenicis.engines.EngineToolsManager;
-import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -36,25 +34,23 @@ public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixC
     private WinePrefixContainerToolsTab toolsTab;
 
     public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity,
-            List<EngineVersionDTO> engineVersions,
             EngineToolsManager engineToolsManager,
             Optional<ApplicationDTO> engineTools,
             WinePrefixContainerController winePrefixContainerController) {
-        super(containerEntity, engineVersions);
+        super(containerEntity);
 
-        this.informationTab = new WinePrefixContainerInformationTab(containerEntity, engineVersions);
+        this.informationTab = new WinePrefixContainerInformationTab(containerEntity);
         this.tabPane.getTabs().add(this.informationTab);
         this.displayTab = new WinePrefixContainerDisplayTab(containerEntity, winePrefixContainerController);
         this.tabPane.getTabs().add(this.displayTab);
         this.inputTab = new WinePrefixContainerInputTab(containerEntity);
         this.tabPane.getTabs().add(this.inputTab);
         if (engineTools.isPresent()) {
-            this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, winePrefixContainerController,
-                    engineToolsManager, engineTools.get());
+            this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, engineToolsManager,
+                    engineTools.get());
             this.tabPane.getTabs().add(this.wineToolsTab);
         }
-        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController,
-                engineToolsManager);
+        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController);
         this.tabPane.getTabs().add(this.toolsTab);
     }
 

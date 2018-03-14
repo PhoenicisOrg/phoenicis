@@ -27,8 +27,6 @@ import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.library.dto.ShortcutCreationDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URI;
@@ -40,7 +38,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * a details view which allows to edit a shortcut
  */
 final class CreateShortcutPanel extends DetailsView {
-    private final Logger LOGGER = LoggerFactory.getLogger(CreateShortcutPanel.class);
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
 
     // consumer called when a shortcut shall be created

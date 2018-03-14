@@ -28,9 +28,9 @@ import javafx.scene.input.MouseEvent;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.lists.ExpandedList;
 import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
-import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -38,8 +38,6 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.tools.ToolsConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -59,7 +57,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * </ul>
  */
 public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
-    private final Logger LOGGER = LoggerFactory.getLogger(ApplicationsView.class);
 
     private final ApplicationFilter filter;
     private final CombinedListWidget<ApplicationDTO> availableApps;

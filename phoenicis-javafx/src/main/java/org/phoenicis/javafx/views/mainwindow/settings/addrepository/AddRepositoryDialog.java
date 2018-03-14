@@ -1,26 +1,10 @@
 package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.stage.DirectoryChooser;
-import org.phoenicis.repository.location.ClasspathRepositoryLocation;
-import org.phoenicis.repository.location.GitRepositoryLocation;
-import org.phoenicis.repository.location.LocalRepositoryLocation;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.repositoryTypes.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -36,7 +20,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 12.06.17
  */
 public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Repository>> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(AddRepositoryDialog.class);
 
     /**
      * The repository type selection step

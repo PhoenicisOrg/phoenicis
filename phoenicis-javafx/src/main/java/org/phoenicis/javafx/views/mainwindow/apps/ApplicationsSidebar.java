@@ -64,10 +64,6 @@ public class ApplicationsSidebar extends Sidebar {
     // widget to switch between the different list widgets in the center view
     private ListWidgetChooser<ApplicationDTO> listWidgetChooser;
 
-    // consumers called when an action inside the searchBar has been performed (a filter text was entered or the filter has been cleared)
-    private Consumer<String> onFilterTextEnter;
-    private Runnable onFilterClear;
-
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
     private Consumer<CategoryDTO> onCategorySelection;

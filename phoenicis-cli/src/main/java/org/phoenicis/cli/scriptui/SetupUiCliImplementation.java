@@ -33,12 +33,10 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 class SetupUiCliImplementation implements SetupUi {
-    private final String title;
     private final boolean interactive;
     private final boolean verbose;
 
     SetupUiCliImplementation(String title, boolean interactive, boolean verbose) {
-        this.title = title;
         this.interactive = interactive;
         this.verbose = verbose;
 

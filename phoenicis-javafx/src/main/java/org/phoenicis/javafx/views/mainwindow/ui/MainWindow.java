@@ -33,11 +33,6 @@ import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 
 public class MainWindow extends Stage {
-    private final LibraryView library;
-    private final ApplicationsView apps;
-    private final EnginesView engines;
-    private final ContainersView containers;
-    private final SettingsView settings;
     private final PhoenicisScene scene;
 
     private TabPane tabPane;
@@ -52,12 +47,6 @@ public class MainWindow extends Stage {
             ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
-
-        this.library = library;
-        this.apps = apps;
-        this.engines = engines;
-        this.containers = containers;
-        this.settings = settings;
 
         tabPane = new TabPane();
         tabPane.setId("menuPane");
