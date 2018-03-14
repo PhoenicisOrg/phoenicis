@@ -35,6 +35,17 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
         return index - others.length;
     }
 
+    /**
+     * Returns the index of the element, in the source list on the given index, inside this list
+     *
+     * @param index The index of the element in the source list
+     * @return The index of the element in this list
+     * @apiNote This method is required to make Phoenicis compile with Java 9
+     */
+    public int getViewIndex(int index) {
+        return index + others.length;
+    }
+
     @Override
     public E get(int index) {
         if (index < others.length) {

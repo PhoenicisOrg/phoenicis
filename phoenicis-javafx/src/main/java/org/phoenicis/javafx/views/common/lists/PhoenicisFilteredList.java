@@ -8,22 +8,19 @@ import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.TransformationList;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * A filtered observable list taking a {@link Predicate} to filter elements of a given input {@link ObservableList}.
- * This class extends the functionality of {@link javafx.collections.transformation.FilteredList} with a trigger method.
+ * This class is based on the implementation of {@link FilteredList}, included in javafx, and extends its functionality with a trigger method.
  * This trigger method can be used to recheck the all elements included in the source list to only marks the elements as invalid,
  * that were previously added and now aren't, or the other way.
  *
  * @param <E> The type of the elements contained in the filtered list
  * @author Marc Arndt
- * @see javafx.collections.transformation.FilteredList
+ * @see FilteredList
  */
 public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> {
     private int[] filtered;
@@ -36,7 +33,8 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
      * Constructs a new FilteredList wrapper around the source list.
      * The provided predicate will match the elements in the source list that will be visible.
      * If the predicate is null, all elements will be matched and the list is equal to the source list.
-     * @param source the source list
+     *
+     * @param source    the source list
      * @param predicate the predicate to match the elements or null to match all elements.
      */
     public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source,
@@ -59,6 +57,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
      * <p>
      * This constructor might be useful if you want to bind {@link #predicateProperty()}
      * of this list.
+     *
      * @param source the source list
      */
     public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source) {
@@ -123,7 +122,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     /**
      * Returns the element at the specified position in this list.
      *
-     * @param  index index of the element to return
+     * @param index index of the element to return
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
@@ -141,6 +140,15 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
             throw new IndexOutOfBoundsException();
         }
         return filtered[index];
+    }
+
+    /**
+     * Taken from: https://github.com/teamfx/openjfx-9-dev-rt/blob/master/modules/javafx.base/src/main/java/javafx/collections/transformation/FilteredList.java
+     *
+     * @apiNote This method is required to make Phoenicis compile with Java 9
+     */
+    public int getViewIndex(int index) {
+        return Arrays.binarySearch(filtered, 0, size, index);
     }
 
     private SortHelper getSortHelper() {

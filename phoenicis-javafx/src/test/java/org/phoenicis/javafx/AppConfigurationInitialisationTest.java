@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.phoenicis.javafx;
 
@@ -10,8 +10,9 @@ import org.testfx.api.FxToolkit;
 import java.util.concurrent.TimeoutException;
 
 /**
- * @author marc
+ * A test for to check that the JavaFX application can be correctly started
  *
+ * @author marc
  */
 public class AppConfigurationInitialisationTest {
 
