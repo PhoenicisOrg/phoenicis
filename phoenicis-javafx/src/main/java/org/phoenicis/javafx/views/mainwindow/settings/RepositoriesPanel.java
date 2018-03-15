@@ -14,7 +14,7 @@ import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.mainwindow.settings.addrepository.AddRepositoryDialog;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 import org.phoenicis.settings.SettingsManager;
 
 import java.util.Optional;

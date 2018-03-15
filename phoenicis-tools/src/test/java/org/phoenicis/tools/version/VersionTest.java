@@ -26,31 +26,31 @@ import static org.junit.Assert.assertNotEquals;
 public class VersionTest {
 
     @Test
-    public void testVersion_toString_givesRightOutput() {
+    public void testVersionToStringGivesRightOutput() {
         Version version = new Version("4.1.9");
         assertEquals("4.1.9", version.toString());
     }
 
     @Test
-    public void testVersion_getBig_givesRightOutput() {
+    public void testVersionGetBigGivesRightOutput() {
         Version version = new Version("4.1.9");
         assertEquals(4, version.getBigNumber());
     }
 
     @Test
-    public void testVersion_getIntermediate_givesRightOutput() {
+    public void testVersionGetIntermediateGivesRightOutput() {
         Version version = new Version("4.1.9");
         assertEquals(1, version.getIntermediateNumber());
     }
 
     @Test
-    public void testVersion_getLow_givesRightOutput() {
+    public void testVersionGetLowGivesRightOutput() {
         Version version = new Version("4.1.9");
         assertEquals(9, version.getLowNumber());
     }
 
     @Test
-    public void testEquals_trivialCases() {
+    public void testEqualsTrivialCases() {
         Version version = new Version("4.1.9");
         assertEquals(version, version);
         assertNotEquals(version, null);
@@ -58,7 +58,7 @@ public class VersionTest {
     }
 
     @Test
-    public void testEquals_SameVersion_versionAreEquals() {
+    public void testEqualsSameVersionVersionAreEquals() {
         Version version1 = new Version("4.1.9");
         Version version2 = new Version("4.1.9");
 
@@ -66,7 +66,7 @@ public class VersionTest {
     }
 
     @Test
-    public void testEquals_DifferentVersions_versionAreNotEquals() {
+    public void testEqualsDifferentVersionsVersionAreNotEquals() {
         Version version1 = new Version("4.1.9");
         Version version2 = new Version("4.1.8");
 

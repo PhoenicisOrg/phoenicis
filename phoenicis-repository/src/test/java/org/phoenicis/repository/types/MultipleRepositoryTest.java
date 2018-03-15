@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repositoryTypes;
+package org.phoenicis.repository.types;
 
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.junit.Test;
@@ -29,13 +29,13 @@ import static org.junit.Assert.assertEquals;
 
 public class MultipleRepositoryTest {
     @Test
-    public void testWithEmptyList_emptySetIsReturned() {
+    public void testWithEmptyListEmptySetIsReturned() {
         final MultipleRepository multipleRepository = new MultipleRepository();
         assertEquals(null, multipleRepository.fetchInstallableApplications());
     }
 
     @Test
-    public void testWithThreeSources_threeResults() {
+    public void testWithThreeSourcesThreeResults() {
         final Repository firstSource = () -> new RepositoryDTO.Builder().withTypes(Collections.singletonList(
                 new TypeDTO.Builder()
                         .withId("Type 1")

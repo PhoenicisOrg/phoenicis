@@ -10,7 +10,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

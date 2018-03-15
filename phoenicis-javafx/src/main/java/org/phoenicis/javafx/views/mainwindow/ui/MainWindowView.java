@@ -39,14 +39,14 @@ import java.util.Optional;
  * The DetailsView is an optional panel on the right side which is opened to show details about currently selected items
  * in the content.
  *
- * @param <SpecificSidebar> Sidebar used by this MainWindowView
+ * @param <S> Sidebar used by this MainWindowView
  */
-public class MainWindowView<SpecificSidebar extends Sidebar> extends Tab {
+public class MainWindowView<S extends Sidebar> extends Tab {
     protected final ThemeManager themeManager;
 
     private final BorderPane content;
 
-    protected SpecificSidebar sidebar;
+    protected S sidebar;
 
     private HBox waitPanel;
     private FailurePanel failurePanel;
@@ -84,7 +84,7 @@ public class MainWindowView<SpecificSidebar extends Sidebar> extends Tab {
      * sets the Sidebar
      * @param sidebar
      */
-    protected void setSidebar(SpecificSidebar sidebar) {
+    protected void setSidebar(S sidebar) {
         this.sidebar = sidebar;
         this.content.setLeft(this.sidebar);
     }

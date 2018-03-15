@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.phoenicis.repository.location.ClasspathRepositoryLocation;
 import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

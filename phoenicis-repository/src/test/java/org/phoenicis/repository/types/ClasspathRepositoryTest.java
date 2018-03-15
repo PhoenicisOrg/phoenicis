@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repositoryTypes;
+package org.phoenicis.repository.types;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -32,12 +32,12 @@ public class ClasspathRepositoryTest {
             resourceResolver, new ObjectMapper());
 
     @Test
-    public void fetchInstallableApplications_numberOfCategories() {
+    public void fetchInstallableApplicationsNumberOfCategories() {
         assertEquals(2, repository.fetchInstallableApplications().getTypes().get(0).getCategories().size());
     }
 
     @Test
-    public void fetchInstallableApplications_categoriesNames() {
+    public void fetchInstallableApplicationsCategoriesNames() {
         assertEquals("Development",
                 repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(0).getName());
         assertEquals("Graphics",
@@ -45,34 +45,34 @@ public class ClasspathRepositoryTest {
     }
 
     @Test
-    public void fetchInstallableApplications_Graphics() {
+    public void fetchInstallableApplicationsGraphics() {
         assertEquals(1, repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(1)
                 .getApplications().size());
     }
 
     @Test
-    public void fetchInstallableApplications_Graphics_Photofiltre() {
+    public void fetchInstallableApplicationsGraphicsPhotofiltre() {
         assertEquals("Photofiltre",
                 repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(1).getApplications()
                         .get(0).getName());
     }
 
     @Test
-    public void fetchInstallableApplications_Graphics_Photofiltre_scripts() {
+    public void fetchInstallableApplicationsGraphicsPhotofiltreScripts() {
         assertEquals(1, repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(1)
                 .getApplications().get(0)
                 .getScripts().size());
     }
 
     @Test
-    public void fetchInstallableApplications_Graphics_Photofiltre_scriptName() {
+    public void fetchInstallableApplicationsGraphicsPhotofiltreScriptName() {
         assertEquals("Online", repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(1)
                 .getApplications().get(0)
                 .getScripts().get(0).getScriptName());
     }
 
     @Test
-    public void fetchInstallableApplications_Graphics_Photofiltre_scriptContent() {
+    public void fetchInstallableApplicationsGraphicsPhotofiltreScriptContent() {
         assertEquals("include([\"Utils\", \"Functions\", \"QuickScript\", \"OnlineInstallerScript\"]);\n" + "\n"
                 + "new OnlineInstallerScript()\n" + "    .name(\"Photofiltre\")\n"
                 + "    .editor(\"Antonio Da Cruz\")\n" + "    .applicationHomepage(\"http://photofiltre.free.fr\")\n"
@@ -86,14 +86,14 @@ public class ClasspathRepositoryTest {
     }
 
     @Test
-    public void fetchInstallableApplications_Graphics_Photofiltre_miniatures() {
+    public void fetchInstallableApplicationsGraphicsPhotofiltreMiniatures() {
         assertEquals(1, repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(1)
                 .getApplications().get(0)
                 .getMiniatures().size());
     }
 
     @Test
-    public void fetchInstallableApplications_categoriesTypes() {
+    public void fetchInstallableApplicationsCategoriesTypes() {
         assertEquals(CategoryDTO.CategoryType.INSTALLERS,
                 repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(0).getType());
         assertEquals(CategoryDTO.CategoryType.FUNCTIONS,

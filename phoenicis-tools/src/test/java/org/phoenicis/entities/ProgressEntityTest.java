@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ProgressEntityTest {
     @Test
-    public void testProgressEntity_testBuilder() {
+    public void testProgressEntityTestBuilder() {
         final ProgressEntity progressEntity = new ProgressEntity.Builder().withProgressText("Progress text")
                 .withPercent(42.).withState(ProgressState.FAILED).build();
 

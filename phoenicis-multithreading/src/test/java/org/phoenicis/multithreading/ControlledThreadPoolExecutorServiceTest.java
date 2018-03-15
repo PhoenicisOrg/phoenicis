@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ControlledThreadPoolExecutorServiceTest {
     @Test
-    public void testSubmitTask_taskAreExecuted() throws InterruptedException {
+    public void testSubmitTaskTaskAreExecuted() throws InterruptedException {
         final ControlledThreadPoolExecutorService controlledThreadPoolExecutor = new ControlledThreadPoolExecutorService(
                 "test", 4, 2);
         final AtomicInteger atomicInteger = new AtomicInteger(0);

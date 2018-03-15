@@ -19,9 +19,9 @@
 package org.phoenicis.tests;
 
 import org.phoenicis.repository.dto.*;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 import org.phoenicis.entities.OperatingSystem;
-import org.phoenicis.repository.repositoryTypes.TeeRepository;
+import org.phoenicis.repository.types.TeeRepository;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;

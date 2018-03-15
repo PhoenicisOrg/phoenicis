@@ -119,7 +119,6 @@ public class LibraryController {
                     shortcutObject.callMember("name", shortcutCreationDTO.getName());
                     shortcutObject.callMember("category", shortcutCreationDTO.getCategory());
                     shortcutObject.callMember("description", shortcutCreationDTO.getDescription());
-                    ;
                     shortcutObject.callMember("miniature", shortcutCreationDTO.getMiniature());
                     shortcutObject.callMember("search", shortcutCreationDTO.getExecutable().getName());
                     shortcutObject.callMember("prefix", container);

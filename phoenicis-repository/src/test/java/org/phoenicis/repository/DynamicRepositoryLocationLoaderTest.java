@@ -2,7 +2,7 @@ package org.phoenicis.repository;
 
 import org.junit.Test;
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 
 import java.util.Arrays;
 import java.util.List;

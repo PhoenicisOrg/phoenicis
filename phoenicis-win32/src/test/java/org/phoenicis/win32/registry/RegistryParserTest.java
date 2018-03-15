@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class RegistryParserTest {
 
     @Test
-    public void testRegistryParser_parseSimpleFile_testKeyTree() throws IOException {
+    public void testRegistryParserParseSimpleFileTestKeyTree() throws IOException {
         File temporaryFile = File.createTempFile("registry", "test");
         temporaryFile.deleteOnExit();
 
@@ -61,7 +61,7 @@ public class RegistryParserTest {
     }
 
     @Test
-    public void testParse_realRegFile_testObjectPopulated() throws URISyntaxException {
+    public void testParseRealRegFileTestObjectPopulated() throws URISyntaxException {
         File registryFile = new File(this.getClass().getResource("user.reg").toURI());
 
         RegistryParser registryParser = new RegistryParser();
@@ -71,7 +71,7 @@ public class RegistryParserTest {
     }
 
     @Test
-    public void testRegistryParser_wineBug37575_valueIsCorrectlyParsed() throws IOException {
+    public void testRegistryParserWineBug37575ValueIsCorrectlyParsed() throws IOException {
         File temporaryFile = File.createTempFile("registry", "test");
         RegistryParser registryParser = new RegistryParser();
         temporaryFile.deleteOnExit();

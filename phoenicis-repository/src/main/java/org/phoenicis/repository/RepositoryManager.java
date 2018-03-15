@@ -4,7 +4,7 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 
 import java.util.List;
 import java.util.function.Consumer;

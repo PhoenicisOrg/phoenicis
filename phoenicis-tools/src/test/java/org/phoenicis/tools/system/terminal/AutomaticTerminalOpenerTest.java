@@ -43,7 +43,7 @@ public class AutomaticTerminalOpenerTest {
     }
 
     @Test
-    public void openTerminal_testOSX() {
+    public void openTerminalTestOSX() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.MACOSX);
         final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
                 mockOperatingSystemFetcher);
@@ -56,7 +56,7 @@ public class AutomaticTerminalOpenerTest {
     }
 
     @Test
-    public void openTerminal_testLinux() {
+    public void openTerminalTestLinux() {
         when(mockOperatingSystemFetcher.fetchCurrentOperationSystem()).thenReturn(OperatingSystem.LINUX);
         final AutomaticTerminalOpener automaticTerminalOpener = new AutomaticTerminalOpener(mockTerminalOpenerFactory,
                 mockOperatingSystemFetcher);
