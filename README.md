@@ -6,13 +6,6 @@ This is the Phoenicis PlayOnLinux and PlayOnMac 5 repository.
 [![Crowdin Badge](https://d322cqt584bo4o.cloudfront.net/phoenicis/localized.svg)](https://crowdin.com/project/phoenicis)
 ------------
 
-## Community
-* Forums : http://www.playonlinux.com/en/forums.html
-* Slack : https://join.slack.com/phoenicis-org/shared_invite/MTkzMTMwMjM3MjcxLTE0OTY1MTQzNzktY2IzOTE2NmE3NA
-
-## Scripts
-* Please make your pull request on this repository: https://github.com/PhoenicisOrg/Scripts to add scripts
-
 ## Build and Run
 Build
 ```
@@ -26,3 +19,11 @@ unzip phoenicis-dist.zip
 ```
 
 For more details (e.g. regarding dependencies), consider the [wiki](https://github.com/PhoenicisOrg/POL-POM-5/wiki/Build).
+
+## Scripts
+Please make your pull request on this repository: https://github.com/PhoenicisOrg/Scripts to add scripts
+
+## Community
+* Forums : http://www.playonlinux.com/en/forums.html
+* Slack : https://join.slack.com/phoenicis-org/shared_invite/MTkzMTMwMjM3MjcxLTE0OTY1MTQzNzktY2IzOTE2NmE3NA
+
