@@ -1,7 +1,7 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 
 import java.util.List;
 

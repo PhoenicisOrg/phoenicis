@@ -257,7 +257,7 @@ Wine.prototype.create = function () {
 Wine.prototype.programFiles = function () {
     var programFilesName = this.run("cmd", ["/c", "echo", "%ProgramFiles%"], true).trim();
     if (programFilesName == "%ProgramFiles%") {
-        return "Program Files"
+        return "Program Files";
     } else {
         return org.apache.commons.io.FilenameUtils.getBaseName(programFilesName);
     }
@@ -293,7 +293,7 @@ Wine.prototype.getAvailableVersions = function () {
     return new Downloader()
         .wizard(this._wizard)
         .url(this._wineWebServiceUrl)
-        .get()
+        .get();
 };
 
 /**

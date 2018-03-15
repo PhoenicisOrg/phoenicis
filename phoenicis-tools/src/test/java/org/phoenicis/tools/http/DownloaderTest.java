@@ -55,7 +55,7 @@ public class DownloaderTest {
     }
 
     @Test
-    public void testGet_DownloadFile_FileIsDownloaded() throws Exception {
+    public void testGetDownloadFileFileIsDownloaded() throws Exception {
         mockServer.when(request().withMethod("GET").withPath("/test.txt")).respond(response().withStatusCode(200)
                 .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download"));
 
@@ -70,7 +70,7 @@ public class DownloaderTest {
     }
 
     @Test
-    public void testGet_DownloadFileInAString_FileIsDownloaded() throws Exception {
+    public void testGetDownloadFileInAStringFileIsDownloaded() throws Exception {
         mockServer.when(request().withMethod("GET").withPath("/test2.txt")).respond(response().withStatusCode(200)
                 .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download 2"));
 

@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ChecksumCalculatorTest {
     @Test
-    public void testChecksumCalculate_generateAFile_CheckMD5() throws IOException {
+    public void testChecksumCalculateGenerateAFileCheckMD5() throws IOException {
         File temporaryFile = File.createTempFile("testHash", "txt");
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(temporaryFile)) {
@@ -40,7 +40,7 @@ public class ChecksumCalculatorTest {
     }
 
     @Test
-    public void testChecksumCalculate_generateAFile_CheckSHA1() throws IOException {
+    public void testChecksumCalculateGenerateAFileCheckSHA1() throws IOException {
         File temporaryFile = File.createTempFile("testHash", "txt");
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(temporaryFile)) {

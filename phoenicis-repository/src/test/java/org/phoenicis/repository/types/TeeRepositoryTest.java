@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repositoryTypes;
+package org.phoenicis.repository.types;
 
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TeeRepositoryTest {
     @Test
-    public void testFetchInstallableApplications_onlyCategoriesNoCollapse_numberOfResultIsCorrect() {
+    public void testFetchInstallableApplicationsOnlyCategoriesNoCollapseNumberOfResultIsCorrect() {
         final Repository leftSource = () -> new RepositoryDTO.Builder()
                 .withTypes(Collections.singletonList(
                         new TypeDTO.Builder().withId("Type 1")
@@ -56,7 +56,7 @@ public class TeeRepositoryTest {
     }
 
     @Test
-    public void testFetchInstallableApplications_onlyCategoriesCollapse_numberOfResultIsCorrect() {
+    public void testFetchInstallableApplicationsOnlyCategoriesCollapseNumberOfResultIsCorrect() {
         final Repository leftSource = () -> new RepositoryDTO.Builder()
                 .withTypes(Collections.singletonList(
                         new TypeDTO.Builder().withId("Type 1")
@@ -83,7 +83,7 @@ public class TeeRepositoryTest {
     }
 
     @Test
-    public void testFetchInstallableApplications_categoriesAndAppsCollapse_numberOfResultIsCorrect() {
+    public void testFetchInstallableApplicationsCategoriesAndAppsCollapseNumberOfResultIsCorrect() {
         final Repository leftSource = () -> new RepositoryDTO.Builder()
                 .withTypes(Collections.singletonList(
                         new TypeDTO.Builder()

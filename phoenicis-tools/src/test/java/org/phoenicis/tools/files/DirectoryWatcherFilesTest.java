@@ -43,7 +43,7 @@ public class DirectoryWatcherFilesTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testObservableDirectory_DirectoryIsInFactAFile_ExceptionThrown() throws IOException {
+    public void testObservableDirectoryDirectoryIsInFactAFileExceptionThrown() throws IOException {
         File temporaryFile = File.createTempFile("observableDirectoryTest", "txt");
         temporaryFile.deleteOnExit();
         expectedEx.expect(IllegalStateException.class);
@@ -56,7 +56,7 @@ public class DirectoryWatcherFilesTest {
     }
 
     @Test
-    public void testObservableDirectory_dontChangeAnything_ObservableOnlyNotifiedOnce() throws InterruptedException {
+    public void testObservableDirectoryDontChangeAnythingObservableOnlyNotifiedOnce() throws InterruptedException {
         final File temporaryDirectory = Files.createTempDir();
 
         try (DirectoryWatcherFiles directoryWatcherFiles = new DirectoryWatcherFiles(mockExecutorService,
@@ -73,7 +73,7 @@ public class DirectoryWatcherFilesTest {
 
     @Test
     @Ignore
-    public void testObservableDirectory_createANewFile_ObservableIsNotifiedTwice()
+    public void testObservableDirectoryCreateANewFileObservableIsNotifiedTwice()
             throws InterruptedException, IOException {
         final File temporaryDirectory = Files.createTempDir();
 

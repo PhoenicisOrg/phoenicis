@@ -22,17 +22,17 @@ import org.junit.Test;
 
 public class UseGLSLTest extends AbstractRegistryParameterTest<UseGLSL> {
     @Test
-    public void testGenerateRegFile_enabledGLSL() {
+    public void testGenerateRegFileEnabledGLSL() {
         testStringValue(UseGLSL.ENABLED, "enabled");
     }
 
     @Test
-    public void testGenerateRegFile_disabledGLSL() {
+    public void testGenerateRegFileDisabledGLSL() {
         testStringValue(UseGLSL.DISABLED, "disabled");
     }
 
     @Test
-    public void testGenerateRegFile_defaultGLSL() {
+    public void testGenerateRegFileDefaultGLSL() {
         testRemoveValue(UseGLSL.DEFAULT);
     }
 

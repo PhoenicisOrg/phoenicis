@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.phoenicis.repository.repositoryTypes;
+package org.phoenicis.repository.types;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.phoenicis.configuration.localisation.Localisation;

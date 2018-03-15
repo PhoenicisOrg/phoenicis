@@ -30,12 +30,12 @@ public class PhoenicisCLITest {
     private final PhoenicisCLI phoenicisCLI = new PhoenicisCLI();
 
     @Test(expected = InvalidCommandLineException.class)
-    public void testRunCliInvalidArguments_exceptionThrown() {
+    public void testRunCliInvalidArgumentsExceptionThrown() {
         phoenicisCLI.run(new String[] { "invalid", "arguments" });
     }
 
     @Test
-    public void testBlankScript_noException() throws IOException {
+    public void testBlankScriptNoException() throws IOException {
         File tempRepositoryListFile = File.createTempFile("repositories", ".json");
         tempRepositoryListFile.deleteOnExit();
 

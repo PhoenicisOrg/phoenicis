@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
-import org.phoenicis.repository.repositoryTypes.LocalRepository;
+import org.phoenicis.repository.types.ClasspathRepository;
+import org.phoenicis.repository.types.LocalRepository;
 import org.phoenicis.tools.files.FileUtilities;
 
 /**

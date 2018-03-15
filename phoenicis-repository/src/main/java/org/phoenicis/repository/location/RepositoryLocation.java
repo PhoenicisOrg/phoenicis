@@ -2,9 +2,9 @@ package org.phoenicis.repository.location;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.phoenicis.repository.repositoryTypes.ClasspathRepository;
-import org.phoenicis.repository.repositoryTypes.LocalRepository;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.ClasspathRepository;
+import org.phoenicis.repository.types.LocalRepository;
+import org.phoenicis.repository.types.Repository;
 import org.phoenicis.tools.files.FileUtilities;
 
 /**

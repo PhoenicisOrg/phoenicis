@@ -1,7 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 

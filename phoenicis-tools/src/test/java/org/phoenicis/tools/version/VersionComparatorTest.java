@@ -33,12 +33,12 @@ public class VersionComparatorTest {
     }
 
     @Test
-    public void testCompare_equalsVersion() {
+    public void testCompareEqualsVersion() {
         assertEquals(0, versionComparator.compare(new Version("4.2.1"), new Version("4.2.1")));
     }
 
     @Test
-    public void testCompare_HigherVersion() {
+    public void testCompareHigherVersion() {
         assertTrue(versionComparator.compare(new Version("4.2.2"), new Version("4.2.1")) > 0);
 
         assertTrue(versionComparator.compare(new Version("4.3.1"), new Version("4.2.1")) > 0);
@@ -49,35 +49,35 @@ public class VersionComparatorTest {
     }
 
     @Test
-    public void testCompare_WithManyPatches() {
+    public void testCompareWithManyPatches() {
         assertTrue(versionComparator.compare(new Version("4.2.1-dev-patch2"), new Version("4.2.1")) > 0);
 
         assertTrue(versionComparator.compare(new Version("4.2.1"), new Version("4.2.1-dev-patch2")) < 0);
     }
 
     @Test
-    public void testCompare_invalidVersion() {
+    public void testCompareInvalidVersion() {
         assertTrue(versionComparator.compare(new Version("1.4.rc6-xliveless-no_xinput2"), new Version("1.4")) > 0);
 
         assertTrue(versionComparator.compare(new Version("1.4"), new Version("1.4.rc6-xliveless-no_xinput2")) < 0);
     }
 
     @Test
-    public void testCompare_WithPatches() {
+    public void testCompareWithPatches() {
         assertTrue(versionComparator.compare(new Version("4.2.1-dev"), new Version("4.2.1")) > 0);
 
         assertTrue(versionComparator.compare(new Version("4.2.1"), new Version("4.2.1-dev")) < 0);
     }
 
     @Test
-    public void testCompare_WithPatchesOnlyTwo() {
+    public void testCompareWithPatchesOnlyTwo() {
         assertTrue(versionComparator.compare(new Version("4.2-dev"), new Version("4.2")) > 0);
 
         assertTrue(versionComparator.compare(new Version("4.2"), new Version("4.2-rc6")) < 0);
     }
 
     @Test
-    public void testCompare_LowerVersion() {
+    public void testCompareLowerVersion() {
         assertTrue(versionComparator.compare(new Version("4.2.1"), new Version("4.2.2")) < 0);
 
         assertTrue(versionComparator.compare(new Version("4.2.1"), new Version("4.3.1")) < 0);

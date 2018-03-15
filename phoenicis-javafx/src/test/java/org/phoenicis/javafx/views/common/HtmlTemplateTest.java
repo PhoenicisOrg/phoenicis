@@ -43,7 +43,7 @@ public class HtmlTemplateTest {
     }
 
     @Test
-    public void testRender_replaceTwoValues_valuesAreReplaced() throws Exception {
+    public void testRenderReplaceTwoValuesValuesAreReplaced() throws Exception {
         HtmlTemplate htmlTemplate = new HtmlTemplate(new FileInputStream(testTemplate));
 
         String expected = "<html>" + "<head>" + "<title>Title</title>" + "</head>" + "<body>" + "Content: Content"

@@ -31,17 +31,17 @@ public class FileUtilitiesTest {
     private FileUtilities fileUtilities = new FileUtilities();
 
     @Test(expected = IllegalArgumentException.class)
-    public void testIntToPosixFilePermission_invalidMode() {
+    public void testIntToPosixFilePermissionInvalidMode() {
         testOneCaseIntToPosixFilePermission(1000);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testIntToPosixFilePermission_invalidModeCase2() {
+    public void testIntToPosixFilePermissionInvalidModeCase2() {
         testOneCaseIntToPosixFilePermission(590);
     }
 
     @Test
-    public void testIntToPosixFilePermission_allAccess() {
+    public void testIntToPosixFilePermissionAllAccess() {
         testOneCaseIntToPosixFilePermission(777, PosixFilePermission.GROUP_EXECUTE, PosixFilePermission.GROUP_READ,
                 PosixFilePermission.GROUP_WRITE, PosixFilePermission.OTHERS_EXECUTE, PosixFilePermission.OTHERS_READ,
                 PosixFilePermission.OTHERS_WRITE, PosixFilePermission.OWNER_EXECUTE, PosixFilePermission.OWNER_READ,
@@ -49,14 +49,14 @@ public class FileUtilitiesTest {
     }
 
     @Test
-    public void testIntToPosixFilePermission_intermediate() {
+    public void testIntToPosixFilePermissionIntermediate() {
         testOneCaseIntToPosixFilePermission(755, PosixFilePermission.GROUP_EXECUTE, PosixFilePermission.GROUP_READ,
                 PosixFilePermission.OTHERS_EXECUTE, PosixFilePermission.OTHERS_READ, PosixFilePermission.OWNER_EXECUTE,
                 PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE);
     }
 
     @Test
-    public void testIntToPosixFilePermission_noAccess() {
+    public void testIntToPosixFilePermissionNoAccess() {
         testOneCaseIntToPosixFilePermission(000);
     }
 

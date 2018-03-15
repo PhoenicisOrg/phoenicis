@@ -54,7 +54,7 @@ public class RegistryKeyTest {
     }
 
     @Test
-    public void testRegistryKey_testGetChildWithMultipleArguments() throws Exception {
+    public void testRegistryKeyTestGetChildWithMultipleArguments() throws Exception {
         assertEquals("Content 1", ((RegistryValue<?>) a1.getChild("B2", "C1", "V1")).getText());
         assertEquals("Content 2", ((RegistryValue<?>) a1.getChild("B2", "C2", "V2")).getText());
         assertEquals("Content 3", ((RegistryValue<?>) a1.getChild("B2", "C2", "V3")).getText());
@@ -63,7 +63,7 @@ public class RegistryKeyTest {
     }
 
     @Test
-    public void testRegistryKey_toString_goodFormat() {
+    public void testRegistryKeyToStringGoodFormat() {
         assertEquals("+ A1\n" + "| + B1\n" + "| + B2\n" + "| | + C1\n" + "| | | - (StringValueType) V1 -> Content 1\n"
                 + "| | + C2\n" + "| | | - (StringValueType) V2 -> Content 2\n"
                 + "| | | - (StringValueType) V3 -> Content 3\n", a1.toString());

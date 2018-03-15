@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.repository.repositoryTypes;
+package org.phoenicis.repository.types;
 
 import org.junit.Test;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -40,7 +40,7 @@ public class BackgroundRepositoryTest {
             .build();
 
     @Test
-    public void testFetchInstallableApplications_taskIsPassed() {
+    public void testFetchInstallableApplicationsTaskIsPassed() {
         doAnswer(invocation -> {
             ((Runnable) invocation.getArguments()[0]).run();
             return null;

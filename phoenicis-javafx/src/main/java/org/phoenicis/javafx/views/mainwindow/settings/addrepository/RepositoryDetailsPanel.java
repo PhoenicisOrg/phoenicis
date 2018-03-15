@@ -2,7 +2,7 @@ package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 
 import javafx.scene.layout.BorderPane;
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.repositoryTypes.Repository;
+import org.phoenicis.repository.types.Repository;
 
 /**
  * A repository details panel used to add specific repository type dependent information.

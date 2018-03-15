@@ -62,7 +62,7 @@ public class ExtractorTest {
     }
 
     @Test
-    public void testUncompress_withSymbolicLinks() throws IOException, URISyntaxException {
+    public void testUncompressWithSymbolicLinks() throws IOException, URISyntaxException {
         File inputFile = new File(inputUrl.toURI().getPath(), "tarLink.tar.gz");
         final File temporaryDirectory = Files.createTempDir();
 
@@ -106,7 +106,6 @@ public class ExtractorTest {
         assertEquals("file0content", new String(FileUtils.readFileToByteArray(file0)));
 
         System.out.println(extractedFiles);
-        ;
         assertEquals(4, extractedFiles.size());
     }
 
@@ -131,7 +130,7 @@ public class ExtractorTest {
     }
 
     @Test(expected = ArchiveException.class)
-    public void testBunzip2_extractGzip() throws IOException, URISyntaxException {
+    public void testBunzip2ExtractGzip() throws IOException, URISyntaxException {
         File inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.gz");
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();
@@ -139,7 +138,7 @@ public class ExtractorTest {
     }
 
     @Test(expected = ArchiveException.class)
-    public void tesGunzip_extractBzip2() throws IOException, URISyntaxException {
+    public void tesGunzipExtractBzip2() throws IOException, URISyntaxException {
         File inputFile = new File(inputUrl.toURI().getPath(), "pol.txt.bz2");
         final File outputFile = File.createTempFile("output", "txt");
         outputFile.deleteOnExit();

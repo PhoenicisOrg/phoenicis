@@ -71,7 +71,7 @@ public class SignatureCheckerTest {
             + "-----END PGP PUBLIC KEY BLOCK-----\n";
 
     @Test
-    public void testSignatureChecker_withValidSignature_returnTrue() {
+    public void testSignatureCheckerWithValidSignatureReturnTrue() {
         SignatureChecker signatureChecker = new SignatureChecker().withSignature(SIGNATURE).withData(SCRIPT)
                 .withPublicKey(PUBLIC_KEY);
 
@@ -79,7 +79,7 @@ public class SignatureCheckerTest {
     }
 
     @Test
-    public void testSignatureChecker_withInvalidValidSignature_returnFalse() {
+    public void testSignatureCheckerWithInvalidValidSignatureReturnFalse() {
         SignatureChecker signatureChecker = new SignatureChecker().withSignature(SIGNATURE)
                 .withData(SCRIPT.replace("a", "b")).withPublicKey(PUBLIC_KEY);
 
