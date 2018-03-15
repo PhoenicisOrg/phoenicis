@@ -18,7 +18,7 @@ unzip phoenicis-dist.zip
 ./phoenicis-dist/phoenicis.sh
 ```
 
-For more details (e.g. regarding dependencies), consider the [wiki](https://github.com/PhoenicisOrg/POL-POM-5/wiki/Build).
+For more details (e.g. regarding dependencies) consider the [wiki](https://github.com/PhoenicisOrg/POL-POM-5/wiki/Build).
 
 ## Scripts
 Please make your pull request on this repository: https://github.com/PhoenicisOrg/Scripts to add scripts
