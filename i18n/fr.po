@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-16 10:04+0100\n"
-"PO-Revision-Date: 2018-03-16 03:41-0400\n"
+"PO-Revision-Date: 2018-03-16 03:51-0400\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -166,7 +166,7 @@ msgstr "Suivant"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/JavaFxUiConfiguration.java:63
 msgid "Question"
-msgstr ""
+msgstr "Question"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
 msgid "Please click here, or drag a file to me."
@@ -480,11 +480,11 @@ msgstr "Console"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:72
 msgid "Installations"
-msgstr ""
+msgstr "Installations"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsView.java:86
 msgid "Apps"
-msgstr ""
+msgstr "Apps"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:132
 msgid "Installers"
@@ -509,7 +509,7 @@ msgstr "Requiert un patch"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:139
 msgid "Commercial"
-msgstr ""
+msgstr "Commerciale"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:143
 msgid "All Operating Systems"
@@ -530,12 +530,12 @@ msgstr "Paramètres d'entrée"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInputTab.java:57
 msgid "Mouse Warp Override"
-msgstr ""
+msgstr "Mouse Warp Override"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:35
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:47
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/WinePrefixContainerInformationTab.java:60
 msgid "Path:"
