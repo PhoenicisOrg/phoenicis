@@ -1,6 +1,6 @@
 ---
 title: "Themes"
-permalink: /docs/themes/
+permalink: /themes/
 excerpt: "About themes"
 toc: true
 ---
