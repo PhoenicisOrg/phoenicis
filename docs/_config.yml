@@ -23,9 +23,8 @@ plugins:
 author:
   name   : "Phoenicis"
   avatar : "/assets/images/phoenicis.png"
-  bio    : "short description."
-  email  : # optional
-  uri    : "https://www.phoenicis.org"
+  bio    : "The future of PlayOnLinux and PlayOnMac"
+  uri    : "http://www.phoenicis.org/"
 
 defaults:
   # _pages
