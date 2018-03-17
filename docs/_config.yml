@@ -6,7 +6,7 @@ baseurl                  : /POL-POM-5
 repository               : plata/POL-POM-5
 
 remote_theme             : mmistakes/minimal-mistakes
-minimal_mistakes_skin    : default
+minimal_mistakes_skin    : contrast
 
 markdown: kramdown
 permalink: /:categories/:title/
