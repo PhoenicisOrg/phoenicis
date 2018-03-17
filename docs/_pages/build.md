@@ -5,8 +5,8 @@ excerpt: "How to build Phoenicis."
 toc: true
 ---
 
-# Dependencies
-## Ubuntu 16.04
+## Dependencies
+### Ubuntu 16.04
 * Install the dependencies:
 ```
 sudo apt-get update
@@ -19,7 +19,7 @@ sudo apt-get install git maven openjdk-8-jdk openjfx libxext6:i386
   * Oracle JDK
     * `export JAVA_HOME="/usr/lib/jvm/java-8-oracle"`
 
-## Arch Linux
+### Arch Linux
 * Install the dependencies. Set the JAVA_HOME after installing `jdk8-openjdk`, but before installing `openjfx`.
   * git
   * jdk8-openjdk
@@ -33,14 +33,14 @@ sudo apt-get install git maven openjdk-8-jdk openjfx libxext6:i386
   * Oracle JDK
     * `export JAVA_HOME="/usr/lib/jvm/java-8-oracle"`
 
-## Fedora >= 26
+### Fedora >= 26
 
 * Install the dependencies:
 ```
 sudo dnf install git java-1.8.0-openjdk java-1.8.0-openjdk-openjfx maven openjfx
 ```
 
-# Build
+## Build
 * Clone the repository from GitHub:
 ```
 git clone https://github.com/PhoenicisOrg/POL-POM-5.git
@@ -52,15 +52,15 @@ cd POL-POM-5
 mvn clean package
 ```
 
-# Run
+## Run
 ```
 cd POL-POM-5/phoenicis-dist/target
 unzip phoenicis-dist.zip -d built
 ./phoenicis-dist/phoenicis.sh
 ```
 
-# Troubleshooting
-### Old Java version on Arch Linux
+## Troubleshooting
+#### Old Java version on Arch Linux
 Problem:
 ```
 Exception in thread "main" java.lang.UnsupportedClassVersionError: org/phoenicis/javafx/JavaFXApplication : Unsupported major.minor version 52.0
