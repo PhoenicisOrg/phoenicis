@@ -1,6 +1,6 @@
 ---
 title: "Test"
-permalink: /docs/test/
+permalink: /docs/test2/
 excerpt: "test page"
 toc: true
 ---
