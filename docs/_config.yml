@@ -4,7 +4,7 @@ description: >-
   The documentation for Phoenicis.
 baseurl: /POL-POM-5
 url: https:///plata.github.io
-minimal_mistakes_skin: dark
+minimal_mistakes_skin: contrast
 
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
