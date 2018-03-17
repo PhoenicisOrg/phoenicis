@@ -3,7 +3,7 @@ email:
 description: >- 
   The documentation for Phoenicis.
 baseurl: /POL-POM-5
-url: https:///plata.github.io
+url: https://plata.github.io
 minimal_mistakes_skin: contrast
 
 markdown: kramdown
@@ -11,6 +11,9 @@ remote_theme: mmistakes/minimal-mistakes
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
+
+search                   : true
+search_full_content      : true
 
 plugins:
   - jekyll-paginate
