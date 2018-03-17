@@ -1,5 +1,27 @@
 docs:
-  - title: Getting Started
+  - title: Users
     children:
       - title: "Build"
-        url: /docs/build/
+        url: /build/
+      - title: "Packages"
+        url: /packages/  
+      - title: "Installation"
+        url: /installation/
+      - title: "Run"
+        url: /run/  
+      - title: "Configuration"
+        url: /configuration/
+      - title: "Repository"
+        url: /repository/
+      - title: "Shortcuts"
+        url: /shortcuts/
+  - title: Developers
+    children:
+      - title: "IntelliJ IDEA"
+        url: /intellij-idea/
+      - title: "Maven Modules"
+        url: /maven-modules/
+      - title: "Themes"
+        url: /themes/
+      - title: "Translation"
+        url: /translation/
