@@ -1,7 +1,6 @@
 ---
 title: "Build"
-permalink: /docs/build/
-excerpt: "How to build Phoenicis."
+permalink: /build/
 toc: true
 ---
 
