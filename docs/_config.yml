@@ -55,15 +55,6 @@ defaults:
       author_profile: false
       sidebar:
         nav: "docs"
-  # _docs
-  - scope:
-      path: "_docs"
-      type: docs
-    values:
-      layout: single
-      author_profile: false
-      sidebar:
-        nav: "docs"
         
 # HTML Compression
 compress_html:
