@@ -7,6 +7,9 @@ url: https:///plata.github.io
 minimal_mistakes_skin: dark
 
 remote_theme: mmistakes/minimal-mistakes
+permalink: /:categories/:title/
+paginate: 5 # amount of posts to show
+paginate_path: /page:num/
 
 plugins:
   - jekyll-paginate
