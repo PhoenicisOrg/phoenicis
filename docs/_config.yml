@@ -48,7 +48,11 @@ defaults:
       author_profile: false
       sidebar:
         nav: "docs"
-        
+
+author:
+  name:   Phoenicis
+  github: PhoenicisOrg
+
 # HTML Compression
 compress_html:
   clippings: all
