@@ -57,7 +57,7 @@ defaults:
         nav: "docs"
   # _docs
   - scope:
-      path: "_docs"
+      path: ""
       type: docs
     values:
       layout: single
