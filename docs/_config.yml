@@ -2,3 +2,12 @@ plugins:
   - jekyll-remote-theme
 
 remote_theme: mmistakes/minimal-mistakes
+
+defaults:
+  # _docs
+  - scope:
+      path: ""
+      type: docs
+    values:
+      sidebar:
+        nav: "docs"
