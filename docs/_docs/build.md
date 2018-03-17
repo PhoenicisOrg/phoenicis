@@ -1,11 +1,10 @@
-__Content__
-* [Dependencies](#dependencies)
-     * [Ubuntu](#Ubuntu-1604)
-     * [Arch Linux](#arch-linux)
-     * [Fedora](#fedora--26)
-* [Build](#build)
-* [Run](#run)
-* [Troubleshooting](#troubleshooting)
+---
+title: "Build"
+permalink: /docs/build/
+excerpt: "How to build Phoenicis."
+  - /theme-setup/
+toc: true
+---
 
 # Dependencies
 ## Ubuntu 16.04
