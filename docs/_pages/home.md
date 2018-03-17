@@ -2,7 +2,7 @@
 permalink: /
 ---
 
-**Phoenicis** is a tool to manage Windows applications in Non-Windows environments (e.g. Linux/Mac OS). It is the successor of PlayOnLinux 4.
+**Phoenicis** is a tool to manage non-native (e.g. Windows) applications in Non-Windows environments (e.g. Linux/Mac OS). It is the successor of PlayOnLinux/PlayOnMac 4.
 
 Phoenicis aims at being the one stop shop platform for non-native applications. To achieve this goal, it focuses on two main principles:
 * extensibility
