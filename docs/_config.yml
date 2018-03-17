@@ -6,6 +6,7 @@ baseurl: /POL-POM-5
 url: https:///plata.github.io
 minimal_mistakes_skin: dark
 
+markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
@@ -18,15 +19,15 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-remote-theme
+  
+author:
+  name   : "Phoenicis"
+  avatar : "/assets/images/phoenicis.png"
+  bio    : "short description."
+  email  : # optional
+  uri    : "https://www.phoenicis.org"
 
 defaults:
-  # _docs
-  - scope:
-      path: ""
-      type: docs
-    values:
-      sidebar:
-        nav: "docs"
   # _pages
   - scope:
       path: ""
