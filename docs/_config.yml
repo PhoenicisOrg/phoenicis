@@ -1,7 +1,20 @@
-plugins:
-  - jekyll-remote-theme
+title: Phoenicis Documentation
+email:
+description: >- 
+  The documentation for Phoenicis.
+baseurl: /POL-POM-5
+url: https:///plata.github.io
+minimal_mistakes_skin: dark
 
 remote_theme: mmistakes/minimal-mistakes
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-remote-theme
 
 defaults:
   # _docs
