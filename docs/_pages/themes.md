@@ -14,11 +14,15 @@ phoenicis-javafx/src/main/resources/com/playonlinux/javafx/themes/
 
 ### Main Window Scene
 - mainWindowScene
-[[img/themes/mainWindowScene.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/mainWindowScene.png' | absolute_url }}" alt="mainWindowScene">
+</figure>
 
 ### Logo
 - logoText
-[[img/themes/logo.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/logo.png' | absolute_url }}" alt="logo">
+</figure>
 
 ### Menu
 - menuPane
@@ -28,7 +32,9 @@ phoenicis-javafx/src/main/resources/com/playonlinux/javafx/themes/
 - menuPane > .tab-header-area .tab:selected
 - menuPane > .tab-header-area .tab:selected .focus-indicator
 - menuPane > .tab-header-area .tab:disabled
-[[img/themes/menuPane.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/menuPane.png' | absolute_url }}" alt="menuPane">
+</figure>
 
 ### Left
 - leftPane
@@ -41,31 +47,43 @@ phoenicis-javafx/src/main/resources/com/playonlinux/javafx/themes/
 - leftPaneInside
 - leftSpacer
 
-[[img/themes/leftPane.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/leftPane.png' | absolute_url }}" alt="leftPane">
+</figure>
 - searchBar
 - searchBar:hover
 - searchCleanButton
 
-[[img/themes/searchBar.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/searchBar.png' | absolute_url }}" alt="searchBar">
+</figure>
 - leftBarTitle
 
-[[img/themes/leftBarTitle.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/leftBarTitle.png' | absolute_url }}" alt="leftBarTitle">
+</figure>
 - leftButton
 - leftButton:hover, .leftButton:selected
 
-[[img/themes/leftButton.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/leftButton.png' | absolute_url }}" alt="leftButton">
+</figure>
 - listChooser
   - listIcon
   - compactList
   - detailsList
   - iconsList
 
-[[img/themes/listChooser.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/listChooser.png' | absolute_url }}" alt="listChooser">
+</figure>
 
 ### Right
 - rightPane
 - rightPane > .viewport
-[[img/themes/rightPane.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/rightPane.png' | absolute_url }}" alt="rightPane">
+</figure>
 
 ### Apps
 - appPresentation
@@ -73,22 +91,32 @@ phoenicis-javafx/src/main/resources/com/playonlinux/javafx/themes/
 - appPanelMiniaturesPane
 - appPanelMiniaturesPaneWrapper
 - appPanelMiniaturesPaneWrapper > .viewport
-[[img/themes/apps.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/apps.png' | absolute_url }}" alt="apps">
+</figure>
 
 #### App Description
 - descriptionTitle
-[[img/themes/appDescriptionTitle.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/appDescriptionTitle.png' | absolute_url }}" alt="appDescriptionTitle">
+</figure>
 
 The app description text is HTML in a WebView. It can be customized in the file description.css.
-[[img/themes/appDescription.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/appDescription.png' | absolute_url }}" alt="appDescription">
+</figure>
 
 - appMiniature
-[[img/themes/appDescriptionMiniature.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/appDescriptionMiniature.png' | absolute_url }}" alt="appDescriptionMiniature">
+</figure>
 
 ### Containers
 - containerConfigurationPane
 - containerConfigurationPane > .grid
-[[img/themes/containers.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/containers.png' | absolute_url }}" alt="containers">
+</figure>
 
 ### Miniature
 - rightPane .miniatureList
@@ -96,7 +124,9 @@ The app description text is HTML in a WebView. It can be customized in the file 
 - miniatureListElement:hover
 - miniatureImage
 - miniatureText
-[[img/themes/miniature.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/miniature.png' | absolute_url }}" alt="miniature">
+</figure>
 
 ### Installation Wizard
 #### Presentation
@@ -112,9 +142,13 @@ The app description text is HTML in a WebView. It can be customized in the file 
 #### Step
 - panelForTopheader
 - header
-[[img/themes/header.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/header.png' | absolute_url }}" alt="header">
+</figure>
 - footer
-[[img/themes/footer.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/footer.png' | absolute_url }}" alt="footer">
+</figure>
 - stepScrollPane
 - stepText
 - dragAndDropBox
@@ -128,13 +162,19 @@ The app description text is HTML in a WebView. It can be customized in the file 
 - consoleText.normal
 - consoleText.default
 - consoleText.error
-[[img/themes/console.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/console.png' | absolute_url }}" alt="console">
+</figure>
 
 ### Wine Tools
 - wineToolButton
-[[img/themes/wineToolButton.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/wineToolButton.png' | absolute_url }}" alt="wineToolButton">
+</figure>
 - wineToolCaption
-[[img/themes/wineToolCaption.png]]
+<figure>
+  <img src="{{ '/assets/images/themes/wineToolCaption.png' | absolute_url }}" alt="wineToolCaption">
+</figure>
 
 ## Icons
 To add custom icons to your theme, just place them in an "icons" folder in your theme directory. For a list of icons, please have a look at the [default theme](https://github.com/PlayOnLinux/POL-POM-5/tree/master/phoenicis-javafx/src/main/resources/org/phoenicis/javafx/themes/default). You do not have to use a special resolution, as the icons will be resized automatically. Just make sure the resolution is high enough to work on high DPI displays.
