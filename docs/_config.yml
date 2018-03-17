@@ -1,13 +1,14 @@
-title: Phoenicis Documentation
-email:
-description: >- 
-  The documentation for Phoenicis.
-baseurl: /POL-POM-5
-url: https://plata.github.io
-minimal_mistakes_skin: contrast
+title                    : Phoenicis Documentation
+name                     : phoenicis.org
+description              : The documentation for Phoenicis.
+url                      : https://plata.github.io
+baseurl                  : /POL-POM-5
+repository               : plata/POL-POM-5
+
+remote_theme             : mmistakes/minimal-mistakes
+minimal_mistakes_skin    : default
 
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
@@ -22,6 +23,14 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-remote-theme
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
   
 author:
   name   : "Phoenicis"
@@ -29,10 +38,17 @@ author:
   bio    : "The future of PlayOnLinux and PlayOnMac"
   uri    : "http://www.phoenicis.org/"
 
+include:
+  - _docs
+  - _pages
+
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+  
 defaults:
   # _pages
   - scope:
-      path: ""
+      path: "_pages"
       type: pages
     values:
       layout: single
@@ -51,3 +67,7 @@ defaults:
       comments: false
       sidebar:
         nav: "docs"
+        
+# HTML Compression
+compress_html:
+  clippings: all
