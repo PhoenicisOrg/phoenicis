@@ -8,10 +8,10 @@ repository               : plata/POL-POM-5
 remote_theme             : mmistakes/minimal-mistakes
 minimal_mistakes_skin    : air
 
-markdown: kramdown
-permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
+markdown                 : kramdown
+permalink                : /:categories/:title/
+paginate                 : 5 # amount of posts to show
+paginate_path            : /page:num/
 
 search                   : true
 search_full_content      : true
@@ -31,15 +31,8 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jemoji
-  
-author:
-  name   : "Phoenicis"
-  avatar : "/assets/images/phoenicis.png"
-  bio    : "The future of PlayOnLinux and PlayOnMac"
-  uri    : "http://www.phoenicis.org/"
 
 include:
-  - _docs
   - _pages
 
 encoding: "utf-8"
