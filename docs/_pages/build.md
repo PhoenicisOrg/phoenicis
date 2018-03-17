@@ -2,7 +2,6 @@
 title: "Build"
 permalink: /docs/build/
 excerpt: "How to build Phoenicis."
-last_modified_at: 2018-03-17T15:00:00-05:00
 toc: true
 ---
 
