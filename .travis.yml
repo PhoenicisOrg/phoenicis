@@ -38,13 +38,7 @@ matrix:
       language: ruby
       rvm:
         - 2.1
-      install:
-        - gem install jekyll
-        - gem install html-proofer
-        - gem install jekyll-remote-theme
-        - gem install github-pages
-        - gem install tzinfo-data
-      before_script: cd docs
+      before_install: cd docs
       script:
         - bundle exec jekyll build
         - bundle exec htmlproofer ./_site --only-4xx --check-favicon --check-html
