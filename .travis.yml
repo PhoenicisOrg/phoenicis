@@ -26,4 +26,3 @@ matrix:
       dist: trusty
       script:
         - mvn -Pcheck-formatted validate formatter:validate
-        - ./check_formatted.sh
