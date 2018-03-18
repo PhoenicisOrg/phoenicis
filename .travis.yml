@@ -14,6 +14,7 @@ matrix:
       jdk: oraclejdk8
       os: linux
       dist: trusty
+      install: mvn dependency:go-offline
       script:
         - mvn -Pcheck-formatted validate formatter:validate
 
