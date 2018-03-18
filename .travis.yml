@@ -41,6 +41,9 @@ matrix:
       install:
         - gem install jekyll
         - gem install html-proofer
+        - gem install jekyll-remote-theme
+        - gem install github-pages
+        - gem install tzinfo-data
       before_script: cd docs
       script:
         - bundle exec jekyll build
