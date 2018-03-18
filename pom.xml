@@ -225,9 +225,16 @@
                         <version>2.0.1</version>
                         <executions>
                             <execution>
+                                <id>validate</id>
                                 <phase>validate</phase>
                                 <goals>
                                     <goal>validate</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>format</id>
+                                <goals>
+                                    <goal>format</goal>
                                 </goals>
                             </execution>
                         </executions>
