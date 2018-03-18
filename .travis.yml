@@ -38,6 +38,9 @@ matrix:
       language: ruby
       rvm:
         - 2.1
+      install:
+        - gem install jekyll
+        - gem install html-proofer
       before_script: cd docs
       script:
         - bundle exec jekyll build
