@@ -1,23 +1,20 @@
-# French translations for POL-POM package
-# Traductions françaises du paquet POL-POM.
-# Copyright (C) 2017 THE POL-POM'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the POL-POM package.
-# ImperatorS79 <fevrier.simon@gmail.com>, 2017.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: POL-POM 5\n"
+"Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-16 10:04+0100\n"
-"PO-Revision-Date: 2017-08-31 13:22+0200\n"
-"Last-Translator: ImperatorS79 <fevrier.simon@gmail.com>\n"
+"PO-Revision-Date: 2018-03-16 03:51-0400\n"
+"Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
-"Language: fr_BE\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: phoenicis\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /master/i18n/keys.pot\n"
 
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
@@ -111,11 +108,9 @@ msgid "Are you sure you want to delete {0}"
 msgstr "Êtes-vous sûr de vouloir supprimer {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:61
-msgid ""
-"Connecting to the repository failed.\n"
+msgid "Connecting to the repository failed.\n"
 "Please check your connection and try again."
-msgstr ""
-"La connexion au dépôt a échoué.\n"
+msgstr "La connexion au dépôt a échoué.\n"
 "Veuillez vérifier votre connexion et réessayer."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:94
@@ -417,19 +412,12 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:180
-msgid ""
-"The value in front of each repository is its priority. The higher the "
-"priority is, the more important the scripts inside the repository are."
-msgstr ""
-"La valeur devant chaque dépôt est sa priorité. Plus la priorité est haute, "
-"plus les scripts à l'intérieur du dépôt sont importants."
+msgid "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."
+msgstr "La valeur devant chaque dépôt est sa priorité. Plus la priorité est haute, plus les scripts à l'intérieur du dépôt sont importants."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
-msgid ""
-"Fetch updates for the repositories to retrieve the newest script versions"
-msgstr ""
-"Récupérer les mises à jour des dépôts pour récupérer les nouvelles versions "
-"des scripts"
+msgid "Fetch updates for the repositories to retrieve the newest script versions"
+msgstr "Récupérer les mises à jour des dépôts pour récupérer les nouvelles versions des scripts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
 msgid "Refresh Repositories"
@@ -521,7 +509,7 @@ msgstr "Requiert un patch"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:139
 msgid "Commercial"
-msgstr "Commercial"
+msgstr "Commerciale"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:143
 msgid "All Operating Systems"
@@ -657,13 +645,10 @@ msgstr "{0} sera installé dans : {1}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:157
 #, java-format
-msgid ""
-"{0} is not responsible for anything that might happen as a result of using "
-"these scripts."
-msgstr ""
-"{0} n'est pas responsable de ce qui pourrait se produire en utilisant ces "
-"scripts."
+msgid "{0} is not responsible for anything that might happen as a result of using these scripts."
+msgstr "{0} n'est pas responsable de ce qui pourrait se produire en utilisant ces scripts."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click \"Next\" to start."
 msgstr "Cliquer sur \"Suivant\" pour commencer."
+
