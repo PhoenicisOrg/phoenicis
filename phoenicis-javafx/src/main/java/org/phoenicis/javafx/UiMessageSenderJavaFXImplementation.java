@@ -35,7 +35,7 @@ public class UiMessageSenderJavaFXImplementation implements UiMessageSender {
         }
 
         // queue on JavaFX thread and wait for completion
-                    final CountDownLatch doneLatch = new CountDownLatch(1);
+        final CountDownLatch doneLatch = new CountDownLatch(1);
         final MutableObject result = new MutableObject();
         Platform.runLater(() -> {
             try {
