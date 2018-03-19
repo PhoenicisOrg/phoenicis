@@ -24,8 +24,7 @@ matrix:
       jdk: oraclejdk8
       os: linux
       dist: trusty
-      install:
-        # do not use default install (runs formatter)
-        - mvn install:install
+      # do not use default install (runs formatter)
+      install: true
       script:
         - mvn -Pcheck-formatted validate formatter:validat
