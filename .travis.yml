@@ -27,4 +27,4 @@ matrix:
       # do not use default install (runs formatter)
       install: true
       script:
-        - mvn -Pcheck-formatted validate formatter:validat
+        - mvn -Pcheck-formatted validate formatter:validate
