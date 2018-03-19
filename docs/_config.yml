@@ -13,9 +13,6 @@ permalink                : /:categories/:title/
 paginate                 : 5 # amount of posts to show
 paginate_path            : /page:num/
 
-search                   : true
-search_full_content      : true
-
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
