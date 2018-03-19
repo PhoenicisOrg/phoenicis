@@ -26,6 +26,6 @@ matrix:
       dist: trusty
       install:
         # do not use default install (runs formatter)
-        - mvn dependency:go-offline
+        - mvn install:install
       script:
         - mvn -Pcheck-formatted validate formatter:validat
