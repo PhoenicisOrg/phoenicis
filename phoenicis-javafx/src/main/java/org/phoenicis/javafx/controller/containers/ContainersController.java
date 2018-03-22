@@ -33,7 +33,6 @@ import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -79,7 +78,6 @@ public class ContainersController {
             // enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
             final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
-                    new ArrayList<>(),
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                     .flatMap(subCategory -> subCategory.getPackages().stream())
                     .collect(Collectors.toList()),*/
