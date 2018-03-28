@@ -1,6 +1,11 @@
 language: java
 sudo: false
 
+# avoid double builds on pull requests
+branches:
+  only:
+    master
+
 addons:
   apt:
     packages:
