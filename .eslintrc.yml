@@ -1,25 +1,51 @@
+---
+extends:
+  - eslint:recommended
+
+env:
+  nashorn: true
+
 globals:
-  include: true  
+  include: false
+  TYPE_ID: false
+  CATEGORY_ID: false
+  APPLICATION_ID: false
   # java
-  java: true
-  Bean: true
+  Bean: false
   # files
-  mkdir: true
-  fileExists: true
-  cat: true
-  cp: true
-  getFileSize: true
-  fileName: true
-  lns: true
-  remove: true
-  touch: true
-  writeToFile: true
-  createTempFile: true
+  mkdir: false
+  fileExists: false
+  cat: false
+  cp: false
+  getFileSize: false
+  fileName: false
+  lns: false
+  remove: false
+  touch: false
+  tr: false
+  writeToFile: false
+  createTempFile: false
   # classes
-  Downloader: true
-  Extractor: true
-  Resource: true
+  AppResource: false
+  CabExtract: false
+  Checksum: false
+  Downloader: false
+  Extractor: false
+  Resource: false
+  SetupWizard: false
+  Wine: false
+  WineShortcut: false
+  # quick scripts
+  CustomInstallerScript: false
+  InstallerScript: false
+  LocalInstallerScript: false
+  OnlineInstallerScript: false
+  QuickScript: false
+  SteamScript: false
+  UplayScript: false
+  ZipScript: false
   # wine
-  LATEST_DEVELOPMENT_VERSION: true
-  LATEST_STABLE_VERSION: true
-  LATEST_STAGING_VERSION: true
+  LATEST_DEVELOPMENT_VERSION: false
+  LATEST_STABLE_VERSION: false
+  LATEST_STAGING_VERSION: false
+  WINE_PREFIX_DIR: false
