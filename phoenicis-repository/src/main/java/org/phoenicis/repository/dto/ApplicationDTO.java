@@ -53,12 +53,12 @@ public class ApplicationDTO {
         this.typeId = builder.typeId;
         this.categoryId = builder.categoryId;
         if (builder.id != null) {
-            if (builder.id.matches("^[a-zA-Z0-9]+$")) {
+            if (builder.id.matches("^[a-zA-Z0-9_]+$")) {
                 this.id = builder.id;
             } else {
                 LOGGER.warn(String.format("Application ID (%s) contains invalid characters, will remove them.",
                         builder.id));
-                this.id = builder.id.replaceAll("[^a-zA-Z0-9]", "");
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9_]", "");
             }
         } else {
             this.id = null;
