@@ -20,6 +20,7 @@ package org.phoenicis.repository.types;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -296,14 +297,23 @@ public class ClasspathRepository implements Repository {
                 LOGGER.debug("Could not find script icon.");
             }
 
-            return new ScriptDTO.Builder(objectMapper.readValue(scriptJsonInputStream, ScriptDTO.class))
-                    .withTypeId(typeId)
-                    .withCategoryId(categoryId)
-                    .withApplicationId(applicationId)
-                    .withId(scriptFileName)
-                    .withScript(new String(IOUtils.toByteArray(scriptFile)))
-                    .withIcon(icon)
-                    .build();
+            ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
+                    objectMapper.readValue(scriptJsonInputStream, ScriptDTO.class))
+                            .withTypeId(typeId)
+                            .withCategoryId(categoryId)
+                            .withApplicationId(applicationId)
+                            .withScript(new String(IOUtils.toByteArray(scriptFile)))
+                            .withIcon(icon);
+
+            if (StringUtils.isBlank(scriptDTOBuilder.getId())) {
+                if (!StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
+                    scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll("[^a-zA-Z0-9_]", ""));
+                } else {
+                    scriptDTOBuilder.withId(scriptFileName.replaceAll("[^a-zA-Z0-9_]", ""));
+                }
+            }
+
+            return scriptDTOBuilder.build();
         } catch (IOException e) {
             throw new RepositoryException("Could not build script", e);
         }

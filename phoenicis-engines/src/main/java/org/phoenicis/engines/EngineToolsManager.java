@@ -48,19 +48,19 @@ public class EngineToolsManager {
 
     /**
      * runs a tool in a given prefix
-     * @param engineName
+     * @param engineId
      * @param container
-     * @param toolName
+     * @param toolId
      * @param doneCallback
      * @param errorCallback
      */
-    public void runTool(String engineName, String container, String toolName, Runnable doneCallback,
+    public void runTool(String engineId, String container, String toolId, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"Engines\", \"" + engineName + "\", \"Tools\", \"" + toolName + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
+                "include([\"Engines\", \"" + engineId + "\", \"Tools\", \"" + toolId + "\"]);",
+                ignored -> interactiveScriptSession.eval("new " + toolId + "()", output -> {
                     final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
                     toolObject.callMember("run", container);
                     doneCallback.run();
