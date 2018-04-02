@@ -47,12 +47,12 @@ public class EngineToolsManager {
     }
 
     /**
-     * runs a tool in a given prefix
-     * @param engineId
-     * @param container
-     * @param toolId
-     * @param doneCallback
-     * @param errorCallback
+     * runs a tool in a given container
+     * @param engineId ID of the engine which provides the tool (e.g. "Wine")
+     * @param container name of the container
+     * @param toolId ID of the tool
+     * @param doneCallback callback executed after the script ran
+     * @param errorCallback callback executed in case of an error
      */
     public void runTool(String engineId, String container, String toolId, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
