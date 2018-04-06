@@ -24,7 +24,7 @@ Default for Mac OS X:
 ${user.home}/Library/Phoenicis
 ```
 
-### [Scripts repository](https://github.com/PlayOnLinux/POL-POM-5/wiki/Repository)
+### [Scripts repository]({{ site.baseurl }}{% link _pages/repository.md %})
 __application.repository.configuration__
 
 Specifies the path where the [scripts](https://github.com/PhoenicisOrg/Scripts) can be found.
