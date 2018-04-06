@@ -1,8 +1,6 @@
 title                    : Phoenicis Documentation
 name                     : phoenicis.org
 description              : The documentation for Phoenicis.
-url                      : https://phoenicisorg.github.io
-baseurl                  : /phoenicis
 repository               : PhoenicisOrg/phoenicis
 
 remote_theme             : mmistakes/minimal-mistakes
