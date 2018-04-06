@@ -42,6 +42,7 @@ public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
     // file name of the icon for a type or category
     private static final String ICON_NAME = "icon.png";
+    private static final String ID_REGEX = "[^a-zA-Z0-9_]";
 
     private final File repositoryDirectory;
     private final ObjectMapper objectMapper;
@@ -111,9 +112,9 @@ public class LocalRepository implements Repository {
 
                     if (StringUtils.isBlank(jsonTypeDTO.getId())) {
                         if (!StringUtils.isBlank(jsonTypeDTO.getName())) {
-                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll(ID_REGEX, ""));
                         } else {
-                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll(ID_REGEX, ""));
                         }
                     }
 
@@ -154,9 +155,9 @@ public class LocalRepository implements Repository {
 
                     if (StringUtils.isBlank(jsonCategoryDTO.getId())) {
                         if (!StringUtils.isBlank(jsonCategoryDTO.getName())) {
-                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll(ID_REGEX, ""));
                         } else {
-                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll(ID_REGEX, ""));
                         }
                     }
 
@@ -202,9 +203,9 @@ public class LocalRepository implements Repository {
 
                 if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
                     if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
-                        applicationDTOBuilder.withId(applicationDTOBuilder.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                        applicationDTOBuilder.withId(applicationDTOBuilder.getName().replaceAll(ID_REGEX, ""));
                     } else {
-                        applicationDTOBuilder.withId(applicationDirectory.getName().replaceAll("[^a-zA-Z0-9]", ""));
+                        applicationDTOBuilder.withId(applicationDirectory.getName().replaceAll(ID_REGEX, ""));
                     }
                 }
 
@@ -288,10 +289,18 @@ public class LocalRepository implements Repository {
                     scriptDTOBuilder = new ScriptDTO.Builder();
                     scriptDTOBuilder.withScriptName(scriptDirectory.getName());
                 }
+
+                if (StringUtils.isBlank(scriptDTOBuilder.getId())) {
+                    if (!StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
+                        scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll(ID_REGEX, ""));
+                    } else {
+                        scriptDTOBuilder.withId(scriptDirectory.getName().replaceAll(ID_REGEX, ""));
+                    }
+                }
+
                 scriptDTOBuilder.withTypeId(typeId)
                         .withCategoryId(categoryId)
                         .withApplicationId(applicationId)
-                        .withId(scriptDirectory.getName())
                         .withScriptSource(repositorySource);
 
                 final File scriptFile = new File(scriptDirectory, "script.js");

@@ -27,6 +27,8 @@ import org.phoenicis.configuration.localisation.Translatable;
 import org.phoenicis.configuration.localisation.TranslatableBuilder;
 import org.phoenicis.configuration.localisation.Translate;
 import org.phoenicis.entities.OperatingSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Comparator;
@@ -36,6 +38,7 @@ import java.util.List;
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 @Translatable
 public class ScriptDTO {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScriptDTO.class);
     private final String typeId;
     private final String categoryId;
     private final String applicationId;
@@ -53,8 +56,19 @@ public class ScriptDTO {
         this.typeId = builder.typeId;
         this.categoryId = builder.categoryId;
         this.applicationId = builder.applicationId;
-        this.id = builder.id;
-        this.scriptName = builder.scriptName;
+        if (builder.id != null) {
+            if (builder.id.matches("^[a-zA-Z0-9_]+$")) {
+                this.id = builder.id;
+            } else {
+                LOGGER.warn(String.format("Script ID (%s) contains invalid characters, will remove them.",
+                        builder.id));
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9_]", "");
+            }
+        } else {
+            this.id = null;
+        }
+
+        this.scriptName = builder.scriptName == null ? builder.id : builder.scriptName;
         this.scriptSource = builder.scriptSource;
         this.compatibleOperatingSystems = builder.compatibleOperatingSystems;
         this.testingOperatingSystems = builder.testingOperatingSystems;
@@ -258,6 +272,14 @@ public class ScriptDTO {
 
         public ScriptDTO build() {
             return new ScriptDTO(this);
+        }
+
+        public String getId() {
+            return this.id;
+        }
+
+        public String getScriptName() {
+            return this.scriptName;
         }
 
     }

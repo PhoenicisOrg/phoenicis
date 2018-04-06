@@ -47,20 +47,20 @@ public class EngineToolsManager {
     }
 
     /**
-     * runs a tool in a given prefix
-     * @param engineName
-     * @param container
-     * @param toolName
-     * @param doneCallback
-     * @param errorCallback
+     * runs a tool in a given container
+     * @param engineId ID of the engine which provides the tool (e.g. "Wine")
+     * @param container name of the container
+     * @param toolId ID of the tool
+     * @param doneCallback callback executed after the script ran
+     * @param errorCallback callback executed in case of an error
      */
-    public void runTool(String engineName, String container, String toolName, Runnable doneCallback,
+    public void runTool(String engineId, String container, String toolId, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"Engines\", \"" + engineName + "\", \"Tools\", \"" + toolName + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
+                "include([\"Engines\", \"" + engineId + "\", \"Tools\", \"" + toolId + "\"]);",
+                ignored -> interactiveScriptSession.eval("new " + toolId + "()", output -> {
                     final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
                     toolObject.callMember("run", container);
                     doneCallback.run();
