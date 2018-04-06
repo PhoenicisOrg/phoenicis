@@ -29,7 +29,7 @@ unzip phoenicis-dist.zip
 For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
 
 ## Scripts
-Please make your pull request on this repository: https://github.com/PhoenicisOrg/Scripts to add scripts
+Please make your pull request on this repository: https://github.com/PhoenicisOrg/scripts to add scripts
 
 ## Community
 * Forums : http://www.playonlinux.com/en/forums.html
