@@ -1,9 +1,9 @@
 title                    : Phoenicis Documentation
 name                     : phoenicis.org
 description              : The documentation for Phoenicis.
-url                      : https://plata.github.io
-baseurl                  : /POL-POM-5
-repository               : plata/POL-POM-5
+url                      : https://PhoenicisOrg.github.io
+baseurl                  : /phoenicis
+repository               : PhoenicisOrg/phoenicis
 
 remote_theme             : mmistakes/minimal-mistakes
 minimal_mistakes_skin    : air
