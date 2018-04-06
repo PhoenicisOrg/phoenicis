@@ -44,7 +44,7 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
         } else {
             try {
                 result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/Scripts").toURI())
+                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/scripts").toURI())
                         .withBranch("master").build());
                 result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
             } catch (URISyntaxException | MalformedURLException e) {
