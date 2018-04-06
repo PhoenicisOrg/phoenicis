@@ -26,7 +26,7 @@
     <packaging>pom</packaging>
     <version>5.0-SNAPSHOT</version>
     <scm>
-        <connection>scm:git:https://github.com/PhoenicisOrg/POL-POM-5.git</connection>
+        <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
     </scm>
     <modules>
         <module>phoenicis-javafx</module>

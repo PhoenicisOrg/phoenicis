@@ -42,18 +42,18 @@ sudo dnf install git java-1.8.0-openjdk java-1.8.0-openjdk-openjfx maven openjfx
 ## Build
 * Clone the repository from GitHub:
 ```
-git clone https://github.com/PhoenicisOrg/POL-POM-5.git
+git clone https://github.com/PhoenicisOrg/phoenicis.git
 ```
 
 * Build Phoenicis:
 ```
-cd POL-POM-5
+cd phoenicis
 mvn clean package
 ```
 
 ## Run
 ```
-cd POL-POM-5/phoenicis-dist/target
+cd phoenicis/phoenicis-dist/target
 unzip phoenicis-dist.zip -d built
 ./phoenicis-dist/phoenicis.sh
 ```

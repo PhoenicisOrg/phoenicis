@@ -76,7 +76,7 @@ public class AboutPanel extends VBox {
         this.gitRevisionHyperlink = new Hyperlink(buildInformation.getApplicationGitRevision());
         this.gitRevisionHyperlink.setOnAction(event -> {
             try {
-                URI uri = new URI("https://github.com/PhoenicisOrg/POL-POM-5/commit/"
+                URI uri = new URI("https://github.com/PhoenicisOrg/phoenicis/commit/"
                         + buildInformation.getApplicationGitRevision());
                 opener.open(uri);
             } catch (URISyntaxException e) {

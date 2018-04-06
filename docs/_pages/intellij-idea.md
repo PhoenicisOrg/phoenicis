@@ -16,4 +16,4 @@ Run → Edit Configurations
 add: JavaFXApplication with main class org.phoenicis.javafx.JavaFXApplication
 
 ### Code Style
-File → Settings → Editor → Code Style → Scheme: Manage... → Import → Eclipse XML Profile: select [settings/POL_Formatter_Settings.xml](https://github.com/PlayOnLinux/POL-POM-5/blob/master/settings/POL_Formatter_Settings.xml)
+File → Settings → Editor → Code Style → Scheme: Manage... → Import → Eclipse XML Profile: select [settings/POL_Formatter_Settings.xml](https://github.com/PhoenicisOrg/phoenicis/blob/master/settings/POL_Formatter_Settings.xml)
