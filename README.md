@@ -1,5 +1,5 @@
 # Phoenicis PlayOnLinux and PlayOnMac 5
-[![Build Status](https://travis-ci.org/PhoenicisOrg/POL-POM-5.svg?branch=master)](https://travis-ci.org/PhoenicisOrg/POL-POM-5)
+[![Build Status](https://travis-ci.org/PhoenicisOrg/phoenicis.svg?branch=master)](https://travis-ci.org/PhoenicisOrg/phoenicis)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9d389a10d98f4d1baa299ce4e268df9d)](https://app.codacy.com/app/PhoenicisOrg/POL-POM-5?utm_source=github.com&utm_medium=referral&utm_content=PhoenicisOrg/POL-POM-5&utm_campaign=badger)
 [![Crowdin Badge](https://d322cqt584bo4o.cloudfront.net/phoenicis/localized.svg)](https://crowdin.com/project/phoenicis)
 
