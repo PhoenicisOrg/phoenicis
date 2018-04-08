@@ -1,4 +1,4 @@
-include(["Utils", "Functions", "QuickScript", "OnlineInstallerScript"]);
+include(["utils", "functions", "quick_script", "online_installer_script"]);
 
 new OnlineInstallerScript()
     .name("Notepad++")

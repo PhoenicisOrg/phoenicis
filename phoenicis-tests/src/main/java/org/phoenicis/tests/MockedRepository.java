@@ -39,12 +39,12 @@ public class MockedRepository extends TeeRepository {
             return new RepositoryDTO.Builder()
                     .withTypes(Collections.singletonList(
                             new TypeDTO.Builder()
-                                    .withId("Type 1")
+                                    .withId("type_1")
                                     .withCategories(Collections.singletonList(
                                             new CategoryDTO.Builder()
                                                     .withApplications(Arrays.asList(
                                                             new ApplicationDTO.Builder()
-                                                                    .withId("Engines")
+                                                                    .withId("engines")
                                                                     .withScripts(Arrays.asList(
                                                                             new ScriptDTO.Builder()
                                                                                     .withScriptName("Wine")

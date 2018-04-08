@@ -48,6 +48,7 @@ public class ClasspathRepository implements Repository {
     private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
     private final ObjectMapper objectMapper;
+    private static final String ID_REGEX = "[^a-zA-Z0-9_]";
 
     public ClasspathRepository(String packagePath, ResourcePatternResolver resourceResolver,
             ObjectMapper objectMapper) {
@@ -90,8 +91,16 @@ public class ClasspathRepository implements Repository {
             if (jsonTypeFile != null) {
                 final TypeDTO typeDTO = objectMapper.readValue(jsonTypeFile, TypeDTO.class);
 
-                TypeDTO.Builder typeDTOBuilder = new TypeDTO.Builder(typeDTO)
-                        .withId(typeFileName);
+                TypeDTO.Builder typeDTOBuilder = new TypeDTO.Builder(typeDTO);
+
+                if (StringUtils.isBlank(typeDTO.getId())) {
+                    if (!StringUtils.isBlank(typeDTO.getName())) {
+                        typeDTOBuilder.withId(typeDTO.getName().replaceAll(ID_REGEX, ""));
+                    } else {
+                        typeDTOBuilder.withId(typeFileName.replaceAll(ID_REGEX, ""));
+                    }
+                }
+
                 typeDTOBuilder.withCategories(buildCategories(typeDTOBuilder.getId(), typeFileName)).build();
                 try {
                     typeDTOBuilder.withIcon(new URI(packagePath + "/" + typeFileName + "/icon.png"));
@@ -141,8 +150,17 @@ public class ClasspathRepository implements Repository {
                 final CategoryDTO categoryDTO = objectMapper.readValue(jsonCategoryFile, CategoryDTO.class);
 
                 CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(categoryDTO)
-                        .withTypeId(typeId)
-                        .withId(categoryFileName);
+                        .withTypeId(typeId);
+                categoryDTOBuilder.withTypeId(typeId);
+
+                if (StringUtils.isBlank(categoryDTO.getId())) {
+                    if (!StringUtils.isBlank(categoryDTO.getName())) {
+                        categoryDTOBuilder.withId(categoryDTO.getName().replaceAll(ID_REGEX, ""));
+                    } else {
+                        categoryDTOBuilder.withId(categoryFileName.replaceAll(ID_REGEX, ""));
+                    }
+                }
+
                 categoryDTOBuilder.withApplications(buildApplications(categoryDTOBuilder.getTypeId(),
                         categoryDTOBuilder.getId(), typeFileName, categoryFileName));
                 try {
@@ -201,8 +219,15 @@ public class ClasspathRepository implements Repository {
 
             ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(applicationDTO)
                     .withTypeId(typeId)
-                    .withCategoryId(categoryId)
-                    .withId(applicationFileName);
+                    .withCategoryId(categoryId);
+
+            if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
+                if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
+                    applicationDTOBuilder.withId(applicationDTOBuilder.getName().replaceAll(ID_REGEX, ""));
+                } else {
+                    applicationDTOBuilder.withId(applicationFileName.replaceAll(ID_REGEX, ""));
+                }
+            }
 
             applicationDTOBuilder
                     .withScripts(buildScripts(applicationDTOBuilder.getTypeId(), applicationDTOBuilder.getCategoryId(),

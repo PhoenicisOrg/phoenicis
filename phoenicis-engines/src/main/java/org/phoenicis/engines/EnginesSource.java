@@ -55,8 +55,9 @@ public class EnginesSource {
         constructorsBuilder.append("function fetchEngines() {\n");
         constructorsBuilder.append("var engines = [];\n");
         for (CategoryDTO categoryDTO : categoryDTOS) {
+            final String engineId = categoryDTO.getId();
+            includesBuilder.append("include([\"engines\", \"" + engineId + "\", \"engine\", \"object\"]);\n");
             final String engineName = categoryDTO.getName();
-            includesBuilder.append("include([\"Engines\", \"" + engineName + "\", \"Engine\", \"Object\"]);\n");
             constructorsBuilder
                     .append("engines[\"" + engineName + "\"] = new " + engineName + "().getAvailableVersions();\n");
         }

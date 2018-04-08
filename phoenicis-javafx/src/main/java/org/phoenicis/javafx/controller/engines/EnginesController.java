@@ -92,7 +92,7 @@ public class EnginesController {
         Platform.runLater(() -> {
             List<CategoryDTO> categoryDTOS = new ArrayList<>();
             for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
-                if (typeDTO.getId().equals("Engines")) {
+                if (typeDTO.getId().equals("engines")) {
                     categoryDTOS = typeDTO.getCategories();
                 }
             }
@@ -106,7 +106,7 @@ public class EnginesController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"Engines\", \"" + engineDTO.getCategory() + "\", \"Engine\", \"Object\"]);",
+                "include([\"engines\", \"" + engineDTO.getCategory() + "\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("install", engineDTO.getCategory(), engineDTO.getSubCategory(),
@@ -118,7 +118,7 @@ public class EnginesController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"Engines\", \"" + engineDTO.getCategory() + "\", \"Engine\", \"Object\"]);",
+                "include([\"engines\", \"" + engineDTO.getCategory() + "\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("delete", engineDTO.getCategory(), engineDTO.getSubCategory(),

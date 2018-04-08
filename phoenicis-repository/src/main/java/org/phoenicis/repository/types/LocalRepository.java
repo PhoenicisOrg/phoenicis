@@ -114,7 +114,7 @@ public class LocalRepository implements Repository {
                         if (!StringUtils.isBlank(jsonTypeDTO.getName())) {
                             typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll(ID_REGEX, ""));
                         } else {
-                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll(ID_REGEX, ""));
+                            typeDTOBuilder.withId(typeDirectory.getName().replaceAll(ID_REGEX, ""));
                         }
                     }
 
@@ -157,7 +157,7 @@ public class LocalRepository implements Repository {
                         if (!StringUtils.isBlank(jsonCategoryDTO.getName())) {
                             categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll(ID_REGEX, ""));
                         } else {
-                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll(ID_REGEX, ""));
+                            categoryDTOBuilder.withId(categoryDirectory.getName().replaceAll(ID_REGEX, ""));
                         }
                     }
 

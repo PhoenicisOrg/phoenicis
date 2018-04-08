@@ -54,13 +54,13 @@ public class EngineToolsManager {
      * @param doneCallback callback executed after the script ran
      * @param errorCallback callback executed in case of an error
      */
-    public void runTool(String engineId, String container, String toolId, Runnable doneCallback,
+    public void runTool(String engineId, String container, String toolId, String toolName, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"Engines\", \"" + engineId + "\", \"Tools\", \"" + toolId + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + toolId + "()", output -> {
+                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);",
+                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
                     final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
                     toolObject.callMember("run", container);
                     doneCallback.run();
@@ -77,13 +77,13 @@ public class EngineToolsManager {
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
-            if (typeDTO.getId().equals("Engines")) {
+            if (typeDTO.getId().equals("engines")) {
                 categoryDTOS = typeDTO.getCategories();
             }
         }
         for (CategoryDTO engine : categoryDTOS) {
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("Tools")) {
+                if (applicationDTO.getId().equals("tools")) {
                     tools.put(engine.getId(), applicationDTO);
                 }
             }
