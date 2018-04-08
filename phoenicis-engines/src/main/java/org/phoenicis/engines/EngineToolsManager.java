@@ -54,17 +54,14 @@ public class EngineToolsManager {
      * @param doneCallback callback executed after the script ran
      * @param errorCallback callback executed in case of an error
      */
-    public void runTool(String engineId, String container, String toolId, String toolName, Runnable doneCallback,
+    public void runTool(String engineId, String container, String toolId, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + toolName + "()", output -> {
-                    final ScriptObjectMirror toolObject = (ScriptObjectMirror) output;
-                    toolObject.callMember("run", container);
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
+                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);" +
+                        "run(\"" + container + "\");",
+                ignored -> doneCallback.run(), errorCallback);
     }
 
     /**
