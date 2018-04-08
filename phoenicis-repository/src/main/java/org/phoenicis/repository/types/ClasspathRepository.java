@@ -151,7 +151,6 @@ public class ClasspathRepository implements Repository {
 
                 CategoryDTO.Builder categoryDTOBuilder = new CategoryDTO.Builder(categoryDTO)
                         .withTypeId(typeId);
-                categoryDTOBuilder.withTypeId(typeId);
 
                 if (StringUtils.isBlank(categoryDTO.getId())) {
                     if (!StringUtils.isBlank(categoryDTO.getName())) {
