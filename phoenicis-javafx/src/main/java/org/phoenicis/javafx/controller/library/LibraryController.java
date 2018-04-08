@@ -113,7 +113,7 @@ public class LibraryController {
 
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"Engines\", \"" + engine + "\", \"Shortcuts\", \"" + engine + "\"]);",
+        interactiveScriptSession.eval("include([\"engines\", \"" + engine + "\", \"shortcuts\", \"" + engine + "\"]);",
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
                     final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
                     shortcutObject.callMember("name", shortcutCreationDTO.getName());

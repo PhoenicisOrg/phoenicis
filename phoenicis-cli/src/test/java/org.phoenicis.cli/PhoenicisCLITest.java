@@ -43,6 +43,6 @@ public class PhoenicisCLITest {
                 tempRepositoryListFile, Charset.defaultCharset());
 
         System.setProperty("application.repository.list", tempRepositoryListFile.getPath());
-        phoenicisCLI.run(new String[] { "-install", "Applications", "Graphics", "Photofiltre", "Online" });
+        phoenicisCLI.run(new String[] { "-install", "applications", "graphics", "photofiltre", "online" });
     }
 }

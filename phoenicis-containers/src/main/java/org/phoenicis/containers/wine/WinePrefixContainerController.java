@@ -49,7 +49,7 @@ public class WinePrefixContainerController {
         LOGGER.info("Updating registry for prefix: " + winePrefix.getPath());
         LOGGER.info(registryPatch);
 
-        interactiveScriptSession.eval("include([\"Engines\", \"Wine\", \"Engine\", \"Object\"]);",
+        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", winePrefix.getName());
@@ -65,7 +65,7 @@ public class WinePrefixContainerController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"Engines\", \"" + container.getEngine() + "\", \"Engine\", \"Object\"]);",
+                "include([\"engines\", \"" + container.getEngine() + "\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new " + container.getEngine() + "()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", container.getName());

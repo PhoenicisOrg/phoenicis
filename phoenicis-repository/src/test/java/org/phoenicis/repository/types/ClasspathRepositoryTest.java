@@ -73,7 +73,7 @@ public class ClasspathRepositoryTest {
 
     @Test
     public void fetchInstallableApplicationsGraphicsPhotofiltreScriptContent() {
-        assertEquals("include([\"Utils\", \"Functions\", \"QuickScript\", \"OnlineInstallerScript\"]);\n" + "\n"
+        assertEquals("include([\"utils\", \"functions\", \"quick_script\", \"online_installer_script\"]);\n" + "\n"
                 + "new OnlineInstallerScript()\n" + "    .name(\"Photofiltre\")\n"
                 + "    .editor(\"Antonio Da Cruz\")\n" + "    .applicationHomepage(\"http://photofiltre.free.fr\")\n"
                 + "    .author(\"Quentin PÂRIS\")\n"

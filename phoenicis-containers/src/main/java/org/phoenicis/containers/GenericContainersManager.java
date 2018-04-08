@@ -146,7 +146,7 @@ public class GenericContainersManager implements ContainersManager {
                     final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
                             .createInteractiveSession();
                     interactiveScriptSession.eval(
-                            "include([\"Engines\", \"" + container.getEngine() + "\", \"Shortcuts\", \"Reader\"]);",
+                            "include([\"engines\", \"" + container.getEngine() + "\", \"shortcuts\", \"reader\"]);",
                             ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                                 final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
                                 shortcutReader.callMember("of", shortcutDTO);
