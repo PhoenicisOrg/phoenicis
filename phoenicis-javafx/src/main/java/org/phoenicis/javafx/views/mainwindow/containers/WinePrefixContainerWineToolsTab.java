@@ -60,16 +60,8 @@ public class WinePrefixContainerWineToolsTab extends Tab {
             toolButton.setStyle("-fx-background-image: url('" + tool.getIcon() + "');");
             toolButton.setOnMouseClicked(event -> {
                 this.lockAll();
-                // TODO: find a better way to get the engine ID and class name for the tool
-                // hacky way to get class name from tool ID...
-                String toolClassName = tool.getId();
-                while (toolClassName.contains("_")) {
-                    toolClassName = toolClassName.replaceFirst("_[a-z]", String
-                            .valueOf(Character.toUpperCase(toolClassName.charAt(toolClassName.indexOf("_") + 1))));
-                }
-                toolClassName = Character.toUpperCase(toolClassName.charAt(0)) + toolClassName.substring(1);
+                // TODO: find a better way to get the engine ID
                 this.engineToolsManager.runTool(container.getEngine().toLowerCase(), container.getName(), tool.getId(),
-                        toolClassName,
                         this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
             });
