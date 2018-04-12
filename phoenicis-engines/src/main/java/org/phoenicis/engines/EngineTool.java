@@ -6,7 +6,7 @@ package org.phoenicis.engines;
 public interface EngineTool {
     /**
      * runs the tool in the given container
-     * @param container container where the tool shall be run
+     * @param container directory name (not the complete path!) of the container where the tool shall be run
      */
     void run(String container);
 }
