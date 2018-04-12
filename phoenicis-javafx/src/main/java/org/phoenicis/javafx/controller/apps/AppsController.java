@@ -25,6 +25,8 @@ import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.scripts.Installer;
+import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
@@ -87,13 +89,29 @@ public class AppsController {
                     environmentBuilder.append(scriptDTO.getId());
                     environmentBuilder.append("\";\n");
                     final String environment = environmentBuilder.toString();
+
                     final String execute = environment + scriptDTO.getScript();
-                    scriptInterpreter.runScript(execute, e -> Platform.runLater(() -> {
-                        // no exception if installation is cancelled
-                        if (!(e.getCause() instanceof InterruptedException)) {
-                            new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
-                        }
-                    }));
+                    final InteractiveScriptSession interactiveScriptSession = scriptInterpreter
+                            .createInteractiveSession();
+                    interactiveScriptSession.eval(
+                            execute,
+                            ignored -> interactiveScriptSession.eval("new Installer()",
+                                    output -> {
+                                        final Installer installerObject = (Installer) output;
+                                        installerObject.run();
+                                    },
+                                    e -> Platform.runLater(() -> {
+                                        // no exception if installation is cancelled
+                                        if (!(e.getCause() instanceof InterruptedException)) {
+                                            new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
+                                        }
+                                    })),
+                            e -> Platform.runLater(() -> {
+                                // no exception if installation is cancelled
+                                if (!(e.getCause() instanceof InterruptedException)) {
+                                    new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
+                                }
+                            }));
                 });
 
         onAppLoaded.run();
