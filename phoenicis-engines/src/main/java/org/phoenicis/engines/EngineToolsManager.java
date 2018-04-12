@@ -18,7 +18,6 @@
 
 package org.phoenicis.engines;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -59,9 +58,12 @@ public class EngineToolsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);" +
-                        "run(\"" + container + "\");",
-                ignored -> doneCallback.run(), errorCallback);
+                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);",
+                ignored -> interactiveScriptSession.eval("new Tool()", output -> {
+                    final EngineTool toolObject = (EngineTool) output;
+                    toolObject.run(container);
+                    doneCallback.run();
+                }, errorCallback), errorCallback);
     }
 
     /**
