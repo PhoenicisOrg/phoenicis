@@ -73,22 +73,24 @@ public class AppsController {
 
         this.view.setOnSelectScript(
                 scriptDTO -> {
-                    final StringBuilder environmentBuilder = new StringBuilder();
-                    environmentBuilder.append("TYPE_ID=\"");
-                    environmentBuilder.append(scriptDTO.getTypeId());
-                    environmentBuilder.append("\";\n");
-                    environmentBuilder.append("CATEGORY_ID=\"");
-                    environmentBuilder.append(scriptDTO.getCategoryId());
-                    environmentBuilder.append("\";\n");
-                    environmentBuilder.append("APPLICATION_ID=\"");
-                    environmentBuilder.append(scriptDTO.getApplicationId());
-                    environmentBuilder.append("\";\n");
-                    environmentBuilder.append("SCRIPT_ID=\"");
-                    environmentBuilder.append(scriptDTO.getId());
-                    environmentBuilder.append("\";\n");
-                    final String environment = environmentBuilder.toString();
-                    final String execute = environment + scriptDTO.getScript();
-                    scriptInterpreter.runScript(execute, e -> Platform.runLater(() -> {
+                    final StringBuilder executeBuilder = new StringBuilder();
+                    executeBuilder.append("TYPE_ID=\"");
+                    executeBuilder.append(scriptDTO.getTypeId());
+                    executeBuilder.append("\";\n");
+                    executeBuilder.append("CATEGORY_ID=\"");
+                    executeBuilder.append(scriptDTO.getCategoryId());
+                    executeBuilder.append("\";\n");
+                    executeBuilder.append("APPLICATION_ID=\"");
+                    executeBuilder.append(scriptDTO.getApplicationId());
+                    executeBuilder.append("\";\n");
+                    executeBuilder.append("SCRIPT_ID=\"");
+                    executeBuilder.append(scriptDTO.getId());
+                    executeBuilder.append("\";\n");
+                    executeBuilder.append(scriptDTO.getScript());
+                    executeBuilder.append("\n");
+                    // TODO: use Java interface instead of String
+                    executeBuilder.append("new Installer().run();");
+                    scriptInterpreter.runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
                         // no exception if installation is cancelled
                         if (!(e.getCause() instanceof InterruptedException)) {
                             new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
