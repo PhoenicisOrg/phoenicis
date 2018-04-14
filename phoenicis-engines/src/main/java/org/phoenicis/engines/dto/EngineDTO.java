@@ -52,6 +52,11 @@ public class EngineDTO {
         return version;
     }
 
+    public String getClassName() {
+        // TODO: get from script.json
+        return category.toLowerCase();
+    }
+
     public Map<String, String> getUserData() {
         return userData;
     }
