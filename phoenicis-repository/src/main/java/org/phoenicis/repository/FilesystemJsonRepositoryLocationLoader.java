@@ -45,7 +45,7 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
             try {
                 result.add(new GitRepositoryLocation.Builder()
                         .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/scripts").toURI())
-                        .withBranch("alpha").build());
+                        .withBranch("5.0-alpha").build());
                 result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
             } catch (URISyntaxException | MalformedURLException e) {
                 LOGGER.error("Couldn't create default repository location list", e);
