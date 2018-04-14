@@ -42,6 +42,15 @@ public class RepositoryConfiguration {
     @Value("${application.repository.list}")
     private String repositoryListPath;
 
+    @Value("${application.repository.default.git.url}")
+    private String defaultGitUrl;
+
+    @Value("${application.repository.default.git.branch}")
+    private String defaultGitBranch;
+
+    @Value("${application.repository.default.classpath}")
+    private String defaultClasspath;
+
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
@@ -80,7 +89,11 @@ public class RepositoryConfiguration {
 
     @Bean
     public RepositoryLocationLoader filesystemLocationLoader() {
-        return new FilesystemJsonRepositoryLocationLoader(repositoryListPath,
+        return new FilesystemJsonRepositoryLocationLoader(
+                repositoryListPath,
+                defaultGitUrl,
+                defaultGitBranch,
+                defaultClasspath,
                 phoenicisGlobalConfiguration.objectMapper());
     }
 
