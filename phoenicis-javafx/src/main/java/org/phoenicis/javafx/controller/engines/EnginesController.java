@@ -106,7 +106,7 @@ public class EnginesController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineDTO.getClassName() + "\", \"engine\", \"object\"]);",
+                "include([\"engines\", \"" + engineDTO.getId() + "\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("install", engineDTO.getCategory(), engineDTO.getSubCategory(),
@@ -118,7 +118,7 @@ public class EnginesController {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineDTO.getClassName() + "\", \"engine\", \"object\"]);",
+                "include([\"engines\", \"" + engineDTO.getId() + "\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new Wine()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("delete", engineDTO.getCategory(), engineDTO.getSubCategory(),

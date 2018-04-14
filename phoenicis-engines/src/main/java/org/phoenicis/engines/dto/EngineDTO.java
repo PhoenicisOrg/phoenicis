@@ -52,7 +52,7 @@ public class EngineDTO {
         return version;
     }
 
-    public String getClassName() {
+    public String getId() {
         // TODO: get from script.json
         return category.toLowerCase();
     }
