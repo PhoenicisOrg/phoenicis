@@ -21,10 +21,17 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
     private static final Logger LOGGER = LoggerFactory.getLogger(FilesystemJsonRepositoryLocationLoader.class);
 
     private final String repositoryListPath;
+    private final String defaultGitUrl;
+    private final String defaultGitBranch;
+    private final String defaultClasspath;
     private final ObjectMapper objectMapper;
 
-    public FilesystemJsonRepositoryLocationLoader(String repositoryListPath, ObjectMapper objectMapper) {
+    public FilesystemJsonRepositoryLocationLoader(String repositoryListPath, String defaultGitUrl,
+            String defaultGitBranch, String defaultClasspath, ObjectMapper objectMapper) {
         this.repositoryListPath = repositoryListPath;
+        this.defaultGitUrl = defaultGitUrl;
+        this.defaultGitBranch = defaultGitBranch;
+        this.defaultClasspath = defaultClasspath;
         this.objectMapper = objectMapper;
     }
 
@@ -44,9 +51,9 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
         } else {
             try {
                 result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL("https://github.com/PhoenicisOrg/scripts").toURI())
-                        .withBranch("5.0-alpha").build());
-                result.add(new ClasspathRepositoryLocation("/org/phoenicis/repository"));
+                        .withGitRepositoryUri(new URL(defaultGitUrl).toURI())
+                        .withBranch(defaultGitBranch).build());
+                result.add(new ClasspathRepositoryLocation(defaultClasspath));
             } catch (URISyntaxException | MalformedURLException e) {
                 LOGGER.error("Couldn't create default repository location list", e);
             }
