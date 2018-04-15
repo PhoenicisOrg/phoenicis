@@ -25,3 +25,5 @@ docs:
         url: /themes/
       - title: "Translation"
         url: /translation/
+      - title: "Release"
+        url: /release/
