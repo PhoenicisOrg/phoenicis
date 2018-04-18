@@ -24,7 +24,7 @@
     <groupId>org.phoenicis</groupId>
     <artifactId>phoenicis</artifactId>
     <packaging>pom</packaging>
-    <version>5.0-SNAPSHOT</version>
+    <version>5.0-alpha</version>
     <scm>
         <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
     </scm>
