@@ -4,8 +4,7 @@ sudo: false
 # avoid double builds on pull requests
 branches:
   only:
-    - master
-    - 5.0-alpha
+    master
 
 addons:
   apt:
