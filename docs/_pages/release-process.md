@@ -1,6 +1,6 @@
 ---
-title: "Release"
-permalink: /release/
+title: "Release process"
+permalink: /release-process/
 toc: false
 ---
 
