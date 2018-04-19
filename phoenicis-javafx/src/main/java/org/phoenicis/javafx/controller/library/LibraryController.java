@@ -109,11 +109,14 @@ public class LibraryController {
         final String engineContainer = split[0];
         final String engine = (Character.toUpperCase(engineContainer.charAt(0)) + engineContainer.substring(1))
                 .replace("prefix", "");
+        // TODO: better way to get engine ID
+        final String engineId = engine.toLowerCase();
         final String container = split[1];
 
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"engines\", \"" + engine + "\", \"shortcuts\", \"" + engine + "\"]);",
+        interactiveScriptSession.eval(
+                "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId + "\"]);",
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
                     final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
                     shortcutObject.callMember("name", shortcutCreationDTO.getName());
