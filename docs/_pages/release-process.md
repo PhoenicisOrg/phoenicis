@@ -15,5 +15,5 @@ The following steps must be executed to release a new version of Phoenicis:
     * Set release version for Maven in `pom.xml` files
     * Set release version in .deb control files
 * Test
-* Create GitHub release
+* Create GitHub release from the release branches for phoenicis and scripts
 * Announce release on phoenicis.org
