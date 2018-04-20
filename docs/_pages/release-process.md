@@ -17,3 +17,5 @@ The following steps must be executed to release a new version of Phoenicis:
 * Test
 * Create GitHub release from the release branches for phoenicis and scripts
 * Announce release on phoenicis.org
+    * Showcase new features
+    * List major changes/fixed bugs
