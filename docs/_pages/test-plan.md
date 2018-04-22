@@ -68,3 +68,66 @@ Before you start, ensure that you are in a clean environment:
 * click "Notepad++"
 * follow installation wizard and finish installation
 
+## Library
+* open "Library" tab
+* check that "All" and "Development" categories are shown
+* check that Notepad++ is listed
+* check that list style can be switched
+* click "Notepad++"
+* check that details panel is shown
+* click "run"
+* check that Notepad++ opens
+* click "close"
+* check that Notepad++ closes
+* right-click "Notepad++" and select "Edit"
+* check that edit form is shown in details panel
+* fill "Arguments" with "/home/<username>/.Phoenicis/shortcuts/Notepad.shortcut"
+* click "save"
+* run Notepad++
+* check that Notepad++ opens and shows the Notepad.shortcut file
+* close Notepad++
+* click "Create shortcut"
+* click "create"
+* check that the required fields are highlighted
+* fill with
+    * name: "Test"
+    * category: "test-category"
+    * executable: "/home/<username>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Internet Explorer/iexplore.exe"
+* click "create"
+* check that "All", "Development" and "test-category" categories are shown
+* check that "Test" shortcut is listed with default miniature
+* search for "Test"
+* check that categories are filtered
+* check that only "Test" shortcut is listed
+* run "Test" shortcut
+* check that Wine Internet Explorer opens
+* close Wine Internet Explorer
+  
+## Containers
+* open "Containers" tab
+* check that "All" and "wineprefix" categories are shown
+* check that Notepad is listed with composed miniature (half Notepad++, half default)
+* check that list style can be switched
+
+## Library
+* open "Library" tab
+* uninstall "Test" shortcut
+* check that "Test" shorcut is not listed anymore
+
+## Containers
+* open "Containers" tab
+* click "Notepad"
+* check that details panel is shown
+* check that tabs exist
+    * Information
+    * Display
+    * Input
+    * Wine Tools
+    * Tools
+* open "Wine Tools" tab
+* check that all tools open
+* open "Tools" tab
+* click "Run executable"
+* select "/home/<username>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Notepad++/notepad++.exe"
+* check that Notepad++ opens
+* close Notepad++
