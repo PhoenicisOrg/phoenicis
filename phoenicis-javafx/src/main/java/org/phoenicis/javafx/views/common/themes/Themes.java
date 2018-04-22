@@ -16,9 +16,11 @@ public class Themes {
             "/org/phoenicis/javafx/themes/breezeDark/");
     public static final Theme UNITY = new ClasspathTheme(tr("Unity theme"), "unity",
             "/org/phoenicis/javafx/themes/unity/");
+    public static final Theme MINT_X = new ClasspathTheme(tr("Mint-X theme"), "mint-x",
+            "/org/phoenicis/javafx/themes/mint-x/");
 
     public static Theme[] all() {
-        return new Theme[] { DEFAULT, DARK, BREEZE_DARK, UNITY };
+        return new Theme[] { DEFAULT, DARK, BREEZE_DARK, UNITY, MINT_X };
     }
 
     public static Optional<Theme> fromShortName(String shortName) {
