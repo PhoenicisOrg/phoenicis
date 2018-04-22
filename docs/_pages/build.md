@@ -83,7 +83,7 @@ sudo pkg install git openjdk8 openjfx8-devel maven roboto-fonts-ttf
 git clone https://github.com/PhoenicisOrg/phoenicis.git
 ```
 
-* Create a file called FreeBSD.properties inside phoenicis/phoenicis-configuration/src/main/resources/, similar to Linux.properties, just change those two lines :
+* Create a file called `FreeBSD.properties` inside `phoenicis/phoenicis-configuration/src/main/resources/`, similar to `Linux.properties`, just change those two lines :
 ```
 application.name = Phoenicis PlayOnBSD
 #tools.linux-terminal = x-terminal-emulator
