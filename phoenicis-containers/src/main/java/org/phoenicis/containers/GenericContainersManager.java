@@ -139,6 +139,8 @@ public class GenericContainersManager implements ContainersManager {
             LOGGER.error("Cannot delete container (" + container.getPath() + ")! Exception: " + e.toString());
             errorCallback.accept(e);
         }
+        // TODO: better way to get engine ID
+        final String engineId = container.getEngine().toLowerCase();
 
         List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
         categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
@@ -146,7 +148,7 @@ public class GenericContainersManager implements ContainersManager {
                     final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
                             .createInteractiveSession();
                     interactiveScriptSession.eval(
-                            "include([\"engines\", \"" + container.getEngine() + "\", \"shortcuts\", \"reader\"]);",
+                            "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"reader\"]);",
                             ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                                 final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
                                 shortcutReader.callMember("of", shortcutDTO);
