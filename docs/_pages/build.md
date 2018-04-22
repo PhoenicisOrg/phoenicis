@@ -39,11 +39,25 @@ sudo apt-get install git maven openjdk-8-jdk openjfx libxext6:i386
 sudo dnf install git java-1.8.0-openjdk java-1.8.0-openjdk-openjfx maven openjfx
 ```
 
+### TrueOS
+
+* Install the dependencies:
+```
+sudo pkg install git openjdk8 openjfx8-devel maven roboto-fonts-ttf
+```
+
 ## Build
 * Clone the repository from GitHub:
 ```
 git clone https://github.com/PhoenicisOrg/phoenicis.git
 ```
+
+* For TrueOS, create a file called FreeBSD.properties inside phoenicis/phoenicis-configuration/src/main/resources/, similar to Linux.properties, just change those two lines :
+```
+application.name = Phoenicis PlayOnBSD
+#tools.linux-terminal = x-terminal-emulator
+```
+Note : As there is not FreeBSD wine at the moment, the linux wine package will be displayed in the engine window.
 
 * Build Phoenicis:
 ```
@@ -56,6 +70,13 @@ mvn clean package
 cd phoenicis/phoenicis-dist/target
 unzip phoenicis-dist.zip -d built
 ./phoenicis-dist/phoenicis.sh
+```
+
+* On TrueOs, do :
+```
+cd phoenicis/phoenicis-dist/target
+unzip phoenicis-dist.zip -d built
+bash ./phoenicis-dist/phoenicis.sh
 ```
 
 ## Troubleshooting
