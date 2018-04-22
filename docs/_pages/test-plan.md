@@ -131,3 +131,54 @@ Before you start, ensure that you are in a clean environment:
 * select "/home/<username>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Notepad++/notepad++.exe"
 * check that Notepad++ opens
 * close Notepad++
+* open "Information" tab
+* click "delete container"
+* approve pop-up
+* check that "Notepad" is not listed anymore   
+* check that Notepad has been deleted from `.Phoenicis/containers/wineprefix`
+   
+## Library
+* open "Library" tab
+* check that "Notepad++" shortcut is not listed anymore
+* check that the shortcut files have been deleted from `.Phoenicis/shortcuts`
+
+## Settings
+* open "Settings" tab
+### User Interface
+* open "User Interface"
+* select all themes and check that they are applied
+* change scaling
+* check that UI is scaled
+* maximize window
+* click "reset"
+* restart Phoenicis
+* check that window is not maximized and default scaling and theme are used
+### Repositories
+* open "Repositories"
+* check that default repositories are listed
+* click "add"
+* select "local repository"
+* use "/home/<userhome>/.Phoenicis/cache/git-XXXXXX"
+* click "finish"
+* check that new repository is listed
+* select new repository
+* click "delete"
+* approve pop-up
+* check that repository has been removed from list
+* click "add"
+* select "local repository"
+* use "/home/<userhome>/.Phoenicis/cache/git-XXXXXX"
+* click "finish"
+* check that new repository is listed
+* click "reset
+* restart Phoenicis
+* check that repository has been removed from list
+### File Associations
+* open "File Associations"
+* check that it is empty
+### Network
+* open "Network"
+* check that it is empty
+### About
+* open "About"
+* check that shown information is correct
