@@ -62,10 +62,12 @@ public class WinePrefixContainerController {
 
     public void runInContainer(ContainerDTO container, String command, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
+        // TODO: better way to get engine ID
+        final String engineId = container.getEngine().toLowerCase();
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + container.getEngine() + "\", \"engine\", \"object\"]);",
+                "include([\"engines\", \"" + engineId + "\", \"engine\", \"object\"]);",
                 ignored -> interactiveScriptSession.eval("new " + container.getEngine() + "()", output -> {
                     final ScriptObjectMirror wine = (ScriptObjectMirror) output;
                     wine.callMember("prefix", container.getName());
