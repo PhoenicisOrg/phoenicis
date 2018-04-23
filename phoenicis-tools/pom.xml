@@ -80,7 +80,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.13</version>
+            <version>1.16.1</version>
         </dependency>
 
         <dependency>
