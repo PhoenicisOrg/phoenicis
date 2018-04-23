@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.fedorahosted.tennera</groupId>
             <artifactId>jgettext</artifactId>
-            <version>0.14</version>
+            <version>0.15.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
