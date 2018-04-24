@@ -14,7 +14,7 @@ The following steps must be executed to release a new version of Phoenicis:
     * Specify scripts release branch in configuration (`application.repository.default.git.url`)
     * Set release version for Maven in `pom.xml` files
     * Set release version in .deb control files
-* Test
+* [Test]({{ site.baseurl }}{% link _pages/test-plan.md %})
 * Create GitHub release from the release branches for phoenicis and scripts
 * Announce release on phoenicis.org
     * Showcase new features

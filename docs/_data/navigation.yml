@@ -27,3 +27,5 @@ docs:
         url: /translation/
       - title: "Release process"
         url: /release-process/
+      - title: "Test plan"
+        url: /test-plan/
