@@ -55,7 +55,7 @@
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.18.3</mockito.version>
-        <spring.version>4.2.5.RELEASE</spring.version>
+        <spring.version>5.0.5.RELEASE</spring.version>
     </properties>
 
     <dependencyManagement>
