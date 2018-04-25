@@ -56,10 +56,10 @@ public class EnginesSource {
         constructorsBuilder.append("var engines = [];\n");
         for (CategoryDTO categoryDTO : categoryDTOS) {
             final String engineId = categoryDTO.getId();
-            includesBuilder.append("include([\"engines\", \"" + engineId + "\", \"engine\", \"object\"]);\n");
+            includesBuilder.append("include([\"engines\", \"" + engineId + "\", \"engine\", \"java\"]);\n");
             final String engineName = categoryDTO.getName();
             constructorsBuilder
-                    .append("engines[\"" + engineName + "\"] = new " + engineName + "().getAvailableVersions();\n");
+                    .append("engines[\"" + engineName + "\"] = new Engine().getAvailableVersions();\n");
         }
         constructorsBuilder.append("return engines;\n");
         constructorsBuilder.append("}\n");
