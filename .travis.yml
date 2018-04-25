@@ -43,7 +43,7 @@ matrix:
       os: linux
       language: ruby
       rvm:
-        - 2.1
+        - 2.5
       before_install: cd docs
       script:
         - bundle exec jekyll build
