@@ -47,6 +47,17 @@ public class EnginesSource {
         this.objectMapper = objectMapper;
     }
 
+    public void getEngine(String engineId, Consumer<Engine> doneCallback, Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval(
+                "include([\"engines\", \"" + engineId + "\", \"engine\", \"object\"]); new Engine();",
+                output -> {
+                    final Engine engine = (Engine) output;
+                    doneCallback.accept(engine);
+                }, errorCallback);
+    }
+
     public void fetchAvailableEngines(List<CategoryDTO> categoryDTOS, Consumer<List<EngineCategoryDTO>> callback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
