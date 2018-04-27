@@ -87,9 +87,8 @@ public class AppsController {
                     executeBuilder.append(scriptDTO.getId());
                     executeBuilder.append("\";\n");
                     executeBuilder.append(scriptDTO.getScript());
-                    executeBuilder.append("\n");
+
                     // TODO: use Java interface instead of String
-                    executeBuilder.append("new Installer().run();");
                     scriptInterpreter.runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
                         // no exception if installation is cancelled
                         if (!(e.getCause() instanceof InterruptedException)) {

@@ -22,4 +22,20 @@ import java.util.function.Consumer;
 
 public interface InteractiveScriptSession {
     void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback);
+
+    /**
+     * Evaluates the given script {@link String evaluation}.
+     * The resulting json object of the script evaluation is used to create a new Java object of type {@link T}, which is
+     * passed to the {@link Consumer<T> responseCallback} function.
+     * <p>
+     * If an error occurs during this process, the corresponding exception gets passed to the {@link Consumer<Exception> errorCallback} function.
+     *
+     * @param evaluation       The script to be evaluated. This script needs to return a json object
+     * @param responseType     The return class of the script
+     * @param responseCallback The response callback method
+     * @param errorCallback    The error callback method
+     * @param <T>              The return type of the script
+     */
+    <T> void eval(String evaluation, Class<T> responseType, Consumer<T> responseCallback,
+            Consumer<Exception> errorCallback);
 }

@@ -19,6 +19,7 @@
 package org.phoenicis.scripts.nashorn;
 
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.interpreter.ScriptException;
 
 import java.util.function.Consumer;
 
@@ -32,5 +33,32 @@ public class NashornInteractiveSession implements InteractiveScriptSession {
     @Override
     public void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback) {
         responseCallback.accept(nashornEngine.evalAndReturn(evaluation, errorCallback));
+    }
+
+    @Override
+    public <T> void eval(String evaluation, Class<T> responseType, Consumer<T> responseCallback,
+            Consumer<Exception> errorCallback) {
+        // execute the given script and save the returned json object in a jsonResult variable
+        final Object jsonResult = nashornEngine.evalAndReturn(evaluation, errorCallback);
+
+        // bind the returned json object to a new variable called "jsonObject"
+        nashornEngine.put("jsonObject", jsonResult, errorCallback);
+
+        /*
+         * create an anonymous class, which extends the given response type and
+         * uses the implementation contained in jsonObject as its body
+         */
+        nashornEngine.eval(
+                String.format("val InheritedClass = Java.extend(\"%s\", jsonObject)", responseType.getName()),
+                errorCallback);
+
+        // create a new instance of the anonymous class and return it
+        Object result = nashornEngine.evalAndReturn("new InheritedClass()", errorCallback);
+        if (responseType.isInstance(result)) {
+            responseCallback.accept((T) result);
+        } else {
+            errorCallback.accept(new ScriptException(
+                    "The resulting object from the script is not of type " + responseType.getSimpleName()));
+        }
     }
 }

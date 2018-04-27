@@ -18,6 +18,7 @@
 
 package org.phoenicis.scripts.nashorn;
 
+import org.phoenicis.scripts.Installer;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
@@ -32,7 +33,14 @@ public class NashornScriptInterpreter implements ScriptInterpreter {
 
     @Override
     public void runScript(String scriptContent, Runnable doneCallback, Consumer<Exception> errorCallback) {
-        nashornEngineFactory.createEngine().eval(scriptContent, doneCallback, errorCallback);
+        InteractiveScriptSession scriptSession = createInteractiveSession();
+
+        scriptSession.eval(scriptContent, Installer.class,
+                installer -> {
+                    installer.run();
+                    doneCallback.run();
+                },
+                errorCallback);
     }
 
     @Override

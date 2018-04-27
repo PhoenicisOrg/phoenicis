@@ -39,6 +39,7 @@ public class EngineToolsManager {
 
     /**
      * constructor
+     *
      * @param scriptInterpreter
      */
     public EngineToolsManager(ScriptInterpreter scriptInterpreter) {
@@ -47,27 +48,30 @@ public class EngineToolsManager {
 
     /**
      * runs a tool in a given container
-     * @param engineId ID of the engine which provides the tool (e.g. "Wine")
-     * @param container name of the container
-     * @param toolId ID of the tool
-     * @param doneCallback callback executed after the script ran
+     *
+     * @param engineId      ID of the engine which provides the tool (e.g. "Wine")
+     * @param container     name of the container
+     * @param toolId        ID of the tool
+     * @param doneCallback  callback executed after the script ran
      * @param errorCallback callback executed in case of an error
      */
     public void runTool(String engineId, String container, String toolId, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);",
-                ignored -> interactiveScriptSession.eval("new Tool()", output -> {
-                    final EngineTool toolObject = (EngineTool) output;
+        String script = "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);";
+
+        interactiveScriptSession.eval(script, EngineTool.class,
+                toolObject -> {
                     toolObject.run(container);
                     doneCallback.run();
-                }, errorCallback), errorCallback);
+                },
+                errorCallback);
     }
 
     /**
      * fetches the available engine tools
+     *
      * @param repositoryDTO
      * @param callback
      */
