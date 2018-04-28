@@ -37,12 +37,12 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 @Safe
-public class EnginesSource {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnginesSource.class);
+public class EnginesManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnginesManager.class);
     private final ScriptInterpreter scriptInterpreter;
     private final ObjectMapper objectMapper;
 
-    public EnginesSource(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
+    public EnginesManager(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
         this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }

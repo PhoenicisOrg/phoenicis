@@ -20,7 +20,7 @@ package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.phoenicis.engines.EnginesSource;
+import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
@@ -51,16 +51,17 @@ public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final EnginesView enginesView;
     private final RepositoryManager repositoryManager;
-    private final EnginesSource enginesSource;
+    private final EnginesManager enginesManager;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
 
-    public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager, EnginesSource enginesSource,
+    public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
+            EnginesManager enginesManager,
             ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
         this.enginesView = enginesView;
         this.repositoryManager = repositoryManager;
-        this.enginesSource = enginesSource;
+        this.enginesManager = enginesManager;
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
@@ -97,7 +98,7 @@ public class EnginesController {
                 }
             }
             setDefaultEngineIcons(categoryDTOS);
-            enginesSource.fetchAvailableEngines(categoryDTOS,
+            enginesManager.fetchAvailableEngines(categoryDTOS,
                     versions -> Platform.runLater(() -> this.enginesView.populate(versions)));
         });
     }
