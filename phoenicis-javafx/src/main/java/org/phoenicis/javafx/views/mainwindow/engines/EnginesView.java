@@ -26,6 +26,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TabPane;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -35,6 +36,7 @@ import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
@@ -134,12 +136,6 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         availableEngines.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
-    // TODO: delete this method because it doesn't do what it promises, namely showing the wine versions tab
-    @Deprecated
-    public void showWineVersions() {
-        setCenter(availableEngines);
-    }
-
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
             this.engineCategories.setAll(engineCategoryDTOS);
@@ -153,9 +149,13 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         });
     }
 
-    public void updateVersions(EngineCategoryDTO oldEngineCategoryDTO, EngineCategoryDTO newEngineCategoryDTO) {
-        this.engineCategories.remove(oldEngineCategoryDTO);
-        this.engineCategories.add(newEngineCategoryDTO);
+    public void updateVersions(EngineCategoryDTO engineCategoryDTO, List<EngineSubCategoryDTO> versions) {
+        Platform.runLater(() -> {
+            engineCategoryDTO.setSubCategories(versions);
+            // why doesn't it update without these lines?
+            this.engineCategories.remove(engineCategoryDTO);
+            this.engineCategories.add(engineCategoryDTO);
+        });
     }
 
     private void showEngineDetails(EngineDTO engineDTO) {

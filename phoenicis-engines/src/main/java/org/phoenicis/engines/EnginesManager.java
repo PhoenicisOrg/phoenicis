@@ -57,17 +57,9 @@ public class EnginesManager {
                 }, errorCallback);
     }
 
-    public void fetchAvailableVersions(String engineId, Consumer<EngineCategoryDTO> callback,
+    public void fetchAvailableVersions(String engineId, Consumer<List<EngineSubCategoryDTO>> callback,
             Consumer<Exception> errorCallback) {
-        this.getEngine(engineId, engine -> {
-            final String engineName = Character.toUpperCase(engineId.charAt(0)) + engineId.substring(1);
-            final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
-                    .withName(engineName)
-                    .withDescription(engineName)
-                    .withSubCategories(unSerialize(engine.getAvailableVersions()))
-                    .build();
-            callback.accept(engineCategoryDTO);
-        }, errorCallback);
+        this.getEngine(engineId, engine -> callback.accept(unSerialize(engine.getAvailableVersions())), errorCallback);
     }
 
     public List<EngineCategoryDTO> getAvailableEngines(List<CategoryDTO> categoryDTOS) {

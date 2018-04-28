@@ -37,7 +37,7 @@ import java.util.List;
 public class EngineCategoryDTO {
     private final String name;
     private final String description;
-    private final List<EngineSubCategoryDTO> subCategories;
+    private List<EngineSubCategoryDTO> subCategories;
     private URI icon;
 
     private EngineCategoryDTO(Builder builder) {
@@ -95,6 +95,10 @@ public class EngineCategoryDTO {
                 .append(subCategories)
                 .append(icon)
                 .toHashCode();
+    }
+
+    public void setSubCategories(List<EngineSubCategoryDTO> engineSubCategoryDTOS) {
+        this.subCategories = engineSubCategoryDTOS;
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")

@@ -72,8 +72,7 @@ public class EnginesController {
             // TODO: better way to get engine ID
             final String engineId = engineCategoryDTO.getName().toLowerCase();
             this.enginesManager.fetchAvailableVersions(engineId,
-                    newEngineCategoryDTO -> Platform
-                            .runLater(() -> this.enginesView.updateVersions(engineCategoryDTO, newEngineCategoryDTO)),
+                    versions -> this.enginesView.updateVersions(engineCategoryDTO, versions),
                     e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
         });
 
