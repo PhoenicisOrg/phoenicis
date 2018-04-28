@@ -68,6 +68,15 @@ public class EnginesController {
         this.repositoryManager.addCallbacks(this::populateView,
                 e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
+        this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
+            // TODO: better way to get engine ID
+            final String engineId = engineCategoryDTO.getName().toLowerCase();
+            this.enginesManager.fetchAvailableVersions(engineId,
+                    newEngineCategoryDTO -> Platform
+                            .runLater(() -> this.enginesView.updateVersions(engineCategoryDTO, newEngineCategoryDTO)),
+                    e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+        });
+
         this.enginesView.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
@@ -98,8 +107,7 @@ public class EnginesController {
                 }
             }
             setDefaultEngineIcons(categoryDTOS);
-            enginesManager.fetchAvailableEngines(categoryDTOS,
-                    versions -> Platform.runLater(() -> this.enginesView.populate(versions)));
+            this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS));
         });
     }
 

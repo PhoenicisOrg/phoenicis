@@ -61,6 +61,8 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
     };
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {
     };
+    private Consumer<EngineCategoryDTO> onSelectEngineCategory = (engineCategory) -> {
+    };
 
     public EnginesView(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Engines"), themeManager);
@@ -95,7 +97,10 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
         this.sidebar = new EnginesSidebar(mappedListWidgets, filter, javaFxSettingsManager);
 
-        this.sidebar.setOnCategorySelection(filter::setSelectedEngineCategory);
+        this.sidebar.setOnCategorySelection(engineCategoryDTO -> {
+            this.onSelectEngineCategory.accept(engineCategoryDTO);
+            this.filter.setSelectedEngineCategory(engineCategoryDTO);
+        });
 
         this.initFailure();
         this.initWineVersions();
@@ -104,6 +109,10 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         Bindings.bindContent(availableEngines.getTabs(), filteredEngineSubTabs);
 
         this.setSidebar(this.sidebar);
+    }
+
+    public void setOnSelectEngineCategory(Consumer<EngineCategoryDTO> engineCategory) {
+        this.onSelectEngineCategory = engineCategory;
     }
 
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
@@ -142,6 +151,11 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
             this.closeDetailsView();
             this.setCenter(availableEngines);
         });
+    }
+
+    public void updateVersions(EngineCategoryDTO oldEngineCategoryDTO, EngineCategoryDTO newEngineCategoryDTO) {
+        this.engineCategories.remove(oldEngineCategoryDTO);
+        this.engineCategories.add(newEngineCategoryDTO);
     }
 
     private void showEngineDetails(EngineDTO engineDTO) {

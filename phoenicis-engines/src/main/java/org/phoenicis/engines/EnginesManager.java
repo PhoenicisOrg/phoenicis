@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Safe
@@ -51,45 +50,38 @@ public class EnginesManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"engine\", \"object\"]); new Engine();",
+                "include([\"engines\", \"" + engineId + "\", \"engine\", \"java\"]); new Engine();",
                 output -> {
                     final Engine engine = (Engine) output;
                     doneCallback.accept(engine);
                 }, errorCallback);
     }
 
-    public void fetchAvailableEngines(List<CategoryDTO> categoryDTOS, Consumer<List<EngineCategoryDTO>> callback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+    public void fetchAvailableVersions(String engineId, Consumer<EngineCategoryDTO> callback,
+            Consumer<Exception> errorCallback) {
+        this.getEngine(engineId, engine -> {
+            final String engineName = Character.toUpperCase(engineId.charAt(0)) + engineId.substring(1);
+            final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
+                    .withName(engineName)
+                    .withDescription(engineName)
+                    .withSubCategories(unSerialize(engine.getAvailableVersions()))
+                    .build();
+            callback.accept(engineCategoryDTO);
+        }, errorCallback);
+    }
 
-        StringBuilder includesBuilder = new StringBuilder();
-        StringBuilder constructorsBuilder = new StringBuilder();
-        constructorsBuilder.append("function fetchEngines() {\n");
-        constructorsBuilder.append("var engines = [];\n");
+    public List<EngineCategoryDTO> getAvailableEngines(List<CategoryDTO> categoryDTOS) {
+        List<EngineCategoryDTO> engines = new ArrayList<>();
         for (CategoryDTO categoryDTO : categoryDTOS) {
-            final String engineId = categoryDTO.getId();
-            includesBuilder.append("include([\"engines\", \"" + engineId + "\", \"engine\", \"java\"]);\n");
             final String engineName = categoryDTO.getName();
-            constructorsBuilder
-                    .append("engines[\"" + engineName + "\"] = new Engine().getAvailableVersions();\n");
+            final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
+                    .withName(engineName)
+                    .withDescription(engineName)
+                    .withSubCategories(new ArrayList<>())
+                    .build();
+            engines.add(engineCategoryDTO);
         }
-        constructorsBuilder.append("return engines;\n");
-        constructorsBuilder.append("}\n");
-        constructorsBuilder.append("fetchEngines();");
-        interactiveScriptSession.eval(includesBuilder.toString(),
-                ignored -> interactiveScriptSession.eval(constructorsBuilder.toString(),
-                        output -> {
-                            List<EngineCategoryDTO> engines = new ArrayList<>();
-                            for (Map.Entry<String, Object> entry : ((Map<String, Object>) output).entrySet()) {
-                                final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
-                                        .withName(entry.getKey())
-                                        .withDescription(entry.getKey())
-                                        .withSubCategories(unSerialize(entry.getValue()))
-                                        .build();
-                                engines.add(engineCategoryDTO);
-                            }
-                            callback.accept(engines);
-                        }, this::throwError),
-                this::throwError);
+        return engines;
     }
 
     private List<EngineSubCategoryDTO> unSerialize(Object json) {
