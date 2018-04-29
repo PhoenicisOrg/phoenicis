@@ -22,6 +22,7 @@ import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.dto.EngineDTO;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -40,9 +41,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -54,6 +53,7 @@ public class EnginesController {
     private final EnginesManager enginesManager;
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
+    private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
             EnginesManager enginesManager,
@@ -71,9 +71,15 @@ public class EnginesController {
         this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
             // TODO: better way to get engine ID
             final String engineId = engineCategoryDTO.getName().toLowerCase();
-            this.enginesManager.fetchAvailableVersions(engineId,
-                    versions -> this.enginesView.updateVersions(engineCategoryDTO, versions),
-                    e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+            // only if not chached
+            if (!this.versionsCache.containsKey(engineId)) {
+                this.enginesManager.fetchAvailableVersions(engineId,
+                        versions -> {
+                            this.versionsCache.put(engineId, versions);
+                            this.enginesView.updateVersions(engineCategoryDTO, versions);
+                        },
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+            }
         });
 
         this.enginesView.setOnInstallEngine(engineDTO -> {
@@ -81,6 +87,8 @@ public class EnginesController {
                     tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
                         installEngine(engineDTO,
                                 e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                        // invalidate cache to show installed version correctly
+                        this.versionsCache.remove(engineDTO.getId());
                     });
         });
 
@@ -89,6 +97,8 @@ public class EnginesController {
                     tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
                         deleteEngine(engineDTO,
                                 e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                        // invalidate cache to show deleted version correctly
+                        this.versionsCache.remove(engineDTO.getId());
                     });
         });
     }
