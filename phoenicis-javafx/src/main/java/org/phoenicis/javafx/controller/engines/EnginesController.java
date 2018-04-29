@@ -85,7 +85,8 @@ public class EnginesController {
         this.enginesView.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
-                        installEngine(engineDTO,
+                        this.enginesManager.getEngine(engineDTO.getId(),
+                                engine -> engine.install(engineDTO.getSubCategory(), engineDTO.getVersion()),
                                 e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
                         // invalidate cache to show installed version correctly
                         this.versionsCache.remove(engineDTO.getId());
@@ -95,9 +96,10 @@ public class EnginesController {
         this.enginesView.setOnDeleteEngine(engineDTO -> {
             new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
-                        deleteEngine(engineDTO,
-                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                        // invalidate cache to show deleted version correctly
+                this.enginesManager.getEngine(engineDTO.getId(),
+                        engine -> engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion()),
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                // invalidate cache to show deleted version correctly
                         this.versionsCache.remove(engineDTO.getId());
                     });
         });
@@ -118,30 +120,6 @@ public class EnginesController {
             setDefaultEngineIcons(categoryDTOS);
             this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS));
         });
-    }
-
-    private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineDTO.getId() + "\", \"engine\", \"object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("install", engineDTO.getCategory(), engineDTO.getSubCategory(),
-                            engineDTO.getVersion(), engineDTO.getUserData());
-                }, errorCallback), errorCallback);
-    }
-
-    private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineDTO.getId() + "\", \"engine\", \"object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("delete", engineDTO.getCategory(), engineDTO.getSubCategory(),
-                            engineDTO.getVersion(), engineDTO.getUserData());
-                }, errorCallback), errorCallback);
     }
 
     private void setDefaultEngineIcons(List<CategoryDTO> categoryDTOS) {
