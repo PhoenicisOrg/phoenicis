@@ -70,7 +70,8 @@ public class WinePrefixContainerController {
         // TODO: better way to get engine ID
         final String engineId = container.getEngine().toLowerCase();
         this.enginesManager.getEngine(engineId, engine -> {
-            engine.run(container.getName(), command, null, container.getPath(), false);
+            engine.setWorkingContainer(container.getName());
+            engine.run(command, null, container.getPath(), false, true);
             // TODO: wait
             doneCallback.run();
         }, errorCallback);

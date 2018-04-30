@@ -1,5 +1,7 @@
 package org.phoenicis.engines;
 
+import org.phoenicis.scripts.wizard.SetupWizard;
+
 import java.util.Map;
 
 /**
@@ -44,11 +46,23 @@ public interface Engine {
     String getAvailableVersions();
 
     /**
+     * returns the current working container
+     * @return working container
+     */
+    String getWorkingContainer();
+
+    /**
+     * sets the working container
+     * @param workingContainer working container
+     */
+    void setWorkingContainer(String workingContainer);
+
+    /**
      * returns path of a container
      * @param containerName name of the container
      * @return path of container
      */
-    String getContainer(String containerName);
+    String getContainerDirectory(String containerName);
 
     /**
      * creates a container
@@ -60,12 +74,24 @@ public interface Engine {
 
     /**
      * runs an executable
-     * @param containerName name of the container
      * @param executable executable
      * @param args program arguments
      * @param workingDir working directory
      * @param captureOutput true if output shall be captured
+     * @param wait wait until run finished
      * @return output
      */
-    String run(String containerName, String executable, String[] args, String workingDir, boolean captureOutput);
+    String run(String executable, String[] args, String workingDir, boolean captureOutput, boolean wait);
+
+    /**
+     * returns the setup wizard
+     * @return setup wizard
+     */
+    SetupWizard getWizard();
+
+    /**
+     * sets the setup wizard
+     * @param wizard setup wizard
+     */
+    void setWizard(SetupWizard wizard);
 }
