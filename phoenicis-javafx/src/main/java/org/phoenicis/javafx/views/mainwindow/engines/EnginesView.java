@@ -150,10 +150,11 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
     public void updateVersions(EngineCategoryDTO engineCategoryDTO, List<EngineSubCategoryDTO> versions) {
         Platform.runLater(() -> {
-            engineCategoryDTO.setSubCategories(versions);
-            // why doesn't it update without these lines?
+            EngineCategoryDTO newEngineCategoryDTO = new EngineCategoryDTO.Builder(engineCategoryDTO)
+                    .withSubCategories(versions)
+                    .build();
             this.engineCategories.remove(engineCategoryDTO);
-            this.engineCategories.add(engineCategoryDTO);
+            this.engineCategories.add(newEngineCategoryDTO);
         });
     }
 
