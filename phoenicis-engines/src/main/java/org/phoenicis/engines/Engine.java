@@ -2,6 +2,8 @@ package org.phoenicis.engines;
 
 import org.phoenicis.scripts.wizard.SetupWizard;
 
+import java.util.Map;
+
 /**
  * interface which must be implemented by all engines in Javascript
  */
@@ -77,9 +79,11 @@ public interface Engine {
      * @param workingDir working directory
      * @param captureOutput true if output shall be captured
      * @param wait wait until run finished
+     * @param userData engine specific data
      * @return output
      */
-    String run(String executable, String[] args, String workingDir, boolean captureOutput, boolean wait);
+    String run(String executable, String[] args, String workingDir, boolean captureOutput, boolean wait,
+            Map<String, String> userData);
 
     /**
      * returns the setup wizard

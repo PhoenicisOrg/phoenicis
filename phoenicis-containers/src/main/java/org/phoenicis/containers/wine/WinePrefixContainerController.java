@@ -29,6 +29,7 @@ import org.phoenicis.win32.registry.RegistryWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class WinePrefixContainerController {
@@ -70,7 +71,7 @@ public class WinePrefixContainerController {
         final String engineId = container.getEngine().toLowerCase();
         this.enginesManager.getEngine(engineId, engine -> {
             engine.setWorkingContainer(container.getName());
-            engine.run(command, null, container.getPath(), false, true);
+            engine.run(command, null, container.getPath(), false, true, new HashMap<>());
             // TODO: wait
             doneCallback.run();
         }, errorCallback);
