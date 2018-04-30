@@ -72,7 +72,6 @@ public class WinePrefixContainerController {
         this.enginesManager.getEngine(engineId, engine -> {
             engine.setWorkingContainer(container.getName());
             engine.run(command, null, container.getPath(), false, true, new HashMap<>());
-            // TODO: wait
             doneCallback.run();
         }, errorCallback);
     }
