@@ -96,10 +96,10 @@ public class EnginesController {
         this.enginesView.setOnDeleteEngine(engineDTO -> {
             new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
-                this.enginesManager.getEngine(engineDTO.getId(),
-                        engine -> engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion()),
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                // invalidate cache to show deleted version correctly
+                        this.enginesManager.getEngine(engineDTO.getId(),
+                                engine -> engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion()),
+                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                        // invalidate cache to show deleted version correctly
                         this.versionsCache.remove(engineDTO.getId());
                     });
         });

@@ -50,7 +50,7 @@ public class EnginesManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"engine\", \"java\"]); new Engine();",
+                "include([\"engines\", \"" + engineId + "\", \"engine\", \"implementation\"]); new Engine();",
                 output -> {
                     final Engine engine = (Engine) output;
                     doneCallback.accept(engine);

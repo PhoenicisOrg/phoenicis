@@ -40,7 +40,7 @@ public class WinePrefixContainerController {
 
     public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
             RegistryWriter registryWriter,
-                                         EnginesManager enginesManager) {
+            EnginesManager enginesManager) {
         this.scriptInterpreter = scriptInterpreter;
         this.registryWriter = registryWriter;
         this.enginesManager = enginesManager;

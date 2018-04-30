@@ -76,8 +76,7 @@ public class ContainersConfiguration {
     public WinePrefixContainerController winePrefixContainerController() {
         return new WinePrefixContainerController(scriptsConfiguration.scriptInterpreter(),
                 win32Configuration.registryWriter(),
-                enginesConfiguration.enginesSource()
-                );
+                enginesConfiguration.enginesSource());
     }
 
     @Bean
