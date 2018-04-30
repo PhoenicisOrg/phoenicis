@@ -30,7 +30,6 @@ import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
