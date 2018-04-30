@@ -19,9 +19,7 @@
 package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.engines.EnginesManager;
-import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
@@ -32,7 +30,6 @@ import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +39,6 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -51,18 +47,15 @@ public class EnginesController {
     private final EnginesView enginesView;
     private final RepositoryManager repositoryManager;
     private final EnginesManager enginesManager;
-    private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
             EnginesManager enginesManager,
-            ScriptInterpreter scriptInterpreter,
             ThemeManager themeManager) {
         this.enginesView = enginesView;
         this.repositoryManager = repositoryManager;
         this.enginesManager = enginesManager;
-        this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
         this.repositoryManager.addCallbacks(this::populateView,

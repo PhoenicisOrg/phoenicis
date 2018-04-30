@@ -87,7 +87,4 @@ public class EnginesManager {
         }
     }
 
-    private void throwError(Exception e) {
-        throw new IllegalStateException(e);
-    }
 }

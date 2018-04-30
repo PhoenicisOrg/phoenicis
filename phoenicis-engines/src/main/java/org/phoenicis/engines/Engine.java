@@ -2,8 +2,6 @@ package org.phoenicis.engines;
 
 import org.phoenicis.scripts.wizard.SetupWizard;
 
-import java.util.Map;
-
 /**
  * interface which must be implemented by all engines in Javascript
  */
