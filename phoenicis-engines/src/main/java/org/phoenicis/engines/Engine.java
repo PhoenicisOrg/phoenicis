@@ -10,7 +10,7 @@ import java.util.Map;
 public interface Engine {
 
     /**
-     * returns the local directory
+     * returns the local directory (e.g. ~/.Phoenicis/engines/wine/upstream-linux-x86/3.0)
      * @param subCategory e.g. upstream-linux-x86
      * @param version e.g. 3.0
      * @return local directory
@@ -40,19 +40,19 @@ public interface Engine {
     void delete(String subCategory, String version);
 
     /**
-     * fetches the available versions     *
-     * @return content of JSON file
+     * fetches the available versions
+     * @return content of JSON file (format like the file provided by webservice.wine.url)
      */
     String getAvailableVersions();
 
     /**
-     * returns the current working container
+     * returns the current working container (i.e. name of container directory without full path)
      * @return working container
      */
     String getWorkingContainer();
 
     /**
-     * sets the working container
+     * sets the working container (i.e. name of container directory without full path)
      * @param workingContainer working container
      */
     void setWorkingContainer(String workingContainer);
@@ -73,7 +73,7 @@ public interface Engine {
     void createContainer(String subCategory, String version, String containerName);
 
     /**
-     * runs an executable
+     * runs an executable with this engine
      * @param executable executable
      * @param args program arguments
      * @param workingDir working directory

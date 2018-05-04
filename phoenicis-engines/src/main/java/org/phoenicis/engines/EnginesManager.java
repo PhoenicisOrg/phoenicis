@@ -35,17 +35,31 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * manages the several engines provided by the repository
+ */
 @Safe
 public class EnginesManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(EnginesManager.class);
     private final ScriptInterpreter scriptInterpreter;
     private final ObjectMapper objectMapper;
 
+    /**
+     * constructor
+     * @param scriptInterpreter to access the javascript engine implementation
+     * @param objectMapper to parse the available versions
+     */
     public EnginesManager(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
         this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * fetches the required engine
+     * @param engineId engine ID (e.g. "wine")
+     * @param doneCallback callback which will be executed with the fetched engine
+     * @param errorCallback callback which will be executed if an error occurs
+     */
     public void getEngine(String engineId, Consumer<Engine> doneCallback, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
@@ -57,11 +71,22 @@ public class EnginesManager {
                 }, errorCallback);
     }
 
+    /**
+     * fetches the available versions of a certain engine
+     * @param engineId engine ID (e.g. "wine")
+     * @param callback callback which will be executed with the fetched engine versions
+     * @param errorCallback callback which will be executed if an error occurs
+     */
     public void fetchAvailableVersions(String engineId, Consumer<List<EngineSubCategoryDTO>> callback,
             Consumer<Exception> errorCallback) {
         this.getEngine(engineId, engine -> callback.accept(unSerialize(engine.getAvailableVersions())), errorCallback);
     }
 
+    /**
+     * fetches all available engines from the repository
+     * @param categoryDTOS engine categories from the repository
+     * @return available engines
+     */
     public List<EngineCategoryDTO> getAvailableEngines(List<CategoryDTO> categoryDTOS) {
         List<EngineCategoryDTO> engines = new ArrayList<>();
         for (CategoryDTO categoryDTO : categoryDTOS) {
@@ -76,6 +101,11 @@ public class EnginesManager {
         return engines;
     }
 
+    /**
+     * reads available engine versions from JSON
+     * @param json JSON file
+     * @return available engine versions
+     */
     private List<EngineSubCategoryDTO> unSerialize(Object json) {
         try {
             return objectMapper.readValue(json.toString(), new TypeReference<List<EngineSubCategoryDTO>>() {
