@@ -28,10 +28,6 @@ import java.util.function.Consumer;
 
 public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
     private ContainerInformationTab informationTab;
-    private ContainerDisplayTab displayTab;
-    private ContainerInputTab inputTab;
-    private ContainerEngineToolsTab wineToolsTab;
-    private ContainerToolsTab toolsTab;
 
     public ContainerPanel(WinePrefixContainerDTO containerEntity,
             EngineToolsManager engineToolsManager,
@@ -41,17 +37,17 @@ public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDT
 
         this.informationTab = new ContainerInformationTab(containerEntity);
         this.tabPane.getTabs().add(this.informationTab);
-        this.displayTab = new ContainerDisplayTab(containerEntity, containerEngineController);
-        this.tabPane.getTabs().add(this.displayTab);
-        this.inputTab = new ContainerInputTab(containerEntity);
-        this.tabPane.getTabs().add(this.inputTab);
+        ContainerDisplayTab displayTab = new ContainerDisplayTab(containerEntity, containerEngineController);
+        this.tabPane.getTabs().add(displayTab);
+        ContainerInputTab inputTab = new ContainerInputTab(containerEntity);
+        this.tabPane.getTabs().add(inputTab);
         if (engineTools.isPresent()) {
-            this.wineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
+            ContainerEngineToolsTab wineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
                     engineTools.get());
-            this.tabPane.getTabs().add(this.wineToolsTab);
+            this.tabPane.getTabs().add(wineToolsTab);
         }
-        this.toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
-        this.tabPane.getTabs().add(this.toolsTab);
+        ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
+        this.tabPane.getTabs().add(toolsTab);
     }
 
     public void setOnDeletePrefix(Consumer<WinePrefixContainerDTO> onDeletePrefix) {

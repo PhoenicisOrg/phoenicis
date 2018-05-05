@@ -42,8 +42,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ContainersController {
     private final ContainersView containersView;
     private final ContainersManager containersManager;
-    private final ContainerPanelFactory<ContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
-    private final RepositoryManager repositoryManager;
     private final EngineToolsManager engineToolsManager;
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
@@ -55,13 +53,11 @@ public class ContainersController {
             EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
-        this.winePrefixContainerPanelFactory = winePrefixContainerPanelFactory;
-        this.repositoryManager = repositoryManager;
         this.engineToolsManager = engineToolsManager;
 
         this.engineTools = new HashMap<>();
 
-        this.repositoryManager.addCallbacks(this::updateEngineTools,
+        repositoryManager.addCallbacks(this::updateEngineTools,
                 e -> Platform.runLater(() -> new ErrorMessage(tr("Loading engines failed."), e, this.containersView)));
 
         containersView.setOnSelectionChanged(event -> {
@@ -85,16 +81,14 @@ public class ContainersController {
                     Optional.ofNullable(engineTools.get("wine")),
                     containerEngineController);
 
-            panel.setOnDeletePrefix(winePrefixDTO -> {
-                new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
-                        tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
-                                .ask(() -> {
-                                    containersManager.deleteContainer(winePrefixDTO,
-                                            e -> Platform.runLater(
-                                                    () -> new ErrorMessage("Error", e, this.containersView).show()));
-                                    loadContainers();
-                                });
-            });
+            panel.setOnDeletePrefix(winePrefixDTO -> new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
+                    tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
+                            .ask(() -> {
+                                containersManager.deleteContainer(winePrefixDTO,
+                                        e -> Platform.runLater(
+                                                () -> new ErrorMessage("Error", e, this.containersView).show()));
+                                loadContainers();
+                            }));
 
             panel.setOnClose(containersView::closeDetailsView);
 
