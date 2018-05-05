@@ -81,14 +81,16 @@ public class ContainersController {
                     Optional.ofNullable(engineTools.get("wine")),
                     containerEngineController);
 
-            panel.setOnDeletePrefix(winePrefixDTO -> new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
-                    tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
-                            .ask(() -> {
-                                containersManager.deleteContainer(winePrefixDTO,
-                                        e -> Platform.runLater(
-                                                () -> new ErrorMessage("Error", e, this.containersView).show()));
-                                loadContainers();
-                            }));
+            panel.setOnDeletePrefix(
+                    winePrefixDTO -> new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
+                            tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
+                                    .ask(() -> {
+                                        containersManager.deleteContainer(winePrefixDTO,
+                                                e -> Platform.runLater(
+                                                        () -> new ErrorMessage("Error", e, this.containersView)
+                                                                .show()));
+                                        loadContainers();
+                                    }));
 
             panel.setOnClose(containersView::closeDetailsView);
 
