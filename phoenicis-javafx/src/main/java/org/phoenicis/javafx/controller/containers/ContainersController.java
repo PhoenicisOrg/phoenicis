@@ -23,17 +23,19 @@ import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.ContainerEngineController;
+import org.phoenicis.engines.EngineSetting;
+import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,23 +44,31 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ContainersController {
     private final ContainersView containersView;
     private final ContainersManager containersManager;
+    private EngineSettingsManager engineSettingsManager;
     private final EngineToolsManager engineToolsManager;
+    private Map<String, List<EngineSetting>> engineSettings; // engine settings per engine
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
             ContainersManager containersManager,
-            ContainerPanelFactory<ContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
             ContainerEngineController containerEngineController,
             RepositoryManager repositoryManager,
+            EngineSettingsManager engineSettingsManager,
             EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
+        this.engineSettingsManager = engineSettingsManager;
         this.engineToolsManager = engineToolsManager;
 
-        this.engineTools = new HashMap<>();
+        this.engineSettings = new HashMap<>();
+        repositoryManager.addCallbacks(this::updateEngineSettings,
+                e -> Platform.runLater(
+                        () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
 
+        this.engineTools = new HashMap<>();
         repositoryManager.addCallbacks(this::updateEngineTools,
-                e -> Platform.runLater(() -> new ErrorMessage(tr("Loading engines failed."), e, this.containersView)));
+                e -> Platform
+                        .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
 
         containersView.setOnSelectionChanged(event -> {
             if (containersView.isSelected()) {
@@ -67,21 +77,17 @@ public class ContainersController {
         });
 
         containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
-            // disabled fetching of available engines
-            // changing engine does not work currently
-            // querying Wine webservice causes performance issues on systems with slow internet connection
-            // List<CategoryDTO> categoryDTOS = Collections.singletonList(new CategoryDTO.Builder().withName("Wine").build());
-            // enginesSource.getAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
-            final ContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
+            // TODO: better way to get engine ID
+            final String engineId = containerDTO.getEngine().toLowerCase();
+            final ContainerPanel panel = new ContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
-                    /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
-                    .flatMap(subCategory -> subCategory.getPackages().stream())
-                    .collect(Collectors.toList()),*/
                     engineToolsManager,
-                    Optional.ofNullable(engineTools.get("wine")),
+                    Optional.ofNullable(engineSettings.get(engineId)),
+                    Optional.ofNullable(engineTools.get(engineId)),
                     containerEngineController);
 
             panel.setOnDeletePrefix(
+                    // TODO rename to generic "container"
                     winePrefixDTO -> new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
                             tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
                                     .ask(() -> {
@@ -105,13 +111,20 @@ public class ContainersController {
 
     public void loadContainers() {
         this.containersView.showWait();
-        containersManager.fetchContainers(containersView::populate,
+        this.containersManager.fetchContainers(containersView::populate,
                 e -> this.containersView.showFailure(tr("Loading containers failed."), Optional
                         .of(e)));
     }
 
+    private void updateEngineSettings(RepositoryDTO repositoryDTO) {
+        this.engineSettingsManager.fetchAvailableEngineSettings(repositoryDTO,
+                engineSettings -> Platform.runLater(() -> this.engineSettings = engineSettings),
+                e -> Platform
+                        .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
+    }
+
     private void updateEngineTools(RepositoryDTO repositoryDTO) {
-        engineToolsManager.fetchAvailableEngineTools(repositoryDTO,
+        this.engineToolsManager.fetchAvailableEngineTools(repositoryDTO,
                 engineTools -> Platform.runLater(() -> this.engineTools = engineTools));
     }
 }
