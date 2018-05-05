@@ -26,6 +26,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TabPane;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -42,6 +43,9 @@ import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * "Engines" tab
+ */
 public class EnginesView extends MainWindowView<EnginesSidebar> {
     private final EnginesFilter filter;
 
@@ -61,7 +65,15 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
     };
     private Consumer<EngineDTO> setOnDeleteEngine = (engine) -> {
     };
+    private Consumer<EngineCategoryDTO> onSelectEngineCategory = (engineCategory) -> {
+    };
 
+    /**
+     * constructor
+     * @param themeManager
+     * @param enginesPath
+     * @param javaFxSettingsManager
+     */
     public EnginesView(ThemeManager themeManager, String enginesPath, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Engines"), themeManager);
 
@@ -95,7 +107,10 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
         this.sidebar = new EnginesSidebar(mappedListWidgets, filter, javaFxSettingsManager);
 
-        this.sidebar.setOnCategorySelection(filter::setSelectedEngineCategory);
+        this.sidebar.setOnCategorySelection(engineCategoryDTO -> {
+            this.onSelectEngineCategory.accept(engineCategoryDTO);
+            this.filter.setSelectedEngineCategory(engineCategoryDTO);
+        });
 
         this.initFailure();
         this.initWineVersions();
@@ -106,10 +121,26 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         this.setSidebar(this.sidebar);
     }
 
+    /**
+     * sets the consumer which shall be executed if an engine is selected
+     * @param engineCategory
+     */
+    public void setOnSelectEngineCategory(Consumer<EngineCategoryDTO> engineCategory) {
+        this.onSelectEngineCategory = engineCategory;
+    }
+
+    /**
+     * sets the consumer which shall be executed if an engine is installed
+     * @param onInstallEngine
+     */
     public void setOnInstallEngine(Consumer<EngineDTO> onInstallEngine) {
         this.setOnInstallEngine = onInstallEngine;
     }
 
+    /**
+     * sets the consumer which shall be executed if an engine is deleted
+     * @param onDeleteEngine
+     */
     public void setOnDeleteEngine(Consumer<EngineDTO> onDeleteEngine) {
         this.setOnDeleteEngine = onDeleteEngine;
     }
@@ -125,12 +156,10 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         availableEngines.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
-    // TODO: delete this method because it doesn't do what it promises, namely showing the wine versions tab
-    @Deprecated
-    public void showWineVersions() {
-        setCenter(availableEngines);
-    }
-
+    /**
+     * inits the view with the given engines
+     * @param engineCategoryDTOS
+     */
     public void populate(List<EngineCategoryDTO> engineCategoryDTOS) {
         Platform.runLater(() -> {
             this.engineCategories.setAll(engineCategoryDTOS);
@@ -144,6 +173,25 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         });
     }
 
+    /**
+     * updates available versions for a certain engine
+     * @param engineCategoryDTO engine
+     * @param versions available versions for the engine
+     */
+    public void updateVersions(EngineCategoryDTO engineCategoryDTO, List<EngineSubCategoryDTO> versions) {
+        Platform.runLater(() -> {
+            EngineCategoryDTO newEngineCategoryDTO = new EngineCategoryDTO.Builder(engineCategoryDTO)
+                    .withSubCategories(versions)
+                    .build();
+            this.engineCategories.remove(engineCategoryDTO);
+            this.engineCategories.add(newEngineCategoryDTO);
+        });
+    }
+
+    /**
+     * shows details for a given engine
+     * @param engineDTO
+     */
     private void showEngineDetails(EngineDTO engineDTO) {
         currentEnginePanel = new EnginePanel(engineDTO);
         currentEnginePanel.setOnClose(this::closeDetailsView);
@@ -153,10 +201,18 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         this.showDetailsView(currentEnginePanel);
     }
 
+    /**
+     * installs given engine
+     * @param engineDTO
+     */
     private void installEngine(EngineDTO engineDTO) {
         this.setOnInstallEngine.accept(engineDTO);
     }
 
+    /**
+     * deletes given engine
+     * @param engineDTO
+     */
     private void deleteEngine(EngineDTO engineDTO) {
         this.setOnDeleteEngine.accept(engineDTO);
     }

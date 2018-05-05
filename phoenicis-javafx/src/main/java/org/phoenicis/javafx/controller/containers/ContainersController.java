@@ -75,7 +75,7 @@ public class ContainersController {
             // changing engine does not work currently
             // querying Wine webservice causes performance issues on systems with slow internet connection
             // List<CategoryDTO> categoryDTOS = Collections.singletonList(new CategoryDTO.Builder().withName("Wine").build());
-            // enginesSource.fetchAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
+            // enginesSource.getAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
             final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())

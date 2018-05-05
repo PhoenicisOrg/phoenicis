@@ -132,7 +132,7 @@ public class LibraryController {
 
     private void runShortcut(ShortcutDTO shortcutDTO) {
         shortcutRunner.run(shortcutDTO, Collections.emptyList(),
-                e -> new ErrorMessage(tr("Error"), e, this.libraryView));
+                e -> Platform.runLater(() -> new ErrorMessage(tr("Error"), e, this.libraryView)));
     }
 
     /**

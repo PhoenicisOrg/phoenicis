@@ -22,23 +22,28 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.containers.wine.parameters.RegistryParameter;
+import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.win32.registry.RegistryWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class WinePrefixContainerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainerController.class);
     private final ScriptInterpreter scriptInterpreter;
     private final RegistryWriter registryWriter;
+    private EnginesManager enginesManager;
 
     public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
-            RegistryWriter registryWriter) {
+            RegistryWriter registryWriter,
+            EnginesManager enginesManager) {
         this.scriptInterpreter = scriptInterpreter;
         this.registryWriter = registryWriter;
+        this.enginesManager = enginesManager;
     }
 
     public void changeSetting(WinePrefixContainerDTO winePrefix, RegistryParameter setting, Runnable doneCallback,
@@ -64,16 +69,10 @@ public class WinePrefixContainerController {
             Consumer<Exception> errorCallback) {
         // TODO: better way to get engine ID
         final String engineId = container.getEngine().toLowerCase();
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"engine\", \"object\"]);",
-                ignored -> interactiveScriptSession.eval("new " + container.getEngine() + "()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", container.getName());
-                    wine.callMember("run", command);
-                    wine.callMember("wait");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
+        this.enginesManager.getEngine(engineId, engine -> {
+            engine.setWorkingContainer(container.getName());
+            engine.run(command, null, container.getPath(), false, true, new HashMap<>());
+            doneCallback.run();
+        }, errorCallback);
     }
 }

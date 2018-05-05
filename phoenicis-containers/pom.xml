@@ -47,6 +47,18 @@
         </dependency>
 
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.phoenicis</groupId>
+            <artifactId>phoenicis-engines</artifactId>
+            <version>5.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-entities</artifactId>
             <version>${project.version}</version>
@@ -54,7 +66,7 @@
 
         <dependency>
             <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-tools</artifactId>
+            <artifactId>phoenicis-library</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -65,18 +77,15 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-library</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-settings</artifactId>
             <version>5.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.phoenicis</groupId>
+            <artifactId>phoenicis-tools</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

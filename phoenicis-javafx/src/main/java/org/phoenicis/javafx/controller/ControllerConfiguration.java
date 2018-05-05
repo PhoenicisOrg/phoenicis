@@ -93,9 +93,10 @@ public class ControllerConfiguration {
 
     @Bean
     public EnginesController enginesController() {
-        return new EnginesController(viewsConfiguration.viewEngines(), repositoryConfiguration.repositoryManager(),
+        return new EnginesController(viewsConfiguration.viewEngines(),
+                repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.enginesSource(),
-                scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
+                themeConfiguration.themeManager());
     }
 
     @Bean

@@ -31,14 +31,14 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Represents a category of application
+ * Represents a category of engines
  */
 @JsonDeserialize(builder = EngineCategoryDTO.Builder.class)
 public class EngineCategoryDTO {
     private final String name;
     private final String description;
     private final List<EngineSubCategoryDTO> subCategories;
-    private URI icon;
+    private final URI icon;
 
     private EngineCategoryDTO(Builder builder) {
         this.name = builder.name;
