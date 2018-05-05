@@ -19,7 +19,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 /**
  * Created by marc on 27.05.17.
  */
-public class WinePrefixContainerInformationTab extends Tab {
+public class ContainerInformationTab extends Tab {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
@@ -28,7 +28,7 @@ public class WinePrefixContainerInformationTab extends Tab {
 
     private Consumer<WinePrefixContainerDTO> onDeletePrefix;
 
-    public WinePrefixContainerInformationTab(WinePrefixContainerDTO container) {
+    public ContainerInformationTab(WinePrefixContainerDTO container) {
         super(tr("Information"));
 
         this.container = container;

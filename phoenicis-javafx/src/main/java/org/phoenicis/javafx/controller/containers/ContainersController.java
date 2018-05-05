@@ -22,13 +22,13 @@ import javafx.application.Platform;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.containers.wine.ContainerEngineController;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
-import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -42,15 +42,15 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ContainersController {
     private final ContainersView containersView;
     private final ContainersManager containersManager;
-    private final ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
+    private final ContainerPanelFactory<ContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory;
     private final RepositoryManager repositoryManager;
     private final EngineToolsManager engineToolsManager;
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
             ContainersManager containersManager,
-            ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
-            WinePrefixContainerController winePrefixContainerController,
+            ContainerPanelFactory<ContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory,
+            ContainerEngineController containerEngineController,
             RepositoryManager repositoryManager,
             EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
@@ -76,14 +76,14 @@ public class ContainersController {
             // querying Wine webservice causes performance issues on systems with slow internet connection
             // List<CategoryDTO> categoryDTOS = Collections.singletonList(new CategoryDTO.Builder().withName("Wine").build());
             // enginesSource.getAvailableEngines(categoryDTOS, engineCategoryDTOS -> {
-            final WinePrefixContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
+            final ContainerPanel panel = winePrefixContainerPanelFactory.createContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
                     /*engineCategoryDTOS.stream().flatMap(category -> category.getSubCategories().stream())
                     .flatMap(subCategory -> subCategory.getPackages().stream())
                     .collect(Collectors.toList()),*/
                     engineToolsManager,
                     Optional.ofNullable(engineTools.get("wine")),
-                    winePrefixContainerController);
+                    containerEngineController);
 
             panel.setOnDeletePrefix(winePrefixDTO -> {
                 new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),

@@ -32,13 +32,13 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
-public class WinePrefixContainerController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WinePrefixContainerController.class);
+public class ContainerEngineController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContainerEngineController.class);
     private final ScriptInterpreter scriptInterpreter;
     private final RegistryWriter registryWriter;
     private EnginesManager enginesManager;
 
-    public WinePrefixContainerController(ScriptInterpreter scriptInterpreter,
+    public ContainerEngineController(ScriptInterpreter scriptInterpreter,
             RegistryWriter registryWriter,
             EnginesManager enginesManager) {
         this.scriptInterpreter = scriptInterpreter;
