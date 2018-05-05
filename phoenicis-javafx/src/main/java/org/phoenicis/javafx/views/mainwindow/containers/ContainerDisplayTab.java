@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.containers.wine.ContainerEngineController;
 import org.phoenicis.containers.wine.parameters.*;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -28,22 +28,22 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 /**
  * Created by marc on 27.05.17.
  */
-public class WinePrefixContainerDisplayTab extends Tab {
+public class ContainerDisplayTab extends Tab {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
 
     private final WinePrefixContainerDTO container;
-    private final WinePrefixContainerController winePrefixContainerController;
+    private final ContainerEngineController containerEngineController;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public WinePrefixContainerDisplayTab(WinePrefixContainerDTO container,
-            WinePrefixContainerController winePrefixContainerController) {
+    public ContainerDisplayTab(WinePrefixContainerDTO container,
+            ContainerEngineController containerEngineController) {
         super(tr("Display"));
 
         this.container = container;
-        this.winePrefixContainerController = winePrefixContainerController;
+        this.containerEngineController = containerEngineController;
 
         this.setClosable(false);
 
@@ -145,7 +145,7 @@ public class WinePrefixContainerDisplayTab extends Tab {
 
     private void changeSettings(RegistryParameter newValue) {
         this.lockAll();
-        winePrefixContainerController.changeSetting(container, newValue, this::unlockAll,
+        containerEngineController.changeSetting(container, newValue, this::unlockAll,
                 e -> Platform.runLater(() -> new ErrorMessage(tr("Error"), e).show()));
     }
 

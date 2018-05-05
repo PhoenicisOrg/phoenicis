@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.containers.wine.ContainerEngineController;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
@@ -38,13 +38,13 @@ public class ContainerPanelFactory<T extends AbstractContainerPanel<C>, C extend
     public T createContainerPanel(C containerDTO,
             EngineToolsManager engineToolsManager,
             Optional<ApplicationDTO> engineTools,
-            WinePrefixContainerController winePrefixContainerController) {
+            ContainerEngineController containerEngineController) {
         try {
             return this.clazz
                     .getConstructor(entityClazz, EngineToolsManager.class, Optional.class,
-                            WinePrefixContainerController.class)
+                            ContainerEngineController.class)
                     .newInstance(containerDTO, engineToolsManager, engineTools,
-                            winePrefixContainerController);
+                            containerEngineController);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException
                 | NoSuchMethodException e) {
             throw new IllegalStateException(e);

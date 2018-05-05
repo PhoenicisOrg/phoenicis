@@ -19,7 +19,7 @@
 package org.phoenicis.containers;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
-import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.containers.wine.ContainerEngineController;
 import org.phoenicis.containers.wine.configurations.*;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
@@ -73,8 +73,8 @@ public class ContainersConfiguration {
     }
 
     @Bean
-    public WinePrefixContainerController winePrefixContainerController() {
-        return new WinePrefixContainerController(scriptsConfiguration.scriptInterpreter(),
+    public ContainerEngineController winePrefixContainerController() {
+        return new ContainerEngineController(scriptsConfiguration.scriptInterpreter(),
                 win32Configuration.registryWriter(),
                 enginesConfiguration.enginesSource());
     }

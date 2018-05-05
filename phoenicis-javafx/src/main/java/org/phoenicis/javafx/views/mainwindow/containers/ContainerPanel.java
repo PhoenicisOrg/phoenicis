@@ -19,39 +19,35 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.WinePrefixContainerController;
+import org.phoenicis.containers.wine.ContainerEngineController;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class WinePrefixContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
-    private WinePrefixContainerInformationTab informationTab;
-    private WinePrefixContainerDisplayTab displayTab;
-    private WinePrefixContainerInputTab inputTab;
-    private WinePrefixContainerWineToolsTab wineToolsTab;
-    private WinePrefixContainerToolsTab toolsTab;
+public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
+    private ContainerInformationTab informationTab;
 
-    public WinePrefixContainerPanel(WinePrefixContainerDTO containerEntity,
+    public ContainerPanel(WinePrefixContainerDTO containerEntity,
             EngineToolsManager engineToolsManager,
             Optional<ApplicationDTO> engineTools,
-            WinePrefixContainerController winePrefixContainerController) {
+            ContainerEngineController containerEngineController) {
         super(containerEntity);
 
-        this.informationTab = new WinePrefixContainerInformationTab(containerEntity);
+        this.informationTab = new ContainerInformationTab(containerEntity);
         this.tabPane.getTabs().add(this.informationTab);
-        this.displayTab = new WinePrefixContainerDisplayTab(containerEntity, winePrefixContainerController);
-        this.tabPane.getTabs().add(this.displayTab);
-        this.inputTab = new WinePrefixContainerInputTab(containerEntity);
-        this.tabPane.getTabs().add(this.inputTab);
+        ContainerDisplayTab displayTab = new ContainerDisplayTab(containerEntity, containerEngineController);
+        this.tabPane.getTabs().add(displayTab);
+        ContainerInputTab inputTab = new ContainerInputTab(containerEntity);
+        this.tabPane.getTabs().add(inputTab);
         if (engineTools.isPresent()) {
-            this.wineToolsTab = new WinePrefixContainerWineToolsTab(containerEntity, engineToolsManager,
+            ContainerEngineToolsTab wineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
                     engineTools.get());
-            this.tabPane.getTabs().add(this.wineToolsTab);
+            this.tabPane.getTabs().add(wineToolsTab);
         }
-        this.toolsTab = new WinePrefixContainerToolsTab(containerEntity, winePrefixContainerController);
-        this.tabPane.getTabs().add(this.toolsTab);
+        ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
+        this.tabPane.getTabs().add(toolsTab);
     }
 
     public void setOnDeletePrefix(Consumer<WinePrefixContainerDTO> onDeletePrefix) {

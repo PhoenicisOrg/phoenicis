@@ -25,7 +25,7 @@ import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
-import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
@@ -123,7 +123,7 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory() {
-        return new ContainerPanelFactory<>(WinePrefixContainerPanel.class, WinePrefixContainerDTO.class);
+    public ContainerPanelFactory<ContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory() {
+        return new ContainerPanelFactory<>(ContainerPanel.class, WinePrefixContainerDTO.class);
     }
 }

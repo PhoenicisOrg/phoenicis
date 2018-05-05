@@ -22,7 +22,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 /**
  * Created by marc on 27.05.17.
  */
-public class WinePrefixContainerInputTab extends Tab {
+public class ContainerInputTab extends Tab {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
@@ -31,7 +31,7 @@ public class WinePrefixContainerInputTab extends Tab {
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public WinePrefixContainerInputTab(WinePrefixContainerDTO container) {
+    public ContainerInputTab(WinePrefixContainerDTO container) {
         super(tr("Input"));
 
         this.container = container;
