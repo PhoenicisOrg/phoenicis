@@ -164,7 +164,6 @@ public class GenericContainersManager implements ContainersManager {
             for (File containerDirectory : containerDirectories) {
                 final ConfigFile configFile = compatibleConfigFileFormatFactory
                         .open(new File(containerDirectory, "phoenicis.cfg"));
-                final File userRegistryFile = new File(containerDirectory, "user.reg");
                 final String containerPath = containerDirectory.getAbsolutePath();
                 final String containerName = containerPath.substring(containerPath.lastIndexOf('/') + 1);
 

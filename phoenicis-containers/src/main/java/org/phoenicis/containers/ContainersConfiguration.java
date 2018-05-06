@@ -44,9 +44,6 @@ public class ContainersConfiguration {
     private ToolsConfiguration toolsConfiguration;
 
     @Autowired
-    private Win32Configuration win32Configuration;
-
-    @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
     @Autowired

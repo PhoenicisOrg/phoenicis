@@ -61,6 +61,7 @@ public class ContainerEngineSettingsTab extends Tab {
             comboBox.setItems(items);
             comboBox.setValue(setting.getCurrentOption(this.container.getName()));
             comboBox.valueProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+                this.lockAll();
                 setting.setOption(this.container.getName(), items.indexOf(newValue));
                 this.unlockAll();
             }));
