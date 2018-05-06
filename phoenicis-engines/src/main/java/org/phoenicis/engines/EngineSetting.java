@@ -18,14 +18,15 @@ public interface EngineSetting {
 
     /**
      * fetches the currently used option
+     * @param container name of container for which the current setting shall be fetched
      * @return option
      */
-    String getCurrentOption();
+    String getCurrentOption(String container);
 
     /**
      * sets the selected option
      * @param container name of container for which the setting shall be applied
-     * @param option selected option
+     * @param optionIndex index of selected option
      */
-    void setOption(String container, String option);
+    void setOption(String container, int optionIndex);
 }

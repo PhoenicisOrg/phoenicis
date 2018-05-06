@@ -64,13 +64,13 @@ public class ContainerEngineSettingsTab extends Tab {
         for (EngineSetting setting : engineSettings) {
             final ComboBox<String> comboBox = new ComboBox<>();
             comboBox.setMaxWidth(Double.MAX_VALUE);
-            comboBox.setValue(setting.getCurrentOption());
-            comboBox.valueProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
-                setting.setOption(this.container.getName(), newValue);
-                this.unlockAll();
-            }));
             ObservableList<String> items = FXCollections.observableArrayList(setting.getOptions());
             comboBox.setItems(items);
+            comboBox.setValue(setting.getCurrentOption(this.container.getName()));
+            comboBox.valueProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+                setting.setOption(this.container.getName(), items.indexOf(newValue));
+                this.unlockAll();
+            }));
             displayContentPane.add(new TextWithStyle(setting.getText(), CAPTION_TITLE_CSS_CLASS), 0, 0);
             displayContentPane.add(comboBox, 1, row);
             lockableElements.add(comboBox);
