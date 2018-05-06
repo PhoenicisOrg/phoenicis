@@ -69,7 +69,6 @@ public class EngineSettingsManager {
      */
     public void fetchAvailableEngineSettings(RepositoryDTO repositoryDTO,
             Consumer<Map<String, List<EngineSetting>>> callback, Consumer<Exception> errorCallback) {
-        Map<String, List<EngineSetting>> settings = new HashMap<>();
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
@@ -77,18 +76,31 @@ public class EngineSettingsManager {
                 categoryDTOS = typeDTO.getCategories();
             }
         }
+        StringBuilder script = new StringBuilder();
+        script.append("(function () {\n");
+        script.append("var settings = {};\n");
         for (CategoryDTO engine : categoryDTOS) {
             final String engineId = engine.getId();
-            settings.put(engineId, new ArrayList<>());
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
                 if (applicationDTO.getId().equals("settings")) {
                     for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                        this.getSetting(engineId, scriptDTO.getId(), setting -> settings.get(engineId).add(setting),
-                                errorCallback);
+                        script.append("include([\"engines\", \"" + engineId + "\", \"settings\", \"" + scriptDTO.getId()
+                                + "\"]);\n");
+                        script.append("if (!(\"" + engineId + "\" in settings))\n");
+                        script.append("{\n");
+                        script.append("settings[\"" + engineId + "\"] = new java.util.ArrayList();\n");
+                        script.append("}\n");
+                        script.append("settings[\"" + engineId + "\"].add(new Setting());\n");
                     }
                 }
             }
         }
-        callback.accept(settings);
+        script.append("return settings;\n");
+        script.append("})()\n;");
+
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval(script.toString(),
+                output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
     }
 }
