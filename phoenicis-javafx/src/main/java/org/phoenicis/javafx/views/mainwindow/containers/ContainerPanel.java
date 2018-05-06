@@ -18,8 +18,8 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.ContainerEngineController;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -43,12 +43,9 @@ public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDT
         this.tabPane.getTabs().add(this.informationTab);
         if (engineSettings.isPresent()) {
             ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
-                    containerEngineController, engineSettings.get());
+                    engineSettings.get());
             this.tabPane.getTabs().add(settingsTab);
         }
-        // TODO: delete ContainerInputTab
-        ContainerInputTab inputTab = new ContainerInputTab(containerEntity);
-        this.tabPane.getTabs().add(inputTab);
         if (engineTools.isPresent()) {
             ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
                     engineTools.get());

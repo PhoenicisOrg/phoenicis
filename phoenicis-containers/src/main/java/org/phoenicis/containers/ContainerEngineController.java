@@ -16,53 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.containers.wine;
+package org.phoenicis.containers;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.parameters.RegistryParameter;
 import org.phoenicis.engines.EnginesManager;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.win32.registry.RegistryWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class ContainerEngineController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContainerEngineController.class);
-    private final ScriptInterpreter scriptInterpreter;
-    private final RegistryWriter registryWriter;
     private EnginesManager enginesManager;
 
-    public ContainerEngineController(ScriptInterpreter scriptInterpreter,
-            RegistryWriter registryWriter,
-            EnginesManager enginesManager) {
-        this.scriptInterpreter = scriptInterpreter;
-        this.registryWriter = registryWriter;
+    public ContainerEngineController(EnginesManager enginesManager) {
         this.enginesManager = enginesManager;
-    }
-
-    public void changeSetting(WinePrefixContainerDTO winePrefix, RegistryParameter setting, Runnable doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-        final String registryPatch = registryWriter.generateRegFileContent(setting.toRegistryPatch());
-
-        LOGGER.info("Updating registry for prefix: " + winePrefix.getPath());
-        LOGGER.info(registryPatch);
-
-        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"engine\", \"object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("prefix", winePrefix.getName());
-                    final ScriptObjectMirror regedit = (ScriptObjectMirror) wine.callMember("regedit");
-                    regedit.callMember("patch", registryPatch);
-                    wine.callMember("wait");
-                    doneCallback.run();
-                }, errorCallback), errorCallback);
     }
 
     public void runInContainer(ContainerDTO container, String command, Runnable doneCallback,

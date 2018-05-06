@@ -22,7 +22,7 @@ import javafx.application.Platform;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.ContainerEngineController;
+import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;

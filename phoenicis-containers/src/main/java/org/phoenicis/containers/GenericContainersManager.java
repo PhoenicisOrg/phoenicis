@@ -25,8 +25,6 @@ import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.configurations.WinePrefixContainerDisplayConfiguration;
-import org.phoenicis.containers.wine.configurations.WinePrefixContainerInputConfiguration;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
@@ -60,8 +58,6 @@ public class GenericContainersManager implements ContainersManager {
     private String containersPath;
 
     private final CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory;
-    private final WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration;
-    private final WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration;
     private final LibraryManager libraryManager;
     private final ShortcutManager shortcutManager;
     private final FileUtilities fileUtilities;
@@ -71,8 +67,6 @@ public class GenericContainersManager implements ContainersManager {
     /**
      * constructor
      * @param compatibleConfigFileFormatFactory
-     * @param winePrefixContainerDisplayConfiguration
-     * @param winePrefixContainerInputConfiguration
      * @param libraryManager
      * @param shortcutManager
      * @param fileUtilities
@@ -80,16 +74,12 @@ public class GenericContainersManager implements ContainersManager {
      * @param objectMapper
      */
     public GenericContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
-            WinePrefixContainerDisplayConfiguration winePrefixContainerDisplayConfiguration,
-            WinePrefixContainerInputConfiguration winePrefixContainerInputConfiguration,
             LibraryManager libraryManager,
             ShortcutManager shortcutManager,
             FileUtilities fileUtilities,
             ScriptInterpreter scriptInterpreter,
             ObjectMapper objectMapper) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
-        this.winePrefixContainerDisplayConfiguration = winePrefixContainerDisplayConfiguration;
-        this.winePrefixContainerInputConfiguration = winePrefixContainerInputConfiguration;
         this.libraryManager = libraryManager;
         this.shortcutManager = shortcutManager;
         this.fileUtilities = fileUtilities;
@@ -199,23 +189,6 @@ public class GenericContainersManager implements ContainersManager {
                             .withArchitecture(configFile.readValue("wineArchitecture", ""))
                             .withDistribution(configFile.readValue("wineDistribution", ""))
                             .withVersion(configFile.readValue("wineVersion", ""))
-                            .withGlslValue(winePrefixContainerDisplayConfiguration.getGLSL(userRegistryFile))
-                            .withDirectDrawRenderer(
-                                    winePrefixContainerDisplayConfiguration.getDirectDrawRenderer(userRegistryFile))
-                            .withVideoMemorySize(
-                                    winePrefixContainerDisplayConfiguration.getVideoMemorySize(userRegistryFile))
-                            .withOffscreenRenderingMode(
-                                    winePrefixContainerDisplayConfiguration.getOffscreenRenderingMode(userRegistryFile))
-                            .withMultisampling(
-                                    winePrefixContainerDisplayConfiguration.getMultisampling(userRegistryFile))
-                            .withAlwaysOffscreen(
-                                    winePrefixContainerDisplayConfiguration.getAlwaysOffscreen(userRegistryFile))
-                            .withStrictDrawOrdering(
-                                    winePrefixContainerDisplayConfiguration.getStrictDrawOrdering(userRegistryFile))
-                            .withRenderTargetModeLock(
-                                    winePrefixContainerDisplayConfiguration.getRenderTargetModeLock(userRegistryFile))
-                            .withMouseWarpOverride(
-                                    winePrefixContainerInputConfiguration.getMouseWarpOverride(userRegistryFile))
                             .build());
                 }
             }
