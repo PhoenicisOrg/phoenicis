@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-05-07 13:20-0400\n"
+"PO-Revision-Date: 2018-05-07 13:50-0400\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -86,12 +86,12 @@ msgstr "Das Skript wurde unerwartet beendet"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:66
 msgid "Loading engine settings failed."
-msgstr ""
+msgstr "Laden der Engineeinstellungen fehlgeschlagen."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:124
 msgid "Loading engine tools failed."
-msgstr ""
+msgstr "Laden der Enginewerkzeuge fehlgeschlagen."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:91
 #, java-format
@@ -134,7 +134,7 @@ msgstr "Unity"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:19
 msgid "Mint-X theme"
-msgstr ""
+msgstr "Mint-X"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
 msgid "Cancel"
@@ -497,7 +497,7 @@ msgstr "Alle Betriebssysteme"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineSettingsTab.java:35
 msgid "Engine Settings"
-msgstr ""
+msgstr "Engineeinstellungen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersView.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersSidebar.java:116
