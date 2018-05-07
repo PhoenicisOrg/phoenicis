@@ -208,6 +208,28 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>i18n/keys.pot</file>
+                    <replacements>
+                        <replacement>
+                            <token>"POT-Creation-Date: \d{4}-\d{2}-\d{2} \d{2}:\d{2}\+\d{4}\\n"</token>
+                            <value>"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\\n"</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <profiles>

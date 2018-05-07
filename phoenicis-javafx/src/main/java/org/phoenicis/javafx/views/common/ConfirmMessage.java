@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,13 +32,16 @@ public class ConfirmMessage {
     private final Logger LOGGER = LoggerFactory.getLogger(ConfirmMessage.class);
     private final Alert alert;
 
-    public ConfirmMessage(String title, String message) {
+    public ConfirmMessage(String title, String message, Window owner) {
         LOGGER.info("Ask for confirmation", message);
         alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(title);
         alert.setContentText(message);
-        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label)
+        alert.getDialogPane().getChildren()
+                .stream()
+                .filter(node -> node instanceof Label)
                 .forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
     }
 

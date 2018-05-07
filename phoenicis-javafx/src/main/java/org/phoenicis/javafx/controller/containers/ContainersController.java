@@ -89,7 +89,8 @@ public class ContainersController {
             panel.setOnDeletePrefix(
                     // TODO rename to generic "container"
                     winePrefixDTO -> new ConfirmMessage(tr("Delete {0} container", winePrefixDTO.getName()),
-                            tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()))
+                            tr("Are you sure you want to delete the {0} container?", winePrefixDTO.getName()),
+                            this.containersView.getContent().getScene().getWindow())
                                     .ask(() -> {
                                         containersManager.deleteContainer(winePrefixDTO,
                                                 e -> Platform.runLater(

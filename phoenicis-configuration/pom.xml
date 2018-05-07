@@ -115,7 +115,7 @@
                         <id>gettext</id>
                         <phase>compile</phase>
                         <goals>
-                            <goal>merge</goal>
+                            <goal>gettext</goal>
                             <goal>dist</goal>
                         </goals>
                     </execution>
