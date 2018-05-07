@@ -18,7 +18,6 @@
 
 package org.phoenicis.containers.dto;
 
-import org.phoenicis.containers.wine.parameters.*;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.List;
@@ -27,30 +26,12 @@ public class WinePrefixContainerDTO extends ContainerDTO {
     private final String architecture;
     private final String distribution;
     private final String version;
-    private final UseGLSL useGlslValue;
-    private final DirectDrawRenderer directDrawRenderer;
-    private final VideoMemorySize videoMemorySize;
-    private final OffscreenRenderingMode offscreenRenderingMode;
-    private final Multisampling multisampling;
-    private final AlwaysOffscreen alwaysOffscreen;
-    private final StrictDrawOrdering strictDrawOrdering;
-    private final RenderTargetModeLock renderTargetModeLock;
-    private final MouseWarpOverride mouseWarpOverride;
 
     private WinePrefixContainerDTO(Builder builder) {
         super(builder.name, builder.path, ContainerType.WINEPREFIX, "Wine", builder.installedShortcuts);
         this.architecture = builder.architecture;
         this.distribution = builder.distribution;
         this.version = builder.version;
-        this.useGlslValue = builder.useGlslValue;
-        this.directDrawRenderer = builder.directDrawRenderer;
-        this.videoMemorySize = builder.videoMemorySize;
-        this.offscreenRenderingMode = builder.offscreenRenderingMode;
-        this.multisampling = builder.multisampling;
-        this.alwaysOffscreen = builder.alwaysOffscreen;
-        this.strictDrawOrdering = builder.strictDrawOrdering;
-        this.renderTargetModeLock = builder.renderTargetModeLock;
-        this.mouseWarpOverride = builder.mouseWarpOverride;
     }
 
     public String getArchitecture() {
@@ -65,57 +46,12 @@ public class WinePrefixContainerDTO extends ContainerDTO {
         return version;
     }
 
-    public UseGLSL getUseGlslValue() {
-        return useGlslValue;
-    }
-
-    public DirectDrawRenderer getDirectDrawRenderer() {
-        return directDrawRenderer;
-    }
-
-    public VideoMemorySize getVideoMemorySize() {
-        return videoMemorySize;
-    }
-
-    public OffscreenRenderingMode getOffscreenRenderingMode() {
-        return offscreenRenderingMode;
-    }
-
-    public Multisampling getMultisampling() {
-        return multisampling;
-    }
-
-    public AlwaysOffscreen getAlwaysOffscreen() {
-        return alwaysOffscreen;
-    }
-
-    public StrictDrawOrdering getStrictDrawOrdering() {
-        return strictDrawOrdering;
-    }
-
-    public RenderTargetModeLock getRenderTargetModeLock() {
-        return renderTargetModeLock;
-    }
-
-    public MouseWarpOverride getMouseWarpOverride() {
-        return mouseWarpOverride;
-    }
-
     public static class Builder {
         private String name;
         private String path;
         private String architecture;
         private String distribution;
         private String version;
-        private UseGLSL useGlslValue;
-        private DirectDrawRenderer directDrawRenderer;
-        private VideoMemorySize videoMemorySize;
-        private OffscreenRenderingMode offscreenRenderingMode;
-        private Multisampling multisampling;
-        private AlwaysOffscreen alwaysOffscreen;
-        private StrictDrawOrdering strictDrawOrdering;
-        private RenderTargetModeLock renderTargetModeLock;
-        private MouseWarpOverride mouseWarpOverride;
         private List<ShortcutDTO> installedShortcuts;
 
         public Builder withName(String name) {
@@ -145,51 +81,6 @@ public class WinePrefixContainerDTO extends ContainerDTO {
 
         public Builder withVersion(String version) {
             this.version = version;
-            return this;
-        }
-
-        public Builder withGlslValue(UseGLSL useGlslValue) {
-            this.useGlslValue = useGlslValue;
-            return this;
-        }
-
-        public Builder withDirectDrawRenderer(DirectDrawRenderer directDrawRenderer) {
-            this.directDrawRenderer = directDrawRenderer;
-            return this;
-        }
-
-        public Builder withVideoMemorySize(VideoMemorySize videoMemorySize) {
-            this.videoMemorySize = videoMemorySize;
-            return this;
-        }
-
-        public Builder withOffscreenRenderingMode(OffscreenRenderingMode offscreenRenderingMode) {
-            this.offscreenRenderingMode = offscreenRenderingMode;
-            return this;
-        }
-
-        public Builder withMultisampling(Multisampling multisampling) {
-            this.multisampling = multisampling;
-            return this;
-        }
-
-        public Builder withAlwaysOffscreen(AlwaysOffscreen alwaysOffscreen) {
-            this.alwaysOffscreen = alwaysOffscreen;
-            return this;
-        }
-
-        public Builder withStrictDrawOrdering(StrictDrawOrdering strictDrawOrdering) {
-            this.strictDrawOrdering = strictDrawOrdering;
-            return this;
-        }
-
-        public Builder withRenderTargetModeLock(RenderTargetModeLock renderTargetModeLock) {
-            this.renderTargetModeLock = renderTargetModeLock;
-            return this;
-        }
-
-        public Builder withMouseWarpOverride(MouseWarpOverride mouseWarpOverride) {
-            this.mouseWarpOverride = mouseWarpOverride;
             return this;
         }
 

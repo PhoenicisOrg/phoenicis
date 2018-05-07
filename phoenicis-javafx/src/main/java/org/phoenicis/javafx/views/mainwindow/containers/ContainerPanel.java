@@ -18,33 +18,38 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.wine.ContainerEngineController;
+import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+// TODO: AbstractContainerPanel not needed anymore (ContainerPanel is generic)
 public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
     private ContainerInformationTab informationTab;
 
     public ContainerPanel(WinePrefixContainerDTO containerEntity,
             EngineToolsManager engineToolsManager,
+            Optional<List<EngineSetting>> engineSettings,
             Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
         super(containerEntity);
 
         this.informationTab = new ContainerInformationTab(containerEntity);
         this.tabPane.getTabs().add(this.informationTab);
-        ContainerDisplayTab displayTab = new ContainerDisplayTab(containerEntity, containerEngineController);
-        this.tabPane.getTabs().add(displayTab);
-        ContainerInputTab inputTab = new ContainerInputTab(containerEntity);
-        this.tabPane.getTabs().add(inputTab);
+        if (engineSettings.isPresent()) {
+            ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
+                    engineSettings.get());
+            this.tabPane.getTabs().add(settingsTab);
+        }
         if (engineTools.isPresent()) {
-            ContainerEngineToolsTab wineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
+            ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
                     engineTools.get());
-            this.tabPane.getTabs().add(wineToolsTab);
+            this.tabPane.getTabs().add(engineToolsTab);
         }
         ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
         this.tabPane.getTabs().add(toolsTab);

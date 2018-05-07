@@ -39,6 +39,11 @@ public class EnginesConfiguration {
     }
 
     @Bean
+    public EngineSettingsManager engineSettingsManager() {
+        return new EngineSettingsManager(scriptsConfiguration.scriptInterpreter());
+    }
+
+    @Bean
     public EngineToolsManager engineToolsManager() {
         return new EngineToolsManager(scriptsConfiguration.scriptInterpreter());
     }

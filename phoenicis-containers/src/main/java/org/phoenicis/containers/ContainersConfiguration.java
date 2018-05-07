@@ -19,8 +19,6 @@
 package org.phoenicis.containers;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
-import org.phoenicis.containers.wine.ContainerEngineController;
-import org.phoenicis.containers.wine.configurations.*;
 import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
@@ -46,9 +44,6 @@ public class ContainersConfiguration {
     private ToolsConfiguration toolsConfiguration;
 
     @Autowired
-    private Win32Configuration win32Configuration;
-
-    @Autowired
     private ScriptsConfiguration scriptsConfiguration;
 
     @Autowired
@@ -57,8 +52,6 @@ public class ContainersConfiguration {
     @Bean
     public ContainersManager containersManager() {
         return new GenericContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
-                winePrefixDisplayConfiguration(),
-                winePrefixInputConfiguration(),
                 libraryConfiguration.libraryManager(),
                 libraryConfiguration.shortcutManager(),
                 toolsConfiguration.fileUtilities(),
@@ -74,20 +67,6 @@ public class ContainersConfiguration {
 
     @Bean
     public ContainerEngineController winePrefixContainerController() {
-        return new ContainerEngineController(scriptsConfiguration.scriptInterpreter(),
-                win32Configuration.registryWriter(),
-                enginesConfiguration.enginesSource());
-    }
-
-    @Bean
-    WinePrefixContainerInputConfiguration winePrefixInputConfiguration() {
-        return new RegistryWinePrefixContainerInputConfiguration(win32Configuration.registryParser(),
-                new DefaultWinePrefixContainerInputConfiguration());
-    }
-
-    @Bean
-    WinePrefixContainerDisplayConfiguration winePrefixDisplayConfiguration() {
-        return new RegistryWinePrefixContainerDisplayConfiguration(win32Configuration.registryParser(),
-                new DefaultWinePrefixContainerDisplayConfiguration());
+        return new ContainerEngineController(enginesConfiguration.enginesSource());
     }
 }
