@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-05-07 12:51-0400\n"
+"PO-Revision-Date: 2018-05-07 13:20-0400\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -25,41 +25,9 @@ msgstr "entrée"
 msgid "Please wait while we are verifying the file ..."
 msgstr "Veuillez patienter pendant que nous vérifions le fichier ..."
 
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/StrictDrawOrdering.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/Multisampling.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/UseGLSL.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/DirectDrawRenderer.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/AlwaysOffscreen.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/RenderTargetModeLock.java:26
-msgid "Default"
-msgstr "Défaut"
-
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/StrictDrawOrdering.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/Multisampling.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/UseGLSL.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/AlwaysOffscreen.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/RenderTargetModeLock.java:26
-msgid "Disabled"
-msgstr "Désactivée"
-
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/StrictDrawOrdering.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/Multisampling.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/UseGLSL.java:26
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/AlwaysOffscreen.java:26
-msgid "Enabled"
-msgstr "Activée"
-
-#: phoenicis-containers/src/main/java/org/phoenicis/containers/wine/parameters/MouseWarpOverride.java:27
-msgid "Force"
-msgstr "Forcer"
-
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:75
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:135
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:136
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:71
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:149
 msgid "Error"
 msgstr "Erreur"
 
@@ -73,17 +41,16 @@ msgstr "Désinstalle {0}"
 msgid "Are you sure you want to uninstall {0}?"
 msgstr "Êtes-vous sûr de vouloir désinstaller {0}?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:95
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:96
 msgid "Error while running script"
 msgstr "Une erreur est survenue pendant l'exécution du script"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:129
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:130
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:131
 msgid "Error while creating shortcut"
 msgstr "Une erreur est survenue lors de la création du raccourci"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:61
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:61
 msgid "Loading engines failed."
 msgstr "Le chargement des moteurs a échoué."
 
@@ -97,12 +64,12 @@ msgstr "Installation de {0}"
 msgid "Are you sure you want to install {0}?"
 msgstr "Êtes-vous sûr de vouloir installer {0} ?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:89
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:92
 #, java-format
 msgid "Delete {0}"
 msgstr "Suppression de {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:90
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:93
 #, java-format
 msgid "Are you sure you want to delete {0}"
 msgstr "Êtes-vous sûr de vouloir supprimer {0}"
@@ -117,17 +84,26 @@ msgstr "La connexion au dépôt a échoué.\n"
 msgid "The script ended unexpectedly"
 msgstr "Le script s'est terminé de façon inattendue"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:85
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:66
+msgid "Loading engine settings failed."
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:124
+msgid "Loading engine tools failed."
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:91
 #, java-format
 msgid "Delete {0} container"
 msgstr "Suppression du conteneur {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:86
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:92
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
 msgstr "Êtes-vous sûr de vouloir supprimer le conteneur {0} ?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:109
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:116
 msgid "Loading containers failed."
 msgstr "Le chargement des conteneurs a échoué."
 
@@ -519,62 +495,14 @@ msgstr "Commerciale"
 msgid "All Operating Systems"
 msgstr "Tous les OS"
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineSettingsTab.java:35
+msgid "Engine Settings"
+msgstr ""
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersView.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainersSidebar.java:116
 msgid "Containers"
 msgstr "Conteneurs"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:43
-msgid "Display"
-msgstr "Afficher"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:55
-msgid "Display settings"
-msgstr "Paramètres d'affichage"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:68
-msgid "GLSL support"
-msgstr "Prise en charge du GLSL"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:77
-msgid "Direct Draw Renderer"
-msgstr "Rendu Direct Draw"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:86
-msgid "Video memory size"
-msgstr "Taille de la mémoire vidéo"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:95
-msgid "Offscreen rendering mode"
-msgstr "Mode de rendu offscreen"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:104
-msgid "Render target lock mode"
-msgstr "Verrouillage du mode de cible de rendu"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:113
-msgid "Multisampling"
-msgstr "Multisampling"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:122
-msgid "Strict Draw Ordering"
-msgstr "Ordonnancement Strict Draw"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerDisplayTab.java:131
-msgid "Always Offscreen"
-msgstr "Toujours Offscreen"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInputTab.java:35
-msgid "Input"
-msgstr "Entrée"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInputTab.java:46
-msgid "Input settings"
-msgstr "Paramètres d'entrée"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInputTab.java:57
-msgid "Mouse Warp Override"
-msgstr "Mouse Warp Override"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:43
