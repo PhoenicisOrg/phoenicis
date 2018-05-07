@@ -45,10 +45,7 @@ public class ContainerEngineSettingsTab extends Tab {
 
     private void populate(List<EngineSetting> engineSettings) {
         final VBox displayPane = new VBox();
-        final Text title = new TextWithStyle(tr("Display settings"), TITLE_CSS_CLASS);
-
         displayPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
-        displayPane.getChildren().add(title);
 
         final GridPane displayContentPane = new GridPane();
         displayContentPane.getStyleClass().add("grid");
