@@ -33,31 +33,30 @@ import java.util.function.Consumer;
 
 public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
-    private final TabPane tabPane;
 
     public ContainerPanel(WinePrefixContainerDTO containerEntity,
             EngineToolsManager engineToolsManager,
             Optional<List<EngineSetting>> engineSettings,
             Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
-        this.tabPane = new TabPane();
+        TabPane tabPane = new TabPane();
         this.setTitle(containerEntity.getName());
         this.setCenter(tabPane);
 
         this.informationTab = new ContainerInformationTab(containerEntity);
-        this.tabPane.getTabs().add(this.informationTab);
+        tabPane.getTabs().add(this.informationTab);
         if (engineSettings.isPresent()) {
             ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
                     engineSettings.get());
-            this.tabPane.getTabs().add(settingsTab);
+            tabPane.getTabs().add(settingsTab);
         }
         if (engineTools.isPresent()) {
             ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
                     engineTools.get());
-            this.tabPane.getTabs().add(engineToolsTab);
+            tabPane.getTabs().add(engineToolsTab);
         }
         ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
-        this.tabPane.getTabs().add(toolsTab);
+        tabPane.getTabs().add(toolsTab);
     }
 
     public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
