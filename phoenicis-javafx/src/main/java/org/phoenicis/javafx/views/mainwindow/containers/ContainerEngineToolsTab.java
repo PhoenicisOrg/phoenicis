@@ -7,6 +7,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -26,14 +27,14 @@ public class ContainerEngineToolsTab extends Tab {
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
 
-    private final WinePrefixContainerDTO container;
+    private final ContainerDTO container;
     private EngineToolsManager engineToolsManager;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public ContainerEngineToolsTab(WinePrefixContainerDTO container, EngineToolsManager engineToolsManager,
+    public ContainerEngineToolsTab(ContainerDTO container, EngineToolsManager engineToolsManager,
             ApplicationDTO engineTools) {
-        super(tr("Wine tools"));
+        super(tr("Engine tools"));
 
         this.container = container;
         this.engineToolsManager = engineToolsManager;
@@ -45,7 +46,7 @@ public class ContainerEngineToolsTab extends Tab {
 
     private void populate(ApplicationDTO engineTools) {
         final VBox toolsPane = new VBox();
-        final Text title = new TextWithStyle(tr("Wine tools"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Engine tools"), TITLE_CSS_CLASS);
 
         toolsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
         toolsPane.getChildren().add(title);

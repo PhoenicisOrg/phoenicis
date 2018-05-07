@@ -66,7 +66,7 @@ public class ContainersConfiguration {
     }
 
     @Bean
-    public ContainerEngineController winePrefixContainerController() {
+    public ContainerEngineController containerEngineController() {
         return new ContainerEngineController(enginesConfiguration.enginesSource());
     }
 }

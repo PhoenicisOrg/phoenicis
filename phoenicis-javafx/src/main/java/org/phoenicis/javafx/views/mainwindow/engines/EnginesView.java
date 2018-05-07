@@ -113,7 +113,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         });
 
         this.initFailure();
-        this.initWineVersions();
+        this.initEngineVersions();
 
         this.sidebar.bindEngineCategories(engineCategories);
         Bindings.bindContent(availableEngines.getTabs(), filteredEngineSubTabs);
@@ -149,7 +149,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
     }
 
-    private void initWineVersions() {
+    private void initEngineVersions() {
         availableEngines = new TabPane();
         availableEngines.getStyleClass().add("rightPane");
 

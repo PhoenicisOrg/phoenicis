@@ -18,26 +18,31 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.scene.control.TabPane;
 import org.phoenicis.containers.ContainerEngineController;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-// TODO: AbstractContainerPanel not needed anymore (ContainerPanel is generic)
-public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
+public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
+    private final TabPane tabPane;
 
     public ContainerPanel(WinePrefixContainerDTO containerEntity,
             EngineToolsManager engineToolsManager,
             Optional<List<EngineSetting>> engineSettings,
             Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
-        super(containerEntity);
+        this.tabPane = new TabPane();
+        this.setTitle(containerEntity.getName());
+        this.setCenter(tabPane);
 
         this.informationTab = new ContainerInformationTab(containerEntity);
         this.tabPane.getTabs().add(this.informationTab);
@@ -55,7 +60,7 @@ public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDT
         this.tabPane.getTabs().add(toolsTab);
     }
 
-    public void setOnDeletePrefix(Consumer<WinePrefixContainerDTO> onDeletePrefix) {
+    public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
         this.informationTab.setOnDeletePrefix(onDeletePrefix);
     }
 }

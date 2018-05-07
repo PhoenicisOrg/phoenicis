@@ -8,6 +8,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
@@ -26,7 +27,7 @@ public class ContainerInformationTab extends Tab {
 
     private final WinePrefixContainerDTO container;
 
-    private Consumer<WinePrefixContainerDTO> onDeletePrefix;
+    private Consumer<ContainerDTO> onDeletePrefix;
 
     public ContainerInformationTab(WinePrefixContainerDTO container) {
         super(tr("Information"));
@@ -64,6 +65,7 @@ public class ContainerInformationTab extends Tab {
         installedShortcuts.setWrapText(true);
         informationContentPane.add(installedShortcuts, 1, 2);
 
+        // TODO: find generic solution which works for all container types
         informationContentPane.add(new TextWithStyle(tr("Wine version:"), CAPTION_TITLE_CSS_CLASS), 0, 3);
         Label version = new Label(container.getVersion());
         version.setWrapText(true);
@@ -109,7 +111,7 @@ public class ContainerInformationTab extends Tab {
         this.setContent(informationPane);
     }
 
-    public void setOnDeletePrefix(Consumer<WinePrefixContainerDTO> onDeletePrefix) {
+    public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
         this.onDeletePrefix = onDeletePrefix;
     }
 }
