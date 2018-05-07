@@ -68,6 +68,18 @@ public class EngineSettingsManager {
      */
     public void fetchAvailableEngineSettings(RepositoryDTO repositoryDTO,
             Consumer<Map<String, List<EngineSetting>>> callback, Consumer<Exception> errorCallback) {
+        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+
+        interactiveScriptSession.eval(this.getFetchScript(repositoryDTO),
+                output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
+    }
+
+    /**
+     * retrieves a Javascript string which can be used to fetch the available settings
+     * @param repositoryDTO repository containing the settings
+     * @return Javascript
+     */
+    private String getFetchScript(RepositoryDTO repositoryDTO) {
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
@@ -97,9 +109,6 @@ public class EngineSettingsManager {
         script.append("return settings;\n");
         script.append("})()\n;");
 
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(script.toString(),
-                output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
+        return script.toString();
     }
 }
