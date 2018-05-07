@@ -10,7 +10,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -26,7 +25,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ContainerEngineSettingsTab extends Tab {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
-    private static final String TITLE_CSS_CLASS = "title";
 
     private final ContainerDTO container;
 
