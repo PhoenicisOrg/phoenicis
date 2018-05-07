@@ -76,24 +76,30 @@ public class EnginesController {
 
         this.enginesView.setOnInstallEngine(engineDTO -> {
             new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
-                        this.enginesManager.getEngine(engineDTO.getId(),
-                                engine -> engine.install(engineDTO.getSubCategory(), engineDTO.getVersion()),
-                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                        // invalidate cache to show installed version correctly
-                        this.versionsCache.remove(engineDTO.getId());
-                    });
+                    tr("Are you sure you want to install {0}?", engineDTO.getVersion()),
+                    this.enginesView.getContent().getScene().getWindow())
+                            .ask(() -> {
+                                this.enginesManager.getEngine(engineDTO.getId(),
+                                        engine -> engine.install(engineDTO.getSubCategory(), engineDTO.getVersion()),
+                                        e -> Platform
+                                                .runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                                // invalidate cache to show installed version correctly
+                                this.versionsCache.remove(engineDTO.getId());
+                            });
         });
 
         this.enginesView.setOnDeleteEngine(engineDTO -> {
             new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
-                        this.enginesManager.getEngine(engineDTO.getId(),
-                                engine -> engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion()),
-                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                        // invalidate cache to show deleted version correctly
-                        this.versionsCache.remove(engineDTO.getId());
-                    });
+                    tr("Are you sure you want to delete {0}", engineDTO.getVersion()),
+                    this.enginesView.getContent().getScene().getWindow())
+                            .ask(() -> {
+                                this.enginesManager.getEngine(engineDTO.getId(),
+                                        engine -> engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion()),
+                                        e -> Platform
+                                                .runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                                // invalidate cache to show deleted version correctly
+                                this.versionsCache.remove(engineDTO.getId());
+                            });
         });
     }
 

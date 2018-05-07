@@ -77,7 +77,8 @@ public class LibraryController {
         this.libraryView.setOnShortcutUninstall(shortcutDTO -> {
             final String shortcutName = shortcutDTO.getInfo().getName();
             new ConfirmMessage(tr("Uninstall {0}", shortcutName),
-                    tr("Are you sure you want to uninstall {0}?", shortcutName))
+                    tr("Are you sure you want to uninstall {0}?", shortcutName),
+                    this.libraryView.getContent().getScene().getWindow())
                             .ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO,
                                     e -> new ErrorMessage("Error while uninstalling " + shortcutName, e,
                                             this.libraryView)));

@@ -34,6 +34,6 @@ public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
 
     @Override
     public void create(String questionText, Runnable yesCallback, Runnable noCallback) {
-        Platform.runLater(() -> new ConfirmMessage(this.wizardTitle, questionText).ask(yesCallback, noCallback));
+        Platform.runLater(() -> new ConfirmMessage(this.wizardTitle, questionText, null).ask(yesCallback, noCallback));
     }
 }
