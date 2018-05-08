@@ -46,6 +46,7 @@ jobs:
       jdk: oraclejdk8
       os: linux
       dist: trusty
+      env: CACHE_NAME=LINUX
       before_cache:
         - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
@@ -61,6 +62,7 @@ jobs:
     - stage: Install packages
       os: linux
       dist: trusty
+      env: CACHE_NAME=LINUX
       install: true
       script:
         # check that cache has been filled in current build
