@@ -287,11 +287,16 @@
 
     .sidebarTitle {
         -fx-font-size: 1.2em;
-        -fx-fill: @inactive-text-color;
+
+        .text {
+            -fx-fill: @inactive-text-color;
+        }
     }
 
     .sidebarButton {
-        -fx-text-fill: @text-color;
+        .text {
+            -fx-fill: @text-color;
+        }
 
         &:hover, &:selected {
             -fx-background-color: @focus-color;
