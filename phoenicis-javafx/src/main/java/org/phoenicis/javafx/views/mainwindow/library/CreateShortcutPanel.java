@@ -39,10 +39,10 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 final class CreateShortcutPanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
+    private final String containersPath;
 
     // consumer called when a shortcut shall be created
     private Consumer<ShortcutCreationDTO> onCreateShortcut;
-    private String containersPath;
 
     /**
      * constructor
