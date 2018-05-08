@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.phoenicis.containers.ContainerEngineController;
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
@@ -26,12 +26,12 @@ public class ContainerToolsTab extends Tab {
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
 
-    private final WinePrefixContainerDTO container;
+    private final ContainerDTO container;
     private final ContainerEngineController containerEngineController;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
-    public ContainerToolsTab(WinePrefixContainerDTO container,
+    public ContainerToolsTab(ContainerDTO container,
             ContainerEngineController containerEngineController) {
         super(tr("Tools"));
 

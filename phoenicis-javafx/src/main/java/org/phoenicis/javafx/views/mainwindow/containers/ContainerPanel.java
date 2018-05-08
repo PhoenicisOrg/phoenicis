@@ -18,18 +18,20 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.scene.control.TabPane;
 import org.phoenicis.containers.ContainerEngineController;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
+import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-// TODO: AbstractContainerPanel not needed anymore (ContainerPanel is generic)
-public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDTO> {
+public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
 
     public ContainerPanel(WinePrefixContainerDTO containerEntity,
@@ -37,25 +39,27 @@ public class ContainerPanel extends AbstractContainerPanel<WinePrefixContainerDT
             Optional<List<EngineSetting>> engineSettings,
             Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
-        super(containerEntity);
+        TabPane tabPane = new TabPane();
+        this.setTitle(containerEntity.getName());
+        this.setCenter(tabPane);
 
         this.informationTab = new ContainerInformationTab(containerEntity);
-        this.tabPane.getTabs().add(this.informationTab);
+        tabPane.getTabs().add(this.informationTab);
         if (engineSettings.isPresent()) {
             ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
                     engineSettings.get());
-            this.tabPane.getTabs().add(settingsTab);
+            tabPane.getTabs().add(settingsTab);
         }
         if (engineTools.isPresent()) {
             ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
                     engineTools.get());
-            this.tabPane.getTabs().add(engineToolsTab);
+            tabPane.getTabs().add(engineToolsTab);
         }
         ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
-        this.tabPane.getTabs().add(toolsTab);
+        tabPane.getTabs().add(toolsTab);
     }
 
-    public void setOnDeletePrefix(Consumer<WinePrefixContainerDTO> onDeletePrefix) {
+    public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
         this.informationTab.setOnDeletePrefix(onDeletePrefix);
     }
 }
