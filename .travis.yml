@@ -30,7 +30,9 @@ matrix:
       - mkdir ~/travis_cache
       - echo "$TRAVIS_BUILD_ID"
       - echo "$TRAVIS_BUILD_ID" > ~/travis_cache/travis_build_id
-    # normal tests
+
+    # build + test
+    -stage: Build + Test
     - jdk: oraclejdk8
       os: linux
       dist: trusty
