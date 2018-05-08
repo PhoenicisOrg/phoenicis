@@ -21,7 +21,7 @@ cache:
   directories:
     - $HOME/travis_cache
 
-matrix:
+jobs:
   include:
     # build cache
     - stage: Build cache
