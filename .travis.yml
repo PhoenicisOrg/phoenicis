@@ -23,33 +23,26 @@ jobs:
 
     # Check the format
     - stage: Check format
-      jdk: oraclejdk8
-      os: linux
-      dist: trusty
       # do not use default install (runs formatter)
       install: true
-      script:
-        - mvn -Pcheck-formatted validate formatter:validate
+      script: mvn -Pcheck-formatted validate formatter:validate
 
     # build + test
     - stage: Build + test
-      addons:
-        apt:
-          packages:
-            - oracle-java8-installer
+      os: linux
+      dist: trusty
       jdk: oraclejdk8
-      os: linux
-      dist: trusty
-      before_cache:
-        - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
-    - stage: Build + test
       addons:
         apt:
-          packages:
-            - oracle-java9-installer
-      jdk: oraclejdk9
+          packages: oracle-java8-installer
+      before_cache: cp phoenicis-dist/target/*.deb $HOME/travis_cache/
+    - stage: Build + test
       os: linux
       dist: trusty
+      jdk: oraclejdk9
+      addons:
+        apt:
+          packages: oracle-java9-installer
     - stage: Build + test
       os: osx
       osx_image: xcode9.2
@@ -57,7 +50,6 @@ jobs:
     # Install packages
     # .deb
     - stage: Install packages
-      jdk: oraclejdk8
       os: linux
       dist: trusty
       install: true
@@ -71,7 +63,6 @@ jobs:
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
-      os: linux
       env: NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
       language: ruby
       rvm:
