@@ -45,7 +45,7 @@ matrix:
       jdk: oraclejdk8
       os: linux
       dist: trusty
-      after_script:
+      before_cache:
         - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
       jdk: oraclejdk9
