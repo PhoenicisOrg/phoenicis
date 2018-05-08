@@ -16,12 +16,25 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
 
+# caches for build artifacts
+cache:
+  directories:
+    - ~/travis_cache
+
 matrix:
   include:
-    # The normal tests
+    # set up cache
+    - stage: Setup cache
+      script:
+      - mv ~/travis_cache ~/travis_cache_old
+      - mkdir ~/travis_cache
+      - echo "$TRAVIS_BUILD_ID"
+      - echo "$TRAVIS_BUILD_ID" > ~/travis_cache/travis_build_id
+    # normal tests
     - jdk: oraclejdk8
       os: linux
       dist: trusty
+      on_success: cp phoenicis-dist/target/phoenicis-dist_*.deb ~/travis_cache
     - jdk: oraclejdk9
       os: linux
       dist: trusty
@@ -37,6 +50,18 @@ matrix:
       install: true
       script:
         - mvn -Pcheck-formatted validate formatter:validate
+
+    # Check installations
+    - stage: Check installations
+      os: linux
+      dist: trusty
+      script:
+        # check that cache has been filled in current build
+        - if test "$TRAVIS_BUILD_ID" != `cat ~/travis_cache/travis_build_id`; then travis_terminate 1; fi
+        - rm -f ~/travis_cache/travis_build_id
+        - sudo apt install ~/travis_cache/*.deb
+        - mv ~/travis_cache ~/travis_cache_old
+        - mkdir ~/travis_cache # clear the cache
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
