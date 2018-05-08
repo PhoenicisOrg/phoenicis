@@ -73,7 +73,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     private Consumer<ShortcutDTO> onShortcutEdit = shortcut -> {
     };
 
-    public LibraryView(String applicationName, ThemeManager themeManager, ObjectMapper objectMapper,
+    public LibraryView(String applicationName, String containersPath, ThemeManager themeManager,
+            ObjectMapper objectMapper,
             JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Library"), themeManager);
         this.getStyleClass().add("mainWindowScene");
@@ -155,7 +156,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.setCenter(this.libraryTabs);
 
         this.libraryPanel = new LibraryPanel(objectMapper);
-        this.createShortcutPanel = new CreateShortcutPanel();
+        this.createShortcutPanel = new CreateShortcutPanel(containersPath);
         this.editShortcutPanel = new EditShortcutPanel(objectMapper);
     }
 

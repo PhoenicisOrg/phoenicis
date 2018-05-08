@@ -42,12 +42,15 @@ final class CreateShortcutPanel extends DetailsView {
 
     // consumer called when a shortcut shall be created
     private Consumer<ShortcutCreationDTO> onCreateShortcut;
+    private String containersPath;
 
     /**
      * constructor
+     * @param containersPath path to containers (usually ~/.Phoenicis/containers)
      */
-    public CreateShortcutPanel() {
+    public CreateShortcutPanel(String containersPath) {
         super();
+        this.containersPath = containersPath;
         this.populate();
     }
 
@@ -106,10 +109,19 @@ final class CreateShortcutPanel extends DetailsView {
         Button openMiniatureBrowser = new Button(tr("Choose"));
         openMiniatureBrowser.setOnAction(event -> {
             FileChooser chooser = new FileChooser();
+
+            // open in containers directory if it exists
+            File containersDir = new File(this.containersPath);
+            if (containersDir.canRead()) {
+                chooser.setInitialDirectory(containersDir);
+            }
+
             chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Images"), "*.miniature, *.png"));
 
-            File newMiniature = chooser.showOpenDialog(null);
-            miniature.setText(newMiniature.toString());
+            File newMiniature = chooser.showOpenDialog(this.getScene().getWindow());
+            if (newMiniature != null) {
+                miniature.setText(newMiniature.toString());
+            }
         });
 
         HBox miniatureHbox = new HBox(miniature, openMiniatureBrowser);
@@ -130,8 +142,16 @@ final class CreateShortcutPanel extends DetailsView {
         openExecutableBrowser.setOnAction(event -> {
             FileChooser chooser = new FileChooser();
 
-            File newMiniature = chooser.showOpenDialog(null);
-            executable.setText(newMiniature.toString());
+            // open in containers directory if it exists
+            File containersDir = new File(this.containersPath);
+            if (containersDir.canRead()) {
+                chooser.setInitialDirectory(containersDir);
+            }
+
+            File newExecutable = chooser.showOpenDialog(this.getScene().getWindow());
+            if (newExecutable != null) {
+                executable.setText(newExecutable.toString());
+            }
         });
 
         HBox executableHbox = new HBox(executable, openExecutableBrowser);
