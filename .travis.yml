@@ -57,6 +57,7 @@ jobs:
     # Install packages
     # .deb
     - stage: Install packages
+      jdk: oraclejdk8
       os: linux
       dist: trusty
       install: true
