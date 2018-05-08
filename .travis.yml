@@ -60,6 +60,7 @@ matrix:
     - stage: Install packages
       os: linux
       dist: trusty
+      install: true
       script:
         # check that cache has been filled in current build
         - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
