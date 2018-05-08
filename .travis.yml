@@ -55,8 +55,9 @@ matrix:
       os: osx
       osx_image: xcode9.2
 
-    # Check installations
-    - stage: Check installations
+    # Install packages
+    # .deb
+    - stage: Install packages
       os: linux
       dist: trusty
       script:
