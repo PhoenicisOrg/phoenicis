@@ -6,12 +6,6 @@ branches:
   only:
     master
 
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-      - oracle-java9-installer
-
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
@@ -43,6 +37,10 @@ jobs:
 
     # build + test
     - stage: Build + test
+      addons:
+        apt:
+          packages:
+            - oracle-java8-installer
       jdk: oraclejdk8
       os: linux
       dist: trusty
@@ -50,6 +48,10 @@ jobs:
       before_cache:
         - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
+      addons:
+        apt:
+          packages:
+            - oracle-java9-installer
       jdk: oraclejdk9
       os: linux
       dist: trusty
