@@ -25,6 +25,7 @@ jobs:
   include:
     # build cache
     - stage: Build cache
+      install: true
       script:
         - mv $HOME/travis_cache $HOME/travis_cache_old
         - mkdir $HOME/travis_cache
