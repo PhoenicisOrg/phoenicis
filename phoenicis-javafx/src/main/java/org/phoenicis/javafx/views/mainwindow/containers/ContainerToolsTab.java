@@ -64,6 +64,9 @@ public class ContainerToolsTab extends Tab {
             if (file != null) {
                 containerEngineController.runInContainer(container, file.getAbsolutePath(), this::unlockAll,
                         e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+            } else {
+                // unlock if file chooser is closed
+                this.unlockAll();
             }
         });
 
