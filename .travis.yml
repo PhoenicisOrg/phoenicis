@@ -36,7 +36,7 @@ matrix:
     - jdk: oraclejdk8
       os: linux
       dist: trusty
-      on_success: cp phoenicis-dist/target/phoenicis-dist_*.deb ~/travis_cache/
+      after_success: cp phoenicis-dist/target/phoenicis-dist_*.deb ~/travis_cache/
     - jdk: oraclejdk9
       os: linux
       dist: trusty
