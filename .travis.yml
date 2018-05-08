@@ -23,22 +23,28 @@ cache:
 
 matrix:
   include:
-    # build + test
-    - jdk: oraclejdk8
-      os: linux
-      dist: trusty
-      after_success:
-        # TODO: create cache in tage before the builds
+    # build cache
+    - stage: Build cache
+      script:
         - mv ~/travis_cache ~/travis_cache_old
         - mkdir ~/travis_cache
         - echo "$TRAVIS_BUILD_ID" > ~/travis_cache/travis_build_id
-        - cp phoenicis-dist/target/*.deb ~/travis_cache/
-    - jdk: oraclejdk9
+
+    # build + test
+    - stage: Build + test
+      jdk: oraclejdk8
       os: linux
       dist: trusty
-    - os: osx
+      after_success:
+        - cp phoenicis-dist/target/*.deb ~/travis_cache/
+    - stage: Build + test
+      jdk: oraclejdk9
+      os: linux
+      dist: trusty
+    - stage: Build + test
+      os: osx
       osx_image: xcode9.2
-        
+
     # Check the format
     - stage: Check format
       jdk: oraclejdk8
