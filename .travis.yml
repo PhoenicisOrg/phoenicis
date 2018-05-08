@@ -19,16 +19,16 @@ env:
 # caches for build artifacts
 cache:
   directories:
-    - ~/travis_cache
+    - $HOME/travis_cache
 
 matrix:
   include:
     # build cache
     - stage: Build cache
       script:
-        - mv ~/travis_cache ~/travis_cache_old
-        - mkdir ~/travis_cache
-        - echo "$TRAVIS_BUILD_ID" > ~/travis_cache/travis_build_id
+        - mv $HOME/travis_cache $HOME/travis_cache_old
+        - mkdir $HOME/travis_cache
+        - echo "$TRAVIS_BUILD_ID" > $HOME/travis_cache/travis_build_id
 
     # Check the format
     - stage: Check format
@@ -46,7 +46,7 @@ matrix:
       os: linux
       dist: trusty
       after_success:
-        - cp phoenicis-dist/target/*.deb ~/travis_cache/
+        - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
       jdk: oraclejdk9
       os: linux
@@ -61,11 +61,11 @@ matrix:
       dist: trusty
       script:
         # check that cache has been filled in current build
-        - if test "$TRAVIS_BUILD_ID" != `cat ~/travis_cache/travis_build_id`; then travis_terminate 1; fi
-        - rm -f ~/travis_cache/travis_build_id
-        - sudo dpkg -i ~/travis_cache/*.deb && sudo apt install -fy
-        - mv ~/travis_cache ~/travis_cache_old
-        - mkdir ~/travis_cache # clear the cache
+        - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
+        - rm -f $HOME/travis_cache/travis_build_id
+        - sudo dpkg -i $HOME/travis_cache/*.deb && sudo apt install -fy
+        - mv $HOME/travis_cache $HOME/travis_cache_old
+        - mkdir $HOME/travis_cache # clear the cache
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
