@@ -37,7 +37,7 @@ public class ContainerEngineController {
         final String engineId = container.getEngine().toLowerCase();
         this.enginesManager.getEngine(engineId, engine -> {
             engine.setWorkingContainer(container.getName());
-            engine.run(command, null, container.getPath(), false, true, new HashMap<>());
+            engine.run(command, new String[0], container.getPath(), false, true, new HashMap<>());
             doneCallback.run();
         }, errorCallback);
     }
