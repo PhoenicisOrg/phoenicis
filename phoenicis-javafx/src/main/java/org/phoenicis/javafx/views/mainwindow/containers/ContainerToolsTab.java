@@ -60,6 +60,13 @@ public class ContainerToolsTab extends Tab {
             this.lockAll();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(tr("Choose executable"));
+
+            // open in container directory if it exists
+            File containerDir = new File(this.container.getPath());
+            if (containerDir.canRead()) {
+                fileChooser.setInitialDirectory(containerDir);
+            }
+
             File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
             if (file != null) {
                 containerEngineController.runInContainer(container, file.getAbsolutePath(), this::unlockAll,
