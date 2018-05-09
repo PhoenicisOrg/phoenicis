@@ -107,7 +107,7 @@ public class EngineSettingsManager {
             }
         }
         script.append("return settings;\n");
-        script.append("})()\n;");
+        script.append("})();\n");
 
         return script.toString();
     }

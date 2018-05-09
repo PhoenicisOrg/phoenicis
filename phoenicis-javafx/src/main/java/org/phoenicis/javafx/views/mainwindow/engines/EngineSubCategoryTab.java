@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Tab;
+import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
@@ -16,7 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 /**
@@ -30,6 +31,7 @@ public class EngineSubCategoryTab extends Tab {
     private EngineCategoryDTO engineCategory;
     private EngineSubCategoryDTO engineSubCategory;
     private String enginesPath;
+    private Engine engine;
 
     private Predicate<EngineVersionDTO> filterPredicate;
 
@@ -39,7 +41,7 @@ public class EngineSubCategoryTab extends Tab {
     private SortedList<EngineVersionDTO> sortedEngineVersions;
     private PhoenicisFilteredList<EngineVersionDTO> filteredEngineVersions;
 
-    private Consumer<EngineDTO> onSelectEngine;
+    private BiConsumer<EngineDTO, Engine> onSelectEngine;
 
     /**
      * Constructor
@@ -48,13 +50,17 @@ public class EngineSubCategoryTab extends Tab {
      * @param engineSubCategory The engine sub category to be shown in this tab
      * @param enginesPath   The path to the engines
      */
-    public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory,
-            String enginesPath, EnginesFilter filter) {
+    public EngineSubCategoryTab(EngineCategoryDTO engineCategory,
+            EngineSubCategoryDTO engineSubCategory,
+            String enginesPath,
+            EnginesFilter filter,
+            Engine engine) {
         super(engineSubCategory.getDescription());
 
         this.engineCategory = engineCategory;
         this.engineSubCategory = engineSubCategory;
         this.enginesPath = enginesPath;
+        this.engine = engine;
 
         this.filterPredicate = filter.createFilter(engineCategory, engineSubCategory);
 
@@ -89,7 +95,7 @@ public class EngineSubCategoryTab extends Tab {
                             .withSubCategory(engineSubCategory.getName()).withVersion(engineVersionDTO.getVersion())
                             .withUserData(userData).build();
 
-                    onSelectEngine.accept(engineDTO);
+                    onSelectEngine.accept(engineDTO, engine);
                 });
 
         this.engineVersionsView.bind(filteredEngineVersions);
@@ -100,7 +106,7 @@ public class EngineSubCategoryTab extends Tab {
      *
      * @param onSelectEngine
      */
-    public void setOnSelectEngine(Consumer<EngineDTO> onSelectEngine) {
+    public void setOnSelectEngine(BiConsumer<EngineDTO, Engine> onSelectEngine) {
         this.onSelectEngine = onSelectEngine;
     }
 
