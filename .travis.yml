@@ -14,7 +14,10 @@ cache:
 jobs:
   include:
     # build cache
+    # .deb
     - stage: Build cache
+      os: linux
+      dist: trusty
       install: true
       script:
         - mv $HOME/travis_cache $HOME/travis_cache_old
