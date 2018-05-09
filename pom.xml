@@ -139,6 +139,7 @@
                 </executions>
                 <configuration>
                     <nrOfIndentSpace>4</nrOfIndentSpace>
+                    <createBackupFile>false</createBackupFile>
                 </configuration>
             </plugin>
             <plugin>
