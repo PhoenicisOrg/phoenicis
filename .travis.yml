@@ -48,12 +48,6 @@ jobs:
       osx_image: xcode9.2
 
     # Install packages
-    # debug
-    - stage: Install packages
-      install: true
-      script:
-        - cd $HOME/travis_cache
-        - ls
     # .deb
     - stage: Install packages
       os: linux
