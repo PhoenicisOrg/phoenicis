@@ -49,7 +49,7 @@ jobs:
 
     # Install packages
     # debug
-    - stage: Build cache
+    - stage: Install packages
       install: true
       script: ls $HOME/travis_cache/
     # .deb
