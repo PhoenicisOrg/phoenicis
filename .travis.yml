@@ -16,9 +16,6 @@ jobs:
     # build cache
     # .deb
     - stage: Build cache
-      os: linux
-      dist: trusty
-      jdk: oraclejdk8
       install: true
       script:
         - mv $HOME/travis_cache $HOME/travis_cache_old
@@ -54,9 +51,6 @@ jobs:
     # Install packages
     # .deb
     - stage: Install packages
-      os: linux
-      dist: trusty
-      jdk: oraclejdk8
       install: true
       script:
         # check that cache has been filled in current build
