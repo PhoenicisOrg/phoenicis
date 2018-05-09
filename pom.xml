@@ -16,18 +16,12 @@
   ~ with this program; if not, write to the Free Software Foundation, Inc.,
   ~ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
   -->
-
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.phoenicis</groupId>
     <artifactId>phoenicis</artifactId>
-    <packaging>pom</packaging>
     <version>5.0-SNAPSHOT</version>
-    <scm>
-        <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
-    </scm>
+    <packaging>pom</packaging>
     <modules>
         <module>phoenicis-javafx</module>
         <module>phoenicis-win32</module>
@@ -45,7 +39,9 @@
         <module>phoenicis-containers</module>
         <module>phoenicis-tests</module>
     </modules>
-
+    <scm>
+        <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
+    </scm>
     <properties>
         <project.settings>${project.basedir}/settings</project.settings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,7 +52,6 @@
         <mockito.version>2.18.3</mockito.version>
         <spring.version>5.0.5.RELEASE</spring.version>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -65,28 +60,24 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
             </dependency>
-
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.9.5</version>
             </dependency>
-
-	    <dependency>
-		<groupId>com.googlecode.gettext-commons</groupId>
-		<artifactId>gettext-commons</artifactId>
-		<version>0.9.8</version>
-	    </dependency>
+            <dependency>
+                <groupId>com.googlecode.gettext-commons</groupId>
+                <artifactId>gettext-commons</artifactId>
+                <version>0.9.8</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -103,8 +94,7 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.jacoco</groupId>
                                         <artifactId>jacoco-maven-plugin</artifactId>
-                                        <versionRange>[0.5,)
-                                        </versionRange>
+                                        <versionRange>[0.5,)</versionRange>
                                         <goals>
                                             <goal>prepare-agent</goal>
                                         </goals>
@@ -119,14 +109,13 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.codehaus.mojo</groupId>
                                         <artifactId>buildnumber-maven-plugin</artifactId>
-                                        <versionRange>[1.4,)
-                                        </versionRange>
+                                        <versionRange>[1.4,)</versionRange>
                                         <goals>
                                             <goal>create</goal>
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <execute/>
+                                        <execute></execute>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -135,8 +124,23 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
         <plugins>
+            <plugin>
+                <groupId>com.github.ekryd.sortpom</groupId>
+                <artifactId>sortpom-maven-plugin</artifactId>
+                <version>2.8.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <nrOfIndentSpace>4</nrOfIndentSpace>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -192,13 +196,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.0</version>
-
-                <configuration>
-                    <excludes>
-                        <exclude>**/org/phoenicis/javafx/**</exclude>
-                        <exclude>**/org/phoenicis/app/**</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>agent</id>
@@ -207,6 +204,12 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/org/phoenicis/javafx/**</exclude>
+                        <exclude>**/org/phoenicis/app/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.google.code.maven-replacer-plugin</groupId>
@@ -236,7 +239,7 @@
         <profile>
             <id>check-formatted</id>
             <activation>
-              <activeByDefault>false</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
