@@ -128,7 +128,7 @@ public class EnginesManager {
             Consumer<Map<String, Engine>> callback, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(this.getFetchScript(repositoryDTO),
+        interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
                 output -> callback.accept((Map<String, Engine>) output), errorCallback);
     }
 
@@ -137,7 +137,7 @@ public class EnginesManager {
      * @param repositoryDTO repository containing the engines
      * @return Javascript
      */
-    private String getFetchScript(RepositoryDTO repositoryDTO) {
+    private String createFetchScript(RepositoryDTO repositoryDTO) {
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
