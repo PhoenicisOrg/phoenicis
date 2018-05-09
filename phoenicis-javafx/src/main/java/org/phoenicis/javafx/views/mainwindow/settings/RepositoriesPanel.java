@@ -57,7 +57,7 @@ public class RepositoriesPanel extends StackPane {
     /**
      * Constructor
      *
-     * @param settingsManager   The settings manager
+     * @param settingsManager The settings manager
      * @param repositoryManager The repository manager
      */
     public RepositoriesPanel(SettingsManager settingsManager, RepositoryManager repositoryManager) {

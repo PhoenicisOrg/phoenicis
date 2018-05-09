@@ -50,7 +50,8 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
     /**
      * Constructor
      *
-     * @param converter         A converter function, that takes an object of type <code>E</code> and returns a {@link ListWidgetEntry} for it
+     * @param converter A converter function, that takes an object of type <code>E</code> and returns a
+     *            {@link ListWidgetEntry} for it
      * @param setOnMouseClicked An event listener function to be called when an entry has been selected/clicked
      */
     public CombinedListWidget(Function<E, ListWidgetEntry<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {

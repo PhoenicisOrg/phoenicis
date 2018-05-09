@@ -101,9 +101,9 @@ final class ApplicationPanel extends DetailsView {
 
     /**
      * Constructor
-     *  @param application     The application to be shown inside this {@link ApplicationPanel}
-     * @param filter          The filter to be used for filtering the shown scripts for the <code>application</code>
-     * @param themeManager    The theme manager
+     * @param application The application to be shown inside this {@link ApplicationPanel}
+     * @param filter The filter to be used for filtering the shown scripts for the <code>application</code>
+     * @param themeManager The theme manager
      * @param javaFxSettingsManager The settings manager
      */
     public ApplicationPanel(ApplicationDTO application, ApplicationFilter filter, ThemeManager themeManager,

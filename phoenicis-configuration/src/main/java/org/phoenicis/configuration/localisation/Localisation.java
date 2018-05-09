@@ -51,7 +51,8 @@ public final class Localisation {
     /**
      * add a ResourceBundle containing additional translations for the localisation
      * - typically used to add translations for the scripts
-     * - only one additional ResourceBundle can be set at a time (calling the method again will override the old ResourceBundle)
+     * - only one additional ResourceBundle can be set at a time (calling the method again will override the old
+     * ResourceBundle)
      *
      * @param resourceBundle Resource bundle
      */

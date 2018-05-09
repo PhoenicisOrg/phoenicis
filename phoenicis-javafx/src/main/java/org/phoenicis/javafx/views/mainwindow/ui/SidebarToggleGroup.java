@@ -16,9 +16,12 @@ import java.util.function.Supplier;
 
 /**
  * This class represents a group of toggle buttons in the sidebar.
- * This class must be used together with an {@link ObservableList}, containing the objects which are to be shown in this SidebarToggleGroup.
- * For every object inside the {@link ObservableList} a {@link ToggleButton} is created, which is then shown inside this SidebarToggleGroup.
- * For the creation of the {@link ToggleButton}s a converter function is used, which must be passed to the constructor of this class.
+ * This class must be used together with an {@link ObservableList}, containing the objects which are to be shown in this
+ * SidebarToggleGroup.
+ * For every object inside the {@link ObservableList} a {@link ToggleButton} is created, which is then shown inside this
+ * SidebarToggleGroup.
+ * For the creation of the {@link ToggleButton}s a converter function is used, which must be passed to the constructor
+ * of this class.
  *
  * @author marc
  * @since 28.03.17
@@ -41,17 +44,20 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     private final VBox toggleButtonBox;
 
     /**
-     * An {@link ObservableList} containing all objects for which a {@link ToggleButton} is to be shown in this SidebarToggleGroup
+     * An {@link ObservableList} containing all objects for which a {@link ToggleButton} is to be shown in this
+     * SidebarToggleGroup
      */
     private final ObservableList<E> elements;
 
     /**
-     * An {@link ObservableList} that takes all objects in <code>elements</code> and converts them to a {@link ToggleButton}
+     * An {@link ObservableList} that takes all objects in <code>elements</code> and converts them to a
+     * {@link ToggleButton}
      */
     private final MappedList<? extends ToggleButton, E> mappedToggleButtons;
 
     /**
-     * An {@link ObservableList} containing both the <code>allButton</code>, if it's available, and the {@link ToggleButton}s
+     * An {@link ObservableList} containing both the <code>allButton</code>, if it's available, and the
+     * {@link ToggleButton}s
      * inside <code>mappedToggleButtons</code>
      */
     private final AdhocList<? extends ToggleButton> adhocToggleButtons;
@@ -59,9 +65,10 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     /**
      * Constructor
      *
-     * @param name              The title of this SidebarToggleGroup
-     * @param allButtonSupplier A supplier function used to create the optional "all" ToggleButton. If no such button is needed null can be used
-     * @param converter         A converter function used to convert the source objects to ToggleButtons
+     * @param name The title of this SidebarToggleGroup
+     * @param allButtonSupplier A supplier function used to create the optional "all" ToggleButton. If no such button is
+     *            needed null can be used
+     * @param converter A converter function used to convert the source objects to ToggleButtons
      */
     private SidebarToggleGroup(String name, Supplier<ToggleButton> allButtonSupplier,
             Function<E, ? extends ToggleButton> converter) {
@@ -109,7 +116,7 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     /**
      * Constructor
      *
-     * @param name      The title of this SidebarToggleGroup
+     * @param name The title of this SidebarToggleGroup
      * @param converter A converter function used to convert the source objects to ToggleButtons
      */
     private SidebarToggleGroup(String name, Function<E, ? extends ToggleButton> converter) {
@@ -119,9 +126,10 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     /**
      * This method creates a new SidebarToggleGroup without an "all" categories ToggleButton using the given arguments
      *
-     * @param name      The title of the new SidebarToggleGroup
-     * @param converter The converter function used by the new SidebarToggleGroup to convert the source objects to ToggleButtons
-     * @param <T>       The type of the source objects in the new SidebarToggleGroup
+     * @param name The title of the new SidebarToggleGroup
+     * @param converter The converter function used by the new SidebarToggleGroup to convert the source objects to
+     *            ToggleButtons
+     * @param <T> The type of the source objects in the new SidebarToggleGroup
      * @return The newly created SidebarToggleGroup with the given arguments
      */
     public static <T> SidebarToggleGroup<T> create(String name, Function<T, ? extends ToggleButton> converter) {
@@ -131,10 +139,11 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     /**
      * This method creates a new SidebarToggleGroup using the given arguments
      *
-     * @param name              The title of the new SidebarToggleGroup
+     * @param name The title of the new SidebarToggleGroup
      * @param allButtonSupplier The suppliert function used to create the "all" categories ToggleButton
-     * @param converter         The converter function used by the new SidebarToggleGroup to convert the source objects to ToggleButtons
-     * @param <T>               The type of the source objects in the new SidebarToggleGroup
+     * @param converter The converter function used by the new SidebarToggleGroup to convert the source objects to
+     *            ToggleButtons
+     * @param <T> The type of the source objects in the new SidebarToggleGroup
      * @return The newly created SidebarToggleGroup with the given arguments
      */
     public static <T> SidebarToggleGroup<T> create(String name, Supplier<ToggleButton> allButtonSupplier,
@@ -143,7 +152,8 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     }
 
     /**
-     * This method returns the {@link ObservableList} containing the source objects used to create the shown {@link ToggleButton}s.
+     * This method returns the {@link ObservableList} containing the source objects used to create the shown
+     * {@link ToggleButton}s.
      * This {@link ObservableList} can be used to bind another {@link ObservableList} to this SidebarToggleGroup
      *
      * @return The used {@link ObservableList}
@@ -166,7 +176,7 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
      *
      * @param elementIndex The position of the to be selected {@link ToggleButton}
      * @throws IllegalArgumentException This exception is thrown, if the given position <code>elementIndex</code>
-     *                                  is outside the range of the elements contained in this SidebarToggleGroup
+     *             is outside the range of the elements contained in this SidebarToggleGroup
      */
     public void select(int elementIndex) {
         if (elementIndex < 0 || elementIndex >= this.elements.size()) {
@@ -177,11 +187,13 @@ public class SidebarToggleGroup<E> extends SidebarGroup {
     }
 
     /**
-     * This method selects the ToggleButton belonging to a given element contained in the <code>elements</code> {@link ObservableList}
+     * This method selects the ToggleButton belonging to a given element contained in the <code>elements</code>
+     * {@link ObservableList}
      * inside this SidebarToggleGroup.
      *
      * @param element The element, whose corresponding {@link javafx.scene.control.ToggleButton} is to be selected
-     * @throws IllegalArgumentException This exception is thrown, if the given <code>element</code> doesn't exist in this SidebarToggleGroup
+     * @throws IllegalArgumentException This exception is thrown, if the given <code>element</code> doesn't exist in
+     *             this SidebarToggleGroup
      */
     public void select(E element) {
         this.select(this.elements.indexOf(element));

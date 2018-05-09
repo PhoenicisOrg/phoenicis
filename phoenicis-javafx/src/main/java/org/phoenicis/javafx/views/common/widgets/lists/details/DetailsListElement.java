@@ -31,10 +31,12 @@ public class DetailsListElement<E> extends GridPane {
     /**
      * Constructor
      *
-     * @param item                  The item for which a DetailsListElement should be created
-     * @param title                 The title which is shown inside this DetailsListElement
-     * @param additionalInformation An optional list of additional information to be shown inside this DetailsListElement
-     * @param detailedInformation   An optional list of additional detailed information to be shown inside this DetailsListElement
+     * @param item The item for which a DetailsListElement should be created
+     * @param title The title which is shown inside this DetailsListElement
+     * @param additionalInformation An optional list of additional information to be shown inside this
+     *            DetailsListElement
+     * @param detailedInformation An optional list of additional detailed information to be shown inside this
+     *            DetailsListElement
      */
     public DetailsListElement(E item, String title,
             Optional<List<AdditionalListWidgetInformation>> additionalInformation,

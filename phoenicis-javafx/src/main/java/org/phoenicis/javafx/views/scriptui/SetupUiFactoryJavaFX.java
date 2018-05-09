@@ -58,7 +58,8 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
     /**
      * creates a setup UI to install an application
      * @param title title of the setup UI
-     * @param miniature miniature which is shown in the "Installations" tab (usually the miniature of the installed application)
+     * @param miniature miniature which is shown in the "Installations" tab (usually the miniature of the installed
+     *            application)
      * @param installationType apps/engines
      * @return setup window
      */

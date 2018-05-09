@@ -46,9 +46,9 @@ public class EngineSubCategoryTab extends Tab {
     /**
      * Constructor
      *
-     * @param engineCategory    The engine category, which contains the engine sub category
+     * @param engineCategory The engine category, which contains the engine sub category
      * @param engineSubCategory The engine sub category to be shown in this tab
-     * @param enginesPath   The path to the engines
+     * @param enginesPath The path to the engines
      */
     public EngineSubCategoryTab(EngineCategoryDTO engineCategory,
             EngineSubCategoryDTO engineSubCategory,
@@ -76,7 +76,8 @@ public class EngineSubCategoryTab extends Tab {
     }
 
     /**
-     * This method populates the engines version miniature list widget and binds the filtered engine versions list to it.
+     * This method populates the engines version miniature list widget and binds the filtered engine versions list to
+     * it.
      */
     private void populate() {
         this.engineVersionsView = new CombinedListWidget<>(

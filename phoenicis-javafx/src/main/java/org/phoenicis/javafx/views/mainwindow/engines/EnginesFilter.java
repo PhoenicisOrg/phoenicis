@@ -132,9 +132,10 @@ public class EnginesFilter extends AbstractFilter {
 
     /**
      * Creates a new filter predicate for a {@link EngineCategoryDTO} and {@link EngineSubCategoryDTO}.
-     * This predicate then accepts a {@link EngineVersionDTO} object and returns true if the given object fulfills the filter predicate and false otherwise
+     * This predicate then accepts a {@link EngineVersionDTO} object and returns true if the given object fulfills the
+     * filter predicate and false otherwise
      *
-     * @param engineCategory    The engine category
+     * @param engineCategory The engine category
      * @param engineSubCategory The engine sub category
      * @return A new filter predicate
      */

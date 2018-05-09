@@ -38,10 +38,11 @@ public class CompactListElement<E> extends GridPane {
     /**
      * Constructor
      *
-     * @param item                  The item for which a CompactListElement should be created
-     * @param miniatureUri          An uri to the miniature which is shown inside this CompactListElement
-     * @param title                 The title which is shown inside this CompactListElement
-     * @param additionalInformation An optional list of additional information to be shown inside this CompactListElement
+     * @param item The item for which a CompactListElement should be created
+     * @param miniatureUri An uri to the miniature which is shown inside this CompactListElement
+     * @param title The title which is shown inside this CompactListElement
+     * @param additionalInformation An optional list of additional information to be shown inside this
+     *            CompactListElement
      */
     public CompactListElement(E item, URI miniatureUri, String title,
             Optional<List<AdditionalListWidgetInformation>> additionalInformation) {

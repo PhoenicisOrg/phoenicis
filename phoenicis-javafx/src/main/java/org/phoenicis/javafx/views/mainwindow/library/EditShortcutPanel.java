@@ -89,9 +89,9 @@ final class EditShortcutPanel extends DetailsView {
     }
 
     /**
-    * sets the shortcut which can be edited in this view
-    * @param shortcutDTO
-    */
+     * sets the shortcut which can be edited in this view
+     * @param shortcutDTO
+     */
     public void setShortcutDTO(ShortcutDTO shortcutDTO) {
         this.editedShortcut = shortcutDTO;
 

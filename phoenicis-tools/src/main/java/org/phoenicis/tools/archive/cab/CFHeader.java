@@ -67,17 +67,18 @@ public class CFHeader extends AbstractCabStructure {
             structureSize += inputStream.read(setID);
             structureSize += inputStream.read(iCabinet);
 
-            /* FIXME: Read the flag
-            structureSize += inputStream.read(cbCFHeader);
-            structureSize += inputStream.read(cbCFFolder);
-            structureSize += inputStream.read(cbCFData);
-            */
+            /*
+             * FIXME: Read the flag
+             * structureSize += inputStream.read(cbCFHeader);
+             * structureSize += inputStream.read(cbCFFolder);
+             * structureSize += inputStream.read(cbCFData);
+             */
 
-            //structureSize += readVariableField(inputStream, abReserve);
-            //structureSize += readVariableField(inputStream, szCabinetPrev);
-            //structureSize += readVariableField(inputStream, szDiskPrev);
-            //structureSize += readVariableField(inputStream, szCabinetNext);
-            //structureSize += readVariableField(inputStream, szDiskNext);
+            // structureSize += readVariableField(inputStream, abReserve);
+            // structureSize += readVariableField(inputStream, szCabinetPrev);
+            // structureSize += readVariableField(inputStream, szDiskPrev);
+            // structureSize += readVariableField(inputStream, szCabinetNext);
+            // structureSize += readVariableField(inputStream, szDiskNext);
         } catch (IOException e) {
             throw new CabException("Unable to parse header", e);
         }

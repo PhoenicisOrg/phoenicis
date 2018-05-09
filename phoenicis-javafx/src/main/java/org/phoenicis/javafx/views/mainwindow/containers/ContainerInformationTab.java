@@ -87,27 +87,30 @@ public class ContainerInformationTab extends Tab {
 
         // changing engine does not work currently
         // disabled combobox to avoid confusion of users
-        /*ComboBox<EngineVersionDTO> changeEngineComboBox = new ComboBox<EngineVersionDTO>(
-                FXCollections.observableList(engineVersions));
-        changeEngineComboBox.setConverter(new StringConverter<EngineVersionDTO>() {
-            @Override
-            public String toString(EngineVersionDTO object) {
-                return object.getVersion();
-            }
-        
-            @Override
-            public EngineVersionDTO fromString(String string) {
-                return engineVersions.stream().filter(engineVersion -> engineVersion.getVersion().equals(string))
-                        .findFirst().get();
-            }
-        });
-        changeEngineComboBox.getSelectionModel().select(engineVersions.stream()
-                .filter(engineVersion -> engineVersion.getVersion().equals(container.getVersion())).findFirst().get());*/
+        /*
+         * ComboBox<EngineVersionDTO> changeEngineComboBox = new ComboBox<EngineVersionDTO>(
+         * FXCollections.observableList(engineVersions));
+         * changeEngineComboBox.setConverter(new StringConverter<EngineVersionDTO>() {
+         * 
+         * @Override
+         * public String toString(EngineVersionDTO object) {
+         * return object.getVersion();
+         * }
+         * 
+         * @Override
+         * public EngineVersionDTO fromString(String string) {
+         * return engineVersions.stream().filter(engineVersion -> engineVersion.getVersion().equals(string))
+         * .findFirst().get();
+         * }
+         * });
+         * changeEngineComboBox.getSelectionModel().select(engineVersions.stream()
+         * .filter(engineVersion -> engineVersion.getVersion().equals(container.getVersion())).findFirst().get());
+         */
 
         Button deleteButton = new Button(tr("Delete container"));
         deleteButton.setOnMouseClicked(event -> this.onDeletePrefix.accept(container));
 
-        informationPane.getChildren().addAll(informationContentPane, spacer, /*changeEngineComboBox,*/ deleteButton);
+        informationPane.getChildren().addAll(informationContentPane, spacer, /* changeEngineComboBox, */ deleteButton);
         this.setContent(informationPane);
     }
 
