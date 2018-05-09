@@ -21,9 +21,9 @@ public abstract class RepositoryLocation<E extends Repository> {
     /**
      * The repository location type. Currently the following are available:
      * <ul>
-     *     <li>local</li>
-     *     <li>classpath</li>
-     *     <li>git</li>
+     * <li>local</li>
+     * <li>classpath</li>
+     * <li>git</li>
      * </ul>
      */
     private final String type;
@@ -50,7 +50,8 @@ public abstract class RepositoryLocation<E extends Repository> {
             ClasspathRepository.Factory classPathRepositoryFactory, FileUtilities fileUtilities);
 
     /**
-     * Returns a String to be displayed to the user, containing all available information about the location of the repository
+     * Returns a String to be displayed to the user, containing all available information about the location of the
+     * repository
      *
      * @return The to be displayed String
      */

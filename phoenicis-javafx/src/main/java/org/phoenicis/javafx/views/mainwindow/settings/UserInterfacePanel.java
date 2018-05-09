@@ -40,7 +40,7 @@ public class UserInterfacePanel extends VBox {
 
     /**
      * Constructor
-     *  @param javaFxSettingsManager The settings manager
+     * @param javaFxSettingsManager The settings manager
      * @param themeManager The theme manager
      */
     public UserInterfacePanel(JavaFxSettingsManager javaFxSettingsManager, ThemeManager themeManager) {

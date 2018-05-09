@@ -55,7 +55,7 @@ public class Zip {
      * Uncompress a tar
      *
      * @param countingInputStream to count the number of byte extracted
-     * @param outputDir           The directory where files should be extracted
+     * @param outputDir The directory where files should be extracted
      * @return A list of extracted files
      * @throws ArchiveException if the process fails
      */

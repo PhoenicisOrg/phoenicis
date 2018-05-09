@@ -142,7 +142,8 @@ final class LibraryPanel extends DetailsView {
     }
 
     /**
-     * This method updates the consumer, that is called when the "Run" button for the currently selected shortcut has been clicked.
+     * This method updates the consumer, that is called when the "Run" button for the currently selected shortcut has
+     * been clicked.
      *
      * @param onShortcutRun The new consumer to be called
      */
@@ -151,7 +152,8 @@ final class LibraryPanel extends DetailsView {
     }
 
     /**
-     * This method updates the consumer, that is called when the "Stop" button for the currently selected shortcut has been clicked.
+     * This method updates the consumer, that is called when the "Stop" button for the currently selected shortcut has
+     * been clicked.
      *
      * @param onShortcutStop The new consumer to be called
      */
@@ -160,7 +162,8 @@ final class LibraryPanel extends DetailsView {
     }
 
     /**
-     * This method updates the consumer, that is called when the "Uninstall" button for the currently selected shortcut has been clicked.
+     * This method updates the consumer, that is called when the "Uninstall" button for the currently selected shortcut
+     * has been clicked.
      *
      * @param onShortcutUninstall The new consumer to be called
      */

@@ -101,7 +101,7 @@ public class ContainersController {
             panel.setOnClose(containersView::closeDetailsView);
 
             Platform.runLater(() -> containersView.showDetailsView(panel));
-            //});
+            // });
         });
     }
 

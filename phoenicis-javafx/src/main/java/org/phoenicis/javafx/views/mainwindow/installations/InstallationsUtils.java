@@ -50,7 +50,8 @@ public class InstallationsUtils {
      * removes as installation from an existing list of installations
      * @param list existing list of installations
      * @param toRemove installation which shall be removed
-     * @return new list of installations containing the existing installations without the installation which shall be removed
+     * @return new list of installations containing the existing installations without the installation which shall be
+     *         removed
      */
     public List<InstallationCategoryDTO> removeInstallationFromList(List<InstallationCategoryDTO> list,
             InstallationDTO toRemove) {

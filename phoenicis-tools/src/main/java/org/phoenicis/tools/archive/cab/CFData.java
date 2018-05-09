@@ -43,7 +43,7 @@ public class CFData extends AbstractCabStructure {
             structureSize += inputStream.read(cbData);
             structureSize += inputStream.read(cbUncomp);
 
-            //structureSize += readVariableField(inputStream, abReserve);
+            // structureSize += readVariableField(inputStream, abReserve);
 
             ab = new byte[(int) getCompressedSize()];
 

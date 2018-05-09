@@ -90,7 +90,8 @@ public class ContainersSidebar extends Sidebar {
     }
 
     /**
-     * This method takes an {@link ObservableList} of container categories and binds it to the container categories button group
+     * This method takes an {@link ObservableList} of container categories and binds it to the container categories
+     * button group
      *
      * @param categories The list of container categories
      */
