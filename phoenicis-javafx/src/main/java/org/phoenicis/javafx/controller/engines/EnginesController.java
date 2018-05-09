@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
+import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
@@ -57,7 +58,9 @@ public class EnginesController {
         this.enginesManager = enginesManager;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(this::populateView,
+        this.repositoryManager.addCallbacks(repositoryDTO -> this.enginesManager.fetchAvailableEngines(repositoryDTO,
+                engines -> this.populateView(repositoryDTO, engines),
+                e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e)))),
                 e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
         this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
@@ -107,7 +110,7 @@ public class EnginesController {
         return enginesView;
     }
 
-    private void populateView(RepositoryDTO repositoryDTO) {
+    private void populateView(RepositoryDTO repositoryDTO, Map<String, Engine> engines) {
         Platform.runLater(() -> {
             List<CategoryDTO> categoryDTOS = new ArrayList<>();
             for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
@@ -116,7 +119,7 @@ public class EnginesController {
                 }
             }
             setDefaultEngineIcons(categoryDTOS);
-            this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS));
+            this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS), engines);
         });
     }
 
