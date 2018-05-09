@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-05-08 04:30-0400\n"
+"PO-Revision-Date: 2018-05-09 12:26-0400\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -533,21 +533,21 @@ msgstr "Distribution de wine :"
 msgid "Delete container"
 msgstr "Supprimer le conteneur"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:37
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:49
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
 msgid "Tools"
 msgstr "Outils"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:58
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:57
 msgid "Run executable"
 msgstr "Exécuter"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:63
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
 msgid "Choose executable"
 msgstr "Choisir l'exécutable"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:37
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:49
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:36
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:48
 msgid "Engine tools"
 msgstr ""
 
