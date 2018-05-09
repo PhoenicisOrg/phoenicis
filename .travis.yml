@@ -14,7 +14,6 @@ cache:
 jobs:
   include:
     # build cache
-    # .deb
     - stage: Build cache
       install: true
       script:
@@ -49,6 +48,10 @@ jobs:
       osx_image: xcode9.2
 
     # Install packages
+    # debug
+    - stage: Build cache
+      install: true
+      script: ls $HOME/travis_cache/
     # .deb
     - stage: Install packages
       install: true
