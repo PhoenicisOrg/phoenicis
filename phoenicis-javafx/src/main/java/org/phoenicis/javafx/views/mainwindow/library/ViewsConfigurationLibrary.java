@@ -32,6 +32,9 @@ public class ViewsConfigurationLibrary {
     @Value("${application.name}")
     private String applicationName;
 
+    @Value("${application.user.containers}")
+    private String containersPath;
+
     @Autowired
     private ThemeConfiguration themeConfiguration;
 
@@ -44,6 +47,7 @@ public class ViewsConfigurationLibrary {
     @Bean
     public LibraryView viewLibrary() {
         return new LibraryView(applicationName,
+                containersPath,
                 themeConfiguration.themeManager(),
                 phoenicisGlobalConfiguration.objectMapper(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
