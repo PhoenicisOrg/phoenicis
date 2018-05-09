@@ -61,11 +61,15 @@
     }
 
     .sidebarTitle {
-        -fx-text-fill: @text-color;
+        .text {
+            -fx-fill: @text-color;
+        }
     }
 
     .sidebarButton {
-        -fx-text-fill: @text-color;
+        .text {
+            -fx-fill: @text-color;
+        }
 
         &:hover, &:selected {
             -fx-background-color: #9f9da6;
