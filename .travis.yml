@@ -24,8 +24,8 @@ jobs:
       install:
         - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
                                                apt install -y git;
-                                               aptt install -y maven;
-                                               aptt install -y openjdk-8-jdk"
+                                               apt install -y maven;
+                                               apt install -y openjdk-8-jdk"
       script:
         - docker exec -t ubuntu-16-04 bash -c "cd /travis;
                                                export JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64\";
